@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GCash Design System — Component Assessment Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+<style>
+/* ── Reset ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:        #0A2757;
+  --blue:        #005CE5;
+  --blue-mid:    #3A7FEF;
+  --blue-light:  #E8F0FB;
+  --border:      #E5EBF4;
+  --bg:          #F4F7FB;
+  --white:       #FFFFFF;
+  --text:        #1A2740;
+  --muted:       #5B7194;
+  --sidebar-w:   260px;
+
+  --ready-fg:    #1A7A4A;
+  --ready-bg:    #E6F4ED;
+  --refine-fg:   #B45309;
+  --refine-bg:   #FEF3C7;
+  --rework-fg:   #B91C1C;
+  --rework-bg:   #FEE2E2;
+  --na-fg:       #6B7280;
+  --na-bg:       #F3F4F6;
+  --empty-fg:    #5B7194;
+  --empty-bg:    #EEF2F8;
+
+  --keep-fg:     #1A7A4A;
+  --keep-bg:     #E6F4ED;
+  --fix-fg:      #B45309;
+  --fix-bg:      #FEF3C7;
+  --restructure-fg: #9333EA;
+  --restructure-bg: #F3E8FF;
+  --consolidate-fg: #0369A1;
+  --consolidate-bg: #E0F2FE;
+  --product-fg:  #6B7280;
+  --product-bg:  #F3F4F6;
+  --remove-fg:   #B91C1C;
+  --remove-bg:   #FEE2E2;
+
+  --font:        'IBM Plex Sans', sans-serif;
+  --mono:        'IBM Plex Mono', monospace;
+  --radius:      6px;
+}
+
+html { font-size: 15px; scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ───────────────────────────────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--navy);
+  position: fixed;
+  top: 0; left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  padding: 28px 20px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.sidebar-brand-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6A9DC8;
+  margin-bottom: 6px;
+}
+.sidebar-brand-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+.sidebar-brand-sub {
+  font-size: 11.5px;
+  color: #6A9DC8;
+  margin-top: 4px;
+}
+
+.sidebar-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #4A7099;
+  padding: 20px 20px 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  text-decoration: none;
+  font-size: 13px;
+  color: #90B8D8;
+  border-left: 3px solid transparent;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  cursor: pointer;
+}
+.nav-item:hover {
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+}
+.nav-item.active {
+  background: rgba(0,92,229,0.18);
+  color: #fff;
+  border-left-color: var(--blue-mid);
+}
+.nav-item .nav-icon {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 11px;
+  color: #3E6080;
+  line-height: 1.5;
+}
+
+/* ── Main content ──────────────────────────────────────────────────────────── */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  padding: 0 40px 80px;
+  max-width: calc(100% - var(--sidebar-w));
+}
+
+/* ── Topbar ────────────────────────────────────────────────────────────────── */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.topbar-crumb { color: var(--muted); }
+.topbar-sep { color: #C5D0E0; }
+.topbar-current { color: var(--navy); font-weight: 600; }
+
+/* ── Cover ─────────────────────────────────────────────────────────────────── */
+.cover {
+  background: var(--navy);
+  border-radius: 10px;
+  padding: 48px 48px 40px;
+  margin-bottom: 56px;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  background: rgba(0,92,229,0.15);
+  pointer-events: none;
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; right: 120px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(0,92,229,0.08);
+  pointer-events: none;
+}
+.cover-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7AAAE0;
+  margin-bottom: 12px;
+}
+.cover-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.cover-subtitle {
+  font-size: 17px;
+  color: #7AAAE0;
+  margin-bottom: 32px;
+}
+.cover-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.cover-tag {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #A8C4F0;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(168,196,240,0.2);
+  border-radius: 4px;
+  padding: 4px 10px;
+}
+
+/* ── Page sections ─────────────────────────────────────────────────────────── */
+.page-section { margin-bottom: 64px; }
+
+.section-heading {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 10px;
+  margin-bottom: 24px;
+}
+.sub-heading {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 28px 0 10px;
+}
+p, .body-text {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+/* ── Badges ────────────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 3px 9px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.badge::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.badge-ready  { color: var(--ready-fg);  background: var(--ready-bg); }
+.badge-refine { color: var(--refine-fg); background: var(--refine-bg); }
+.badge-rework { color: var(--rework-fg); background: var(--rework-bg); }
+.badge-na     { color: var(--na-fg);     background: var(--na-bg); }
+.badge-empty  { color: var(--empty-fg);  background: var(--empty-bg); }
+
+.badge-keep         { color: var(--keep-fg);        background: var(--keep-bg); }
+.badge-fix          { color: var(--fix-fg);          background: var(--fix-bg); }
+.badge-restructure  { color: var(--restructure-fg);  background: var(--restructure-bg); }
+.badge-consolidate  { color: var(--consolidate-fg);  background: var(--consolidate-bg); }
+.badge-product      { color: var(--product-fg);      background: var(--product-bg); }
+.badge-remove       { color: var(--remove-fg);       background: var(--remove-bg); }
+
+/* ── Tables ────────────────────────────────────────────────────────────────── */
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+thead tr { background: var(--navy); }
+thead th {
+  color: #fff;
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  text-align: left;
+  padding: 10px 14px;
+  white-space: nowrap;
+}
+thead th:first-child { border-radius: var(--radius) 0 0 0; }
+thead th:last-child  { border-radius: 0 var(--radius) 0 0; }
+tbody tr { background: var(--white); }
+tbody tr:nth-child(even) { background: #F9FAFC; }
+td {
+  padding: 9px 14px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+  line-height: 1.55;
+}
+td.muted   { color: var(--muted); }
+td.center  { text-align: center; }
+td.mono    { font-family: var(--mono); font-size: 12px; color: var(--blue); }
+td strong  { font-weight: 600; color: var(--navy); }
+.col-id    { width: 44px; }
+.col-sm    { width: 88px; }
+.col-md    { width: 130px; }
+.col-badge { width: 150px; }
+
+/* ── Info boxes ────────────────────────────────────────────────────────────── */
+.infobox {
+  border-radius: var(--radius);
+  border-left: 4px solid;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.infobox-status { border-color: var(--refine-fg); background: #FFFBF0; }
+.infobox-issue  { border-color: #D97706;          background: #FFFBF0; }
+.infobox-code   { border-color: var(--blue);       background: var(--blue-light); }
+.infobox-ready  { border-color: var(--ready-fg);   background: var(--ready-bg); }
+.infobox-note   { border-color: var(--muted);      background: #F0F3F8; }
+.infobox p { color: var(--text); margin: 0 0 7px; }
+.infobox p:last-child { margin-bottom: 0; }
+.label-issue  { color: var(--rework-fg); font-weight: 700; }
+.label-rec    { color: var(--ready-fg);  font-weight: 700; }
+.label-status { color: var(--refine-fg); font-weight: 700; font-size: 14.5px; }
+
+/* ── Code ──────────────────────────────────────────────────────────────────── */
+code {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  background: #EEF2F8;
+  color: var(--blue);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.code-block {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--blue);
+  background: #fff;
+  border: 1px solid #C5D8F8;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  white-space: pre-wrap;
+  line-height: 1.7;
+}
+.path-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 4px;
+  margin-top: 12px;
+}
+.path-label:first-child { margin-top: 0; }
+.path-box {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--blue);
+  background: #fff;
+  border: 1px solid #C5D8F8;
+  border-radius: var(--radius);
+  padding: 8px 12px;
+}
+
+/* ── Lists ─────────────────────────────────────────────────────────────────── */
+ul.findings { padding-left: 18px; margin-bottom: 14px; }
+ul.findings li {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  line-height: 1.6;
+}
+.issue-block { margin-bottom: 20px; }
+.issue-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 7px;
+}
+
+/* ── Check marks ───────────────────────────────────────────────────────────── */
+.check { color: var(--ready-fg); font-weight: 700; font-size: 14px; }
+.cross { color: var(--rework-fg); font-weight: 700; font-size: 14px; }
+.dash  { color: var(--na-fg); font-size: 14px; }
+
+/* ── Summary overview grid ────────────────────────────────────────────────── */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.summary-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+.summary-card:hover {
+  box-shadow: 0 2px 12px rgba(10,39,87,0.08);
+  border-color: #C5D0E4;
+}
+.summary-card-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+}
+.summary-card-finding {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── Numbered step card ───────────────────────────────────────────────────── */
+.step-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-bottom: 14px;
+}
+.step-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.step-number {
+  width: 28px; height: 28px;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.step-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+}
+.step-body {
+  padding-left: 40px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+.step-body ul { padding-left: 18px; margin-top: 6px; }
+.step-body li { margin-bottom: 4px; }
+
+/* ── Anti-pattern block ───────────────────────────────────────────────────── */
+.pattern-category {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 24px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Component divider ────────────────────────────────────────────────────── */
+.component-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 48px 0;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  font-size: 11.5px;
+  color: #9BAEC4;
+  text-align: center;
+  margin-top: 64px;
+  font-style: italic;
+}
+
+/* ── Scroll highlight for active section ───────────────────────────────────── */
+.page-section:target .section-heading {
+  color: var(--navy);
+  border-bottom-color: var(--blue);
+}
+
+/* ── Print ─────────────────────────────────────────────────────────────────── */
+@media print {
+  .sidebar { display: none; }
+  .main { margin-left: 0; max-width: 100%; padding: 0 24px 40px; }
+  .cover { border-radius: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ SIDEBAR ════════════════════════════════════════════════════════════════ -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-eyebrow">GCash Design System</div>
+    <div class="sidebar-brand-title">Component<br>Assessment Guide</div>
+    <div class="sidebar-brand-sub">DS Health + Native Readiness</div>
+  </div>
+
+  <div class="sidebar-section-label">Guide Sections</div>
+  <a class="nav-item" href="#overview" onclick="setActive(this)">
+    <span class="nav-icon" style="background:#4A7099"></span>
+    Overview
+  </a>
+  <a class="nav-item" href="#dependencies" onclick="setActive(this)">
+    <span class="nav-icon" style="background:#4A7099"></span>
+    Dependencies
+  </a>
+  <a class="nav-item" href="#what-assessing" onclick="setActive(this)">
+    <span class="nav-icon" style="background:#4A7099"></span>
+    What You Assess
+  </a>
+  <a class="nav-item" href="#ds-health" onclick="setActive(this)">
+    <span class="nav-icon" style="background:#4A7099"></span>
+    DS Health Traits
+  </a>
+  <a class="nav-item" href="#native-readiness" onclick="setActive(this)">
+    <span class="nav-icon" style="background:#4A7099"></span>
+    Native Readiness
+  </a>
+  <a class="nav-item" href="#combined-status" onclick="setActive(this)">
+    <span class="nav-icon" style="background:#4A7099"></span>
+    Combined Status
+  </a>
+  <a class="nav-item" href="#known-patterns" onclick="setActive(this)">
+    <span class="nav-icon" style="background:#4A7099"></span>
+    Known Patterns
+  </a>
+  <a class="nav-item" href="#workflow" onclick="setActive(this)">
+    <span class="nav-icon" style="background:#4A7099"></span>
+    Assessment Workflow
+  </a>
+  <a class="nav-item" href="#output-format" onclick="setActive(this)">
+    <span class="nav-icon" style="background:#4A7099"></span>
+    Output Format
+  </a>
+  <a class="nav-item" href="#assessed" onclick="setActive(this)">
+    <span class="nav-icon" style="background:#4A7099"></span>
+    Components Assessed
+  </a>
+  <a class="nav-item" href="#new-session" onclick="setActive(this)">
+    <span class="nav-icon" style="background:#4A7099"></span>
+    Starting a Session
+  </a>
+  <a class="nav-item" href="#ownership" onclick="setActive(this)">
+    <span class="nav-icon" style="background:#4A7099"></span>
+    Ownership
+  </a>
+
+  <div class="sidebar-footer">
+    March 2026 &nbsp;&middot;&nbsp; For internal use only
+  </div>
+</nav>
+
+<!-- ══ MAIN ═══════════════════════════════════════════════════════════════════ -->
+<main class="main">
+
+  <!-- Topbar breadcrumb -->
+  <div class="topbar">
+    <span class="topbar-crumb">GCash Design System</span>
+    <span class="topbar-sep">&rsaquo;</span>
+    <span class="topbar-current">Component Assessment Guide</span>
+  </div>
+
+  <!-- Cover -->
+  <div class="cover" id="overview">
+    <div class="cover-eyebrow">GCash Design System &mdash; UI Component Library</div>
+    <div class="cover-title">Component Assessment<br>Guide</div>
+    <div class="cover-subtitle">Combined DS Health + Native Mobile Readiness</div>
+    <div class="cover-tags">
+      <span class="cover-tag">DS Health Audit</span>
+      <span class="cover-tag">Native Readiness</span>
+      <span class="cover-tag">SwiftUI</span>
+      <span class="cover-tag">Jetpack Compose</span>
+      <span class="cover-tag">Code Connect</span>
+      <span class="cover-tag">March 2026</span>
+    </div>
+  </div>
+
+  <div class="infobox infobox-code" style="margin-bottom:48px">
+    <p>This document is the unified assessment guide for evaluating GCash Design System components across two dimensions:</p>
+    <p><strong>1. DS Health</strong> &mdash; Should this component exist in the core DS? Is it well-structured?</p>
+    <p><strong>2. Native Mobile Readiness</strong> &mdash; Can it be implemented in SwiftUI and Jetpack Compose?</p>
+    <p style="margin-top:4px;font-size:12.5px;color:var(--muted)">Use this guide as your first-message context when starting a new Claude assessment session.</p>
+  </div>
+
+
+  <!-- ══ DEPENDENCIES ══════════════════════════════════════════════════════ -->
+  <div class="page-section" id="dependencies">
+    <div class="section-heading">Dependencies</div>
+
+    <div class="sub-heading">1. Claude Access</div>
+    <ul class="findings">
+      <li>Recommended model: Claude Sonnet (most recent version)</li>
+      <li>No special system prompt needed &mdash; paste this document as your first message context</li>
+    </ul>
+
+    <div class="sub-heading">2. Figma MCP Server <span class="badge badge-rework" style="font-size:10px;vertical-align:middle">Required</span></div>
+    <ul class="findings">
+      <li>The assessment uses the <strong>Figma MCP server</strong> for direct file access</li>
+      <li>Authenticate via your own Figma account &mdash; minimum <strong>viewer</strong> access required</li>
+    </ul>
+    <div class="infobox infobox-issue">
+      <p><span class="label-issue">Warning:</span> Never paste your Figma Personal Access Token into the chat.</p>
+    </div>
+
+    <div class="sub-heading">3. Figma File</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td><strong>File Name</strong></td><td class="muted">GCash Design System &mdash; Sticker Sheets v2</td></tr>
+          <tr><td><strong>File Key</strong></td><td class="mono">HwWDwPit2xJjDH4zszOZ5o</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading">4. No Other Tools Required</div>
+    <ul class="findings">
+      <li>No npm, no build tools, no local server</li>
+      <li>Claude uses Figma MCP tools directly</li>
+    </ul>
+  </div>
+
+
+  <!-- ══ WHAT YOU ARE ASSESSING ════════════════════════════════════════════ -->
+  <div class="page-section" id="what-assessing">
+    <div class="section-heading">What You Are Assessing</div>
+    <p>Every component is evaluated across <strong>two phases</strong>. Both must be completed for each component.</p>
+
+    <div class="summary-grid" style="margin-top:18px">
+      <div class="summary-card">
+        <div class="summary-card-name">Phase 1 &mdash; DS Health (Debloat Audit)</div>
+        <div class="summary-card-finding">Is this component worth keeping in the core DS? Is it well-designed?</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card-name">Phase 2 &mdash; Native Mobile Readiness</div>
+        <div class="summary-card-finding">Can this component be handed off to engineers for SwiftUI and Jetpack Compose implementation?</div>
+      </div>
+    </div>
+
+    <div class="infobox infobox-note">
+      <p>These are complementary but distinct. A component can pass Phase 1 (belongs in DS) but fail Phase 2 (raster icons, broken token coverage). Both must be assessed.</p>
+    </div>
+  </div>
+
+
+  <!-- ══ PHASE 1: DS HEALTH ════════════════════════════════════════════════ -->
+  <div class="page-section" id="ds-health">
+    <div class="section-heading">Phase 1: DS Health &mdash; The 4 Traits</div>
+    <p>Every component is evaluated against these four traits. Rate each as <span class="check">&#10003;</span> Pass &middot; <span style="color:var(--refine-fg);font-weight:700">&#9888;</span> Needs work &middot; <span class="cross">&#10007;</span> Fail.</p>
+
+    <div class="table-wrap" style="margin-top:16px">
+      <table>
+        <thead><tr><th>Trait</th><th>What to Check</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Reusable</strong></td><td class="muted">Does this component work across multiple contexts and flows, not just one specific screen or feature?</td></tr>
+          <tr><td><strong>Self-contained</strong></td><td class="muted">Does it carry its own styles, states, and logic without depending on external setup?</td></tr>
+          <tr><td><strong>Consistent</strong></td><td class="muted">Does it behave predictably? Are naming conventions, property types, and state coverage aligned with the rest of the DS?</td></tr>
+          <tr><td><strong>Composable</strong></td><td class="muted">Can it be nested inside other components? Does it fit into the existing component hierarchy?</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading">DS Health Verdicts</div>
+    <p>The overall DS Health verdict is determined by the combination of trait scores and structural findings.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-badge">Verdict</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge badge-keep">Keep</span></td><td class="muted">All 4 traits pass. Component belongs in core DS as-is.</td></tr>
+          <tr><td><span class="badge badge-fix">Fix</span></td><td class="muted">Component belongs in core DS but has specific issues (missing states, naming problems, incomplete variants).</td></tr>
+          <tr><td><span class="badge badge-restructure">Restructure</span></td><td class="muted">Component belongs in core DS but needs significant property or architectural changes before it is usable.</td></tr>
+          <tr><td><span class="badge badge-consolidate">Consolidate</span></td><td class="muted">Component should be merged into another component (reduce duplication).</td></tr>
+          <tr><td><span class="badge badge-product">Product Layer</span></td><td class="muted">Component is too feature-specific for core DS. Move to a product-layer pattern library.</td></tr>
+          <tr><td><span class="badge badge-remove">Remove</span></td><td class="muted">Component is redundant, deprecated, or doesn&rsquo;t belong in a design system (e.g., OS-level UI, ad infrastructure).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ══ PHASE 2: NATIVE READINESS ═════════════════════════════════════════ -->
+  <div class="page-section" id="native-readiness">
+    <div class="section-heading">Phase 2: Native Mobile Readiness &mdash; The 7 Criteria</div>
+    <p>Score each criterion independently. The overall component status is set by the <strong>worst-scoring criterion</strong> &mdash; one C6 failure makes the whole component &ldquo;Requires Rework&rdquo; even if every other criterion passes.</p>
+
+    <div class="table-wrap" style="margin-top:16px">
+      <table>
+        <thead>
+          <tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th>What to Check</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td class="muted">Are layers named semantically (<code>leading-icon</code>, <code>content</code>, <code>trailing-icon</code>) not as Figma defaults (<code>Frame 42</code>, <code>Group 7</code>)? Is the hierarchy logical for native mapping?</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td class="muted">Are variant names clean and consistent? Are boolean properties <code>true</code>/<code>false</code> (not <code>yes</code>/<code>no</code>)? Are enum values hyphenated, not space-separated?</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td class="muted">Are all colors, spacing, typography, and radius values bound to design tokens? No hardcoded values?</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td class="muted">Does the component map to a standard native primitive (<code>DisclosureGroup</code>, <code>Button</code>, <code>List</code>, <code>AlertView</code>)? Are there web-only patterns with no native equivalent?</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td class="muted">Are all expected states present as variants: default, pressed, disabled, focused? Missing states force engineers to invent behavior.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td class="muted">Are icons <strong>vector component instances</strong> (not raster/PNG embeds or CDN image assets)? Are they colored with tokens so tinting works natively?</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td class="muted">Is the component a proper Figma component set? Are property names clean enough to map 1:1 to native parameters? Are Code Connect mappings registered?</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading">Native Readiness Status Levels</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-badge">Status</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge badge-ready">Ready</span></td><td class="muted">Clean structure, maps well to native, Code Connect linkable as-is.</td></tr>
+          <tr><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Minor naming, structural, or token issues to fix before linking.</td></tr>
+          <tr><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Significant structural or design issues &mdash; needs redesign before native translation.</td></tr>
+          <tr><td><span class="badge badge-na">Not Applicable</span></td><td class="muted">Web-only concept or removed-from-DS component &mdash; skip native assessment.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ══ COMBINED STATUS ═══════════════════════════════════════════════════ -->
+  <div class="page-section" id="combined-status">
+    <div class="section-heading">Combined Status at a Glance</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>DS Health Verdict</th><th>Native Status</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge badge-keep">Keep</span></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Ship it &mdash; component is clean and native-ready.</td></tr>
+          <tr><td><span class="badge badge-keep">Keep</span> / <span class="badge badge-fix">Fix</span></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Minor fixes needed, assign to DS team.</td></tr>
+          <tr><td><span class="badge badge-fix">Fix</span> / <span class="badge badge-restructure">Restructure</span></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Significant work before engineers can use it.</td></tr>
+          <tr><td><span class="badge badge-product">Product Layer</span></td><td><span class="badge badge-na">Not Applicable</span></td><td class="muted">Move to product library, no native DS component needed.</td></tr>
+          <tr><td><span class="badge badge-remove">Remove</span> / <span class="badge badge-consolidate">Consolidate</span></td><td><span class="badge badge-na">Not Applicable</span></td><td class="muted">Skip native assessment entirely.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ══ KNOWN PATTERNS ════════════════════════════════════════════════════ -->
+  <div class="page-section" id="known-patterns">
+    <div class="section-heading">GCash-Specific Patterns to Check on Every Component</div>
+    <p>These issues have been confirmed to recur across the library. Check for all of them on every assessment.</p>
+
+    <div class="sub-heading">Known Anti-Patterns</div>
+
+    <!-- Naming & Property Issues -->
+    <div class="pattern-category">Naming &amp; Property Issues (C2)</div>
+    <ul class="findings">
+      <li><strong><code>yes</code>/<code>no</code> boolean strings</strong> &mdash; Boolean variant properties (e.g. <code>Full Width</code>, <code>leadingIcon</code>, <code>labelDescription</code>) are encoded as <code>yes</code>/<code>no</code> strings instead of <code>true</code>/<code>false</code>. Flag every occurrence under C2.</li>
+      <li><strong>Mixed-case boolean strings</strong> &mdash; The Alert component uses <code>yes</code> and <code>No</code> (inconsistent capitalisation) on the same boolean property. Watch for this pattern on new components.</li>
+      <li><strong>Space-separated variant names</strong> &mdash; Values like <code>with stroke</code> and <code>corner radius</code> are incompatible with Swift/Kotlin enum naming. Flag under C2.</li>
+      <li><strong>Version numbers in variant names</strong> &mdash; <code>transaction_v1</code>, <code>transaction_v2</code>, <code>Type=Version 2</code> are cleanup debt signals. Identify the actual difference between versions, keep the better one, flag for deletion.</li>
+      <li><strong><code>default</code> as a size name</strong> &mdash; <code>size=default</code> is ambiguous. Should always be a named size (<code>small</code>, <code>medium</code>, <code>large</code>). Seen in Checkbox (With Label) and Contextual Help.</li>
+      <li><strong><code>type</code> encoding two unrelated concerns</strong> &mdash; Some components (Button, Modal, Filter) use a single <code>type</code> property to encode both visual style and structural layout. These should be split into two separate properties.</li>
+      <li><strong><code>State</code> encoding style</strong> &mdash; <code>State=Pill</code> (Countdown) is a layout style, not an interaction state. Flag any component where state values include visual style descriptors.</li>
+    </ul>
+
+    <!-- Structural Issues -->
+    <div class="pattern-category">Structural Issues (C1, C4)</div>
+    <ul class="findings">
+      <li><strong>Generic internal layer names</strong> &mdash; <code>shape_full</code>, <code>Placeholder</code>, <code>Vector</code>, <code>Ellipse</code>, <code>Frame 42</code> &mdash; flag under C1. Semantic names should be <code>icon-chevron</code>, <code>icon-leading</code>, <code>content-body</code>, etc.</li>
+      <li><strong>Raw boolean operations as components</strong> &mdash; The Nudges section contains coachmark and dimmer shapes built as Figma boolean operation nodes, not proper component sets. These cannot be instanced, overridden, or Code Connect linked. Requires full rebuild.</li>
+      <li><strong>Sub-components not converted to variant properties</strong> &mdash; e.g., <code>Button with Icon</code> is a separate component instead of <code>hasIcon=true</code> on the main Button. Any time you see <code>[Component Name] - with [Feature]</code> as a separate frame, it should likely be a property.</li>
+      <li><strong>Baking content into the container</strong> &mdash; Bottom Sheet family, Form Group <code>Type=Two Fields</code>, Carousel families all bake content decisions into the container. Content should be a composable slot, not a fixed variant.</li>
+    </ul>
+
+    <!-- Token Issues -->
+    <div class="pattern-category">Token Issues (C3)</div>
+    <ul class="findings">
+      <li><strong>Hardcoded <code>opacity</code> modifiers</strong> &mdash; <code>opacity-80</code> and similar hardcoded opacity values seen on text layers. Should be a semantic token.</li>
+      <li><strong>Generic depth token for shadows</strong> &mdash; <code>Depth/D0</code> used for drop shadows instead of a component-specific semantic shadow token.</li>
+      <li><strong>Raw pixel values as size names</strong> &mdash; Card List uses <code>64, 52, 46, 40, 32, 24</code> as icon size values instead of named tokens (<code>large</code>, <code>medium</code>, <code>small</code>). Countdown has similar issues. All raw pixel size values should map to a named scale.</li>
+    </ul>
+
+    <!-- Asset Issues -->
+    <div class="pattern-category">Asset Issues (C6)</div>
+    <ul class="findings">
+      <li><strong>Raster icon assets</strong> &mdash; The Alert component&rsquo;s semantic type icons are raster images from Figma&rsquo;s CDN, not vector component instances. Any component using <code>imgShapeFull</code>, <code>imgVector</code>, <code>imgEllipse</code> in its generated code output is using raster assets. This is a hard C6 blocker.</li>
+      <li><strong>How to spot raster icons in design context output:</strong> Look for <code>const imgXxx = "https://www.figma.com/api/mcp/asset/..."</code> constants at the top of the generated code, then find where they are used as <code>&lt;img src={imgXxx} /&gt;</code>. If a semantic icon (not a placeholder image) is an <code>&lt;img&gt;</code> tag, it is raster.</li>
+    </ul>
+
+    <!-- State Coverage Issues -->
+    <div class="pattern-category">State Coverage Issues (C5)</div>
+    <ul class="findings">
+      <li><strong>Missing <code>disabled</code> state</strong> &mdash; Checkbox, Amount Text Field, Search Field, Date Picker all have missing disabled variants. Check every component for disabled coverage.</li>
+      <li><strong>Missing <code>indeterminate</code> state</strong> &mdash; Checkbox is missing this. Check all selection-type components.</li>
+      <li><strong>Missing <code>selected</code> / <code>active</code> state</strong> &mdash; Filter chips have no selected state. Check all filter and toggle-style components.</li>
+      <li><strong>Incomplete state matrix for sub-types</strong> &mdash; Date Picker Item documents Range (Middle) but is missing Range Start and Range End. Check that all item types cover all relevant states, not just the most common one.</li>
+    </ul>
+
+    <!-- Documentation Issues -->
+    <div class="pattern-category">Documentation Issues</div>
+    <ul class="findings">
+      <li><strong>Empty screen context panels</strong> &mdash; Several components (List, Progress Bar, Date Picker) have no screen context/usage examples. Flag as documentation gaps &mdash; not a technical blocker but a handoff risk.</li>
+      <li><strong>Deprecated components still in templates</strong> &mdash; <code>[DEPRECATED] Form Group V1</code> is still referenced in live template screens. Any deprecated component still appearing in templates must have its references cleaned up before deletion.</li>
+    </ul>
+
+    <div class="component-divider"></div>
+
+    <div class="sub-heading">Known Good Patterns &mdash; Do Not Re-Flag</div>
+    <div class="infobox infobox-ready">
+      <p><strong>Semantic color token naming</strong> &mdash; The <code>main/{component}/color/{state}/{role}</code> pattern is consistent and excellent across the library.</p>
+      <p><strong>Chevron icons</strong> &mdash; Chevron Down, Chevron Up, Chevron Right are all confirmed vector component instances.</p>
+      <p><strong>Spacing tokens</strong> &mdash; <code>space/space-*</code> tokens are consistently applied across all assessed components.</p>
+      <p><strong>Custom fonts</strong> &mdash; <code>font-family/font-primary</code> (Proxima Soft) and <code>font-family/font-secondary</code> (BarkAda) require native app bundle verification. Flag this <strong>once per session</strong> as a standing action item for the engineer &mdash; do not repeat per component.</p>
+    </div>
+  </div>
+
+
+  <!-- ══ ASSESSMENT WORKFLOW ═══════════════════════════════════════════════ -->
+  <div class="page-section" id="workflow">
+    <div class="section-heading">Assessment Workflow (Step by Step)</div>
+    <p>For each new Figma node URL received:</p>
+
+    <div class="step-card" style="margin-top:18px">
+      <div class="step-card-header">
+        <div class="step-number">1</div>
+        <div class="step-title">Get the Metadata</div>
+      </div>
+      <div class="step-body">
+        <div class="code-block">get_metadata(fileKey, nodeId)</div>
+        <ul>
+          <li>Count total variants and sub-components</li>
+          <li>Read all variant property names and values</li>
+          <li>Immediately spot C2 issues (boolean strings, space-separated names, version numbers)</li>
+          <li>Understand the layer hierarchy for C1</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-card-header">
+        <div class="step-number">2</div>
+        <div class="step-title">Get the Screenshot</div>
+      </div>
+      <div class="step-body">
+        <div class="code-block">get_screenshot(fileKey, nodeId)</div>
+        <ul>
+          <li>Visually confirm what the component looks like</li>
+          <li>Identify visual patterns not obvious from metadata alone</li>
+          <li>Spot missing states by looking at what&rsquo;s shown vs. what&rsquo;s absent</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-card-header">
+        <div class="step-number">3</div>
+        <div class="step-title">Get Full Design Context</div>
+      </div>
+      <div class="step-body">
+        <div class="code-block">get_design_context(fileKey, nodeId, disableCodeConnect=true,
+  clientFrameworks="SwiftUI, Jetpack Compose",
+  clientLanguages="Swift, Kotlin")</div>
+        <ul>
+          <li>Confirm layer naming in detail (C1)</li>
+          <li>Identify token usage vs. hardcoded values (C3)</li>
+          <li>Detect raster icons via <code>const imgXxx = "https://www.figma.com/api/mcp/asset/..."</code> (C6)</li>
+          <li>Surface hidden props with no Figma variant backing (C2/C7)</li>
+          <li>Assess layout structure for native mappability (C4)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-card-header">
+        <div class="step-number">4</div>
+        <div class="step-title">Get Variable/Token Definitions</div>
+      </div>
+      <div class="step-body">
+        <div class="code-block">get_variable_defs(fileKey, nodeId)</div>
+        <ul>
+          <li>Confirm full token coverage (C3)</li>
+          <li>Extract hex values for token tables in the report</li>
+          <li>Identify missing semantic tokens (e.g. shadow using generic <code>Depth/D0</code>)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-card-header">
+        <div class="step-number">5</div>
+        <div class="step-title">Spot-Check Specific Nodes <span style="font-weight:400;color:var(--muted);font-size:12px">(optional)</span></div>
+      </div>
+      <div class="step-body">
+        <div class="code-block">get_metadata(fileKey, specificNodeId)</div>
+        <p>If you need to verify whether a specific icon or element is a vector component instance. An <code>&lt;instance&gt;</code> result = vector component. Anything else that generates an <code>&lt;img&gt;</code> in step 3 = raster.</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-card-header">
+        <div class="step-number">6</div>
+        <div class="step-title">Write the Assessment</div>
+      </div>
+      <div class="step-body">
+        <p>Score all 4 DS traits and all 7 native criteria. Assign DS Health verdict and Native Readiness status. List all issues with criterion references. Output findings in the report format.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ OUTPUT FORMAT ═════════════════════════════════════════════════════ -->
+  <div class="page-section" id="output-format">
+    <div class="section-heading">Assessment Output Format</div>
+    <p>For each component, produce a structured assessment with the following sections:</p>
+
+    <div class="sub-heading">Component Header</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Component Name</strong></td><td class="muted">Name of the component with its <code>nodeId</code></td></tr>
+          <tr><td><strong>DS Health Verdict</strong></td><td class="muted">Keep / Fix / Restructure / Consolidate / Product Layer / Remove</td></tr>
+          <tr><td><strong>Native Readiness Status</strong></td><td class="muted">Ready / Needs Refinement / Requires Rework / Not Applicable</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading">Phase 1 &mdash; DS Health Table</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Trait</th><th class="col-sm">Rating</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Reusable</strong></td><td class="center"><span class="check">&#10003;</span> / <span style="color:var(--refine-fg);font-weight:700">&#9888;</span> / <span class="cross">&#10007;</span></td><td class="muted">[assessment notes]</td></tr>
+          <tr><td><strong>Self-contained</strong></td><td class="center"><span class="check">&#10003;</span> / <span style="color:var(--refine-fg);font-weight:700">&#9888;</span> / <span class="cross">&#10007;</span></td><td class="muted">[assessment notes]</td></tr>
+          <tr><td><strong>Consistent</strong></td><td class="center"><span class="check">&#10003;</span> / <span style="color:var(--refine-fg);font-weight:700">&#9888;</span> / <span class="cross">&#10007;</span></td><td class="muted">[assessment notes]</td></tr>
+          <tr><td><strong>Composable</strong></td><td class="center"><span class="check">&#10003;</span> / <span style="color:var(--refine-fg);font-weight:700">&#9888;</span> / <span class="cross">&#10007;</span></td><td class="muted">[assessment notes]</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading">Phase 2 &mdash; Native Readiness Table</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure</strong></td><td>Pass / Flag / Fail</td><td class="muted">[assessment notes]</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant Naming</strong></td><td>Pass / Flag / Fail</td><td class="muted">[assessment notes]</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td>Pass / Flag / Fail</td><td class="muted">[assessment notes]</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td>Pass / Flag / Fail</td><td class="muted">[assessment notes]</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction States</strong></td><td>Pass / Flag / Fail</td><td class="muted">[assessment notes]</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset Quality</strong></td><td>Pass / Flag / Fail</td><td class="muted">[assessment notes]</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect</strong></td><td>Pass / Flag / Fail</td><td class="muted">[assessment notes]</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading">Action Items Table</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">#</th><th class="col-sm">Priority</th><th class="col-md">Owner</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">1</td><td>High</td><td class="muted">DS Team</td><td class="muted">[action description]</td></tr>
+          <tr><td class="mono center">2</td><td>Medium</td><td class="muted">Engineering</td><td class="muted">[action description]</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ══ COMPONENTS ALREADY ASSESSED ═══════════════════════════════════════ -->
+  <div class="page-section" id="assessed">
+    <div class="section-heading">Components Already Assessed</div>
+
+    <div class="sub-heading">From Native Mobile Readiness Assessment (HTML Report)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Component</th><th>Node</th><th class="col-badge">DS Verdict</th><th class="col-badge">Native Status</th><th>Key Issue</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Accordion</strong></td><td class="mono">16:3626</td><td><span class="badge badge-fix">Fix</span></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Missing states, no expanded content panel, yes/no booleans</td></tr>
+          <tr><td><strong>List &ndash; Label Only</strong></td><td class="mono">21:43425</td><td><span class="badge badge-fix">Fix</span></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Space-separated variant names, no interaction states</td></tr>
+          <tr><td><strong>Alert</strong></td><td class="mono">21:83699</td><td><span class="badge badge-fix">Fix</span></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Raster type icons, <code>showHeader</code> ghost prop, font size inconsistency</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading">From DS Debloat Audit (Accordion &rarr; Progress Bar)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Component</th><th>Node</th><th class="col-badge">DS Verdict</th><th>Key Finding</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Accordion</strong></td><td class="mono">16:3626</td><td><span class="badge badge-keep">Keep</span></td><td class="muted">Clean and lean</td></tr>
+          <tr><td><strong>Action List</strong></td><td class="mono">21:43127</td><td><span class="badge badge-consolidate">Consolidate</span></td><td class="muted">5 sub-components &rarr; 1 <code>List Item</code> with trailing slot</td></tr>
+          <tr><td><strong>Ad Space</strong></td><td class="mono">21:28667</td><td><span class="badge badge-remove">Remove</span></td><td class="muted">Advertising infrastructure &mdash; not a DS component</td></tr>
+          <tr><td><strong>Alert</strong></td><td class="mono">21:83699</td><td><span class="badge badge-fix">Fix</span></td><td class="muted">Remove <code>Default</code> type ambiguity, consolidate icon props</td></tr>
+          <tr><td><strong>Avatar</strong></td><td class="mono">21:94765</td><td><span class="badge badge-fix">Fix</span></td><td class="muted">Naming inconsistency, incomplete size scale</td></tr>
+          <tr><td><strong>Banner</strong></td><td class="mono">756:82673</td><td><span class="badge badge-restructure">Restructure</span></td><td class="muted">CTA property architecture, remove left/right variant split</td></tr>
+          <tr><td><strong>Badge</strong></td><td class="mono">21:111526</td><td><span class="badge badge-restructure">Restructure</span></td><td class="muted">Rename <code>type</code> &rarr; <code>size</code>, separate color roles from semantic states</td></tr>
+          <tr><td><strong>Breakdown (Inline Text)</strong></td><td class="mono">21:138492</td><td><span class="badge badge-fix">Fix</span></td><td class="muted">Name conflict &mdash; &ldquo;Inline Text&rdquo; vs &ldquo;Breakdown&rdquo;</td></tr>
+          <tr><td><strong>Button</strong></td><td class="mono">21:164481</td><td><span class="badge badge-fix">Fix</span></td><td class="muted">Unify size naming, standardize appearances, merge with-Icon as property</td></tr>
+          <tr><td><strong>Bottom Sheet family (6)</strong></td><td class="muted">various</td><td><span class="badge badge-consolidate">Consolidate</span></td><td class="muted">6 components &rarr; 1 core <code>Bottom Sheet</code> + 2 content patterns</td></tr>
+          <tr><td><strong>Card List</strong></td><td class="mono">23:86049</td><td><span class="badge badge-fix">Fix</span></td><td class="muted">Rename to Feature Card + Transaction Card, reduce icon sizes to 3-step scale</td></tr>
+          <tr><td><strong>Carousel family (4)</strong></td><td class="muted">various</td><td><span class="badge badge-consolidate">Consolidate</span></td><td class="muted">4 components &rarr; 2: <code>Carousel Card</code> + <code>Carousel Banner</code></td></tr>
+          <tr><td><strong>Chat Field</strong></td><td class="mono">2641:27109</td><td><span class="badge badge-product">Evaluate</span></td><td class="muted">Evaluate core DS vs. product layer; fix naming and complete states</td></tr>
+          <tr><td><strong>Checkbox</strong></td><td class="mono">23:153929</td><td><span class="badge badge-fix">Fix</span></td><td class="muted">Align size naming, add indeterminate + disabled states</td></tr>
+          <tr><td><strong>Contextual Help</strong></td><td class="mono">23:179895</td><td><span class="badge badge-fix">Fix</span></td><td class="muted">Fix naming, complete variants, document vs. Alert</td></tr>
+          <tr><td><strong>Countdown</strong></td><td class="mono">4076:9090</td><td><span class="badge badge-restructure">Restructure</span></td><td class="muted">Separate State/Style properties; evaluate Full Container</td></tr>
+          <tr><td><strong>Date Picker</strong></td><td class="mono">12812:45433</td><td><span class="badge badge-fix">Fix</span></td><td class="muted">Add Range items, range calendar variant, screen context</td></tr>
+          <tr><td><strong>Filter</strong></td><td class="mono">23:183325</td><td><span class="badge badge-fix">Fix</span></td><td class="muted">Add <code>selected</code> state to chips, align naming with Button</td></tr>
+          <tr><td><strong>Form Elements</strong></td><td class="mono">23:199646</td><td><span class="badge badge-fix">Fix</span> + <span class="badge badge-consolidate">Consolidate</span></td><td class="muted">Merge Labeled Field into Input Field; restructure Form Group; delete deprecated V1</td></tr>
+          <tr><td><strong>Title Bar</strong></td><td class="mono">2641:30698</td><td><span class="badge badge-fix">Fix</span></td><td class="muted">Split into <code>Title Bar</code> (nav) + <code>Page Header</code> (content); merge/remove header sub-types</td></tr>
+          <tr><td><strong>List (Content List)</strong></td><td class="mono">10277:5439</td><td><span class="badge badge-fix">Fix</span></td><td class="muted">Rename to <code>Content List</code>, expose indicator type property</td></tr>
+          <tr><td><strong>Message &amp; Notification</strong></td><td class="mono">27:168909</td><td><span class="badge badge-restructure">Restructure</span></td><td class="muted">Split into 3 sections: Feedback, OS Templates, Illustrations</td></tr>
+          <tr><td><strong>Modal</strong></td><td class="mono">2647:22543</td><td><span class="badge badge-restructure">Restructure</span></td><td class="muted">Split <code>type</code> into <code>content</code> + <code>cta</code>; retire <code>transaction_v1</code></td></tr>
+          <tr><td><strong>Visual Popup</strong></td><td class="mono">2647:22590</td><td><span class="badge badge-fix">Fix</span> + <span class="badge badge-consolidate">Consolidate</span></td><td class="muted">Retire Version 2; consider merging with Modal into <code>Dialog</code></td></tr>
+          <tr><td><strong>Nudges</strong></td><td class="mono">2648:25708</td><td><span class="badge badge-fix">Fix</span></td><td class="muted">Convert raw boolean ops to proper components; consolidate 3 tooltips into 1</td></tr>
+          <tr><td><strong>Progress Bar</strong></td><td class="mono">27:64946</td><td><span class="badge badge-fix">Fix</span></td><td class="muted">Rebuild as fill rect; add status, size, label, indeterminate properties</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ══ STARTING A NEW SESSION ════════════════════════════════════════════ -->
+  <div class="page-section" id="new-session">
+    <div class="section-heading">Starting a New Session</div>
+    <p>Paste the following as your <strong>first message</strong> to Claude, along with this guide and the Figma node URL for the next component:</p>
+
+    <div class="infobox infobox-code" style="margin-top:16px">
+      <p style="font-style:italic;color:var(--muted);font-size:12.5px;margin-bottom:10px">Template message:</p>
+      <p>I&rsquo;m continuing a component assessment of the GCash Design System for both DS health (debloat audit) and native mobile readiness (SwiftUI + Jetpack Compose).</p>
+      <p>I&rsquo;m attaching:</p>
+      <p><strong>1.</strong> The assessment guide (<code>gcash-ds-assessment-guide.md</code>) &mdash; it contains the full methodology, 4 DS traits, 7 native criteria, GCash-specific patterns to watch for, and the output format</p>
+      <p><strong>2.</strong> (Optional) The current HTML report (<code>gcash-native-readiness-assessment.html</code>) if updating the native readiness report</p>
+      <p>The next component to assess is: <strong>[PASTE FIGMA NODE URL HERE]</strong></p>
+    </div>
+
+    <div class="sub-heading">Requested Steps</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">#</th><th>Step</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">1</td><td class="muted">Call <code>get_metadata</code> on the node to understand the variant structure</td></tr>
+          <tr><td class="mono center">2</td><td class="muted">Call <code>get_screenshot</code> to see the visual layout</td></tr>
+          <tr><td class="mono center">3</td><td class="muted">Call <code>get_design_context</code> with <code>disableCodeConnect=true</code>, <code>clientFrameworks=&quot;SwiftUI, Jetpack Compose&quot;</code>, <code>clientLanguages=&quot;Swift, Kotlin&quot;</code></td></tr>
+          <tr><td class="mono center">4</td><td class="muted">Call <code>get_variable_defs</code> to get all tokens</td></tr>
+          <tr><td class="mono center">5</td><td class="muted">Score the component against all 4 DS traits and all 7 native criteria</td></tr>
+          <tr><td class="mono center">6</td><td class="muted">Output the full assessment using the format in the guide</td></tr>
+          <tr><td class="mono center">7</td><td class="muted">(If updating the HTML report) Update the sidebar, cover subtitle, summary grid, summary table, and add the full component section before the footer &mdash; then return the updated file</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ══ OWNERSHIP ═════════════════════════════════════════════════════════ -->
+  <div class="page-section" id="ownership">
+    <div class="section-heading">Ownership</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Area</th><th>Owner</th></tr></thead>
+        <tbody>
+          <tr><td><strong>DS debloat audit methodology</strong></td><td class="muted">DS team lead</td></tr>
+          <tr><td><strong>Native mobile readiness methodology</strong></td><td class="muted">Design engineering lead</td></tr>
+          <tr><td><strong>HTML report file</strong></td><td class="muted">Shared via your preferred channel</td></tr>
+          <tr><td><strong>Figma file access</strong></td><td class="muted">Figma admin</td></tr>
+          <tr><td><strong>Token naming questions</strong></td><td class="muted">Design system owner</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <div class="footer">
+    GCash Design System &mdash; Component Assessment Guide &nbsp;&middot;&nbsp; Generated March 2026 &nbsp;&middot;&nbsp; For internal use only
+  </div>
+
+</main>
+
+<script>
+  // ── Active nav highlighting ──────────────────────────────────────────────
+  function setActive(el) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // ── Intersection observer to auto-highlight nav on scroll ───────────────
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('.nav-item[href]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
