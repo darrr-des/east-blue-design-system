@@ -1,15 +1,15 @@
 /**
  * Assessment Build Script
- * Assembles gcash-native-readiness-assessment.html from:
- *   - assessment-src/shell.html       (shared layout, CSS, JS)
- *   - assessment-src/components/*.html (one file per component)
+ * Assembles index.html from:
+ *   - assessment-src/shell.html          (shared layout, CSS, JS)
+ *   - assessment-src/components/*.html   (one file per component)
  *
  * Usage: node assessment-src/build.js
  *
  * Each component file must contain four tagged blocks:
- *   <!--@nav-start-->         ... nav sidebar item ...      <!--@nav-end-->
- *   <!--@summary-card-start--> ... summary card ...         <!--@summary-card-end-->
- *   <!--@summary-row-start-->  ... summary table <tr> ...   <!--@summary-row-end-->
+ *   <!--@nav-start-->          ... nav sidebar item ...      <!--@nav-end-->
+ *   <!--@summary-card-start--> ... summary card ...          <!--@summary-card-end-->
+ *   <!--@summary-row-start-->  ... summary table <tr> ...    <!--@summary-row-end-->
  *   <!--@section-start-->      ... full component section ... <!--@section-end-->
  */
 
@@ -20,7 +20,7 @@ const srcDir  = __dirname;
 const outFile = path.join(srcDir, '..', 'index.html');
 const compDir = path.join(srcDir, 'components');
 
-// ── Extract a tagged block from file content ─────────────────────────────────
+// ── Extract a tagged block from file content ──────────────────────────────────
 function extract(content, tag) {
   const start = `<!--@${tag}-start-->`;
   const end   = `<!--@${tag}-end-->`;
@@ -31,6 +31,21 @@ function extract(content, tag) {
     return '';
   }
   return content.slice(from + start.length, to).trim();
+}
+
+// ── Minify HTML ───────────────────────────────────────────────────────────────
+function minify(html) {
+  return html
+    // Remove HTML comments (but keep IE conditionals)
+    .replace(/<!--(?!\[if)[\s\S]*?-->/g, '')
+    // Collapse whitespace between tags
+    .replace(/>\s+</g, '><')
+    // Collapse multiple spaces into one
+    .replace(/\s{2,}/g, ' ')
+    // Remove spaces around = in attributes
+    .replace(/\s*=\s*/g, '=')
+    // Trim leading/trailing whitespace per line
+    .split('\n').map(l => l.trim()).filter(Boolean).join('');
 }
 
 // ── Read shell ────────────────────────────────────────────────────────────────
@@ -46,7 +61,7 @@ if (files.length === 0) {
   process.exit(1);
 }
 
-let navItems   = '';
+let navItems     = '';
 let summaryCards = '';
 let summaryRows  = '';
 let sections     = '';
@@ -67,6 +82,15 @@ shell = shell
   .replace('<!-- @@SUMMARY_ROWS@@ -->',        summaryRows.trimEnd())
   .replace('<!-- @@COMPONENT_SECTIONS@@ -->', sections.trimEnd());
 
-// ── Write output ──────────────────────────────────────────────────────────────
-fs.writeFileSync(outFile, shell, 'utf8');
+// ── Minify & write output ─────────────────────────────────────────────────────
+const original   = Buffer.byteLength(shell, 'utf8');
+const minified   = minify(shell);
+const compressed = Buffer.byteLength(minified, 'utf8');
+const saving     = (((original - compressed) / original) * 100).toFixed(1);
+
+fs.writeFileSync(outFile, minified, 'utf8');
+
 console.log(`\nBuilt → ${outFile}`);
+console.log(`  Original:  ${(original   / 1024).toFixed(1)} KB`);
+console.log(`  Minified:  ${(compressed / 1024).toFixed(1)} KB`);
+console.log(`  Saved:     ${saving}% smaller ✅`);
