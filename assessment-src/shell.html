@@ -668,6 +668,38 @@ ul.findings li {
 }
 .label-resolved { color: var(--ready-fg); font-weight: 700; }
 
+/* ── How It Works grid ─────────────────────────────────────────────────────── */
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.how-item {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 20px;
+}
+.how-step {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+.how-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.how-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
 /* ── Print ─────────────────────────────────────────────────────────────────── */
 @media print {
   .sidebar { display: none; }
@@ -690,6 +722,10 @@ ul.findings li {
   <a class="nav-item" href="#overview" onclick="setActive(this)">
     <span class="nav-icon" style="background:#4A7099"></span>
     Overview
+  </a>
+  <a class="nav-item" href="#how-it-works" onclick="setActive(this)">
+    <span class="nav-icon" style="background:#4A7099"></span>
+    How It Works
   </a>
   <a class="nav-item" href="#criteria" onclick="setActive(this)">
     <span class="nav-icon" style="background:#4A7099"></span>
@@ -734,6 +770,35 @@ ul.findings li {
       <span class="cover-tag">Jetpack Compose</span>
       <span class="cover-tag">Code Connect</span>
       <span class="cover-tag" style="background:rgba(39,201,144,0.15);border-color:rgba(39,201,144,0.3);color:#7AAAE0">✦ Post-Fix · March 2026</span>
+    </div>
+  </div>
+
+
+  <!-- ══ HOW IT WORKS ════════════════════════════════════════════════════ -->
+  <div class="page-section" id="how-it-works">
+    <div class="section-heading">How This Report Works</div>
+    <p>Each component lives in its own source file. The build script assembles them into this page automatically — keeping the report modular and easy to maintain as the design system grows.</p>
+    <div class="how-grid">
+      <div class="how-item">
+        <div class="how-step">01 — Assess</div>
+        <div class="how-title">Evaluate a component</div>
+        <div class="how-desc">Inspect the Figma component against the 7 criteria: layer naming, variant properties, token coverage, native mappability, interaction states, asset quality, and Code Connect readiness.</div>
+      </div>
+      <div class="how-item">
+        <div class="how-step">02 — Document</div>
+        <div class="how-title">Write the component file</div>
+        <div class="how-desc">Create or update a <code>.html</code> file in <code>assessment-src/components/</code>. Each file contains the nav item, summary card, summary row, and the full assessment section.</div>
+      </div>
+      <div class="how-item">
+        <div class="how-step">03 — Build</div>
+        <div class="how-title">Run the build script</div>
+        <div class="how-desc">Run <code>node assessment-src/build.js</code> to assemble all component files into this page. The nav, summary, and all sections are injected automatically.</div>
+      </div>
+      <div class="how-item">
+        <div class="how-step">04 — Ship</div>
+        <div class="how-title">Push to GitHub</div>
+        <div class="how-desc">Commit and push. The updated report is immediately live on GitHub Pages. No framework, no build pipeline — just a single <code>index.html</code>.</div>
+      </div>
     </div>
   </div>
 

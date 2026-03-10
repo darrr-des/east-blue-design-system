@@ -17,7 +17,7 @@ const fs   = require('fs');
 const path = require('path');
 
 const srcDir  = __dirname;
-const outFile = path.join(srcDir, '..', 'gcash-native-readiness-assessment.html');
+const outFile = path.join(srcDir, '..', 'index.html');
 const compDir = path.join(srcDir, 'components');
 
 // ── Extract a tagged block from file content ─────────────────────────────────
