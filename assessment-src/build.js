@@ -16,9 +16,10 @@
 const fs   = require('fs');
 const path = require('path');
 
-const srcDir  = __dirname;
-const outFile = path.join(srcDir, '..', 'index.html');
-const compDir = path.join(srcDir, 'components');
+const srcDir   = __dirname;
+const outFile  = path.join(srcDir, '..', 'index.html');
+const cssFile  = path.join(srcDir, '..', 'styles.css');
+const compDir  = path.join(srcDir, 'components');
 
 // ── Extract a tagged block from file content ──────────────────────────────────
 function extract(content, tag) {
@@ -90,7 +91,20 @@ const saving     = (((original - compressed) / original) * 100).toFixed(1);
 
 fs.writeFileSync(outFile, minified, 'utf8');
 
+// ── Copy & minify styles.css ──────────────────────────────────────────────────
+const cssSource = fs.readFileSync(path.join(srcDir, 'styles.css'), 'utf8');
+const cssMinified = cssSource
+  .replace(/\/\*[\s\S]*?\*\//g, '')   // remove comments
+  .replace(/\s{2,}/g, ' ')            // collapse whitespace
+  .replace(/\s*([{}:;,>~+])\s*/g, '$1') // remove spaces around symbols
+  .trim();
+const cssOriginal   = Buffer.byteLength(cssSource,    'utf8');
+const cssCompressed = Buffer.byteLength(cssMinified,  'utf8');
+const cssSaving     = (((cssOriginal - cssCompressed) / cssOriginal) * 100).toFixed(1);
+fs.writeFileSync(cssFile, cssMinified, 'utf8');
+
 console.log(`\nBuilt → ${outFile}`);
-console.log(`  Original:  ${(original   / 1024).toFixed(1)} KB`);
-console.log(`  Minified:  ${(compressed / 1024).toFixed(1)} KB`);
-console.log(`  Saved:     ${saving}% smaller ✅`);
+console.log(`  HTML  Original:  ${(original     / 1024).toFixed(1)} KB`);
+console.log(`  HTML  Minified:  ${(compressed   / 1024).toFixed(1)} KB  (saved ${saving}%) ✅`);
+console.log(`  CSS   Original:  ${(cssOriginal  / 1024).toFixed(1)} KB`);
+console.log(`  CSS   Minified:  ${(cssCompressed/ 1024).toFixed(1)} KB  (saved ${cssSaving}%) ✅`);
