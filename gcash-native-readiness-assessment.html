@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>GCash Design System — Native Mobile Readiness Assessment</title>
+<title>GCash Design System — Component Assessment (DS Health + Native Mobile Readiness)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
@@ -494,6 +494,180 @@ ul.findings li {
   box-shadow: 0 0 0 3px rgba(0,92,229,0.1);
 }
 
+/* ── DS Health (Phase 1) styles ────────────────────────────────────────────── */
+.phase-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 40px 0 28px;
+}
+.phase-divider-line { flex: 1; height: 1px; background: var(--border); }
+.phase-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.phase-label-1 { background: #EEF2FF; color: #3730A3; border: 1px solid #C7D2FE; }
+.phase-label-2 { background: #E0F2FE; color: #0369A1; border: 1px solid #BAE6FD; }
+
+.trait-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 16px 0 24px;
+}
+.trait-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  position: relative;
+  overflow: hidden;
+}
+.trait-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: 8px 0 0 8px;
+}
+.trait-card.pass::before  { background: var(--ready-fg); }
+.trait-card.warn::before  { background: var(--refine-fg); }
+.trait-card.fail::before  { background: var(--rework-fg); }
+.trait-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.trait-note { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+.verdict-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin: 20px 0 28px;
+}
+.verdict-banner-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.verdict-banner-text { font-size: 13.5px; color: var(--text); line-height: 1.6; }
+.verdict-banner-text strong { color: var(--navy); }
+
+.dual-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.dual-status-row { display: flex; align-items: center; gap: 8px; }
+.dual-status-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.badge-keep        { color: #1A7A4A; background: #E6F4ED; }
+.badge-fix         { color: #B45309; background: #FEF3C7; }
+.badge-restructure { color: #9333EA; background: #F3E8FF; }
+.badge-consolidate { color: #0369A1; background: #E0F2FE; }
+.badge-remove      { color: #B91C1C; background: #FEE2E2; }
+
+/* ── Re-assessment changelog ─────────────────────────────────────────────── */
+.changelog {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 20px 0 28px;
+}
+.changelog-header {
+  background: #F0F4FA;
+  padding: 10px 18px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--navy);
+  border-bottom: 1px solid var(--border);
+}
+.changelog-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.changelog-row:last-child { border-bottom: none; }
+.changelog-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+.changelog-body { flex: 1; color: var(--text); line-height: 1.5; }
+.changelog-body strong { color: var(--navy); font-weight: 600; }
+.changelog-body .tag-fixed {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--ready-bg);
+  color: var(--ready-fg);
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-left: 6px;
+}
+.changelog-body .tag-open {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--refine-bg);
+  color: var(--refine-fg);
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-left: 6px;
+}
+.score-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ready-fg);
+  background: var(--ready-bg);
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.score-delta-neutral {
+  color: var(--refine-fg);
+  background: var(--refine-bg);
+}
+.infobox-resolved {
+  border-color: var(--ready-fg);
+  background: var(--ready-bg);
+}
+.label-resolved { color: var(--ready-fg); font-weight: 700; }
+
 /* ── Print ─────────────────────────────────────────────────────────────────── */
 @media print {
   .sidebar { display: none; }
@@ -508,8 +682,8 @@ ul.findings li {
 <nav class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-brand-eyebrow">GCash Design System</div>
-    <div class="sidebar-brand-title">Native Mobile<br>Readiness Assessment</div>
-    <div class="sidebar-brand-sub">SwiftUI &amp; Jetpack Compose</div>
+    <div class="sidebar-brand-title">Component Assessment<br>DS Health + Native Mobile</div>
+    <div class="sidebar-brand-sub">SwiftUI &amp; Jetpack Compose · v2 Re-assessment</div>
   </div>
 
   <div class="sidebar-section-label">Report Sections</div>
@@ -534,17 +708,7 @@ ul.findings li {
   <a class="nav-item" href="#accordion" onclick="setActive(this)">
     <span class="nav-icon nav-icon-refine"></span>
     Accordion
-    <span class="nav-badge nav-badge-refine">Refine</span>
-  </a>
-  <a class="nav-item" href="#list-label-only" onclick="setActive(this)">
-    <span class="nav-icon nav-icon-refine"></span>
-    List – Label Only
-    <span class="nav-badge nav-badge-refine">Refine</span>
-  </a>
-  <a class="nav-item" href="#alert" onclick="setActive(this)">
-    <span class="nav-icon nav-icon-rework"></span>
-    Alert
-    <span class="nav-badge nav-badge-rework">Rework</span>
+    <span class="nav-badge nav-badge-refine">Refine · 3 Fixed</span>
   </a>
 
   <div class="sidebar-footer">
@@ -565,13 +729,15 @@ ul.findings li {
   <!-- Cover -->
   <div class="cover" id="overview">
     <div class="cover-eyebrow">GCash Design System — UI Component Library</div>
-    <div class="cover-title">Native Mobile Readiness<br>Assessment</div>
-    <div class="cover-subtitle">SwiftUI + Jetpack Compose &nbsp;·&nbsp; 3 Components</div>
+    <div class="cover-title">Component Assessment<br>DS Health + Native Mobile Readiness</div>
+    <div class="cover-subtitle">SwiftUI + Jetpack Compose &nbsp;·&nbsp; 1 Component &nbsp;·&nbsp; <span style="color:#7AAAE0;font-style:italic">v2 Post-Fix Re-assessment</span></div>
     <div class="cover-tags">
+      <span class="cover-tag">Phase 1 — DS Health</span>
+      <span class="cover-tag">Phase 2 — Native Readiness</span>
       <span class="cover-tag">SwiftUI</span>
       <span class="cover-tag">Jetpack Compose</span>
       <span class="cover-tag">Code Connect</span>
-      <span class="cover-tag">March 2026</span>
+      <span class="cover-tag" style="background:rgba(39,201,144,0.15);border-color:rgba(39,201,144,0.3);color:#7AAAE0">✦ Post-Fix · March 2026</span>
     </div>
   </div>
 
@@ -623,49 +789,27 @@ ul.findings li {
       <a class="summary-card" href="#accordion">
         <div style="display:flex;align-items:center;justify-content:space-between">
           <div class="summary-card-name">Accordion</div>
-          <span class="badge badge-refine">Needs Refinement</span>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+            <span class="badge badge-fix">Fix</span>
+            <span class="badge badge-refine">Needs Refinement</span>
+          </div>
         </div>
-        <div class="summary-card-finding">Solid token coverage and vector icons. Missing pressed/disabled/focused states and the expanded content panel.</div>
-      </a>
-      <a class="summary-card" href="#list-label-only">
-        <div style="display:flex;align-items:center;justify-content:space-between">
-          <div class="summary-card-name">List – Label Only</div>
-          <span class="badge badge-refine">Needs Refinement</span>
-        </div>
-        <div class="summary-card-finding">Clean layout and good token coverage. Style naming uses spaces, and all interactive states are missing.</div>
-      </a>
-      <a class="summary-card" href="#alert">
-        <div style="display:flex;align-items:center;justify-content:space-between">
-          <div class="summary-card-name">Alert</div>
-          <span class="badge badge-rework">Requires Rework</span>
-        </div>
-        <div class="summary-card-finding">Semantic type tokens are excellent. Alert-type icons are raster assets, a hidden prop has no Figma equivalent, and typography is inconsistent across layout modes.</div>
+        <div class="summary-card-finding"><strong style="color:#1A7A4A">v2 Post-Fix:</strong> Layer naming (C1) and boolean variant properties (C2) fully resolved. Token coverage and icons remain clean. Still needs expanded content panel (C4), pressed/disabled states (C5), and Code Connect mappings (C7).</div>
       </a>
     </div>
 
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Component</th><th class="col-badge">Status</th><th>Variants</th><th>Key Finding</th></tr>
+          <tr><th>Component</th><th class="col-badge">DS Health</th><th class="col-badge">Native Status</th><th>Variants</th><th>Key Finding</th></tr>
         </thead>
         <tbody>
           <tr>
             <td><strong>Accordion</strong></td>
+            <td><span class="badge badge-fix">Fix</span></td>
             <td><span class="badge badge-refine">Needs Refinement</span></td>
             <td class="muted">8</td>
-            <td class="muted">Missing pressed, disabled, focused states. No expanded content panel. Boolean props use yes/no strings.</td>
-          </tr>
-          <tr>
-            <td><strong>List – Label Only</strong></td>
-            <td><span class="badge badge-refine">Needs Refinement</span></td>
-            <td class="muted">3</td>
-            <td class="muted">Style variant uses spaces in names. No interaction states. Shadow effect uses a non-standard token. Label-brand color inconsistency across styles.</td>
-          </tr>
-          <tr>
-            <td><strong>Alert</strong></td>
-            <td><span class="badge badge-rework">Requires Rework</span></td>
-            <td class="muted">20</td>
-            <td class="muted">Alert-type icons (Information, Warning, Error, Checkmark) are raster assets. <code>Full Width</code> boolean uses Yes/No strings. Title font size differs between layout modes. <code>showHeader</code> prop has no Figma variant. Undocumented opacity-80 on description in non-Full Width variants.</td>
+            <td class="muted"><span style="color:#1A7A4A;font-weight:600">✓ Fixed:</span> Layer naming, boolean props. <span style="color:#B45309;font-weight:600">Open:</span> Expanded content panel, pressed/disabled states, Code Connect mappings.</td>
           </tr>
         </tbody>
       </table>
@@ -679,22 +823,147 @@ ul.findings li {
   <div class="component-section" id="accordion">
     <div class="component-header">
       <div class="component-header-left">
-        <div class="component-name">Accordion</div>
+        <div class="component-name">Accordion <span style="font-size:12px;font-weight:500;color:#1A7A4A;background:#E6F4ED;padding:2px 8px;border-radius:4px;vertical-align:middle;margin-left:8px">v2 Post-Fix</span></div>
         <div class="component-meta">
-          <span>Node: <code>16:3626</code></span>
+          <span>Node: <code>16830:2025</code></span>
           <span>Variants: 8</span>
           <span>iOS: <code>DisclosureGroup</code></span>
           <span>Android: <code>AnimatedVisibility</code></span>
         </div>
       </div>
-      <div class="component-status-block">
-        <div class="component-status-label">Overall Status</div>
-        <span class="badge badge-refine">Needs Refinement</span>
+      <div class="dual-status">
+        <div class="dual-status-row">
+          <span class="dual-status-label">DS Health</span>
+          <span class="badge badge-fix">Fix</span>
+        </div>
+        <div class="dual-status-row">
+          <span class="dual-status-label">Native Status</span>
+          <span class="badge badge-refine">Needs Refinement</span>
+        </div>
       </div>
     </div>
 
     <div class="section-heading">Overview</div>
     <p>A single-row disclosure row that expands and collapses to reveal content. Supports an optional leading icon placeholder and an optional secondary description line below the label. Standard, well-understood pattern on both iOS and Android.</p>
+
+    <!-- ── POST-FIX CHANGELOG ─────────────────────────────────────────────── -->
+    <div class="sub-heading" style="margin-top:24px">v2 Fix Changelog — March 2026</div>
+    <div class="changelog">
+      <div class="changelog-header">Changes Applied via Figma MCP · node 16830:2025</div>
+      <div class="changelog-row">
+        <div class="changelog-icon">✅</div>
+        <div class="changelog-body">
+          <strong>Frame → container</strong> — All 8 root container frames renamed from Figma's default <code>Frame</code> to <code>container</code>. Affects C1. <span class="tag-fixed">Fixed</span>
+        </div>
+        <div class="score-delta">C1 ↑</div>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-icon">✅</div>
+        <div class="changelog-body">
+          <strong>Placeholder → icon-leading</strong> — All 4 leading icon instances renamed from generic <code>Placeholder</code> to semantic <code>icon-leading</code>. Affects C1 and C7. <span class="tag-fixed">Fixed</span>
+        </div>
+        <div class="score-delta">C1 · C7 ↑</div>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-icon">✅</div>
+        <div class="changelog-body">
+          <strong>Boolean props: yes/no → true/false</strong> — All 8 variant names updated. <code>leading icon=yes/no</code> and <code>label description=yes/no</code> converted to <code>true/false</code> across all variants. Fully resolves C2. <span class="tag-fixed">Fixed</span>
+        </div>
+        <div class="score-delta">C2 ✓ Resolved</div>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-icon">⏳</div>
+        <div class="changelog-body">
+          <strong>Expanded content panel</strong> — Body/slot for expanded state still absent. Engineers must attach content outside the component. Affects C4 and Reusable/Self-contained traits. <span class="tag-open">Still Open</span>
+        </div>
+        <div class="score-delta score-delta-neutral">C4 Open</div>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-icon">⏳</div>
+        <div class="changelog-body">
+          <strong>Interaction states: pressed / disabled / focused</strong> — No new variant states added. Missing states force engineers to invent visual behavior natively. Affects C5. <span class="tag-open">Still Open</span>
+        </div>
+        <div class="score-delta score-delta-neutral">C5 Open</div>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-icon">⏳</div>
+        <div class="changelog-body">
+          <strong>Code Connect mappings</strong> — No native component files or Code Connect CLI mappings registered yet. Affects C7. <span class="tag-open">Still Open</span>
+        </div>
+        <div class="score-delta score-delta-neutral">C7 Open</div>
+      </div>
+    </div>
+
+    <!-- ── PHASE 1: DS HEALTH ─────────────────────────────────────────────── -->
+    <div class="phase-divider">
+      <div class="phase-divider-line"></div>
+      <div class="phase-label phase-label-1">⬡ Phase 1 — DS Health</div>
+      <div class="phase-divider-line"></div>
+    </div>
+
+    <div class="sub-heading">DS Health Verdict</div>
+    <div class="verdict-banner">
+      <div class="verdict-banner-left">
+        <div class="verdict-banner-label">Verdict</div>
+        <div class="verdict-banner-text"><strong>Fix</strong> — The Accordion concept is valid and belongs in the core DS. The structure is lean and layer naming is mostly good. However it needs targeted fixes before it's production-ready: boolean property notation must be corrected, a content slot for the expanded state is missing, and interaction states are absent.</div>
+      </div>
+      <span class="badge badge-fix" style="font-size:13px;padding:6px 14px;flex-shrink:0">Fix</span>
+    </div>
+
+    <div class="sub-heading">The 4 Traits — Scorecard</div>
+    <div class="trait-grid">
+      <div class="trait-card warn">
+        <div class="trait-name"><span class="rating">⚠️</span> Reusable</div>
+        <div class="trait-note">Only the header/trigger row is present. No expanded content panel or body slot — designers must manually attach content outside the component, limiting reuse as a complete accordion pattern.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-name"><span class="rating">⚠️</span> Self-contained</div>
+        <div class="trait-note">Toggle states are internally handled, but without a content body slot the component is incomplete. Engineers cannot implement it as a standalone unit without additional design spec.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-name"><span class="rating">✅</span> Consistent</div>
+        <div class="trait-note"><strong style="color:#1A7A4A">Fixed in v2.</strong> Boolean variant properties <code>leading icon</code> and <code>label description</code> now correctly use <code>true</code>/<code>false</code> across all 8 variants. Layer naming also standardised (<code>container</code>, <code>icon-leading</code>). Fully aligned with DS and native conventions.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-name"><span class="rating">✅</span> Composable</div>
+        <div class="trait-note">Layer naming is semantic (<code>leading-icon</code>, <code>content</code>, <code>trailing-icon</code>). Chevron icons are proper vector instances. The <code>leading-icon</code> slot accepts instances cleanly and fits the existing component hierarchy.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading">DS Health Issues</div>
+    <div class="issue-block">
+      <div class="issue-title" style="color:#1A7A4A">✅ Boolean Strings — Resolved in v2</div>
+      <div class="infobox infobox-resolved">
+        <p><span class="label-resolved">Resolved:</span> <code>leading icon</code> and <code>label description</code> properties have been converted from <code>yes</code>/<code>no</code> strings to <code>true</code>/<code>false</code> booleans across all 8 variants. Layer names <code>Placeholder</code> → <code>icon-leading</code> and <code>Frame</code> → <code>container</code> also corrected.</p>
+      </div>
+    </div>
+    <div class="issue-block">
+      <div class="issue-title">No Expanded Content Panel</div>
+      <div class="infobox infobox-issue">
+        <p><span class="label-issue">Issue:</span> The <code>type=expanded</code> variant only rotates the chevron. There is no body/content slot showing where the revealed content lives. This makes the component a header-only trigger, not a full Accordion.</p>
+        <p><span class="label-rec">Recommendation:</span> Add a composable content slot in the expanded state with defined vertical padding, a background token, and a bottom divider treatment.</p>
+      </div>
+    </div>
+    <div class="issue-block">
+      <div class="issue-title">Missing Interaction States</div>
+      <div class="infobox infobox-issue">
+        <p><span class="label-issue">Issue:</span> No <code>disabled</code> or <code>pressed</code> variants exist, forcing engineers to invent behavior not defined in the design.</p>
+        <p><span class="label-rec">Recommendation:</span> Add <code>pressed</code> and <code>disabled</code> variants with semantic tokens (e.g. <code>main/accordion/color/pressed/bg</code>, <code>main/accordion/color/disabled/label</code>).</p>
+      </div>
+    </div>
+    <div class="issue-block">
+      <div class="issue-title" style="color:#1A7A4A">✅ Generic Internal Layer Name — Resolved in v2</div>
+      <div class="infobox infobox-resolved">
+        <p><span class="label-resolved">Resolved:</span> <code>Placeholder</code> → <code>icon-leading</code> applied to all 4 leading icon instances across variants. Root container layers also corrected from <code>Frame</code> → <code>container</code>.</p>
+      </div>
+    </div>
+
+    <!-- ── PHASE 2: NATIVE MOBILE READINESS ──────────────────────────────── -->
+    <div class="phase-divider">
+      <div class="phase-divider-line"></div>
+      <div class="phase-label phase-label-2">📱 Phase 2 — Native Mobile Readiness</div>
+      <div class="phase-divider-line"></div>
+    </div>
 
     <!-- Variants -->
     <div class="sub-heading">Variants Inventory <span style="font-weight:400;color:var(--muted)">(8 total)</span></div>
@@ -711,14 +980,14 @@ ul.findings li {
           </tr>
         </thead>
         <tbody>
-          <tr><td>collapsed</td><td>yes</td><td>yes</td><td class="mono">16:3627</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
-          <tr><td>expanded</td> <td>yes</td><td>yes</td><td class="mono">16:3636</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
-          <tr><td>collapsed</td><td>no</td> <td>yes</td><td class="mono">16:3645</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
-          <tr><td>expanded</td> <td>no</td> <td>yes</td><td class="mono">16:3652</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
-          <tr><td>collapsed</td><td>yes</td><td>no</td> <td class="mono">16:3659</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
-          <tr><td>expanded</td> <td>yes</td><td>no</td> <td class="mono">16:3667</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
-          <tr><td>collapsed</td><td>no</td> <td>no</td>  <td class="mono">16:3675</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
-          <tr><td>expanded</td> <td>no</td> <td>no</td>  <td class="mono">16:3681</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
+          <tr><td>collapsed</td><td>true</td><td>true</td><td class="mono">16830:2026</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
+          <tr><td>expanded</td> <td>true</td><td>true</td><td class="mono">16830:2035</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
+          <tr><td>collapsed</td><td>false</td><td>true</td><td class="mono">16830:2044</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
+          <tr><td>expanded</td> <td>false</td><td>true</td><td class="mono">16830:2051</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
+          <tr><td>collapsed</td><td>true</td><td>false</td><td class="mono">16830:2058</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
+          <tr><td>expanded</td> <td>true</td><td>false</td><td class="mono">16830:2066</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
+          <tr><td>collapsed</td><td>false</td><td>false</td><td class="mono">16830:2074</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
+          <tr><td>expanded</td> <td>false</td><td>false</td><td class="mono">16830:2080</td><td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td></tr>
         </tbody>
       </table>
     </div>
@@ -726,7 +995,7 @@ ul.findings li {
     <!-- Overall status -->
     <div class="sub-heading">Overall Status</div>
     <div class="infobox infobox-status">
-      <p><span class="label-status">Needs Refinement</span> — Solid foundation with full token coverage, confirmed vector icon instances, and clear variant naming. Missing interaction states, the absent expanded content panel, boolean property notation, and a few internal layer names should be resolved before native handoff.</p>
+      <p><span class="label-status">Needs Refinement</span> — <strong style="color:#1A7A4A">v2 progress:</strong> Layer naming (C1) and boolean property notation (C2) are now fully resolved. Token coverage, vector icons, and variant structure remain clean. Remaining blockers before native handoff: expanded content panel (C4), pressed/disabled/focused interaction states (C5), and Code Connect mappings (C7).</p>
     </div>
 
     <!-- Scorecard -->
@@ -735,8 +1004,8 @@ ul.findings li {
       <table>
         <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Rating</th><th>Summary</th></tr></thead>
         <tbody>
-          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Container layers are well-named. Internal icon layers use generic names (<code>Placeholder</code>, <code>shape_full</code>).</td></tr>
-          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Variant keys are clear. Boolean props use <code>yes</code>/<code>no</code> strings instead of <code>true</code>/<code>false</code> values.</td></tr>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted"><strong style="color:#1A7A4A">Fixed v2.</strong> All layers now use semantic names: <code>container</code>, <code>icon-leading</code>, <code>content</code>, <code>trailing-icon</code>. No generic defaults remaining.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted"><strong style="color:#1A7A4A">Fixed v2.</strong> All 8 variants updated to <code>true</code>/<code>false</code> booleans. Variant keys use clear <code>key=value</code> syntax.</td></tr>
           <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors, spacing, and typography are fully tokenized. No hardcoded values found.</td></tr>
           <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Header row maps cleanly to native. Expanded content panel is absent from the component.</td></tr>
           <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Only default (collapsed/expanded) defined. Pressed, disabled, and focused states are missing.</td></tr>
@@ -805,9 +1074,9 @@ ul.findings li {
         <thead><tr><th>Aspect</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
         <tbody>
           <tr><td><strong>Component type</strong></td>    <td><span class="badge badge-ready">Ready</span></td>            <td class="muted">Proper Figma component set — not a bare group or frame.</td></tr>
-          <tr><td><strong>Variant naming</strong></td>    <td><span class="badge badge-ready">Ready</span></td>            <td class="muted">Clear key=value syntax: <code>type=collapsed</code>, <code>leadingIcon=yes</code>.</td></tr>
-          <tr><td><strong>Property naming</strong></td>   <td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Good names; <code>yes</code>/<code>no</code> should be <code>true</code>/<code>false</code> booleans.</td></tr>
-          <tr><td><strong>Layer naming</strong></td>      <td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Container layers semantic. Inner icon layers use generic names: <code>Placeholder</code>, <code>shape_full</code>.</td></tr>
+          <tr><td><strong>Variant naming</strong></td>    <td><span class="badge badge-ready">Ready</span></td>            <td class="muted"><strong style="color:#1A7A4A">Fixed v2.</strong> All variants use <code>key=value</code> syntax with <code>true</code>/<code>false</code> booleans.</td></tr>
+          <tr><td><strong>Property naming</strong></td>   <td><span class="badge badge-ready">Ready</span></td>            <td class="muted"><strong style="color:#1A7A4A">Fixed v2.</strong> Boolean values corrected. Clean 1:1 mapping to native params now possible.</td></tr>
+          <tr><td><strong>Layer naming</strong></td>      <td><span class="badge badge-ready">Ready</span></td>            <td class="muted"><strong style="color:#1A7A4A">Fixed v2.</strong> All layers renamed: <code>container</code>, <code>icon-leading</code>, <code>content</code>, <code>trailing-icon</code>.</td></tr>
           <tr><td><strong>Token coverage</strong></td>    <td><span class="badge badge-ready">Ready</span></td>            <td class="muted">All values tokenized. No hardcoded values found.</td></tr>
           <tr><td><strong>Asset quality</strong></td>     <td><span class="badge badge-ready">Ready</span></td>            <td class="muted">Chevrons are confirmed vector component instances.</td></tr>
           <tr><td><strong>Code Connect</strong></td>      <td><span class="badge badge-empty">Not Mapped</span></td>       <td class="muted">No mappings registered. Suggested paths below.</td></tr>
@@ -861,561 +1130,21 @@ ul.findings li {
     <div class="section-heading" style="margin-top:36px">Action Items — Accordion</div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th class="col-id">#</th><th class="col-sm">Criterion</th><th>Action</th><th class="col-md">Owner</th></tr></thead>
+        <thead><tr><th class="col-id">#</th><th class="col-sm">Criterion</th><th>Action</th><th class="col-md">Status</th></tr></thead>
         <tbody>
-          <tr><td class="mono center">1</td><td class="mono">C5</td><td>Add <strong>pressed</strong> and <strong>disabled</strong> variant states with semantic color tokens (e.g. <code>main/accordion/color/pressed/bg</code>).</td><td class="muted">Designer</td></tr>
-          <tr><td class="mono center">2</td><td class="mono">C4</td><td>Add the <strong>expanded content panel</strong> as a slot/placeholder in the expanded variant with padding, background token, and divider.</td><td class="muted">Designer</td></tr>
-          <tr><td class="mono center">3</td><td class="mono">C2</td><td>Convert <code>leadingIcon</code> and <code>labelDescription</code> values from <code>yes</code>/<code>no</code> strings to <code>true</code>/<code>false</code> booleans.</td><td class="muted">Designer</td></tr>
-          <tr><td class="mono center">4</td><td class="mono">C1</td><td>Rename <code>Placeholder</code> → <code>icon-leading</code> and <code>shape_full</code> → <code>icon-chevron</code>.</td><td class="muted">Designer</td></tr>
-          <tr><td class="mono center">5</td><td class="mono">C3/C4</td><td>Confirm <strong>Proxima Soft</strong> and <strong>BarkAda</strong> are bundled in native apps. Document font token mapping in the setup guide.</td><td class="muted">Engineer</td></tr>
-          <tr><td class="mono center">6</td><td class="mono">C7</td><td>Create native component files and register Code Connect mappings via the Figma Code Connect CLI.</td><td class="muted">Engineer</td></tr>
+          <tr style="opacity:0.6"><td class="mono center">1</td><td class="mono">C1</td><td><s>Rename <code>Placeholder</code> → <code>icon-leading</code> and <code>Frame</code> → <code>container</code>.</s></td><td><span class="badge badge-ready">✅ Done</span></td></tr>
+          <tr style="opacity:0.6"><td class="mono center">2</td><td class="mono">C2</td><td><s>Convert <code>leadingIcon</code> and <code>labelDescription</code> values from <code>yes</code>/<code>no</code> to <code>true</code>/<code>false</code> booleans.</s></td><td><span class="badge badge-ready">✅ Done</span></td></tr>
+          <tr><td class="mono center">3</td><td class="mono">C5</td><td>Add <strong>pressed</strong> and <strong>disabled</strong> variant states with semantic color tokens (e.g. <code>main/accordion/color/pressed/bg</code>).</td><td><span class="badge badge-refine">Open</span></td></tr>
+          <tr><td class="mono center">4</td><td class="mono">C4</td><td>Add the <strong>expanded content panel</strong> as a slot/placeholder in the expanded variant with padding, background token, and divider.</td><td><span class="badge badge-refine">Open</span></td></tr>
+          <tr><td class="mono center">5</td><td class="mono">C3/C4</td><td>Confirm <strong>Proxima Soft</strong> and <strong>BarkAda</strong> are bundled in native apps. Document font token mapping in the setup guide.</td><td><span class="badge badge-refine">Open</span></td></tr>
+          <tr><td class="mono center">6</td><td class="mono">C7</td><td>Create native component files and register Code Connect mappings via the Figma Code Connect CLI.</td><td><span class="badge badge-refine">Open</span></td></tr>
         </tbody>
       </table>
     </div>
   </div>
-
-  <div class="component-divider"></div>
-
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       COMPONENT 2 — LIST – LABEL ONLY
-  ═══════════════════════════════════════════════════════════════════════════ -->
-  <div class="component-section" id="list-label-only">
-    <div class="component-header">
-      <div class="component-header-left">
-        <div class="component-name">List – Label Only</div>
-        <div class="component-meta">
-          <span>Node: <code>21:43425</code></span>
-          <span>Variants: 3</span>
-          <span>iOS: <code>List / Button</code></span>
-          <span>Android: <code>LazyColumn / Row</code></span>
-        </div>
-      </div>
-      <div class="component-status-block">
-        <div class="component-status-label">Overall Status</div>
-        <span class="badge badge-refine">Needs Refinement</span>
-      </div>
-    </div>
-
-    <div class="section-heading">Overview</div>
-    <p>A minimal action list row showing a label and a trailing chevron. It comes in three visual styles — <code>base</code> (card-like, with a drop shadow), <code>with stroke</code> (separated by a bottom border), and <code>corner radius</code> (rounded card, standalone use). Each style is intended for different compositional contexts.</p>
-
-    <!-- Variants -->
-    <div class="sub-heading">Variants Inventory <span style="font-weight:400;color:var(--muted)">(3 total)</span></div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th><code style="color:#fff;background:transparent;padding:0">style</code></th>
-            <th>Node ID</th>
-            <th>Intended Use</th>
-            <th>iOS</th>
-            <th>Android</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>base</td>          <td class="mono">21:43437</td><td class="muted">Default card control. Drop shadow, no border.</td>                        <td class="muted">List row / Button</td><td class="muted">LazyColumn Row</td></tr>
-          <tr><td>with stroke</td>   <td class="mono">21:43430</td><td class="muted">Grouped or combined lists, separated by a bottom border.</td>              <td class="muted">List row</td>        <td class="muted">LazyColumn Row</td></tr>
-          <tr><td>corner radius</td> <td class="mono">21:43426</td><td class="muted">Standalone item, combined with other elements. Rounded card appearance.</td><td class="muted">RoundedRectangle Button</td><td class="muted">Card / Surface</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Overall status -->
-    <div class="sub-heading">Overall Status</div>
-    <div class="infobox infobox-status">
-      <p><span class="label-status">Needs Refinement</span> — Good token coverage and clean layout structure. The style variant naming uses spaces (non-standard for Code Connect), no interactive states are defined, a label color inconsistency exists across styles, and the drop shadow is defined via a non-semantic effect token. These should be resolved before native handoff.</p>
-    </div>
-
-    <!-- Scorecard -->
-    <div class="sub-heading">Criteria Scorecard</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Rating</th><th>Summary</th></tr></thead>
-        <tbody>
-          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Most layers are named well (<code>container</code>, <code>text</code>, <code>line</code>, <code>offset</code>). Inner chevron layer is still named <code>shape_full</code>.</td></tr>
-          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Style names use spaces (<code>with stroke</code>, <code>corner radius</code>) which are incompatible with most Code Connect prop mapping conventions.</td></tr>
-          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td>              <td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Most values tokenized. The drop shadow uses a generic <code>Depth/D0</code> effect token with a hardcoded RGBA color. The <code>corner radius</code> style uses <code>label-brand</code> color while other styles use <code>label</code>.</td></tr>
-          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td>          <td><span class="badge badge-ready">Ready</span></td>            <td class="muted">All three styles map naturally to standard native primitives. The drop shadow is achievable with <code>.shadow()</code> (SwiftUI) or <code>Modifier.shadow()</code> (Compose).</td></tr>
-          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td>  <td><span class="badge badge-rework">Requires Rework</span></td>  <td class="muted">No interactive states defined at all — no pressed, disabled, or focused variants. This is a tappable list row; all three are needed.</td></tr>
-          <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td>    <td><span class="badge badge-ready">Ready</span></td>            <td class="muted">Chevron Right is a confirmed Figma component instance (vector path). Color is applied via the <code>main/action-list/color/default/chevron</code> token.</td></tr>
-          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td>    <td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Properly structured component set. Style names with spaces will require mapping cleanup. No Code Connect mappings registered.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Interaction states -->
-    <div class="sub-heading">Interaction States</div>
-    <p>This is a tappable action list row — a standard interactive component. The following states are expected:</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>State</th><th class="col-sm center">Expected</th><th class="col-sm center">Present</th><th>Variant / Property</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Default</strong></td>         <td class="center"><span class="check">✓</span></td><td class="center"><span class="check">✓</span></td><td class="mono">style=base/with stroke/corner radius</td><td class="muted">All three style variants cover the default state.</td></tr>
-          <tr><td><strong>Pressed / Active</strong></td><td class="center"><span class="check">✓</span></td><td class="center"><span class="cross">✗</span></td><td class="muted center">—</td><td class="muted">No pressed state. Critical for a tappable row — users need visual feedback on tap.</td></tr>
-          <tr><td><strong>Disabled</strong></td>        <td class="center"><span class="check">✓</span></td><td class="center"><span class="cross">✗</span></td><td class="muted center">—</td><td class="muted">No disabled state. List items are commonly disabled conditionally.</td></tr>
-          <tr><td><strong>Focused (a11y)</strong></td>  <td class="center"><span class="check">✓</span></td><td class="center"><span class="cross">✗</span></td><td class="muted center">—</td><td class="muted">No focus ring defined. Needed for VoiceOver / TalkBack navigation.</td></tr>
-          <tr><td><strong>Loading</strong></td>         <td class="center"><span class="dash">—</span></td> <td class="center"><span class="dash">—</span></td> <td class="muted center">N/A</td><td class="muted">Not expected for a simple label-only row.</td></tr>
-          <tr><td><strong>Error</strong></td>           <td class="center"><span class="dash">—</span></td> <td class="center"><span class="dash">—</span></td> <td class="muted center">N/A</td><td class="muted">Not applicable for a navigation/action list row.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- A. Native translatability -->
-    <div class="sub-heading">A. Native Mobile Translatability</div>
-    <p style="font-weight:600;color:var(--ready-fg);font-size:13px;margin-bottom:6px">A1 — What Works Well</p>
-    <ul class="findings">
-      <li>All three style variants map naturally to standard native primitives. The <code>base</code> and <code>with stroke</code> styles map to a <code>List</code> row (SwiftUI) or <code>LazyColumn</code> item (Compose). The <code>corner radius</code> style maps to a card-style <code>Button</code> or <code>Surface</code>.</li>
-      <li>Drop shadow on the <code>base</code> style is achievable with <code>.shadow(color:radius:x:y:)</code> in SwiftUI or <code>Modifier.shadow(elevation:)</code> in Compose — the shadow values (<code>0px 1px 3px rgba(232,238,242,0.79)</code>) are low-profile and will translate naturally.</li>
-      <li>The bottom border on the <code>with stroke</code> style maps cleanly to a <code>Divider</code> view in SwiftUI or a <code>HorizontalDivider</code> in Compose.</li>
-      <li>Corner radius of <code>6px</code> (<code>radius/radius-2</code>) is a tokenized value and maps directly to <code>.cornerRadius(6)</code> or <code>RoundedCornerShape(6.dp)</code>.</li>
-      <li>Chevron Right is a confirmed vector component instance — exports cleanly for all native targets.</li>
-    </ul>
-
-    <p style="font-weight:600;color:var(--refine-fg);font-size:13px;margin-bottom:8px">A2 — Issues &amp; Recommendations</p>
-
-    <div class="issue-block">
-      <div class="issue-title">No Interactive States</div>
-      <div class="infobox infobox-issue">
-        <p><span class="label-issue">Issue:</span> This is a tappable row but has zero interactive state variants — no pressed, disabled, or focused. This is the most significant gap in the component. Engineers building native implementations will have to invent the visual feedback for tap, which leads to fragmented UX across the app.</p>
-        <p><span class="label-rec">Recommendation:</span> Add a <code>state</code> property with at minimum <code>default</code>, <code>pressed</code>, and <code>disabled</code> values. Apply per-style token overrides where needed (e.g. <code>main/action-list/color/pressed/bg</code>). The pressed state on a list row is typically a light background tint, which is simple to design and critical to have.</p>
-      </div>
-    </div>
-
-    <div class="issue-block">
-      <div class="issue-title">Label Color Inconsistency Across Styles</div>
-      <div class="infobox infobox-issue">
-        <p><span class="label-issue">Issue:</span> The <code>corner radius</code> style uses <code>main/action-list/color/default/label-brand</code> (<code>#005CE5</code>, blue) for its label, while <code>base</code> and <code>with stroke</code> use <code>main/action-list/color/default/label</code> (<code>#0A2757</code>, navy). This is an intentional design difference, but it is undocumented and may confuse engineers who expect consistent label color across styles.</p>
-        <p><span class="label-rec">Recommendation:</span> Add a component annotation or Figma description clarifying this is intentional — the <code>corner radius</code> style is a standalone CTA-like element that uses brand blue to signal interactivity. If this is not intentional, standardize to a single label color token.</p>
-      </div>
-    </div>
-
-    <div class="issue-block">
-      <div class="issue-title">Style Variant Names Contain Spaces</div>
-      <div class="infobox infobox-issue">
-        <p><span class="label-issue">Issue:</span> Style values <code>with stroke</code> and <code>corner radius</code> contain spaces, which are not compatible with most Code Connect prop-mapping conventions and many code style guides (Swift/Kotlin enums do not allow spaces).</p>
-        <p><span class="label-rec">Recommendation:</span> Rename to hyphenated or camelCase values: <code>base</code>, <code>with-stroke</code>, <code>corner-radius</code> — or map to native enum values explicitly in Code Connect: <code>"with stroke"</code> → <code>.withStroke</code> / <code>WithStroke</code>.</p>
-      </div>
-    </div>
-
-    <div class="issue-block">
-      <div class="issue-title">Drop Shadow Uses a Non-Semantic Effect Token</div>
-      <div class="infobox infobox-issue">
-        <p><span class="label-issue">Issue:</span> The <code>base</code> style shadow is defined via <code>Depth/D0</code>, which resolves to a hardcoded RGBA color (<code>rgba(232,238,242,0.79)</code>). This is a generic depth token, not a component-specific semantic token. It will be harder to maintain across theme changes.</p>
-        <p><span class="label-rec">Recommendation:</span> Introduce a semantic shadow token like <code>main/action-list/effect/default/shadow</code> that maps to <code>Depth/D0</code> internally. This decouples the component from the generic depth system and makes it easier to theme or update independently.</p>
-      </div>
-    </div>
-
-    <!-- B. Code Connect -->
-    <div class="sub-heading">B. Code Connect Readiness</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Aspect</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Component type</strong></td>  <td><span class="badge badge-ready">Ready</span></td>            <td class="muted">Proper Figma component set.</td></tr>
-          <tr><td><strong>Variant naming</strong></td>  <td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Style names contain spaces (<code>with stroke</code>, <code>corner radius</code>) — incompatible with standard enum naming.</td></tr>
-          <tr><td><strong>Property naming</strong></td> <td><span class="badge badge-ready">Ready</span></td>            <td class="muted">Single <code>style</code> property is clear and unambiguous.</td></tr>
-          <tr><td><strong>Layer naming</strong></td>    <td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Most layers well-named. Inner chevron layer still named <code>shape_full</code>.</td></tr>
-          <tr><td><strong>Token coverage</strong></td>  <td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Good overall. Shadow uses a generic <code>Depth/D0</code> token. Label color varies across styles without documentation.</td></tr>
-          <tr><td><strong>Asset quality</strong></td>   <td><span class="badge badge-ready">Ready</span></td>            <td class="muted">Chevron Right confirmed as vector component instance.</td></tr>
-          <tr><td><strong>Code Connect</strong></td>    <td><span class="badge badge-empty">Not Mapped</span></td>       <td class="muted">No mappings registered. Suggested paths below.</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="infobox infobox-code">
-      <div class="path-label">SwiftUI</div>
-      <div class="path-box">ios/Components/ActionList/ListLabelOnly.swift</div>
-      <div class="path-label">Jetpack Compose</div>
-      <div class="path-box">android/components/actionlist/ListLabelOnly.kt</div>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Figma Property</th><th>SwiftUI Param</th><th>Compose Param</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td class="mono">style=base</td>          <td class="mono">.base</td>          <td class="mono">ListStyle.BASE</td>          <td class="muted">Default card row with drop shadow</td></tr>
-          <tr><td class="mono">style=with stroke</td>   <td class="mono">.withStroke</td>    <td class="mono">ListStyle.WITH_STROKE</td>   <td class="muted">Bottom-bordered row for grouped lists</td></tr>
-          <tr><td class="mono">style=corner radius</td> <td class="mono">.cornerRadius</td>  <td class="mono">ListStyle.CORNER_RADIUS</td> <td class="muted">Standalone rounded card CTA</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- C. Design Tokens -->
-    <div class="sub-heading">C. Design Token Coverage</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Token Name</th><th>Value</th><th>Native Note</th></tr></thead>
-        <tbody>
-          <tr><td class="mono">main/action-list/color/default/bg</td>          <td class="mono">#FFFFFF</td>         <td class="muted">Row background</td></tr>
-          <tr><td class="mono">main/action-list/color/default/border</td>       <td class="mono">#D7E0EF</td>         <td class="muted">Bottom divider (with stroke style)</td></tr>
-          <tr><td class="mono">main/action-list/color/default/label</td>        <td class="mono">#0A2757</td>         <td class="muted">Label color (base + with stroke)</td></tr>
-          <tr><td class="mono">main/action-list/color/default/label-brand</td>  <td class="mono">#005CE5</td>         <td class="muted">Label color (corner radius style only)</td></tr>
-          <tr><td class="mono">main/action-list/color/default/chevron</td>      <td class="mono">#005CE5</td>         <td class="muted">Chevron icon tint</td></tr>
-          <tr><td class="mono">Depth/D0</td>                                    <td class="mono">rgba(232,238,242,0.79) 0px 1px 3px</td><td class="muted">Drop shadow (base style). Consider semantic alias.</td></tr>
-          <tr><td class="mono">radius/radius-2</td>                             <td class="mono">6px</td>             <td class="muted">Corner radius (corner radius style)</td></tr>
-          <tr><td class="mono">font-family/font-primary</td>                    <td class="mono">Proxima Soft</td>    <td class="muted">Verify bundle in native app</td></tr>
-          <tr><td class="mono">font-size/scaling-font-size-25</td>              <td class="mono">16px</td>            <td class="muted">Label size (base + with stroke)</td></tr>
-          <tr><td class="mono">font-size/font-size-30</td>                      <td class="mono">18px</td>            <td class="muted">Label size (corner radius style)</td></tr>
-          <tr><td class="mono">space/space-12</td>                              <td class="mono">12px</td>            <td class="muted">Vertical padding (with stroke)</td></tr>
-          <tr><td class="mono">space/space-16</td>                              <td class="mono">16px</td>            <td class="muted">Horizontal padding</td></tr>
-          <tr><td class="mono">space/space-24</td>                              <td class="mono">24px</td>            <td class="muted">Leading padding (with stroke + corner radius)</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Action items -->
-    <div class="section-heading" style="margin-top:36px">Action Items — List – Label Only</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th class="col-id">#</th><th class="col-sm">Criterion</th><th>Action</th><th class="col-md">Owner</th></tr></thead>
-        <tbody>
-          <tr><td class="mono center">1</td><td class="mono">C5</td><td>Add <strong>pressed</strong> and <strong>disabled</strong> states as variants. Define at minimum <code>main/action-list/color/pressed/bg</code> and <code>main/action-list/color/disabled/label</code> tokens.</td><td class="muted">Designer</td></tr>
-          <tr><td class="mono center">2</td><td class="mono">C2</td><td>Rename style values: <code>with stroke</code> → <code>with-stroke</code> and <code>corner radius</code> → <code>corner-radius</code> to remove spaces and enable standard enum mapping in Code Connect.</td><td class="muted">Designer</td></tr>
-          <tr><td class="mono center">3</td><td class="mono">C3</td><td>Add a component annotation documenting that <code>corner radius</code> intentionally uses <code>label-brand</code> (blue) vs <code>label</code> (navy) in other styles. Or standardize if the difference is unintentional.</td><td class="muted">Designer</td></tr>
-          <tr><td class="mono center">4</td><td class="mono">C3</td><td>Create a semantic shadow token <code>main/action-list/effect/default/shadow</code> aliasing <code>Depth/D0</code>, to decouple the component from the generic depth token.</td><td class="muted">Designer</td></tr>
-          <tr><td class="mono center">5</td><td class="mono">C1</td><td>Rename inner chevron layer <code>shape_full</code> → <code>icon-chevron</code> for semantic consistency with other components.</td><td class="muted">Designer</td></tr>
-          <tr><td class="mono center">6</td><td class="mono">C7</td><td>Create native component files at suggested Code Connect paths and register mappings using the explicit style value→enum mapping table above.</td><td class="muted">Engineer</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-
-  <div class="component-divider"></div>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       COMPONENT 3 — ALERT
-  ═══════════════════════════════════════════════════════════════════════════ -->
-  <div class="component-section" id="alert">
-    <div class="component-header">
-      <div class="component-header-left">
-        <div class="component-name">Alert</div>
-        <div class="component-meta">
-          <span>Node: <code>21:83699</code></span>
-          <span>Variants: 20</span>
-          <span>iOS: <code>Custom View</code></span>
-          <span>Android: <code>Custom Composable</code></span>
-        </div>
-      </div>
-      <div class="component-status-block">
-        <div class="component-status-label">Overall Status</div>
-        <span class="badge badge-rework">Requires Rework</span>
-      </div>
-    </div>
-
-    <div class="section-heading">Overview</div>
-    <p>A multi-purpose alert banner supporting five semantic types (Default, Information, Warning, Error, Success) and three layout dimensions: <strong>Full Width</strong> (edge-to-edge vs. padded container), <strong>Left Icon</strong> (leading placeholder slot), and <strong>Right Icon</strong> (semantic type icon, right-aligned). Non-Full Width variants additionally show a "Learn More" CTA link. With 20 variants, this is the most complex component assessed so far.</p>
-
-    <!-- Variants -->
-    <div class="sub-heading">Variants Inventory <span style="font-weight:400;color:var(--muted)">(20 total)</span></div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th><code style="color:#fff;background:transparent;padding:0">Type</code></th>
-            <th><code style="color:#fff;background:transparent;padding:0">Full Width</code></th>
-            <th><code style="color:#fff;background:transparent;padding:0">Left Icon</code></th>
-            <th><code style="color:#fff;background:transparent;padding:0">Right Icon</code></th>
-            <th><code style="color:#fff;background:transparent;padding:0">Description</code></th>
-            <th>Node ID</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Default</td>    <td>yes</td><td>no</td> <td>no</td> <td>yes</td><td class="mono">21:83700</td></tr>
-          <tr><td>Information</td><td>No</td> <td>no</td> <td>yes</td><td>yes</td><td class="mono">21:83706</td></tr>
-          <tr><td>Warning</td>    <td>No</td> <td>no</td> <td>yes</td><td>yes</td><td class="mono">21:83720</td></tr>
-          <tr><td>Error</td>      <td>No</td> <td>no</td> <td>yes</td><td>yes</td><td class="mono">21:83734</td></tr>
-          <tr><td>Success</td>    <td>No</td> <td>no</td> <td>yes</td><td>yes</td><td class="mono">21:83752</td></tr>
-          <tr><td>Default</td>    <td>yes</td><td>no</td> <td>no</td> <td>no</td> <td class="mono">21:83770</td></tr>
-          <tr><td>Information</td><td>yes</td><td>no</td> <td>yes</td><td>yes</td><td class="mono">21:83774</td></tr>
-          <tr><td>Warning</td>    <td>yes</td><td>no</td> <td>yes</td><td>yes</td><td class="mono">21:83783</td></tr>
-          <tr><td>Error</td>      <td>yes</td><td>no</td> <td>yes</td><td>yes</td><td class="mono">21:83792</td></tr>
-          <tr><td>Success</td>    <td>yes</td><td>no</td> <td>yes</td><td>yes</td><td class="mono">21:83805</td></tr>
-          <tr><td>Default</td>    <td>yes</td><td>yes</td><td>no</td> <td>yes</td><td class="mono">21:83818</td></tr>
-          <tr><td>Information</td><td>yes</td><td>yes</td><td>no</td> <td>yes</td><td class="mono">21:83826</td></tr>
-          <tr><td>Warning</td>    <td>yes</td><td>yes</td><td>no</td> <td>yes</td><td class="mono">21:83834</td></tr>
-          <tr><td>Error</td>      <td>yes</td><td>yes</td><td>no</td> <td>yes</td><td class="mono">21:83842</td></tr>
-          <tr><td>Success</td>    <td>yes</td><td>yes</td><td>no</td> <td>yes</td><td class="mono">21:83850</td></tr>
-          <tr><td>Default</td>    <td>yes</td><td>yes</td><td>no</td> <td>no</td> <td class="mono">21:83858</td></tr>
-          <tr><td>Information</td><td>yes</td><td>yes</td><td>no</td> <td>no</td> <td class="mono">21:83864</td></tr>
-          <tr><td>Warning</td>    <td>yes</td><td>yes</td><td>no</td> <td>no</td> <td class="mono">21:83870</td></tr>
-          <tr><td>Error</td>      <td>yes</td><td>yes</td><td>no</td> <td>no</td> <td class="mono">21:83876</td></tr>
-          <tr><td>Success</td>    <td>yes</td><td>yes</td><td>no</td> <td>no</td> <td class="mono">21:83882</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Overall status -->
-    <div class="sub-heading">Overall Status</div>
-    <div class="infobox infobox-status" style="border-color:var(--rework-fg);background:#FEF2F2;">
-      <p><span style="color:var(--rework-fg);font-weight:700;font-size:14.5px">Requires Rework</span> — Semantic color token coverage is excellent across all five types. However, the alert-type icons (Information, Warning, Error, Checkmark) are rendered as raster asset images rather than vector component instances — this must be fixed before the component can export correctly for native targets. Additionally, a hidden <code>showHeader</code> prop exists in the generated code with no Figma variant backing it, title typography is inconsistent between layout modes, and <code>Full Width</code> uses mixed capitalisation (<code>yes</code>/<code>No</code>) for boolean values.</p>
-    </div>
-
-    <!-- Criteria scorecard -->
-    <div class="sub-heading">Criteria Scorecard</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Rating</th><th>Summary</th></tr></thead>
-        <tbody>
-          <tr>
-            <td class="mono center">C1</td>
-            <td><strong>Layer Structure &amp; Naming</strong></td>
-            <td><span class="badge badge-refine">Needs Refinement</span></td>
-            <td class="muted">High-level layers are named well (<code>container</code>, <code>content</code>, <code>heading</code>, <code>icon-offset</code>, <code>line-paragraph</code>). Icon layers inside type icons use generic names (<code>shape_full</code>, <code>Vector</code>, <code>Ellipse</code>).</td>
-          </tr>
-          <tr>
-            <td class="mono center">C2</td>
-            <td><strong>Variant &amp; Property Naming</strong></td>
-            <td><span class="badge badge-rework">Requires Rework</span></td>
-            <td class="muted"><code>Full Width</code> uses mixed capitalisation boolean strings: <code>yes</code> vs <code>No</code>. A hidden <code>showHeader</code> boolean appears in generated code but has no corresponding Figma variant property — engineers cannot control it via Code Connect.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C3</td>
-            <td><strong>Token Coverage</strong></td>
-            <td><span class="badge badge-refine">Needs Refinement</span></td>
-            <td class="muted">Color tokens are comprehensive and semantically excellent across all five types. However, description text on non-Full Width variants applies <code>opacity-80</code> as a hardcoded modifier — this is not a token and will need to be handled manually in native code.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C4</td>
-            <td><strong>Native Mappability</strong></td>
-            <td><span class="badge badge-refine">Needs Refinement</span></td>
-            <td class="muted">The alert banner structure maps naturally to a custom view. The "Learn More" CTA link present only in non-Full Width variants adds a behavioral dimension that must be reflected in native component API. Title font size differs between layout modes (16px Full Width, 18px non-Full Width) — this needs documenting or standardising.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C5</td>
-            <td><strong>Interaction State Coverage</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">Alerts are non-interactive display components. No pressed or focused states are needed for the banner itself. The "Learn More" link lacks a pressed/focused state, but this is a minor gap given the link is a secondary element.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C6</td>
-            <td><strong>Asset &amp; Icon Quality</strong></td>
-            <td><span class="badge badge-rework">Requires Rework</span></td>
-            <td class="muted">Alert-type icons (Information circle, Warning triangle, Error circle, Checkmark) are <strong>raster image assets</strong> served from Figma's asset CDN. They are not Figma component instances. This is the most critical issue — raster icons will not scale, cannot be tinted with tokens, and will not export correctly for native targets.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C7</td>
-            <td><strong>Code Connect Linkability</strong></td>
-            <td><span class="badge badge-rework">Requires Rework</span></td>
-            <td class="muted">The <code>showHeader</code> prop in generated code has no Figma property to map from. <code>Full Width</code> boolean uses mixed case strings. Raster icons block export. These three issues must be resolved before Code Connect can be registered reliably.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Interaction states -->
-    <div class="sub-heading">Interaction States</div>
-    <p>Alert banners are primarily non-interactive display components. State requirements are minimal compared to action components:</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>State</th><th class="col-sm center">Expected</th><th class="col-sm center">Present</th><th>Variant / Property</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Default (all types)</strong></td>  <td class="center"><span class="check">✓</span></td><td class="center"><span class="check">✓</span></td><td class="mono">Type=Default/Info/Warning/Error/Success</td><td class="muted">All five types fully defined.</td></tr>
-          <tr><td><strong>Pressed / Active</strong></td>     <td class="center"><span class="dash">—</span></td><td class="center"><span class="dash">—</span></td><td class="muted center">N/A</td><td class="muted">Alert banners are display-only. Not tappable as a whole.</td></tr>
-          <tr><td><strong>Disabled</strong></td>             <td class="center"><span class="dash">—</span></td><td class="center"><span class="dash">—</span></td><td class="muted center">N/A</td><td class="muted">Not applicable — alerts are either shown or hidden, not disabled.</td></tr>
-          <tr><td><strong>Focused (a11y)</strong></td>       <td class="center"><span class="dash">—</span></td><td class="center"><span class="dash">—</span></td><td class="muted center">N/A</td><td class="muted">Alert banners are read by screen readers as static content, not focused interactively.</td></tr>
-          <tr><td><strong>"Learn More" link pressed</strong></td><td class="center"><span class="check">✓</span></td><td class="center"><span class="cross">✗</span></td><td class="muted center">—</td><td class="muted">Non-Full Width variants include a "Learn More" CTA. Its pressed/focused state is undefined.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- A. Native translatability -->
-    <div class="sub-heading">A. Native Mobile Translatability</div>
-    <p style="font-weight:600;color:var(--ready-fg);font-size:13px;margin-bottom:6px">A1 — What Works Well</p>
-    <ul class="findings">
-      <li>Semantic color token coverage is the strongest seen so far — all five types (Default, Information, Warning, Error, Success) have dedicated tokens for <code>bg</code>, <code>border</code>, <code>label-title</code>, <code>description</code>, <code>icon</code>, and <code>label-link</code>. This maps directly to a native token switch by alert type.</li>
-      <li>Non-Full Width variants use a left-side colored border (<code>border-l-6</code>) combined with a rounded corner radius (<code>radius/radius-1</code>, 4px) — this maps cleanly to a native <code>overlay(alignment:)</code> or a <code>background + clipShape</code> in SwiftUI, or a <code>border + shape</code> in Compose.</li>
-      <li>The five-type structure maps naturally to a native enum: <code>AlertType { default, info, warning, error, success }</code>. Color and icon selection can be driven from this enum in a single switch statement.</li>
-      <li>Full Width variants (edge-to-edge) and container variants (with padding/rounded corners) represent distinct layout contexts that can be expressed as a single <code>isFullWidth: Bool</code> parameter in native code.</li>
-      <li>The "Learn More" link and chevron in non-Full Width variants is a clean optional CTA slot — maps to an optional <code>action: (() -> Void)?</code> in SwiftUI or a nullable <code>onLearnMore: (() -> Unit)?</code> in Compose.</li>
-    </ul>
-
-    <p style="font-weight:600;color:var(--rework-fg);font-size:13px;margin-bottom:8px">A2 — Issues &amp; Recommendations</p>
-
-    <div class="issue-block">
-      <div class="issue-title">Alert-Type Icons Are Raster Assets — Critical</div>
-      <div class="infobox infobox-issue" style="border-color:var(--rework-fg);background:#FEF2F2;">
-        <p><span class="label-issue">Issue (Critical):</span> The semantic type icons — Information circle, Warning triangle, Error circle with exclamation, and Checkmark — are rendered as raster images (Figma CDN asset URLs: <code>imgShapeFull</code>, <code>imgVector2107</code>, <code>imgEllipse2098</code>, etc.). They are <strong>not</strong> Figma component instances. Raster assets cannot be tinted using the <code>main/alert/color/{type}/icon</code> tokens at runtime, will not scale on high-density screens, and will not export correctly as SVG/VectorDrawable for native targets.</p>
-        <p><span class="label-rec">Recommendation:</span> Replace all four type icons with proper vector icon components from the GCash icon library, with their fill color bound to the corresponding <code>main/alert/color/{type}/icon</code> token. The leading icon slot (<code>Left Icon=yes</code>) also uses the same generic grey circle placeholder as the Accordion — this should also accept a real icon component.</p>
-      </div>
-    </div>
-
-    <div class="issue-block">
-      <div class="issue-title"><code>showHeader</code> Prop Has No Figma Variant</div>
-      <div class="infobox infobox-issue">
-        <p><span class="label-issue">Issue:</span> The generated code exposes a <code>showHeader</code> boolean prop that controls whether the title text renders. This prop has <strong>no corresponding Figma variant property</strong> — it is a code-only construct. Engineers cannot control or preview this behaviour through Figma variants or Code Connect.</p>
-        <p><span class="label-rec">Recommendation:</span> Either add a <code>Title</code> boolean variant property to the component set (mirroring the existing <code>Description</code> property), or remove the internal <code>showHeader</code> prop and instead drive title visibility through the existing <code>Description=yes/no</code> logic. Either path resolves the Figma/code mismatch.</p>
-      </div>
-    </div>
-
-    <div class="issue-block">
-      <div class="issue-title">Title Font Size Inconsistent Across Layout Modes</div>
-      <div class="infobox infobox-issue">
-        <p><span class="label-issue">Issue:</span> Full Width variants use <code>font-size/font-size-25</code> (16px) for the title, while non-Full Width variants use <code>font-size/font-size-30</code> (18px). This is a visual inconsistency — the same "alert title" text is larger in the container (non-full-width) layout than in the edge-to-edge layout. It is unclear if this is intentional.</p>
-        <p><span class="label-rec">Recommendation:</span> If intentional, add a Figma annotation explaining the typographic difference and expose it via a dedicated text style token (e.g. <code>main/alert/typography/title-inline</code> vs <code>main/alert/typography/title-banner</code>). If unintentional, standardise to a single size.</p>
-      </div>
-    </div>
-
-    <div class="issue-block">
-      <div class="issue-title"><code>Full Width</code> Boolean Uses Mixed-Case Strings</div>
-      <div class="infobox infobox-issue">
-        <p><span class="label-issue">Issue:</span> The <code>Full Width</code> property uses <code>yes</code> (lowercase) and <code>No</code> (capitalised) — inconsistent casing within the same boolean property. This inconsistency will produce unreliable Code Connect mappings and is a data-quality issue in the Figma file.</p>
-        <p><span class="label-rec">Recommendation:</span> Standardise to <code>true</code>/<code>false</code> to match the same fix needed in the Accordion and List components.</p>
-      </div>
-    </div>
-
-    <div class="issue-block">
-      <div class="issue-title">Hardcoded <code>opacity-80</code> on Non-Full Width Descriptions</div>
-      <div class="infobox infobox-issue">
-        <p><span class="label-issue">Issue:</span> Description text on non-Full Width (container) variants applies <code>opacity: 0.8</code> as a hardcoded layer property. This is not expressed through a token and will not be visible in a token inspection tool. It also means the effective rendered colour differs from the raw <code>description</code> token value.</p>
-        <p><span class="label-rec">Recommendation:</span> Either absorb the opacity into the description color tokens directly (e.g. adjust the hex value to the 80% blended equivalent), or create a composite token that includes the opacity. Remove the hardcoded layer opacity.</p>
-      </div>
-    </div>
-
-    <!-- B. Code Connect -->
-    <div class="sub-heading">B. Code Connect Readiness</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Aspect</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Component type</strong></td>   <td><span class="badge badge-ready">Ready</span></td>            <td class="muted">Proper Figma component set with 20 named symbol variants.</td></tr>
-          <tr><td><strong>Variant naming</strong></td>   <td><span class="badge badge-rework">Requires Rework</span></td> <td class="muted"><code>Full Width</code> uses <code>yes</code>/<code>No</code> — mixed case, non-standard boolean strings.</td></tr>
-          <tr><td><strong>Property naming</strong></td>  <td><span class="badge badge-rework">Requires Rework</span></td> <td class="muted"><code>showHeader</code> appears in generated code but has no Figma property. Cannot be mapped via Code Connect.</td></tr>
-          <tr><td><strong>Layer naming</strong></td>     <td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Top-level layers are well-named. Icon sub-layers inside type icons use generic names (<code>shape_full</code>, raw vector/ellipse names).</td></tr>
-          <tr><td><strong>Token coverage</strong></td>   <td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Excellent semantic color tokens. Hardcoded <code>opacity-80</code> on non-Full Width descriptions is not tokenized.</td></tr>
-          <tr><td><strong>Asset quality</strong></td>    <td><span class="badge badge-rework">Requires Rework</span></td> <td class="muted">All four semantic type icons are raster assets. Must be replaced with vector component instances before native export.</td></tr>
-          <tr><td><strong>Code Connect</strong></td>     <td><span class="badge badge-empty">Not Mapped</span></td>       <td class="muted">No mappings registered. Blocked by raster icons and missing <code>showHeader</code> variant. Suggested paths below.</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="infobox infobox-code">
-      <div class="path-label">SwiftUI</div>
-      <div class="path-box">ios/Components/Alert/Alert.swift</div>
-      <div class="path-label">Jetpack Compose</div>
-      <div class="path-box">android/components/alert/Alert.kt</div>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Figma Property</th><th>SwiftUI Param</th><th>Compose Param</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td class="mono">Type</td>        <td class="mono">type: AlertType</td>             <td class="mono">type: AlertType</td>              <td class="muted">Enum: <code>.default</code>, <code>.info</code>, <code>.warning</code>, <code>.error</code>, <code>.success</code></td></tr>
-          <tr><td class="mono">Full Width</td>  <td class="mono">isFullWidth: Bool</td>           <td class="mono">isFullWidth: Boolean</td>          <td class="muted">Map <code>yes</code>→<code>true</code>, <code>No</code>→<code>false</code> (after fixing casing)</td></tr>
-          <tr><td class="mono">Left Icon</td>   <td class="mono">leadingIcon: Image?</td>         <td class="mono">leadingIcon: @Composable?</td>     <td class="muted"><code>nil</code>/<code>null</code> = hidden. Accepts any icon.</td></tr>
-          <tr><td class="mono">Right Icon</td>  <td class="mono">showTypeIcon: Bool</td>          <td class="mono">showTypeIcon: Boolean</td>         <td class="muted">Drives visibility of the semantic type icon (once converted to vector).</td></tr>
-          <tr><td class="mono">Description</td> <td class="mono">description: String?</td>        <td class="mono">description: String?</td>          <td class="muted"><code>nil</code>/<code>null</code> = hidden</td></tr>
-          <tr><td class="mono">(missing)</td>   <td class="mono">title: String?</td>              <td class="mono">title: String?</td>               <td class="muted">Corresponds to undocumented <code>showHeader</code>. Needs Figma variant property added.</td></tr>
-          <tr><td class="mono">(implicit)</td>  <td class="mono">onLearnMore: (() -> Void)?</td>  <td class="mono">onLearnMore: (() -> Unit)?</td>   <td class="muted">Only present on non-Full Width variants. Needs explicit Figma property.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- C. Design tokens -->
-    <div class="sub-heading">C. Design Token Coverage</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Token Name</th><th>Value</th><th>Native Note</th></tr></thead>
-        <tbody>
-          <tr><td class="mono" colspan="3" style="background:#F4F7FB;color:var(--navy);font-family:var(--font);font-weight:700;font-size:12px">Default type</td></tr>
-          <tr><td class="mono">main/alert/color/default/bg</td>          <td class="mono">#F6F9FD</td><td class="muted">Background</td></tr>
-          <tr><td class="mono">main/alert/color/default/label-title</td> <td class="mono">#0A2757</td><td class="muted">Title text</td></tr>
-          <tr><td class="mono">main/alert/color/default/description</td> <td class="mono">#6780A9</td><td class="muted">Description text</td></tr>
-
-          <tr><td class="mono" colspan="3" style="background:#F4F7FB;color:var(--navy);font-family:var(--font);font-weight:700;font-size:12px">Information type</td></tr>
-          <tr><td class="mono">main/alert/color/info/bg</td>             <td class="mono">#E5F1FF</td><td class="muted">Background</td></tr>
-          <tr><td class="mono">main/alert/color/info/border</td>         <td class="mono">#005CE5</td><td class="muted">Left border (non-Full Width)</td></tr>
-          <tr><td class="mono">main/alert/color/info/label-title</td>    <td class="mono">#072592</td><td class="muted">Title text</td></tr>
-          <tr><td class="mono">main/alert/color/info/description</td>    <td class="mono">#072592</td><td class="muted">Description text (+ opacity-80 hardcoded)</td></tr>
-          <tr><td class="mono">main/alert/color/info/icon</td>           <td class="mono">#2340A9</td><td class="muted">Type icon tint (once vectorised)</td></tr>
-          <tr><td class="mono">main/alert/color/info/label-link</td>     <td class="mono">#072592</td><td class="muted">"Learn More" link color</td></tr>
-
-          <tr><td class="mono" colspan="3" style="background:#F4F7FB;color:var(--navy);font-family:var(--font);font-weight:700;font-size:12px">Warning type</td></tr>
-          <tr><td class="mono">main/alert/color/warning/bg</td>          <td class="mono">#FFF9EB</td><td class="muted">Background</td></tr>
-          <tr><td class="mono">main/alert/color/warning/border</td>      <td class="mono">#EBB30A</td><td class="muted">Left border</td></tr>
-          <tr><td class="mono">main/alert/color/warning/label-title</td> <td class="mono">#6C5009</td><td class="muted">Title text</td></tr>
-          <tr><td class="mono">main/alert/color/warning/description</td> <td class="mono">#966F0B</td><td class="muted">Description text</td></tr>
-          <tr><td class="mono">main/alert/color/warning/icon</td>        <td class="mono">#966F0B</td><td class="muted">Type icon tint (once vectorised)</td></tr>
-          <tr><td class="mono">main/alert/color/warning/label-link</td>  <td class="mono">#966F0B</td><td class="muted">"Learn More" link color</td></tr>
-
-          <tr><td class="mono" colspan="3" style="background:#F4F7FB;color:var(--navy);font-family:var(--font);font-weight:700;font-size:12px">Error type</td></tr>
-          <tr><td class="mono">main/alert/color/error/bg</td>            <td class="mono">#F8E6E6</td><td class="muted">Background</td></tr>
-          <tr><td class="mono">main/alert/color/error/border</td>        <td class="mono">#D61B2C</td><td class="muted">Left border</td></tr>
-          <tr><td class="mono">main/alert/color/error/label-title</td>   <td class="mono">#D61B2C</td><td class="muted">Title text</td></tr>
-          <tr><td class="mono">main/alert/color/error/description</td>   <td class="mono">#D61B2C</td><td class="muted">Description text</td></tr>
-          <tr><td class="mono">main/alert/color/error/icon</td>          <td class="mono">#B50707</td><td class="muted">Type icon tint (once vectorised)</td></tr>
-          <tr><td class="mono">main/alert/color/error/label-link</td>    <td class="mono">#D61B2C</td><td class="muted">"Learn More" link color</td></tr>
-
-          <tr><td class="mono" colspan="3" style="background:#F4F7FB;color:var(--navy);font-family:var(--font);font-weight:700;font-size:12px">Success type</td></tr>
-          <tr><td class="mono">main/alert/color/success/bg</td>          <td class="mono">#E7F8F0</td><td class="muted">Background</td></tr>
-          <tr><td class="mono">main/alert/color/success/border</td>      <td class="mono">#27C990</td><td class="muted">Left border</td></tr>
-          <tr><td class="mono">main/alert/color/success/label-title</td> <td class="mono">#035E50</td><td class="muted">Title text</td></tr>
-          <tr><td class="mono">main/alert/color/success/description</td> <td class="mono">#035E50</td><td class="muted">Description text</td></tr>
-          <tr><td class="mono">main/alert/color/success/icon</td>        <td class="mono">#035E50</td><td class="muted">Type icon tint (once vectorised)</td></tr>
-          <tr><td class="mono">main/alert/color/success/label-link</td>  <td class="mono">#035E50</td><td class="muted">"Learn More" link color</td></tr>
-
-          <tr><td class="mono" colspan="3" style="background:#F4F7FB;color:var(--navy);font-family:var(--font);font-weight:700;font-size:12px">Spacing &amp; shape</td></tr>
-          <tr><td class="mono">space/space-8</td>                        <td class="mono">8px</td>    <td class="muted">Vertical padding (Full Width + Right Icon)</td></tr>
-          <tr><td class="mono">space/space-12</td>                       <td class="mono">12px</td>   <td class="muted">Vertical padding (Left Icon variants)</td></tr>
-          <tr><td class="mono">space/space-16</td>                       <td class="mono">16px</td>   <td class="muted">Leading padding / trailing padding</td></tr>
-          <tr><td class="mono">space/space-20</td>                       <td class="mono">20px</td>   <td class="muted">Leading padding (Right Icon variants)</td></tr>
-          <tr><td class="mono">space/space-24</td>                       <td class="mono">24px</td>   <td class="muted">Leading padding (Default Full Width no-icon)</td></tr>
-          <tr><td class="mono">radius/radius-1</td>                      <td class="mono">4px</td>    <td class="muted">Corner radius (non-Full Width container variants)</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Action items -->
-    <div class="section-heading" style="margin-top:36px">Action Items — Alert</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th class="col-id">#</th><th class="col-sm">Criterion</th><th>Action</th><th class="col-md">Owner</th></tr></thead>
-        <tbody>
-          <tr>
-            <td class="mono center">1</td><td class="mono">C6</td>
-            <td>Replace all four raster type icons (Information, Warning, Error, Checkmark) with <strong>vector component instances</strong> from the icon library. Bind each icon's fill color to the corresponding <code>main/alert/color/{type}/icon</code> token.</td>
-            <td class="muted">Designer</td>
-          </tr>
-          <tr>
-            <td class="mono center">2</td><td class="mono">C2 / C7</td>
-            <td>Add a <strong><code>Title</code> boolean variant property</strong> to the component to expose the <code>showHeader</code> behaviour in Figma. Remove the hidden code-only prop in favour of the Figma-driven one.</td>
-            <td class="muted">Designer</td>
-          </tr>
-          <tr>
-            <td class="mono center">3</td><td class="mono">C2</td>
-            <td>Standardise <code>Full Width</code> boolean values: change <code>yes</code>/<code>No</code> to <code>true</code>/<code>false</code> for consistent Code Connect prop mapping.</td>
-            <td class="muted">Designer</td>
-          </tr>
-          <tr>
-            <td class="mono center">4</td><td class="mono">C4</td>
-            <td>Add an explicit <strong><code>Learn More</code> boolean property</strong> to the component set to expose the CTA link present in non-Full Width variants. Clarify in documentation that this is only available when <code>Full Width=false</code>.</td>
-            <td class="muted">Designer</td>
-          </tr>
-          <tr>
-            <td class="mono center">5</td><td class="mono">C4</td>
-            <td>Resolve the <strong>title font size inconsistency</strong>: Full Width uses 16px (<code>font-size-25</code>) while non-Full Width uses 18px (<code>font-size-30</code>). Either standardise or document the difference with dedicated typography tokens.</td>
-            <td class="muted">Designer</td>
-          </tr>
-          <tr>
-            <td class="mono center">6</td><td class="mono">C3</td>
-            <td>Remove the hardcoded <code>opacity: 0.8</code> from description text on non-Full Width variants. Absorb it into the description color tokens directly, or create a composite token.</td>
-            <td class="muted">Designer</td>
-          </tr>
-          <tr>
-            <td class="mono center">7</td><td class="mono">C1</td>
-            <td>Rename generic sub-layers inside type icon groups (<code>shape_full</code>, <code>Vector</code>, <code>Ellipse</code>) to semantic names (e.g. <code>icon-info</code>, <code>icon-warning</code>) once they are converted to vector components.</td>
-            <td class="muted">Designer</td>
-          </tr>
-          <tr>
-            <td class="mono center">8</td><td class="mono">C7</td>
-            <td>After items 1–4 are resolved, create native component files at suggested Code Connect paths and register mappings via the Figma Code Connect CLI using the property mapping table above.</td>
-            <td class="muted">Engineer</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
 
   <div class="footer">
-    GCash Design System — Native Mobile Readiness Assessment &nbsp;·&nbsp; Generated March 2026 &nbsp;·&nbsp; For internal use only
+    GCash Design System — Component Assessment (DS Health + Native Mobile Readiness) &nbsp;·&nbsp; v2 Post-Fix Re-assessment · March 2026 &nbsp;·&nbsp; For internal use only
   </div>
 
 </main>
