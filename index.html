@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GCash Design System — Native Mobile Readiness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:       #0A2757;
+  --blue:       #005CE5;
+  --blue-mid:   #3A7FEF;
+  --blue-light: #E8F0FB;
+  --border:     #E5EBF4;
+  --bg:         #F4F7FB;
+  --white:      #FFFFFF;
+  --text:       #1A2740;
+  --muted:      #5B7194;
+  --font:       'IBM Plex Sans', sans-serif;
+  --mono:       'IBM Plex Mono', monospace;
+}
+
+html { font-size: 15px; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ── */
+.header {
+  background: var(--navy);
+  padding: 56px 48px 48px;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  background: rgba(0,92,229,0.12);
+  pointer-events: none;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: 200px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: rgba(0,92,229,0.07);
+  pointer-events: none;
+}
+.header-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  position: relative;
+}
+.header-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6A9DC8;
+  margin-bottom: 14px;
+}
+.header-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+.header-title span {
+  color: #7AAAE0;
+}
+.header-sub {
+  font-size: 16px;
+  color: #7AAAE0;
+  line-height: 1.6;
+  max-width: 560px;
+  margin-bottom: 28px;
+}
+.header-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.header-tag {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #A8C4F0;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(168,196,240,0.2);
+  border-radius: 4px;
+  padding: 4px 10px;
+}
+
+/* ── Main ── */
+.main {
+  flex: 1;
+  max-width: 880px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 56px 48px 80px;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 10px;
+  margin-bottom: 24px;
+}
+
+/* ── Document cards ── */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 56px;
+}
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
+}
+.card:hover {
+  box-shadow: 0 4px 20px rgba(10,39,87,0.10);
+  border-color: #B8CCEF;
+  transform: translateY(-2px);
+}
+.card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.card-icon-blue   { background: #E8F0FB; }
+.card-icon-indigo { background: #EEF2FF; }
+.card-icon-teal   { background: #E0F7F4; }
+
+.card-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.3;
+}
+.card-desc {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.55;
+  flex: 1;
+}
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
+.card-badge {
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.badge-live    { color: #1A7A4A; background: #E6F4ED; }
+.badge-guide   { color: #0369A1; background: #E0F2FE; }
+.badge-source  { color: #5B7194; background: #EEF2F8; }
+
+.card-arrow {
+  font-size: 14px;
+  color: var(--blue);
+  opacity: 0.5;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.card:hover .card-arrow {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* ── How it works ── */
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+.how-item {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 20px;
+}
+.how-step {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+.how-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.how-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 20px 48px;
+  font-size: 11.5px;
+  color: #9BAEC4;
+  text-align: center;
+  font-style: italic;
+}
+
+@media (max-width: 600px) {
+  .header { padding: 40px 24px 36px; }
+  .main   { padding: 36px 24px 60px; }
+  .footer { padding: 20px 24px; }
+  .header-title { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="header-eyebrow">GCash Design System</div>
+    <h1 class="header-title">Native Mobile<br><span>Readiness Assessment</span></h1>
+    <p class="header-sub">A structured evaluation of the GCash DS component library against DS health and native mobile (SwiftUI + Jetpack Compose) readiness criteria.</p>
+    <div class="header-tags">
+      <span class="header-tag">Phase 1 — DS Health</span>
+      <span class="header-tag">Phase 2 — Native Readiness</span>
+      <span class="header-tag">SwiftUI</span>
+      <span class="header-tag">Jetpack Compose</span>
+      <span class="header-tag">Code Connect</span>
+      <span class="header-tag">March 2026</span>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="section-label">Documents</div>
+  <div class="cards">
+
+    <a class="card" href="gcash-native-readiness-assessment.html">
+      <div class="card-icon card-icon-blue">📋</div>
+      <div>
+        <div class="card-label">Live Report</div>
+        <div class="card-title">Native Readiness Assessment</div>
+      </div>
+      <div class="card-desc">Component-by-component assessment report. DS health verdicts, criteria scorecards, interaction states, token coverage, and action items — updated per fix cycle.</div>
+      <div class="card-footer">
+        <span class="card-badge badge-live">v2 Post-Fix</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="card" href="combined-assessment.html">
+      <div class="card-icon card-icon-indigo">🗂</div>
+      <div>
+        <div class="card-label">Full Report</div>
+        <div class="card-title">Combined Assessment</div>
+      </div>
+      <div class="card-desc">The consolidated view of DS health and native mobile readiness across all assessed components in a single document.</div>
+      <div class="card-footer">
+        <span class="card-badge badge-live">Combined</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="card" href="gcash-ds-assessment-guide.html">
+      <div class="card-icon card-icon-teal">📖</div>
+      <div>
+        <div class="card-label">Methodology</div>
+        <div class="card-title">Assessment Guide</div>
+      </div>
+      <div class="card-desc">The criteria framework, rating definitions, and step-by-step process used to evaluate each component for DS health and native handoff readiness.</div>
+      <div class="card-footer">
+        <span class="card-badge badge-guide">Reference</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-label">How Assessment Reports Are Built</div>
+  <div class="how-grid">
+    <div class="how-item">
+      <div class="how-step">01 — Source</div>
+      <div class="how-title">Edit a component file</div>
+      <div class="how-desc">Each component has its own file in <code>assessment-src/components/</code>. Edit only that file to update its assessment.</div>
+    </div>
+    <div class="how-item">
+      <div class="how-step">02 — Build</div>
+      <div class="how-title">Run the build script</div>
+      <div class="how-desc">Run <code>node assessment-src/build.js</code> to assemble all component files into the final HTML report.</div>
+    </div>
+    <div class="how-item">
+      <div class="how-step">03 — Add</div>
+      <div class="how-title">New component</div>
+      <div class="how-desc">Drop a new <code>.html</code> file into <code>assessment-src/components/</code> and rebuild. It's automatically added to the nav and summary.</div>
+    </div>
+    <div class="how-item">
+      <div class="how-step">04 — Ship</div>
+      <div class="how-title">Push to GitHub</div>
+      <div class="how-desc">Commit and push. The updated report is immediately live on GitHub Pages at the repo URL.</div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  GCash Design System — Native Mobile Readiness &nbsp;·&nbsp; March 2026 &nbsp;·&nbsp; For internal use only
+</footer>
+
+</body>
+</html>
