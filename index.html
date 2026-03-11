@@ -5,50 +5,227 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GCash Design System</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F5F7FA;min-height:100vh;display:flex;align-items:center;justify-content:center}
-.container{width:100%;max-width:600px;padding:40px 24px}
-.logo{display:flex;align-items:center;gap:12px;margin-bottom:40px}
-.logo-icon{width:42px;height:42px;background:#0056D6;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.logo-text h1{font-size:17px;font-weight:700;color:#0D1B2A;line-height:1.2}
-.logo-text p{font-size:13px;color:#6B7A8D;margin-top:2px}
-.cards{display:flex;flex-direction:column;gap:14px}
-.card{display:flex;align-items:center;gap:18px;padding:22px 24px;background:#fff;border:1px solid #E2E8F0;border-radius:14px;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s}
-.card:hover{border-color:#0056D6;box-shadow:0 4px 18px rgba(0,86,214,.10)}
-.card-icon{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.card-icon.blue{background:#EEF3FB}
-.card-icon.green{background:#EDFAF4}
-.card-body{flex:1;min-width:0}
-.card-title{font-size:15px;font-weight:600;color:#0D1B2A}
-.card-desc{font-size:13px;color:#6B7A8D;margin-top:3px;line-height:1.4}
-.card-arrow{color:#C8D5E4;flex-shrink:0;transition:color .15s}
-.card:hover .card-arrow{color:#0056D6}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #FFFFFF;
+    --surface: #F9FAFB;
+    --border: #E8E7E4;
+    --text: #111111;
+    --text-2: #444444;
+    --muted: #666666;
+    --accent: #0056D6;
+    --accent-light: #EEF3FB;
+    --font: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --radius: 18px;
+  }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    color: var(--text);
+  }
+  .container {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 32px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .brand-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--accent);
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .brand-text h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+  .brand-text p {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: -0.01em;
+  }
+  .stats-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: none;
+  }
+  .pill.blue  { background: #EEF3FB; color: #1448A3; }
+  .pill.amber { background: #FEF3E2; color: #92400E; }
+  .pill.green { background: #ECFDF5; color: #065F46; }
+  .pill-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .pill.blue  .pill-dot { background: #0056D6; }
+  .pill.amber .pill-dot { background: #D97706; }
+  .pill.green .pill-dot { background: #059669; }
+
+  /* Section label */
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  /* Cards */
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 22px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .card:hover:has(.card-icon.blue) {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.07), inset 0 0 0 1px rgba(0, 86, 214, 0.22);
+    transform: translateY(-2px);
+  }
+  .card:hover:has(.card-icon.green) {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.07), inset 0 0 0 1px rgba(23, 166, 103, 0.22);
+    transform: translateY(-2px);
+  }
+  .card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .card-icon svg {
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .card:hover .card-icon svg {
+    transform: scale(1.2) rotate(-8deg);
+  }
+  .card-icon.blue { background: #EEF3FB; }
+  .card-icon.green { background: #EDFAF4; }
+  .card-body { flex: 1; min-width: 0; }
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .card-desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+    line-height: 1.5;
+  }
+  .card-arrow {
+    color: var(--border);
+    flex-shrink: 0;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+  .card:hover .card-arrow {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 11px;
+    color: #AAAAAA;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="logo">
-    <div class="logo-icon">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-        <rect x="3" y="3" width="6" height="6" rx="1.5" fill="#fff"/>
-        <rect x="13" y="3" width="6" height="6" rx="1.5" fill="#fff" opacity=".7"/>
-        <rect x="3" y="13" width="6" height="6" rx="1.5" fill="#fff" opacity=".7"/>
-        <rect x="13" y="13" width="6" height="6" rx="1.5" fill="#fff" opacity=".4"/>
-      </svg>
+
+  <div class="header">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
+          <rect x="2" y="2" width="6" height="6" rx="1.5" fill="#fff"/>
+          <rect x="12" y="2" width="6" height="6" rx="1.5" fill="#fff" opacity=".75"/>
+          <rect x="2" y="12" width="6" height="6" rx="1.5" fill="#fff" opacity=".75"/>
+          <rect x="12" y="12" width="6" height="6" rx="1.5" fill="#fff" opacity=".45"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>GCash Design System</h1>
+        <p>Native Mobile Readiness · Component Assessment</p>
+      </div>
     </div>
-    <div class="logo-text">
-      <h1>GCash Design System</h1>
-      <p>Component Assessment</p>
+
+    <div class="stats-bar">
+      <span class="pill blue"><span class="pill-dot"></span>1 Component</span>
+      <span class="pill amber"><span class="pill-dot"></span>1 Open Issue</span>
+      <span class="pill green"><span class="pill-dot"></span>v4 Post-Fix</span>
     </div>
   </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Resources</div>
 
   <div class="cards">
     <a class="card" href="report.html">
       <div class="card-icon blue">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-          <path d="M7 3H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2" stroke="#0056D6" stroke-width="1.6" stroke-linecap="round"/>
-          <path d="M8 3h6a1 1 0 0 1 1 1v1H7V4a1 1 0 0 1 1-1Z" stroke="#0056D6" stroke-width="1.6"/>
-          <path d="M8 11h6M8 15h4" stroke="#0056D6" stroke-width="1.6" stroke-linecap="round"/>
+        <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
+          <path d="M6 2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-1" stroke="#0056D6" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M7 2h6a1 1 0 0 1 1 1v1H6V3a1 1 0 0 1 1-1Z" stroke="#0056D6" stroke-width="1.5"/>
+          <path d="M7 10h6M7 13.5h4" stroke="#0056D6" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
       </div>
       <div class="card-body">
@@ -56,16 +233,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="card-desc">Full component evaluation — verdicts, interaction states, tokens, and action items</div>
       </div>
       <div class="card-arrow">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 12 10 8 6 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 11 9 7 5 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
     </a>
 
     <a class="card" href="gcash-ds-assessment-guide.html">
       <div class="card-icon green">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-          <path d="M4 17V6a2 2 0 0 1 2-2h11" stroke="#17A667" stroke-width="1.6" stroke-linecap="round"/>
-          <path d="M6 19h11a1 1 0 0 0 1-1V7H6a2 2 0 0 0-2 2v9a1 1 0 0 0 1 1Z" stroke="#17A667" stroke-width="1.6"/>
-          <path d="M9 11h5M9 14h3" stroke="#17A667" stroke-width="1.6" stroke-linecap="round"/>
+        <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
+          <path d="M3 15.5V5.5a2 2 0 0 1 2-2h10" stroke="#17A667" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M5 17.5h10a1 1 0 0 0 1-1V6.5H5a2 2 0 0 0-2 2v8a1 1 0 0 0 1 1Z" stroke="#17A667" stroke-width="1.5"/>
+          <path d="M8 10h4.5M8 13h3" stroke="#17A667" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
       </div>
       <div class="card-body">
@@ -73,10 +250,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="card-desc">Quick-reference summary of open issues, patterns, and component status</div>
       </div>
       <div class="card-arrow">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 12 10 8 6 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 11 9 7 5 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
     </a>
   </div>
+
+  <div class="footer">March 2026 &nbsp;·&nbsp; For internal use only</div>
+
 </div>
 </body>
 </html>
