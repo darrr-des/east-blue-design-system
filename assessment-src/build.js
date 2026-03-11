@@ -1,6 +1,6 @@
 /**
  * Assessment Build Script
- * Assembles index.html from:
+ * Assembles report.html from:
  *   - assessment-src/shell.html          (shared layout, CSS, JS)
  *   - assessment-src/components/*.html   (one file per component)
  *
@@ -24,7 +24,7 @@ const fs   = require('fs');
 const path = require('path');
 
 const srcDir   = __dirname;
-const outFile  = path.join(srcDir, '..', 'index.html');
+const outFile  = path.join(srcDir, '..', 'report.html');
 const cssFile  = path.join(srcDir, '..', 'styles.css');
 const compDir  = path.join(srcDir, 'components');
 
