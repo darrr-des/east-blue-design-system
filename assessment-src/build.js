@@ -4,6 +4,9 @@
  *   - assessment-src/shell.html          (shared layout, CSS, JS)
  *   - assessment-src/components/*.html   (one file per component)
  *
+ * Also syncs the assessment guide (gcash-ds-assessment-guide.md) with
+ * current component data via sync-guide.js.
+ *
  * Usage: node assessment-src/build.js
  *
  * Each component file must contain four tagged blocks:
@@ -11,6 +14,10 @@
  *   <!--@summary-card-start--> ... summary card ...          <!--@summary-card-end-->
  *   <!--@summary-row-start-->  ... summary table <tr> ...    <!--@summary-row-end-->
  *   <!--@section-start-->      ... full component section ... <!--@section-end-->
+ *
+ * Optional blocks (used by sync-guide.js):
+ *   <!--@meta-start-->         ... status, node, verdicts ... <!--@meta-end-->
+ *   <!--@patterns-start-->     ... new anti-patterns found ... <!--@patterns-end-->
  */
 
 const fs   = require('fs');
@@ -108,3 +115,8 @@ console.log(`  HTML  Original:  ${(original     / 1024).toFixed(1)} KB`);
 console.log(`  HTML  Minified:  ${(compressed   / 1024).toFixed(1)} KB  (saved ${saving}%) ✅`);
 console.log(`  CSS   Original:  ${(cssOriginal  / 1024).toFixed(1)} KB`);
 console.log(`  CSS   Minified:  ${(cssCompressed/ 1024).toFixed(1)} KB  (saved ${cssSaving}%) ✅`);
+
+// ── Sync assessment guide ─────────────────────────────────────────────────────
+const { syncGuide } = require('./sync-guide.js');
+console.log('\nSyncing assessment guide...');
+syncGuide();

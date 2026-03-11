@@ -1,8 +1,26 @@
 <!--
   ACCORDION COMPONENT ASSESSMENT
   Edit this file to update the Accordion assessment.
-  Run `node assessment-src/build.js` to regenerate gcash-native-readiness-assessment.html
+  Run `node assessment-src/build.js` to regenerate index.html
 -->
+
+<!--@meta-start-->
+status: re-assessing
+node: 16830:2025
+ds-verdict: fix
+native-status: refine
+variants: 8
+ios: DisclosureGroup
+android: AnimatedVisibility
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] Boolean variant properties using yes/no strings instead of true/false — found on leadingIcon and labelDescription properties
+[C1] Root container frames left as Figma default "Frame" instead of semantic name like "container"
+[C1] Leading icon instances named "Placeholder" instead of semantic "icon-leading"
+[C5] Only collapsed and expanded states defined — missing pressed, disabled, and focused states
+[C4] Expanded content panel (body/slot for revealed content) is absent — engineers must attach content outside the component
+<!--@patterns-end-->
 
 <!--@nav-start-->
 <a class="nav-item" href="#accordion" onclick="setActive(this)">
