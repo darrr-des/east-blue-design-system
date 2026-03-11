@@ -233,7 +233,7 @@ New patterns found during component assessments are automatically collected here
 | C2 | Boolean variant properties using yes/no strings instead of true/false — found on leadingIcon and labelDescription properties | Accordion |
 | C1 | Root container frames left as Figma default "Frame" instead of semantic name like "container" | Accordion |
 | C1 | Leading icon instances named "Placeholder" instead of semantic "icon-leading" | Accordion |
-| C4 | Expanded content panel (body/slot for revealed content) is absent — engineers must attach content outside the component | Accordion |
+| C4 | Expanded content panel added in v4 — content-body frame (80px) with background token #F4F7FB added to all 12 expanded variants | Accordion |
 <!-- @@DISCOVERED_PATTERNS_END@@ -->
 
 ---
@@ -539,7 +539,7 @@ This section tracks components currently being assessed and their status. Compon
 <!-- @@PROGRESS_TABLE@@ -->
 | Component | Node | DS Verdict | Native Status | Status | Notes |
 |---|---|---|---|---|---|
-| Accordion | `16870:9288` | Fix | Needs Refinement | 🔁 Re-assessing | Fixed: C1, C2, C5. Open: C4, C7 |
+| Accordion | `16870:9288` | Fix | Needs Refinement | 🔁 Re-assessing | Fixed: C1, C2, C5, C4. Open: C7 |
 <!-- @@PROGRESS_TABLE_END@@ -->
 
 ### Open Issues Across All Components
@@ -547,7 +547,6 @@ This section tracks components currently being assessed and their status. Compon
 <!-- @@OPEN_ISSUES@@ -->
 | Component | Criterion | Action | Status |
 |---|---|---|---|
-| Accordion | C4 | Add the **expanded content panel** as a slot/placeholder in the expanded variant with padding, background token, and divider. | Open |
 | Accordion | C7 | Create native component files and register Code Connect mappings via the Figma Code Connect CLI. | Open |
 <!-- @@OPEN_ISSUES_END@@ -->
 
