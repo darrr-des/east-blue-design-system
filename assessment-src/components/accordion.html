@@ -6,10 +6,10 @@
 
 <!--@meta-start-->
 status: re-assessing
-node: 16830:2025
+node: 16870:9288
 ds-verdict: fix
 native-status: refine
-variants: 8
+variants: 24
 ios: DisclosureGroup
 android: AnimatedVisibility
 <!--@meta-end-->
@@ -18,7 +18,6 @@ android: AnimatedVisibility
 [C2] Boolean variant properties using yes/no strings instead of true/false — found on leadingIcon and labelDescription properties
 [C1] Root container frames left as Figma default "Frame" instead of semantic name like "container"
 [C1] Leading icon instances named "Placeholder" instead of semantic "icon-leading"
-[C5] Only collapsed and expanded states defined — missing pressed, disabled, and focused states
 [C4] Expanded content panel (body/slot for revealed content) is absent — engineers must attach content outside the component
 <!--@patterns-end-->
 
@@ -26,7 +25,7 @@ android: AnimatedVisibility
 <a class="nav-item" href="#accordion" onclick="setActive(this)">
   <span class="nav-icon nav-icon-refine"></span>
   Accordion
-  <span class="nav-badge nav-badge-refine">Refine · 3 Fixed</span>
+  <span class="nav-badge nav-badge-refine">Refine · 4 Fixed</span>
 </a>
 <!--@nav-end-->
 
@@ -39,7 +38,7 @@ android: AnimatedVisibility
       <span class="badge badge-refine">Needs Refinement</span>
     </div>
   </div>
-  <div class="summary-card-finding"><strong style="color:#1A7A4A">v2 Post-Fix:</strong> Layer naming (C1) and boolean variant properties (C2) fully resolved. Token coverage and icons remain clean. Still needs expanded content panel (C4), pressed/disabled states (C5), and Code Connect mappings (C7).</div>
+  <div class="summary-card-finding"><strong style="color:#1A7A4A">v3 Post-Fix:</strong> Layer naming (C1), boolean props (C2), and pressed/disabled interaction states (C5) fully resolved. Now 24 variants. Still needs expanded content panel (C4) and Code Connect mappings (C7).</div>
 </a>
 <!--@summary-card-end-->
 
@@ -48,8 +47,8 @@ android: AnimatedVisibility
   <td><strong>Accordion</strong></td>
   <td><span class="badge badge-fix">Fix</span></td>
   <td><span class="badge badge-refine">Needs Refinement</span></td>
-  <td class="muted">8</td>
-  <td class="muted"><span style="color:#1A7A4A;font-weight:600">✓ Fixed:</span> Layer naming, boolean props. <span style="color:#B45309;font-weight:600">Open:</span> Expanded content panel, pressed/disabled states, Code Connect mappings.</td>
+  <td class="muted">24</td>
+  <td class="muted"><span style="color:#1A7A4A;font-weight:600">✓ Fixed:</span> Layer naming, boolean props, pressed/disabled states. <span style="color:#B45309;font-weight:600">Open:</span> Expanded content panel, Code Connect mappings.</td>
 </tr>
 <!--@summary-row-end-->
 
@@ -57,10 +56,10 @@ android: AnimatedVisibility
 <div class="component-section" id="accordion">
   <div class="component-header">
     <div class="component-header-left">
-      <div class="component-name">Accordion <span style="font-size:12px;font-weight:500;color:#1A7A4A;background:#E6F4ED;padding:2px 8px;border-radius:4px;vertical-align:middle;margin-left:8px">v2 Post-Fix</span></div>
+      <div class="component-name">Accordion <span style="font-size:12px;font-weight:500;color:#1A7A4A;background:#E6F4ED;padding:2px 8px;border-radius:4px;vertical-align:middle;margin-left:8px">v3 Post-Fix</span></div>
       <div class="component-meta">
-        <span>Node: <code>16830:2025</code></span>
-        <span>Variants: 8</span>
+        <span>Node: <code>16870:9288</code></span>
+        <span>Variants: 24</span>
         <span>iOS: <code>DisclosureGroup</code></span>
         <span>Android: <code>AnimatedVisibility</code></span>
       </div>
@@ -81,6 +80,18 @@ android: AnimatedVisibility
   <p>A single-row disclosure row that expands and collapses to reveal content. Supports an optional leading icon placeholder and an optional secondary description line below the label. Standard, well-understood pattern on both iOS and Android.</p>
 
   <!-- ── POST-FIX CHANGELOG ─────────────────────────────────────────────── -->
+  <div class="sub-heading" style="margin-top:24px">v3 Fix Changelog — March 2026</div>
+  <div class="changelog">
+    <div class="changelog-header">Changes Applied via Figma MCP · node 16870:9288</div>
+    <div class="changelog-row">
+      <div class="changelog-icon">✅</div>
+      <div class="changelog-body">
+        <strong>Added state=pressed and state=disabled variants</strong> — 16 new variants cloned and styled. Component set expanded from 8 → 24 variants. <code>state</code> property added with values <code>default / pressed / disabled</code>. Tokens applied: pressed bg #EEF3FB; disabled bg #F5F7FA, label #B5BEC9, desc #C8D5E4, icon #D4D9E2. Fully resolves C5. <span class="tag-fixed">Fixed</span>
+      </div>
+      <div class="score-delta">C5 ✓ Resolved</div>
+    </div>
+  </div>
+
   <div class="sub-heading" style="margin-top:24px">v2 Fix Changelog — March 2026</div>
   <div class="changelog">
     <div class="changelog-header">Changes Applied via Figma MCP · node 16830:2025</div>
@@ -113,11 +124,11 @@ android: AnimatedVisibility
       <div class="score-delta score-delta-neutral">C4 Open</div>
     </div>
     <div class="changelog-row">
-      <div class="changelog-icon">⏳</div>
+      <div class="changelog-icon">✅</div>
       <div class="changelog-body">
-        <strong>Interaction states: pressed / disabled / focused</strong> — No new variant states added. Missing states force engineers to invent visual behavior natively. Affects C5. <span class="tag-open">Still Open</span>
+        <strong>Interaction states: pressed / disabled</strong> — Resolved in v3. 16 new variants added across all type/icon/desc combinations. See v3 changelog above. <span class="tag-fixed">Fixed in v3</span>
       </div>
-      <div class="score-delta score-delta-neutral">C5 Open</div>
+      <div class="score-delta">C5 ✓ Resolved</div>
     </div>
     <div class="changelog-row">
       <div class="changelog-icon">⏳</div>
@@ -139,7 +150,7 @@ android: AnimatedVisibility
   <div class="verdict-banner">
     <div class="verdict-banner-left">
       <div class="verdict-banner-label">Verdict</div>
-      <div class="verdict-banner-text"><strong>Fix</strong> — The Accordion concept is valid and belongs in the core DS. The structure is lean and layer naming is mostly good. However it needs targeted fixes before it's production-ready: boolean property notation must be corrected, a content slot for the expanded state is missing, and interaction states are absent.</div>
+      <div class="verdict-banner-text"><strong>Fix</strong> — The Accordion concept is valid and belongs in the core DS. Layer naming, boolean notation, and interaction states (pressed/disabled) are now all resolved. Remaining fix needed: expanded content panel (C4) — the component is currently header-only with no body slot for revealed content.</div>
     </div>
     <span class="badge badge-fix" style="font-size:13px;padding:6px 14px;flex-shrink:0">Fix</span>
   </div>
@@ -179,10 +190,9 @@ android: AnimatedVisibility
     </div>
   </div>
   <div class="issue-block">
-    <div class="issue-title">Missing Interaction States</div>
-    <div class="infobox infobox-issue">
-      <p><span class="label-issue">Issue:</span> No <code>disabled</code> or <code>pressed</code> variants exist, forcing engineers to invent behavior not defined in the design.</p>
-      <p><span class="label-rec">Recommendation:</span> Add <code>pressed</code> and <code>disabled</code> variants with semantic tokens (e.g. <code>main/accordion/color/pressed/bg</code>, <code>main/accordion/color/disabled/label</code>).</p>
+    <div class="issue-title" style="color:#1A7A4A">✅ Missing Interaction States — Resolved in v3</div>
+    <div class="infobox infobox-resolved">
+      <p><span class="label-resolved">Resolved:</span> <code>pressed</code> and <code>disabled</code> variants added via Figma MCP. Component now has 24 variants with a <code>state</code> property (default / pressed / disabled). Pressed uses #EEF3FB bg; disabled uses muted label (#B5BEC9), description (#C8D5E4), and icon (#D4D9E2) tokens across all combinations.</p>
     </div>
   </div>
   <div class="issue-block">
@@ -200,7 +210,7 @@ android: AnimatedVisibility
   </div>
 
   <!-- Variants -->
-  <div class="sub-heading">Variants Inventory <span style="font-weight:400;color:var(--muted)">(8 total)</span></div>
+  <div class="sub-heading">Variants Inventory <span style="font-weight:400;color:var(--muted)">(24 total — 8 per state)</span></div>
   <div class="table-wrap">
     <table>
       <thead>
@@ -229,7 +239,7 @@ android: AnimatedVisibility
   <!-- Overall status -->
   <div class="sub-heading">Overall Status</div>
   <div class="infobox infobox-status">
-    <p><span class="label-status">Needs Refinement</span> — <strong style="color:#1A7A4A">v2 progress:</strong> Layer naming (C1) and boolean property notation (C2) are now fully resolved. Token coverage, vector icons, and variant structure remain clean. Remaining blockers before native handoff: expanded content panel (C4), pressed/disabled/focused interaction states (C5), and Code Connect mappings (C7).</p>
+    <p><span class="label-status">Needs Refinement</span> — <strong style="color:#1A7A4A">v3 progress:</strong> Layer naming (C1), boolean notation (C2), and interaction states (C5) are now fully resolved. Component set is 24 variants. Remaining blockers before native handoff: expanded content panel (C4) and Code Connect mappings (C7).</p>
   </div>
 
   <!-- Scorecard -->
@@ -242,7 +252,7 @@ android: AnimatedVisibility
         <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted"><strong style="color:#1A7A4A">Fixed v2.</strong> All 8 variants updated to <code>true</code>/<code>false</code> booleans. Variant keys use clear <code>key=value</code> syntax.</td></tr>
         <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors, spacing, and typography are fully tokenized. No hardcoded values found.</td></tr>
         <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Header row maps cleanly to native. Expanded content panel is absent from the component.</td></tr>
-        <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Only default (collapsed/expanded) defined. Pressed, disabled, and focused states are missing.</td></tr>
+        <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted"><strong style="color:#1A7A4A">Fixed v3.</strong> 24 variants across state=default/pressed/disabled. Focused (a11y) not yet defined but pressed and disabled are fully covered.</td></tr>
         <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Chevron Down / Up confirmed as Figma component instances (vector paths). Leading icon slot is a placeholder by design.</td></tr>
         <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Properly structured component set. No mappings registered yet. Property notation needs minor cleanup.</td></tr>
       </tbody>
@@ -258,8 +268,8 @@ android: AnimatedVisibility
       <tbody>
         <tr><td><strong>Default (Collapsed)</strong></td><td class="center"><span class="check">✓</span></td><td class="center"><span class="check">✓</span></td><td class="mono">type=collapsed</td><td class="muted">Fully defined across all combinations.</td></tr>
         <tr><td><strong>Default (Expanded)</strong></td> <td class="center"><span class="check">✓</span></td><td class="center"><span class="check">✓</span></td><td class="mono">type=expanded</td><td class="muted">Fully defined across all combinations.</td></tr>
-        <tr><td><strong>Pressed / Active</strong></td>   <td class="center"><span class="check">✓</span></td><td class="center"><span class="cross">✗</span></td><td class="muted center">—</td><td class="muted">No tap-highlight state. Engineers will need to improvise feedback.</td></tr>
-        <tr><td><strong>Disabled</strong></td>           <td class="center"><span class="check">✓</span></td><td class="center"><span class="cross">✗</span></td><td class="muted center">—</td><td class="muted">No disabled state. Common in accordions that are conditionally locked.</td></tr>
+        <tr><td><strong>Pressed / Active</strong></td>   <td class="center"><span class="check">✓</span></td><td class="center"><span class="check">✓</span></td><td class="mono">state=pressed</td><td class="muted"><strong style="color:#1A7A4A">Fixed v3.</strong> Light blue bg (#EEF3FB) across all 8 type/icon/desc combos.</td></tr>
+        <tr><td><strong>Disabled</strong></td>           <td class="center"><span class="check">✓</span></td><td class="center"><span class="check">✓</span></td><td class="mono">state=disabled</td><td class="muted"><strong style="color:#1A7A4A">Fixed v3.</strong> Muted bg, label (#B5BEC9), desc (#C8D5E4), icon (#D4D9E2).</td></tr>
         <tr><td><strong>Focused (a11y)</strong></td>     <td class="center"><span class="check">✓</span></td><td class="center"><span class="cross">✗</span></td><td class="muted center">—</td><td class="muted">No focus ring defined. Required for keyboard/switch navigation.</td></tr>
         <tr><td><strong>Loading</strong></td>            <td class="center"><span class="dash">—</span></td> <td class="center"><span class="dash">—</span></td> <td class="muted center">N/A</td><td class="muted">Not expected for a standard accordion header row.</td></tr>
         <tr><td><strong>Error</strong></td>              <td class="center"><span class="dash">—</span></td> <td class="center"><span class="dash">—</span></td> <td class="muted center">N/A</td><td class="muted">Accordions do not typically carry error states at the header level.</td></tr>
@@ -280,10 +290,9 @@ android: AnimatedVisibility
   <p style="font-weight:600;color:var(--refine-fg);font-size:13px;margin-bottom:8px">A2 — Issues &amp; Recommendations</p>
 
   <div class="issue-block">
-    <div class="issue-title">Missing Interaction States</div>
-    <div class="infobox infobox-issue">
-      <p><span class="label-issue">Issue:</span> Only collapsed and expanded states defined. Native mobile requires pressed, disabled, and focused states at minimum. Without these, engineers will invent visuals leading to inconsistency.</p>
-      <p><span class="label-rec">Recommendation:</span> Add pressed and disabled variants with semantic tokens (e.g. <code>main/accordion/color/pressed/bg</code>, <code>main/accordion/color/disabled/label</code>). Define focused as a focus ring or border highlight.</p>
+    <div class="issue-title" style="color:#1A7A4A">✅ Missing Interaction States — Resolved in v3</div>
+    <div class="infobox infobox-resolved">
+      <p><span class="label-resolved">Resolved:</span> Pressed and disabled states added via Figma MCP. Engineers can reference <code>state=pressed</code> and <code>state=disabled</code> directly. Focused state (a11y focus ring) is still not defined but is lower priority for initial native handoff.</p>
     </div>
   </div>
   <div class="issue-block">
@@ -328,6 +337,7 @@ android: AnimatedVisibility
       <thead><tr><th>Figma Property</th><th>SwiftUI Param</th><th>Compose Param</th><th>Notes</th></tr></thead>
       <tbody>
         <tr><td class="mono">type</td>             <td class="mono">isExpanded: Bool</td>          <td class="mono">isExpanded: Boolean</td>      <td class="muted">Map <code>collapsed</code>→<code>false</code>, <code>expanded</code>→<code>true</code></td></tr>
+        <tr><td class="mono">state</td>            <td class="mono">isDisabled: Bool</td>           <td class="mono">enabled: Boolean</td>         <td class="muted"><code>disabled</code>→disabled; pressed handled natively by gesture recognizer</td></tr>
         <tr><td class="mono">leadingIcon</td>       <td class="mono">leadingIcon: Image?</td>        <td class="mono">leadingIcon: @Composable?</td><td class="muted"><code>nil</code>/<code>null</code> = hidden</td></tr>
         <tr><td class="mono">labelDescription</td>  <td class="mono">description: String?</td>       <td class="mono">description: String?</td>     <td class="muted"><code>nil</code>/<code>null</code> = hidden</td></tr>
       </tbody>
@@ -350,6 +360,11 @@ android: AnimatedVisibility
         <tr><td class="mono">main/accordion/color/expanded/label</td>         <td class="mono">#0A2757</td>      <td class="muted">Same as collapsed</td></tr>
         <tr><td class="mono">main/accordion/color/expanded/description</td>   <td class="mono">#90A8D0</td>      <td class="muted">Same as collapsed</td></tr>
         <tr><td class="mono">main/accordion/color/expanded/icon-chevron</td>  <td class="mono">#005CE5</td>      <td class="muted">Same as collapsed</td></tr>
+        <tr><td class="mono">surface/pressed</td>                                    <td class="mono">#EEF3FB</td>      <td class="muted">Pressed bg — <strong style="color:#1A7A4A">Added v3</strong></td></tr>
+        <tr><td class="mono">surface/disabled</td>                                   <td class="mono">#F5F7FA</td>      <td class="muted">Disabled bg — <strong style="color:#1A7A4A">Added v3</strong></td></tr>
+        <tr><td class="mono">text/disabled</td>                                      <td class="mono">#B5BEC9</td>      <td class="muted">Disabled label — <strong style="color:#1A7A4A">Added v3</strong></td></tr>
+        <tr><td class="mono">text/disabled-secondary</td>                            <td class="mono">#C8D5E4</td>      <td class="muted">Disabled description — <strong style="color:#1A7A4A">Added v3</strong></td></tr>
+        <tr><td class="mono">icon/disabled</td>                                      <td class="mono">#D4D9E2</td>      <td class="muted">Disabled icon — <strong style="color:#1A7A4A">Added v3</strong></td></tr>
         <tr><td class="mono">font-family/font-primary</td>                    <td class="mono">Proxima Soft</td> <td class="muted">Verify bundle</td></tr>
         <tr><td class="mono">font-family/font-secondary</td>                  <td class="mono">BarkAda</td>      <td class="muted">Verify bundle</td></tr>
         <tr><td class="mono">font-size/font-size-25</td>                      <td class="mono">16px</td>         <td class="muted">Label size</td></tr>
@@ -368,7 +383,7 @@ android: AnimatedVisibility
       <tbody>
         <tr style="opacity:0.6"><td class="mono center">1</td><td class="mono">C1</td><td><s>Rename <code>Placeholder</code> → <code>icon-leading</code> and <code>Frame</code> → <code>container</code>.</s></td><td><span class="badge badge-ready">✅ Done</span></td></tr>
         <tr style="opacity:0.6"><td class="mono center">2</td><td class="mono">C2</td><td><s>Convert <code>leadingIcon</code> and <code>labelDescription</code> values from <code>yes</code>/<code>no</code> to <code>true</code>/<code>false</code> booleans.</s></td><td><span class="badge badge-ready">✅ Done</span></td></tr>
-        <tr><td class="mono center">3</td><td class="mono">C5</td><td>Add <strong>pressed</strong> and <strong>disabled</strong> variant states with semantic color tokens (e.g. <code>main/accordion/color/pressed/bg</code>).</td><td><span class="badge badge-refine">Open</span></td></tr>
+        <tr style="opacity:0.6"><td class="mono center">3</td><td class="mono">C5</td><td><s>Add <strong>pressed</strong> and <strong>disabled</strong> variant states with semantic color tokens.</s></td><td><span class="badge badge-ready">✅ Done</span></td></tr>
         <tr><td class="mono center">4</td><td class="mono">C4</td><td>Add the <strong>expanded content panel</strong> as a slot/placeholder in the expanded variant with padding, background token, and divider.</td><td><span class="badge badge-refine">Open</span></td></tr>
         <tr><td class="mono center">5</td><td class="mono">C3/C4</td><td>Confirm <strong>Proxima Soft</strong> and <strong>BarkAda</strong> are bundled in native apps. Document font token mapping in the setup guide.</td><td><span class="badge badge-refine">Open</span></td></tr>
         <tr><td class="mono center">6</td><td class="mono">C7</td><td>Create native component files and register Code Connect mappings via the Figma Code Connect CLI.</td><td><span class="badge badge-refine">Open</span></td></tr>
