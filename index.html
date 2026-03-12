@@ -8,7 +8,7 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --bg: #FFFFFF;
-    --surface: #F9FAFB;
+    --surface: #FFFFFF;
     --border: #E8E7E4;
     --text: #111111;
     --text-2: #444444;
@@ -17,6 +17,28 @@
     --accent-light: #EEF3FB;
     --font: system-ui, -apple-system, 'Segoe UI', sans-serif;
     --radius: 18px;
+    --pill-blue-bg: #EEF3FB; --pill-blue-fg: #1448A3; --pill-blue-dot: #0056D6;
+    --pill-amber-bg: #FEF3E2; --pill-amber-fg: #92400E; --pill-amber-dot: #D97706;
+    --pill-green-bg: #ECFDF5; --pill-green-fg: #065F46; --pill-green-dot: #059669;
+    --card-bg: #F9FAFB;
+    --icon-blue-bg: #EEF3FB; --icon-blue-stroke: #0056D6;
+    --icon-green-bg: #EDFAF4; --icon-green-stroke: #17A667;
+  }
+  [data-theme="dark"] {
+    --bg: #1C1C1E;
+    --surface: #2C2C2E;
+    --border: #3A3A3C;
+    --text: #F5F5F7;
+    --text-2: #A1A1A6;
+    --muted: #8E8E93;
+    --accent: #4DA3FF;
+    --accent-light: rgba(77, 163, 255, 0.12);
+    --pill-blue-bg: rgba(77, 163, 255, 0.12); --pill-blue-fg: #4DA3FF; --pill-blue-dot: #4DA3FF;
+    --pill-amber-bg: rgba(255, 214, 10, 0.12); --pill-amber-fg: #FFD60A; --pill-amber-dot: #FFD60A;
+    --pill-green-bg: rgba(48, 209, 88, 0.12); --pill-green-fg: #30D158; --pill-green-dot: #30D158;
+    --card-bg: #2C2C2E;
+    --icon-blue-bg: rgba(77, 163, 255, 0.12); --icon-blue-stroke: #4DA3FF;
+    --icon-green-bg: rgba(48, 209, 88, 0.12); --icon-green-stroke: #30D158;
   }
   body {
     font-family: var(--font);
@@ -85,18 +107,18 @@
     text-transform: uppercase;
     border: none;
   }
-  .pill.blue  { background: #EEF3FB; color: #1448A3; }
-  .pill.amber { background: #FEF3E2; color: #92400E; }
-  .pill.green { background: #ECFDF5; color: #065F46; }
+  .pill.blue  { background: var(--pill-blue-bg); color: var(--pill-blue-fg); }
+  .pill.amber { background: var(--pill-amber-bg); color: var(--pill-amber-fg); }
+  .pill.green { background: var(--pill-green-bg); color: var(--pill-green-fg); }
   .pill-dot {
     width: 5px;
     height: 5px;
     border-radius: 50%;
     flex-shrink: 0;
   }
-  .pill.blue  .pill-dot { background: #0056D6; }
-  .pill.amber .pill-dot { background: #D97706; }
-  .pill.green .pill-dot { background: #059669; }
+  .pill.blue  .pill-dot { background: var(--pill-blue-dot); }
+  .pill.amber .pill-dot { background: var(--pill-amber-dot); }
+  .pill.green .pill-dot { background: var(--pill-green-dot); }
 
   /* Section label */
   .section-label {
@@ -119,7 +141,7 @@
     align-items: center;
     gap: 16px;
     padding: 20px 22px;
-    background: var(--surface);
+    background: var(--card-bg);
     border-radius: var(--radius);
     text-decoration: none;
     color: inherit;
@@ -148,8 +170,10 @@
   .card:hover .card-icon svg {
     transform: scale(1.2) rotate(-8deg);
   }
-  .card-icon.blue { background: #EEF3FB; }
-  .card-icon.green { background: #EDFAF4; }
+  .card-icon.blue { background: var(--icon-blue-bg); }
+  .card-icon.green { background: var(--icon-green-bg); }
+  .card-icon.blue svg { stroke: var(--icon-blue-stroke); }
+  .card-icon.green svg { stroke: var(--icon-green-stroke); }
   .card-body { flex: 1; min-width: 0; }
   .card-title {
     font-size: 14px;
@@ -187,9 +211,102 @@
     background: var(--border);
     margin: 20px 0;
   }
+
+  /* Theme toggle — floating pill */
+  .theme-pill {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 6px 6px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    z-index: 100;
+  }
+  .theme-pill-label {
+    font-size: 12px;
+    line-height: 1;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  #theme-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+  #theme-icon svg {
+    display: block;
+    width: 14px;
+    height: 14px;
+  }
+  .theme-toggle {
+    position: relative;
+    width: 42px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+  .theme-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
+  .theme-toggle-track {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #D1D1D6;
+    border-radius: 13px;
+    cursor: pointer;
+    transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .theme-toggle input:checked + .theme-toggle-track {
+    background: var(--accent);
+  }
+  .theme-toggle-knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+  .theme-toggle input:checked ~ .theme-toggle-knob {
+    transform: translateX(16px);
+  }
+
+  /* Smooth transitions */
+  body, .card, .pill, .brand-icon, .card-icon, .theme-pill {
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
 </style>
 </head>
 <body>
+
+<div class="theme-pill">
+  <span class="theme-pill-label">
+    <span id="theme-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+    <span id="theme-label">Light</span>
+  </span>
+  <label class="theme-toggle">
+    <input type="checkbox" id="theme-switch" onchange="toggleTheme(this.checked)">
+    <span class="theme-toggle-track"></span>
+    <span class="theme-toggle-knob"></span>
+  </label>
+</div>
+
 <div class="container">
 
   <div class="header">
@@ -223,9 +340,9 @@
     <a class="card" href="report.html">
       <div class="card-icon blue">
         <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
-          <path d="M6 2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-1" stroke="#0056D6" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M7 2h6a1 1 0 0 1 1 1v1H6V3a1 1 0 0 1 1-1Z" stroke="#0056D6" stroke-width="1.5"/>
-          <path d="M7 10h6M7 13.5h4" stroke="#0056D6" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M6 2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-1" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M7 2h6a1 1 0 0 1 1 1v1H6V3a1 1 0 0 1 1-1Z" stroke-width="1.5"/>
+          <path d="M7 10h6M7 13.5h4" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
       </div>
       <div class="card-body">
@@ -240,9 +357,9 @@
     <a class="card" href="gcash-ds-assessment-guide.html">
       <div class="card-icon green">
         <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
-          <path d="M3 15.5V5.5a2 2 0 0 1 2-2h10" stroke="#17A667" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M5 17.5h10a1 1 0 0 0 1-1V6.5H5a2 2 0 0 0-2 2v8a1 1 0 0 0 1 1Z" stroke="#17A667" stroke-width="1.5"/>
-          <path d="M8 10h4.5M8 13h3" stroke="#17A667" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M3 15.5V5.5a2 2 0 0 1 2-2h10" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M5 17.5h10a1 1 0 0 0 1-1V6.5H5a2 2 0 0 0-2 2v8a1 1 0 0 0 1 1Z" stroke-width="1.5"/>
+          <path d="M8 10h4.5M8 13h3" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
       </div>
       <div class="card-body">
@@ -258,5 +375,31 @@
   <div class="footer">March 2026 &nbsp;·&nbsp; For internal use only</div>
 
 </div>
+<script>
+var sunIcon = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>';
+var moonIcon = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6.8 1.5A6.5 6.5 0 0 0 8 14.5a6.5 6.5 0 0 0 5.7-3.4A5.5 5.5 0 0 1 6.8 1.5Z" fill="currentColor"/></svg>';
+function setThemeUI(isDark) {
+  var lbl = document.getElementById('theme-label');
+  var ico = document.getElementById('theme-icon');
+  if (lbl) lbl.textContent = isDark ? 'Dark' : 'Light';
+  if (ico) ico.innerHTML = isDark ? moonIcon : sunIcon;
+}
+function toggleTheme(isDark) {
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  setThemeUI(isDark);
+  try { localStorage.setItem('gcash-ds-theme', isDark ? 'dark' : 'light'); } catch(e) {}
+}
+(function() {
+  var saved = null;
+  try { saved = localStorage.getItem('gcash-ds-theme'); } catch(e) {}
+  var isDark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  if (isDark) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    var sw = document.getElementById('theme-switch');
+    if (sw) sw.checked = true;
+  }
+  setThemeUI(isDark);
+})();
+</script>
 </body>
 </html>
