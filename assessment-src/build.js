@@ -103,7 +103,7 @@ const cssSource = fs.readFileSync(path.join(srcDir, 'styles.css'), 'utf8');
 const cssMinified = cssSource
   .replace(/\/\*[\s\S]*?\*\//g, '')   // remove comments
   .replace(/\s{2,}/g, ' ')            // collapse whitespace
-  .replace(/\s*([{}:;,>~+])\s*/g, '$1') // remove spaces around symbols
+  .replace(/\s*([{}:;,>~])\s*/g, '$1') // remove spaces around symbols (not + to preserve calc())
   .trim();
 const cssOriginal   = Buffer.byteLength(cssSource,    'utf8');
 const cssCompressed = Buffer.byteLength(cssMinified,  'utf8');

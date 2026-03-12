@@ -62,7 +62,7 @@ open-issues: C7
     </div>
   </div>
   <div class="summary-card-finding">
-    <strong style="color:var(--ready-fg)">v4 Post-Fix:</strong> Layer naming (C1), boolean props (C2), interaction states (C5), and expanded content panel (C4) all resolved. 24 variants, each expanded now has a <code>content-body</code> slot. Only Code Connect mappings (C7) remain.
+    4 of 5 criteria resolved. 24 variants with <code>content-body</code> slots. Remaining: Code Connect mappings (C7).
   </div>
 </div>
 <!--@summary-card-end-->
@@ -73,7 +73,7 @@ open-issues: C7
   <td><span class="badge badge-fix">Fix</span></td>
   <td><span class="badge badge-refine">Needs Refinement</span></td>
   <td class="muted">24</td>
-  <td class="muted"><span style="color:#1A7A4A;font-weight:600">✓ Fixed:</span> Layer naming, boolean props, pressed/disabled states, expanded content panel. <span style="color:#B45309;font-weight:600">Open:</span> Code Connect mappings.</td>
+  <td class="muted">4/5 resolved. Open: Code Connect mappings.</td>
 </tr>
 <!--@summary-row-end-->
 
@@ -89,36 +89,13 @@ open-issues: C7
 
     <!-- Component header -->
     <div class="comp-header">
-      <div class="comp-header-icon">
-        <!-- Accordion icon 64×64 -->
-        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Collapsed row (top) -->
-          <rect x="4" y="4" width="48" height="18" rx="4" fill="#EEF3FB" stroke="#B8CFF8" stroke-width="1.5"/>
-          <!-- Label bar in collapsed row -->
-          <rect x="11" y="11" width="24" height="3.5" rx="1.75" fill="#7AAAE0"/>
-          <!-- Small desc line -->
-          <rect x="11" y="17.5" width="16" height="2" rx="1" fill="#C5D5E8"/>
-          <!-- Right chevron (collapsed) -->
-          <path d="M40 11 L44 13 L40 15" stroke="#0056D6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-
-          <!-- Expanded row (bottom) -->
-          <rect x="4" y="26" width="48" height="26" rx="4" fill="#F4F7FB" stroke="#B8CFF8" stroke-width="1.5"/>
-          <!-- Header of expanded row -->
-          <rect x="11" y="31" width="24" height="3.5" rx="1.75" fill="#7AAAE0"/>
-          <!-- Up chevron (expanded) -->
-          <path d="M40 35 L44 33 L40 31" stroke="#0056D6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" transform="rotate(90 42 33)"/>
-          <!-- Content lines inside expanded row -->
-          <rect x="11" y="38" width="32" height="2.5" rx="1.25" fill="#C5D5E8"/>
-          <rect x="11" y="43.5" width="24" height="2.5" rx="1.25" fill="#C5D5E8"/>
-        </svg>
-      </div>
       <div class="comp-header-body">
         <div class="comp-name">
           Accordion
           <span class="badge badge-fix">Fix</span>
           <span class="badge badge-refine">Needs Refinement</span>
         </div>
-        <p style="font-size:14px;color:var(--muted);margin-bottom:16px;line-height:1.6;">A single-row disclosure row that expands and collapses to reveal content. Supports an optional leading icon placeholder and an optional secondary description line below the label. Standard, well-understood pattern on both iOS and Android.</p>
+        <p class="comp-desc">A disclosure row that expands to reveal content. Supports an optional leading icon and secondary description. Maps directly to native patterns on both platforms.</p>
         <div class="comp-meta">
           <div class="cover-meta-item"><strong>Node:</strong> 16870:9288</div>
           <div class="cover-meta-item"><strong>Variants:</strong> 24</div>
@@ -128,230 +105,200 @@ open-issues: C7
       </div>
     </div>
 
-    <!-- ── v4 Changelog ─────────────────────────────────────────── -->
-    <div class="sub-heading">v4 Fix Changelog — March 2026</div>
+    <!-- ── Tab bar ──────────────────────────────────────────────── -->
+    <div data-tab-group="accordion-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'assessment', 'accordion-tabs')">Assessment</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'accordion-tabs')">Changelog</button>
+    </div>
+
+    <!-- ── Tab 2: Changelog ─────────────────────────────────────── -->
+    <div class="comp-tab-content" data-tab="changelog">
+    <div class="sub-heading">1.2.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
     <div class="changelog">
       <div class="changelog-header">Changes Applied via Figma MCP · node 16870:9288</div>
       <div class="changelog-row">
         <div class="changelog-body">
-          <strong>Added expanded content panel (content-body)</strong> — All 12 expanded variants resized from 62px → 142px. A <code>content-body</code> frame (360×80px) added at y=62 inside each container. Background: #F4F7FB (<code>surface/expanded-body</code> token). Border: #E5EBF4. Auto-layout disabled on containers to allow free positioning. Fully resolves C4.
+          <strong>Added expanded content panel (content-body)</strong> — All 12 expanded variants resized from 62px to 142px. A <code>content-body</code> frame (360x80px) added at y=62 inside each container. Background: #F4F7FB (<code>surface/expanded-body</code> token). Border: #E5EBF4. Fully resolves C4.
           <span class="tag-fixed">Fixed</span>
         </div>
         <span class="changelog-delta delta-resolved">C4 Resolved</span>
       </div>
     </div>
 
-    <!-- ── v3 Changelog ─────────────────────────────────────────── -->
-    <div class="sub-heading" style="margin-top:20px">v3 Fix Changelog — March 2026</div>
+    <div class="sub-heading">1.1.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
     <div class="changelog">
       <div class="changelog-header">Changes Applied via Figma MCP · node 16870:9288</div>
       <div class="changelog-row">
         <div class="changelog-body">
-          <strong>Added state=pressed and state=disabled variants</strong> — 16 new variants cloned and styled. Component set expanded from 8 → 24 variants. <code>state</code> property added with values <code>default / pressed / disabled</code>. Tokens applied: pressed bg #EEF3FB; disabled bg #F5F7FA, label #B5BEC9, desc #C8D5E4, icon #D4D9E2. Fully resolves C5.
+          <strong>Added state=pressed and state=disabled variants</strong> — 16 new variants cloned and styled. Component set expanded from 8 to 24 variants. <code>state</code> property added with values <code>default / pressed / disabled</code>. Fully resolves C5.
           <span class="tag-fixed">Fixed</span>
         </div>
         <span class="changelog-delta delta-resolved">C5 Resolved</span>
       </div>
     </div>
 
-    <!-- ── v2 Changelog ─────────────────────────────────────────── -->
-    <div class="sub-heading" style="margin-top:20px">v2 Fix Changelog — March 2026</div>
+    <div class="sub-heading">1.0.1 — March 2026 <span class="tab-version-badge patch">Patch</span></div>
     <div class="changelog">
       <div class="changelog-header">Changes Applied via Figma MCP · node 16830:2025</div>
       <div class="changelog-row">
         <div class="changelog-body">
-          <strong>Frame → container</strong> — All 8 root container frames renamed from Figma's default <code>Frame</code> to <code>container</code>. Affects C1.
+          <strong>Frame renamed to container</strong> — All 8 root container frames renamed from <code>Frame</code> to <code>container</code>.
           <span class="tag-fixed">Fixed</span>
         </div>
         <span class="changelog-delta delta-partial">C1 Partial</span>
       </div>
       <div class="changelog-row">
         <div class="changelog-body">
-          <strong>Placeholder → icon-leading</strong> — All 4 leading icon instances renamed from generic <code>Placeholder</code> to semantic <code>icon-leading</code>. Affects C1 and C7.
+          <strong>Placeholder renamed to icon-leading</strong> — All 4 leading icon instances renamed from <code>Placeholder</code> to <code>icon-leading</code>.
           <span class="tag-fixed">Fixed</span>
         </div>
-        <span class="changelog-delta delta-partial">C1 · C7 Partial</span>
+        <span class="changelog-delta delta-partial">C1 Partial</span>
       </div>
       <div class="changelog-row">
         <div class="changelog-body">
-          <strong>Boolean props: yes/no → true/false</strong> — All 8 variant names updated. <code>leading icon=yes/no</code> and <code>label description=yes/no</code> converted to <code>true/false</code> across all variants. Fully resolves C2.
+          <strong>Boolean props converted to true/false</strong> — All 8 variant names updated. <code>leading icon</code> and <code>label description</code> converted from <code>yes/no</code> to <code>true/false</code>. Fully resolves C2.
           <span class="tag-fixed">Fixed</span>
         </div>
         <span class="changelog-delta delta-resolved">C2 Resolved</span>
       </div>
       <div class="changelog-row">
         <div class="changelog-body">
-          <strong>Expanded content panel</strong> — Resolved in v4. <code>content-body</code> frame added to all 12 expanded variants. See v4 changelog above.
+          <strong>Expanded content panel</strong> — Resolved in v4. <code>content-body</code> frame added to all 12 expanded variants.
           <span class="tag-fixed">Fixed in v4</span>
         </div>
         <span class="changelog-delta delta-resolved">C4 Resolved</span>
       </div>
       <div class="changelog-row">
         <div class="changelog-body">
-          <strong>Interaction states: pressed / disabled</strong> — Resolved in v3. 16 new variants added across all type/icon/desc combinations. See v3 changelog above.
+          <strong>Interaction states: pressed / disabled</strong> — Resolved in v3. 16 new variants added across all type/icon/desc combinations.
           <span class="tag-fixed">Fixed in v3</span>
         </div>
         <span class="changelog-delta delta-resolved">C5 Resolved</span>
       </div>
       <div class="changelog-row">
-        <div class="changelog-icon">⏳</div>
+        <div class="changelog-icon"></div>
         <div class="changelog-body">
-          <strong>Code Connect mappings</strong> — No native component files or Code Connect CLI mappings registered yet. Affects C7.
+          <strong>Code Connect mappings</strong> — No native component files or Code Connect CLI mappings registered yet.
           <span class="tag-open">Still Open</span>
         </div>
         <span class="changelog-delta delta-open">C7 Open</span>
       </div>
     </div>
+    </div><!-- /comp-tab-content changelog -->
 
-    <!-- ── Phase 1 divider ──────────────────────────────────────── -->
-    <div class="phase-divider">
-      <div class="phase-divider-line"></div>
-      <div class="phase-label phase-1">⬡ Phase 1 — DS Health</div>
-      <div class="phase-divider-line"></div>
-    </div>
+    <!-- ── Tab 1: Assessment ────────────────────────────────────── -->
+    <div class="comp-tab-content active" data-tab="assessment">
 
-    <!-- DS Health Verdict -->
-    <div class="sub-heading" style="margin-top:0">DS Health Verdict</div>
-    <div class="verdict-banner">
-      <div>
-        <div class="verdict-label">Verdict</div>
-        <div class="verdict-text">
-          <strong>Fix</strong> — The Accordion concept is valid and belongs in the core DS. Layer naming (C1), boolean notation (C2), interaction states (C5), and the expanded content panel (C4) are all resolved. Only Code Connect mappings (C7) remain before the component is fully handoff-ready.
-        </div>
-      </div>
-      <span class="badge badge-fix" style="font-size:12px;padding:5px 12px;flex-shrink:0">Fix</span>
+    <!-- ── DS Health ─────────────────────────────────────────────── -->
+    <div class="section-heading">DS Health</div>
+
+    <div class="verdict-card">
+      <div class="verdict-card-title">Fixes applied — nearly handoff-ready</div>
+      <div class="verdict-card-body"><strong>Verdict:</strong> Layer naming, boolean notation, interaction states, and the expanded content panel are all resolved. Only Code Connect mappings (C7) remain before this component is fully linked.</div>
     </div>
 
     <!-- 4 Traits -->
     <div class="sub-heading">The 4 Traits — Scorecard</div>
     <div class="trait-grid">
       <div class="trait-card pass">
-        <div class="trait-name">Reusable</div>
+        <div class="trait-header">
+          <div class="trait-name">Reusable</div>
+          <div class="trait-status">Pass</div>
+        </div>
         <div class="trait-note">
-          <strong>Fixed in v4.</strong> All 12 expanded variants now include a <code>content-body</code> slot (360×80px, background #F4F7FB). Designers can attach arbitrary content inside the slot. The component is now a complete accordion pattern, not just a header trigger.
+          All 12 expanded variants include a <code>content-body</code> slot. Designers can attach arbitrary content inside the slot without modifying the component itself.
         </div>
       </div>
       <div class="trait-card pass">
-        <div class="trait-name">Self-contained</div>
+        <div class="trait-header">
+          <div class="trait-name">Self-contained</div>
+          <div class="trait-status">Pass</div>
+        </div>
         <div class="trait-note">
-          <strong>Fixed in v4.</strong> Expanded state now includes both the header row and the <code>content-body</code> panel. Engineers can implement it as a standalone unit with a defined content area — no external spec needed for the body slot.
+          Both the header row and the <code>content-body</code> panel are included. Engineers can implement it as a standalone unit with no external spec needed.
         </div>
       </div>
       <div class="trait-card pass">
-        <div class="trait-name">Consistent</div>
+        <div class="trait-header">
+          <div class="trait-name">Consistent</div>
+          <div class="trait-status">Pass</div>
+        </div>
         <div class="trait-note">
-          <strong>Fixed in v2.</strong> Boolean variant properties <code>leading icon</code> and <code>label description</code> now correctly use <code>true</code>/<code>false</code> across all 8 variants. Layer naming also standardised (<code>container</code>, <code>icon-leading</code>). Fully aligned with DS and native conventions.
+          Boolean properties use <code>true</code>/<code>false</code> across all variants. Layer naming is standardised with <code>container</code> and <code>icon-leading</code>.
         </div>
       </div>
       <div class="trait-card pass">
-        <div class="trait-name">Composable</div>
+        <div class="trait-header">
+          <div class="trait-name">Composable</div>
+          <div class="trait-status">Pass</div>
+        </div>
         <div class="trait-note">
-          Layer naming is semantic (<code>leading-icon</code>, <code>content</code>, <code>trailing-icon</code>). Chevron icons are proper vector instances. The <code>leading-icon</code> slot accepts instances cleanly and fits the existing component hierarchy.
+          Semantic layer names (<code>leading-icon</code>, <code>content</code>, <code>trailing-icon</code>). Chevrons are vector instances. The icon slot accepts instances cleanly.
         </div>
       </div>
     </div>
 
-    <!-- DS Health Issues -->
-    <div class="sub-heading">DS Health Issues</div>
+    <!-- Resolved Issues -->
+    <div class="sub-heading">Resolved Issues</div>
+    <ul class="resolved-list">
+      <li>Boolean properties converted from yes/no to true/false (C2)</li>
+      <li>Layer names corrected to semantic naming (C1)</li>
+      <li>Pressed and disabled interaction states added (C5)</li>
+      <li>Expanded content panel with content-body slot added (C4)</li>
+    </ul>
 
-    <div class="issue-block">
-      <div class="issue-title" style="color:var(--ready-fg)">Boolean Strings — Resolved in v2</div>
-      <div class="infobox infobox-resolved">
-        <p><span class="label-resolved">Resolved:</span> <code>leading icon</code> and <code>label description</code> properties have been converted from <code>yes</code>/<code>no</code> strings to <code>true</code>/<code>false</code> booleans across all 8 variants. Layer names <code>Placeholder</code> → <code>icon-leading</code> and <code>Frame</code> → <code>container</code> also corrected.</p>
-      </div>
-    </div>
-
-    <div class="issue-block">
-      <div class="issue-title" style="color:var(--ready-fg)">No Expanded Content Panel — Resolved in v4</div>
-      <div class="infobox infobox-resolved">
-        <p><span class="label-resolved">Resolved:</span> A <code>content-body</code> frame (360×80px) added to all 12 expanded variants via Figma MCP. Positioned at y=62 inside each container. Background token <code>surface/expanded-body</code> (#F4F7FB), border #E5EBF4. All containers resized from 62px → 142px. Auto-layout set to NONE to allow free child positioning.</p>
-      </div>
-    </div>
-
-    <div class="issue-block">
-      <div class="issue-title" style="color:var(--ready-fg)">Missing Interaction States — Resolved in v3</div>
-      <div class="infobox infobox-resolved">
-        <p><span class="label-resolved">Resolved:</span> <code>pressed</code> and <code>disabled</code> variants added via Figma MCP. Component now has 24 variants with a <code>state</code> property (default / pressed / disabled). Pressed uses #EEF3FB bg; disabled uses muted label (#B5BEC9), description (#C8D5E4), and icon (#D4D9E2) tokens across all combinations.</p>
-      </div>
-    </div>
-
-    <div class="issue-block">
-      <div class="issue-title" style="color:var(--ready-fg)">Generic Internal Layer Name — Resolved in v2</div>
-      <div class="infobox infobox-resolved">
-        <p><span class="label-resolved">Resolved:</span> <code>Placeholder</code> → <code>icon-leading</code> applied to all 4 leading icon instances across variants. Root container layers also corrected from <code>Frame</code> → <code>container</code>.</p>
-      </div>
-    </div>
-
-    <!-- ── Phase 2 divider ──────────────────────────────────────── -->
-    <div class="phase-divider">
-      <div class="phase-divider-line"></div>
-      <div class="phase-label phase-2">📱 Phase 2 — Native Mobile Readiness</div>
-      <div class="phase-divider-line"></div>
-    </div>
+    <!-- ── Native Mobile Readiness ─────────────────────────────── -->
+    <div class="section-heading" style="margin-top:48px">Native Mobile Readiness</div>
 
     <!-- Variants Inventory -->
-    <div class="sub-heading" style="margin-top:0">Variants Inventory <span style="font-weight:400;color:var(--muted)">(24 total — 8 per state)</span></div>
+    <div class="sub-heading">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:14px">(24 total)</span></div>
+    <p>8 combinations of <code>type</code> x <code>leadingIcon</code> x <code>labelDescription</code>, each across 3 states (default, pressed, disabled).</p>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th><code style="background:transparent;color:var(--navy);padding:0;font-size:11px">type</code></th>
-            <th><code style="background:transparent;color:var(--navy);padding:0;font-size:11px">leadingIcon</code></th>
-            <th><code style="background:transparent;color:var(--navy);padding:0;font-size:11px">labelDescription</code></th>
+            <th>type</th>
+            <th>leadingIcon</th>
+            <th>labelDescription</th>
             <th>Node ID</th>
-            <th>iOS</th>
-            <th>Android</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>collapsed</td><td>true</td><td>true</td>
             <td class="mono">16830:2026</td>
-            <td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td>
           </tr>
           <tr>
             <td>expanded</td><td>true</td><td>true</td>
             <td class="mono">16830:2035</td>
-            <td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td>
           </tr>
           <tr>
             <td>collapsed</td><td>false</td><td>true</td>
             <td class="mono">16830:2044</td>
-            <td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td>
           </tr>
           <tr>
             <td>expanded</td><td>false</td><td>true</td>
             <td class="mono">16830:2051</td>
-            <td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td>
           </tr>
           <tr>
             <td>collapsed</td><td>true</td><td>false</td>
             <td class="mono">16830:2058</td>
-            <td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td>
           </tr>
           <tr>
             <td>expanded</td><td>true</td><td>false</td>
             <td class="mono">16830:2066</td>
-            <td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td>
           </tr>
           <tr>
             <td>collapsed</td><td>false</td><td>false</td>
             <td class="mono">16830:2074</td>
-            <td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td>
           </tr>
           <tr>
             <td>expanded</td><td>false</td><td>false</td>
             <td class="mono">16830:2080</td>
-            <td class="muted">DisclosureGroup</td><td class="muted">AnimatedVisibility</td>
           </tr>
         </tbody>
       </table>
-    </div>
-
-    <!-- Overall Status -->
-    <div class="sub-heading">Overall Status</div>
-    <div class="infobox infobox-status">
-      <p><span class="label-status">Needs Refinement</span> — <strong style="color:var(--ready-fg)">v4 progress:</strong> Layer naming (C1), boolean notation (C2), interaction states (C5), and expanded content panel (C4) are all resolved. Component set is 24 variants with full content-body slots. Only remaining blocker: Code Connect mappings (C7).</p>
     </div>
 
     <!-- Criteria Scorecard -->
@@ -371,43 +318,43 @@ open-issues: C7
             <td class="mono center">C1</td>
             <td><strong>Layer Structure &amp; Naming</strong></td>
             <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted"><strong style="color:var(--ready-fg)">Fixed v2.</strong> All layers now use semantic names: <code>container</code>, <code>icon-leading</code>, <code>content</code>, <code>trailing-icon</code>. No generic defaults remaining.</td>
+            <td class="muted">Semantic names across all variants: <code>container</code>, <code>icon-leading</code>, <code>content</code>, <code>trailing-icon</code>.</td>
           </tr>
           <tr>
             <td class="mono center">C2</td>
             <td><strong>Variant &amp; Property Naming</strong></td>
             <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted"><strong style="color:var(--ready-fg)">Fixed v2.</strong> All 8 variants updated to <code>true</code>/<code>false</code> booleans. Variant keys use clear <code>key=value</code> syntax.</td>
+            <td class="muted">Boolean properties use <code>true</code>/<code>false</code>. Variant keys use <code>key=value</code> syntax.</td>
           </tr>
           <tr>
             <td class="mono center">C3</td>
             <td><strong>Token Coverage</strong></td>
             <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">All colors, spacing, and typography are fully tokenized. No hardcoded values found.</td>
+            <td class="muted">All colors, spacing, and typography fully tokenized.</td>
           </tr>
           <tr>
             <td class="mono center">C4</td>
             <td><strong>Native Mappability</strong></td>
             <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted"><strong style="color:var(--ready-fg)">Fixed v4.</strong> Header row + content-body slot both defined. Maps cleanly to <code>DisclosureGroup</code> / <code>AnimatedVisibility</code> with a child content slot.</td>
+            <td class="muted">Header + content-body slot maps to <code>DisclosureGroup</code> / <code>AnimatedVisibility</code>.</td>
           </tr>
           <tr>
             <td class="mono center">C5</td>
             <td><strong>Interaction State Coverage</strong></td>
             <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted"><strong style="color:var(--ready-fg)">Fixed v3.</strong> 24 variants across state=default/pressed/disabled. Focused (a11y) not yet defined but pressed and disabled are fully covered.</td>
+            <td class="muted">Default, pressed, and disabled states covered across all 24 variants.</td>
           </tr>
           <tr>
             <td class="mono center">C6</td>
             <td><strong>Asset &amp; Icon Quality</strong></td>
             <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">Chevron Down / Up confirmed as Figma component instances (vector paths). Leading icon slot is a placeholder by design.</td>
+            <td class="muted">Chevrons are vector component instances. Leading icon is a slot placeholder.</td>
           </tr>
           <tr>
             <td class="mono center">C7</td>
             <td><strong>Code Connect Linkability</strong></td>
             <td><span class="badge badge-refine">Needs Refinement</span></td>
-            <td class="muted">Properly structured component set. No mappings registered yet. Property notation needs minor cleanup.</td>
+            <td class="muted">No Code Connect mappings registered yet.</td>
           </tr>
         </tbody>
       </table>
@@ -415,7 +362,6 @@ open-issues: C7
 
     <!-- Interaction States -->
     <div class="sub-heading">Interaction States</div>
-    <p>Standard interactive component. The following states are expected for a complete native implementation:</p>
     <div class="table-wrap">
       <table>
         <thead>
@@ -447,78 +393,49 @@ open-issues: C7
             <td class="center"><span class="check">Yes</span></td>
             <td class="center"><span class="check">Yes</span></td>
             <td class="mono">state=pressed</td>
-            <td class="muted"><strong style="color:var(--ready-fg)">Fixed v3.</strong> Light blue bg (#EEF3FB) across all 8 type/icon/desc combos.</td>
+            <td class="muted">Light blue background (#EEF3FB) across all 8 combinations.</td>
           </tr>
           <tr>
             <td><strong>Disabled</strong></td>
             <td class="center"><span class="check">Yes</span></td>
             <td class="center"><span class="check">Yes</span></td>
             <td class="mono">state=disabled</td>
-            <td class="muted"><strong style="color:var(--ready-fg)">Fixed v3.</strong> Muted bg, label (#B5BEC9), desc (#C8D5E4), icon (#D4D9E2).</td>
+            <td class="muted">Muted tokens applied for label, description, and icon.</td>
           </tr>
           <tr>
             <td><strong>Focused (a11y)</strong></td>
             <td class="center"><span class="check">Yes</span></td>
-            <td class="center"><span class="cross">✗</span></td>
+            <td class="center"><span class="cross">&#x2717;</span></td>
             <td class="muted center">—</td>
             <td class="muted">No focus ring defined. Required for keyboard/switch navigation.</td>
-          </tr>
-          <tr>
-            <td><strong>Loading</strong></td>
-            <td class="center"><span class="dash">—</span></td>
-            <td class="center"><span class="dash">—</span></td>
-            <td class="muted center">N/A</td>
-            <td class="muted">Not expected for a standard accordion header row.</td>
-          </tr>
-          <tr>
-            <td><strong>Error</strong></td>
-            <td class="center"><span class="dash">—</span></td>
-            <td class="center"><span class="dash">—</span></td>
-            <td class="muted center">N/A</td>
-            <td class="muted">Accordions do not typically carry error states at the header level.</td>
           </tr>
         </tbody>
       </table>
     </div>
+    <p class="table-footnote">Loading and error states are not applicable for accordion headers.</p>
 
-    <!-- A. Native Mobile Translatability -->
-    <div class="sub-heading">A. Native Mobile Translatability</div>
-
-    <div class="sub-label" style="color:var(--ready-fg)">A1 — What Works Well</div>
+    <!-- Native Translatability -->
+    <div class="sub-heading">What Works Well</div>
     <ul class="findings">
-      <li>Simple horizontal row layout maps directly to <code>HStack</code>/<code>Row</code> in both platforms with no web-specific layout assumptions.</li>
-      <li>Collapsed/expanded toggle maps cleanly to <code>DisclosureGroup</code> (SwiftUI) or <code>AnimatedVisibility</code> in a <code>Column</code> (Compose).</li>
-      <li>Chevron icons are confirmed Figma component instances (vector paths) — export cleanly as SVG/PDF for iOS or VectorDrawable for Android.</li>
+      <li>Simple horizontal row layout maps directly to <code>HStack</code>/<code>Row</code> with no web-specific assumptions.</li>
+      <li>Collapsed/expanded toggle maps cleanly to <code>DisclosureGroup</code> (SwiftUI) or <code>AnimatedVisibility</code> (Compose).</li>
+      <li>Chevron icons are Figma component instances — export cleanly as SVG/PDF for iOS or VectorDrawable for Android.</li>
       <li>All spacing and padding values are tokenized (<code>space/space-12</code>, <code>space/space-16</code>).</li>
-      <li>Color tokens explicitly separate collapsed and expanded states, allowing direct 1:1 mapping to native color resources.</li>
+      <li>Color tokens explicitly separate collapsed and expanded states for direct 1:1 native mapping.</li>
     </ul>
 
-    <div class="sub-label" style="color:var(--refine-fg)">A2 — Issues &amp; Recommendations</div>
-
-    <div class="issue-block">
-      <div class="issue-title" style="color:var(--ready-fg)">Missing Interaction States — Resolved in v3</div>
-      <div class="infobox infobox-resolved">
-        <p><span class="label-resolved">Resolved:</span> Pressed and disabled states added via Figma MCP. Engineers can reference <code>state=pressed</code> and <code>state=disabled</code> directly. Focused state (a11y focus ring) is still not defined but is lower priority for initial native handoff.</p>
-      </div>
-    </div>
-
-    <div class="issue-block">
-      <div class="issue-title" style="color:var(--ready-fg)">Expanded Content Panel — Resolved in v4</div>
-      <div class="infobox infobox-resolved">
-        <p><span class="label-resolved">Resolved:</span> <code>content-body</code> slot added to all 12 expanded variants. Background #F4F7FB, border #E5EBF4. Native engineers can now reference the defined content area in both <code>DisclosureGroup</code> (SwiftUI) and <code>AnimatedVisibility</code> (Compose) implementations.</p>
-      </div>
-    </div>
+    <div class="sub-heading">Open Issues</div>
 
     <div class="issue-block">
       <div class="issue-title">Custom Fonts — Device Availability</div>
       <div class="infobox infobox-issue">
-        <p><span class="label-issue">Issue:</span> Label uses "Proxima Soft" and description uses "BarkAda" — neither are system fonts on iOS or Android and must be bundled.</p>
-        <p><span class="label-rec">Recommendation:</span> Confirm both fonts are bundled in native apps. Map tokens to <code>UIFont(name:)</code> / <code>Font.custom()</code> on iOS and <code>fontFamily</code> in the Compose theme on Android.</p>
+        <p>The label uses "Proxima Soft" and the description uses "BarkAda" — neither are system fonts on iOS or Android. Both must be bundled in the native app.</p>
+        <p>Map tokens to <code>UIFont(name:)</code> / <code>Font.custom()</code> on iOS and <code>fontFamily</code> in the Compose theme on Android.</p>
       </div>
     </div>
 
-    <!-- B. Code Connect Readiness -->
-    <div class="sub-heading">B. Code Connect Readiness</div>
+    <!-- Code Connect Readiness -->
+    <div class="sub-heading">Code Connect Readiness</div>
     <div class="table-wrap">
       <table>
         <thead>
@@ -532,32 +449,32 @@ open-issues: C7
           <tr>
             <td><strong>Component type</strong></td>
             <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">Proper Figma component set — not a bare group or frame.</td>
+            <td class="muted">Proper Figma component set.</td>
           </tr>
           <tr>
             <td><strong>Variant naming</strong></td>
             <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted"><strong style="color:var(--ready-fg)">Fixed v2.</strong> All variants use <code>key=value</code> syntax with <code>true</code>/<code>false</code> booleans.</td>
+            <td class="muted"><code>key=value</code> syntax with <code>true</code>/<code>false</code> booleans.</td>
           </tr>
           <tr>
             <td><strong>Property naming</strong></td>
             <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted"><strong style="color:var(--ready-fg)">Fixed v2.</strong> Boolean values corrected. Clean 1:1 mapping to native params now possible.</td>
+            <td class="muted">Clean 1:1 mapping to native params.</td>
           </tr>
           <tr>
             <td><strong>Layer naming</strong></td>
             <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted"><strong style="color:var(--ready-fg)">Fixed v2.</strong> All layers renamed: <code>container</code>, <code>icon-leading</code>, <code>content</code>, <code>trailing-icon</code>.</td>
+            <td class="muted"><code>container</code>, <code>icon-leading</code>, <code>content</code>, <code>trailing-icon</code>.</td>
           </tr>
           <tr>
             <td><strong>Token coverage</strong></td>
             <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">All values tokenized. No hardcoded values found.</td>
+            <td class="muted">All values tokenized.</td>
           </tr>
           <tr>
             <td><strong>Asset quality</strong></td>
             <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">Chevrons are confirmed vector component instances.</td>
+            <td class="muted">Chevrons are vector component instances.</td>
           </tr>
           <tr>
             <td><strong>Code Connect</strong></td>
@@ -590,32 +507,32 @@ open-issues: C7
             <td class="mono">type</td>
             <td class="mono">isExpanded: Bool</td>
             <td class="mono">isExpanded: Boolean</td>
-            <td class="muted">Map <code>collapsed</code>→<code>false</code>, <code>expanded</code>→<code>true</code></td>
+            <td class="muted"><code>collapsed</code> maps to <code>false</code>, <code>expanded</code> to <code>true</code></td>
           </tr>
           <tr>
             <td class="mono">state</td>
             <td class="mono">isDisabled: Bool</td>
             <td class="mono">enabled: Boolean</td>
-            <td class="muted"><code>disabled</code>→disabled; pressed handled natively by gesture recognizer</td>
+            <td class="muted">Pressed handled natively by gesture recognizer</td>
           </tr>
           <tr>
             <td class="mono">leadingIcon</td>
             <td class="mono">leadingIcon: Image?</td>
             <td class="mono">leadingIcon: @Composable?</td>
-            <td class="muted"><code>nil</code>/<code>null</code>=hidden</td>
+            <td class="muted"><code>nil</code>/<code>null</code> hides the icon</td>
           </tr>
           <tr>
             <td class="mono">labelDescription</td>
             <td class="mono">description: String?</td>
             <td class="mono">description: String?</td>
-            <td class="muted"><code>nil</code>/<code>null</code>=hidden</td>
+            <td class="muted"><code>nil</code>/<code>null</code> hides the description</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- C. Design Token Coverage -->
-    <div class="sub-heading">C. Design Token Coverage</div>
+    <!-- Design Token Coverage -->
+    <div class="sub-heading">Design Token Coverage</div>
     <div class="table-wrap">
       <table>
         <thead>
@@ -626,22 +543,17 @@ open-issues: C7
           </tr>
         </thead>
         <tbody>
-          <tr><td class="mono">main/accordion/color/collapsed/bg</td><td class="mono">#FFFFFF</td><td class="muted">Use <code>Color.white</code></td></tr>
-          <tr><td class="mono">main/accordion/color/collapsed/border</td><td class="mono">#E5EBF4</td><td class="muted">Divider color</td></tr>
-          <tr><td class="mono">main/accordion/color/collapsed/label</td><td class="mono">#0A2757</td><td class="muted">Primary text</td></tr>
-          <tr><td class="mono">main/accordion/color/collapsed/description</td><td class="mono">#90A8D0</td><td class="muted">Secondary text</td></tr>
-          <tr><td class="mono">main/accordion/color/collapsed/icon-chevron</td><td class="mono">#005CE5</td><td class="muted">Tint / foreground</td></tr>
-          <tr><td class="mono">main/accordion/color/expanded/bg</td><td class="mono">#FFFFFF</td><td class="muted">Same as collapsed</td></tr>
-          <tr><td class="mono">main/accordion/color/expanded/border</td><td class="mono">#E5EBF4</td><td class="muted">Same as collapsed</td></tr>
-          <tr><td class="mono">main/accordion/color/expanded/label</td><td class="mono">#0A2757</td><td class="muted">Same as collapsed</td></tr>
-          <tr><td class="mono">main/accordion/color/expanded/description</td><td class="mono">#90A8D0</td><td class="muted">Same as collapsed</td></tr>
-          <tr><td class="mono">main/accordion/color/expanded/icon-chevron</td><td class="mono">#005CE5</td><td class="muted">Same as collapsed</td></tr>
-          <tr><td class="mono">surface/pressed</td><td class="mono">#EEF3FB</td><td class="muted">Pressed bg — <strong style="color:var(--ready-fg)">Added v3</strong></td></tr>
-          <tr><td class="mono">surface/disabled</td><td class="mono">#F5F7FA</td><td class="muted">Disabled bg — <strong style="color:var(--ready-fg)">Added v3</strong></td></tr>
-          <tr><td class="mono">text/disabled</td><td class="mono">#B5BEC9</td><td class="muted">Disabled label — <strong style="color:var(--ready-fg)">Added v3</strong></td></tr>
-          <tr><td class="mono">text/disabled-secondary</td><td class="mono">#C8D5E4</td><td class="muted">Disabled description — <strong style="color:var(--ready-fg)">Added v3</strong></td></tr>
-          <tr><td class="mono">icon/disabled</td><td class="mono">#D4D9E2</td><td class="muted">Disabled icon — <strong style="color:var(--ready-fg)">Added v3</strong></td></tr>
-          <tr><td class="mono">surface/expanded-body</td><td class="mono">#F4F7FB</td><td class="muted">Content panel bg — <strong style="color:var(--ready-fg)">Added v4</strong></td></tr>
+          <tr><td class="mono">accordion/color/bg</td><td class="mono">#FFFFFF</td><td class="muted">Same for collapsed and expanded</td></tr>
+          <tr><td class="mono">accordion/color/border</td><td class="mono">#E5EBF4</td><td class="muted">Divider color</td></tr>
+          <tr><td class="mono">accordion/color/label</td><td class="mono">#0A2757</td><td class="muted">Primary text</td></tr>
+          <tr><td class="mono">accordion/color/description</td><td class="mono">#90A8D0</td><td class="muted">Secondary text</td></tr>
+          <tr><td class="mono">accordion/color/icon-chevron</td><td class="mono">#005CE5</td><td class="muted">Tint / foreground</td></tr>
+          <tr><td class="mono">surface/pressed</td><td class="mono">#EEF3FB</td><td class="muted">Pressed background</td></tr>
+          <tr><td class="mono">surface/disabled</td><td class="mono">#F5F7FA</td><td class="muted">Disabled background</td></tr>
+          <tr><td class="mono">text/disabled</td><td class="mono">#B5BEC9</td><td class="muted">Disabled label</td></tr>
+          <tr><td class="mono">text/disabled-secondary</td><td class="mono">#C8D5E4</td><td class="muted">Disabled description</td></tr>
+          <tr><td class="mono">icon/disabled</td><td class="mono">#D4D9E2</td><td class="muted">Disabled icon</td></tr>
+          <tr><td class="mono">surface/expanded-body</td><td class="mono">#F4F7FB</td><td class="muted">Content panel background</td></tr>
           <tr><td class="mono">font-family/font-primary</td><td class="mono">Proxima Soft</td><td class="muted">Verify bundle</td></tr>
           <tr><td class="mono">font-family/font-secondary</td><td class="mono">BarkAda</td><td class="muted">Verify bundle</td></tr>
           <tr><td class="mono">font-size/font-size-25</td><td class="mono">16px</td><td class="muted">Label size</td></tr>
@@ -653,7 +565,7 @@ open-issues: C7
     </div>
 
     <!-- Action Items -->
-    <div class="sub-heading" style="margin-top:36px">Action Items — Accordion</div>
+    <div class="sub-heading">Action Items</div>
     <div class="table-wrap">
       <table>
         <thead>
@@ -665,38 +577,14 @@ open-issues: C7
           </tr>
         </thead>
         <tbody>
-          <tr class="done">
-            <td class="mono center">1</td>
-            <td class="mono">C1</td>
-            <td><s>Rename <code>Placeholder</code> → <code>icon-leading</code> and <code>Frame</code> → <code>container</code>.</s></td>
-            <td><span class="badge badge-ready">Done</span></td>
-          </tr>
-          <tr class="done">
-            <td class="mono center">2</td>
-            <td class="mono">C2</td>
-            <td><s>Convert <code>leadingIcon</code> and <code>labelDescription</code> values from <code>yes</code>/<code>no</code> to <code>true</code>/<code>false</code> booleans.</s></td>
-            <td><span class="badge badge-ready">Done</span></td>
-          </tr>
-          <tr class="done">
-            <td class="mono center">3</td>
-            <td class="mono">C5</td>
-            <td><s>Add <strong>pressed</strong> and <strong>disabled</strong> variant states with semantic color tokens.</s></td>
-            <td><span class="badge badge-ready">Done</span></td>
-          </tr>
-          <tr class="done">
-            <td class="mono center">4</td>
-            <td class="mono">C4</td>
-            <td><s>Add the <strong>expanded content panel</strong> as a slot/placeholder in the expanded variant with padding, background token, and divider.</s></td>
-            <td><span class="badge badge-ready">Done</span></td>
-          </tr>
           <tr>
-            <td class="mono center">5</td>
+            <td class="mono center">1</td>
             <td class="mono">C3/C4</td>
             <td>Confirm <strong>Proxima Soft</strong> and <strong>BarkAda</strong> are bundled in native apps. Document font token mapping in the setup guide.</td>
             <td><span class="badge badge-refine">Open</span></td>
           </tr>
           <tr>
-            <td class="mono center">6</td>
+            <td class="mono center">2</td>
             <td class="mono">C7</td>
             <td>Create native component files and register Code Connect mappings via the Figma Code Connect CLI.</td>
             <td><span class="badge badge-refine">Open</span></td>
@@ -704,6 +592,8 @@ open-issues: C7
         </tbody>
       </table>
     </div>
+    </div><!-- /comp-tab-content assessment -->
+    </div><!-- /data-tab-group -->
 
   </div><!-- /content-wrap -->
 </div><!-- /panel-accordion -->

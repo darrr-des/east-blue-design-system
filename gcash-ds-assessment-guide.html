@@ -6,387 +6,446 @@
 <title>GCash Design System — Component Assessment Guide</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--navy:#0A2757;--blue:#005CE5;--blue-mid:#3A7FEF;--blue-light:#E8F0FB;--border:#E5EBF4;--bg:#F4F7FB;--white:#FFFFFF;--text:#1A2740;--muted:#5B7194;--sidebar-w:250px;--ready-fg:#1A7A4A;--ready-bg:#E6F4ED;--refine-fg:#B45309;--refine-bg:#FEF3C7;--rework-fg:#B91C1C;--rework-bg:#FEE2E2;--na-fg:#6B7280;--na-bg:#F3F4F6;--font:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;--mono:ui-monospace,'SF Mono','Cascadia Code','Fira Code',monospace;--radius:6px}
-html{font-size:15px;scroll-behavior:smooth}
-body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;display:flex;min-height:100vh}
-.sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:100;overflow-y:auto}
-.sidebar-brand{padding:28px 20px 20px;border-bottom:1px solid rgba(255,255,255,.08)}
-.sidebar-brand-eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6A9DC8;margin-bottom:6px}
-.sidebar-brand-title{font-size:14px;font-weight:700;color:#fff;line-height:1.3}
-.sidebar-brand-sub{font-size:11px;color:#6A9DC8;margin-top:4px}
-.sidebar-section-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#4A7099;padding:20px 20px 8px}
-.nav-item{display:flex;align-items:center;gap:10px;padding:8px 20px;text-decoration:none;font-size:12.5px;color:#90B8D8;border-left:3px solid transparent;transition:background .15s,color .15s,border-color .15s;cursor:pointer}
-.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
-.nav-item.active{background:rgba(0,92,229,.18);color:#fff;border-left-color:var(--blue-mid)}
-.nav-dot{width:5px;height:5px;border-radius:50%;background:#4A7099;flex-shrink:0}
-.sidebar-footer{margin-top:auto;padding:16px 20px;border-top:1px solid rgba(255,255,255,.08);font-size:11px;color:#3E6080;line-height:1.5}
-.main{margin-left:var(--sidebar-w);flex:1;padding:0 48px 80px;max-width:calc(100% - var(--sidebar-w))}
-.topbar{display:flex;align-items:center;gap:8px;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:40px;font-size:12.5px;color:var(--muted)}
-.topbar-current{color:var(--navy);font-weight:600}
-.topbar-sep{color:#C5D0E0}
-.cover{background:var(--navy);border-radius:10px;padding:48px 48px 40px;margin-bottom:56px;position:relative;overflow:hidden}
-.cover::before{content:'';position:absolute;top:-80px;right:-80px;width:340px;height:340px;border-radius:50%;background:rgba(0,92,229,.15);pointer-events:none}
-.cover::after{content:'';position:absolute;bottom:-60px;right:120px;width:200px;height:200px;border-radius:50%;background:rgba(0,92,229,.08);pointer-events:none}
-.cover-eyebrow{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#7AAAE0;margin-bottom:12px}
-.cover-title{font-size:32px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:8px}
-.cover-subtitle{font-size:17px;color:#7AAAE0;margin-bottom:24px}
-.cover-tags{display:flex;flex-wrap:wrap;gap:8px}
-.cover-tag{font-size:11.5px;font-weight:500;color:#A8C4F0;background:rgba(255,255,255,.07);border:1px solid rgba(168,196,240,.2);border-radius:4px;padding:4px 10px}
-.section-heading{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);border-bottom:2px solid var(--border);padding-bottom:10px;margin-bottom:24px}
-.sub-heading{font-size:14.5px;font-weight:700;color:var(--navy);margin:32px 0 12px}
-p,.body-text{font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:12px}
-.page-section{margin-bottom:64px}
-code{font-family:var(--mono);font-size:11.5px;background:#EEF2F8;color:var(--blue);padding:1px 5px;border-radius:3px}
-pre{background:var(--navy);color:#C5D8F8;font-family:var(--mono);font-size:12px;line-height:1.6;border-radius:var(--radius);padding:16px 20px;overflow-x:auto;margin:12px 0 16px}
-pre code{background:none;color:inherit;padding:0;font-size:inherit}
-.table-wrap{overflow-x:auto;margin-bottom:20px;border-radius:var(--radius);border:1px solid var(--border)}
-table{width:100%;border-collapse:collapse;font-size:13px}
-thead tr{background:var(--navy)}
-thead th{color:#fff;font-weight:600;font-size:11.5px;letter-spacing:.05em;text-align:left;padding:10px 14px;white-space:nowrap}
-thead th:first-child{border-radius:var(--radius) 0 0 0}
-thead th:last-child{border-radius:0 var(--radius) 0 0}
-tbody tr{background:var(--white)}
-tbody tr:nth-child(even){background:#F9FAFC}
-td{padding:9px 14px;border-top:1px solid var(--border);color:var(--text);vertical-align:top;line-height:1.55}
-td.muted{color:var(--muted)}td.mono{font-family:var(--mono);font-size:12px;color:var(--blue)}
-td strong{font-weight:600;color:var(--navy)}
-.col-id{width:44px}.col-md{width:140px}
-.badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;letter-spacing:.03em;padding:2px 8px;border-radius:4px;white-space:nowrap}
-.badge::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor}
-.badge-ready{color:var(--ready-fg);background:var(--ready-bg)}.badge-refine{color:var(--refine-fg);background:var(--refine-bg)}.badge-rework{color:var(--rework-fg);background:var(--rework-bg)}.badge-na{color:var(--na-fg);background:var(--na-bg)}.badge-keep{color:#1A7A4A;background:#E6F4ED}.badge-fix{color:#B45309;background:#FEF3C7}.badge-restructure{color:#9333EA;background:#F3E8FF}.badge-consolidate{color:#0369A1;background:#E0F2FE}.badge-remove{color:#B91C1C;background:#FEE2E2}
-.infobox{border-radius:var(--radius);border-left:4px solid;padding:14px 18px;margin-bottom:18px;font-size:13px;line-height:1.65}
-.infobox-tip{border-color:var(--blue);background:var(--blue-light)}.infobox-warn{border-color:var(--refine-fg);background:#FFFBF0}.infobox-good{border-color:var(--ready-fg);background:var(--ready-bg)}
-.infobox p{margin:0 0 7px;color:var(--text)}.infobox p:last-child{margin-bottom:0}
-.how-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px}
-.how-item{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:18px 20px}
-.how-step{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--blue);margin-bottom:8px}
-.how-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px}
-.how-desc{font-size:12px;color:var(--muted);line-height:1.55}
-.file-tree{background:var(--navy);border-radius:var(--radius);padding:18px 22px;margin:12px 0 16px;font-family:var(--mono);font-size:12.5px;line-height:1.7;color:#7AAAE0}
-.file-tree .comment{color:#4A7099}
+:root{
+  --bg:#F7F6F3;--surface:#FFFFFF;--border:#E8E7E4;--border-2:#D8D6D2;
+  --text:#111111;--text-2:#444444;--muted:#666666;
+  --accent:#0056D6;--accent-light:#EEF3FB;
+  --ready-fg:#1A7A4A;--ready-bg:#E6F4ED;
+  --refine-fg:#B45309;--refine-bg:#FEF3C7;
+  --rework-fg:#B91C1C;--rework-bg:#FEE2E2;
+  --na-fg:#6B7280;--na-bg:#F3F4F6;
+  --font:system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:ui-monospace,'SF Mono','Fira Code',monospace;
+  --sidebar-w:260px;--radius:14px
+}
+html{font-size:14px;scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+
+/* ── Sidebar ── */
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--surface);border-right:1px solid rgba(232,231,228,.5);display:flex;flex-direction:column;overflow-y:auto;z-index:100}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:2px}
+.sidebar-brand{padding:20px 18px 16px;border-bottom:1px solid rgba(232,231,228,.5);flex-shrink:0}
+.sidebar-brand-row{display:flex;align-items:center;gap:10px}
+.sidebar-logo{width:30px;height:30px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sidebar-brand-title{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-.01em;line-height:1.2}
+.sidebar-brand-sub{font-size:12px;color:var(--muted);line-height:1.2;margin-top:1px}
+.sidebar-section-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#AAAAAA;padding:22px 18px 4px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:7px 18px;font-size:14px;color:#666666;text-decoration:none;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;border-left:2px solid transparent;transition:background .1s ease,color .1s ease,border-color .1s ease;line-height:1.4}
+.nav-item:hover{background:var(--bg);color:var(--text)}
+.nav-item.active{background:var(--accent-light);color:#1972F9;border-left-color:#1972F9;font-weight:500}
+.sidebar-footer{margin-top:auto;padding:14px 18px;font-size:12px;color:#BBBBBB;border-top:1px solid rgba(232,231,228,.5);flex-shrink:0}
+
+/* ── Main ── */
+.main{margin-left:var(--sidebar-w);padding-right:var(--sidebar-w);min-height:100vh;background:#FFFFFF}
+.content-wrap{max-width:860px;margin:0 auto;padding:40px 48px 80px}
+
+/* ── Breadcrumb ── */
+.back-btn{display:inline-flex;align-items:center;gap:5px;margin-bottom:28px;font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;background:none;border:none;padding:0;cursor:pointer;font-family:var(--font);transition:color .15s ease}
+.back-btn:hover{color:var(--text)}
+.back-btn svg{flex-shrink:0;transition:transform .15s ease}
+.back-btn:hover svg{transform:translateX(-3px)}
+
+/* ── Cover ── */
+.cover{padding:8px 0 32px;border-bottom:1px solid rgba(232,231,228,.5);margin-bottom:36px}
+.cover-eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#1972F9;margin-bottom:10px}
+.cover-title{font-size:28px;font-weight:500;color:var(--text);line-height:1.2;margin-bottom:8px}
+.cover-subtitle{font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+
+/* ── Sections ── */
+.page-section{margin-bottom:48px}
+.section-heading{font-size:18px;font-weight:600;color:var(--text);letter-spacing:-.01em;margin-bottom:6px}
+.section-desc{font-size:14px;color:var(--muted);margin-bottom:16px;line-height:1.65}
+.sub-heading{font-size:18px;font-weight:600;color:var(--text);margin-bottom:12px;margin-top:48px;letter-spacing:-.01em}
+p{font-size:14px;color:var(--text-2);line-height:1.65;margin-bottom:12px}
+p:last-child{margin-bottom:0}
+
+/* ── Tables ── */
+.table-wrap{overflow:hidden;border-radius:var(--radius);background:#FFFFFF;border:1px solid rgba(232,231,228,.5);margin-bottom:20px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+thead th{background:#F3F3F6;padding:10px 16px;text-align:left;font-size:12px;font-weight:600;color:#005CE5;letter-spacing:.02em;white-space:nowrap}
+thead th:first-child{border-radius:14px 0 0 0}
+thead th:last-child{border-radius:0 14px 0 0}
+tbody td{padding:11px 16px;border-top:1px solid rgba(0,0,0,.05);vertical-align:top;color:var(--text-2)}
+tbody tr:first-child td{border-top:none}
+td.mono{font-family:var(--mono);font-size:12px}
+td.muted{color:var(--muted);font-size:12px}
+td strong{font-weight:600;color:var(--text)}
+.col-id{width:48px}.col-md{width:160px}.col-badge{width:120px}
+
+/* ── Badges ── */
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:normal;white-space:nowrap}
+.badge-ready{background:var(--ready-bg);color:var(--ready-fg)}
+.badge-refine{background:var(--refine-bg);color:var(--refine-fg)}
+.badge-rework{background:var(--rework-bg);color:var(--rework-fg)}
+.badge-na{background:var(--na-bg);color:var(--na-fg)}
+.badge-keep{color:#1A7A4A;background:#E6F4ED}
+.badge-fix{color:#B45309;background:#FEF3C7}
+.badge-restructure{color:#9333EA;background:#F3E8FF}
+.badge-consolidate{color:#0369A1;background:#E0F2FE}
+.badge-remove{color:#B91C1C;background:#FEE2E2}
+
+/* ── Code ── */
+code{font-family:var(--mono);font-size:12px;font-weight:600;background:#F0F1F2;padding:1px 4px;border-radius:3px;color:#3C3F44}
+pre{background:#F3F3F6;border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;overflow-x:auto;margin:12px 0 16px;font-size:12px;line-height:1.6}
+pre code{background:none;padding:0;font-weight:400;color:var(--text-2)}
+
+/* ── How cards ── */
+.how-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.how-card{background:#F3F3F6;border-radius:var(--radius);padding:20px}
+.how-step{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:capitalize;color:var(--accent);margin-bottom:6px}
+.how-title{font-size:18px;font-weight:600;color:var(--text);margin-bottom:6px}
+.how-desc{font-size:14px;color:var(--muted);line-height:1.6}
+.how-desc code{font-size:12px}
+
+/* ── Dep cards ── */
+.dep-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.dep-card{background:#F3F3F6;border-radius:var(--radius);padding:20px}
+.dep-label{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:capitalize;color:var(--accent);margin-bottom:6px}
+.dep-title{font-size:18px;font-weight:600;color:var(--text);margin-bottom:6px}
+.dep-desc{font-size:14px;color:var(--muted);line-height:1.6}
+.dep-desc a{color:var(--accent);text-decoration:none}
+.dep-desc a:hover{text-decoration:underline}
+
+/* ── Step cards ── */
+.step-card{background:#F3F3F6;border-radius:var(--radius);padding:20px;margin-bottom:12px}
+.step-label{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:capitalize;color:var(--accent);margin-bottom:6px}
+.step-title{font-size:18px;font-weight:600;color:var(--text);margin-bottom:6px}
+.step-body{font-size:14px;color:var(--muted);line-height:1.6}
+.step-body pre{margin:8px 0 0;background:#FFFFFF;border:1px solid var(--border)}
+
+/* ── Pattern items ── */
 .pattern-group{margin-bottom:24px}
-.pattern-item{margin-bottom:10px;padding-left:16px;border-left:3px solid var(--border);font-size:13px;color:var(--muted);line-height:1.6}
-.pattern-item strong{color:var(--text)}.pattern-item code{font-size:10.5px}
-.step-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:16px 20px;margin-bottom:14px}
-.step-label{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--blue);margin-bottom:6px}
-.step-title{font-size:13.5px;font-weight:700;color:var(--navy);margin-bottom:6px}
-.step-body{font-size:12.5px;color:var(--muted);line-height:1.6}
-.step-body code{font-size:10.5px}
-ol.steps{padding-left:20px;margin-bottom:14px}ol.steps li{font-size:13px;color:var(--muted);margin-bottom:8px;line-height:1.6}
-.footer{border-top:1px solid var(--border);padding-top:20px;font-size:11.5px;color:#9BAEC4;text-align:center;margin-top:64px;font-style:italic}
-@media print{.sidebar{display:none}.main{margin-left:0;max-width:100%;padding:0 24px 40px}.cover{border-radius:0}}
+.pattern-item{font-size:14px;color:var(--muted);line-height:1.65;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.04)}
+.pattern-item:last-child{border-bottom:none}
+.pattern-item strong{color:var(--text)}
+
+/* ── Infobox ── */
+.infobox{border-radius:var(--radius);padding:14px 16px;font-size:12px;line-height:1.65;margin-bottom:16px}
+.infobox p{margin-bottom:6px;font-size:12px}
+.infobox p:last-child{margin-bottom:0}
+.infobox-tip{background:#FFFDF8;border:1px solid #F0E8D4;color:var(--muted)}
+.infobox-warn{background:#FFFDF8;border:1px solid #F0E8D4;color:var(--muted)}
+.infobox-good{background:#FAFDF9;border:1px solid #E2F0E2;color:var(--muted)}
+
+/* ── File tree ── */
+.file-tree{background:#F3F3F6;border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px;margin:12px 0 16px;font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--text-2)}
+.file-tree .comment{color:var(--muted)}
+
+/* ── Footer ── */
+.footer{border-top:1px solid var(--border);padding-top:20px;font-size:12px;color:var(--muted);text-align:center;margin-top:64px}
+
+@media print{.sidebar{display:none}.main{margin-left:0;padding-right:0;max-width:100%;padding:0 24px 40px}}
 </style>
 </head>
 <body>
 <nav class="sidebar">
   <div class="sidebar-brand">
-    <div class="sidebar-brand-eyebrow">GCash Design System</div>
-    <div class="sidebar-brand-title">Component<br>Assessment Guide</div>
-    <div class="sidebar-brand-sub">DS Health + Native Mobile · v2</div>
+    <div class="sidebar-brand-row">
+      <div class="sidebar-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="1" y="1" width="5" height="5" rx="1" fill="#fff"/>
+          <rect x="9" y="1" width="5" height="5" rx="1" fill="#fff" opacity=".75"/>
+          <rect x="1" y="9" width="5" height="5" rx="1" fill="#fff" opacity=".75"/>
+          <rect x="9" y="9" width="5" height="5" rx="1" fill="#fff" opacity=".45"/>
+        </svg>
+      </div>
+      <div>
+        <div class="sidebar-brand-title">GCash Design System</div>
+        <div class="sidebar-brand-sub">Assessment Guide</div>
+      </div>
+    </div>
   </div>
-  <div class="sidebar-section-label">Guide Sections</div>
-  <a class="nav-item" href="#overview" onclick="setActive(this)"><span class="nav-dot"></span> Overview</a>
-  <a class="nav-item" href="#dependencies" onclick="setActive(this)"><span class="nav-dot"></span> Dependencies</a>
-  <a class="nav-item" href="#what-you-assess" onclick="setActive(this)"><span class="nav-dot"></span> What You Assess</a>
-  <a class="nav-item" href="#phase1" onclick="setActive(this)"><span class="nav-dot"></span> Phase 1 — DS Health</a>
-  <a class="nav-item" href="#phase2" onclick="setActive(this)"><span class="nav-dot"></span> Phase 2 — Native Readiness</a>
-  <a class="nav-item" href="#combined" onclick="setActive(this)"><span class="nav-dot"></span> Combined Status</a>
-  <a class="nav-item" href="#architecture" onclick="setActive(this)"><span class="nav-dot"></span> HTML Report Architecture</a>
-  <a class="nav-item" href="#patterns" onclick="setActive(this)"><span class="nav-dot"></span> GCash Patterns</a>
-  <a class="nav-item" href="#workflow" onclick="setActive(this)"><span class="nav-dot"></span> Assessment Workflow</a>
-  <a class="nav-item" href="#output" onclick="setActive(this)"><span class="nav-dot"></span> Output Format</a>
-  <a class="nav-item" href="#progress" onclick="setActive(this)"><span class="nav-dot"></span> Assessment Progress</a>
-  <a class="nav-item" href="#ownership" onclick="setActive(this)"><span class="nav-dot"></span> Ownership</a>
-  <div class="sidebar-footer">March 2026 · For internal use only</div>
+  <div class="sidebar-section-label">Guide</div>
+  <a class="nav-item active" href="#overview" onclick="setActive(this)">Overview</a>
+  <a class="nav-item" href="#dependencies" onclick="setActive(this)">Dependencies</a>
+  <a class="nav-item" href="#ds-health" onclick="setActive(this)">DS Health</a>
+  <a class="nav-item" href="#native-readiness" onclick="setActive(this)">Native Readiness</a>
+  <a class="nav-item" href="#combined" onclick="setActive(this)">Combined Status</a>
+  <a class="nav-item" href="#architecture" onclick="setActive(this)">Report Architecture</a>
+  <a class="nav-item" href="#patterns" onclick="setActive(this)">GCash Patterns</a>
+  <a class="nav-item" href="#workflow" onclick="setActive(this)">Workflow</a>
+  <a class="nav-item" href="#output" onclick="setActive(this)">Output Format</a>
+  <a class="nav-item" href="#progress" onclick="setActive(this)">Progress</a>
+  <a class="nav-item" href="#ownership" onclick="setActive(this)">Ownership</a>
+  <div class="sidebar-footer">March 2026 &nbsp;&middot;&nbsp; For internal use only</div>
 </nav>
+
 <main class="main">
-  <div class="topbar"><a href="index.html" style="color:var(--muted);text-decoration:none;">GCash Design System</a><span class="topbar-sep">›</span><span class="topbar-current">Component Assessment Guide</span></div>
+  <div class="content-wrap">
 
-  <div class="cover" id="overview">
-    <div class="cover-eyebrow">GCash Design System — Internal Reference</div>
-    <div class="cover-title">Component Assessment Guide</div>
-    <div class="cover-subtitle">Combined DS Health + Native Mobile Readiness</div>
-    <div class="cover-tags"><span class="cover-tag">4 DS Health Traits</span><span class="cover-tag">7 Native Criteria (C1–C7)</span><span class="cover-tag">SwiftUI + Jetpack Compose</span><span class="cover-tag">Figma MCP Workflow</span><span class="cover-tag">Modular HTML Report</span></div>
-  </div>
-  <p>This document is the unified assessment guide for evaluating GCash Design System components across two dimensions: <strong>DS Health</strong> (should this component exist in the core DS? Is it well-structured?) and <strong>Native Mobile Readiness</strong> (can it be implemented in SwiftUI and Jetpack Compose?).</p>
-  <p>Assessment results are published as a <strong>modular HTML report</strong> — each component lives in its own <code>.html</code> source file, and a build script assembles them into a single <code>index.html</code> with minified CSS. See the <a href="#architecture">HTML Report Architecture</a> section for details.</p>
-  <p>Use this guide as your first-message context when starting a new Claude assessment session.</p>
+    <a class="back-btn" href="index.html">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Home
+    </a>
 
-  <!-- DEPENDENCIES -->
-  <div class="page-section" id="dependencies">
-    <div class="section-heading">Dependencies</div>
-    <div class="how-grid">
-      <div class="how-item"><div class="how-step">01 — Claude</div><div class="how-title">Claude Access</div><div class="how-desc">Recommended: Claude Sonnet (most recent). No special system prompt — paste this document as first-message context.</div></div>
-      <div class="how-item"><div class="how-step">02 — Figma MCP</div><div class="how-title">Figma MCP Server</div><div class="how-desc">Direct file access via MCP. Minimum <strong>viewer</strong> access. <a href="https://help.figma.com/hc/en-us/articles/32132100833559" style="color:var(--blue)">Setup guide ↗</a></div></div>
-      <div class="how-item"><div class="how-step">03 — Figma File</div><div class="how-title">Sticker Sheets v2</div><div class="how-desc"><a href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=16870-9381&amp;t=HkaWvJ7nLoQVjegR-0" style="color:var(--blue)">Open in Figma ↗</a></div></div>
-      <div class="how-item"><div class="how-step">04 — Node.js</div><div class="how-title">Build Script</div><div class="how-desc">Run <code>node assessment-src/build.js</code> to assemble the report. Uses only <code>fs</code> and <code>path</code>.</div></div>
-    </div>
-    <div class="infobox infobox-warn" style="margin-top:16px"><p>⚠️ <strong>Never paste your Figma Personal Access Token into the chat.</strong> Authenticate via the MCP server setup.</p></div>
-  </div>
-
-  <!-- WHAT YOU ARE ASSESSING -->
-  <div class="page-section" id="what-you-assess">
-    <div class="section-heading">What You Are Assessing</div>
-    <p>Every component is evaluated across <strong>two phases</strong>. Both must be completed for each component.</p>
-    <div class="how-grid" style="grid-template-columns:repeat(2,1fr)">
-      <div class="how-item"><div class="how-step">Phase 1</div><div class="how-title">DS Health (Debloat Audit)</div><div class="how-desc">Is this component worth keeping in the core DS? Is it well-designed?</div></div>
-      <div class="how-item"><div class="how-step">Phase 2</div><div class="how-title">Native Mobile Readiness</div><div class="how-desc">Can this component be handed off to engineers for SwiftUI and Jetpack Compose implementation?</div></div>
-    </div>
-    <p style="margin-top:16px">These are complementary but distinct. A component can pass Phase 1 (belongs in DS) but fail Phase 2 (raster icons, broken token coverage). Both must be assessed.</p>
-  </div>
-
-  <!-- PHASE 1 -->
-  <div class="page-section" id="phase1">
-    <div class="section-heading">Phase 1: DS Health — The 4 Traits</div>
-    <p>Every component is evaluated against these four traits. Rate each as ✅ Pass · ⚠️ Needs work · ❌ Fail.</p>
-    <div class="table-wrap" style="margin-top:16px"><table><thead><tr><th class="col-md">Trait</th><th>What to Check</th></tr></thead><tbody>
-      <tr><td><strong>Reusable</strong></td><td class="muted">Does this component work across multiple contexts and flows, not just one specific screen or feature?</td></tr>
-      <tr><td><strong>Self-contained</strong></td><td class="muted">Does it carry its own styles, states, and logic without depending on external setup?</td></tr>
-      <tr><td><strong>Consistent</strong></td><td class="muted">Does it behave predictably? Are naming conventions, property types, and state coverage aligned with the rest of the DS?</td></tr>
-      <tr><td><strong>Composable</strong></td><td class="muted">Can it be nested inside other components? Does it fit into the existing component hierarchy?</td></tr>
-    </tbody></table></div>
-    <div class="sub-heading">DS Health Verdicts</div>
-    <p>The overall DS Health verdict is determined by the combination of trait scores and structural findings.</p>
-    <div class="table-wrap"><table><thead><tr><th class="col-md">Verdict</th><th>Meaning</th></tr></thead><tbody>
-      <tr><td><span class="badge badge-keep">Keep</span></td><td class="muted">All 4 traits pass. Component belongs in core DS as-is.</td></tr>
-      <tr><td><span class="badge badge-fix">Fix</span></td><td class="muted">Component belongs in core DS but has specific issues (missing states, naming, incomplete variants).</td></tr>
-      <tr><td><span class="badge badge-restructure">Restructure</span></td><td class="muted">Needs significant property or architectural changes before it is usable.</td></tr>
-      <tr><td><span class="badge badge-consolidate">Consolidate</span></td><td class="muted">Should be merged into another component (reduce duplication).</td></tr>
-      <tr><td><span class="badge badge-na">Product Layer</span></td><td class="muted">Too feature-specific for core DS. Move to a product-layer pattern library.</td></tr>
-      <tr><td><span class="badge badge-remove">Remove</span></td><td class="muted">Redundant, deprecated, or doesn't belong in a design system.</td></tr>
-    </tbody></table></div>
-  </div>
-
-  <!-- PHASE 2 -->
-  <div class="page-section" id="phase2">
-    <div class="section-heading">Phase 2: Native Mobile Readiness — The 7 Criteria</div>
-    <p>Score each criterion independently. The overall component status is set by the <strong>worst-scoring criterion</strong> — one C6 failure makes the whole component "Requires Rework" even if every other criterion passes.</p>
-    <div class="table-wrap" style="margin-top:16px"><table><thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th>What to Check</th></tr></thead><tbody>
-      <tr><td class="mono" style="text-align:center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td class="muted">Are layers named semantically (<code>leading-icon</code>, <code>content</code>) not as Figma defaults (<code>Frame 42</code>)?</td></tr>
-      <tr><td class="mono" style="text-align:center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td class="muted">Clean names? Booleans as <code>true</code>/<code>false</code> (not <code>yes</code>/<code>no</code>)? Enum values hyphenated?</td></tr>
-      <tr><td class="mono" style="text-align:center">C3</td><td><strong>Token Coverage</strong></td><td class="muted">All colors, spacing, typography, radius bound to design tokens? No hardcoded values?</td></tr>
-      <tr><td class="mono" style="text-align:center">C4</td><td><strong>Native Mappability</strong></td><td class="muted">Maps to standard native primitive (<code>DisclosureGroup</code>, <code>Button</code>, <code>List</code>)?</td></tr>
-      <tr><td class="mono" style="text-align:center">C5</td><td><strong>Interaction State Coverage</strong></td><td class="muted">All expected states as variants: default, pressed, disabled, focused?</td></tr>
-      <tr><td class="mono" style="text-align:center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td class="muted">Icons are <strong>vector component instances</strong> (not raster/PNG)? Colored with tokens?</td></tr>
-      <tr><td class="mono" style="text-align:center">C7</td><td><strong>Code Connect Linkability</strong></td><td class="muted">Proper component set? Property names map 1:1 to native params? Mappings registered?</td></tr>
-    </tbody></table></div>
-    <div class="sub-heading">Native Readiness Status Levels</div>
-    <div class="table-wrap"><table><thead><tr><th class="col-md">Status</th><th>Meaning</th></tr></thead><tbody>
-      <tr><td><span class="badge badge-ready">Ready</span></td><td class="muted">Clean structure, maps well to native, Code Connect linkable as-is.</td></tr>
-      <tr><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Minor naming, structural, or token issues to fix before linking.</td></tr>
-      <tr><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Significant structural or design issues — needs redesign before native translation.</td></tr>
-      <tr><td><span class="badge badge-na">Not Applicable</span></td><td class="muted">Web-only concept or removed-from-DS component — skip native assessment.</td></tr>
-    </tbody></table></div>
-  </div>
-
-  <!-- COMBINED STATUS -->
-  <div class="page-section" id="combined">
-    <div class="section-heading">Combined Status at a Glance</div>
-    <div class="table-wrap"><table><thead><tr><th>DS Health Verdict</th><th>Native Status</th><th>Meaning</th></tr></thead><tbody>
-      <tr><td><span class="badge badge-keep">Keep</span></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Ship it — component is clean and native-ready.</td></tr>
-      <tr><td><span class="badge badge-fix">Keep / Fix</span></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Minor fixes needed, assign to DS team.</td></tr>
-      <tr><td><span class="badge badge-restructure">Fix / Restructure</span></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Significant work before engineers can use it.</td></tr>
-      <tr><td><span class="badge badge-na">Product Layer</span></td><td><span class="badge badge-na">N/A</span></td><td class="muted">Move to product library, no native DS component needed.</td></tr>
-      <tr><td><span class="badge badge-remove">Remove / Consolidate</span></td><td><span class="badge badge-na">N/A</span></td><td class="muted">Skip native assessment entirely.</td></tr>
-    </tbody></table></div>
-  </div>
-
-  <!-- HTML REPORT ARCHITECTURE -->
-  <div class="page-section" id="architecture">
-    <div class="section-heading">HTML Report Architecture</div>
-    <p>The assessment report is a modular, build-assembled static site hosted on GitHub Pages.</p>
-    <div class="sub-heading">Repository Structure</div>
-    <div class="file-tree">gcash-design-system/<br>├── index.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">← Built output (do not edit directly)</span><br>├── styles.css &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">← Built output (minified)</span><br>├── README.md<br>└── assessment-src/<br>&nbsp;&nbsp;&nbsp;&nbsp;├── shell.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">← Shared layout, sidebar, cover, JS</span><br>&nbsp;&nbsp;&nbsp;&nbsp;├── styles.css &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">← Source CSS (unminified)</span><br>&nbsp;&nbsp;&nbsp;&nbsp;├── build.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">← Node.js build script</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── components/<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── accordion.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">← One file per component</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── ...</div>
-    <div class="sub-heading">How the Build Works</div>
-    <ol class="steps">
-      <li><code>build.js</code> reads <code>shell.html</code> as the page scaffold</li>
-      <li>It reads every <code>.html</code> file in <code>components/</code> (sorted alphabetically)</li>
-      <li>From each component file, it extracts <strong>4 tagged blocks</strong> using comment markers</li>
-      <li>It injects all blocks into the shell at the corresponding placeholder comments</li>
-      <li>It minifies both HTML and CSS, then writes <code>index.html</code> and <code>styles.css</code> to the repo root</li>
-    </ol>
-    <div class="sub-heading">Building the Report</div>
-    <pre><code>node assessment-src/build.js</code></pre>
-    <pre><code>  + accordion.html
-
-Built → index.html
-  HTML  Original:  48.2 KB
-  HTML  Minified:  34.1 KB  (saved 29.3%) ✅
-  CSS   Original:  12.7 KB
-  CSS   Minified:   8.9 KB  (saved 29.9%) ✅</code></pre>
-  </div>
-
-  <!-- GCASH PATTERNS -->
-  <div class="page-section" id="patterns">
-    <div class="section-heading">GCash-Specific Patterns to Check on Every Component</div>
-    <p>These issue patterns have been confirmed to recur across the GCash DS library. Use them as a checklist during every assessment.</p>
-
-    <div class="sub-heading">Naming &amp; Property Issues (C2)</div>
-    <p>Look for these naming anti-patterns on every component:</p>
-    <div class="pattern-group">
-      <div class="pattern-item"><strong>Boolean properties as strings</strong> — Should use <code>true</code>/<code>false</code>, not <code>yes</code>/<code>no</code> or any mixed-case variant. Flag every occurrence.</div>
-      <div class="pattern-item"><strong>Space-separated variant names</strong> — Values like <code>with stroke</code> are incompatible with Swift/Kotlin enum naming. Should be hyphenated or camelCase.</div>
-      <div class="pattern-item"><strong>Version numbers in variant names</strong> — Names like <code>transaction_v1</code> indicate cleanup debt. Identify what differs, keep the better one, flag the rest.</div>
-      <div class="pattern-item"><strong>Ambiguous size names</strong> — <code>size=default</code> is unclear. Should be <code>small</code>, <code>medium</code>, <code>large</code>.</div>
-      <div class="pattern-item"><strong>Overloaded property keys</strong> — A single <code>type</code> encoding both visual style and layout should be split into two properties.</div>
-      <div class="pattern-item"><strong>State values encoding style</strong> — <code>State</code> property with layout descriptors should be separated. State = interaction states only.</div>
+    <div class="cover" id="overview">
+      <div class="cover-eyebrow">GCash Design System</div>
+      <div class="cover-title">Component Assessment Guide</div>
+      <div class="cover-subtitle">Unified guide for evaluating DS health and native mobile readiness for SwiftUI and Jetpack Compose. Use as first-message context when starting a new assessment session.</div>
     </div>
 
-    <div class="sub-heading">Structural Issues (C1, C4)</div>
-    <p>Look for these structural anti-patterns:</p>
-    <div class="pattern-group">
-      <div class="pattern-item"><strong>Generic layer names</strong> — Figma defaults (<code>Frame 42</code>, <code>Group 7</code>, <code>Vector</code>, <code>Placeholder</code>) should be semantic (<code>icon-leading</code>, <code>content-body</code>).</div>
-      <div class="pattern-item"><strong>Non-component primitives</strong> — Boolean ops, flattened shapes, or bare groups where a proper component set is expected. Cannot be instanced or Code Connected.</div>
-      <div class="pattern-item"><strong>Feature variants instead of properties</strong> — <code>[Component] - with [Feature]</code> should be a boolean property (<code>hasIcon=true</code>), not a standalone frame.</div>
-      <div class="pattern-item"><strong>Baked-in content</strong> — Components that hardcode content into fixed variants instead of composable slots.</div>
+    <!-- Dependencies -->
+    <div class="page-section" id="dependencies">
+      <div class="section-heading">Dependencies</div>
+      <div class="dep-grid">
+        <div class="dep-card"><div class="dep-label">01 — AI</div><div class="dep-title">Claude</div><div class="dep-desc">Recommended: Claude Sonnet (latest). Paste this document as first-message context.</div></div>
+        <div class="dep-card"><div class="dep-label">02 — Integration</div><div class="dep-title">Figma MCP Server</div><div class="dep-desc">Direct file access. Minimum viewer access. <a href="https://help.figma.com/hc/en-us/articles/32132100833559">Setup guide</a></div></div>
+        <div class="dep-card"><div class="dep-label">03 — Source</div><div class="dep-title">Sticker Sheets v2</div><div class="dep-desc"><a href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=16870-9381&amp;t=HkaWvJ7nLoQVjegR-0">Open in Figma</a></div></div>
+        <div class="dep-card"><div class="dep-label">04 — Build</div><div class="dep-title">Node.js</div><div class="dep-desc">Run <code>node assessment-src/build.js</code>. No npm packages needed.</div></div>
+      </div>
+      <div class="infobox infobox-warn" style="margin-top:16px"><p><strong>Never paste your Figma Personal Access Token into the chat.</strong> Authenticate via the MCP server setup.</p></div>
     </div>
 
-    <div class="sub-heading">Token Issues (C3)</div>
-    <p>Look for these token anti-patterns:</p>
-    <div class="pattern-group">
-      <div class="pattern-item"><strong>Hardcoded opacity</strong> — <code>opacity-80</code> on layers instead of a semantic opacity token.</div>
-      <div class="pattern-item"><strong>Generic depth/shadow tokens</strong> — Shared <code>Depth/D0</code> instead of component-specific semantic shadow tokens.</div>
-      <div class="pattern-item"><strong>Raw pixel values as identifiers</strong> — Size values as raw numbers (<code>64</code>, <code>52</code>) instead of named tokens (<code>large</code>, <code>medium</code>).</div>
+    <!-- DS Health -->
+    <div class="page-section" id="ds-health">
+      <div class="section-heading">DS Health — The 4 Traits</div>
+      <p class="section-desc">Is this component worth keeping? Is it well-structured, reusable, and consistent? Rate each trait as Pass, Warn, or Fail.</p>
+      <div class="table-wrap">
+        <table><thead><tr><th class="col-md">Trait</th><th>What to Check</th></tr></thead><tbody>
+          <tr><td><strong>Reusable</strong></td><td class="muted">Works across multiple contexts and flows — not tied to one screen or feature.</td></tr>
+          <tr><td><strong>Self-contained</strong></td><td class="muted">Carries its own styles, states, and logic without external dependencies.</td></tr>
+          <tr><td><strong>Consistent</strong></td><td class="muted">Predictable behavior. Naming, property types, and state coverage align with the DS.</td></tr>
+          <tr><td><strong>Composable</strong></td><td class="muted">Nests inside other components and fits the existing hierarchy.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="sub-heading">Verdicts</div>
+      <div class="table-wrap">
+        <table><thead><tr><th class="col-md">Verdict</th><th>Meaning</th></tr></thead><tbody>
+          <tr><td><span class="badge badge-keep">Keep</span></td><td class="muted">All 4 traits pass. Ship as-is.</td></tr>
+          <tr><td><span class="badge badge-fix">Fix</span></td><td class="muted">Belongs in DS but has specific issues to resolve.</td></tr>
+          <tr><td><span class="badge badge-restructure">Restructure</span></td><td class="muted">Needs significant property or architectural changes.</td></tr>
+          <tr><td><span class="badge badge-consolidate">Consolidate</span></td><td class="muted">Merge into another component.</td></tr>
+          <tr><td><span class="badge badge-na">Product Layer</span></td><td class="muted">Too feature-specific for core DS.</td></tr>
+          <tr><td><span class="badge badge-remove">Remove</span></td><td class="muted">Redundant, deprecated, or not a DS concern.</td></tr>
+        </tbody></table>
+      </div>
     </div>
 
-    <div class="sub-heading">Asset Issues (C6)</div>
-    <p>Look for these asset anti-patterns:</p>
-    <div class="pattern-group">
-      <div class="pattern-item"><strong>Raster icons</strong> — Semantic icons as raster images from Figma CDN. <strong>Hard C6 blocker.</strong></div>
-      <div class="pattern-item"><strong>How to detect:</strong> Look for <code>const imgXxx = "https://www.figma.com/api/mcp/asset/..."</code> used as <code>&lt;img src={imgXxx} /&gt;</code>. Semantic icon as <code>&lt;img&gt;</code> = raster.</div>
+    <!-- Native Readiness -->
+    <div class="page-section" id="native-readiness">
+      <div class="section-heading">Native Mobile Readiness — 7 Criteria</div>
+      <p class="section-desc">Can engineers implement it in SwiftUI and Jetpack Compose? The overall status is set by the worst-scoring criterion.</p>
+      <div class="table-wrap">
+        <table><thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th>What to Check</th></tr></thead><tbody>
+          <tr><td class="mono" style="text-align:center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td class="muted">Layers should use semantic names like <code>leading-icon</code> or <code>content</code> — not Figma defaults like <code>Frame 42</code> or <code>Group 7</code>. Logical hierarchy, no unnecessary nesting.</td></tr>
+          <tr><td class="mono" style="text-align:center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td class="muted">Variants and properties should follow clear, consistent conventions. Booleans as <code>true</code>/<code>false</code> (not <code>yes</code>/<code>no</code>), enum values lowercase and hyphenated.</td></tr>
+          <tr><td class="mono" style="text-align:center">C3</td><td><strong>Token Coverage</strong></td><td class="muted">All color, spacing, typography, and radius values should be bound to design tokens — not hardcoded. Token coverage determines how easily engineers can map to a native token system.</td></tr>
+          <tr><td class="mono" style="text-align:center">C4</td><td><strong>Native Mappability</strong></td><td class="muted">The component should map cleanly to a standard native primitive (e.g. <code>DisclosureGroup</code>, <code>Button</code>, <code>List</code>) with no web-only patterns.</td></tr>
+          <tr><td class="mono" style="text-align:center">C5</td><td><strong>Interaction State Coverage</strong></td><td class="muted">All expected interactive states should be defined as variants — default, pressed, focused, disabled, and error. Missing states force engineers to invent visual behavior.</td></tr>
+          <tr><td class="mono" style="text-align:center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td class="muted">Icons should be vector components (not raster or PNG embeds) and colored using tokens so tinting works natively on both platforms.</td></tr>
+          <tr><td class="mono" style="text-align:center">C7</td><td><strong>Code Connect Linkability</strong></td><td class="muted">The component should be a proper Figma component set with property names clean enough to map 1:1 to native parameters via Code Connect.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="sub-heading">Status Levels</div>
+      <div class="table-wrap">
+        <table><thead><tr><th class="col-badge">Status</th><th>Meaning</th></tr></thead><tbody>
+          <tr><td><span class="badge badge-ready">Ready</span></td><td class="muted">Linkable as-is. Clean structure, maps well to native.</td></tr>
+          <tr><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Minor issues to resolve before linking.</td></tr>
+          <tr><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Needs redesign before native translation.</td></tr>
+          <tr><td><span class="badge badge-na">Not Applicable</span></td><td class="muted">No native equivalent.</td></tr>
+        </tbody></table>
+      </div>
     </div>
 
-    <div class="sub-heading">State Coverage Issues (C5)</div>
-    <p>Check every component for these missing states:</p>
-    <div class="pattern-group">
-      <div class="pattern-item"><strong>Missing <code>disabled</code> state</strong> — All interactive components need a disabled variant.</div>
-      <div class="pattern-item"><strong>Missing <code>indeterminate</code> state</strong> — Selection components (checkboxes, radio groups) should support indeterminate.</div>
-      <div class="pattern-item"><strong>Missing <code>selected</code> / <code>active</code> state</strong> — Filter chips, toggles, tab-like components need a selected variant.</div>
-      <div class="pattern-item"><strong>Incomplete state matrix</strong> — If a component has sub-types, verify every sub-type covers all relevant states.</div>
+    <!-- Combined Status -->
+    <div class="page-section" id="combined">
+      <div class="section-heading">Combined Status</div>
+      <div class="table-wrap">
+        <table><thead><tr><th>DS Health</th><th>Native Status</th><th>Meaning</th></tr></thead><tbody>
+          <tr><td><span class="badge badge-keep">Keep</span></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Ship it.</td></tr>
+          <tr><td><span class="badge badge-fix">Keep / Fix</span></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Minor fixes, assign to DS team.</td></tr>
+          <tr><td><span class="badge badge-restructure">Fix / Restructure</span></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Significant work before handoff.</td></tr>
+          <tr><td><span class="badge badge-na">Product Layer</span></td><td><span class="badge badge-na">N/A</span></td><td class="muted">Move to product library.</td></tr>
+          <tr><td><span class="badge badge-remove">Remove / Consolidate</span></td><td><span class="badge badge-na">N/A</span></td><td class="muted">Skip native assessment.</td></tr>
+        </tbody></table>
+      </div>
     </div>
 
-    <div class="sub-heading">Documentation Issues</div>
-    <div class="pattern-group">
-      <div class="pattern-item"><strong>Empty screen context panels</strong> — Components without usage examples. Flag as documentation gap and handoff risk.</div>
-      <div class="pattern-item"><strong>Deprecated components in live templates</strong> — Must be cleaned up before deletion.</div>
+    <!-- Architecture -->
+    <div class="page-section" id="architecture">
+      <div class="section-heading">Report Architecture</div>
+      <p class="section-desc">The report is a modular, build-assembled static site on GitHub Pages.</p>
+
+      <div class="sub-heading">Repository Structure</div>
+      <div class="file-tree">gcash-design-system/<br>&#x251C;&#x2500;&#x2500; index.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&larr; Built output (do not edit)</span><br>&#x251C;&#x2500;&#x2500; styles.css &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&larr; Built output (minified)</span><br>&#x2514;&#x2500;&#x2500; assessment-src/<br>&nbsp;&nbsp;&nbsp;&nbsp;&#x251C;&#x2500;&#x2500; shell.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&larr; Shared layout, sidebar, JS</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&#x251C;&#x2500;&#x2500; styles.css &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&larr; Source CSS (unminified)</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&#x251C;&#x2500;&#x2500; build.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&larr; Build script</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&#x2514;&#x2500;&#x2500; components/<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x251C;&#x2500;&#x2500; accordion.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&larr; One file per component</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2514;&#x2500;&#x2500; ...</div>
+
+      <div class="sub-heading">Build Process</div>
+      <p>The build script reads <code>shell.html</code> as the scaffold, extracts 4 tagged blocks from each component file, injects them into the shell, minifies HTML + CSS, and writes to the repo root.</p>
+      <pre><code>node assessment-src/build.js</code></pre>
     </div>
 
-    <div class="sub-heading">Known Good Patterns — Do Not Re-Flag</div>
-    <div class="infobox infobox-good">
-      <p><strong>Semantic color token naming</strong> — The <code>main/{component}/color/{state}/{role}</code> convention is consistent and well-structured.</p>
-      <p><strong>Chevron icons</strong> — Chevron Down, Up, Right are confirmed vector component instances.</p>
-      <p><strong>Spacing tokens</strong> — <code>space/space-*</code> tokens are consistently applied.</p>
-      <p><strong>Custom fonts</strong> — <code>font-family/font-primary</code> (Proxima Soft) and <code>font-family/font-secondary</code> (BarkAda) require native bundle verification. Flag <strong>once per session</strong> only.</p>
+    <!-- GCash Patterns -->
+    <div class="page-section" id="patterns">
+      <div class="section-heading">GCash-Specific Patterns</div>
+      <p class="section-desc">Confirmed recurring patterns across the GCash DS. Use as a checklist during every assessment.</p>
+
+      <div class="sub-heading">Naming &amp; Properties (C2)</div>
+      <div class="pattern-group">
+        <div class="pattern-item"><strong>Boolean properties as strings</strong> — Should be <code>true</code>/<code>false</code>, not <code>yes</code>/<code>no</code>.</div>
+        <div class="pattern-item"><strong>Space-separated variant names</strong> — Incompatible with Swift/Kotlin enums. Use hyphenated or camelCase.</div>
+        <div class="pattern-item"><strong>Version numbers in names</strong> — <code>transaction_v1</code>, <code>Type=Version 2</code> indicate cleanup debt.</div>
+        <div class="pattern-item"><strong>Ambiguous sizes</strong> — <code>size=default</code> is unclear. Use named values (<code>small</code>, <code>medium</code>, <code>large</code>).</div>
+        <div class="pattern-item"><strong>Overloaded property keys</strong> — A single <code>type</code> encoding style and layout should be split.</div>
+        <div class="pattern-item"><strong>State values encoding style</strong> — <code>State=Pill</code> mixes concerns. Separate layout from interaction state.</div>
+      </div>
+
+      <div class="sub-heading">Structure (C1, C4)</div>
+      <div class="pattern-group">
+        <div class="pattern-item"><strong>Generic layer names</strong> — <code>Frame 42</code>, <code>Group 7</code>, <code>Placeholder</code> should be semantic.</div>
+        <div class="pattern-item"><strong>Non-component primitives</strong> — Boolean ops, flattened shapes, or bare groups where component sets are expected.</div>
+        <div class="pattern-item"><strong>Feature variants as separate components</strong> — <code>[Component] - with [Feature]</code> should be a boolean property.</div>
+        <div class="pattern-item"><strong>Baked-in content</strong> — Hardcoded content instead of composable slots.</div>
+      </div>
+
+      <div class="sub-heading">Tokens (C3)</div>
+      <div class="pattern-group">
+        <div class="pattern-item"><strong>Hardcoded opacity</strong> — Use semantic opacity tokens, not raw values on layers.</div>
+        <div class="pattern-item"><strong>Generic shadows</strong> — Shared <code>Depth/D0</code> instead of component-specific tokens.</div>
+        <div class="pattern-item"><strong>Raw pixel identifiers</strong> — Size <code>64</code> instead of named tokens like <code>large</code>.</div>
+      </div>
+
+      <div class="sub-heading">Assets (C6)</div>
+      <div class="pattern-group">
+        <div class="pattern-item"><strong>Raster icons</strong> — Semantic icons as <code>&lt;img&gt;</code> from Figma CDN instead of vector instances. Hard C6 blocker.</div>
+      </div>
+
+      <div class="sub-heading">States (C5)</div>
+      <div class="pattern-group">
+        <div class="pattern-item"><strong>Missing <code>disabled</code></strong> — All interactive components need this.</div>
+        <div class="pattern-item"><strong>Missing <code>indeterminate</code></strong> — Checkboxes and radio groups.</div>
+        <div class="pattern-item"><strong>Missing <code>selected</code> / <code>active</code></strong> — Chips, toggles, tabs.</div>
+        <div class="pattern-item"><strong>Incomplete state matrix</strong> — Every sub-type should cover all relevant states.</div>
+      </div>
+
+      <div class="sub-heading">Known Good Patterns</div>
+      <div class="infobox infobox-good">
+        <p><strong>Semantic color tokens</strong> — <code>main/{component}/color/{state}/{role}</code> is consistent.</p>
+        <p><strong>Chevron icons</strong> — Confirmed vector component instances.</p>
+        <p><strong>Spacing tokens</strong> — <code>space/space-*</code> consistently applied.</p>
+        <p><strong>Custom fonts</strong> — Proxima Soft and BarkAda require native bundle verification. Flag once per session.</p>
+      </div>
+
+      <div class="sub-heading">Discovered During Assessment</div>
+      <div class="table-wrap">
+        <table><thead><tr><th>Criterion</th><th>Pattern</th><th>First Found In</th></tr></thead><tbody>
+          <tr><td class="mono">C2</td><td class="muted">Boolean variant properties using yes/no strings instead of true/false</td><td>Accordion</td></tr>
+          <tr><td class="mono">C1</td><td class="muted">Root container frames left as Figma default "Frame"</td><td>Accordion</td></tr>
+          <tr><td class="mono">C1</td><td class="muted">Leading icon instances named "Placeholder" instead of semantic name</td><td>Accordion</td></tr>
+          <tr><td class="mono">C4</td><td class="muted">Expanded content panel added in v4 with content-body frame</td><td>Accordion</td></tr>
+        </tbody></table>
+      </div>
     </div>
 
-    <div class="sub-heading">Discovered During Assessment</div>
-    <p>New patterns found during component assessments are automatically collected here via the <code>&lt;!--@patterns--&gt;</code> block in each component file.</p>
-    <div class="table-wrap"><table><thead><tr><th>Criterion</th><th>Pattern</th><th>First Found In</th></tr></thead><tbody>
-      <tr><td class="mono">C2</td><td class="muted">Boolean variant properties using yes/no strings instead of true/false</td><td>Accordion</td></tr>
-      <tr><td class="mono">C1</td><td class="muted">Root container frames left as Figma default "Frame" instead of semantic name</td><td>Accordion</td></tr>
-      <tr><td class="mono">C1</td><td class="muted">Leading icon instances named "Placeholder" instead of semantic name</td><td>Accordion</td></tr>
-      <tr><td class="mono">C5</td><td class="muted">Only collapsed and expanded states defined — missing pressed, disabled, focused</td><td>Accordion</td></tr>
-      <tr><td class="mono">C4</td><td class="muted">Expanded content panel (body/slot) absent — engineers must attach content externally</td><td>Accordion</td></tr>
-    </tbody></table></div>
-  </div>
+    <!-- Workflow -->
+    <div class="page-section" id="workflow">
+      <div class="section-heading">Assessment Workflow</div>
+      <p class="section-desc">For each Figma node URL received, follow these steps.</p>
 
-  <!-- ASSESSMENT WORKFLOW -->
-  <div class="page-section" id="workflow">
-    <div class="section-heading">Assessment Workflow (Step by Step)</div>
-    <p>For each new Figma node URL received:</p>
-    <div class="step-card"><div class="step-label">Step 1</div><div class="step-title">Get the metadata</div><div class="step-body"><pre><code>Call: get_metadata(fileKey, nodeId)</code></pre>Count variants, read property names/values, spot C2 issues, understand C1 hierarchy.</div></div>
-    <div class="step-card"><div class="step-label">Step 2</div><div class="step-title">Get the screenshot</div><div class="step-body"><pre><code>Call: get_screenshot(fileKey, nodeId)</code></pre>Visually confirm the component, spot missing states.</div></div>
-    <div class="step-card"><div class="step-label">Step 3</div><div class="step-title">Get full design context</div><div class="step-body"><pre><code>Call: get_design_context(fileKey, nodeId,
+      <div class="step-card"><div class="step-label">Step 1</div><div class="step-title">Get Metadata</div><div class="step-body">Count variants, read property names/values, spot C2 issues, understand layer hierarchy.<pre><code>get_metadata(fileKey, nodeId)</code></pre></div></div>
+      <div class="step-card"><div class="step-label">Step 2</div><div class="step-title">Get Screenshot</div><div class="step-body">Visual confirmation. Identify missing states by what's absent.<pre><code>get_screenshot(fileKey, nodeId)</code></pre></div></div>
+      <div class="step-card"><div class="step-label">Step 3</div><div class="step-title">Get Design Context</div><div class="step-body">Layer naming (C1), token usage (C3), raster icons (C6), layout structure (C4).<pre><code>get_design_context(fileKey, nodeId,
   disableCodeConnect=true,
   clientFrameworks="SwiftUI, Jetpack Compose",
-  clientLanguages="Swift, Kotlin")</code></pre>Confirm layer naming (C1), token usage (C3), detect raster icons (C6), surface hidden props (C2/C7), assess native mappability (C4).</div></div>
-    <div class="step-card"><div class="step-label">Step 4</div><div class="step-title">Get variable/token definitions</div><div class="step-body"><pre><code>Call: get_variable_defs(fileKey, nodeId)</code></pre>Confirm token coverage (C3), extract hex values, identify missing semantic tokens.</div></div>
-    <div class="step-card"><div class="step-label">Step 5 — Optional</div><div class="step-title">Spot-check specific nodes</div><div class="step-body"><pre><code>Call: get_metadata(fileKey, specificNodeId)</code></pre>Verify vector vs. raster. <code>&lt;instance&gt;</code> = vector. <code>&lt;img&gt;</code> in step 3 = raster.</div></div>
-    <div class="step-card"><div class="step-label">Step 6</div><div class="step-title">Write the assessment</div><div class="step-body">Score all 4 DS traits and all 7 native criteria. Assign verdicts. Output findings as a <strong>quick markdown summary</strong> for review.</div></div>
-    <div class="step-card"><div class="step-label">Step 7</div><div class="step-title">Produce the HTML component file</div><div class="step-body">Once confirmed, create <code>assessment-src/components/[name].html</code> with all 4 tagged blocks.</div></div>
-    <div class="step-card"><div class="step-label">Step 8</div><div class="step-title">Build and verify</div><div class="step-body"><pre><code>node assessment-src/build.js</code></pre>Open <code>index.html</code> to verify. Commit and push.</div></div>
-  </div>
+  clientLanguages="Swift, Kotlin")</code></pre></div></div>
+      <div class="step-card"><div class="step-label">Step 4</div><div class="step-title">Get Token Definitions</div><div class="step-body">Confirm token coverage (C3), extract hex values for the report.<pre><code>get_variable_defs(fileKey, nodeId)</code></pre></div></div>
+      <div class="step-card"><div class="step-label">Step 5 — Optional</div><div class="step-title">Spot-check Nodes</div><div class="step-body">Verify if an element is a vector instance or raster.<pre><code>get_metadata(fileKey, specificNodeId)</code></pre></div></div>
+      <div class="step-card"><div class="step-label">Step 6</div><div class="step-title">Write Assessment</div><div class="step-body">Score all 4 traits and 7 criteria. Assign verdicts. Output as markdown summary for review.</div></div>
+      <div class="step-card"><div class="step-label">Step 7</div><div class="step-title">Produce HTML File</div><div class="step-body">Create <code>assessment-src/components/[name].html</code> with all 4 tagged blocks.</div></div>
+      <div class="step-card"><div class="step-label">Step 8</div><div class="step-title">Build and Verify</div><div class="step-body">Open in browser. Verify sidebar, summary, and content. Commit and push.<pre><code>node assessment-src/build.js</code></pre></div></div>
+    </div>
 
-  <!-- OUTPUT FORMAT -->
-  <div class="page-section" id="output">
-    <div class="section-heading">Assessment Output Format</div>
-    <p>Each component assessment has <strong>two deliverables</strong>: a quick markdown summary (for chat/review) and an HTML component file (for the published report).</p>
-    <div class="sub-heading">A. Quick Markdown Summary (for chat)</div>
-    <p>Use this format for in-session review before producing the HTML file:</p>
-    <pre><code>## [Component Name] `nodeId`
+    <!-- Output Format -->
+    <div class="page-section" id="output">
+      <div class="section-heading">Output Format</div>
+      <p class="section-desc">Two deliverables per component: markdown summary (for review) and HTML file (for the report).</p>
 
-**DS Health Verdict:** [Keep / Fix / Restructure / Consolidate / Product Layer / Remove]
-**Native Readiness Status:** [Ready / Needs Refinement / Requires Rework / Not Applicable]
+      <div class="sub-heading">Markdown Summary</div>
+      <p>Use for in-session review before producing the HTML file.</p>
+      <pre><code>## [Component Name] `nodeId`
 
-### Phase 1 — DS Health
+**DS Health:** [Keep / Fix / Restructure / Consolidate / Product Layer / Remove]
+**Native Status:** [Ready / Needs Refinement / Requires Rework / Not Applicable]
+
+### DS Health
 | Trait | Rating | Notes |
-| Reusable | ✅/⚠️/❌ | [note] |
+| Reusable | Pass/Warn/Fail | [note] |
 ...
 
-### Phase 2 — Native Mobile Readiness
-| Criterion | Status | Notes |
-| C1–C7 | [Pass/Flag/Fail] | [note] |
+### Native Readiness
+| ID | Criterion | Status | Notes |
+| C1-C7 | [name] | Pass/Flag/Fail | [note] |
 
 ### Action Items
-| Priority | Owner | Action |</code></pre>
-    <div class="sub-heading">B. HTML Component File (for the published report)</div>
-    <p>After review is confirmed, produce the HTML file for <code>assessment-src/components/</code>. Must contain all 4 tagged blocks.</p>
-    <p><strong>File naming:</strong> lowercase, hyphenated — <code>accordion.html</code>, <code>list-label-only.html</code>, <code>bottom-sheet.html</code></p>
-    <div class="infobox infobox-tip"><p><strong>Template reference:</strong> Use the Accordion component file as a working reference for the full HTML structure (nav item, summary card, summary row, section with dual-status header, Phase 1 trait grid, Phase 2 criteria tables, Code Connect readiness, design tokens, action items).</p></div>
-    <div class="sub-heading" style="font-size:13px">Post-fix (v2) components</div>
-    <p>For components partially fixed via Figma MCP, add a <strong>changelog block</strong> between Overview and Phase 1. Include <code>tag-fixed</code> / <code>tag-open</code> spans and <code>score-delta</code> indicators. Append a <code>v2 Post-Fix</code> tag to the component name.</p>
-  </div>
+| # | Criterion | Action | Status |</code></pre>
 
-  <!-- ASSESSMENT PROGRESS -->
-  <div class="page-section" id="progress">
-    <div class="section-heading">Assessment Progress</div>
-    <p>This section tracks components currently being assessed and their status. Components are added here once assessment begins and moved to the HTML report once complete.</p>
-    <div class="infobox infobox-tip"><p><strong>Auto-sync enabled.</strong> The MD version of this section is automatically updated by <code>sync-guide.js</code> when you run <code>node assessment-src/build.js</code> or <code>node assessment-src/sync-guide.js</code> standalone. Data is extracted from <code>&lt;!--@meta--&gt;</code> blocks and action items in each component file.</p></div>
-    <div class="sub-heading">Status Key</div>
-    <div class="table-wrap"><table><thead><tr><th class="col-md">Status</th><th>Meaning</th></tr></thead><tbody>
-      <tr><td>🟡 <strong>In Progress</strong></td><td class="muted">Assessment is actively underway — findings are preliminary.</td></tr>
-      <tr><td>🟢 <strong>Complete</strong></td><td class="muted">Assessment finalized and HTML component file produced.</td></tr>
-      <tr><td>🔁 <strong>Re-assessing</strong></td><td class="muted">Previously assessed, now being re-evaluated after fixes.</td></tr>
-    </tbody></table></div>
-    <div class="sub-heading">Current Assessments</div>
-    <div class="table-wrap"><table><thead><tr><th>Component</th><th>Node</th><th>DS Verdict</th><th>Native Status</th><th>Status</th><th>Notes</th></tr></thead><tbody>
-      <tr>
-        <td><strong>Accordion</strong></td>
-        <td class="mono">16830:2025</td>
-        <td><span class="badge badge-fix">Fix</span></td>
-        <td><span class="badge badge-refine">Needs Refinement</span></td>
-        <td>🔁 Re-assessing</td>
-        <td class="muted">Fixed: C1, C2. Open: C5, C4, C7</td>
-      </tr>
-    </tbody></table></div>
-    <div class="sub-heading">Open Issues Across All Components</div>
-    <div class="table-wrap"><table><thead><tr><th>Component</th><th>Criterion</th><th>Action</th><th>Status</th></tr></thead><tbody>
-      <tr><td><strong>Accordion</strong></td><td class="mono">C5</td><td class="muted">Add pressed and disabled variant states with semantic color tokens</td><td>Open</td></tr>
-      <tr><td><strong>Accordion</strong></td><td class="mono">C4</td><td class="muted">Add expanded content panel as slot/placeholder in expanded variant</td><td>Open</td></tr>
-      <tr><td><strong>Accordion</strong></td><td class="mono">C7</td><td class="muted">Create native component files and register Code Connect mappings</td><td>Open</td></tr>
-    </tbody></table></div>
-  </div>
+      <div class="sub-heading">HTML Component File</div>
+      <p>File naming: lowercase, hyphenated — <code>accordion.html</code>, <code>bottom-sheet.html</code></p>
+      <div class="infobox infobox-tip"><p><strong>Template reference:</strong> Use the Accordion component file as a working reference for the full HTML structure including nav, summary card, tabbed assessment/changelog layout, trait cards, resolved lists, and action items.</p></div>
+      <p>Key conventions:</p>
+      <div class="pattern-group">
+        <div class="pattern-item"><strong>Resolved issues</strong> — Use <code>resolved-list</code> class instead of individual infobox blocks.</div>
+        <div class="pattern-item"><strong>Action items</strong> — Show only open items. Omit completed rows.</div>
+        <div class="pattern-item"><strong>Section headings</strong> — No <code>A./B./C.</code> prefixes. Use plain sub-headings.</div>
+        <div class="pattern-item"><strong>Inline styles</strong> — Avoid. Use CSS classes instead.</div>
+        <div class="pattern-item"><strong>Copy</strong> — Keep concise and direct. Apple-style minimalism.</div>
+        <div class="pattern-item"><strong>Interaction states</strong> — Omit N/A rows. Add a <code>table-footnote</code> if needed.</div>
+      </div>
+    </div>
 
-  <!-- OWNERSHIP -->
-  <div class="page-section" id="ownership">
-    <div class="section-heading">Ownership</div>
-    <div class="table-wrap"><table><thead><tr><th>Area</th><th>Owner</th></tr></thead><tbody>
-      <tr><td><strong>DS debloat audit methodology</strong></td><td class="muted">[DS team lead]</td></tr>
-      <tr><td><strong>Native mobile readiness methodology</strong></td><td class="muted">[Design engineering lead]</td></tr>
-      <tr><td><strong>HTML report architecture &amp; build script</strong></td><td class="muted">[DS team / design engineering]</td></tr>
-      <tr><td><strong>Component HTML files</strong></td><td class="muted">Produced per-session, committed to <code>assessment-src/components/</code></td></tr>
-      <tr><td><strong>Figma file access</strong></td><td class="muted">[Figma admin]</td></tr>
-      <tr><td><strong>Token naming questions</strong></td><td class="muted">[Design system owner]</td></tr>
-    </tbody></table></div>
-  </div>
+    <!-- Progress -->
+    <div class="page-section" id="progress">
+      <div class="section-heading">Assessment Progress</div>
 
-  <div class="footer">GCash Design System — Component Assessment Guide &nbsp;·&nbsp; DS Health + Native Mobile Readiness · March 2026 &nbsp;·&nbsp; For internal use only</div>
+      <div class="sub-heading">Current Assessments</div>
+      <div class="table-wrap">
+        <table><thead><tr><th>Component</th><th>Node</th><th>DS Verdict</th><th>Native Status</th><th>Status</th><th>Notes</th></tr></thead><tbody>
+          <tr>
+            <td><strong>Accordion</strong></td>
+            <td class="mono">16870:9288</td>
+            <td><span class="badge badge-fix">Fix</span></td>
+            <td><span class="badge badge-refine">Needs Refinement</span></td>
+            <td>Re-assessing</td>
+            <td class="muted">Open: C7</td>
+          </tr>
+        </tbody></table>
+      </div>
+
+      <div class="sub-heading">Open Issues</div>
+      <div class="table-wrap">
+        <table><thead><tr><th>Component</th><th>Criterion</th><th>Action</th><th>Status</th></tr></thead><tbody>
+          <tr><td><strong>Accordion</strong></td><td class="mono">C7</td><td class="muted">Create native component files and register Code Connect mappings via the Figma Code Connect CLI.</td><td>Open</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+    <!-- Ownership -->
+    <div class="page-section" id="ownership">
+      <div class="section-heading">Ownership</div>
+      <div class="table-wrap">
+        <table><thead><tr><th>Role</th><th>Owner</th></tr></thead><tbody>
+          <tr><td><strong>DS debloat audit methodology</strong></td><td class="muted">DS team lead</td></tr>
+          <tr><td><strong>Native readiness methodology</strong></td><td class="muted">Design engineering lead</td></tr>
+          <tr><td><strong>HTML report &amp; build script</strong></td><td class="muted">DS team / design engineering</td></tr>
+          <tr><td><strong>Component HTML files</strong></td><td class="muted">Produced per-session</td></tr>
+          <tr><td><strong>Figma file access</strong></td><td class="muted">Figma admin</td></tr>
+          <tr><td><strong>Token naming</strong></td><td class="muted">Design system owner</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+    <div class="footer">GCash Design System &nbsp;&middot;&nbsp; Component Assessment Guide &nbsp;&middot;&nbsp; March 2026</div>
+
+  </div><!-- /content-wrap -->
 </main>
 <script>
-function setActive(el){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));el.classList.add('active')}
-const sections=document.querySelectorAll('[id]'),navLinks=document.querySelectorAll('.nav-item[href]');
-const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){const id=entry.target.getAttribute('id');navLinks.forEach(link=>{link.classList.remove('active');if(link.getAttribute('href')==='#'+id)link.classList.add('active')})}})},{rootMargin:'-20% 0px -70% 0px',threshold:0});
-sections.forEach(s=>observer.observe(s));
+function setActive(el){document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});el.classList.add('active')}
+var sections=document.querySelectorAll('[id]'),navLinks=document.querySelectorAll('.nav-item[href]');
+var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){var id=entry.target.getAttribute('id');navLinks.forEach(function(link){link.classList.remove('active');if(link.getAttribute('href')==='#'+id)link.classList.add('active')})}})},{rootMargin:'-20% 0px -70% 0px',threshold:0});
+sections.forEach(function(s){observer.observe(s)});
 </script>
 </body>
 </html>
