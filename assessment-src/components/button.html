@@ -1,0 +1,505 @@
+<!--
+  BUTTON COMPONENT ASSESSMENT
+  Edit this file to update the Button assessment.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 17104:184842
+ds-verdict: refine
+native-status: refine
+variants: 30
+ios: Button
+android: Button / OutlinedButton / TextButton
+open-issues: C1, C2, C5, C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] Layer named `.base/button/small` on compact disabled container — non-semantic internal style reference
+[C2] No icon slot variants — missing leadingIcon, trailingIcon, and iconOnly button patterns
+[C5] No focus ring state; no loading state; Pressed documented as "Desktop only" — ambiguous for mobile
+[C7] Code Connect mappings not yet registered — no native component files linked via Code Connect CLI
+<!--@patterns-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-button" onclick="showPanel('button', this)">
+  <div class="nav-comp-icon">
+    <!-- Button thumbnail SVG 32×32 -->
+    <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Primary filled pill button -->
+      <rect x="2" y="8" width="28" height="10" rx="5" fill="#005CE5"/>
+      <!-- Label text bar -->
+      <rect x="9" y="12" width="14" height="2" rx="1" fill="white" opacity="0.9"/>
+      <!-- Outlined pill button below -->
+      <rect x="2" y="21" width="28" height="8" rx="4" fill="none" stroke="#005CE5" stroke-width="1.5"/>
+      <rect x="10" y="24" width="12" height="2" rx="1" fill="#005CE5" opacity="0.8"/>
+    </svg>
+  </div>
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Button</div>
+  </div>
+  <div class="nav-comp-status refine"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('button')">
+  <div class="summary-card-row">
+    <div class="summary-card-name">Button</div>
+    <div class="summary-card-badges">
+      <span class="badge badge-refine">Needs Refinement</span>
+    </div>
+  </div>
+  <div class="summary-card-finding">
+    30 variants across Appearance × Size × State × isError. Tokens fully connected. Missing: icon slot variants, focus ring, loading state, and Code Connect mappings.
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Button</strong></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">30</td>
+  <td class="muted">Tokens connected. Missing icon variants, focus ring, loading state, and Code Connect (C1, C2, C5, C7).</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-button">
+  <div class="content-wrap">
+
+    <!-- Back -->
+    <button class="back-btn" onclick="showPanel('overview', document.getElementById('nav-overview'), true)">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <!-- Component header -->
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Button
+          <span class="badge badge-refine">Needs Refinement</span>
+        </div>
+        <p class="comp-desc">A pill-shaped tap target for primary, secondary, and tertiary actions. Supports three appearances (Default, Outlined, Text Link), two sizes (Default 50px / Compact 38px), three states, and an isError flag for destructive variants. Text-only — no icon slots defined.</p>
+        <div class="comp-meta">
+          <div class="cover-meta-item"><strong>Node:</strong> 17104:184842</div>
+          <div class="cover-meta-item"><strong>Variants:</strong> 30</div>
+          <div class="cover-meta-item"><strong>iOS:</strong> Button</div>
+          <div class="cover-meta-item"><strong>Android:</strong> Button / OutlinedButton / TextButton</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Tab bar ──────────────────────────────────────────────── -->
+    <div data-tab-group="button-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'assessment', 'button-tabs')">Assessment</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'button-tabs')">Changelog</button>
+    </div>
+
+    <!-- ── Tab 2: Changelog ─────────────────────────────────────── -->
+    <div class="comp-tab-content" data-tab="changelog">
+    <div class="sub-heading">1.0.0 — March 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 17104:184842</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Component assessed</strong> — 30 variants documented across Appearance (Default / Outlined / Text Link) × Size (Default / Compact) × State (Default / Pressed / Disabled) × isError (boolean, Outlined &amp; Text Link only).
+          <span class="tag-fixed">Documented</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Initial</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Token audit complete</strong> — 24 color tokens and 9 layout/typography tokens confirmed as connected via design system variable collection.
+          <span class="tag-fixed">Verified</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C3 Pass</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Non-semantic layer name found</strong> — Compact disabled container is named <code>.base/button/small</code> instead of <code>container</code>. Inconsistent with all other variants.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C1 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Icon slots absent</strong> — Component is text-only. No <code>leadingIcon</code>, <code>trailingIcon</code>, or icon-only variants defined. Buttons in production frequently require icons.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C2 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Focus ring and loading state missing</strong> — No focus ring defined for keyboard/switch navigation. No loading/processing state for async actions. "Pressed" documented as "For Desktop only" — needs clarification for mobile touch feedback.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C5 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Code Connect mappings</strong> — Usage descriptions are attached per variant. No native component files or Code Connect CLI mappings registered yet.
+          <span class="tag-open">Still Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C7 Open</span>
+      </div>
+    </div>
+    </div><!-- /comp-tab-content changelog -->
+
+    <!-- ── Tab 1: Assessment ────────────────────────────────────── -->
+    <div class="comp-tab-content active" data-tab="assessment">
+
+    <!-- ── DS Health ─────────────────────────────────────────────── -->
+    <div class="section-heading">DS Health</div>
+
+    <div class="verdict-card">
+      <div class="verdict-card-title">Solid token foundation — gaps in icon variants and interaction completeness</div>
+      <div class="verdict-card-body"><strong>Verdict:</strong> 30 variants cover the text-button matrix (3 Appearances × 2 Sizes × 3 States, isError for Outlined/Text Link). All 24 color tokens and 9 layout/typography tokens are connected. Primary gaps: no icon slot variants (leadingIcon, trailingIcon, iconOnly), one non-semantic layer name in the compact disabled variant, missing focus ring and loading states, and no Code Connect CLI mappings.</div>
+    </div>
+
+    <!-- 4 Traits -->
+    <div class="sub-heading">The 4 Traits — Scorecard</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Reusable</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">
+          Three appearances and an <code>isError</code> boolean cover primary, secondary, tertiary, and destructive action patterns. Compact and Default sizes handle both full-width and inline placement.
+        </div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header">
+          <div class="trait-name">Self-contained</div>
+          <div class="trait-status">Partial</div>
+        </div>
+        <div class="trait-note">
+          Text + background + border are all self-contained. However, the absence of icon slots means icon+label buttons require a separate or extended component, breaking the single-component contract.
+        </div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Consistent</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">
+          A single <code>appearance</code> property cleanly drives all three button types. Tokens are connected across every variant — no hardcoded colors or spacing.
+        </div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header">
+          <div class="trait-name">Composable</div>
+          <div class="trait-status">Partial</div>
+        </div>
+        <div class="trait-note">
+          Maps directly to <code>Button</code>, <code>OutlinedButton</code>, and <code>TextButton</code> primitives. Composability is limited by the lack of icon slot properties — common in real-world button compositions.
+        </div>
+      </div>
+    </div>
+
+    <!-- Open Issues -->
+    <div class="sub-heading">Open Issues</div>
+    <ul class="resolved-list">
+      <li>Layer named <code>.base/button/small</code> on compact disabled container — rename to <code>container</code> (C1)</li>
+      <li>No <code>leadingIcon</code>, <code>trailingIcon</code>, or icon-only variants defined (C2)</li>
+      <li>No focus ring state — required for keyboard and switch navigation a11y (C5)</li>
+      <li>No loading/processing state — needed for async actions like form submit (C5)</li>
+      <li>"Pressed" state documented as "For Desktop only" — needs mobile clarification (C5)</li>
+      <li>Code Connect CLI mappings not registered (C7)</li>
+    </ul>
+
+    <!-- ── Native Mobile Readiness ─────────────────────────────── -->
+    <div class="section-heading" style="margin-top:48px">Native Mobile Readiness</div>
+
+    <!-- Variants Inventory -->
+    <div class="sub-heading">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:14px">(30 total)</span></div>
+    <p>3 <code>Appearance</code> × 2 <code>Size</code> × 3 <code>State</code>. <code>isError=true</code> is only defined for Outlined and Text Link appearances (no destructive filled variant).</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Appearance</th>
+            <th>Size</th>
+            <th>State</th>
+            <th>isError</th>
+            <th>Node ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Default</td><td>Default</td><td>Default</td><td class="muted center">—</td><td class="mono">17104:184843</td></tr>
+          <tr><td>Default</td><td>Default</td><td>Pressed</td><td class="muted center">—</td><td class="mono">17104:184846</td></tr>
+          <tr><td>Default</td><td>Default</td><td>Disabled</td><td class="muted center">—</td><td class="mono">17104:184849</td></tr>
+          <tr><td>Outlined</td><td>Default</td><td>Default</td><td class="muted center">—</td><td class="mono">17104:184852</td></tr>
+          <tr><td>Text Link</td><td>Default</td><td>Default</td><td class="muted center">—</td><td class="mono">17104:184855</td></tr>
+          <tr><td>Outlined</td><td>Default</td><td>Pressed</td><td class="muted center">—</td><td class="mono">17104:184858</td></tr>
+          <tr><td>Text Link</td><td>Default</td><td>Pressed</td><td class="muted center">—</td><td class="mono">17104:184861</td></tr>
+          <tr><td>Outlined</td><td>Default</td><td>Disabled</td><td class="muted center">—</td><td class="mono">17104:184864</td></tr>
+          <tr><td>Text Link</td><td>Default</td><td>Disabled</td><td class="muted center">—</td><td class="mono">17104:184867</td></tr>
+          <tr><td>Default</td><td>Compact</td><td>Default</td><td class="muted center">—</td><td class="mono">17104:184870</td></tr>
+          <tr><td>Default</td><td>Compact</td><td>Pressed</td><td class="muted center">—</td><td class="mono">17104:184874</td></tr>
+          <tr><td>Default</td><td>Compact</td><td>Disabled</td><td class="muted center">—</td><td class="mono">17104:184878</td></tr>
+          <tr><td>Outlined</td><td>Compact</td><td>Default</td><td class="muted center">—</td><td class="mono">17104:184882</td></tr>
+          <tr><td>Text Link</td><td>Compact</td><td>Default</td><td class="muted center">—</td><td class="mono">17104:184886</td></tr>
+          <tr><td>Outlined</td><td>Compact</td><td>Default</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184890</td></tr>
+          <tr><td>Text Link</td><td>Compact</td><td>Default</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184894</td></tr>
+          <tr><td>Outlined</td><td>Compact</td><td>Pressed</td><td class="muted center">—</td><td class="mono">17104:184898</td></tr>
+          <tr><td>Text Link</td><td>Compact</td><td>Pressed</td><td class="muted center">—</td><td class="mono">17104:184902</td></tr>
+          <tr><td>Outlined</td><td>Compact</td><td>Pressed</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184906</td></tr>
+          <tr><td>Text Link</td><td>Compact</td><td>Pressed</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184910</td></tr>
+          <tr><td>Outlined</td><td>Compact</td><td>Disabled</td><td class="muted center">—</td><td class="mono">17104:184914</td></tr>
+          <tr><td>Text Link</td><td>Compact</td><td>Disabled</td><td class="muted center">—</td><td class="mono">17104:184918</td></tr>
+          <tr><td>Outlined</td><td>Compact</td><td>Disabled</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184922</td></tr>
+          <tr><td>Text Link</td><td>Compact</td><td>Disabled</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184926</td></tr>
+          <tr><td>Outlined</td><td>Default</td><td>Disabled</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184930</td></tr>
+          <tr><td>Text Link</td><td>Default</td><td>Disabled</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184933</td></tr>
+          <tr><td>Outlined</td><td>Default</td><td>Pressed</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184936</td></tr>
+          <tr><td>Text Link</td><td>Default</td><td>Pressed</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184939</td></tr>
+          <tr><td>Outlined</td><td>Default</td><td>Default</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184942</td></tr>
+          <tr><td>Text Link</td><td>Default</td><td>Default</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184945</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Criteria Scorecard -->
+    <div class="sub-heading">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">ID</th>
+            <th class="col-md">Criterion</th>
+            <th class="col-badge">Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono center">C1</td>
+            <td><strong>Layer Structure &amp; Naming</strong></td>
+            <td><span class="badge badge-refine">Partial</span></td>
+            <td class="muted">Most layers use semantic names (<code>container</code>, <code>offset</code>). Compact disabled container is named <code>.base/button/small</code> — an internal style reference that should be <code>container</code>.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C2</td>
+            <td><strong>Variant &amp; Property Naming</strong></td>
+            <td><span class="badge badge-refine">Partial</span></td>
+            <td class="muted">30-variant text matrix is well-structured. Missing: <code>leadingIcon</code>, <code>trailingIcon</code>, and icon-only variants. Real-world buttons frequently require icon compositions.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C3</td>
+            <td><strong>Token Coverage</strong></td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted">24 semantic color tokens connected across all variants. Spacing, radius, and typography tokens also bound. No hardcoded values.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C4</td>
+            <td><strong>Native Mappability</strong></td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted">Default → <code>Button(.borderedProminent)</code> / <code>Button</code>. Outlined → <code>Button(.bordered)</code> / <code>OutlinedButton</code>. Text Link → <code>Button(.plain)</code> / <code>TextButton</code>. isError maps to destructive role / error tint.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C5</td>
+            <td><strong>Interaction State Coverage</strong></td>
+            <td><span class="badge badge-refine">Partial</span></td>
+            <td class="muted">Default, Pressed, Disabled covered. Missing: focus ring (a11y), loading/processing state. Pressed variants documented as "For Desktop only" — ambiguous for mobile touch feedback.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C6</td>
+            <td><strong>Asset &amp; Icon Quality</strong></td>
+            <td><span class="badge badge-na">N/A</span></td>
+            <td class="muted">Text-only component — no icon assets to evaluate. Note: icon slots are absent and represent a gap, tracked under C2.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C7</td>
+            <td><strong>Code Connect Linkability</strong></td>
+            <td><span class="badge badge-refine">Needs Refinement</span></td>
+            <td class="muted">Per-variant usage descriptions attached in Figma. Property names (<code>appearance</code>, <code>size</code>, <code>state</code>, <code>isError</code>) are clean for 1:1 mapping. No CLI mappings registered yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Interaction States -->
+    <div class="sub-heading">Interaction States</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+            <th>Figma Property</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Default</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">state=Default</td>
+            <td class="muted">All three appearances fully defined.</td>
+          </tr>
+          <tr>
+            <td><strong>Pressed / Active</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">state=Pressed</td>
+            <td class="muted">Darker fill/border using pressed tokens. Documentation says "Desktop only" — should apply to mobile touch feedback too.</td>
+          </tr>
+          <tr>
+            <td><strong>Disabled</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">state=Disabled</td>
+            <td class="muted">Muted brand color tokens applied across all appearances.</td>
+          </tr>
+          <tr>
+            <td><strong>Destructive / Error</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">isError=true</td>
+            <td class="muted">Red destructive tokens applied. Only available for Outlined and Text Link.</td>
+          </tr>
+          <tr>
+            <td><strong>Focused (a11y)</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="cross">&#x2717;</span></td>
+            <td class="muted center">—</td>
+            <td class="muted">No focus ring defined. Required for keyboard and switch control navigation.</td>
+          </tr>
+          <tr>
+            <td><strong>Loading</strong></td>
+            <td class="center"><span class="cross">&#x2717;</span></td>
+            <td class="center"><span class="cross">&#x2717;</span></td>
+            <td class="muted center">—</td>
+            <td class="muted">No loading/spinner state. Common for form submit and async actions.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Code Connect Mapping -->
+    <div class="sub-heading">Code Connect — Property Mapping</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Figma Property</th>
+            <th>SwiftUI Param</th>
+            <th>Compose Param</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">appearance=Default</td>
+            <td class="mono">.borderedProminent</td>
+            <td class="mono">Button {}</td>
+            <td class="muted">Primary filled button</td>
+          </tr>
+          <tr>
+            <td class="mono">appearance=Outlined</td>
+            <td class="mono">.bordered</td>
+            <td class="mono">OutlinedButton {}</td>
+            <td class="muted">Secondary outlined button</td>
+          </tr>
+          <tr>
+            <td class="mono">appearance=Text Link</td>
+            <td class="mono">.plain / .borderless</td>
+            <td class="mono">TextButton {}</td>
+            <td class="muted">Tertiary text-only button</td>
+          </tr>
+          <tr>
+            <td class="mono">size=Default</td>
+            <td class="mono">controlSize: .large</td>
+            <td class="mono">modifier size tokens</td>
+            <td class="muted">~50px height via padding</td>
+          </tr>
+          <tr>
+            <td class="mono">size=Compact</td>
+            <td class="mono">controlSize: .regular</td>
+            <td class="mono">modifier size tokens</td>
+            <td class="muted">38px fixed height</td>
+          </tr>
+          <tr>
+            <td class="mono">state=Disabled</td>
+            <td class="mono">.disabled(true)</td>
+            <td class="mono">enabled = false</td>
+            <td class="muted">Disabled modifier</td>
+          </tr>
+          <tr>
+            <td class="mono">isError=true</td>
+            <td class="mono">role: .destructive</td>
+            <td class="mono">colors = ButtonDefaults.outlinedButtonColors(contentColor = errorColor)</td>
+            <td class="muted">Destructive / error variant</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Token Table -->
+    <div class="sub-heading">Design Tokens</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Token Name</th>
+            <th>Value</th>
+            <th>Native Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Primary / filled -->
+          <tr><td class="mono">main/button/primary/brand/enabled/bg</td><td class="mono">#005CE5</td><td class="muted">Default filled background</td></tr>
+          <tr><td class="mono">main/button/primary/brand/pressed/bg</td><td class="mono">#2340A9</td><td class="muted">Pressed/hover filled background</td></tr>
+          <tr><td class="mono">main/button/primary/brand/disabled/bg</td><td class="mono">#9BC5FD</td><td class="muted">Disabled filled background</td></tr>
+          <tr><td class="mono">main/button/primary/brand/enabled/label</td><td class="mono">#FFFFFF</td><td class="muted">Label on filled button (all states)</td></tr>
+          <!-- Outlined brand -->
+          <tr><td class="mono">main/button/secondary/brand/enabled/border</td><td class="mono">#005CE5</td><td class="muted">Outlined border — default</td></tr>
+          <tr><td class="mono">main/button/secondary/brand/pressed/border</td><td class="mono">#2340A9</td><td class="muted">Outlined border — pressed</td></tr>
+          <tr><td class="mono">main/button/secondary/brand/disabled/border</td><td class="mono">#9BC5FD</td><td class="muted">Outlined border — disabled</td></tr>
+          <tr><td class="mono">main/button/secondary/brand/enabled/label</td><td class="mono">#005CE5</td><td class="muted">Outlined label — default</td></tr>
+          <tr><td class="mono">main/button/secondary/brand/pressed/label</td><td class="mono">#2340A9</td><td class="muted">Outlined label — pressed</td></tr>
+          <tr><td class="mono">main/button/secondary/brand/disabled/label</td><td class="mono">#9BC5FD</td><td class="muted">Outlined label — disabled</td></tr>
+          <!-- Outlined destructive -->
+          <tr><td class="mono">main/button/secondary/destructive/enabled/border</td><td class="mono">#D61B2C</td><td class="muted">Error outlined border — default</td></tr>
+          <tr><td class="mono">main/button/secondary/destructive/pressed/border</td><td class="mono">#B50707</td><td class="muted">Error outlined border — pressed</td></tr>
+          <tr><td class="mono">main/button/secondary/destructive/disabled/border</td><td class="mono">#F4C7C9</td><td class="muted">Error outlined border — disabled</td></tr>
+          <tr><td class="mono">main/button/secondary/destructive/enabled/label</td><td class="mono">#D61B2C</td><td class="muted">Error outlined label — default</td></tr>
+          <tr><td class="mono">main/button/secondary/destructive/pressed/label</td><td class="mono">#B50707</td><td class="muted">Error outlined label — pressed</td></tr>
+          <tr><td class="mono">main/button/secondary/destructive/disabled/label</td><td class="mono">#F4C7C9</td><td class="muted">Error outlined label — disabled</td></tr>
+          <!-- Text Link brand -->
+          <tr><td class="mono">main/button/tertiary/brand/enabled/label</td><td class="mono">#005CE5</td><td class="muted">Text Link label — default</td></tr>
+          <tr><td class="mono">main/button/tertiary/brand/pressed/label</td><td class="mono">#2340A9</td><td class="muted">Text Link label — pressed</td></tr>
+          <tr><td class="mono">main/button/tertiary/brand/disabled/label</td><td class="mono">#9BC5FD</td><td class="muted">Text Link label — disabled</td></tr>
+          <!-- Text Link destructive -->
+          <tr><td class="mono">main/button/tertiary/destructive/enabled/label</td><td class="mono">#D61B2C</td><td class="muted">Text Link error label — default</td></tr>
+          <tr><td class="mono">main/button/tertiary/destructive/pressed/label</td><td class="mono">#B50707</td><td class="muted">Text Link error label — pressed</td></tr>
+          <tr><td class="mono">main/button/tertiary/destructive/disabled/label</td><td class="mono">#F4C7C9</td><td class="muted">Text Link error label — disabled</td></tr>
+          <!-- Layout & Typography -->
+          <tr><td class="mono">space/space-16</td><td class="mono">16px</td><td class="muted">Horizontal padding — Default size</td></tr>
+          <tr><td class="mono">space/space-12</td><td class="mono">12px</td><td class="muted">Horizontal padding — Compact size</td></tr>
+          <tr><td class="mono">radius/radius-pill</td><td class="mono">99px</td><td class="muted">Pill shape — capsule in SwiftUI</td></tr>
+          <tr><td class="mono">font-family/font-primary</td><td class="mono">Proxima Soft Bold</td><td class="muted">Verify font bundle in native app</td></tr>
+          <tr><td class="mono">font-size/font-size-30</td><td class="mono">18px</td><td class="muted">Label size — Default</td></tr>
+          <tr><td class="mono">font-size/font-size-25</td><td class="mono">16px</td><td class="muted">Label size — Compact</td></tr>
+          <tr><td class="mono">line-height/leading-30</td><td class="mono">18px</td><td class="muted">Line height — Default</td></tr>
+          <tr><td class="mono">line-height/leading-25</td><td class="mono">16px</td><td class="muted">Line height — Compact</td></tr>
+          <tr><td class="mono">letter-spacing/tracking-wide</td><td class="mono">0.25px</td><td class="muted">Letter spacing on both sizes</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /comp-tab-content assessment -->
+    </div><!-- /data-tab-group -->
+
+  </div><!-- /content-wrap -->
+</div><!-- /panel-button -->
+<!--@section-end-->

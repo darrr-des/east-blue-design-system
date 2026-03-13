@@ -178,6 +178,9 @@ Confirmed recurring patterns across the GCash DS. Use as a checklist during ever
 | Criterion | Pattern | First Found In |
 |---|---|---|
 | C7 | Code Connect mappings not yet registered — no native component files linked via Code Connect CLI | Accordion |
+| C1 | Layer named `.base/button/small` on compact disabled container — non-semantic internal style reference | Button |
+| C2 | No icon slot variants — missing leadingIcon, trailingIcon, and iconOnly button patterns | Button |
+| C5 | No focus ring state; no loading state; Pressed documented as "Desktop only" — ambiguous for mobile | Button |
 <!-- @@DISCOVERED_PATTERNS_END@@ -->
 
 ---
@@ -415,6 +418,7 @@ Key conventions:
 | Component | Node | DS Verdict | Native Status | Status | Notes |
 |---|---|---|---|---|---|
 | Accordion | `16870:9288` | Ready | Needs Refinement | 🔁 Re-assessing | Open: C7 |
+| Button | `17104:184842` | Needs Refinement | Needs Refinement | 🔁 Re-assessing | — |
 <!-- @@PROGRESS_TABLE_END@@ -->
 
 ### Open Issues
