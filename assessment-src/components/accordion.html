@@ -5,21 +5,18 @@
 -->
 
 <!--@meta-start-->
-status: re-assessing
+status: assessed
 node: 16870:9288
-ds-verdict: fix
+ds-verdict: refine
 native-status: refine
-variants: 24
+variants: 6
 ios: DisclosureGroup
 android: AnimatedVisibility
 open-issues: C7
 <!--@meta-end-->
 
 <!--@patterns-start-->
-[C2] Boolean variant properties using yes/no strings instead of true/false — found on leadingIcon and labelDescription properties
-[C1] Root container frames left as Figma default "Frame" instead of semantic name like "container"
-[C1] Leading icon instances named "Placeholder" instead of semantic "icon-leading"
-[C4] Expanded content panel added in v4 — content-body frame (80px) with background token #F4F7FB added to all 12 expanded variants
+[C7] Code Connect mappings not yet registered — no native component files linked via Code Connect CLI
 <!--@patterns-end-->
 
 <!--@nav-start-->
@@ -57,12 +54,11 @@ open-issues: C7
   <div class="summary-card-row">
     <div class="summary-card-name">Accordion</div>
     <div class="summary-card-badges">
-      <span class="badge badge-fix">Fix</span>
       <span class="badge badge-refine">Needs Refinement</span>
     </div>
   </div>
   <div class="summary-card-finding">
-    4 of 5 criteria resolved. 24 variants with <code>content-body</code> slots. Remaining: Code Connect mappings (C7).
+    Reduced to 6 variants (Type × State) with boolean visibility for <code>leadingIcon</code> and <code>description</code>. Color tokens connected across all variants. Remaining: Code Connect mappings (C7).
   </div>
 </div>
 <!--@summary-card-end-->
@@ -70,10 +66,10 @@ open-issues: C7
 <!--@summary-row-start-->
 <tr>
   <td><strong>Accordion</strong></td>
-  <td><span class="badge badge-fix">Fix</span></td>
+  <td><span class="badge badge-ready">Ready</span></td>
   <td><span class="badge badge-refine">Needs Refinement</span></td>
-  <td class="muted">24</td>
-  <td class="muted">4/5 resolved. Open: Code Connect mappings.</td>
+  <td class="muted">6</td>
+  <td class="muted">All criteria resolved except Code Connect mappings (C7).</td>
 </tr>
 <!--@summary-row-end-->
 
@@ -92,13 +88,12 @@ open-issues: C7
       <div class="comp-header-body">
         <div class="comp-name">
           Accordion
-          <span class="badge badge-fix">Fix</span>
           <span class="badge badge-refine">Needs Refinement</span>
         </div>
-        <p class="comp-desc">A disclosure row that expands to reveal content. Supports an optional leading icon and secondary description. Maps directly to native patterns on both platforms.</p>
+        <p class="comp-desc">A disclosure row that expands to reveal content. Supports optional leading icon and description via boolean visibility properties. Reduced from 24 to 6 variants (Type × State) with color tokens fully connected.</p>
         <div class="comp-meta">
           <div class="cover-meta-item"><strong>Node:</strong> 16870:9288</div>
-          <div class="cover-meta-item"><strong>Variants:</strong> 24</div>
+          <div class="cover-meta-item"><strong>Variants:</strong> 6</div>
           <div class="cover-meta-item"><strong>iOS:</strong> DisclosureGroup</div>
           <div class="cover-meta-item"><strong>Android:</strong> AnimatedVisibility</div>
         </div>
@@ -114,6 +109,46 @@ open-issues: C7
 
     <!-- ── Tab 2: Changelog ─────────────────────────────────────── -->
     <div class="comp-tab-content" data-tab="changelog">
+    <div class="sub-heading">1.3.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Changes Applied via Figma MCP · node 16870:9288</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Variant set reduced from 24 to 6</strong> — <code>leadingIcon</code> and <code>description</code> converted from variant axes to boolean visibility properties. Component set now has 2 Type values (Collapsed / Expanded) × 3 State values (Default / Pressed / Disabled) = 6 variants total.
+          <span class="tag-fixed">Refined</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C2 Improved</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Fixed 56px header height</strong> — Applied consistent fixed height across all 6 variant headers for reliable layout in native implementations.
+          <span class="tag-fixed">Refined</span>
+        </div>
+        <span class="changelog-delta delta-partial">C4 Improved</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Color tokens connected</strong> — 9 design system variables bound across all 6 variants: <code>surface/default</code>, <code>border/subtle</code>, <code>text/primary</code>, <code>text/secondary</code>, <code>icon/placeholder</code>, <code>surface/pressed</code>, <code>surface/content</code>, <code>surface/disabled</code>, <code>text/disabled</code>. Fully resolves C3.
+          <span class="tag-fixed">Fixed</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C3 Resolved</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Code Connect property renamed</strong> — <code>labelDescription</code> → <code>description</code> for cleaner 1:1 mapping to native params.
+          <span class="tag-fixed">Refined</span>
+        </div>
+        <span class="changelog-delta delta-partial">C7 Prep</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Annotation instance frame added</strong> — Type × State grid built with nested auto layout (VERTICAL outer → HORIZONTAL rows → VERTICAL cells). White card, #E5EBF4 border, 16px radius, Menlo annotation labels.
+          <span class="tag-fixed">Added</span>
+        </div>
+        <span class="changelog-delta delta-partial">Annotation</span>
+      </div>
+    </div>
+
     <div class="sub-heading">1.2.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
     <div class="changelog">
       <div class="changelog-header">Changes Applied via Figma MCP · node 16870:9288</div>
@@ -177,7 +212,6 @@ open-issues: C7
         <span class="changelog-delta delta-resolved">C5 Resolved</span>
       </div>
       <div class="changelog-row">
-        <div class="changelog-icon"></div>
         <div class="changelog-body">
           <strong>Code Connect mappings</strong> — No native component files or Code Connect CLI mappings registered yet.
           <span class="tag-open">Still Open</span>
@@ -194,8 +228,8 @@ open-issues: C7
     <div class="section-heading">DS Health</div>
 
     <div class="verdict-card">
-      <div class="verdict-card-title">Fixes applied — nearly handoff-ready</div>
-      <div class="verdict-card-body"><strong>Verdict:</strong> Layer naming, boolean notation, interaction states, and the expanded content panel are all resolved. Only Code Connect mappings (C7) remain before this component is fully linked.</div>
+      <div class="verdict-card-title">Architecture refined — handoff-ready except Code Connect</div>
+      <div class="verdict-card-body"><strong>Verdict:</strong> Variant set reduced from 24 to 6 (Type=Collapsed/Expanded × State=Default/Pressed/Disabled) with <code>leadingIcon</code> and <code>description</code> as boolean visibility properties. Fixed 56px header height applied. Color tokens connected across all variants using the design system variable collection. Only Code Connect mappings (C7) remain.</div>
     </div>
 
     <!-- 4 Traits -->
@@ -207,7 +241,7 @@ open-issues: C7
           <div class="trait-status">Pass</div>
         </div>
         <div class="trait-note">
-          All 12 expanded variants include a <code>content-body</code> slot. Designers can attach arbitrary content inside the slot without modifying the component itself.
+          Expanded variants include a <code>content-body</code> slot. Boolean visibility on <code>leadingIcon</code> and <code>description</code> lets designers configure the component without extra variants.
         </div>
       </div>
       <div class="trait-card pass">
@@ -216,7 +250,7 @@ open-issues: C7
           <div class="trait-status">Pass</div>
         </div>
         <div class="trait-note">
-          Both the header row and the <code>content-body</code> panel are included. Engineers can implement it as a standalone unit with no external spec needed.
+          Header row (56px fixed height) and <code>content-body</code> panel are both included. Engineers can implement it as a standalone unit with no external spec needed.
         </div>
       </div>
       <div class="trait-card pass">
@@ -225,7 +259,7 @@ open-issues: C7
           <div class="trait-status">Pass</div>
         </div>
         <div class="trait-note">
-          Boolean properties use <code>true</code>/<code>false</code> across all variants. Layer naming is standardised with <code>container</code> and <code>icon-leading</code>.
+          A single variant property (<code>Type</code>) drives collapsed/expanded. <code>leadingIcon</code> and <code>description</code> are boolean show/hide properties — no duplicate variants needed.
         </div>
       </div>
       <div class="trait-card pass">
@@ -246,56 +280,51 @@ open-issues: C7
       <li>Layer names corrected to semantic naming (C1)</li>
       <li>Pressed and disabled interaction states added (C5)</li>
       <li>Expanded content panel with content-body slot added (C4)</li>
+      <li>Variant set reduced from 24 to 6 — <code>Type</code> × <code>State</code> matrix (C2)</li>
+      <li><code>leadingIcon</code> and <code>description</code> converted to boolean visibility properties</li>
+      <li>Fixed 56px header height applied across all 6 variants</li>
+      <li>Annotation instance frame built with nested auto layout (Type × State grid)</li>
     </ul>
 
     <!-- ── Native Mobile Readiness ─────────────────────────────── -->
     <div class="section-heading" style="margin-top:48px">Native Mobile Readiness</div>
 
     <!-- Variants Inventory -->
-    <div class="sub-heading">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:14px">(24 total)</span></div>
-    <p>8 combinations of <code>type</code> x <code>leadingIcon</code> x <code>labelDescription</code>, each across 3 states (default, pressed, disabled).</p>
+    <div class="sub-heading">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:14px">(6 total)</span></div>
+    <p>2 <code>Type</code> values × 3 <code>State</code> values. <code>leadingIcon</code> and <code>description</code> are boolean visibility properties, not variant axes.</p>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th>type</th>
-            <th>leadingIcon</th>
-            <th>labelDescription</th>
+            <th>Type</th>
+            <th>State</th>
             <th>Node ID</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>collapsed</td><td>true</td><td>true</td>
-            <td class="mono">16830:2026</td>
+            <td>Collapsed</td><td>Default</td>
+            <td class="mono">16870:9289</td>
           </tr>
           <tr>
-            <td>expanded</td><td>true</td><td>true</td>
-            <td class="mono">16830:2035</td>
+            <td>Expanded</td><td>Default</td>
+            <td class="mono">16870:9298</td>
           </tr>
           <tr>
-            <td>collapsed</td><td>false</td><td>true</td>
-            <td class="mono">16830:2044</td>
+            <td>Collapsed</td><td>Pressed</td>
+            <td class="mono">16919:864</td>
           </tr>
           <tr>
-            <td>expanded</td><td>false</td><td>true</td>
-            <td class="mono">16830:2051</td>
+            <td>Expanded</td><td>Pressed</td>
+            <td class="mono">16919:877</td>
           </tr>
           <tr>
-            <td>collapsed</td><td>true</td><td>false</td>
-            <td class="mono">16830:2058</td>
+            <td>Collapsed</td><td>Disabled</td>
+            <td class="mono">16919:956</td>
           </tr>
           <tr>
-            <td>expanded</td><td>true</td><td>false</td>
-            <td class="mono">16830:2066</td>
-          </tr>
-          <tr>
-            <td>collapsed</td><td>false</td><td>false</td>
-            <td class="mono">16830:2074</td>
-          </tr>
-          <tr>
-            <td>expanded</td><td>false</td><td>false</td>
-            <td class="mono">16830:2080</td>
+            <td>Expanded</td><td>Disabled</td>
+            <td class="mono">16919:969</td>
           </tr>
         </tbody>
       </table>
@@ -342,7 +371,7 @@ open-issues: C7
             <td class="mono center">C5</td>
             <td><strong>Interaction State Coverage</strong></td>
             <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">Default, pressed, and disabled states covered across all 24 variants.</td>
+            <td class="muted">Default, pressed, and disabled states covered across all 6 variants.</td>
           </tr>
           <tr>
             <td class="mono center">C6</td>
@@ -393,14 +422,14 @@ open-issues: C7
             <td class="center"><span class="check">Yes</span></td>
             <td class="center"><span class="check">Yes</span></td>
             <td class="mono">state=pressed</td>
-            <td class="muted">Light blue background (#EEF3FB) across all 8 combinations.</td>
+            <td class="muted">Light blue background — <code>surface/pressed</code> (#EEF3FB) token applied.</td>
           </tr>
           <tr>
             <td><strong>Disabled</strong></td>
             <td class="center"><span class="check">Yes</span></td>
             <td class="center"><span class="check">Yes</span></td>
             <td class="mono">state=disabled</td>
-            <td class="muted">Muted tokens applied for label, description, and icon.</td>
+            <td class="muted"><code>surface/disabled</code> (#F6F9FD) and <code>text/disabled</code> (#C2CFE5) tokens applied.</td>
           </tr>
           <tr>
             <td><strong>Focused (a11y)</strong></td>
@@ -522,7 +551,7 @@ open-issues: C7
             <td class="muted"><code>nil</code>/<code>null</code> hides the icon</td>
           </tr>
           <tr>
-            <td class="mono">labelDescription</td>
+            <td class="mono">description</td>
             <td class="mono">description: String?</td>
             <td class="mono">description: String?</td>
             <td class="muted"><code>nil</code>/<code>null</code> hides the description</td>
@@ -543,19 +572,17 @@ open-issues: C7
           </tr>
         </thead>
         <tbody>
-          <tr><td class="mono">accordion/color/bg</td><td class="mono">#FFFFFF</td><td class="muted">Same for collapsed and expanded</td></tr>
-          <tr><td class="mono">accordion/color/border</td><td class="mono">#E5EBF4</td><td class="muted">Divider color</td></tr>
-          <tr><td class="mono">accordion/color/label</td><td class="mono">#0A2757</td><td class="muted">Primary text</td></tr>
-          <tr><td class="mono">accordion/color/description</td><td class="mono">#90A8D0</td><td class="muted">Secondary text</td></tr>
-          <tr><td class="mono">accordion/color/icon-chevron</td><td class="mono">#005CE5</td><td class="muted">Tint / foreground</td></tr>
-          <tr><td class="mono">surface/pressed</td><td class="mono">#EEF3FB</td><td class="muted">Pressed background</td></tr>
-          <tr><td class="mono">surface/disabled</td><td class="mono">#F5F7FA</td><td class="muted">Disabled background</td></tr>
-          <tr><td class="mono">text/disabled</td><td class="mono">#B5BEC9</td><td class="muted">Disabled label</td></tr>
-          <tr><td class="mono">text/disabled-secondary</td><td class="mono">#C8D5E4</td><td class="muted">Disabled description</td></tr>
-          <tr><td class="mono">icon/disabled</td><td class="mono">#D4D9E2</td><td class="muted">Disabled icon</td></tr>
-          <tr><td class="mono">surface/expanded-body</td><td class="mono">#F4F7FB</td><td class="muted">Content panel background</td></tr>
-          <tr><td class="mono">font-family/font-primary</td><td class="mono">Proxima Soft</td><td class="muted">Verify bundle</td></tr>
-          <tr><td class="mono">font-family/font-secondary</td><td class="mono">BarkAda</td><td class="muted">Verify bundle</td></tr>
+          <tr><td class="mono">surface/default</td><td class="mono">#FFFFFF</td><td class="muted">Default background — collapsed and expanded</td></tr>
+          <tr><td class="mono">border/subtle</td><td class="mono">#E5EBF4</td><td class="muted">Container border and divider color</td></tr>
+          <tr><td class="mono">text/primary</td><td class="mono">#0A2757</td><td class="muted">Label text</td></tr>
+          <tr><td class="mono">text/secondary</td><td class="mono">#90A8D0</td><td class="muted">Description text</td></tr>
+          <tr><td class="mono">icon/placeholder</td><td class="mono">#C2C6CF</td><td class="muted">Leading icon placeholder tint</td></tr>
+          <tr><td class="mono">surface/pressed</td><td class="mono">#EEF3FB</td><td class="muted">Pressed state background</td></tr>
+          <tr><td class="mono">surface/content</td><td class="mono">#F4F7FB</td><td class="muted">Expanded content-body panel background</td></tr>
+          <tr><td class="mono">surface/disabled</td><td class="mono">#F6F9FD</td><td class="muted">Disabled state background</td></tr>
+          <tr><td class="mono">text/disabled</td><td class="mono">#C2CFE5</td><td class="muted">Disabled label and description text</td></tr>
+          <tr><td class="mono">font-family/font-primary</td><td class="mono">Proxima Soft</td><td class="muted">Verify bundle in native app</td></tr>
+          <tr><td class="mono">font-family/font-secondary</td><td class="mono">BarkAda</td><td class="muted">Verify bundle in native app</td></tr>
           <tr><td class="mono">font-size/font-size-25</td><td class="mono">16px</td><td class="muted">Label size</td></tr>
           <tr><td class="mono">font-size/font-size-20</td><td class="mono">14px</td><td class="muted">Description size</td></tr>
           <tr><td class="mono">space/space-12</td><td class="mono">12px</td><td class="muted">Vertical padding</td></tr>

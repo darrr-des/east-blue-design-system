@@ -177,10 +177,7 @@ Confirmed recurring patterns across the GCash DS. Use as a checklist during ever
 <!-- @@DISCOVERED_PATTERNS@@ -->
 | Criterion | Pattern | First Found In |
 |---|---|---|
-| C2 | Boolean variant properties using yes/no strings instead of true/false — found on leadingIcon and labelDescription properties | Accordion |
-| C1 | Root container frames left as Figma default "Frame" instead of semantic name like "container" | Accordion |
-| C1 | Leading icon instances named "Placeholder" instead of semantic "icon-leading" | Accordion |
-| C4 | Expanded content panel added in v4 — content-body frame (80px) with background token #F4F7FB added to all 12 expanded variants | Accordion |
+| C7 | Code Connect mappings not yet registered — no native component files linked via Code Connect CLI | Accordion |
 <!-- @@DISCOVERED_PATTERNS_END@@ -->
 
 ---
@@ -417,7 +414,7 @@ Key conventions:
 <!-- @@PROGRESS_TABLE@@ -->
 | Component | Node | DS Verdict | Native Status | Status | Notes |
 |---|---|---|---|---|---|
-| Accordion | `16870:9288` | Fix | Needs Refinement | 🔁 Re-assessing | Open: C7 |
+| Accordion | `16870:9288` | Ready | Needs Refinement | 🔁 Re-assessing | Open: C7 |
 <!-- @@PROGRESS_TABLE_END@@ -->
 
 ### Open Issues

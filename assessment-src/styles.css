@@ -24,7 +24,7 @@
   --code-fg: #3C3F44;
   --card-bg: #F3F3F6;
   --thead-bg: #F3F3F6;
-  --thead-fg: #005CE5;
+  --thead-fg: #3C4A5C;
   --row-border: rgba(0,0,0,0.05);
   --sidebar-border: rgba(232, 231, 228, 0.5);
   --verdict-bg: #FFFDF8;
@@ -68,7 +68,7 @@
   --code-fg: #D1D1D6;
   --card-bg: #3A3A3C;
   --thead-bg: #3A3A3C;
-  --thead-fg: #4DA3FF;
+  --thead-fg: #C8CDD5;
   --row-border: rgba(255,255,255,0.06);
   --sidebar-border: rgba(255, 255, 255, 0.08);
   --verdict-bg: rgba(255, 214, 10, 0.06);
@@ -553,6 +553,9 @@ td code, td .mono-inline {
 
 /* ── Sub heading ─────────────────────────────────────────────────────── */
 .sub-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 18px;
   font-weight: 600;
   color: var(--text);
@@ -603,8 +606,8 @@ td code, td .mono-inline {
 }
 .changelog-delta {
   flex-shrink: 0;
-  font-size: 10px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 600;
   padding: 2px 8px;
   border-radius: 999px;
   white-space: nowrap;
@@ -616,20 +619,22 @@ td code, td .mono-inline {
 .delta-open     { background: var(--refine-bg); color: var(--refine-fg); }
 
 .tag-fixed {
-  display: inline-block;
-  font-size: 10px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
   font-weight: 600;
-  padding: 1px 6px;
+  padding: 2px 8px;
   border-radius: 999px;
   background: var(--ready-bg);
   color: var(--ready-fg);
   margin-left: 4px;
 }
 .tag-open {
-  display: inline-block;
-  font-size: 10px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
   font-weight: 600;
-  padding: 1px 6px;
+  padding: 2px 8px;
   border-radius: 999px;
   background: var(--refine-bg);
   color: var(--refine-fg);
@@ -882,7 +887,7 @@ code {
   background: var(--tab-pill);
   border-radius: 7px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
-  transition: left 0.2s ease, width 0.2s ease;
+  transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1), width 0.28s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease;
   z-index: 0;
 }
 .comp-tab {
@@ -914,12 +919,12 @@ code {
 .tab-version-badge {
   display: inline-flex;
   align-items: center;
-  padding: 2px 7px;
-  border-radius: 6px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: normal;
+  text-transform: none;
   line-height: 1;
 }
 .tab-version-badge.patch { background: #ECFDF5; color: #065F46; }
@@ -1060,7 +1065,6 @@ body,
 .changelog-header,
 .summary-card,
 .comp-tabs,
-.comp-tabs::before,
 .theme-pill,
 thead th,
 code {
