@@ -28,7 +28,7 @@ This is a **component assessment report** for the GCash Design System. It evalua
 ## Repository Structure
 
 ```
-gcash-design-system/
+east-blue-design-system/
 ├── report.html                    ← Built output (do not edit directly)
 ├── styles.css                     ← Built output (minified from assessment-src/styles.css)
 ├── gcash-ds-assessment-guide.md   ← Assessment methodology + auto-synced progress tables

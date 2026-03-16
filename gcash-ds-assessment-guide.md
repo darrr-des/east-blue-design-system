@@ -104,7 +104,7 @@ The report is a modular, build-assembled static site on GitHub Pages.
 ### Repository Structure
 
 ```
-gcash-design-system/
+east-blue-design-system/
 ├── index.html                    ← Built output (do not edit)
 ├── styles.css                    ← Built output (minified)
 └── assessment-src/
