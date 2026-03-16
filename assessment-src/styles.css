@@ -246,11 +246,11 @@ body {
   border-radius: 50%;
   flex-shrink: 0;
 }
-.nav-comp-status.ready { background: var(--ready-fg); }
-.nav-comp-status.fix { background: var(--fix-fg); }
-.nav-comp-status.refine { background: var(--refine-fg); }
-.nav-comp-status.rework { background: var(--rework-fg); }
-.nav-comp-status.na { background: var(--na-fg); }
+.nav-comp-status.ready { background: #22C55E; }
+.nav-comp-status.fix { background: #F59E0B; }
+.nav-comp-status.refine { background: #F59E0B; }
+.nav-comp-status.rework { background: #EF4444; }
+.nav-comp-status.na { background: #9CA3AF; }
 
 .sidebar-footer {
   padding: 14px 18px;
