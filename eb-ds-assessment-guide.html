@@ -106,6 +106,10 @@ td strong{font-weight:600;color:var(--text)}
 .badge-restructure{color:#9333EA;background:#F3E8FF}
 .badge-consolidate{color:#0369A1;background:#E0F2FE}
 .badge-remove{color:#B91C1C;background:#FEE2E2}
+.badge-pass{color:#1A7A4A;background:#E6F4ED}
+.badge-partial{color:#1448A3;background:#EEF3FB}
+.badge-warn{color:#92400E;background:#FEF3C7}
+.badge-fail{color:#991B1B;background:#FEE2E2}
 
 /* ── Code ── */
 code{font-family:var(--mono);font-size:12px;font-weight:600;background:var(--code-bg);padding:1px 4px;border-radius:3px;color:var(--code-fg)}
@@ -259,11 +263,11 @@ body,.sidebar,.main,.sidebar-brand,.sidebar-footer,.table-wrap,.how-card,.dep-ca
       <div class="sub-heading">Trait Ratings</div>
       <p class="section-desc">Each trait gets one of four ratings. These describe <strong>how well the trait is met</strong>, not the component's overall health.</p>
       <div class="table-wrap">
-        <table><thead><tr><th class="col-md">Rating</th><th>Color</th><th>When to Use</th></tr></thead><tbody>
-          <tr><td><strong>Pass</strong></td><td class="muted">Green</td><td class="muted">Fully met. No issues — ready for native handoff.</td></tr>
-          <tr><td><strong>Partial</strong></td><td class="muted">Blue</td><td class="muted">Mostly met with minor gaps. Functional but has specific limitations (e.g. missing icon slots, but text variants work).</td></tr>
-          <tr><td><strong>Warn</strong></td><td class="muted">Orange</td><td class="muted">Significant concerns that limit reuse or block handoff (e.g. naming issues, raster assets, hardcoded values).</td></tr>
-          <tr><td><strong>Fail</strong></td><td class="muted">Red</td><td class="muted">Broken. Blocks DS inclusion or native implementation entirely (e.g. flattened icons, no separable layers).</td></tr>
+        <table><thead><tr><th class="col-badge">Rating</th><th>When to Use</th></tr></thead><tbody>
+          <tr><td><span class="badge badge-pass">Pass</span></td><td class="muted">Fully met. No issues — ready for native handoff.</td></tr>
+          <tr><td><span class="badge badge-partial">Partial</span></td><td class="muted">Mostly met with minor gaps. Functional but has specific limitations (e.g. missing icon slots, but text variants work).</td></tr>
+          <tr><td><span class="badge badge-warn">Warn</span></td><td class="muted">Significant concerns that limit reuse or block handoff (e.g. naming issues, raster assets, hardcoded values).</td></tr>
+          <tr><td><span class="badge badge-fail">Fail</span></td><td class="muted">Broken. Blocks DS inclusion or native implementation entirely (e.g. flattened icons, no separable layers).</td></tr>
         </tbody></table>
       </div>
 
