@@ -31,14 +31,7 @@ A component can pass DS Health but fail Native Readiness (e.g. raster icons, bro
 
 ## DS Health — The 4 Traits
 
-Rate each trait using one of four levels:
-
-| Rating | CSS Class | Meaning |
-|---|---|---|
-| **Pass** | `pass` | Fully met. No issues — ready for native handoff. |
-| **Partial** | `partial` | Mostly met with minor gaps. Functional but has specific limitations that should be addressed. |
-| **Warn** | `warn` | Significant concerns that limit reuse or block reliable native handoff. |
-| **Fail** | `fail` | Broken. Blocks DS inclusion or native implementation entirely. |
+Each component is scored on 4 traits. These measure whether the component belongs in the design system and how well it's built.
 
 | Trait | What to check |
 |---|---|
@@ -47,22 +40,45 @@ Rate each trait using one of four levels:
 | **Consistent** | Predictable behavior. Naming, property types, and state coverage align with the DS. |
 | **Composable** | Nests inside other components and fits the existing hierarchy. |
 
-### Verdicts
+---
 
-| Verdict | Meaning |
-|---|---|
-| **Keep** | All 4 traits pass. Ship as-is. |
-| **Fix** | Belongs in DS but has specific issues to resolve. |
-| **Restructure** | Needs significant property or architectural changes. |
-| **Consolidate** | Merge into another component. |
-| **Product Layer** | Too feature-specific for core DS. |
-| **Remove** | Redundant, deprecated, or not a DS concern. |
+## Trait Ratings — Pass / Partial / Warn / Fail
+
+Each trait gets one of four ratings. These describe **how well the trait is met**, not the component's overall health.
+
+| Rating | CSS Class | Color | When to use |
+|---|---|---|---|
+| **Pass** | `pass` | Green | Fully met. No issues — the trait is solid and ready for native handoff. |
+| **Partial** | `partial` | Blue | Mostly met with minor gaps. The component is functional but has specific limitations that should be addressed (e.g. missing icon slots, but text variants work fine). |
+| **Warn** | `warn` | Orange | Significant concerns that limit reuse or block reliable native handoff (e.g. naming inconsistencies, raster assets where vectors are expected, hardcoded values). |
+| **Fail** | `fail` | Red | Broken. The trait is fundamentally unmet — blocks DS inclusion or native implementation entirely (e.g. flattened icons that can't be tinted, no separable layers). |
+
+### How Trait Ratings differ from Verdicts
+
+- **Trait Ratings** (Pass/Partial/Warn/Fail) = per-trait scores in the 4 Traits Scorecard
+- **DS Verdicts** (Keep/Fix/Restructure...) = the overall DS Health outcome derived from all 4 traits combined
+- **Native Status** (Ready/Needs Refinement/Requires Rework...) = overall native readiness derived from the 7 criteria (C1–C7)
+
+---
+
+## DS Health Verdicts
+
+The overall DS Health verdict is based on the combination of all 4 trait ratings.
+
+| Verdict | Meaning | When to assign |
+|---|---|---|
+| **Keep** | Ship as-is. | All 4 traits pass. |
+| **Fix** | Belongs in DS but has specific issues to resolve. | Mostly pass/partial with a few warn traits. |
+| **Restructure** | Needs significant property or architectural changes. | Multiple warn/fail traits indicating structural problems. |
+| **Consolidate** | Merge into another component. | Overlaps with an existing component. |
+| **Product Layer** | Too feature-specific for core DS. | Tied to a single screen or product flow. |
+| **Remove** | Redundant, deprecated, or not a DS concern. | No longer needed or never belonged. |
 
 ---
 
 ## Native Mobile Readiness — 7 Criteria
 
-The overall status is set by the **worst-scoring criterion**.
+The overall native status is set by the **worst-scoring criterion**. One unresolved blocker can hold back the entire component.
 
 | ID | Criterion | What to check |
 |----|---|---|
@@ -74,14 +90,19 @@ The overall status is set by the **worst-scoring criterion**.
 | **C6** | Asset & Icon Quality | Vector component instances, not raster/PNG. Token-based coloring for native tinting. |
 | **C7** | Code Connect Linkability | Proper component set. Property names map 1:1 to native parameters. |
 
-### Status Levels
+---
 
-| Status | Meaning |
-|---|---|
-| **Ready** | Linkable as-is. Clean structure, maps well to native. |
-| **Needs Refinement** | Minor issues to resolve before linking. |
-| **Requires Rework** | Needs redesign before native translation. |
-| **Not Applicable** | Web-only or removed — skip native assessment. |
+## Native Status Levels
+
+The overall native readiness of a component based on all 7 criteria.
+
+| Status | Badge Class | Meaning |
+|---|---|---|
+| **Ready** | `badge-ready` | Linkable as-is. Clean structure, maps well to native. |
+| **Needs Refinement** | `badge-refine` | Minor issues to resolve before linking. |
+| **Requires Rework** | `badge-rework` | Needs redesign before native translation. |
+| **Not Applicable** | `badge-na` | Web-only or removed — skip native assessment. |
+| **Fix** | `badge-fix` | Resolved via Figma. Residual items may remain. |
 
 ---
 
