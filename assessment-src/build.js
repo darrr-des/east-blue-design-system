@@ -4,7 +4,7 @@
  *   - assessment-src/shell.html          (shared layout, CSS, JS)
  *   - assessment-src/components/*.html   (one file per component)
  *
- * Also syncs the assessment guide (gcash-ds-assessment-guide.md) with
+ * Also syncs the assessment guide (eb-ds-assessment-guide.md) with
  * current component data via sync-guide.js.
  *
  * Usage: node assessment-src/build.js

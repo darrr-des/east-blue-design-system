@@ -35,7 +35,7 @@ const path = require('path');
 
 const srcDir    = __dirname;
 const compDir   = path.join(srcDir, 'components');
-const guideFile = path.join(srcDir, '..', 'gcash-ds-assessment-guide.md');
+const guideFile = path.join(srcDir, '..', 'eb-ds-assessment-guide.md');
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 

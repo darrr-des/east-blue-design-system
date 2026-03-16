@@ -31,14 +31,14 @@ This is a **component assessment report** for the GCash Design System. It evalua
 east-blue-design-system/
 ├── report.html                    ← Built output (do not edit directly)
 ├── styles.css                     ← Built output (minified from assessment-src/styles.css)
-├── gcash-ds-assessment-guide.md   ← Assessment methodology + auto-synced progress tables
-├── gcash-ds-assessment-guide.html ← Standalone guide page (fully inlined CSS, edit directly)
+├── eb-ds-assessment-guide.md   ← Assessment methodology + auto-synced progress tables
+├── eb-ds-assessment-guide.html ← Standalone guide page (fully inlined CSS, edit directly)
 ├── CLAUDE.md                      ← This file (read-only assessment rulebook)
 └── assessment-src/
     ├── shell.html                 ← Shared layout: sidebar, cover, criteria, JS
     ├── styles.css                 ← Source CSS (unminified) — edit this, not root styles.css
     ├── build.js                   ← Build script: assembles report.html + minifies CSS
-    ├── sync-guide.js              ← Auto-updates gcash-ds-assessment-guide.md from component metadata
+    ├── sync-guide.js              ← Auto-updates eb-ds-assessment-guide.md from component metadata
     └── components/
         ├── accordion.html         ← One file per assessed component
         ├── button.html
@@ -143,7 +143,7 @@ Rate each using one of four levels:
 ## CSS Rules
 
 - **Source CSS**: Edit `assessment-src/styles.css` only. The root `styles.css` is generated.
-- **`gcash-ds-assessment-guide.html`**: Has fully inlined CSS. Changes to `assessment-src/styles.css` do NOT propagate — edit its `<style>` block directly.
+- **`eb-ds-assessment-guide.html`**: Has fully inlined CSS. Changes to `assessment-src/styles.css` do NOT propagate — edit its `<style>` block directly.
 - CSS custom properties are defined in `:root` (light) and `[data-theme="dark"]` (dark mode).
 - The tab pill indicator uses `::before` with CSS custom properties `--pill-left` and `--pill-width`, animated via `transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1), width 0.28s cubic-bezier(0.4, 0, 0.2, 1)`.
 - **Do not add `.comp-tabs::before` to the shared theme transition block** — it will override the pill animation.
@@ -212,7 +212,7 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 - Deploy: GitHub Pages (static, no framework)
 - `.nojekyll` file present to skip Jekyll processing
 - Always run `node assessment-src/build.js` before committing
-- Commit generated files (`report.html`, `styles.css`, `gcash-ds-assessment-guide.md`) alongside source changes
+- Commit generated files (`report.html`, `styles.css`, `eb-ds-assessment-guide.md`) alongside source changes
 
 ---
 
