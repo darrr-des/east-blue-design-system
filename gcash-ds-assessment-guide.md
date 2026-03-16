@@ -178,9 +178,11 @@ Confirmed recurring patterns across the GCash DS. Use as a checklist during ever
 | Criterion | Pattern | First Found In |
 |---|---|---|
 | C7 | Code Connect mappings not yet registered — no native component files linked via Code Connect CLI | Accordion |
-| C1 | Layer named `.base/button/small` on compact disabled container — non-semantic internal style reference | Button |
 | C2 | No icon slot variants — missing leadingIcon, trailingIcon, and iconOnly button patterns | Button |
 | C5 | No focus ring state; no loading state; Pressed documented as "Desktop only" — ambiguous for mobile | Button |
+| C2 | Boolean property isChecked uses Yes/No instead of true/false — incompatible with Swift/Kotlin booleans | Checkbox |
+| C5 | Only checked/unchecked states — missing disabled, pressed, focused, indeterminate, and error | Checkbox |
+| C6 | Checkmark is a flattened boolean operation with no separable vector icon layer — blocks native tinting | Checkbox |
 <!-- @@DISCOVERED_PATTERNS_END@@ -->
 
 ---
@@ -419,6 +421,7 @@ Key conventions:
 |---|---|---|---|---|---|
 | Accordion | `16870:9288` | Ready | Needs Refinement | 🔁 Re-assessing | Open: C7 |
 | Button | `17104:184842` | Needs Refinement | Needs Refinement | 🔁 Re-assessing | — |
+| Checkbox | `17143:2464` | Requires Rework | Requires Rework | 🔁 Re-assessing | Open: C6, C5, C2, C7 |
 <!-- @@PROGRESS_TABLE_END@@ -->
 
 ### Open Issues
@@ -427,6 +430,10 @@ Key conventions:
 | Component | Criterion | Action | Status |
 |---|---|---|---|
 | Accordion | C7 | Create native component files and register Code Connect mappings via the Figma Code Connect CLI. | Open |
+| Checkbox | C6 | Rebuild checked variants with a separable **vector checkmark icon** as a child component instance inside the container. Remove the flattened boolean operation. The checkmark must be independently tintable via the `selected/icon-check` token. | Open |
+| Checkbox | C5 | Add **disabled**, **pressed**, **focused**, **indeterminate**, and **error** state variants across all 3 sizes. Define corresponding color tokens for each state. | Open |
+| Checkbox | C2 | Convert `isChecked=Yes/No` to `isChecked=true/false`. Add `indeterminate` boolean property. | Open |
+| Checkbox | C7 | Create native component files and register Code Connect mappings via the Figma Code Connect CLI. | Open |
 <!-- @@OPEN_ISSUES_END@@ -->
 
 ---

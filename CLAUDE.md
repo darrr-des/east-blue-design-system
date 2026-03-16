@@ -206,3 +206,4 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 |---|---|---|---|---|---|
 | Accordion | `16870:9288` | 6 | Ready | Refine | C7 |
 | Button | `17104:184842` | 30 | Refine | Refine | C2, C5, C7 |
+| Checkbox | `17143:2464` | 6 | Rework | Rework | C2, C5, C6, C7 |

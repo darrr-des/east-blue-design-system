@@ -1,0 +1,506 @@
+<!--
+  CHECKBOX COMPONENT ASSESSMENT
+  Edit this file to update the Checkbox assessment.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 17143:2464
+ds-verdict: rework
+native-status: rework
+variants: 6
+ios: Toggle (CheckboxToggleStyle)
+android: Checkbox (Material 3)
+open-issues: C2, C5, C6, C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] Boolean property isChecked uses Yes/No instead of true/false — incompatible with Swift/Kotlin booleans
+[C5] Only checked/unchecked states — missing disabled, pressed, focused, indeterminate, and error
+[C6] Checkmark is a flattened boolean operation with no separable vector icon layer — blocks native tinting
+<!--@patterns-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-checkbox" onclick="showPanel('checkbox', this)">
+  <div class="nav-comp-icon">
+    <!-- Checkbox thumbnail SVG 32×32 -->
+    <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Unchecked box -->
+      <rect x="4" y="8" width="10" height="10" rx="2" fill="none" stroke="#D7E0EF" stroke-width="1.5"/>
+      <!-- Checked box -->
+      <rect x="18" y="8" width="10" height="10" rx="2" fill="#1972F9"/>
+      <!-- Checkmark -->
+      <path d="M21 13.5 L22.5 15 L25.5 11.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <!-- Size indicators -->
+      <rect x="4" y="22" width="6" height="1.5" rx="0.75" fill="#C5D5E8"/>
+      <rect x="13" y="22" width="8" height="1.5" rx="0.75" fill="#C5D5E8"/>
+      <rect x="24" y="22" width="4" height="1.5" rx="0.75" fill="#C5D5E8"/>
+    </svg>
+  </div>
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Checkbox</div>
+  </div>
+  <div class="nav-comp-status refine"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('checkbox')">
+  <div class="summary-card-row">
+    <div class="summary-card-name">Checkbox</div>
+    <div class="summary-card-badges">
+      <span class="badge badge-rework">Requires Rework</span>
+    </div>
+  </div>
+  <div class="summary-card-finding">
+    6 variants (isChecked × Size). Checkmark is a flattened boolean operation — no separable icon layer (C6 blocker). Missing disabled, pressed, focused, indeterminate, and error states (C5). <code>isChecked</code> uses Yes/No instead of true/false (C2).
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Checkbox</strong></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">6</td>
+  <td class="muted">Flattened checkmark (C6), missing states (C5), Yes/No booleans (C2), no Code Connect (C7).</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-checkbox">
+  <div class="content-wrap">
+
+    <!-- Back -->
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <!-- Component header -->
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Checkbox
+          <span class="badge badge-rework">Requires Rework</span>
+        </div>
+        <p class="comp-desc">A selection control for binary or multi-select options. Currently only supports checked/unchecked across three sizes. The checkmark is a flattened boolean operation — not a separable vector icon. Missing interaction states and indeterminate support.</p>
+        <div class="comp-meta">
+          <div class="cover-meta-item"><strong>Node:</strong> 17143:2464</div>
+          <div class="cover-meta-item"><strong>Variants:</strong> 6</div>
+          <div class="cover-meta-item"><strong>iOS:</strong> Toggle (CheckboxToggleStyle)</div>
+          <div class="cover-meta-item"><strong>Android:</strong> Checkbox (Material 3)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Tab bar ──────────────────────────────────────────────── -->
+    <div data-tab-group="checkbox-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'assessment', 'checkbox-tabs')">Assessment</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'checkbox-tabs')">Changelog</button>
+    </div>
+
+    <!-- ── Tab 2: Changelog ─────────────────────────────────────── -->
+    <div class="comp-tab-content" data-tab="changelog">
+    <div class="sub-heading">1.0.0 — March 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 17143:2464</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Component assessed</strong> — 6 variants documented across isChecked (Yes/No) × Size (Small 16px / Medium 20px / Large 24px). Token audit found 7 variables defined.
+          <span class="tag-fixed">Documented</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Initial</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Flattened checkmark icon</strong> — Checked containers have no child layers. The white checkmark is a boolean operation baked into the container frame. Cannot be extracted, tinted, or swapped as a component instance. Hard C6 blocker.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C6 Blocker</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Missing interaction states</strong> — Only checked/unchecked defined. No disabled, pressed, focused, indeterminate, or error state variants. Checkboxes require all of these for production form use.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C5 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Boolean property uses Yes/No</strong> — <code>isChecked=Yes/No</code> instead of <code>true/false</code>. Incompatible with Swift <code>Bool</code> and Kotlin <code>Boolean</code> for Code Connect mapping.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C2 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Code Connect mappings</strong> — Usage descriptions attached per variant. No native component files or Code Connect CLI mappings registered yet.
+          <span class="tag-open">Still Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C7 Open</span>
+      </div>
+    </div>
+    </div><!-- /comp-tab-content changelog -->
+
+    <!-- ── Tab 1: Assessment ────────────────────────────────────── -->
+    <div class="comp-tab-content active" data-tab="assessment">
+
+    <!-- ── DS Health ─────────────────────────────────────────────── -->
+    <div class="section-heading">DS Health</div>
+
+    <div class="verdict-card">
+      <div class="verdict-card-title">Structural rework needed — flattened icon and missing states</div>
+      <div class="verdict-card-body"><strong>Verdict:</strong> The checkbox has only 6 variants (checked/unchecked × 3 sizes) with no interaction states beyond the binary toggle. The checkmark icon is a flattened boolean operation — not a separable vector layer — making it impossible to tint or swap natively. The <code>isChecked</code> property uses <code>Yes/No</code> instead of <code>true/false</code>. Token variables exist (7 defined) but the flattened structure limits their utility. Requires a full rebuild before native handoff.</div>
+    </div>
+
+    <!-- 4 Traits -->
+    <div class="sub-heading">The 4 Traits — Scorecard</div>
+    <div class="trait-grid">
+      <div class="trait-card warn">
+        <div class="trait-header">
+          <div class="trait-name">Reusable</div>
+          <div class="trait-status">Warn</div>
+        </div>
+        <div class="trait-note">
+          Only checked/unchecked states. Missing disabled, indeterminate, and error states severely limits use in production forms, select-all patterns, and validation flows.
+        </div>
+      </div>
+      <div class="trait-card fail">
+        <div class="trait-header">
+          <div class="trait-name">Self-contained</div>
+          <div class="trait-status">Fail</div>
+        </div>
+        <div class="trait-note">
+          The checkmark is a flattened boolean operation baked into the container frame — not a separable child layer. Engineers cannot extract, tint, or override it. The component is visually complete but structurally broken.
+        </div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header">
+          <div class="trait-name">Consistent</div>
+          <div class="trait-status">Warn</div>
+        </div>
+        <div class="trait-note">
+          Token naming follows DS convention (<code>main/checkbox/color/...</code>). However, <code>isChecked=Yes/No</code> violates the <code>true/false</code> boolean standard used across the DS.
+        </div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header">
+          <div class="trait-name">Composable</div>
+          <div class="trait-status">Warn</div>
+        </div>
+        <div class="trait-note">
+          Can nest in form layouts and list rows. Missing indeterminate state blocks use in select-all/partial selection patterns. No label slot — checkbox is icon-only.
+        </div>
+      </div>
+    </div>
+
+    <!-- Open Issues -->
+    <div class="sub-heading">Open Issues</div>
+    <ul class="resolved-list">
+      <li>Checkmark is a flattened boolean operation — needs to be a separable vector component instance (C6)</li>
+      <li>Missing disabled, pressed, focused, indeterminate, and error state variants (C5)</li>
+      <li><code>isChecked</code> property uses <code>Yes/No</code> — convert to <code>true/false</code> (C2)</li>
+      <li>Missing <code>indeterminate</code> boolean property for partial selection (C2)</li>
+      <li>No label slot or text property — checkbox is icon-only with no built-in label pairing (C4)</li>
+      <li>Code Connect CLI mappings not registered (C7)</li>
+    </ul>
+
+    <!-- ── Native Mobile Readiness ─────────────────────────────── -->
+    <div class="section-heading" style="margin-top:48px">Native Mobile Readiness</div>
+
+    <!-- Variants Inventory -->
+    <div class="sub-heading">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:14px">(6 total)</span></div>
+    <p>2 <code>isChecked</code> values × 3 <code>Size</code> values. No interaction state axis. No indeterminate property.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>isChecked</th>
+            <th>Size</th>
+            <th>Dimensions</th>
+            <th>Node ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>No</td><td>Small</td><td class="muted">16 × 16</td><td class="mono">17143:2465</td></tr>
+          <tr><td>Yes</td><td>Small</td><td class="muted">16 × 16</td><td class="mono">17143:2468</td></tr>
+          <tr><td>No</td><td>Medium</td><td class="muted">20 × 20</td><td class="mono">17143:2471</td></tr>
+          <tr><td>Yes</td><td>Medium</td><td class="muted">20 × 20</td><td class="mono">17143:2473</td></tr>
+          <tr><td>No</td><td>Large</td><td class="muted">24 × 24</td><td class="mono">17143:2476</td></tr>
+          <tr><td>Yes</td><td>Large</td><td class="muted">24 × 24</td><td class="mono">17143:2478</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Criteria Scorecard -->
+    <div class="sub-heading">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">ID</th>
+            <th class="col-md">Criterion</th>
+            <th class="col-badge">Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono center">C1</td>
+            <td><strong>Layer Structure &amp; Naming</strong></td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted">Root frame → <code>container</code>. Simple, semantic. No generic names.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C2</td>
+            <td><strong>Variant &amp; Property Naming</strong></td>
+            <td><span class="badge badge-rework">Needs Fix</span></td>
+            <td class="muted"><code>isChecked=Yes/No</code> should be <code>true/false</code>. Missing <code>indeterminate</code> boolean property for partial selection.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C3</td>
+            <td><strong>Token Coverage</strong></td>
+            <td><span class="badge badge-refine">Partial</span></td>
+            <td class="muted">7 tokens defined: <code>selected/bg</code>, <code>selected/icon-check</code>, <code>unselected/border</code>, <code>radius/radius-1</code>, 3 spacing. Checked fill is token-bound but checkmark color token (<code>icon-check</code>) has no separable layer to bind to.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C4</td>
+            <td><strong>Native Mappability</strong></td>
+            <td><span class="badge badge-refine">Partial</span></td>
+            <td class="muted">Maps to <code>Toggle(isOn:)</code> with <code>CheckboxToggleStyle</code> on iOS and <code>Checkbox</code> on Android. Missing indeterminate blocks <code>TriStateCheckbox</code> mapping. No label slot.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C5</td>
+            <td><strong>Interaction State Coverage</strong></td>
+            <td><span class="badge badge-rework">Requires Rework</span></td>
+            <td class="muted">Only checked/unchecked. Missing: disabled, pressed, focused, indeterminate, error. 5 of 7 expected states absent.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C6</td>
+            <td><strong>Asset &amp; Icon Quality</strong></td>
+            <td><span class="badge badge-rework">Requires Rework</span></td>
+            <td class="muted">Checkmark is a flattened boolean operation — no child vector layer. Exported as raster <code>&lt;img&gt;</code> by Figma. Cannot be tinted or swapped natively. Hard blocker.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C7</td>
+            <td><strong>Code Connect Linkability</strong></td>
+            <td><span class="badge badge-refine">Needs Refinement</span></td>
+            <td class="muted">Usage descriptions attached. <code>isChecked</code> uses Yes/No instead of boolean. No Code Connect CLI mappings.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Interaction States -->
+    <div class="sub-heading">Interaction States</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th class="center">Expected</th>
+            <th class="center">Present</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Unchecked</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="muted">Border-only container with <code>unselected/border</code> token. Defined for all 3 sizes.</td>
+          </tr>
+          <tr>
+            <td><strong>Checked</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="muted">Blue fill (<code>selected/bg</code>) with flattened white checkmark. Defined for all 3 sizes.</td>
+          </tr>
+          <tr>
+            <td><strong>Indeterminate</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="cross">&#x2717;</span></td>
+            <td class="muted">Required for select-all/partial selection. Maps to <code>TriStateCheckbox</code> on Android.</td>
+          </tr>
+          <tr>
+            <td><strong>Disabled</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="cross">&#x2717;</span></td>
+            <td class="muted">All interactive components need a disabled state. No disabled tokens defined.</td>
+          </tr>
+          <tr>
+            <td><strong>Pressed / Active</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="cross">&#x2717;</span></td>
+            <td class="muted">Touch feedback state for mobile. No pressed tokens defined.</td>
+          </tr>
+          <tr>
+            <td><strong>Focused (a11y)</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="cross">&#x2717;</span></td>
+            <td class="muted">Required for keyboard/switch navigation. No focus ring defined.</td>
+          </tr>
+          <tr>
+            <td><strong>Error</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="cross">&#x2717;</span></td>
+            <td class="muted">Required for form validation. No error tokens or state defined.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-footnote">5 of 7 expected interaction states are absent. Only the binary checked/unchecked toggle is defined.</p>
+
+    <!-- Layer Structure -->
+    <div class="sub-heading">Layer Structure (per variant)</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th>Type</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">container</td>
+            <td class="muted">FRAME</td>
+            <td class="muted">Root container. Unchecked: hidden fill + border stroke. Checked: solid fill (#1972F9), no children.</td>
+          </tr>
+          <tr>
+            <td class="mono">(no children)</td>
+            <td class="muted">—</td>
+            <td class="muted">Checked containers have zero child layers. The white checkmark is a flattened boolean operation on the frame itself — no separable <code>icon-check</code> layer exists.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Code Connect Mapping -->
+    <div class="sub-heading">Code Connect — Property Mapping</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Figma Property</th>
+            <th>SwiftUI Param</th>
+            <th>Compose Param</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">isChecked=Yes/No</td>
+            <td class="mono">isOn: Bool</td>
+            <td class="mono">checked: Boolean</td>
+            <td class="muted">Needs conversion from Yes/No to true/false</td>
+          </tr>
+          <tr>
+            <td class="mono">Size=Small</td>
+            <td class="mono">controlSize: .small</td>
+            <td class="mono">modifier size 16.dp</td>
+            <td class="muted">16 × 16 px</td>
+          </tr>
+          <tr>
+            <td class="mono">Size=Medium</td>
+            <td class="mono">controlSize: .regular</td>
+            <td class="mono">modifier size 20.dp</td>
+            <td class="muted">20 × 20 px</td>
+          </tr>
+          <tr>
+            <td class="mono">Size=Large</td>
+            <td class="mono">controlSize: .large</td>
+            <td class="mono">modifier size 24.dp</td>
+            <td class="muted">24 × 24 px</td>
+          </tr>
+          <tr>
+            <td class="mono">(missing)</td>
+            <td class="mono">isEnabled: Bool</td>
+            <td class="mono">enabled: Boolean</td>
+            <td class="muted">No disabled state in Figma. Engineers must create.</td>
+          </tr>
+          <tr>
+            <td class="mono">(missing)</td>
+            <td class="mono">—</td>
+            <td class="mono">TriStateCheckbox</td>
+            <td class="muted">No indeterminate state. Android has native <code>TriStateCheckbox</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Token Table -->
+    <div class="sub-heading">Design Tokens</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Token Name</th>
+            <th>Value</th>
+            <th>Native Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono">main/checkbox/color/default/selected/bg</td><td class="mono">#1972F9</td><td class="muted">Checked fill background</td></tr>
+          <tr><td class="mono">main/checkbox/color/default/selected/icon-check</td><td class="mono">#FFFFFF</td><td class="muted">Checkmark color — token exists but no separable layer to bind</td></tr>
+          <tr><td class="mono">main/checkbox/color/default/unselected/border</td><td class="mono">#D7E0EF</td><td class="muted">Unchecked border color</td></tr>
+          <tr><td class="mono">radius/radius-1</td><td class="mono">4px</td><td class="muted">Corner radius for all sizes</td></tr>
+          <tr><td class="mono">space/space-4</td><td class="mono">4px</td><td class="muted">Internal spacing</td></tr>
+          <tr><td class="mono">space/space-6</td><td class="mono">6px</td><td class="muted">Internal spacing</td></tr>
+          <tr><td class="mono">space/space-8</td><td class="mono">8px</td><td class="muted">Internal spacing</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-footnote">No tokens defined for disabled, pressed, focused, indeterminate, or error states. Only the default checked/unchecked appearance is tokenized.</p>
+
+    <!-- Action Items -->
+    <div class="sub-heading">Action Items</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">#</th>
+            <th class="col-sm">Criterion</th>
+            <th>Action</th>
+            <th class="col-md">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono center">1</td>
+            <td class="mono">C6</td>
+            <td>Rebuild checked variants with a separable <strong>vector checkmark icon</strong> as a child component instance inside the container. Remove the flattened boolean operation. The checkmark must be independently tintable via the <code>selected/icon-check</code> token.</td>
+            <td><span class="badge badge-rework">Blocker</span></td>
+          </tr>
+          <tr>
+            <td class="mono center">2</td>
+            <td class="mono">C5</td>
+            <td>Add <strong>disabled</strong>, <strong>pressed</strong>, <strong>focused</strong>, <strong>indeterminate</strong>, and <strong>error</strong> state variants across all 3 sizes. Define corresponding color tokens for each state.</td>
+            <td><span class="badge badge-rework">Blocker</span></td>
+          </tr>
+          <tr>
+            <td class="mono center">3</td>
+            <td class="mono">C2</td>
+            <td>Convert <code>isChecked=Yes/No</code> to <code>isChecked=true/false</code>. Add <code>indeterminate</code> boolean property.</td>
+            <td><span class="badge badge-refine">Open</span></td>
+          </tr>
+          <tr>
+            <td class="mono center">4</td>
+            <td class="mono">C7</td>
+            <td>Create native component files and register Code Connect mappings via the Figma Code Connect CLI.</td>
+            <td><span class="badge badge-refine">Open</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div><!-- /comp-tab-content assessment -->
+    </div><!-- /data-tab-group -->
+
+  </div><!-- /content-wrap -->
+</div><!-- /panel-checkbox -->
+<!--@section-end-->
