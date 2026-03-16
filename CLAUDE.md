@@ -14,8 +14,8 @@ This is a **component assessment report** for the GCash Design System. It evalua
 
 ## Figma Rule — Read-Only
 
-- **NEVER** use `mcp__ClaudeTalkToFigma__*` tools (rename, resize, set properties, etc.)
-- **NEVER** modify Figma components, layers, properties, or tokens
+- **NEVER** modify Figma components, layers, properties, or tokens — not even to fix issues
+- **NEVER** use any Figma tool that writes, renames, resizes, or edits nodes
 - **ONLY** use read-only Figma tools to inspect and document:
   - `mcp__figma__get_design_context` — code + screenshot + tokens
   - `mcp__figma__get_metadata` — structure overview, variant counts
@@ -190,7 +190,7 @@ For each Figma component URL:
 | `mcp__figma__get_screenshot` | Visual confirmation |
 | `mcp__figma__get_variable_defs` | Token audit |
 
-**Do NOT use `mcp__ClaudeTalkToFigma__*` tools. All Figma modifications are off-limits.**
+**All Figma write/edit operations are off-limits. Only use the read-only tools listed above.**
 
 ### URL Parsing
 
