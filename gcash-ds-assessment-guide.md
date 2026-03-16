@@ -31,7 +31,14 @@ A component can pass DS Health but fail Native Readiness (e.g. raster icons, bro
 
 ## DS Health — The 4 Traits
 
-Rate each as Pass, Warn, or Fail.
+Rate each trait using one of four levels:
+
+| Rating | CSS Class | Meaning |
+|---|---|---|
+| **Pass** | `pass` | Fully met. No issues — ready for native handoff. |
+| **Partial** | `partial` | Mostly met with minor gaps. Functional but has specific limitations that should be addressed. |
+| **Warn** | `warn` | Significant concerns that limit reuse or block reliable native handoff. |
+| **Fail** | `fail` | Broken. Blocks DS inclusion or native implementation entirely. |
 
 | Trait | What to check |
 |---|---|

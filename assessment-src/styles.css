@@ -246,7 +246,11 @@ body {
   border-radius: 50%;
   flex-shrink: 0;
 }
-.nav-comp-status.refine { background: #F59E0B; }
+.nav-comp-status.ready { background: var(--ready-fg); }
+.nav-comp-status.fix { background: var(--fix-fg); }
+.nav-comp-status.refine { background: var(--refine-fg); }
+.nav-comp-status.rework { background: var(--rework-fg); }
+.nav-comp-status.na { background: var(--na-fg); }
 
 .sidebar-footer {
   padding: 14px 18px;
@@ -715,6 +719,7 @@ td code, td .mono-inline {
   border-radius: 999px;
 }
 .trait-card.pass .trait-status { color: #1A7A4A; background: #E6F4ED; }
+.trait-card.partial .trait-status { color: #1448A3; background: #EEF3FB; }
 .trait-card.warn .trait-status { color: #92400E; background: #FEF3C7; }
 .trait-card.fail .trait-status { color: #991B1B; background: #FEE2E2; }
 .trait-name {

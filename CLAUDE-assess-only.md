@@ -100,7 +100,14 @@ open-issues: [comma-separated criterion IDs, or "none"]
 
 ### DS Health — 4 Traits
 
-Rate each as **Pass**, **Warn** (use class `partial` in HTML), or **Fail**.
+Rate each using one of four levels:
+
+| Rating | CSS Class | Meaning |
+|---|---|---|
+| **Pass** | `pass` | Fully met — ready for native handoff |
+| **Partial** | `partial` | Mostly met with minor gaps — functional but has specific limitations |
+| **Warn** | `warn` | Significant concerns that limit reuse or block native handoff |
+| **Fail** | `fail` | Broken — blocks DS inclusion or native implementation |
 
 | Trait | What to check |
 |---|---|

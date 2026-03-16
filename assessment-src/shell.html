@@ -92,8 +92,9 @@
         <div class="cover-title">Component Assessment</div>
         <div class="cover-subtitle">Evaluating DS health and native mobile readiness for SwiftUI and Jetpack Compose.</div>
         <div class="cover-meta">
-          <div class="cover-meta-item"><strong>Components:</strong> 4</div>
-          <div class="cover-meta-item"><strong>Open Issues:</strong> 14</div>
+          <div class="cover-meta-item"><strong>Components:</strong> <span id="count-components">0</span></div>
+          <div class="cover-meta-item"><strong>Open Issues:</strong> <span id="count-open">0</span></div>
+          <div class="cover-meta-item"><strong>Post Fix:</strong> <span id="count-fixed">0</span></div>
           <div class="cover-meta-item"><strong>Last updated:</strong> March 2026</div>
         </div>
       </div>
@@ -291,7 +292,17 @@ function initPills() {
     if (overviewNav) { overviewNav.classList.add('active'); }
   }
   setTimeout(initPills, 60);
+  updateCoverStats();
 })();
+function updateCoverStats() {
+  var comps = document.querySelectorAll('.nav-comp').length;
+  var open = document.querySelectorAll('.tag-open').length;
+  var fixed = document.querySelectorAll('.tag-fixed').length;
+  var el;
+  el = document.getElementById('count-components'); if (el) el.textContent = comps;
+  el = document.getElementById('count-open'); if (el) el.textContent = open;
+  el = document.getElementById('count-fixed'); if (el) el.textContent = fixed;
+}
 var sunIcon = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>';
 var moonIcon = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6.8 1.5A6.5 6.5 0 0 0 8 14.5a6.5 6.5 0 0 0 5.7-3.4A5.5 5.5 0 0 1 6.8 1.5Z" fill="currentColor"/></svg>';
 function setThemeUI(isDark) {
