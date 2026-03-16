@@ -99,21 +99,32 @@ open-issues: [comma-separated criterion IDs, or "none"]
 
 ### DS Health — 4 Traits
 
-Rate each using one of four levels:
-
-| Rating | CSS Class | Meaning |
-|---|---|---|
-| **Pass** | `pass` | Fully met — ready for native handoff |
-| **Partial** | `partial` | Mostly met with minor gaps — functional but has specific limitations |
-| **Warn** | `warn` | Significant concerns that limit reuse or block native handoff |
-| **Fail** | `fail` | Broken — blocks DS inclusion or native implementation |
-
 | Trait | What to check |
 |---|---|
 | Reusable | Works across multiple contexts — not tied to one screen |
 | Self-contained | Carries its own styles, states, and logic |
 | Consistent | Predictable naming, property types, state coverage |
 | Composable | Nests inside other components, fits hierarchy |
+
+### Trait Ratings (per-trait scores)
+
+| Rating | CSS Class | Color | When to use |
+|---|---|---|---|
+| **Pass** | `pass` | Green | Fully met — ready for native handoff |
+| **Partial** | `partial` | Blue | Mostly met with minor gaps (e.g. missing icon slots, but text variants work) |
+| **Warn** | `warn` | Orange | Significant concerns that limit reuse or block handoff (e.g. naming issues, raster assets, hardcoded values) |
+| **Fail** | `fail` | Red | Broken — blocks DS inclusion or native implementation (e.g. flattened icons, no separable layers) |
+
+### DS Verdicts (overall DS Health outcome from all 4 traits)
+
+| Verdict | Meaning |
+|---|---|
+| **Keep** | All 4 traits pass. Ship as-is. |
+| **Fix** | Belongs in DS but has specific issues. Mostly pass/partial with a few warn. |
+| **Restructure** | Needs significant property or architectural changes. Multiple warn/fail. |
+| **Consolidate** | Merge into another component. |
+| **Product Layer** | Too feature-specific for core DS. |
+| **Remove** | Redundant, deprecated, or not a DS concern. |
 
 ### Native Readiness — 7 Criteria (C1–C7)
 
@@ -127,16 +138,16 @@ Rate each using one of four levels:
 | C6 | Asset & Icon Quality | Vector instances, token-based coloring |
 | C7 | Code Connect Linkability | Clean property names, 1:1 native param mapping |
 
-### Badge Classes
+### Native Status Levels (overall native readiness from C1–C7)
 
-| Class | Meaning |
-|---|---|
-| `badge-ready` | Ready / Pass |
-| `badge-refine` | Needs Refinement |
-| `badge-rework` | Requires Rework |
-| `badge-na` | N/A |
-| `badge-fix` | Fixed |
-| `badge-empty` | Not Mapped |
+| Status | Badge Class | Meaning |
+|---|---|---|
+| **Ready** | `badge-ready` | Linkable as-is. Clean structure, maps well to native. |
+| **Needs Refinement** | `badge-refine` | Minor issues to resolve before linking. |
+| **Requires Rework** | `badge-rework` | Needs redesign before native translation. |
+| **Not Applicable** | `badge-na` | Web-only or removed — skip native assessment. |
+| **Fix** | `badge-fix` | Resolved via Figma. Residual items may remain. |
+| **Not Mapped** | `badge-empty` | No Code Connect mappings registered. |
 
 ---
 

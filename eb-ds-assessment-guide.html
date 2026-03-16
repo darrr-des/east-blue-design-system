@@ -246,7 +246,7 @@ body,.sidebar,.main,.sidebar-brand,.sidebar-footer,.table-wrap,.how-card,.dep-ca
     <!-- DS Health -->
     <div class="page-section" id="ds-health">
       <div class="section-heading">DS Health — The 4 Traits</div>
-      <p class="section-desc">Is this component worth keeping? Is it well-structured, reusable, and consistent? Rate each trait as Pass, Warn, or Fail.</p>
+      <p class="section-desc">Each component is scored on 4 traits. These measure whether the component belongs in the design system and how well it's built.</p>
       <div class="table-wrap">
         <table><thead><tr><th class="col-md">Trait</th><th>What to Check</th></tr></thead><tbody>
           <tr><td><strong>Reusable</strong></td><td class="muted">Works across multiple contexts and flows — not tied to one screen or feature.</td></tr>
@@ -256,12 +256,24 @@ body,.sidebar,.main,.sidebar-brand,.sidebar-footer,.table-wrap,.how-card,.dep-ca
         </tbody></table>
       </div>
 
-      <div class="sub-heading">Verdicts</div>
+      <div class="sub-heading">Trait Ratings</div>
+      <p class="section-desc">Each trait gets one of four ratings. These describe <strong>how well the trait is met</strong>, not the component's overall health.</p>
+      <div class="table-wrap">
+        <table><thead><tr><th class="col-md">Rating</th><th>Color</th><th>When to Use</th></tr></thead><tbody>
+          <tr><td><strong>Pass</strong></td><td class="muted">Green</td><td class="muted">Fully met. No issues — ready for native handoff.</td></tr>
+          <tr><td><strong>Partial</strong></td><td class="muted">Blue</td><td class="muted">Mostly met with minor gaps. Functional but has specific limitations (e.g. missing icon slots, but text variants work).</td></tr>
+          <tr><td><strong>Warn</strong></td><td class="muted">Orange</td><td class="muted">Significant concerns that limit reuse or block handoff (e.g. naming issues, raster assets, hardcoded values).</td></tr>
+          <tr><td><strong>Fail</strong></td><td class="muted">Red</td><td class="muted">Broken. Blocks DS inclusion or native implementation entirely (e.g. flattened icons, no separable layers).</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="sub-heading">DS Verdicts</div>
+      <p class="section-desc">The overall DS Health outcome derived from all 4 trait ratings combined.</p>
       <div class="table-wrap">
         <table><thead><tr><th class="col-md">Verdict</th><th>Meaning</th></tr></thead><tbody>
           <tr><td><span class="badge badge-keep">Keep</span></td><td class="muted">All 4 traits pass. Ship as-is.</td></tr>
-          <tr><td><span class="badge badge-fix">Fix</span></td><td class="muted">Belongs in DS but has specific issues to resolve.</td></tr>
-          <tr><td><span class="badge badge-restructure">Restructure</span></td><td class="muted">Needs significant property or architectural changes.</td></tr>
+          <tr><td><span class="badge badge-fix">Fix</span></td><td class="muted">Belongs in DS but has specific issues. Mostly pass/partial with a few warn.</td></tr>
+          <tr><td><span class="badge badge-restructure">Restructure</span></td><td class="muted">Needs significant property or architectural changes. Multiple warn/fail.</td></tr>
           <tr><td><span class="badge badge-consolidate">Consolidate</span></td><td class="muted">Merge into another component.</td></tr>
           <tr><td><span class="badge badge-na">Product Layer</span></td><td class="muted">Too feature-specific for core DS.</td></tr>
           <tr><td><span class="badge badge-remove">Remove</span></td><td class="muted">Redundant, deprecated, or not a DS concern.</td></tr>
@@ -285,13 +297,15 @@ body,.sidebar,.main,.sidebar-brand,.sidebar-footer,.table-wrap,.how-card,.dep-ca
         </tbody></table>
       </div>
 
-      <div class="sub-heading">Status Levels</div>
+      <div class="sub-heading">Native Status Levels</div>
+      <p class="section-desc">The overall native readiness of a component based on all 7 criteria.</p>
       <div class="table-wrap">
         <table><thead><tr><th class="col-badge">Status</th><th>Meaning</th></tr></thead><tbody>
           <tr><td><span class="badge badge-ready">Ready</span></td><td class="muted">Linkable as-is. Clean structure, maps well to native.</td></tr>
           <tr><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Minor issues to resolve before linking.</td></tr>
           <tr><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Needs redesign before native translation.</td></tr>
-          <tr><td><span class="badge badge-na">Not Applicable</span></td><td class="muted">No native equivalent.</td></tr>
+          <tr><td><span class="badge badge-na">Not Applicable</span></td><td class="muted">Web-only or removed — skip native assessment.</td></tr>
+          <tr><td><span class="badge badge-fix">Fix</span></td><td class="muted">Resolved via Figma. Residual items may remain.</td></tr>
         </tbody></table>
       </div>
     </div>
