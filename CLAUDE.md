@@ -2,11 +2,26 @@
 
 Project rules and context for Claude Code sessions.
 
+**IMPORTANT: This is a read-only assessment rulebook. Do NOT edit Figma components — even if issues are found, only document them in the report. All fixes must be done manually by the design team.**
+
 ---
 
 ## Project Overview
 
 This is a **component assessment report** for the GCash Design System. It evaluates Figma components across two dimensions: **DS Health** (structure/quality) and **Native Mobile Readiness** (SwiftUI + Jetpack Compose handoff). The output is a static HTML site hosted on GitHub Pages.
+
+---
+
+## Figma Rule — Read-Only
+
+- **NEVER** use `mcp__ClaudeTalkToFigma__*` tools (rename, resize, set properties, etc.)
+- **NEVER** modify Figma components, layers, properties, or tokens
+- **ONLY** use read-only Figma tools to inspect and document:
+  - `mcp__figma__get_design_context` — code + screenshot + tokens
+  - `mcp__figma__get_metadata` — structure overview, variant counts
+  - `mcp__figma__get_screenshot` — visual confirmation
+  - `mcp__figma__get_variable_defs` — token audit
+- If an issue is found (e.g. wrong layer name, missing state), **document it as an open issue in the report** — do not attempt to fix it in Figma
 
 ---
 
@@ -18,7 +33,7 @@ gcash-design-system/
 ├── styles.css                     ← Built output (minified from assessment-src/styles.css)
 ├── gcash-ds-assessment-guide.md   ← Assessment methodology + auto-synced progress tables
 ├── gcash-ds-assessment-guide.html ← Standalone guide page (fully inlined CSS, edit directly)
-├── CLAUDE.md                      ← This file
+├── CLAUDE.md                      ← This file (read-only assessment rulebook)
 └── assessment-src/
     ├── shell.html                 ← Shared layout: sidebar, cover, criteria, JS
     ├── styles.css                 ← Source CSS (unminified) — edit this, not root styles.css
@@ -27,6 +42,7 @@ gcash-design-system/
     └── components/
         ├── accordion.html         ← One file per assessed component
         ├── button.html
+        ├── checkbox.html
         └── ...
 ```
 
@@ -149,7 +165,7 @@ Rate each using one of four levels:
 
 ---
 
-## Assessment Workflow
+## Assessment Workflow (Read-Only)
 
 For each Figma component URL:
 
@@ -157,14 +173,15 @@ For each Figma component URL:
 2. **`get_metadata`** — Node structure, variant counts, property names
 3. **`get_variable_defs`** (optional) — Confirm token bindings, extract hex values
 4. **Score** all 4 traits and 7 criteria
-5. **Create** `assessment-src/components/[name].html` with all tagged blocks
-6. **Update** `shell.html` cover meta (Components count, Open Issues count)
-7. **Build**: `node assessment-src/build.js`
-8. **Verify** in browser, then commit and push
+5. **Document all issues as open items** — do NOT fix them in Figma
+6. **Create** `assessment-src/components/[name].html` with all tagged blocks
+7. **Update** `shell.html` cover meta (Components count, Open Issues count)
+8. **Build**: `node assessment-src/build.js`
+9. **Verify** in browser, then commit and push
 
 ---
 
-## Figma MCP Tools
+## Figma MCP Tools (Read-Only)
 
 | Tool | When to use |
 |---|---|
@@ -172,7 +189,8 @@ For each Figma component URL:
 | `mcp__figma__get_metadata` | Structure overview, variant counting |
 | `mcp__figma__get_screenshot` | Visual confirmation |
 | `mcp__figma__get_variable_defs` | Token audit |
-| `mcp__ClaudeTalkToFigma__*` | Direct Figma edits (rename layers, set properties, etc.) — requires plugin connection via `join_channel` |
+
+**Do NOT use `mcp__ClaudeTalkToFigma__*` tools. All Figma modifications are off-limits.**
 
 ### URL Parsing
 
