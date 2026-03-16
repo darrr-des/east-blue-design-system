@@ -116,6 +116,32 @@ console.log(`  HTML  Minified:  ${(compressed   / 1024).toFixed(1)} KB  (saved $
 console.log(`  CSS   Original:  ${(cssOriginal  / 1024).toFixed(1)} KB`);
 console.log(`  CSS   Minified:  ${(cssCompressed/ 1024).toFixed(1)} KB  (saved ${cssSaving}%) ✅`);
 
+// ── Update index.html stats ──────────────────────────────────────────────────
+const indexFile = path.join(srcDir, '..', 'index.html');
+if (fs.existsSync(indexFile)) {
+  const allContent = files.map(f => fs.readFileSync(path.join(compDir, f), 'utf8')).join('\n');
+  const compCount  = files.length;
+  const openCount  = (allContent.match(/class="tag-open"/g) || []).length;
+  const fixedCount = (allContent.match(/class="tag-fixed"/g) || []).length;
+
+  let index = fs.readFileSync(indexFile, 'utf8');
+  index = index.replace(
+    /(<span class="pill blue">)<span class="pill-dot"><\/span>[^<]*<\/span>/,
+    `$1<span class="pill-dot"></span>${compCount} Component${compCount !== 1 ? 's' : ''}</span>`
+  );
+  index = index.replace(
+    /(<span class="pill amber">)<span class="pill-dot"><\/span>[^<]*<\/span>/,
+    `$1<span class="pill-dot"></span>${openCount} Open Issue${openCount !== 1 ? 's' : ''}</span>`
+  );
+  index = index.replace(
+    /(<span class="pill green">)<span class="pill-dot"><\/span>[^<]*<\/span>/,
+    `$1<span class="pill-dot"></span>${fixedCount} Post-Fix</span>`
+  );
+  fs.writeFileSync(indexFile, index, 'utf8');
+  console.log(`\nIndex updated → ${indexFile}`);
+  console.log(`  Components: ${compCount}  Open: ${openCount}  Fixed: ${fixedCount}`);
+}
+
 // ── Sync assessment guide ─────────────────────────────────────────────────────
 const { syncGuide } = require('./sync-guide.js');
 console.log('\nSyncing assessment guide...');
