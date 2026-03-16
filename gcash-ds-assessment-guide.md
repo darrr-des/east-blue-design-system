@@ -178,6 +178,10 @@ Confirmed recurring patterns across the GCash DS. Use as a checklist during ever
 | Criterion | Pattern | First Found In |
 |---|---|---|
 | C7 | Code Connect mappings not yet registered — no native component files linked via Code Connect CLI | Accordion |
+| C2 | Variant name spacing inconsistency — "initials - light" vs "dark-initials" (spaces around hyphen) | Avatar |
+| C2 | Token name typo — "main/avatar/brand/intials" missing letter i (should be "initials") | Avatar |
+| C3 | Border-radius hardcoded per size — not using radius tokens (45.213px, 24px, 16px, 12px, 10px) | Avatar |
+| C6 | Raster backgrounds on 5 initials variants (40px, 64px, 90px) — should be simple vector circles | Avatar |
 | C2 | No icon slot variants — missing leadingIcon, trailingIcon, and iconOnly button patterns | Button |
 | C5 | No focus ring state; no loading state; Pressed documented as "Desktop only" — ambiguous for mobile | Button |
 | C2 | Boolean property isChecked uses Yes/No instead of true/false — incompatible with Swift/Kotlin booleans | Checkbox |
@@ -420,6 +424,7 @@ Key conventions:
 | Component | Node | DS Verdict | Native Status | Status | Notes |
 |---|---|---|---|---|---|
 | Accordion | `16870:9288` | Ready | Needs Refinement | 🔁 Re-assessing | Open: C7 |
+| Avatar | `17143:4488` | Fix | Needs Refinement | 🔁 Re-assessing | Open: C2, C3, C6, C7 |
 | Button | `17104:184842` | Needs Refinement | Needs Refinement | 🔁 Re-assessing | — |
 | Checkbox | `17143:2464` | Requires Rework | Requires Rework | 🔁 Re-assessing | Open: C6, C5, C2, C7 |
 <!-- @@PROGRESS_TABLE_END@@ -->
@@ -430,6 +435,11 @@ Key conventions:
 | Component | Criterion | Action | Status |
 |---|---|---|---|
 | Accordion | C7 | Create native component files and register Code Connect mappings via the Figma Code Connect CLI. | Open |
+| Avatar | C2 | Rename `type=initials - light` to `type=initials-light` (remove spaces) for Swift/Kotlin enum compatibility. | Open |
+| Avatar | C2 | Fix token typo: `main/avatar/brand/intials` → `main/avatar/brand/initials`. | Open |
+| Avatar | C3 | Bind border-radius to a shared `radius/radius-round` token (or use 50%) instead of hardcoded per-size values. Tokenize border-width scale. | Open |
+| Avatar | C6 | Replace raster backgrounds on 5 initials variants (dark 40px/64px, light 40px/64px/90px) with simple vector circles using `brand/bg` or `default/bg` token fills. | Open |
+| Avatar | C7 | Create native component files and register Code Connect mappings via the Figma Code Connect CLI. | Open |
 | Checkbox | C6 | Rebuild checked variants with a separable **vector checkmark icon** as a child component instance inside the container. Remove the flattened boolean operation. The checkmark must be independently tintable via the `selected/icon-check` token. | Open |
 | Checkbox | C5 | Add **disabled**, **pressed**, **focused**, **indeterminate**, and **error** state variants across all 3 sizes. Define corresponding color tokens for each state. | Open |
 | Checkbox | C2 | Convert `isChecked=Yes/No` to `isChecked=true/false`. Add `indeterminate` boolean property. | Open |
