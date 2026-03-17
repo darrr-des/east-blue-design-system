@@ -210,7 +210,6 @@ Confirmed recurring patterns across the GCash DS. Use as a checklist during ever
 | C2 | Token name typo — "main/avatar/brand/intials" missing letter i (should be "initials") | Avatar |
 | C3 | Border-radius hardcoded per size — not using radius tokens (45.213px, 24px, 16px, 12px, 10px) | Avatar |
 | C6 | Raster backgrounds on 5 initials variants (40px, 64px, 90px) — should be simple vector circles | Avatar |
-| C2 | No icon slot variants — missing leadingIcon, trailingIcon, and iconOnly button patterns | Button |
 | C5 | No focus ring state; no loading state; Pressed documented as "Desktop only" — ambiguous for mobile | Button |
 | C2 | Boolean property isChecked uses Yes/No instead of true/false — incompatible with Swift/Kotlin booleans | Checkbox |
 | C5 | Only checked/unchecked states — missing disabled, pressed, focused, indeterminate, and error | Checkbox |

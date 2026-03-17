@@ -12,11 +12,10 @@ native-status: refine
 variants: 30
 ios: Button
 android: Button / OutlinedButton / TextButton
-open-issues: C2, C5, C7
+open-issues: C5, C7
 <!--@meta-end-->
 
 <!--@patterns-start-->
-[C2] No icon slot variants — missing leadingIcon, trailingIcon, and iconOnly button patterns
 [C5] No focus ring state; no loading state; Pressed documented as "Desktop only" — ambiguous for mobile
 [C7] Code Connect mappings not yet registered — no native component files linked via Code Connect CLI
 <!--@patterns-end-->
@@ -51,7 +50,7 @@ open-issues: C2, C5, C7
     </div>
   </div>
   <div class="summary-card-finding">
-    30 variants across Appearance × Size × State × isError. Tokens fully connected. Missing: icon slot variants, focus ring, loading state, and Code Connect mappings.
+    30 variants across Appearance × Size × State × isError. Tokens fully connected. Icon slots (leadingIcon/trailingIcon) added. Missing: focus ring, loading state, and Code Connect mappings.
   </div>
 </div>
 <!--@summary-card-end-->
@@ -62,7 +61,7 @@ open-issues: C2, C5, C7
   <td><span class="badge badge-refine">Needs Refinement</span></td>
   <td><span class="badge badge-refine">Needs Refinement</span></td>
   <td class="muted">30</td>
-  <td class="muted">Tokens connected. C1 resolved. Missing icon variants, focus ring, loading state, and Code Connect (C2, C5, C7).</td>
+  <td class="muted">Tokens connected. C1, C2 resolved. Icon slots added. Missing focus ring, loading state, and Code Connect (C5, C7).</td>
 </tr>
 <!--@summary-row-end-->
 
@@ -83,7 +82,7 @@ open-issues: C2, C5, C7
           Button
           <span class="badge badge-refine">Needs Refinement</span>
         </div>
-        <p class="comp-desc">A pill-shaped tap target for primary, secondary, and tertiary actions. Supports three appearances (Default, Outlined, Text Link), two sizes (Default 50px / Compact 38px), three states, and an isError flag for destructive variants. Text-only — no icon slots defined.</p>
+        <p class="comp-desc">A pill-shaped tap target for primary, secondary, and tertiary actions. Supports three appearances (Default, Outlined, Text Link), two sizes (Default 50px / Compact 38px), three states, and an isError flag for destructive variants. Icon slots (leadingIcon/trailingIcon) added as hidden layers — ready for boolean property exposure.</p>
         <div class="comp-meta">
           <div class="cover-meta-item"><strong>Node:</strong> 17104:184842</div>
           <div class="cover-meta-item"><strong>Variants:</strong> 30</div>
@@ -102,6 +101,18 @@ open-issues: C2, C5, C7
 
     <!-- ── Tab 2: Changelog ─────────────────────────────────────── -->
     <div class="comp-tab-content" data-tab="changelog">
+    <div class="sub-heading">1.2.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Changes Applied via Figma MCP · node 17104:184842</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Icon slots added: <code>leadingIcon</code> + <code>trailingIcon</code></strong> — 20×20 frames (Default size) and 16×16 frames (Compact size) added to all 30 variants inside <code>container</code>. Positioned before and after the label in auto-layout order. Hidden by default — ready for boolean component property exposure. Fully resolves C2.
+          <span class="tag-fixed">Fixed</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C2 Resolved</span>
+      </div>
+    </div>
+
     <div class="sub-heading">1.1.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
     <div class="changelog">
       <div class="changelog-header">Changes Applied via Figma MCP · node 17104:184842</div>
@@ -140,10 +151,10 @@ open-issues: C2, C5, C7
       </div>
       <div class="changelog-row">
         <div class="changelog-body">
-          <strong>Icon slots absent</strong> — Component is text-only. No <code>leadingIcon</code>, <code>trailingIcon</code>, or icon-only variants defined. Buttons in production frequently require icons.
-          <span class="tag-open">Open</span>
+          <strong>Icon slots absent</strong> — Component was text-only. No <code>leadingIcon</code>, <code>trailingIcon</code>, or icon-only variants defined. Resolved in v1.2.0.
+          <span class="tag-fixed">Resolved</span>
         </div>
-        <span class="changelog-delta delta-open">C2 Open</span>
+        <span class="changelog-delta delta-resolved">C2 Resolved</span>
       </div>
       <div class="changelog-row">
         <div class="changelog-body">
@@ -169,8 +180,8 @@ open-issues: C2, C5, C7
     <div class="section-heading">DS Health</div>
 
     <div class="verdict-card">
-      <div class="verdict-card-title">Solid token foundation — gaps in icon variants and interaction completeness</div>
-      <div class="verdict-card-body"><strong>Verdict:</strong> 30 variants cover the text-button matrix (3 Appearances × 2 Sizes × 3 States, isError for Outlined/Text Link). All 24 color tokens and 9 layout/typography tokens are connected. Primary gaps: no icon slot variants (leadingIcon, trailingIcon, iconOnly), one non-semantic layer name in the compact disabled variant, missing focus ring and loading states, and no Code Connect CLI mappings.</div>
+      <div class="verdict-card-title">Solid token foundation with icon slots — gaps in interaction completeness</div>
+      <div class="verdict-card-body"><strong>Verdict:</strong> 30 variants cover the button matrix (3 Appearances × 2 Sizes × 3 States, isError for Outlined/Text Link). All 24 color tokens and 9 layout/typography tokens are connected. Icon slots (<code>leadingIcon</code>/<code>trailingIcon</code>) added to all variants as hidden layers. Remaining gaps: missing focus ring and loading states, and no Code Connect CLI mappings.</div>
     </div>
 
     <!-- 4 Traits -->
@@ -185,13 +196,13 @@ open-issues: C2, C5, C7
           Three appearances and an <code>isError</code> boolean cover primary, secondary, tertiary, and destructive action patterns. Compact and Default sizes handle both full-width and inline placement.
         </div>
       </div>
-      <div class="trait-card partial">
+      <div class="trait-card pass">
         <div class="trait-header">
           <div class="trait-name">Self-contained</div>
-          <div class="trait-status">Partial</div>
+          <div class="trait-status">Pass</div>
         </div>
         <div class="trait-note">
-          Text + background + border are all self-contained. However, the absence of icon slots means icon+label buttons require a separate or extended component, breaking the single-component contract.
+          Text + background + border + icon slots are all self-contained. <code>leadingIcon</code> and <code>trailingIcon</code> frames are built into every variant, ready for boolean property toggling.
         </div>
       </div>
       <div class="trait-card pass">
@@ -203,13 +214,13 @@ open-issues: C2, C5, C7
           A single <code>appearance</code> property cleanly drives all three button types. Tokens are connected across every variant — no hardcoded colors or spacing.
         </div>
       </div>
-      <div class="trait-card partial">
+      <div class="trait-card pass">
         <div class="trait-header">
           <div class="trait-name">Composable</div>
-          <div class="trait-status">Partial</div>
+          <div class="trait-status">Pass</div>
         </div>
         <div class="trait-note">
-          Maps directly to <code>Button</code>, <code>OutlinedButton</code>, and <code>TextButton</code> primitives. Composability is limited by the lack of icon slot properties — common in real-world button compositions.
+          Maps directly to <code>Button</code>, <code>OutlinedButton</code>, and <code>TextButton</code> primitives. Icon slots support common icon+label compositions without needing a separate component.
         </div>
       </div>
     </div>
@@ -218,12 +229,12 @@ open-issues: C2, C5, C7
     <div class="sub-heading">Resolved Issues</div>
     <ul class="resolved-list">
       <li>Layer renamed from <code>.base/button/small</code> → <code>container</code> on compact disabled container (C1)</li>
+      <li>Icon slots (<code>leadingIcon</code> 20×20, <code>trailingIcon</code> 20×20 Default / 16×16 Compact) added to all 30 variants, hidden by default (C2)</li>
     </ul>
 
     <!-- Open Issues -->
     <div class="sub-heading">Open Issues</div>
     <ul class="resolved-list">
-      <li>No <code>leadingIcon</code>, <code>trailingIcon</code>, or icon-only variants defined (C2)</li>
       <li>No focus ring state — required for keyboard and switch navigation a11y (C5)</li>
       <li>No loading/processing state — needed for async actions like form submit (C5)</li>
       <li>"Pressed" state documented as "For Desktop only" — needs mobile clarification (C5)</li>
@@ -304,8 +315,8 @@ open-issues: C2, C5, C7
           <tr>
             <td class="mono center">C2</td>
             <td><strong>Variant &amp; Property Naming</strong></td>
-            <td><span class="badge badge-refine">Partial</span></td>
-            <td class="muted">30-variant text matrix is well-structured. Missing: <code>leadingIcon</code>, <code>trailingIcon</code>, and icon-only variants. Real-world buttons frequently require icon compositions.</td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted">30-variant matrix with <code>leadingIcon</code> and <code>trailingIcon</code> frames added to all variants (hidden by default). Ready for boolean component property exposure.</td>
           </tr>
           <tr>
             <td class="mono center">C3</td>
@@ -328,8 +339,8 @@ open-issues: C2, C5, C7
           <tr>
             <td class="mono center">C6</td>
             <td><strong>Asset &amp; Icon Quality</strong></td>
-            <td><span class="badge badge-na">N/A</span></td>
-            <td class="muted">Text-only component — no icon assets to evaluate. Note: icon slots are absent and represent a gap, tracked under C2.</td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted">Icon slot frames (<code>leadingIcon</code>/<code>trailingIcon</code>) are placeholder containers — ready to receive vector icon instances. No raster assets present.</td>
           </tr>
           <tr>
             <td class="mono center">C7</td>
@@ -455,6 +466,18 @@ open-issues: C2, C5, C7
             <td class="mono">role: .destructive</td>
             <td class="mono">colors = ButtonDefaults.outlinedButtonColors(contentColor = errorColor)</td>
             <td class="muted">Destructive / error variant</td>
+          </tr>
+          <tr>
+            <td class="mono">leadingIcon (boolean)</td>
+            <td class="mono">Label("", image:)</td>
+            <td class="mono">icon = { Icon(...) }</td>
+            <td class="muted">20×20 (Default) / 16×16 (Compact) — hidden by default</td>
+          </tr>
+          <tr>
+            <td class="mono">trailingIcon (boolean)</td>
+            <td class="mono">Label("", image:)</td>
+            <td class="mono">trailingIcon = { Icon(...) }</td>
+            <td class="muted">20×20 (Default) / 16×16 (Compact) — hidden by default</td>
           </tr>
         </tbody>
       </table>
