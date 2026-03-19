@@ -3,8 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GCash Design System</title>
+<title>East Blue Design System</title>
 <style>
+  @font-face {
+    font-family: 'HeyMeow Rnd';
+    src: url('./HeyMeow Rnd/VAR/[VAR] HeyMeow Rnd/HeyMeow Rnd VF.woff2') format('woff2-variations'),
+         url('./HeyMeow Rnd/VAR/[VAR] HeyMeow Rnd/HeyMeow Rnd VF.woff') format('woff-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'BarkAda';
+    src: url('./BarkAda/VAR/BarkAda VF.woff2') format('woff2-variations'),
+         url('./BarkAda/VAR/BarkAda VF.woff') format('woff-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --bg: #FFFFFF;
@@ -15,7 +31,8 @@
     --muted: #666666;
     --accent: #0056D6;
     --accent-light: #EEF3FB;
-    --font: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-heading: 'HeyMeow Rnd', system-ui, sans-serif;
+    --font: 'BarkAda', system-ui, sans-serif;
     --radius: 18px;
     --pill-blue-bg: #EEF3FB; --pill-blue-fg: #1448A3; --pill-blue-dot: #0056D6;
     --pill-amber-bg: #FEF3E2; --pill-amber-fg: #92400E; --pill-amber-dot: #D97706;
@@ -77,6 +94,7 @@
     flex-shrink: 0;
   }
   .brand-text h1 {
+    font-family: var(--font-heading);
     font-size: 28px;
     font-weight: 700;
     color: var(--text);
@@ -176,13 +194,13 @@
   .card-icon.green svg { stroke: var(--icon-green-stroke); }
   .card-body { flex: 1; min-width: 0; }
   .card-title {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--text);
     line-height: 1.3;
   }
   .card-desc {
-    font-size: 12px;
+    font-size: 14px;
     color: var(--muted);
     margin-top: 3px;
     line-height: 1.5;
@@ -320,15 +338,15 @@
         </svg>
       </div>
       <div class="brand-text">
-        <h1>GCash Design System</h1>
-        <p>Native Mobile Readiness · Component Assessment</p>
+        <h1>East Blue</h1>
+        <p>Design System Assessment</p>
       </div>
     </div>
 
     <div class="stats-bar">
       <span class="pill blue"><span class="pill-dot"></span>4 Components</span>
-      <span class="pill amber"><span class="pill-dot"></span>13 Open Issues</span>
-      <span class="pill green"><span class="pill-dot"></span>19 Post-Fix</span>
+      <span class="pill amber"><span class="pill-dot"></span>12 Open Issues</span>
+      <span class="pill green"><span class="pill-dot"></span>25 Post-Fix</span>
     </div>
   </div>
 

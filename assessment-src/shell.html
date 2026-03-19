@@ -3,16 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GCash Design System — Component Assessment</title>
+<title>East Blue Design System — Component Assessment</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <!-- ═══════════════════════════════════════════════════════════════════ -->
+<!--  MOBILE TOP BAR                                                    -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<header class="topbar">
+  <button class="topbar-hamburger" onclick="toggleSidebar()" aria-label="Toggle navigation">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+  <span class="topbar-title">East Blue</span>
+  <div class="topbar-right">
+    <span class="topbar-version">v0.1.0</span>
+    <label class="theme-toggle theme-toggle-sm">
+      <input type="checkbox" id="theme-switch-mobile" onchange="toggleTheme(this.checked)">
+      <span class="theme-toggle-track"></span>
+      <span class="theme-toggle-knob"></span>
+    </label>
+  </div>
+</header>
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
 <!--  SIDEBAR                                                           -->
 <!-- ═══════════════════════════════════════════════════════════════════ -->
-<nav class="sidebar">
-  <div class="sidebar-brand">
+<nav class="sidebar" id="sidebar">
+  <a class="sidebar-brand" href="index.html" title="Back to Index">
     <div class="sidebar-brand-row">
       <div class="sidebar-logo">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -23,51 +42,38 @@
         </svg>
       </div>
       <div class="sidebar-brand-text">
-        <div class="sidebar-brand-title">GCash Design System</div>
+        <div class="sidebar-brand-title-row">
+          <span class="sidebar-wordmark">East Blue</span>
+          <span class="sidebar-version">v0.1.0</span>
+        </div>
         <div class="sidebar-brand-sub">Component Assessment</div>
       </div>
     </div>
-  </div>
+  </a>
 
-  <div class="sidebar-nav">
-    <div class="sidebar-section-label">General</div>
-
+  <div class="sidebar-nav" id="sidebar-nav">
     <button class="nav-item active" id="nav-overview" onclick="showPanel('overview', this, true)">
-      <span class="nav-dot"></span>
       Overview
     </button>
-    <button class="nav-item" id="nav-how" onclick="showPanel('overview', this, false, 'how-it-works')">
-      <span class="nav-dot"></span>
-      How It Works
-    </button>
-    <button class="nav-item" id="nav-criteria" onclick="showPanel('overview', this, false, 'criteria')">
-      <span class="nav-dot"></span>
-      Criteria
-    </button>
-    <button class="nav-item" id="nav-legend" onclick="showPanel('overview', this, false, 'legend')">
-      <span class="nav-dot"></span>
-      Legend
-    </button>
 
-    <div class="sidebar-section-label">Components</div>
-
-    <!-- @@NAV_ITEMS@@ -->
+    <button class="nav-section-toggle open" id="comp-toggle" onclick="navigateComponents(event)">
+      <span>Components</span>
+      <svg class="nav-section-chevron" onclick="toggleCompSection(event)" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 6l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="nav-section-list open" id="comp-list">
+      <!-- @@NAV_ITEMS@@ -->
+    </div>
   </div>
 
-  <div class="sidebar-footer">March 2026 &nbsp;·&nbsp; For internal use only</div>
+  <div class="sidebar-footer">
+    <label class="theme-toggle">
+      <input type="checkbox" id="theme-switch" onchange="toggleTheme(this.checked)">
+      <span class="theme-toggle-track"></span>
+      <span class="theme-toggle-knob"></span>
+    </label>
+    <span class="sidebar-footer-text">March 2026</span>
+  </div>
 </nav>
-
-<div class="theme-pill">
-  <span class="theme-pill-label">
-    <span id="theme-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
-    <span id="theme-label">Light</span>
-  </span>
-  <label class="theme-toggle">
-    <input type="checkbox" id="theme-switch" onchange="toggleTheme(this.checked)">
-    <span class="theme-toggle-track"></span>
-    <span class="theme-toggle-knob"></span>
-  </label>
-</div>
 
 <!-- ═══════════════════════════════════════════════════════════════════ -->
 <!--  MAIN                                                              -->
@@ -77,26 +83,18 @@
   <!-- ──────────────────────────────────────────────────────────────── -->
   <!--  PANEL 1: Overview                                               -->
   <!-- ──────────────────────────────────────────────────────────────── -->
+  <!-- ── Overview Panel ─────────────────────────────────────────────── -->
   <div class="panel active" id="panel-overview">
     <div class="content-wrap">
 
-      <!-- Back -->
       <a class="back-btn" href="index.html">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Home
       </a>
 
-      <!-- Cover -->
-      <div class="cover" id="overview">
-        <div class="cover-eyebrow">GCash Design System</div>
-        <div class="cover-title">Component Assessment</div>
-        <div class="cover-subtitle">Evaluating DS health and native mobile readiness for SwiftUI and Jetpack Compose.</div>
-        <div class="cover-meta">
-          <div class="cover-meta-item"><strong>Components:</strong> <span id="count-components">0</span></div>
-          <div class="cover-meta-item"><strong>Open Issues:</strong> <span id="count-open">0</span></div>
-          <div class="cover-meta-item"><strong>Post Fix:</strong> <span id="count-fixed">0</span></div>
-          <div class="cover-meta-item"><strong>Last updated:</strong> March 2026</div>
-        </div>
+      <div class="page-header">
+        <h1 class="page-header-title">Overview</h1>
+        <p class="page-header-desc">Evaluating DS health and native mobile readiness for SwiftUI and Jetpack Compose.</p>
       </div>
 
       <!-- How It Works -->
@@ -218,31 +216,45 @@
         </div>
       </div>
 
-      <!-- Component Summary -->
-      <div class="page-section" id="summary">
-        <div class="section-heading">Component Summary</div>
+    </div><!-- /content-wrap -->
+  </div><!-- /panel-overview -->
 
-        <div class="summary-grid">
-          <!-- @@SUMMARY_CARDS@@ -->
+  <!-- ── Components Panel ─────────────────────────────────────────── -->
+  <div class="panel" id="panel-components">
+    <div class="content-wrap">
+
+      <div class="page-header" id="overview">
+        <div class="page-header-top">
+          <h1 class="page-header-title">Components</h1>
+          <span class="page-header-count" id="count-components">0</span>
         </div>
+        <p class="page-header-desc"><span id="count-components-text">0</span> components in East Blue Design System</p>
+        <div class="page-header-meta">
+          <span class="page-header-stat"><span class="page-header-stat-dot stat-amber"></span><span id="count-open">0</span> open issues</span>
+          <span class="page-header-stat"><span class="page-header-stat-dot stat-green"></span><span id="count-fixed">0</span> resolved</span>
+        </div>
+      </div>
 
+      <div class="comp-grid">
+        <!-- @@SUMMARY_CARDS@@ -->
       </div>
 
     </div><!-- /content-wrap -->
-  </div><!-- /panel-overview -->
+  </div><!-- /panel-components -->
 
   <!-- @@COMPONENT_SECTIONS@@ -->
 
 </main>
 
 <script>
+/* ── Panel navigation ─────────────────────────────────────────────── */
 function showPanel(panelId, triggerEl, forceTop, anchorId) {
   var currentPanel = document.querySelector('.panel.active');
   var isSamePanel = currentPanel && currentPanel.id === 'panel-' + panelId;
   document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
   var panel = document.getElementById('panel-' + panelId);
   if (panel) { panel.classList.add('active'); }
-  document.querySelectorAll('.nav-item, .nav-comp').forEach(function(n) { n.classList.remove('active'); });
+  document.querySelectorAll('.nav-item, .nav-comp, .nav-section-toggle').forEach(function(n) { n.classList.remove('active'); });
   if (triggerEl) { triggerEl.classList.add('active'); }
   if (anchorId) {
     if (!isSamePanel) { window.scrollTo({ top: 0 }); }
@@ -254,8 +266,19 @@ function showPanel(panelId, triggerEl, forceTop, anchorId) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   history.replaceState(null, '', '#' + panelId);
-  setTimeout(function() { if (typeof initPills === 'function') { initPills(); } }, 60);
+  setTimeout(function() {
+    if (typeof initPills === 'function') { initPills(); }
+    if (typeof buildToc === 'function') { buildToc(panelId); }
+  }, 60);
+  /* Close sidebar on mobile after nav */
+  if (window.innerWidth < 768) { closeSidebar(); }
 }
+function showPanelById(panelId) {
+  var navEl = document.getElementById('nav-' + panelId);
+  showPanel(panelId, navEl);
+}
+
+/* ── Tabs ──────────────────────────────────────────────────────────── */
 function positionPill(tabBar, activeTab) {
   if (!tabBar || !activeTab) return;
   var barRect = tabBar.getBoundingClientRect();
@@ -272,10 +295,11 @@ function switchTab(tabBtn, tabId, groupId) {
   group.querySelectorAll('.comp-tab-content').forEach(function(c) { c.classList.remove('active'); });
   var target = group.querySelector('[data-tab="' + tabId + '"]');
   if (target) { target.classList.add('active'); }
-}
-function showPanelById(panelId) {
-  var navEl = document.getElementById('nav-' + panelId);
-  showPanel(panelId, navEl);
+  /* Rebuild TOC for new tab */
+  var panel = tabBtn.closest('.panel');
+  if (panel && typeof buildToc === 'function') {
+    setTimeout(function() { buildToc(panel.id.replace('panel-', '')); }, 30);
+  }
 }
 function initPills() {
   document.querySelectorAll('.comp-tabs').forEach(function(bar) {
@@ -283,7 +307,634 @@ function initPills() {
     if (active) { positionPill(bar, active); }
   });
 }
+
+/* ── Sidebar toggle (mobile) ──────────────────────────────────────── */
+function toggleSidebar() {
+  var sb = document.getElementById('sidebar');
+  var ov = document.querySelector('.sidebar-overlay');
+  var open = sb.classList.toggle('open');
+  if (ov) ov.classList.toggle('open', open);
+  document.body.classList.toggle('sidebar-open', open);
+}
+function closeSidebar() {
+  var sb = document.getElementById('sidebar');
+  var ov = document.querySelector('.sidebar-overlay');
+  if (sb) sb.classList.remove('open');
+  if (ov) ov.classList.remove('open');
+  document.body.classList.remove('sidebar-open');
+}
+
+/* ── Components nav — click label to navigate, chevron to toggle ── */
+function navigateComponents(e) {
+  /* If the chevron was clicked, don't navigate — just toggle */
+  if (e.target.closest('.nav-section-chevron')) return;
+  /* Navigate to the components panel */
+  showPanel('components', null, true);
+  /* Mark the toggle as active */
+  document.querySelectorAll('.nav-item, .nav-comp').forEach(function(n) { n.classList.remove('active'); });
+  var btn = document.getElementById('comp-toggle');
+  if (btn) btn.classList.add('active');
+  /* Ensure list is expanded */
+  var list = document.getElementById('comp-list');
+  if (btn && !btn.classList.contains('open')) {
+    btn.classList.add('open');
+    if (list) list.classList.add('open');
+  }
+}
+function toggleCompSection(e) {
+  if (e) { e.stopPropagation(); }
+  var list = document.getElementById('comp-list');
+  var btn = document.getElementById('comp-toggle');
+  if (list) list.classList.toggle('open');
+  if (btn) btn.classList.toggle('open');
+}
+
+/* ── Cover stats ──────────────────────────────────────────────────── */
+function updateCoverStats() {
+  var comps = document.querySelectorAll('.nav-comp').length;
+  var open = document.querySelectorAll('.tag-open').length;
+  var fixed = document.querySelectorAll('.tag-fixed').length;
+  var el;
+  el = document.getElementById('count-components'); if (el) el.textContent = comps;
+  el = document.getElementById('count-components-text'); if (el) el.textContent = comps;
+  el = document.getElementById('count-open'); if (el) el.textContent = open;
+  el = document.getElementById('count-fixed'); if (el) el.textContent = fixed;
+}
+
+/* ── Theme ────────────────────────────────────────────────────────── */
+function toggleTheme(isDark) {
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  /* Sync both switches */
+  var sw1 = document.getElementById('theme-switch');
+  var sw2 = document.getElementById('theme-switch-mobile');
+  if (sw1) sw1.checked = isDark;
+  if (sw2) sw2.checked = isDark;
+  try { localStorage.setItem('eb-ds-theme', isDark ? 'dark' : 'light'); } catch(e) {}
+}
+
+/* ── Underline tab switcher ────────────────────────────────────────── */
+function switchTabLine(tabBtn, tabId, groupId) {
+  var group = tabBtn.closest('[data-tab-group="' + groupId + '"]');
+  if (!group) return;
+  group.querySelectorAll('.comp-tab-line').forEach(function(t) {
+    t.classList.remove('active');
+    t.setAttribute('aria-selected', 'false');
+  });
+  tabBtn.classList.add('active');
+  tabBtn.setAttribute('aria-selected', 'true');
+  group.querySelectorAll('.comp-tab-content').forEach(function(c) { c.classList.remove('active'); });
+  var target = group.querySelector('[data-tab="' + tabId + '"]');
+  if (target) { target.classList.add('active'); }
+}
+
+/* ── Demo controls ────────────────────────────────────────────────── */
+var _demo = { appearance: 'primary', variant: 'brand', size: 'large', state: 'default' };
+
+var _demoColors = {
+  primary:  { brand: { bg:'#005CE5', color:'#FFFFFF', border:'none' }, destructive: { bg:'#D61B2C', color:'#FFFFFF', border:'none' } },
+  white:    { brand: { bg:'#FFFFFF', color:'#005CE5', border:'none' } },
+  subtle:   { brand: { bg:'#E5F1FF', color:'#005CE5', border:'none' } },
+  outlined: { brand: { bg:'transparent', color:'#005CE5', border:'2px solid #005CE5' }, destructive: { bg:'transparent', color:'#D61B2C', border:'2px solid #D61B2C' } },
+  text:     { brand: { bg:'transparent', color:'#005CE5', border:'none' }, destructive: { bg:'transparent', color:'#D61B2C', border:'none' } }
+};
+var _demoSizes = {
+  large:  { padding:'14px 32px', fontSize:'14px' },
+  medium: { padding:'8px 20px',  fontSize:'14px' },
+  small:  { padding:'6px 16px',  fontSize:'12px' },
+  xsmall: { padding:'4px 12px',  fontSize:'12px' }
+};
+function _applyDemo() {
+  var el = document.getElementById('demo-btn-live');
+  if (!el) return;
+  var colorMap = _demoColors[_demo.appearance] || _demoColors['primary'];
+  var c = colorMap[_demo.variant] || colorMap['brand'];
+  var sz = _demoSizes[_demo.size] || _demoSizes['large'];
+  el.style.background   = c.bg;
+  el.style.color        = c.color;
+  el.style.border       = c.border;
+  el.style.padding      = sz.padding;
+  el.style.fontSize     = sz.fontSize;
+  el.style.borderRadius = '99px';
+  el.style.opacity      = _demo.state === 'disabled' ? '0.4' : '1';
+  var preview = el.closest('.demo-preview');
+  if (preview) preview.classList.toggle('demo-preview-dark', _demo.appearance === 'white');
+}
+function setDemoAppearance(type, btn) {
+  activateSeg(btn);
+  _demo.appearance = type;
+  var surfaceOnly = (type === 'white' || type === 'subtle');
+  if (surfaceOnly) _demo.variant = 'brand';
+  /* disable/enable variant segs */
+  var panel = btn.closest('.demo-panel');
+  if (panel) {
+    panel.querySelectorAll('.demo-seg').forEach(function(s) {
+      var oc = s.getAttribute('onclick') || '';
+      if (oc.indexOf('setDemoVariant') === -1) return;
+      s.disabled = surfaceOnly;
+      if (surfaceOnly) {
+        s.classList.toggle('active', oc.indexOf("'brand'") !== -1);
+      }
+    });
+  }
+  _applyDemo();
+}
+function setDemoSize(size, btn) {
+  activateSeg(btn);
+  _demo.size = size;
+  _applyDemo();
+}
+function setDemoVariant(variant, btn) {
+  activateSeg(btn);
+  _demo.variant = variant;
+  _applyDemo();
+}
+function setDemoState(state, btn) {
+  activateSeg(btn);
+  _demo.state = state;
+  _applyDemo();
+}
+function activateSeg(btn) {
+  var group = btn.parentElement;
+  group.querySelectorAll('.demo-seg').forEach(function(s) { s.classList.remove('active'); });
+  btn.classList.add('active');
+}
+function toggleVerdict(btn) {
+  var body = btn.nextElementSibling;
+  var expanded = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', String(!expanded));
+  body.hidden = expanded;
+}
+
+/* ── On This Page — TOC builder + scroll spy ──────────────────────── */
+function buildToc(panelId) {
+  var panel = document.getElementById('panel-' + panelId);
+  if (!panel) return;
+  var toc = panel.querySelector('.page-toc');
+  var tocNav = panel.querySelector('.page-toc-nav');
+  if (!tocNav) return;
+  tocNav.innerHTML = '';
+  /* Align TOC with tab content */
+  if (toc) {
+    var tabBar = panel.querySelector('.comp-tabs');
+    var panelRect = panel.getBoundingClientRect();
+    if (tabBar) {
+      var tabBarRect = tabBar.getBoundingClientRect();
+      var offset = tabBarRect.top - panelRect.top;
+      toc.style.paddingTop = offset + 'px';
+    }
+  }
+  var activeTab = panel.querySelector('.comp-tab-content.active');
+  if (!activeTab) return;
+  function makeTocClick(targetEl, linkEl) {
+    return function() {
+      /* Force this link active and pause spy */
+      tocNav.querySelectorAll('.page-toc-link').forEach(function(l) { l.classList.remove('active'); });
+      linkEl.classList.add('active');
+      _spyPaused = true;
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(function() { _spyPaused = false; }, 800);
+    };
+  }
+  var headings = activeTab.querySelectorAll('[id]');
+  headings.forEach(function(h) {
+    var text = h.textContent.trim();
+    if (!text || text.length > 60) return;
+    /* Skip non-heading elements */
+    if (!h.classList.contains('sub-heading') && !h.classList.contains('verdict-card') && !h.classList.contains('demo-panel')) return;
+    /* Skip spec card headings that are children — they'll be added as nested */
+    if (h.classList.contains('toc-child')) return;
+    var label = text;
+    if (h.classList.contains('verdict-card')) label = 'Overview';
+    if (h.classList.contains('demo-panel')) label = 'Live Demo';
+    var link = document.createElement('button');
+    link.className = 'page-toc-link';
+    link.textContent = label;
+    link.setAttribute('data-target', h.id);
+    link.onclick = makeTocClick(h, link);
+    tocNav.appendChild(link);
+    /* Check for toc-child items that follow this heading's section */
+    var children = activeTab.querySelectorAll('.toc-child[id]');
+    var isParent = false;
+    /* If this is a group heading (e.g. "Appearance"), find its children */
+    children.forEach(function(child) {
+      /* Check if this child belongs after the current heading */
+      var hPos = h.compareDocumentPosition(child);
+      if (hPos & Node.DOCUMENT_POSITION_FOLLOWING) {
+        /* Check there's no other sub-heading between h and child */
+        var between = false;
+        headings.forEach(function(other) {
+          if (other === h || other.classList.contains('toc-child')) return;
+          if (!other.classList.contains('sub-heading')) return;
+          var oPos = h.compareDocumentPosition(other);
+          var cPos = other.compareDocumentPosition(child);
+          if ((oPos & Node.DOCUMENT_POSITION_FOLLOWING) && (cPos & Node.DOCUMENT_POSITION_FOLLOWING)) between = true;
+        });
+        if (!between && !isParent) isParent = true;
+        if (!between) {
+          var childLink = document.createElement('button');
+          childLink.className = 'page-toc-link page-toc-child';
+          childLink.textContent = child.textContent.trim();
+          childLink.setAttribute('data-target', child.id);
+          childLink.onclick = makeTocClick(child, childLink);
+          tocNav.appendChild(childLink);
+        }
+      }
+    });
+  });
+  initScrollSpy(panel);
+}
+var _spyRaf = null;
+var _spyHandler = null;
+var _spyPaused = false;
+function initScrollSpy(panel) {
+  /* Remove previous listener to prevent stacking */
+  if (_spyHandler) {
+    window.removeEventListener('scroll', _spyHandler);
+    _spyHandler = null;
+  }
+  if (!panel) return;
+  var tocLinks = panel.querySelectorAll('.page-toc-link');
+  if (!tocLinks.length) return;
+  _spyHandler = function() {
+    if (_spyRaf) return;
+    _spyRaf = requestAnimationFrame(function() {
+      _spyRaf = null;
+      /* Skip if user just clicked a TOC link (give scroll time to settle) */
+      if (_spyPaused) return;
+      var current = null;
+      var closestDist = Infinity;
+      tocLinks.forEach(function(link) {
+        var id = link.getAttribute('data-target');
+        var el = document.getElementById(id);
+        if (el) {
+          var rect = el.getBoundingClientRect();
+          /* Element must have scrolled past the threshold */
+          if (rect.top <= 150) {
+            /* Pick the one closest to the top (smallest negative distance) */
+            var dist = Math.abs(rect.top);
+            if (dist < closestDist) {
+              closestDist = dist;
+              current = link;
+            }
+          }
+        }
+      });
+      tocLinks.forEach(function(l) { l.classList.remove('active'); });
+      if (current) current.classList.add('active');
+      else if (tocLinks[0]) tocLinks[0].classList.add('active');
+    });
+  };
+  window.addEventListener('scroll', _spyHandler, { passive: true });
+  _spyHandler();
+}
+
+/* ── DES / DEV toggle + scramble ───────────────────────────────────── */
+function toggleSpecMode(type, toggleEl) {
+  var labels = toggleEl.querySelectorAll('.spec-mode-label');
+  var isDes = labels[0].classList.contains('active');
+  labels[0].classList.toggle('active', !isDes);
+  labels[1].classList.toggle('active', isDes);
+  var desView = document.querySelector('[data-view="'+type+'-des"]');
+  var devView = document.querySelector('[data-view="'+type+'-dev"]');
+  if (isDes) {
+    if (desView) desView.style.display = 'none';
+    if (devView) {
+      devView.style.display = '';
+      /* Generate code from current state */
+      var s = cardState[type] || { size:'default', state:'enabled', isError:false };
+      var activeTab = devView.querySelector('.spec-code-tab.active');
+      var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+      var codeEl = devView.querySelector('code');
+      if (codeEl) { codeEl.setAttribute('data-final', getSnippet(type, lang, s)); }
+      scrambleCode(type);
+    }
+  } else {
+    if (devView) devView.style.display = 'none';
+    if (desView) desView.style.display = '';
+  }
+}
+var scrambleChars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz0123456789!@#$%&*(){}[]<>/=';
+function scrambleCode(type) {
+  var codeEl = document.querySelector('[data-code-content="'+type+'"]');
+  if (!codeEl) return;
+  var final = codeEl.getAttribute('data-final') || codeEl.textContent;
+  codeEl.setAttribute('data-final', final);
+  var len = final.length;
+  var iterations = 0;
+  var maxIter = 8;
+  codeEl.style.opacity = '0.7';
+  var interval = setInterval(function() {
+    iterations++;
+    var out = '';
+    for (var i = 0; i < len; i++) {
+      if (final[i] === '\n') { out += '\n'; continue; }
+      if (final[i] === ' ') { out += ' '; continue; }
+      if (iterations >= maxIter || (iterations / maxIter) > (i / len)) {
+        out += final[i];
+      } else {
+        out += scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+      }
+    }
+    codeEl.textContent = out;
+    if (iterations >= maxIter) {
+      clearInterval(interval);
+      codeEl.style.opacity = '1';
+      highlightSyntax(codeEl);
+    }
+  }, 35);
+}
+function highlightSyntax(el) {
+  var code = el.getAttribute('data-final') || el.textContent;
+  var html = code
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    /* comments — must be first */
+    .replace(/(\/\/[^\n]*)/g, '\x00CMT_S$1\x00CMT_E')
+    /* strings */
+    .replace(/("(?:[^"\\]|\\.)*")/g, '\x00STR_S$1\x00STR_E');
+  /* Now apply other highlights avoiding comments/strings */
+  html = html
+    .replace(/\x00CMT_S([\s\S]*?)\x00CMT_E/g,'<span class="syn-cmt">$1</span>')
+    .replace(/\x00STR_S([\s\S]*?)\x00STR_E/g,'<span class="syn-str">$1</span>')
+    /* keywords */
+    .replace(/\b(fun|val|var|let|struct|static|object|import|return|if|else)\b/g,'<span class="syn-kw">$1</span>')
+    /* boolean / null / numeric */
+    .replace(/\b(true|false|null|nil)\b/g,'<span class="syn-val">$1</span>')
+    .replace(/\b(\d+(?:\.\w+)?)\b/g,'<span class="syn-val">$1</span>')
+    /* constructors / types at call sites */
+    .replace(/\b(Row|HStack|VStack|Modifier|RoundedRectangle|RoundedCornerShape|Color|Arrangement|Alignment|Dp|CGFloat)\b/g,'<span class="syn-type">$1</span>')
+    /* constants/variables objects */
+    .replace(/\b(Constants|Variables)\b/g,'<span class="syn-type">$1</span>')
+    /* parameter names */
+    .replace(/\b(alignment|spacing|horizontalArrangement|verticalAlignment|modifier|color|shape|width|start|top|maxWidth)\b(?=\s*[=:])/g,'<span class="syn-param">$1</span>')
+    /* dot accessors */
+    .replace(/(\.\w+)/g,'<span class="syn-dot">$1</span>')
+    /* braces/parens */
+    .replace(/([{}()\[\]])/g,'<span class="syn-punc">$1</span>');
+  el.innerHTML = html;
+}
+function copyCode(btn) {
+  var card = btn.closest('.spec-card-code');
+  var code = card.querySelector('code');
+  var text = code.getAttribute('data-final') || code.textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    btn.style.color = '#4EC9B0';
+    /* Show fixed toast below button */
+    var rect = btn.getBoundingClientRect();
+    var toast = document.createElement('div');
+    toast.className = 'spec-copy-toast';
+    toast.textContent = 'Code copied';
+    toast.style.top = (rect.bottom + 8) + 'px';
+    toast.style.right = (window.innerWidth - rect.right) + 'px';
+    document.body.appendChild(toast);
+    requestAnimationFrame(function() { toast.classList.add('show'); });
+    setTimeout(function() {
+      toast.classList.remove('show');
+      btn.style.color = '';
+      setTimeout(function() { toast.remove(); }, 150);
+    }, 1500);
+  });
+}
+function copyNode(btn) {
+  var node = btn.getAttribute('data-node');
+  navigator.clipboard.writeText(node).then(function() {
+    var span = btn.querySelector('span');
+    var orig = span.textContent;
+    span.textContent = 'Copied!';
+    setTimeout(function() { span.textContent = orig; }, 1200);
+  });
+}
+function switchCodeTab(tabBtn, lang, type) {
+  var block = tabBtn.closest('.spec-card-code');
+  block.querySelectorAll('.spec-code-tab').forEach(function(t) { t.classList.remove('active'); });
+  tabBtn.classList.add('active');
+  var codeEl = block.querySelector('code');
+  if (!codeEl) return;
+  var s = cardState[type] || { size:'default', state:'enabled', isError:false };
+  var code = getSnippet(type, lang, s);
+  codeEl.textContent = '// Loading...';
+  codeEl.setAttribute('data-final', code);
+  scrambleCode(type);
+}
+/* Code snippets — Figma Dev Mode style with Layout + Variables */
+function buildSwiftSnippet(type, s) {
+  var bg = colorData[s.isError && type !== 'primary' ? type+'Err' : type][s.state];
+  var compact = s.size === 'compact';
+  var pad = compact ? 'spaceSpace12' : 'spaceSpace16';
+  var padVal = compact ? '12' : '16';
+  var bgToken = type === 'primary' ? 'mainButton' + (s.state === 'enabled' ? 'Primary' : s.state === 'pressed' ? 'Primary' : 'Primary') + 'Brand' + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Bg' : '';
+  var labelToken = type === 'primary' ? 'mainButtonPrimaryBrandEnabledLabel' : '';
+  var lines = [];
+  lines.push('// Layout');
+  lines.push('HStack(alignment: .center, spacing: Constants.spaceSpace0) { ... }');
+  lines.push('    .padding(Constants.' + pad + ')');
+  if (compact) lines.push('    .frame(height: 38)');
+  else lines.push('    .frame(maxWidth: .infinity, alignment: .center)');
+  if (type === 'primary') {
+    lines.push('    .background(Constants.mainButtonPrimaryBrand' + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Bg)');
+  } else if (type === 'secondary') {
+    var errSuffix = s.isError ? 'Destructive' : 'Brand';
+    lines.push('    .overlay(RoundedRectangle(cornerRadius: Constants.radiusRadiusPill)');
+    lines.push('        .stroke(Constants.mainButtonSecondary' + errSuffix + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Border, lineWidth: 3))');
+  }
+  lines.push('    .cornerRadius(Constants.radiusRadiusPill)');
+  if (s.state === 'disabled') lines.push('    .disabled(true)');
+  lines.push('');
+  lines.push('// Variables');
+  lines.push('struct Constants {');
+  lines.push('    static let spaceSpace0: CGFloat = 0');
+  if (type === 'primary') {
+    lines.push('    static let mainButtonPrimaryBrand' + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Bg: Color = Color("' + bg + '")');
+  } else if (type === 'secondary') {
+    var errSuffix2 = s.isError ? 'Destructive' : 'Brand';
+    lines.push('    static let mainButtonSecondary' + errSuffix2 + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Border: Color = Color("' + bg + '")');
+  } else {
+    var errSuffix3 = s.isError ? 'Destructive' : 'Brand';
+    lines.push('    static let mainButtonTertiary' + errSuffix3 + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Label: Color = Color("' + bg + '")');
+  }
+  lines.push('    static let radiusRadiusPill: CGFloat = 99');
+  lines.push('    static let ' + pad + ': CGFloat = ' + padVal);
+  lines.push('}');
+  return lines.join('\n');
+}
+function buildComposeSnippet(type, s) {
+  var bg = colorData[s.isError && type !== 'primary' ? type+'Err' : type][s.state];
+  var compact = s.size === 'compact';
+  var pad = compact ? 'spaceSpace12' : 'spaceSpace16';
+  var padVal = compact ? '12' : '16';
+  var lines = [];
+  lines.push('// Layout');
+  lines.push('Row(');
+  lines.push('    horizontalArrangement = Arrangement.spacedBy(');
+  lines.push('        Variables.spaceSpace0,');
+  lines.push('        Alignment.CenterHorizontally'),
+  lines.push('    ),');
+  lines.push('    verticalAlignment = Alignment.CenterVertically,');
+  lines.push('    modifier = Modifier');
+  if (type === 'primary') {
+    lines.push('        .background(');
+    lines.push('            color = Variables.mainButtonPrimaryBrand' + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Bg,');
+    lines.push('            shape = RoundedCornerShape(Variables.radiusRadiusPill)');
+    lines.push('        )');
+  } else if (type === 'secondary') {
+    var errS = s.isError ? 'Destructive' : 'Brand';
+    lines.push('        .border(');
+    lines.push('            width = 3.dp,');
+    lines.push('            color = Variables.mainButtonSecondary' + errS + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Border,');
+    lines.push('            shape = RoundedCornerShape(Variables.radiusRadiusPill)');
+    lines.push('        )');
+  }
+  lines.push('        .padding(Variables.' + pad + ')');
+  if (compact) lines.push('        .height(38.dp)');
+  lines.push(') {');
+  lines.push('    // Child views.');
+  lines.push('}');
+  lines.push('');
+  lines.push('// Variables');
+  lines.push('object Variables {');
+  if (type === 'primary') {
+    lines.push('    val mainButtonPrimaryBrand' + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Bg: Color = Color(0xFF' + bg.replace('#','') + ')');
+  } else if (type === 'secondary') {
+    var errS2 = s.isError ? 'Destructive' : 'Brand';
+    lines.push('    val mainButtonSecondary' + errS2 + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Border: Color = Color(0xFF' + bg.replace('#','') + ')');
+  } else {
+    var errS3 = s.isError ? 'Destructive' : 'Brand';
+    lines.push('    val mainButtonTertiary' + errS3 + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Label: Color = Color(0xFF' + bg.replace('#','') + ')');
+  }
+  lines.push('    val radiusRadiusPill: Dp = 99.dp');
+  lines.push('    val ' + pad + ': Dp = ' + padVal + '.dp');
+  lines.push('    val spaceSpace0: Dp = 0.dp');
+  lines.push('}');
+  return lines.join('\n');
+}
+function getSnippet(type, lang, s) {
+  if (lang === 'swift') return buildSwiftSnippet(type, s);
+  return buildComposeSnippet(type, s);
+}
+
+/* ── Style tab — spec card data ────────────────────────────────────── */
+var cardState = { primary: { size:'default', state:'enabled', isError:false, variant:'brand' }, secondary: { size:'default', state:'enabled', isError:false, variant:'brand' }, text: { size:'default', state:'enabled', isError:false, variant:'brand' }, white: { state:'enabled' }, subtle: { state:'enabled' } };
+var colorData = {
+  primary:      { enabled:'#005CE5', pressed:'#2340A9', disabled:'#9BC5FD' },
+  primaryErr:   { enabled:'#D61B2C', pressed:'#B50707', disabled:'#F4C7C9' },
+  secondary:    { enabled:'#005CE5', pressed:'#2340A9', disabled:'#9BC5FD' },
+  secondaryErr: { enabled:'#D61B2C', pressed:'#B50707', disabled:'#F4C7C9' },
+  text:         { enabled:'#005CE5', pressed:'#2340A9', disabled:'#9BC5FD' },
+  textErr:      { enabled:'#D61B2C', pressed:'#B50707', disabled:'#F4C7C9' },
+  white:        { enabled:'#FFFFFF', pressed:'#EEF2F9', disabled:'#C2CFE5' },
+  subtle:       { enabled:'#E5F1FF', pressed:'#D2E5FF', disabled:'#C2CFE5' }
+};
+var nodeMap = {
+  'primary-default-enabled':'17104:184843','primary-default-pressed':'17104:184846','primary-default-disabled':'17104:184849',
+  'primary-compact-enabled':'17104:184870','primary-compact-pressed':'17104:184874','primary-compact-disabled':'17104:184878',
+  'secondary-default-enabled':'17104:184852','secondary-default-pressed':'17104:184858','secondary-default-disabled':'17104:184864',
+  'secondary-compact-enabled':'17104:184882','secondary-compact-pressed':'17104:184898','secondary-compact-disabled':'17104:184914',
+  'text-default-enabled':'17104:184855','text-default-pressed':'17104:184861','text-default-disabled':'17104:184867',
+  'text-compact-enabled':'17104:184886','text-compact-pressed':'17104:184902','text-compact-disabled':'17104:184918'
+};
+function renderCard(type, change, btn) {
+  activateSeg(btn);
+  var s = cardState[type];
+  if (change === 'default' || change === 'compact') s.size = change;
+  else if (change === 'enabled' || change === 'pressed' || change === 'disabled') s.state = change;
+  else if (change === 'error-true') s.isError = true;
+  else if (change === 'error-false') s.isError = false;
+  else if (change === 'brand' || change === 'destructive') {
+    s.variant = change;
+    /* toggle color sections visibility */
+    var card = btn.closest('.spec-card');
+    if (card) {
+      card.querySelectorAll('[data-card-variant]').forEach(function(sec) {
+        sec.style.display = sec.dataset.cardVariant === change ? '' : 'none';
+      });
+    }
+  }
+  var compact = s.size === 'compact';
+  var isDestructive = s.variant === 'destructive';
+  var err = s.isError || isDestructive;
+  /* Preview */
+  var btnEl = document.getElementById('spec-' + type + '-btn');
+  if (btnEl) {
+    /* White / Subtle — inline style only, opacity for disabled */
+    if (type === 'white' || type === 'subtle') {
+      var c = colorData[type][s.state];
+      btnEl.style.background = c;
+      btnEl.style.opacity = s.state === 'disabled' ? '0.4' : '1';
+      return;
+    }
+    var base = type === 'primary' ? 'demo-btn-primary' : type === 'secondary' ? 'demo-btn-outlined' : 'demo-btn-text';
+    btnEl.className = 'demo-btn ' + base + (compact ? ' compact' : '') + (s.state === 'disabled' ? ' disabled' : '');
+    var cKey = (isDestructive || (err && type !== 'primary')) ? type + 'Err' : type;
+    if (!colorData[cKey]) cKey = type;
+    var c = colorData[cKey][s.state];
+    if (type === 'primary') {
+      btnEl.style.backgroundColor = c;
+      btnEl.style.color = '#FFFFFF';
+      btnEl.style.borderColor = '';
+    } else if (type === 'secondary') {
+      btnEl.style.backgroundColor = '';
+      btnEl.style.color = c;
+      btnEl.style.borderColor = c;
+    } else {
+      btnEl.style.backgroundColor = '';
+      btnEl.style.color = c;
+      btnEl.style.borderColor = '';
+    }
+  }
+  /* Properties */
+  var sp = function(k,v) { var el = document.querySelector('[data-sp="'+type+'-'+k+'"]'); if(el) el.textContent = v; };
+  sp('size', compact ? 'Compact (38px)' : 'Default (50px)');
+  sp('state', s.state === 'enabled' ? 'Default' : s.state.charAt(0).toUpperCase() + s.state.slice(1));
+  sp('node', nodeMap[type+'-'+s.size+'-'+s.state] || '—');
+  sp('height', compact ? '38px' : '50px');
+  sp('padding', compact ? '12px' : '16px');
+  sp('fontsize', compact ? '16px' : '18px');
+  sp('lh', compact ? '16px' : '18px');
+  if (type !== 'primary') sp('error', err ? 'true' : 'false');
+  /* Colors */
+  var cKey2 = err && type !== 'primary' ? type + 'Err' : type;
+  var clr = colorData[cKey2][s.state];
+  if (type === 'primary') {
+    sp('bg', clr);
+    var sw = document.querySelector('[data-sw="primary-bg"]'); if(sw) sw.style.background = clr;
+  } else {
+    if (type === 'secondary') { sp('border', clr); var sw1 = document.querySelector('[data-sw="secondary-border"]'); if(sw1) sw1.style.background = clr; }
+    sp('label', clr);
+    var sw2 = document.querySelector('[data-sw="'+type+'-label"]'); if(sw2) sw2.style.background = clr;
+  }
+  /* Update node copy button */
+  var nodeVal = nodeMap[type+'-'+s.size+'-'+s.state] || '—';
+  var nodeBtn = document.querySelector('[data-sp="'+type+'-node-btn"]');
+  if (nodeBtn) nodeBtn.setAttribute('data-node', nodeVal);
+  var nodeText = document.querySelector('[data-sp="'+type+'-node-text"]');
+  if (nodeText) nodeText.textContent = nodeVal;
+  /* Update code snippet if DEV view is active */
+  var devView = document.querySelector('[data-view="'+type+'-dev"]');
+  if (devView && devView.style.display !== 'none') {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('code');
+    if (codeEl) {
+      codeEl.setAttribute('data-final', getSnippet(type, lang, s));
+      scrambleCode(type);
+    }
+  }
+}
+
+/* ── Init ─────────────────────────────────────────────────────────── */
 (function() {
+  /* Theme */
+  var saved = null;
+  try { saved = localStorage.getItem('eb-ds-theme'); } catch(e) {}
+  var isDark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  if (isDark) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+  var sw1 = document.getElementById('theme-switch');
+  var sw2 = document.getElementById('theme-switch-mobile');
+  if (sw1) sw1.checked = isDark;
+  if (sw2) sw2.checked = isDark;
+
+  /* Hash routing */
   var hash = window.location.hash.replace('#', '');
   if (hash && hash !== 'overview') {
     showPanelById(hash);
@@ -293,39 +944,6 @@ function initPills() {
   }
   setTimeout(initPills, 60);
   updateCoverStats();
-})();
-function updateCoverStats() {
-  var comps = document.querySelectorAll('.nav-comp').length;
-  var open = document.querySelectorAll('.tag-open').length;
-  var fixed = document.querySelectorAll('.tag-fixed').length;
-  var el;
-  el = document.getElementById('count-components'); if (el) el.textContent = comps;
-  el = document.getElementById('count-open'); if (el) el.textContent = open;
-  el = document.getElementById('count-fixed'); if (el) el.textContent = fixed;
-}
-var sunIcon = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>';
-var moonIcon = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6.8 1.5A6.5 6.5 0 0 0 8 14.5a6.5 6.5 0 0 0 5.7-3.4A5.5 5.5 0 0 1 6.8 1.5Z" fill="currentColor"/></svg>';
-function setThemeUI(isDark) {
-  var lbl = document.getElementById('theme-label');
-  var ico = document.getElementById('theme-icon');
-  if (lbl) lbl.textContent = isDark ? 'Dark' : 'Light';
-  if (ico) ico.innerHTML = isDark ? moonIcon : sunIcon;
-}
-function toggleTheme(isDark) {
-  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-  setThemeUI(isDark);
-  try { localStorage.setItem('gcash-ds-theme', isDark ? 'dark' : 'light'); } catch(e) {}
-}
-(function() {
-  var saved = null;
-  try { saved = localStorage.getItem('gcash-ds-theme'); } catch(e) {}
-  var isDark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  if (isDark) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    var sw = document.getElementById('theme-switch');
-    if (sw) sw.checked = true;
-  }
-  setThemeUI(isDark);
 })();
 </script>
 </body>

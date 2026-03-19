@@ -44,15 +44,15 @@ open-issues: C2, C3, C6, C7
 
 <!--@summary-card-start-->
 <div class="summary-card" onclick="showPanelById('avatar')">
-  <div class="summary-card-row">
-    <div class="summary-card-name">Avatar</div>
-    <div class="summary-card-badges">
-      <span class="badge badge-fix">Fix</span>
-      <span class="badge badge-refine">Needs Refinement</span>
-    </div>
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><circle cx="28" cy="20" r="12" stroke="currentColor" stroke-width="1.2" opacity=".2"/><circle cx="48" cy="20" r="8" stroke="currentColor" stroke-width="1.2" opacity=".15"/><circle cx="62" cy="20" r="6" stroke="currentColor" stroke-width="1.2" opacity=".1"/></svg>
   </div>
-  <div class="summary-card-finding">
-    21 variants (3 types × 7 sizes). Good token coverage with 8 component-specific tokens. Issues: <code>initials - light</code> naming has spaces (C2), token typo <code>intials</code> (C2), 5 variants use raster backgrounds (C6), hardcoded border-radius per size (C3).
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Avatar</div>
+      <span class="badge badge-refine">Beta</span>
+    </div>
+    <div class="summary-card-desc">21 variants. Naming and token issues. Raster backgrounds in 5 variants need replacement.</div>
   </div>
 </div>
 <!--@summary-card-end-->
@@ -69,6 +69,7 @@ open-issues: C2, C3, C6, C7
 
 <!--@section-start-->
 <div class="panel" id="panel-avatar">
+  <div class="panel-layout">
   <div class="content-wrap">
 
     <!-- Back -->
@@ -159,8 +160,14 @@ open-issues: C2, C3, C6, C7
     <div class="section-heading">DS Health</div>
 
     <div class="verdict-card">
-      <div class="verdict-card-title">Solid structure with fixable naming and asset issues</div>
-      <div class="verdict-card-body"><strong>Verdict:</strong> 21 variants cover a comprehensive size/type matrix with good token coverage (8 component-specific color tokens, full typography set). Key fixes needed: rename <code>initials - light</code> to remove spaces, fix the <code>intials</code> token typo, replace raster backgrounds on 5 initials variants with simple vector circles, and bind border-radius to a shared token. No interaction states needed — avatar is display-only.</div>
+      <button class="verdict-card-trigger" onclick="toggleVerdict(this)" aria-expanded="false">
+        <div class="verdict-card-trigger-body">
+          <span class="verdict-card-eyebrow">VERDICT</span>
+          <span class="verdict-card-title">Solid structure with fixable naming and asset issues</span>
+        </div>
+        <svg class="verdict-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="verdict-card-body" hidden>21 variants cover a comprehensive size/type matrix with good token coverage (8 component-specific color tokens, full typography set). Key fixes needed: rename <code>initials - light</code> to remove spaces, fix the <code>intials</code> token typo, replace raster backgrounds on 5 initials variants with simple vector circles, and bind border-radius to a shared token. No interaction states needed — avatar is display-only.</div>
     </div>
 
     <!-- 4 Traits -->
@@ -447,5 +454,13 @@ open-issues: C2, C3, C6, C7
     </div><!-- /data-tab-group -->
 
   </div><!-- /content-wrap -->
+
+  <!-- On This Page -->
+  <aside class="page-toc" id="toc-avatar">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-avatar"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
 </div><!-- /panel-avatar -->
 <!--@section-end-->

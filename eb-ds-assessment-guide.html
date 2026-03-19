@@ -3,41 +3,44 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>GCash Design System — Component Assessment Guide</title>
+<title>East Blue — Component Assessment Guide</title>
 <style>
+@font-face{font-family:'HeyMeow Rnd';src:url('./HeyMeow Rnd/VAR/[VAR] HeyMeow Rnd/HeyMeow Rnd VF.woff2') format('woff2-variations'),url('./HeyMeow Rnd/VAR/[VAR] HeyMeow Rnd/HeyMeow Rnd VF.woff') format('woff-variations');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:'BarkAda';src:url('./BarkAda/VAR/BarkAda VF.woff2') format('woff2-variations'),url('./BarkAda/VAR/BarkAda VF.woff') format('woff-variations');font-weight:100 900;font-style:normal;font-display:swap}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#FFFFFF;--surface:#FFFFFF;--border:#E8E7E4;--border-2:#D8D6D2;
-  --text:#111111;--text-2:#444444;--muted:#666666;
-  --accent:#0056D6;--accent-light:#EEF3FB;
-  --ready-fg:#1A7A4A;--ready-bg:#E6F4ED;
-  --refine-fg:#B45309;--refine-bg:#FEF3C7;
-  --rework-fg:#B91C1C;--rework-bg:#FEE2E2;
-  --na-fg:#6B7280;--na-bg:#F3F4F6;
-  --font:system-ui,-apple-system,'Segoe UI',sans-serif;
+  --bg:#F8F9FB;--surface:#FFFFFF;--border:#E2E4E9;--border-2:#D0D3D9;
+  --text:#111111;--text-2:#3A3E47;--muted:#646A78;
+  --accent:#1A56DB;--accent-light:#EEF2FF;
+  --ready-fg:#166534;--ready-bg:#DCFCE7;
+  --refine-fg:#92400E;--refine-bg:#FEF3C7;
+  --rework-fg:#991B1B;--rework-bg:#FEE2E2;
+  --na-fg:#525766;--na-bg:#F3F4F7;
+  --font-heading:'HeyMeow Rnd',system-ui,sans-serif;
+  --font:'BarkAda',system-ui,sans-serif;
   --mono:ui-monospace,'SF Mono','Fira Code',monospace;
-  --sidebar-w:260px;--radius:14px;
-  --code-bg:#F0F1F2;--code-fg:#3C3F44;
-  --card-bg:#F3F3F6;--thead-bg:#F3F3F6;--thead-fg:#3C4A5C;
-  --row-border:rgba(0,0,0,0.05);--sidebar-border:rgba(232,231,228,.5);
-  --issue-bg:#FFFDF8;--issue-border:#F0E8D4;
-  --resolved-bg:#FAFDF9;--resolved-border:#E2F0E2;
-  --tab-bg:#F0F1F3;--tab-border:#E8E9EC;--tab-pill:#FFFFFF
+  --sidebar-w:240px;--radius:12px;
+  --code-bg:#E4E6ED;--code-fg:#1A1D24;
+  --card-bg:#FFFFFF;--thead-bg:#F5F6F9;--thead-fg:#adb2c2;
+  --row-border:#EDEEF2;--sidebar-border:#E2E4E9;
+  --issue-bg:#FEFCE8;--issue-border:#FDE68A;
+  --resolved-bg:#F0FDF4;--resolved-border:#BBF7D0;
+  --tab-bg:#EDEEF3;--tab-border:#E2E4E9;--tab-pill:#FFFFFF
 }
 [data-theme="dark"]{
-  --bg:#1C1C1E;--surface:#2C2C2E;--border:#3A3A3C;--border-2:#48484A;
-  --text:#F5F5F7;--text-2:#A1A1A6;--muted:#8E8E93;
-  --accent:#4DA3FF;--accent-light:rgba(77,163,255,.12);
-  --ready-fg:#30D158;--ready-bg:rgba(48,209,88,.12);
-  --refine-fg:#FFD60A;--refine-bg:rgba(255,214,10,.12);
-  --rework-fg:#FF453A;--rework-bg:rgba(255,69,58,.12);
-  --na-fg:#8E8E93;--na-bg:rgba(142,142,147,.12);
-  --code-bg:#3A3A3C;--code-fg:#D1D1D6;
-  --card-bg:#3A3A3C;--thead-bg:#3A3A3C;--thead-fg:#C8CDD5;
-  --row-border:rgba(255,255,255,.06);--sidebar-border:rgba(255,255,255,.08);
-  --issue-bg:rgba(255,214,10,.06);--issue-border:rgba(255,214,10,.15);
-  --resolved-bg:rgba(48,209,88,.06);--resolved-border:rgba(48,209,88,.15);
-  --tab-bg:#3A3A3C;--tab-border:#48484A;--tab-pill:#636366
+  --bg:#141414;--surface:#1C1C1C;--border:#2E2E2E;--border-2:#3D3D3D;
+  --text:#F0F0F0;--text-2:#A3A3A3;--muted:#737373;
+  --accent:#6B9AEF;--accent-light:rgba(107,154,239,.1);
+  --ready-fg:#4ADE80;--ready-bg:rgba(74,222,128,.1);
+  --refine-fg:#FBBF24;--refine-bg:rgba(251,191,36,.1);
+  --rework-fg:#F87171;--rework-bg:rgba(248,113,113,.1);
+  --na-fg:#737373;--na-bg:rgba(115,115,115,.1);
+  --code-bg:#262626;--code-fg:#D4D4D4;
+  --card-bg:#1C1C1C;--thead-bg:#1C1C1C;--thead-fg:#A3A3A3;
+  --row-border:#262626;--sidebar-border:#2E2E2E;
+  --issue-bg:rgba(251,191,36,.06);--issue-border:rgba(251,191,36,.15);
+  --resolved-bg:rgba(74,222,128,.06);--resolved-border:rgba(74,222,128,.15);
+  --tab-bg:#262626;--tab-border:#2E2E2E;--tab-pill:#3D3D3D
 }
 html{font-size:14px;scroll-behavior:smooth}
 body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
@@ -47,23 +50,29 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 .sidebar::-webkit-scrollbar{width:4px}
 .sidebar::-webkit-scrollbar-track{background:transparent}
 .sidebar::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:2px}
-.sidebar-brand{padding:20px 18px 16px;border-bottom:1px solid var(--sidebar-border);flex-shrink:0}
-.sidebar-brand-row{display:flex;align-items:center;gap:10px}
-.sidebar-logo{width:30px;height:30px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sidebar-brand-title{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-.01em;line-height:1.2}
-.sidebar-brand-sub{font-size:12px;color:var(--muted);line-height:1.2;margin-top:1px}
-.sidebar-section-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#AAAAAA;padding:22px 18px 4px}
-.nav-item{display:flex;align-items:center;gap:8px;padding:7px 18px;font-size:14px;color:#666666;text-decoration:none;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;border-left:2px solid transparent;transition:background .1s ease,color .1s ease,border-color .1s ease;line-height:1.4}
-.nav-item:hover{background:var(--bg);color:var(--text)}
-.nav-item.active{background:var(--accent-light);color:#1972F9;border-left-color:#1972F9;font-weight:500}
-.sidebar-footer{margin-top:auto;padding:14px 18px;font-size:12px;color:#BBBBBB;border-top:1px solid var(--sidebar-border);flex-shrink:0}
+a.sidebar-brand{display:block;padding:20px 16px 16px;border-bottom:1px solid var(--sidebar-border);flex-shrink:0;text-decoration:none;color:inherit}
+.sidebar-brand-row{display:flex;align-items:center;gap:12px}
+.sidebar-brand-text{display:flex;flex-direction:column;gap:0}
+.sidebar-logo{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sidebar-brand-title-row{display:flex;align-items:baseline;gap:8px}
+.sidebar-wordmark{font-family:var(--font-heading);font-size:16px;font-weight:600;color:var(--text);letter-spacing:-.02em;line-height:1.2}
+.sidebar-version{font-family:var(--mono);font-size:10px;color:var(--muted);background:var(--bg);padding:2px 6px;border-radius:6px}
+.sidebar-brand-sub{font-size:12px;color:var(--muted);line-height:1.3;opacity:.7}
+.sidebar-nav{flex:1;padding:12px 8px;overflow-y:auto}
+.sidebar-section-label{font-size:12px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);opacity:.6;padding:16px 12px 8px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:12px 12px;font-family:var(--font);font-size:16px;font-weight:400;color:var(--muted);text-decoration:none;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;border-radius:6px;transition:background .08s ease,color .08s ease;line-height:1.4;margin-bottom:1px}
+.nav-item:hover{background:rgba(100,106,120,.06);color:var(--text)}
+.nav-item.active{background:var(--accent-light);color:var(--accent);font-weight:500}
+[data-theme="dark"] .nav-item:hover{background:rgba(255,255,255,.04)}
+[data-theme="dark"] .nav-item.active{background:rgba(107,154,239,.08);color:var(--accent)}
+.sidebar-footer{margin-top:auto;display:flex;align-items:center;gap:12px;padding:12px 16px;font-size:12px;color:var(--muted);border-top:1px solid var(--sidebar-border);flex-shrink:0}
 
 /* ── Main ── */
 .main{margin-left:var(--sidebar-w);padding-right:var(--sidebar-w);min-height:100vh;background:var(--surface)}
 .content-wrap{max-width:860px;margin:0 auto;padding:40px 48px 80px}
 
 /* ── Breadcrumb ── */
-.back-btn{display:inline-flex;align-items:center;gap:5px;margin-bottom:28px;font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;background:none;border:none;padding:0;cursor:pointer;font-family:var(--font);transition:color .15s ease}
+.back-btn{display:inline-flex;align-items:center;gap:5px;margin-bottom:28px;font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;background:none;border:none;padding:0;cursor:pointer;font-family:var(--font-heading);transition:color .15s ease}
 .back-btn:hover{color:var(--text)}
 .back-btn svg{flex-shrink:0;transition:transform .15s ease}
 .back-btn:hover svg{transform:translateX(-3px)}
@@ -71,14 +80,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 /* ── Cover ── */
 .cover{padding:8px 0 32px;border-bottom:1px solid var(--sidebar-border);margin-bottom:36px}
 .cover-eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#1972F9;margin-bottom:10px}
-.cover-title{font-size:28px;font-weight:500;color:var(--text);line-height:1.2;margin-bottom:8px}
+.cover-title{font-family:var(--font-heading);font-size:28px;font-weight:500;color:var(--text);line-height:1.2;margin-bottom:8px}
 .cover-subtitle{font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.6}
 
 /* ── Sections ── */
 .page-section{margin-bottom:48px}
-.section-heading{font-size:18px;font-weight:600;color:var(--text);letter-spacing:-.01em;margin-bottom:6px}
+.section-heading{font-family:var(--font-heading);font-size:18px;font-weight:600;color:var(--text);letter-spacing:-.01em;margin-bottom:6px}
 .section-desc{font-size:14px;color:var(--muted);margin-bottom:16px;line-height:1.65}
-.sub-heading{font-size:18px;font-weight:600;color:var(--text);margin-bottom:12px;margin-top:48px;letter-spacing:-.01em}
+.sub-heading{font-family:var(--font-heading);font-size:18px;font-weight:600;color:var(--text);margin-bottom:12px;margin-top:48px;letter-spacing:-.01em}
 p{font-size:14px;color:var(--text-2);line-height:1.65;margin-bottom:12px}
 p:last-child{margin-bottom:0}
 
@@ -113,30 +122,33 @@ td strong{font-weight:600;color:var(--text)}
 
 /* ── Code ── */
 code{font-family:var(--mono);font-size:12px;font-weight:600;background:var(--code-bg);padding:1px 4px;border-radius:3px;color:var(--code-fg)}
-pre{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;overflow-x:auto;margin:12px 0 16px;font-size:12px;line-height:1.6}
+pre{background:#F1F1F4;border:none;border-radius:var(--radius);padding:16px 20px;overflow-x:auto;margin:12px 0 16px;font-size:12px;line-height:1.6}
+[data-theme="dark"] pre{background:#262626}
 pre code{background:none;padding:0;font-weight:400;color:var(--text-2)}
 
 /* ── How cards ── */
 .how-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
 .how-card{background:var(--card-bg);border-radius:var(--radius);padding:20px}
 .how-step{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:capitalize;color:var(--accent);margin-bottom:6px}
-.how-title{font-size:18px;font-weight:600;color:var(--text);margin-bottom:6px}
+.how-title{font-family:var(--font-heading);font-size:18px;font-weight:600;color:var(--text);margin-bottom:6px}
 .how-desc{font-size:14px;color:var(--muted);line-height:1.6}
 .how-desc code{font-size:12px}
 
 /* ── Dep cards ── */
 .dep-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
-.dep-card{background:var(--card-bg);border-radius:var(--radius);padding:20px}
+.dep-card{background:#F1F1F4;border-radius:var(--radius);padding:20px}
+[data-theme="dark"] .dep-card{background:#262626}
 .dep-label{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:capitalize;color:var(--accent);margin-bottom:6px}
-.dep-title{font-size:18px;font-weight:600;color:var(--text);margin-bottom:6px}
+.dep-title{font-family:var(--font-heading);font-size:18px;font-weight:600;color:var(--text);margin-bottom:6px}
 .dep-desc{font-size:14px;color:var(--muted);line-height:1.6}
 .dep-desc a{color:var(--accent);text-decoration:none}
 .dep-desc a:hover{text-decoration:underline}
 
 /* ── Step cards ── */
-.step-card{background:var(--card-bg);border-radius:var(--radius);padding:20px;margin-bottom:12px}
+.step-card{background:#F1F1F4;border-radius:var(--radius);padding:20px;margin-bottom:12px}
+[data-theme="dark"] .step-card{background:#262626}
 .step-label{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:capitalize;color:var(--accent);margin-bottom:6px}
-.step-title{font-size:18px;font-weight:600;color:var(--text);margin-bottom:6px}
+.step-title{font-family:var(--font-heading);font-size:18px;font-weight:600;color:var(--text);margin-bottom:6px}
 .step-body{font-size:14px;color:var(--muted);line-height:1.6}
 .step-body pre{margin:8px 0 0;background:var(--surface);border:1px solid var(--border)}
 
@@ -178,7 +190,7 @@ body,.sidebar,.main,.sidebar-brand,.sidebar-footer,.table-wrap,.how-card,.dep-ca
 </head>
 <body>
 <nav class="sidebar">
-  <div class="sidebar-brand">
+  <a class="sidebar-brand" href="index.html" title="Back to Index">
     <div class="sidebar-brand-row">
       <div class="sidebar-logo">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -188,24 +200,29 @@ body,.sidebar,.main,.sidebar-brand,.sidebar-footer,.table-wrap,.how-card,.dep-ca
           <rect x="9" y="9" width="5" height="5" rx="1" fill="#fff" opacity=".45"/>
         </svg>
       </div>
-      <div>
-        <div class="sidebar-brand-title">GCash Design System</div>
+      <div class="sidebar-brand-text">
+        <div class="sidebar-brand-title-row">
+          <span class="sidebar-wordmark">East Blue</span>
+          <span class="sidebar-version">v0.1.0</span>
+        </div>
         <div class="sidebar-brand-sub">Assessment Guide</div>
       </div>
     </div>
+  </a>
+  <div class="sidebar-nav">
+    <div class="sidebar-section-label">Guide</div>
+    <a class="nav-item active" href="#overview" onclick="setActive(this)">Overview</a>
+    <a class="nav-item" href="#dependencies" onclick="setActive(this)">Dependencies</a>
+    <a class="nav-item" href="#ds-health" onclick="setActive(this)">DS Health</a>
+    <a class="nav-item" href="#native-readiness" onclick="setActive(this)">Native Readiness</a>
+    <a class="nav-item" href="#combined" onclick="setActive(this)">Combined Status</a>
+    <a class="nav-item" href="#architecture" onclick="setActive(this)">Report Architecture</a>
+    <a class="nav-item" href="#patterns" onclick="setActive(this)">Patterns</a>
+    <a class="nav-item" href="#workflow" onclick="setActive(this)">Workflow</a>
+    <a class="nav-item" href="#output" onclick="setActive(this)">Output Format</a>
+    <a class="nav-item" href="#progress" onclick="setActive(this)">Progress</a>
+    <a class="nav-item" href="#ownership" onclick="setActive(this)">Ownership</a>
   </div>
-  <div class="sidebar-section-label">Guide</div>
-  <a class="nav-item active" href="#overview" onclick="setActive(this)">Overview</a>
-  <a class="nav-item" href="#dependencies" onclick="setActive(this)">Dependencies</a>
-  <a class="nav-item" href="#ds-health" onclick="setActive(this)">DS Health</a>
-  <a class="nav-item" href="#native-readiness" onclick="setActive(this)">Native Readiness</a>
-  <a class="nav-item" href="#combined" onclick="setActive(this)">Combined Status</a>
-  <a class="nav-item" href="#architecture" onclick="setActive(this)">Report Architecture</a>
-  <a class="nav-item" href="#patterns" onclick="setActive(this)">GCash Patterns</a>
-  <a class="nav-item" href="#workflow" onclick="setActive(this)">Workflow</a>
-  <a class="nav-item" href="#output" onclick="setActive(this)">Output Format</a>
-  <a class="nav-item" href="#progress" onclick="setActive(this)">Progress</a>
-  <a class="nav-item" href="#ownership" onclick="setActive(this)">Ownership</a>
   <div class="sidebar-footer">March 2026 &nbsp;&middot;&nbsp; For internal use only</div>
 </nav>
 
@@ -230,7 +247,7 @@ body,.sidebar,.main,.sidebar-brand,.sidebar-footer,.table-wrap,.how-card,.dep-ca
     </a>
 
     <div class="cover" id="overview">
-      <div class="cover-eyebrow">GCash Design System</div>
+      <div class="cover-eyebrow">East Blue Design System</div>
       <div class="cover-title">Component Assessment Guide</div>
       <div class="cover-subtitle">Unified guide for evaluating DS health and native mobile readiness for SwiftUI and Jetpack Compose. Use as first-message context when starting a new assessment session.</div>
     </div>

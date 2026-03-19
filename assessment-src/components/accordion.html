@@ -51,14 +51,15 @@ open-issues: C7
 
 <!--@summary-card-start-->
 <div class="summary-card" onclick="showPanelById('accordion')">
-  <div class="summary-card-row">
-    <div class="summary-card-name">Accordion</div>
-    <div class="summary-card-badges">
-      <span class="badge badge-refine">Needs Refinement</span>
-    </div>
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><rect x="4" y="4" width="72" height="14" rx="3" stroke="currentColor" stroke-width="1.2" opacity=".25"/><rect x="4" y="22" width="72" height="14" rx="3" stroke="currentColor" stroke-width="1.2" opacity=".15"/></svg>
   </div>
-  <div class="summary-card-finding">
-    Reduced to 6 variants (Type × State) with boolean visibility for <code>leadingIcon</code> and <code>description</code>. Color tokens connected across all variants. Remaining: Code Connect mappings (C7).
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Accordion</div>
+      <span class="badge badge-refine">Beta</span>
+    </div>
+    <div class="summary-card-desc">6 variants. Clean tokens and naming. Code Connect not yet registered.</div>
   </div>
 </div>
 <!--@summary-card-end-->
@@ -75,6 +76,7 @@ open-issues: C7
 
 <!--@section-start-->
 <div class="panel" id="panel-accordion">
+  <div class="panel-layout">
   <div class="content-wrap">
 
     <!-- Back -->
@@ -228,8 +230,14 @@ open-issues: C7
     <div class="section-heading">DS Health</div>
 
     <div class="verdict-card">
-      <div class="verdict-card-title">Architecture refined — handoff-ready except Code Connect</div>
-      <div class="verdict-card-body"><strong>Verdict:</strong> Variant set reduced from 24 to 6 (Type=Collapsed/Expanded × State=Default/Pressed/Disabled) with <code>leadingIcon</code> and <code>description</code> as boolean visibility properties. Fixed 56px header height applied. Color tokens connected across all variants using the design system variable collection. Only Code Connect mappings (C7) remain.</div>
+      <button class="verdict-card-trigger" onclick="toggleVerdict(this)" aria-expanded="false">
+        <div class="verdict-card-trigger-body">
+          <span class="verdict-card-eyebrow">VERDICT</span>
+          <span class="verdict-card-title">Architecture refined — handoff-ready except Code Connect</span>
+        </div>
+        <svg class="verdict-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="verdict-card-body" hidden>Variant set reduced from 24 to 6 (Type=Collapsed/Expanded × State=Default/Pressed/Disabled) with <code>leadingIcon</code> and <code>description</code> as boolean visibility properties. Fixed 56px header height applied. Color tokens connected across all variants using the design system variable collection. Only Code Connect mappings (C7) remain.</div>
     </div>
 
     <!-- 4 Traits -->
@@ -623,5 +631,13 @@ open-issues: C7
     </div><!-- /data-tab-group -->
 
   </div><!-- /content-wrap -->
+
+  <!-- On This Page -->
+  <aside class="page-toc" id="toc-accordion">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-accordion"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
 </div><!-- /panel-accordion -->
 <!--@section-end-->

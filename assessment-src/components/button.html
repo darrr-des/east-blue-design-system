@@ -9,14 +9,14 @@ status: assessed
 node: 17104:184842
 ds-verdict: refine
 native-status: refine
-variants: 30
+variants: 24
 ios: Button
 android: Button / OutlinedButton / TextButton
 open-issues: C5, C7
 <!--@meta-end-->
 
 <!--@patterns-start-->
-[C5] No focus ring state; no loading state; Pressed documented as "Desktop only" — ambiguous for mobile
+[C5] No loading state defined — needed for async/form submit actions; focus ring N/A for mobile-only (OS handles natively)
 [C7] Code Connect mappings not yet registered — no native component files linked via Code Connect CLI
 <!--@patterns-end-->
 
@@ -43,14 +43,15 @@ open-issues: C5, C7
 
 <!--@summary-card-start-->
 <div class="summary-card" onclick="showPanelById('button')">
-  <div class="summary-card-row">
-    <div class="summary-card-name">Button</div>
-    <div class="summary-card-badges">
-      <span class="badge badge-refine">Needs Refinement</span>
-    </div>
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><rect x="8" y="10" width="64" height="20" rx="10" fill="currentColor" opacity=".12"/><rect x="24" y="18" width="32" height="4" rx="2" fill="currentColor" opacity=".2"/></svg>
   </div>
-  <div class="summary-card-finding">
-    30 variants across Appearance × Size × State × isError. Tokens fully connected. Icon slots (leadingIcon/trailingIcon) added. Missing: focus ring, loading state, and Code Connect mappings.
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Button</div>
+      <span class="badge badge-refine">Beta</span>
+    </div>
+    <div class="summary-card-desc">24 variants. Variant property (Brand/Destructive) replaces isError. White + Subtle appearances added. Variable-driven sizing (Large/Medium/Small/XSmall). C2 resolved. Loading state (C5) and Code Connect (C7) pending.</div>
   </div>
 </div>
 <!--@summary-card-end-->
@@ -60,19 +61,20 @@ open-issues: C5, C7
   <td><strong>Button</strong></td>
   <td><span class="badge badge-refine">Needs Refinement</span></td>
   <td><span class="badge badge-refine">Needs Refinement</span></td>
-  <td class="muted">30</td>
-  <td class="muted">Tokens connected. C1, C2 resolved. Icon slots added. Missing focus ring, loading state, and Code Connect (C5, C7).</td>
+  <td class="muted">24</td>
+  <td class="muted">C2 resolved — isError replaced with Variant: Brand/Destructive. 5 appearances, variable-driven sizing (Large/Medium/Small/XSmall). Missing loading state (C5) and Code Connect (C7).</td>
 </tr>
 <!--@summary-row-end-->
 
 <!--@section-start-->
 <div class="panel" id="panel-button">
+  <div class="panel-layout">
   <div class="content-wrap">
 
     <!-- Back -->
-    <button class="back-btn" onclick="showPanel('overview', document.getElementById('nav-overview'), true)">
+    <button class="back-btn" onclick="navigateComponents({target:this})">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Overview
+      Components
     </button>
 
     <!-- Component header -->
@@ -80,12 +82,12 @@ open-issues: C5, C7
       <div class="comp-header-body">
         <div class="comp-name">
           Button
-          <span class="badge badge-refine">Needs Refinement</span>
+          <span class="badge badge-refine">Beta</span>
         </div>
-        <p class="comp-desc">A pill-shaped tap target for primary, secondary, and tertiary actions. Supports three appearances (Default, Outlined, Text Link), two sizes (Default 50px / Compact 38px), three states, and an isError flag for destructive variants. Icon slots (leadingIcon/trailingIcon) added as hidden layers — ready for boolean property exposure.</p>
+        <p class="comp-desc">A pill-shaped tap target for primary, secondary, and tertiary actions. Supports five appearances (Default, White, Subtle, Outlined, Text Link), two variant types (Brand, Destructive), four variable-driven size modes (Large, Medium, Small, XSmall), three states, and Boolean icon slots.</p>
         <div class="comp-meta">
           <div class="cover-meta-item"><strong>Node:</strong> 17104:184842</div>
-          <div class="cover-meta-item"><strong>Variants:</strong> 30</div>
+          <div class="cover-meta-item"><strong>Variants:</strong> 24</div>
           <div class="cover-meta-item"><strong>iOS:</strong> Button</div>
           <div class="cover-meta-item"><strong>Android:</strong> Button / OutlinedButton / TextButton</div>
         </div>
@@ -95,265 +97,105 @@ open-issues: C5, C7
     <!-- ── Tab bar ──────────────────────────────────────────────── -->
     <div data-tab-group="button-tabs">
     <div class="comp-tabs">
-      <button class="comp-tab active" onclick="switchTab(this, 'assessment', 'button-tabs')">Assessment</button>
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'button-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'button-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'button-tabs')">Code</button>
       <button class="comp-tab" onclick="switchTab(this, 'changelog', 'button-tabs')">Changelog</button>
     </div>
 
-    <!-- ── Tab 2: Changelog ─────────────────────────────────────── -->
-    <div class="comp-tab-content" data-tab="changelog">
-    <div class="sub-heading">1.2.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
-    <div class="changelog">
-      <div class="changelog-header">Changes Applied via Figma MCP · node 17104:184842</div>
-      <div class="changelog-row">
-        <div class="changelog-body">
-          <strong>Icon slots added: <code>leadingIcon</code> + <code>trailingIcon</code></strong> — 20×20 frames (Default size) and 16×16 frames (Compact size) added to all 30 variants inside <code>container</code>. Positioned before and after the label in auto-layout order. Hidden by default — ready for boolean component property exposure. Fully resolves C2.
-          <span class="tag-fixed">Fixed</span>
+    <!-- ── Tab: Usage ────────────────────────────────────────────── -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <!-- Overview -->
+    <div class="verdict-card" id="btn-overview">
+      <button class="verdict-card-trigger" onclick="toggleVerdict(this)" aria-expanded="false">
+        <div class="verdict-card-trigger-body">
+          <span class="verdict-card-eyebrow">VERDICT</span>
+          <span class="verdict-card-title">Fully restructured — clean variant model, variable-driven sizing, ready for native handoff pending loading state</span>
         </div>
-        <span class="changelog-delta delta-resolved">C2 Resolved</span>
+        <svg class="verdict-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="verdict-card-body" hidden>24 variants cover the button matrix (5 Appearances × 2 Variants [Brand/Destructive] for applicable appearances × 3 States, with <code>Size</code> removed from variant dimension). All color tokens connected. Size is now driven by the <code>button/size</code> variable collection with four modes: Large (52px), Medium (36px), Small (28px), XSmall (24px). Icon slots (<code>leadingIcon</code>/<code>trailingIcon</code>) are proper Figma SLOT nodes with Boolean component properties. Remaining gaps: missing loading state (C5), no Code Connect CLI mappings (C7).</div>
+    </div>
+
+    <!-- Live Demo Panel -->
+    <div class="demo-panel" id="btn-demo">
+      <div class="demo-preview">
+        <div class="demo-button-group">
+          <button class="demo-btn demo-btn-primary" id="demo-btn-live">Label</button>
+        </div>
+      </div>
+      <div class="demo-controls">
+        <div class="demo-control-group">
+          <span class="demo-control-label">Appearance</span>
+          <div class="demo-segmented">
+            <button class="demo-seg active" onclick="setDemoAppearance('primary', this)">Default</button>
+            <button class="demo-seg" onclick="setDemoAppearance('white', this)">White</button>
+            <button class="demo-seg" onclick="setDemoAppearance('subtle', this)">Subtle</button>
+            <button class="demo-seg" onclick="setDemoAppearance('outlined', this)">Outlined</button>
+            <button class="demo-seg" onclick="setDemoAppearance('text', this)">Text Link</button>
+          </div>
+        </div>
+        <div class="demo-control-group">
+          <span class="demo-control-label">Size</span>
+          <div class="demo-segmented">
+            <button class="demo-seg active" onclick="setDemoSize('large', this)">Large</button>
+            <button class="demo-seg" onclick="setDemoSize('medium', this)">Medium</button>
+            <button class="demo-seg" onclick="setDemoSize('small', this)">Small</button>
+            <button class="demo-seg" onclick="setDemoSize('xsmall', this)">XSmall</button>
+          </div>
+        </div>
+        <div class="demo-control-group">
+          <span class="demo-control-label">Variant</span>
+          <div class="demo-segmented">
+            <button class="demo-seg active" onclick="setDemoVariant('brand', this)">Brand</button>
+            <button class="demo-seg" onclick="setDemoVariant('destructive', this)">Destructive</button>
+          </div>
+        </div>
+        <div class="demo-control-group">
+          <span class="demo-control-label">State</span>
+          <div class="demo-segmented">
+            <button class="demo-seg active" onclick="setDemoState('default', this)">Default</button>
+            <button class="demo-seg" onclick="setDemoState('disabled', this)">Disabled</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="sub-heading">1.1.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
-    <div class="changelog">
-      <div class="changelog-header">Changes Applied via Figma MCP · node 17104:184842</div>
-      <div class="changelog-row">
-        <div class="changelog-body">
-          <strong>Layer renamed: <code>.base/button/small</code> → <code>container</code></strong> — Compact disabled container (node 17104:184879) renamed to match all other variants. Fully resolves C1.
-          <span class="tag-fixed">Fixed</span>
-        </div>
-        <span class="changelog-delta delta-resolved">C1 Resolved</span>
-      </div>
-    </div>
-
-    <div class="sub-heading">1.0.0 — March 2026 <span class="tab-version-badge major">Initial</span></div>
-    <div class="changelog">
-      <div class="changelog-header">Initial Assessment · node 17104:184842</div>
-      <div class="changelog-row">
-        <div class="changelog-body">
-          <strong>Component assessed</strong> — 30 variants documented across Appearance (Default / Outlined / Text Link) × Size (Default / Compact) × State (Default / Pressed / Disabled) × isError (boolean, Outlined &amp; Text Link only).
-          <span class="tag-fixed">Documented</span>
-        </div>
-        <span class="changelog-delta delta-resolved">Initial</span>
-      </div>
-      <div class="changelog-row">
-        <div class="changelog-body">
-          <strong>Token audit complete</strong> — 24 color tokens and 9 layout/typography tokens confirmed as connected via design system variable collection.
-          <span class="tag-fixed">Verified</span>
-        </div>
-        <span class="changelog-delta delta-resolved">C3 Pass</span>
-      </div>
-      <div class="changelog-row">
-        <div class="changelog-body">
-          <strong>Non-semantic layer name found</strong> — Compact disabled container is named <code>.base/button/small</code> instead of <code>container</code>. Inconsistent with all other variants.
-          <span class="tag-open">Open</span>
-        </div>
-        <span class="changelog-delta delta-open">C1 Open</span>
-      </div>
-      <div class="changelog-row">
-        <div class="changelog-body">
-          <strong>Icon slots absent</strong> — Component was text-only. No <code>leadingIcon</code>, <code>trailingIcon</code>, or icon-only variants defined. Resolved in v1.2.0.
-          <span class="tag-fixed">Resolved</span>
-        </div>
-        <span class="changelog-delta delta-resolved">C2 Resolved</span>
-      </div>
-      <div class="changelog-row">
-        <div class="changelog-body">
-          <strong>Focus ring and loading state missing</strong> — No focus ring defined for keyboard/switch navigation. No loading/processing state for async actions. "Pressed" documented as "For Desktop only" — needs clarification for mobile touch feedback.
-          <span class="tag-open">Open</span>
-        </div>
-        <span class="changelog-delta delta-open">C5 Open</span>
-      </div>
-      <div class="changelog-row">
-        <div class="changelog-body">
-          <strong>Code Connect mappings</strong> — Usage descriptions are attached per variant. No native component files or Code Connect CLI mappings registered yet.
-          <span class="tag-open">Still Open</span>
-        </div>
-        <span class="changelog-delta delta-open">C7 Open</span>
-      </div>
-    </div>
-    </div><!-- /comp-tab-content changelog -->
-
-    <!-- ── Tab 1: Assessment ────────────────────────────────────── -->
-    <div class="comp-tab-content active" data-tab="assessment">
-
-    <!-- ── DS Health ─────────────────────────────────────────────── -->
-    <div class="section-heading">DS Health</div>
-
-    <div class="verdict-card">
-      <div class="verdict-card-title">Solid token foundation with icon slots — gaps in interaction completeness</div>
-      <div class="verdict-card-body"><strong>Verdict:</strong> 30 variants cover the button matrix (3 Appearances × 2 Sizes × 3 States, isError for Outlined/Text Link). All 24 color tokens and 9 layout/typography tokens are connected. Icon slots (<code>leadingIcon</code>/<code>trailingIcon</code>) added to all variants as hidden layers. Remaining gaps: missing focus ring and loading states, and no Code Connect CLI mappings.</div>
-    </div>
-
-    <!-- 4 Traits -->
-    <div class="sub-heading">The 4 Traits — Scorecard</div>
+    <!-- DS Health -->
+    <div class="sub-heading" id="btn-traits">DS Health</div>
     <div class="trait-grid">
       <div class="trait-card pass">
         <div class="trait-header">
           <div class="trait-name">Reusable</div>
           <div class="trait-status">Pass</div>
         </div>
-        <div class="trait-note">
-          Three appearances and an <code>isError</code> boolean cover primary, secondary, tertiary, and destructive action patterns. Compact and Default sizes handle both full-width and inline placement.
-        </div>
+        <div class="trait-note">Five appearances and a <code>Variant</code> property (Brand/Destructive) cover primary, secondary, tertiary, surface, and destructive action patterns across all contexts.</div>
       </div>
       <div class="trait-card pass">
         <div class="trait-header">
           <div class="trait-name">Self-contained</div>
           <div class="trait-status">Pass</div>
         </div>
-        <div class="trait-note">
-          Text + background + border + icon slots are all self-contained. <code>leadingIcon</code> and <code>trailingIcon</code> frames are built into every variant, ready for boolean property toggling.
-        </div>
+        <div class="trait-note">Text, background, border, and icon slots are all self-contained. <code>leadingIcon</code> and <code>trailingIcon</code> are Figma SLOT nodes with Boolean component properties built into every variant.</div>
       </div>
       <div class="trait-card pass">
         <div class="trait-header">
           <div class="trait-name">Consistent</div>
           <div class="trait-status">Pass</div>
         </div>
-        <div class="trait-note">
-          A single <code>appearance</code> property cleanly drives all three button types. Tokens are connected across every variant — no hardcoded colors or spacing.
-        </div>
+        <div class="trait-note"><code>Appearance</code> and <code>Variant</code> are clean orthogonal properties. Size is driven by the <code>button/size</code> variable collection — no Size dimension in the variant matrix. Tokens connected across all 24 variants.</div>
       </div>
       <div class="trait-card pass">
         <div class="trait-header">
           <div class="trait-name">Composable</div>
           <div class="trait-status">Pass</div>
         </div>
-        <div class="trait-note">
-          Maps directly to <code>Button</code>, <code>OutlinedButton</code>, and <code>TextButton</code> primitives. Icon slots support common icon+label compositions without needing a separate component.
-        </div>
+        <div class="trait-note">Maps directly to <code>Button</code>, <code>OutlinedButton</code>, and <code>TextButton</code> primitives. SLOT nodes support icon+label compositions. Variable modes enable size switching without variant duplication.</div>
       </div>
     </div>
 
-    <!-- Resolved Issues -->
-    <div class="sub-heading">Resolved Issues</div>
-    <ul class="resolved-list">
-      <li>Layer renamed from <code>.base/button/small</code> → <code>container</code> on compact disabled container (C1)</li>
-      <li>Icon slots (<code>leadingIcon</code> 20×20, <code>trailingIcon</code> 20×20 Default / 16×16 Compact) added to all 30 variants, hidden by default (C2)</li>
-    </ul>
-
-    <!-- Open Issues -->
-    <div class="sub-heading">Open Issues</div>
-    <ul class="resolved-list">
-      <li>No focus ring state — required for keyboard and switch navigation a11y (C5)</li>
-      <li>No loading/processing state — needed for async actions like form submit (C5)</li>
-      <li>"Pressed" state documented as "For Desktop only" — needs mobile clarification (C5)</li>
-      <li>Code Connect CLI mappings not registered (C7)</li>
-    </ul>
-
-    <!-- ── Native Mobile Readiness ─────────────────────────────── -->
-    <div class="section-heading" style="margin-top:48px">Native Mobile Readiness</div>
-
-    <!-- Variants Inventory -->
-    <div class="sub-heading">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:14px">(30 total)</span></div>
-    <p>3 <code>Appearance</code> × 2 <code>Size</code> × 3 <code>State</code>. <code>isError=true</code> is only defined for Outlined and Text Link appearances (no destructive filled variant).</p>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Appearance</th>
-            <th>Size</th>
-            <th>State</th>
-            <th>isError</th>
-            <th>Node ID</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Default</td><td>Default</td><td>Default</td><td class="muted center">—</td><td class="mono">17104:184843</td></tr>
-          <tr><td>Default</td><td>Default</td><td>Pressed</td><td class="muted center">—</td><td class="mono">17104:184846</td></tr>
-          <tr><td>Default</td><td>Default</td><td>Disabled</td><td class="muted center">—</td><td class="mono">17104:184849</td></tr>
-          <tr><td>Outlined</td><td>Default</td><td>Default</td><td class="muted center">—</td><td class="mono">17104:184852</td></tr>
-          <tr><td>Text Link</td><td>Default</td><td>Default</td><td class="muted center">—</td><td class="mono">17104:184855</td></tr>
-          <tr><td>Outlined</td><td>Default</td><td>Pressed</td><td class="muted center">—</td><td class="mono">17104:184858</td></tr>
-          <tr><td>Text Link</td><td>Default</td><td>Pressed</td><td class="muted center">—</td><td class="mono">17104:184861</td></tr>
-          <tr><td>Outlined</td><td>Default</td><td>Disabled</td><td class="muted center">—</td><td class="mono">17104:184864</td></tr>
-          <tr><td>Text Link</td><td>Default</td><td>Disabled</td><td class="muted center">—</td><td class="mono">17104:184867</td></tr>
-          <tr><td>Default</td><td>Compact</td><td>Default</td><td class="muted center">—</td><td class="mono">17104:184870</td></tr>
-          <tr><td>Default</td><td>Compact</td><td>Pressed</td><td class="muted center">—</td><td class="mono">17104:184874</td></tr>
-          <tr><td>Default</td><td>Compact</td><td>Disabled</td><td class="muted center">—</td><td class="mono">17104:184878</td></tr>
-          <tr><td>Outlined</td><td>Compact</td><td>Default</td><td class="muted center">—</td><td class="mono">17104:184882</td></tr>
-          <tr><td>Text Link</td><td>Compact</td><td>Default</td><td class="muted center">—</td><td class="mono">17104:184886</td></tr>
-          <tr><td>Outlined</td><td>Compact</td><td>Default</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184890</td></tr>
-          <tr><td>Text Link</td><td>Compact</td><td>Default</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184894</td></tr>
-          <tr><td>Outlined</td><td>Compact</td><td>Pressed</td><td class="muted center">—</td><td class="mono">17104:184898</td></tr>
-          <tr><td>Text Link</td><td>Compact</td><td>Pressed</td><td class="muted center">—</td><td class="mono">17104:184902</td></tr>
-          <tr><td>Outlined</td><td>Compact</td><td>Pressed</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184906</td></tr>
-          <tr><td>Text Link</td><td>Compact</td><td>Pressed</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184910</td></tr>
-          <tr><td>Outlined</td><td>Compact</td><td>Disabled</td><td class="muted center">—</td><td class="mono">17104:184914</td></tr>
-          <tr><td>Text Link</td><td>Compact</td><td>Disabled</td><td class="muted center">—</td><td class="mono">17104:184918</td></tr>
-          <tr><td>Outlined</td><td>Compact</td><td>Disabled</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184922</td></tr>
-          <tr><td>Text Link</td><td>Compact</td><td>Disabled</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184926</td></tr>
-          <tr><td>Outlined</td><td>Default</td><td>Disabled</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184930</td></tr>
-          <tr><td>Text Link</td><td>Default</td><td>Disabled</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184933</td></tr>
-          <tr><td>Outlined</td><td>Default</td><td>Pressed</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184936</td></tr>
-          <tr><td>Text Link</td><td>Default</td><td>Pressed</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184939</td></tr>
-          <tr><td>Outlined</td><td>Default</td><td>Default</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184942</td></tr>
-          <tr><td>Text Link</td><td>Default</td><td>Default</td><td class="center"><span class="check">Yes</span></td><td class="mono">17104:184945</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Criteria Scorecard -->
-    <div class="sub-heading">Criteria Scorecard</div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th class="col-id">ID</th>
-            <th class="col-md">Criterion</th>
-            <th class="col-badge">Status</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="mono center">C1</td>
-            <td><strong>Layer Structure &amp; Naming</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">All layers use semantic names (<code>container</code>, <code>offset</code>). Compact disabled container renamed from <code>.base/button/small</code> → <code>container</code> via Figma MCP.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C2</td>
-            <td><strong>Variant &amp; Property Naming</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">30-variant matrix with <code>leadingIcon</code> and <code>trailingIcon</code> frames added to all variants (hidden by default). Ready for boolean component property exposure.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C3</td>
-            <td><strong>Token Coverage</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">24 semantic color tokens connected across all variants. Spacing, radius, and typography tokens also bound. No hardcoded values.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C4</td>
-            <td><strong>Native Mappability</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">Default → <code>Button(.borderedProminent)</code> / <code>Button</code>. Outlined → <code>Button(.bordered)</code> / <code>OutlinedButton</code>. Text Link → <code>Button(.plain)</code> / <code>TextButton</code>. isError maps to destructive role / error tint.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C5</td>
-            <td><strong>Interaction State Coverage</strong></td>
-            <td><span class="badge badge-refine">Partial</span></td>
-            <td class="muted">Default, Pressed, Disabled covered. Missing: focus ring (a11y), loading/processing state. Pressed variants documented as "For Desktop only" — ambiguous for mobile touch feedback.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C6</td>
-            <td><strong>Asset &amp; Icon Quality</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">Icon slot frames (<code>leadingIcon</code>/<code>trailingIcon</code>) are placeholder containers — ready to receive vector icon instances. No raster assets present.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C7</td>
-            <td><strong>Code Connect Linkability</strong></td>
-            <td><span class="badge badge-refine">Needs Refinement</span></td>
-            <td class="muted">Per-variant usage descriptions attached in Figma. Property names (<code>appearance</code>, <code>size</code>, <code>state</code>, <code>isError</code>) are clean for 1:1 mapping. No CLI mappings registered yet.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Interaction States -->
-    <div class="sub-heading">Interaction States</div>
+    <div class="sub-heading" id="btn-behavior">Behavior</div>
     <div class="table-wrap">
       <table>
         <thead>
@@ -370,175 +212,653 @@ open-issues: C5, C7
             <td><strong>Default</strong></td>
             <td class="center"><span class="check">Yes</span></td>
             <td class="center"><span class="check">Yes</span></td>
-            <td class="mono">state=Default</td>
-            <td class="muted">All three appearances fully defined.</td>
+            <td class="mono">State=Default</td>
+            <td class="muted">All five appearances fully defined.</td>
           </tr>
           <tr>
-            <td><strong>Pressed / Active</strong></td>
+            <td><strong>Pressed</strong></td>
             <td class="center"><span class="check">Yes</span></td>
             <td class="center"><span class="check">Yes</span></td>
-            <td class="mono">state=Pressed</td>
-            <td class="muted">Darker fill/border using pressed tokens. Documentation says "Desktop only" — should apply to mobile touch feedback too.</td>
+            <td class="mono">State=Pressed</td>
+            <td class="muted">Darker fill/border using pressed tokens.</td>
           </tr>
           <tr>
             <td><strong>Disabled</strong></td>
             <td class="center"><span class="check">Yes</span></td>
             <td class="center"><span class="check">Yes</span></td>
-            <td class="mono">state=Disabled</td>
-            <td class="muted">Muted brand color tokens applied across all appearances.</td>
+            <td class="mono">State=Disabled</td>
+            <td class="muted">Muted color tokens applied across all appearances.</td>
           </tr>
           <tr>
-            <td><strong>Destructive / Error</strong></td>
+            <td><strong>Destructive</strong></td>
             <td class="center"><span class="check">Yes</span></td>
             <td class="center"><span class="check">Yes</span></td>
-            <td class="mono">isError=true</td>
-            <td class="muted">Red destructive tokens applied. Only available for Outlined and Text Link.</td>
+            <td class="mono">Variant=Destructive</td>
+            <td class="muted">Red tokens. Applies to Default, Outlined, and Text Link appearances.</td>
           </tr>
           <tr>
             <td><strong>Focused (a11y)</strong></td>
-            <td class="center"><span class="check">Yes</span></td>
-            <td class="center"><span class="cross">&#x2717;</span></td>
+            <td class="center muted">N/A</td>
+            <td class="center muted">N/A</td>
             <td class="muted center">—</td>
-            <td class="muted">No focus ring defined. Required for keyboard and switch control navigation.</td>
+            <td class="muted">Mobile-only component. Focus rings rendered natively by iOS (UIKit/SwiftUI) and Android (Material a11y). No Figma state required.</td>
           </tr>
           <tr>
             <td><strong>Loading</strong></td>
             <td class="center"><span class="cross">&#x2717;</span></td>
             <td class="center"><span class="cross">&#x2717;</span></td>
             <td class="muted center">—</td>
-            <td class="muted">No loading/spinner state. Common for form submit and async actions.</td>
+            <td class="muted">No loading state. Needed for async actions.</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- Code Connect Mapping -->
-    <div class="sub-heading">Code Connect — Property Mapping</div>
+    <!-- Open / Resolved -->
+    <div class="sub-heading" id="btn-resolved">Resolved Issues</div>
+    <ul class="resolved-list">
+      <li>Layer renamed from <code>.base/button/small</code> → <code>container</code> on compact disabled container (C1)</li>
+      <li>Icon slots (<code>leadingIcon</code>, <code>trailingIcon</code>) added to all variants as Figma SLOT nodes with Boolean component properties (C2)</li>
+      <li><code>isError</code> replaced with <code>Variant: Brand | Destructive</code> — now a true orthogonal property applicable across all appearances (C2)</li>
+      <li>Destructive Default (filled) variants added — 3 new variants covering all 3 states (C2)</li>
+      <li>White and Subtle appearances added — 6 new Brand-only variants for surface/inverse contexts (C2)</li>
+      <li>Size dimension removed from variant matrix — <code>button/size</code> variable collection introduced with 4 modes: Large (52px), Medium (36px), Small (28px), XSmall (24px) (C2)</li>
+      <li>All containers bound to <code>button/size</code> variables: <code>height</code>, <code>padding-h</code>, <code>padding-v</code>, <code>font-size</code> (C3)</li>
+    </ul>
+
+    <div class="sub-heading" id="btn-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li>No loading/processing state — needed for async actions like form submit (C5)</li>
+      <li>Code Connect CLI mappings not registered (C7)</li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ── Tab: Style (Component Spec) ──────────────────────────── -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <!-- In Context -->
+    <div class="sub-heading" id="btn-context" style="margin-top:0">In Context</div>
+    <div class="mockup-frame">
+      <div class="mockup-chrome">
+        <div class="mockup-dots"><span></span><span></span><span></span></div>
+        <div class="mockup-url">app.eastblue.design/settings</div>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-form">
+          <div class="mockup-field"><div class="mockup-field-label"></div><div class="mockup-field-input"></div></div>
+          <div class="mockup-field"><div class="mockup-field-label"></div><div class="mockup-field-input"></div></div>
+          <div class="mockup-actions">
+            <div class="mockup-btn-outlined">Cancel</div>
+            <div class="mockup-btn-primary">Save Changes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Size modes -->
+    <div class="sub-heading" id="btn-sizing">Button Modes</div>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>Figma Property</th>
-            <th>SwiftUI Param</th>
-            <th>Compose Param</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Mode</th><th>Height</th><th>Font Size</th><th>Padding H</th><th>Padding V</th></tr></thead>
         <tbody>
-          <tr>
-            <td class="mono">appearance=Default</td>
-            <td class="mono">.borderedProminent</td>
-            <td class="mono">Button {}</td>
-            <td class="muted">Primary filled button</td>
-          </tr>
-          <tr>
-            <td class="mono">appearance=Outlined</td>
-            <td class="mono">.bordered</td>
-            <td class="mono">OutlinedButton {}</td>
-            <td class="muted">Secondary outlined button</td>
-          </tr>
-          <tr>
-            <td class="mono">appearance=Text Link</td>
-            <td class="mono">.plain / .borderless</td>
-            <td class="mono">TextButton {}</td>
-            <td class="muted">Tertiary text-only button</td>
-          </tr>
-          <tr>
-            <td class="mono">size=Default</td>
-            <td class="mono">controlSize: .large</td>
-            <td class="mono">modifier size tokens</td>
-            <td class="muted">~50px height via padding</td>
-          </tr>
-          <tr>
-            <td class="mono">size=Compact</td>
-            <td class="mono">controlSize: .regular</td>
-            <td class="mono">modifier size tokens</td>
-            <td class="muted">38px fixed height</td>
-          </tr>
-          <tr>
-            <td class="mono">state=Disabled</td>
-            <td class="mono">.disabled(true)</td>
-            <td class="mono">enabled = false</td>
-            <td class="muted">Disabled modifier</td>
-          </tr>
-          <tr>
-            <td class="mono">isError=true</td>
-            <td class="mono">role: .destructive</td>
-            <td class="mono">colors = ButtonDefaults.outlinedButtonColors(contentColor = errorColor)</td>
-            <td class="muted">Destructive / error variant</td>
-          </tr>
-          <tr>
-            <td class="mono">leadingIcon (boolean)</td>
-            <td class="mono">Label("", image:)</td>
-            <td class="mono">icon = { Icon(...) }</td>
-            <td class="muted">20×20 (Default) / 16×16 (Compact) — hidden by default</td>
-          </tr>
-          <tr>
-            <td class="mono">trailingIcon (boolean)</td>
-            <td class="mono">Label("", image:)</td>
-            <td class="mono">trailingIcon = { Icon(...) }</td>
-            <td class="muted">20×20 (Default) / 16×16 (Compact) — hidden by default</td>
-          </tr>
+          <tr><td><strong>Large</strong></td><td class="mono">52px</td><td class="mono">18px</td><td class="mono">24px</td><td class="mono">16px</td></tr>
+          <tr><td><strong>Medium</strong></td><td class="mono">36px</td><td class="mono">16px</td><td class="mono">16px</td><td class="mono">10px</td></tr>
+          <tr><td><strong>Small</strong></td><td class="mono">28px</td><td class="mono">16px</td><td class="mono">8px</td><td class="mono">6px</td></tr>
+          <tr><td><strong>XSmall</strong></td><td class="mono">24px</td><td class="mono">14px</td><td class="mono">8px</td><td class="mono">4px</td></tr>
         </tbody>
       </table>
     </div>
+    <p class="table-footnote">Size is controlled by switching the variable mode on the component instance — no separate size variants exist in the component set.</p>
 
-    <!-- Token Table -->
-    <div class="sub-heading">Design Tokens</div>
+    <!-- Appearance group -->
+    <div class="sub-heading" id="btn-appearance">Appearance</div>
+
+    <!-- ═══ Primary ═══ -->
+    <div class="spec-card" id="btn-spec-primary">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="btn-primary" style="margin-top:0">Default (Filled)</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17104:184843" data-sp="primary-node-btn" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span data-sp="primary-node-text">17104:184843</span></button>
+          <div class="spec-mode-toggle" onclick="toggleSpecMode('primary', this)">
+            <span class="spec-mode-label active">DES</span>
+            <span class="spec-mode-label">DEV</span>
+          </div>
+        </div>
+        <p class="spec-card-desc">Use for primary actions. Filled background with white label. Available in Brand and Destructive variants.</p>
+      </div>
+      <div class="spec-card-preview">
+        <button class="demo-btn demo-btn-primary" id="spec-primary-btn">Label</button>
+      </div>
+      <div class="spec-card-controls">
+        <div class="demo-control-group">
+          <span class="demo-control-label">Variant</span>
+          <div class="demo-segmented">
+            <button class="demo-seg active" onclick="renderCard('primary','brand',this)">Brand</button>
+            <button class="demo-seg" onclick="renderCard('primary','destructive',this)">Destructive</button>
+          </div>
+        </div>
+        <div class="demo-control-group">
+          <span class="demo-control-label">State</span>
+          <div class="demo-segmented">
+            <button class="demo-seg active" onclick="renderCard('primary','enabled',this)">Default</button>
+            <button class="demo-seg" onclick="renderCard('primary','pressed',this)">Pressed</button>
+            <button class="demo-seg" onclick="renderCard('primary','disabled',this)">Disabled</button>
+          </div>
+        </div>
+      </div>
+      <!-- DES view -->
+      <div class="spec-card-detail spec-view-des" data-view="primary-des">
+        <div class="spec-detail-section">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Appearance</span><span class="spec-prop-val">Default</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Variant</span><span class="spec-prop-val" data-sp="primary-variant">Brand</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">State</span><span class="spec-prop-val" data-sp="primary-state">Default</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val">Variable mode (Large/Medium/Small/XSmall)</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" data-card-variant="brand">
+          <div class="spec-detail-label">Colors — Brand</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Default bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#005CE5"></span> #005CE5</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Pressed bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#2340A9"></span> #2340A9</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Disabled bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#9BC5FD"></span> #9BC5FD</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#FFFFFF;border:1px solid #E2E4E9"></span> #FFFFFF</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" data-card-variant="destructive" style="display:none">
+          <div class="spec-detail-label">Colors — Destructive</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Default bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#D61B2C"></span> #D61B2C</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Pressed bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#B50707"></span> #B50707</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Disabled bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#F4C7C9"></span> #F4C7C9</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#FFFFFF;border:1px solid #E2E4E9"></span> #FFFFFF</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Height</span><span class="spec-prop-val mono">button/size/height</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Padding H</span><span class="spec-prop-val mono">button/size/padding-h</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Padding V</span><span class="spec-prop-val mono">button/size/padding-v</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Radius</span><span class="spec-prop-val mono">99px</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">Proxima Soft Bold</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">button/size/font-size</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Tracking</span><span class="spec-prop-val mono">0.25px</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- DEV view -->
+      <div class="spec-card-code spec-view-dev" data-view="primary-dev" style="display:none">
+        <div class="spec-code-tabs">
+          <button class="spec-code-tab active" onclick="switchCodeTab(this,'swift','primary')">SwiftUI</button>
+          <button class="spec-code-tab" onclick="switchCodeTab(this,'compose','primary')">Compose</button>
+          <button class="spec-code-copy" onclick="copyCode(this)" title="Copy code">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg>
+          </button>
+        </div>
+        <div class="spec-code-block">
+          <pre class="spec-code-pre" data-code="primary"><code data-code-content="primary">// Loading...</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ White ═══ -->
+    <div class="spec-card" id="btn-spec-white">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="btn-white" style="margin-top:0">White (Inverse)</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17285:6723" data-sp="white-node-btn" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span data-sp="white-node-text">17285:6723</span></button>
+          <div class="spec-mode-toggle" onclick="toggleSpecMode('white', this)">
+            <span class="spec-mode-label active">DES</span>
+            <span class="spec-mode-label">DEV</span>
+          </div>
+        </div>
+        <p class="spec-card-desc">For use on colored or dark backgrounds. White fill with brand-colored label. Brand variant only.</p>
+      </div>
+      <div class="spec-card-preview">
+        <button class="demo-btn" style="background:#fff;color:#005CE5;border:none;" id="spec-white-btn">Label</button>
+      </div>
+      <div class="spec-card-controls">
+        <div class="demo-control-group">
+          <span class="demo-control-label">State</span>
+          <div class="demo-segmented">
+            <button class="demo-seg active" onclick="renderCard('white','enabled',this)">Default</button>
+            <button class="demo-seg" onclick="renderCard('white','pressed',this)">Pressed</button>
+            <button class="demo-seg" onclick="renderCard('white','disabled',this)">Disabled</button>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card-detail spec-view-des" data-view="white-des">
+        <div class="spec-detail-section">
+          <div class="spec-detail-label">Colors</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Default bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#FFFFFF;border:1px solid #E2E4E9"></span> #FFFFFF</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Pressed bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#EEF2F9"></span> #EEF2F9</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Disabled bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#C2CFE5"></span> #C2CFE5</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Label (all states)</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#005CE5"></span> #005CE5</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section">
+          <div class="spec-detail-label">Token refs</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Default bg</span><span class="spec-prop-val mono">main/button/primary/inverse/enabled/bg</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Pressed bg</span><span class="spec-prop-val mono">main/button/primary/inverse/pressed/bg</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Disabled bg</span><span class="spec-prop-val mono">main/button/primary/inverse/disabled/bg</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card-code spec-view-dev" data-view="white-dev" style="display:none">
+        <div class="spec-code-tabs">
+          <button class="spec-code-tab active" onclick="switchCodeTab(this,'swift','white')">SwiftUI</button>
+          <button class="spec-code-tab" onclick="switchCodeTab(this,'compose','white')">Compose</button>
+          <button class="spec-code-copy" onclick="copyCode(this)" title="Copy code"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg></button>
+        </div>
+        <div class="spec-code-block">
+          <pre class="spec-code-pre" data-code="white"><code data-code-content="white">// Loading...</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Subtle ═══ -->
+    <div class="spec-card" id="btn-spec-subtle">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="btn-subtle" style="margin-top:0">Subtle (Tinted)</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17285:6738" data-sp="subtle-node-btn" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span data-sp="subtle-node-text">17285:6738</span></button>
+          <div class="spec-mode-toggle" onclick="toggleSpecMode('subtle', this)">
+            <span class="spec-mode-label active">DES</span>
+            <span class="spec-mode-label">DEV</span>
+          </div>
+        </div>
+        <p class="spec-card-desc">Light brand-tinted fill for use on neutral surfaces. Lower visual weight than Default. Brand variant only.</p>
+      </div>
+      <div class="spec-card-preview">
+        <button class="demo-btn" style="background:#E5F1FF;color:#005CE5;border:none;" id="spec-subtle-btn">Label</button>
+      </div>
+      <div class="spec-card-controls">
+        <div class="demo-control-group">
+          <span class="demo-control-label">State</span>
+          <div class="demo-segmented">
+            <button class="demo-seg active" onclick="renderCard('subtle','enabled',this)">Default</button>
+            <button class="demo-seg" onclick="renderCard('subtle','pressed',this)">Pressed</button>
+            <button class="demo-seg" onclick="renderCard('subtle','disabled',this)">Disabled</button>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card-detail spec-view-des" data-view="subtle-des">
+        <div class="spec-detail-section">
+          <div class="spec-detail-label">Colors</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Default bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#E5F1FF"></span> #E5F1FF</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Pressed bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#D2E5FF"></span> #D2E5FF</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Disabled bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#C2CFE5"></span> #C2CFE5</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Label (all states)</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#005CE5"></span> #005CE5</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section">
+          <div class="spec-detail-label">Token refs</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Default bg</span><span class="spec-prop-val mono">main/button/primary/neutral/enabled/bg</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Pressed bg</span><span class="spec-prop-val mono">main/button/primary/neutral/pressed/bg</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Disabled bg</span><span class="spec-prop-val mono">main/button/primary/neutral/disabled/bg</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card-code spec-view-dev" data-view="subtle-dev" style="display:none">
+        <div class="spec-code-tabs">
+          <button class="spec-code-tab active" onclick="switchCodeTab(this,'swift','subtle')">SwiftUI</button>
+          <button class="spec-code-tab" onclick="switchCodeTab(this,'compose','subtle')">Compose</button>
+          <button class="spec-code-copy" onclick="copyCode(this)" title="Copy code"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg></button>
+        </div>
+        <div class="spec-code-block">
+          <pre class="spec-code-pre" data-code="subtle"><code data-code-content="subtle">// Loading...</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Secondary (Outlined) ═══ -->
+    <div class="spec-card" id="btn-spec-secondary">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="btn-secondary" style="margin-top:0">Outlined</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17104:184852" data-sp="secondary-node-btn" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span data-sp="secondary-node-text">17104:184852</span></button>
+          <div class="spec-mode-toggle" onclick="toggleSpecMode('secondary', this)">
+            <span class="spec-mode-label active">DES</span>
+            <span class="spec-mode-label">DEV</span>
+          </div>
+        </div>
+        <p class="spec-card-desc">Secondary actions. Border and label share the same color token. Available in Brand and Destructive variants.</p>
+      </div>
+      <div class="spec-card-preview">
+        <button class="demo-btn demo-btn-outlined" id="spec-secondary-btn">Label</button>
+      </div>
+      <div class="spec-card-controls">
+        <div class="demo-control-group">
+          <span class="demo-control-label">Variant</span>
+          <div class="demo-segmented">
+            <button class="demo-seg active" onclick="renderCard('secondary','brand',this)">Brand</button>
+            <button class="demo-seg" onclick="renderCard('secondary','destructive',this)">Destructive</button>
+          </div>
+        </div>
+        <div class="demo-control-group">
+          <span class="demo-control-label">State</span>
+          <div class="demo-segmented">
+            <button class="demo-seg active" onclick="renderCard('secondary','enabled',this)">Default</button>
+            <button class="demo-seg" onclick="renderCard('secondary','pressed',this)">Pressed</button>
+            <button class="demo-seg" onclick="renderCard('secondary','disabled',this)">Disabled</button>
+          </div>
+        </div>
+      </div>
+      <!-- DES view -->
+      <div class="spec-card-detail spec-view-des" data-view="secondary-des">
+        <div class="spec-detail-section">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Appearance</span><span class="spec-prop-val">Outlined</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Variant</span><span class="spec-prop-val" data-sp="secondary-variant">Brand</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">State</span><span class="spec-prop-val" data-sp="secondary-state">Default</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" data-card-variant="brand">
+          <div class="spec-detail-label">Colors — Brand</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Default border/label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#005CE5"></span> #005CE5</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Pressed border/label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#2340A9"></span> #2340A9</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Disabled border/label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#9BC5FD"></span> #9BC5FD</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" data-card-variant="destructive" style="display:none">
+          <div class="spec-detail-label">Colors — Destructive</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Default border/label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#D61B2C"></span> #D61B2C</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Pressed border/label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#B50707"></span> #B50707</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Disabled border/label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#F4C7C9"></span> #F4C7C9</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Height</span><span class="spec-prop-val mono">button/size/height</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Border Width</span><span class="spec-prop-val mono">3px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Radius</span><span class="spec-prop-val mono">99px</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- DEV view -->
+      <div class="spec-card-code spec-view-dev" data-view="secondary-dev" style="display:none">
+        <div class="spec-code-tabs">
+          <button class="spec-code-tab active" onclick="switchCodeTab(this,'swift','secondary')">SwiftUI</button>
+          <button class="spec-code-tab" onclick="switchCodeTab(this,'compose','secondary')">Compose</button>
+          <button class="spec-code-copy" onclick="copyCode(this)" title="Copy code">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg>
+          </button>
+        </div>
+        <div class="spec-code-block">
+          <pre class="spec-code-pre" data-code="secondary"><code data-code-content="secondary">// Loading...</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Text Link ═══ -->
+    <div class="spec-card" id="btn-spec-text">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="btn-textlink" style="margin-top:0">Text Link</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17104:184855" data-sp="text-node-btn" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span data-sp="text-node-text">17104:184855</span></button>
+          <div class="spec-mode-toggle" onclick="toggleSpecMode('text', this)">
+            <span class="spec-mode-label active">DES</span>
+            <span class="spec-mode-label">DEV</span>
+          </div>
+        </div>
+        <p class="spec-card-desc">Tertiary action — no background, no border. Label color only. Available in Brand and Destructive variants.</p>
+      </div>
+      <div class="spec-card-preview">
+        <button class="demo-btn demo-btn-text" id="spec-text-btn">Label</button>
+      </div>
+      <div class="spec-card-controls">
+        <div class="demo-control-group">
+          <span class="demo-control-label">Variant</span>
+          <div class="demo-segmented">
+            <button class="demo-seg active" onclick="renderCard('text','brand',this)">Brand</button>
+            <button class="demo-seg" onclick="renderCard('text','destructive',this)">Destructive</button>
+          </div>
+        </div>
+        <div class="demo-control-group">
+          <span class="demo-control-label">State</span>
+          <div class="demo-segmented">
+            <button class="demo-seg active" onclick="renderCard('text','enabled',this)">Default</button>
+            <button class="demo-seg" onclick="renderCard('text','pressed',this)">Pressed</button>
+            <button class="demo-seg" onclick="renderCard('text','disabled',this)">Disabled</button>
+          </div>
+        </div>
+      </div>
+      <!-- DES view -->
+      <div class="spec-card-detail spec-view-des" data-view="text-des">
+        <div class="spec-detail-section">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Appearance</span><span class="spec-prop-val">Text Link</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Variant</span><span class="spec-prop-val" data-sp="text-variant">Brand</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">State</span><span class="spec-prop-val" data-sp="text-state">Default</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" data-card-variant="brand">
+          <div class="spec-detail-label">Colors — Brand</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Default label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#005CE5"></span> #005CE5</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Pressed label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#2340A9"></span> #2340A9</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Disabled label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#9BC5FD"></span> #9BC5FD</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" data-card-variant="destructive" style="display:none">
+          <div class="spec-detail-label">Colors — Destructive</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Default label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#D61B2C"></span> #D61B2C</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Pressed label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#B50707"></span> #B50707</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Disabled label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#F4C7C9"></span> #F4C7C9</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Height</span><span class="spec-prop-val mono">button/size/height</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Radius</span><span class="spec-prop-val mono">99px</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- DEV view -->
+      <div class="spec-card-code spec-view-dev" data-view="text-dev" style="display:none">
+        <div class="spec-code-tabs">
+          <button class="spec-code-tab active" onclick="switchCodeTab(this,'swift','text')">SwiftUI</button>
+          <button class="spec-code-tab" onclick="switchCodeTab(this,'compose','text')">Compose</button>
+          <button class="spec-code-copy" onclick="copyCode(this)" title="Copy code">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg>
+          </button>
+        </div>
+        <div class="spec-code-block">
+          <pre class="spec-code-pre" data-code="text"><code data-code-content="text">// Loading...</code></pre>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- ── Tab: Code ─────────────────────────────────────────────── -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="btn-scorecard" style="margin-top:0">Criteria Scorecard</div>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>Token Name</th>
-            <th>Value</th>
-            <th>Native Note</th>
-          </tr>
-        </thead>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
         <tbody>
-          <!-- Primary / filled -->
-          <tr><td class="mono">main/button/primary/brand/enabled/bg</td><td class="mono">#005CE5</td><td class="muted">Default filled background</td></tr>
-          <tr><td class="mono">main/button/primary/brand/pressed/bg</td><td class="mono">#2340A9</td><td class="muted">Pressed/hover filled background</td></tr>
-          <tr><td class="mono">main/button/primary/brand/disabled/bg</td><td class="mono">#9BC5FD</td><td class="muted">Disabled filled background</td></tr>
-          <tr><td class="mono">main/button/primary/brand/enabled/label</td><td class="mono">#FFFFFF</td><td class="muted">Label on filled button (all states)</td></tr>
-          <!-- Outlined brand -->
-          <tr><td class="mono">main/button/secondary/brand/enabled/border</td><td class="mono">#005CE5</td><td class="muted">Outlined border — default</td></tr>
-          <tr><td class="mono">main/button/secondary/brand/pressed/border</td><td class="mono">#2340A9</td><td class="muted">Outlined border — pressed</td></tr>
-          <tr><td class="mono">main/button/secondary/brand/disabled/border</td><td class="mono">#9BC5FD</td><td class="muted">Outlined border — disabled</td></tr>
-          <tr><td class="mono">main/button/secondary/brand/enabled/label</td><td class="mono">#005CE5</td><td class="muted">Outlined label — default</td></tr>
-          <tr><td class="mono">main/button/secondary/brand/pressed/label</td><td class="mono">#2340A9</td><td class="muted">Outlined label — pressed</td></tr>
-          <tr><td class="mono">main/button/secondary/brand/disabled/label</td><td class="mono">#9BC5FD</td><td class="muted">Outlined label — disabled</td></tr>
-          <!-- Outlined destructive -->
-          <tr><td class="mono">main/button/secondary/destructive/enabled/border</td><td class="mono">#D61B2C</td><td class="muted">Error outlined border — default</td></tr>
-          <tr><td class="mono">main/button/secondary/destructive/pressed/border</td><td class="mono">#B50707</td><td class="muted">Error outlined border — pressed</td></tr>
-          <tr><td class="mono">main/button/secondary/destructive/disabled/border</td><td class="mono">#F4C7C9</td><td class="muted">Error outlined border — disabled</td></tr>
-          <tr><td class="mono">main/button/secondary/destructive/enabled/label</td><td class="mono">#D61B2C</td><td class="muted">Error outlined label — default</td></tr>
-          <tr><td class="mono">main/button/secondary/destructive/pressed/label</td><td class="mono">#B50707</td><td class="muted">Error outlined label — pressed</td></tr>
-          <tr><td class="mono">main/button/secondary/destructive/disabled/label</td><td class="mono">#F4C7C9</td><td class="muted">Error outlined label — disabled</td></tr>
-          <!-- Text Link brand -->
-          <tr><td class="mono">main/button/tertiary/brand/enabled/label</td><td class="mono">#005CE5</td><td class="muted">Text Link label — default</td></tr>
-          <tr><td class="mono">main/button/tertiary/brand/pressed/label</td><td class="mono">#2340A9</td><td class="muted">Text Link label — pressed</td></tr>
-          <tr><td class="mono">main/button/tertiary/brand/disabled/label</td><td class="mono">#9BC5FD</td><td class="muted">Text Link label — disabled</td></tr>
-          <!-- Text Link destructive -->
-          <tr><td class="mono">main/button/tertiary/destructive/enabled/label</td><td class="mono">#D61B2C</td><td class="muted">Text Link error label — default</td></tr>
-          <tr><td class="mono">main/button/tertiary/destructive/pressed/label</td><td class="mono">#B50707</td><td class="muted">Text Link error label — pressed</td></tr>
-          <tr><td class="mono">main/button/tertiary/destructive/disabled/label</td><td class="mono">#F4C7C9</td><td class="muted">Text Link error label — disabled</td></tr>
-          <!-- Layout & Typography -->
-          <tr><td class="mono">space/space-16</td><td class="mono">16px</td><td class="muted">Horizontal padding — Default size</td></tr>
-          <tr><td class="mono">space/space-12</td><td class="mono">12px</td><td class="muted">Horizontal padding — Compact size</td></tr>
-          <tr><td class="mono">radius/radius-pill</td><td class="mono">99px</td><td class="muted">Pill shape — capsule in SwiftUI</td></tr>
-          <tr><td class="mono">font-family/font-primary</td><td class="mono">Proxima Soft Bold</td><td class="muted">Verify font bundle in native app</td></tr>
-          <tr><td class="mono">font-size/font-size-30</td><td class="mono">18px</td><td class="muted">Label size — Default</td></tr>
-          <tr><td class="mono">font-size/font-size-25</td><td class="mono">16px</td><td class="muted">Label size — Compact</td></tr>
-          <tr><td class="mono">line-height/leading-30</td><td class="mono">18px</td><td class="muted">Line height — Default</td></tr>
-          <tr><td class="mono">line-height/leading-25</td><td class="mono">16px</td><td class="muted">Line height — Compact</td></tr>
-          <tr><td class="mono">letter-spacing/tracking-wide</td><td class="mono">0.25px</td><td class="muted">Letter spacing on both sizes</td></tr>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All layers use semantic names. <code>container</code>, <code>#label</code>, <code>leadingIcon</code>, <code>trailingIcon</code> consistent across all 24 variants.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted"><code>isError</code> replaced with <code>Variant: Brand | Destructive</code> — a true orthogonal property. <code>Appearance</code> now covers all 5 types. <code>leadingIcon</code>/<code>trailingIcon</code> are SLOT nodes with Boolean component properties.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All color values connected to semantic tokens. Layout/sizing driven by <code>button/size</code> variable collection (height, padding-h, padding-v, font-size).</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Maps to <code>Button</code>, <code>OutlinedButton</code>, <code>TextButton</code>. Destructive maps to <code>role: .destructive</code> / <code>contentColor = errorColor</code>.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Default, Pressed, Disabled covered. Focus ring is N/A — mobile OS handles natively. Missing: loading/processing state for async actions.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Icon slots are Figma SLOT nodes accepting vector icon instances. Boolean properties control visibility.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">No CLI mappings registered yet. Property structure is clean and ready for mapping.</td></tr>
         </tbody>
       </table>
     </div>
 
-    </div><!-- /comp-tab-content assessment -->
+    <div class="sub-heading" id="btn-codeconnect">Code Connect — Property Mapping</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma Property</th><th>SwiftUI Param</th><th>Compose Param</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">Appearance=Default</td><td class="mono">.borderedProminent</td><td class="mono">Button {}</td><td class="muted">Primary filled button</td></tr>
+          <tr><td class="mono">Appearance=White</td><td class="mono">.borderedProminent (inverse tint)</td><td class="mono">Button {} (inverse colors)</td><td class="muted">White fill, brand label — for colored surfaces</td></tr>
+          <tr><td class="mono">Appearance=Subtle</td><td class="mono">.bordered (tinted)</td><td class="mono">Button {} (tinted colors)</td><td class="muted">Light brand tint fill</td></tr>
+          <tr><td class="mono">Appearance=Outlined</td><td class="mono">.bordered</td><td class="mono">OutlinedButton {}</td><td class="muted">Secondary outlined button</td></tr>
+          <tr><td class="mono">Appearance=Text Link</td><td class="mono">.plain / .borderless</td><td class="mono">TextButton {}</td><td class="muted">Tertiary text-only button</td></tr>
+          <tr><td class="mono">Variant=Brand</td><td class="mono">(default)</td><td class="mono">(default)</td><td class="muted">Brand blue color set</td></tr>
+          <tr><td class="mono">Variant=Destructive</td><td class="mono">role: .destructive</td><td class="mono">contentColor = errorColor</td><td class="muted">Red color set — Default, Outlined, Text Link</td></tr>
+          <tr><td class="mono">Size mode=Large</td><td class="mono">controlSize: .large</td><td class="mono">modifier size tokens</td><td class="muted">52px height via variable</td></tr>
+          <tr><td class="mono">Size mode=Medium</td><td class="mono">controlSize: .regular</td><td class="mono">modifier size tokens</td><td class="muted">36px height via variable</td></tr>
+          <tr><td class="mono">Size mode=Small</td><td class="mono">controlSize: .small</td><td class="mono">modifier size tokens</td><td class="muted">28px height via variable</td></tr>
+          <tr><td class="mono">Size mode=XSmall</td><td class="mono">controlSize: .mini</td><td class="mono">modifier size tokens</td><td class="muted">24px height via variable</td></tr>
+          <tr><td class="mono">State=Disabled</td><td class="mono">.disabled(true)</td><td class="mono">enabled = false</td><td class="muted">Disabled modifier</td></tr>
+          <tr><td class="mono">leadingIcon=true</td><td class="mono">Label("", systemImage:)</td><td class="mono">icon = { Icon(...) }</td><td class="muted">SLOT node — Boolean component property</td></tr>
+          <tr><td class="mono">trailingIcon=true</td><td class="mono">Label("", systemImage:)</td><td class="mono">trailingIcon = { Icon(...) }</td><td class="muted">SLOT node — Boolean component property</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="btn-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(24 total)</span></div>
+    <p>5 <code>Appearance</code> × 2 <code>Variant</code> (Brand/Destructive, where applicable) × 3 <code>State</code>. <code>Size</code> is not a variant dimension — controlled by the <code>button/size</code> variable mode.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Appearance</th><th>Variant</th><th>State</th><th>Node ID</th></tr></thead>
+        <tbody>
+          <tr><td>Default</td><td>Brand</td><td>Default</td><td class="mono">17104:184843</td></tr>
+          <tr><td>Default</td><td>Brand</td><td>Pressed</td><td class="mono">17104:184846</td></tr>
+          <tr><td>Default</td><td>Brand</td><td>Disabled</td><td class="mono">17104:184849</td></tr>
+          <tr><td>Default</td><td>Destructive</td><td>Default</td><td class="mono">17274:54</td></tr>
+          <tr><td>Default</td><td>Destructive</td><td>Pressed</td><td class="mono">17274:59</td></tr>
+          <tr><td>Default</td><td>Destructive</td><td>Disabled</td><td class="mono">17274:64</td></tr>
+          <tr><td>White</td><td>Brand</td><td>Default</td><td class="mono">17285:6723</td></tr>
+          <tr><td>White</td><td>Brand</td><td>Pressed</td><td class="mono">17285:6728</td></tr>
+          <tr><td>White</td><td>Brand</td><td>Disabled</td><td class="mono">17285:6733</td></tr>
+          <tr><td>Subtle</td><td>Brand</td><td>Default</td><td class="mono">17285:6738</td></tr>
+          <tr><td>Subtle</td><td>Brand</td><td>Pressed</td><td class="mono">17285:6743</td></tr>
+          <tr><td>Subtle</td><td>Brand</td><td>Disabled</td><td class="mono">17285:6748</td></tr>
+          <tr><td>Outlined</td><td>Brand</td><td>Default</td><td class="mono">17104:184852</td></tr>
+          <tr><td>Outlined</td><td>Brand</td><td>Pressed</td><td class="mono">17104:184858</td></tr>
+          <tr><td>Outlined</td><td>Brand</td><td>Disabled</td><td class="mono">17104:184864</td></tr>
+          <tr><td>Outlined</td><td>Destructive</td><td>Default</td><td class="mono">17104:184942</td></tr>
+          <tr><td>Outlined</td><td>Destructive</td><td>Pressed</td><td class="mono">17104:184936</td></tr>
+          <tr><td>Outlined</td><td>Destructive</td><td>Disabled</td><td class="mono">17104:184930</td></tr>
+          <tr><td>Text Link</td><td>Brand</td><td>Default</td><td class="mono">17104:184855</td></tr>
+          <tr><td>Text Link</td><td>Brand</td><td>Pressed</td><td class="mono">17104:184861</td></tr>
+          <tr><td>Text Link</td><td>Brand</td><td>Disabled</td><td class="mono">17104:184867</td></tr>
+          <tr><td>Text Link</td><td>Destructive</td><td>Default</td><td class="mono">17104:184945</td></tr>
+          <tr><td>Text Link</td><td>Destructive</td><td>Pressed</td><td class="mono">17104:184939</td></tr>
+          <tr><td>Text Link</td><td>Destructive</td><td>Disabled</td><td class="mono">17104:184933</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- ── Tab: Changelog ────────────────────────────────────────── -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+
+    <div class="sub-heading" id="btn-v200" style="margin-top:0">2.0.0 — March 2026 <span class="tab-version-badge major">Major</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Component Restructure via Figma MCP · node 17104:184842</div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong><code>isError</code> replaced with <code>Variant: Brand | Destructive</code></strong> — True orthogonal property applied to all 24 variants. Destructive Default (filled) variants added for all 3 states. All 30 existing variants renamed. <span class="tag-fixed">Fixed</span></div>
+        <span class="changelog-delta delta-resolved">C2 Resolved</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>White and Subtle appearances added</strong> — 6 new Brand-only variants (3 States each). White for inverse/dark-surface contexts; Subtle for neutral-tinted surface contexts. <span class="tag-fixed">Added</span></div>
+        <span class="changelog-delta delta-resolved">+6 Variants</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Size dimension removed from variant matrix</strong> — Compact variants deleted. Size is now driven by the <code>button/size</code> variable collection with 4 modes: Large (52px), Medium (36px), Small (28px), XSmall (24px). Reduces variant count from 36 → 24 while expanding size coverage. <span class="tag-fixed">Restructured</span></div>
+        <span class="changelog-delta delta-resolved">36 → 24 Variants</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong><code>button/size</code> variable collection created</strong> — 5 variables (<code>height</code>, <code>font-size</code>, <code>padding-h</code>, <code>padding-v</code>, <code>icon-size</code>) bound to all containers, labels, and icon slots across all variants. Fixed height binding prevents icon slot size from affecting button height. <span class="tag-fixed">Added</span></div>
+        <span class="changelog-delta delta-resolved">C3 Enhanced</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Icon slots upgraded to SLOT nodes with Boolean properties</strong> — <code>leadingIcon</code> and <code>trailingIcon</code> promoted from hidden frames to Figma SLOT nodes. Boolean component properties added for designer toggle control. <span class="tag-fixed">Upgraded</span></div>
+        <span class="changelog-delta delta-resolved">C6 Enhanced</span>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="btn-v130">1.3.0 — March 2026 <span class="tab-version-badge minor">Re-assessment</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Re-assessment · node 17104:184842</div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>isError re-classified as C2 issue</strong> — <code>isError</code> is not a true orthogonal boolean. Only applies to <code>Outlined</code> and <code>Text Link</code>, not <code>Default</code>. Recommendation: fold into <code>Appearance</code> as <code>Outlined Error</code> / <code>Text Link Error</code>. Resolved in v2.0.0. <span class="tag-fixed">Resolved in 2.0.0</span></div>
+        <span class="changelog-delta delta-open">C2 Re-opened</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Focus ring removed from C5 scope</strong> — Component is mobile-only. Focus rings rendered natively by iOS (UIKit/SwiftUI) and Android (Material a11y). No Figma state required. <span class="tag-fixed">Clarified</span></div>
+        <span class="changelog-delta delta-resolved">C5 Scope Revised</span>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="btn-v120">1.2.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Changes Applied via Figma MCP · node 17104:184842</div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Icon slots added: <code>leadingIcon</code> + <code>trailingIcon</code></strong> — Added to all 30 variants. Hidden by default. Upgraded to SLOT nodes with Boolean properties in v2.0.0. <span class="tag-fixed">Fixed</span></div>
+        <span class="changelog-delta delta-resolved">C2 Resolved</span>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="btn-v110">1.1.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Changes Applied via Figma MCP · node 17104:184842</div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Layer renamed: <code>.base/button/small</code> → <code>container</code></strong> — Resolves C1. <span class="tag-fixed">Fixed</span></div>
+        <span class="changelog-delta delta-resolved">C1 Resolved</span>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="btn-v100">1.0.0 — March 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 17104:184842</div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Component assessed</strong> — 30 variants documented. <span class="tag-fixed">Documented</span></div>
+        <span class="changelog-delta delta-resolved">Initial</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Token audit complete</strong> — 24 color + 9 layout tokens confirmed. <span class="tag-fixed">Verified</span></div>
+        <span class="changelog-delta delta-resolved">C3 Pass</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Focus ring and loading state missing</strong> — C5 open. <span class="tag-open">Open</span></div>
+        <span class="changelog-delta delta-open">C5 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Code Connect mappings</strong> — No CLI mappings registered. <span class="tag-open">Still Open</span></div>
+        <span class="changelog-delta delta-open">C7 Open</span>
+      </div>
+    </div>
+
+    </div><!-- /tab changelog -->
     </div><!-- /data-tab-group -->
 
   </div><!-- /content-wrap -->
+
+  <!-- On This Page -->
+  <aside class="page-toc" id="toc-button">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-button"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
 </div><!-- /panel-button -->
 <!--@section-end-->
