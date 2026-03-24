@@ -9,6 +9,43 @@
 <body>
 
 <!-- ═══════════════════════════════════════════════════════════════════ -->
+<!--  LOGIN GATE                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div class="login-screen" id="login-screen">
+  <div class="login-brand">
+    <div class="login-brand-content">
+      <div class="login-brand-icon">
+        <svg width="28" height="28" viewBox="0 0 20 20" fill="none">
+          <rect x="2" y="2" width="6" height="6" rx="1.5" fill="#fff"/>
+          <rect x="12" y="2" width="6" height="6" rx="1.5" fill="#fff" opacity=".75"/>
+          <rect x="2" y="12" width="6" height="6" rx="1.5" fill="#fff" opacity=".75"/>
+          <rect x="12" y="12" width="6" height="6" rx="1.5" fill="#fff" opacity=".45"/>
+        </svg>
+      </div>
+      <div class="login-brand-title">East Blue<br>Design System</div>
+      <div class="login-brand-desc">Component assessment platform for evaluating DS health and native mobile readiness across SwiftUI and Jetpack Compose.</div>
+    </div>
+    <div class="login-brand-footer"><span>Frost Design Group</span></div>
+  </div>
+  <div class="login-form-wrap">
+    <div class="login-form-title">Welcome back</div>
+    <div class="login-form-sub">Sign in to access the assessment report.</div>
+    <div class="login-field">
+      <label class="login-label">Email</label>
+      <input type="email" class="login-input" id="login-email" placeholder="Email address" autocomplete="email" />
+      <div class="login-error" id="login-email-error">Please use a valid @frostdesigngroup.com email</div>
+    </div>
+    <div class="login-field">
+      <label class="login-label">Password</label>
+      <input type="password" class="login-input" id="login-password" placeholder="Enter your password" autocomplete="current-password" />
+      <div class="login-error" id="login-pass-error">Password is required</div>
+    </div>
+    <button class="login-btn" onclick="handleLogin()">Sign In</button>
+    <div class="login-footer-text">For internal use only</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
 <!--  MOBILE TOP BAR                                                    -->
 <!-- ═══════════════════════════════════════════════════════════════════ -->
 <header class="topbar">
@@ -387,71 +424,210 @@ function switchTabLine(tabBtn, tabId, groupId) {
   if (target) { target.classList.add('active'); }
 }
 
-/* ── Demo controls ────────────────────────────────────────────────── */
-var _demo = { appearance: 'primary', variant: 'brand', size: 'large', state: 'default' };
+/* ── Demo controls (v3) ──────────────────────────────────────────── */
+var _demo = { style: 'filled', appearance: 'default', size: 'large', state: 'default' };
 
+/* Colors: style → appearance → state → { bg, color, border } */
 var _demoColors = {
-  primary:  { brand: { bg:'#005CE5', color:'#FFFFFF', border:'none' }, destructive: { bg:'#D61B2C', color:'#FFFFFF', border:'none' } },
-  white:    { brand: { bg:'#FFFFFF', color:'#005CE5', border:'none' } },
-  subtle:   { brand: { bg:'#E5F1FF', color:'#005CE5', border:'none' } },
-  outlined: { brand: { bg:'transparent', color:'#005CE5', border:'2px solid #005CE5' }, destructive: { bg:'transparent', color:'#D61B2C', border:'2px solid #D61B2C' } },
-  text:     { brand: { bg:'transparent', color:'#005CE5', border:'none' }, destructive: { bg:'transparent', color:'#D61B2C', border:'none' } }
+  filled: {
+    default:     { default: { bg:'#005CE5', color:'#FFF', border:'none' },     pressed: { bg:'#2340A9', color:'#FFF', border:'none' },     disabled: { bg:'#9BC5FD', color:'#FFF', border:'none' } },
+    destructive: { default: { bg:'#D81E1E', color:'#FFF', border:'none' },     pressed: { bg:'#B01818', color:'#FFF', border:'none' },     disabled: { bg:'#F5A3A3', color:'#FFF', border:'none' } },
+    white:       { default: { bg:'#FFFFFF', color:'#005CE5', border:'none' },  pressed: { bg:'#EEF2F9', color:'#2340A9', border:'none' },  disabled: { bg:'#F5F7FA', color:'#9BC5FD', border:'none' } },
+    subtle:      { default: { bg:'#E5F1FF', color:'#005CE5', border:'none' },  pressed: { bg:'#D2E5FF', color:'#2340A9', border:'none' },  disabled: { bg:'#EEF5FF', color:'#9BC5FD', border:'none' } }
+  },
+  outline: {
+    default:     { default: { bg:'transparent', color:'#005CE5', border:'2px solid #005CE5' }, pressed: { bg:'transparent', color:'#2340A9', border:'2px solid #2340A9' }, disabled: { bg:'transparent', color:'#9BC5FD', border:'2px solid #9BC5FD' } },
+    destructive: { default: { bg:'transparent', color:'#D81E1E', border:'2px solid #D81E1E' }, pressed: { bg:'transparent', color:'#B01818', border:'2px solid #B01818' }, disabled: { bg:'transparent', color:'#F5A3A3', border:'2px solid #F5A3A3' } },
+    white:       { default: { bg:'transparent', color:'#005CE5', border:'2px solid #005CE5' }, pressed: { bg:'transparent', color:'#2340A9', border:'2px solid #2340A9' }, disabled: { bg:'transparent', color:'#9BC5FD', border:'2px solid #9BC5FD' } },
+    subtle:      { default: { bg:'transparent', color:'#005CE5', border:'2px solid #005CE5' }, pressed: { bg:'transparent', color:'#2340A9', border:'2px solid #2340A9' }, disabled: { bg:'transparent', color:'#9BC5FD', border:'2px solid #9BC5FD' } }
+  },
+  text: {
+    default:     { default: { bg:'transparent', color:'#005CE5', border:'none' }, pressed: { bg:'transparent', color:'#2340A9', border:'none' }, disabled: { bg:'transparent', color:'#9BC5FD', border:'none' } },
+    destructive: { default: { bg:'transparent', color:'#D81E1E', border:'none' }, pressed: { bg:'transparent', color:'#B01818', border:'none' }, disabled: { bg:'transparent', color:'#F5A3A3', border:'none' } },
+    white:       { default: { bg:'transparent', color:'#005CE5', border:'none' }, pressed: { bg:'transparent', color:'#2340A9', border:'none' }, disabled: { bg:'transparent', color:'#9BC5FD', border:'none' } },
+    subtle:      { default: { bg:'transparent', color:'#005CE5', border:'none' }, pressed: { bg:'transparent', color:'#2340A9', border:'none' }, disabled: { bg:'transparent', color:'#9BC5FD', border:'none' } }
+  }
 };
 var _demoSizes = {
-  large:  { padding:'14px 32px', fontSize:'14px' },
-  medium: { padding:'8px 20px',  fontSize:'14px' },
-  small:  { padding:'6px 16px',  fontSize:'12px' },
-  xsmall: { padding:'4px 12px',  fontSize:'12px' }
+  large:  { padding:'13px 20px', fontSize:'18px', height:'50px' },
+  medium: { padding:'8px 16px',  fontSize:'16px', height:'40px' },
+  small:  { padding:'6px 12px',  fontSize:'16px', height:'28px' },
+  xsmall: { padding:'4px 10px',  fontSize:'14px', height:'24px' }
 };
+
 function _applyDemo() {
   var el = document.getElementById('demo-btn-live');
   if (!el) return;
-  var colorMap = _demoColors[_demo.appearance] || _demoColors['primary'];
-  var c = colorMap[_demo.variant] || colorMap['brand'];
+  var styleMap = _demoColors[_demo.style] || _demoColors['filled'];
+  var appMap = styleMap[_demo.appearance] || styleMap['default'];
+  var c = appMap[_demo.state] || appMap['default'];
   var sz = _demoSizes[_demo.size] || _demoSizes['large'];
+
   el.style.background   = c.bg;
   el.style.color        = c.color;
   el.style.border       = c.border;
   el.style.padding      = sz.padding;
   el.style.fontSize     = sz.fontSize;
   el.style.borderRadius = '99px';
-  el.style.opacity      = _demo.state === 'disabled' ? '0.4' : '1';
+  el.style.fontFamily   = "'Proxima Soft', sans-serif";
+  el.style.fontWeight   = '700';
+  el.style.cursor       = _demo.state === 'disabled' ? 'not-allowed' : 'pointer';
+  el.style.opacity      = '1';
+
   var preview = el.closest('.demo-preview');
   if (preview) preview.classList.toggle('demo-preview-dark', _demo.appearance === 'white');
 }
-function setDemoAppearance(type, btn) {
-  activateSeg(btn);
-  _demo.appearance = type;
-  var surfaceOnly = (type === 'white' || type === 'subtle');
-  if (surfaceOnly) _demo.variant = 'brand';
-  /* disable/enable variant segs */
-  var panel = btn.closest('.demo-panel');
-  if (panel) {
-    panel.querySelectorAll('.demo-seg').forEach(function(s) {
-      var oc = s.getAttribute('onclick') || '';
-      if (oc.indexOf('setDemoVariant') === -1) return;
-      s.disabled = surfaceOnly;
-      if (surfaceOnly) {
-        s.classList.toggle('active', oc.indexOf("'brand'") !== -1);
-      }
-    });
-  }
+
+function setDemoStyle(style) {
+  _demo.style = style;
   _applyDemo();
 }
-function setDemoSize(size, btn) {
-  activateSeg(btn);
+function setDemoAppearance(appearance) {
+  _demo.appearance = appearance;
+  _applyDemo();
+}
+function setDemoSize(size) {
   _demo.size = size;
   _applyDemo();
 }
-function setDemoVariant(variant, btn) {
-  activateSeg(btn);
-  _demo.variant = variant;
-  _applyDemo();
-}
-function setDemoState(state, btn) {
-  activateSeg(btn);
+function setDemoState(state) {
   _demo.state = state;
   _applyDemo();
+}
+/* Keep old function names as aliases for backward compat */
+function setDemoVariant(v) { setDemoAppearance(v === 'brand' ? 'default' : v); }
+
+/* ── Spec card previews ──────────────────────────────────────────── */
+var _specCards = {
+  filled:  { style: 'filled',  appearance: 'default', size: 'large', state: 'default' },
+  outline: { style: 'outline', appearance: 'default', size: 'large', state: 'default' },
+  text:    { style: 'text',    appearance: 'default', size: 'large', state: 'default' }
+};
+
+/* Size data for spec card layout/typography */
+var _specSizeData = {
+  large:  { height: 50, paddingH: 20, paddingV: 13, fontSize: 18, textStyle: 'Primary/Label/Large' },
+  medium: { height: 40, paddingH: 16, paddingV: 8,  fontSize: 16, textStyle: 'Primary/Label/Base' },
+  small:  { height: 28, paddingH: 12, paddingV: 6,  fontSize: 16, textStyle: 'Primary/Label/Base' },
+  xsmall: { height: 24, paddingH: 10, paddingV: 4,  fontSize: 14, textStyle: 'Primary/Label/Small' }
+};
+
+/* Color data for spec card detail sections */
+var _specColorData = {
+  filled: {
+    default:     { label: 'Colors — Default',     rows: [['Default bg','#005CE5'],['Pressed bg','#2340A9'],['Disabled bg','#9BC5FD'],['Label','#FFFFFF']] },
+    destructive: { label: 'Colors — Destructive',  rows: [['Default bg','#D81E1E'],['Pressed bg','#B01818'],['Disabled bg','#F5A3A3'],['Label','#FFFFFF']] },
+    white:       { label: 'Colors — White',        rows: [['Default bg','#FFFFFF'],['Pressed bg','#EEF2F9'],['Disabled bg','#F5F7FA'],['Label','#005CE5']] },
+    subtle:      { label: 'Colors — Subtle',       rows: [['Default bg','#E5F1FF'],['Pressed bg','#D2E5FF'],['Disabled bg','#EEF5FF'],['Label','#005CE5']] }
+  },
+  outline: {
+    default:     { label: 'Colors — Default',     rows: [['Default stroke/label','#005CE5'],['Pressed','#2340A9'],['Disabled','#9BC5FD']] },
+    destructive: { label: 'Colors — Destructive',  rows: [['Default stroke/label','#D81E1E'],['Pressed','#B01818'],['Disabled','#F5A3A3']] },
+    white:       { label: 'Colors — White',        rows: [['Default stroke/label','#005CE5'],['Pressed','#2340A9'],['Disabled','#9BC5FD']] },
+    subtle:      { label: 'Colors — Subtle',       rows: [['Default stroke/label','#005CE5'],['Pressed','#2340A9'],['Disabled','#9BC5FD']] }
+  },
+  text: {
+    default:     { label: 'Colors — Default',     rows: [['Default label','#005CE5'],['Pressed','#2340A9'],['Disabled','#9BC5FD']] },
+    destructive: { label: 'Colors — Destructive',  rows: [['Default label','#D81E1E'],['Pressed','#B01818'],['Disabled','#F5A3A3']] },
+    white:       { label: 'Colors — White',        rows: [['Default label','#005CE5'],['Pressed','#2340A9'],['Disabled','#9BC5FD']] },
+    subtle:      { label: 'Colors — Subtle',       rows: [['Default label','#005CE5'],['Pressed','#2340A9'],['Disabled','#9BC5FD']] }
+  }
+};
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview button */
+  var el = document.getElementById('spec-' + cardStyle + '-btn');
+  if (el) {
+    var styleMap = _demoColors[card.style] || _demoColors['filled'];
+    var appMap = styleMap[card.appearance] || styleMap['default'];
+    var c = appMap[card.state] || appMap['default'];
+    var sz = _demoSizes[card.size] || _demoSizes['large'];
+    el.style.background   = c.bg;
+    el.style.color        = c.color;
+    el.style.border       = c.border;
+    el.style.padding      = sz.padding;
+    el.style.fontSize     = sz.fontSize;
+    el.style.borderRadius = '99px';
+    el.style.fontFamily   = "'Proxima Soft', sans-serif";
+    el.style.fontWeight   = '700';
+    el.style.cursor       = card.state === 'disabled' ? 'not-allowed' : 'pointer';
+    el.style.opacity      = '1';
+    var preview = el.closest('.spec-card-preview');
+    if (preview) preview.classList.toggle('demo-preview-dark', card.appearance === 'white');
+  }
+
+  /* Update properties text */
+  var spApp = document.querySelector('[data-sp="' + cardStyle + '-appearance"]');
+  var spState = document.querySelector('[data-sp="' + cardStyle + '-state"]');
+  var spSize = document.querySelector('[data-sp="' + cardStyle + '-size"]');
+  if (spApp) spApp.textContent = card.appearance.charAt(0).toUpperCase() + card.appearance.slice(1);
+  if (spState) spState.textContent = card.state.charAt(0).toUpperCase() + card.state.slice(1);
+  if (spSize) spSize.textContent = card.size === 'xsmall' ? 'XSmall' : card.size.charAt(0).toUpperCase() + card.size.slice(1);
+
+  /* Update colors section */
+  var colorsEl = document.getElementById('spec-' + cardStyle + '-colors');
+  if (colorsEl) {
+    var colorData = _specColorData[cardStyle] && _specColorData[cardStyle][card.appearance];
+    if (colorData) {
+      var h = '<div class="spec-detail-label">' + colorData.label + '</div><div class="spec-props">';
+      colorData.rows.forEach(function(r) {
+        var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
+        h += '<div class="spec-prop"><span class="spec-prop-key">' + r[0] + '</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span></div>';
+      });
+      h += '</div>';
+      colorsEl.innerHTML = h;
+    }
+  }
+
+  /* Update layout section */
+  var layoutEl = document.getElementById('spec-' + cardStyle + '-layout');
+  if (layoutEl) {
+    var sizeData = _specSizeData[card.size];
+    var lh = '<div class="spec-detail-label">Layout</div><div class="spec-props">';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Height</span><span class="spec-prop-val mono">' + sizeData.height + 'px</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding H</span><span class="spec-prop-val mono">' + sizeData.paddingH + 'px</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding V</span><span class="spec-prop-val mono">' + sizeData.paddingV + 'px</span></div>';
+    if (cardStyle === 'outline') lh += '<div class="spec-prop"><span class="spec-prop-key">Border</span><span class="spec-prop-val mono">1.5px solid</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Radius</span><span class="spec-prop-val mono">99px</span></div>';
+    lh += '</div>';
+    layoutEl.innerHTML = lh;
+  }
+
+  /* Update typography section */
+  var typoEl = document.getElementById('spec-' + cardStyle + '-typo');
+  if (typoEl) {
+    var sizeData = _specSizeData[card.size];
+    var th = '<div class="spec-detail-label">Typography</div><div class="spec-props">';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">Proxima Soft Bold</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Text Style</span><span class="spec-prop-val mono">' + sizeData.textStyle + '</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">' + sizeData.fontSize + 'px</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Tracking</span><span class="spec-prop-val mono">0.25px</span></div>';
+    th += '</div>';
+    typoEl.innerHTML = th;
+  }
+
+  /* Update DEV code if visible */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView && devView.style.display !== 'none') {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('code');
+    if (codeEl) {
+      codeEl.setAttribute('data-final', getSnippet(cardStyle, lang, card));
+      scrambleCode(cardStyle);
+    }
+  }
+}
+
+/* Initialize spec card colors on page load */
+function initSpecCards() {
+  updateSpecCard('filled', 'appearance', 'default');
+  updateSpecCard('outline', 'appearance', 'default');
+  updateSpecCard('text', 'appearance', 'default');
 }
 function activateSeg(btn) {
   var group = btn.parentElement;
@@ -601,11 +777,11 @@ function toggleSpecMode(type, toggleEl) {
     if (devView) {
       devView.style.display = '';
       /* Generate code from current state */
-      var s = cardState[type] || { size:'default', state:'enabled', isError:false };
+      var card = _specCards[type] || { style:'filled', appearance:'default', size:'large', state:'default' };
       var activeTab = devView.querySelector('.spec-code-tab.active');
       var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
       var codeEl = devView.querySelector('code');
-      if (codeEl) { codeEl.setAttribute('data-final', getSnippet(type, lang, s)); }
+      if (codeEl) { codeEl.setAttribute('data-final', getSnippet(type, lang, card)); }
       scrambleCode(type);
     }
   } else {
@@ -613,35 +789,12 @@ function toggleSpecMode(type, toggleEl) {
     if (desView) desView.style.display = '';
   }
 }
-var scrambleChars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz0123456789!@#$%&*(){}[]<>/=';
 function scrambleCode(type) {
   var codeEl = document.querySelector('[data-code-content="'+type+'"]');
   if (!codeEl) return;
   var final = codeEl.getAttribute('data-final') || codeEl.textContent;
-  codeEl.setAttribute('data-final', final);
-  var len = final.length;
-  var iterations = 0;
-  var maxIter = 8;
-  codeEl.style.opacity = '0.7';
-  var interval = setInterval(function() {
-    iterations++;
-    var out = '';
-    for (var i = 0; i < len; i++) {
-      if (final[i] === '\n') { out += '\n'; continue; }
-      if (final[i] === ' ') { out += ' '; continue; }
-      if (iterations >= maxIter || (iterations / maxIter) > (i / len)) {
-        out += final[i];
-      } else {
-        out += scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
-      }
-    }
-    codeEl.textContent = out;
-    if (iterations >= maxIter) {
-      clearInterval(interval);
-      codeEl.style.opacity = '1';
-      highlightSyntax(codeEl);
-    }
-  }, 35);
+  codeEl.textContent = final;
+  highlightSyntax(codeEl);
 }
 function highlightSyntax(el) {
   var code = el.getAttribute('data-final') || el.textContent;
@@ -703,112 +856,127 @@ function copyNode(btn) {
     setTimeout(function() { span.textContent = orig; }, 1200);
   });
 }
+function switchPlatform(btn, group, tab) {
+  btn.closest('.code-card-body').querySelectorAll('.platform-tab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  btn.closest('.code-card-body').querySelectorAll('.platform-panel').forEach(function(p) {
+    p.classList.toggle('active', p.dataset.tab === tab);
+  });
+}
+function copySnippet(btn) {
+  var pre = btn.parentElement.querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(function() {
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
+  });
+}
 function switchCodeTab(tabBtn, lang, type) {
   var block = tabBtn.closest('.spec-card-code');
   block.querySelectorAll('.spec-code-tab').forEach(function(t) { t.classList.remove('active'); });
   tabBtn.classList.add('active');
   var codeEl = block.querySelector('code');
   if (!codeEl) return;
-  var s = cardState[type] || { size:'default', state:'enabled', isError:false };
-  var code = getSnippet(type, lang, s);
+  var card = _specCards[type] || { style:'filled', appearance:'default', size:'large', state:'default' };
+  var code = getSnippet(type, lang, card);
   codeEl.textContent = '// Loading...';
   codeEl.setAttribute('data-final', code);
   scrambleCode(type);
 }
-/* Code snippets — Figma Dev Mode style with Layout + Variables */
-function buildSwiftSnippet(type, s) {
-  var bg = colorData[s.isError && type !== 'primary' ? type+'Err' : type][s.state];
-  var compact = s.size === 'compact';
-  var pad = compact ? 'spaceSpace12' : 'spaceSpace16';
-  var padVal = compact ? '12' : '16';
-  var bgToken = type === 'primary' ? 'mainButton' + (s.state === 'enabled' ? 'Primary' : s.state === 'pressed' ? 'Primary' : 'Primary') + 'Brand' + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Bg' : '';
-  var labelToken = type === 'primary' ? 'mainButtonPrimaryBrandEnabledLabel' : '';
+/* Code snippets — Figma Dev Mode style with Layout + Variables (v3) */
+function _cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+function _getCodeColors(card) {
+  var cd = _specColorData[card.style];
+  if (!cd) return { bg:'transparent', color:'#005CE5', border:'none' };
+  var ad = cd[card.appearance] || cd['default'];
+  if (!ad) return { bg:'transparent', color:'#005CE5', border:'none' };
+  var row = ad.rows;
+  var stateIdx = card.state === 'pressed' ? 1 : card.state === 'disabled' ? 2 : 0;
+  var labelIdx = row.length - 1;
+  return { bg: row[stateIdx] ? row[stateIdx][1] : '#005CE5', label: row[labelIdx] ? row[labelIdx][1] : '#FFFFFF' };
+}
+
+function buildSwiftSnippet(type, card) {
+  var sizeMap = { large: '.large', medium: '.regular', small: '.small', xsmall: '.mini' };
+  var szLabel = sizeMap[card.size] || '.large';
+  var appLabel = card.appearance || 'default';
   var lines = [];
-  lines.push('// Layout');
-  lines.push('HStack(alignment: .center, spacing: Constants.spaceSpace0) { ... }');
-  lines.push('    .padding(Constants.' + pad + ')');
-  if (compact) lines.push('    .frame(height: 38)');
-  else lines.push('    .frame(maxWidth: .infinity, alignment: .center)');
-  if (type === 'primary') {
-    lines.push('    .background(Constants.mainButtonPrimaryBrand' + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Bg)');
-  } else if (type === 'secondary') {
-    var errSuffix = s.isError ? 'Destructive' : 'Brand';
-    lines.push('    .overlay(RoundedRectangle(cornerRadius: Constants.radiusRadiusPill)');
-    lines.push('        .stroke(Constants.mainButtonSecondary' + errSuffix + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Border, lineWidth: 3))');
-  }
-  lines.push('    .cornerRadius(Constants.radiusRadiusPill)');
-  if (s.state === 'disabled') lines.push('    .disabled(true)');
-  lines.push('');
-  lines.push('// Variables');
-  lines.push('struct Constants {');
-  lines.push('    static let spaceSpace0: CGFloat = 0');
-  if (type === 'primary') {
-    lines.push('    static let mainButtonPrimaryBrand' + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Bg: Color = Color("' + bg + '")');
-  } else if (type === 'secondary') {
-    var errSuffix2 = s.isError ? 'Destructive' : 'Brand';
-    lines.push('    static let mainButtonSecondary' + errSuffix2 + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Border: Color = Color("' + bg + '")');
+
+  // Component call
+  if (type === 'filled') {
+    lines.push('EBButton("Label")');
+    lines.push('    .ebAppearance(.filled)');
+  } else if (type === 'outline') {
+    lines.push('EBButton("Label")');
+    lines.push('    .ebAppearance(.outlined)');
   } else {
-    var errSuffix3 = s.isError ? 'Destructive' : 'Brand';
-    lines.push('    static let mainButtonTertiary' + errSuffix3 + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Label: Color = Color("' + bg + '")');
+    lines.push('EBButton("Label")');
+    lines.push('    .ebAppearance(.textLink)');
   }
-  lines.push('    static let radiusRadiusPill: CGFloat = 99');
-  lines.push('    static let ' + pad + ': CGFloat = ' + padVal);
-  lines.push('}');
+
+  // Size
+  lines.push('    .controlSize(' + szLabel + ')');
+
+  // Appearance mode
+  if (appLabel === 'destructive') {
+    // Insert role before controlSize
+    lines.splice(0, 1, 'EBButton("Label", role: .destructive)');
+  } else if (appLabel === 'white') {
+    lines.push('    .ebColorScheme(.white)');
+  } else if (appLabel === 'subtle') {
+    lines.push('    .ebColorScheme(.subtle)');
+  }
+
+  // State
+  if (card.state === 'disabled') {
+    lines.push('    .disabled(true)');
+  }
+
   return lines.join('\n');
 }
-function buildComposeSnippet(type, s) {
-  var bg = colorData[s.isError && type !== 'primary' ? type+'Err' : type][s.state];
-  var compact = s.size === 'compact';
-  var pad = compact ? 'spaceSpace12' : 'spaceSpace16';
-  var padVal = compact ? '12' : '16';
+
+function buildComposeSnippet(type, card) {
+  var sizeMap = { large: 'Large', medium: 'Medium', small: 'Small', xsmall: 'XSmall' };
+  var szLabel = sizeMap[card.size] || 'Large';
+  var appLabel = card.appearance || 'default';
   var lines = [];
-  lines.push('// Layout');
-  lines.push('Row(');
-  lines.push('    horizontalArrangement = Arrangement.spacedBy(');
-  lines.push('        Variables.spaceSpace0,');
-  lines.push('        Alignment.CenterHorizontally'),
-  lines.push('    ),');
-  lines.push('    verticalAlignment = Alignment.CenterVertically,');
-  lines.push('    modifier = Modifier');
-  if (type === 'primary') {
-    lines.push('        .background(');
-    lines.push('            color = Variables.mainButtonPrimaryBrand' + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Bg,');
-    lines.push('            shape = RoundedCornerShape(Variables.radiusRadiusPill)');
-    lines.push('        )');
-  } else if (type === 'secondary') {
-    var errS = s.isError ? 'Destructive' : 'Brand';
-    lines.push('        .border(');
-    lines.push('            width = 3.dp,');
-    lines.push('            color = Variables.mainButtonSecondary' + errS + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Border,');
-    lines.push('            shape = RoundedCornerShape(Variables.radiusRadiusPill)');
-    lines.push('        )');
+
+  // Component name based on style
+  var comp = 'EBButton';
+  if (type === 'outline') comp = 'EBOutlinedButton';
+  else if (type === 'text') comp = 'EBTextButton';
+
+  lines.push(comp + '(');
+  lines.push('    onClick = { /* action */ },');
+  lines.push('    size = EBButtonSize.' + szLabel + ',');
+
+  // Appearance mode
+  if (appLabel === 'destructive') {
+    lines.push('    colors = EBButtonDefaults.destructiveColors(),');
+  } else if (appLabel === 'white') {
+    lines.push('    colors = EBButtonDefaults.whiteColors(),');
+  } else if (appLabel === 'subtle') {
+    lines.push('    colors = EBButtonDefaults.subtleColors(),');
   }
-  lines.push('        .padding(Variables.' + pad + ')');
-  if (compact) lines.push('        .height(38.dp)');
+
+  // State
+  if (card.state === 'disabled') {
+    lines.push('    enabled = false,');
+  }
+
+  // Clean trailing comma on last param
+  var last = lines[lines.length - 1];
+  if (last.endsWith(',')) lines[lines.length - 1] = last.slice(0, -1);
+
   lines.push(') {');
-  lines.push('    // Child views.');
+  lines.push('    Text("Label")');
   lines.push('}');
-  lines.push('');
-  lines.push('// Variables');
-  lines.push('object Variables {');
-  if (type === 'primary') {
-    lines.push('    val mainButtonPrimaryBrand' + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Bg: Color = Color(0xFF' + bg.replace('#','') + ')');
-  } else if (type === 'secondary') {
-    var errS2 = s.isError ? 'Destructive' : 'Brand';
-    lines.push('    val mainButtonSecondary' + errS2 + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Border: Color = Color(0xFF' + bg.replace('#','') + ')');
-  } else {
-    var errS3 = s.isError ? 'Destructive' : 'Brand';
-    lines.push('    val mainButtonTertiary' + errS3 + (s.state.charAt(0).toUpperCase()+s.state.slice(1)) + 'Label: Color = Color(0xFF' + bg.replace('#','') + ')');
-  }
-  lines.push('    val radiusRadiusPill: Dp = 99.dp');
-  lines.push('    val ' + pad + ': Dp = ' + padVal + '.dp');
-  lines.push('    val spaceSpace0: Dp = 0.dp');
-  lines.push('}');
+
   return lines.join('\n');
 }
-function getSnippet(type, lang, s) {
-  if (lang === 'swift') return buildSwiftSnippet(type, s);
-  return buildComposeSnippet(type, s);
+
+function getSnippet(type, lang, card) {
+  if (lang === 'swift') return buildSwiftSnippet(type, card);
+  return buildComposeSnippet(type, card);
 }
 
 /* ── Style tab — spec card data ────────────────────────────────────── */
@@ -944,7 +1112,60 @@ function renderCard(type, change, btn) {
   }
   setTimeout(initPills, 60);
   updateCoverStats();
+  checkAuth();
+  if (typeof initSpecCards === 'function') initSpecCards();
 })();
+
+/* ── Login Gate ─────────────────────────────── */
+function handleLogin() {
+  var email = document.getElementById('login-email').value.trim().toLowerCase();
+  var pass = document.getElementById('login-password').value;
+  var emailErr = document.getElementById('login-email-error');
+  var passErr = document.getElementById('login-pass-error');
+  var emailInput = document.getElementById('login-email');
+  var passInput = document.getElementById('login-password');
+  var valid = true;
+
+  emailErr.style.display = 'none';
+  passErr.style.display = 'none';
+  emailInput.classList.remove('error');
+  passInput.classList.remove('error');
+
+  if (!email || !email.endsWith('@frostdesigngroup.com')) {
+    emailErr.style.display = 'block';
+    emailInput.classList.add('error');
+    valid = false;
+  }
+  if (!pass) {
+    passErr.style.display = 'block';
+    passInput.classList.add('error');
+    valid = false;
+  }
+  if (!valid) return;
+
+  localStorage.setItem('eb_auth', JSON.stringify({ email: email, time: Date.now() }));
+  document.getElementById('login-screen').style.display = 'none';
+}
+
+function checkAuth() {
+  var auth = localStorage.getItem('eb_auth');
+  if (auth) {
+    try {
+      var data = JSON.parse(auth);
+      if (data.email && data.email.endsWith('@frostdesigngroup.com')) {
+        document.getElementById('login-screen').style.display = 'none';
+        return;
+      }
+    } catch(e) {}
+  }
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    var ls = document.getElementById('login-screen');
+    if (ls && ls.style.display !== 'none') handleLogin();
+  }
+});
 </script>
 </body>
 </html>

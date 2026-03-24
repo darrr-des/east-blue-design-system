@@ -43,17 +43,31 @@ function extract(content, tag) {
 
 // ── Minify HTML ───────────────────────────────────────────────────────────────
 function minify(html) {
-  return html
+  // Preserve <pre> and <script> content by replacing with placeholders
+  const preserved = [];
+  html = html.replace(/<(pre|script)[\s\S]*?<\/\1>/gi, function(match) {
+    preserved.push(match);
+    return '%%PRESERVED_' + (preserved.length - 1) + '%%';
+  });
+
+  html = html
     // Remove HTML comments (but keep IE conditionals)
     .replace(/<!--(?!\[if)[\s\S]*?-->/g, '')
     // Collapse whitespace between tags
     .replace(/>\s+</g, '><')
     // Collapse multiple spaces into one
     .replace(/\s{2,}/g, ' ')
-    // Remove spaces around = in attributes
+    // Remove spaces around = in attributes (safe — no script content here)
     .replace(/\s*=\s*/g, '=')
     // Trim leading/trailing whitespace per line
     .split('\n').map(l => l.trim()).filter(Boolean).join('');
+
+  // Restore preserved blocks
+  html = html.replace(/%%PRESERVED_(\d+)%%/g, function(_, i) {
+    return preserved[parseInt(i)];
+  });
+
+  return html;
 }
 
 // ── Read shell ────────────────────────────────────────────────────────────────

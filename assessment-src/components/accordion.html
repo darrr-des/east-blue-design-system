@@ -80,9 +80,9 @@ open-issues: C7
   <div class="content-wrap">
 
     <!-- Back -->
-    <button class="back-btn" onclick="showPanelById('overview')">
+    <button class="back-btn" onclick="navigateComponents({target:this})">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Overview
+      Components
     </button>
 
     <!-- Component header -->
@@ -105,13 +105,566 @@ open-issues: C7
     <!-- ── Tab bar ──────────────────────────────────────────────── -->
     <div data-tab-group="accordion-tabs">
     <div class="comp-tabs">
-      <button class="comp-tab active" onclick="switchTab(this, 'assessment', 'accordion-tabs')">Assessment</button>
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'accordion-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'accordion-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'accordion-tabs')">Code</button>
       <button class="comp-tab" onclick="switchTab(this, 'changelog', 'accordion-tabs')">Changelog</button>
     </div>
 
-    <!-- ── Tab 2: Changelog ─────────────────────────────────────── -->
-    <div class="comp-tab-content" data-tab="changelog">
-    <div class="sub-heading">1.3.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
+    <!-- ── Tab: Overview ─────────────────────────────────────────── -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <!-- Verdict -->
+    <div class="verdict-card" id="acc-overview">
+      <button class="verdict-card-trigger" onclick="toggleVerdict(this)" aria-expanded="false">
+        <div class="verdict-card-trigger-body">
+          <span class="verdict-card-eyebrow">VERDICT</span>
+          <span class="verdict-card-title">Architecture refined — handoff-ready except Code Connect</span>
+        </div>
+        <svg class="verdict-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="verdict-card-body" hidden>Variant set reduced from 24 to 6 (Type=Collapsed/Expanded × State=Default/Pressed/Disabled) with <code>leadingIcon</code> and <code>description</code> as boolean visibility properties. Fixed 56px header height applied. Color tokens connected across all variants using the design system variable collection. Only Code Connect mappings (C7) remain.</div>
+    </div>
+
+    <!-- Live Demo -->
+    <div class="demo-panel" id="acc-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="acc-demo-preview-wrap">
+          <!-- Accordion row preview -->
+          <div id="demo-acc-live" style="width:340px;border:1px solid #E5EBF4;border-radius:0;overflow:hidden;font-family:'Proxima Soft', sans-serif;">
+            <!-- Header row -->
+            <div id="demo-acc-header" style="display:flex;align-items:center;gap:8px;padding:4px 16px;height:56px;background:#FFFFFF;border-bottom:none;box-sizing:border-box;">
+              <div id="demo-acc-icon" style="width:32px;height:32px;border-radius:6px;background:#C2C6CF;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="3" width="10" height="10" rx="2" fill="#fff" opacity=".8"/></svg>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div id="demo-acc-label" style="font-size:16px;font-weight:700;color:#0A2757;line-height:20px;letter-spacing:0.25px;">Accordion Label</div>
+                <div id="demo-acc-desc" style="font-family:'BarkAda',sans-serif;font-size:14px;font-weight:500;color:#90A8D0;line-height:20px;display:none;">Description text</div>
+              </div>
+              <div id="demo-acc-chevron" style="width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                <svg id="demo-acc-chevron-svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="#0A2757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+            <!-- Content body (shown only when expanded) -->
+            <div id="demo-acc-body" style="display:none;height:56px;background:#F4F7FB;border-top:1px solid #E5EBF4;padding:12px 16px;box-sizing:border-box;">
+              <div style="height:8px;border-radius:4px;background:#C5D5E8;margin-bottom:8px;width:80%;"></div>
+              <div style="height:8px;border-radius:4px;background:#C5D5E8;width:60%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Type</span>
+              <select class="demo-panel-select" onchange="setAccDemoType(this.value)">
+                <option value="collapsed" selected>Collapsed</option>
+                <option value="expanded">Expanded</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <select class="demo-panel-select" onchange="setAccDemoState(this.value)">
+                <option value="default" selected>Default</option>
+                <option value="pressed">Pressed</option>
+                <option value="disabled">Disabled</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leadingIcon</span>
+              <select class="demo-panel-select" onchange="setAccDemoProp('leadingIcon', this.value === 'true')">
+                <option value="true" selected>true</option>
+                <option value="false">false</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">description</span>
+              <select class="demo-panel-select" onchange="setAccDemoProp('description', this.value === 'true')">
+                <option value="false" selected>false</option>
+                <option value="true">true</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DS Health -->
+    <div class="sub-heading" id="acc-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Reusable</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">
+          Expanded variants include a <code>content-body</code> slot. Boolean visibility on <code>leadingIcon</code> and <code>description</code> lets designers configure the component without extra variants.
+        </div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Self-contained</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">
+          Header row (56px fixed height) and <code>content-body</code> panel are both included. Engineers can implement it as a standalone unit with no external spec needed.
+        </div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Consistent</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">
+          A single variant property (<code>Type</code>) drives collapsed/expanded. <code>leadingIcon</code> and <code>description</code> are boolean show/hide properties — no duplicate variants needed.
+        </div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Composable</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">
+          Semantic layer names (<code>icon-leading</code>, <code>content</code>, <code>trailing-icon</code>). Chevrons are vector instances. The icon slot accepts instances cleanly.
+        </div>
+      </div>
+    </div>
+
+    <!-- Resolved Issues -->
+    <div class="sub-heading" id="acc-resolved">Resolved Issues</div>
+    <ul class="resolved-list">
+      <li>Boolean properties converted from yes/no to true/false (C2)</li>
+      <li>Layer names corrected to semantic naming: <code>container</code>, <code>icon-leading</code>, <code>content</code>, <code>trailing-icon</code> (C1)</li>
+      <li>Pressed and disabled interaction states added across all 6 variants (C5)</li>
+      <li>Expanded content panel with <code>content-body</code> SLOT added to all expanded variants (C4)</li>
+      <li>Variant set reduced from 24 to 6 — <code>Type</code> × <code>State</code> matrix (C2)</li>
+      <li><code>leadingIcon</code> and <code>description</code> converted to boolean visibility properties</li>
+      <li>Fixed 56px header height applied across all 6 variants</li>
+      <li>9 design tokens connected: <code>surface/default</code>, <code>border/subtle</code>, <code>text/primary</code>, <code>text/secondary</code>, <code>icon/placeholder</code>, <code>surface/pressed</code>, <code>surface/content</code>, <code>surface/disabled</code>, <code>text/disabled</code> (C3)</li>
+      <li>Annotation instance frame built with nested auto layout (Type × State grid)</li>
+    </ul>
+
+    <!-- Open Issues -->
+    <div class="sub-heading" id="acc-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li>Code Connect CLI mappings not registered — no native component files linked (C7)</li>
+      <li>Custom fonts (Proxima Soft label, BarkAda description) must be bundled in native apps — map to <code>UIFont(name:)</code> / <code>Font.custom()</code> on iOS and <code>fontFamily</code> in Compose theme</li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ── Tab: Style ─────────────────────────────────────────────── -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="acc-styles" style="margin-top:0">Styles</div>
+
+    <!-- ═══ Collapsed ═══ -->
+    <div class="spec-card" id="acc-spec-collapsed">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="acc-collapsed" style="margin-top:0">Collapsed</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="16870:9289" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>16870:9289</span></button>
+          <div class="spec-mode-toggle" onclick="toggleAccSpecMode('acc-collapsed', this)"><span class="spec-mode-label active">DES</span><span class="spec-mode-label">DEV</span></div>
+        </div>
+        <p class="spec-card-desc">Header row only — 56px fixed height. Trailing chevron points down. Tap anywhere in the row to expand.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview">
+          <!-- Collapsed preview -->
+          <div id="spec-acc-collapsed-preview" style="width:320px;border:1px solid #E5EBF4;border-radius:0;overflow:hidden;font-family:'Proxima Soft', sans-serif;">
+            <div id="spec-acc-collapsed-header" style="display:flex;align-items:center;gap:8px;padding:4px 16px;height:56px;background:#FFFFFF;box-sizing:border-box;">
+              <div id="spec-acc-collapsed-icon" style="width:32px;height:32px;border-radius:6px;background:#C2C6CF;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="3" width="10" height="10" rx="2" fill="#fff" opacity=".8"/></svg>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div id="spec-acc-collapsed-label" style="font-size:16px;font-weight:700;color:#0A2757;line-height:20px;letter-spacing:0.25px;">Label</div>
+                <div id="spec-acc-collapsed-desc" style="font-family:'BarkAda',sans-serif;font-size:14px;font-weight:500;color:#90A8D0;line-height:20px;display:none;">Description</div>
+              </div>
+              <div style="width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path id="spec-acc-collapsed-chev" d="M5 7.5l5 5 5-5" stroke="#0A2757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <select class="demo-panel-select" onchange="updateAccSpecCard('collapsed', 'state', this.value)">
+                <option value="default" selected>Default</option>
+                <option value="pressed">Pressed</option>
+                <option value="disabled">Disabled</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leadingIcon</span>
+              <select class="demo-panel-select" onchange="updateAccSpecCard('collapsed', 'leadingIcon', this.value === 'true')">
+                <option value="true" selected>true</option>
+                <option value="false">false</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">description</span>
+              <select class="demo-panel-select" onchange="updateAccSpecCard('collapsed', 'description', this.value === 'true')">
+                <option value="false" selected>false</option>
+                <option value="true">true</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card-detail spec-view-des" data-view="acc-collapsed-des">
+        <div class="spec-detail-section" id="spec-acc-collapsed-props">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Type</span><span class="spec-prop-val">Collapsed</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">State</span><span class="spec-prop-val" data-sp="acc-collapsed-state">Default</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">leadingIcon</span><span class="spec-prop-val" data-sp="acc-collapsed-leadingIcon">true</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">description</span><span class="spec-prop-val" data-sp="acc-collapsed-description">false</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" id="spec-acc-collapsed-colors"></div>
+        <div class="spec-detail-section" id="spec-acc-collapsed-layout">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Width</span><span class="spec-prop-val mono">396px (fill)</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Header height</span><span class="spec-prop-val mono">56px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Padding H</span><span class="spec-prop-val mono">16px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Padding V</span><span class="spec-prop-val mono">4px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Leading icon</span><span class="spec-prop-val mono">32×32px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Trailing icon</span><span class="spec-prop-val mono">32×32px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Corner radius</span><span class="spec-prop-val mono">0 (rectangular)</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Border</span><span class="spec-prop-val mono">1px solid #E5EBF4</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" id="spec-acc-collapsed-typo">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Label font</span><span class="spec-prop-val mono">Proxima Soft Bold</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Label size</span><span class="spec-prop-val mono">16px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Label tracking</span><span class="spec-prop-val mono">0.25px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Label line-height</span><span class="spec-prop-val mono">20px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Desc font</span><span class="spec-prop-val mono">BarkAda SemiBold</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Desc size</span><span class="spec-prop-val mono">14px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Desc tracking</span><span class="spec-prop-val mono">0</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Desc line-height</span><span class="spec-prop-val mono">20px</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card-detail spec-card-code" data-view="acc-collapsed-dev" style="display:none">
+        <div class="spec-code-tabs">
+          <button class="spec-code-tab active" onclick="switchAccCodeTab(this, 'swift', 'collapsed')">SWIFTUI</button>
+          <button class="spec-code-tab" onclick="switchAccCodeTab(this, 'compose', 'collapsed')">COMPOSE</button>
+        </div>
+        <pre class="spec-code-block"><code data-code-content="acc-collapsed" data-final="">// Click DEV to generate code</code></pre>
+      </div>
+    </div>
+
+    <!-- ═══ Expanded ═══ -->
+    <div class="spec-card" id="acc-spec-expanded">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="acc-expanded" style="margin-top:0">Expanded</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="16870:9298" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>16870:9298</span></button>
+          <div class="spec-mode-toggle" onclick="toggleAccSpecMode('acc-expanded', this)"><span class="spec-mode-label active">DES</span><span class="spec-mode-label">DEV</span></div>
+        </div>
+        <p class="spec-card-desc">Header row (56px) + content-body panel (56px SLOT) = 112px total height. Trailing chevron points up. Content-body background uses <code>surface/content</code> token.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview">
+          <!-- Expanded preview -->
+          <div id="spec-acc-expanded-preview" style="width:320px;border:1px solid #E5EBF4;border-radius:0;overflow:hidden;font-family:'Proxima Soft', sans-serif;">
+            <div id="spec-acc-expanded-header" style="display:flex;align-items:center;gap:8px;padding:4px 16px;height:56px;background:#FFFFFF;border-bottom:1px solid #E5EBF4;box-sizing:border-box;">
+              <div id="spec-acc-expanded-icon" style="width:32px;height:32px;border-radius:6px;background:#C2C6CF;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="3" width="10" height="10" rx="2" fill="#fff" opacity=".8"/></svg>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div id="spec-acc-expanded-label" style="font-size:16px;font-weight:700;color:#0A2757;line-height:20px;letter-spacing:0.25px;">Label</div>
+                <div id="spec-acc-expanded-desc" style="font-family:'BarkAda',sans-serif;font-size:14px;font-weight:500;color:#90A8D0;line-height:20px;display:none;">Description</div>
+              </div>
+              <div style="width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path id="spec-acc-expanded-chev" d="M5 12.5l5-5 5 5" stroke="#0A2757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+            <div id="spec-acc-expanded-body" style="height:56px;background:#F4F7FB;padding:12px 16px;box-sizing:border-box;">
+              <div style="height:8px;border-radius:4px;background:#C5D5E8;margin-bottom:8px;width:80%;"></div>
+              <div style="height:8px;border-radius:4px;background:#C5D5E8;width:60%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <select class="demo-panel-select" onchange="updateAccSpecCard('expanded', 'state', this.value)">
+                <option value="default" selected>Default</option>
+                <option value="pressed">Pressed</option>
+                <option value="disabled">Disabled</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leadingIcon</span>
+              <select class="demo-panel-select" onchange="updateAccSpecCard('expanded', 'leadingIcon', this.value === 'true')">
+                <option value="true" selected>true</option>
+                <option value="false">false</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">description</span>
+              <select class="demo-panel-select" onchange="updateAccSpecCard('expanded', 'description', this.value === 'true')">
+                <option value="false" selected>false</option>
+                <option value="true">true</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card-detail spec-view-des" data-view="acc-expanded-des">
+        <div class="spec-detail-section" id="spec-acc-expanded-props">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Type</span><span class="spec-prop-val">Expanded</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">State</span><span class="spec-prop-val" data-sp="acc-expanded-state">Default</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">leadingIcon</span><span class="spec-prop-val" data-sp="acc-expanded-leadingIcon">true</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">description</span><span class="spec-prop-val" data-sp="acc-expanded-description">false</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" id="spec-acc-expanded-colors"></div>
+        <div class="spec-detail-section" id="spec-acc-expanded-layout">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Width</span><span class="spec-prop-val mono">396px (fill)</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Header height</span><span class="spec-prop-val mono">56px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Content-body height</span><span class="spec-prop-val mono">56px (SLOT)</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Total height</span><span class="spec-prop-val mono">112px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Padding H</span><span class="spec-prop-val mono">16px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Padding V</span><span class="spec-prop-val mono">4px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Leading icon</span><span class="spec-prop-val mono">32×32px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Trailing icon</span><span class="spec-prop-val mono">32×32px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Corner radius</span><span class="spec-prop-val mono">0 (rectangular)</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Border</span><span class="spec-prop-val mono">1px solid #E5EBF4</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Divider</span><span class="spec-prop-val mono">1px solid #E5EBF4 (header/body)</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" id="spec-acc-expanded-typo">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Label font</span><span class="spec-prop-val mono">Proxima Soft Bold</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Label size</span><span class="spec-prop-val mono">16px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Label tracking</span><span class="spec-prop-val mono">0.25px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Label line-height</span><span class="spec-prop-val mono">20px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Desc font</span><span class="spec-prop-val mono">BarkAda SemiBold</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Desc size</span><span class="spec-prop-val mono">14px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Desc tracking</span><span class="spec-prop-val mono">0</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Desc line-height</span><span class="spec-prop-val mono">20px</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card-detail spec-card-code" data-view="acc-expanded-dev" style="display:none">
+        <div class="spec-code-tabs">
+          <button class="spec-code-tab active" onclick="switchAccCodeTab(this, 'swift', 'expanded')">SWIFTUI</button>
+          <button class="spec-code-tab" onclick="switchAccCodeTab(this, 'compose', 'expanded')">COMPOSE</button>
+        </div>
+        <pre class="spec-code-block"><code data-code-content="acc-expanded" data-final="">// Click DEV to generate code</code></pre>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- ── Tab: Code ─────────────────────────────────────────────── -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="acc-scorecard" style="margin-top:0">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">ID</th>
+            <th class="col-md">Criterion</th>
+            <th class="col-badge">Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono center">C1</td>
+            <td><strong>Layer Structure &amp; Naming</strong></td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted">Semantic names across all variants: <code>container</code>, <code>icon-leading</code>, <code>content</code>, <code>trailing-icon</code>.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C2</td>
+            <td><strong>Variant &amp; Property Naming</strong></td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted">Boolean properties use <code>true</code>/<code>false</code>. Variant keys use <code>key=value</code> syntax. <code>leadingIcon</code> and <code>description</code> are boolean visibility props.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C3</td>
+            <td><strong>Token Coverage</strong></td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted">9 tokens bound across all 6 variants. All colors, spacing, and typography fully tokenized.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C4</td>
+            <td><strong>Native Mappability</strong></td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted">Header + content-body SLOT maps cleanly to <code>DisclosureGroup</code> (SwiftUI) and <code>AnimatedVisibility</code> (Compose).</td>
+          </tr>
+          <tr>
+            <td class="mono center">C5</td>
+            <td><strong>Interaction State Coverage</strong></td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted">Default, pressed, and disabled states covered across all 6 variants. Focus ring N/A — mobile OS handles natively.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C6</td>
+            <td><strong>Asset &amp; Icon Quality</strong></td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted">Chevrons are vector component instances. Leading icon is a SLOT placeholder accepting any icon instance.</td>
+          </tr>
+          <tr>
+            <td class="mono center">C7</td>
+            <td><strong>Code Connect Linkability</strong></td>
+            <td><span class="badge badge-refine">Needs Refinement</span></td>
+            <td class="muted">No Code Connect mappings registered. Property structure is clean and ready for mapping — suggested paths below.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="acc-codeconnect">Code Connect — Readiness</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Aspect</th>
+            <th class="col-badge">Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Component type</strong></td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted">Proper Figma component set.</td>
+          </tr>
+          <tr>
+            <td><strong>Variant naming</strong></td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted"><code>key=value</code> syntax with <code>true</code>/<code>false</code> booleans.</td>
+          </tr>
+          <tr>
+            <td><strong>Property naming</strong></td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted">Clean 1:1 mapping to native params.</td>
+          </tr>
+          <tr>
+            <td><strong>Layer naming</strong></td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted"><code>container</code>, <code>icon-leading</code>, <code>content</code>, <code>trailing-icon</code>.</td>
+          </tr>
+          <tr>
+            <td><strong>Token coverage</strong></td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted">All 9 tokens bound — colors, spacing, and typography.</td>
+          </tr>
+          <tr>
+            <td><strong>Asset quality</strong></td>
+            <td><span class="badge badge-ready">Ready</span></td>
+            <td class="muted">Chevrons are vector component instances. Icon slot is SLOT type.</td>
+          </tr>
+          <tr>
+            <td><strong>Code Connect</strong></td>
+            <td><span class="badge badge-empty">Not Mapped</span></td>
+            <td class="muted">No mappings registered. Suggested paths below.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/Accordion/Accordion.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/accordion/Accordion.kt</div>
+    </div>
+
+    <div class="sub-heading" id="acc-mapping">Code Connect — Property Mapping</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Figma Property</th>
+            <th>SwiftUI Param</th>
+            <th>Compose Param</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">type</td>
+            <td class="mono">isExpanded: Bool</td>
+            <td class="mono">isExpanded: Boolean</td>
+            <td class="muted"><code>collapsed</code> → <code>false</code>, <code>expanded</code> → <code>true</code></td>
+          </tr>
+          <tr>
+            <td class="mono">state</td>
+            <td class="mono">isDisabled: Bool</td>
+            <td class="mono">enabled: Boolean</td>
+            <td class="muted">Pressed handled natively by gesture recognizer / ripple</td>
+          </tr>
+          <tr>
+            <td class="mono">leadingIcon</td>
+            <td class="mono">leadingIcon: Image?</td>
+            <td class="mono">leadingIcon: @Composable?</td>
+            <td class="muted"><code>nil</code>/<code>null</code> hides the icon slot</td>
+          </tr>
+          <tr>
+            <td class="mono">description</td>
+            <td class="mono">description: String?</td>
+            <td class="mono">description: String?</td>
+            <td class="muted"><code>nil</code>/<code>null</code> hides the description</td>
+          </tr>
+          <tr>
+            <td class="mono">Content-Body (SLOT)</td>
+            <td class="mono">content: () -&gt; View</td>
+            <td class="mono">content: @Composable () -&gt; Unit</td>
+            <td class="muted">Native Figma SLOT — maps to trailing closure / composable lambda</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="acc-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(6 total)</span></div>
+    <p>2 <code>Type</code> values × 3 <code>State</code> values. <code>leadingIcon</code> and <code>description</code> are boolean visibility properties, not variant axes.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>State</th>
+            <th>Node ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Collapsed</td><td>Default</td><td class="mono">16870:9289</td></tr>
+          <tr><td>Expanded</td><td>Default</td><td class="mono">16870:9298</td></tr>
+          <tr><td>Collapsed</td><td>Pressed</td><td class="mono">16919:864</td></tr>
+          <tr><td>Expanded</td><td>Pressed</td><td class="mono">16919:877</td></tr>
+          <tr><td>Collapsed</td><td>Disabled</td><td class="mono">16919:956</td></tr>
+          <tr><td>Expanded</td><td>Disabled</td><td class="mono">16919:969</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- ── Tab: Changelog ────────────────────────────────────────── -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+
+    <div class="sub-heading" id="acc-v130" style="margin-top:0">1.3.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
     <div class="changelog">
       <div class="changelog-header">Changes Applied via Figma MCP · node 16870:9288</div>
       <div class="changelog-row">
@@ -151,19 +704,19 @@ open-issues: C7
       </div>
     </div>
 
-    <div class="sub-heading">1.2.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
+    <div class="sub-heading" id="acc-v120">1.2.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
     <div class="changelog">
       <div class="changelog-header">Changes Applied via Figma MCP · node 16870:9288</div>
       <div class="changelog-row">
         <div class="changelog-body">
-          <strong>Added expanded content panel (content-body)</strong> — All 12 expanded variants resized from 62px to 142px. A <code>content-body</code> frame (360x80px) added at y=62 inside each container. Background: #F4F7FB (<code>surface/expanded-body</code> token). Border: #E5EBF4. Fully resolves C4.
+          <strong>Added expanded content panel (content-body)</strong> — All 12 expanded variants resized from 62px to 142px. A <code>content-body</code> frame (360×80px) added at y=62 inside each container. Background: #F4F7FB (<code>surface/content</code> token). Border: #E5EBF4. Fully resolves C4.
           <span class="tag-fixed">Fixed</span>
         </div>
         <span class="changelog-delta delta-resolved">C4 Resolved</span>
       </div>
     </div>
 
-    <div class="sub-heading">1.1.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
+    <div class="sub-heading" id="acc-v110">1.1.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
     <div class="changelog">
       <div class="changelog-header">Changes Applied via Figma MCP · node 16870:9288</div>
       <div class="changelog-row">
@@ -175,7 +728,7 @@ open-issues: C7
       </div>
     </div>
 
-    <div class="sub-heading">1.0.1 — March 2026 <span class="tab-version-badge patch">Patch</span></div>
+    <div class="sub-heading" id="acc-v101">1.0.1 — March 2026 <span class="tab-version-badge patch">Patch</span></div>
     <div class="changelog">
       <div class="changelog-header">Changes Applied via Figma MCP · node 16830:2025</div>
       <div class="changelog-row">
@@ -201,15 +754,15 @@ open-issues: C7
       </div>
       <div class="changelog-row">
         <div class="changelog-body">
-          <strong>Expanded content panel</strong> — Resolved in v4. <code>content-body</code> frame added to all 12 expanded variants.
-          <span class="tag-fixed">Fixed in v4</span>
+          <strong>Expanded content panel</strong> — Resolved in v1.2.0. <code>content-body</code> frame added to all 12 expanded variants.
+          <span class="tag-fixed">Fixed in 1.2.0</span>
         </div>
         <span class="changelog-delta delta-resolved">C4 Resolved</span>
       </div>
       <div class="changelog-row">
         <div class="changelog-body">
-          <strong>Interaction states: pressed / disabled</strong> — Resolved in v3. 16 new variants added across all type/icon/desc combinations.
-          <span class="tag-fixed">Fixed in v3</span>
+          <strong>Interaction states: pressed / disabled</strong> — Resolved in v1.1.0. 16 new variants added across all type/icon/desc combinations.
+          <span class="tag-fixed">Fixed in 1.1.0</span>
         </div>
         <span class="changelog-delta delta-resolved">C5 Resolved</span>
       </div>
@@ -221,413 +774,8 @@ open-issues: C7
         <span class="changelog-delta delta-open">C7 Open</span>
       </div>
     </div>
-    </div><!-- /comp-tab-content changelog -->
 
-    <!-- ── Tab 1: Assessment ────────────────────────────────────── -->
-    <div class="comp-tab-content active" data-tab="assessment">
-
-    <!-- ── DS Health ─────────────────────────────────────────────── -->
-    <div class="section-heading">DS Health</div>
-
-    <div class="verdict-card">
-      <button class="verdict-card-trigger" onclick="toggleVerdict(this)" aria-expanded="false">
-        <div class="verdict-card-trigger-body">
-          <span class="verdict-card-eyebrow">VERDICT</span>
-          <span class="verdict-card-title">Architecture refined — handoff-ready except Code Connect</span>
-        </div>
-        <svg class="verdict-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="verdict-card-body" hidden>Variant set reduced from 24 to 6 (Type=Collapsed/Expanded × State=Default/Pressed/Disabled) with <code>leadingIcon</code> and <code>description</code> as boolean visibility properties. Fixed 56px header height applied. Color tokens connected across all variants using the design system variable collection. Only Code Connect mappings (C7) remain.</div>
-    </div>
-
-    <!-- 4 Traits -->
-    <div class="sub-heading">The 4 Traits — Scorecard</div>
-    <div class="trait-grid">
-      <div class="trait-card pass">
-        <div class="trait-header">
-          <div class="trait-name">Reusable</div>
-          <div class="trait-status">Pass</div>
-        </div>
-        <div class="trait-note">
-          Expanded variants include a <code>content-body</code> slot. Boolean visibility on <code>leadingIcon</code> and <code>description</code> lets designers configure the component without extra variants.
-        </div>
-      </div>
-      <div class="trait-card pass">
-        <div class="trait-header">
-          <div class="trait-name">Self-contained</div>
-          <div class="trait-status">Pass</div>
-        </div>
-        <div class="trait-note">
-          Header row (56px fixed height) and <code>content-body</code> panel are both included. Engineers can implement it as a standalone unit with no external spec needed.
-        </div>
-      </div>
-      <div class="trait-card pass">
-        <div class="trait-header">
-          <div class="trait-name">Consistent</div>
-          <div class="trait-status">Pass</div>
-        </div>
-        <div class="trait-note">
-          A single variant property (<code>Type</code>) drives collapsed/expanded. <code>leadingIcon</code> and <code>description</code> are boolean show/hide properties — no duplicate variants needed.
-        </div>
-      </div>
-      <div class="trait-card pass">
-        <div class="trait-header">
-          <div class="trait-name">Composable</div>
-          <div class="trait-status">Pass</div>
-        </div>
-        <div class="trait-note">
-          Semantic layer names (<code>leading-icon</code>, <code>content</code>, <code>trailing-icon</code>). Chevrons are vector instances. The icon slot accepts instances cleanly.
-        </div>
-      </div>
-    </div>
-
-    <!-- Resolved Issues -->
-    <div class="sub-heading">Resolved Issues</div>
-    <ul class="resolved-list">
-      <li>Boolean properties converted from yes/no to true/false (C2)</li>
-      <li>Layer names corrected to semantic naming (C1)</li>
-      <li>Pressed and disabled interaction states added (C5)</li>
-      <li>Expanded content panel with content-body slot added (C4)</li>
-      <li>Variant set reduced from 24 to 6 — <code>Type</code> × <code>State</code> matrix (C2)</li>
-      <li><code>leadingIcon</code> and <code>description</code> converted to boolean visibility properties</li>
-      <li>Fixed 56px header height applied across all 6 variants</li>
-      <li>Annotation instance frame built with nested auto layout (Type × State grid)</li>
-    </ul>
-
-    <!-- ── Native Mobile Readiness ─────────────────────────────── -->
-    <div class="section-heading" style="margin-top:48px">Native Mobile Readiness</div>
-
-    <!-- Variants Inventory -->
-    <div class="sub-heading">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:14px">(6 total)</span></div>
-    <p>2 <code>Type</code> values × 3 <code>State</code> values. <code>leadingIcon</code> and <code>description</code> are boolean visibility properties, not variant axes.</p>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>State</th>
-            <th>Node ID</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Collapsed</td><td>Default</td>
-            <td class="mono">16870:9289</td>
-          </tr>
-          <tr>
-            <td>Expanded</td><td>Default</td>
-            <td class="mono">16870:9298</td>
-          </tr>
-          <tr>
-            <td>Collapsed</td><td>Pressed</td>
-            <td class="mono">16919:864</td>
-          </tr>
-          <tr>
-            <td>Expanded</td><td>Pressed</td>
-            <td class="mono">16919:877</td>
-          </tr>
-          <tr>
-            <td>Collapsed</td><td>Disabled</td>
-            <td class="mono">16919:956</td>
-          </tr>
-          <tr>
-            <td>Expanded</td><td>Disabled</td>
-            <td class="mono">16919:969</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Criteria Scorecard -->
-    <div class="sub-heading">Criteria Scorecard</div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th class="col-id">ID</th>
-            <th class="col-md">Criterion</th>
-            <th class="col-badge">Rating</th>
-            <th>Summary</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="mono center">C1</td>
-            <td><strong>Layer Structure &amp; Naming</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">Semantic names across all variants: <code>container</code>, <code>icon-leading</code>, <code>content</code>, <code>trailing-icon</code>.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C2</td>
-            <td><strong>Variant &amp; Property Naming</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">Boolean properties use <code>true</code>/<code>false</code>. Variant keys use <code>key=value</code> syntax.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C3</td>
-            <td><strong>Token Coverage</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">All colors, spacing, and typography fully tokenized.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C4</td>
-            <td><strong>Native Mappability</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">Header + content-body slot maps to <code>DisclosureGroup</code> / <code>AnimatedVisibility</code>.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C5</td>
-            <td><strong>Interaction State Coverage</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">Default, pressed, and disabled states covered across all 6 variants.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C6</td>
-            <td><strong>Asset &amp; Icon Quality</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">Chevrons are vector component instances. Leading icon is a slot placeholder.</td>
-          </tr>
-          <tr>
-            <td class="mono center">C7</td>
-            <td><strong>Code Connect Linkability</strong></td>
-            <td><span class="badge badge-refine">Needs Refinement</span></td>
-            <td class="muted">No Code Connect mappings registered yet.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Interaction States -->
-    <div class="sub-heading">Interaction States</div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>State</th>
-            <th class="col-sm center">Expected</th>
-            <th class="col-sm center">Present</th>
-            <th>Variant / Property</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Default (Collapsed)</strong></td>
-            <td class="center"><span class="check">Yes</span></td>
-            <td class="center"><span class="check">Yes</span></td>
-            <td class="mono">type=collapsed</td>
-            <td class="muted">Fully defined across all combinations.</td>
-          </tr>
-          <tr>
-            <td><strong>Default (Expanded)</strong></td>
-            <td class="center"><span class="check">Yes</span></td>
-            <td class="center"><span class="check">Yes</span></td>
-            <td class="mono">type=expanded</td>
-            <td class="muted">Fully defined across all combinations.</td>
-          </tr>
-          <tr>
-            <td><strong>Pressed / Active</strong></td>
-            <td class="center"><span class="check">Yes</span></td>
-            <td class="center"><span class="check">Yes</span></td>
-            <td class="mono">state=pressed</td>
-            <td class="muted">Light blue background — <code>surface/pressed</code> (#EEF3FB) token applied.</td>
-          </tr>
-          <tr>
-            <td><strong>Disabled</strong></td>
-            <td class="center"><span class="check">Yes</span></td>
-            <td class="center"><span class="check">Yes</span></td>
-            <td class="mono">state=disabled</td>
-            <td class="muted"><code>surface/disabled</code> (#F6F9FD) and <code>text/disabled</code> (#C2CFE5) tokens applied.</td>
-          </tr>
-          <tr>
-            <td><strong>Focused (a11y)</strong></td>
-            <td class="center"><span class="check">Yes</span></td>
-            <td class="center"><span class="cross">&#x2717;</span></td>
-            <td class="muted center">—</td>
-            <td class="muted">No focus ring defined. Required for keyboard/switch navigation.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="table-footnote">Loading and error states are not applicable for accordion headers.</p>
-
-    <!-- Native Translatability -->
-    <div class="sub-heading">What Works Well</div>
-    <ul class="findings">
-      <li>Simple horizontal row layout maps directly to <code>HStack</code>/<code>Row</code> with no web-specific assumptions.</li>
-      <li>Collapsed/expanded toggle maps cleanly to <code>DisclosureGroup</code> (SwiftUI) or <code>AnimatedVisibility</code> (Compose).</li>
-      <li>Chevron icons are Figma component instances — export cleanly as SVG/PDF for iOS or VectorDrawable for Android.</li>
-      <li>All spacing and padding values are tokenized (<code>space/space-12</code>, <code>space/space-16</code>).</li>
-      <li>Color tokens explicitly separate collapsed and expanded states for direct 1:1 native mapping.</li>
-    </ul>
-
-    <div class="sub-heading">Open Issues</div>
-
-    <div class="issue-block">
-      <div class="issue-title">Custom Fonts — Device Availability</div>
-      <div class="infobox infobox-issue">
-        <p>The label uses "Proxima Soft" and the description uses "BarkAda" — neither are system fonts on iOS or Android. Both must be bundled in the native app.</p>
-        <p>Map tokens to <code>UIFont(name:)</code> / <code>Font.custom()</code> on iOS and <code>fontFamily</code> in the Compose theme on Android.</p>
-      </div>
-    </div>
-
-    <!-- Code Connect Readiness -->
-    <div class="sub-heading">Code Connect Readiness</div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Aspect</th>
-            <th class="col-badge">Status</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Component type</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">Proper Figma component set.</td>
-          </tr>
-          <tr>
-            <td><strong>Variant naming</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted"><code>key=value</code> syntax with <code>true</code>/<code>false</code> booleans.</td>
-          </tr>
-          <tr>
-            <td><strong>Property naming</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">Clean 1:1 mapping to native params.</td>
-          </tr>
-          <tr>
-            <td><strong>Layer naming</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted"><code>container</code>, <code>icon-leading</code>, <code>content</code>, <code>trailing-icon</code>.</td>
-          </tr>
-          <tr>
-            <td><strong>Token coverage</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">All values tokenized.</td>
-          </tr>
-          <tr>
-            <td><strong>Asset quality</strong></td>
-            <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">Chevrons are vector component instances.</td>
-          </tr>
-          <tr>
-            <td><strong>Code Connect</strong></td>
-            <td><span class="badge badge-empty">Not Mapped</span></td>
-            <td class="muted">No mappings registered. Suggested paths below.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="infobox infobox-code">
-      <div class="path-label">SwiftUI</div>
-      <div class="path-box">ios/Components/Accordion/Accordion.swift</div>
-      <div class="path-label">Jetpack Compose</div>
-      <div class="path-box">android/components/accordion/Accordion.kt</div>
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Figma Property</th>
-            <th>SwiftUI Param</th>
-            <th>Compose Param</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="mono">type</td>
-            <td class="mono">isExpanded: Bool</td>
-            <td class="mono">isExpanded: Boolean</td>
-            <td class="muted"><code>collapsed</code> maps to <code>false</code>, <code>expanded</code> to <code>true</code></td>
-          </tr>
-          <tr>
-            <td class="mono">state</td>
-            <td class="mono">isDisabled: Bool</td>
-            <td class="mono">enabled: Boolean</td>
-            <td class="muted">Pressed handled natively by gesture recognizer</td>
-          </tr>
-          <tr>
-            <td class="mono">leadingIcon</td>
-            <td class="mono">leadingIcon: Image?</td>
-            <td class="mono">leadingIcon: @Composable?</td>
-            <td class="muted"><code>nil</code>/<code>null</code> hides the icon</td>
-          </tr>
-          <tr>
-            <td class="mono">description</td>
-            <td class="mono">description: String?</td>
-            <td class="mono">description: String?</td>
-            <td class="muted"><code>nil</code>/<code>null</code> hides the description</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Design Token Coverage -->
-    <div class="sub-heading">Design Token Coverage</div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Token Name</th>
-            <th>Value</th>
-            <th>Native Note</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td class="mono">surface/default</td><td class="mono">#FFFFFF</td><td class="muted">Default background — collapsed and expanded</td></tr>
-          <tr><td class="mono">border/subtle</td><td class="mono">#E5EBF4</td><td class="muted">Container border and divider color</td></tr>
-          <tr><td class="mono">text/primary</td><td class="mono">#0A2757</td><td class="muted">Label text</td></tr>
-          <tr><td class="mono">text/secondary</td><td class="mono">#90A8D0</td><td class="muted">Description text</td></tr>
-          <tr><td class="mono">icon/placeholder</td><td class="mono">#C2C6CF</td><td class="muted">Leading icon placeholder tint</td></tr>
-          <tr><td class="mono">surface/pressed</td><td class="mono">#EEF3FB</td><td class="muted">Pressed state background</td></tr>
-          <tr><td class="mono">surface/content</td><td class="mono">#F4F7FB</td><td class="muted">Expanded content-body panel background</td></tr>
-          <tr><td class="mono">surface/disabled</td><td class="mono">#F6F9FD</td><td class="muted">Disabled state background</td></tr>
-          <tr><td class="mono">text/disabled</td><td class="mono">#C2CFE5</td><td class="muted">Disabled label and description text</td></tr>
-          <tr><td class="mono">font-family/font-primary</td><td class="mono">Proxima Soft</td><td class="muted">Verify bundle in native app</td></tr>
-          <tr><td class="mono">font-family/font-secondary</td><td class="mono">BarkAda</td><td class="muted">Verify bundle in native app</td></tr>
-          <tr><td class="mono">font-size/font-size-25</td><td class="mono">16px</td><td class="muted">Label size</td></tr>
-          <tr><td class="mono">font-size/font-size-20</td><td class="mono">14px</td><td class="muted">Description size</td></tr>
-          <tr><td class="mono">space/space-12</td><td class="mono">12px</td><td class="muted">Vertical padding</td></tr>
-          <tr><td class="mono">space/space-16</td><td class="mono">16px</td><td class="muted">Horizontal padding</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Action Items -->
-    <div class="sub-heading">Action Items</div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th class="col-id">#</th>
-            <th class="col-sm">Criterion</th>
-            <th>Action</th>
-            <th class="col-md">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="mono center">1</td>
-            <td class="mono">C3/C4</td>
-            <td>Confirm <strong>Proxima Soft</strong> and <strong>BarkAda</strong> are bundled in native apps. Document font token mapping in the setup guide.</td>
-            <td><span class="badge badge-refine">Open</span></td>
-          </tr>
-          <tr>
-            <td class="mono center">2</td>
-            <td class="mono">C7</td>
-            <td>Create native component files and register Code Connect mappings via the Figma Code Connect CLI.</td>
-            <td><span class="badge badge-refine">Open</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    </div><!-- /comp-tab-content assessment -->
+    </div><!-- /tab changelog -->
     </div><!-- /data-tab-group -->
 
   </div><!-- /content-wrap -->
@@ -640,4 +788,355 @@ open-issues: C7
 
   </div><!-- /panel-layout -->
 </div><!-- /panel-accordion -->
+
+<!-- ── Accordion Demo JS ─────────────────────────────────────────────── -->
+<script>
+/* ── Accordion live demo state ─────────────────────────────────────── */
+var _accDemo = { type: 'collapsed', state: 'default', leadingIcon: true, description: false };
+
+/* Colors per state */
+var _accDemoColors = {
+  default:  { headerBg: '#FFFFFF',  labelColor: '#0A2757', descColor: '#90A8D0', chevColor: '#0A2757', borderColor: '#E5EBF4' },
+  pressed:  { headerBg: '#EEF3FB',  labelColor: '#0A2757', descColor: '#90A8D0', chevColor: '#0A2757', borderColor: '#E5EBF4' },
+  disabled: { headerBg: '#F6F9FD',  labelColor: '#C2CFE5', descColor: '#C2CFE5', chevColor: '#C2CFE5', borderColor: '#E5EBF4' }
+};
+
+function _applyAccDemo() {
+  var c = _accDemoColors[_accDemo.state] || _accDemoColors['default'];
+  var isExpanded = _accDemo.type === 'expanded';
+
+  var header = document.getElementById('demo-acc-header');
+  var label  = document.getElementById('demo-acc-label');
+  var desc   = document.getElementById('demo-acc-desc');
+  var icon   = document.getElementById('demo-acc-icon');
+  var body   = document.getElementById('demo-acc-body');
+  var outer  = document.getElementById('demo-acc-live');
+  var chevSvg = document.getElementById('demo-acc-chevron-svg');
+
+  if (!header) return;
+
+  header.style.background = c.headerBg;
+  label.style.color = c.labelColor;
+
+  /* Leading icon */
+  if (icon) {
+    icon.style.display = _accDemo.leadingIcon ? 'flex' : 'none';
+  }
+
+  /* Description */
+  if (desc) {
+    desc.style.display = _accDemo.description ? 'block' : 'none';
+    desc.style.color = c.descColor;
+  }
+
+  /* Chevron direction */
+  if (chevSvg) {
+    chevSvg.querySelector('path').setAttribute('stroke', c.chevColor);
+    chevSvg.querySelector('path').setAttribute('d', isExpanded
+      ? 'M5 12.5l5-5 5 5'
+      : 'M5 7.5l5 5 5-5');
+  }
+
+  /* Expanded body */
+  if (body) {
+    body.style.display = isExpanded ? 'block' : 'none';
+  }
+
+  /* Outer border */
+  if (outer) {
+    outer.style.borderColor = c.borderColor;
+    /* Add bottom border to header when expanded */
+    header.style.borderBottom = isExpanded ? ('1px solid ' + c.borderColor) : 'none';
+  }
+}
+
+function setAccDemoType(type) {
+  _accDemo.type = type;
+  _applyAccDemo();
+}
+function setAccDemoState(state) {
+  _accDemo.state = state;
+  _applyAccDemo();
+}
+function setAccDemoProp(prop, val) {
+  _accDemo[prop] = val;
+  _applyAccDemo();
+}
+
+/* ── Accordion spec card state ─────────────────────────────────────── */
+var _accSpecCards = {
+  collapsed: { state: 'default', leadingIcon: true, description: false },
+  expanded:  { state: 'default', leadingIcon: true, description: false }
+};
+
+var _accSpecColors = {
+  default:  { label: 'Colors — Default',  rows: [['Header bg','#FFFFFF'],['Content-body bg','#F4F7FB'],['Label','#0A2757'],['Description','#90A8D0'],['Icon placeholder','#C2C6CF'],['Border','#E5EBF4']] },
+  pressed:  { label: 'Colors — Pressed',  rows: [['Header bg','#EEF3FB'],['Content-body bg','#F4F7FB'],['Label','#0A2757'],['Description','#90A8D0'],['Icon placeholder','#C2C6CF'],['Border','#E5EBF4']] },
+  disabled: { label: 'Colors — Disabled', rows: [['Header bg','#F6F9FD'],['Content-body bg','#F4F7FB'],['Label','#C2CFE5'],['Description','#C2CFE5'],['Icon placeholder','#C2C6CF'],['Border','#E5EBF4']] }
+};
+
+function updateAccSpecCard(cardType, prop, value) {
+  var card = _accSpecCards[cardType];
+  if (!card) return;
+  card[prop] = value;
+
+  var c = _accDemoColors[card.state] || _accDemoColors['default'];
+  var isExpanded = cardType === 'expanded';
+
+  /* Update preview */
+  var header = document.getElementById('spec-acc-' + cardType + '-header');
+  var labelEl = document.getElementById('spec-acc-' + cardType + '-label');
+  var descEl  = document.getElementById('spec-acc-' + cardType + '-desc');
+  var iconEl  = document.getElementById('spec-acc-' + cardType + '-icon');
+
+  if (header) header.style.background = c.headerBg;
+  if (labelEl) labelEl.style.color = c.labelColor;
+  if (descEl) {
+    descEl.style.display = card.description ? 'block' : 'none';
+    descEl.style.color = c.descColor;
+  }
+  if (iconEl) {
+    iconEl.style.display = card.leadingIcon ? 'flex' : 'none';
+  }
+
+  /* Update chevron stroke color */
+  var chevPath = document.querySelector('#spec-acc-' + cardType + '-chev');
+  if (chevPath) chevPath.setAttribute('stroke', c.chevColor);
+
+  /* For expanded variant: update body and header border-bottom */
+  if (isExpanded) {
+    var bodyEl = document.getElementById('spec-acc-expanded-body');
+    if (bodyEl && header) {
+      header.style.borderBottom = '1px solid ' + c.borderColor;
+    }
+  }
+
+  /* Update spec properties text */
+  var spState = document.querySelector('[data-sp="acc-' + cardType + '-state"]');
+  var spIcon  = document.querySelector('[data-sp="acc-' + cardType + '-leadingIcon"]');
+  var spDesc  = document.querySelector('[data-sp="acc-' + cardType + '-description"]');
+  if (spState) spState.textContent = card.state.charAt(0).toUpperCase() + card.state.slice(1);
+  if (spIcon)  spIcon.textContent  = card.leadingIcon ? 'true' : 'false';
+  if (spDesc)  spDesc.textContent  = card.description ? 'true' : 'false';
+
+  /* Update colors section */
+  var colorsEl = document.getElementById('spec-acc-' + cardType + '-colors');
+  if (colorsEl) {
+    var colorData = _accSpecColors[card.state] || _accSpecColors['default'];
+    var h = '<div class="spec-detail-label">' + colorData.label + '</div><div class="spec-props">';
+    colorData.rows.forEach(function(r) {
+      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
+      h += '<div class="spec-prop"><span class="spec-prop-key">' + r[0] + '</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span></div>';
+    });
+    h += '</div>';
+    colorsEl.innerHTML = h;
+  }
+
+  /* Update DEV code if visible */
+  var devView = document.querySelector('[data-view="acc-' + cardType + '-dev"]');
+  if (devView && devView.style.display !== 'none') {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('code');
+    if (codeEl) {
+      codeEl.setAttribute('data-final', buildAccSnippet(cardType, lang, card));
+      scrambleAccCode(cardType);
+    }
+  }
+}
+
+function buildAccSwiftSnippet(cardType, card) {
+  var isExpanded = cardType === 'expanded';
+  var stateLabel = card.state.charAt(0).toUpperCase() + card.state.slice(1);
+  var lines = [];
+  lines.push('// Layout');
+  if (isExpanded) {
+    lines.push('DisclosureGroup(isExpanded: $isExpanded) {');
+    lines.push('    // Content-body (SLOT)');
+    lines.push('    contentBody');
+    lines.push('        .frame(height: Constants.contentBodyHeight)');
+    lines.push('        .background(Constants.surfaceContent)');
+    lines.push('} label: {');
+  } else {
+    lines.push('DisclosureGroup(isExpanded: $isExpanded) { /* ... */ } label: {');
+  }
+  lines.push('    HStack(alignment: .center, spacing: 8) {');
+  if (card.leadingIcon) {
+    lines.push('        leadingIcon');
+    lines.push('            .frame(width: Constants.iconSize, height: Constants.iconSize)');
+  }
+  lines.push('        VStack(alignment: .leading, spacing: 0) {');
+  lines.push('            Text(label)');
+  lines.push('                .font(.custom("ProximaSoft-Bold", size: Constants.labelSize))');
+  lines.push('                .foregroundColor(Constants.textPrimary' + stateLabel + ')');
+  if (card.description) {
+    lines.push('            Text(description)');
+    lines.push('                .font(.custom("BarkAda-SemiBold", size: Constants.descSize))');
+    lines.push('                .foregroundColor(Constants.textSecondary' + stateLabel + ')');
+  }
+  lines.push('        }');
+  lines.push('        Spacer()');
+  lines.push('    }');
+  lines.push('    .padding(.horizontal, Constants.paddingH)');
+  lines.push('    .padding(.vertical, Constants.paddingV)');
+  lines.push('    .frame(height: Constants.headerHeight)');
+  lines.push('    .background(Constants.surface' + stateLabel + ')');
+  if (card.state === 'disabled') lines.push('    .disabled(true)');
+  lines.push('}');
+  lines.push('');
+  lines.push('// Variables');
+  lines.push('struct Constants {');
+  var c = _accDemoColors[card.state] || _accDemoColors['default'];
+  lines.push('    static let surface' + stateLabel + ': Color = Color("' + c.headerBg + '")');
+  lines.push('    static let textPrimary' + stateLabel + ': Color = Color("' + c.labelColor + '")');
+  if (card.description) lines.push('    static let textSecondary' + stateLabel + ': Color = Color("' + c.descColor + '")');
+  if (isExpanded) lines.push('    static let surfaceContent: Color = Color("#F4F7FB")');
+  lines.push('    static let borderSubtle: Color = Color("#E5EBF4")');
+  lines.push('    static let headerHeight: CGFloat = 56');
+  if (isExpanded) lines.push('    static let contentBodyHeight: CGFloat = 56');
+  lines.push('    static let paddingH: CGFloat = 16');
+  lines.push('    static let paddingV: CGFloat = 4');
+  lines.push('    static let labelSize: CGFloat = 16');
+  if (card.description) lines.push('    static let descSize: CGFloat = 14');
+  if (card.leadingIcon) lines.push('    static let iconSize: CGFloat = 32');
+  lines.push('}');
+  return lines.join('\n');
+}
+
+function buildAccComposeSnippet(cardType, card) {
+  var isExpanded = cardType === 'expanded';
+  var stateLabel = card.state.charAt(0).toUpperCase() + card.state.slice(1);
+  var lines = [];
+  var c = _accDemoColors[card.state] || _accDemoColors['default'];
+  lines.push('// Layout');
+  lines.push('Column(');
+  lines.push('    modifier = Modifier');
+  lines.push('        .fillMaxWidth()');
+  lines.push('        .border(width = 1.dp, color = Variables.borderSubtle)');
+  lines.push(') {');
+  lines.push('    Row(');
+  lines.push('        verticalAlignment = Alignment.CenterVertically,');
+  lines.push('        modifier = Modifier');
+  lines.push('            .fillMaxWidth()');
+  lines.push('            .height(Variables.headerHeight)');
+  lines.push('            .background(Variables.surface' + stateLabel + ')');
+  lines.push('            .padding(horizontal = Variables.paddingH, vertical = Variables.paddingV)');
+  if (card.state === 'disabled') lines.push('            .alpha(1f) // disabled state — not clickable');
+  lines.push('    ) {');
+  if (card.leadingIcon) {
+    lines.push('        leadingIcon()');
+  }
+  lines.push('        Column(modifier = Modifier.weight(1f)) {');
+  lines.push('            Text(');
+  lines.push('                text = label,');
+  lines.push('                fontSize = 16.sp,');
+  lines.push('                fontWeight = FontWeight.Bold,');
+  lines.push('                color = Variables.textPrimary' + stateLabel);
+  lines.push('            )');
+  if (card.description) {
+    lines.push('            Text(');
+    lines.push('                text = description,');
+    lines.push('                fontSize = 14.sp,');
+    lines.push('                fontWeight = FontWeight.SemiBold,');
+    lines.push('                color = Variables.textSecondary' + stateLabel);
+    lines.push('            )');
+  }
+  lines.push('        }');
+  lines.push('        // Trailing chevron icon');
+  lines.push('    }');
+  if (isExpanded) {
+    lines.push('    AnimatedVisibility(visible = isExpanded) {');
+    lines.push('        Box(');
+    lines.push('            modifier = Modifier');
+    lines.push('                .fillMaxWidth()');
+    lines.push('                .height(Variables.contentBodyHeight)');
+    lines.push('                .background(Variables.surfaceContent)');
+    lines.push('        ) {');
+    lines.push('            content()');
+    lines.push('        }');
+    lines.push('    }');
+  }
+  lines.push('}');
+  lines.push('');
+  lines.push('// Variables');
+  lines.push('object Variables {');
+  lines.push('    val surface' + stateLabel + ': Color = Color(0xFF' + c.headerBg.replace('#','') + ')');
+  lines.push('    val textPrimary' + stateLabel + ': Color = Color(0xFF' + c.labelColor.replace('#','') + ')');
+  if (card.description) lines.push('    val textSecondary' + stateLabel + ': Color = Color(0xFF' + c.descColor.replace('#','') + ')');
+  if (isExpanded) lines.push('    val surfaceContent: Color = Color(0xFFF4F7FB)');
+  lines.push('    val borderSubtle: Color = Color(0xFFE5EBF4)');
+  lines.push('    val headerHeight: Dp = 56.dp');
+  if (isExpanded) lines.push('    val contentBodyHeight: Dp = 56.dp');
+  lines.push('    val paddingH: Dp = 16.dp');
+  lines.push('    val paddingV: Dp = 4.dp');
+  lines.push('}');
+  return lines.join('\n');
+}
+
+function buildAccSnippet(cardType, lang, card) {
+  if (lang === 'swift') return buildAccSwiftSnippet(cardType, card);
+  return buildAccComposeSnippet(cardType, card);
+}
+
+function scrambleAccCode(cardType) {
+  var codeEl = document.querySelector('[data-code-content="acc-' + cardType + '"]');
+  if (!codeEl) return;
+  var final = codeEl.getAttribute('data-final') || codeEl.textContent;
+  codeEl.textContent = final;
+  highlightSyntax(codeEl);
+}
+
+function switchAccCodeTab(tabBtn, lang, cardType) {
+  var block = tabBtn.closest('.spec-card-code');
+  block.querySelectorAll('.spec-code-tab').forEach(function(t) { t.classList.remove('active'); });
+  tabBtn.classList.add('active');
+  var codeEl = block.querySelector('code');
+  if (!codeEl) return;
+  var card = _accSpecCards[cardType] || { state: 'default', leadingIcon: true, description: false };
+  var code = buildAccSnippet(cardType, lang, card);
+  codeEl.textContent = '// Loading...';
+  codeEl.setAttribute('data-final', code);
+  scrambleAccCode(cardType);
+}
+
+/* Accordion DES/DEV toggle — standalone function */
+function toggleAccSpecMode(type, toggleEl) {
+  var labels = toggleEl.querySelectorAll('.spec-mode-label');
+  var isDes = labels[0].classList.contains('active');
+  labels[0].classList.toggle('active', !isDes);
+  labels[1].classList.toggle('active', isDes);
+  var desView = document.querySelector('[data-view="'+type+'-des"]');
+  var devView = document.querySelector('[data-view="'+type+'-dev"]');
+  if (isDes) {
+    if (desView) desView.style.display = 'none';
+    if (devView) {
+      devView.style.display = '';
+      var cardType = type.replace('acc-', '');
+      var card = _accSpecCards[cardType] || { state: 'default', leadingIcon: true, description: false };
+      var activeTab = devView.querySelector('.spec-code-tab.active');
+      var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+      var codeEl = devView.querySelector('code');
+      if (codeEl) { codeEl.setAttribute('data-final', buildAccSnippet(cardType, lang, card)); }
+      scrambleAccCode(cardType);
+    }
+  } else {
+    if (devView) devView.style.display = 'none';
+    if (desView) desView.style.display = '';
+  }
+}
+
+/* Initialize accordion spec card colors and accordion demo on load */
+function initAccSpecCards() {
+  updateAccSpecCard('collapsed', 'state', 'default');
+  updateAccSpecCard('expanded', 'state', 'default');
+  _applyAccDemo();
+}
+
+/* Auto-init when DOM is ready */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAccSpecCards);
+} else {
+  initAccSpecCards();
+}
+</script>
 <!--@section-end-->

@@ -244,3 +244,53 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | Button | `17104:184842` | 30 | Refine | Refine | C5, C7 |
 | Checkbox | `17143:2464` | 6 | Rework | Rework | C2, C5, C6, C7 |
 | Avatar | `17143:4488` | 21 | Fix | Refine | C2, C3, C6, C7 |
+
+---
+
+## Code Snippet Conventions
+
+Component documentation has two places where SwiftUI/Compose code appears. Each serves a different audience and must use the correct code style.
+
+### Style Tab — Per-Appearance Snippets
+
+Show **component API usage** — the code a developer writes to USE the component. Short, focused on the specific appearance being documented.
+```
+// ✅ CORRECT — component API
+EBButton("Save Changes")
+    .ebAppearance(.filled)
+    .controlSize(.large)
+
+// ❌ WRONG — Figma Dev Mode container code
+HStack(alignment: .center, spacing: Constants.spaceSpace0) { ... }
+    .padding(Constants.spaceSpace16)
+    .background(Constants.mainButtonPrimaryBrandEnabledBg)
+    .cornerRadius(Constants.radiusRadiusPill)
+```
+
+Do not use Figma Dev Mode auto-generated code (HStack, padding, background, cornerRadius) in documentation snippets. That code describes how to DRAW the container — not how to USE the component. Developers consuming the DS never write container code; they call the component API.
+
+### Code Tab — Full Reference
+
+Shows the complete developer reference: installation, import, property mapping table (Figma → SwiftUI → Compose), usage snippets for ALL appearances, size mode mapping, accessibility requirements, and usage guidelines (do's/don'ts).
+
+### Naming Pattern
+
+Component API names follow the pattern `EB{ComponentName}`:
+- `EBButton` / `EBOutlinedButton` / `EBTextButton`
+- `EBAccordion`
+- `EBAvatar`
+- `EBCheckbox`
+
+### Variant Mapping Pattern
+
+| Figma Concept | SwiftUI Pattern | Compose Pattern |
+|---|---|---|
+| Appearance (enum) | `.ebAppearance(.filled)` modifier | Separate composable: `EBButton` / `EBOutlinedButton` / `EBTextButton` |
+| Variant=Destructive | `role: .destructive` parameter | `colors = EBButtonDefaults.destructiveColors()` |
+| Size modes | `.controlSize(.large / .regular / .small / .mini)` | `size = EBButtonSize.Large / Medium / Small / XSmall` |
+| Boolean slots | Optional parameter: `leadingIcon: Image?` | Composable slot: `leadingIcon = { Icon(…) }` |
+| Disabled state | `.disabled(true)` modifier | `enabled = false` parameter |
+
+### Planned API Badge
+
+If native components are not yet implemented, mark all code snippets with a `badge-planned` badge labeled "Planned API". This signals to developers that the API shape is final but the package is not yet published.

@@ -450,9 +450,9 @@ Key conventions:
 <!-- @@PROGRESS_TABLE@@ -->
 | Component | Node | DS Verdict | Native Status | Status | Notes |
 |---|---|---|---|---|---|
-| Accordion | `16870:9288` | Ready | Needs Refinement | 🔁 Re-assessing | Open: C7 |
+| Accordion | `16870:9288` | Ready | Needs Refinement | 🔁 Re-assessing | — |
 | Avatar | `17143:4488` | Fix | Needs Refinement | 🔁 Re-assessing | Open: C2, C3, C6, C7 |
-| Button | `17104:184842` | Needs Refinement | Needs Refinement | 🔁 Re-assessing | — |
+| Button | `17104:184842` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Checkbox | `17143:2464` | Requires Rework | Requires Rework | 🔁 Re-assessing | Open: C6, C5, C2, C7 |
 <!-- @@PROGRESS_TABLE_END@@ -->
 
@@ -461,7 +461,6 @@ Key conventions:
 <!-- @@OPEN_ISSUES@@ -->
 | Component | Criterion | Action | Status |
 |---|---|---|---|
-| Accordion | C7 | Create native component files and register Code Connect mappings via the Figma Code Connect CLI. | Open |
 | Avatar | C2 | Rename `type=initials - light` to `type=initials-light` (remove spaces) for Swift/Kotlin enum compatibility. | Open |
 | Avatar | C2 | Fix token typo: `main/avatar/brand/intials` → `main/avatar/brand/initials`. | Open |
 | Avatar | C3 | Bind border-radius to a shared `radius/radius-round` token (or use 50%) instead of hardcoded per-size values. Tokenize border-width scale. | Open |

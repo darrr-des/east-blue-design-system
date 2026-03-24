@@ -7,9 +7,9 @@
 <!--@meta-start-->
 status: assessed
 node: 17104:184842
-ds-verdict: refine
+ds-verdict: fix
 native-status: refine
-variants: 24
+variants: 36
 ios: Button
 android: Button / OutlinedButton / TextButton
 open-issues: C5, C7
@@ -37,7 +37,7 @@ open-issues: C5, C7
   <div class="nav-comp-body">
     <div class="nav-comp-name">Button</div>
   </div>
-  <div class="nav-comp-status refine"></div>
+  <div class="nav-comp-status fix"></div>
 </button>
 <!--@nav-end-->
 
@@ -49,9 +49,9 @@ open-issues: C5, C7
   <div class="summary-card-body">
     <div class="summary-card-header">
       <div class="summary-card-name">Button</div>
-      <span class="badge badge-refine">Beta</span>
+      <span class="badge badge-fix">Fix</span>
     </div>
-    <div class="summary-card-desc">24 variants. Variant property (Brand/Destructive) replaces isError. White + Subtle appearances added. Variable-driven sizing (Large/Medium/Small/XSmall). C2 resolved. Loading state (C5) and Code Connect (C7) pending.</div>
+    <div class="summary-card-desc">36 variants. Size(4) × State(3) × Style(3). Appearance via variable modes (Default/Destructive/White/Subtle). Text styles per size — no variable conflict. C5 (loading) and C7 (code connect) pending.</div>
   </div>
 </div>
 <!--@summary-card-end-->
@@ -59,10 +59,10 @@ open-issues: C5, C7
 <!--@summary-row-start-->
 <tr>
   <td><strong>Button</strong></td>
+  <td><span class="badge badge-fix">Fix</span></td>
   <td><span class="badge badge-refine">Needs Refinement</span></td>
-  <td><span class="badge badge-refine">Needs Refinement</span></td>
-  <td class="muted">24</td>
-  <td class="muted">C2 resolved — isError replaced with Variant: Brand/Destructive. 5 appearances, variable-driven sizing (Large/Medium/Small/XSmall). Missing loading state (C5) and Code Connect (C7).</td>
+  <td class="muted">36</td>
+  <td class="muted">v3 restructure: Size(4) × State(3) × Style(Filled/Outline/Text). Appearance via 4 variable modes. Text styles per size. C5 (loading) and C7 (code connect) pending.</td>
 </tr>
 <!--@summary-row-end-->
 
@@ -82,12 +82,12 @@ open-issues: C5, C7
       <div class="comp-header-body">
         <div class="comp-name">
           Button
-          <span class="badge badge-refine">Beta</span>
+          <span class="badge badge-fix">Fix</span>
         </div>
-        <p class="comp-desc">A pill-shaped tap target for primary, secondary, and tertiary actions. Supports five appearances (Default, White, Subtle, Outlined, Text Link), two variant types (Brand, Destructive), four variable-driven size modes (Large, Medium, Small, XSmall), three states, and Boolean icon slots.</p>
+        <p class="comp-desc">A pill-shaped tap target with three styles (Filled, Outline, Text), four sizes (Large/Medium/Small/XSmall), and three states (Default/Pressed/Disabled). Appearance controlled via variable modes (Default/Destructive/White/Subtle) — 144 effective visual states from 36 variants.</p>
         <div class="comp-meta">
           <div class="cover-meta-item"><strong>Node:</strong> 17104:184842</div>
-          <div class="cover-meta-item"><strong>Variants:</strong> 24</div>
+          <div class="cover-meta-item"><strong>Variants:</strong> 36</div>
           <div class="cover-meta-item"><strong>iOS:</strong> Button</div>
           <div class="cover-meta-item"><strong>Android:</strong> Button / OutlinedButton / TextButton</div>
         </div>
@@ -111,52 +111,59 @@ open-issues: C5, C7
       <button class="verdict-card-trigger" onclick="toggleVerdict(this)" aria-expanded="false">
         <div class="verdict-card-trigger-body">
           <span class="verdict-card-eyebrow">VERDICT</span>
-          <span class="verdict-card-title">Fully restructured — clean variant model, variable-driven sizing, ready for native handoff pending loading state</span>
+          <span class="verdict-card-title">v3 restructure — size as variant dimension eliminates text style conflict. 36 variants × 4 appearance modes = 144 visual states.</span>
         </div>
         <svg class="verdict-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <div class="verdict-card-body" hidden>24 variants cover the button matrix (5 Appearances × 2 Variants [Brand/Destructive] for applicable appearances × 3 States, with <code>Size</code> removed from variant dimension). All color tokens connected. Size is now driven by the <code>button/size</code> variable collection with four modes: Large (52px), Medium (36px), Small (28px), XSmall (24px). Icon slots (<code>leadingIcon</code>/<code>trailingIcon</code>) are proper Figma SLOT nodes with Boolean component properties. Remaining gaps: missing loading state (C5), no Code Connect CLI mappings (C7).</div>
+      <div class="verdict-card-body" hidden>36 variants (Size × State × Style) with appearance controlled via variable modes. Size is now a variant dimension — each size has its own text style, eliminating the font-size variable conflict. Style (Filled/Outline/Text) replaces the old Appearance+Variant system. The <code>Button</code> variable collection has 4 modes (Default/Destructive/White/Subtle) with 12 color variables bound to all containers and labels. Remaining gaps: missing loading state (C5), no Code Connect CLI mappings (C7).</div>
     </div>
 
     <!-- Live Demo Panel -->
     <div class="demo-panel" id="btn-demo">
-      <div class="demo-preview">
-        <div class="demo-button-group">
+      <div class="demo-layout">
+        <div class="demo-preview">
           <button class="demo-btn demo-btn-primary" id="demo-btn-live">Label</button>
         </div>
-      </div>
-      <div class="demo-controls">
-        <div class="demo-control-group">
-          <span class="demo-control-label">Appearance</span>
-          <div class="demo-segmented">
-            <button class="demo-seg active" onclick="setDemoAppearance('primary', this)">Default</button>
-            <button class="demo-seg" onclick="setDemoAppearance('white', this)">White</button>
-            <button class="demo-seg" onclick="setDemoAppearance('subtle', this)">Subtle</button>
-            <button class="demo-seg" onclick="setDemoAppearance('outlined', this)">Outlined</button>
-            <button class="demo-seg" onclick="setDemoAppearance('text', this)">Text Link</button>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Style</span>
+              <select class="demo-panel-select" onchange="setDemoStyle(this.value)">
+                <option value="filled" selected>Filled</option>
+                <option value="outline">Outline</option>
+                <option value="text">Text</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <select class="demo-panel-select" onchange="setDemoState(this.value)">
+                <option value="default" selected>Default</option>
+                <option value="pressed">Pressed</option>
+                <option value="disabled">Disabled</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Size</span>
+              <select class="demo-panel-select" onchange="setDemoSize(this.value)">
+                <option value="large" selected>Large</option>
+                <option value="medium">Medium</option>
+                <option value="small">Small</option>
+                <option value="xsmall">XSmall</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="demo-control-group">
-          <span class="demo-control-label">Size</span>
-          <div class="demo-segmented">
-            <button class="demo-seg active" onclick="setDemoSize('large', this)">Large</button>
-            <button class="demo-seg" onclick="setDemoSize('medium', this)">Medium</button>
-            <button class="demo-seg" onclick="setDemoSize('small', this)">Small</button>
-            <button class="demo-seg" onclick="setDemoSize('xsmall', this)">XSmall</button>
-          </div>
-        </div>
-        <div class="demo-control-group">
-          <span class="demo-control-label">Variant</span>
-          <div class="demo-segmented">
-            <button class="demo-seg active" onclick="setDemoVariant('brand', this)">Brand</button>
-            <button class="demo-seg" onclick="setDemoVariant('destructive', this)">Destructive</button>
-          </div>
-        </div>
-        <div class="demo-control-group">
-          <span class="demo-control-label">State</span>
-          <div class="demo-segmented">
-            <button class="demo-seg active" onclick="setDemoState('default', this)">Default</button>
-            <button class="demo-seg" onclick="setDemoState('disabled', this)">Disabled</button>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Mode</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Appearance</span>
+              <select class="demo-panel-select" onchange="setDemoAppearance(this.value)">
+                <option value="default" selected>Default</option>
+                <option value="destructive">Destructive</option>
+                <option value="white">White</option>
+                <option value="subtle">Subtle</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -170,28 +177,28 @@ open-issues: C5, C7
           <div class="trait-name">Reusable</div>
           <div class="trait-status">Pass</div>
         </div>
-        <div class="trait-note">Five appearances and a <code>Variant</code> property (Brand/Destructive) cover primary, secondary, tertiary, surface, and destructive action patterns across all contexts.</div>
+        <div class="trait-note">Three styles (Filled/Outline/Text) with four appearance modes cover primary, secondary, tertiary, surface, and destructive action patterns across all contexts.</div>
       </div>
       <div class="trait-card pass">
         <div class="trait-header">
           <div class="trait-name">Self-contained</div>
           <div class="trait-status">Pass</div>
         </div>
-        <div class="trait-note">Text, background, border, and icon slots are all self-contained. <code>leadingIcon</code> and <code>trailingIcon</code> are Figma SLOT nodes with Boolean component properties built into every variant.</div>
+        <div class="trait-note">All styles, states, and appearance colors are self-contained via variable bindings. <code>Leading Container</code> and <code>Trailing Container</code> SLOT nodes in every variant.</div>
       </div>
       <div class="trait-card pass">
         <div class="trait-header">
           <div class="trait-name">Consistent</div>
           <div class="trait-status">Pass</div>
         </div>
-        <div class="trait-note"><code>Appearance</code> and <code>Variant</code> are clean orthogonal properties. Size is driven by the <code>button/size</code> variable collection — no Size dimension in the variant matrix. Tokens connected across all 24 variants.</div>
+        <div class="trait-note">Clean <code>Property=Value</code> naming across all 36 variants. Size, State, and Style are orthogonal variant dimensions. Appearance is a variable mode — no naming conflicts. 12 color variables bound consistently.</div>
       </div>
       <div class="trait-card pass">
         <div class="trait-header">
           <div class="trait-name">Composable</div>
           <div class="trait-status">Pass</div>
         </div>
-        <div class="trait-note">Maps directly to <code>Button</code>, <code>OutlinedButton</code>, and <code>TextButton</code> primitives. SLOT nodes support icon+label compositions. Variable modes enable size switching without variant duplication.</div>
+        <div class="trait-note">Style=Filled → <code>Button</code>, Style=Outline → <code>OutlinedButton</code>, Style=Text → <code>TextButton</code>. SLOT nodes support icon+label compositions. Each size has its own text style — clean native mapping.</div>
       </div>
     </div>
 
@@ -233,8 +240,8 @@ open-issues: C5, C7
             <td><strong>Destructive</strong></td>
             <td class="center"><span class="check">Yes</span></td>
             <td class="center"><span class="check">Yes</span></td>
-            <td class="mono">Variant=Destructive</td>
-            <td class="muted">Red tokens. Applies to Default, Outlined, and Text Link appearances.</td>
+            <td class="mono">Appearance mode: Destructive</td>
+            <td class="muted">Red tokens via variable mode. Applies to all 3 styles (Filled/Outline/Text).</td>
           </tr>
           <tr>
             <td><strong>Focused (a11y)</strong></td>
@@ -258,12 +265,12 @@ open-issues: C5, C7
     <div class="sub-heading" id="btn-resolved">Resolved Issues</div>
     <ul class="resolved-list">
       <li>Layer renamed from <code>.base/button/small</code> → <code>container</code> on compact disabled container (C1)</li>
-      <li>Icon slots (<code>leadingIcon</code>, <code>trailingIcon</code>) added to all variants as Figma SLOT nodes with Boolean component properties (C2)</li>
-      <li><code>isError</code> replaced with <code>Variant: Brand | Destructive</code> — now a true orthogonal property applicable across all appearances (C2)</li>
-      <li>Destructive Default (filled) variants added — 3 new variants covering all 3 states (C2)</li>
-      <li>White and Subtle appearances added — 6 new Brand-only variants for surface/inverse contexts (C2)</li>
-      <li>Size dimension removed from variant matrix — <code>button/size</code> variable collection introduced with 4 modes: Large (52px), Medium (36px), Small (28px), XSmall (24px) (C2)</li>
-      <li>All containers bound to <code>button/size</code> variables: <code>height</code>, <code>padding-h</code>, <code>padding-v</code>, <code>font-size</code> (C3)</li>
+      <li>Icon slots (<code>Leading Container</code>, <code>Trailing Container</code>) added to all variants as Figma SLOT nodes (C2)</li>
+      <li><code>isError</code> replaced — Destructive is now an appearance variable mode, not a variant property (C2)</li>
+      <li>v2: Outlined and Text Link moved from appearance to <code>Style</code> variant property (Filled/Outline/Text) (C2)</li>
+      <li>v2: Size moved from variable modes to variant dimension — each size has its own text style, eliminating font-size variable conflict (C2/C3)</li>
+      <li>v3: <code>Button</code> variable collection created with 4 appearance modes (Default/Destructive/White/Subtle) — 12 color variables bound to all 36 variants (C3)</li>
+      <li>v3: Old <code>Button Size</code> and <code>button/variant</code> collections removed (C3)</li>
     </ul>
 
     <div class="sub-heading" id="btn-open">Open Issues</div>
@@ -296,395 +303,220 @@ open-issues: C5, C7
       </div>
     </div>
 
-    <!-- Size modes -->
-    <div class="sub-heading" id="btn-sizing">Button Modes</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Mode</th><th>Height</th><th>Font Size</th><th>Padding H</th><th>Padding V</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Large</strong></td><td class="mono">52px</td><td class="mono">18px</td><td class="mono">24px</td><td class="mono">16px</td></tr>
-          <tr><td><strong>Medium</strong></td><td class="mono">36px</td><td class="mono">16px</td><td class="mono">16px</td><td class="mono">10px</td></tr>
-          <tr><td><strong>Small</strong></td><td class="mono">28px</td><td class="mono">16px</td><td class="mono">8px</td><td class="mono">6px</td></tr>
-          <tr><td><strong>XSmall</strong></td><td class="mono">24px</td><td class="mono">14px</td><td class="mono">8px</td><td class="mono">4px</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="table-footnote">Size is controlled by switching the variable mode on the component instance — no separate size variants exist in the component set.</p>
 
-    <!-- Appearance group -->
-    <div class="sub-heading" id="btn-appearance">Appearance</div>
+    <!-- Styles group -->
+    <div class="sub-heading" id="btn-styles">Styles</div>
 
-    <!-- ═══ Primary ═══ -->
-    <div class="spec-card" id="btn-spec-primary">
+    <!-- ═══ Filled ═══ -->
+    <div class="spec-card" id="btn-spec-filled">
       <div class="spec-card-header">
         <div class="spec-card-header-row">
-          <div class="sub-heading toc-child" id="btn-primary" style="margin-top:0">Default (Filled)</div>
-          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17104:184843" data-sp="primary-node-btn" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span data-sp="primary-node-text">17104:184843</span></button>
-          <div class="spec-mode-toggle" onclick="toggleSpecMode('primary', this)">
-            <span class="spec-mode-label active">DES</span>
-            <span class="spec-mode-label">DEV</span>
+          <div class="sub-heading toc-child" id="btn-filled" style="margin-top:0">Filled</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17104:184843" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>17104:184843</span></button>
+          <div class="spec-mode-toggle" onclick="toggleSpecMode('filled', this)"><span class="spec-mode-label active">DES</span><span class="spec-mode-label">DEV</span></div>
+        </div>
+        <p class="spec-card-desc">Solid background with contrasting label. Primary action style. Colors change via Appearance variable mode.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview">
+          <button class="demo-btn demo-btn-primary" id="spec-filled-btn">Label</button>
+        </div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <select class="demo-panel-select" onchange="updateSpecCard('filled', 'state', this.value)">
+                <option value="default" selected>Default</option>
+                <option value="pressed">Pressed</option>
+                <option value="disabled">Disabled</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Size</span>
+              <select class="demo-panel-select" onchange="updateSpecCard('filled', 'size', this.value)">
+                <option value="large" selected>Large</option>
+                <option value="medium">Medium</option>
+                <option value="small">Small</option>
+                <option value="xsmall">XSmall</option>
+              </select>
+            </div>
+          </div>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Mode</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Appearance</span>
+              <select class="demo-panel-select" onchange="updateSpecCard('filled', 'appearance', this.value)">
+                <option value="default" selected>Default</option>
+                <option value="destructive">Destructive</option>
+                <option value="white">White</option>
+                <option value="subtle">Subtle</option>
+              </select>
+            </div>
           </div>
         </div>
-        <p class="spec-card-desc">Use for primary actions. Filled background with white label. Available in Brand and Destructive variants.</p>
       </div>
-      <div class="spec-card-preview">
-        <button class="demo-btn demo-btn-primary" id="spec-primary-btn">Label</button>
-      </div>
-      <div class="spec-card-controls">
-        <div class="demo-control-group">
-          <span class="demo-control-label">Variant</span>
-          <div class="demo-segmented">
-            <button class="demo-seg active" onclick="renderCard('primary','brand',this)">Brand</button>
-            <button class="demo-seg" onclick="renderCard('primary','destructive',this)">Destructive</button>
-          </div>
-        </div>
-        <div class="demo-control-group">
-          <span class="demo-control-label">State</span>
-          <div class="demo-segmented">
-            <button class="demo-seg active" onclick="renderCard('primary','enabled',this)">Default</button>
-            <button class="demo-seg" onclick="renderCard('primary','pressed',this)">Pressed</button>
-            <button class="demo-seg" onclick="renderCard('primary','disabled',this)">Disabled</button>
-          </div>
-        </div>
-      </div>
-      <!-- DES view -->
-      <div class="spec-card-detail spec-view-des" data-view="primary-des">
-        <div class="spec-detail-section">
+      <div class="spec-card-detail spec-view-des" data-view="filled-des">
+        <div class="spec-detail-section" id="spec-filled-props">
           <div class="spec-detail-label">Properties</div>
           <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Appearance</span><span class="spec-prop-val">Default</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Variant</span><span class="spec-prop-val" data-sp="primary-variant">Brand</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">State</span><span class="spec-prop-val" data-sp="primary-state">Default</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val">Variable mode (Large/Medium/Small/XSmall)</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Appearance</span><span class="spec-prop-val" data-sp="filled-appearance">Default</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">State</span><span class="spec-prop-val" data-sp="filled-state">Default</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val" data-sp="filled-size">Large</span></div>
           </div>
         </div>
-        <div class="spec-detail-section" data-card-variant="brand">
-          <div class="spec-detail-label">Colors — Brand</div>
-          <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Default bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#005CE5"></span> #005CE5</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Pressed bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#2340A9"></span> #2340A9</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Disabled bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#9BC5FD"></span> #9BC5FD</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#FFFFFF;border:1px solid #E2E4E9"></span> #FFFFFF</span></div>
-          </div>
-        </div>
-        <div class="spec-detail-section" data-card-variant="destructive" style="display:none">
-          <div class="spec-detail-label">Colors — Destructive</div>
-          <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Default bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#D61B2C"></span> #D61B2C</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Pressed bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#B50707"></span> #B50707</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Disabled bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#F4C7C9"></span> #F4C7C9</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#FFFFFF;border:1px solid #E2E4E9"></span> #FFFFFF</span></div>
-          </div>
-        </div>
-        <div class="spec-detail-section">
-          <div class="spec-detail-label">Layout</div>
-          <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Height</span><span class="spec-prop-val mono">button/size/height</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Padding H</span><span class="spec-prop-val mono">button/size/padding-h</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Padding V</span><span class="spec-prop-val mono">button/size/padding-v</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Radius</span><span class="spec-prop-val mono">99px</span></div>
-          </div>
-        </div>
-        <div class="spec-detail-section">
-          <div class="spec-detail-label">Typography</div>
-          <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">Proxima Soft Bold</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">button/size/font-size</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Tracking</span><span class="spec-prop-val mono">0.25px</span></div>
-          </div>
-        </div>
+        <div class="spec-detail-section" id="spec-filled-colors"></div>
+        <div class="spec-detail-section" id="spec-filled-layout"></div>
+        <div class="spec-detail-section" id="spec-filled-typo"></div>
       </div>
-      <!-- DEV view -->
-      <div class="spec-card-code spec-view-dev" data-view="primary-dev" style="display:none">
+      <div class="spec-card-detail spec-card-code" data-view="filled-dev" style="display:none">
         <div class="spec-code-tabs">
-          <button class="spec-code-tab active" onclick="switchCodeTab(this,'swift','primary')">SwiftUI</button>
-          <button class="spec-code-tab" onclick="switchCodeTab(this,'compose','primary')">Compose</button>
-          <button class="spec-code-copy" onclick="copyCode(this)" title="Copy code">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg>
-          </button>
+          <button class="spec-code-tab active" onclick="switchCodeTab(this, 'swift', 'filled')">SWIFTUI</button>
+          <button class="spec-code-tab" onclick="switchCodeTab(this, 'compose', 'filled')">COMPOSE</button>
         </div>
-        <div class="spec-code-block">
-          <pre class="spec-code-pre" data-code="primary"><code data-code-content="primary">// Loading...</code></pre>
-        </div>
+        <pre class="spec-code-block"><code data-code-content="filled" data-final="">// Click DEV to generate code</code></pre>
       </div>
     </div>
 
-    <!-- ═══ White ═══ -->
-    <div class="spec-card" id="btn-spec-white">
+    <!-- ═══ Outline ═══ -->
+    <div class="spec-card" id="btn-spec-outline">
       <div class="spec-card-header">
         <div class="spec-card-header-row">
-          <div class="sub-heading toc-child" id="btn-white" style="margin-top:0">White (Inverse)</div>
-          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17285:6723" data-sp="white-node-btn" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span data-sp="white-node-text">17285:6723</span></button>
-          <div class="spec-mode-toggle" onclick="toggleSpecMode('white', this)">
-            <span class="spec-mode-label active">DES</span>
-            <span class="spec-mode-label">DEV</span>
+          <div class="sub-heading toc-child" id="btn-outline" style="margin-top:0">Outline</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17104:184852" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>17104:184852</span></button>
+          <div class="spec-mode-toggle" onclick="toggleSpecMode('outline', this)"><span class="spec-mode-label active">DES</span><span class="spec-mode-label">DEV</span></div>
+        </div>
+        <p class="spec-card-desc">Transparent background with border and accent-colored label. Secondary action style.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview">
+          <button class="demo-btn demo-btn-outlined" id="spec-outline-btn">Label</button>
+        </div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <select class="demo-panel-select" onchange="updateSpecCard('outline', 'state', this.value)">
+                <option value="default" selected>Default</option>
+                <option value="pressed">Pressed</option>
+                <option value="disabled">Disabled</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Size</span>
+              <select class="demo-panel-select" onchange="updateSpecCard('outline', 'size', this.value)">
+                <option value="large" selected>Large</option>
+                <option value="medium">Medium</option>
+                <option value="small">Small</option>
+                <option value="xsmall">XSmall</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <p class="spec-card-desc">For use on colored or dark backgrounds. White fill with brand-colored label. Brand variant only.</p>
-      </div>
-      <div class="spec-card-preview">
-        <button class="demo-btn" style="background:#fff;color:#005CE5;border:none;" id="spec-white-btn">Label</button>
-      </div>
-      <div class="spec-card-controls">
-        <div class="demo-control-group">
-          <span class="demo-control-label">State</span>
-          <div class="demo-segmented">
-            <button class="demo-seg active" onclick="renderCard('white','enabled',this)">Default</button>
-            <button class="demo-seg" onclick="renderCard('white','pressed',this)">Pressed</button>
-            <button class="demo-seg" onclick="renderCard('white','disabled',this)">Disabled</button>
-          </div>
-        </div>
-      </div>
-      <div class="spec-card-detail spec-view-des" data-view="white-des">
-        <div class="spec-detail-section">
-          <div class="spec-detail-label">Colors</div>
-          <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Default bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#FFFFFF;border:1px solid #E2E4E9"></span> #FFFFFF</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Pressed bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#EEF2F9"></span> #EEF2F9</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Disabled bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#C2CFE5"></span> #C2CFE5</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Label (all states)</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#005CE5"></span> #005CE5</span></div>
-          </div>
-        </div>
-        <div class="spec-detail-section">
-          <div class="spec-detail-label">Token refs</div>
-          <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Default bg</span><span class="spec-prop-val mono">main/button/primary/inverse/enabled/bg</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Pressed bg</span><span class="spec-prop-val mono">main/button/primary/inverse/pressed/bg</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Disabled bg</span><span class="spec-prop-val mono">main/button/primary/inverse/disabled/bg</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="spec-card-code spec-view-dev" data-view="white-dev" style="display:none">
-        <div class="spec-code-tabs">
-          <button class="spec-code-tab active" onclick="switchCodeTab(this,'swift','white')">SwiftUI</button>
-          <button class="spec-code-tab" onclick="switchCodeTab(this,'compose','white')">Compose</button>
-          <button class="spec-code-copy" onclick="copyCode(this)" title="Copy code"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg></button>
-        </div>
-        <div class="spec-code-block">
-          <pre class="spec-code-pre" data-code="white"><code data-code-content="white">// Loading...</code></pre>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ Subtle ═══ -->
-    <div class="spec-card" id="btn-spec-subtle">
-      <div class="spec-card-header">
-        <div class="spec-card-header-row">
-          <div class="sub-heading toc-child" id="btn-subtle" style="margin-top:0">Subtle (Tinted)</div>
-          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17285:6738" data-sp="subtle-node-btn" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span data-sp="subtle-node-text">17285:6738</span></button>
-          <div class="spec-mode-toggle" onclick="toggleSpecMode('subtle', this)">
-            <span class="spec-mode-label active">DES</span>
-            <span class="spec-mode-label">DEV</span>
-          </div>
-        </div>
-        <p class="spec-card-desc">Light brand-tinted fill for use on neutral surfaces. Lower visual weight than Default. Brand variant only.</p>
-      </div>
-      <div class="spec-card-preview">
-        <button class="demo-btn" style="background:#E5F1FF;color:#005CE5;border:none;" id="spec-subtle-btn">Label</button>
-      </div>
-      <div class="spec-card-controls">
-        <div class="demo-control-group">
-          <span class="demo-control-label">State</span>
-          <div class="demo-segmented">
-            <button class="demo-seg active" onclick="renderCard('subtle','enabled',this)">Default</button>
-            <button class="demo-seg" onclick="renderCard('subtle','pressed',this)">Pressed</button>
-            <button class="demo-seg" onclick="renderCard('subtle','disabled',this)">Disabled</button>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Mode</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Appearance</span>
+              <select class="demo-panel-select" onchange="updateSpecCard('outline', 'appearance', this.value)">
+                <option value="default" selected>Default</option>
+                <option value="destructive">Destructive</option>
+                <option value="white">White</option>
+                <option value="subtle">Subtle</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
-      <div class="spec-card-detail spec-view-des" data-view="subtle-des">
-        <div class="spec-detail-section">
-          <div class="spec-detail-label">Colors</div>
-          <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Default bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#E5F1FF"></span> #E5F1FF</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Pressed bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#D2E5FF"></span> #D2E5FF</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Disabled bg</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#C2CFE5"></span> #C2CFE5</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Label (all states)</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#005CE5"></span> #005CE5</span></div>
-          </div>
-        </div>
-        <div class="spec-detail-section">
-          <div class="spec-detail-label">Token refs</div>
-          <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Default bg</span><span class="spec-prop-val mono">main/button/primary/neutral/enabled/bg</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Pressed bg</span><span class="spec-prop-val mono">main/button/primary/neutral/pressed/bg</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Disabled bg</span><span class="spec-prop-val mono">main/button/primary/neutral/disabled/bg</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="spec-card-code spec-view-dev" data-view="subtle-dev" style="display:none">
-        <div class="spec-code-tabs">
-          <button class="spec-code-tab active" onclick="switchCodeTab(this,'swift','subtle')">SwiftUI</button>
-          <button class="spec-code-tab" onclick="switchCodeTab(this,'compose','subtle')">Compose</button>
-          <button class="spec-code-copy" onclick="copyCode(this)" title="Copy code"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg></button>
-        </div>
-        <div class="spec-code-block">
-          <pre class="spec-code-pre" data-code="subtle"><code data-code-content="subtle">// Loading...</code></pre>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ Secondary (Outlined) ═══ -->
-    <div class="spec-card" id="btn-spec-secondary">
-      <div class="spec-card-header">
-        <div class="spec-card-header-row">
-          <div class="sub-heading toc-child" id="btn-secondary" style="margin-top:0">Outlined</div>
-          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17104:184852" data-sp="secondary-node-btn" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span data-sp="secondary-node-text">17104:184852</span></button>
-          <div class="spec-mode-toggle" onclick="toggleSpecMode('secondary', this)">
-            <span class="spec-mode-label active">DES</span>
-            <span class="spec-mode-label">DEV</span>
-          </div>
-        </div>
-        <p class="spec-card-desc">Secondary actions. Border and label share the same color token. Available in Brand and Destructive variants.</p>
-      </div>
-      <div class="spec-card-preview">
-        <button class="demo-btn demo-btn-outlined" id="spec-secondary-btn">Label</button>
-      </div>
-      <div class="spec-card-controls">
-        <div class="demo-control-group">
-          <span class="demo-control-label">Variant</span>
-          <div class="demo-segmented">
-            <button class="demo-seg active" onclick="renderCard('secondary','brand',this)">Brand</button>
-            <button class="demo-seg" onclick="renderCard('secondary','destructive',this)">Destructive</button>
-          </div>
-        </div>
-        <div class="demo-control-group">
-          <span class="demo-control-label">State</span>
-          <div class="demo-segmented">
-            <button class="demo-seg active" onclick="renderCard('secondary','enabled',this)">Default</button>
-            <button class="demo-seg" onclick="renderCard('secondary','pressed',this)">Pressed</button>
-            <button class="demo-seg" onclick="renderCard('secondary','disabled',this)">Disabled</button>
-          </div>
-        </div>
-      </div>
-      <!-- DES view -->
-      <div class="spec-card-detail spec-view-des" data-view="secondary-des">
-        <div class="spec-detail-section">
+      <div class="spec-card-detail spec-view-des" data-view="outline-des">
+        <div class="spec-detail-section" id="spec-outline-props">
           <div class="spec-detail-label">Properties</div>
           <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Appearance</span><span class="spec-prop-val">Outlined</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Variant</span><span class="spec-prop-val" data-sp="secondary-variant">Brand</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">State</span><span class="spec-prop-val" data-sp="secondary-state">Default</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Appearance</span><span class="spec-prop-val" data-sp="outline-appearance">Default</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">State</span><span class="spec-prop-val" data-sp="outline-state">Default</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val" data-sp="outline-size">Large</span></div>
           </div>
         </div>
-        <div class="spec-detail-section" data-card-variant="brand">
-          <div class="spec-detail-label">Colors — Brand</div>
-          <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Default border/label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#005CE5"></span> #005CE5</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Pressed border/label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#2340A9"></span> #2340A9</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Disabled border/label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#9BC5FD"></span> #9BC5FD</span></div>
-          </div>
-        </div>
-        <div class="spec-detail-section" data-card-variant="destructive" style="display:none">
-          <div class="spec-detail-label">Colors — Destructive</div>
-          <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Default border/label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#D61B2C"></span> #D61B2C</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Pressed border/label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#B50707"></span> #B50707</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Disabled border/label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#F4C7C9"></span> #F4C7C9</span></div>
-          </div>
-        </div>
-        <div class="spec-detail-section">
-          <div class="spec-detail-label">Layout</div>
-          <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Height</span><span class="spec-prop-val mono">button/size/height</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Border Width</span><span class="spec-prop-val mono">3px</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Radius</span><span class="spec-prop-val mono">99px</span></div>
-          </div>
-        </div>
+        <div class="spec-detail-section" id="spec-outline-colors"></div>
+        <div class="spec-detail-section" id="spec-outline-layout"></div>
+        <div class="spec-detail-section" id="spec-outline-typo"></div>
       </div>
-      <!-- DEV view -->
-      <div class="spec-card-code spec-view-dev" data-view="secondary-dev" style="display:none">
+      <div class="spec-card-detail spec-card-code" data-view="outline-dev" style="display:none">
         <div class="spec-code-tabs">
-          <button class="spec-code-tab active" onclick="switchCodeTab(this,'swift','secondary')">SwiftUI</button>
-          <button class="spec-code-tab" onclick="switchCodeTab(this,'compose','secondary')">Compose</button>
-          <button class="spec-code-copy" onclick="copyCode(this)" title="Copy code">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg>
-          </button>
+          <button class="spec-code-tab active" onclick="switchCodeTab(this, 'swift', 'outline')">SWIFTUI</button>
+          <button class="spec-code-tab" onclick="switchCodeTab(this, 'compose', 'outline')">COMPOSE</button>
         </div>
-        <div class="spec-code-block">
-          <pre class="spec-code-pre" data-code="secondary"><code data-code-content="secondary">// Loading...</code></pre>
-        </div>
+        <pre class="spec-code-block"><code data-code-content="outline" data-final="">// Click DEV to generate code</code></pre>
       </div>
     </div>
 
-    <!-- ═══ Text Link ═══ -->
+    <!-- ═══ Text ═══ -->
     <div class="spec-card" id="btn-spec-text">
       <div class="spec-card-header">
         <div class="spec-card-header-row">
-          <div class="sub-heading toc-child" id="btn-textlink" style="margin-top:0">Text Link</div>
-          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17104:184855" data-sp="text-node-btn" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span data-sp="text-node-text">17104:184855</span></button>
-          <div class="spec-mode-toggle" onclick="toggleSpecMode('text', this)">
-            <span class="spec-mode-label active">DES</span>
-            <span class="spec-mode-label">DEV</span>
+          <div class="sub-heading toc-child" id="btn-text" style="margin-top:0">Text</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17104:184855" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>17104:184855</span></button>
+          <div class="spec-mode-toggle" onclick="toggleSpecMode('text', this)"><span class="spec-mode-label active">DES</span><span class="spec-mode-label">DEV</span></div>
+        </div>
+        <p class="spec-card-desc">No background or border. Label only. Tertiary action style.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview">
+          <button class="demo-btn" style="background:transparent;color:#005CE5;border:none;padding:14px 24px;border-radius:99px;font-weight:700" id="spec-text-btn">Label</button>
+        </div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <select class="demo-panel-select" onchange="updateSpecCard('text', 'state', this.value)">
+                <option value="default" selected>Default</option>
+                <option value="pressed">Pressed</option>
+                <option value="disabled">Disabled</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Size</span>
+              <select class="demo-panel-select" onchange="updateSpecCard('text', 'size', this.value)">
+                <option value="large" selected>Large</option>
+                <option value="medium">Medium</option>
+                <option value="small">Small</option>
+                <option value="xsmall">XSmall</option>
+              </select>
+            </div>
+          </div>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Mode</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Appearance</span>
+              <select class="demo-panel-select" onchange="updateSpecCard('text', 'appearance', this.value)">
+                <option value="default" selected>Default</option>
+                <option value="destructive">Destructive</option>
+                <option value="white">White</option>
+                <option value="subtle">Subtle</option>
+              </select>
+            </div>
           </div>
         </div>
-        <p class="spec-card-desc">Tertiary action — no background, no border. Label color only. Available in Brand and Destructive variants.</p>
       </div>
-      <div class="spec-card-preview">
-        <button class="demo-btn demo-btn-text" id="spec-text-btn">Label</button>
-      </div>
-      <div class="spec-card-controls">
-        <div class="demo-control-group">
-          <span class="demo-control-label">Variant</span>
-          <div class="demo-segmented">
-            <button class="demo-seg active" onclick="renderCard('text','brand',this)">Brand</button>
-            <button class="demo-seg" onclick="renderCard('text','destructive',this)">Destructive</button>
-          </div>
-        </div>
-        <div class="demo-control-group">
-          <span class="demo-control-label">State</span>
-          <div class="demo-segmented">
-            <button class="demo-seg active" onclick="renderCard('text','enabled',this)">Default</button>
-            <button class="demo-seg" onclick="renderCard('text','pressed',this)">Pressed</button>
-            <button class="demo-seg" onclick="renderCard('text','disabled',this)">Disabled</button>
-          </div>
-        </div>
-      </div>
-      <!-- DES view -->
       <div class="spec-card-detail spec-view-des" data-view="text-des">
-        <div class="spec-detail-section">
+        <div class="spec-detail-section" id="spec-text-props">
           <div class="spec-detail-label">Properties</div>
           <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Appearance</span><span class="spec-prop-val">Text Link</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Variant</span><span class="spec-prop-val" data-sp="text-variant">Brand</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Appearance</span><span class="spec-prop-val" data-sp="text-appearance">Default</span></div>
             <div class="spec-prop"><span class="spec-prop-key">State</span><span class="spec-prop-val" data-sp="text-state">Default</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val" data-sp="text-size">Large</span></div>
           </div>
         </div>
-        <div class="spec-detail-section" data-card-variant="brand">
-          <div class="spec-detail-label">Colors — Brand</div>
-          <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Default label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#005CE5"></span> #005CE5</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Pressed label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#2340A9"></span> #2340A9</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Disabled label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#9BC5FD"></span> #9BC5FD</span></div>
-          </div>
-        </div>
-        <div class="spec-detail-section" data-card-variant="destructive" style="display:none">
-          <div class="spec-detail-label">Colors — Destructive</div>
-          <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Default label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#D61B2C"></span> #D61B2C</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Pressed label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#B50707"></span> #B50707</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Disabled label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#F4C7C9"></span> #F4C7C9</span></div>
-          </div>
-        </div>
-        <div class="spec-detail-section">
-          <div class="spec-detail-label">Layout</div>
-          <div class="spec-props">
-            <div class="spec-prop"><span class="spec-prop-key">Height</span><span class="spec-prop-val mono">button/size/height</span></div>
-            <div class="spec-prop"><span class="spec-prop-key">Radius</span><span class="spec-prop-val mono">99px</span></div>
-          </div>
-        </div>
+        <div class="spec-detail-section" id="spec-text-colors"></div>
+        <div class="spec-detail-section" id="spec-text-layout"></div>
+        <div class="spec-detail-section" id="spec-text-typo"></div>
       </div>
-      <!-- DEV view -->
-      <div class="spec-card-code spec-view-dev" data-view="text-dev" style="display:none">
+      <div class="spec-card-detail spec-card-code" data-view="text-dev" style="display:none">
         <div class="spec-code-tabs">
-          <button class="spec-code-tab active" onclick="switchCodeTab(this,'swift','text')">SwiftUI</button>
-          <button class="spec-code-tab" onclick="switchCodeTab(this,'compose','text')">Compose</button>
-          <button class="spec-code-copy" onclick="copyCode(this)" title="Copy code">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg>
-          </button>
+          <button class="spec-code-tab active" onclick="switchCodeTab(this, 'swift', 'text')">SWIFTUI</button>
+          <button class="spec-code-tab" onclick="switchCodeTab(this, 'compose', 'text')">COMPOSE</button>
         </div>
-        <div class="spec-code-block">
-          <pre class="spec-code-pre" data-code="text"><code data-code-content="text">// Loading...</code></pre>
-        </div>
+        <pre class="spec-code-block"><code data-code-content="text" data-final="">// Click DEV to generate code</code></pre>
       </div>
     </div>
 
@@ -693,7 +525,229 @@ open-issues: C5, C7
     <!-- ── Tab: Code ─────────────────────────────────────────────── -->
     <div class="comp-tab-content" data-tab="code" role="tabpanel">
 
-    <div class="sub-heading" id="btn-scorecard" style="margin-top:0">Criteria Scorecard</div>
+    <!-- ══ Installation ══ -->
+    <div class="sub-heading" id="btn-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span>
+
+<span class="cmt">// Or in Package.swift:</span>
+.<span class="fn">package</span>(
+    <span class="prp">url</span>: <span class="str">"https://github.com/AY-Org/eb-ds-ios"</span>,
+    <span class="prp">from</span>: <span class="str">"2.0.0"</span>
+)</pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// build.gradle.kts (app)</span>
+<span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:button:2.0.0"</span>)
+}</pre>
+    </div>
+    <p class="code-label">Import</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="kw">import</span> EastBlueDS  <span class="cmt">// SwiftUI</span>
+<span class="kw">import</span> com.eastblue.ds.button.*  <span class="cmt">// Compose</span></pre>
+    </div>
+    <p class="table-footnote">Package not yet published. These are the planned distribution paths. API shape is final — native implementation is pending.</p>
+
+    <!-- ══ Property Mapping ══ -->
+    <div class="sub-heading" id="btn-mapping">Property Mapping</div>
+    <p>Every row maps a Figma component property to its native equivalent. When a developer selects a variant in Figma, Code Connect will output the corresponding native code using these mappings.</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Figma Property</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+      <tbody>
+        <tr><td><code>Style=Filled</code></td><td><code>.ebAppearance(.filled)</code></td><td><code>EBButton {}</code></td></tr>
+        <tr><td><code>Style=Outline</code></td><td><code>.ebAppearance(.outlined)</code></td><td><code>EBOutlinedButton {}</code></td></tr>
+        <tr><td><code>Style=Text</code></td><td><code>.ebAppearance(.textLink)</code></td><td><code>EBTextButton {}</code></td></tr>
+        <tr><td><code>Appearance=Default</code></td><td>(default colors)</td><td>(default colors)</td></tr>
+        <tr><td><code>Appearance=Destructive</code></td><td><code>role: .destructive</code></td><td><code>colors = EBButtonDefaults.destructiveColors()</code></td></tr>
+        <tr><td><code>Appearance=White</code></td><td><code>.ebAppearance(.white)</code></td><td><code>colors = EBButtonDefaults.whiteColors()</code></td></tr>
+        <tr><td><code>Appearance=Subtle</code></td><td><code>.ebAppearance(.subtle)</code></td><td><code>colors = EBButtonDefaults.subtleColors()</code></td></tr>
+        <tr><td><code>Size=Large…XSmall</code></td><td><code>controlSize: .large / .regular / .small / .mini</code></td><td><code>size = EBButtonSize.Large / Medium / Small / XSmall</code></td></tr>
+        <tr><td><code>State=Disabled</code></td><td><code>.disabled(true)</code></td><td><code>enabled = false</code></td></tr>
+        <tr><td><code>leadingIcon=true</code></td><td><code>Label("…", systemImage: "…")</code></td><td><code>leadingIcon = { Icon(…) }</code></td></tr>
+        <tr><td><code>trailingIcon=true</code></td><td><code>Label + trailing Image</code></td><td><code>trailingIcon = { Icon(…) }</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/Button/EBButton.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/button/EBButton.kt</div>
+    </div>
+
+    <!-- ══ Usage — Filled ══ -->
+    <div class="sub-heading" id="btn-usage-filled">Primary Button</div>
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'code-filled','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'code-filled','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Default appearance</span>
+<span class="typ">EBButton</span>(<span class="str">"Save Changes"</span>)
+    .<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
+    .<span class="fn">controlSize</span>(.<span class="prp">large</span>)
+
+<span class="cmt">// Destructive appearance</span>
+<span class="typ">EBButton</span>(<span class="str">"Delete Account"</span>, <span class="prp">role</span>: .<span class="prp">destructive</span>)
+    .<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
+
+<span class="cmt">// With leading icon</span>
+<span class="typ">EBButton</span> {
+    <span class="typ">Label</span>(<span class="str">"Send Money"</span>, <span class="prp">systemImage</span>: <span class="str">"arrow.up.right"</span>)
+}
+.<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
+
+<span class="cmt">// Disabled</span>
+<span class="typ">EBButton</span>(<span class="str">"Submit"</span>)
+    .<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
+    .<span class="fn">disabled</span>(<span class="kw">true</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Default appearance</span>
+<span class="typ">EBButton</span>(
+    <span class="prp">onClick</span> = { <span class="cmt">/* action */</span> },
+    <span class="prp">size</span> = <span class="typ">EBButtonSize</span>.<span class="prp">Large</span>
+) {
+    <span class="typ">Text</span>(<span class="str">"Save Changes"</span>)
+}
+
+<span class="cmt">// Destructive appearance</span>
+<span class="typ">EBButton</span>(
+    <span class="prp">onClick</span> = { <span class="cmt">/* action */</span> },
+    <span class="prp">colors</span> = <span class="typ">EBButtonDefaults</span>.<span class="fn">destructiveColors</span>()
+) {
+    <span class="typ">Text</span>(<span class="str">"Delete Account"</span>)
+}
+
+<span class="cmt">// Disabled</span>
+<span class="typ">EBButton</span>(
+    <span class="prp">onClick</span> = { },
+    <span class="prp">enabled</span> = <span class="kw">false</span>
+) {
+    <span class="typ">Text</span>(<span class="str">"Submit"</span>)
+}</pre>
+      </div>
+    </div>
+
+    <!-- ══ Usage — Outline ══ -->
+    <div class="sub-heading" id="btn-usage-outline">Secondary Button</div>
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'code-outline','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'code-outline','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Default</span>
+<span class="typ">EBButton</span>(<span class="str">"Cancel"</span>)
+    .<span class="fn">ebAppearance</span>(.<span class="prp">outlined</span>)
+
+<span class="cmt">// Destructive</span>
+<span class="typ">EBButton</span>(<span class="str">"Remove Item"</span>, <span class="prp">role</span>: .<span class="prp">destructive</span>)
+    .<span class="fn">ebAppearance</span>(.<span class="prp">outlined</span>)
+
+<span class="cmt">// Button pair</span>
+<span class="typ">HStack</span>(<span class="prp">spacing</span>: <span class="typ">12</span>) {
+    <span class="typ">EBButton</span>(<span class="str">"Cancel"</span>).<span class="fn">ebAppearance</span>(.<span class="prp">outlined</span>)
+    <span class="typ">EBButton</span>(<span class="str">"Save"</span>).<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
+}</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBOutlinedButton</span>(
+    <span class="prp">onClick</span> = { <span class="cmt">/* action */</span> }
+) {
+    <span class="typ">Text</span>(<span class="str">"Cancel"</span>)
+}
+
+<span class="cmt">// Button pair</span>
+<span class="typ">Row</span>(<span class="prp">horizontalArrangement</span> = <span class="typ">Arrangement</span>.<span class="fn">spacedBy</span>(<span class="typ">12</span>.dp)) {
+    <span class="typ">EBOutlinedButton</span>(<span class="prp">onClick</span> = {}) { <span class="typ">Text</span>(<span class="str">"Cancel"</span>) }
+    <span class="typ">EBButton</span>(<span class="prp">onClick</span> = {}) { <span class="typ">Text</span>(<span class="str">"Save"</span>) }
+}</pre>
+      </div>
+    </div>
+
+    <!-- ══ Usage — Text ══ -->
+    <div class="sub-heading" id="btn-usage-text">Tertiary Button</div>
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'code-text','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'code-text','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBButton</span>(<span class="str">"Learn More"</span>)
+    .<span class="fn">ebAppearance</span>(.<span class="prp">textLink</span>)
+    .<span class="fn">controlSize</span>(.<span class="prp">small</span>)
+
+<span class="cmt">// Destructive</span>
+<span class="typ">EBButton</span>(<span class="str">"Remove"</span>, <span class="prp">role</span>: .<span class="prp">destructive</span>)
+    .<span class="fn">ebAppearance</span>(.<span class="prp">textLink</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBTextButton</span>(
+    <span class="prp">onClick</span> = { <span class="cmt">/* action */</span> },
+    <span class="prp">size</span> = <span class="typ">EBButtonSize</span>.<span class="prp">Small</span>
+) {
+    <span class="typ">Text</span>(<span class="str">"Learn More"</span>)
+}</pre>
+      </div>
+    </div>
+
+    <!-- ══ Accessibility ══ -->
+    <div class="sub-heading" id="btn-a11y">Accessibility</div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+      <tbody>
+        <tr><td>Min touch target</td><td><code>44 × 44pt</code></td><td><code>48 × 48dp</code></td></tr>
+        <tr><td>Focus ring</td><td>Handled by UIKit/SwiftUI</td><td>Handled by Material ripple</td></tr>
+        <tr><td>Icon-only buttons</td><td><code>.accessibilityLabel("Send")</code></td><td><code>contentDescription = "Send"</code></td></tr>
+        <tr><td>Destructive role</td><td><code>role: .destructive</code> — announced by VoiceOver</td><td>Use <code>semantics { role = Role.Button }</code></td></tr>
+        <tr><td>Loading state</td><td colspan="2">Pending — announce "Loading, please wait" to screen readers and disable tap</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- ══ Usage Guidelines ══ -->
+    <div class="sub-heading" id="btn-guidelines">Usage Guidelines</div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use one Filled button per screen area as the primary action. Pair with Outline or Text for secondary.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Place two filled buttons side by side — they compete for attention and neither reads as primary.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use Destructive appearance for irreversible actions (delete, remove). Always pair with a confirmation.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Use Destructive for actions that are simply "negative" but reversible (dismiss, close, decline).</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use White appearance on brand-colored or dark surfaces (hero banners, promotional cards).</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Use White appearance on a white background — the button disappears. Use Default or Subtle instead.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use Text style for inline or low-emphasis actions (Learn more, View terms, Skip).</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Use Text style for primary form submission — it lacks the visual weight to signal the main action.</p></div>
+    </div>
+
+    <div class="sub-heading" id="btn-scorecard">Criteria Scorecard</div>
     <div class="table-wrap">
       <table>
         <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
@@ -709,7 +763,7 @@ open-issues: C5, C7
       </table>
     </div>
 
-    <div class="sub-heading" id="btn-codeconnect">Code Connect — Property Mapping</div>
+    <div class="sub-heading" id="btn-codeconnect">Code Connect</div>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Figma Property</th><th>SwiftUI Param</th><th>Compose Param</th><th>Notes</th></tr></thead>
