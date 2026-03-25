@@ -172,17 +172,11 @@ open-issues: C7
             </div>
             <div class="demo-panel-row">
               <span class="demo-panel-label">leadingIcon</span>
-              <select class="demo-panel-select" onchange="setAccDemoProp('leadingIcon', this.value === 'true')">
-                <option value="true" selected>true</option>
-                <option value="false">false</option>
-              </select>
+              <button class="demo-bool-toggle active" onclick="this.classList.toggle('active'); setAccDemoProp('leadingIcon', this.classList.contains('active'))"></button>
             </div>
             <div class="demo-panel-row">
               <span class="demo-panel-label">description</span>
-              <select class="demo-panel-select" onchange="setAccDemoProp('description', this.value === 'true')">
-                <option value="false" selected>false</option>
-                <option value="true">true</option>
-              </select>
+              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); setAccDemoProp('description', this.classList.contains('active'))"></button>
             </div>
           </div>
         </div>
@@ -299,17 +293,11 @@ open-issues: C7
             </div>
             <div class="demo-panel-row">
               <span class="demo-panel-label">leadingIcon</span>
-              <select class="demo-panel-select" onchange="updateAccSpecCard('collapsed', 'leadingIcon', this.value === 'true')">
-                <option value="true" selected>true</option>
-                <option value="false">false</option>
-              </select>
+              <button class="demo-bool-toggle active" onclick="this.classList.toggle('active'); updateAccSpecCard('collapsed', 'leadingIcon', this.classList.contains('active'))"></button>
             </div>
             <div class="demo-panel-row">
               <span class="demo-panel-label">description</span>
-              <select class="demo-panel-select" onchange="updateAccSpecCard('collapsed', 'description', this.value === 'true')">
-                <option value="false" selected>false</option>
-                <option value="true">true</option>
-              </select>
+              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); updateAccSpecCard('collapsed', 'description', this.classList.contains('active'))"></button>
             </div>
           </div>
         </div>
@@ -406,17 +394,11 @@ open-issues: C7
             </div>
             <div class="demo-panel-row">
               <span class="demo-panel-label">leadingIcon</span>
-              <select class="demo-panel-select" onchange="updateAccSpecCard('expanded', 'leadingIcon', this.value === 'true')">
-                <option value="true" selected>true</option>
-                <option value="false">false</option>
-              </select>
+              <button class="demo-bool-toggle active" onclick="this.classList.toggle('active'); updateAccSpecCard('expanded', 'leadingIcon', this.classList.contains('active'))"></button>
             </div>
             <div class="demo-panel-row">
               <span class="demo-panel-label">description</span>
-              <select class="demo-panel-select" onchange="updateAccSpecCard('expanded', 'description', this.value === 'true')">
-                <option value="false" selected>false</option>
-                <option value="true">true</option>
-              </select>
+              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); updateAccSpecCard('expanded', 'description', this.classList.contains('active'))"></button>
             </div>
           </div>
         </div>

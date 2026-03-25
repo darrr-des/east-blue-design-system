@@ -84,13 +84,7 @@ open-issues: C5, C7
           Button
           <span class="badge badge-fix">Fix</span>
         </div>
-        <p class="comp-desc">A pill-shaped tap target with three styles (Filled, Outline, Text), four sizes (Large/Medium/Small/XSmall), and three states (Default/Pressed/Disabled). Appearance controlled via variable modes (Default/Destructive/White/Subtle) — 144 effective visual states from 36 variants.</p>
-        <div class="comp-meta">
-          <div class="cover-meta-item"><strong>Node:</strong> 17104:184842</div>
-          <div class="cover-meta-item"><strong>Variants:</strong> 36</div>
-          <div class="cover-meta-item"><strong>iOS:</strong> Button</div>
-          <div class="cover-meta-item"><strong>Android:</strong> Button / OutlinedButton / TextButton</div>
-        </div>
+        <p class="comp-desc">Used to trigger an action when tapped. The button's Call to Action describes the action that will occur. The Large/Medium Buttons are the default size for the GCash app.</p>
       </div>
     </div>
 
@@ -122,7 +116,11 @@ open-issues: C5, C7
     <div class="demo-panel" id="btn-demo">
       <div class="demo-layout">
         <div class="demo-preview">
-          <button class="demo-btn demo-btn-primary" id="demo-btn-live">Label</button>
+          <button class="demo-btn demo-btn-primary" id="demo-btn-live" style="display:inline-flex;align-items:center;gap:8px;">
+            <svg id="demo-btn-leading" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;flex-shrink:0;"><path d="M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span id="demo-btn-text">Label</span>
+            <svg id="demo-btn-trailing" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;flex-shrink:0;"><path d="M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          </button>
         </div>
         <div class="demo-figma-panel">
           <div class="demo-panel-section">
@@ -151,6 +149,14 @@ open-issues: C5, C7
                 <option value="small">Small</option>
                 <option value="xsmall">XSmall</option>
               </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leadingIcon</span>
+              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); setDemoIcon('leading', this.classList.contains('active'))"></button>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">trailingIcon</span>
+              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); setDemoIcon('trailing', this.classList.contains('active'))"></button>
             </div>
           </div>
           <div class="demo-panel-section">
@@ -319,7 +325,11 @@ open-issues: C5, C7
       </div>
       <div class="demo-layout">
         <div class="spec-card-preview">
-          <button class="demo-btn demo-btn-primary" id="spec-filled-btn">Label</button>
+          <button class="demo-btn demo-btn-primary" id="spec-filled-btn" style="display:inline-flex;align-items:center;gap:8px;">
+            <svg id="spec-filled-leading" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;flex-shrink:0;"><path d="M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span>Label</span>
+            <svg id="spec-filled-trailing" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;flex-shrink:0;"><path d="M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          </button>
         </div>
         <div class="demo-figma-panel">
           <div class="demo-panel-section">
@@ -340,6 +350,14 @@ open-issues: C5, C7
                 <option value="small">Small</option>
                 <option value="xsmall">XSmall</option>
               </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leadingIcon</span>
+              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); updateSpecCard('filled', 'leadingIcon', this.classList.contains('active'))"></button>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">trailingIcon</span>
+              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); updateSpecCard('filled', 'trailingIcon', this.classList.contains('active'))"></button>
             </div>
           </div>
           <div class="demo-panel-section">
@@ -390,7 +408,11 @@ open-issues: C5, C7
       </div>
       <div class="demo-layout">
         <div class="spec-card-preview">
-          <button class="demo-btn demo-btn-outlined" id="spec-outline-btn">Label</button>
+          <button class="demo-btn demo-btn-outlined" id="spec-outline-btn" style="display:inline-flex;align-items:center;gap:8px;">
+            <svg id="spec-outline-leading" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;flex-shrink:0;"><path d="M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span>Label</span>
+            <svg id="spec-outline-trailing" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;flex-shrink:0;"><path d="M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          </button>
         </div>
         <div class="demo-figma-panel">
           <div class="demo-panel-section">
@@ -411,6 +433,14 @@ open-issues: C5, C7
                 <option value="small">Small</option>
                 <option value="xsmall">XSmall</option>
               </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leadingIcon</span>
+              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); updateSpecCard('outline', 'leadingIcon', this.classList.contains('active'))"></button>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">trailingIcon</span>
+              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); updateSpecCard('outline', 'trailingIcon', this.classList.contains('active'))"></button>
             </div>
           </div>
           <div class="demo-panel-section">
@@ -461,7 +491,11 @@ open-issues: C5, C7
       </div>
       <div class="demo-layout">
         <div class="spec-card-preview">
-          <button class="demo-btn" style="background:transparent;color:#005CE5;border:none;padding:14px 24px;border-radius:99px;font-weight:700" id="spec-text-btn">Label</button>
+          <button class="demo-btn" style="background:transparent;color:#005CE5;border:none;padding:14px 24px;border-radius:99px;font-weight:700;display:inline-flex;align-items:center;gap:8px;" id="spec-text-btn">
+            <svg id="spec-text-leading" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;flex-shrink:0;"><path d="M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span>Label</span>
+            <svg id="spec-text-trailing" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;flex-shrink:0;"><path d="M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          </button>
         </div>
         <div class="demo-figma-panel">
           <div class="demo-panel-section">
@@ -482,6 +516,14 @@ open-issues: C5, C7
                 <option value="small">Small</option>
                 <option value="xsmall">XSmall</option>
               </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leadingIcon</span>
+              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); updateSpecCard('text', 'leadingIcon', this.classList.contains('active'))"></button>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">trailingIcon</span>
+              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); updateSpecCard('text', 'trailingIcon', this.classList.contains('active'))"></button>
             </div>
           </div>
           <div class="demo-panel-section">
