@@ -93,11 +93,12 @@ open-issues: C7
           <span class="badge badge-refine">Needs Refinement</span>
         </div>
         <p class="comp-desc">A disclosure row that expands to reveal content. Supports optional leading icon and description via boolean visibility properties. Reduced from 24 to 6 variants (Type × State) with color tokens fully connected.</p>
-        <div class="comp-meta">
-          <div class="cover-meta-item"><strong>Node:</strong> 16870:9288</div>
-          <div class="cover-meta-item"><strong>Variants:</strong> 6</div>
-          <div class="cover-meta-item"><strong>iOS:</strong> DisclosureGroup</div>
-          <div class="cover-meta-item"><strong>Android:</strong> AnimatedVisibility</div>
+      </div>
+      <div class="verdict-inline verdict-refine">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Architecture refined — handoff-ready except Code Connect</div>
+          <div class="verdict-inline-text">6 variants (Type × State) with boolean visibility properties. Color tokens fully connected. Only Code Connect mappings (C7) remain.</div>
         </div>
       </div>
     </div>
@@ -113,18 +114,6 @@ open-issues: C7
 
     <!-- ── Tab: Overview ─────────────────────────────────────────── -->
     <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
-
-    <!-- Verdict -->
-    <div class="verdict-card" id="acc-overview">
-      <button class="verdict-card-trigger" onclick="toggleVerdict(this)" aria-expanded="false">
-        <div class="verdict-card-trigger-body">
-          <span class="verdict-card-eyebrow">VERDICT</span>
-          <span class="verdict-card-title">Architecture refined — handoff-ready except Code Connect</span>
-        </div>
-        <svg class="verdict-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="verdict-card-body" hidden>Variant set reduced from 24 to 6 (Type=Collapsed/Expanded × State=Default/Pressed/Disabled) with <code>leadingIcon</code> and <code>description</code> as boolean visibility properties. Fixed 56px header height applied. Color tokens connected across all variants using the design system variable collection. Only Code Connect mappings (C7) remain.</div>
-    </div>
 
     <!-- Live Demo -->
     <div class="demo-panel" id="acc-demo">

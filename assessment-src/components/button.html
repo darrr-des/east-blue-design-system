@@ -86,6 +86,13 @@ open-issues: C5, C7
         </div>
         <p class="comp-desc">Used to trigger an action when tapped. The button's Call to Action describes the action that will occur. The Large/Medium Buttons are the default size for the GCash app.</p>
       </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">v3 restructure — 36 variants × 4 appearance modes = 144 visual states</div>
+          <div class="verdict-inline-text">Size is now a variant dimension (Style × Size × State). 12 color variables across 4 modes. Remaining: loading state (C5), Code Connect mappings (C7).</div>
+        </div>
+      </div>
     </div>
 
     <!-- ── Tab bar ──────────────────────────────────────────────── -->
@@ -100,19 +107,16 @@ open-issues: C5, C7
     <!-- ── Tab: Usage ────────────────────────────────────────────── -->
     <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
 
-    <!-- Overview -->
-    <div class="verdict-card" id="btn-overview">
-      <button class="verdict-card-trigger" onclick="toggleVerdict(this)" aria-expanded="false">
-        <div class="verdict-card-trigger-body">
-          <span class="verdict-card-eyebrow">VERDICT</span>
-          <span class="verdict-card-title">v3 restructure — size as variant dimension eliminates text style conflict. 36 variants × 4 appearance modes = 144 visual states.</span>
-        </div>
-        <svg class="verdict-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="verdict-card-body" hidden>36 variants (Size × State × Style) with appearance controlled via variable modes. Size is now a variant dimension — each size has its own text style, eliminating the font-size variable conflict. Style (Filled/Outline/Text) replaces the old Appearance+Variant system. The <code>Button</code> variable collection has 4 modes (Default/Destructive/White/Subtle) with 12 color variables bound to all containers and labels. Remaining gaps: missing loading state (C5), no Code Connect CLI mappings (C7).</div>
+    <!-- In Context -->
+    <div class="sub-heading" id="btn-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">How the button appears in a real product screen — primary and secondary actions in a bottom sheet.</p>
+    <div class="ctx-wrap">
+      <img class="ctx-img" src="assets/previews/button-in-context.png" alt="Button component shown in a GCash Physical Card bottom sheet with primary and secondary buttons" />
     </div>
 
     <!-- Live Demo Panel -->
+    <div class="sub-heading" id="btn-preview">Live Preview</div>
+    <p class="section-desc">Toggle properties and appearance modes to see the button update in real time.</p>
     <div class="demo-panel" id="btn-demo">
       <div class="demo-layout">
         <div class="demo-preview">
@@ -226,7 +230,7 @@ open-issues: C5, C7
             <td class="center"><span class="check">Yes</span></td>
             <td class="center"><span class="check">Yes</span></td>
             <td class="mono">State=Default</td>
-            <td class="muted">All five appearances fully defined.</td>
+            <td class="muted">All four appearance modes fully defined.</td>
           </tr>
           <tr>
             <td><strong>Pressed</strong></td>
@@ -289,26 +293,6 @@ open-issues: C5, C7
 
     <!-- ── Tab: Style (Component Spec) ──────────────────────────── -->
     <div class="comp-tab-content" data-tab="style" role="tabpanel">
-
-    <!-- In Context -->
-    <div class="sub-heading" id="btn-context" style="margin-top:0">In Context</div>
-    <div class="mockup-frame">
-      <div class="mockup-chrome">
-        <div class="mockup-dots"><span></span><span></span><span></span></div>
-        <div class="mockup-url">app.eastblue.design/settings</div>
-      </div>
-      <div class="mockup-body">
-        <div class="mockup-form">
-          <div class="mockup-field"><div class="mockup-field-label"></div><div class="mockup-field-input"></div></div>
-          <div class="mockup-field"><div class="mockup-field-label"></div><div class="mockup-field-input"></div></div>
-          <div class="mockup-actions">
-            <div class="mockup-btn-outlined">Cancel</div>
-            <div class="mockup-btn-primary">Save Changes</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
 
     <!-- Styles group -->
     <div class="sub-heading" id="btn-styles">Styles</div>
@@ -794,8 +778,8 @@ open-issues: C5, C7
       <table>
         <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
         <tbody>
-          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All layers use semantic names. <code>container</code>, <code>#label</code>, <code>leadingIcon</code>, <code>trailingIcon</code> consistent across all 24 variants.</td></tr>
-          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted"><code>isError</code> replaced with <code>Variant: Brand | Destructive</code> — a true orthogonal property. <code>Appearance</code> now covers all 5 types. <code>leadingIcon</code>/<code>trailingIcon</code> are SLOT nodes with Boolean component properties.</td></tr>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All layers use semantic names. <code>container</code>, <code>#label</code>, <code>leadingIcon</code>, <code>trailingIcon</code> consistent across all 36 variants.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">v3 clean orthogonal dimensions: <code>Style</code> (Filled/Outline/Text), <code>Size</code> (Large/Medium/Small/XSmall), <code>State</code> (Default/Pressed/Disabled). Appearance via 4 variable modes. <code>leadingIcon</code>/<code>trailingIcon</code> are SLOT nodes with Boolean component properties.</td></tr>
           <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All color values connected to semantic tokens. Layout/sizing driven by <code>button/size</code> variable collection (height, padding-h, padding-v, font-size).</td></tr>
           <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Maps to <code>Button</code>, <code>OutlinedButton</code>, <code>TextButton</code>. Destructive maps to <code>role: .destructive</code> / <code>contentColor = errorColor</code>.</td></tr>
           <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Default, Pressed, Disabled covered. Focus ring is N/A — mobile OS handles natively. Missing: loading/processing state for async actions.</td></tr>
@@ -806,58 +790,121 @@ open-issues: C5, C7
     </div>
 
     <div class="sub-heading" id="btn-codeconnect">Code Connect</div>
-    <div class="table-wrap">
+    <p>Maps v3 variant dimensions (Style × Size × State) and variable modes (Appearance) to native parameters. 36 variants × 4 appearance modes = 144 visual states.</p>
+
+    <div class="cc-group">
+      <div class="cc-group-label">Style <span class="cc-group-dim">variant dimension</span></div>
+      <div class="table-wrap">
       <table>
-        <thead><tr><th>Figma Property</th><th>SwiftUI Param</th><th>Compose Param</th><th>Notes</th></tr></thead>
+        <thead><tr><th>Figma</th><th>SwiftUI</th><th>Compose</th></tr></thead>
         <tbody>
-          <tr><td class="mono">Appearance=Default</td><td class="mono">.borderedProminent</td><td class="mono">Button {}</td><td class="muted">Primary filled button</td></tr>
-          <tr><td class="mono">Appearance=White</td><td class="mono">.borderedProminent (inverse tint)</td><td class="mono">Button {} (inverse colors)</td><td class="muted">White fill, brand label — for colored surfaces</td></tr>
-          <tr><td class="mono">Appearance=Subtle</td><td class="mono">.bordered (tinted)</td><td class="mono">Button {} (tinted colors)</td><td class="muted">Light brand tint fill</td></tr>
-          <tr><td class="mono">Appearance=Outlined</td><td class="mono">.bordered</td><td class="mono">OutlinedButton {}</td><td class="muted">Secondary outlined button</td></tr>
-          <tr><td class="mono">Appearance=Text Link</td><td class="mono">.plain / .borderless</td><td class="mono">TextButton {}</td><td class="muted">Tertiary text-only button</td></tr>
-          <tr><td class="mono">Variant=Brand</td><td class="mono">(default)</td><td class="mono">(default)</td><td class="muted">Brand blue color set</td></tr>
-          <tr><td class="mono">Variant=Destructive</td><td class="mono">role: .destructive</td><td class="mono">contentColor = errorColor</td><td class="muted">Red color set — Default, Outlined, Text Link</td></tr>
-          <tr><td class="mono">Size mode=Large</td><td class="mono">controlSize: .large</td><td class="mono">modifier size tokens</td><td class="muted">52px height via variable</td></tr>
-          <tr><td class="mono">Size mode=Medium</td><td class="mono">controlSize: .regular</td><td class="mono">modifier size tokens</td><td class="muted">36px height via variable</td></tr>
-          <tr><td class="mono">Size mode=Small</td><td class="mono">controlSize: .small</td><td class="mono">modifier size tokens</td><td class="muted">28px height via variable</td></tr>
-          <tr><td class="mono">Size mode=XSmall</td><td class="mono">controlSize: .mini</td><td class="mono">modifier size tokens</td><td class="muted">24px height via variable</td></tr>
-          <tr><td class="mono">State=Disabled</td><td class="mono">.disabled(true)</td><td class="mono">enabled = false</td><td class="muted">Disabled modifier</td></tr>
-          <tr><td class="mono">leadingIcon=true</td><td class="mono">Label("", systemImage:)</td><td class="mono">icon = { Icon(...) }</td><td class="muted">SLOT node — Boolean component property</td></tr>
-          <tr><td class="mono">trailingIcon=true</td><td class="mono">Label("", systemImage:)</td><td class="mono">trailingIcon = { Icon(...) }</td><td class="muted">SLOT node — Boolean component property</td></tr>
+          <tr><td class="mono">Filled</td><td class="mono">.ebAppearance(.filled)</td><td class="mono">EBButton {}</td></tr>
+          <tr><td class="mono">Outline</td><td class="mono">.ebAppearance(.outlined)</td><td class="mono">EBOutlinedButton {}</td></tr>
+          <tr><td class="mono">Text</td><td class="mono">.ebAppearance(.textLink)</td><td class="mono">EBTextButton {}</td></tr>
         </tbody>
       </table>
+      </div>
     </div>
 
-    <div class="sub-heading" id="btn-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(24 total)</span></div>
-    <p>5 <code>Appearance</code> × 2 <code>Variant</code> (Brand/Destructive, where applicable) × 3 <code>State</code>. <code>Size</code> is not a variant dimension — controlled by the <code>button/size</code> variable mode.</p>
+    <div class="cc-group">
+      <div class="cc-group-label">Size <span class="cc-group-dim">variant dimension</span></div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">Large <span class="muted">52px</span></td><td class="mono">.controlSize(.large)</td><td class="mono">size = EBButtonSize.Large</td></tr>
+          <tr><td class="mono">Medium <span class="muted">36px</span></td><td class="mono">.controlSize(.regular)</td><td class="mono">size = EBButtonSize.Medium</td></tr>
+          <tr><td class="mono">Small <span class="muted">28px</span></td><td class="mono">.controlSize(.small)</td><td class="mono">size = EBButtonSize.Small</td></tr>
+          <tr><td class="mono">XSmall <span class="muted">24px</span></td><td class="mono">.controlSize(.mini)</td><td class="mono">size = EBButtonSize.XSmall</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="cc-group">
+      <div class="cc-group-label">State <span class="cc-group-dim">variant dimension</span></div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">Default</td><td class="mono">(default)</td><td class="mono">(default)</td></tr>
+          <tr><td class="mono">Pressed</td><td class="mono">(system)</td><td class="mono">(system)</td></tr>
+          <tr><td class="mono">Disabled</td><td class="mono">.disabled(true)</td><td class="mono">enabled = false</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="cc-group">
+      <div class="cc-group-label">Appearance <span class="cc-group-dim">variable mode</span></div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">Default</td><td class="mono">(default colors)</td><td class="mono">(default colors)</td></tr>
+          <tr><td class="mono">Destructive</td><td class="mono">role: .destructive</td><td class="mono">colors = …destructiveColors()</td></tr>
+          <tr><td class="mono">White</td><td class="mono">.ebColorScheme(.white)</td><td class="mono">colors = …whiteColors()</td></tr>
+          <tr><td class="mono">Subtle</td><td class="mono">.ebColorScheme(.subtle)</td><td class="mono">colors = …subtleColors()</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="cc-group">
+      <div class="cc-group-label">Icon Slots <span class="cc-group-dim">boolean properties</span></div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">leadingIcon=true</td><td class="mono">Label("…", systemImage:)</td><td class="mono">leadingIcon = { Icon(…) }</td></tr>
+          <tr><td class="mono">trailingIcon=true</td><td class="mono">trailingIcon: Image(…)</td><td class="mono">trailingIcon = { Icon(…) }</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="btn-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(36 total)</span></div>
+    <p>3 <code>Style</code> (Filled/Outline/Text) × 4 <code>Size</code> (Large/Medium/Small/XSmall) × 3 <code>State</code> (Default/Pressed/Disabled) = 36 variants. <code>Appearance</code> is a variable mode (Default/Destructive/White/Subtle) — 4 modes × 36 variants = 144 visual states.</p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Appearance</th><th>Variant</th><th>State</th><th>Node ID</th></tr></thead>
+        <thead><tr><th>Style</th><th>Size</th><th>State</th></tr></thead>
         <tbody>
-          <tr><td>Default</td><td>Brand</td><td>Default</td><td class="mono">17104:184843</td></tr>
-          <tr><td>Default</td><td>Brand</td><td>Pressed</td><td class="mono">17104:184846</td></tr>
-          <tr><td>Default</td><td>Brand</td><td>Disabled</td><td class="mono">17104:184849</td></tr>
-          <tr><td>Default</td><td>Destructive</td><td>Default</td><td class="mono">17274:54</td></tr>
-          <tr><td>Default</td><td>Destructive</td><td>Pressed</td><td class="mono">17274:59</td></tr>
-          <tr><td>Default</td><td>Destructive</td><td>Disabled</td><td class="mono">17274:64</td></tr>
-          <tr><td>White</td><td>Brand</td><td>Default</td><td class="mono">17285:6723</td></tr>
-          <tr><td>White</td><td>Brand</td><td>Pressed</td><td class="mono">17285:6728</td></tr>
-          <tr><td>White</td><td>Brand</td><td>Disabled</td><td class="mono">17285:6733</td></tr>
-          <tr><td>Subtle</td><td>Brand</td><td>Default</td><td class="mono">17285:6738</td></tr>
-          <tr><td>Subtle</td><td>Brand</td><td>Pressed</td><td class="mono">17285:6743</td></tr>
-          <tr><td>Subtle</td><td>Brand</td><td>Disabled</td><td class="mono">17285:6748</td></tr>
-          <tr><td>Outlined</td><td>Brand</td><td>Default</td><td class="mono">17104:184852</td></tr>
-          <tr><td>Outlined</td><td>Brand</td><td>Pressed</td><td class="mono">17104:184858</td></tr>
-          <tr><td>Outlined</td><td>Brand</td><td>Disabled</td><td class="mono">17104:184864</td></tr>
-          <tr><td>Outlined</td><td>Destructive</td><td>Default</td><td class="mono">17104:184942</td></tr>
-          <tr><td>Outlined</td><td>Destructive</td><td>Pressed</td><td class="mono">17104:184936</td></tr>
-          <tr><td>Outlined</td><td>Destructive</td><td>Disabled</td><td class="mono">17104:184930</td></tr>
-          <tr><td>Text Link</td><td>Brand</td><td>Default</td><td class="mono">17104:184855</td></tr>
-          <tr><td>Text Link</td><td>Brand</td><td>Pressed</td><td class="mono">17104:184861</td></tr>
-          <tr><td>Text Link</td><td>Brand</td><td>Disabled</td><td class="mono">17104:184867</td></tr>
-          <tr><td>Text Link</td><td>Destructive</td><td>Default</td><td class="mono">17104:184945</td></tr>
-          <tr><td>Text Link</td><td>Destructive</td><td>Pressed</td><td class="mono">17104:184939</td></tr>
-          <tr><td>Text Link</td><td>Destructive</td><td>Disabled</td><td class="mono">17104:184933</td></tr>
+          <tr><td>Filled</td><td>Large</td><td>Default</td></tr>
+          <tr><td>Filled</td><td>Large</td><td>Pressed</td></tr>
+          <tr><td>Filled</td><td>Large</td><td>Disabled</td></tr>
+          <tr><td>Filled</td><td>Medium</td><td>Default</td></tr>
+          <tr><td>Filled</td><td>Medium</td><td>Pressed</td></tr>
+          <tr><td>Filled</td><td>Medium</td><td>Disabled</td></tr>
+          <tr><td>Filled</td><td>Small</td><td>Default</td></tr>
+          <tr><td>Filled</td><td>Small</td><td>Pressed</td></tr>
+          <tr><td>Filled</td><td>Small</td><td>Disabled</td></tr>
+          <tr><td>Filled</td><td>XSmall</td><td>Default</td></tr>
+          <tr><td>Filled</td><td>XSmall</td><td>Pressed</td></tr>
+          <tr><td>Filled</td><td>XSmall</td><td>Disabled</td></tr>
+          <tr><td>Outline</td><td>Large</td><td>Default</td></tr>
+          <tr><td>Outline</td><td>Large</td><td>Pressed</td></tr>
+          <tr><td>Outline</td><td>Large</td><td>Disabled</td></tr>
+          <tr><td>Outline</td><td>Medium</td><td>Default</td></tr>
+          <tr><td>Outline</td><td>Medium</td><td>Pressed</td></tr>
+          <tr><td>Outline</td><td>Medium</td><td>Disabled</td></tr>
+          <tr><td>Outline</td><td>Small</td><td>Default</td></tr>
+          <tr><td>Outline</td><td>Small</td><td>Pressed</td></tr>
+          <tr><td>Outline</td><td>Small</td><td>Disabled</td></tr>
+          <tr><td>Outline</td><td>XSmall</td><td>Default</td></tr>
+          <tr><td>Outline</td><td>XSmall</td><td>Pressed</td></tr>
+          <tr><td>Outline</td><td>XSmall</td><td>Disabled</td></tr>
+          <tr><td>Text</td><td>Large</td><td>Default</td></tr>
+          <tr><td>Text</td><td>Large</td><td>Pressed</td></tr>
+          <tr><td>Text</td><td>Large</td><td>Disabled</td></tr>
+          <tr><td>Text</td><td>Medium</td><td>Default</td></tr>
+          <tr><td>Text</td><td>Medium</td><td>Pressed</td></tr>
+          <tr><td>Text</td><td>Medium</td><td>Disabled</td></tr>
+          <tr><td>Text</td><td>Small</td><td>Default</td></tr>
+          <tr><td>Text</td><td>Small</td><td>Pressed</td></tr>
+          <tr><td>Text</td><td>Small</td><td>Disabled</td></tr>
+          <tr><td>Text</td><td>XSmall</td><td>Default</td></tr>
+          <tr><td>Text</td><td>XSmall</td><td>Pressed</td></tr>
+          <tr><td>Text</td><td>XSmall</td><td>Disabled</td></tr>
         </tbody>
       </table>
     </div>

@@ -87,11 +87,12 @@ open-issues: C2, C3, C6, C7
           <span class="badge badge-refine">Needs Refinement</span>
         </div>
         <p class="comp-desc">A circular display element showing user initials or a profile image. Supports 7 sizes (20px–90px) and 3 types (dark initials, light initials, image). Used when a profile image is unavailable or for visual user identification.</p>
-        <div class="comp-meta">
-          <div class="cover-meta-item"><strong>Node:</strong> 17143:4488</div>
-          <div class="cover-meta-item"><strong>Variants:</strong> 21</div>
-          <div class="cover-meta-item"><strong>iOS:</strong> Custom View (Image + Text in Circle clip)</div>
-          <div class="cover-meta-item"><strong>Android:</strong> Custom Composable (AsyncImage / Text in CircleShape clip)</div>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Solid structure with fixable naming and asset issues</div>
+          <div class="verdict-inline-text">21 variants with good token coverage. Fix: rename <code>initials - light</code>, fix <code>intials</code> typo, replace 5 raster backgrounds with vectors, bind border-radius to shared token.</div>
         </div>
       </div>
     </div>
@@ -158,17 +159,6 @@ open-issues: C2, C3, C6, C7
 
     <!-- ── DS Health ─────────────────────────────────────────────── -->
     <div class="section-heading">DS Health</div>
-
-    <div class="verdict-card">
-      <button class="verdict-card-trigger" onclick="toggleVerdict(this)" aria-expanded="false">
-        <div class="verdict-card-trigger-body">
-          <span class="verdict-card-eyebrow">VERDICT</span>
-          <span class="verdict-card-title">Solid structure with fixable naming and asset issues</span>
-        </div>
-        <svg class="verdict-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="verdict-card-body" hidden>21 variants cover a comprehensive size/type matrix with good token coverage (8 component-specific color tokens, full typography set). Key fixes needed: rename <code>initials - light</code> to remove spaces, fix the <code>intials</code> token typo, replace raster backgrounds on 5 initials variants with simple vector circles, and bind border-radius to a shared token. No interaction states needed — avatar is display-only.</div>
-    </div>
 
     <!-- 4 Traits -->
     <div class="sub-heading">The 4 Traits — Scorecard</div>

@@ -557,22 +557,22 @@ var _specSizeData = {
 /* Color data for spec card detail sections */
 var _specColorData = {
   filled: {
-    default:     { label: 'Colors — Default',     rows: [['Default bg','#005CE5'],['Pressed bg','#2340A9'],['Disabled bg','#9BC5FD'],['Label','#FFFFFF']] },
-    destructive: { label: 'Colors — Destructive',  rows: [['Default bg','#D81E1E'],['Pressed bg','#B01818'],['Disabled bg','#F5A3A3'],['Label','#FFFFFF']] },
-    white:       { label: 'Colors — White',        rows: [['Default bg','#FFFFFF'],['Pressed bg','#EEF2F9'],['Disabled bg','#F5F7FA'],['Label','#005CE5']] },
-    subtle:      { label: 'Colors — Subtle',       rows: [['Default bg','#E5F1FF'],['Pressed bg','#D2E5FF'],['Disabled bg','#EEF5FF'],['Label','#005CE5']] }
+    default:     { label: 'Colors — Default',     rows: [['Default bg','#005CE5','main/button/primary/brand/enabled/bg'],['Pressed bg','#2340A9','main/button/primary/brand/pressed/bg'],['Disabled bg','#9BC5FD','main/button/primary/brand/disabled/bg'],['Label','#FFFFFF','main/button/primary/brand/enabled/label']] },
+    destructive: { label: 'Colors — Destructive',  rows: [['Default bg','#D81E1E','main/button/primary/brand/enabled/bg'],['Pressed bg','#B01818','main/button/primary/brand/pressed/bg'],['Disabled bg','#F5A3A3','main/button/primary/brand/disabled/bg'],['Label','#FFFFFF','main/button/primary/brand/enabled/label']] },
+    white:       { label: 'Colors — White',        rows: [['Default bg','#FFFFFF','main/button/primary/brand/enabled/bg'],['Pressed bg','#EEF2F9','main/button/primary/brand/pressed/bg'],['Disabled bg','#F5F7FA','main/button/primary/brand/disabled/bg'],['Label','#005CE5','main/button/primary/brand/enabled/label']] },
+    subtle:      { label: 'Colors — Subtle',       rows: [['Default bg','#E5F1FF','main/button/primary/brand/enabled/bg'],['Pressed bg','#D2E5FF','main/button/primary/brand/pressed/bg'],['Disabled bg','#EEF5FF','main/button/primary/brand/disabled/bg'],['Label','#005CE5','main/button/primary/brand/enabled/label']] }
   },
   outline: {
-    default:     { label: 'Colors — Default',     rows: [['Default stroke/label','#005CE5'],['Pressed','#2340A9'],['Disabled','#9BC5FD']] },
-    destructive: { label: 'Colors — Destructive',  rows: [['Default stroke/label','#D81E1E'],['Pressed','#B01818'],['Disabled','#F5A3A3']] },
-    white:       { label: 'Colors — White',        rows: [['Default stroke/label','#005CE5'],['Pressed','#2340A9'],['Disabled','#9BC5FD']] },
-    subtle:      { label: 'Colors — Subtle',       rows: [['Default stroke/label','#005CE5'],['Pressed','#2340A9'],['Disabled','#9BC5FD']] }
+    default:     { label: 'Colors — Default',     rows: [['Default stroke/label','#005CE5','main/button/secondary/brand/enabled/border'],['Pressed','#2340A9','main/button/secondary/brand/pressed/border'],['Disabled','#9BC5FD','main/button/secondary/brand/disabled/border']] },
+    destructive: { label: 'Colors — Destructive',  rows: [['Default stroke/label','#D81E1E','main/button/secondary/brand/enabled/border'],['Pressed','#B01818','main/button/secondary/brand/pressed/border'],['Disabled','#F5A3A3','main/button/secondary/brand/disabled/border']] },
+    white:       { label: 'Colors — White',        rows: [['Default stroke/label','#005CE5','main/button/secondary/brand/enabled/border'],['Pressed','#2340A9','main/button/secondary/brand/pressed/border'],['Disabled','#9BC5FD','main/button/secondary/brand/disabled/border']] },
+    subtle:      { label: 'Colors — Subtle',       rows: [['Default stroke/label','#005CE5','main/button/secondary/brand/enabled/border'],['Pressed','#2340A9','main/button/secondary/brand/pressed/border'],['Disabled','#9BC5FD','main/button/secondary/brand/disabled/border']] }
   },
   text: {
-    default:     { label: 'Colors — Default',     rows: [['Default label','#005CE5'],['Pressed','#2340A9'],['Disabled','#9BC5FD']] },
-    destructive: { label: 'Colors — Destructive',  rows: [['Default label','#D81E1E'],['Pressed','#B01818'],['Disabled','#F5A3A3']] },
-    white:       { label: 'Colors — White',        rows: [['Default label','#005CE5'],['Pressed','#2340A9'],['Disabled','#9BC5FD']] },
-    subtle:      { label: 'Colors — Subtle',       rows: [['Default label','#005CE5'],['Pressed','#2340A9'],['Disabled','#9BC5FD']] }
+    default:     { label: 'Colors — Default',     rows: [['Default label','#005CE5','main/button/tertiary/brand/enabled/label'],['Pressed','#2340A9','main/button/tertiary/brand/pressed/label'],['Disabled','#9BC5FD','main/button/tertiary/brand/disabled/label']] },
+    destructive: { label: 'Colors — Destructive',  rows: [['Default label','#D81E1E','main/button/tertiary/brand/enabled/label'],['Pressed','#B01818','main/button/tertiary/brand/pressed/label'],['Disabled','#F5A3A3','main/button/tertiary/brand/disabled/label']] },
+    white:       { label: 'Colors — White',        rows: [['Default label','#005CE5','main/button/tertiary/brand/enabled/label'],['Pressed','#2340A9','main/button/tertiary/brand/pressed/label'],['Disabled','#9BC5FD','main/button/tertiary/brand/disabled/label']] },
+    subtle:      { label: 'Colors — Subtle',       rows: [['Default label','#005CE5','main/button/tertiary/brand/enabled/label'],['Pressed','#2340A9','main/button/tertiary/brand/pressed/label'],['Disabled','#9BC5FD','main/button/tertiary/brand/disabled/label']] }
   }
 };
 
@@ -638,7 +638,8 @@ function updateSpecCard(cardStyle, prop, value) {
       var h = '<div class="spec-detail-label">' + colorData.label + '</div><div class="spec-props">';
       colorData.rows.forEach(function(r) {
         var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
-        h += '<div class="spec-prop"><span class="spec-prop-key">' + r[0] + '</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span></div>';
+        var tokenHtml = r[2] ? '<span class="spec-token-name">' + r[2] + '</span>' : '';
+        h += '<div class="spec-prop"><span class="spec-prop-key">' + r[0] + '</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + tokenHtml + '</span></div>';
       });
       h += '</div>';
       colorsEl.innerHTML = h;

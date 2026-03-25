@@ -294,3 +294,62 @@ Component API names follow the pattern `EB{ComponentName}`:
 ### Planned API Badge
 
 If native components are not yet implemented, mark all code snippets with a `badge-planned` badge labeled "Planned API". This signals to developers that the API shape is final but the package is not yet published.
+
+---
+
+## Mobile Documentation Criteria — 9-Point Assessment
+
+Use this checklist to evaluate every component's documentation before presenting to the user. Score each criterion as Pass, Partial, or Fail. Target: 9/9.
+
+### Must-Haves (1–5)
+
+| # | Criterion | Pass | Partial | Fail |
+|---|---|---|---|---|
+| 1 | **Live preview / playground** | Interactive preview with all property controls that update visually | Preview exists but missing controls for some properties | No interactive preview or static screenshot only |
+| 2 | **Native install / import** | SPM URL + Gradle dependency + import statements. "Planned API" badge if unpublished | Only one platform shown | No install or import instructions |
+| 3 | **SwiftUI & Compose code snippets** | All styles have SwiftUI + Compose snippets with Copy button. Must show component API (`EBButton("Label")`) — NOT container code (`HStack.padding.background`) | Some styles have snippets, others show placeholders | All blocks show `// Loading...` or container code |
+| 4 | **Props / API table (native)** | Prominent table mapping every Figma property → SwiftUI + Compose equivalent | Table exists but buried or incomplete | No mapping table |
+| 5 | **Variants & states (with code)** | Every style section in Style tab has SwiftUI/Compose component API snippet | Code tab has snippets but Style tab still shows placeholder text | No code paired with visual variants |
+
+### Good-to-Haves (6–9)
+
+| # | Criterion | Pass | Partial | Fail |
+|---|---|---|---|---|
+| 6 | **Native platform notes** | Accessibility table with iOS + Android columns (touch targets, focus rings, icon-only labels, destructive role, loading state) | Some notes but not structured or single-platform only | No platform-specific guidance |
+| 7 | **Design token connection** | Each style/appearance shows token name + hex value + state (enabled/pressed/disabled). Per-mode color specs documented | Token names visible but hex breakdowns or per-mode specs missing | Only hex values with no token names |
+| 8 | **Changelog / version history** | Semantic versioning, entries tied to C1–C7, status badges, Figma node IDs | History exists but no criterion linking | No changelog |
+| 9 | **Figma ↔ code mapping** | Property mapping table matches current architecture, suggested file paths shown, Code Connect readiness table present | Mapping exists but references outdated architecture | No Code Connect mapping |
+
+### Scoring Scale
+
+| Score | Rating |
+|---|---|
+| 9/9 | Excellent — exceeds all top DS benchmarks |
+| 7–8/9 | Strong — on par with Google Material 3 |
+| 5–6/9 | Acceptable — gaps need addressing |
+| 3–4/9 | Weak — significant documentation gaps |
+| 0–2/9 | Not ready — fundamental sections missing |
+
+### Stale Content Check
+
+After any component restructure (variant count change, property renaming, architecture change), verify ALL of these reflect the current architecture:
+
+- Verdict summary (variant count, property names)
+- Interactive playground controls (match current properties)
+- Style tab per-style code snippets (match current API)
+- Code tab property mapping table (match current Figma properties)
+- Code tab usage snippets (match current API)
+- Criteria Scorecard notes (match current variant count and property names)
+- Code Connect property mapping (match current architecture)
+- Variants Inventory table (match current variant count and schema)
+- Behavior table (match current states and properties)
+
+If ANY section references an old architecture (wrong variant count, old property names, deprecated properties), mark it as stale and update before presenting.
+
+### Workflow
+
+1. After completing or updating any component documentation, run through all 9 criteria
+2. Score each as Pass / Partial / Fail
+3. Run the Stale Content Check if the component was restructured
+4. Fix any Partial or Fail items before presenting
+5. Report the final score (e.g. "Button: 7.5/9 — criteria #5 partial, #7 partial")
