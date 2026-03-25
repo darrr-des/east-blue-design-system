@@ -1,0 +1,67 @@
+{
+  "timestamp": "2026-03-23T08:55:41.256Z",
+  "results": {
+    "button": [
+      {
+        "check": "Node exists",
+        "status": "pass",
+        "message": "Found \"Button\" (COMPONENT_SET)"
+      },
+      {
+        "check": "Component type",
+        "status": "pass",
+        "message": "COMPONENT_SET confirmed"
+      },
+      {
+        "check": "Variant count",
+        "status": "pass",
+        "message": "36 variants confirmed"
+      },
+      {
+        "check": "Property: Style",
+        "status": "pass",
+        "message": "Values match: Filled, Outline, Text"
+      },
+      {
+        "check": "Property: State",
+        "status": "pass",
+        "message": "Values match: Default, Disabled, Pressed"
+      },
+      {
+        "check": "Property: Size",
+        "status": "pass",
+        "message": "Values match: Large, Medium, Small, XSmall"
+      },
+      {
+        "check": "Layer naming",
+        "status": "pass",
+        "message": "All sampled layers have semantic names"
+      },
+      {
+        "check": "Size: Large",
+        "status": "pass",
+        "message": "Height 50px confirmed"
+      },
+      {
+        "check": "Size: Medium",
+        "status": "pass",
+        "message": "Height 40px confirmed"
+      },
+      {
+        "check": "Size: Small",
+        "status": "pass",
+        "message": "Height 28px confirmed"
+      },
+      {
+        "check": "Size: XSmall",
+        "status": "pass",
+        "message": "Height 24px confirmed"
+      }
+    ]
+  },
+  "summary": {
+    "pass": 11,
+    "warn": 0,
+    "fail": 0
+  }
+}
