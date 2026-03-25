@@ -376,7 +376,41 @@ open-issues: C5, C7
           <button class="spec-code-tab active" onclick="switchCodeTab(this, 'swift', 'filled')">SWIFTUI</button>
           <button class="spec-code-tab" onclick="switchCodeTab(this, 'compose', 'filled')">COMPOSE</button>
         </div>
-        <pre class="spec-code-block"><code data-code-content="filled" data-final="">// Click DEV to generate code</code></pre>
+        <pre class="spec-code-block"><code data-code-content="filled" data-final="EBButton(&quot;Label&quot;)
+    .ebAppearance(.filled)
+    .controlSize(.large)">EBButton("Label")
+    .ebAppearance(.filled)
+    .controlSize(.large)</code></pre>
+      </div>
+    </div>
+
+    <!-- Filled — Colors by Appearance Mode -->
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by Appearance Mode</div>
+      <p class="style-colors-desc">Token names resolve to different hex values per mode. All 4 modes share the same 4 variables from the <code>Button</code> collection.</p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Mode</th><th>Role</th><th>Enabled</th><th>Pressed</th><th>Disabled</th></tr>
+        </thead>
+        <tbody>
+          <tr><td rowspan="2"><strong>Default</strong></td><td class="muted">bg</td><td class="mono">#005CE5</td><td class="mono">#2340A9</td><td class="mono">#9BC5FD</td></tr>
+          <tr><td class="muted">label</td><td class="mono">#FFFFFF</td><td class="mono">#FFFFFF</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td rowspan="2"><strong>Destructive</strong></td><td class="muted">bg</td><td class="mono">#D81E1E</td><td class="mono">#B01818</td><td class="mono">#F5A3A3</td></tr>
+          <tr><td class="muted">label</td><td class="mono">#FFFFFF</td><td class="mono">#FFFFFF</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td rowspan="2"><strong>White</strong></td><td class="muted">bg</td><td class="mono">#FFFFFF</td><td class="mono">#EEF2F9</td><td class="mono">#F5F7FA</td></tr>
+          <tr><td class="muted">label</td><td class="mono">#005CE5</td><td class="mono">#005CE5</td><td class="mono">#005CE5</td></tr>
+          <tr><td rowspan="2"><strong>Subtle</strong></td><td class="muted">bg</td><td class="mono">#E5F1FF</td><td class="mono">#D2E5FF</td><td class="mono">#EEF5FF</td></tr>
+          <tr><td class="muted">label</td><td class="mono">#005CE5</td><td class="mono">#005CE5</td><td class="mono">#005CE5</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="style-colors-tokens">
+        <span class="style-colors-token-label">Tokens:</span>
+        <code>main/button/primary/brand/enabled/bg</code>
+        <code>main/button/primary/brand/pressed/bg</code>
+        <code>main/button/primary/brand/disabled/bg</code>
+        <code>main/button/primary/brand/enabled/label</code>
       </div>
     </div>
 
@@ -459,7 +493,40 @@ open-issues: C5, C7
           <button class="spec-code-tab active" onclick="switchCodeTab(this, 'swift', 'outline')">SWIFTUI</button>
           <button class="spec-code-tab" onclick="switchCodeTab(this, 'compose', 'outline')">COMPOSE</button>
         </div>
-        <pre class="spec-code-block"><code data-code-content="outline" data-final="">// Click DEV to generate code</code></pre>
+        <pre class="spec-code-block"><code data-code-content="outline" data-final="EBButton(&quot;Label&quot;)
+    .ebAppearance(.outlined)
+    .controlSize(.large)">EBButton("Label")
+    .ebAppearance(.outlined)
+    .controlSize(.large)</code></pre>
+      </div>
+    </div>
+
+    <!-- Outline — Colors by Appearance Mode -->
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by Appearance Mode</div>
+      <p class="style-colors-desc">Outline uses border + label tokens — no background fill. All 4 modes share the same 3 variables from the <code>Button</code> collection.</p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Mode</th><th>Role</th><th>Enabled</th><th>Pressed</th><th>Disabled</th></tr>
+        </thead>
+        <tbody>
+          <tr><td rowspan="2"><strong>Default</strong></td><td class="muted">border</td><td class="mono">#005CE5</td><td class="mono">#2340A9</td><td class="mono">#9BC5FD</td></tr>
+          <tr><td class="muted">label</td><td class="mono">#005CE5</td><td class="mono">#2340A9</td><td class="mono">#9BC5FD</td></tr>
+          <tr><td rowspan="2"><strong>Destructive</strong></td><td class="muted">border</td><td class="mono">#D81E1E</td><td class="mono">#B01818</td><td class="mono">#F5A3A3</td></tr>
+          <tr><td class="muted">label</td><td class="mono">#D81E1E</td><td class="mono">#B01818</td><td class="mono">#F5A3A3</td></tr>
+          <tr><td rowspan="2"><strong>White</strong></td><td class="muted">border</td><td class="mono">#005CE5</td><td class="mono">#2340A9</td><td class="mono">#9BC5FD</td></tr>
+          <tr><td class="muted">label</td><td class="mono">#005CE5</td><td class="mono">#2340A9</td><td class="mono">#9BC5FD</td></tr>
+          <tr><td rowspan="2"><strong>Subtle</strong></td><td class="muted">border</td><td class="mono">#005CE5</td><td class="mono">#2340A9</td><td class="mono">#9BC5FD</td></tr>
+          <tr><td class="muted">label</td><td class="mono">#005CE5</td><td class="mono">#2340A9</td><td class="mono">#9BC5FD</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="style-colors-tokens">
+        <span class="style-colors-token-label">Tokens:</span>
+        <code>main/button/secondary/brand/enabled/border</code>
+        <code>main/button/secondary/brand/pressed/border</code>
+        <code>main/button/secondary/brand/disabled/border</code>
       </div>
     </div>
 
@@ -542,7 +609,36 @@ open-issues: C5, C7
           <button class="spec-code-tab active" onclick="switchCodeTab(this, 'swift', 'text')">SWIFTUI</button>
           <button class="spec-code-tab" onclick="switchCodeTab(this, 'compose', 'text')">COMPOSE</button>
         </div>
-        <pre class="spec-code-block"><code data-code-content="text" data-final="">// Click DEV to generate code</code></pre>
+        <pre class="spec-code-block"><code data-code-content="text" data-final="EBButton(&quot;Label&quot;)
+    .ebAppearance(.textLink)
+    .controlSize(.large)">EBButton("Label")
+    .ebAppearance(.textLink)
+    .controlSize(.large)</code></pre>
+      </div>
+    </div>
+
+    <!-- Text — Colors by Appearance Mode -->
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by Appearance Mode</div>
+      <p class="style-colors-desc">Text style uses label-only tokens — no background or border. All 4 modes share the same 3 variables from the <code>Button</code> collection.</p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Mode</th><th>Role</th><th>Enabled</th><th>Pressed</th><th>Disabled</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Default</strong></td><td class="muted">label</td><td class="mono">#005CE5</td><td class="mono">#2340A9</td><td class="mono">#9BC5FD</td></tr>
+          <tr><td><strong>Destructive</strong></td><td class="muted">label</td><td class="mono">#D81E1E</td><td class="mono">#B01818</td><td class="mono">#F5A3A3</td></tr>
+          <tr><td><strong>White</strong></td><td class="muted">label</td><td class="mono">#005CE5</td><td class="mono">#2340A9</td><td class="mono">#9BC5FD</td></tr>
+          <tr><td><strong>Subtle</strong></td><td class="muted">label</td><td class="mono">#005CE5</td><td class="mono">#2340A9</td><td class="mono">#9BC5FD</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="style-colors-tokens">
+        <span class="style-colors-token-label">Tokens:</span>
+        <code>main/button/tertiary/brand/enabled/label</code>
+        <code>main/button/tertiary/brand/pressed/label</code>
+        <code>main/button/tertiary/brand/disabled/label</code>
       </div>
     </div>
 
@@ -611,6 +707,7 @@ open-issues: C5, C7
 
     <!-- ══ Usage — Filled ══ -->
     <div class="sub-heading" id="btn-usage-filled">Primary Button</div>
+    <div class="code-card-body">
     <div class="platform-tabs">
       <button class="platform-tab active" onclick="switchPlatform(this,'code-filled','swift')">SwiftUI</button>
       <button class="platform-tab" onclick="switchPlatform(this,'code-filled','compose')">Compose</button>
@@ -667,9 +764,11 @@ open-issues: C5, C7
 }</pre>
       </div>
     </div>
+    </div><!-- /code-card-body filled -->
 
     <!-- ══ Usage — Outline ══ -->
     <div class="sub-heading" id="btn-usage-outline">Secondary Button</div>
+    <div class="code-card-body">
     <div class="platform-tabs">
       <button class="platform-tab active" onclick="switchPlatform(this,'code-outline','swift')">SwiftUI</button>
       <button class="platform-tab" onclick="switchPlatform(this,'code-outline','compose')">Compose</button>
@@ -708,9 +807,11 @@ open-issues: C5, C7
 }</pre>
       </div>
     </div>
+    </div><!-- /code-card-body outline -->
 
     <!-- ══ Usage — Text ══ -->
     <div class="sub-heading" id="btn-usage-text">Tertiary Button</div>
+    <div class="code-card-body">
     <div class="platform-tabs">
       <button class="platform-tab active" onclick="switchPlatform(this,'code-text','swift')">SwiftUI</button>
       <button class="platform-tab" onclick="switchPlatform(this,'code-text','compose')">Compose</button>
@@ -738,6 +839,7 @@ open-issues: C5, C7
 }</pre>
       </div>
     </div>
+    </div><!-- /code-card-body text -->
 
     <!-- ══ Accessibility ══ -->
     <div class="sub-heading" id="btn-a11y">Accessibility</div>
