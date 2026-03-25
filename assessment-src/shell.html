@@ -460,7 +460,8 @@ function _applyDemo() {
   if (!el) return;
   var styleMap = _demoColors[_demo.style] || _demoColors['filled'];
   var appMap = styleMap[_demo.appearance] || styleMap['default'];
-  var c = appMap[_demo.state] || appMap['default'];
+  var effectiveState = _demo.state === 'loading' ? 'disabled' : _demo.state;
+  var c = appMap[effectiveState] || appMap['default'];
   var sz = _demoSizes[_demo.size] || _demoSizes['large'];
 
   el.style.background   = c.bg;
@@ -468,11 +469,17 @@ function _applyDemo() {
   el.style.border       = c.border;
   el.style.padding      = sz.padding;
   el.style.fontSize     = sz.fontSize;
+  el.style.height       = sz.height;
+  el.style.boxSizing    = 'border-box';
   el.style.borderRadius = '99px';
   el.style.fontFamily   = "'Proxima Soft', sans-serif";
   el.style.fontWeight   = '700';
-  el.style.cursor       = _demo.state === 'disabled' ? 'not-allowed' : 'pointer';
+  el.style.cursor       = (_demo.state === 'disabled' || _demo.state === 'loading') ? 'not-allowed' : 'pointer';
   el.style.opacity      = '1';
+
+  /* Loading label swap */
+  var textEl = document.getElementById('demo-btn-text');
+  if (textEl) textEl.textContent = _demo.state === 'loading' ? '●  ●  ●' : 'Label';
 
   /* Icon slots */
   var iconSize = (_demo.size === 'small' || _demo.size === 'xsmall') ? '16' : '24';
@@ -586,18 +593,25 @@ function updateSpecCard(cardStyle, prop, value) {
   if (el) {
     var styleMap = _demoColors[card.style] || _demoColors['filled'];
     var appMap = styleMap[card.appearance] || styleMap['default'];
-    var c = appMap[card.state] || appMap['default'];
+    var effectiveCardState = card.state === 'loading' ? 'disabled' : card.state;
+    var c = appMap[effectiveCardState] || appMap['default'];
     var sz = _demoSizes[card.size] || _demoSizes['large'];
     el.style.background   = c.bg;
     el.style.color        = c.color;
     el.style.border       = c.border;
     el.style.padding      = sz.padding;
     el.style.fontSize     = sz.fontSize;
+    el.style.height       = sz.height;
+    el.style.boxSizing    = 'border-box';
     el.style.borderRadius = '99px';
     el.style.fontFamily   = "'Proxima Soft', sans-serif";
     el.style.fontWeight   = '700';
-    el.style.cursor       = card.state === 'disabled' ? 'not-allowed' : 'pointer';
+    el.style.cursor       = (card.state === 'disabled' || card.state === 'loading') ? 'not-allowed' : 'pointer';
     el.style.opacity      = '1';
+
+    /* Loading label swap for spec cards */
+    var specLabel = el.querySelector('span');
+    if (specLabel) specLabel.textContent = card.state === 'loading' ? '●  ●  ●' : 'Label';
     var preview = el.closest('.spec-card-preview');
     if (preview) preview.classList.toggle('demo-preview-dark', card.appearance === 'white');
 

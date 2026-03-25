@@ -115,6 +115,17 @@ open-issues: C7
     <!-- ── Tab: Overview ─────────────────────────────────────────── -->
     <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
 
+    <!-- In Context -->
+    <div class="sub-heading" id="acc-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">How the accordion appears in a real product screen — expanding to reveal content.</p>
+    <div class="ctx-wrap" style="min-height:200px;display:flex;align-items:center;justify-content:center;">
+      <span style="font-size:13px;color:var(--muted)">Screenshot pending — add Figma export here</span>
+    </div>
+
+    <!-- Live Preview -->
+    <div class="sub-heading" id="acc-preview">Live Preview</div>
+    <p class="section-desc">Toggle properties to see the accordion update in real time.</p>
+
     <!-- Live Demo -->
     <div class="demo-panel" id="acc-demo">
       <div class="demo-layout">
@@ -211,6 +222,52 @@ open-issues: C7
           Semantic layer names (<code>icon-leading</code>, <code>content</code>, <code>trailing-icon</code>). Chevrons are vector instances. The icon slot accepts instances cleanly.
         </div>
       </div>
+    </div>
+
+    <!-- Behavior -->
+    <div class="sub-heading" id="acc-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+            <th>Figma Property</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Default</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">State=Default</td>
+            <td class="muted">Header row with chevron. Tap to expand/collapse.</td>
+          </tr>
+          <tr>
+            <td><strong>Pressed</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">State=Pressed</td>
+            <td class="muted">Visual feedback on touch. Darker surface token.</td>
+          </tr>
+          <tr>
+            <td><strong>Disabled</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">State=Disabled</td>
+            <td class="muted">Muted colors. Tap ignored. Chevron dimmed.</td>
+          </tr>
+          <tr>
+            <td><strong>Focused (a11y)</strong></td>
+            <td class="center muted">N/A</td>
+            <td class="center muted">N/A</td>
+            <td class="muted center">—</td>
+            <td class="muted">Mobile OS handles focus rings natively.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <!-- Resolved Issues -->
@@ -334,7 +391,32 @@ open-issues: C7
           <button class="spec-code-tab active" onclick="switchAccCodeTab(this, 'swift', 'collapsed')">SWIFTUI</button>
           <button class="spec-code-tab" onclick="switchAccCodeTab(this, 'compose', 'collapsed')">COMPOSE</button>
         </div>
-        <pre class="spec-code-block"><code data-code-content="acc-collapsed" data-final="">// Click DEV to generate code</code></pre>
+        <pre class="spec-code-block"><code data-code-content="acc-collapsed" data-final="EBAccordion(&quot;Label&quot;, isExpanded: .constant(false)) {
+    Text(&quot;Content&quot;)
+}">EBAccordion("Label", isExpanded: .constant(false)) {
+    Text("Content")
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Collapsed — Colors by State -->
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <p class="style-colors-desc">All colors are bound to design tokens from the component variable collection.</p>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Role</th><th>Token</th><th>Default</th><th>Pressed</th><th>Disabled</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Header bg</td><td class="mono">surface/default</td><td class="mono">#FFFFFF</td><td class="mono">—</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Pressed bg</td><td class="mono">surface/pressed</td><td class="mono">—</td><td class="mono">#F4F7FB</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Disabled bg</td><td class="mono">surface/disabled</td><td class="mono">—</td><td class="mono">—</td><td class="mono">#F8F9FB</td></tr>
+          <tr><td class="muted">Border</td><td class="mono">border/subtle</td><td class="mono">#E5EBF4</td><td class="mono">#E5EBF4</td><td class="mono">#E5EBF4</td></tr>
+          <tr><td class="muted">Label</td><td class="mono">text/primary</td><td class="mono">#0A2757</td><td class="mono">#0A2757</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Label (disabled)</td><td class="mono">text/disabled</td><td class="mono">—</td><td class="mono">—</td><td class="mono">#C2C6CF</td></tr>
+          <tr><td class="muted">Description</td><td class="mono">text/secondary</td><td class="mono">#90A8D0</td><td class="mono">#90A8D0</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Icon placeholder</td><td class="mono">icon/placeholder</td><td class="mono">#C2C6CF</td><td class="mono">#C2C6CF</td><td class="mono">#C2C6CF</td></tr>
+        </tbody>
+      </table>
       </div>
     </div>
 
@@ -438,7 +520,33 @@ open-issues: C7
           <button class="spec-code-tab active" onclick="switchAccCodeTab(this, 'swift', 'expanded')">SWIFTUI</button>
           <button class="spec-code-tab" onclick="switchAccCodeTab(this, 'compose', 'expanded')">COMPOSE</button>
         </div>
-        <pre class="spec-code-block"><code data-code-content="acc-expanded" data-final="">// Click DEV to generate code</code></pre>
+        <pre class="spec-code-block"><code data-code-content="acc-expanded" data-final="EBAccordion(&quot;Label&quot;, isExpanded: .constant(true)) {
+    Text(&quot;Content body slot&quot;)
+}">EBAccordion("Label", isExpanded: .constant(true)) {
+    Text("Content body slot")
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Expanded — Colors by State -->
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <p class="style-colors-desc">Expanded adds the <code>surface/content</code> token for the content-body panel background.</p>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Role</th><th>Token</th><th>Default</th><th>Pressed</th><th>Disabled</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Header bg</td><td class="mono">surface/default</td><td class="mono">#FFFFFF</td><td class="mono">—</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Pressed bg</td><td class="mono">surface/pressed</td><td class="mono">—</td><td class="mono">#F4F7FB</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Disabled bg</td><td class="mono">surface/disabled</td><td class="mono">—</td><td class="mono">—</td><td class="mono">#F8F9FB</td></tr>
+          <tr><td class="muted">Content bg</td><td class="mono">surface/content</td><td class="mono">#F4F7FB</td><td class="mono">#F4F7FB</td><td class="mono">#F8F9FB</td></tr>
+          <tr><td class="muted">Border</td><td class="mono">border/subtle</td><td class="mono">#E5EBF4</td><td class="mono">#E5EBF4</td><td class="mono">#E5EBF4</td></tr>
+          <tr><td class="muted">Label</td><td class="mono">text/primary</td><td class="mono">#0A2757</td><td class="mono">#0A2757</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Label (disabled)</td><td class="mono">text/disabled</td><td class="mono">—</td><td class="mono">—</td><td class="mono">#C2C6CF</td></tr>
+          <tr><td class="muted">Description</td><td class="mono">text/secondary</td><td class="mono">#90A8D0</td><td class="mono">#90A8D0</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Icon placeholder</td><td class="mono">icon/placeholder</td><td class="mono">#C2C6CF</td><td class="mono">#C2C6CF</td><td class="mono">#C2C6CF</td></tr>
+        </tbody>
+      </table>
       </div>
     </div>
 
@@ -447,7 +555,164 @@ open-issues: C7
     <!-- ── Tab: Code ─────────────────────────────────────────────── -->
     <div class="comp-tab-content" data-tab="code" role="tabpanel">
 
-    <div class="sub-heading" id="acc-scorecard" style="margin-top:0">Criteria Scorecard</div>
+    <!-- ══ Installation ══ -->
+    <div class="sub-heading" id="acc-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span>
+
+<span class="cmt">// Or in Package.swift:</span>
+.<span class="fn">package</span>(
+    <span class="prp">url</span>: <span class="str">"https://github.com/AY-Org/eb-ds-ios"</span>,
+    <span class="prp">from</span>: <span class="str">"1.0.0"</span>
+)</pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// build.gradle.kts (app)</span>
+<span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:accordion:1.0.0"</span>)
+}</pre>
+    </div>
+    <p class="code-label">Import</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="kw">import</span> EastBlueDS  <span class="cmt">// SwiftUI</span>
+<span class="kw">import</span> com.eastblue.ds.accordion.*  <span class="cmt">// Compose</span></pre>
+    </div>
+    <p class="table-footnote">Package not yet published. These are the planned distribution paths. API shape is final — native implementation is pending.</p>
+
+    <!-- ══ Property Mapping ══ -->
+    <div class="sub-heading" id="acc-prop-mapping">Property Mapping</div>
+    <p>Every row maps a Figma component property to its native equivalent.</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Figma Property</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+      <tbody>
+        <tr><td><code>Type=Collapsed</code></td><td><code>isExpanded: false</code></td><td><code>isExpanded = false</code></td></tr>
+        <tr><td><code>Type=Expanded</code></td><td><code>isExpanded: true</code></td><td><code>isExpanded = true</code></td></tr>
+        <tr><td><code>State=Disabled</code></td><td><code>.disabled(true)</code></td><td><code>enabled = false</code></td></tr>
+        <tr><td><code>leadingIcon=true</code></td><td><code>leadingIcon: Image?</code></td><td><code>leadingIcon: @Composable (() -> Unit)?</code></td></tr>
+        <tr><td><code>description=true</code></td><td><code>description: String?</code></td><td><code>description: String?</code></td></tr>
+        <tr><td><code>Content-Body (SLOT)</code></td><td><code>content: () -> some View</code></td><td><code>content: @Composable () -> Unit</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/Accordion/EBAccordion.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/accordion/EBAccordion.kt</div>
+    </div>
+
+    <!-- ══ Usage — Basic ══ -->
+    <div class="sub-heading" id="acc-usage-basic">Basic Accordion</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'acc-code-basic','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'acc-code-basic','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Basic</span>
+<span class="typ">EBAccordion</span>(<span class="str">"Settings"</span>, <span class="prp">isExpanded</span>: $isExpanded) {
+    <span class="typ">Text</span>(<span class="str">"Content goes here"</span>)
+}
+
+<span class="cmt">// With leading icon</span>
+<span class="typ">EBAccordion</span>(<span class="str">"Settings"</span>,
+    <span class="prp">isExpanded</span>: $isExpanded,
+    <span class="prp">leadingIcon</span>: <span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"gear"</span>)
+) {
+    <span class="typ">Text</span>(<span class="str">"Content"</span>)
+}
+
+<span class="cmt">// With description</span>
+<span class="typ">EBAccordion</span>(<span class="str">"Settings"</span>,
+    <span class="prp">description</span>: <span class="str">"Manage your preferences"</span>,
+    <span class="prp">isExpanded</span>: $isExpanded
+) {
+    <span class="typ">Text</span>(<span class="str">"Content"</span>)
+}
+
+<span class="cmt">// Disabled</span>
+<span class="typ">EBAccordion</span>(<span class="str">"Settings"</span>, <span class="prp">isExpanded</span>: $isExpanded) {
+    <span class="typ">Text</span>(<span class="str">"Content"</span>)
+}
+.<span class="fn">disabled</span>(<span class="kw">true</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Basic</span>
+<span class="typ">EBAccordion</span>(
+    <span class="prp">title</span> = <span class="str">"Settings"</span>,
+    <span class="prp">isExpanded</span> = isExpanded,
+    <span class="prp">onExpandedChange</span> = { isExpanded = it }
+) {
+    <span class="typ">Text</span>(<span class="str">"Content goes here"</span>)
+}
+
+<span class="cmt">// With leading icon</span>
+<span class="typ">EBAccordion</span>(
+    <span class="prp">title</span> = <span class="str">"Settings"</span>,
+    <span class="prp">isExpanded</span> = isExpanded,
+    <span class="prp">onExpandedChange</span> = { isExpanded = it },
+    <span class="prp">leadingIcon</span> = { <span class="typ">Icon</span>(<span class="typ">Icons</span>.<span class="prp">Filled</span>.<span class="prp">Settings</span>, <span class="kw">null</span>) }
+) {
+    <span class="typ">Text</span>(<span class="str">"Content"</span>)
+}
+
+<span class="cmt">// Disabled</span>
+<span class="typ">EBAccordion</span>(
+    <span class="prp">title</span> = <span class="str">"Settings"</span>,
+    <span class="prp">isExpanded</span> = isExpanded,
+    <span class="prp">onExpandedChange</span> = {},
+    <span class="prp">enabled</span> = <span class="kw">false</span>
+) {
+    <span class="typ">Text</span>(<span class="str">"Content"</span>)
+}</pre>
+      </div>
+    </div>
+    </div><!-- /code-card-body -->
+
+    <!-- ══ Accessibility ══ -->
+    <div class="sub-heading" id="acc-a11y">Accessibility</div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+      <tbody>
+        <tr><td>Min touch target</td><td><code>44 × 44pt</code> (full header row)</td><td><code>48 × 48dp</code> (full header row)</td></tr>
+        <tr><td>Expand/collapse</td><td><code>.accessibilityAction(.default)</code> toggles</td><td><code>onClick</code> handler on header</td></tr>
+        <tr><td>State announcement</td><td><code>.accessibilityValue("expanded"/"collapsed")</code></td><td><code>expandedState</code> semantics</td></tr>
+        <tr><td>Disabled</td><td><code>.disabled(true)</code> — announced by VoiceOver</td><td><code>enabled = false</code></td></tr>
+        <tr><td>Content-body</td><td colspan="2">Automatically read by screen reader when expanded</td></tr>
+        <tr><td>Chevron icon</td><td><code>.accessibilityHidden(true)</code> — decorative</td><td><code>contentDescription = null</code> — decorative</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- ══ Usage Guidelines ══ -->
+    <div class="sub-heading" id="acc-guidelines">Usage Guidelines</div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use Accordion for progressive disclosure — hiding secondary content until the user needs it.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Nest Accordions more than one level deep — it creates confusing navigation.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use description text for context that helps users decide whether to expand.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Put critical information inside collapsed Accordions — users may miss it.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use leadingIcon to reinforce the section's topic — gears for settings, bell for notifications.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Use Accordion for content the user needs to compare side-by-side — use tabs instead.</p></div>
+    </div>
+
+    <div class="sub-heading" id="acc-scorecard">Criteria Scorecard</div>
     <div class="table-wrap">
       <table>
         <thead>
@@ -550,59 +815,6 @@ open-issues: C7
             <td><strong>Code Connect</strong></td>
             <td><span class="badge badge-empty">Not Mapped</span></td>
             <td class="muted">No mappings registered. Suggested paths below.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="infobox infobox-code">
-      <div class="path-label">SwiftUI</div>
-      <div class="path-box">ios/Components/Accordion/Accordion.swift</div>
-      <div class="path-label">Jetpack Compose</div>
-      <div class="path-box">android/components/accordion/Accordion.kt</div>
-    </div>
-
-    <div class="sub-heading" id="acc-mapping">Code Connect — Property Mapping</div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Figma Property</th>
-            <th>SwiftUI Param</th>
-            <th>Compose Param</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="mono">type</td>
-            <td class="mono">isExpanded: Bool</td>
-            <td class="mono">isExpanded: Boolean</td>
-            <td class="muted"><code>collapsed</code> → <code>false</code>, <code>expanded</code> → <code>true</code></td>
-          </tr>
-          <tr>
-            <td class="mono">state</td>
-            <td class="mono">isDisabled: Bool</td>
-            <td class="mono">enabled: Boolean</td>
-            <td class="muted">Pressed handled natively by gesture recognizer / ripple</td>
-          </tr>
-          <tr>
-            <td class="mono">leadingIcon</td>
-            <td class="mono">leadingIcon: Image?</td>
-            <td class="mono">leadingIcon: @Composable?</td>
-            <td class="muted"><code>nil</code>/<code>null</code> hides the icon slot</td>
-          </tr>
-          <tr>
-            <td class="mono">description</td>
-            <td class="mono">description: String?</td>
-            <td class="mono">description: String?</td>
-            <td class="muted"><code>nil</code>/<code>null</code> hides the description</td>
-          </tr>
-          <tr>
-            <td class="mono">Content-Body (SLOT)</td>
-            <td class="mono">content: () -&gt; View</td>
-            <td class="mono">content: @Composable () -&gt; Unit</td>
-            <td class="muted">Native Figma SLOT — maps to trailing closure / composable lambda</td>
           </tr>
         </tbody>
       </table>

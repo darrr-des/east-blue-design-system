@@ -7,16 +7,15 @@
 <!--@meta-start-->
 status: assessed
 node: 17104:184842
-ds-verdict: fix
+ds-verdict: keep
 native-status: refine
-variants: 36
+variants: 48
 ios: Button
 android: Button / OutlinedButton / TextButton
-open-issues: C5, C7
+open-issues: C7
 <!--@meta-end-->
 
 <!--@patterns-start-->
-[C5] No loading state defined — needed for async/form submit actions; focus ring N/A for mobile-only (OS handles natively)
 [C7] Code Connect mappings not yet registered — no native component files linked via Code Connect CLI
 <!--@patterns-end-->
 
@@ -37,7 +36,7 @@ open-issues: C5, C7
   <div class="nav-comp-body">
     <div class="nav-comp-name">Button</div>
   </div>
-  <div class="nav-comp-status fix"></div>
+  <div class="nav-comp-status keep"></div>
 </button>
 <!--@nav-end-->
 
@@ -49,9 +48,9 @@ open-issues: C5, C7
   <div class="summary-card-body">
     <div class="summary-card-header">
       <div class="summary-card-name">Button</div>
-      <span class="badge badge-fix">Fix</span>
+      <span class="badge badge-ready">Keep</span>
     </div>
-    <div class="summary-card-desc">36 variants. Size(4) × State(3) × Style(3). Appearance via variable modes (Default/Destructive/White/Subtle). Text styles per size — no variable conflict. C5 (loading) and C7 (code connect) pending.</div>
+    <div class="summary-card-desc">48 variants. Size(4) × State(4) × Style(3). Appearance via variable modes (Default/Destructive/White/Subtle). Loading state added with dot indicators. C7 (code connect) pending.</div>
   </div>
 </div>
 <!--@summary-card-end-->
@@ -59,10 +58,10 @@ open-issues: C5, C7
 <!--@summary-row-start-->
 <tr>
   <td><strong>Button</strong></td>
-  <td><span class="badge badge-fix">Fix</span></td>
+  <td><span class="badge badge-ready">Keep</span></td>
   <td><span class="badge badge-refine">Needs Refinement</span></td>
-  <td class="muted">36</td>
-  <td class="muted">v3 restructure: Size(4) × State(3) × Style(Filled/Outline/Text). Appearance via 4 variable modes. Text styles per size. C5 (loading) and C7 (code connect) pending.</td>
+  <td class="muted">48</td>
+  <td class="muted">v3.1: Size(4) × State(4) × Style(Filled/Outline/Text). Loading state added. Appearance via 4 variable modes. C7 (code connect) pending.</td>
 </tr>
 <!--@summary-row-end-->
 
@@ -82,16 +81,8 @@ open-issues: C5, C7
       <div class="comp-header-body">
         <div class="comp-name">
           Button
-          <span class="badge badge-fix">Fix</span>
         </div>
         <p class="comp-desc">Used to trigger an action when tapped. The button's Call to Action describes the action that will occur. The Large/Medium Buttons are the default size for the GCash app.</p>
-      </div>
-      <div class="verdict-inline verdict-fix">
-        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
-        <div class="verdict-inline-body">
-          <div class="verdict-inline-title">v3 restructure — 36 variants × 4 appearance modes = 144 visual states</div>
-          <div class="verdict-inline-text">Size is now a variant dimension (Style × Size × State). 12 color variables across 4 modes. Remaining: loading state (C5), Code Connect mappings (C7).</div>
-        </div>
       </div>
     </div>
 
@@ -143,6 +134,7 @@ open-issues: C5, C7
                 <option value="default" selected>Default</option>
                 <option value="pressed">Pressed</option>
                 <option value="disabled">Disabled</option>
+                <option value="loading">Loading</option>
               </select>
             </div>
             <div class="demo-panel-row">
@@ -201,7 +193,7 @@ open-issues: C5, C7
           <div class="trait-name">Consistent</div>
           <div class="trait-status">Pass</div>
         </div>
-        <div class="trait-note">Clean <code>Property=Value</code> naming across all 36 variants. Size, State, and Style are orthogonal variant dimensions. Appearance is a variable mode — no naming conflicts. 12 color variables bound consistently.</div>
+        <div class="trait-note">Clean <code>Property=Value</code> naming across all 48 variants. Size, State, and Style are orthogonal variant dimensions. Appearance is a variable mode — no naming conflicts. 12 color variables bound consistently.</div>
       </div>
       <div class="trait-card pass">
         <div class="trait-header">
@@ -262,10 +254,10 @@ open-issues: C5, C7
           </tr>
           <tr>
             <td><strong>Loading</strong></td>
-            <td class="center"><span class="cross">&#x2717;</span></td>
-            <td class="center"><span class="cross">&#x2717;</span></td>
-            <td class="muted center">—</td>
-            <td class="muted">No loading state. Needed for async actions.</td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">State=Loading</td>
+            <td class="muted">Dot indicators replace label. Uses disabled appearance colors. Tap disabled.</td>
           </tr>
         </tbody>
       </table>
@@ -279,13 +271,13 @@ open-issues: C5, C7
       <li><code>isError</code> replaced — Destructive is now an appearance variable mode, not a variant property (C2)</li>
       <li>v2: Outlined and Text Link moved from appearance to <code>Style</code> variant property (Filled/Outline/Text) (C2)</li>
       <li>v2: Size moved from variable modes to variant dimension — each size has its own text style, eliminating font-size variable conflict (C2/C3)</li>
-      <li>v3: <code>Button</code> variable collection created with 4 appearance modes (Default/Destructive/White/Subtle) — 12 color variables bound to all 36 variants (C3)</li>
+      <li>v3: <code>Button</code> variable collection created with 4 appearance modes (Default/Destructive/White/Subtle) — 12 color variables bound to all 48 variants (C3)</li>
       <li>v3: Old <code>Button Size</code> and <code>button/variant</code> collections removed (C3)</li>
+      <li>v3.1: Loading state added — 12 new <code>State=Loading</code> variants with dot indicators replacing label, disabled appearance colors (C5)</li>
     </ul>
 
     <div class="sub-heading" id="btn-open">Open Issues</div>
     <ul class="resolved-list">
-      <li>No loading/processing state — needed for async actions like form submit (C5)</li>
       <li>Code Connect CLI mappings not registered (C7)</li>
     </ul>
 
@@ -324,6 +316,7 @@ open-issues: C5, C7
                 <option value="default" selected>Default</option>
                 <option value="pressed">Pressed</option>
                 <option value="disabled">Disabled</option>
+                <option value="loading">Loading</option>
               </select>
             </div>
             <div class="demo-panel-row">
@@ -441,6 +434,7 @@ open-issues: C5, C7
                 <option value="default" selected>Default</option>
                 <option value="pressed">Pressed</option>
                 <option value="disabled">Disabled</option>
+                <option value="loading">Loading</option>
               </select>
             </div>
             <div class="demo-panel-row">
@@ -557,6 +551,7 @@ open-issues: C5, C7
                 <option value="default" selected>Default</option>
                 <option value="pressed">Pressed</option>
                 <option value="disabled">Disabled</option>
+                <option value="loading">Loading</option>
               </select>
             </div>
             <div class="demo-panel-row">
@@ -693,6 +688,7 @@ open-issues: C5, C7
         <tr><td><code>Appearance=Subtle</code></td><td><code>.ebAppearance(.subtle)</code></td><td><code>colors = EBButtonDefaults.subtleColors()</code></td></tr>
         <tr><td><code>Size=Large…XSmall</code></td><td><code>controlSize: .large / .regular / .small / .mini</code></td><td><code>size = EBButtonSize.Large / Medium / Small / XSmall</code></td></tr>
         <tr><td><code>State=Disabled</code></td><td><code>.disabled(true)</code></td><td><code>enabled = false</code></td></tr>
+        <tr><td><code>State=Loading</code></td><td><code>.ebLoading(true)</code></td><td><code>isLoading = true</code></td></tr>
         <tr><td><code>leadingIcon=true</code></td><td><code>Label("…", systemImage: "…")</code></td><td><code>leadingIcon = { Icon(…) }</code></td></tr>
         <tr><td><code>trailingIcon=true</code></td><td><code>Label + trailing Image</code></td><td><code>trailingIcon = { Icon(…) }</code></td></tr>
       </tbody>
@@ -733,7 +729,12 @@ open-issues: C5, C7
 <span class="cmt">// Disabled</span>
 <span class="typ">EBButton</span>(<span class="str">"Submit"</span>)
     .<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
-    .<span class="fn">disabled</span>(<span class="kw">true</span>)</pre>
+    .<span class="fn">disabled</span>(<span class="kw">true</span>)
+
+<span class="cmt">// Loading</span>
+<span class="typ">EBButton</span>(<span class="str">"Submit"</span>)
+    .<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
+    .<span class="fn">ebLoading</span>(<span class="kw">true</span>)</pre>
       </div>
     </div>
     <div class="platform-panel" data-tab="compose">
@@ -759,6 +760,14 @@ open-issues: C5, C7
 <span class="typ">EBButton</span>(
     <span class="prp">onClick</span> = { },
     <span class="prp">enabled</span> = <span class="kw">false</span>
+) {
+    <span class="typ">Text</span>(<span class="str">"Submit"</span>)
+}
+
+<span class="cmt">// Loading</span>
+<span class="typ">EBButton</span>(
+    <span class="prp">onClick</span> = { },
+    <span class="prp">isLoading</span> = <span class="kw">true</span>
 ) {
     <span class="typ">Text</span>(<span class="str">"Submit"</span>)
 }</pre>
@@ -851,7 +860,7 @@ open-issues: C5, C7
         <tr><td>Focus ring</td><td>Handled by UIKit/SwiftUI</td><td>Handled by Material ripple</td></tr>
         <tr><td>Icon-only buttons</td><td><code>.accessibilityLabel("Send")</code></td><td><code>contentDescription = "Send"</code></td></tr>
         <tr><td>Destructive role</td><td><code>role: .destructive</code> — announced by VoiceOver</td><td>Use <code>semantics { role = Role.Button }</code></td></tr>
-        <tr><td>Loading state</td><td colspan="2">Pending — announce "Loading, please wait" to screen readers and disable tap</td></tr>
+        <tr><td>Loading state</td><td><code>.accessibilityLabel("Loading")</code> + disable tap</td><td><code>semantics { stateDescription = "Loading" }</code> + disable click</td></tr>
       </tbody>
     </table>
     </div>
@@ -880,11 +889,11 @@ open-issues: C5, C7
       <table>
         <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
         <tbody>
-          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All layers use semantic names. <code>container</code>, <code>#label</code>, <code>leadingIcon</code>, <code>trailingIcon</code> consistent across all 36 variants.</td></tr>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All layers use semantic names. <code>container</code>, <code>#label</code>, <code>leadingIcon</code>, <code>trailingIcon</code> consistent across all 48 variants.</td></tr>
           <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">v3 clean orthogonal dimensions: <code>Style</code> (Filled/Outline/Text), <code>Size</code> (Large/Medium/Small/XSmall), <code>State</code> (Default/Pressed/Disabled). Appearance via 4 variable modes. <code>leadingIcon</code>/<code>trailingIcon</code> are SLOT nodes with Boolean component properties.</td></tr>
           <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All color values connected to semantic tokens. Layout/sizing driven by <code>button/size</code> variable collection (height, padding-h, padding-v, font-size).</td></tr>
           <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Maps to <code>Button</code>, <code>OutlinedButton</code>, <code>TextButton</code>. Destructive maps to <code>role: .destructive</code> / <code>contentColor = errorColor</code>.</td></tr>
-          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Default, Pressed, Disabled covered. Focus ring is N/A — mobile OS handles natively. Missing: loading/processing state for async actions.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Default, Pressed, Disabled, Loading covered across all 48 variants. Focus ring is N/A — mobile OS handles natively. Loading uses dot indicators with disabled appearance colors.</td></tr>
           <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Icon slots are Figma SLOT nodes accepting vector icon instances. Boolean properties control visibility.</td></tr>
           <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">No CLI mappings registered yet. Property structure is clean and ready for mapping.</td></tr>
         </tbody>
@@ -892,7 +901,7 @@ open-issues: C5, C7
     </div>
 
     <div class="sub-heading" id="btn-codeconnect">Code Connect</div>
-    <p>Maps v3 variant dimensions (Style × Size × State) and variable modes (Appearance) to native parameters. 36 variants × 4 appearance modes = 144 visual states.</p>
+    <p>Maps v3.1 variant dimensions (Style × Size × State) and variable modes (Appearance) to native parameters. 48 variants × 4 appearance modes = 192 visual states.</p>
 
     <div class="cc-group">
       <div class="cc-group-label">Style <span class="cc-group-dim">variant dimension</span></div>
@@ -932,6 +941,7 @@ open-issues: C5, C7
           <tr><td class="mono">Default</td><td class="mono">(default)</td><td class="mono">(default)</td></tr>
           <tr><td class="mono">Pressed</td><td class="mono">(system)</td><td class="mono">(system)</td></tr>
           <tr><td class="mono">Disabled</td><td class="mono">.disabled(true)</td><td class="mono">enabled = false</td></tr>
+          <tr><td class="mono">Loading</td><td class="mono">.ebLoading(true)</td><td class="mono">isLoading = true</td></tr>
         </tbody>
       </table>
       </div>
@@ -965,8 +975,8 @@ open-issues: C5, C7
       </div>
     </div>
 
-    <div class="sub-heading" id="btn-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(36 total)</span></div>
-    <p>3 <code>Style</code> (Filled/Outline/Text) × 4 <code>Size</code> (Large/Medium/Small/XSmall) × 3 <code>State</code> (Default/Pressed/Disabled) = 36 variants. <code>Appearance</code> is a variable mode (Default/Destructive/White/Subtle) — 4 modes × 36 variants = 144 visual states.</p>
+    <div class="sub-heading" id="btn-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(48 total)</span></div>
+    <p>3 <code>Style</code> (Filled/Outline/Text) × 4 <code>Size</code> (Large/Medium/Small/XSmall) × 4 <code>State</code> (Default/Pressed/Disabled/Loading) = 48 variants. <code>Appearance</code> is a variable mode (Default/Destructive/White/Subtle) — 4 modes × 48 variants = 192 visual states.</p>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Style</th><th>Size</th><th>State</th></tr></thead>
@@ -974,39 +984,51 @@ open-issues: C5, C7
           <tr><td>Filled</td><td>Large</td><td>Default</td></tr>
           <tr><td>Filled</td><td>Large</td><td>Pressed</td></tr>
           <tr><td>Filled</td><td>Large</td><td>Disabled</td></tr>
+          <tr><td>Filled</td><td>Large</td><td>Loading</td></tr>
           <tr><td>Filled</td><td>Medium</td><td>Default</td></tr>
           <tr><td>Filled</td><td>Medium</td><td>Pressed</td></tr>
           <tr><td>Filled</td><td>Medium</td><td>Disabled</td></tr>
+          <tr><td>Filled</td><td>Medium</td><td>Loading</td></tr>
           <tr><td>Filled</td><td>Small</td><td>Default</td></tr>
           <tr><td>Filled</td><td>Small</td><td>Pressed</td></tr>
           <tr><td>Filled</td><td>Small</td><td>Disabled</td></tr>
+          <tr><td>Filled</td><td>Small</td><td>Loading</td></tr>
           <tr><td>Filled</td><td>XSmall</td><td>Default</td></tr>
           <tr><td>Filled</td><td>XSmall</td><td>Pressed</td></tr>
           <tr><td>Filled</td><td>XSmall</td><td>Disabled</td></tr>
+          <tr><td>Filled</td><td>XSmall</td><td>Loading</td></tr>
           <tr><td>Outline</td><td>Large</td><td>Default</td></tr>
           <tr><td>Outline</td><td>Large</td><td>Pressed</td></tr>
           <tr><td>Outline</td><td>Large</td><td>Disabled</td></tr>
+          <tr><td>Outline</td><td>Large</td><td>Loading</td></tr>
           <tr><td>Outline</td><td>Medium</td><td>Default</td></tr>
           <tr><td>Outline</td><td>Medium</td><td>Pressed</td></tr>
           <tr><td>Outline</td><td>Medium</td><td>Disabled</td></tr>
+          <tr><td>Outline</td><td>Medium</td><td>Loading</td></tr>
           <tr><td>Outline</td><td>Small</td><td>Default</td></tr>
           <tr><td>Outline</td><td>Small</td><td>Pressed</td></tr>
           <tr><td>Outline</td><td>Small</td><td>Disabled</td></tr>
+          <tr><td>Outline</td><td>Small</td><td>Loading</td></tr>
           <tr><td>Outline</td><td>XSmall</td><td>Default</td></tr>
           <tr><td>Outline</td><td>XSmall</td><td>Pressed</td></tr>
           <tr><td>Outline</td><td>XSmall</td><td>Disabled</td></tr>
+          <tr><td>Outline</td><td>XSmall</td><td>Loading</td></tr>
           <tr><td>Text</td><td>Large</td><td>Default</td></tr>
           <tr><td>Text</td><td>Large</td><td>Pressed</td></tr>
           <tr><td>Text</td><td>Large</td><td>Disabled</td></tr>
+          <tr><td>Text</td><td>Large</td><td>Loading</td></tr>
           <tr><td>Text</td><td>Medium</td><td>Default</td></tr>
           <tr><td>Text</td><td>Medium</td><td>Pressed</td></tr>
           <tr><td>Text</td><td>Medium</td><td>Disabled</td></tr>
+          <tr><td>Text</td><td>Medium</td><td>Loading</td></tr>
           <tr><td>Text</td><td>Small</td><td>Default</td></tr>
           <tr><td>Text</td><td>Small</td><td>Pressed</td></tr>
           <tr><td>Text</td><td>Small</td><td>Disabled</td></tr>
+          <tr><td>Text</td><td>Small</td><td>Loading</td></tr>
           <tr><td>Text</td><td>XSmall</td><td>Default</td></tr>
           <tr><td>Text</td><td>XSmall</td><td>Pressed</td></tr>
           <tr><td>Text</td><td>XSmall</td><td>Disabled</td></tr>
+          <tr><td>Text</td><td>XSmall</td><td>Loading</td></tr>
         </tbody>
       </table>
     </div>
@@ -1016,7 +1038,20 @@ open-issues: C5, C7
     <!-- ── Tab: Changelog ────────────────────────────────────────── -->
     <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
 
-    <div class="sub-heading" id="btn-v200" style="margin-top:0">2.0.0 — March 2026 <span class="tab-version-badge major">Major</span></div>
+    <div class="sub-heading" id="btn-v310" style="margin-top:0">3.1.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Loading State Added via Figma MCP · node 17104:184842</div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Loading state added as 4th state dimension</strong> — 12 new <code>State=Loading</code> variants (3 Styles × 4 Sizes). Dot indicators (<code>●  ●  ●</code>) replace label text. Uses disabled appearance colors. Tap is disabled during loading. <span class="tag-fixed">Added</span></div>
+        <span class="changelog-delta delta-resolved">C5 Resolved</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Variant count increased from 36 → 48</strong> — 4 states (Default/Pressed/Disabled/Loading) × 4 sizes × 3 styles. 192 visual states across 4 appearance modes. <span class="tag-fixed">Updated</span></div>
+        <span class="changelog-delta delta-resolved">+12 Variants</span>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="btn-v200">2.0.0 — March 2026 <span class="tab-version-badge major">Major</span></div>
     <div class="changelog">
       <div class="changelog-header">Component Restructure via Figma MCP · node 17104:184842</div>
       <div class="changelog-row">
