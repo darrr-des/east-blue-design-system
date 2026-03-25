@@ -222,6 +222,7 @@ body,.sidebar,.main,.sidebar-brand,.sidebar-footer,.table-wrap,.how-card,.dep-ca
     <a class="nav-item" href="#output" onclick="setActive(this)">Output Format</a>
     <a class="nav-item" href="#progress" onclick="setActive(this)">Progress</a>
     <a class="nav-item" href="#ownership" onclick="setActive(this)">Ownership</a>
+    <a class="nav-item" href="#mobile-doc" onclick="setActive(this)">Mobile Doc Criteria</a>
   </div>
   <div class="sidebar-footer">March 2026 &nbsp;&middot;&nbsp; For internal use only</div>
 </nav>
@@ -515,6 +516,67 @@ body,.sidebar,.main,.sidebar-brand,.sidebar-footer,.table-wrap,.how-card,.dep-ca
           <tr><td><strong>Token naming</strong></td><td class="muted">Design system owner</td></tr>
         </tbody></table>
       </div>
+    </div>
+
+    <!-- Mobile Documentation Criteria -->
+    <div class="page-section" id="mobile-doc">
+      <div class="section-heading">Mobile Documentation Criteria — 9-Point Assessment</div>
+      <p>Use this checklist to evaluate every component's documentation before presenting. Score each criterion as Pass, Partial, or Fail. Target: 9/9.</p>
+
+      <div class="sub-heading" style="margin-top:24px">Must-Haves (1–5)</div>
+      <div class="table-wrap">
+        <table><thead><tr><th>#</th><th>Criterion</th><th>Pass</th><th>Partial</th><th>Fail</th></tr></thead><tbody>
+          <tr><td class="mono center">1</td><td><strong>Live preview / playground</strong></td><td class="muted">Interactive preview with all property controls that update visually</td><td class="muted">Preview exists but missing controls for some properties</td><td class="muted">No interactive preview or static screenshot only</td></tr>
+          <tr><td class="mono center">2</td><td><strong>Native install / import</strong></td><td class="muted">SPM URL + Gradle dependency + import statements. "Planned API" badge if unpublished</td><td class="muted">Only one platform shown</td><td class="muted">No install or import instructions</td></tr>
+          <tr><td class="mono center">3</td><td><strong>SwiftUI &amp; Compose snippets</strong></td><td class="muted">All styles have SwiftUI + Compose snippets with Copy button. Component API pattern — not container code</td><td class="muted">Some styles have snippets, others show placeholders</td><td class="muted">All blocks show <code>// Loading...</code> or container code</td></tr>
+          <tr><td class="mono center">4</td><td><strong>Props / API table</strong></td><td class="muted">Prominent table mapping every Figma property → SwiftUI + Compose equivalent</td><td class="muted">Table exists but buried or incomplete</td><td class="muted">No mapping table</td></tr>
+          <tr><td class="mono center">5</td><td><strong>Variants &amp; states (with code)</strong></td><td class="muted">Every style section in Style tab has SwiftUI/Compose component API snippet</td><td class="muted">Code tab has snippets but Style tab still shows placeholder text</td><td class="muted">No code paired with visual variants</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="sub-heading" style="margin-top:24px">Good-to-Haves (6–9)</div>
+      <div class="table-wrap">
+        <table><thead><tr><th>#</th><th>Criterion</th><th>Pass</th><th>Partial</th><th>Fail</th></tr></thead><tbody>
+          <tr><td class="mono center">6</td><td><strong>Native platform notes</strong></td><td class="muted">Accessibility table with iOS + Android columns (touch targets, focus rings, icon-only labels, destructive role, loading state)</td><td class="muted">Some notes but not structured or single-platform only</td><td class="muted">No platform-specific guidance</td></tr>
+          <tr><td class="mono center">7</td><td><strong>Design token connection</strong></td><td class="muted">Each style/appearance shows token name + hex value + state. Per-mode color specs documented</td><td class="muted">Token names visible but hex breakdowns or per-mode specs missing</td><td class="muted">Only hex values with no token names</td></tr>
+          <tr><td class="mono center">8</td><td><strong>Changelog / version history</strong></td><td class="muted">Semantic versioning, entries tied to C1–C7, status badges, Figma node IDs</td><td class="muted">History exists but no criterion linking</td><td class="muted">No changelog</td></tr>
+          <tr><td class="mono center">9</td><td><strong>Figma ↔ code mapping</strong></td><td class="muted">Property mapping table matches current architecture, suggested file paths shown, Code Connect readiness table present</td><td class="muted">Mapping exists but references outdated architecture</td><td class="muted">No Code Connect mapping</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="sub-heading" style="margin-top:24px">Scoring Scale</div>
+      <div class="table-wrap">
+        <table><thead><tr><th>Score</th><th>Rating</th></tr></thead><tbody>
+          <tr><td class="mono"><strong>9/9</strong></td><td>Excellent — exceeds all top DS benchmarks</td></tr>
+          <tr><td class="mono"><strong>7–8/9</strong></td><td>Strong — on par with Google Material 3</td></tr>
+          <tr><td class="mono"><strong>5–6/9</strong></td><td>Acceptable — gaps need addressing</td></tr>
+          <tr><td class="mono"><strong>3–4/9</strong></td><td>Weak — significant documentation gaps</td></tr>
+          <tr><td class="mono"><strong>0–2/9</strong></td><td>Not ready — fundamental sections missing</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="sub-heading" style="margin-top:24px">Stale Content Check</div>
+      <p>After any component restructure (variant count change, property renaming, architecture change), verify ALL of these reflect the current architecture:</p>
+      <ul style="margin:12px 0 0 20px;line-height:1.8;color:var(--text-2)">
+        <li>Verdict summary (variant count, property names)</li>
+        <li>Interactive playground controls (match current properties)</li>
+        <li>Style tab per-style code snippets (match current API)</li>
+        <li>Code tab property mapping table (match current Figma properties)</li>
+        <li>Code tab usage snippets (match current API)</li>
+        <li>Criteria Scorecard notes (match current variant count and property names)</li>
+        <li>Code Connect property mapping (match current architecture)</li>
+        <li>Variants Inventory table (match current variant count and schema)</li>
+        <li>Behavior table (match current states and properties)</li>
+      </ul>
+
+      <div class="sub-heading" style="margin-top:24px">Workflow</div>
+      <ol style="margin:12px 0 0 20px;line-height:1.8;color:var(--text-2)">
+        <li>After completing or updating any component documentation, run through all 9 criteria</li>
+        <li>Score each as Pass / Partial / Fail</li>
+        <li>Run the Stale Content Check if the component was restructured</li>
+        <li>Fix any Partial or Fail items before presenting</li>
+        <li>Report the final score (e.g. "Button: 9/9")</li>
+      </ol>
     </div>
 
     <div class="footer">GCash Design System &nbsp;&middot;&nbsp; Component Assessment Guide &nbsp;&middot;&nbsp; March 2026</div>
