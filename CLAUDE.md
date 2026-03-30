@@ -240,10 +240,15 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 
 | Component | Node | Variants | DS | Native | Open |
 |---|---|---|---|---|---|
-| Accordion | `16870:9288` | 6 | Ready | Refine | C7 |
-| Button | `17104:184842` | 30 | Refine | Refine | C5, C7 |
-| Checkbox | `17143:2464` | 6 | Rework | Rework | C2, C5, C6, C7 |
-| Avatar | `17143:4488` | 21 | Fix | Refine | C2, C3, C6, C7 |
+| Accordion | `16870:9288` | 6 | Keep | Refine | C7 |
+| Avatar | `17143:4488` | 21 | Keep | Refine | C7 |
+| Button | `17104:184842` | 60 | Keep | Refine | C7 |
+| Checkbox | `17143:2464` | 33 | Keep | Refine | C7 |
+| **Form Elements** | | | | | |
+| Input Field | `17758:3687` | 8 | Keep | Refine | C7 |
+| Labeled Field | `17758:3713` | 8 | Fix | Refine | C6, C7 |
+| Select Field | `17758:3786` | 8 | Fix | Refine | C6, C7 |
+| Recipient Field | `17758:3867` | 8 | Fix | Refine | C6, C7 |
 
 ---
 
@@ -287,7 +292,7 @@ Component API names follow the pattern `EB{ComponentName}`:
 |---|---|---|
 | Appearance (enum) | `.ebAppearance(.filled)` modifier | Separate composable: `EBButton` / `EBOutlinedButton` / `EBTextButton` |
 | Variant=Destructive | `role: .destructive` parameter | `colors = EBButtonDefaults.destructiveColors()` |
-| Size modes | `.controlSize(.large / .regular / .small / .mini)` | `size = EBButtonSize.Large / Medium / Small / XSmall` |
+| Size modes | `.controlSize(.large / .regular / .small / .compact / .mini)` | `size = EBButtonSize.Large / Medium / Small / Compact / XSmall` |
 | Boolean slots | Optional parameter: `leadingIcon: Image?` | Composable slot: `leadingIcon = { Icon(…) }` |
 | Disabled state | `.disabled(true)` modifier | `enabled = false` parameter |
 
@@ -353,3 +358,88 @@ If ANY section references an old architecture (wrong variant count, old property
 3. Run the Stale Content Check if the component was restructured
 4. Fix any Partial or Fail items before presenting
 5. Report the final score (e.g. "Button: 7.5/9 — criteria #5 partial, #7 partial")
+
+---
+
+## Style Tab Spec Card Conventions
+
+The Button component's spec card is the baseline. Every component's Style tab spec cards must follow this structure.
+
+### Card Anatomy (top to bottom)
+
+1. **Header**: Style name · Node ID · DES/DEV toggle
+2. **Description**: One-line summary of the style's purpose
+3. **Interactive preview**: Component rendering with property controls on the right (dropdowns, toggles)
+4. **Properties + Colors** (two-column row):
+   - Left: PROPERTIES — current values of all Figma properties for this style
+   - Right: COLORS — grouped by role, showing hex swatch + value for all states (Default/Pressed/Disabled), with full semantic token path below each hex value
+5. **Layout + Typography** (two-column row):
+   - Left: LAYOUT — all relevant dimension values (height, padding, radius, border, icon sizes)
+   - Right: TYPOGRAPHY — DS text style reference name first, then individual font properties (font, size, tracking, line-height)
+
+### Colors Section Rules
+
+- Group by color role (bg, label, border, icon), not by state
+- Show all states inline per role: Default value, Pressed value, Disabled value
+- Each hex value must have a color swatch dot and the full semantic token path below it
+- Format: `■ #005CE5` then below it `main/button/primary/brand/enabled/bg`
+- If a role doesn't change across states (e.g. border), show one value with token path
+- If the component has appearance modes, the Colors section updates dynamically when the mode dropdown changes
+
+### Typography Section Rules
+
+- First row: DS text style reference name (e.g. `Primary/Label/Large`) — this is the Figma text style bound to the text layer
+- Following rows: individual properties (Font, Size, Tracking, Line-height)
+- If the component has multiple text layers (e.g. Accordion has Label + Description), show a subsection per text layer, each with its own DS text style reference
+
+### Layout Section Rules
+
+- Show all relevant dimensions — don't truncate to match simpler components
+- Include: height, width (if not fill), padding H/V, corner radius, border, icon sizes, slot dimensions
+- Values match the current property selection in the interactive preview
+
+---
+
+## Color Table Conventions
+
+Every component's Style tab must have a color reference table showing that all colors are bound to design tokens from the component variable collection. The table title and structure depend on whether the component uses appearance modes.
+
+**Note: This convention is provisional.** It is based on the Button and Accordion assessments only. As more components are assessed, new patterns may emerge (e.g. components with nested variable collections, multi-layer token resolution, or hybrid mode/state structures) that require updates to this convention. Treat this as the current best practice, not a locked standard.
+
+### Components WITHOUT appearance modes (e.g. Accordion)
+
+Title: **"Colors by State"**
+
+| ROLE | TOKEN | DEFAULT | PRESSED | DISABLED |
+|---|---|---|---|---|
+| Header bg | surface/default | #FFFFFF | – | – |
+| Label | text/primary | #0A2757 | #0A2757 | – |
+
+- No MODE column — the component has no variable modes
+- TOKEN column shows the short token name inline per row
+- List ALL color roles exhaustively
+- Use "–" for non-applicable state/role combinations
+
+### Components WITH appearance modes (e.g. Button)
+
+Title: **"Colors by Appearance Mode"**
+
+| MODE | ROLE | TOKEN | DEFAULT | PRESSED | DISABLED |
+|---|---|---|---|---|---|
+| Default | bg | primary/brand/{state}/bg | #005CE5 | #2340A9 | #9BC5FD |
+| Default | label | primary/brand/{state}/label | #FFFFFF | #FFFFFF | #FFFFFF |
+| Destructive | bg | primary/destructive/{state}/bg | #D81E1E | #B01818 | #F5A3A3 |
+
+- MODE as the first column — one group per variable mode
+- TOKEN column shows the short token name inline per row
+- Group rows by mode: all Default roles first, then Destructive, then White, then Subtle
+- List ALL color roles per mode exhaustively
+
+### Rules for both formats
+
+- TOKEN column is mandatory — every hex value must have its token name inline in the same row
+- Do NOT put token names as badge pills at the bottom of the table — they belong inline per row
+- Use "DEFAULT" not "ENABLED" for the default state column — matches Figma's State=Default
+- Use "–" for non-applicable state/role combinations
+- Every color the dev needs to implement must appear in the table — bg, label, border, icon, chevron, description, etc.
+- The table proves that all colors are bound to design tokens from the component variable collection — no hardcoded values

@@ -7,7 +7,7 @@
 <!--@meta-start-->
 status: assessed
 node: 16870:9288
-ds-verdict: refine
+ds-verdict: keep
 native-status: refine
 variants: 6
 ios: DisclosureGroup
@@ -45,7 +45,7 @@ open-issues: C7
   <div class="nav-comp-body">
     <div class="nav-comp-name">Accordion</div>
   </div>
-  <div class="nav-comp-status refine"></div>
+  <div class="nav-comp-status"></div>
 </button>
 <!--@nav-end-->
 
@@ -57,9 +57,8 @@ open-issues: C7
   <div class="summary-card-body">
     <div class="summary-card-header">
       <div class="summary-card-name">Accordion</div>
-      <span class="badge badge-refine">Beta</span>
     </div>
-    <div class="summary-card-desc">6 variants. Clean tokens and naming. Code Connect not yet registered.</div>
+    <div class="summary-card-desc">6 variants. All tokens connected, naming clean. DS Ready — only Code Connect CLI pending.</div>
   </div>
 </div>
 <!--@summary-card-end-->
@@ -90,16 +89,9 @@ open-issues: C7
       <div class="comp-header-body">
         <div class="comp-name">
           Accordion
-          <span class="badge badge-refine">Needs Refinement</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=16870-9288" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
         </div>
         <p class="comp-desc">A disclosure row that expands to reveal content. Supports optional leading icon and description via boolean visibility properties. Reduced from 24 to 6 variants (Type × State) with color tokens fully connected.</p>
-      </div>
-      <div class="verdict-inline verdict-refine">
-        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
-        <div class="verdict-inline-body">
-          <div class="verdict-inline-title">Architecture refined — handoff-ready except Code Connect</div>
-          <div class="verdict-inline-text">6 variants (Type × State) with boolean visibility properties. Color tokens fully connected. Only Code Connect mappings (C7) remain.</div>
-        </div>
       </div>
     </div>
 
@@ -118,8 +110,8 @@ open-issues: C7
     <!-- In Context -->
     <div class="sub-heading" id="acc-context" style="margin-top:0">In Context</div>
     <p class="section-desc">How the accordion appears in a real product screen — expanding to reveal content.</p>
-    <div class="ctx-wrap" style="min-height:200px;display:flex;align-items:center;justify-content:center;">
-      <span style="font-size:13px;color:var(--muted)">Screenshot pending — add Figma export here</span>
+    <div class="ctx-wrap">
+      <img class="ctx-img" src="assets/previews/accordion-in-context.png" alt="Accordion component shown in a GCash Cash In screen with Over the Counter expanded showing partner list, Online Banks and Global Partners collapsed" />
     </div>
 
     <!-- Live Preview -->
@@ -142,7 +134,7 @@ open-issues: C7
                 <div id="demo-acc-desc" style="font-family:'BarkAda',sans-serif;font-size:14px;font-weight:500;color:#90A8D0;line-height:20px;display:none;">Description text</div>
               </div>
               <div id="demo-acc-chevron" style="width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
-                <svg id="demo-acc-chevron-svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="#0A2757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg id="demo-acc-chevron-svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="#005CE5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
             <!-- Content body (shown only when expanded) -->
@@ -280,7 +272,7 @@ open-issues: C7
       <li>Variant set reduced from 24 to 6 — <code>Type</code> × <code>State</code> matrix (C2)</li>
       <li><code>leadingIcon</code> and <code>description</code> converted to boolean visibility properties</li>
       <li>Fixed 56px header height applied across all 6 variants</li>
-      <li>9 design tokens connected: <code>surface/default</code>, <code>border/subtle</code>, <code>text/primary</code>, <code>text/secondary</code>, <code>icon/placeholder</code>, <code>surface/pressed</code>, <code>surface/content</code>, <code>surface/disabled</code>, <code>text/disabled</code> (C3)</li>
+      <li>10 design tokens connected — all colors, spacing, and typography fully tokenized (C3)</li>
       <li>Annotation instance frame built with nested auto layout (Type × State grid)</li>
     </ul>
 
@@ -288,7 +280,12 @@ open-issues: C7
     <div class="sub-heading" id="acc-open">Open Issues</div>
     <ul class="resolved-list">
       <li>Code Connect CLI mappings not registered — no native component files linked (C7)</li>
-      <li>Custom fonts (Proxima Soft label, BarkAda description) must be bundled in native apps — map to <code>UIFont(name:)</code> / <code>Font.custom()</code> on iOS and <code>fontFamily</code> in Compose theme</li>
+    </ul>
+
+    <!-- Design Recommendations -->
+    <div class="sub-heading" id="acc-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span>Create an <code>AccordionGroup</code> compound component to manage exclusive expand (only one open at a time) — common FAQ and settings pattern <span class="tag-recommend">New Component</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -321,7 +318,7 @@ open-issues: C7
                 <div id="spec-acc-collapsed-desc" style="font-family:'BarkAda',sans-serif;font-size:14px;font-weight:500;color:#90A8D0;line-height:20px;display:none;">Description</div>
               </div>
               <div style="width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path id="spec-acc-collapsed-chev" d="M5 7.5l5 5 5-5" stroke="#0A2757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path id="spec-acc-collapsed-chev" d="M5 7.5l5 5 5-5" stroke="#005CE5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
           </div>
@@ -375,10 +372,12 @@ open-issues: C7
         <div class="spec-detail-section" id="spec-acc-collapsed-typo">
           <div class="spec-detail-label">Typography</div>
           <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Text Style</span><span class="spec-prop-val mono">Primary/Multi-line Label/Base</span></div>
             <div class="spec-prop"><span class="spec-prop-key">Label font</span><span class="spec-prop-val mono">Proxima Soft Bold</span></div>
             <div class="spec-prop"><span class="spec-prop-key">Label size</span><span class="spec-prop-val mono">16px</span></div>
             <div class="spec-prop"><span class="spec-prop-key">Label tracking</span><span class="spec-prop-val mono">0.25px</span></div>
             <div class="spec-prop"><span class="spec-prop-key">Label line-height</span><span class="spec-prop-val mono">20px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Text Style</span><span class="spec-prop-val mono">Secondary/Bold/Base</span></div>
             <div class="spec-prop"><span class="spec-prop-key">Desc font</span><span class="spec-prop-val mono">BarkAda SemiBold</span></div>
             <div class="spec-prop"><span class="spec-prop-key">Desc size</span><span class="spec-prop-val mono">14px</span></div>
             <div class="spec-prop"><span class="spec-prop-key">Desc tracking</span><span class="spec-prop-val mono">0</span></div>
@@ -415,6 +414,7 @@ open-issues: C7
           <tr><td class="muted">Label (disabled)</td><td class="mono">text/disabled</td><td class="mono">—</td><td class="mono">—</td><td class="mono">#C2C6CF</td></tr>
           <tr><td class="muted">Description</td><td class="mono">text/secondary</td><td class="mono">#90A8D0</td><td class="mono">#90A8D0</td><td class="mono">—</td></tr>
           <tr><td class="muted">Icon placeholder</td><td class="mono">icon/placeholder</td><td class="mono">#C2C6CF</td><td class="mono">#C2C6CF</td><td class="mono">#C2C6CF</td></tr>
+          <tr><td class="muted">Chevron</td><td class="mono">icon-chevron</td><td class="mono">#005CE5</td><td class="mono">#005CE5</td><td class="mono">#C2CFE5</td></tr>
         </tbody>
       </table>
       </div>
@@ -443,7 +443,7 @@ open-issues: C7
                 <div id="spec-acc-expanded-desc" style="font-family:'BarkAda',sans-serif;font-size:14px;font-weight:500;color:#90A8D0;line-height:20px;display:none;">Description</div>
               </div>
               <div style="width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path id="spec-acc-expanded-chev" d="M5 12.5l5-5 5 5" stroke="#0A2757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path id="spec-acc-expanded-chev" d="M5 12.5l5-5 5 5" stroke="#005CE5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
             <div id="spec-acc-expanded-body" style="height:56px;background:#F4F7FB;padding:12px 16px;box-sizing:border-box;">
@@ -504,10 +504,12 @@ open-issues: C7
         <div class="spec-detail-section" id="spec-acc-expanded-typo">
           <div class="spec-detail-label">Typography</div>
           <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Text Style</span><span class="spec-prop-val mono">Primary/Multi-line Label/Base</span></div>
             <div class="spec-prop"><span class="spec-prop-key">Label font</span><span class="spec-prop-val mono">Proxima Soft Bold</span></div>
             <div class="spec-prop"><span class="spec-prop-key">Label size</span><span class="spec-prop-val mono">16px</span></div>
             <div class="spec-prop"><span class="spec-prop-key">Label tracking</span><span class="spec-prop-val mono">0.25px</span></div>
             <div class="spec-prop"><span class="spec-prop-key">Label line-height</span><span class="spec-prop-val mono">20px</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Text Style</span><span class="spec-prop-val mono">Secondary/Bold/Base</span></div>
             <div class="spec-prop"><span class="spec-prop-key">Desc font</span><span class="spec-prop-val mono">BarkAda SemiBold</span></div>
             <div class="spec-prop"><span class="spec-prop-key">Desc size</span><span class="spec-prop-val mono">14px</span></div>
             <div class="spec-prop"><span class="spec-prop-key">Desc tracking</span><span class="spec-prop-val mono">0</span></div>
@@ -545,6 +547,7 @@ open-issues: C7
           <tr><td class="muted">Label (disabled)</td><td class="mono">text/disabled</td><td class="mono">—</td><td class="mono">—</td><td class="mono">#C2C6CF</td></tr>
           <tr><td class="muted">Description</td><td class="mono">text/secondary</td><td class="mono">#90A8D0</td><td class="mono">#90A8D0</td><td class="mono">—</td></tr>
           <tr><td class="muted">Icon placeholder</td><td class="mono">icon/placeholder</td><td class="mono">#C2C6CF</td><td class="mono">#C2C6CF</td><td class="mono">#C2C6CF</td></tr>
+          <tr><td class="muted">Chevron</td><td class="mono">icon-chevron</td><td class="mono">#005CE5</td><td class="mono">#005CE5</td><td class="mono">#C2CFE5</td></tr>
         </tbody>
       </table>
       </div>
@@ -608,8 +611,9 @@ open-issues: C7
       <div class="path-box">android/components/accordion/EBAccordion.kt</div>
     </div>
 
-    <!-- ══ Usage — Basic ══ -->
-    <div class="sub-heading" id="acc-usage-basic">Basic Accordion</div>
+    <!-- ══ Usage Snippets ══ -->
+    <div class="sub-heading" id="acc-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+    <div class="sub-heading toc-child" id="acc-usage-basic">Basic Accordion</div>
     <div class="code-card-body">
     <div class="platform-tabs">
       <button class="platform-tab active" onclick="switchPlatform(this,'acc-code-basic','swift')">SwiftUI</button>
@@ -740,7 +744,7 @@ open-issues: C7
             <td class="mono center">C3</td>
             <td><strong>Token Coverage</strong></td>
             <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">9 tokens bound across all 6 variants. All colors, spacing, and typography fully tokenized.</td>
+            <td class="muted">10 tokens bound across all 6 variants. All colors, spacing, and typography fully tokenized.</td>
           </tr>
           <tr>
             <td class="mono center">C4</td>
@@ -770,7 +774,7 @@ open-issues: C7
       </table>
     </div>
 
-    <div class="sub-heading" id="acc-codeconnect">Code Connect — Readiness</div>
+    <div class="sub-heading" id="acc-codeconnect">Code Connect</div>
     <div class="table-wrap">
       <table>
         <thead>
@@ -804,7 +808,7 @@ open-issues: C7
           <tr>
             <td><strong>Token coverage</strong></td>
             <td><span class="badge badge-ready">Ready</span></td>
-            <td class="muted">All 9 tokens bound — colors, spacing, and typography.</td>
+            <td class="muted">All 10 tokens bound — colors, spacing, and typography.</td>
           </tr>
           <tr>
             <td><strong>Asset quality</strong></td>
@@ -847,7 +851,26 @@ open-issues: C7
     <!-- ── Tab: Changelog ────────────────────────────────────────── -->
     <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
 
-    <div class="sub-heading" id="acc-v130" style="margin-top:0">1.3.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
+    <div class="sub-heading" id="acc-v140" style="margin-top:0">1.4.0 — March 2026 <span class="tab-version-badge patch">Patch</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Changes Applied via Figma MCP · node 16870:9288</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Leading icon layer re-renamed</strong> — All 6 variants had <code>Placeholder</code> reverted after v1.3.0 restructure. Re-applied <code>icon-leading</code> name across all 6 current variants.
+          <span class="tag-fixed">Fixed</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C1 Restored</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Custom fonts validated</strong> — <code>ProximaSoft-Bold.ttf</code> (700, TTF, GPOS kerning, 959 glyphs) and <code>BarkAda-SemiBold.ttf</code> (600, TTF, GPOS kerning, 1050 glyphs) confirmed native-ready. BarkAda uses PostScript name <code>BarkAda-SemiBold</code> for iOS registration.
+          <span class="tag-fixed">Validated</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Fonts Resolved</span>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="acc-v130">1.3.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
     <div class="changelog">
       <div class="changelog-header">Changes Applied via Figma MCP · node 16870:9288</div>
       <div class="changelog-row">
@@ -866,7 +889,7 @@ open-issues: C7
       </div>
       <div class="changelog-row">
         <div class="changelog-body">
-          <strong>Color tokens connected</strong> — 9 design system variables bound across all 6 variants: <code>surface/default</code>, <code>border/subtle</code>, <code>text/primary</code>, <code>text/secondary</code>, <code>icon/placeholder</code>, <code>surface/pressed</code>, <code>surface/content</code>, <code>surface/disabled</code>, <code>text/disabled</code>. Fully resolves C3.
+          <strong>Color tokens connected</strong> — 10 design system variables bound across all 6 variants: <code>surface/default</code>, <code>border/subtle</code>, <code>text/primary</code>, <code>text/secondary</code>, <code>icon/placeholder</code>, <code>icon-chevron</code>, <code>surface/pressed</code>, <code>surface/content</code>, <code>surface/disabled</code>, <code>text/disabled</code>. Fully resolves C3.
           <span class="tag-fixed">Fixed</span>
         </div>
         <span class="changelog-delta delta-resolved">C3 Resolved</span>
@@ -952,7 +975,7 @@ open-issues: C7
       <div class="changelog-row">
         <div class="changelog-body">
           <strong>Code Connect mappings</strong> — No native component files or Code Connect CLI mappings registered yet.
-          <span class="tag-open">Still Open</span>
+          <span class="tag-open tag-c7">Still Open</span>
         </div>
         <span class="changelog-delta delta-open">C7 Open</span>
       </div>
@@ -979,8 +1002,8 @@ var _accDemo = { type: 'collapsed', state: 'default', leadingIcon: true, descrip
 
 /* Colors per state */
 var _accDemoColors = {
-  default:  { headerBg: '#FFFFFF',  labelColor: '#0A2757', descColor: '#90A8D0', chevColor: '#0A2757', borderColor: '#E5EBF4' },
-  pressed:  { headerBg: '#EEF3FB',  labelColor: '#0A2757', descColor: '#90A8D0', chevColor: '#0A2757', borderColor: '#E5EBF4' },
+  default:  { headerBg: '#FFFFFF',  labelColor: '#0A2757', descColor: '#90A8D0', chevColor: '#005CE5', borderColor: '#E5EBF4' },
+  pressed:  { headerBg: '#EEF3FB',  labelColor: '#0A2757', descColor: '#90A8D0', chevColor: '#005CE5', borderColor: '#E5EBF4' },
   disabled: { headerBg: '#F6F9FD',  labelColor: '#C2CFE5', descColor: '#C2CFE5', chevColor: '#C2CFE5', borderColor: '#E5EBF4' }
 };
 
@@ -1053,9 +1076,33 @@ var _accSpecCards = {
 };
 
 var _accSpecColors = {
-  default:  { label: 'Colors — Default',  rows: [['Header bg','#FFFFFF'],['Content-body bg','#F4F7FB'],['Label','#0A2757'],['Description','#90A8D0'],['Icon placeholder','#C2C6CF'],['Border','#E5EBF4']] },
-  pressed:  { label: 'Colors — Pressed',  rows: [['Header bg','#EEF3FB'],['Content-body bg','#F4F7FB'],['Label','#0A2757'],['Description','#90A8D0'],['Icon placeholder','#C2C6CF'],['Border','#E5EBF4']] },
-  disabled: { label: 'Colors — Disabled', rows: [['Header bg','#F6F9FD'],['Content-body bg','#F4F7FB'],['Label','#C2CFE5'],['Description','#C2CFE5'],['Icon placeholder','#C2C6CF'],['Border','#E5EBF4']] }
+  default: { label: 'Colors — Default', rows: [
+    ['Header bg','#FFFFFF','main/accordion/color/collapsed/bg'],
+    ['Content-body bg','#F4F7FB','surface/content'],
+    ['Label','#0A2757','main/accordion/color/collapsed/label'],
+    ['Description','#90A8D0','main/accordion/color/collapsed/description'],
+    ['Chevron','#005CE5','main/accordion/color/collapsed/icon-chevron'],
+    ['Icon placeholder','#C2C6CF','icon/placeholder'],
+    ['Border','#E5EBF4','main/accordion/color/collapsed/border']
+  ]},
+  pressed: { label: 'Colors — Pressed', rows: [
+    ['Header bg','#EEF3FB','surface/pressed'],
+    ['Content-body bg','#F4F7FB','surface/content'],
+    ['Label','#0A2757','main/accordion/color/collapsed/label'],
+    ['Description','#90A8D0','main/accordion/color/collapsed/description'],
+    ['Chevron','#005CE5','main/accordion/color/collapsed/icon-chevron'],
+    ['Icon placeholder','#C2C6CF','icon/placeholder'],
+    ['Border','#E5EBF4','main/accordion/color/collapsed/border']
+  ]},
+  disabled: { label: 'Colors — Disabled', rows: [
+    ['Header bg','#F6F9FD','bg/color-bg'],
+    ['Content-body bg','#F4F7FB','surface/content'],
+    ['Label','#C2CFE5','text/color-text-disabled'],
+    ['Description','#C2CFE5','text/color-text-disabled'],
+    ['Chevron','#C2CFE5','text/color-text-disabled'],
+    ['Icon placeholder','#C2C6CF','icon/placeholder'],
+    ['Border','#E5EBF4','main/accordion/color/collapsed/border']
+  ]}
 };
 
 function updateAccSpecCard(cardType, prop, value) {
@@ -1109,7 +1156,7 @@ function updateAccSpecCard(cardType, prop, value) {
     var h = '<div class="spec-detail-label">' + colorData.label + '</div><div class="spec-props">';
     colorData.rows.forEach(function(r) {
       var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
-      h += '<div class="spec-prop"><span class="spec-prop-key">' + r[0] + '</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span></div>';
+      h += '<div class="spec-prop"><span class="spec-prop-key">' + r[0] + '</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + (r[2] ? '<span class="spec-token-name">' + r[2] + '</span>' : '') + '</span></div>';
     });
     h += '</div>';
     colorsEl.innerHTML = h;

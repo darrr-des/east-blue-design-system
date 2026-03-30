@@ -1,0 +1,777 @@
+<!--
+  INPUT FIELD COMPONENT ASSESSMENT (Form Elements)
+  Edit this file to update the Input Field assessment.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 17758:3687
+ds-verdict: fix
+native-status: refine
+variants: 8
+ios: TextField
+android: OutlinedTextField (Material 3)
+open-issues: C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Form Elements<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-input-field" onclick="showPanel('input-field', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Input Field</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('input-field')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="10" y="10" width="60" height="20" rx="3" stroke="currentColor" stroke-width="1.2" opacity=".2"/>
+      <rect x="16" y="19" width="28" height="2" rx="1" fill="currentColor" opacity=".15"/>
+      <line x1="15" y1="15" x2="15" y2="25" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity=".3"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Input Field</div>
+      <span class="badge badge-fix">Fix</span>
+    </div>
+    <div class="summary-card-desc">8 variants across State × isFilled. Base text input for Form Elements group. C2 (boolean naming) open.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Input Field</strong></td>
+  <td><span class="badge badge-fix">Fix</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">8</td>
+  <td class="muted">Form Elements base. State × isFilled. C2 (Yes/No naming) open.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-input-field">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Input Field
+          <span class="badge badge-fix">Fix</span>
+          <span class="badge badge-refine">Needs Refinement</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=17758-3687" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A basic text input field with border stroke and placeholder text. 8 variants across State (Default/Active/Error/Disabled) × isFilled (Yes/No). Part of the Form Elements group — serves as the base primitive for Labeled Field, Select Field, and Recipient Field.</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Fix required before handoff</div>
+          <div class="verdict-inline-text">isFilled uses Yes/No instead of true/false (C2). Property naming blocks direct Swift Bool / Kotlin Boolean mapping.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Tab bar ──────────────────────────────────────────────── -->
+    <div data-tab-group="input-field-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'input-field-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'input-field-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'input-field-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'input-field-tabs')">Changelog</button>
+    </div>
+
+    <!-- ══ Tab: Overview ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <!-- In Context -->
+    <div class="sub-heading" id="inf-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Contexts are illustrative. Final screens will reference actual GCash patterns.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+          <rect x="10" y="8" width="100" height="64" rx="8" stroke="currentColor" stroke-width="1.2" opacity=".15"/>
+          <rect x="20" y="20" width="80" height="14" rx="3" stroke="currentColor" stroke-width="1" opacity=".15"/>
+          <rect x="24" y="25" width="30" height="2" rx="1" fill="currentColor" opacity=".1"/>
+          <rect x="20" y="42" width="80" height="14" rx="3" stroke="currentColor" stroke-width="1" opacity=".15"/>
+          <rect x="24" y="47" width="45" height="2" rx="1" fill="currentColor" opacity=".1"/>
+          <rect x="20" y="62" width="80" height="8" rx="4" fill="currentColor" opacity=".08"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Live Preview -->
+    <div class="sub-heading" id="inf-preview">Live Preview</div>
+    <p class="section-desc">Toggle state and fill to see the input field update in real time.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="inf-demo-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <select class="demo-panel-select" onchange="_infDemo.state=this.value;updateInputFieldDemo()">
+                <option value="Default">Default</option>
+                <option value="Active">Active</option>
+                <option value="Error">Error</option>
+                <option value="Disabled">Disabled</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">isFilled</span>
+              <select class="demo-panel-select" onchange="_infDemo.filled=this.value;updateInputFieldDemo()">
+                <option value="true">true</option>
+                <option value="false" selected>false</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DS Health -->
+    <div class="sub-heading" id="inf-health">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card partial">
+        <div class="trait-header">
+          <div class="trait-name">Reusable</div>
+          <div class="trait-status">Partial</div>
+        </div>
+        <div class="trait-note">Works across any text input context. Single-line only — no multi-line or textarea variant. No size variants (fixed 46px height).</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Self-contained</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Carries its own border, fill, and text styles per state. All 4 interaction states defined. Disabled state has distinct background.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Consistent</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">C2 resolved — <code>isFilled</code> now uses <code>true/false</code>. C1 resolved — text layer renamed from <code>#text-label</code> to <code>#label</code>, consistent with sibling fields.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Composable</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Serves as the base primitive for Labeled Field, Select Field, and Recipient Field. Nests cleanly in form layouts.</div>
+      </div>
+    </div>
+
+    <!-- Behavior -->
+    <div class="sub-heading" id="inf-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+            <th>Figma Property</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Default</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">State=Default</td>
+            <td class="muted">Gray #D7E0EF border, white bg.</td>
+          </tr>
+          <tr>
+            <td><strong>Active (Focused)</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">State=Active</td>
+            <td class="muted">Blue #005CE5 border.</td>
+          </tr>
+          <tr>
+            <td><strong>Error</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">State=Error</td>
+            <td class="muted">Red #D61B2C border.</td>
+          </tr>
+          <tr>
+            <td><strong>Disabled</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">State=Disabled</td>
+            <td class="muted">#EEF2F9 bg, border hidden.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Resolved Issues -->
+    <div class="sub-heading" id="inf-resolved">Resolved Issues</div>
+    <ul class="resolved-list">
+      <li><span><code>isFilled</code> property renamed from <code>Yes/No</code> to <code>true/false</code> — now maps directly to Swift <code>Bool</code> / Kotlin <code>Boolean</code> <span class="tag-fixed">C2 Fixed</span></span></li>
+      <li><span>Text layer renamed from <code>#text-label</code> to <code>#label</code> — now consistent with sibling fields <span class="tag-fixed">C1 Fixed</span></span></li>
+    </ul>
+
+    <!-- Open Issues -->
+    <div class="sub-heading" id="inf-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
+    </ul>
+
+    <!-- Design Recommendations -->
+    <div class="sub-heading" id="inf-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span>Continue standardizing text layer naming across all Form Elements — Input Field now uses <code>#label</code>; verify remaining fields follow suit <span class="tag-recommend">Suggested</span></span></li>
+      <li><span>Consider adding a <code>helperText</code> slot below the field for validation messages and hints — currently handled externally <span class="tag-recommend">Suggested</span></span></li>
+      <li><span>Add a <code>leadingIcon</code> and <code>trailingIcon</code> boolean slot to Input Field (Labeled Field already has these) for search inputs and clear buttons <span class="tag-recommend">Suggested</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ══ Tab: Style ═════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="inf-styles" style="margin-top:0">States</div>
+    <p class="section-desc">8 variants across 2 axes: State (Default/Active/Error/Disabled) × isFilled (Yes/No). All share the same 366×46px container with 6px corner radius.</p>
+
+    <!-- ═══ Default ═══ -->
+    <div class="spec-card" id="inf-spec-default">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="inf-default">Default</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17758:3688" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>17758:3688</span></button>
+        </div>
+        <p class="spec-card-desc">Idle state with gray border. Text color depends on whether the field has a value.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="inf-default-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <span class="demo-panel-value">Default</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">isFilled</span>
+              <select class="demo-panel-select" onchange="updateInputFieldSpecCard('default',this.value)">
+                <option value="true">true</option>
+                <option value="false" selected>false</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Active ═══ -->
+    <div class="spec-card" id="inf-spec-active">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="inf-active">Active (Focused)</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17758:3694" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>17758:3694</span></button>
+        </div>
+        <p class="spec-card-desc">Focused state with blue border indicating active input.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="inf-active-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <span class="demo-panel-value">Active</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">isFilled</span>
+              <select class="demo-panel-select" onchange="updateInputFieldSpecCard('active',this.value)">
+                <option value="true">true</option>
+                <option value="false" selected>false</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Error ═══ -->
+    <div class="spec-card" id="inf-spec-error">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="inf-error">Error</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17758:3700" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>17758:3700</span></button>
+        </div>
+        <p class="spec-card-desc">Validation error state with red border.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="inf-error-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <span class="demo-panel-value">Error</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">isFilled</span>
+              <select class="demo-panel-select" onchange="updateInputFieldSpecCard('error',this.value)">
+                <option value="true">true</option>
+                <option value="false" selected>false</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Disabled ═══ -->
+    <div class="spec-card" id="inf-spec-disabled">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="inf-disabled">Disabled</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="17758:3706" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>17758:3706</span></button>
+        </div>
+        <p class="spec-card-desc">Non-interactive state with gray background and hidden border.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="inf-disabled-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <span class="demo-panel-value">Disabled</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">isFilled</span>
+              <select class="demo-panel-select" onchange="updateInputFieldSpecCard('disabled',this.value)">
+                <option value="true">true</option>
+                <option value="false" selected>false</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colors by State -->
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <p class="style-colors-desc">All states share the same container structure. Border color is the primary state indicator.</p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Role</th><th>Token</th><th>DEFAULT</th><th>ACTIVE</th><th>ERROR</th><th>DISABLED</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Border</td><td class="mono">field/border</td><td class="mono">#D7E0EF</td><td class="mono">#005CE5</td><td class="mono">#D61B2C</td><td class="mono">hidden</td></tr>
+          <tr><td class="muted">Background</td><td class="mono">field/bg</td><td class="mono">#FFFFFF</td><td class="mono">#FFFFFF</td><td class="mono">#FFFFFF</td><td class="mono">#EEF2F9</td></tr>
+          <tr><td class="muted">Text (filled)</td><td class="mono">field/text/filled</td><td class="mono">#0A2757</td><td class="mono">#0A2757</td><td class="mono">#0A2757</td><td class="mono">#90A8D0</td></tr>
+          <tr><td class="muted">Text (empty)</td><td class="mono">field/text/placeholder</td><td class="mono">#90A8D0</td><td class="mono">#90A8D0</td><td class="mono">#90A8D0</td><td class="mono">#C2CFE5</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- ══ Tab: Code ══════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <!-- Installation -->
+    <div class="sub-heading" id="inf-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:form-elements:1.0.0"</span>)
+}</pre>
+    </div>
+    <p class="code-label">Import</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="kw">import</span> EastBlueDS  <span class="cmt">// SwiftUI</span>
+<span class="kw">import</span> com.eastblue.ds.form.*  <span class="cmt">// Compose</span></pre>
+    </div>
+    <p class="table-footnote">Package not yet published. These are the planned distribution paths.</p>
+
+    <!-- Property Mapping -->
+    <div class="sub-heading" id="inf-props">Property Mapping</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Figma Property</th>
+            <th>SwiftUI Param</th>
+            <th>Compose Param</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">isFilled (Yes/No)</td>
+            <td class="mono">text: Binding&lt;String&gt;</td>
+            <td class="mono">value: String</td>
+            <td class="muted">Derived from text content</td>
+          </tr>
+          <tr>
+            <td class="mono">State = Default</td>
+            <td class="mono">—</td>
+            <td class="mono">—</td>
+            <td class="muted">Default idle state</td>
+          </tr>
+          <tr>
+            <td class="mono">State = Active</td>
+            <td class="mono">.focused()</td>
+            <td class="mono">interactionSource</td>
+            <td class="muted">Keyboard active</td>
+          </tr>
+          <tr>
+            <td class="mono">State = Error</td>
+            <td class="mono">.ebError(true)</td>
+            <td class="mono">isError = true</td>
+            <td class="muted">Validation failed</td>
+          </tr>
+          <tr>
+            <td class="mono">State = Disabled</td>
+            <td class="mono">.disabled(true)</td>
+            <td class="mono">enabled = false</td>
+            <td class="muted">Non-interactive</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/FormElements/EBInputField.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/form/EBInputField.kt</div>
+    </div>
+
+    <!-- Usage Snippets -->
+    <div class="sub-heading" id="inf-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+
+    <div class="sub-heading toc-child" id="inf-snip-default">Default</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'inf-usage-def','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'inf-usage-def','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBInputField</span>(<span class="str">"Placeholder"</span>, <span class="prp">text</span>: $value)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBInputField</span>(
+    <span class="prp">value</span> = text,
+    <span class="prp">onValueChange</span> = { text = it },
+    <span class="prp">placeholder</span> = <span class="str">"Placeholder"</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="inf-snip-error">Error</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'inf-usage-err','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'inf-usage-err','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBInputField</span>(<span class="str">"Placeholder"</span>, <span class="prp">text</span>: $value)
+    .<span class="fn">ebError</span>(<span class="kw">true</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBInputField</span>(
+    <span class="prp">value</span> = text,
+    <span class="prp">onValueChange</span> = { text = it },
+    <span class="prp">placeholder</span> = <span class="str">"Placeholder"</span>,
+    <span class="prp">isError</span> = <span class="kw">true</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="inf-snip-disabled">Disabled</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'inf-usage-dis','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'inf-usage-dis','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBInputField</span>(<span class="str">"Placeholder"</span>, <span class="prp">text</span>: $value)
+    .<span class="fn">disabled</span>(<span class="kw">true</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBInputField</span>(
+    <span class="prp">value</span> = text,
+    <span class="prp">onValueChange</span> = { text = it },
+    <span class="prp">placeholder</span> = <span class="str">"Placeholder"</span>,
+    <span class="prp">enabled</span> = <span class="kw">false</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <!-- Accessibility -->
+    <div class="sub-heading" id="inf-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Requirement</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Minimum touch target</td>
+            <td class="center muted">44 x 44 pt</td>
+            <td class="center muted">48 x 48 dp</td>
+          </tr>
+          <tr>
+            <td>Accessibility label</td>
+            <td class="muted"><code>.accessibilityLabel("Input")</code></td>
+            <td class="muted"><code>contentDescription</code></td>
+          </tr>
+          <tr>
+            <td>Error announcement</td>
+            <td class="muted">VoiceOver reads error via <code>.accessibilityValue</code></td>
+            <td class="muted">TalkBack reads error via <code>semantics { error() }</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Usage Guidelines -->
+    <div class="sub-heading" id="inf-guidelines">Usage Guidelines</div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Pair with a visible label above or inside the field. Use placeholder text to hint at expected input format.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Use placeholder text as the only label — it disappears on focus and fails accessibility.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Show error state with a helper text message below the field explaining what needs to be corrected.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Use Input Field for selection — use Select Field instead. Input Field is for free-text entry only.</p></div>
+    </div>
+
+    <!-- Criteria Scorecard -->
+    <div class="sub-heading" id="inf-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">ID</th>
+            <th class="col-md">Criterion</th>
+            <th class="col-badge">Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Layer renamed to <code>#label</code>, now consistent with sibling fields.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted"><code>isFilled</code> now uses <code>true/false</code>. Boolean naming resolved.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Colors appear correct but token binding not verified.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Maps to <code>TextField</code> (SwiftUI) / <code>OutlinedTextField</code> (Compose).</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All 4 states defined: Default, Active, Error, Disabled.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">No icons in base Input Field — text only.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-refine">Pending</span></td><td class="muted">No CLI mappings registered yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Code Connect -->
+    <div class="sub-heading" id="inf-cc">Code Connect</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Aspect</th><th class="col-badge">Status</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Property naming</td><td><span class="badge badge-ready">Ready</span></td><td class="muted"><code>isFilled</code> uses <code>true/false</code> — maps directly to native booleans</td></tr>
+          <tr><td>State coverage</td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All 4 states defined</td></tr>
+          <tr><td>Native component file</td><td><span class="badge badge-refine">Pending</span></td><td class="muted">EBInputField.swift / EBInputField.kt not yet created</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Variants Inventory -->
+    <div class="sub-heading" id="inf-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(8 total)</span></div>
+    <p class="section-desc">4 <code>State</code> values × 2 <code>isFilled</code> values.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>State</th><th>isFilled</th><th>Node ID</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Default</td><td>true</td><td class="mono">17758:3688</td></tr>
+          <tr><td>Default</td><td>false</td><td class="mono">17758:3691</td></tr>
+          <tr><td>Active</td><td>true</td><td class="mono">17758:3694</td></tr>
+          <tr><td>Active</td><td>false</td><td class="mono">17758:3697</td></tr>
+          <tr><td>Error</td><td>true</td><td class="mono">17758:3700</td></tr>
+          <tr><td>Error</td><td>false</td><td class="mono">17758:3703</td></tr>
+          <tr><td>Disabled</td><td>true</td><td class="mono">17758:3706</td></tr>
+          <tr><td>Disabled</td><td>false</td><td class="mono">17758:3709</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- ══ Tab: Changelog ═════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.1.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
+    <div class="changelog">
+      <div class="changelog-header">C1 + C2 Fixes · Layer naming and boolean naming resolved</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>isFilled property renamed</strong> — <code>isFilled=Yes/No</code> updated to <code>isFilled=true/false</code> in Figma. Now maps directly to Swift <code>Bool</code> and Kotlin <code>Boolean</code> for Code Connect.
+          <span class="tag-fixed">Fixed</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C2 Resolved</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Text layer renamed</strong> — <code>#text-label</code> renamed to <code>#label</code> in Figma. Now consistent with sibling fields (Labeled Field, Select Field, Recipient Field).
+          <span class="tag-fixed">Fixed</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C1 Resolved</span>
+      </div>
+    </div>
+
+    <div class="sub-heading">1.0.0 — March 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 17758:3687</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Component assessed</strong> — 8 variants documented across State (Default/Active/Error/Disabled) × isFilled (Yes/No). Part of Form Elements group.
+          <span class="tag-fixed">Documented</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Initial</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Boolean property uses Yes/No</strong> — <code>isFilled=Yes/No</code> instead of <code>true/false</code>. Incompatible with Swift <code>Bool</code> and Kotlin <code>Boolean</code> for Code Connect mapping.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C2 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Code Connect mappings</strong> — No CLI mappings registered yet. Blocked by C2 (property naming).
+          <span class="tag-open tag-c7">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C7 Open</span>
+      </div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <!-- On This Page -->
+  <aside class="page-toc" id="toc-input-field">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-input-field"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Input Field Component JS ──────────────────────────────────────── */
+var _infDemo = { state: 'Default', filled: 'false' };
+
+var _infColors = {
+  Default:  { border: '#D7E0EF', bg: '#FFFFFF' },
+  Active:   { border: '#005CE5', bg: '#FFFFFF' },
+  Error:    { border: '#D61B2C', bg: '#FFFFFF' },
+  Disabled: { border: 'none',    bg: '#EEF2F9' }
+};
+var _infTextColors = {
+  Default:  { filled: '#0A2757', empty: '#90A8D0' },
+  Active:   { filled: '#0A2757', empty: '#90A8D0' },
+  Error:    { filled: '#0A2757', empty: '#90A8D0' },
+  Disabled: { filled: '#90A8D0', empty: '#C2CFE5' }
+};
+
+function _infBuildSvg(state, filled) {
+  var c = _infColors[state] || _infColors.Default;
+  var tc = _infTextColors[state] || _infTextColors.Default;
+  var textColor = (filled === 'true') ? tc.filled : tc.empty;
+  var borderAttr = c.border === 'none' ? '' : ' stroke="' + c.border + '" stroke-width="1.5"';
+  var s = '<svg width="366" height="46" viewBox="0 0 366 46" fill="none">';
+  s += '<rect x="0.5" y="0.5" width="365" height="45" rx="5.5" fill="' + c.bg + '"' + borderAttr + '/>';
+  s += '<text x="12" y="27" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + textColor + '" letter-spacing="0.25">' + (filled === 'true' ? 'Placeholder' : 'Placeholder') + '</text>';
+  s += '</svg>';
+  return s;
+}
+
+function updateInputFieldDemo() {
+  var el = document.getElementById('inf-demo-preview');
+  if (el) el.innerHTML = _infBuildSvg(_infDemo.state, _infDemo.filled);
+}
+
+function updateInputFieldSpecCard(state, filled) {
+  var el = document.getElementById('inf-' + state.toLowerCase() + '-preview');
+  if (el) el.innerHTML = _infBuildSvg(state.charAt(0).toUpperCase() + state.slice(1), filled);
+}
+
+function _infInitSpecCards() {
+  updateInputFieldSpecCard('default', 'false');
+  updateInputFieldSpecCard('active', 'false');
+  updateInputFieldSpecCard('error', 'false');
+  updateInputFieldSpecCard('disabled', 'false');
+}
+
+function _infInit() {
+  updateInputFieldDemo();
+  _infInitSpecCards();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _infInit);
+} else {
+  _infInit();
+}
+</script>
+
+<!--@section-end-->

@@ -386,6 +386,13 @@ function toggleCompSection(e) {
   if (btn) btn.classList.toggle('open');
 }
 
+/* ── Nav group toggle ─────────────────────────────────────────────── */
+function toggleNavGroup(groupId, btn) {
+  var list = document.getElementById('nav-group-' + groupId);
+  if (list) list.classList.toggle('open');
+  if (btn) btn.classList.toggle('open');
+}
+
 /* ── Cover stats ──────────────────────────────────────────────────── */
 function updateCoverStats() {
   var comps = document.querySelectorAll('.nav-comp').length;
@@ -396,6 +403,36 @@ function updateCoverStats() {
   el = document.getElementById('count-components-text'); if (el) el.textContent = comps;
   el = document.getElementById('count-open'); if (el) el.textContent = open;
   el = document.getElementById('count-fixed'); if (el) el.textContent = fixed;
+}
+
+/* ── Dynamic status indicators (nav dot + header badges + verdict box) ── */
+function updateNavDots() {
+  document.querySelectorAll('.nav-comp').forEach(function(btn) {
+    var id = btn.id.replace('nav-', '');
+    var panel = document.getElementById('panel-' + id);
+    var dot = btn.querySelector('.nav-comp-status');
+    if (!dot || !panel) return;
+    var openCount = panel.querySelectorAll('.tag-open:not(.tag-c7)').length;
+    var isClean = (openCount === 0);
+
+    /* Nav dot */
+    dot.className = 'nav-comp-status';
+    if (isClean) {
+      dot.style.display = 'none';
+    } else {
+      dot.style.display = '';
+      var hasRework = panel.querySelector('.badge-rework') !== null;
+      dot.classList.add(hasRework ? 'rework' : 'fix');
+    }
+
+    /* Header badges (DS verdict + Native status) */
+    var headerBadges = panel.querySelectorAll('.comp-name > .badge');
+    headerBadges.forEach(function(b) { b.style.display = isClean ? 'none' : ''; });
+
+    /* Verdict box */
+    var verdictBox = panel.querySelector('.verdict-inline');
+    if (verdictBox) verdictBox.style.display = isClean ? 'none' : '';
+  });
 }
 
 /* ── Theme ────────────────────────────────────────────────────────── */
@@ -449,10 +486,11 @@ var _demoColors = {
   }
 };
 var _demoSizes = {
-  large:  { padding:'13px 20px', fontSize:'18px', height:'50px' },
-  medium: { padding:'8px 16px',  fontSize:'16px', height:'40px' },
-  small:  { padding:'6px 12px',  fontSize:'16px', height:'28px' },
-  xsmall: { padding:'4px 10px',  fontSize:'14px', height:'24px' }
+  large:   { padding:'13px 20px', fontSize:'18px', height:'50px' },
+  medium:  { padding:'8px 16px',  fontSize:'16px', height:'40px' },
+  small:   { padding:'6px 12px',  fontSize:'16px', height:'28px' },
+  compact: { padding:'6px 12px',  fontSize:'16px', height:'28px' },
+  xsmall:  { padding:'4px 10px',  fontSize:'14px', height:'24px' }
 };
 
 function _applyDemo() {
@@ -482,7 +520,7 @@ function _applyDemo() {
   if (textEl) textEl.textContent = _demo.state === 'loading' ? '●  ●  ●' : 'Label';
 
   /* Icon slots */
-  var iconSize = (_demo.size === 'small' || _demo.size === 'xsmall') ? '16' : '24';
+  var iconSize = (_demo.size === 'small' || _demo.size === 'compact' || _demo.size === 'xsmall') ? '16' : '24';
   var leading = document.getElementById('demo-btn-leading');
   var trailing = document.getElementById('demo-btn-trailing');
   if (leading) {
@@ -555,10 +593,11 @@ var _specCards = {
 
 /* Size data for spec card layout/typography */
 var _specSizeData = {
-  large:  { height: 50, paddingH: 20, paddingV: 13, fontSize: 18, textStyle: 'Primary/Label/Large' },
-  medium: { height: 40, paddingH: 16, paddingV: 8,  fontSize: 16, textStyle: 'Primary/Label/Base' },
-  small:  { height: 28, paddingH: 12, paddingV: 6,  fontSize: 16, textStyle: 'Primary/Label/Base' },
-  xsmall: { height: 24, paddingH: 10, paddingV: 4,  fontSize: 14, textStyle: 'Primary/Label/Small' }
+  large:   { height: 50, paddingH: 20, paddingV: 13, fontSize: 18, textStyle: 'Primary/Label/Large' },
+  medium:  { height: 40, paddingH: 16, paddingV: 8,  fontSize: 16, textStyle: 'Primary/Label/Base' },
+  small:   { height: 28, paddingH: 12, paddingV: 6,  fontSize: 16, textStyle: 'Primary/Label/Base' },
+  compact: { height: 28, paddingH: 12, paddingV: 6,  fontSize: 16, textStyle: 'Primary/Label/Base' },
+  xsmall:  { height: 24, paddingH: 10, paddingV: 4,  fontSize: 14, textStyle: 'Primary/Label/Small' }
 };
 
 /* Color data for spec card detail sections */
@@ -616,7 +655,7 @@ function updateSpecCard(cardStyle, prop, value) {
     if (preview) preview.classList.toggle('demo-preview-dark', card.appearance === 'white');
 
     /* Spec card icon slots */
-    var specIconSize = (card.size === 'small' || card.size === 'xsmall') ? '16' : '24';
+    var specIconSize = (card.size === 'small' || card.size === 'compact' || card.size === 'xsmall') ? '16' : '24';
     var specLeading = document.getElementById('spec-' + cardStyle + '-leading');
     var specTrailing = document.getElementById('spec-' + cardStyle + '-trailing');
     var path16 = 'M2.13359 5.8498C2.41244 4.3707 3.15349 3.46738 4.59457 3.13974C5.47753 2.93899 6.35971 3.35959 7 3.99988L8 4.99988L9 3.99988C9.6403 3.35967 10.5224 2.93908 11.4053 3.13975C12.8465 3.46728 13.5876 4.37064 13.8664 5.84979C14.0629 6.8923 13.5786 7.92128 12.8284 8.67143L12.5 8.99986L8.70711 12.7928C8.31658 13.1833 7.68342 13.1833 7.29289 12.7928L3.5 8.99986L3.17159 8.67145C2.42143 7.9213 1.93706 6.89231 2.13359 5.8498Z';
@@ -973,7 +1012,7 @@ function _getCodeColors(card) {
 }
 
 function buildSwiftSnippet(type, card) {
-  var sizeMap = { large: '.large', medium: '.regular', small: '.small', xsmall: '.mini' };
+  var sizeMap = { large: '.large', medium: '.regular', small: '.small', compact: '.compact', xsmall: '.mini' };
   var szLabel = sizeMap[card.size] || '.large';
   var appLabel = card.appearance || 'default';
   var hasLeading = card.leadingIcon;
@@ -1031,7 +1070,7 @@ function buildSwiftSnippet(type, card) {
 }
 
 function buildComposeSnippet(type, card) {
-  var sizeMap = { large: 'Large', medium: 'Medium', small: 'Small', xsmall: 'XSmall' };
+  var sizeMap = { large: 'Large', medium: 'Medium', small: 'Small', compact: 'Compact', xsmall: 'XSmall' };
   var szLabel = sizeMap[card.size] || 'Large';
   var appLabel = card.appearance || 'default';
   var hasLeading = card.leadingIcon;
@@ -1218,6 +1257,7 @@ function renderCard(type, change, btn) {
   }
   setTimeout(initPills, 60);
   updateCoverStats();
+  updateNavDots();
   checkAuth();
   if (typeof initSpecCards === 'function') initSpecCards();
 })();

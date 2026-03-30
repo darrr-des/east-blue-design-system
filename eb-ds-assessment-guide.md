@@ -206,13 +206,14 @@ Confirmed recurring patterns across the GCash DS. Use as a checklist during ever
 | Criterion | Pattern | First Found In |
 |---|---|---|
 | C7 | Code Connect mappings not yet registered — no native component files linked via Code Connect CLI | Accordion |
-| C2 | Variant name spacing inconsistency — "initials - light" vs "dark-initials" (spaces around hyphen) | Avatar |
-| C2 | Token name typo — "main/avatar/brand/intials" missing letter i (should be "initials") | Avatar |
-| C3 | Border-radius hardcoded per size — not using radius tokens (45.213px, 24px, 16px, 12px, 10px) | Avatar |
-| C6 | Raster backgrounds on 5 initials variants (40px, 64px, 90px) — should be simple vector circles | Avatar |
-| C2 | Boolean property isChecked uses Yes/No instead of true/false — incompatible with Swift/Kotlin booleans | Checkbox |
-| C5 | Only checked/unchecked states — missing disabled, pressed, focused, indeterminate, and error | Checkbox |
-| C6 | Checkmark is a flattened boolean operation with no separable vector icon layer — blocks native tinting | Checkbox |
+| C2 | Variant name spacing inconsistency — "initials - light" renamed to "initials-light" (RESOLVED) | Avatar |
+| C2 | Token name typo — "main/avatar/brand/intials" missing letter i (should be "initials") — RESOLVED | Avatar |
+| C3 | Border-radius bound to radius/radius-round (99999) — RESOLVED. Border-width still fixed per size. | Avatar |
+| C6 | Raster backgrounds on 5 initials variants replaced with vector ELLIPSE layers — RESOLVED | Avatar |
+| C6 | trailing-icon uses icon-placeholder RECTANGLE — not a swappable icon instance | Labeled Field |
+| C6 | Trailing icons use icon-placeholder RECTANGLE instead of swappable icon instances | Recipient Field |
+| C6 | Peso Sign uses shape_full BOOLEAN_OPERATION — should be a vector, not a boolean op | Select Field |
+| C6 | Flag uses IMAGE fill (raster) — may need vector alternative for scalability | Select Field |
 <!-- @@DISCOVERED_PATTERNS_END@@ -->
 
 ---
@@ -449,10 +450,14 @@ Key conventions:
 <!-- @@PROGRESS_TABLE@@ -->
 | Component | Node | DS Verdict | Native Status | Status | Notes |
 |---|---|---|---|---|---|
-| Accordion | `16870:9288` | Ready | Needs Refinement | 🔁 Re-assessing | — |
-| Avatar | `17143:4488` | Fix | Needs Refinement | 🔁 Re-assessing | Open: C2, C3, C6, C7 |
+| Accordion | `16870:9288` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Avatar | `17143:4488` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Button | `17104:184842` | Keep | Needs Refinement | 🔁 Re-assessing | — |
-| Checkbox | `17143:2464` | Requires Rework | Requires Rework | 🔁 Re-assessing | Open: C6, C5, C2, C7 |
+| Checkbox | `17143:2464` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Input Field | `17758:3687` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Labeled Field | `17758:3713` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Recipient Field | `17758:3867` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Select Field | `17758:3786` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 <!-- @@PROGRESS_TABLE_END@@ -->
 
 ### Open Issues
@@ -460,15 +465,7 @@ Key conventions:
 <!-- @@OPEN_ISSUES@@ -->
 | Component | Criterion | Action | Status |
 |---|---|---|---|
-| Avatar | C2 | Rename `type=initials - light` to `type=initials-light` (remove spaces) for Swift/Kotlin enum compatibility. | Open |
-| Avatar | C2 | Fix token typo: `main/avatar/brand/intials` → `main/avatar/brand/initials`. | Open |
-| Avatar | C3 | Bind border-radius to a shared `radius/radius-round` token (or use 50%) instead of hardcoded per-size values. Tokenize border-width scale. | Open |
-| Avatar | C6 | Replace raster backgrounds on 5 initials variants (dark 40px/64px, light 40px/64px/90px) with simple vector circles using `brand/bg` or `default/bg` token fills. | Open |
-| Avatar | C7 | Create native component files and register Code Connect mappings via the Figma Code Connect CLI. | Open |
-| Checkbox | C6 | Rebuild checked variants with a separable **vector checkmark icon** as a child component instance inside the container. Remove the flattened boolean operation. The checkmark must be independently tintable via the `selected/icon-check` token. | Open |
-| Checkbox | C5 | Add **disabled**, **pressed**, **focused**, **indeterminate**, and **error** state variants across all 3 sizes. Define corresponding color tokens for each state. | Open |
-| Checkbox | C2 | Convert `isChecked=Yes/No` to `isChecked=true/false`. Add `indeterminate` boolean property. | Open |
-| Checkbox | C7 | Create native component files and register Code Connect mappings via the Figma Code Connect CLI. | Open |
+| — | — | No open issues | — |
 <!-- @@OPEN_ISSUES_END@@ -->
 
 ---

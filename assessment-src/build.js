@@ -87,14 +87,53 @@ let navItems     = '';
 let summaryCards = '';
 let summaryRows  = '';
 let sections     = '';
+const groupItems = {};   // groupName → [navHtml, ...]
+const openGroups = new Set();
+let pendingGroup = null;
 
+// First pass: collect all items, grouping where needed
+const navEntries = [];
 for (const file of files) {
   const content = fs.readFileSync(path.join(compDir, file), 'utf8');
   console.log(`  + ${file}`);
-  navItems     += extract(content, 'nav')          + '\n';
+
+  const navGroup = extract(content, 'nav-group');
+  const navHtml  = extract(content, 'nav');
+
+  if (navGroup) {
+    if (!groupItems[navGroup]) groupItems[navGroup] = [];
+    groupItems[navGroup].push(navHtml);
+    if (!openGroups.has(navGroup)) {
+      navEntries.push({ type: 'group', name: navGroup });
+      openGroups.add(navGroup);
+    }
+  } else {
+    navEntries.push({ type: 'item', html: navHtml });
+  }
+
   summaryCards += extract(content, 'summary-card') + '\n';
   summaryRows  += extract(content, 'summary-row')  + '\n';
   sections     += extract(content, 'section')      + '\n\n';
+}
+
+// Build final nav HTML
+for (const entry of navEntries) {
+  if (entry.type === 'item') {
+    navItems += entry.html + '\n';
+  } else {
+    const groupId = entry.name.toLowerCase().replace(/\s+/g, '-');
+    navItems += `<div class="nav-group">\n`;
+    navItems += `  <button class="nav-group-toggle open" onclick="toggleNavGroup('${groupId}', this)">\n`;
+    navItems += `    <span class="nav-comp-name">${entry.name}</span>\n`;
+    navItems += `    <svg class="nav-group-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 6l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>\n`;
+    navItems += `  </button>\n`;
+    navItems += `  <div class="nav-group-list open" id="nav-group-${groupId}">\n`;
+    for (const itemHtml of groupItems[entry.name]) {
+      navItems += '    ' + itemHtml + '\n';
+    }
+    navItems += `  </div>\n`;
+    navItems += `</div>\n`;
+  }
 }
 
 // ── Inject into shell ─────────────────────────────────────────────────────────
