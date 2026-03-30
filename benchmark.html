@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>East Blue — Component Benchmark</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--pri:#0033B8;--pri-lt:#E8EDF8;--navy:#01245C;--navy-d:#04142D;--bg:#fff;--bg2:#F7F8FA;--bg3:#F0F2F5;--tx:#1A1A2E;--tx2:#5A6270;--tx3:#8C939E;--bd:#E2E5EA;--bd2:#ECEEF2;--grn:#0F7B3F;--grn-bg:#E6F4ED;--red:#C62828;--red-bg:#FDECEA;--amb:#E6A817;--amb-bg:#FFF8E1;--blu-bg:#E3EDFC;--pur:#5B3FBF;--pur-bg:#F0ECFC;--r:8px;--rl:12px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Google Sans',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--tx);background:var(--bg);line-height:1.5;position:relative}
+body::before{content:'';position:fixed;inset:0;z-index:-1;background:
+  radial-gradient(ellipse 80% 60% at 10% 15%, rgba(0,51,184,.12) 0%, transparent 60%),
+  radial-gradient(ellipse 60% 50% at 85% 25%, rgba(91,63,191,.1) 0%, transparent 50%),
+  radial-gradient(ellipse 50% 40% at 60% 10%, rgba(0,140,229,.08) 0%, transparent 40%),
+  radial-gradient(ellipse 70% 40% at 40% 80%, rgba(0,92,229,.06) 0%, transparent 50%),
+  linear-gradient(180deg, #f0f2f8 0%, #f8f9fc 30%, #fff 60%, #f5f6fa 100%)}
+
+/* Header */
+.hd{background:rgba(4,20,45,.85);backdrop-filter:blur(40px) saturate(1.8);-webkit-backdrop-filter:blur(40px) saturate(1.8);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
+.hd-t{color:#fff;font-size:14px;font-weight:500;display:flex;align-items:center;gap:8px}
+.hd-t span{opacity:.4}
+.hd-badge{background:var(--pur);color:#fff;font-size:9px;font-weight:500;padding:2px 7px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase}
+.hd-nav{display:flex;gap:16px}
+.hd-nav a{color:rgba(255,255,255,.5);text-decoration:none;font-size:12px;transition:color .2s}
+.hd-nav a:hover{color:#fff}
+
+/* Container */
+.container{max-width:1100px;margin:0 auto;padding:0 40px}
+#results{display:none}
+
+/* Section */
+.section{padding:48px 0}
+.section+.section{border-top:1px solid rgba(0,0,0,.04)}
+.sc-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.sc-title{font-size:24px;font-weight:500;margin-bottom:6px}
+.sc-desc{font-size:14px;color:var(--tx2);margin-bottom:32px}
+
+/* Comparison grid */
+.cmp-grid{display:grid;gap:0}
+.cmp-row{display:grid;border-bottom:1px solid var(--bd2);align-items:center}
+.cmp-row:last-child{border-bottom:none}
+.cmp-cell{padding:14px 16px;font-size:14px;text-align:center}
+.cmp-cell:first-child{text-align:left;color:var(--tx2);font-size:13px}
+.cmp-header .cmp-cell{font-size:11px;font-weight:500;color:var(--tx3);text-transform:uppercase;letter-spacing:.3px;padding:10px 16px;background:rgba(255,255,255,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.cmp-eb{font-weight:500;color:var(--tx)}
+.cmp-lead{color:var(--grn)}
+.cmp-trail{color:var(--red)}
+.cmp-match{color:var(--tx3)}
+
+/* Maturity row */
+.mat-row{display:flex;gap:32px;flex-wrap:wrap}
+.mat-card{min-width:140px;max-width:200px;background:rgba(255,255,255,.35);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.5);border-radius:14px;padding:16px;box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 2px 8px rgba(0,0,0,.03)}
+.mat-sys{font-size:12px;color:var(--tx3);margin-bottom:4px}
+.mat-level{font-size:44px;font-weight:500}
+.mat-name{font-size:12px;color:var(--tx2);margin-top:2px}
+.mat-reason{font-size:11px;color:var(--tx3);margin-top:8px;line-height:1.5;padding-top:8px;border-top:1px solid var(--bd2)}
+.mat-card.l1 .mat-level{color:var(--red)}
+.mat-card.l2 .mat-level{color:var(--amb)}
+.mat-card.l3 .mat-level{color:var(--pri)}
+.mat-card.l4 .mat-level{color:var(--grn)}
+
+/* Pillar grid */
+.pillar-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pillar{background:rgba(255,255,255,.4);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.5);border-radius:var(--rl);padding:20px;box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 2px 8px rgba(0,0,0,.03)}
+.pillar-name{font-size:12px;color:var(--tx2);margin-bottom:6px}
+.pillar-score{font-size:28px;font-weight:500}
+.pillar-bar{height:4px;background:var(--bg3);border-radius:2px;margin-top:10px;overflow:hidden}
+.pillar-fill{height:4px;border-radius:2px}
+.threshold{margin-top:20px;font-size:14px;color:var(--tx2)}
+.threshold strong{font-weight:500}
+
+/* Gap radar chart */
+.gap-list{display:flex;flex-direction:column;align-items:center}
+.gap-radar-wrap{position:relative;width:100%;max-width:600px;margin:0 auto}
+.gap-radar-wrap svg{width:100%;height:auto}
+.gap-legend{margin-top:24px;display:flex;gap:20px;flex-wrap:wrap;align-items:center;justify-content:center}
+.gap-legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--tx2)}
+.gap-legend-swatch{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.gap-legend-swatch.line{width:16px;height:2px;border-radius:1px}
+.gap-tooltip{position:absolute;background:var(--navy-d);color:#fff;font-size:11px;padding:6px 10px;border-radius:6px;pointer-events:none;white-space:nowrap;opacity:0;transition:opacity .15s;z-index:10}
+
+/* Recommendations */
+.rec-list{}
+.rec-main{background:linear-gradient(135deg,rgba(0,51,184,.06),rgba(0,51,184,.03));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(0,51,184,.1);border-left:3px solid var(--pri);border-radius:14px;padding:20px 24px;margin-bottom:24px;box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 2px 8px rgba(0,51,184,.04)}
+.rec-main-label{font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;color:var(--pri);margin-bottom:4px}
+.rec-main-title{font-size:17px;font-weight:500;color:var(--tx);margin-bottom:6px}
+.rec-main-body{font-size:13px;color:var(--tx2);line-height:1.7}
+.rec-main-ref{font-size:12px;color:var(--pri);text-decoration:none;font-weight:500;margin-top:8px;display:inline-block}
+.rec-main-ref:hover{text-decoration:underline}
+.rec-group{margin-bottom:20px}
+.rec-group-h{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.4px;padding-bottom:8px;margin-bottom:2px;border-bottom:1px solid var(--bd2)}
+.rec-group-h.must{color:var(--red)}
+.rec-group-h.should{color:#9A6700}
+.rec-group-h.could{color:var(--pri)}
+.rec-group-h.skip{color:var(--tx3)}
+.rec-item{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--bd2);font-size:14px;line-height:1.6}
+.rec-item:last-child{border-bottom:none}
+.rec-bullet{flex-shrink:0;width:6px;height:6px;border-radius:50%;margin-top:8px}
+.rec-bullet.must{background:var(--red)}
+.rec-bullet.should{background:var(--amb)}
+.rec-bullet.could{background:var(--pri)}
+.rec-bullet.skip{background:var(--tx3)}
+.rec-item-title{font-weight:500;color:var(--tx)}
+.rec-item-desc{font-size:13px;color:var(--tx2);margin-top:2px}
+.rec-item-meta{display:flex;gap:12px;margin-top:6px;font-size:11px;color:var(--tx3)}
+.rec-item-ref{color:var(--pri);text-decoration:none;font-weight:500;font-size:12px}
+.rec-item-ref:hover{text-decoration:underline}
+.rec-count{font-size:13px;color:var(--tx3);margin-bottom:20px}
+
+/* Empty */
+.empty{text-align:center;padding:80px 20px;color:var(--tx3)}
+.empty-icon{font-size:48px;opacity:.15;margin-bottom:12px}
+.empty-text{font-size:15px}
+#compSel option{color:#1A1A2E;background:#fff;font-size:13px;padding:6px 8px}
+
+/* Competitive Edge */
+.edge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.edge-card{background:rgba(255,255,255,.4);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.5);border-radius:14px;padding:16px 18px;box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 2px 6px rgba(0,0,0,.03);position:relative;overflow:hidden}
+.edge-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0}
+.edge-card.lead::before{background:linear-gradient(90deg,var(--grn),#34D399)}
+.edge-card.match::before{background:linear-gradient(90deg,var(--pri),#60A5FA)}
+.edge-metric{font-size:11px;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.edge-card.lead .edge-metric{color:var(--grn)}
+.edge-card.match .edge-metric{color:var(--pri)}
+.edge-value{font-size:28px;font-weight:500;color:var(--tx);line-height:1.2}
+.edge-context{font-size:12px;color:var(--tx2);margin-top:6px;line-height:1.5}
+.edge-vs{font-size:11px;color:var(--tx3);margin-top:8px;padding-top:8px;border-top:1px solid rgba(0,0,0,.04)}
+.edge-empty{font-size:14px;color:var(--tx3);padding:20px 0}
+</style>
+</head>
+<body>
+
+<div class="hd">
+<div class="hd-t">East Blue <span>/</span> Component Benchmark <span class="hd-badge">Frost internal</span></div>
+<div class="hd-nav"><a href="index.html">Index</a><a href="report.html">Assessment</a><a href="eb-ds-assessment-guide.html">Guide</a></div>
+</div>
+
+<!-- Selection Bar -->
+<div style="position:sticky;top:12px;z-index:100;max-width:1100px;margin:0 auto;padding:0 40px;margin-top:32px">
+<div style="background:linear-gradient(135deg,rgba(255,255,255,.4),rgba(255,255,255,.2));backdrop-filter:blur(60px) saturate(2.2) brightness(1.05);-webkit-backdrop-filter:blur(60px) saturate(2.2) brightness(1.05);border:1.5px solid rgba(255,255,255,.5);border-top-color:rgba(255,255,255,.7);border-radius:24px;padding:20px 24px;box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 12px 40px rgba(0,20,80,.08),0 2px 8px rgba(0,0,0,.03)">
+
+  <!-- Row 1: Title + Baseline + Benchmark -->
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px">
+    <h2 style="font-size:18px;font-weight:500;color:var(--tx);flex:1;margin:0">Compare components</h2>
+    <div style="display:flex;align-items:center;gap:6px">
+      <span style="font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.4px">Baseline</span>
+      <div style="position:relative">
+        <select id="baseSel" style="padding:6px 28px 6px 10px;border:1px solid rgba(0,0,0,.07);border-radius:8px;font-family:inherit;font-size:12px;color:var(--tx2);background:rgba(255,255,255,.5);cursor:pointer;appearance:none;-webkit-appearance:none;outline:none">
+          <option value="industry">Industry (30)</option>
+          <option value="fintech">Fintech (4)</option>
+          <option value="mobile">Mobile-first (4)</option>
+        </select>
+        <svg style="position:absolute;right:9px;top:50%;transform:translateY(-50%);pointer-events:none;opacity:.3" width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+    <button id="runBtn" onclick="run()" disabled style="flex-shrink:0;background:var(--navy-d);color:#fff;border:none;padding:9px 28px;border-radius:10px;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;box-shadow:0 4px 12px rgba(0,0,0,.1);opacity:.4">Benchmark</button>
+  </div>
+
+  <!-- Row 2: Component + vs + Chips + Add -->
+  <div style="display:flex;align-items:center;gap:10px">
+    <!-- Component pill -->
+    <div style="display:inline-flex;align-items:center;gap:8px;padding:8px 12px 8px 14px;background:linear-gradient(135deg,rgba(0,51,184,.88),rgba(0,35,140,.92));border-radius:12px;color:#fff;flex-shrink:0;box-shadow:0 4px 14px rgba(0,51,184,.18)">
+      <span style="font-size:10px;opacity:.5;letter-spacing:.3px">Component</span>
+      <div style="position:relative;display:inline-flex;align-items:center">
+        <select id="compSel" onchange="resizeCompSel()" style="padding:3px 24px 3px 8px;border:1px solid rgba(255,255,255,.18);border-radius:6px;font-family:inherit;font-size:13px;font-weight:500;color:#fff;background:rgba(255,255,255,.1);cursor:pointer;appearance:none;-webkit-appearance:none;outline:none;transition:all .15s;min-width:0;width:auto" onfocus="this.style.background='rgba(255,255,255,.2)'" onblur="this.style.background='rgba(255,255,255,.1)'">
+          <option value="button">Button</option>
+          <option value="accordion">Accordion</option>
+          <option value="avatar">Avatar</option>
+          <option value="checkbox">Checkbox</option>
+          <option value="inputField">Input Field</option>
+          <option value="labeledField">Labeled Field</option>
+          <option value="selectField">Select Field</option>
+          <option value="recipientField">Recipient Field</option>
+        </select>
+        <svg style="position:absolute;right:6px;top:50%;transform:translateY(-50%);pointer-events:none;opacity:.45" width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+    <span style="font-size:12px;color:var(--tx3);flex-shrink:0">vs</span>
+    <!-- Chips area -->
+    <div id="chips" style="display:flex;gap:6px;flex-wrap:wrap;flex:1;min-width:0"></div>
+    <!-- Add system -->
+    <button onclick="openMo()" style="flex-shrink:0;background:rgba(255,255,255,.45);border:1.5px dashed rgba(0,0,0,.1);color:var(--tx3);cursor:pointer;padding:8px 14px;border-radius:10px;font-size:12px;font-family:inherit;transition:all .15s" onmouseover="this.style.background='rgba(255,255,255,.7)';this.style.color='var(--pri)';this.style.borderColor='rgba(0,51,184,.2)'" onmouseout="this.style.background='rgba(255,255,255,.45)';this.style.color='var(--tx3)';this.style.borderColor='rgba(0,0,0,.1)'">+ Add system</button>
+  </div>
+
+</div>
+</div>
+
+<!-- Empty state -->
+<div class="container">
+<div class="empty" id="empty">
+  <div class="empty-icon">&#9878;</div>
+  <div class="empty-text">Add 1-4 design systems to compare against, then hit Benchmark</div>
+</div>
+</div>
+
+<!-- Results -->
+<div class="container" id="results">
+
+  <!-- S2: Design Metrics -->
+  <div class="section">
+    <div class="sc-label" style="color:var(--pri)">Design metrics</div>
+    <h2 class="sc-title">Side-by-side comparison</h2>
+    <p class="sc-desc">How East Blue's implementation stacks up against the selected systems.</p>
+    <div id="cmpGrid"></div>
+  </div>
+
+  <!-- S2b: Competitive Edge -->
+  <div class="section">
+    <div class="sc-label" style="color:var(--grn)">Competitive edge</div>
+    <h2 class="sc-title">Where East Blue stands out</h2>
+    <p class="sc-desc">Metrics where this component meets or exceeds the compared systems and industry baseline.</p>
+    <div id="edgeList"></div>
+  </div>
+
+  <!-- S3: Industry Level -->
+  <div class="section">
+    <div class="sc-label" style="color:var(--pri)">Industry level</div>
+    <h2 class="sc-title">Component maturity</h2>
+    <p class="sc-desc">L1 Functional → L2 Reliable → L3 Scalable → L4 Industry-grade</p>
+    <div class="mat-row" id="matRow"></div>
+  </div>
+
+  <!-- S4: Future-Proof -->
+  <div class="section">
+    <div class="sc-label" style="color:var(--pri)">Future-proof</div>
+    <h2 class="sc-title">Rebrand resilience</h2>
+    <p class="sc-desc">Can this component survive a visual refresh with token changes only?</p>
+    <div class="pillar-row" id="pillarRow"></div>
+    <div class="threshold" id="thresholdBar"></div>
+  </div>
+
+  <!-- S5: Gap Analysis -->
+  <div class="section">
+    <div class="sc-label" style="color:var(--pri)">Gap analysis</div>
+    <h2 class="sc-title">Where you lead and trail</h2>
+    <p class="sc-desc">Each metric shows East Blue and compared systems against the industry median baseline.</p>
+    <div class="gap-list" id="gapBars"></div>
+  </div>
+
+  <!-- S6: Recommendations -->
+  <div class="section">
+    <div class="sc-label" style="color:var(--pri)">Recommendations</div>
+    <h2 class="sc-title">What to improve</h2>
+    <p class="sc-desc">Prioritized list based on gaps found in the analysis above.</p>
+    <div class="rec-list" id="recList"></div>
+  </div>
+
+</div>
+
+<div style="height:80px"></div>
+
+<!-- Modal -->
+<div id="modal" onclick="if(event.target===this)closeMo()" style="display:none;position:fixed;inset:0;background:rgba(0,10,30,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:200;justify-content:center;align-items:center">
+<div style="background:rgba(255,255,255,.75);backdrop-filter:blur(40px) saturate(2);-webkit-backdrop-filter:blur(40px) saturate(2);border:1px solid rgba(255,255,255,.6);border-radius:20px;padding:24px;width:380px;max-height:75vh;overflow-y:auto;box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 24px 80px rgba(0,0,0,.15),0 4px 16px rgba(0,0,0,.08)">
+<h3 style="font-size:15px;font-weight:500;margin-bottom:10px">Add comparison system</h3>
+<p style="font-size:11px;color:var(--tx3);margin-bottom:10px">Tier 1 systems — select up to 4 total</p>
+<div id="mList"></div>
+<button onclick="closeMo()" style="margin-top:10px;width:100%;padding:7px;border:1px solid var(--bd);border-radius:5px;background:none;font-family:inherit;font-size:12px;cursor:pointer">Done</button>
+</div>
+</div>
+
+<script>
+const D={eastblue:{button:{variants:60,styles:3,sizes:5,states:["default","pressed","disabled","focused","loading"],slots:["leadingIcon","trailingIcon"],tokenDepth:3,a11yDocs:"documented",edgeCases:[],motionSpec:"none",darkMode:!0,responsive:!1,codeConnect:!0,maturity:"L3",futureProof:{tokenAbstraction:3,apiStability:2,variantExtensibility:3,layoutDecoupling:2,compositionIsolation:2,migrationPath:2},openIssues:["C7"]},accordion:{variants:6,styles:2,sizes:1,states:["default","pressed","disabled"],slots:["leadingIcon","description"],tokenDepth:3,a11yDocs:"documented",edgeCases:[],motionSpec:"none",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3",futureProof:{tokenAbstraction:3,apiStability:3,variantExtensibility:2,layoutDecoupling:2,compositionIsolation:3,migrationPath:2},openIssues:["C7"]},avatar:{variants:21,styles:3,sizes:7,states:["default"],slots:[],tokenDepth:2,a11yDocs:"documented",edgeCases:[],motionSpec:"none",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L2",futureProof:{tokenAbstraction:2,apiStability:3,variantExtensibility:2,layoutDecoupling:2,compositionIsolation:3,migrationPath:2},openIssues:["C7"]},checkbox:{variants:33,styles:1,sizes:3,states:["default","pressed","focused","disabled","error"],slots:["iconCheck","iconIndeterminate"],tokenDepth:2,a11yDocs:"documented",edgeCases:["indeterminate"],motionSpec:"none",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3",futureProof:{tokenAbstraction:2,apiStability:3,variantExtensibility:3,layoutDecoupling:2,compositionIsolation:2,migrationPath:2},openIssues:["C7"]},inputField:{variants:8,styles:1,sizes:1,states:["default","active","error","disabled"],slots:[],tokenDepth:2,a11yDocs:"documented",edgeCases:[],motionSpec:"none",darkMode:!1,responsive:!1,codeConnect:!1,maturity:"L2",futureProof:{tokenAbstraction:2,apiStability:2,variantExtensibility:1,layoutDecoupling:2,compositionIsolation:2,migrationPath:1},openIssues:["C7"]},labeledField:{variants:8,styles:1,sizes:1,states:["default","active","error","disabled"],slots:["leadingIcon","actionButton","trailingIcon"],tokenDepth:2,a11yDocs:"documented",edgeCases:[],motionSpec:"none",darkMode:!1,responsive:!1,codeConnect:!1,maturity:"L2",futureProof:{tokenAbstraction:2,apiStability:2,variantExtensibility:1,layoutDecoupling:2,compositionIsolation:2,migrationPath:1},openIssues:["C6","C7"]},selectField:{variants:8,styles:1,sizes:1,states:["default","active","error","disabled"],slots:["pesoSign","flag","chevron"],tokenDepth:2,a11yDocs:"documented",edgeCases:[],motionSpec:"none",darkMode:!1,responsive:!1,codeConnect:!1,maturity:"L2",futureProof:{tokenAbstraction:2,apiStability:2,variantExtensibility:1,layoutDecoupling:1,compositionIsolation:1,migrationPath:1},openIssues:["C6","C7"]},recipientField:{variants:8,styles:1,sizes:1,states:["default","active","error","disabled"],slots:["trailingIcon1","trailingIcon2"],tokenDepth:2,a11yDocs:"documented",edgeCases:[],motionSpec:"none",darkMode:!1,responsive:!1,codeConnect:!1,maturity:"L2",futureProof:{tokenAbstraction:2,apiStability:2,variantExtensibility:1,layoutDecoupling:2,compositionIsolation:2,migrationPath:1},openIssues:["C6","C7"]}},tier1:{material:{name:"Google Material 3",url:"https://m3.material.io/components/buttons/overview",components:{accordion:{variants:4,styles:1,sizes:1,states:["default","expanded","disabled"],slots:["leadingIcon","trailingIcon","supportingText"],tokenDepth:3,a11yDocs:"tested",edgeCases:["nested"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},avatar:{variants:6,styles:3,sizes:3,states:["default"],slots:["image","icon","initials"],tokenDepth:3,a11yDocs:"tested",edgeCases:["fallback","group"],motionSpec:"none",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},checkbox:{variants:12,styles:1,sizes:1,states:["default","hovered","pressed","focused","disabled","error"],slots:["icon"],tokenDepth:3,a11yDocs:"tested",edgeCases:["indeterminate","errorState"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},inputField:{variants:8,styles:2,sizes:1,states:["default","focused","error","disabled"],slots:["leadingIcon","trailingIcon","prefix","suffix"],tokenDepth:3,a11yDocs:"tested",edgeCases:["helperText","characterCount","multiline"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},labeledField:{variants:8,styles:2,sizes:1,states:["default","focused","error","disabled"],slots:["leadingIcon","trailingIcon","label","supportingText"],tokenDepth:3,a11yDocs:"tested",edgeCases:["helperText","errorMessage"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},selectField:{variants:6,styles:2,sizes:1,states:["default","focused","error","disabled"],slots:["leadingIcon","label"],tokenDepth:3,a11yDocs:"tested",edgeCases:["searchable","multiSelect"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},recipientField:{variants:4,styles:1,sizes:1,states:["default","focused","error","disabled"],slots:["avatar","clearButton"],tokenDepth:2,a11yDocs:"tested",edgeCases:["autocomplete","multiRecipient"],motionSpec:"basic",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L3"},button:{variants:20,styles:5,sizes:3,states:["default","hovered","pressed","disabled","focused"],slots:["icon"],tokenDepth:3,a11yDocs:"tested",edgeCases:["longText","iconOnly"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"}}},apple:{name:"Apple HIG",url:"https://developer.apple.com/design/human-interface-guidelines/buttons",components:{accordion:{variants:2,styles:1,sizes:1,states:["default","expanded"],slots:["label"],tokenDepth:2,a11yDocs:"tested",edgeCases:[],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},avatar:{variants:4,styles:2,sizes:4,states:["default"],slots:["image","monogram"],tokenDepth:2,a11yDocs:"tested",edgeCases:["fallback"],motionSpec:"none",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},checkbox:{variants:4,styles:1,sizes:2,states:["default","pressed","disabled","focused"],slots:[],tokenDepth:2,a11yDocs:"tested",edgeCases:["mixed"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},inputField:{variants:4,styles:1,sizes:2,states:["default","focused","disabled"],slots:["label"],tokenDepth:2,a11yDocs:"tested",edgeCases:["secureEntry"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},labeledField:{variants:4,styles:1,sizes:2,states:["default","focused","disabled"],slots:["label"],tokenDepth:2,a11yDocs:"tested",edgeCases:[],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},selectField:{variants:4,styles:1,sizes:2,states:["default","focused","disabled"],slots:["label"],tokenDepth:2,a11yDocs:"tested",edgeCases:["searchable"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},recipientField:{variants:2,styles:1,sizes:1,states:["default","focused"],slots:["tokenField"],tokenDepth:2,a11yDocs:"tested",edgeCases:["multiRecipient"],motionSpec:"basic",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L3"},button:{variants:8,styles:4,sizes:4,states:["default","hover","pressed","disabled","focused"],slots:["image","label"],tokenDepth:2,a11yDocs:"tested",edgeCases:[],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"}}},salesforce:{name:"Salesforce Lightning",url:"https://www.lightningdesignsystem.com/components/buttons/",components:{accordion:{variants:4,styles:1,sizes:1,states:["default","expanded","disabled"],slots:[],tokenDepth:2,a11yDocs:"tested",edgeCases:["controlled"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},checkbox:{variants:6,styles:1,sizes:1,states:["default","hover","focus","disabled","error"],slots:[],tokenDepth:2,a11yDocs:"tested",edgeCases:["indeterminate"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},inputField:{variants:6,styles:1,sizes:2,states:["default","focused","error","disabled","readOnly"],slots:["addonBefore","addonAfter"],tokenDepth:2,a11yDocs:"tested",edgeCases:["helperText","counter"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},selectField:{variants:4,styles:1,sizes:2,states:["default","focused","error","disabled"],slots:["label"],tokenDepth:2,a11yDocs:"tested",edgeCases:["searchable"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},button:{variants:20,styles:7,sizes:3,states:["default","hover","active","focus","disabled"],slots:["icon"],tokenDepth:2,a11yDocs:"tested",edgeCases:["iconOnly","stretch"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"}}},carbon:{name:"IBM Carbon",url:"https://carbondesignsystem.com/components/button/usage/",components:{accordion:{variants:4,styles:2,sizes:2,states:["default","expanded","disabled"],slots:["title"],tokenDepth:3,a11yDocs:"documented",edgeCases:["controlled","skeleton"],motionSpec:"basic",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"},avatar:{variants:6,styles:2,sizes:4,states:["default"],slots:["image","icon","initials"],tokenDepth:3,a11yDocs:"documented",edgeCases:["group"],motionSpec:"none",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"},checkbox:{variants:8,styles:1,sizes:1,states:["default","hover","focus","disabled","readOnly"],slots:[],tokenDepth:3,a11yDocs:"documented",edgeCases:["indeterminate","skeleton"],motionSpec:"basic",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"},inputField:{variants:8,styles:2,sizes:3,states:["default","focused","error","disabled","readOnly"],slots:["helperText","label"],tokenDepth:3,a11yDocs:"documented",edgeCases:["helperText","characterCount","skeleton"],motionSpec:"basic",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"},labeledField:{variants:8,styles:2,sizes:3,states:["default","focused","error","disabled","readOnly"],slots:["helperText","label"],tokenDepth:3,a11yDocs:"documented",edgeCases:["helperText","characterCount"],motionSpec:"basic",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"},selectField:{variants:6,styles:2,sizes:3,states:["default","focused","error","disabled"],slots:["label","helperText"],tokenDepth:3,a11yDocs:"documented",edgeCases:["filterable","multiSelect","inline"],motionSpec:"basic",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"},recipientField:{variants:4,styles:1,sizes:2,states:["default","focused","error","disabled"],slots:["tag"],tokenDepth:2,a11yDocs:"documented",edgeCases:["multiValue"],motionSpec:"basic",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"},button:{variants:30,styles:5,sizes:7,states:["default","hover","active","focus","disabled"],slots:["icon"],tokenDepth:3,a11yDocs:"documented",edgeCases:["longText","iconOnly","fluid"],motionSpec:"basic",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"}}},atlassian:{name:"Atlassian DS",url:"https://atlassian.design/components/button",components:{accordion:{variants:4,styles:1,sizes:1,states:["default","expanded","disabled"],slots:["actions"],tokenDepth:2,a11yDocs:"tested",edgeCases:["controlled"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},avatar:{variants:9,styles:3,sizes:6,states:["default"],slots:["image","icon","initials"],tokenDepth:2,a11yDocs:"tested",edgeCases:["group","presence","status"],motionSpec:"none",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},checkbox:{variants:8,styles:1,sizes:2,states:["default","hovered","focused","disabled","invalid"],slots:[],tokenDepth:2,a11yDocs:"tested",edgeCases:["indeterminate"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},inputField:{variants:6,styles:2,sizes:2,states:["default","focused","error","disabled"],slots:["elemBefore","elemAfter"],tokenDepth:2,a11yDocs:"tested",edgeCases:["helperMessage","validMessage"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},labeledField:{variants:6,styles:2,sizes:2,states:["default","focused","error","disabled"],slots:["elemBefore","elemAfter","label"],tokenDepth:2,a11yDocs:"tested",edgeCases:["helperMessage"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},selectField:{variants:6,styles:2,sizes:2,states:["default","focused","error","disabled"],slots:["label"],tokenDepth:2,a11yDocs:"tested",edgeCases:["searchable","multiSelect","creatable"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},recipientField:{variants:4,styles:1,sizes:1,states:["default","focused","error","disabled"],slots:["avatar"],tokenDepth:2,a11yDocs:"documented",edgeCases:["multiUser"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},button:{variants:18,styles:6,sizes:2,states:["default","hover","active","focus","disabled","selected","loading"],slots:["iconBefore","iconAfter"],tokenDepth:2,a11yDocs:"tested",edgeCases:["truncation","iconOnly"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"}}},polaris:{name:"Shopify Polaris",url:"https://polaris.shopify.com/components/actions/button",components:{accordion:{variants:2,styles:1,sizes:1,states:["default","expanded"],slots:[],tokenDepth:2,a11yDocs:"documented",edgeCases:[],motionSpec:"basic",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"},checkbox:{variants:6,styles:1,sizes:1,states:["default","hover","focus","disabled","error"],slots:[],tokenDepth:2,a11yDocs:"documented",edgeCases:["indeterminate"],motionSpec:"basic",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"},inputField:{variants:6,styles:1,sizes:2,states:["default","focused","error","disabled"],slots:["prefix","suffix","connectedLeft","connectedRight"],tokenDepth:2,a11yDocs:"documented",edgeCases:["helperText","multiline","autoComplete"],motionSpec:"basic",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"},selectField:{variants:4,styles:1,sizes:1,states:["default","focused","error","disabled"],slots:["label"],tokenDepth:2,a11yDocs:"documented",edgeCases:[],motionSpec:"basic",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"},button:{variants:12,styles:4,sizes:3,states:["default","hover","active","focus","disabled","loading"],slots:["icon","disclosure"],tokenDepth:2,a11yDocs:"documented",edgeCases:["fullWidth","truncation"],motionSpec:"basic",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"}}},spectrum:{name:"Adobe Spectrum",url:"https://spectrum.adobe.com/page/button/",components:{accordion:{variants:4,styles:2,sizes:3,states:["default","expanded","disabled"],slots:["icon"],tokenDepth:3,a11yDocs:"tested",edgeCases:["nested"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},checkbox:{variants:10,styles:1,sizes:3,states:["default","hovered","pressed","focused","disabled","error"],slots:[],tokenDepth:3,a11yDocs:"tested",edgeCases:["indeterminate","emphasized"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},inputField:{variants:8,styles:2,sizes:4,states:["default","focused","error","disabled","readOnly"],slots:["icon"],tokenDepth:3,a11yDocs:"tested",edgeCases:["helperText","quiet"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},selectField:{variants:6,styles:2,sizes:4,states:["default","focused","error","disabled"],slots:["label"],tokenDepth:3,a11yDocs:"tested",edgeCases:["searchable"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},button:{variants:24,styles:6,sizes:4,states:["default","hover","active","focus","disabled"],slots:["icon"],tokenDepth:3,a11yDocs:"tested",edgeCases:["longText","iconOnly","pending"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"}}},pajamas:{name:"GitLab Pajamas",url:"https://design.gitlab.com/components/button",components:{accordion:{variants:2,styles:1,sizes:1,states:["default","expanded"],slots:[],tokenDepth:2,a11yDocs:"documented",edgeCases:[],motionSpec:"none",darkMode:!1,responsive:!1,codeConnect:!1,maturity:"L2"},checkbox:{variants:6,styles:1,sizes:1,states:["default","hover","focus","disabled"],slots:[],tokenDepth:2,a11yDocs:"documented",edgeCases:["indeterminate"],motionSpec:"none",darkMode:!1,responsive:!1,codeConnect:!1,maturity:"L2"},inputField:{variants:6,styles:1,sizes:3,states:["default","focused","error","disabled"],slots:["prepend","append"],tokenDepth:2,a11yDocs:"documented",edgeCases:["helperText"],motionSpec:"none",darkMode:!1,responsive:!1,codeConnect:!1,maturity:"L2"},button:{variants:16,styles:5,sizes:4,states:["default","hover","active","focus","disabled","loading"],slots:["icon"],tokenDepth:2,a11yDocs:"documented",edgeCases:["loading","iconOnly"],motionSpec:"none",darkMode:!1,responsive:!1,codeConnect:!1,maturity:"L3"}}},fluent:{name:"Microsoft Fluent 2",url:"https://fluent2.microsoft.design/",components:{accordion:{variants:4,styles:2,sizes:3,states:["default","expanded","disabled"],slots:["icon","actions"],tokenDepth:3,a11yDocs:"tested",edgeCases:["nested","inline"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},avatar:{variants:12,styles:4,sizes:8,states:["default"],slots:["image","icon","initials","badge"],tokenDepth:3,a11yDocs:"tested",edgeCases:["group","badge","presence"],motionSpec:"basic",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},checkbox:{variants:8,styles:1,sizes:2,states:["default","hovered","pressed","focused","disabled"],slots:[],tokenDepth:3,a11yDocs:"tested",edgeCases:["indeterminate","circular"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},inputField:{variants:10,styles:3,sizes:3,states:["default","focused","error","disabled"],slots:["contentBefore","contentAfter"],tokenDepth:3,a11yDocs:"tested",edgeCases:["helperText","prefix","suffix"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},labeledField:{variants:10,styles:3,sizes:3,states:["default","focused","error","disabled"],slots:["contentBefore","contentAfter","label"],tokenDepth:3,a11yDocs:"tested",edgeCases:["helperText"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},selectField:{variants:8,styles:2,sizes:3,states:["default","focused","error","disabled"],slots:["label"],tokenDepth:3,a11yDocs:"tested",edgeCases:["searchable","multiSelect"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},recipientField:{variants:4,styles:1,sizes:2,states:["default","focused","error","disabled"],slots:["persona","clearButton"],tokenDepth:3,a11yDocs:"tested",edgeCases:["peoplePicker","multiRecipient"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"},button:{variants:20,styles:5,sizes:4,states:["default","hover","pressed","focus","disabled"],slots:["icon"],tokenDepth:3,a11yDocs:"tested",edgeCases:["iconOnly","longText"],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!0,maturity:"L4"}}},antdesign:{name:"Ant Design",url:"https://ant.design/components/button",components:{accordion:{variants:4,styles:2,sizes:2,states:["default","expanded","disabled"],slots:["extra"],tokenDepth:2,a11yDocs:"documented",edgeCases:["nested","ghost"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},checkbox:{variants:8,styles:1,sizes:1,states:["default","hover","focus","disabled"],slots:[],tokenDepth:2,a11yDocs:"documented",edgeCases:["indeterminate","group"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},inputField:{variants:8,styles:3,sizes:3,states:["default","focused","error","disabled"],slots:["prefix","suffix","addonBefore","addonAfter"],tokenDepth:2,a11yDocs:"documented",edgeCases:["helperText","password","search","textarea"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},selectField:{variants:6,styles:2,sizes:3,states:["default","focused","error","disabled"],slots:["label"],tokenDepth:2,a11yDocs:"documented",edgeCases:["searchable","multiSelect","tags"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},button:{variants:20,styles:5,sizes:3,states:["default","hover","active","focus","disabled","loading"],slots:["icon"],tokenDepth:2,a11yDocs:"documented",edgeCases:["loading","block","ghost"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"}}},orbit:{name:"Kiwicom Orbit",url:"https://orbit.kiwi/components/action/button/",components:{inputField:{variants:6,styles:1,sizes:2,states:["default","focused","error","disabled"],slots:["prefix","suffix"],tokenDepth:2,a11yDocs:"documented",edgeCases:["helperText"],motionSpec:"basic",darkMode:!1,responsive:!0,codeConnect:!1,maturity:"L3"},selectField:{variants:4,styles:1,sizes:2,states:["default","focused","error","disabled"],slots:["label","prefix"],tokenDepth:2,a11yDocs:"documented",edgeCases:[],motionSpec:"basic",darkMode:!1,responsive:!0,codeConnect:!1,maturity:"L3"},button:{variants:15,styles:5,sizes:3,states:["default","hover","active","focus","disabled","loading"],slots:["iconLeft","iconRight"],tokenDepth:2,a11yDocs:"documented",edgeCases:["fullWidth","loading"],motionSpec:"basic",darkMode:!1,responsive:!0,codeConnect:!1,maturity:"L3"}}},porsche:{name:"Porsche DS",url:"https://designsystem.porsche.com/",components:{inputField:{variants:4,styles:1,sizes:2,states:["default","focused","error","disabled"],slots:[],tokenDepth:2,a11yDocs:"documented",edgeCases:[],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"},selectField:{variants:4,styles:1,sizes:2,states:["default","focused","error","disabled"],slots:["label"],tokenDepth:2,a11yDocs:"documented",edgeCases:[],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"},button:{variants:12,styles:3,sizes:2,states:["default","hover","active","focus","disabled","loading"],slots:["icon"],tokenDepth:2,a11yDocs:"documented",edgeCases:[],motionSpec:"full",darkMode:!0,responsive:!0,codeConnect:!1,maturity:"L3"}}},blade:{name:"Razorpay Blade",url:"https://blade.razorpay.com/",components:{inputField:{variants:8,styles:2,sizes:3,states:["default","focused","error","disabled"],slots:["prefix","suffix","leading","trailing"],tokenDepth:2,a11yDocs:"documented",edgeCases:["helperText","counter","clearButton"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},selectField:{variants:6,styles:1,sizes:3,states:["default","focused","error","disabled"],slots:["label"],tokenDepth:2,a11yDocs:"documented",edgeCases:["searchable","multiSelect"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},checkbox:{variants:6,styles:1,sizes:2,states:["default","hover","focus","disabled","error"],slots:[],tokenDepth:2,a11yDocs:"documented",edgeCases:["indeterminate","group"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},button:{variants:15,styles:4,sizes:4,states:["default","hover","active","focus","disabled","loading"],slots:["icon","iconRight"],tokenDepth:2,a11yDocs:"documented",edgeCases:["fullWidth","loading"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"}}},govuk:{name:"GOV.UK DS",url:"https://design-system.service.gov.uk/components/button/",components:{accordion:{variants:2,styles:1,sizes:1,states:["default","expanded"],slots:[],tokenDepth:1,a11yDocs:"tested",edgeCases:[],motionSpec:"none",darkMode:!1,responsive:!0,codeConnect:!1,maturity:"L2"},inputField:{variants:4,styles:1,sizes:1,states:["default","focused","error","disabled"],slots:[],tokenDepth:1,a11yDocs:"tested",edgeCases:["helperText","errorMessage","hint"],motionSpec:"none",darkMode:!1,responsive:!0,codeConnect:!1,maturity:"L2"},selectField:{variants:4,styles:1,sizes:1,states:["default","focused","error","disabled"],slots:["label"],tokenDepth:1,a11yDocs:"tested",edgeCases:["hint"],motionSpec:"none",darkMode:!1,responsive:!0,codeConnect:!1,maturity:"L2"},button:{variants:4,styles:3,sizes:1,states:["default","hover","active","focus","disabled"],slots:[],tokenDepth:1,a11yDocs:"tested",edgeCases:["loading"],motionSpec:"none",darkMode:!1,responsive:!0,codeConnect:!1,maturity:"L2"}}},primer:{name:"GitHub Primer",url:"https://primer.style/components/button",components:{accordion:{variants:4,styles:1,sizes:1,states:["default","expanded"],slots:[],tokenDepth:3,a11yDocs:"tested",edgeCases:[],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},checkbox:{variants:6,styles:1,sizes:2,states:["default","hover","focus","disabled"],slots:[],tokenDepth:3,a11yDocs:"tested",edgeCases:["indeterminate"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},inputField:{variants:8,styles:2,sizes:3,states:["default","focused","error","disabled"],slots:["leadingVisual","trailingAction"],tokenDepth:3,a11yDocs:"tested",edgeCases:["helperText","loading"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},selectField:{variants:6,styles:2,sizes:3,states:["default","focused","error","disabled"],slots:["label"],tokenDepth:3,a11yDocs:"tested",edgeCases:["searchable","multiSelect"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"},button:{variants:15,styles:5,sizes:3,states:["default","hover","active","focus","disabled","loading"],slots:["leadingVisual","trailingVisual","trailingAction"],tokenDepth:3,a11yDocs:"tested",edgeCases:["iconOnly","loading","inactive"],motionSpec:"basic",darkMode:!0,responsive:!1,codeConnect:!1,maturity:"L3"}}}},tier2:{uber:{name:"Uber Base",components:{inputField:{variants:6,styles:1,sizes:2,states:["default","focused","error","disabled"]},selectField:{variants:4,styles:1,sizes:2,states:["default","focused","error","disabled"]},labeledField:{variants:6,styles:1,sizes:2,states:["default","focused","error","disabled"]},recipientField:{variants:4,styles:1,sizes:1,states:["default","focused","error","disabled"]},accordion:{variants:2,styles:1,sizes:1,states:["default","expanded"]},avatar:{variants:6,styles:2,sizes:4,states:["default"]},checkbox:{variants:6,styles:1,sizes:1,states:["default","hover","focus","disabled"]},button:{variants:12,styles:4,sizes:3,states:["default","hover","pressed","disabled","loading"]}}},paste:{name:"Twilio Paste",components:{inputField:{variants:8,styles:2,sizes:2,states:["default","focused","error","disabled"]},selectField:{variants:6,styles:1,sizes:2,states:["default","focused","error","disabled"]},labeledField:{variants:8,styles:2,sizes:2,states:["default","focused","error","disabled"]},recipientField:{variants:4,styles:1,sizes:1,states:["default","focused","error","disabled"]},checkbox:{variants:6,styles:1,sizes:1,states:["default","hover","focus","disabled","error"]},accordion:{variants:4,styles:1,sizes:1,states:["default","expanded","disabled"]},avatar:{variants:6,styles:2,sizes:5,states:["default"]},button:{variants:18,styles:5,sizes:3,states:["default","hover","active","focus","disabled","loading"]}}},evo:{name:"eBay Evo",components:{inputField:{variants:6,styles:1,sizes:2,states:["default","focused","error","disabled"]},selectField:{variants:4,styles:1,sizes:2,states:["default","focused","error","disabled"]},checkbox:{variants:6,styles:1,sizes:1,states:["default","hover","focus","disabled"]},accordion:{variants:4,styles:1,sizes:1,states:["default","expanded","disabled"]},button:{variants:16,styles:4,sizes:3,states:["default","hover","active","focus","disabled"]}}},cloudscape:{name:"Amazon Cloudscape",components:{inputField:{variants:6,styles:2,sizes:2,states:["default","focused","error","disabled"]},selectField:{variants:6,styles:2,sizes:2,states:["default","focused","error","disabled"]},checkbox:{variants:6,styles:1,sizes:1,states:["default","hover","focus","disabled"]},accordion:{variants:4,styles:2,sizes:1,states:["default","expanded","disabled"]},avatar:{variants:4,styles:2,sizes:3,states:["default"]},button:{variants:10,styles:4,sizes:2,states:["default","hover","active","focus","disabled","loading"]}}},fiori:{name:"SAP Fiori",components:{inputField:{variants:8,styles:2,sizes:3,states:["default","focused","error","disabled","readOnly"]},selectField:{variants:6,styles:2,sizes:3,states:["default","focused","error","disabled"]},checkbox:{variants:6,styles:1,sizes:1,states:["default","hover","focus","disabled"]},accordion:{variants:4,styles:1,sizes:1,states:["default","expanded","disabled"]},avatar:{variants:8,styles:3,sizes:6,states:["default"]},button:{variants:16,styles:5,sizes:3,states:["default","hover","active","focus","disabled"]}}},patternfly:{name:"Red Hat PatternFly",components:{inputField:{variants:8,styles:1,sizes:2,states:["default","focused","error","disabled"]},selectField:{variants:6,styles:2,sizes:2,states:["default","focused","error","disabled"]},checkbox:{variants:6,styles:1,sizes:1,states:["default","hover","focus","disabled"]},accordion:{variants:4,styles:2,sizes:1,states:["default","expanded","disabled"]},avatar:{variants:4,styles:2,sizes:4,states:["default"]},button:{variants:20,styles:6,sizes:3,states:["default","hover","active","focus","disabled"]}}},vibe:{name:"Monday Vibe",components:{inputField:{variants:6,styles:1,sizes:3,states:["default","focused","error","disabled"]},selectField:{variants:4,styles:1,sizes:3,states:["default","focused","error","disabled"]},checkbox:{variants:6,styles:1,sizes:2,states:["default","hover","focus","disabled"]},accordion:{variants:2,styles:1,sizes:1,states:["default","expanded"]},avatar:{variants:6,styles:2,sizes:4,states:["default"]},button:{variants:12,styles:4,sizes:3,states:["default","hover","active","focus","disabled","loading"]}}},visa:{name:"Visa DS",components:{inputField:{variants:6,styles:1,sizes:2,states:["default","focused","error","disabled"]},selectField:{variants:4,styles:1,sizes:2,states:["default","focused","error","disabled"]},checkbox:{variants:4,styles:1,sizes:1,states:["default","hover","focus","disabled"]},button:{variants:10,styles:3,sizes:3,states:["default","hover","active","focus","disabled"]}}},elastic:{name:"Elastic DS",components:{inputField:{variants:6,styles:1,sizes:2,states:["default","focused","error","disabled"]},selectField:{variants:6,styles:2,sizes:2,states:["default","focused","error","disabled"]},checkbox:{variants:6,styles:1,sizes:1,states:["default","hover","focus","disabled"]},accordion:{variants:4,styles:1,sizes:1,states:["default","expanded"]},avatar:{variants:4,styles:2,sizes:3,states:["default"]},button:{variants:14,styles:5,sizes:3,states:["default","hover","active","focus","disabled"]}}},uswds:{name:"USWDS",components:{inputField:{variants:4,styles:1,sizes:1,states:["default","focused","error","disabled"]},selectField:{variants:4,styles:1,sizes:1,states:["default","focused","error","disabled"]},checkbox:{variants:4,styles:1,sizes:1,states:["default","hover","focus","disabled"]},accordion:{variants:2,styles:1,sizes:1,states:["default","expanded"]},button:{variants:10,styles:5,sizes:2,states:["default","hover","active","focus","disabled"]}}},druids:{name:"Datadog Druids",components:{button:{variants:12,styles:4,sizes:3,states:["default","hover","active","focus","disabled"]}}},tractie:{name:"NS Tractie",components:{button:{variants:8,styles:3,sizes:2,states:["default","hover","active","focus","disabled"]}}},helsinki:{name:"Helsinki DS",components:{button:{variants:10,styles:4,sizes:3,states:["default","hover","active","focus","disabled"]}}},ausgov:{name:"Australian Gov",components:{button:{variants:8,styles:3,sizes:2,states:["default","hover","active","focus","disabled"]}}},dell:{name:"Dell DS",components:{button:{variants:12,styles:4,sizes:3,states:["default","hover","active","focus","disabled"]}}}}};
+
+// Resize component dropdown to fit content
+function resizeCompSel(){const s=document.getElementById("compSel");if(!s)return;const t=document.createElement("span");t.style.cssText="position:absolute;visibility:hidden;white-space:nowrap;font-family:inherit;font-size:13px;font-weight:500";t.textContent=s.options[s.selectedIndex].text;document.body.appendChild(t);s.style.width=(t.offsetWidth+42)+"px";document.body.removeChild(t)}
+
+// STATE
+let sel=[];
+
+function rc(){const c=document.getElementById("chips");c.innerHTML=sel.map(i=>`<span style="display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:10px;font-size:12px;font-weight:500;background:rgba(255,255,255,.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.6);color:var(--tx);white-space:nowrap;box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 1px 3px rgba(0,0,0,.04)">${D.tier1[i].name}<span onclick="rm('${i}')" style="cursor:pointer;color:var(--tx3);font-size:10px;opacity:.35;transition:opacity .15s;margin-left:2px" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.35">&#x2715;</span></span>`).join("");const btn=document.getElementById("runBtn");btn.disabled=!sel.length;btn.style.opacity=sel.length?'1':'.4'}
+function rm(i){sel=sel.filter(c=>c!==i);rc()}
+function openMo(){const l=document.getElementById("mList");l.innerHTML=Object.entries(D.tier1).map(([i,s])=>{const se=sel.includes(i),di=!se&&sel.length>=4;return`<div onclick="tog('${i}')" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:5px;cursor:pointer;font-size:12px;transition:background .15s;${se?'background:var(--pri-lt);color:var(--pri)':''}${di?';opacity:.25;pointer-events:none':''}"><span style="flex:1">${s.name}</span><span style="font-size:10px;color:var(--tx3)">${se?"Selected":""}</span></div>`}).join("");document.getElementById("modal").style.display="flex"}
+function closeMo(){document.getElementById("modal").style.display="none";rc()}
+function tog(i){sel.includes(i)?sel=sel.filter(c=>c!==i):sel.length<4&&sel.push(i);openMo()}
+function getSelected(){return sel}
+function reset(){document.getElementById("results").style.display="none";document.getElementById("empty").style.display="block"}
+
+// UTILS
+function allData(c){const a=[];Object.values(D.tier1).forEach(s=>{s.components[c]&&a.push(s.components[c])});Object.values(D.tier2).forEach(s=>{s.components[c]&&a.push(s.components[c])});return a}
+function med(a){const s=[...a].sort((x,y)=>x-y),m=Math.floor(s.length/2);return s.length%2?s[m]:(s[m-1]+s[m])/2}
+function meds(c){const a=allData(c);return{variants:med(a.map(s=>s.variants)),styles:med(a.map(s=>s.styles)),sizes:med(a.map(s=>s.sizes)),stateCount:med(a.map(s=>s.states.length))}}
+function cmpClass(e,r){return e>r?"cmp-lead":e<r?"cmp-trail":"cmp-match"}
+
+// RUN
+function run(){
+  const c=document.getElementById("compSel").value;
+  const eb=D.eastblue[c];
+  if(!eb){alert("No East Blue data for this component");return}
+  const sel=getSelected().filter(id=>D.tier1[id].components&&D.tier1[id].components[c]);
+  if(!sel.length){alert("None of the selected systems have data for this component. Try different systems.");return}
+  const m=meds(c);
+  document.getElementById("empty").style.display="none";
+  document.getElementById("results").style.display="block";
+  renderGrid(c,eb,sel,m);
+  renderEdge(c,eb,sel,m);
+  renderMat(c,eb,sel);
+  renderFP(eb);
+  renderGap(c,eb,sel,m);
+  renderRec(c,eb,sel,m);
+}
+
+// S2b: Competitive Edge
+function renderEdge(c,eb,sel,m){
+  const refs=sel.map(id=>({id,name:D.tier1[id].name,data:D.tier1[id].components[c]}));
+  const edges=[];
+
+  // Variants
+  const refMax=Math.max(...refs.map(r=>r.data.variants));
+  if(eb.variants>=m.variants){
+    const beat=refs.filter(r=>eb.variants>r.data.variants);
+    const ratio=(eb.variants/m.variants).toFixed(1);
+    edges.push({metric:"Variants",value:eb.variants,lead:eb.variants>refMax,context:ratio+"x industry median ("+m.variants+")",vs:beat.length?("Leads "+beat.map(r=>r.name).join(", ")):"Matches top systems"});
+  }
+
+  // Styles
+  if(eb.styles>=m.styles){
+    const beat=refs.filter(r=>eb.styles>(r.data.styles||0));
+    edges.push({metric:"Style coverage",value:eb.styles+" styles",lead:eb.styles>Math.max(...refs.map(r=>r.data.styles||0)),context:"Median: "+m.styles,vs:beat.length?("More than "+beat.map(r=>r.name).join(", ")):"On par with compared systems"});
+  }
+
+  // Sizes
+  if(eb.sizes>=m.sizes){
+    const beat=refs.filter(r=>eb.sizes>(r.data.sizes||0));
+    edges.push({metric:"Size range",value:eb.sizes+" sizes",lead:eb.sizes>Math.max(...refs.map(r=>r.data.sizes||0)),context:"Median: "+m.sizes,vs:beat.length?("More than "+beat.map(r=>r.name).join(", ")):"Matches compared systems"});
+  }
+
+  // States
+  const ebSc=eb.states?eb.states.length:0;
+  if(ebSc>=m.stateCount){
+    const beat=refs.filter(r=>(r.data.states?r.data.states.length:0)<ebSc);
+    edges.push({metric:"Interaction states",value:ebSc+" states",lead:beat.length>=Math.ceil(refs.length/2),context:eb.states.join(", "),vs:beat.length?("More than "+beat.map(r=>r.name).join(", ")):"Matches compared systems"});
+  }
+
+  // Token depth
+  if(eb.tokenDepth>=2){
+    const topTokenSystems=refs.filter(r=>(r.data.tokenDepth||0)>=3);
+    if(eb.tokenDepth>=3) edges.push({metric:"Token depth",value:"Level "+eb.tokenDepth,lead:false,context:"Deep semantic tokens — same tier as Material 3, Carbon, Fluent",vs:"Highest level of token abstraction"});
+    else edges.push({metric:"Token depth",value:"Level "+eb.tokenDepth,lead:false,context:"Solid token coverage",vs:"Above baseline"});
+  }
+
+  // Slots
+  if(eb.slots&&eb.slots.length>0){
+    const slotless=refs.filter(r=>!r.data.slots||r.data.slots.length===0);
+    if(slotless.length>0) edges.push({metric:"Composable slots",value:eb.slots.length+" slots",lead:true,context:eb.slots.join(", "),vs:"More flexible than "+slotless.map(r=>r.name).join(", ")});
+  }
+
+  // Dark mode
+  if(eb.darkMode){
+    const noDark=refs.filter(r=>!r.data.darkMode);
+    if(noDark.length>0) edges.push({metric:"Dark mode",value:"Supported",lead:true,context:"Full dark theme via design tokens",vs:noDark.map(r=>r.name).join(", ")+" lack dark mode"});
+  }
+
+  // Edge cases
+  if(eb.edgeCases&&eb.edgeCases.length>0){
+    edges.push({metric:"Edge cases",value:eb.edgeCases.length+" covered",lead:false,context:eb.edgeCases.join(", "),vs:"Proactive coverage"});
+  }
+
+  let h="";
+  if(edges.length===0){
+    h='<div class="edge-empty">No leading metrics found for this component against the selected systems. Run the gap analysis below to find improvement areas.</div>';
+  } else {
+    h='<div class="edge-grid">';
+    edges.forEach(e=>{
+      const cls=e.lead?"lead":"match";
+      h+=`<div class="edge-card ${cls}"><div class="edge-metric">${e.metric}</div><div class="edge-value">${e.value}</div><div class="edge-context">${e.context}</div><div class="edge-vs">${e.vs}</div></div>`;
+    });
+    h+='</div>';
+  }
+  document.getElementById("edgeList").innerHTML=h;
+}
+
+// S2: Comparison Grid
+function renderGrid(c,eb,sel,m){
+  const refs=sel.map(id=>({id,...D.tier1[id].components[c],name:D.tier1[id].name}));
+  const cols=2+refs.length;
+  const tpl=`repeat(${cols}, 1fr)`;
+  const rows=[
+    {l:"Variants",v:s=>s.variants,n:1},{l:"Styles",v:s=>s.styles,n:1},{l:"Sizes",v:s=>s.sizes,n:1},
+    {l:"States",v:s=>s.states.length,n:1},
+    {l:"State list",v:s=>s.states.join(", "),t:1},
+    {l:"Slots",v:s=>s.slots?s.slots.join(", ")||"none":"—",t:1},
+    {l:"Token depth",v:s=>s.tokenDepth,n:1},
+    {l:"Edge cases",v:s=>s.edgeCases?s.edgeCases.join(", ")||"none":"none",t:1},
+    {l:"A11y docs",v:s=>s.a11yDocs,t:1},
+    {l:"Motion spec",v:s=>s.motionSpec,t:1},
+    {l:"Dark mode",v:s=>s.darkMode?"Yes":"No",t:1},
+    {l:"Code Connect",v:s=>s.codeConnect?"Yes":"No",t:1},
+  ];
+  let h=`<div class="cmp-row cmp-header" style="grid-template-columns:${tpl}"><div class="cmp-cell">Metric</div><div class="cmp-cell">East Blue</div>`;
+  refs.forEach(r=>h+=`<div class="cmp-cell">${r.name}</div>`);
+  h+=`</div>`;
+  rows.forEach(row=>{
+    h+=`<div class="cmp-row" style="grid-template-columns:${tpl}"><div class="cmp-cell">${row.l}</div>`;
+    const ebV=row.v(eb);
+    h+=`<div class="cmp-cell cmp-eb">${ebV}</div>`;
+    refs.forEach(r=>{
+      const rv=row.v(r);
+      if(row.n){h+=`<div class="cmp-cell ${cmpClass(ebV,rv)}">${rv}</div>`}
+      else{h+=`<div class="cmp-cell">${rv}</div>`}
+    });
+    h+=`</div>`;
+  });
+  // Median row
+  h+=`<div class="cmp-row" style="grid-template-columns:${tpl};background:var(--bg2)"><div class="cmp-cell" style="font-weight:500">Industry median</div><div class="cmp-cell"></div>`;
+  refs.forEach(()=>h+=`<div class="cmp-cell"></div>`);
+  h=h.replace(`<div class="cmp-cell"></div>`+`<div class="cmp-cell"></div>`.repeat(refs.length),
+    `<div class="cmp-cell" style="grid-column:2/-1;text-align:left;color:var(--tx3);font-size:12px">Variants: ${m.variants} · Styles: ${m.styles} · Sizes: ${m.sizes} · States: ${m.stateCount}</div>`);
+  h+=`</div>`;
+  document.getElementById("cmpGrid").innerHTML=h;
+}
+
+// S3: Maturity
+function renderMat(c,eb,sel){
+  const lv={L1:["Functional","l1"],L2:["Reliable","l2"],L3:["Scalable","l3"],L4:["Industry-grade","l4"]};
+
+  function matReason(d,name){
+    const s=d.styles||0,sz=d.sizes||0,st=d.states?d.states.length:0,td=d.tokenDepth||0,ec=d.edgeCases?d.edgeCases.length:0,cc=d.codeConnect||false,ms=d.motionSpec||"none",a11y=d.a11yDocs||"none",dm=d.darkMode||false;
+    if(d.maturity==="L4"){
+      const reasons=[];
+      if(cc)reasons.push("has Code Connect");
+      if(ms==="full")reasons.push("full motion specs");
+      if(a11y==="tested")reasons.push("a11y tested");
+      if(dm)reasons.push("dark mode");
+      return reasons.length?reasons.join(", ")+". Covers all C1–C7 criteria with cross-platform code.":"Passes all C1–C7 with cross-platform parity.";
+    }
+    if(d.maturity==="L3"){
+      const has=[];
+      if(s>=3)has.push(s+" styles");
+      if(sz>=3)has.push(sz+" sizes");
+      if(td>=2)has.push("token depth "+td);
+      if(dm)has.push("dark mode");
+      const miss=[];
+      if(!cc)miss.push("no Code Connect");
+      if(ms==="none")miss.push("no motion spec");
+      if(ec===0)miss.push("no edge cases");
+      return(has.length?has.join(", ")+". ":"")+(miss.length?"Missing: "+miss.join(", ")+".":"");
+    }
+    if(d.maturity==="L2"){
+      const has=[];
+      if(st>=4)has.push(st+" states");
+      if(td>=1)has.push("has tokens");
+      if(s>=2)has.push(s+" styles");
+      const miss=[];
+      if(s<3)miss.push("fewer than 3 styles");
+      if(sz<3)miss.push("only "+sz+" size"+(sz>1?"s":""));
+      if(!dm)miss.push("no dark mode");
+      return(has.length?has.join(", ")+". ":"")+(miss.length?"Held back by: "+miss.join(", ")+".":"");
+    }
+    // L1
+    const miss=[];
+    if(s<2)miss.push("only "+s+" style"+(s>1?"s":""));
+    if(sz<2)miss.push(sz+" size"+(sz>1?"s":""));
+    if(st<4)miss.push(st+" states");
+    if(td<1)miss.push("no tokens");
+    return"Works in one context. "+(miss.length?"Held back by: "+miss.join(", ")+".":"");
+  }
+
+  function card(sys,d,mat){
+    const l=lv[mat];
+    return`<div class="mat-card ${l[1]}"><div class="mat-sys">${sys}</div><div class="mat-level">${mat}</div><div class="mat-name">${l[0]}</div><div class="mat-reason">${matReason(d,sys)}</div></div>`;
+  }
+
+  let h=card("East Blue",eb,eb.maturity);
+  sel.forEach(id=>{
+    const r=D.tier1[id].components[c];
+    h+=card(D.tier1[id].name,r,r.maturity);
+  });
+
+  // Industry median
+  const a=allData(c),ms=a.map(s=>s.maturity?parseInt(s.maturity.replace("L","")):2),mm=Math.round(med(ms)),mk="L"+mm;
+  const medReasons={
+    L1:"Most systems in the industry are at a basic functional level for this component.",
+    L2:"The typical system has proper states and basic tokens, but limited styles and sizes.",
+    L3:"The typical system has 3+ styles, composable slots, and multi-theme support.",
+    L4:"Most systems have reached cross-platform parity with full documentation."
+  };
+  h+=`<div class="mat-card ${lv[mk][1]}"><div class="mat-sys">Industry median</div><div class="mat-level">${mk}</div><div class="mat-name">${lv[mk][0]}</div><div class="mat-reason">${medReasons[mk]}</div></div>`;
+
+  document.getElementById("matRow").innerHTML=h;
+}
+
+// S4: Future-Proof
+function renderFP(eb){
+  const ps=[{k:"tokenAbstraction",n:"Token abstraction"},{k:"apiStability",n:"API stability"},{k:"variantExtensibility",n:"Variant extensibility"},{k:"layoutDecoupling",n:"Layout decoupling"},{k:"compositionIsolation",n:"Composition isolation"},{k:"migrationPath",n:"Migration path"}];
+  const fp=eb.futureProof,av=ps.reduce((s,p)=>s+fp[p.k],0)/ps.length;
+  let h="";
+  ps.forEach(p=>{const v=fp[p.k],pct=(v/3)*100,co=v>=3?"var(--grn)":v>=2?"var(--pri)":"var(--amb)";
+    h+=`<div class="pillar"><div class="pillar-name">${p.n}</div><div class="pillar-score" style="color:${co}">${v}/3</div><div class="pillar-bar"><div class="pillar-fill" style="width:${pct}%;background:${co}"></div></div></div>`});
+  document.getElementById("pillarRow").innerHTML=h;
+  const co=av>=2?"var(--grn)":av>=1.5?"var(--amb)":"var(--red)";
+  const tx=av>=2?"Passes — survives a rebrand with token changes only":av>=1.5?"Close — needs some manual fixes after token swap":"Below threshold — needs structural rebuild";
+  document.getElementById("thresholdBar").innerHTML=`Average: <strong style="color:${co}">${av.toFixed(1)} / 3.0</strong> · ${tx}`;
+}
+
+// S5: Gap Analysis — Radar Chart
+function renderGap(c,eb,selIds,m){
+  const COLORS={eb:"#0033B8",median:"#C0C4CC"};
+  const REF_COLORS=["#E45B30","#1AA86C","#8B5CF6","#E6A817"];
+  const refs=selIds.map((id,i)=>({id,name:D.tier1[id].name,data:D.tier1[id].components[c],color:REF_COLORS[i]}));
+
+  const metrics=[
+    {l:"Variants",get:s=>s.variants,med:m.variants},
+    {l:"Styles",get:s=>s.styles,med:m.styles},
+    {l:"Sizes",get:s=>s.sizes,med:m.sizes},
+    {l:"States",get:s=>s.states?s.states.length:0,med:m.stateCount},
+    {l:"Edge Cases",get:s=>s.edgeCases?s.edgeCases.length:0,med:2},
+    {l:"Token Depth",get:s=>s.tokenDepth||0,med:2},
+  ];
+  const N=metrics.length;
+
+  // Find max per metric for normalization (each axis 0-10 scale)
+  const maxPerMetric=metrics.map(mt=>{
+    let mx=Math.max(mt.get(eb),mt.med);
+    refs.forEach(r=>mx=Math.max(mx,mt.get(r.data)));
+    return mx||1;
+  });
+
+  // SVG setup
+  const W=560,H=500,CX=W/2,CY=H/2+10,R=180;
+  const RINGS=5;
+  const angleStep=(2*Math.PI)/N;
+  const startAngle=-Math.PI/2; // top
+
+  function pol(cx,cy,r,angle){return[cx+r*Math.cos(angle),cy+r*Math.sin(angle)]}
+  function polyPoints(values){
+    return values.map((v,i)=>{
+      const norm=v/maxPerMetric[i];
+      const clamp=Math.min(norm,1);
+      const angle=startAngle+i*angleStep;
+      const [x,y]=pol(CX,CY,R*clamp,angle);
+      return `${x},${y}`;
+    }).join(" ");
+  }
+
+  let svg=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">`;
+
+  // Grid rings
+  for(let r=1;r<=RINGS;r++){
+    const ringR=R*(r/RINGS);
+    let pts="";
+    for(let i=0;i<N;i++){const a=startAngle+i*angleStep;const[x,y]=pol(CX,CY,ringR,a);pts+=`${x},${y} `}
+    svg+=`<polygon points="${pts}" fill="none" stroke="#E8EAEE" stroke-width="${r===RINGS?1.5:0.8}"/>`;
+  }
+
+  // Ring scale labels
+  for(let r=1;r<=RINGS;r++){
+    const ringR=R*(r/RINGS);
+    const val=Math.round((r/RINGS)*10);
+    svg+=`<text x="${CX+4}" y="${CY-ringR+4}" font-size="9" fill="#B0B4BC" font-family="Google Sans">${val}</text>`;
+  }
+
+  // Axis lines + labels
+  for(let i=0;i<N;i++){
+    const angle=startAngle+i*angleStep;
+    const[lx,ly]=pol(CX,CY,R,angle);
+    svg+=`<line x1="${CX}" y1="${CY}" x2="${lx}" y2="${ly}" stroke="#E8EAEE" stroke-width="0.8"/>`;
+    // Label
+    const[tx,ty]=pol(CX,CY,R+24,angle);
+    const anchor=Math.abs(Math.cos(angle))<0.1?"middle":Math.cos(angle)>0?"start":"end";
+    const dy=Math.sin(angle)>0.3?14:Math.sin(angle)<-0.3?-4:5;
+    svg+=`<text x="${tx}" y="${ty+dy}" font-size="12" fill="#5A6270" font-family="Google Sans" font-weight="500" text-anchor="${anchor}">${metrics[i].l}</text>`;
+  }
+
+  // Median polygon (dashed, gray fill)
+  const medVals=metrics.map((mt,i)=>(mt.med/maxPerMetric[i])*maxPerMetric[i]);
+  svg+=`<polygon points="${polyPoints(medVals)}" fill="${COLORS.median}" fill-opacity="0.12" stroke="${COLORS.median}" stroke-width="1.5" stroke-dasharray="6,4"/>`;
+
+  // Ref system polygons
+  refs.forEach(r=>{
+    const vals=metrics.map(mt=>mt.get(r.data));
+    svg+=`<polygon points="${polyPoints(vals)}" fill="${r.color}" fill-opacity="0.06" stroke="${r.color}" stroke-width="2"/>`;
+    // Dots
+    vals.forEach((v,i)=>{
+      const norm=Math.min(v/maxPerMetric[i],1);
+      const angle=startAngle+i*angleStep;
+      const[x,y]=pol(CX,CY,R*norm,angle);
+      svg+=`<circle cx="${x}" cy="${y}" r="3.5" fill="${r.color}" stroke="#fff" stroke-width="1.5"/>`;
+    });
+  });
+
+  // East Blue polygon (on top)
+  const ebVals=metrics.map(mt=>mt.get(eb));
+  svg+=`<polygon points="${polyPoints(ebVals)}" fill="${COLORS.eb}" fill-opacity="0.1" stroke="${COLORS.eb}" stroke-width="2.5"/>`;
+  // East Blue dots
+  ebVals.forEach((v,i)=>{
+    const norm=Math.min(v/maxPerMetric[i],1);
+    const angle=startAngle+i*angleStep;
+    const[x,y]=pol(CX,CY,R*norm,angle);
+    svg+=`<circle cx="${x}" cy="${y}" r="4" fill="${COLORS.eb}" stroke="#fff" stroke-width="2"/>`;
+  });
+
+  svg+=`</svg>`;
+
+  // Legend
+  let legend=`<div class="gap-legend">`;
+  legend+=`<div class="gap-legend-item"><div class="gap-legend-swatch" style="background:${COLORS.eb}"></div>East Blue</div>`;
+  refs.forEach(r=>legend+=`<div class="gap-legend-item"><div class="gap-legend-swatch" style="background:${r.color}"></div>${r.name}</div>`);
+  legend+=`<div class="gap-legend-item"><div class="gap-legend-swatch line" style="background:${COLORS.median};border:1px dashed ${COLORS.median}"></div>Industry median</div>`;
+  legend+=`</div>`;
+
+  // Score table below radar
+  let table=`<div style="margin-top:24px;width:100%;max-width:600px"><table style="width:100%;border-collapse:collapse;font-size:12px">`;
+  table+=`<tr style="border-bottom:1px solid var(--bd)"><td style="padding:6px 8px;font-weight:500;color:var(--tx3);font-size:10px;text-transform:uppercase">Metric</td><td style="padding:6px 8px;font-weight:500;color:var(--pri);font-size:10px;text-transform:uppercase">East Blue</td>`;
+  refs.forEach(r=>table+=`<td style="padding:6px 8px;font-weight:500;color:${r.color};font-size:10px;text-transform:uppercase">${r.name}</td>`);
+  table+=`<td style="padding:6px 8px;font-weight:500;color:var(--tx3);font-size:10px;text-transform:uppercase">Median</td></tr>`;
+  metrics.forEach((mt,i)=>{
+    const ebV=mt.get(eb);
+    table+=`<tr style="border-bottom:1px solid var(--bd2)"><td style="padding:6px 8px;color:var(--tx2)">${mt.l}</td><td style="padding:6px 8px;font-weight:500">${ebV}</td>`;
+    refs.forEach(r=>table+=`<td style="padding:6px 8px;color:${ebV>=mt.get(r.data)?'var(--grn)':'var(--red)'}">${mt.get(r.data)}</td>`);
+    table+=`<td style="padding:6px 8px;color:var(--tx3)">${mt.med}</td></tr>`;
+  });
+  table+=`</table></div>`;
+
+  document.getElementById("gapBars").innerHTML=`<div class="gap-radar-wrap">${svg}</div>${legend}${table}`;
+}
+
+// S6: Recommendations
+function renderRec(c,eb,sel,m){
+  const rs=sel.map(i=>({id:i,...D.tier1[i].components[c],name:D.tier1[i].name,url:D.tier1[i].url}));
+  const recs=[];
+
+  if(eb.edgeCases.length===0){const withEc=rs.filter(r=>r.edgeCases&&r.edgeCases.length>0);const allEc=[...new Set(rs.flatMap(r=>r.edgeCases||[]))];const best=rs.reduce((a,b)=>(b.edgeCases||[]).length>(a.edgeCases||[]).length?b:a,rs[0]);
+    recs.push({pri:"must",title:"Add edge case variants",body:`You have 0 edge cases. ${withEc.length} out of ${rs.length} systems you compared have them. Edge cases show what happens when things go wrong — like a super long label that doesn't fit, or a button with only an icon and no text. GCash uses Tagalog which makes labels much longer than English. You need to show how the button handles that.`,ref:best.name,url:best.url,effort:"medium",metric:"Edge cases"});}
+
+  if(eb.styles<m.styles){const best=rs.reduce((a,b)=>b.styles>a.styles?b:a,rs[0]);const missing=Math.ceil(m.styles)-eb.styles;
+    recs.push({pri:missing>=2?"must":"should",title:`Add ${missing} more button style${missing>1?"s":""}`,body:`You have ${eb.styles} styles. Most systems have ${m.styles}. ${best.name} has ${best.styles}. Right now you only have filled, outlined, and text. Think about adding a tonal style (softer than filled, good for secondary actions) or a ghost style (just text, no background, good for toolbars).`,ref:best.name,url:best.url,effort:"medium",metric:"Styles"});}
+
+  const ebSc=eb.states.length;
+  if(ebSc<m.stateCount){const allStates=[...new Set(rs.flatMap(r=>r.states))].filter(s=>!eb.states.includes(s));const best=rs.reduce((a,b)=>b.states.length>a.states.length?b:a,rs[0]);
+    recs.push({pri:"should",title:`Add missing states: ${allStates.slice(0,3).join(", ")}`,body:`You have ${ebSc} states. Most systems have ${Math.round(m.stateCount)}. You're missing: ${allStates.join(", ")}. A "hover" state shows what happens when someone moves their cursor over the button. A "selected" state shows the button is currently active.`,ref:best.name,url:best.url,effort:"low",metric:"States"});}
+
+  if(eb.motionSpec==="none"){const wm=rs.filter(r=>r.motionSpec!=="none");if(wm.length>=Math.ceil(rs.length/2)){const best=rs.find(r=>r.motionSpec==="full")||wm[0];
+    recs.push({pri:"should",title:"Add motion specs",body:`You have no animation specs. ${wm.length} out of ${rs.length} compared systems do. Motion specs tell developers exactly how fast a button should animate when pressed (e.g. 150ms ease-out) so all buttons feel the same across the app.`,ref:best.name,url:best.url,effort:"low",metric:"Motion"});}else{
+    recs.push({pri:"could",title:"Consider adding motion specs",body:`Only ${wm.length} out of ${rs.length} compared systems have these. Not urgent, but nice to have. It tells developers the exact timing and easing for button press animations.`,ref:wm.length?wm[0].name:"—",url:wm.length?wm[0].url:"",effort:"low",metric:"Motion"});}}
+
+  if(!eb.codeConnect){const wc=rs.filter(r=>r.codeConnect);if(wc.length>0){
+    recs.push({pri:wc.length>=3?"should":"could",title:"Set up Code Connect",body:`You don't have Code Connect yet. ${wc.length} compared system${wc.length>1?"s":""} (${wc.map(r=>r.name).join(", ")}) do. Code Connect links your Figma component directly to real code — when a developer inspects the button in Figma, they see the actual code snippet instead of CSS properties.`,ref:wc[0].name,url:wc[0].url,effort:"medium",metric:"Code Connect"});}}
+
+  if(eb.a11yDocs==="documented"){const t=rs.filter(r=>r.a11yDocs==="tested");if(t.length>=3){
+    recs.push({pri:"could",title:"Test accessibility with real tools",body:`You've written down the accessibility rules, which is good. But ${t.length} out of ${rs.length} compared systems have actually tested them using screen readers (VoiceOver, TalkBack). "Documented" means you wrote it. "Tested" means you proved it works. Do this after your native components ship.`,ref:t[0].name,url:t[0].url,effort:"high",metric:"Accessibility"});}}
+
+  const fp=eb.futureProof;
+  if(fp.layoutDecoupling<3){recs.push({pri:"could",title:"Make layout token-driven",body:`Score: ${fp.layoutDecoupling}/3. Right now your button heights are fixed numbers (50px, 36px, etc.). If you change them to use min-height + padding instead, the button can grow when the text is bigger and shrink when it's smaller — without you having to update every variant by hand.`,ref:"IBM Carbon",url:"https://carbondesignsystem.com/components/button/style/",effort:"high",metric:"Future-proof"});}
+  if(fp.apiStability<3){recs.push({pri:"could",title:"Consider renaming API to be intent-based",body:`Score: ${fp.apiStability}/3. Right now your API says .filled and .outlined — those are visual names. If GCash rebrands and "filled" becomes "elevated," the API name is wrong. Intent-based names like .primary or .prominence(.high) don't break when the look changes. Only do this if a rebrand is coming soon.`,ref:"—",url:"",effort:"high",metric:"Future-proof"});}
+
+  if(eb.sizes>=m.sizes){const fewer=rs.filter(r=>r.sizes<eb.sizes);if(fewer.length>0){
+    recs.push({pri:"skip",title:"Sizes are already strong — no changes needed",body:`You have ${eb.sizes} sizes. Most systems only have ${m.sizes}. ${fewer.length} out of ${rs.length} compared systems have fewer than you. Your L/M/S/XS lineup covers everything from hero CTAs to compact toolbar buttons. You're good here.`,ref:"—",url:"",effort:"n/a",metric:"Sizes"});}}
+
+  if(eb.variants>m.variants*1.5){recs.push({pri:"skip",title:"Variant count is a strength — no changes needed",body:`You have ${eb.variants} variants. Most systems have ${m.variants}. That's more than 3x the industry average. This means your button covers way more combinations than most design systems. Nothing to add here.`,ref:"—",url:"",effort:"n/a",metric:"Variants"});}
+
+  const priOrder={must:0,should:1,could:2,skip:3};
+  recs.sort((a,b)=>priOrder[a.pri]-priOrder[b.pri]);
+
+  let h=`<div class="rec-count">${recs.length} recommendations</div>`;
+  const main=recs[0];
+  if(main){h+=`<div class="rec-main"><div class="rec-main-label">Top priority</div><div class="rec-main-title">${main.title}</div><div class="rec-main-body">${main.body}</div>`;
+    if(main.ref&&main.ref!=="—")h+=`<a class="rec-main-ref" href="${main.url}" target="_blank">Reference: ${main.ref} &#x2197;</a>`;h+=`</div>`;}
+
+  const groups={must:[],should:[],could:[],skip:[]};
+  recs.slice(1).forEach(r=>groups[r.pri].push(r));
+  const labels={must:"Must fix",should:"Should improve",could:"Could enhance",skip:"No action needed"};
+  Object.entries(groups).forEach(([pri,items])=>{if(!items.length)return;
+    h+=`<div class="rec-group"><div class="rec-group-h ${pri}">${labels[pri]} (${items.length})</div>`;
+    items.forEach(r=>{h+=`<div class="rec-item"><div class="rec-bullet ${pri}"></div><div><div class="rec-item-title">${r.title}</div><div class="rec-item-desc">${r.body}</div>`;
+      if(r.ref&&r.ref!=="—")h+=`<a class="rec-item-ref" href="${r.url}" target="_blank">Reference: ${r.ref} &#x2197;</a>`;
+      h+=`<div class="rec-item-meta"><span>Effort: ${r.effort}</span><span>Metric: ${r.metric}</span></div></div></div>`});
+    h+=`</div>`});
+  document.getElementById("recList").innerHTML=h;
+}
+
+rc();
+resizeCompSel();
+</script>
+</body>
+</html>
