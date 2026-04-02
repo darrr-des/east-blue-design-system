@@ -246,9 +246,9 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | Checkbox | `17143:2464` | 33 | Keep | Refine | C7 |
 | **Form Elements** | | | | | |
 | Input Field | `17758:3687` | 8 | Keep | Refine | C7 |
-| Labeled Field | `17758:3713` | 8 | Fix | Refine | C6, C7 |
-| Select Field | `17758:3786` | 8 | Fix | Refine | C6, C7 |
-| Recipient Field | `17758:3867` | 8 | Fix | Refine | C6, C7 |
+| Labeled Field | `17758:3713` | 8 | Keep | Refine | C7 |
+| Select Field | `17758:3786` | 8 | Keep | Refine | C7 |
+| Recipient Field | `17758:3867` | 8 | Keep | Refine | C7 |
 
 ---
 

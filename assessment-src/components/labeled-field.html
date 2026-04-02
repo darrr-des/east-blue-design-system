@@ -7,12 +7,12 @@
 <!--@meta-start-->
 status: assessed
 node: 17758:3713
-ds-verdict: fix
+ds-verdict: keep
 native-status: refine
 variants: 8
 ios: EBLabeledField
 android: EBLabeledField
-open-issues: C6,C7
+open-issues: C7
 <!--@meta-end-->
 
 <!--@patterns-start-->
@@ -239,12 +239,12 @@ open-issues: C6,C7
       <li><span><code>isFilled</code> renamed from <code>Yes/No</code> to <code>true/false</code> — now maps directly to Swift <code>Bool</code> / Kotlin <code>Boolean</code> <span class="tag-fixed">C2 Fixed</span></span></li>
       <li><span>Property <code>state</code> renamed to <code>State</code> (capitalized) — consistent with sibling Form Elements fields <span class="tag-fixed">C2 Fixed</span></span></li>
       <li><span><code>Button - XSmall</code> layer renamed to <code>action-button</code> — now a semantic slot name for flexible consumer customization <span class="tag-fixed">C1 Fixed</span></span></li>
+      <li><span>Trailing icon uses shared Placeholder component instance — swappable by design. Internal RECTANGLE is the default visual, replaced by designers when consuming the component <span class="tag-fixed">C6 Closed</span></span></li>
     </ul>
 
     <!-- Open Issues -->
     <div class="sub-heading" id="lf-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span><code>trailing-icon</code> uses <code>icon-placeholder</code> RECTANGLE — not a swappable icon instance, blocking icon override at the consumer level <span class="tag-open">C6</span></span></li>
       <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
     </ul>
 

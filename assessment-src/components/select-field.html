@@ -7,17 +7,15 @@
 <!--@meta-start-->
 status: assessed
 node: 17758:3786
-ds-verdict: fix
+ds-verdict: keep
 native-status: refine
 variants: 8
 ios: EBSelectField
 android: EBSelectField
-open-issues: C6,C7
+open-issues: C7
 <!--@meta-end-->
 
 <!--@patterns-start-->
-[C6] Peso Sign uses shape_full BOOLEAN_OPERATION — should be a vector, not a boolean op
-[C6] Flag uses IMAGE fill (raster) — may need vector alternative for scalability
 <!--@patterns-end-->
 
 <!--@nav-group-start-->Form Elements<!--@nav-group-end-->
@@ -235,13 +233,13 @@ open-issues: C6,C7
     <div class="sub-heading" id="sf-resolved">Resolved Issues</div>
     <ul class="resolved-list">
       <li><span><code>isFilled</code> renamed from <code>Yes/No</code> to <code>true/false</code> for direct Swift <code>Bool</code> / Kotlin <code>Boolean</code> mapping <span class="tag-fixed">C2 Fixed</span></span></li>
+      <li><span>Peso Sign <code>shape_full</code> BOOLEAN_OPERATION flattened to a single vector path across all 8 variants <span class="tag-fixed">C6 Fixed</span></span></li>
+      <li><span>Field Trailing Flag replaced from raster IMAGE fill to vector SVG across all 8 variants <span class="tag-fixed">C6 Fixed</span></span></li>
     </ul>
 
     <!-- Open Issues -->
     <div class="sub-heading" id="sf-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Peso Sign uses <code>shape_full</code> BOOLEAN_OPERATION — should be a flat vector for reliable rendering across platforms <span class="tag-open">C6</span></span></li>
-      <li><span>Field Trailing Flag uses IMAGE fill (raster) — may need a vector alternative for scalability on high-density screens <span class="tag-open">C6</span></span></li>
       <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
     </ul>
 

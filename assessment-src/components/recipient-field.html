@@ -7,12 +7,12 @@
 <!--@meta-start-->
 status: assessed
 node: 17758:3867
-ds-verdict: fix
+ds-verdict: keep
 native-status: refine
 variants: 8
 ios: EBRecipientField
 android: EBRecipientField
-open-issues: C6,C7
+open-issues: C7
 <!--@meta-end-->
 
 <!--@patterns-start-->
@@ -235,12 +235,12 @@ open-issues: C6,C7
     <ul class="resolved-list">
       <li><span><code>isFilled</code> property renamed from <code>Yes/No</code> to <code>true/false</code> — now maps directly to Swift <code>Bool</code> / Kotlin <code>Boolean</code> <span class="tag-fixed">C2 Fixed</span></span></li>
       <li><span>Text layer renamed from <code>#text-placeholder</code> to <code>#value</code> — now consistent with sibling fields (Input Field, Labeled Field) <span class="tag-fixed">C1 Fixed</span></span></li>
+      <li><span>Both trailing icons use shared Placeholder component instances — swappable by design. Internal RECTANGLE is the default visual, replaced by designers when consuming the component <span class="tag-fixed">C6 Closed</span></span></li>
     </ul>
 
     <!-- Open Issues -->
     <div class="sub-heading" id="rf-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Both trailing icons use <code>icon-placeholder</code> RECTANGLE (cornerRadius 41, fill #C2C6CF) — not swappable icon instances. Developers cannot substitute real icons without editing the component <span class="tag-open">C6</span></span></li>
       <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
     </ul>
 

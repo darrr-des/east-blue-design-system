@@ -212,8 +212,6 @@ Confirmed recurring patterns across the GCash DS. Use as a checklist during ever
 | C6 | Raster backgrounds on 5 initials variants replaced with vector ELLIPSE layers — RESOLVED | Avatar |
 | C6 | trailing-icon uses icon-placeholder RECTANGLE — not a swappable icon instance | Labeled Field |
 | C6 | Trailing icons use icon-placeholder RECTANGLE instead of swappable icon instances | Recipient Field |
-| C6 | Peso Sign uses shape_full BOOLEAN_OPERATION — should be a vector, not a boolean op | Select Field |
-| C6 | Flag uses IMAGE fill (raster) — may need vector alternative for scalability | Select Field |
 <!-- @@DISCOVERED_PATTERNS_END@@ -->
 
 ---
@@ -455,9 +453,9 @@ Key conventions:
 | Button | `17104:184842` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Checkbox | `17143:2464` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Input Field | `17758:3687` | Fix | Needs Refinement | 🔁 Re-assessing | — |
-| Labeled Field | `17758:3713` | Fix | Needs Refinement | 🔁 Re-assessing | — |
-| Recipient Field | `17758:3867` | Fix | Needs Refinement | 🔁 Re-assessing | — |
-| Select Field | `17758:3786` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Labeled Field | `17758:3713` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Recipient Field | `17758:3867` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Select Field | `17758:3786` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 <!-- @@PROGRESS_TABLE_END@@ -->
 
 ### Open Issues
