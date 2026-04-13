@@ -402,6 +402,19 @@ body,.sidebar,.main,.sidebar-brand,.sidebar-footer,.table-wrap,.how-card,.dep-ca
         <div class="pattern-item"><strong>Incomplete state matrix</strong> — Every sub-type should cover all relevant states.</div>
       </div>
 
+      <div class="sub-heading">Figma Modes vs Component Properties (C2, C7)</div>
+      <div class="infobox">
+        <p><strong>Figma Modes are invisible in developer handoff.</strong> When a component uses Variable Collection Modes (e.g. Button's Appearance: Default / Destructive / White / Subtle), developers inspecting via Dev Mode or MCP see only the resolved CSS variable values — not the Mode itself.</p>
+        <p>A developer inspecting a Destructive Button sees <code>background: var(--main/button/primary/destructive/enabled/bg)</code>, but does <strong>not</strong> see that the Button has 4 appearances, that "Appearance" is a Mode not a property, or how to switch between them in their native API.</p>
+      </div>
+      <div class="pattern-group">
+        <div class="pattern-item"><strong>Why this matters</strong> — Code Connect requires Mode → API parameter translation that must be written manually. A developer missing this context would only implement one appearance and not realize others exist.</div>
+        <div class="pattern-item"><strong>Use Mode when</strong> — Appearance swap is global (dark theme, brand skin); variable reuse matters more than variant explosion; developers configure appearance at theme level.</div>
+        <div class="pattern-item"><strong>Use Property when</strong> — Appearance is a per-instance choice (destructive, emphasis level); each appearance needs its own instance visible; developers configure appearance inline per call site.</div>
+        <div class="pattern-item"><strong>Recommendation</strong> — For component-level appearance variants (destructive, outline, text, subtle), prefer <strong>component properties</strong> over Modes. Makes the variant matrix explicit in Figma, visible in dev handoff, and directly mappable to native API parameters without manual translation.</div>
+        <div class="pattern-item"><strong>If Mode must stay</strong> — Document the Mode → API mapping explicitly in the component's Code tab, including every Mode value and its SwiftUI modifier / Compose parameter. Without this doc, the appearance layer is silently lost in handoff.</div>
+      </div>
+
       <div class="sub-heading">Known Good Patterns</div>
       <div class="infobox infobox-good">
         <p><strong>Semantic color tokens</strong> — <code>main/{component}/color/{state}/{role}</code> is consistent.</p>

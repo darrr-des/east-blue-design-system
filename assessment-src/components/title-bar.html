@@ -1,0 +1,1092 @@
+<!--
+  TITLE BAR COMPONENT ASSESSMENT
+  Edit this file to update the Title Bar assessment.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 23:175148
+ds-verdict: keep
+native-status: refine
+variants: 20
+ios: NavigationBar / custom UINavigationBar
+android: TopAppBar (Material 3)
+open-issues: C2, C6, C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] Boolean properties use yes/no instead of true/false — blocks direct Swift Bool / Kotlin Boolean mapping
+[C6] Trailing icon uses icon-placeholder RECTANGLE instead of swappable icon instance — blocks native icon slot
+<!--@patterns-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-title-bar" onclick="showPanel('title-bar', this)">
+  <div class="nav-comp-icon">
+    <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="4" width="28" height="10" rx="2" fill="#1972F9"/>
+      <path d="M6 9l2-2 2 2" stroke="#FFF" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" transform="rotate(180 8 9)"/>
+      <text x="16" y="10.5" text-anchor="middle" fill="white" font-size="4" font-weight="600" font-family="system-ui">Title</text>
+      <circle cx="25" cy="9" r="2" stroke="#FFF" stroke-width="0.8" fill="none"/>
+      <rect x="2" y="16" width="28" height="8" rx="2" fill="#1972F9" opacity=".5"/>
+      <text x="6" y="21.5" fill="white" font-size="5" font-weight="600" font-family="system-ui">Header</text>
+    </svg>
+  </div>
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Title Bar</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('title-bar')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="4" y="4" width="72" height="16" rx="2" fill="#1972F9" opacity=".8"/>
+      <path d="M10 12l3-3 3 3" stroke="#FFF" stroke-width="1" stroke-linecap="round" transform="rotate(180 13 11)"/>
+      <text x="40" y="13" text-anchor="middle" fill="white" font-size="5" font-weight="600" font-family="system-ui">Title</text>
+      <circle cx="67" cy="12" r="3" stroke="#FFF" stroke-width="0.8" fill="none"/>
+      <rect x="4" y="22" width="72" height="12" rx="2" fill="#1972F9" opacity=".4"/>
+      <text x="10" y="30" fill="white" font-size="6" font-weight="600" font-family="system-ui">Header</text>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Title Bar</div>
+    </div>
+    <div class="summary-card-desc">20 variants across 5 boolean properties. App navigation title bar with optional leading/trailing icons, subtext, control, and title block. C2, C6 open.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Title Bar</strong></td>
+  <td><span class="badge badge-ready">Ready</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">20</td>
+  <td class="muted">App navigation title bar. 5 boolean properties (yes/no). C2 (boolean naming), C6 (placeholder icon) open.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-title-bar">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <!-- Back -->
+    <button class="back-btn" onclick="navigateComponents({target:this})">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Components
+    </button>
+
+    <!-- Component header -->
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Title Bar
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=23-175148" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">An app-level navigation title bar used at the top of every screen. Includes an iOS status bar stub (44px), a centered title row with optional leading icon (back arrow), trailing icon, leading control ("Done" text), subtext (URL), and an optional title block for large headers. 20 variants across 5 boolean properties. Background is brand blue (#1972F9), all text and icons white.</p>
+      </div>
+    </div>
+
+    <!-- Tab bar -->
+    <div data-tab-group="title-bar-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'title-bar-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'title-bar-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'title-bar-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'title-bar-tabs')">Changelog</button>
+    </div>
+
+    <!-- ══ Tab: Overview ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <!-- In Context -->
+    <div class="sub-heading" id="tb-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Contexts are illustrative. Final screens will reference actual GCash patterns.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+          <rect x="10" y="8" width="100" height="64" rx="8" stroke="currentColor" stroke-width="1.2" opacity=".15"/>
+          <!-- Title bar -->
+          <rect x="10" y="8" width="100" height="18" rx="4" fill="#1972F9" opacity=".6"/>
+          <path d="M18 17l3-3 3 3" stroke="#FFF" stroke-width="1" stroke-linecap="round" transform="rotate(180 21 16)"/>
+          <text x="60" y="19" text-anchor="middle" fill="white" font-size="5" font-weight="600" font-family="system-ui">Send Money</text>
+          <!-- Content below -->
+          <rect x="18" y="32" width="84" height="10" rx="2" stroke="currentColor" stroke-width="0.8" opacity=".1"/>
+          <rect x="22" y="35" width="40" height="3" rx="1.5" fill="currentColor" opacity=".1"/>
+          <rect x="18" y="48" width="84" height="10" rx="2" stroke="currentColor" stroke-width="0.8" opacity=".1"/>
+          <rect x="22" y="51" width="50" height="3" rx="1.5" fill="currentColor" opacity=".1"/>
+          <rect x="18" y="64" width="84" height="6" rx="3" fill="currentColor" opacity=".08"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Live Preview -->
+    <div class="sub-heading" id="tb-preview">Live Preview</div>
+    <p class="section-desc">Toggle properties to see the title bar update in real time.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="tb-demo-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leading icon</span>
+              <select class="demo-panel-select" id="tb-demo-leadingIcon" onchange="updateTitleBarDemo()">
+                <option value="no">no</option>
+                <option value="yes" selected>yes</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">trailing icon</span>
+              <select class="demo-panel-select" id="tb-demo-trailingIcon" onchange="updateTitleBarDemo()">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leading control</span>
+              <select class="demo-panel-select" id="tb-demo-leadingControl" onchange="updateTitleBarDemo()">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">subtext</span>
+              <select class="demo-panel-select" id="tb-demo-subtext" onchange="updateTitleBarDemo()">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">title block</span>
+              <select class="demo-panel-select" id="tb-demo-titleBlock" onchange="updateTitleBarDemo()">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DS Health -->
+    <div class="sub-heading" id="tb-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Reusable</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Navigation title bar used across every screen in the app. Boolean property toggles cover all common configurations: back arrow, trailing action, subtext URL, CTA control, and large header block.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Self-contained</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Carries its own status bar stub, title row, icon slots, subtext, and optional header block. Background color and all text/icon colors are token-bound. No external dependencies.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header">
+          <div class="trait-name">Consistent</div>
+          <div class="trait-status">Partial</div>
+        </div>
+        <div class="trait-note">Boolean properties use <code>yes/no</code> instead of <code>true/false</code> (C2). <code>leading control</code> only available when <code>leading icon=yes</code> and <code>trailing icon=no</code> -- implicit dependency not expressed in property schema.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Composable</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Fits as the top element on any screen. Nests below the system status bar. Content area sits directly below the title bar. Title block expands naturally when toggled on.</div>
+      </div>
+    </div>
+
+    <!-- Behavior -->
+    <div class="sub-heading" id="tb-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+            <th>Figma Property</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Default</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">5 boolean properties</td>
+            <td class="muted">Navigation bar. No interaction states beyond tap targets on icons and control text.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-footnote">Title Bar is a navigation container. Interaction states (pressed, focused) apply to the individual tap targets (leading icon, trailing icon, leading control) rather than the bar itself. These states are not represented as separate variants in the component.</p>
+
+    <!-- Open Issues -->
+    <div class="sub-heading" id="tb-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span>Boolean properties (<code>leading icon</code>, <code>trailing icon</code>, <code>leading control</code>, <code>subtext</code>, <code>title block</code>) use <code>yes/no</code> instead of <code>true/false</code> -- incompatible with Swift <code>Bool</code> and Kotlin <code>Boolean</code> <span class="tag-open">C2</span></span></li>
+      <li><span>Trailing icon uses <code>icon-placeholder</code> RECTANGLE (24x24) instead of a swappable icon instance -- blocks native icon slot mapping <span class="tag-open">C6</span></span></li>
+      <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
+    </ul>
+
+    <!-- Design Recommendations -->
+    <div class="sub-heading" id="tb-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span>Rename boolean properties from <code>yes/no</code> to <code>true/false</code> for direct native boolean mapping <span class="tag-recommend">Suggested</span></span></li>
+      <li><span>Replace trailing icon <code>icon-placeholder</code> RECTANGLE with a swappable icon instance from the DS icon library (e.g. more/ellipsis, share, search) <span class="tag-recommend">Suggested</span></span></li>
+      <li><span>Make <code>leading control</code> dependency explicit -- consider a separate property or document that it requires <code>leading icon=yes</code> and <code>trailing icon=no</code> <span class="tag-recommend">Suggested</span></span></li>
+      <li><span>Consider adding a dark/transparent variant for screens with hero images or gradient backgrounds <span class="tag-recommend">Suggested</span></span></li>
+      <li><span>Add <code>showAsset</code> property documentation -- currently only available when <code>title block=yes</code>; its purpose (background image) should be explicitly described in the component spec <span class="tag-recommend">Suggested</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ══ Tab: Style ═════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="tb-styles" style="margin-top:0">Configurations</div>
+    <p class="section-desc">20 variants across 2 structural configurations: Standard (no title block, 10 variants) and With Title Block (titleBlock=yes, 10 variants). Each configuration has the same 10 boolean property combinations for leading icon, trailing icon, leading control, and subtext.</p>
+
+    <!-- ═══ Standard ═══ -->
+    <div class="spec-card" id="tb-spec-standard">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="tb-standard">Standard</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="23:175149" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>23:175149</span></button>
+          <div class="spec-mode-toggle" onclick="toggleTbSpecMode('tb-standard', this)"><span class="spec-mode-label active">DES</span><span class="spec-mode-label">DEV</span></div>
+        </div>
+        <p class="spec-card-desc">Standard title bar without title block. Status bar (44px) + title row with optional icons, control, and subtext. Height ranges from 84px to 100px depending on subtext.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="tb-spec-standard-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leading icon</span>
+              <select class="demo-panel-select" onchange="updateTbSpecCard('standard', 'leadingIcon', this.value)">
+                <option value="no">no</option>
+                <option value="yes" selected>yes</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">trailing icon</span>
+              <select class="demo-panel-select" onchange="updateTbSpecCard('standard', 'trailingIcon', this.value)">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leading control</span>
+              <select class="demo-panel-select" onchange="updateTbSpecCard('standard', 'leadingControl', this.value)">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">subtext</span>
+              <select class="demo-panel-select" onchange="updateTbSpecCard('standard', 'subtext', this.value)">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card-detail spec-view-des" data-view="tb-standard-des">
+        <div class="spec-detail-section" id="tb-spec-standard-props">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">leading icon</span><span class="spec-prop-val" data-sp="tb-standard-leadingIcon">yes</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">trailing icon</span><span class="spec-prop-val" data-sp="tb-standard-trailingIcon">no</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">leading control</span><span class="spec-prop-val" data-sp="tb-standard-leadingControl">no</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">subtext</span><span class="spec-prop-val" data-sp="tb-standard-subtext">no</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">title block</span><span class="spec-prop-val">no</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" id="tb-spec-standard-colors"><!-- filled by JS --></div>
+        <div class="spec-detail-section" id="tb-spec-standard-layout"><!-- filled by JS --></div>
+        <div class="spec-detail-section" id="tb-spec-standard-typo"><!-- filled by JS --></div>
+      </div>
+      <div class="spec-card-detail spec-card-code" data-view="tb-standard-dev" style="display:none">
+        <div class="spec-code-tabs">
+          <button class="spec-code-tab active" onclick="switchTbCodeTab(this, 'swift', 'standard')">SWIFTUI</button>
+          <button class="spec-code-tab" onclick="switchTbCodeTab(this, 'compose', 'standard')">COMPOSE</button>
+        </div>
+        <pre class="spec-code-block"><code id="tb-code-standard" data-code-content="tb-standard" data-final=""><!-- filled by JS --></code></pre>
+      </div>
+    </div>
+
+    <!-- ═══ With Title Block ═══ -->
+    <div class="spec-card" id="tb-spec-titleblock">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="tb-titleblock">With Title Block</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="23:175159" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>23:175159</span></button>
+          <div class="spec-mode-toggle" onclick="toggleTbSpecMode('tb-titleblock', this)"><span class="spec-mode-label active">DES</span><span class="spec-mode-label">DEV</span></div>
+        </div>
+        <p class="spec-card-desc">Title bar with expanded header block (72px) below the title row. Used for screens with prominent section headers. Adds "Header" text at 26px Semibold.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="tb-spec-titleblock-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leading icon</span>
+              <select class="demo-panel-select" onchange="updateTbSpecCard('titleblock', 'leadingIcon', this.value)">
+                <option value="no">no</option>
+                <option value="yes" selected>yes</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">trailing icon</span>
+              <select class="demo-panel-select" onchange="updateTbSpecCard('titleblock', 'trailingIcon', this.value)">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leading control</span>
+              <select class="demo-panel-select" onchange="updateTbSpecCard('titleblock', 'leadingControl', this.value)">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">subtext</span>
+              <select class="demo-panel-select" onchange="updateTbSpecCard('titleblock', 'subtext', this.value)">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card-detail spec-view-des" data-view="tb-titleblock-des">
+        <div class="spec-detail-section" id="tb-spec-titleblock-props">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">leading icon</span><span class="spec-prop-val" data-sp="tb-titleblock-leadingIcon">yes</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">trailing icon</span><span class="spec-prop-val" data-sp="tb-titleblock-trailingIcon">no</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">leading control</span><span class="spec-prop-val" data-sp="tb-titleblock-leadingControl">no</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">subtext</span><span class="spec-prop-val" data-sp="tb-titleblock-subtext">no</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">title block</span><span class="spec-prop-val">yes</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" id="tb-spec-titleblock-colors"><!-- filled by JS --></div>
+        <div class="spec-detail-section" id="tb-spec-titleblock-layout"><!-- filled by JS --></div>
+        <div class="spec-detail-section" id="tb-spec-titleblock-typo"><!-- filled by JS --></div>
+      </div>
+      <div class="spec-card-detail spec-card-code" data-view="tb-titleblock-dev" style="display:none">
+        <div class="spec-code-tabs">
+          <button class="spec-code-tab active" onclick="switchTbCodeTab(this, 'swift', 'titleblock')">SWIFTUI</button>
+          <button class="spec-code-tab" onclick="switchTbCodeTab(this, 'compose', 'titleblock')">COMPOSE</button>
+        </div>
+        <pre class="spec-code-block"><code id="tb-code-titleblock" data-code-content="tb-titleblock" data-final=""><!-- filled by JS --></code></pre>
+      </div>
+    </div>
+
+    <!-- Colors by State -->
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <p class="style-colors-desc">Single color scheme -- no appearance modes. All colors bound to <code>main/title-bar/color/</code> tokens. Display/navigation component with no state-driven color changes.</p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Role</th><th>Token</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Background</td><td class="mono">main/title-bar/color/bg</td><td class="mono">#1972F9</td></tr>
+          <tr><td class="muted">Title label</td><td class="mono">main/title-bar/color/label-title</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Header label</td><td class="mono">main/title-bar/color/label-header</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Subtext / URL</td><td class="mono">main/title-bar/color/label-url</td><td class="mono">#F6F9FDCC <span class="muted">(80% opacity)</span></td></tr>
+          <tr><td class="muted">CTA text</td><td class="mono">main/title-bar/color/label-cta</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Icon</td><td class="mono">main/title-bar/color/icon</td><td class="mono">#FFFFFF</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Layout -->
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Property</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Status bar height</td><td class="mono">44px</td></tr>
+          <tr><td class="muted">Title row padding H</td><td class="mono">20px</td></tr>
+          <tr><td class="muted">Title row padding V</td><td class="mono">12px</td></tr>
+          <tr><td class="muted">Leading icon size</td><td class="mono">24 x 24</td></tr>
+          <tr><td class="muted">Trailing icon size</td><td class="mono">24 x 24</td></tr>
+          <tr><td class="muted">Title block height</td><td class="mono">72px</td></tr>
+          <tr><td class="muted">Title block padding H</td><td class="mono">24px</td></tr>
+          <tr><td class="muted">Total height (no subtext, no block)</td><td class="mono">~84px</td></tr>
+          <tr><td class="muted">Total height (with subtext, no block)</td><td class="mono">~100px</td></tr>
+          <tr><td class="muted">Total height (with block)</td><td class="mono">~156--172px</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="style-colors">
+      <div class="style-colors-title">Typography</div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>Text Style</th><th>Font</th><th>Size</th><th>Tracking</th><th>Line-height</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Title</td><td class="mono">Primary/Label/Light/Base</td><td class="mono">Proxima Soft Semibold</td><td class="mono">16px</td><td class="mono">0.25px</td><td class="mono">16px</td></tr>
+          <tr><td class="muted">Subtext</td><td class="mono">Primary/Label/Light/Fine</td><td class="mono">Proxima Soft Semibold</td><td class="mono">12px</td><td class="mono">0.5px</td><td class="mono">12px</td></tr>
+          <tr><td class="muted">Header</td><td class="mono">Primary/Headlines/Light/Area</td><td class="mono">Proxima Soft Semibold</td><td class="mono">26px</td><td class="mono">0.85px</td><td class="mono">31px</td></tr>
+          <tr><td class="muted">CTA (control)</td><td class="mono">Primary/Label/Light/Small</td><td class="mono">Proxima Soft Semibold</td><td class="mono">14px</td><td class="mono">0.25px</td><td class="mono">14px</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- ══ Tab: Code ══════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <!-- Installation -->
+    <div class="sub-heading" id="tb-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS -- Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File -> Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android -- Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:titlebar:1.0.0"</span>)
+}</pre>
+    </div>
+    <p class="code-label">Import</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="kw">import</span> EastBlueDS  <span class="cmt">// SwiftUI</span>
+<span class="kw">import</span> com.eastblue.ds.titlebar.*  <span class="cmt">// Compose</span></pre>
+    </div>
+    <p class="table-footnote">Package not yet published. These are the planned distribution paths.</p>
+
+    <!-- Property Mapping -->
+    <div class="sub-heading" id="tb-props">Property Mapping</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Figma Property</th>
+            <th>SwiftUI</th>
+            <th>Compose</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">leading icon (yes/no)</td>
+            <td class="mono">.ebLeadingIcon(Image?)</td>
+            <td class="mono">leadingIcon: @Composable (() -> Unit)?</td>
+            <td class="muted">Back arrow, optional</td>
+          </tr>
+          <tr>
+            <td class="mono">trailing icon (yes/no)</td>
+            <td class="mono">.ebTrailingIcon(Image?)</td>
+            <td class="mono">trailingIcon: @Composable (() -> Unit)?</td>
+            <td class="muted">Action icon, optional</td>
+          </tr>
+          <tr>
+            <td class="mono">leading control (yes/no)</td>
+            <td class="mono">.ebLeadingControl("Done")</td>
+            <td class="mono">leadingControlText: String?</td>
+            <td class="muted">CTA text, replaces trailing icon</td>
+          </tr>
+          <tr>
+            <td class="mono">subtext (yes/no)</td>
+            <td class="mono">.ebSubtext("m.gcash.com")</td>
+            <td class="mono">subtext: String?</td>
+            <td class="muted">URL or secondary text below title</td>
+          </tr>
+          <tr>
+            <td class="mono">title block (yes/no)</td>
+            <td class="mono">.ebTitleBlock("Header")</td>
+            <td class="mono">titleBlock: String?</td>
+            <td class="muted">Large header below title row</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/TitleBar/EBTitleBar.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/titlebar/EBTitleBar.kt</div>
+    </div>
+
+    <!-- Usage Snippets -->
+    <div class="sub-heading" id="tb-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+
+    <div class="sub-heading toc-child" id="tb-snip-basic">Basic (title only)</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'tb-usage-basic','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'tb-usage-basic','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBTitleBar</span>(<span class="str">"Send Money"</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBTitleBar</span>(
+    <span class="prp">title</span> = <span class="str">"Send Money"</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="tb-snip-back">With back arrow</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'tb-usage-back','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'tb-usage-back','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBTitleBar</span>(<span class="str">"Send Money"</span>)
+    .<span class="fn">ebLeadingIcon</span>(<span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"arrow.left"</span>))</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBTitleBar</span>(
+    <span class="prp">title</span> = <span class="str">"Send Money"</span>,
+    <span class="prp">leadingIcon</span> = { <span class="typ">Icon</span>(<span class="typ">Icons</span>.<span class="prp">Default</span>.<span class="prp">ArrowBack</span>, <span class="str">"Back"</span>) }
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="tb-snip-full">Full configuration</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'tb-usage-full','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'tb-usage-full','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBTitleBar</span>(<span class="str">"GCash"</span>)
+    .<span class="fn">ebLeadingIcon</span>(<span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"arrow.left"</span>))
+    .<span class="fn">ebTrailingIcon</span>(<span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"ellipsis"</span>))
+    .<span class="fn">ebSubtext</span>(<span class="str">"m.gcash.com"</span>)
+    .<span class="fn">ebTitleBlock</span>(<span class="str">"My Wallet"</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBTitleBar</span>(
+    <span class="prp">title</span> = <span class="str">"GCash"</span>,
+    <span class="prp">leadingIcon</span> = { <span class="typ">Icon</span>(<span class="typ">Icons</span>.<span class="prp">Default</span>.<span class="prp">ArrowBack</span>, <span class="str">"Back"</span>) },
+    <span class="prp">trailingIcon</span> = { <span class="typ">Icon</span>(<span class="typ">Icons</span>.<span class="prp">Default</span>.<span class="prp">MoreVert</span>, <span class="str">"More"</span>) },
+    <span class="prp">subtext</span> = <span class="str">"m.gcash.com"</span>,
+    <span class="prp">titleBlock</span> = <span class="str">"My Wallet"</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="tb-snip-control">With leading control</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'tb-usage-ctrl','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'tb-usage-ctrl','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBTitleBar</span>(<span class="str">"Edit Profile"</span>)
+    .<span class="fn">ebLeadingIcon</span>(<span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"arrow.left"</span>))
+    .<span class="fn">ebLeadingControl</span>(<span class="str">"Done"</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBTitleBar</span>(
+    <span class="prp">title</span> = <span class="str">"Edit Profile"</span>,
+    <span class="prp">leadingIcon</span> = { <span class="typ">Icon</span>(<span class="typ">Icons</span>.<span class="prp">Default</span>.<span class="prp">ArrowBack</span>, <span class="str">"Back"</span>) },
+    <span class="prp">leadingControlText</span> = <span class="str">"Done"</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <!-- Accessibility -->
+    <div class="sub-heading" id="tb-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Requirement</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Minimum touch target</td>
+            <td class="center muted">44 x 44 pt (icons and control)</td>
+            <td class="center muted">48 x 48 dp (icons and control)</td>
+          </tr>
+          <tr>
+            <td>Back button label</td>
+            <td class="muted"><code>.accessibilityLabel("Back")</code></td>
+            <td class="muted"><code>contentDescription = "Navigate back"</code></td>
+          </tr>
+          <tr>
+            <td>Trailing icon label</td>
+            <td class="muted"><code>.accessibilityLabel("More options")</code></td>
+            <td class="muted"><code>contentDescription = "More options"</code></td>
+          </tr>
+          <tr>
+            <td>Heading semantics</td>
+            <td class="muted"><code>.accessibilityAddTraits(.isHeader)</code> on title</td>
+            <td class="muted"><code>semantics { heading() }</code> on title</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Usage Guidelines -->
+    <div class="sub-heading" id="tb-guidelines">Usage Guidelines</div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use EBTitleBar as the top-level navigation element on every screen. Keep the title short and descriptive.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Nest a title bar inside scrollable content or use it as a section header within a page -- use a section heading component instead.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use the title block for high-level section headers like "My Wallet" or "Dashboard" where the large text reinforces the current context.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Show both trailing icon and leading control simultaneously -- they occupy the same trailing slot. Use one or the other.</p></div>
+    </div>
+
+    <!-- Criteria Scorecard -->
+    <div class="sub-heading" id="tb-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">ID</th>
+            <th class="col-md">Criterion</th>
+            <th class="col-badge">Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Semantic layer names: <code>title</code>, <code>Title Bar</code>, <code>title-block</code>, <code>Leading Icon</code>, <code>Placeholder</code>.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">All 5 boolean properties use <code>yes/no</code> instead of <code>true/false</code>. <code>leading control</code> has implicit dependency on other properties.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All 6 color roles bound to <code>main/title-bar/color/</code> tokens.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Maps to <code>NavigationBar</code> (iOS) / <code>TopAppBar</code> (Android, Material 3).</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Navigation bar -- no interaction states needed beyond individual tap targets on icons and control.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Trailing icon uses <code>icon-placeholder</code> RECTANGLE instead of a swappable icon instance.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">No CLI mappings registered yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Code Connect -->
+    <div class="sub-heading" id="tb-cc">Code Connect</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Aspect</th><th class="col-badge">Status</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Property naming</td><td><span class="badge badge-refine">Needs Fix</span></td><td class="muted">All booleans use <code>yes/no</code> -- must be renamed to <code>true/false</code> before Code Connect mapping</td></tr>
+          <tr><td>Asset quality</td><td><span class="badge badge-refine">Needs Fix</span></td><td class="muted">Trailing icon placeholder RECTANGLE needs replacement with icon instance</td></tr>
+          <tr><td>State coverage</td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Navigation bar -- no interaction states needed</td></tr>
+          <tr><td>Native component file</td><td><span class="badge badge-refine">Pending</span></td><td class="muted">EBTitleBar.swift / EBTitleBar.kt not yet created</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Variants Inventory -->
+    <div class="sub-heading" id="tb-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(20 total)</span></div>
+    <p class="section-desc">5 boolean properties with implicit constraints yield 20 distinct variants: 10 without title block + 10 with title block.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>leading icon</th><th>trailing icon</th><th>leading control</th><th>subtext</th><th>title block</th><th>Node ID</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>no</td><td>no</td><td>no</td><td>no</td><td>no</td><td class="mono">23:175149</td></tr>
+          <tr><td>no</td><td>no</td><td>no</td><td>yes</td><td>no</td><td class="mono">23:175365</td></tr>
+          <tr><td>no</td><td>yes</td><td>no</td><td>no</td><td>no</td><td class="mono">23:175415</td></tr>
+          <tr><td>no</td><td>yes</td><td>no</td><td>yes</td><td>no</td><td class="mono">23:175427</td></tr>
+          <tr><td>yes</td><td>yes</td><td>no</td><td>no</td><td>no</td><td class="mono">23:175377</td></tr>
+          <tr><td>yes</td><td>yes</td><td>no</td><td>yes</td><td>no</td><td class="mono">23:175389</td></tr>
+          <tr><td>yes</td><td>no</td><td>no</td><td>no</td><td>no</td><td class="mono">23:175487</td></tr>
+          <tr><td>yes</td><td>no</td><td>no</td><td>yes</td><td>no</td><td class="mono">23:175499</td></tr>
+          <tr><td>yes</td><td>no</td><td>yes</td><td>no</td><td>no</td><td class="mono">23:175449</td></tr>
+          <tr><td>yes</td><td>no</td><td>yes</td><td>yes</td><td>no</td><td class="mono">23:175461</td></tr>
+          <tr><td>no</td><td>no</td><td>no</td><td>no</td><td>yes</td><td class="mono">23:175159</td></tr>
+          <tr><td>no</td><td>no</td><td>no</td><td>yes</td><td>yes</td><td class="mono">23:175169</td></tr>
+          <tr><td>no</td><td>yes</td><td>no</td><td>no</td><td>yes</td><td class="mono">23:175179</td></tr>
+          <tr><td>no</td><td>yes</td><td>no</td><td>yes</td><td>yes</td><td class="mono">23:175189</td></tr>
+          <tr><td>yes</td><td>yes</td><td>no</td><td>no</td><td>yes</td><td class="mono">23:175199</td></tr>
+          <tr><td>yes</td><td>yes</td><td>no</td><td>yes</td><td>yes</td><td class="mono">23:175209</td></tr>
+          <tr><td>yes</td><td>no</td><td>no</td><td>no</td><td>yes</td><td class="mono">23:175219</td></tr>
+          <tr><td>yes</td><td>no</td><td>no</td><td>yes</td><td>yes</td><td class="mono">23:175229</td></tr>
+          <tr><td>yes</td><td>no</td><td>yes</td><td>no</td><td>yes</td><td class="mono">23:175239</td></tr>
+          <tr><td>yes</td><td>no</td><td>yes</td><td>yes</td><td>yes</td><td class="mono">23:175249</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- ══ Tab: Changelog ═════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+
+    <div class="sub-heading" id="tb-v100">1.0.0 -- April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment -- node 23:175148</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Component assessed</strong> -- 20 variants documented across 5 boolean properties: leading icon, trailing icon, leading control, subtext, title block. App navigation title bar with brand blue background and white text/icons. All colors bound to <code>main/title-bar/color/</code> tokens.
+          <span class="tag-fixed">Documented</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Initial</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Boolean properties use yes/no</strong> -- All 5 boolean properties (<code>leading icon</code>, <code>trailing icon</code>, <code>leading control</code>, <code>subtext</code>, <code>title block</code>) use <code>yes/no</code> instead of <code>true/false</code>. Incompatible with Swift <code>Bool</code> and Kotlin <code>Boolean</code> for Code Connect mapping.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C2 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Trailing icon uses placeholder RECTANGLE</strong> -- <code>icon-placeholder</code> is a 24x24 RECTANGLE instead of a swappable icon instance from the DS icon library. Blocks native icon slot mapping.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C6 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Code Connect mappings</strong> -- No CLI mappings registered yet. Blocked by C2 (boolean naming) and C6 (placeholder icon).
+          <span class="tag-open tag-c7">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C7 Open</span>
+      </div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <!-- On This Page -->
+  <aside class="page-toc" id="toc-title-bar">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-title-bar"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Title Bar Component JS ──────────────────────────────────────────── */
+
+/* ── HTML-based preview builder ────────────────────────────────────── */
+function _tbBuildHtml(opts) {
+  var leadIcon = opts.leadingIcon === 'yes';
+  var trailIcon = opts.trailingIcon === 'yes';
+  var leadCtrl = opts.leadingControl === 'yes';
+  var subtext = opts.subtext === 'yes';
+  var titleBlock = opts.titleBlock === 'yes';
+
+  var bg = '#1972F9';
+  var w = 360;
+
+  /* Heights */
+  var statusH = 44;
+  var titleRowH = subtext ? 56 : 40;
+  var blockH = titleBlock ? 72 : 0;
+  var totalH = statusH + titleRowH + blockH;
+
+  var h = '';
+  h += '<div style="width:' + w + 'px;max-width:100%;background:' + bg + ';border-radius:4px;overflow:hidden;font-family:Proxima Soft,system-ui,sans-serif;color:#FFF;">';
+
+  /* ── Status bar ── */
+  h += '<div style="height:' + statusH + 'px;display:flex;align-items:flex-end;padding:0 20px 8px;justify-content:space-between;font-size:12px;font-weight:600;">';
+  h += '<span>9:41</span>';
+  h += '<span style="display:flex;gap:4px;align-items:center;">';
+  /* signal bars */
+  h += '<svg width="16" height="12" viewBox="0 0 16 12"><rect x="0" y="8" width="3" height="4" rx="0.5" fill="#FFF"/><rect x="4" y="5" width="3" height="7" rx="0.5" fill="#FFF"/><rect x="8" y="2" width="3" height="10" rx="0.5" fill="#FFF"/><rect x="12" y="0" width="3" height="12" rx="0.5" fill="#FFF"/></svg>';
+  /* wifi */
+  h += '<svg width="14" height="12" viewBox="0 0 14 12"><path d="M7 10.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z" fill="#FFF" transform="translate(0,-2)"/><path d="M3.5 7.5C4.8 6.2 5.9 5.5 7 5.5s2.2.7 3.5 2" stroke="#FFF" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M1 4.5C3 2.5 5 1.5 7 1.5s4 1 6 3" stroke="#FFF" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>';
+  /* battery */
+  h += '<svg width="22" height="12" viewBox="0 0 22 12"><rect x="0" y="1" width="19" height="10" rx="2" stroke="#FFF" stroke-width="1" fill="none"/><rect x="2" y="3" width="15" height="6" rx="1" fill="#FFF"/><rect x="20" y="4" width="2" height="4" rx="0.5" fill="#FFF"/></svg>';
+  h += '</span>';
+  h += '</div>';
+
+  /* ── Title row ── */
+  h += '<div style="display:flex;align-items:' + (subtext ? 'flex-start' : 'center') + ';padding:12px 20px;position:relative;min-height:' + (titleRowH - 24) + 'px;">';
+
+  /* Leading icon */
+  if (leadIcon) {
+    h += '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-right:12px;' + (subtext ? 'margin-top:2px;' : '') + '"><path d="M15 18l-6-6 6-6" stroke="#FFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  }
+
+  /* Center title area */
+  h += '<div style="flex:1;text-align:center;">';
+  h += '<div style="font-size:16px;font-weight:600;letter-spacing:0.25px;line-height:16px;">Title</div>';
+  if (subtext) {
+    h += '<div style="font-size:12px;font-weight:600;letter-spacing:0.5px;line-height:12px;opacity:0.8;margin-top:6px;">m.gcash.com</div>';
+  }
+  h += '</div>';
+
+  /* Trailing icon or leading control */
+  if (trailIcon && !leadCtrl) {
+    h += '<div style="width:24px;height:24px;border-radius:12px;border:2px solid rgba(255,255,255,0.6);flex-shrink:0;margin-left:12px;' + (subtext ? 'margin-top:2px;' : '') + '"></div>';
+  } else if (leadCtrl) {
+    h += '<span style="font-size:14px;font-weight:600;letter-spacing:0.25px;flex-shrink:0;margin-left:12px;' + (subtext ? 'margin-top:2px;' : '') + '">Done</span>';
+  }
+
+  h += '</div>';
+
+  /* ── Title block ── */
+  if (titleBlock) {
+    h += '<div style="height:' + blockH + 'px;padding:0 24px;display:flex;align-items:center;">';
+    h += '<div style="font-size:26px;font-weight:600;letter-spacing:0.85px;line-height:31px;">Header</div>';
+    h += '</div>';
+  }
+
+  h += '</div>';
+  return h;
+}
+
+/* ── Live Preview Demo ─────────────────────────────────────────── */
+function updateTitleBarDemo() {
+  var opts = {
+    leadingIcon: document.getElementById('tb-demo-leadingIcon').value,
+    trailingIcon: document.getElementById('tb-demo-trailingIcon').value,
+    leadingControl: document.getElementById('tb-demo-leadingControl').value,
+    subtext: document.getElementById('tb-demo-subtext').value,
+    titleBlock: document.getElementById('tb-demo-titleBlock').value
+  };
+  var el = document.getElementById('tb-demo-preview');
+  if (el) el.innerHTML = _tbBuildHtml(opts);
+}
+
+/* ── Spec Card State ──────────────────────────────────────────── */
+var _tbSpecCards = {
+  'standard': { leadingIcon: 'yes', trailingIcon: 'no', leadingControl: 'no', subtext: 'no', titleBlock: 'no' },
+  'titleblock': { leadingIcon: 'yes', trailingIcon: 'no', leadingControl: 'no', subtext: 'no', titleBlock: 'yes' }
+};
+
+function updateTbSpecCard(cardType, prop, value) {
+  var card = _tbSpecCards[cardType];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview */
+  var previewEl = document.getElementById('tb-spec-' + cardType + '-preview');
+  if (previewEl) previewEl.innerHTML = _tbBuildHtml(card);
+
+  /* Update property labels */
+  var props = ['leadingIcon', 'trailingIcon', 'leadingControl', 'subtext'];
+  props.forEach(function(p) {
+    var sp = document.querySelector('[data-sp="tb-' + cardType + '-' + p + '"]');
+    if (sp) sp.textContent = card[p];
+  });
+
+  /* Update colors section */
+  var colorsEl = document.getElementById('tb-spec-' + cardType + '-colors');
+  if (colorsEl) {
+    var ch = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
+    ch += '<div class="spec-prop"><span class="spec-prop-key">Background</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#1972F9"></span> #1972F9<span class="spec-token-name">main/title-bar/color/bg</span></span></div>';
+    ch += '<div class="spec-prop"><span class="spec-prop-key">Title</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#FFFFFF;border:1px solid #E2E4E9"></span> #FFFFFF<span class="spec-token-name">main/title-bar/color/label-title</span></span></div>';
+    if (card.subtext === 'yes') {
+      ch += '<div class="spec-prop"><span class="spec-prop-key">Subtext</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:rgba(246,249,253,0.8);border:1px solid #E2E4E9"></span> #F6F9FDCC<span class="spec-token-name">main/title-bar/color/label-url</span></span></div>';
+    }
+    if (card.leadingIcon === 'yes' || card.trailingIcon === 'yes') {
+      ch += '<div class="spec-prop"><span class="spec-prop-key">Icon</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#FFFFFF;border:1px solid #E2E4E9"></span> #FFFFFF<span class="spec-token-name">main/title-bar/color/icon</span></span></div>';
+    }
+    if (card.leadingControl === 'yes') {
+      ch += '<div class="spec-prop"><span class="spec-prop-key">CTA text</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#FFFFFF;border:1px solid #E2E4E9"></span> #FFFFFF<span class="spec-token-name">main/title-bar/color/label-cta</span></span></div>';
+    }
+    if (card.titleBlock === 'yes') {
+      ch += '<div class="spec-prop"><span class="spec-prop-key">Header</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:#FFFFFF;border:1px solid #E2E4E9"></span> #FFFFFF<span class="spec-token-name">main/title-bar/color/label-header</span></span></div>';
+    }
+    ch += '</div>';
+    colorsEl.innerHTML = ch;
+  }
+
+  /* Update layout section */
+  var layoutEl = document.getElementById('tb-spec-' + cardType + '-layout');
+  if (layoutEl) {
+    var hasSubtext = card.subtext === 'yes';
+    var hasTB = card.titleBlock === 'yes';
+    var titleRowH = hasSubtext ? 56 : 40;
+    var totalH = 44 + titleRowH + (hasTB ? 72 : 0);
+
+    var lh = '<div class="spec-detail-label">Layout</div><div class="spec-props">';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Total height</span><span class="spec-prop-val mono">~' + totalH + 'px</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Status bar</span><span class="spec-prop-val mono">44px</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Title row padding</span><span class="spec-prop-val mono">12px V / 20px H</span></div>';
+    if (card.leadingIcon === 'yes') {
+      lh += '<div class="spec-prop"><span class="spec-prop-key">Leading icon</span><span class="spec-prop-val mono">24 x 24</span></div>';
+    }
+    if (card.trailingIcon === 'yes') {
+      lh += '<div class="spec-prop"><span class="spec-prop-key">Trailing icon</span><span class="spec-prop-val mono">24 x 24</span></div>';
+    }
+    if (hasTB) {
+      lh += '<div class="spec-prop"><span class="spec-prop-key">Title block height</span><span class="spec-prop-val mono">72px</span></div>';
+      lh += '<div class="spec-prop"><span class="spec-prop-key">Title block padding H</span><span class="spec-prop-val mono">24px</span></div>';
+    }
+    lh += '</div>';
+    layoutEl.innerHTML = lh;
+  }
+
+  /* Update typography section */
+  var typoEl = document.getElementById('tb-spec-' + cardType + '-typo');
+  if (typoEl) {
+    var th = '<div class="spec-detail-label">Typography</div><div class="spec-props">';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Title</span><span class="spec-prop-val mono">Primary/Label/Light/Base -- Proxima Soft Semibold 16px</span></div>';
+    if (card.subtext === 'yes') {
+      th += '<div class="spec-prop"><span class="spec-prop-key">Subtext</span><span class="spec-prop-val mono">Primary/Label/Light/Fine -- Proxima Soft Semibold 12px</span></div>';
+    }
+    if (card.leadingControl === 'yes') {
+      th += '<div class="spec-prop"><span class="spec-prop-key">CTA</span><span class="spec-prop-val mono">Primary/Label/Light/Small -- Proxima Soft Semibold 14px</span></div>';
+    }
+    if (card.titleBlock === 'yes') {
+      th += '<div class="spec-prop"><span class="spec-prop-key">Header</span><span class="spec-prop-val mono">Primary/Headlines/Light/Area -- Proxima Soft Semibold 26px</span></div>';
+    }
+    th += '</div>';
+    typoEl.innerHTML = th;
+  }
+
+  /* Update DEV code snippet */
+  var codeEl = document.getElementById('tb-code-' + cardType);
+  if (codeEl) {
+    var activeTab = codeEl.closest('.spec-card-code');
+    if (activeTab) {
+      var activeLangBtn = activeTab.querySelector('.spec-code-tab.active');
+      var lang = (activeLangBtn && activeLangBtn.textContent.indexOf('COMPOSE') !== -1) ? 'compose' : 'swift';
+      var raw = _getTbSnippet(cardType, lang);
+      codeEl.setAttribute('data-final', raw);
+      codeEl.textContent = raw;
+      if (typeof highlightSyntax === 'function') highlightSyntax(codeEl);
+    }
+  }
+}
+
+function _getTbSnippet(cardType, lang) {
+  var card = _tbSpecCards[cardType];
+  if (!card) return '';
+
+  if (lang === 'swift') {
+    var s = 'EBTitleBar("Title")';
+    if (card.leadingIcon === 'yes') s += '\n    .ebLeadingIcon(Image(systemName: "arrow.left"))';
+    if (card.trailingIcon === 'yes') s += '\n    .ebTrailingIcon(Image(systemName: "ellipsis"))';
+    if (card.leadingControl === 'yes') s += '\n    .ebLeadingControl("Done")';
+    if (card.subtext === 'yes') s += '\n    .ebSubtext("m.gcash.com")';
+    if (card.titleBlock === 'yes') s += '\n    .ebTitleBlock("Header")';
+    return s;
+  } else {
+    var lines = ['EBTitleBar('];
+    lines.push('    title = "Title"');
+    var params = [];
+    if (card.leadingIcon === 'yes') params.push('    leadingIcon = { Icon(Icons.Default.ArrowBack, "Back") }');
+    if (card.trailingIcon === 'yes') params.push('    trailingIcon = { Icon(Icons.Default.MoreVert, "More") }');
+    if (card.leadingControl === 'yes') params.push('    leadingControlText = "Done"');
+    if (card.subtext === 'yes') params.push('    subtext = "m.gcash.com"');
+    if (card.titleBlock === 'yes') params.push('    titleBlock = "Header"');
+    var all = ['    title = "Title"'].concat(params);
+    return 'EBTitleBar(\n' + all.join(',\n') + '\n)';
+  }
+}
+
+function switchTbCodeTab(tabBtn, lang, cardType) {
+  var parent = tabBtn.parentElement;
+  parent.querySelectorAll('.spec-code-tab').forEach(function(t) { t.classList.remove('active'); });
+  tabBtn.classList.add('active');
+  var codeEl = document.getElementById('tb-code-' + cardType);
+  if (codeEl) {
+    var raw = _getTbSnippet(cardType, lang);
+    codeEl.setAttribute('data-final', raw);
+    codeEl.textContent = raw;
+    if (typeof highlightSyntax === 'function') highlightSyntax(codeEl);
+  }
+}
+
+function toggleTbSpecMode(type, toggleEl) {
+  var labels = toggleEl.querySelectorAll('.spec-mode-label');
+  var isDes = labels[0].classList.contains('active');
+  labels[0].classList.toggle('active', !isDes);
+  labels[1].classList.toggle('active', isDes);
+  var desView = document.querySelector('[data-view="' + type + '-des"]');
+  var devView = document.querySelector('[data-view="' + type + '-dev"]');
+  if (isDes) {
+    if (desView) desView.style.display = 'none';
+    if (devView) {
+      devView.style.display = '';
+      var shortType = type.replace('tb-', '');
+      var codeEl = devView.querySelector('code');
+      if (codeEl) {
+        var activeTab = devView.querySelector('.spec-code-tab.active');
+        var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+        var raw = _getTbSnippet(shortType, lang);
+        codeEl.setAttribute('data-final', raw);
+        codeEl.textContent = raw;
+        if (typeof highlightSyntax === 'function') highlightSyntax(codeEl);
+      }
+    }
+  } else {
+    if (devView) devView.style.display = 'none';
+    if (desView) desView.style.display = '';
+  }
+}
+
+/* ── Init ──────────────────────────────────────────────────────── */
+function _tbInit() {
+  updateTitleBarDemo();
+  ['standard', 'titleblock'].forEach(function(ct) {
+    updateTbSpecCard(ct, 'leadingIcon', _tbSpecCards[ct].leadingIcon);
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _tbInit);
+} else {
+  _tbInit();
+}
+</script>
+
+<!--@section-end-->

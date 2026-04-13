@@ -188,6 +188,37 @@ Confirmed recurring patterns across the GCash DS. Use as a checklist during ever
 - **Missing `selected`/`active`** — Chips, toggles, tabs.
 - **Incomplete state matrix** — Every sub-type should cover all relevant states.
 
+### Figma Modes vs Component Properties (C2, C7)
+
+**Figma Modes are invisible in developer handoff.** When a component uses Variable Collection Modes (e.g. Button's Appearance: Default / Destructive / White / Subtle), developers inspecting the component via Dev Mode or MCP see only the resolved CSS variable values — not the Mode itself.
+
+Example — a developer inspecting a Destructive Button sees:
+```
+background: var(--main/button/primary/destructive/enabled/bg);
+```
+
+They do **not** see:
+- That the Button supports 4 distinct appearances
+- That "Appearance" is a Mode, not a component property
+- How to switch between appearances in their native API
+
+**Why this matters:**
+- Code Connect mapping requires Mode → API parameter translation that must be written manually
+- A developer missing this context would only implement one appearance and not realize others exist
+- Mode swaps are invisible in variant grids, side-by-side comparisons, and component previews
+
+**When to use Mode vs Property:**
+
+| Use Mode when… | Use Property when… |
+|---|---|
+| Appearance swap is global (e.g. dark theme, brand skin) | Appearance is a per-instance choice (destructive action, emphasis level) |
+| Variable reuse across many components matters more than variant explosion | Each appearance needs its own instance visible in the design |
+| Developers will configure appearance at app/theme level | Developers will configure appearance inline per call site |
+
+**Recommendation:** For component-level appearance variants (destructive, outline, text, subtle, etc.), prefer **component properties** over Modes. This makes the variant matrix explicit in Figma, visible in dev handoff, and directly mappable to native API parameters without manual translation.
+
+**If Mode must stay:** Document the Mode → API mapping explicitly in the component's Code tab, including every Mode value and its corresponding SwiftUI modifier / Compose parameter. Without this doc, the appearance layer is silently lost in handoff.
+
 ### Documentation
 
 - **Empty screen context panels** — Missing usage examples. Flag as handoff risk.
@@ -210,8 +241,14 @@ Confirmed recurring patterns across the GCash DS. Use as a checklist during ever
 | C2 | Token name typo — "main/avatar/brand/intials" missing letter i (should be "initials") — RESOLVED | Avatar |
 | C3 | Border-radius bound to radius/radius-round (99999) — RESOLVED. Border-width still fixed per size. | Avatar |
 | C6 | Raster backgrounds on 5 initials variants replaced with vector ELLIPSE layers — RESOLVED | Avatar |
+| C3 | Hardcoded opacity: 0.90 on Danger/Heavy and Disabled/Heavy Transaction variants — inconsistent with other variants | Badge |
+| C2 | State property names don't match token names (Info/information, Success/positive, Warning/notice, Danger/negative, Disabled/muted) — minor inconsistency | Badge |
+| C5 | No disabled or pressed states — form dropdown missing standard interaction states | Dropdown |
+| C2 | DropdownItem `selected` property uses yes/no string instead of true/false boolean | Dropdown |
 | C6 | trailing-icon uses icon-placeholder RECTANGLE — not a swappable icon instance | Labeled Field |
 | C6 | Trailing icons use icon-placeholder RECTANGLE instead of swappable icon instances | Recipient Field |
+| C2 | Boolean properties use yes/no instead of true/false — blocks direct Swift Bool / Kotlin Boolean mapping | Title Bar |
+| C6 | Trailing icon uses icon-placeholder RECTANGLE instead of swappable icon instance — blocks native icon slot | Title Bar |
 <!-- @@DISCOVERED_PATTERNS_END@@ -->
 
 ---
@@ -450,12 +487,15 @@ Key conventions:
 |---|---|---|---|---|---|
 | Accordion | `16870:9288` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Avatar | `17143:4488` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Badge | `21:111526` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Button | `17104:184842` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Checkbox | `17143:2464` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Dropdown | `23:199480` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Input Field | `17758:3687` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Labeled Field | `17758:3713` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Recipient Field | `17758:3867` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Select Field | `17758:3786` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Title Bar | `23:175148` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 <!-- @@PROGRESS_TABLE_END@@ -->
 
 ### Open Issues

@@ -462,7 +462,7 @@ function switchTabLine(tabBtn, tabId, groupId) {
 }
 
 /* ── Demo controls (v3) ──────────────────────────────────────────── */
-var _demo = { style: 'filled', appearance: 'default', size: 'large', state: 'default', leadingIcon: false, trailingIcon: false };
+var _demo = { style: 'filled', appearance: 'default', size: 'large', state: 'default', leadingIcon: false, trailingIcon: false, iconPlacement: 'none' };
 
 /* Colors: style → appearance → state → { bg, color, border } */
 var _demoColors = {
@@ -515,16 +515,35 @@ function _applyDemo() {
   el.style.cursor       = (_demo.state === 'disabled' || _demo.state === 'loading') ? 'not-allowed' : 'pointer';
   el.style.opacity      = '1';
 
-  /* Loading label swap */
+  /* Derive icon visibility from iconPlacement (source of truth) with fallback to legacy booleans */
+  var placement = _demo.iconPlacement || 'none';
+  var showLeading = placement === 'leading' || (placement === 'none' && _demo.leadingIcon);
+  var showTrailing = placement === 'trailing' || (placement === 'none' && _demo.trailingIcon);
+  var isIconOnly = placement === 'iconOnly';
+
+  /* Label swap (icon only = no text) */
   var textEl = document.getElementById('demo-btn-text');
-  if (textEl) textEl.textContent = _demo.state === 'loading' ? '●  ●  ●' : 'Label';
+  if (textEl) {
+    if (isIconOnly) textEl.style.display = 'none';
+    else { textEl.style.display = ''; textEl.textContent = 'Label'; }
+  }
+
+  /* Icon Only = square button — override padding and width */
+  if (isIconOnly) {
+    el.style.padding = '0';
+    el.style.width = sz.height;
+    el.style.justifyContent = 'center';
+  } else {
+    el.style.width = '';
+    el.style.justifyContent = '';
+  }
 
   /* Icon slots */
   var iconSize = (_demo.size === 'small' || _demo.size === 'compact' || _demo.size === 'xsmall') ? '16' : '24';
   var leading = document.getElementById('demo-btn-leading');
   var trailing = document.getElementById('demo-btn-trailing');
   if (leading) {
-    leading.style.display = _demo.leadingIcon ? 'block' : 'none';
+    leading.style.display = (showLeading || isIconOnly) ? 'block' : 'none';
     leading.setAttribute('width', iconSize);
     leading.setAttribute('height', iconSize);
     leading.setAttribute('viewBox', iconSize === '16' ? '0 0 16 16' : '0 0 24 24');
@@ -540,7 +559,7 @@ function _applyDemo() {
     }
   }
   if (trailing) {
-    trailing.style.display = _demo.trailingIcon ? 'block' : 'none';
+    trailing.style.display = showTrailing ? 'block' : 'none';
     trailing.setAttribute('width', iconSize);
     trailing.setAttribute('height', iconSize);
     trailing.setAttribute('viewBox', iconSize === '16' ? '0 0 16 16' : '0 0 24 24');
@@ -579,6 +598,10 @@ function setDemoState(state) {
 function setDemoIcon(slot, value) {
   if (slot === 'leading') _demo.leadingIcon = value;
   else if (slot === 'trailing') _demo.trailingIcon = value;
+  _applyDemo();
+}
+function setDemoIconPlacement(placement) {
+  _demo.iconPlacement = placement;
   _applyDemo();
 }
 /* Keep old function names as aliases for backward compat */

@@ -807,10 +807,8 @@ function _sfBuildSvg(state, filled) {
   var s = '<svg width="366" height="46" viewBox="0 0 366 46" fill="none" xmlns="http://www.w3.org/2000/svg">';
   /* container */
   s += '<rect x="0.5" y="0.5" width="365" height="45" rx="5.5" fill="' + c.bg + '"' + borderAttr + '/>';
-  /* peso sign */
-  s += '<g transform="translate(12, 15.5)">';
-  s += '<text font-family="Proxima Soft, system-ui" font-size="15" font-weight="700" fill="' + pc + '">&#8369;</text>';
-  s += '</g>';
+  /* peso sign — vertically centered in 46px container */
+  s += '<text x="12" y="23" font-family="Proxima Soft, system-ui" font-size="15" font-weight="700" fill="' + pc + '" dominant-baseline="central">&#8369;</text>';
   /* label */
   s += '<text x="36" y="20" font-family="Proxima Soft, system-ui" font-size="16" font-weight="600" fill="' + labelColor + '">#label</text>';
   /* value */

@@ -242,13 +242,16 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 |---|---|---|---|---|---|
 | Accordion | `16870:9288` | 6 | Keep | Refine | C7 |
 | Avatar | `17143:4488` | 21 | Keep | Refine | C7 |
-| Button | `17104:184842` | 60 | Keep | Refine | C7 |
+| Badge | `21:111526` | 68 | Keep | Refine | C7 |
+| Button | `17104:184842` | 180 | Keep | Refine | C7 |
 | Checkbox | `17143:2464` | 33 | Keep | Refine | C7 |
 | **Form Elements** | | | | | |
 | Input Field | `17758:3687` | 8 | Keep | Refine | C7 |
 | Labeled Field | `17758:3713` | 8 | Keep | Refine | C7 |
 | Select Field | `17758:3786` | 8 | Keep | Refine | C7 |
 | Recipient Field | `17758:3867` | 8 | Keep | Refine | C7 |
+| Dropdown | `23:199480` | 8 | Fix | Refine | C2,C5,C6,C7 |
+| Title Bar | `23:175148` | 20 | Keep | Refine | C2,C6,C7 |
 
 ---
 

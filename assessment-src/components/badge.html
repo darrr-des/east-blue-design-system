@@ -1,0 +1,1174 @@
+<!--
+  BADGE COMPONENT ASSESSMENT
+  Edit this file to update the Badge assessment.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 21:111526
+ds-verdict: keep
+native-status: refine
+variants: 68
+ios: Text (custom badge styling)
+android: Custom Composable (EBBadge)
+open-issues: C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C3] Hardcoded opacity: 0.90 on Danger/Heavy and Disabled/Heavy Transaction variants — inconsistent with other variants
+[C2] State property names don't match token names (Info/information, Success/positive, Warning/notice, Danger/negative, Disabled/muted) — minor inconsistency
+<!--@patterns-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-badge" onclick="showPanel('badge', this)">
+  <div class="nav-comp-icon">
+    <!-- Badge thumbnail SVG 32x32 -->
+    <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Heavy pill -->
+      <rect x="2" y="5" width="28" height="10" rx="5" fill="#005CE5"/>
+      <text x="16" y="12" text-anchor="middle" fill="white" font-size="5" font-weight="700" font-family="system-ui">Label</text>
+      <!-- Light pill -->
+      <rect x="4" y="19" width="24" height="10" rx="5" fill="#E5F1FF"/>
+      <text x="16" y="26" text-anchor="middle" fill="#005CE5" font-size="5" font-weight="700" font-family="system-ui">Label</text>
+    </svg>
+  </div>
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Badge</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('badge')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="4" y="6" width="30" height="10" rx="5" fill="#005CE5" opacity=".7"/>
+      <rect x="38" y="6" width="30" height="10" rx="5" fill="#12AF80" opacity=".7"/>
+      <rect x="10" y="22" width="26" height="10" rx="5" fill="#E5F1FF" opacity=".7"/>
+      <rect x="42" y="22" width="26" height="10" rx="5" fill="#E7F8F0" opacity=".7"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Badge</div>
+    </div>
+    <div class="summary-card-desc">68 variants across State x Level x Type. Status indicator pill with token-bound colors. DS Ready -- only Code Connect CLI pending.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Badge</strong></td>
+  <td><span class="badge badge-ready">Ready</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">68</td>
+  <td class="muted">All criteria resolved except Code Connect mappings (C7). Minor opacity inconsistency on 2 variants.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-badge">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <!-- Back -->
+    <button class="back-btn" onclick="navigateComponents({target:this})">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Components
+    </button>
+
+    <!-- Component header -->
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Badge
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=21-111526" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A colored pill/tag used to highlight an item's status for quick recognition. 68 variants across State (Primary/Brand/Info/Success/Warning/Danger/Disabled) x Level (Heavy/Medium/Light) x Type (Default/Voucher/Transaction/Dashboard). Display-only component with no interaction states.</p>
+      </div>
+    </div>
+
+    <!-- Tab bar -->
+    <div data-tab-group="badge-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'badge-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'badge-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'badge-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'badge-tabs')">Changelog</button>
+    </div>
+
+    <!-- ══ Tab: Overview ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <!-- In Context -->
+    <div class="sub-heading" id="bd-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Contexts are illustrative. Final screens will reference actual GCash patterns.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+          <rect x="10" y="8" width="100" height="64" rx="8" stroke="currentColor" stroke-width="1.2" opacity=".15"/>
+          <!-- List row 1 with badge -->
+          <rect x="18" y="16" width="84" height="14" rx="3" stroke="currentColor" stroke-width="0.8" opacity=".1"/>
+          <rect x="22" y="20" width="30" height="3" rx="1.5" fill="currentColor" opacity=".12"/>
+          <rect x="72" y="19" width="22" height="8" rx="4" fill="#12AF80" opacity=".5"/>
+          <!-- List row 2 with badge -->
+          <rect x="18" y="34" width="84" height="14" rx="3" stroke="currentColor" stroke-width="0.8" opacity=".1"/>
+          <rect x="22" y="38" width="36" height="3" rx="1.5" fill="currentColor" opacity=".12"/>
+          <rect x="72" y="37" width="22" height="8" rx="4" fill="#CA970C" opacity=".5"/>
+          <!-- List row 3 with badge -->
+          <rect x="18" y="52" width="84" height="14" rx="3" stroke="currentColor" stroke-width="0.8" opacity=".1"/>
+          <rect x="22" y="56" width="28" height="3" rx="1.5" fill="currentColor" opacity=".12"/>
+          <rect x="72" y="55" width="22" height="8" rx="4" fill="#D61B2C" opacity=".5"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Live Preview -->
+    <div class="sub-heading" id="bd-preview">Live Preview</div>
+    <p class="section-desc">Toggle State, Level, and Type to see the badge update in real time.</p>
+    <div class="demo-panel" id="bd-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="bd-demo-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <select class="demo-panel-select" id="bd-demo-state" onchange="updateBadgeDemo()">
+                <option value="Primary" selected>Primary</option>
+                <option value="Brand">Brand</option>
+                <option value="Info">Info</option>
+                <option value="Success">Success</option>
+                <option value="Warning">Warning</option>
+                <option value="Danger">Danger</option>
+                <option value="Disabled">Disabled</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Level</span>
+              <select class="demo-panel-select" id="bd-demo-level" onchange="updateBadgeDemo()">
+                <option value="Heavy" selected>Heavy</option>
+                <option value="Medium">Medium</option>
+                <option value="Light">Light</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Type</span>
+              <select class="demo-panel-select" id="bd-demo-type" onchange="updateBadgeDemo()">
+                <option value="Default" selected>Default</option>
+                <option value="Voucher">Voucher</option>
+                <option value="Transaction">Transaction</option>
+                <option value="Dashboard">Dashboard</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DS Health -->
+    <div class="sub-heading" id="bd-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Reusable</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Universal status indicator used across transaction lists, vouchers, dashboards, and notifications. 7 semantic states and 3 emphasis levels cover all common badge use cases.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Self-contained</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Pure display component. Carries its own background, label color, padding, and border-radius per variant. No external dependencies or slots.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header">
+          <div class="trait-name">Consistent</div>
+          <div class="trait-status">Partial</div>
+        </div>
+        <div class="trait-note">Token naming follows DS convention (<code>main/badge/{semantic}/{level}/</code>). Minor issues: State property names don't match token names (Info vs information, Success vs positive). Danger/Heavy and Disabled/Heavy Transaction variants have hardcoded <code>opacity: 0.90</code>.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Composable</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Simple leaf component. Nests cleanly in list rows, card headers, table cells, and notification banners. No child slots or complex nesting.</div>
+      </div>
+    </div>
+
+    <!-- Behavior -->
+    <div class="sub-heading" id="bd-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+            <th>Figma Property</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Default</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">State + Level + Type</td>
+            <td class="muted">Display-only. All 7 states x 3 levels fully defined per type.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-footnote">Badge is display-only. No interaction states (pressed, focused) exist. Disabled is a visual variant, not an interactive state -- it represents muted/inactive content styling.</p>
+
+    <!-- Open Issues -->
+    <div class="sub-heading" id="bd-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
+      <li><span>Danger/Heavy and Disabled/Heavy Transaction variants have hardcoded <code>opacity: 0.90</code> on container -- inconsistent with other variants <span class="tag-open">C3</span></span></li>
+      <li><span>State property names (Info, Success, Warning, Danger, Disabled) don't match token semantic names (information, positive, notice, negative, muted) -- minor friction for Code Connect mapping <span class="tag-open">C2</span></span></li>
+    </ul>
+
+    <!-- Design Recommendations -->
+    <div class="sub-heading" id="bd-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span>Remove hardcoded <code>opacity: 0.90</code> from Danger/Heavy and Disabled/Heavy Transaction variants to ensure consistency across all variants <span class="tag-recommend">Suggested</span></span></li>
+      <li><span>Consider aligning State property names with token semantic names (e.g. <code>State=Information</code> instead of <code>State=Info</code>) to reduce Code Connect mapping friction <span class="tag-recommend">Suggested</span></span></li>
+      <li><span>Add an icon slot (leading) for badges that need visual reinforcement -- common in status badges across fintech apps <span class="tag-recommend">Suggested</span></span></li>
+      <li><span>Primary and Brand states only support Heavy level -- consider adding Medium/Light levels if these states need lower-emphasis variants in future <span class="tag-recommend">Suggested</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ══ Tab: Style ═════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="bd-styles" style="margin-top:0">Types</div>
+    <p class="section-desc">4 types with different shapes and sizing: Default (pill), Voucher (bottom-right radius only), Transaction (rounded rect), Dashboard (compact rounded rect). Each type supports 7 states x 3 levels (Primary and Brand are Heavy only).</p>
+
+    <!-- ═══ Default ═══ -->
+    <div class="spec-card" id="bd-spec-default">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="bd-type-default">Default</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="21:111526" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>21:111526</span></button>
+          <div class="spec-mode-toggle" onclick="toggleBadgeSpecMode('bd-default', this)"><span class="spec-mode-label active">DES</span><span class="spec-mode-label">DEV</span></div>
+        </div>
+        <p class="spec-card-desc">Pill-shaped badge with full border-radius (99px). Standard status indicator for general use.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="bd-spec-default-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <select class="demo-panel-select" onchange="updateBadgeSpecCard('default', 'state', this.value)">
+                <option value="Primary" selected>Primary</option>
+                <option value="Brand">Brand</option>
+                <option value="Info">Info</option>
+                <option value="Success">Success</option>
+                <option value="Warning">Warning</option>
+                <option value="Danger">Danger</option>
+                <option value="Disabled">Disabled</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Level</span>
+              <select class="demo-panel-select" id="bd-spec-default-level" onchange="updateBadgeSpecCard('default', 'level', this.value)">
+                <option value="Heavy" selected>Heavy</option>
+                <option value="Medium">Medium</option>
+                <option value="Light">Light</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card-detail spec-view-des" data-view="bd-default-des">
+        <div class="spec-detail-section" id="bd-spec-default-props">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Type</span><span class="spec-prop-val">Default</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">State</span><span class="spec-prop-val" data-sp="bd-default-state">Primary</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Level</span><span class="spec-prop-val" data-sp="bd-default-level">Heavy</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" id="bd-spec-default-colors"></div>
+        <div class="spec-detail-section" id="bd-spec-default-layout"></div>
+        <div class="spec-detail-section" id="bd-spec-default-typo"></div>
+      </div>
+      <div class="spec-card-detail spec-card-code" data-view="bd-default-dev" style="display:none">
+        <div class="spec-code-tabs">
+          <button class="spec-code-tab active" onclick="switchBadgeCodeTab(this, 'swift', 'default')">SWIFTUI</button>
+          <button class="spec-code-tab" onclick="switchBadgeCodeTab(this, 'compose', 'default')">COMPOSE</button>
+        </div>
+        <pre class="spec-code-block"><code id="bd-code-default" data-code-content="bd-default" data-final="EBBadge(&quot;Label&quot;, state: .primary, level: .heavy)">EBBadge("Label", state: .primary, level: .heavy)</code></pre>
+      </div>
+    </div>
+
+    <!-- ═══ Voucher ═══ -->
+    <div class="spec-card" id="bd-spec-voucher">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="bd-type-voucher">Voucher</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="21:111526" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>21:111526</span></button>
+          <div class="spec-mode-toggle" onclick="toggleBadgeSpecMode('bd-voucher', this)"><span class="spec-mode-label active">DES</span><span class="spec-mode-label">DEV</span></div>
+        </div>
+        <p class="spec-card-desc">Badge with bottom-right radius only (4px). Used on voucher cards and promotional items. Fixed 18px height.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="bd-spec-voucher-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <select class="demo-panel-select" onchange="updateBadgeSpecCard('voucher', 'state', this.value)">
+                <option value="Primary" selected>Primary</option>
+                <option value="Brand">Brand</option>
+                <option value="Info">Info</option>
+                <option value="Success">Success</option>
+                <option value="Warning">Warning</option>
+                <option value="Danger">Danger</option>
+                <option value="Disabled">Disabled</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Level</span>
+              <select class="demo-panel-select" id="bd-spec-voucher-level" onchange="updateBadgeSpecCard('voucher', 'level', this.value)">
+                <option value="Heavy" selected>Heavy</option>
+                <option value="Medium">Medium</option>
+                <option value="Light">Light</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card-detail spec-view-des" data-view="bd-voucher-des">
+        <div class="spec-detail-section" id="bd-spec-voucher-props">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Type</span><span class="spec-prop-val">Voucher</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">State</span><span class="spec-prop-val" data-sp="bd-voucher-state">Primary</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Level</span><span class="spec-prop-val" data-sp="bd-voucher-level">Heavy</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" id="bd-spec-voucher-colors"></div>
+        <div class="spec-detail-section" id="bd-spec-voucher-layout"></div>
+        <div class="spec-detail-section" id="bd-spec-voucher-typo"></div>
+      </div>
+      <div class="spec-card-detail spec-card-code" data-view="bd-voucher-dev" style="display:none">
+        <div class="spec-code-tabs">
+          <button class="spec-code-tab active" onclick="switchBadgeCodeTab(this, 'swift', 'voucher')">SWIFTUI</button>
+          <button class="spec-code-tab" onclick="switchBadgeCodeTab(this, 'compose', 'voucher')">COMPOSE</button>
+        </div>
+        <pre class="spec-code-block"><code id="bd-code-voucher" data-code-content="bd-voucher" data-final="EBBadge(&quot;Label&quot;, state: .primary, level: .heavy, type: .voucher)">EBBadge("Label", state: .primary, level: .heavy, type: .voucher)</code></pre>
+      </div>
+    </div>
+
+    <!-- ═══ Transaction ═══ -->
+    <div class="spec-card" id="bd-spec-transaction">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="bd-type-transaction">Transaction</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="21:111526" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>21:111526</span></button>
+          <div class="spec-mode-toggle" onclick="toggleBadgeSpecMode('bd-transaction', this)"><span class="spec-mode-label active">DES</span><span class="spec-mode-label">DEV</span></div>
+        </div>
+        <p class="spec-card-desc">Rounded rectangle badge (4px radius). Used in transaction lists and history screens. Compact padding.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="bd-spec-transaction-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <select class="demo-panel-select" onchange="updateBadgeSpecCard('transaction', 'state', this.value)">
+                <option value="Primary" selected>Primary</option>
+                <option value="Brand">Brand</option>
+                <option value="Info">Info</option>
+                <option value="Success">Success</option>
+                <option value="Warning">Warning</option>
+                <option value="Danger">Danger</option>
+                <option value="Disabled">Disabled</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Level</span>
+              <select class="demo-panel-select" id="bd-spec-transaction-level" onchange="updateBadgeSpecCard('transaction', 'level', this.value)">
+                <option value="Heavy" selected>Heavy</option>
+                <option value="Medium">Medium</option>
+                <option value="Light">Light</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card-detail spec-view-des" data-view="bd-transaction-des">
+        <div class="spec-detail-section" id="bd-spec-transaction-props">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Type</span><span class="spec-prop-val">Transaction</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">State</span><span class="spec-prop-val" data-sp="bd-transaction-state">Primary</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Level</span><span class="spec-prop-val" data-sp="bd-transaction-level">Heavy</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" id="bd-spec-transaction-colors"></div>
+        <div class="spec-detail-section" id="bd-spec-transaction-layout"></div>
+        <div class="spec-detail-section" id="bd-spec-transaction-typo"></div>
+      </div>
+      <div class="spec-card-detail spec-card-code" data-view="bd-transaction-dev" style="display:none">
+        <div class="spec-code-tabs">
+          <button class="spec-code-tab active" onclick="switchBadgeCodeTab(this, 'swift', 'transaction')">SWIFTUI</button>
+          <button class="spec-code-tab" onclick="switchBadgeCodeTab(this, 'compose', 'transaction')">COMPOSE</button>
+        </div>
+        <pre class="spec-code-block"><code id="bd-code-transaction" data-code-content="bd-transaction" data-final="EBBadge(&quot;Label&quot;, state: .primary, level: .heavy, type: .transaction)">EBBadge("Label", state: .primary, level: .heavy, type: .transaction)</code></pre>
+      </div>
+    </div>
+
+    <!-- ═══ Dashboard ═══ -->
+    <div class="spec-card" id="bd-spec-dashboard">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="bd-type-dashboard">Dashboard</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="21:111526" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>21:111526</span></button>
+          <div class="spec-mode-toggle" onclick="toggleBadgeSpecMode('bd-dashboard', this)"><span class="spec-mode-label active">DES</span><span class="spec-mode-label">DEV</span></div>
+        </div>
+        <p class="spec-card-desc">Compact rounded rectangle badge (4px radius) with smaller typography (10px). Used in dashboard widgets and summary cards.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="bd-spec-dashboard-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">State</span>
+              <select class="demo-panel-select" onchange="updateBadgeSpecCard('dashboard', 'state', this.value)">
+                <option value="Primary" selected>Primary</option>
+                <option value="Brand">Brand</option>
+                <option value="Info">Info</option>
+                <option value="Success">Success</option>
+                <option value="Warning">Warning</option>
+                <option value="Danger">Danger</option>
+                <option value="Disabled">Disabled</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Level</span>
+              <select class="demo-panel-select" id="bd-spec-dashboard-level" onchange="updateBadgeSpecCard('dashboard', 'level', this.value)">
+                <option value="Heavy" selected>Heavy</option>
+                <option value="Medium">Medium</option>
+                <option value="Light">Light</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card-detail spec-view-des" data-view="bd-dashboard-des">
+        <div class="spec-detail-section" id="bd-spec-dashboard-props">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-props">
+            <div class="spec-prop"><span class="spec-prop-key">Type</span><span class="spec-prop-val">Dashboard</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">State</span><span class="spec-prop-val" data-sp="bd-dashboard-state">Primary</span></div>
+            <div class="spec-prop"><span class="spec-prop-key">Level</span><span class="spec-prop-val" data-sp="bd-dashboard-level">Heavy</span></div>
+          </div>
+        </div>
+        <div class="spec-detail-section" id="bd-spec-dashboard-colors"></div>
+        <div class="spec-detail-section" id="bd-spec-dashboard-layout"></div>
+        <div class="spec-detail-section" id="bd-spec-dashboard-typo"></div>
+      </div>
+      <div class="spec-card-detail spec-card-code" data-view="bd-dashboard-dev" style="display:none">
+        <div class="spec-code-tabs">
+          <button class="spec-code-tab active" onclick="switchBadgeCodeTab(this, 'swift', 'dashboard')">SWIFTUI</button>
+          <button class="spec-code-tab" onclick="switchBadgeCodeTab(this, 'compose', 'dashboard')">COMPOSE</button>
+        </div>
+        <pre class="spec-code-block"><code id="bd-code-dashboard" data-code-content="bd-dashboard" data-final="EBBadge(&quot;Label&quot;, state: .primary, level: .heavy, type: .dashboard)">EBBadge("Label", state: .primary, level: .heavy, type: .dashboard)</code></pre>
+      </div>
+    </div>
+
+    <!-- Colors by Appearance Mode -->
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by Appearance Mode</div>
+      <p class="style-colors-desc">Display-only component. All colors bound to <code>main/badge/{semantic}/{level}/</code> tokens. Primary and Brand states only support Heavy level.</p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>State</th><th>Level</th><th>Role</th><th>Token</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Primary</td><td class="muted">Heavy</td><td class="muted">bg</td><td class="mono">main/badge/primary/heavy/background</td><td class="mono">#005CE5</td></tr>
+          <tr><td class="muted">Primary</td><td class="muted">Heavy</td><td class="muted">label</td><td class="mono">main/badge/primary/heavy/label</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Brand</td><td class="muted">Heavy</td><td class="muted">bg</td><td class="mono">main/badge/brand/heavy/background</td><td class="mono">#1972F9</td></tr>
+          <tr><td class="muted">Brand</td><td class="muted">Heavy</td><td class="muted">label</td><td class="mono">main/badge/brand/heavy/label</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Info</td><td class="muted">Light</td><td class="muted">bg</td><td class="mono">main/badge/information/light/background</td><td class="mono">#E5F1FF</td></tr>
+          <tr><td class="muted">Info</td><td class="muted">Light</td><td class="muted">label</td><td class="mono">main/badge/information/light/label</td><td class="mono">#005CE5</td></tr>
+          <tr><td class="muted">Info</td><td class="muted">Medium</td><td class="muted">bg</td><td class="mono">main/badge/information/medium/background</td><td class="mono">#D2E5FF</td></tr>
+          <tr><td class="muted">Info</td><td class="muted">Medium</td><td class="muted">label</td><td class="mono">main/badge/information/medium/label</td><td class="mono">#005CE5</td></tr>
+          <tr><td class="muted">Info</td><td class="muted">Heavy</td><td class="muted">bg</td><td class="mono">main/badge/information/heavy/background</td><td class="mono">#2340A9</td></tr>
+          <tr><td class="muted">Info</td><td class="muted">Heavy</td><td class="muted">label</td><td class="mono">main/badge/information/heavy/label</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Success</td><td class="muted">Light</td><td class="muted">bg</td><td class="mono">main/badge/positive/light/background</td><td class="mono">#E7F8F0</td></tr>
+          <tr><td class="muted">Success</td><td class="muted">Light</td><td class="muted">label</td><td class="mono">main/badge/positive/light/label</td><td class="mono">#048570</td></tr>
+          <tr><td class="muted">Success</td><td class="muted">Medium</td><td class="muted">bg</td><td class="mono">main/badge/positive/medium/background</td><td class="mono">#CAF2E0</td></tr>
+          <tr><td class="muted">Success</td><td class="muted">Medium</td><td class="muted">label</td><td class="mono">main/badge/positive/medium/label</td><td class="mono">#048570</td></tr>
+          <tr><td class="muted">Success</td><td class="muted">Heavy</td><td class="muted">bg</td><td class="mono">main/badge/positive/heavy/background</td><td class="mono">#12AF80</td></tr>
+          <tr><td class="muted">Success</td><td class="muted">Heavy</td><td class="muted">label</td><td class="mono">main/badge/positive/heavy/label</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Warning</td><td class="muted">Light</td><td class="muted">bg</td><td class="mono">main/badge/notice/light/background</td><td class="mono">#FCF0CA</td></tr>
+          <tr><td class="muted">Warning</td><td class="muted">Light</td><td class="muted">label</td><td class="mono">main/badge/notice/light/label</td><td class="mono">#966F0B</td></tr>
+          <tr><td class="muted">Warning</td><td class="muted">Medium</td><td class="muted">bg</td><td class="mono">main/badge/notice/medium/background</td><td class="mono">#F7D96E</td></tr>
+          <tr><td class="muted">Warning</td><td class="muted">Medium</td><td class="muted">label</td><td class="mono">main/badge/notice/medium/label</td><td class="mono">#966F0B</td></tr>
+          <tr><td class="muted">Warning</td><td class="muted">Heavy</td><td class="muted">bg</td><td class="mono">main/badge/notice/heavy/background</td><td class="mono">#CA970C</td></tr>
+          <tr><td class="muted">Warning</td><td class="muted">Heavy</td><td class="muted">label</td><td class="mono">main/badge/notice/heavy/label</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Danger</td><td class="muted">Light</td><td class="muted">bg</td><td class="mono">main/badge/negative/light/background</td><td class="mono">#F8E6E6</td></tr>
+          <tr><td class="muted">Danger</td><td class="muted">Light</td><td class="muted">label</td><td class="mono">main/badge/negative/light/label</td><td class="mono">#B50707</td></tr>
+          <tr><td class="muted">Danger</td><td class="muted">Medium</td><td class="muted">bg</td><td class="mono">main/badge/negative/medium/background</td><td class="mono">#F4C7C9</td></tr>
+          <tr><td class="muted">Danger</td><td class="muted">Medium</td><td class="muted">label</td><td class="mono">main/badge/negative/medium/label</td><td class="mono">#8D0710</td></tr>
+          <tr><td class="muted">Danger</td><td class="muted">Heavy</td><td class="muted">bg</td><td class="mono">main/badge/negative/heavy/background</td><td class="mono">#D61B2C</td></tr>
+          <tr><td class="muted">Danger</td><td class="muted">Heavy</td><td class="muted">label</td><td class="mono">main/badge/negative/heavy/label</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Disabled</td><td class="muted">Light</td><td class="muted">bg</td><td class="mono">main/badge/muted/light/background</td><td class="mono">#C2C5CA</td></tr>
+          <tr><td class="muted">Disabled</td><td class="muted">Light</td><td class="muted">label</td><td class="mono">main/badge/muted/light/label</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Disabled</td><td class="muted">Medium</td><td class="muted">bg</td><td class="mono">main/badge/muted/medium/background</td><td class="mono">#9A9FA7</td></tr>
+          <tr><td class="muted">Disabled</td><td class="muted">Medium</td><td class="muted">label</td><td class="mono">main/badge/muted/medium/label</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Disabled</td><td class="muted">Heavy</td><td class="muted">bg</td><td class="mono">main/badge/muted/heavy/background</td><td class="mono">#717883</td></tr>
+          <tr><td class="muted">Disabled</td><td class="muted">Heavy</td><td class="muted">label</td><td class="mono">main/badge/muted/heavy/label</td><td class="mono">#FFFFFF</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Layout comparison -->
+    <div class="style-colors">
+      <div class="style-colors-title">Layout by Type</div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Property</th><th>Default</th><th>Voucher</th><th>Transaction</th><th>Dashboard</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Height</td><td class="mono">auto</td><td class="mono">18px (fixed)</td><td class="mono">auto</td><td class="mono">auto</td></tr>
+          <tr><td class="muted">Padding H</td><td class="mono">8px</td><td class="mono">8px</td><td class="mono">4px</td><td class="mono">4px</td></tr>
+          <tr><td class="muted">Padding V</td><td class="mono">2px (top) / 4px (bottom)</td><td class="mono">2px (top) / 4px (bottom)</td><td class="mono">1px (top) / 3px (bottom)</td><td class="mono">1px</td></tr>
+          <tr><td class="muted">Corner radius</td><td class="mono">99px (pill)</td><td class="mono">0/0/4px/0 (BR only)</td><td class="mono">4px</td><td class="mono">4px</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="style-colors">
+      <div class="style-colors-title">Typography</div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Type</th><th>Text Style</th><th>Font</th><th>Size</th><th>Tracking</th><th>Line-height</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Default / Voucher / Transaction</td><td class="mono">Primary/Label/Fine</td><td class="mono">Proxima Soft Bold</td><td class="mono">12px</td><td class="mono">0.5px</td><td class="mono">12px</td></tr>
+          <tr><td class="muted">Dashboard</td><td class="mono">Primary/Label/Tiny</td><td class="mono">Proxima Soft Bold</td><td class="mono">10px</td><td class="mono">0.25px</td><td class="mono">10px</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- ══ Tab: Code ══════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <!-- Installation -->
+    <div class="sub-heading" id="bd-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS -- Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File -> Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span>
+
+<span class="cmt">// Or in Package.swift:</span>
+.<span class="fn">package</span>(
+    <span class="prp">url</span>: <span class="str">"https://github.com/AY-Org/eb-ds-ios"</span>,
+    <span class="prp">from</span>: <span class="str">"1.0.0"</span>
+)</pre>
+    </div>
+    <p class="code-label">Android -- Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// build.gradle.kts (app)</span>
+<span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:badge:1.0.0"</span>)
+}</pre>
+    </div>
+    <p class="code-label">Import</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="kw">import</span> EastBlueDS  <span class="cmt">// SwiftUI</span>
+<span class="kw">import</span> com.eastblue.ds.badge.*  <span class="cmt">// Compose</span></pre>
+    </div>
+    <p class="table-footnote">Package not yet published. These are the planned distribution paths. API shape is final -- native implementation is pending.</p>
+
+    <!-- Property Mapping -->
+    <div class="sub-heading" id="bd-mapping">Property Mapping</div>
+    <p>Every row maps a Figma component property to its native equivalent.</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Figma Property</th><th>SwiftUI</th><th>Compose</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code>State=Primary</code></td><td><code>state: .primary</code></td><td><code>BadgeState.Primary</code></td><td class="muted">Heavy level only</td></tr>
+        <tr><td><code>State=Brand</code></td><td><code>state: .brand</code></td><td><code>BadgeState.Brand</code></td><td class="muted">Heavy level only</td></tr>
+        <tr><td><code>State=Info</code></td><td><code>state: .info</code></td><td><code>BadgeState.Info</code></td><td class="muted">Token: information</td></tr>
+        <tr><td><code>State=Success</code></td><td><code>state: .success</code></td><td><code>BadgeState.Success</code></td><td class="muted">Token: positive</td></tr>
+        <tr><td><code>State=Warning</code></td><td><code>state: .warning</code></td><td><code>BadgeState.Warning</code></td><td class="muted">Token: notice</td></tr>
+        <tr><td><code>State=Danger</code></td><td><code>state: .danger</code></td><td><code>BadgeState.Danger</code></td><td class="muted">Token: negative</td></tr>
+        <tr><td><code>State=Disabled</code></td><td><code>state: .disabled</code></td><td><code>BadgeState.Disabled</code></td><td class="muted">Token: muted</td></tr>
+        <tr><td><code>Level=Heavy</code></td><td><code>level: .heavy</code></td><td><code>BadgeLevel.Heavy</code></td><td class="muted">Solid fill, white label</td></tr>
+        <tr><td><code>Level=Medium</code></td><td><code>level: .medium</code></td><td><code>BadgeLevel.Medium</code></td><td class="muted">Mid-tone fill, dark label</td></tr>
+        <tr><td><code>Level=Light</code></td><td><code>level: .light</code></td><td><code>BadgeLevel.Light</code></td><td class="muted">Subtle fill, dark label</td></tr>
+        <tr><td><code>Type=Default</code></td><td><code>type: .default</code></td><td><code>BadgeType.Default</code></td><td class="muted">Pill shape (99px radius)</td></tr>
+        <tr><td><code>Type=Voucher</code></td><td><code>type: .voucher</code></td><td><code>BadgeType.Voucher</code></td><td class="muted">Bottom-right radius only</td></tr>
+        <tr><td><code>Type=Transaction</code></td><td><code>type: .transaction</code></td><td><code>BadgeType.Transaction</code></td><td class="muted">Rounded rect (4px)</td></tr>
+        <tr><td><code>Type=Dashboard</code></td><td><code>type: .dashboard</code></td><td><code>BadgeType.Dashboard</code></td><td class="muted">Compact, smaller font</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/Badge/EBBadge.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/badge/EBBadge.kt</div>
+    </div>
+
+    <!-- Usage Snippets -->
+    <div class="sub-heading" id="bd-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+
+    <div class="sub-heading toc-child" id="bd-usage-default">Default (Pill)</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'bd-usage-def','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'bd-usage-def','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Success badge -- heavy level</span>
+<span class="typ">EBBadge</span>(<span class="str">"Completed"</span>, <span class="prp">state</span>: .<span class="prp">success</span>, <span class="prp">level</span>: .<span class="prp">heavy</span>)
+
+<span class="cmt">// Info badge -- light level</span>
+<span class="typ">EBBadge</span>(<span class="str">"Pending"</span>, <span class="prp">state</span>: .<span class="prp">info</span>, <span class="prp">level</span>: .<span class="prp">light</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Success badge -- heavy level</span>
+<span class="typ">EBBadge</span>(
+    <span class="prp">text</span> = <span class="str">"Completed"</span>,
+    <span class="prp">state</span> = <span class="typ">BadgeState</span>.<span class="prp">Success</span>,
+    <span class="prp">level</span> = <span class="typ">BadgeLevel</span>.<span class="prp">Heavy</span>
+)
+
+<span class="cmt">// Info badge -- light level</span>
+<span class="typ">EBBadge</span>(
+    <span class="prp">text</span> = <span class="str">"Pending"</span>,
+    <span class="prp">state</span> = <span class="typ">BadgeState</span>.<span class="prp">Info</span>,
+    <span class="prp">level</span> = <span class="typ">BadgeLevel</span>.<span class="prp">Light</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="bd-usage-voucher">Voucher</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'bd-usage-vch','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'bd-usage-vch','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBBadge</span>(<span class="str">"50% OFF"</span>, <span class="prp">state</span>: .<span class="prp">danger</span>, <span class="prp">level</span>: .<span class="prp">heavy</span>, <span class="prp">type</span>: .<span class="prp">voucher</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBBadge</span>(
+    <span class="prp">text</span> = <span class="str">"50% OFF"</span>,
+    <span class="prp">state</span> = <span class="typ">BadgeState</span>.<span class="prp">Danger</span>,
+    <span class="prp">level</span> = <span class="typ">BadgeLevel</span>.<span class="prp">Heavy</span>,
+    <span class="prp">type</span> = <span class="typ">BadgeType</span>.<span class="prp">Voucher</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="bd-usage-transaction">Transaction</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'bd-usage-txn','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'bd-usage-txn','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBBadge</span>(<span class="str">"Failed"</span>, <span class="prp">state</span>: .<span class="prp">danger</span>, <span class="prp">level</span>: .<span class="prp">heavy</span>, <span class="prp">type</span>: .<span class="prp">transaction</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBBadge</span>(
+    <span class="prp">text</span> = <span class="str">"Failed"</span>,
+    <span class="prp">state</span> = <span class="typ">BadgeState</span>.<span class="prp">Danger</span>,
+    <span class="prp">level</span> = <span class="typ">BadgeLevel</span>.<span class="prp">Heavy</span>,
+    <span class="prp">type</span> = <span class="typ">BadgeType</span>.<span class="prp">Transaction</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="bd-usage-dashboard">Dashboard</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'bd-usage-dsh','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'bd-usage-dsh','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBBadge</span>(<span class="str">"Active"</span>, <span class="prp">state</span>: .<span class="prp">success</span>, <span class="prp">level</span>: .<span class="prp">light</span>, <span class="prp">type</span>: .<span class="prp">dashboard</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBBadge</span>(
+    <span class="prp">text</span> = <span class="str">"Active"</span>,
+    <span class="prp">state</span> = <span class="typ">BadgeState</span>.<span class="prp">Success</span>,
+    <span class="prp">level</span> = <span class="typ">BadgeLevel</span>.<span class="prp">Light</span>,
+    <span class="prp">type</span> = <span class="typ">BadgeType</span>.<span class="prp">Dashboard</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <!-- Accessibility -->
+    <div class="sub-heading" id="bd-a11y">Accessibility</div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+      <tbody>
+        <tr><td>Accessibility label</td><td><code>accessibilityLabel("Status: Completed")</code></td><td><code>contentDescription = "Status: Completed"</code></td></tr>
+        <tr><td>Decorative mode</td><td><code>isAccessibilityElement = false</code> (when status is conveyed elsewhere)</td><td><code>importantForAccessibility = no</code></td></tr>
+        <tr><td>Color contrast</td><td>Heavy levels meet WCAG AA (4.5:1+)</td><td>Heavy levels meet WCAG AA (4.5:1+)</td></tr>
+        <tr><td>Non-color indicator</td><td>Badge text conveys meaning alongside color</td><td>Badge text conveys meaning alongside color</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- Usage Guidelines -->
+    <div class="sub-heading" id="bd-guidelines">Usage Guidelines</div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use semantic states that match the content meaning (Success for completed, Danger for failed, Warning for pending).</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Use badges for interactive elements -- badges are display-only status indicators.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use Heavy level for primary status indicators and Light/Medium for secondary or supporting context.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Use multiple Heavy badges in the same row -- visual noise. Use one Heavy + rest Light/Medium.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Match badge Type to context: Default for general, Voucher for promos, Transaction for history, Dashboard for summaries.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Mix badge Types within the same list or group.</p></div>
+    </div>
+
+    <!-- Criteria Scorecard -->
+    <div class="sub-heading" id="bd-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">ID</th>
+            <th class="col-md">Criterion</th>
+            <th class="col-badge">Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Simple single-layer structure: container with text child. Semantic naming.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Clean enum properties: State, Level, Type. Minor: State names don't match token semantic names.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors bound to <code>main/badge/</code> tokens. Note: 2 variants have hardcoded <code>opacity: 0.90</code>.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Maps to custom <code>EBBadge</code> on both platforms. Simple text + background shape.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-na">N/A</span></td><td class="muted">Display-only component. No interactive states needed.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td><span class="badge badge-na">N/A</span></td><td class="muted">No icons or assets. Text-only component.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">No CLI mappings registered yet. Property naming is clean and ready for mapping.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Code Connect -->
+    <div class="sub-heading" id="bd-cc">Code Connect</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Aspect</th><th class="col-badge">Status</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Property naming</td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Clean enum properties: State (7), Level (3), Type (4). Ready for Code Connect mapping.</td></tr>
+          <tr><td>Token coverage</td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors token-bound. Minor opacity inconsistency on 2 variants.</td></tr>
+          <tr><td>State coverage</td><td><span class="badge badge-na">N/A</span></td><td class="muted">Display-only. No interaction states.</td></tr>
+          <tr><td>Native component file</td><td><span class="badge badge-refine">Pending</span></td><td class="muted">EBBadge.swift / EBBadge.kt not yet created</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Variants Inventory -->
+    <div class="sub-heading" id="bd-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(68 total)</span></div>
+    <p class="section-desc">7 <code>State</code> values x 3 <code>Level</code> values x 4 <code>Type</code> values = 84 theoretical. Primary and Brand only support Heavy level, so actual count is (2 x 1 x 4) + (5 x 3 x 4) = 8 + 60 = 68 variants.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>State</th><th>Level</th><th>Types</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Primary</td><td>Heavy</td><td class="muted">Default, Voucher, Transaction, Dashboard</td><td class="mono">4 variants</td></tr>
+          <tr><td>Brand</td><td>Heavy</td><td class="muted">Default, Voucher, Transaction, Dashboard</td><td class="mono">4 variants</td></tr>
+          <tr><td>Info</td><td>Light / Medium / Heavy</td><td class="muted">Default, Voucher, Transaction, Dashboard</td><td class="mono">12 variants</td></tr>
+          <tr><td>Success</td><td>Light / Medium / Heavy</td><td class="muted">Default, Voucher, Transaction, Dashboard</td><td class="mono">12 variants</td></tr>
+          <tr><td>Warning</td><td>Light / Medium / Heavy</td><td class="muted">Default, Voucher, Transaction, Dashboard</td><td class="mono">12 variants</td></tr>
+          <tr><td>Danger</td><td>Light / Medium / Heavy</td><td class="muted">Default, Voucher, Transaction, Dashboard</td><td class="mono">12 variants</td></tr>
+          <tr><td>Disabled</td><td>Light / Medium / Heavy</td><td class="muted">Default, Voucher, Transaction, Dashboard</td><td class="mono">12 variants</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- ══ Tab: Changelog ═════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+
+    <div class="sub-heading" id="bd-v100">1.0.0 -- April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment -- node 21:111526</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Component assessed</strong> -- 68 variants documented across State (Primary/Brand/Info/Success/Warning/Danger/Disabled) x Level (Heavy/Medium/Light) x Type (Default/Voucher/Transaction/Dashboard). Token audit confirms all colors bound to <code>main/badge/{semantic}/{level}/</code> tokens.
+          <span class="tag-fixed">Documented</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Initial</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Hardcoded opacity on 2 variants</strong> -- Danger/Heavy and Disabled/Heavy Transaction variants have <code>opacity: 0.90</code> on container instead of using token-driven values. Inconsistent with other variants.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C3 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>State-to-token name mismatch</strong> -- Figma property names (Info, Success, Warning, Danger, Disabled) don't match token semantic names (information, positive, notice, negative, muted). Minor friction for automated Code Connect mapping.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C2 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Code Connect mappings</strong> -- No CLI mappings registered yet. Property naming is clean and ready for mapping.
+          <span class="tag-open tag-c7">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C7 Open</span>
+      </div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <!-- On This Page -->
+  <aside class="page-toc" id="toc-badge">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-badge"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Badge Component JS ──────────────────────────────────────────── */
+
+/* Color map: State -> Level -> { bg, label } */
+var _bdColors = {
+  Primary: {
+    Heavy:  { bg: '#005CE5', label: '#FFFFFF' },
+    Medium: { bg: '#005CE5', label: '#FFFFFF' },
+    Light:  { bg: '#005CE5', label: '#FFFFFF' }
+  },
+  Brand: {
+    Heavy:  { bg: '#1972F9', label: '#FFFFFF' },
+    Medium: { bg: '#1972F9', label: '#FFFFFF' },
+    Light:  { bg: '#1972F9', label: '#FFFFFF' }
+  },
+  Info: {
+    Light:  { bg: '#E5F1FF', label: '#005CE5' },
+    Medium: { bg: '#D2E5FF', label: '#005CE5' },
+    Heavy:  { bg: '#2340A9', label: '#FFFFFF' }
+  },
+  Success: {
+    Light:  { bg: '#E7F8F0', label: '#048570' },
+    Medium: { bg: '#CAF2E0', label: '#048570' },
+    Heavy:  { bg: '#12AF80', label: '#FFFFFF' }
+  },
+  Warning: {
+    Light:  { bg: '#FCF0CA', label: '#966F0B' },
+    Medium: { bg: '#F7D96E', label: '#966F0B' },
+    Heavy:  { bg: '#CA970C', label: '#FFFFFF' }
+  },
+  Danger: {
+    Light:  { bg: '#F8E6E6', label: '#B50707' },
+    Medium: { bg: '#F4C7C9', label: '#8D0710' },
+    Heavy:  { bg: '#D61B2C', label: '#FFFFFF' }
+  },
+  Disabled: {
+    Light:  { bg: '#C2C5CA', label: '#FFFFFF' },
+    Medium: { bg: '#9A9FA7', label: '#FFFFFF' },
+    Heavy:  { bg: '#717883', label: '#FFFFFF' }
+  }
+};
+
+/* Primary and Brand only have Heavy */
+var _bdHeavyOnly = { Primary: true, Brand: true };
+
+/* Type shape configs */
+var _bdTypes = {
+  Default:     { rx: 99, padH: 8, padV: [2, 4], fontSize: 12, h: null },
+  Voucher:     { rx: '0,0,4,0', padH: 8, padV: [2, 4], fontSize: 12, h: 18 },
+  Transaction: { rx: 4, padH: 4, padV: [1, 3], fontSize: 12, h: null },
+  Dashboard:   { rx: 4, padH: 4, padV: [1, 1], fontSize: 10, h: null }
+};
+
+/* Token semantic name mapping */
+var _bdTokenNames = {
+  Primary: 'primary', Brand: 'brand', Info: 'information',
+  Success: 'positive', Warning: 'notice', Danger: 'negative', Disabled: 'muted'
+};
+
+function _bdGetColors(state, level) {
+  var s = _bdColors[state];
+  if (!s) s = _bdColors.Primary;
+  /* Clamp to Heavy for Primary/Brand */
+  if (_bdHeavyOnly[state]) level = 'Heavy';
+  return s[level] || s.Heavy;
+}
+
+function _bdBuildHtml(state, level, type) {
+  var c = _bdGetColors(state, level);
+  var t = _bdTypes[type] || _bdTypes.Default;
+  var fs = t.fontSize;
+
+  /* Border-radius per type */
+  var br;
+  if (type === 'Voucher') br = '0 0 4px 0';
+  else if (type === 'Default') br = '99px';
+  else br = '4px';
+
+  /* Build the badge span */
+  var style = 'display:inline-block;';
+  style += 'background:' + c.bg + ';';
+  style += 'color:' + c.label + ';';
+  style += 'font-family:Proxima Soft,system-ui,sans-serif;';
+  style += 'font-weight:700;';
+  style += 'font-size:' + fs + 'px;';
+  style += 'line-height:' + fs + 'px;';
+  style += 'letter-spacing:' + (fs === 10 ? '0.25' : '0.5') + 'px;';
+  style += 'padding:' + t.padV[1] + 'px ' + t.padH + 'px ' + t.padV[0] + 'px;';
+  style += 'border-radius:' + br + ';';
+  style += 'text-align:center;white-space:nowrap;';
+  if (t.h) style += 'height:' + t.h + 'px;box-sizing:border-box;';
+
+  return '<span style="' + style + '">Label</span>';
+}
+
+/* ── Live Preview Demo ─────────────────────────────────────────── */
+function updateBadgeDemo() {
+  var state = document.getElementById('bd-demo-state').value;
+  var level = document.getElementById('bd-demo-level').value;
+  var type  = document.getElementById('bd-demo-type').value;
+
+  /* Clamp level for Primary/Brand */
+  if (_bdHeavyOnly[state] && level !== 'Heavy') {
+    document.getElementById('bd-demo-level').value = 'Heavy';
+    level = 'Heavy';
+  }
+
+  var el = document.getElementById('bd-demo-preview');
+  if (el) el.innerHTML = _bdBuildHtml(state, level, type);
+}
+
+/* ── Spec Card Updates ─────────────────────────────────────────── */
+var _bdSpecCards = {
+  'default':     { state: 'Primary', level: 'Heavy', type: 'Default' },
+  'voucher':     { state: 'Primary', level: 'Heavy', type: 'Voucher' },
+  'transaction': { state: 'Primary', level: 'Heavy', type: 'Transaction' },
+  'dashboard':   { state: 'Primary', level: 'Heavy', type: 'Dashboard' }
+};
+
+function updateBadgeSpecCard(cardType, prop, value) {
+  var card = _bdSpecCards[cardType];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Clamp level for Primary/Brand */
+  if (_bdHeavyOnly[card.state] && card.level !== 'Heavy') {
+    card.level = 'Heavy';
+    var levelSel = document.getElementById('bd-spec-' + cardType + '-level');
+    if (levelSel) levelSel.value = 'Heavy';
+  }
+
+  /* Update SVG preview */
+  var previewEl = document.getElementById('bd-spec-' + cardType + '-preview');
+  if (previewEl) previewEl.innerHTML = _bdBuildHtml(card.state, card.level, card.type);
+
+  /* Update property labels */
+  var spState = document.querySelector('[data-sp="bd-' + cardType + '-state"]');
+  if (spState) spState.textContent = card.state;
+  var spLevel = document.querySelector('[data-sp="bd-' + cardType + '-level"]');
+  if (spLevel) spLevel.textContent = card.level;
+
+  /* Update colors section */
+  var colorsEl = document.getElementById('bd-spec-' + cardType + '-colors');
+  if (colorsEl) {
+    var c = _bdGetColors(card.state, card.level);
+    var tokenBase = 'main/badge/' + (_bdTokenNames[card.state] || 'primary') + '/' + card.level.toLowerCase();
+    var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
+    h += '<div class="spec-prop"><span class="spec-prop-key">Background</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + c.bg + '"></span> ' + c.bg + '<span class="spec-token-name">' + tokenBase + '/background</span></span></div>';
+    var labelBorder = (c.label === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
+    h += '<div class="spec-prop"><span class="spec-prop-key">Label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + c.label + ';' + labelBorder + '"></span> ' + c.label + '<span class="spec-token-name">' + tokenBase + '/label</span></span></div>';
+    h += '</div>';
+    colorsEl.innerHTML = h;
+  }
+
+  /* Update layout section */
+  var layoutEl = document.getElementById('bd-spec-' + cardType + '-layout');
+  if (layoutEl) {
+    var t = _bdTypes[card.type] || _bdTypes.Default;
+    var radiusLabel;
+    if (card.type === 'Default') radiusLabel = '99px (pill)';
+    else if (card.type === 'Voucher') radiusLabel = '0/0/4px/0 (bottom-right only)';
+    else radiusLabel = '4px';
+
+    var lh = '<div class="spec-detail-label">Layout</div><div class="spec-props">';
+    if (t.h) lh += '<div class="spec-prop"><span class="spec-prop-key">Height</span><span class="spec-prop-val mono">' + t.h + 'px (fixed)</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding H</span><span class="spec-prop-val mono">' + t.padH + 'px</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding V</span><span class="spec-prop-val mono">' + t.padV[0] + 'px (top) / ' + t.padV[1] + 'px (bottom)</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Corner radius</span><span class="spec-prop-val mono">' + radiusLabel + '</span></div>';
+    lh += '</div>';
+    layoutEl.innerHTML = lh;
+  }
+
+  /* Update typography section */
+  var typoEl = document.getElementById('bd-spec-' + cardType + '-typo');
+  if (typoEl) {
+    var isDash = (card.type === 'Dashboard');
+    var th = '<div class="spec-detail-label">Typography</div><div class="spec-props">';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Text Style</span><span class="spec-prop-val mono">' + (isDash ? 'Primary/Label/Tiny' : 'Primary/Label/Fine') + '</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">Proxima Soft Bold</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">' + (isDash ? '10px' : '12px') + '</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Tracking</span><span class="spec-prop-val mono">' + (isDash ? '0.25px' : '0.5px') + '</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Line-height</span><span class="spec-prop-val mono">' + (isDash ? '10px' : '12px') + '</span></div>';
+    th += '</div>';
+    typoEl.innerHTML = th;
+  }
+
+  /* Update DEV code snippet */
+  var codeEl = document.getElementById('bd-code-' + cardType);
+  if (codeEl) {
+    var activeTab = codeEl.closest('.spec-card-code');
+    if (activeTab) {
+      var activeLangBtn = activeTab.querySelector('.spec-code-tab.active');
+      var lang = (activeLangBtn && activeLangBtn.textContent.indexOf('COMPOSE') !== -1) ? 'compose' : 'swift';
+      var raw = _getBadgeSnippet(cardType, lang);
+      codeEl.setAttribute('data-final', raw);
+      codeEl.textContent = raw;
+      if (typeof highlightSyntax === 'function') highlightSyntax(codeEl);
+    }
+  }
+}
+
+function _getBadgeSnippet(cardType, lang) {
+  var card = _bdSpecCards[cardType];
+  if (!card) return '';
+  var st = card.state.toLowerCase();
+  var lv = card.level.toLowerCase();
+  var tp = card.type.toLowerCase();
+  var typeParam = (tp === 'default') ? '' : ', type: .' + tp;
+
+  if (lang === 'swift') {
+    return 'EBBadge("Label", state: .' + st + ', level: .' + lv + typeParam + ')';
+  } else {
+    var lines = 'EBBadge(\n    text = "Label",\n    state = BadgeState.' + card.state + ',\n    level = BadgeLevel.' + card.level;
+    if (tp !== 'default') lines += ',\n    type = BadgeType.' + card.type;
+    lines += '\n)';
+    return lines;
+  }
+}
+
+function switchBadgeCodeTab(tabBtn, lang, cardType) {
+  var parent = tabBtn.parentElement;
+  parent.querySelectorAll('.spec-code-tab').forEach(function(t) { t.classList.remove('active'); });
+  tabBtn.classList.add('active');
+  var codeEl = document.getElementById('bd-code-' + cardType);
+  if (codeEl) {
+    var raw = _getBadgeSnippet(cardType, lang);
+    codeEl.setAttribute('data-final', raw);
+    codeEl.textContent = raw;
+    if (typeof highlightSyntax === 'function') highlightSyntax(codeEl);
+  }
+}
+
+function toggleBadgeSpecMode(type, toggleEl) {
+  var labels = toggleEl.querySelectorAll('.spec-mode-label');
+  var isDes = labels[0].classList.contains('active');
+  labels[0].classList.toggle('active', !isDes);
+  labels[1].classList.toggle('active', isDes);
+  var desView = document.querySelector('[data-view="' + type + '-des"]');
+  var devView = document.querySelector('[data-view="' + type + '-dev"]');
+  if (isDes) {
+    if (desView) desView.style.display = 'none';
+    if (devView) {
+      devView.style.display = '';
+      var shortType = type.replace('bd-', '');
+      var activeTab = devView.querySelector('.spec-code-tab.active');
+      var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+      var codeEl = devView.querySelector('code');
+      if (codeEl) {
+        var raw = _getBadgeSnippet(shortType, lang);
+        codeEl.setAttribute('data-final', raw);
+        codeEl.textContent = raw;
+        if (typeof highlightSyntax === 'function') highlightSyntax(codeEl);
+      }
+    }
+  } else {
+    if (devView) devView.style.display = 'none';
+    if (desView) desView.style.display = '';
+  }
+}
+
+/* ── Init ──────────────────────────────────────────────────────── */
+function _bdInit() {
+  updateBadgeDemo();
+  ['default', 'voucher', 'transaction', 'dashboard'].forEach(function(ct) {
+    updateBadgeSpecCard(ct, 'state', 'Primary');
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _bdInit);
+} else {
+  _bdInit();
+}
+</script>
+
+<!--@section-end-->

@@ -9,7 +9,7 @@ status: assessed
 node: 17104:184842
 ds-verdict: keep
 native-status: refine
-variants: 60
+variants: 180
 ios: Button
 android: Button / OutlinedButton / TextButton
 open-issues: C7
@@ -50,7 +50,7 @@ open-issues: C7
       <div class="summary-card-name">Button</div>
       <span class="badge badge-ready">Keep</span>
     </div>
-    <div class="summary-card-desc">60 variants. Size(5) × State(4) × Style(3). Appearance via variable modes (Default/Destructive/White/Subtle). Loading state added with dot indicators. C7 (code connect) pending.</div>
+    <div class="summary-card-desc">180 variants. Style(3) × State(3) × Size(5) × Icon Placement(4). Appearance via variable modes (Default/Destructive/White/Subtle) — documented in Figma component description. C7 (code connect) pending.</div>
   </div>
 </div>
 <!--@summary-card-end-->
@@ -60,8 +60,8 @@ open-issues: C7
   <td><strong>Button</strong></td>
   <td><span class="badge badge-ready">Keep</span></td>
   <td><span class="badge badge-refine">Needs Refinement</span></td>
-  <td class="muted">60</td>
-  <td class="muted">v3.2: Size(5) × State(4) × Style(Filled/Outline/Text). Compact size added. Appearance via 4 variable modes. C7 (code connect) pending.</td>
+  <td class="muted">180</td>
+  <td class="muted">v4.0: Style(3) × State(3) × Size(5) × Icon Placement(4). Icon Placement promoted to property. Appearance remains a Mode, documented in Figma description. C7 (code connect) pending.</td>
 </tr>
 <!--@summary-row-end-->
 
@@ -135,7 +135,6 @@ open-issues: C7
                 <option value="default" selected>Default</option>
                 <option value="pressed">Pressed</option>
                 <option value="disabled">Disabled</option>
-                <option value="loading">Loading</option>
               </select>
             </div>
             <div class="demo-panel-row">
@@ -149,12 +148,13 @@ open-issues: C7
               </select>
             </div>
             <div class="demo-panel-row">
-              <span class="demo-panel-label">leadingIcon</span>
-              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); setDemoIcon('leading', this.classList.contains('active'))"></button>
-            </div>
-            <div class="demo-panel-row">
-              <span class="demo-panel-label">trailingIcon</span>
-              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); setDemoIcon('trailing', this.classList.contains('active'))"></button>
+              <span class="demo-panel-label">Icon Placement</span>
+              <select class="demo-panel-select" onchange="setDemoIconPlacement(this.value)">
+                <option value="none" selected>None</option>
+                <option value="leading">Leading</option>
+                <option value="trailing">Trailing</option>
+                <option value="iconOnly">Icon Only</option>
+              </select>
             </div>
           </div>
           <div class="demo-panel-section">
@@ -258,8 +258,15 @@ open-issues: C7
             <td><strong>Loading</strong></td>
             <td class="center"><span class="check">Yes</span></td>
             <td class="center"><span class="check">Yes</span></td>
-            <td class="mono">State=Loading</td>
-            <td class="muted">Dot indicators replace label. Uses disabled appearance colors. Tap disabled.</td>
+            <td class="mono">Native modifier</td>
+            <td class="muted">Handled as an interaction modifier in native code — <code>.ebLoading(true)</code> (SwiftUI) / <code>isLoading = true</code> (Compose). Removed as a Figma state in v4.0.</td>
+          </tr>
+          <tr>
+            <td><strong>Icon Only (a11y)</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">Icon Placement=Icon Only</td>
+            <td class="muted">Square target matches size height. Requires <code>accessibilityLabel</code> / <code>contentDescription</code> since no visible text.</td>
           </tr>
         </tbody>
       </table>
@@ -268,25 +275,27 @@ open-issues: C7
     <!-- Open / Resolved -->
     <div class="sub-heading" id="btn-resolved">Resolved Issues</div>
     <ul class="resolved-list">
-      <li>Layer renamed from <code>.base/button/small</code> → <code>container</code> on compact disabled container (C1)</li>
-      <li>Icon slots (<code>Leading Container</code>, <code>Trailing Container</code>) added to all variants as Figma SLOT nodes (C2)</li>
-      <li><code>isError</code> replaced — Destructive is now an appearance variable mode, not a variant property (C2)</li>
-      <li>v2: Outlined and Text Link moved from appearance to <code>Style</code> variant property (Filled/Outline/Text) (C2)</li>
-      <li>v2: Size moved from variable modes to variant dimension — each size has its own text style, eliminating font-size variable conflict (C2/C3)</li>
-      <li>v3: <code>Button</code> variable collection created with 4 appearance modes (Default/Destructive/White/Subtle) — 12 color variables bound to all 60 variants (C3)</li>
-      <li>v3: Old <code>Button Size</code> and <code>button/variant</code> collections removed (C3)</li>
-      <li>v3.1: Loading state added — 12 new <code>State=Loading</code> variants with dot indicators replacing label, disabled appearance colors (C5)</li>
+      <li><span>Layer renamed from <code>.base/button/small</code> → <code>container</code> on compact disabled container (C1)</span></li>
+      <li><span>Icon slots (<code>Leading Container</code>, <code>Trailing Container</code>) added to all variants as Figma SLOT nodes (C2)</span></li>
+      <li><span><code>isError</code> replaced — Destructive is now an appearance variable mode, not a variant property (C2)</span></li>
+      <li><span>v2: Outlined and Text Link moved from appearance to <code>Style</code> variant property (Filled/Outline/Text) (C2)</span></li>
+      <li><span>v2: Size moved from variable modes to variant dimension — each size has its own text style, eliminating font-size variable conflict (C2/C3)</span></li>
+      <li><span>v3: <code>Button</code> variable collection created with 4 appearance modes (Default/Destructive/White/Subtle) — 12 color variables bound to all 60 variants (C3)</span></li>
+      <li><span>v3: Old <code>Button Size</code> and <code>button/variant</code> collections removed (C3)</span></li>
+      <li><span>v3.1: Loading state added — 12 new <code>State=Loading</code> variants with dot indicators replacing label, disabled appearance colors (C5)</span></li>
+      <li><span>v4.0: Icon Placement promoted to component property — replaces <code>leadingIcon</code>/<code>trailingIcon</code> booleans with a single 4-value enum (<code>None</code>/<code>Leading</code>/<code>Trailing</code>/<code>Icon Only</code>). Adds <code>Icon Only</code> square variant for toolbars/navigation (previously a design recommendation). Handoff is now explicit — developers see icon placement as a first-class property. (C2)</span></li>
+      <li><span>v4.0: Appearance Mode documented in Figma component description with SwiftUI/Compose API mapping — addresses the Mode-invisibility handoff gap until Code Connect is implemented. (C7 partial)</span></li>
+      <li><span>v4.0: State simplified to Default/Pressed/Disabled — Loading moved to a native interaction modifier rather than a Figma variant. (C5)</span></li>
     </ul>
 
     <div class="sub-heading" id="btn-open">Open Issues</div>
     <ul class="resolved-list">
-      <li>Code Connect CLI mappings not registered (C7)</li>
+      <li><span>Code Connect CLI mappings not registered (C7)</span></li>
     </ul>
 
     <!-- Design Recommendations -->
     <div class="sub-heading" id="btn-recommend">Design Recommendations</div>
     <ul class="recommend-list">
-      <li><span>Add an <code>iconOnly</code> variant for icon buttons without labels — common in toolbars, navigation bars, and compact UI areas <span class="tag-recommend">Suggested</span></span></li>
       <li><span>Document full-width (stretch) behavior as a layout guideline — consider a <code>isFullWidth</code> boolean property for bottom-sheet CTAs and standalone action areas <span class="tag-recommend">Suggested</span></span></li>
     </ul>
 
@@ -989,7 +998,7 @@ open-issues: C7
       </div>
     </div>
 
-    <div class="sub-heading" id="btn-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(60 total)</span></div>
+    <div class="sub-heading" id="btn-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(180 total)</span></div>
     <p>3 <code>Style</code> (Filled/Outline/Text) × 5 <code>Size</code> (Large/Medium/Small/Compact/XSmall) × 4 <code>State</code> (Default/Pressed/Disabled/Loading) = 60 variants. <code>Appearance</code> is a variable mode (Default/Destructive/White/Subtle) — 4 modes × 60 variants = 240 visual states.</p>
     <div class="table-wrap">
       <table>
@@ -1064,7 +1073,24 @@ open-issues: C7
     <!-- ── Tab: Changelog ────────────────────────────────────────── -->
     <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
 
-    <div class="sub-heading" id="btn-v320" style="margin-top:0">3.2.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
+    <div class="sub-heading" id="btn-v400" style="margin-top:0">4.0.0 — April 2026 <span class="tab-version-badge major">Major</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Icon Placement restructure + Appearance Mode documentation · node 17104:184842</div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Icon Placement promoted to component property</strong> — Previously two boolean toggles (<code>leadingIcon</code>, <code>trailingIcon</code>) caused handoff ambiguity. Now a single 4-value enum: <code>None</code> / <code>Leading</code> / <code>Trailing</code> / <code>Icon Only</code>. Adds <code>Icon Only</code> as a new square-button variant. Total variants: 60 → 180 (3 Styles × 3 States × 5 Sizes × 4 Icon Placements). <span class="tag-fixed">Restructured</span></div>
+        <span class="changelog-delta delta-resolved">C2 Improved</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Appearance Mode documented in Figma component description</strong> — Appearance (Default/Destructive/White/Subtle) remains a Variable Mode for token reuse but is now explicitly documented in the Figma component description with SwiftUI/Compose API mapping. Addresses the Mode-invisibility handoff gap. Will be superseded by Code Connect when C7 is implemented. <span class="tag-fixed">Documented</span></div>
+        <span class="changelog-delta delta-resolved">C7 Partial</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>State property reduced to 3 values</strong> — <code>State</code> now Default/Pressed/Disabled. Loading is handled as an interaction modifier in native code rather than a Figma variant. <span class="tag-fixed">Simplified</span></div>
+        <span class="changelog-delta delta-resolved">C5 Refined</span>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="btn-v320">3.2.0 — March 2026 <span class="tab-version-badge minor">Minor</span></div>
     <div class="changelog">
       <div class="changelog-header">Changes Applied via Figma MCP · node 17104:184842</div>
       <div class="changelog-row">
