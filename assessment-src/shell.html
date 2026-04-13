@@ -609,39 +609,39 @@ function setDemoVariant(v) { setDemoAppearance(v === 'brand' ? 'default' : v); }
 
 /* ── Spec card previews ──────────────────────────────────────────── */
 var _specCards = {
-  filled:  { style: 'filled',  appearance: 'default', size: 'large', state: 'default', leadingIcon: false, trailingIcon: false },
-  outline: { style: 'outline', appearance: 'default', size: 'large', state: 'default', leadingIcon: false, trailingIcon: false },
-  text:    { style: 'text',    appearance: 'default', size: 'large', state: 'default', leadingIcon: false, trailingIcon: false }
+  filled:  { style: 'filled',  appearance: 'default', size: 'large', state: 'default', iconPlacement: 'none' },
+  outline: { style: 'outline', appearance: 'default', size: 'large', state: 'default', iconPlacement: 'none' },
+  text:    { style: 'text',    appearance: 'default', size: 'large', state: 'default', iconPlacement: 'none' }
 };
 
-/* Size data for spec card layout/typography */
+/* Size data for spec card layout/typography (v4.1) */
 var _specSizeData = {
-  large:   { height: 50, paddingH: 20, paddingV: 13, fontSize: 18, textStyle: 'Primary/Label/Large' },
-  medium:  { height: 40, paddingH: 16, paddingV: 8,  fontSize: 16, textStyle: 'Primary/Label/Base' },
-  small:   { height: 28, paddingH: 12, paddingV: 6,  fontSize: 16, textStyle: 'Primary/Label/Base' },
-  compact: { height: 28, paddingH: 12, paddingV: 6,  fontSize: 16, textStyle: 'Primary/Label/Base' },
-  xsmall:  { height: 24, paddingH: 10, paddingV: 4,  fontSize: 14, textStyle: 'Primary/Label/Small' }
+  large:   { height: 50, paddingH: 20, paddingV: 16, fontSize: 18, textStyle: 'Primary/Label/Large' },
+  medium:  { height: 48, paddingH: 16, paddingV: 12, fontSize: 16, textStyle: 'Primary/Label/Base' },
+  small:   { height: 36, paddingH: 12, paddingV: 8,  fontSize: 14, textStyle: 'Primary/Label/Small' },
+  compact: { height: 28, paddingH: 12, paddingV: 5,  fontSize: 14, textStyle: 'Primary/Label/Small' },
+  xsmall:  { height: 24, paddingH: 10, paddingV: 4,  fontSize: 12, textStyle: 'Primary/Label/Fine' }
 };
 
-/* Color data for spec card detail sections */
+/* Color data for spec card detail sections (v4.1 Mode-driven tokens) */
 var _specColorData = {
   filled: {
-    default:     { label: 'Colors — Default',     rows: [['Default bg','#005CE5','main/button/primary/brand/enabled/bg'],['Pressed bg','#2340A9','main/button/primary/brand/pressed/bg'],['Disabled bg','#9BC5FD','main/button/primary/brand/disabled/bg'],['Label','#FFFFFF','main/button/primary/brand/enabled/label']] },
-    destructive: { label: 'Colors — Destructive',  rows: [['Default bg','#D81E1E','main/button/primary/brand/enabled/bg'],['Pressed bg','#B01818','main/button/primary/brand/pressed/bg'],['Disabled bg','#F5A3A3','main/button/primary/brand/disabled/bg'],['Label','#FFFFFF','main/button/primary/brand/enabled/label']] },
-    white:       { label: 'Colors — White',        rows: [['Default bg','#FFFFFF','main/button/primary/brand/enabled/bg'],['Pressed bg','#EEF2F9','main/button/primary/brand/pressed/bg'],['Disabled bg','#F5F7FA','main/button/primary/brand/disabled/bg'],['Label','#005CE5','main/button/primary/brand/enabled/label']] },
-    subtle:      { label: 'Colors — Subtle',       rows: [['Default bg','#E5F1FF','main/button/primary/brand/enabled/bg'],['Pressed bg','#D2E5FF','main/button/primary/brand/pressed/bg'],['Disabled bg','#EEF5FF','main/button/primary/brand/disabled/bg'],['Label','#005CE5','main/button/primary/brand/enabled/label']] }
+    default:     { label: 'Colors — Default',     rows: [['Default bg','#005CE5','appearance/container/fill'],['Pressed bg','#2340A9','appearance/container/fill-pressed'],['Disabled bg','#9BC5FD','appearance/container/fill-disabled'],['Label','#FFFFFF','appearance/label/color']] },
+    destructive: { label: 'Colors — Destructive', rows: [['Default bg','#D81E1E','appearance/container/fill'],['Pressed bg','#B01818','appearance/container/fill-pressed'],['Disabled bg','#F5A3A3','appearance/container/fill-disabled'],['Label','#FFFFFF','appearance/label/color']] },
+    white:       { label: 'Colors — White',       rows: [['Default bg','#FFFFFF','appearance/container/fill'],['Pressed bg','#EEF2F9','appearance/container/fill-pressed'],['Disabled bg','#F5F7FA','appearance/container/fill-disabled'],['Label','#005CE5','appearance/label/color']] },
+    subtle:      { label: 'Colors — Subtle',      rows: [['Default bg','#E5F1FF','appearance/container/fill'],['Pressed bg','#D2E5FF','appearance/container/fill-pressed'],['Disabled bg','#EEF5FF','appearance/container/fill-disabled'],['Label','#005CE5','appearance/label/color']] }
   },
   outline: {
-    default:     { label: 'Colors — Default',     rows: [['Default stroke/label','#005CE5','main/button/secondary/brand/enabled/border'],['Pressed','#2340A9','main/button/secondary/brand/pressed/border'],['Disabled','#9BC5FD','main/button/secondary/brand/disabled/border']] },
-    destructive: { label: 'Colors — Destructive',  rows: [['Default stroke/label','#D81E1E','main/button/secondary/brand/enabled/border'],['Pressed','#B01818','main/button/secondary/brand/pressed/border'],['Disabled','#F5A3A3','main/button/secondary/brand/disabled/border']] },
-    white:       { label: 'Colors — White',        rows: [['Default stroke/label','#005CE5','main/button/secondary/brand/enabled/border'],['Pressed','#2340A9','main/button/secondary/brand/pressed/border'],['Disabled','#9BC5FD','main/button/secondary/brand/disabled/border']] },
-    subtle:      { label: 'Colors — Subtle',       rows: [['Default stroke/label','#005CE5','main/button/secondary/brand/enabled/border'],['Pressed','#2340A9','main/button/secondary/brand/pressed/border'],['Disabled','#9BC5FD','main/button/secondary/brand/disabled/border']] }
+    default:     { label: 'Colors — Default',     rows: [['Default border','#005CE5','appearance/stroke/color'],['Pressed border','#2340A9','appearance/stroke/color-pressed'],['Disabled border','#9BC5FD','appearance/stroke/color-disabled'],['Label','#005CE5','appearance/label/on-surface/color']] },
+    destructive: { label: 'Colors — Destructive', rows: [['Default border','#D81E1E','appearance/stroke/color'],['Pressed border','#B01818','appearance/stroke/color-pressed'],['Disabled border','#F5A3A3','appearance/stroke/color-disabled'],['Label','#D81E1E','appearance/label/on-surface/color']] },
+    white:       { label: 'Colors — White',       rows: [['Default border','#005CE5','appearance/stroke/color'],['Pressed border','#2340A9','appearance/stroke/color-pressed'],['Disabled border','#9BC5FD','appearance/stroke/color-disabled'],['Label','#005CE5','appearance/label/on-surface/color']] },
+    subtle:      { label: 'Colors — Subtle',      rows: [['Default border','#005CE5','appearance/stroke/color'],['Pressed border','#2340A9','appearance/stroke/color-pressed'],['Disabled border','#9BC5FD','appearance/stroke/color-disabled'],['Label','#005CE5','appearance/label/on-surface/color']] }
   },
   text: {
-    default:     { label: 'Colors — Default',     rows: [['Default label','#005CE5','main/button/tertiary/brand/enabled/label'],['Pressed','#2340A9','main/button/tertiary/brand/pressed/label'],['Disabled','#9BC5FD','main/button/tertiary/brand/disabled/label']] },
-    destructive: { label: 'Colors — Destructive',  rows: [['Default label','#D81E1E','main/button/tertiary/brand/enabled/label'],['Pressed','#B01818','main/button/tertiary/brand/pressed/label'],['Disabled','#F5A3A3','main/button/tertiary/brand/disabled/label']] },
-    white:       { label: 'Colors — White',        rows: [['Default label','#005CE5','main/button/tertiary/brand/enabled/label'],['Pressed','#2340A9','main/button/tertiary/brand/pressed/label'],['Disabled','#9BC5FD','main/button/tertiary/brand/disabled/label']] },
-    subtle:      { label: 'Colors — Subtle',       rows: [['Default label','#005CE5','main/button/tertiary/brand/enabled/label'],['Pressed','#2340A9','main/button/tertiary/brand/pressed/label'],['Disabled','#9BC5FD','main/button/tertiary/brand/disabled/label']] }
+    default:     { label: 'Colors — Default',     rows: [['Default label','#005CE5','appearance/label/on-surface/color'],['Pressed label','#2340A9','appearance/label/on-surface/color-pressed'],['Disabled label','#9BC5FD','appearance/label/on-surface/color-disabled']] },
+    destructive: { label: 'Colors — Destructive', rows: [['Default label','#D81E1E','appearance/label/on-surface/color'],['Pressed label','#B01818','appearance/label/on-surface/color-pressed'],['Disabled label','#F5A3A3','appearance/label/on-surface/color-disabled']] },
+    white:       { label: 'Colors — White',       rows: [['Default label','#005CE5','appearance/label/on-surface/color'],['Pressed label','#2340A9','appearance/label/on-surface/color-pressed'],['Disabled label','#9BC5FD','appearance/label/on-surface/color-disabled']] },
+    subtle:      { label: 'Colors — Subtle',      rows: [['Default label','#005CE5','appearance/label/on-surface/color'],['Pressed label','#2340A9','appearance/label/on-surface/color-pressed'],['Disabled label','#9BC5FD','appearance/label/on-surface/color-disabled']] }
   }
 };
 
@@ -683,9 +683,24 @@ function updateSpecCard(cardStyle, prop, value) {
     var specTrailing = document.getElementById('spec-' + cardStyle + '-trailing');
     var path16 = 'M2.13359 5.8498C2.41244 4.3707 3.15349 3.46738 4.59457 3.13974C5.47753 2.93899 6.35971 3.35959 7 3.99988L8 4.99988L9 3.99988C9.6403 3.35967 10.5224 2.93908 11.4053 3.13975C12.8465 3.46728 13.5876 4.37064 13.8664 5.84979C14.0629 6.8923 13.5786 7.92128 12.8284 8.67143L12.5 8.99986L8.70711 12.7928C8.31658 13.1833 7.68342 13.1833 7.29289 12.7928L3.5 8.99986L3.17159 8.67145C2.42143 7.9213 1.93706 6.89231 2.13359 5.8498Z';
     var path24 = 'M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z';
+    var placement = card.iconPlacement || 'none';
+    var showLeading = placement === 'leading' || placement === 'iconOnly';
+    var showTrailing = placement === 'trailing';
+    var isIconOnly = placement === 'iconOnly';
+    /* Hide label when icon only */
+    if (specLabel) specLabel.style.display = isIconOnly ? 'none' : '';
+    /* Make icon-only square */
+    if (isIconOnly) {
+      el.style.width = sz.height;
+      el.style.padding = '0';
+      el.style.justifyContent = 'center';
+    } else {
+      el.style.width = '';
+      el.style.justifyContent = '';
+    }
     [specLeading, specTrailing].forEach(function(svg, idx) {
       if (!svg) return;
-      var show = idx === 0 ? card.leadingIcon : card.trailingIcon;
+      var show = idx === 0 ? showLeading : showTrailing;
       svg.style.display = show ? 'block' : 'none';
       svg.setAttribute('width', specIconSize);
       svg.setAttribute('height', specIconSize);

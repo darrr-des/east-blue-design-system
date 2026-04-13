@@ -286,6 +286,11 @@ open-issues: C7
       <li><span>v4.0: Icon Placement promoted to component property — replaces <code>leadingIcon</code>/<code>trailingIcon</code> booleans with a single 4-value enum (<code>None</code>/<code>Leading</code>/<code>Trailing</code>/<code>Icon Only</code>). Adds <code>Icon Only</code> square variant for toolbars/navigation (previously a design recommendation). Handoff is now explicit — developers see icon placement as a first-class property. (C2)</span></li>
       <li><span>v4.0: Appearance Mode documented in Figma component description with SwiftUI/Compose API mapping — addresses the Mode-invisibility handoff gap until Code Connect is implemented. (C7 partial)</span></li>
       <li><span>v4.0: State simplified to Default/Pressed/Disabled — Loading moved to a native interaction modifier rather than a Figma variant. (C5)</span></li>
+      <li><span>v4.1: <code>button-container</code> wrapper layer removed — outermost component now holds fill/radius/auto-layout directly. Layer depth reduced from 4 to 3 (component → container → label/icon). Inner <code>container</code> retained for icon-label gap grouping. (C1)</span></li>
+      <li><span>v4.1: Large height reduced from 56px → 50px per design review feedback. (C3)</span></li>
+      <li><span>v4.1: New Mode-driven token collection applied — all 60 Filled variants bound to <code>appearance/container/fill</code> (+ pressed/disabled), all 60 Outline variants bound to <code>appearance/stroke/color</code> + new <code>appearance/label/on-surface/color</code>, all 60 Text variants bound to <code>appearance/label/on-surface/color</code>. Switching the parent frame's Variable Mode (Default / Destructive / White / Subtle) now drives appearance across all 180 variants. (C3)</span></li>
+      <li><span>v4.1: New <code>appearance/label/on-surface/color</code> variable created — semantic separation between labels on filled vs surface backgrounds. Eliminates token-purpose confusion between Filled labels (white-on-fill) and Outline/Text labels (color-on-surface). (C3)</span></li>
+      <li><span>v4.1: Text styles renamed to cleaner <code>Primary/Label/Large</code>, <code>Primary/Label/Base</code>, <code>Primary/Label/Small</code>, <code>Primary/Label/Fine</code> (was <code>Primary/Label/Light/*</code> family). (C3)</span></li>
     </ul>
 
     <div class="sub-heading" id="btn-open">Open Issues</div>
@@ -334,7 +339,6 @@ open-issues: C7
                 <option value="default" selected>Default</option>
                 <option value="pressed">Pressed</option>
                 <option value="disabled">Disabled</option>
-                <option value="loading">Loading</option>
               </select>
             </div>
             <div class="demo-panel-row">
@@ -348,12 +352,13 @@ open-issues: C7
               </select>
             </div>
             <div class="demo-panel-row">
-              <span class="demo-panel-label">leadingIcon</span>
-              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); updateSpecCard('filled', 'leadingIcon', this.classList.contains('active'))"></button>
-            </div>
-            <div class="demo-panel-row">
-              <span class="demo-panel-label">trailingIcon</span>
-              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); updateSpecCard('filled', 'trailingIcon', this.classList.contains('active'))"></button>
+              <span class="demo-panel-label">Icon Placement</span>
+              <select class="demo-panel-select" onchange="updateSpecCard('filled', 'iconPlacement', this.value)">
+                <option value="none" selected>None</option>
+                <option value="leading">Leading</option>
+                <option value="trailing">Trailing</option>
+                <option value="iconOnly">Icon Only</option>
+              </select>
             </div>
           </div>
           <div class="demo-panel-section">
@@ -418,11 +423,13 @@ open-issues: C7
       </table>
       </div>
       <div class="style-colors-tokens">
-        <span class="style-colors-token-label">Tokens:</span>
-        <code>main/button/primary/brand/enabled/bg</code>
-        <code>main/button/primary/brand/pressed/bg</code>
-        <code>main/button/primary/brand/disabled/bg</code>
-        <code>main/button/primary/brand/enabled/label</code>
+        <span class="style-colors-token-label">Tokens (v4.1 Mode-driven):</span>
+        <code>appearance/container/fill</code>
+        <code>appearance/container/fill-pressed</code>
+        <code>appearance/container/fill-disabled</code>
+        <code>appearance/label/color</code>
+        <code>appearance/label/color-pressed</code>
+        <code>appearance/label/color-disabled</code>
       </div>
     </div>
 
@@ -453,7 +460,6 @@ open-issues: C7
                 <option value="default" selected>Default</option>
                 <option value="pressed">Pressed</option>
                 <option value="disabled">Disabled</option>
-                <option value="loading">Loading</option>
               </select>
             </div>
             <div class="demo-panel-row">
@@ -467,12 +473,13 @@ open-issues: C7
               </select>
             </div>
             <div class="demo-panel-row">
-              <span class="demo-panel-label">leadingIcon</span>
-              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); updateSpecCard('outline', 'leadingIcon', this.classList.contains('active'))"></button>
-            </div>
-            <div class="demo-panel-row">
-              <span class="demo-panel-label">trailingIcon</span>
-              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); updateSpecCard('outline', 'trailingIcon', this.classList.contains('active'))"></button>
+              <span class="demo-panel-label">Icon Placement</span>
+              <select class="demo-panel-select" onchange="updateSpecCard('outline', 'iconPlacement', this.value)">
+                <option value="none" selected>None</option>
+                <option value="leading">Leading</option>
+                <option value="trailing">Trailing</option>
+                <option value="iconOnly">Icon Only</option>
+              </select>
             </div>
           </div>
           <div class="demo-panel-section">
@@ -537,10 +544,13 @@ open-issues: C7
       </table>
       </div>
       <div class="style-colors-tokens">
-        <span class="style-colors-token-label">Tokens:</span>
-        <code>main/button/secondary/brand/enabled/border</code>
-        <code>main/button/secondary/brand/pressed/border</code>
-        <code>main/button/secondary/brand/disabled/border</code>
+        <span class="style-colors-token-label">Tokens (v4.1 Mode-driven):</span>
+        <code>appearance/stroke/color</code>
+        <code>appearance/stroke/color-pressed</code>
+        <code>appearance/stroke/color-disabled</code>
+        <code>appearance/label/on-surface/color</code>
+        <code>appearance/label/on-surface/color-pressed</code>
+        <code>appearance/label/on-surface/color-disabled</code>
       </div>
     </div>
 
@@ -571,7 +581,6 @@ open-issues: C7
                 <option value="default" selected>Default</option>
                 <option value="pressed">Pressed</option>
                 <option value="disabled">Disabled</option>
-                <option value="loading">Loading</option>
               </select>
             </div>
             <div class="demo-panel-row">
@@ -585,12 +594,13 @@ open-issues: C7
               </select>
             </div>
             <div class="demo-panel-row">
-              <span class="demo-panel-label">leadingIcon</span>
-              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); updateSpecCard('text', 'leadingIcon', this.classList.contains('active'))"></button>
-            </div>
-            <div class="demo-panel-row">
-              <span class="demo-panel-label">trailingIcon</span>
-              <button class="demo-bool-toggle" onclick="this.classList.toggle('active'); updateSpecCard('text', 'trailingIcon', this.classList.contains('active'))"></button>
+              <span class="demo-panel-label">Icon Placement</span>
+              <select class="demo-panel-select" onchange="updateSpecCard('text', 'iconPlacement', this.value)">
+                <option value="none" selected>None</option>
+                <option value="leading">Leading</option>
+                <option value="trailing">Trailing</option>
+                <option value="iconOnly">Icon Only</option>
+              </select>
             </div>
           </div>
           <div class="demo-panel-section">
@@ -651,10 +661,10 @@ open-issues: C7
       </table>
       </div>
       <div class="style-colors-tokens">
-        <span class="style-colors-token-label">Tokens:</span>
-        <code>main/button/tertiary/brand/enabled/label</code>
-        <code>main/button/tertiary/brand/pressed/label</code>
-        <code>main/button/tertiary/brand/disabled/label</code>
+        <span class="style-colors-token-label">Tokens (v4.1 Mode-driven):</span>
+        <code>appearance/label/on-surface/color</code>
+        <code>appearance/label/on-surface/color-pressed</code>
+        <code>appearance/label/on-surface/color-disabled</code>
       </div>
     </div>
 
@@ -709,9 +719,11 @@ open-issues: C7
         <tr><td><code>Appearance=Subtle</code></td><td><code>.ebAppearance(.subtle)</code></td><td><code>colors = EBButtonDefaults.subtleColors()</code></td></tr>
         <tr><td><code>Size=Large…XSmall</code></td><td><code>controlSize: .large / .regular / .small / .compact / .mini</code></td><td><code>size = EBButtonSize.Large / Medium / Small / Compact / XSmall</code></td></tr>
         <tr><td><code>State=Disabled</code></td><td><code>.disabled(true)</code></td><td><code>enabled = false</code></td></tr>
-        <tr><td><code>State=Loading</code></td><td><code>.ebLoading(true)</code></td><td><code>isLoading = true</code></td></tr>
-        <tr><td><code>leadingIcon=true</code></td><td><code>Label("…", systemImage: "…")</code></td><td><code>leadingIcon = { Icon(…) }</code></td></tr>
-        <tr><td><code>trailingIcon=true</code></td><td><code>Label + trailing Image</code></td><td><code>trailingIcon = { Icon(…) }</code></td></tr>
+        <tr><td><code>(Loading — runtime)</code></td><td><code>.ebLoading(true)</code></td><td><code>isLoading = true</code></td></tr>
+        <tr><td><code>Icon Placement=None</code></td><td>(default — text only)</td><td>(default — text only)</td></tr>
+        <tr><td><code>Icon Placement=Leading</code></td><td><code>Label("…", systemImage: "…")</code></td><td><code>leadingIcon = { Icon(…) }</code></td></tr>
+        <tr><td><code>Icon Placement=Trailing</code></td><td><code>Label + trailing Image</code></td><td><code>trailingIcon = { Icon(…) }</code></td></tr>
+        <tr><td><code>Icon Placement=Icon Only</code></td><td><code>Image(systemName: "…").accessibilityLabel("…")</code></td><td><code>EBIconButton(icon = { … }, contentDescription = "…")</code></td></tr>
       </tbody>
     </table>
     </div>
@@ -733,7 +745,7 @@ open-issues: C7
     <div class="platform-panel active" data-tab="swift">
       <div class="code-block-wrap">
         <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
-        <pre class="code-snippet"><span class="cmt">// Default appearance</span>
+        <pre class="code-snippet"><span class="cmt">// Default appearance — Mode resolves at parent (.environment(\.ebAppearance, .default))</span>
 <span class="typ">EBButton</span>(<span class="str">"Save Changes"</span>)
     .<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
     .<span class="fn">controlSize</span>(.<span class="prp">large</span>)
@@ -742,18 +754,24 @@ open-issues: C7
 <span class="typ">EBButton</span>(<span class="str">"Delete Account"</span>, <span class="prp">role</span>: .<span class="prp">destructive</span>)
     .<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
 
-<span class="cmt">// With leading icon</span>
-<span class="typ">EBButton</span> {
-    <span class="typ">Label</span>(<span class="str">"Send Money"</span>, <span class="prp">systemImage</span>: <span class="str">"arrow.up.right"</span>)
-}
-.<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
+<span class="cmt">// Icon Placement = Leading</span>
+<span class="typ">EBButton</span>(<span class="str">"Send Money"</span>, <span class="prp">leadingIcon</span>: <span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"arrow.up.right"</span>))
+    .<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
+
+<span class="cmt">// Icon Placement = Trailing</span>
+<span class="typ">EBButton</span>(<span class="str">"Continue"</span>, <span class="prp">trailingIcon</span>: <span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"chevron.right"</span>))
+    .<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
+
+<span class="cmt">// Icon Placement = Icon Only — square target, accessibility label required</span>
+<span class="typ">EBIconButton</span>(<span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"plus"</span>), <span class="prp">accessibilityLabel</span>: <span class="str">"Add item"</span>)
+    .<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
 
 <span class="cmt">// Disabled</span>
 <span class="typ">EBButton</span>(<span class="str">"Submit"</span>)
     .<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
     .<span class="fn">disabled</span>(<span class="kw">true</span>)
 
-<span class="cmt">// Loading</span>
+<span class="cmt">// Loading — runtime only, not a Figma state</span>
 <span class="typ">EBButton</span>(<span class="str">"Submit"</span>)
     .<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
     .<span class="fn">ebLoading</span>(<span class="kw">true</span>)</pre>
@@ -762,7 +780,7 @@ open-issues: C7
     <div class="platform-panel" data-tab="compose">
       <div class="code-block-wrap">
         <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
-        <pre class="code-snippet"><span class="cmt">// Default appearance</span>
+        <pre class="code-snippet"><span class="cmt">// Default appearance — Mode resolves at theme/parent</span>
 <span class="typ">EBButton</span>(
     <span class="prp">onClick</span> = { <span class="cmt">/* action */</span> },
     <span class="prp">size</span> = <span class="typ">EBButtonSize</span>.<span class="prp">Large</span>
@@ -778,6 +796,30 @@ open-issues: C7
     <span class="typ">Text</span>(<span class="str">"Delete Account"</span>)
 }
 
+<span class="cmt">// Icon Placement = Leading</span>
+<span class="typ">EBButton</span>(
+    <span class="prp">onClick</span> = { },
+    <span class="prp">leadingIcon</span> = { <span class="typ">Icon</span>(<span class="typ">Icons</span>.<span class="prp">Default</span>.<span class="prp">Send</span>, <span class="prp">contentDescription</span> = <span class="kw">null</span>) }
+) {
+    <span class="typ">Text</span>(<span class="str">"Send Money"</span>)
+}
+
+<span class="cmt">// Icon Placement = Trailing</span>
+<span class="typ">EBButton</span>(
+    <span class="prp">onClick</span> = { },
+    <span class="prp">trailingIcon</span> = { <span class="typ">Icon</span>(<span class="typ">Icons</span>.<span class="prp">Default</span>.<span class="prp">ChevronRight</span>, <span class="prp">contentDescription</span> = <span class="kw">null</span>) }
+) {
+    <span class="typ">Text</span>(<span class="str">"Continue"</span>)
+}
+
+<span class="cmt">// Icon Placement = Icon Only — contentDescription required</span>
+<span class="typ">EBIconButton</span>(
+    <span class="prp">onClick</span> = { },
+    <span class="prp">contentDescription</span> = <span class="str">"Add item"</span>
+) {
+    <span class="typ">Icon</span>(<span class="typ">Icons</span>.<span class="prp">Default</span>.<span class="prp">Add</span>, <span class="prp">contentDescription</span> = <span class="kw">null</span>)
+}
+
 <span class="cmt">// Disabled</span>
 <span class="typ">EBButton</span>(
     <span class="prp">onClick</span> = { },
@@ -786,7 +828,7 @@ open-issues: C7
     <span class="typ">Text</span>(<span class="str">"Submit"</span>)
 }
 
-<span class="cmt">// Loading</span>
+<span class="cmt">// Loading — runtime only, not a Figma state</span>
 <span class="typ">EBButton</span>(
     <span class="prp">onClick</span> = { },
     <span class="prp">isLoading</span> = <span class="kw">true</span>
@@ -815,6 +857,14 @@ open-issues: C7
 <span class="typ">EBButton</span>(<span class="str">"Remove Item"</span>, <span class="prp">role</span>: .<span class="prp">destructive</span>)
     .<span class="fn">ebAppearance</span>(.<span class="prp">outlined</span>)
 
+<span class="cmt">// Icon Placement = Leading</span>
+<span class="typ">EBButton</span>(<span class="str">"Filter"</span>, <span class="prp">leadingIcon</span>: <span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"line.3.horizontal.decrease"</span>))
+    .<span class="fn">ebAppearance</span>(.<span class="prp">outlined</span>)
+
+<span class="cmt">// Icon Placement = Icon Only</span>
+<span class="typ">EBIconButton</span>(<span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"square.and.arrow.up"</span>), <span class="prp">accessibilityLabel</span>: <span class="str">"Share"</span>)
+    .<span class="fn">ebAppearance</span>(.<span class="prp">outlined</span>)
+
 <span class="cmt">// Button pair</span>
 <span class="typ">HStack</span>(<span class="prp">spacing</span>: <span class="typ">12</span>) {
     <span class="typ">EBButton</span>(<span class="str">"Cancel"</span>).<span class="fn">ebAppearance</span>(.<span class="prp">outlined</span>)
@@ -829,6 +879,22 @@ open-issues: C7
     <span class="prp">onClick</span> = { <span class="cmt">/* action */</span> }
 ) {
     <span class="typ">Text</span>(<span class="str">"Cancel"</span>)
+}
+
+<span class="cmt">// Icon Placement = Leading</span>
+<span class="typ">EBOutlinedButton</span>(
+    <span class="prp">onClick</span> = { },
+    <span class="prp">leadingIcon</span> = { <span class="typ">Icon</span>(<span class="typ">Icons</span>.<span class="prp">Default</span>.<span class="prp">FilterList</span>, <span class="prp">contentDescription</span> = <span class="kw">null</span>) }
+) {
+    <span class="typ">Text</span>(<span class="str">"Filter"</span>)
+}
+
+<span class="cmt">// Icon Placement = Icon Only</span>
+<span class="typ">EBOutlinedIconButton</span>(
+    <span class="prp">onClick</span> = { },
+    <span class="prp">contentDescription</span> = <span class="str">"Share"</span>
+) {
+    <span class="typ">Icon</span>(<span class="typ">Icons</span>.<span class="prp">Default</span>.<span class="prp">Share</span>, <span class="prp">contentDescription</span> = <span class="kw">null</span>)
 }
 
 <span class="cmt">// Button pair</span>
@@ -856,6 +922,10 @@ open-issues: C7
 
 <span class="cmt">// Destructive</span>
 <span class="typ">EBButton</span>(<span class="str">"Remove"</span>, <span class="prp">role</span>: .<span class="prp">destructive</span>)
+    .<span class="fn">ebAppearance</span>(.<span class="prp">textLink</span>)
+
+<span class="cmt">// Icon Placement = Trailing (common for inline links)</span>
+<span class="typ">EBButton</span>(<span class="str">"Read more"</span>, <span class="prp">trailingIcon</span>: <span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"chevron.right"</span>))
     .<span class="fn">ebAppearance</span>(.<span class="prp">textLink</span>)</pre>
       </div>
     </div>
@@ -867,6 +937,14 @@ open-issues: C7
     <span class="prp">size</span> = <span class="typ">EBButtonSize</span>.<span class="prp">Small</span>
 ) {
     <span class="typ">Text</span>(<span class="str">"Learn More"</span>)
+}
+
+<span class="cmt">// Icon Placement = Trailing (common for inline links)</span>
+<span class="typ">EBTextButton</span>(
+    <span class="prp">onClick</span> = { },
+    <span class="prp">trailingIcon</span> = { <span class="typ">Icon</span>(<span class="typ">Icons</span>.<span class="prp">Default</span>.<span class="prp">ChevronRight</span>, <span class="prp">contentDescription</span> = <span class="kw">null</span>) }
+) {
+    <span class="typ">Text</span>(<span class="str">"Read more"</span>)
 }</pre>
       </div>
     </div>
@@ -1073,7 +1151,36 @@ open-issues: C7
     <!-- ── Tab: Changelog ────────────────────────────────────────── -->
     <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
 
-    <div class="sub-heading" id="btn-v400" style="margin-top:0">4.0.0 — April 2026 <span class="tab-version-badge major">Major</span></div>
+    <div class="sub-heading" id="btn-v410" style="margin-top:0">4.1.0 — April 2026 <span class="tab-version-badge minor">Minor</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Mode-driven tokens applied + structure flatten + height refinement · node 17104:184842</div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Mode-driven appearance tokens applied to all 180 variants</strong> — Filled fills bound to <code>appearance/container/fill</code> (and pressed/disabled), Outline borders bound to <code>appearance/stroke/color</code>, all Outline + Text labels bound to new <code>appearance/label/on-surface/color</code>. Switching the parent frame's Variable Mode now drives appearance across the entire variant set. Validates the Mode → Property → API translation pattern for upcoming Code Connect work. <span class="tag-fixed">Applied</span></div>
+        <span class="changelog-delta delta-resolved">C3 Improved</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>New <code>appearance/label/on-surface/color</code> variable created</strong> — 3 variants (color, color-pressed, color-disabled) × 4 modes. Provides semantic separation: <code>label/color</code> = labels on filled backgrounds (white-on-fill), <code>label/on-surface/color</code> = labels on transparent/surface backgrounds (color-on-surface). Eliminates the binding ambiguity for Outline/Text styles. <span class="tag-fixed">Added</span></div>
+        <span class="changelog-delta delta-resolved">C3 Improved</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong><code>button-container</code> wrapper layer removed</strong> — Visual properties (fill, radius, auto-layout, padding) lifted from inner <code>button-container</code> frame up to the variant component itself. Layer depth: 4 → 3. Native parity improved (the component IS the styled element, matching SwiftUI/Compose conventions). Inner <code>container</code> frame retained for icon-label gap grouping. <span class="tag-fixed">Restructured</span></div>
+        <span class="changelog-delta delta-resolved">C1 Improved</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Large height reduced 56 → 50px</strong> — Per design review approval. Matches the visual rhythm of other CTAs in the system. Padding adjusted to maintain proportions. <span class="tag-fixed">Refined</span></div>
+        <span class="changelog-delta delta-resolved">C3 Refined</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Text styles renamed</strong> — <code>Primary/Label/Large</code> (was <code>Primary/Label/Light/Base</code>), <code>Primary/Label/Base</code>, <code>Primary/Label/Small</code>, <code>Primary/Label/Fine</code>. Cleaner semantic naming, removes the redundant "Light" prefix. <span class="tag-fixed">Renamed</span></div>
+        <span class="changelog-delta delta-resolved">C2 Improved</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body"><strong>Figma component description added</strong> — Documents the Appearance Mode → SwiftUI/Compose API mapping directly in the Figma component description. Surfaces the Mode layer in dev handoff (Dev Mode panel). Will be superseded by Code Connect when C7 is implemented. <span class="tag-fixed">Documented</span></div>
+        <span class="changelog-delta delta-resolved">C7 Partial</span>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="btn-v400">4.0.0 — April 2026 <span class="tab-version-badge major">Major</span></div>
     <div class="changelog">
       <div class="changelog-header">Icon Placement restructure + Appearance Mode documentation · node 17104:184842</div>
       <div class="changelog-row">
