@@ -33,7 +33,7 @@
     <div class="login-field">
       <label class="login-label">Email</label>
       <input type="email" class="login-input" id="login-email" placeholder="Email address" autocomplete="email" />
-      <div class="login-error" id="login-email-error">Please use a valid @frostdesigngroup.com email</div>
+      <div class="login-error" id="login-email-error">Please use a valid @frostdesigngroup.com or @gcash.com email</div>
     </div>
     <div class="login-field">
       <label class="login-label">Password</label>
@@ -1300,7 +1300,7 @@ function handleLogin() {
   emailInput.classList.remove('error');
   passInput.classList.remove('error');
 
-  if (!email || !email.endsWith('@frostdesigngroup.com')) {
+  if (!email || !(email.endsWith('@frostdesigngroup.com') || email.endsWith('@gcash.com'))) {
     emailErr.style.display = 'block';
     emailInput.classList.add('error');
     valid = false;
@@ -1321,7 +1321,7 @@ function checkAuth() {
   if (auth) {
     try {
       var data = JSON.parse(auth);
-      if (data.email && data.email.endsWith('@frostdesigngroup.com')) {
+      if (data.email && (data.email.endsWith('@frostdesigngroup.com') || data.email.endsWith('@gcash.com'))) {
         document.getElementById('login-screen').style.display = 'none';
         return;
       }
