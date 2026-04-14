@@ -241,7 +241,9 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | Component | Node | Variants | DS | Native | Open |
 |---|---|---|---|---|---|
 | Accordion | `16870:9288` | 6 | Keep | Refine | C7 |
-| Avatar | `17143:4488` | 21 | Keep | Refine | C7 |
+| **Avatar** | | | | | |
+| Avatar | `17143:4488` | 21 | Keep | Refine | C2,C7 |
+| Avatar Group | `18276:4554` | 4 | Fix | Refine | C7 |
 | Badge | `21:111526` | 68 | Keep | Refine | C7 |
 | Button | `17104:184842` | 180 | Keep | Refine | C7 |
 | Checkbox | `17143:2464` | 33 | Keep | Refine | C7 |

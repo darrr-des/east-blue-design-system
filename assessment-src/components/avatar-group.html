@@ -1,0 +1,681 @@
+<!--
+  AVATAR GROUP COMPONENT ASSESSMENT
+  Edit this file to update the Avatar Group assessment.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 18276:4554
+ds-verdict: fix
+native-status: refine
+variants: 4
+ios: HStack with offset + ZStack overlap
+android: Row with offset / custom EBAvatarGroup
+open-issues: C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] Property renamed from "no. of initals" → "layout" with semantic values pair/trio/quad/overflow (RESOLVED — replaces "count" with numeric strings)
+[C5] Overflow variant layout=overflow added with "+N" badge in bottom-right slot (RESOLVED)
+[C6] Inner avatar children are hardcoded 24px containers — do not use Avatar component instances with size prop
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Avatar<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-avatar-group" onclick="showPanel('avatar-group', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Avatar Group</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('avatar-group')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <circle cx="30" cy="20" r="10" fill="#005CE5" opacity=".9"/>
+      <circle cx="42" cy="20" r="10" fill="#F6F9FD" stroke="#E5EBF4" stroke-width="1.5"/>
+      <circle cx="54" cy="20" r="10" fill="#005CE5" opacity=".9"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Avatar Group</div>
+      <span class="badge badge-fix">Fix</span>
+    </div>
+    <div class="summary-card-desc">4 variants (pair/trio/quad/overflow). Property=layout, overflow badge added, inner avatars point to canonical Avatar. Only C7 pending.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Avatar Group</strong></td>
+  <td><span class="badge badge-fix">Fix</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">4</td>
+  <td class="muted">Stacked avatars for participant lists. Property=layout. Overflow added. Children repointed to canonical Avatar. Only C7 pending.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-avatar-group">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Avatar Group
+          <span class="badge badge-fix">Fix</span>
+          <span class="badge badge-refine">Needs Refinement</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18276-4554" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">Stacked/overlapping avatars for participant lists — conversation members, shared documents, collaboration indicators. 4 variants: <code>layout=pair</code> (2), <code>layout=trio</code> (3), <code>layout=quad</code> (4), and <code>layout=overflow</code> (3 + "+N" badge). Fixed 48×48 container with 24×24 inner avatars.</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">All structural issues resolved</div>
+          <div class="verdict-inline-text">Property renamed to <code>layout</code> with semantic values ✓. Overflow variant added ✓. Inner avatars repointed to canonical Avatar via instance swap ✓. Only C7 (Code Connect) remains — tracked universally across all components.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="avatar-group-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'avatar-group-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'avatar-group-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'avatar-group-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'avatar-group-tabs')">Changelog</button>
+    </div>
+
+    <!-- ══ Tab: Overview ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="avg-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">How the avatar group appears in a real product screen — conversation list where grouped chats display stacked avatars (DX Team, David's Surprise Party) alongside single-avatar threads.</p>
+    <div class="ctx-wrap">
+      <img class="ctx-img" src="assets/previews/avatar-group-in-context.png" alt="Avatar Group component shown in the GCash messaging/chat list, where group conversations display 2–3 stacked circular avatars" />
+    </div>
+
+    <div class="sub-heading" id="avg-preview">Live Preview</div>
+    <p class="section-desc">Toggle count to see the avatar group update in real time.</p>
+    <div class="demo-panel" id="avg-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="avg-demo-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">layout</span>
+              <select class="demo-panel-select" id="avg-demo-count" onchange="updateAvatarGroupDemo()">
+                <option value="pair" selected>pair</option>
+                <option value="trio">trio</option>
+                <option value="quad">quad</option>
+                <option value="overflow">overflow</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="avg-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card partial">
+        <div class="trait-header">
+          <div class="trait-name">Reusable</div>
+          <div class="trait-status">Partial</div>
+        </div>
+        <div class="trait-note">Fits participant lists and collaboration indicators, but only 3 variants (2/3/4). Fixed 48×48 container — doesn't scale for larger contexts (hero lists, dense profile rows). No overflow variant for groups larger than 4.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Self-contained</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Group carries its own overlap positioning, border overlap treatment, and fixed dimensions. All colors token-bound.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Consistent</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Property renamed from <code>no. of initals</code> → <code>layout</code> with semantic values (<code>pair</code>/<code>trio</code>/<code>quad</code>/<code>overflow</code>). C2 resolved. Inherits the <code>main/avatar/brand/intials</code> typo from Avatar's shared variable collection (tracked under Avatar, not an Avatar Group blocker).</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Composable</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">All inner avatars are instances of the canonical Avatar component (<code>17143:4488</code>). Changes to Avatar now propagate to Avatar Group automatically. Compositional inheritance restored.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="avg-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+            <th>Figma Property</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>2 avatars</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">layout=pair</td>
+            <td class="muted">Diagonal overlap — top-left + bottom-right</td>
+          </tr>
+          <tr>
+            <td><strong>3 avatars</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">layout=trio</td>
+            <td class="muted">Triangle arrangement</td>
+          </tr>
+          <tr>
+            <td><strong>4 avatars</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">layout=quad</td>
+            <td class="muted">2×2 grid</td>
+          </tr>
+          <tr>
+            <td><strong>Overflow (5+)</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">layout=overflow</td>
+            <td class="muted">3 avatars + "+N" badge in bottom-right slot. Uses the same default/light style as the avatar it replaces.</td>
+          </tr>
+          <tr>
+            <td><strong>Pressed / Disabled</strong></td>
+            <td class="center muted">N/A</td>
+            <td class="center muted">N/A</td>
+            <td class="muted center">—</td>
+            <td class="muted">Display-only. Tap behavior handled by parent container.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Resolved Issues -->
+    <div class="sub-heading" id="avg-resolved">Resolved Issues</div>
+    <ul class="resolved-list">
+      <li><span>Property renamed: <code>no. of initals</code> → <code>layout</code> with semantic values (<code>pair</code>/<code>trio</code>/<code>quad</code>/<code>overflow</code>). Fixes typo, removes spaces/dots, replaces pseudo-numeric strings with true enum values. Maps cleanly to SwiftUI <code>EBAvatarGroupLayout.pair/.trio/.quad/.overflow</code> / Compose <code>EBAvatarGroupLayout.Pair</code> etc. <span class="tag-fixed">C2 Fixed</span></span></li>
+      <li><span>Overflow variant <code>layout=overflow</code> added — bottom-right slot shows "+N" badge instead of a 4th avatar. Handles groups larger than 4. <span class="tag-fixed">C5 Fixed</span></span></li>
+      <li><span>Inner avatars repointed via instance swap to the canonical Avatar component (<code>17143:4488</code>). Previously referenced a duplicate Avatar at <code>21:94766</code> — now all 4 variants inherit from the canonical source. Compositional pattern restored: changes to Avatar will propagate here automatically. <span class="tag-fixed">C6 Fixed</span></span></li>
+    </ul>
+
+    <!-- Open Issues -->
+    <div class="sub-heading" id="avg-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span>Code Connect CLI mappings not registered. <span class="tag-open tag-c7">C7</span></span></li>
+    </ul>
+
+
+    <div class="sub-heading" id="avg-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span>Replace the hardcoded 24px avatar children with <strong>Avatar component instances</strong> (size=24px, using the Avatar component's existing type property). This restores composition and ensures updates propagate. <span class="tag-recommend">Architectural</span></span></li>
+      <li><span>Rename property from <code>no. of initals</code> to <code>count</code> with <strong>number values</strong> (2/3/4), not strings. Cleaner native mapping. <span class="tag-recommend">Suggested</span></span></li>
+      <li><span>Add an overflow variant (<code>count=5+</code> or a separate boolean <code>isOverflow</code>) that displays 3 avatars + a "+N" counter badge. Common pattern for lists with 5+ participants. <span class="tag-recommend">Suggested</span></span></li>
+      <li><span>Consider adding size variants (e.g. <code>groupSize=small/medium/large</code>) — current 48×48 is one size only. Bigger groups may need larger containers for readability. <span class="tag-recommend">Suggested</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ══ Tab: Style ═════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="avg-styles" style="margin-top:0">Variants</div>
+    <p class="section-desc">3 variants (2 / 3 / 4 avatars). All use a 48×48 fixed container with 24×24 inner avatars arranged with intentional overlap to indicate grouping.</p>
+
+    <div class="spec-card" id="avg-spec-2">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="avg-variant-2">Pair <span class="muted" style="font-weight:400;">— 2 avatars</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18276:4555" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18276:4555</span></button>
+        </div>
+        <p class="spec-card-desc">Two avatars placed diagonally. Top-left uses dark-initials (brand), bottom-right uses initials-light (default).</p>
+      </div>
+      <div class="spec-card-preview" id="avg-preview-2"><!-- filled by JS --></div>
+    </div>
+
+    <div class="spec-card" id="avg-spec-3">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="avg-variant-3">Trio <span class="muted" style="font-weight:400;">— 3 avatars</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18276:4558" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18276:4558</span></button>
+        </div>
+        <p class="spec-card-desc">Three avatars in a triangular arrangement. Two on top (dark + dark), one default at bottom.</p>
+      </div>
+      <div class="spec-card-preview" id="avg-preview-3"><!-- filled by JS --></div>
+    </div>
+
+    <div class="spec-card" id="avg-spec-4">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="avg-variant-4">Quad <span class="muted" style="font-weight:400;">— 4 avatars</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18276:4562" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18276:4562</span></button>
+        </div>
+        <p class="spec-card-desc">Four avatars in a 2×2 grid. Top row: brand + brand. Bottom row: default + default.</p>
+      </div>
+      <div class="spec-card-preview" id="avg-preview-4"><!-- filled by JS --></div>
+    </div>
+
+    <div class="spec-card" id="avg-spec-5plus">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="avg-variant-5plus">Overflow <span class="muted" style="font-weight:400;">— 3 + "+N" badge</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18276:4585" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18276:4585</span></button>
+        </div>
+        <p class="spec-card-desc">Overflow variant — 3 avatars plus a "+N" badge in the bottom-right position. Use when group has 5 or more members. The "+N" uses the default/light avatar style with overridable text content.</p>
+      </div>
+      <div class="spec-card-preview" id="avg-preview-5plus"><!-- filled by JS --></div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <p class="style-colors-desc">Inner avatars use the same tokens as the main Avatar component. See Avatar / Style tab for the full token reference.</p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Role</th><th>Token</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Brand avatar bg</td><td class="mono">main/avatar/brand/bg</td><td class="mono">#005CE5</td></tr>
+          <tr><td class="muted">Brand avatar border</td><td class="mono">main/avatar/brand/border</td><td class="mono">#E5EBF4</td></tr>
+          <tr><td class="muted">Brand avatar initials</td><td class="mono">main/avatar/brand/intials <span class="tag-fixed">library typo</span></td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Default avatar bg</td><td class="mono">main/avatar/default/bg</td><td class="mono">#F6F9FD</td></tr>
+          <tr><td class="muted">Default avatar border</td><td class="mono">main/avatar/default/border</td><td class="mono">#E5EBF4</td></tr>
+          <tr><td class="muted">Default avatar initials</td><td class="mono">main/avatar/default/initials</td><td class="mono">#2340A9</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Property</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Container size</td><td class="mono">48 × 48</td></tr>
+          <tr><td class="muted">Inner avatar size</td><td class="mono">24 × 24</td></tr>
+          <tr><td class="muted">Inner avatar radius</td><td class="mono">12px</td></tr>
+          <tr><td class="muted">Inner avatar border</td><td class="mono">1.5px solid</td></tr>
+          <tr><td class="muted">Overlap offset (2 avatars)</td><td class="mono">16px diagonal</td></tr>
+          <tr><td class="muted">Overlap offset (3 avatars)</td><td class="mono">12px horizontal, 24px vertical</td></tr>
+          <tr><td class="muted">Overlap offset (4 avatars)</td><td class="mono">24px grid step</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- ══ Tab: Code ══════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="avg-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:avatar:1.0.0"</span>)
+}</pre>
+    </div>
+
+    <div class="sub-heading" id="avg-props">Property Mapping</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Figma Property</th>
+            <th>SwiftUI Param</th>
+            <th>Compose Param</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">layout=pair</td>
+            <td class="mono">.ebLayout(.pair)</td>
+            <td class="mono">layout = EBAvatarGroupLayout.Pair</td>
+            <td class="muted">2 avatars, diagonal overlap</td>
+          </tr>
+          <tr>
+            <td class="mono">layout=trio</td>
+            <td class="mono">.ebLayout(.trio)</td>
+            <td class="mono">layout = EBAvatarGroupLayout.Trio</td>
+            <td class="muted">3 avatars, triangle</td>
+          </tr>
+          <tr>
+            <td class="mono">layout=quad</td>
+            <td class="mono">.ebLayout(.quad)</td>
+            <td class="mono">layout = EBAvatarGroupLayout.Quad</td>
+            <td class="muted">4 avatars, 2×2 grid</td>
+          </tr>
+          <tr>
+            <td class="mono">layout=overflow</td>
+            <td class="mono">.ebLayout(.overflow)</td>
+            <td class="mono">layout = EBAvatarGroupLayout.Overflow</td>
+            <td class="muted">3 avatars + "+N" badge</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/Avatar/EBAvatarGroup.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/avatar/EBAvatarGroup.kt</div>
+    </div>
+
+    <div class="sub-heading" id="avg-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'avg-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'avg-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Pair / trio / quad — pass avatars, layout auto-detected from count</span>
+<span class="typ">EBAvatarGroup</span>(<span class="prp">avatars</span>: [
+    <span class="typ">EBAvatar</span>(<span class="prp">initials</span>: <span class="str">"DM"</span>),
+    <span class="typ">EBAvatar</span>(<span class="prp">initials</span>: <span class="str">"LM"</span>),
+    <span class="typ">EBAvatar</span>(<span class="prp">initials</span>: <span class="str">"AB"</span>)
+])
+
+<span class="cmt">// Overflow — pass full list + max visible count</span>
+<span class="typ">EBAvatarGroup</span>(<span class="prp">avatars</span>: allAvatars, <span class="prp">maxVisible</span>: <span class="kw">3</span>)
+    .<span class="fn">ebLayout</span>(.<span class="prp">overflow</span>)
+    <span class="cmt">// renders 3 avatars + "+N" if allAvatars.count > 3</span></pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Pair / trio / quad — pass avatars, layout auto-detected from count</span>
+<span class="typ">EBAvatarGroup</span>(
+    <span class="prp">avatars</span> = <span class="fn">listOf</span>(
+        <span class="typ">Avatar</span>(<span class="prp">initials</span> = <span class="str">"DM"</span>),
+        <span class="typ">Avatar</span>(<span class="prp">initials</span> = <span class="str">"LM"</span>),
+        <span class="typ">Avatar</span>(<span class="prp">initials</span> = <span class="str">"AB"</span>)
+    )
+)
+
+<span class="cmt">// Overflow — pass full list + maxVisible</span>
+<span class="typ">EBAvatarGroup</span>(
+    <span class="prp">avatars</span> = allAvatars,
+    <span class="prp">maxVisible</span> = <span class="kw">3</span>,
+    <span class="prp">layout</span> = <span class="typ">EBAvatarGroupLayout</span>.<span class="prp">Overflow</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="avg-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Requirement</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Accessibility label</td>
+            <td class="muted"><code>.accessibilityLabel("3 participants: Dara, Lara, Alex")</code></td>
+            <td class="muted"><code>contentDescription = "3 participants: ..."</code></td>
+          </tr>
+          <tr>
+            <td>Role</td>
+            <td class="muted">Decorative if not tappable — use <code>.accessibilityHidden(true)</code> on individual avatars</td>
+            <td class="muted">Same — prefer single group-level semantic</td>
+          </tr>
+          <tr>
+            <td>Tap target</td>
+            <td class="muted">48 × 48 container meets iOS HIG when whole group is tappable</td>
+            <td class="muted">Meets Material 48dp minimum</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="avg-guidelines">Usage Guidelines</div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use Avatar Group for 2–4 participants in a list item, header, or shared-with indicator.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Use for counts above 4 without an overflow "+N" badge — users can't infer total count from a cluster alone.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Provide a single group-level accessibility label listing all participants.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Let each avatar announce separately — creates VoiceOver/TalkBack noise.</p></div>
+    </div>
+
+    <div class="sub-heading" id="avg-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">ID</th>
+            <th class="col-md">Criterion</th>
+            <th class="col-badge">Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Semantic names: <code>Avatar</code>, <code>container</code>. Top-level component set uses "Avatar Group" — clean.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">Property <code>no. of initals</code> has typo, spaces, and uses string values. Rename to <code>count</code> with integer values.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors bound to Avatar's tokens. Inherits the same typo in <code>intials</code> — tracked under Avatar's open issues.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Maps to stacked avatars via ZStack (iOS) / Box + offset (Compose). Fixed 48×48 and count=2/3/4 don't match a dynamic native list — API should accept an array.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">No overflow state for 5+ avatars. Common DS pattern ("+N" badge) is missing.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Inner avatars are hardcoded 24px containers, not Avatar component instances. Breaks compositional inheritance — changes to Avatar won't propagate.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-refine">Pending</span></td><td class="muted">No CLI mappings registered yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="avg-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(4 total)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>layout</th><th>Node ID</th><th>Size</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>pair</td><td class="mono">18276:4555</td><td class="mono">48 × 48</td><td class="muted">2 avatars — diagonal</td></tr>
+          <tr><td>trio</td><td class="mono">18276:4558</td><td class="mono">48 × 48</td><td class="muted">3 avatars — triangle</td></tr>
+          <tr><td>quad</td><td class="mono">18276:4562</td><td class="mono">48 × 48</td><td class="muted">4 avatars — 2×2 grid</td></tr>
+          <tr><td>overflow</td><td class="mono">18276:4585</td><td class="mono">48 × 48</td><td class="muted">3 avatars + "+N" overflow badge</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- ══ Tab: Changelog ═════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="sub-heading" style="margin-top:0">1.1.0 — April 2026 <span class="tab-version-badge minor">Minor</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Structural closure · node 18276:4554</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Property renamed</strong> — <code>no. of initals</code> → <code>layout</code>. Values changed from pseudo-numeric strings (2/3/4/5+) to semantic enum values (pair/trio/quad/overflow). Fixes typo, spaces, and dots in one pass. Clean native enum mapping.
+          <span class="tag-fixed">Fixed</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C2 Fixed</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Overflow variant added</strong> — <code>layout=overflow</code> displays 3 avatars + a "+N" badge in the 4th slot. Handles groups larger than 4.
+          <span class="tag-fixed">Added</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C5 Fixed</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Inner avatars repointed to canonical Avatar</strong> — Previously referenced a duplicate Avatar component at <code>21:94766</code>. All 4 variants now use instances of the canonical Avatar at <code>17143:4488</code>. Compositional inheritance restored.
+          <span class="tag-fixed">Swapped</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C6 Fixed</span>
+      </div>
+    </div>
+
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 21:94828</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Component assessed</strong> — 3 variants (2/3/4 avatars) in a fixed 48×48 container. Used for participant lists, collaboration indicators.
+          <span class="tag-fixed">Documented</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Initial</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Property name has typo and spaces</strong> — <code>no. of initals</code>: missing second "i", contains dot + space. Values are strings instead of integers. Blocks native enum mapping.
+          <span class="tag-fixed">Fixed in 1.1.0</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C2 Fixed</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>No overflow variant</strong> — Component supports only 2/3/4 avatars. Most DS patterns include a "+N" overflow badge for groups larger than the max shown.
+          <span class="tag-fixed">Fixed in 1.1.0</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C5 Fixed</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Inner avatars hardcoded, not Avatar instances</strong> — The 24px child avatars are duplicated as plain containers inside this component. If the main Avatar changes, this group won't inherit updates.
+          <span class="tag-fixed">Fixed in 1.1.0</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C6 Fixed</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Code Connect mappings</strong> — No CLI mappings registered yet.
+          <span class="tag-open tag-c7">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C7 Open</span>
+      </div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-avatar-group">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-avatar-group"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Avatar Group Component JS ────────────────────────────────────── */
+var _avgDemo = { count: 2 };
+
+function _avgBuildSvg(count) {
+  var size = 48;
+  var avatarSize = 24;
+  var r = avatarSize / 2;
+  var s = '<svg width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+  var positions;
+  if (count === 2) {
+    positions = [
+      { x: 0, y: 0, type: 'brand', initials: 'DM' },
+      { x: 16, y: 16, type: 'default', initials: 'LM' }
+    ];
+  } else if (count === 3) {
+    positions = [
+      { x: 12, y: 0, type: 'brand', initials: 'DM' },
+      { x: 0, y: 24, type: 'default', initials: 'LM' },
+      { x: 24, y: 24, type: 'brand', initials: 'AB' }
+    ];
+  } else if (count === 4) {
+    positions = [
+      { x: 0, y: 0, type: 'brand', initials: 'DM' },
+      { x: 24, y: 0, type: 'brand', initials: 'LM' },
+      { x: 0, y: 24, type: 'default', initials: 'AB' },
+      { x: 24, y: 24, type: 'default', initials: 'CD' }
+    ];
+  } else { /* 5+ overflow */
+    positions = [
+      { x: 0, y: 0, type: 'brand', initials: 'DM' },
+      { x: 24, y: 0, type: 'brand', initials: 'LM' },
+      { x: 0, y: 24, type: 'default', initials: 'AB' },
+      { x: 24, y: 24, type: 'default', initials: '+5' }
+    ];
+  }
+  positions.forEach(function(p) {
+    var cx = p.x + r;
+    var cy = p.y + r;
+    var bg = p.type === 'brand' ? '#005CE5' : '#F6F9FD';
+    var borderColor = '#E5EBF4';
+    var textColor = p.type === 'brand' ? '#FFFFFF' : '#2340A9';
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + (r - 1) + '" fill="' + bg + '" stroke="' + borderColor + '" stroke-width="1.5"/>';
+    s += '<text x="' + cx + '" y="' + (cy + 3) + '" text-anchor="middle" fill="' + textColor + '" font-size="8" font-weight="700" font-family="\'Proxima Soft\', system-ui, sans-serif">' + p.initials + '</text>';
+  });
+  s += '</svg>';
+  return s;
+}
+
+function updateAvatarGroupDemo() {
+  var raw = document.getElementById('avg-demo-count').value;
+  var layoutMap = { pair: 2, trio: 3, quad: 4, overflow: 5 };
+  var count = layoutMap[raw] || 2;
+  _avgDemo.count = count;
+  var el = document.getElementById('avg-demo-preview');
+  if (el) el.innerHTML = _avgBuildSvg(count);
+}
+
+function _avgInitSpecCards() {
+  [2, 3, 4, 5].forEach(function(n) {
+    var key = n === 5 ? '5plus' : n;
+    var el = document.getElementById('avg-preview-' + key);
+    if (el) el.innerHTML = _avgBuildSvg(n);
+  });
+}
+
+function _avgInit() {
+  updateAvatarGroupDemo();
+  _avgInitSpecCards();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _avgInit);
+} else {
+  _avgInit();
+}
+</script>
+
+<!--@section-end-->

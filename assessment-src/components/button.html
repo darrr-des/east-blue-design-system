@@ -713,17 +713,17 @@ open-issues: C7
         <tr><td><code>Style=Filled</code></td><td><code>.ebAppearance(.filled)</code></td><td><code>EBButton {}</code></td></tr>
         <tr><td><code>Style=Outline</code></td><td><code>.ebAppearance(.outlined)</code></td><td><code>EBOutlinedButton {}</code></td></tr>
         <tr><td><code>Style=Text</code></td><td><code>.ebAppearance(.textLink)</code></td><td><code>EBTextButton {}</code></td></tr>
-        <tr><td><code>Appearance=Default</code></td><td>(default colors)</td><td>(default colors)</td></tr>
-        <tr><td><code>Appearance=Destructive</code></td><td><code>role: .destructive</code></td><td><code>colors = EBButtonDefaults.destructiveColors()</code></td></tr>
-        <tr><td><code>Appearance=White</code></td><td><code>.ebAppearance(.white)</code></td><td><code>colors = EBButtonDefaults.whiteColors()</code></td></tr>
-        <tr><td><code>Appearance=Subtle</code></td><td><code>.ebAppearance(.subtle)</code></td><td><code>colors = EBButtonDefaults.subtleColors()</code></td></tr>
+        <tr><td><code>Appearance=Default</code></td><td>(default — omit modifier)</td><td>(default — omit colors param)</td></tr>
+        <tr><td><code>Appearance=Destructive</code></td><td><code>.ebColorScheme(.destructive)</code></td><td><code>colors = EBButtonDefaults.destructiveColors()</code></td></tr>
+        <tr><td><code>Appearance=White</code></td><td><code>.ebColorScheme(.white)</code></td><td><code>colors = EBButtonDefaults.whiteColors()</code></td></tr>
+        <tr><td><code>Appearance=Subtle</code></td><td><code>.ebColorScheme(.subtle)</code></td><td><code>colors = EBButtonDefaults.subtleColors()</code></td></tr>
         <tr><td><code>Size=Large…XSmall</code></td><td><code>controlSize: .large / .regular / .small / .compact / .mini</code></td><td><code>size = EBButtonSize.Large / Medium / Small / Compact / XSmall</code></td></tr>
         <tr><td><code>State=Disabled</code></td><td><code>.disabled(true)</code></td><td><code>enabled = false</code></td></tr>
         <tr><td><code>(Loading — runtime)</code></td><td><code>.ebLoading(true)</code></td><td><code>isLoading = true</code></td></tr>
         <tr><td><code>Icon Placement=None</code></td><td>(default — text only)</td><td>(default — text only)</td></tr>
         <tr><td><code>Icon Placement=Leading</code></td><td><code>Label("…", systemImage: "…")</code></td><td><code>leadingIcon = { Icon(…) }</code></td></tr>
         <tr><td><code>Icon Placement=Trailing</code></td><td><code>Label + trailing Image</code></td><td><code>trailingIcon = { Icon(…) }</code></td></tr>
-        <tr><td><code>Icon Placement=Icon Only</code></td><td><code>Image(systemName: "…").accessibilityLabel("…")</code></td><td><code>EBIconButton(icon = { … }, contentDescription = "…")</code></td></tr>
+        <tr><td><code>Icon Placement=Icon Only</code></td><td><code>EBButton(icon: Image(…), accessibilityLabel: "…")</code></td><td><code>EBButton(contentDescription = "…") { Icon(…) }</code></td></tr>
       </tbody>
     </table>
     </div>
@@ -736,7 +736,7 @@ open-issues: C7
 
     <!-- ══ Usage Snippets ══ -->
     <div class="sub-heading" id="btn-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
-    <div class="sub-heading toc-child" id="btn-usage-filled">Primary Button</div>
+    <div class="sub-heading toc-child" id="btn-usage-filled">Filled <span class="muted" style="font-weight:400;">— Primary action</span></div>
     <div class="code-card-body">
     <div class="platform-tabs">
       <button class="platform-tab active" onclick="switchPlatform(this,'code-filled','swift')">SwiftUI</button>
@@ -751,8 +751,9 @@ open-issues: C7
     .<span class="fn">controlSize</span>(.<span class="prp">large</span>)
 
 <span class="cmt">// Destructive appearance</span>
-<span class="typ">EBButton</span>(<span class="str">"Delete Account"</span>, <span class="prp">role</span>: .<span class="prp">destructive</span>)
+<span class="typ">EBButton</span>(<span class="str">"Delete Account"</span>)
     .<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
+    .<span class="fn">ebColorScheme</span>(.<span class="prp">destructive</span>)
 
 <span class="cmt">// Icon Placement = Leading</span>
 <span class="typ">EBButton</span>(<span class="str">"Send Money"</span>, <span class="prp">leadingIcon</span>: <span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"arrow.up.right"</span>))
@@ -763,7 +764,7 @@ open-issues: C7
     .<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
 
 <span class="cmt">// Icon Placement = Icon Only — square target, accessibility label required</span>
-<span class="typ">EBIconButton</span>(<span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"plus"</span>), <span class="prp">accessibilityLabel</span>: <span class="str">"Add item"</span>)
+<span class="typ">EBButton</span>(<span class="prp">icon</span>: <span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"plus"</span>), <span class="prp">accessibilityLabel</span>: <span class="str">"Add item"</span>)
     .<span class="fn">ebAppearance</span>(.<span class="prp">filled</span>)
 
 <span class="cmt">// Disabled</span>
@@ -813,7 +814,7 @@ open-issues: C7
 }
 
 <span class="cmt">// Icon Placement = Icon Only — contentDescription required</span>
-<span class="typ">EBIconButton</span>(
+<span class="typ">EBButton</span>(
     <span class="prp">onClick</span> = { },
     <span class="prp">contentDescription</span> = <span class="str">"Add item"</span>
 ) {
@@ -840,7 +841,7 @@ open-issues: C7
     </div><!-- /code-card-body filled -->
 
     <!-- ══ Usage — Outline ══ -->
-    <div class="sub-heading toc-child" id="btn-usage-outline">Secondary Button</div>
+    <div class="sub-heading toc-child" id="btn-usage-outline">Outline <span class="muted" style="font-weight:400;">— Secondary action</span></div>
     <div class="code-card-body">
     <div class="platform-tabs">
       <button class="platform-tab active" onclick="switchPlatform(this,'code-outline','swift')">SwiftUI</button>
@@ -854,15 +855,16 @@ open-issues: C7
     .<span class="fn">ebAppearance</span>(.<span class="prp">outlined</span>)
 
 <span class="cmt">// Destructive</span>
-<span class="typ">EBButton</span>(<span class="str">"Remove Item"</span>, <span class="prp">role</span>: .<span class="prp">destructive</span>)
+<span class="typ">EBButton</span>(<span class="str">"Remove Item"</span>)
     .<span class="fn">ebAppearance</span>(.<span class="prp">outlined</span>)
+    .<span class="fn">ebColorScheme</span>(.<span class="prp">destructive</span>)
 
 <span class="cmt">// Icon Placement = Leading</span>
 <span class="typ">EBButton</span>(<span class="str">"Filter"</span>, <span class="prp">leadingIcon</span>: <span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"line.3.horizontal.decrease"</span>))
     .<span class="fn">ebAppearance</span>(.<span class="prp">outlined</span>)
 
 <span class="cmt">// Icon Placement = Icon Only</span>
-<span class="typ">EBIconButton</span>(<span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"square.and.arrow.up"</span>), <span class="prp">accessibilityLabel</span>: <span class="str">"Share"</span>)
+<span class="typ">EBButton</span>(<span class="prp">icon</span>: <span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"square.and.arrow.up"</span>), <span class="prp">accessibilityLabel</span>: <span class="str">"Share"</span>)
     .<span class="fn">ebAppearance</span>(.<span class="prp">outlined</span>)
 
 <span class="cmt">// Button pair</span>
@@ -890,7 +892,7 @@ open-issues: C7
 }
 
 <span class="cmt">// Icon Placement = Icon Only</span>
-<span class="typ">EBOutlinedIconButton</span>(
+<span class="typ">EBOutlinedButton</span>(
     <span class="prp">onClick</span> = { },
     <span class="prp">contentDescription</span> = <span class="str">"Share"</span>
 ) {
@@ -907,7 +909,7 @@ open-issues: C7
     </div><!-- /code-card-body outline -->
 
     <!-- ══ Usage — Text ══ -->
-    <div class="sub-heading toc-child" id="btn-usage-text">Tertiary Button</div>
+    <div class="sub-heading toc-child" id="btn-usage-text">Text <span class="muted" style="font-weight:400;">— Tertiary action</span></div>
     <div class="code-card-body">
     <div class="platform-tabs">
       <button class="platform-tab active" onclick="switchPlatform(this,'code-text','swift')">SwiftUI</button>
@@ -921,8 +923,9 @@ open-issues: C7
     .<span class="fn">controlSize</span>(.<span class="prp">small</span>)
 
 <span class="cmt">// Destructive</span>
-<span class="typ">EBButton</span>(<span class="str">"Remove"</span>, <span class="prp">role</span>: .<span class="prp">destructive</span>)
+<span class="typ">EBButton</span>(<span class="str">"Remove"</span>)
     .<span class="fn">ebAppearance</span>(.<span class="prp">textLink</span>)
+    .<span class="fn">ebColorScheme</span>(.<span class="prp">destructive</span>)
 
 <span class="cmt">// Icon Placement = Trailing (common for inline links)</span>
 <span class="typ">EBButton</span>(<span class="str">"Read more"</span>, <span class="prp">trailingIcon</span>: <span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"chevron.right"</span>))
@@ -1042,7 +1045,7 @@ open-issues: C7
           <tr><td class="mono">Default</td><td class="mono">(default)</td><td class="mono">(default)</td></tr>
           <tr><td class="mono">Pressed</td><td class="mono">(system)</td><td class="mono">(system)</td></tr>
           <tr><td class="mono">Disabled</td><td class="mono">.disabled(true)</td><td class="mono">enabled = false</td></tr>
-          <tr><td class="mono">Loading</td><td class="mono">.ebLoading(true)</td><td class="mono">isLoading = true</td></tr>
+          <tr><td class="mono">(Loading — runtime)</td><td class="mono">.ebLoading(true)</td><td class="mono">isLoading = true</td></tr>
         </tbody>
       </table>
       </div>
@@ -1054,8 +1057,8 @@ open-issues: C7
       <table>
         <thead><tr><th>Figma</th><th>SwiftUI</th><th>Compose</th></tr></thead>
         <tbody>
-          <tr><td class="mono">Default</td><td class="mono">(default colors)</td><td class="mono">(default colors)</td></tr>
-          <tr><td class="mono">Destructive</td><td class="mono">role: .destructive</td><td class="mono">colors = …destructiveColors()</td></tr>
+          <tr><td class="mono">Default</td><td class="mono">(omit — default)</td><td class="mono">(omit — default)</td></tr>
+          <tr><td class="mono">Destructive</td><td class="mono">.ebColorScheme(.destructive)</td><td class="mono">colors = …destructiveColors()</td></tr>
           <tr><td class="mono">White</td><td class="mono">.ebColorScheme(.white)</td><td class="mono">colors = …whiteColors()</td></tr>
           <tr><td class="mono">Subtle</td><td class="mono">.ebColorScheme(.subtle)</td><td class="mono">colors = …subtleColors()</td></tr>
         </tbody>
@@ -1064,87 +1067,61 @@ open-issues: C7
     </div>
 
     <div class="cc-group">
-      <div class="cc-group-label">Icon Slots <span class="cc-group-dim">boolean properties</span></div>
+      <div class="cc-group-label">Icon Placement <span class="cc-group-dim">component property (v4.0)</span></div>
       <div class="table-wrap">
       <table>
         <thead><tr><th>Figma</th><th>SwiftUI</th><th>Compose</th></tr></thead>
         <tbody>
-          <tr><td class="mono">leadingIcon=true</td><td class="mono">Label("…", systemImage:)</td><td class="mono">leadingIcon = { Icon(…) }</td></tr>
-          <tr><td class="mono">trailingIcon=true</td><td class="mono">trailingIcon: Image(…)</td><td class="mono">trailingIcon = { Icon(…) }</td></tr>
+          <tr><td class="mono">None</td><td class="mono">(text only — default)</td><td class="mono">(text only — default)</td></tr>
+          <tr><td class="mono">Leading</td><td class="mono">leadingIcon: Image(…)</td><td class="mono">leadingIcon = { Icon(…) }</td></tr>
+          <tr><td class="mono">Trailing</td><td class="mono">trailingIcon: Image(…)</td><td class="mono">trailingIcon = { Icon(…) }</td></tr>
+          <tr><td class="mono">Icon Only</td><td class="mono">EBButton(icon:, accessibilityLabel:)</td><td class="mono">EBButton(contentDescription = …) { Icon(…) }</td></tr>
         </tbody>
       </table>
       </div>
     </div>
 
     <div class="sub-heading" id="btn-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(180 total)</span></div>
-    <p>3 <code>Style</code> (Filled/Outline/Text) × 5 <code>Size</code> (Large/Medium/Small/Compact/XSmall) × 4 <code>State</code> (Default/Pressed/Disabled/Loading) = 60 variants. <code>Appearance</code> is a variable mode (Default/Destructive/White/Subtle) — 4 modes × 60 variants = 240 visual states.</p>
+    <p>3 <code>Style</code> × 5 <code>Size</code> × 3 <code>State</code> × 4 <code>Icon Placement</code> = <strong>180 variants</strong>. <code>Appearance</code> is a variable mode (Default/Destructive/White/Subtle) that further multiplies visual states × 4 = <strong>720 resolved visual states</strong>.</p>
+
+    <!-- Grouped summary (always visible, compact) -->
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Style</th><th>Size</th><th>State</th></tr></thead>
+        <thead><tr><th>Style</th><th>Sizes</th><th>States</th><th>Icon Placements</th><th class="center">Count</th></tr></thead>
         <tbody>
-          <tr><td>Filled</td><td>Large</td><td>Default</td></tr>
-          <tr><td>Filled</td><td>Large</td><td>Pressed</td></tr>
-          <tr><td>Filled</td><td>Large</td><td>Disabled</td></tr>
-          <tr><td>Filled</td><td>Large</td><td>Loading</td></tr>
-          <tr><td>Filled</td><td>Medium</td><td>Default</td></tr>
-          <tr><td>Filled</td><td>Medium</td><td>Pressed</td></tr>
-          <tr><td>Filled</td><td>Medium</td><td>Disabled</td></tr>
-          <tr><td>Filled</td><td>Medium</td><td>Loading</td></tr>
-          <tr><td>Filled</td><td>Small</td><td>Default</td></tr>
-          <tr><td>Filled</td><td>Small</td><td>Pressed</td></tr>
-          <tr><td>Filled</td><td>Small</td><td>Disabled</td></tr>
-          <tr><td>Filled</td><td>Small</td><td>Loading</td></tr>
-          <tr><td>Filled</td><td>Compact</td><td>Default</td></tr>
-          <tr><td>Filled</td><td>Compact</td><td>Pressed</td></tr>
-          <tr><td>Filled</td><td>Compact</td><td>Disabled</td></tr>
-          <tr><td>Filled</td><td>Compact</td><td>Loading</td></tr>
-          <tr><td>Filled</td><td>XSmall</td><td>Default</td></tr>
-          <tr><td>Filled</td><td>XSmall</td><td>Pressed</td></tr>
-          <tr><td>Filled</td><td>XSmall</td><td>Disabled</td></tr>
-          <tr><td>Filled</td><td>XSmall</td><td>Loading</td></tr>
-          <tr><td>Outline</td><td>Large</td><td>Default</td></tr>
-          <tr><td>Outline</td><td>Large</td><td>Pressed</td></tr>
-          <tr><td>Outline</td><td>Large</td><td>Disabled</td></tr>
-          <tr><td>Outline</td><td>Large</td><td>Loading</td></tr>
-          <tr><td>Outline</td><td>Medium</td><td>Default</td></tr>
-          <tr><td>Outline</td><td>Medium</td><td>Pressed</td></tr>
-          <tr><td>Outline</td><td>Medium</td><td>Disabled</td></tr>
-          <tr><td>Outline</td><td>Medium</td><td>Loading</td></tr>
-          <tr><td>Outline</td><td>Small</td><td>Default</td></tr>
-          <tr><td>Outline</td><td>Small</td><td>Pressed</td></tr>
-          <tr><td>Outline</td><td>Small</td><td>Disabled</td></tr>
-          <tr><td>Outline</td><td>Small</td><td>Loading</td></tr>
-          <tr><td>Outline</td><td>Compact</td><td>Default</td></tr>
-          <tr><td>Outline</td><td>Compact</td><td>Pressed</td></tr>
-          <tr><td>Outline</td><td>Compact</td><td>Disabled</td></tr>
-          <tr><td>Outline</td><td>Compact</td><td>Loading</td></tr>
-          <tr><td>Outline</td><td>XSmall</td><td>Default</td></tr>
-          <tr><td>Outline</td><td>XSmall</td><td>Pressed</td></tr>
-          <tr><td>Outline</td><td>XSmall</td><td>Disabled</td></tr>
-          <tr><td>Outline</td><td>XSmall</td><td>Loading</td></tr>
-          <tr><td>Text</td><td>Large</td><td>Default</td></tr>
-          <tr><td>Text</td><td>Large</td><td>Pressed</td></tr>
-          <tr><td>Text</td><td>Large</td><td>Disabled</td></tr>
-          <tr><td>Text</td><td>Large</td><td>Loading</td></tr>
-          <tr><td>Text</td><td>Medium</td><td>Default</td></tr>
-          <tr><td>Text</td><td>Medium</td><td>Pressed</td></tr>
-          <tr><td>Text</td><td>Medium</td><td>Disabled</td></tr>
-          <tr><td>Text</td><td>Medium</td><td>Loading</td></tr>
-          <tr><td>Text</td><td>Small</td><td>Default</td></tr>
-          <tr><td>Text</td><td>Small</td><td>Pressed</td></tr>
-          <tr><td>Text</td><td>Small</td><td>Disabled</td></tr>
-          <tr><td>Text</td><td>Small</td><td>Loading</td></tr>
-          <tr><td>Text</td><td>Compact</td><td>Default</td></tr>
-          <tr><td>Text</td><td>Compact</td><td>Pressed</td></tr>
-          <tr><td>Text</td><td>Compact</td><td>Disabled</td></tr>
-          <tr><td>Text</td><td>Compact</td><td>Loading</td></tr>
-          <tr><td>Text</td><td>XSmall</td><td>Default</td></tr>
-          <tr><td>Text</td><td>XSmall</td><td>Pressed</td></tr>
-          <tr><td>Text</td><td>XSmall</td><td>Disabled</td></tr>
-          <tr><td>Text</td><td>XSmall</td><td>Loading</td></tr>
+          <tr><td><strong>Filled</strong></td><td class="muted">Large, Medium, Small, Compact, XSmall</td><td class="muted">Default, Pressed, Disabled</td><td class="muted">None, Leading, Trailing, Icon Only</td><td class="mono center">60</td></tr>
+          <tr><td><strong>Outline</strong></td><td class="muted">Large, Medium, Small, Compact, XSmall</td><td class="muted">Default, Pressed, Disabled</td><td class="muted">None, Leading, Trailing, Icon Only</td><td class="mono center">60</td></tr>
+          <tr><td><strong>Text</strong></td><td class="muted">Large, Medium, Small, Compact, XSmall</td><td class="muted">Default, Pressed, Disabled</td><td class="muted">None, Leading, Trailing, Icon Only</td><td class="mono center">60</td></tr>
         </tbody>
       </table>
     </div>
+
+    <!-- Full breakdown (collapsed) -->
+    <details style="margin-top:16px;">
+      <summary style="cursor:pointer;padding:8px 12px;background:var(--row-hover,#F4F6FA);border-radius:6px;font-weight:600;font-size:13px;color:var(--text,#0A1628);user-select:none;">View full Style × Size breakdown (15 rows)</summary>
+      <div class="table-wrap" style="margin-top:12px;">
+      <table>
+        <thead><tr><th>Style</th><th>Size</th><th>Height</th><th>States × Icon Placements</th><th class="center">Count</th></tr></thead>
+        <tbody>
+          <tr><td>Filled</td><td>Large</td><td class="mono">50px</td><td class="muted">3 × 4</td><td class="mono center">12</td></tr>
+          <tr><td>Filled</td><td>Medium</td><td class="mono">48px</td><td class="muted">3 × 4</td><td class="mono center">12</td></tr>
+          <tr><td>Filled</td><td>Small</td><td class="mono">36px</td><td class="muted">3 × 4</td><td class="mono center">12</td></tr>
+          <tr><td>Filled</td><td>Compact</td><td class="mono">28px</td><td class="muted">3 × 4</td><td class="mono center">12</td></tr>
+          <tr><td>Filled</td><td>XSmall</td><td class="mono">24px</td><td class="muted">3 × 4</td><td class="mono center">12</td></tr>
+          <tr><td>Outline</td><td>Large</td><td class="mono">50px</td><td class="muted">3 × 4</td><td class="mono center">12</td></tr>
+          <tr><td>Outline</td><td>Medium</td><td class="mono">48px</td><td class="muted">3 × 4</td><td class="mono center">12</td></tr>
+          <tr><td>Outline</td><td>Small</td><td class="mono">36px</td><td class="muted">3 × 4</td><td class="mono center">12</td></tr>
+          <tr><td>Outline</td><td>Compact</td><td class="mono">28px</td><td class="muted">3 × 4</td><td class="mono center">12</td></tr>
+          <tr><td>Outline</td><td>XSmall</td><td class="mono">24px</td><td class="muted">3 × 4</td><td class="mono center">12</td></tr>
+          <tr><td>Text</td><td>Large</td><td class="mono">50px</td><td class="muted">3 × 4</td><td class="mono center">12</td></tr>
+          <tr><td>Text</td><td>Medium</td><td class="mono">48px</td><td class="muted">3 × 4</td><td class="mono center">12</td></tr>
+          <tr><td>Text</td><td>Small</td><td class="mono">36px</td><td class="muted">3 × 4</td><td class="mono center">12</td></tr>
+          <tr><td>Text</td><td>Compact</td><td class="mono">28px</td><td class="muted">3 × 4</td><td class="mono center">12</td></tr>
+          <tr><td>Text</td><td>XSmall</td><td class="mono">24px</td><td class="muted">3 × 4</td><td class="mono center">12</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </details>
 
     </div><!-- /tab code -->
 

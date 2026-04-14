@@ -237,9 +237,11 @@ They do **not** see:
 | Criterion | Pattern | First Found In |
 |---|---|---|
 | C7 | Code Connect mappings not yet registered — no native component files linked via Code Connect CLI | Accordion |
-| C2 | Variant name spacing inconsistency — "initials - light" renamed to "initials-light" (RESOLVED) | Avatar |
-| C2 | Token name typo — "main/avatar/brand/intials" missing letter i (should be "initials") — RESOLVED | Avatar |
-| C3 | Border-radius bound to radius/radius-round (99999) — RESOLVED. Border-width still fixed per size. | Avatar |
+| C2 | Property renamed from "no. of initals" → "layout" with semantic values pair/trio/quad/overflow (RESOLVED — replaces "count" with numeric strings) | Avatar Group |
+| C5 | Overflow variant layout=overflow added with "+N" badge in bottom-right slot (RESOLVED) | Avatar Group |
+| C6 | Inner avatar children are hardcoded 24px containers — do not use Avatar component instances with size prop | Avatar Group |
+| C2 | Token name typo "main/avatar/brand/intials" missing second letter i — should be "initials" (reopened on recheck) | Avatar |
+| C3 | Border-radius bound to radius/radius-round (99999) — RESOLVED. Border-width still fixed per size (acceptable by design). | Avatar |
 | C6 | Raster backgrounds on 5 initials variants replaced with vector ELLIPSE layers — RESOLVED | Avatar |
 | C3 | Hardcoded opacity: 0.90 on Danger/Heavy and Disabled/Heavy Transaction variants — inconsistent with other variants | Badge |
 | C2 | State property names don't match token names (Info/information, Success/positive, Warning/notice, Danger/negative, Disabled/muted) — minor inconsistency | Badge |
@@ -486,6 +488,7 @@ Key conventions:
 | Component | Node | DS Verdict | Native Status | Status | Notes |
 |---|---|---|---|---|---|
 | Accordion | `16870:9288` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Avatar Group | `18276:4554` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Avatar | `17143:4488` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Badge | `21:111526` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Button | `17104:184842` | Keep | Needs Refinement | 🔁 Re-assessing | — |

@@ -16,11 +16,12 @@ open-issues: C7
 <!--@meta-end-->
 
 <!--@patterns-start-->
-[C2] Variant name spacing inconsistency — "initials - light" renamed to "initials-light" (RESOLVED)
-[C2] Token name typo — "main/avatar/brand/intials" missing letter i (should be "initials") — RESOLVED
-[C3] Border-radius bound to radius/radius-round (99999) — RESOLVED. Border-width still fixed per size.
+[C2] Token name typo "main/avatar/brand/intials" missing second letter i — should be "initials" (reopened on recheck)
+[C3] Border-radius bound to radius/radius-round (99999) — RESOLVED. Border-width still fixed per size (acceptable by design).
 [C6] Raster backgrounds on 5 initials variants replaced with vector ELLIPSE layers — RESOLVED
 <!--@patterns-end-->
+
+<!--@nav-group-start-->Avatar<!--@nav-group-end-->
 
 <!--@nav-start-->
 <button class="nav-comp" id="nav-avatar" onclick="showPanel('avatar', this)">
@@ -51,7 +52,7 @@ open-issues: C7
     <div class="summary-card-header">
       <div class="summary-card-name">Avatar</div>
       </div>
-    <div class="summary-card-desc">21 variants. All tokens correct, naming clean. DS Ready — only Code Connect CLI pending.</div>
+    <div class="summary-card-desc">21 variants. Library-level C2 noted (token typo in shared Variables collection). C7 pending (universal).</div>
   </div>
 </div>
 <!--@summary-card-end-->
@@ -62,7 +63,7 @@ open-issues: C7
   <td><span class="badge badge-ready">Ready</span></td>
   <td><span class="badge badge-refine">Needs Refinement</span></td>
   <td class="muted">21</td>
-  <td class="muted">No Code Connect (C7).</td>
+  <td class="muted">Library-level C2 noted (shared Variables). C7 pending.</td>
 </tr>
 <!--@summary-row-end-->
 
@@ -102,19 +103,9 @@ open-issues: C7
 
     <!-- In Context -->
     <div class="sub-heading" id="ava-context" style="margin-top:0">In Context</div>
-    <p class="section-desc">Contexts are illustrative. Final screens will reference actual GCash patterns.</p>
+    <p class="section-desc">How the avatar appears in a real product screen — Contacts list with Favorites row (brand fill + default fill avatars in circular display).</p>
     <div class="ctx-wrap">
-      <div class="ctx-placeholder">
-        <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
-          <rect x="10" y="10" width="100" height="60" rx="8" stroke="currentColor" stroke-width="1.2" opacity=".15"/>
-          <circle cx="35" cy="30" r="10" fill="#005CE5" opacity=".3"/>
-          <rect x="50" y="24" width="40" height="4" rx="2" fill="currentColor" opacity=".12"/>
-          <rect x="50" y="32" width="28" height="3" rx="1.5" fill="currentColor" opacity=".08"/>
-          <circle cx="35" cy="55" r="8" fill="#F6F9FD" stroke="#E5EBF4" stroke-width="1"/>
-          <rect x="48" y="50" width="36" height="4" rx="2" fill="currentColor" opacity=".12"/>
-          <rect x="48" y="57" width="24" height="3" rx="1.5" fill="currentColor" opacity=".08"/>
-        </svg>
-      </div>
+      <img class="ctx-img" src="assets/previews/avatar-in-context.png" alt="Avatar component shown in the GCash Contacts screen with a Favorites row of circular initials avatars (JF, JD, D, C, ZD)" />
     </div>
 
     <!-- Live Preview -->
@@ -173,12 +164,12 @@ open-issues: C7
         </div>
         <div class="trait-note">All variants are self-contained with vector ELLIPSE fills, token-bound colors, and editable text. No external assets required.</div>
       </div>
-      <div class="trait-card pass">
+      <div class="trait-card partial">
         <div class="trait-header">
           <div class="trait-name">Consistent</div>
-          <div class="trait-status">Pass</div>
+          <div class="trait-status">Partial</div>
         </div>
-        <div class="trait-note">Token naming follows DS convention (<code>main/avatar/...</code>) and all token names are correct. Variant naming consistent (<code>dark-initials</code> / <code>initials-light</code>). Border-radius tokenized to <code>radius/radius-round</code>. Border-width fixed per size (by design).</div>
+        <div class="trait-note">Token naming follows DS convention (<code>main/avatar/...</code>). Variant naming verified correct (<code>type=initials-light</code>). Border-radius tokenized to <code>radius/radius-round</code>. <strong>One C2 issue remaining:</strong> token <code>main/avatar/brand/intials</code> has typo (should be <code>initials</code>) — manual rename needed in Figma Variables panel.</div>
       </div>
       <div class="trait-card pass">
         <div class="trait-header">
@@ -239,24 +230,29 @@ open-issues: C7
     <!-- Resolved Issues -->
     <div class="sub-heading" id="ava-resolved">Resolved Issues</div>
     <ul class="resolved-list">
-      <li>Variant naming: <code>type=initials - light</code> renamed to <code>type=initials-light</code> across all 7 variants (C2)</li>
-      <li>Border-radius: bound to <code>radius/radius-round</code> (99999) across all sizes — previously hardcoded per size (C3)</li>
-      <li>Border-width: confirmed fixed per size by design — not a token gap (C3)</li>
-      <li>Raster backgrounds replaced with vector ELLIPSE layers across all 5 affected initials variants (C6)</li>
-      <li>Token name typo fixed: <code>main/avatar/brand/intials</code> → <code>main/avatar/brand/initials</code> (C2)</li>
+      <li><span>Border-radius: bound to <code>radius/radius-round</code> (99999) across all sizes — previously hardcoded per size (C3)</span></li>
+      <li><span>Border-width: confirmed fixed per size by design — not a token gap (C3)</span></li>
+      <li><span>Raster backgrounds replaced with vector ELLIPSE layers across all 5 affected initials variants (C6)</span></li>
+      <li><span>Avatar Group compound component created (previously a design recommendation) — see sibling component under Avatar group (C2)</span></li>
+      <li><span>Variant property value naming verified on recheck: variant names are correctly hyphenated as <code>type=initials-light</code> in Figma source. Earlier "spaces" report was an MCP output artifact (TypeScript enum generation converts hyphens to spaces). No action required. <span class="tag-fixed">C2 Verified</span></span></li>
     </ul>
 
     <!-- Open Issues -->
     <div class="sub-heading" id="ava-open">Open Issues</div>
     <ul class="resolved-list">
-      <li>Code Connect CLI mappings not registered (C7)</li>
+      <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
+    </ul>
+
+    <!-- Noted — Library-level (not a component blocker) -->
+    <div class="sub-heading" id="ava-noted">Noted — Library-level</div>
+    <ul class="resolved-list">
+      <li><span>Token name typo: <code>main/avatar/brand/intials</code> still missing second "i" — should be <code>initials</code>. Lives in the shared Variables collection, not in this component — so it's tracked here for visibility but not counted as an Avatar-level blocker. Fix requires renaming in Figma → Variables panel. <span class="tag-fixed">C2 Noted</span></span></li>
     </ul>
 
     <!-- Design Recommendations -->
     <div class="sub-heading" id="ava-recommend">Design Recommendations</div>
     <ul class="recommend-list">
       <li><span>Add a <code>badge</code> overlay slot for status indicators (online/offline dot, notification count) — common in chat, contacts, and profile lists <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Create an <code>AvatarGroup</code> compound component for stacked/overlapping avatar rows — used in participant lists, shared document headers, and collaboration indicators <span class="tag-recommend">New Component</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->

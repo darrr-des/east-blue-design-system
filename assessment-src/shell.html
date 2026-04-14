@@ -332,11 +332,26 @@ function switchTab(tabBtn, tabId, groupId) {
   group.querySelectorAll('.comp-tab-content').forEach(function(c) { c.classList.remove('active'); });
   var target = group.querySelector('[data-tab="' + tabId + '"]');
   if (target) { target.classList.add('active'); }
-  /* Rebuild TOC for new tab */
+  /* Persist tab in URL hash: #panelId/tabId */
   var panel = tabBtn.closest('.panel');
+  if (panel) {
+    var panelId = panel.id.replace('panel-', '');
+    var newHash = tabId && tabId !== 'usage' ? '#' + panelId + '/' + tabId : '#' + panelId;
+    history.replaceState(null, '', newHash);
+  }
+  /* Rebuild TOC for new tab */
   if (panel && typeof buildToc === 'function') {
     setTimeout(function() { buildToc(panel.id.replace('panel-', '')); }, 30);
   }
+}
+/* Restore tab from URL hash (called on page load after showPanel) */
+function restoreTabFromHash(panelId, tabId) {
+  var panel = document.getElementById('panel-' + panelId);
+  if (!panel || !tabId) return;
+  var group = panel.querySelector('[data-tab-group]');
+  if (!group) return;
+  var tabBtn = group.querySelector('.comp-tab[onclick*="\'' + tabId + '\'"]');
+  if (tabBtn) { switchTab(tabBtn, tabId, group.getAttribute('data-tab-group')); }
 }
 function initPills() {
   document.querySelectorAll('.comp-tabs').forEach(function(bar) {
@@ -1053,34 +1068,18 @@ function buildSwiftSnippet(type, card) {
   var sizeMap = { large: '.large', medium: '.regular', small: '.small', compact: '.compact', xsmall: '.mini' };
   var szLabel = sizeMap[card.size] || '.large';
   var appLabel = card.appearance || 'default';
-  var hasLeading = card.leadingIcon;
-  var hasTrailing = card.trailingIcon;
+  var placement = card.iconPlacement || 'none';
   var lines = [];
 
-  // Component call — with or without icons
-  if (hasLeading && !hasTrailing) {
-    lines.push('EBButton {');
-    lines.push('    Label("Label", systemImage: "heart")');
-    lines.push('}');
-  } else if (hasLeading && hasTrailing) {
-    lines.push('EBButton(');
-    lines.push('    leadingIcon: Image(systemName: "heart"),');
-    lines.push('    trailingIcon: Image(systemName: "heart")');
-    lines.push(') {');
-    lines.push('    Text("Label")');
-    lines.push('}');
-  } else if (!hasLeading && hasTrailing) {
-    lines.push('EBButton(');
-    lines.push('    trailingIcon: Image(systemName: "heart")');
-    lines.push(') {');
-    lines.push('    Text("Label")');
-    lines.push('}');
+  // Component call — based on Icon Placement
+  if (placement === 'iconOnly') {
+    lines.push('EBButton(icon: Image(systemName: "heart"), accessibilityLabel: "Label")');
+  } else if (placement === 'leading') {
+    lines.push('EBButton("Label", leadingIcon: Image(systemName: "heart"))');
+  } else if (placement === 'trailing') {
+    lines.push('EBButton("Label", trailingIcon: Image(systemName: "heart"))');
   } else {
-    if (appLabel === 'destructive') {
-      lines.push('EBButton("Label", role: .destructive)');
-    } else {
-      lines.push('EBButton("Label")');
-    }
+    lines.push('EBButton("Label")');
   }
 
   // Style
@@ -1090,9 +1089,9 @@ function buildSwiftSnippet(type, card) {
   // Size
   lines.push('    .controlSize(' + szLabel + ')');
 
-  // Appearance mode (skip destructive if already in constructor)
-  if (appLabel === 'destructive' && (hasLeading || hasTrailing)) {
-    lines.push('    .ebRole(.destructive)');
+  // Appearance mode — unified via .ebColorScheme()
+  if (appLabel === 'destructive') {
+    lines.push('    .ebColorScheme(.destructive)');
   } else if (appLabel === 'white') {
     lines.push('    .ebColorScheme(.white)');
   } else if (appLabel === 'subtle') {
@@ -1111,11 +1110,10 @@ function buildComposeSnippet(type, card) {
   var sizeMap = { large: 'Large', medium: 'Medium', small: 'Small', compact: 'Compact', xsmall: 'XSmall' };
   var szLabel = sizeMap[card.size] || 'Large';
   var appLabel = card.appearance || 'default';
-  var hasLeading = card.leadingIcon;
-  var hasTrailing = card.trailingIcon;
+  var placement = card.iconPlacement || 'none';
   var lines = [];
 
-  // Component name based on style
+  // Component name based on style — Icon Only uses same composable with iconOnly content
   var comp = 'EBButton';
   if (type === 'outline') comp = 'EBOutlinedButton';
   else if (type === 'text') comp = 'EBTextButton';
@@ -1124,12 +1122,13 @@ function buildComposeSnippet(type, card) {
   lines.push('    onClick = { /* action */ },');
   lines.push('    size = EBButtonSize.' + szLabel + ',');
 
-  // Icons
-  if (hasLeading) {
+  // Icon Placement → icon slots
+  if (placement === 'leading') {
     lines.push('    leadingIcon = { Icon(Icons.Filled.Favorite, null) },');
-  }
-  if (hasTrailing) {
+  } else if (placement === 'trailing') {
     lines.push('    trailingIcon = { Icon(Icons.Filled.Favorite, null) },');
+  } else if (placement === 'iconOnly') {
+    lines.push('    contentDescription = "Label",');
   }
 
   // Appearance mode
@@ -1151,7 +1150,11 @@ function buildComposeSnippet(type, card) {
   if (last.endsWith(',')) lines[lines.length - 1] = last.slice(0, -1);
 
   lines.push(') {');
-  lines.push('    Text("Label")');
+  if (placement === 'iconOnly') {
+    lines.push('    Icon(Icons.Filled.Favorite, null)');
+  } else {
+    lines.push('    Text("Label")');
+  }
   lines.push('}');
 
   return lines.join('\n');
@@ -1285,10 +1288,14 @@ function renderCard(type, change, btn) {
   if (sw1) sw1.checked = isDark;
   if (sw2) sw2.checked = isDark;
 
-  /* Hash routing */
+  /* Hash routing: supports #panelId and #panelId/tabId */
   var hash = window.location.hash.replace('#', '');
-  if (hash && hash !== 'overview') {
-    showPanelById(hash);
+  var hashParts = hash.split('/');
+  var panelId = hashParts[0];
+  var tabId = hashParts[1];
+  if (panelId && panelId !== 'overview') {
+    showPanelById(panelId);
+    if (tabId) { setTimeout(function() { restoreTabFromHash(panelId, tabId); }, 40); }
   } else {
     var overviewNav = document.getElementById('nav-overview');
     if (overviewNav) { overviewNav.classList.add('active'); }
@@ -1298,6 +1305,7 @@ function renderCard(type, change, btn) {
   updateNavDots();
   checkAuth();
   if (typeof initSpecCards === 'function') initSpecCards();
+  if (typeof _applyDemo === 'function') _applyDemo();
 })();
 
 /* ── Login Gate ─────────────────────────────── */
