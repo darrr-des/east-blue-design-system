@@ -1,0 +1,694 @@
+<!--
+  MENU GRID COMPONENT ASSESSMENT
+  Edit this file to update the Menu Grid assessment.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 18320:14332
+ds-verdict: fix
+native-status: refine
+variants: 20
+ios: LazyVGrid of EBServiceItem
+android: LazyVerticalGrid of EBServiceItem
+open-issues: C2,C5,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] Variant property values use pseudo-numeric strings ("by 4") instead of clean integer enums
+[C5] Service Item only defines `active` color tokens — no pressed/disabled state coverage
+[C4] Variant explosion (4 rows × 5 columns = 20) where two integer props would suffice on native
+<!--@patterns-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-menu-grid" onclick="showPanel('menu-grid', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Menu Grid</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('menu-grid')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="14" y="6" width="12" height="12" rx="2" fill="#005CE5" opacity=".9"/>
+      <rect x="34" y="6" width="12" height="12" rx="2" fill="#005CE5" opacity=".9"/>
+      <rect x="54" y="6" width="12" height="12" rx="2" fill="#005CE5" opacity=".9"/>
+      <rect x="14" y="22" width="12" height="4" rx="1" fill="#072592" opacity=".5"/>
+      <rect x="34" y="22" width="12" height="4" rx="1" fill="#072592" opacity=".5"/>
+      <rect x="54" y="22" width="12" height="4" rx="1" fill="#072592" opacity=".5"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Menu Grid</div>
+      <span class="badge badge-fix">Fix</span>
+    </div>
+    <div class="summary-card-desc">20 variants (Row × Column, 2–5 × 1–5). Layout container of Service Item instances. C2 (string enums), C5 (only active state), C7 pending.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Menu Grid</strong></td>
+  <td><span class="badge badge-fix">Fix</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">20</td>
+  <td class="muted">Dashboard service grid composed of Service Item children. Variant matrix Row × Column. Pseudo-numeric variant strings, missing pressed/disabled tokens, C7 pending.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-menu-grid">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Menu Grid
+          <span class="badge badge-fix">Fix</span>
+          <span class="badge badge-refine">Needs Refinement</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18320-14332" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">Dashboard service grid — a 336px-wide layout container that arranges <strong>Service Item</strong> instances (icon + label) in a configurable grid. 20 variants combine <code>Row</code> (2/3/4/5) and <code>Column</code> (1/2/3/4/5). Used for service shortcuts on dashboard surfaces (Send Money, Pay Bills, Cash In, etc.).</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Open issues remain</div>
+          <div class="verdict-inline-text">Variant property values use pseudo-numeric strings (<code>"by 4"</code>) instead of integers (C2). Service Item only ships an <code>active</code> color set — no pressed/disabled tokens (C5). Code Connect mappings not yet registered (C7).</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="menu-grid-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'menu-grid-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'menu-grid-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'menu-grid-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'menu-grid-tabs')">Changelog</button>
+    </div>
+
+    <!-- ══ Tab: Overview ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="mg-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Contexts are illustrative. Final screens will reference actual GCash patterns. Menu Grid sits on the dashboard as the primary service shortcut surface — typically Row=2, Column=4 (8 services) on the home screen.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="180" height="120" viewBox="0 0 180 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Phone frame -->
+          <rect x="34" y="6" width="112" height="108" rx="10" stroke="currentColor" stroke-width="1.2" opacity=".15"/>
+          <!-- Brand header strip -->
+          <rect x="34" y="6" width="112" height="22" rx="10" fill="#005CE5" opacity=".85"/>
+          <rect x="34" y="20" width="112" height="8" fill="#005CE5" opacity=".85"/>
+          <text x="90" y="20" text-anchor="middle" fill="#FFF" font-size="6" font-weight="700" font-family="system-ui">GCash</text>
+          <!-- Balance card -->
+          <rect x="42" y="34" width="96" height="14" rx="3" fill="currentColor" opacity=".06"/>
+          <rect x="46" y="38" width="34" height="3" rx="1.5" fill="currentColor" opacity=".18"/>
+          <rect x="46" y="43" width="22" height="3" rx="1.5" fill="currentColor" opacity=".12"/>
+          <!-- Menu Grid container -->
+          <rect x="42" y="54" width="96" height="44" rx="4" fill="#FFFFFF" stroke="#E5EBF4" stroke-width="0.8"/>
+          <!-- 2 × 4 service items -->
+          <g fill="#005CE5" opacity=".9">
+            <rect x="48" y="58" width="14" height="14" rx="2"/>
+            <rect x="68" y="58" width="14" height="14" rx="2"/>
+            <rect x="88" y="58" width="14" height="14" rx="2"/>
+            <rect x="108" y="58" width="14" height="14" rx="2"/>
+            <rect x="48" y="80" width="14" height="14" rx="2"/>
+            <rect x="68" y="80" width="14" height="14" rx="2"/>
+            <rect x="88" y="80" width="14" height="14" rx="2"/>
+            <rect x="108" y="80" width="14" height="14" rx="2"/>
+          </g>
+          <g fill="#072592" opacity=".55">
+            <rect x="49" y="74" width="12" height="2" rx="1"/>
+            <rect x="69" y="74" width="12" height="2" rx="1"/>
+            <rect x="89" y="74" width="12" height="2" rx="1"/>
+            <rect x="109" y="74" width="12" height="2" rx="1"/>
+            <rect x="49" y="96" width="12" height="2" rx="1"/>
+            <rect x="69" y="96" width="12" height="2" rx="1"/>
+            <rect x="89" y="96" width="12" height="2" rx="1"/>
+            <rect x="109" y="96" width="12" height="2" rx="1"/>
+          </g>
+          <!-- Section below -->
+          <rect x="42" y="104" width="96" height="6" rx="3" fill="currentColor" opacity=".07"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="mg-preview">Live Preview</div>
+    <p class="section-desc">Toggle Row × Column to see the grid recalculate. Each cell is a Service Item (icon + label).</p>
+    <div class="demo-panel" id="mg-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="mg-demo-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Row</span>
+              <select class="demo-panel-select" id="mg-demo-row" onchange="updateMenuGridDemo()">
+                <option value="2">by 2</option>
+                <option value="3">by 3</option>
+                <option value="4" selected>by 4</option>
+                <option value="5">by 5</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Column</span>
+              <select class="demo-panel-select" id="mg-demo-col" onchange="updateMenuGridDemo()">
+                <option value="1">by 1</option>
+                <option value="2">by 2</option>
+                <option value="3">by 3</option>
+                <option value="4" selected>by 4</option>
+                <option value="5">by 5</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="mg-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Reusable</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Used on dashboard surfaces and any screen needing a uniform service shortcut grid. 20 row/column combinations cover most layout needs from a single column list to a 5×5 grid.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Self-contained</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Container carries its own background, padding (8h / 10t / 6b), gap (4×4), and bottom radius (6). All values bound to design tokens.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header">
+          <div class="trait-name">Consistent</div>
+          <div class="trait-status">Warn</div>
+        </div>
+        <div class="trait-note">Variant property values are pseudo-numeric strings (<code>"by 4"</code>) instead of clean integer enums. Should be <code>rows: 4</code> / <code>columns: 4</code> for native parity. <span class="tag-open tag-c2">C2</span></div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Composable</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Cleanly composes <strong>Service Item</strong> instances (node <code>17787:1700</code>). Service Item is a separate canonical component — icon and label are easily overridable per cell.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="mg-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+            <th>Figma Property</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Default</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">Row × Column</td>
+            <td class="muted">Active state only — uses <code>dashboard/service-item/color/active/{icon,label}</code></td>
+          </tr>
+          <tr>
+            <td><strong>Pressed</strong></td>
+            <td class="center muted">N/A</td>
+            <td class="center muted">N/A</td>
+            <td class="muted center">—</td>
+            <td class="muted">No pressed token defined for Service Item. Native may need to derive from icon brand color. <span class="tag-open tag-c5">C5</span></td>
+          </tr>
+          <tr>
+            <td><strong>Disabled</strong></td>
+            <td class="center muted">N/A</td>
+            <td class="center muted">N/A</td>
+            <td class="muted center">—</td>
+            <td class="muted">No disabled token defined. <span class="tag-open tag-c5">C5</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-footnote">Menu Grid is a layout container; tap behavior lives on each Service Item child.</p>
+
+    <!-- Open Issues -->
+    <div class="sub-heading" id="mg-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span>Variant property values use pseudo-numeric strings — <code>Row="by 4"</code>, <code>Column="by 4"</code>. Should be plain integers (<code>rows: 4</code>, <code>columns: 4</code>) for clean native enum/int mapping. <span class="tag-open tag-c2">C2</span></span></li>
+      <li><span>Service Item only defines an <code>active</code> color set. No <code>pressed</code> or <code>disabled</code> color tokens — engineers must invent these on native. <span class="tag-open tag-c5">C5</span></span></li>
+      <li><span>Code Connect CLI mappings not registered. <span class="tag-open tag-c7">C7</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="mg-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span>Replace the 20-variant matrix with a single component exposing two integer properties (<code>rows</code>, <code>columns</code>) — variant explosion is a Figma-only construct; native uses a lazy grid that takes any int. Could collapse to ~1–2 variants. <span class="tag-recommend">Restructure</span></span></li>
+      <li><span>Add <code>pressed</code> and <code>disabled</code> color tokens to <code>dashboard/service-item/color/*</code> so all states are documented at the token layer, not improvised in code. <span class="tag-recommend">Token gap</span></span></li>
+      <li><span>Consider documenting Service Item as its own first-class DS component — currently it's a child of Menu Grid but is reused independently across other surfaces. <span class="tag-recommend">DS Hygiene</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ══ Tab: Style ═════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="mg-styles" style="margin-top:0">Variants</div>
+    <p class="section-desc">20 variants formed by Row (2/3/4/5) × Column (1/2/3/4/5). All share the same 336px container width, 4×4 gap, and 8/10/6 padding. Cell count = Row × Column.</p>
+
+    <div class="spec-card" id="mg-spec-2x4">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="mg-variant-2x4">Row 2 × Column 4 <span class="muted" style="font-weight:400;">— 8 services (most common)</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18320:14371" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18320:14371</span></button>
+        </div>
+        <p class="spec-card-desc">The default dashboard layout — 2 rows × 4 columns = 8 services. Used on the home dashboard for primary service shortcuts.</p>
+      </div>
+      <div class="spec-card-preview" id="mg-preview-2x4"><!-- filled by JS --></div>
+    </div>
+
+    <div class="spec-card" id="mg-spec-4x4">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="mg-variant-4x4">Row 4 × Column 4 <span class="muted" style="font-weight:400;">— 16 services</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18320:14333" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18320:14333</span></button>
+        </div>
+        <p class="spec-card-desc">Expanded grid for "All Services" sheets — 4 rows × 4 columns = 16 services. Used on category pages or full-list views.</p>
+      </div>
+      <div class="spec-card-preview" id="mg-preview-4x4"><!-- filled by JS --></div>
+    </div>
+
+    <div class="spec-card" id="mg-spec-5x5">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="mg-variant-5x5">Row 5 × Column 5 <span class="muted" style="font-weight:400;">— 25 services (max)</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18320:14508" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18320:14508</span></button>
+        </div>
+        <p class="spec-card-desc">Maximum density — 5 rows × 5 columns = 25 services. Use sparingly; label legibility tightens at this density.</p>
+      </div>
+      <div class="spec-card-preview" id="mg-preview-5x5"><!-- filled by JS --></div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <p class="style-colors-desc">Service Item ships only the <code>active</code> color set. Pressed and disabled are not yet defined at the token layer — see C5 in the Open Issues.</p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Role</th><th>Token</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Container bg</td><td class="mono">bg/color-bg-main</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Service icon</td><td class="mono">dashboard/service-item/color/active/icon</td><td class="mono">#005CE5</td></tr>
+          <tr><td class="muted">Service label</td><td class="mono">dashboard/service-item/color/active/label</td><td class="mono">#072592</td></tr>
+          <tr><td class="muted">Border (weak)</td><td class="mono">border/color-border-weak</td><td class="mono">#E5EBF4</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Property</th><th>Token</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Container width</td><td class="mono">—</td><td class="mono">336px (fixed)</td></tr>
+          <tr><td class="muted">Padding (horizontal)</td><td class="mono">space/space-8</td><td class="mono">8px</td></tr>
+          <tr><td class="muted">Padding (top)</td><td class="mono">space/space-10</td><td class="mono">10px</td></tr>
+          <tr><td class="muted">Padding (bottom)</td><td class="mono">space/space-6</td><td class="mono">6px</td></tr>
+          <tr><td class="muted">Cell gap (row & col)</td><td class="mono">space/space-4</td><td class="mono">4px</td></tr>
+          <tr><td class="muted">Bottom radius</td><td class="mono">radius/radius-2</td><td class="mono">6px</td></tr>
+          <tr><td class="muted">Service Item min-width</td><td class="mono">—</td><td class="mono">64px</td></tr>
+          <tr><td class="muted">Service Item icon container</td><td class="mono">—</td><td class="mono">40 × 40</td></tr>
+          <tr><td class="muted">Icon padding</td><td class="mono">space/space-4</td><td class="mono">4px</td></tr>
+          <tr><td class="muted">Icon → label gap</td><td class="mono">space/space-6</td><td class="mono">6px</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Typography (Service Item Label)</div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Property</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">DS text style</td><td class="mono">Primary/Label/Fine</td></tr>
+          <tr><td class="muted">Font</td><td class="mono">Proxima Soft</td></tr>
+          <tr><td class="muted">Weight</td><td class="mono">700 (Bold)</td></tr>
+          <tr><td class="muted">Size</td><td class="mono">12px</td></tr>
+          <tr><td class="muted">Line height</td><td class="mono">12px</td></tr>
+          <tr><td class="muted">Tracking</td><td class="mono">+0.5</td></tr>
+          <tr><td class="muted">Alignment</td><td class="mono">center</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- ══ Tab: Code ══════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="mg-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:menu-grid:1.0.0"</span>)
+}</pre>
+    </div>
+
+    <div class="sub-heading" id="mg-props">Property Mapping</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Figma Property</th>
+            <th>SwiftUI Param</th>
+            <th>Compose Param</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">Row="by N"</td>
+            <td class="mono">rows: Int</td>
+            <td class="mono">rows: Int</td>
+            <td class="muted">Native takes a plain integer; Figma string parsed to N</td>
+          </tr>
+          <tr>
+            <td class="mono">Column="by N"</td>
+            <td class="mono">columns: Int</td>
+            <td class="mono">columns: Int</td>
+            <td class="muted">Same — integer parameter</td>
+          </tr>
+          <tr>
+            <td class="mono">Service Item (instance)</td>
+            <td class="mono">items: [EBServiceItem]</td>
+            <td class="mono">items: List&lt;EBServiceItem&gt;</td>
+            <td class="muted">Each cell is a Service Item with icon + label</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/MenuGrid/EBMenuGrid.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/menugrid/EBMenuGrid.kt</div>
+    </div>
+
+    <div class="sub-heading" id="mg-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'mg-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'mg-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Default dashboard grid — 2 rows × 4 columns</span>
+<span class="typ">EBMenuGrid</span>(<span class="prp">columns</span>: <span class="kw">4</span>, <span class="prp">items</span>: services)
+
+<span class="cmt">// Service Item child</span>
+<span class="typ">EBServiceItem</span>(
+    <span class="prp">icon</span>: <span class="typ">Image</span>(<span class="str">"send-money"</span>),
+    <span class="prp">label</span>: <span class="str">"Send Money"</span>,
+    <span class="prp">action</span>: { /* tap */ }
+)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Default dashboard grid — 2 rows × 4 columns</span>
+<span class="typ">EBMenuGrid</span>(
+    <span class="prp">columns</span> = <span class="kw">4</span>,
+    <span class="prp">items</span> = services
+)
+
+<span class="cmt">// Service Item child</span>
+<span class="typ">EBServiceItem</span>(
+    <span class="prp">icon</span> = painterResource(R.drawable.send_money),
+    <span class="prp">label</span> = <span class="str">"Send Money"</span>,
+    <span class="prp">onClick</span> = { /* tap */ }
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="mg-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Requirement</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tap target</td>
+            <td class="muted">Service Item is 64+ px wide × ~64 px tall — meets HIG 44pt minimum</td>
+            <td class="muted">Meets Material 48dp minimum</td>
+          </tr>
+          <tr>
+            <td>Accessibility label</td>
+            <td class="muted"><code>.accessibilityLabel(label)</code> on each item</td>
+            <td class="muted"><code>contentDescription = label</code></td>
+          </tr>
+          <tr>
+            <td>Grid semantics</td>
+            <td class="muted">Container exposes grid traits via <code>LazyVGrid</code></td>
+            <td class="muted"><code>LazyVerticalGrid</code> announces row/column position</td>
+          </tr>
+          <tr>
+            <td>Disabled state</td>
+            <td class="muted">Currently undefined — needs token + <code>.disabled(true)</code> handling</td>
+            <td class="muted">Currently undefined — needs token + <code>enabled = false</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="mg-guidelines">Usage Guidelines</div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use Row=2 × Column=4 for the primary dashboard surface — 8 services is the established home pattern.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Use Row=5 × Column=5 unless density is essential — 25 cells reduces label legibility.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Pair Menu Grid with a section heading or container card so users understand the grouping.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Mix icon styles within a single grid — keep all Service Item icons in the same vector style.</p></div>
+    </div>
+
+    <div class="sub-heading" id="mg-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">ID</th>
+            <th class="col-md">Criterion</th>
+            <th class="col-badge">Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Semantic names: <code>Service Item</code>, <code>icon-container</code>, <code>Label</code>. No Frame/Group debris.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">Property values are pseudo-numeric strings (<code>"by 4"</code>) instead of integers. Native takes <code>Int</code>.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors, spacing, radii, and typography bound to tokens.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Maps to <code>LazyVGrid</code> / <code>LazyVerticalGrid</code>. The 20-variant matrix is Figma-only — native uses one component with two int props.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">Only <code>active</code> token defined. No <code>pressed</code> or <code>disabled</code> color tokens for Service Item.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Icon container is a vector instance, token-bound color.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-refine">Pending</span></td><td class="muted">No CLI mappings registered yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="mg-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(20 total)</span></div>
+    <p>4 <code>Row</code> × 5 <code>Column</code> = <strong>20 variants</strong>. All variants share the same 336px container, 4×4 cell gap, and Service Item child.</p>
+
+    <!-- Grouped summary (always visible, compact) -->
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Row</th><th>Columns</th><th>Cell range</th><th class="center">Count</th></tr></thead>
+        <tbody>
+          <tr><td><strong>by 2</strong></td><td class="muted">by 1, 2, 3, 4, 5</td><td class="muted">2 – 10</td><td class="mono center">5</td></tr>
+          <tr><td><strong>by 3</strong></td><td class="muted">by 1, 2, 3, 4, 5</td><td class="muted">3 – 15</td><td class="mono center">5</td></tr>
+          <tr><td><strong>by 4</strong></td><td class="muted">by 1, 2, 3, 4, 5</td><td class="muted">4 – 20</td><td class="mono center">5</td></tr>
+          <tr><td><strong>by 5</strong></td><td class="muted">by 1, 2, 3, 4, 5</td><td class="muted">5 – 25</td><td class="mono center">5</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Full breakdown (collapsed) -->
+    <details style="margin-top:16px;">
+      <summary style="cursor:pointer;padding:8px 12px;background:var(--row-hover,#F4F6FA);border-radius:6px;font-weight:600;font-size:13px;color:var(--text,#0A1628);user-select:none;">View full Row × Column breakdown (20 rows)</summary>
+      <div class="table-wrap" style="margin-top:12px;">
+      <table>
+        <thead>
+          <tr><th>Row</th><th>Column</th><th>Cells</th><th>Node ID</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>by 2</td><td>by 1</td><td class="mono">2</td><td class="mono">18320:14413</td></tr>
+          <tr><td>by 2</td><td>by 2</td><td class="mono">4</td><td class="mono">18320:14407</td></tr>
+          <tr><td>by 2</td><td>by 3</td><td class="mono">6</td><td class="mono">18320:14398</td></tr>
+          <tr><td>by 2</td><td>by 4</td><td class="mono">8</td><td class="mono">18320:14371</td></tr>
+          <tr><td>by 2</td><td>by 5</td><td class="mono">10</td><td class="mono">18320:14383</td></tr>
+          <tr><td>by 3</td><td>by 1</td><td class="mono">3</td><td class="mono">18320:14423</td></tr>
+          <tr><td>by 3</td><td>by 2</td><td class="mono">6</td><td class="mono">18320:14416</td></tr>
+          <tr><td>by 3</td><td>by 3</td><td class="mono">9</td><td class="mono">18320:14563</td></tr>
+          <tr><td>by 3</td><td>by 4</td><td class="mono">12</td><td class="mono">18320:14550</td></tr>
+          <tr><td>by 3</td><td>by 5</td><td class="mono">15</td><td class="mono">18320:14534</td></tr>
+          <tr><td>by 4</td><td>by 1</td><td class="mono">4</td><td class="mono">18320:14503</td></tr>
+          <tr><td>by 4</td><td>by 2</td><td class="mono">8</td><td class="mono">18320:14477</td></tr>
+          <tr><td>by 4</td><td>by 3</td><td class="mono">12</td><td class="mono">18320:14448</td></tr>
+          <tr><td>by 4</td><td>by 4</td><td class="mono">16</td><td class="mono">18320:14333</td></tr>
+          <tr><td>by 4</td><td>by 5</td><td class="mono">20</td><td class="mono">18320:14350</td></tr>
+          <tr><td>by 5</td><td>by 1</td><td class="mono">5</td><td class="mono">18320:14497</td></tr>
+          <tr><td>by 5</td><td>by 2</td><td class="mono">10</td><td class="mono">18320:14486</td></tr>
+          <tr><td>by 5</td><td>by 3</td><td class="mono">15</td><td class="mono">18320:14461</td></tr>
+          <tr><td>by 5</td><td>by 4</td><td class="mono">20</td><td class="mono">18320:14427</td></tr>
+          <tr><td>by 5</td><td>by 5</td><td class="mono">25</td><td class="mono">18320:14508</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </details>
+
+    </div><!-- /tab code -->
+
+    <!-- ══ Tab: Changelog ═════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 18320:14332</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Component assessed</strong> — 20 variants formed by Row × Column (Row 2/3/4/5, Column 1/2/3/4/5). Layout container of Service Item children. 336px fixed width.
+          <span class="tag-fixed">Documented</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Initial</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Variant property values are strings, not integers</strong> — <code>Row="by 4"</code>, <code>Column="by 4"</code>. Native takes <code>Int</code>; the string prefix forces parsing.
+          <span class="tag-open tag-c2">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C2 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Service Item missing pressed/disabled tokens</strong> — Only <code>dashboard/service-item/color/active/{icon,label}</code> defined. Other states must be improvised.
+          <span class="tag-open tag-c5">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C5 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Code Connect mappings</strong> — No CLI mappings registered yet.
+          <span class="tag-open tag-c7">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C7 Open</span>
+      </div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-menu-grid">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-menu-grid"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Menu Grid Component JS ───────────────────────────────────────── */
+var _mgDemo = { row: 4, col: 4 };
+
+function _mgBuildSvg(rows, cols) {
+  var cellW = 64;
+  var cellH = 56;
+  var gap = 4;
+  var padH = 8;
+  var padT = 10;
+  var padB = 6;
+  var w = padH * 2 + cols * cellW + (cols - 1) * gap;
+  var h = padT + padB + rows * cellH + (rows - 1) * gap;
+  var s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+  s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" rx="6" fill="#FFFFFF" stroke="#E5EBF4" stroke-width="1"/>';
+  for (var r = 0; r < rows; r++) {
+    for (var c = 0; c < cols; c++) {
+      var x = padH + c * (cellW + gap);
+      var y = padT + r * (cellH + gap);
+      var iconCx = x + cellW / 2;
+      var iconCy = y + 20;
+      s += '<rect x="' + (iconCx - 14) + '" y="' + (iconCy - 14) + '" width="28" height="28" rx="4" fill="#005CE5" opacity=".9"/>';
+      s += '<text x="' + iconCx + '" y="' + (y + 50) + '" text-anchor="middle" fill="#072592" font-size="9" font-weight="700" font-family="\'Proxima Soft\', system-ui, sans-serif">Label</text>';
+    }
+  }
+  s += '</svg>';
+  return s;
+}
+
+function updateMenuGridDemo() {
+  var r = parseInt(document.getElementById('mg-demo-row').value, 10) || 4;
+  var c = parseInt(document.getElementById('mg-demo-col').value, 10) || 4;
+  _mgDemo.row = r;
+  _mgDemo.col = c;
+  var el = document.getElementById('mg-demo-preview');
+  if (el) el.innerHTML = _mgBuildSvg(r, c);
+}
+
+function _mgInitSpecCards() {
+  var combos = [[2, 4, '2x4'], [4, 4, '4x4'], [5, 5, '5x5']];
+  combos.forEach(function(t) {
+    var el = document.getElementById('mg-preview-' + t[2]);
+    if (el) el.innerHTML = _mgBuildSvg(t[0], t[1]);
+  });
+}
+
+function _mgInit() {
+  updateMenuGridDemo();
+  _mgInitSpecCards();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _mgInit);
+} else {
+  _mgInit();
+}
+</script>
+
+<!--@section-end-->

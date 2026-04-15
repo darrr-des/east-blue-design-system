@@ -708,8 +708,24 @@ open-issues: C7
 
     <!-- Variants Inventory -->
     <div class="sub-heading" id="ava-variants">Variants Inventory <span class="badge-count">21 total</span></div>
-    <p>3 <code>type</code> values x 7 <code>size</code> values. No interaction state axis (display-only component).</p>
+    <p>3 <code>type</code> × 7 <code>size</code> = <strong>21 variants</strong>. No interaction state axis (display-only component).</p>
+
+    <!-- Grouped summary (always visible, compact) -->
     <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>Sizes</th><th>Notes</th><th class="center">Count</th></tr></thead>
+        <tbody>
+          <tr><td><strong>dark-initials</strong></td><td class="muted">20, 24, 32, 40, 48, 64, 90 px</td><td class="muted">Brand background, white initials</td><td class="mono center">7</td></tr>
+          <tr><td><strong>initials-light</strong></td><td class="muted">20, 24, 32, 40, 48, 64, 90 px</td><td class="muted">Light background, dark initials</td><td class="mono center">7</td></tr>
+          <tr><td><strong>image</strong></td><td class="muted">20, 24, 32, 40, 48, 64, 90 px</td><td class="muted">Photo fill (raster expected)</td><td class="mono center">7</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Full breakdown (collapsed) -->
+    <details style="margin-top:16px;">
+      <summary style="cursor:pointer;padding:8px 12px;background:var(--row-hover,#F4F6FA);border-radius:6px;font-weight:600;font-size:13px;color:var(--text,#0A1628);user-select:none;">View full Type × Size breakdown (21 rows)</summary>
+      <div class="table-wrap" style="margin-top:12px;">
       <table>
         <thead>
           <tr>
@@ -743,8 +759,9 @@ open-issues: C7
           <tr><td>image</td><td>90px</td><td class="muted center">expected</td><td class="mono">17143:4548</td></tr>
         </tbody>
       </table>
-    </div>
-    <p class="table-footnote">Raster column: &#x2717; = initials background exported as raster image instead of vector. "expected" = image type uses photos by design.</p>
+      <p class="table-footnote">Raster column: &#x2717; = initials background exported as raster image instead of vector. "expected" = image type uses photos by design.</p>
+      </div>
+    </details>
 
     </div><!-- /tab code -->
 

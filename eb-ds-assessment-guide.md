@@ -248,9 +248,15 @@ They do **not** see:
 | C5 | No disabled or pressed states — form dropdown missing standard interaction states | Dropdown |
 | C2 | DropdownItem `selected` property uses yes/no string instead of true/false boolean | Dropdown |
 | C6 | trailing-icon uses icon-placeholder RECTANGLE — not a swappable icon instance | Labeled Field |
+| C2 | Variant property values use pseudo-numeric strings ("by 4") instead of clean integer enums | Menu Grid |
+| C5 | Service Item only defines `active` color tokens — no pressed/disabled state coverage | Menu Grid |
+| C4 | Variant explosion (4 rows × 5 columns = 20) where two integer props would suffice on native | Menu Grid |
 | C6 | Trailing icons use icon-placeholder RECTANGLE instead of swappable icon instances | Recipient Field |
 | C2 | Boolean properties use yes/no instead of true/false — blocks direct Swift Bool / Kotlin Boolean mapping | Title Bar |
 | C6 | Trailing icon uses icon-placeholder RECTANGLE instead of swappable icon instance — blocks native icon slot | Title Bar |
+| C2 | Variant property values mix paradigms — "Default" / "2 CTA" / "Version 2" combine generic, count, and version naming | Visual Popup |
+| C6 | Hero image is a flat raster placeholder with "Replace me" overlay instead of a swappable image slot | Visual Popup |
+| C5 | No destructive/error/loading variant; close affordance only on Version 2 | Visual Popup |
 <!-- @@DISCOVERED_PATTERNS_END@@ -->
 
 ---
@@ -496,9 +502,11 @@ Key conventions:
 | Dropdown | `23:199480` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Input Field | `17758:3687` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Labeled Field | `17758:3713` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Menu Grid | `18320:14332` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Recipient Field | `17758:3867` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Select Field | `17758:3786` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Title Bar | `23:175148` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Visual Popup | `30:81526` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 <!-- @@PROGRESS_TABLE_END@@ -->
 
 ### Open Issues

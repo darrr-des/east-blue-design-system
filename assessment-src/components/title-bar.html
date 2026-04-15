@@ -737,8 +737,23 @@ open-issues: C2, C6, C7
 
     <!-- Variants Inventory -->
     <div class="sub-heading" id="tb-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(20 total)</span></div>
-    <p class="section-desc">5 boolean properties with implicit constraints yield 20 distinct variants: 10 without title block + 10 with title block.</p>
+    <p>5 boolean properties (<code>leading icon</code>, <code>trailing icon</code>, <code>leading control</code>, <code>subtext</code>, <code>title block</code>) with implicit constraints yield <strong>20 variants</strong>: 10 without title block + 10 with title block.</p>
+
+    <!-- Grouped summary (always visible, compact) -->
     <div class="table-wrap">
+      <table>
+        <thead><tr><th>title block</th><th>Combinations covered</th><th class="center">Count</th></tr></thead>
+        <tbody>
+          <tr><td><strong>no</strong></td><td class="muted">10 combos of leading/trailing icon + leading control + subtext</td><td class="mono center">10</td></tr>
+          <tr><td><strong>yes</strong></td><td class="muted">Same 10 combos with title block enabled</td><td class="mono center">10</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Full breakdown (collapsed) -->
+    <details style="margin-top:16px;">
+      <summary style="cursor:pointer;padding:8px 12px;background:var(--row-hover,#F4F6FA);border-radius:6px;font-weight:600;font-size:13px;color:var(--text,#0A1628);user-select:none;">View full property combination breakdown (20 rows)</summary>
+      <div class="table-wrap" style="margin-top:12px;">
       <table>
         <thead>
           <tr><th>leading icon</th><th>trailing icon</th><th>leading control</th><th>subtext</th><th>title block</th><th>Node ID</th></tr>
@@ -766,7 +781,8 @@ open-issues: C2, C6, C7
           <tr><td>yes</td><td>no</td><td>yes</td><td>yes</td><td>yes</td><td class="mono">23:175249</td></tr>
         </tbody>
       </table>
-    </div>
+      </div>
+    </details>
 
     </div><!-- /tab code -->
 

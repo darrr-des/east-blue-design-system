@@ -405,6 +405,51 @@ The Button component's spec card is the baseline. Every component's Style tab sp
 
 ---
 
+## Variants Inventory Conventions
+
+The Button component is the reference. Every component's Variants Inventory in the Code tab must follow this two-part pattern when it has more than ~10 variants or a multi-axis matrix (Style × Size × State × …). Components with ≤8 variants may use a single flat table.
+
+### Structure (top to bottom)
+
+1. **Heading** with total count: `Variants Inventory (180 total)`
+2. **Multiplier expression** in a `<p>`: e.g. `3 Style × 5 Size × 3 State × 4 Icon Placement = 180 variants`. Call out variable modes separately if they multiply visual states further.
+3. **Grouped summary table** (always visible) — collapses one axis (typically Size) into a comma-separated list per row, with a Count column. Keeps the at-a-glance view compact.
+4. **Full breakdown** in a `<details>` collapsible — labeled `View full {Axis} × {Axis} breakdown (N rows)`. Lists every variant with node IDs, dimensions, and any per-variant details.
+
+### Markup pattern
+
+```html
+<div class="sub-heading" id="xxx-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(N total)</span></div>
+<p>A <code>X</code> × B <code>Y</code> × C <code>Z</code> = <strong>N variants</strong>.</p>
+
+<!-- Grouped summary (always visible) -->
+<div class="table-wrap">
+  <table>...compact summary...</table>
+</div>
+
+<!-- Full breakdown (collapsed) -->
+<details style="margin-top:16px;">
+  <summary style="cursor:pointer;padding:8px 12px;background:var(--row-hover,#F4F6FA);border-radius:6px;font-weight:600;font-size:13px;color:var(--text,#0A1628);user-select:none;">View full {Axis} × {Axis} breakdown (N rows)</summary>
+  <div class="table-wrap" style="margin-top:12px;">
+    <table>...full per-variant table with node IDs...</table>
+  </div>
+</details>
+```
+
+### When to apply
+
+- **Apply** when the inventory has >10 rows or a multi-axis matrix (e.g. Button 180, Badge 68, Checkbox 33, Avatar 21, Menu Grid 20, Title Bar 20)
+- **Skip** for components with ≤8 variants (Avatar Group 4, Accordion 6, Dropdown 8, Form fields 8) — a single flat table is more readable
+
+### Rules
+
+- Node IDs belong in the **full breakdown**, not the summary
+- Summary table groups by the highest-cardinality axis (usually Style or Type)
+- Use `<details>` for native collapse — no JS required
+- The collapsible label must include the row count: `(15 rows)`, `(20 rows)`, etc.
+
+---
+
 ## Color Table Conventions
 
 Every component's Style tab must have a color reference table showing that all colors are bound to design tokens from the component variable collection. The table title and structure depend on whether the component uses appearance modes.
