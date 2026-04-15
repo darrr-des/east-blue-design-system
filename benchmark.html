@@ -67,6 +67,9 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;background:
 .pillar-score{font-size:28px;font-weight:500}
 .pillar-bar{height:4px;background:var(--bg3);border-radius:2px;margin-top:10px;overflow:hidden}
 .pillar-fill{height:4px;border-radius:2px}
+.pillar-fix{font-size:11px;color:var(--tx2);line-height:1.55;margin-top:10px;padding-top:10px;border-top:1px solid var(--bd2)}
+.pillar-fix-lbl{font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3);margin-bottom:4px}
+.pillar-fix.done{color:var(--grn)}
 .threshold{margin-top:20px;font-size:14px;color:var(--tx2)}
 .threshold strong{font-weight:500}
 
@@ -486,11 +489,21 @@ function renderMat(c,eb,sel){
 
 // S4: Future-Proof
 function renderFP(eb){
-  const ps=[{k:"tokenAbstraction",n:"Token abstraction"},{k:"apiStability",n:"API stability"},{k:"variantExtensibility",n:"Variant extensibility"},{k:"layoutDecoupling",n:"Layout decoupling"},{k:"compositionIsolation",n:"Composition isolation"},{k:"migrationPath",n:"Migration path"}];
+  const ps=[
+    {k:"tokenAbstraction",n:"Token abstraction",fix:{1:"Replace raw hex values with semantic tokens (e.g. main/{component}/{state}/bg) bound to the component variable collection.",2:"Collapse remaining aliased or one-off tokens into the shared semantic scale so every color/space value resolves through the collection.",3:"All values flow through a single semantic token layer — a rebrand only requires swapping token values."}},
+    {k:"apiStability",n:"API stability",fix:{1:"Rename ad-hoc booleans and enums to a stable schema (true/false for booleans, semantic enums for styles/states) and remove deprecated properties.",2:"Lock property names and enum values; document any remaining renames with a migration note so consumers don't break on the next update.",3:"Public properties are frozen and versioned — name and shape stay the same across rebrands."}},
+    {k:"variantExtensibility",n:"Variant extensibility",fix:{1:"Add the missing core variants (states, sizes, or appearances) so the component covers the documented matrix without overrides.",2:"Expose the remaining optional slots/flags (e.g. leading/trailing icon, loading, destructive) as first-class properties instead of detached instances.",3:"New variants can be added by toggling properties — no restructuring or duplicate masters required."}},
+    {k:"layoutDecoupling",n:"Layout decoupling",fix:{1:"Remove fixed heights/widths and move to auto-layout with min-height + padding so the component grows with content.",2:"Token-drive the remaining padding, gap, and radius values so layout adapts when spacing tokens change.",3:"Layout is fully token- and content-driven — a spacing rebrand flows through without manual resizing."}},
+    {k:"compositionIsolation",n:"Composition isolation",fix:{1:"Flatten nested dependencies and replace detached children with proper component instances so the component carries its own structure.",2:"Isolate side-effect styles (shadows, background layers) inside the component boundary so parents can't leak styles in.",3:"Component is self-contained — nesting it anywhere produces the same visual result."}},
+    {k:"migrationPath",n:"Migration path",fix:{1:"Write a changelog entry and property-rename map for the last breaking change so consumers know how to upgrade.",2:"Provide swap instructions and Code Connect mappings so Figma→code migrations are mechanical, not manual.",3:"Every breaking change ships with a documented swap path and automated upgrade notes."}}
+  ];
   const fp=eb.futureProof,av=ps.reduce((s,p)=>s+fp[p.k],0)/ps.length;
   let h="";
   ps.forEach(p=>{const v=fp[p.k],pct=(v/3)*100,co=v>=3?"var(--grn)":v>=2?"var(--pri)":"var(--amb)";
-    h+=`<div class="pillar"><div class="pillar-name">${p.n}</div><div class="pillar-score" style="color:${co}">${v}/3</div><div class="pillar-bar"><div class="pillar-fill" style="width:${pct}%;background:${co}"></div></div></div>`});
+    const done=v>=3;
+    const msg=done?"Achieved — no further action needed to reach 3/3.":p.fix[v]||p.fix[1];
+    const lbl=done?"Status":"To reach 3/3";
+    h+=`<div class="pillar"><div class="pillar-name">${p.n}</div><div class="pillar-score" style="color:${co}">${v}/3</div><div class="pillar-bar"><div class="pillar-fill" style="width:${pct}%;background:${co}"></div></div><div class="pillar-fix${done?" done":""}"><div class="pillar-fix-lbl">${lbl}</div>${msg}</div></div>`});
   document.getElementById("pillarRow").innerHTML=h;
   const co=av>=2?"var(--grn)":av>=1.5?"var(--amb)":"var(--red)";
   const tx=av>=2?"Passes — survives a rebrand with token changes only":av>=1.5?"Close — needs some manual fixes after token swap":"Below threshold — needs structural rebuild";
