@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>East Blue Design System</title>
+<script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <style>
   @font-face {
     font-family: 'HeyMeow Rnd';
@@ -362,19 +363,9 @@
   </div>
   <div class="login-form-wrap">
     <div class="login-form-title">Welcome back</div>
-    <div class="login-form-sub">Sign in to access the assessment dashboard.</div>
-    <div class="login-field">
-      <label class="login-label">Email</label>
-      <input type="email" class="login-input" id="login-email" placeholder="Email address" autocomplete="email" />
-      <div class="login-error" id="login-email-error">Please use an authorized email</div>
-    </div>
-    <div class="login-field">
-      <label class="login-label">Password</label>
-      <input type="password" class="login-input" id="login-password" placeholder="Enter your password" autocomplete="current-password" />
-      <div class="login-error" id="login-pass-error">Password is required</div>
-    </div>
-    <button class="login-btn" onclick="handleLogin()">Sign In</button>
-    <div class="login-footer-text">For internal use only</div>
+    <div class="login-form-sub">Sign in with your invited account to access the assessment dashboard.</div>
+    <button class="login-btn" onclick="openNetlifyLogin()" style="margin-top:24px;">Sign In</button>
+    <div class="login-footer-text" style="margin-top:16px;">Access by invitation only. Contact your admin if you need to be added.</div>
   </div>
 </div>
 
@@ -410,8 +401,8 @@
 
     <div class="stats-bar">
       <span class="pill blue"><span class="pill-dot"></span>12 Components</span>
-      <span class="pill amber"><span class="pill-dot"></span>19 Open Issues</span>
-      <span class="pill green"><span class="pill-dot"></span>103 Post-Fix</span>
+      <span class="pill amber"><span class="pill-dot"></span>15 Open Issues</span>
+      <span class="pill green"><span class="pill-dot"></span>109 Post-Fix</span>
     </div>
   </div>
 
@@ -485,60 +476,31 @@ function toggleTheme(isDark) {
 })();
 
 /* ── Login ──────────────────────────────── */
-function handleLogin() {
-  var email = document.getElementById('login-email').value.trim().toLowerCase();
-  var pass = document.getElementById('login-password').value;
-  var emailErr = document.getElementById('login-email-error');
-  var passErr = document.getElementById('login-pass-error');
-  var emailInput = document.getElementById('login-email');
-  var passInput = document.getElementById('login-password');
-  var valid = true;
-
-  emailErr.style.display = 'none';
-  passErr.style.display = 'none';
-  emailInput.classList.remove('error');
-  passInput.classList.remove('error');
-
-  if (!email || !(email.endsWith('@frostdesigngroup.com') || email.endsWith('@gcash.com'))) {
-    emailErr.style.display = 'block';
-    emailInput.classList.add('error');
-    valid = false;
-  }
-  if (!pass) {
-    passErr.style.display = 'block';
-    passInput.classList.add('error');
-    valid = false;
-  }
-  if (!valid) return;
-
-  localStorage.setItem('eb_auth', JSON.stringify({ email: email, time: Date.now() }));
-  showApp();
-}
-
+/* ── Netlify Identity auth gate ───────────────────────────────────── */
 function showApp() {
   document.getElementById('login-screen').style.display = 'none';
 }
-
-function checkAuth() {
-  var auth = localStorage.getItem('eb_auth');
-  if (auth) {
-    try {
-      var data = JSON.parse(auth);
-      if (data.email && (data.email.endsWith('@frostdesigngroup.com') || data.email.endsWith('@gcash.com'))) {
-        showApp();
-        return;
-      }
-    } catch(e) {}
+function hideApp() {
+  document.getElementById('login-screen').style.display = 'flex';
+}
+function openNetlifyLogin() {
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.open('login');
   }
 }
 
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
-    handleLogin();
-  }
-});
-
-checkAuth();
+if (window.netlifyIdentity) {
+  window.netlifyIdentity.on('init', function(user) {
+    if (user) { showApp(); } else { hideApp(); }
+  });
+  window.netlifyIdentity.on('login', function(user) {
+    showApp();
+    window.netlifyIdentity.close();
+  });
+  window.netlifyIdentity.on('logout', function() {
+    hideApp();
+  });
+}
 </script>
 </body>
 </html>

@@ -131,12 +131,12 @@ open-issues: C7
 
     <div class="sub-heading" id="avg-traits">DS Health</div>
     <div class="trait-grid">
-      <div class="trait-card partial">
+      <div class="trait-card pass">
         <div class="trait-header">
           <div class="trait-name">Reusable</div>
-          <div class="trait-status">Partial</div>
+          <div class="trait-status">Pass</div>
         </div>
-        <div class="trait-note">Fits participant lists and collaboration indicators, but only 3 variants (2/3/4). Fixed 48×48 container — doesn't scale for larger contexts (hero lists, dense profile rows). No overflow variant for groups larger than 4.</div>
+        <div class="trait-note">Fits participant lists and collaboration indicators. 4 variants (pair/trio/quad/overflow) cover 2–4 visible avatars plus "+N" overflow for larger groups. Fixed 48×48 container — suitable for most list/row contexts.</div>
       </div>
       <div class="trait-card pass">
         <div class="trait-header">
@@ -230,10 +230,8 @@ open-issues: C7
 
     <div class="sub-heading" id="avg-recommend">Design Recommendations</div>
     <ul class="recommend-list">
-      <li><span>Replace the hardcoded 24px avatar children with <strong>Avatar component instances</strong> (size=24px, using the Avatar component's existing type property). This restores composition and ensures updates propagate. <span class="tag-recommend">Architectural</span></span></li>
-      <li><span>Rename property from <code>no. of initals</code> to <code>count</code> with <strong>number values</strong> (2/3/4), not strings. Cleaner native mapping. <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Add an overflow variant (<code>count=5+</code> or a separate boolean <code>isOverflow</code>) that displays 3 avatars + a "+N" counter badge. Common pattern for lists with 5+ participants. <span class="tag-recommend">Suggested</span></span></li>
       <li><span>Consider adding size variants (e.g. <code>groupSize=small/medium/large</code>) — current 48×48 is one size only. Bigger groups may need larger containers for readability. <span class="tag-recommend">Suggested</span></span></li>
+      <li><span>Consolidate the duplicate Avatar component at <code>21:94766</code> — now that Avatar Group points at the canonical <code>17143:4488</code>, the duplicate should be deprecated and eventually removed in a future DS cleanup pass. <span class="tag-recommend">DS Hygiene</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -242,7 +240,7 @@ open-issues: C7
     <div class="comp-tab-content" data-tab="style" role="tabpanel">
 
     <div class="sub-heading" id="avg-styles" style="margin-top:0">Variants</div>
-    <p class="section-desc">3 variants (2 / 3 / 4 avatars). All use a 48×48 fixed container with 24×24 inner avatars arranged with intentional overlap to indicate grouping.</p>
+    <p class="section-desc">4 variants (pair / trio / quad / overflow). All use a 48×48 fixed container with 24×24 inner avatars arranged with intentional overlap to indicate grouping. Overflow replaces the 4th avatar with a "+N" badge for groups larger than 4.</p>
 
     <div class="spec-card" id="avg-spec-2">
       <div class="spec-card-header">

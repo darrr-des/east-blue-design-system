@@ -243,8 +243,8 @@ They do **not** see:
 | C2 | Token name typo "main/avatar/brand/intials" missing second letter i — should be "initials" (reopened on recheck) | Avatar |
 | C3 | Border-radius bound to radius/radius-round (99999) — RESOLVED. Border-width still fixed per size (acceptable by design). | Avatar |
 | C6 | Raster backgrounds on 5 initials variants replaced with vector ELLIPSE layers — RESOLVED | Avatar |
-| C3 | Hardcoded opacity: 0.90 on Danger/Heavy and Disabled/Heavy Transaction variants — inconsistent with other variants | Badge |
-| C2 | State property names don't match token names (Info/information, Success/positive, Warning/notice, Danger/negative, Disabled/muted) — minor inconsistency | Badge |
+| C3 | Hardcoded opacity: 0.90 on Danger/Heavy and Disabled/Heavy Transaction variants — RESOLVED (set to 1 via plugin) | Badge |
+| C2 | State property values renamed to match token semantic names (Info→Information, Success→Positive, Warning→Notice, Danger→Negative, Disabled→Muted) — RESOLVED across all 60 affected variants | Badge |
 | C5 | No disabled or pressed states — form dropdown missing standard interaction states | Dropdown |
 | C2 | DropdownItem `selected` property uses yes/no string instead of true/false boolean | Dropdown |
 | C6 | trailing-icon uses icon-placeholder RECTANGLE — not a swappable icon instance | Labeled Field |

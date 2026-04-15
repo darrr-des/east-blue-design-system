@@ -16,8 +16,8 @@ open-issues: C7
 <!--@meta-end-->
 
 <!--@patterns-start-->
-[C3] Hardcoded opacity: 0.90 on Danger/Heavy and Disabled/Heavy Transaction variants — inconsistent with other variants
-[C2] State property names don't match token names (Info/information, Success/positive, Warning/notice, Danger/negative, Disabled/muted) — minor inconsistency
+[C3] Hardcoded opacity: 0.90 on Danger/Heavy and Disabled/Heavy Transaction variants — RESOLVED (set to 1 via plugin)
+[C2] State property values renamed to match token semantic names (Info→Information, Success→Positive, Warning→Notice, Danger→Negative, Disabled→Muted) — RESOLVED across all 60 affected variants
 <!--@patterns-end-->
 
 <!--@nav-start-->
@@ -228,12 +228,17 @@ open-issues: C7
     </div>
     <p class="table-footnote">Badge is display-only. No interaction states (pressed, focused) exist. Disabled is a visual variant, not an interactive state -- it represents muted/inactive content styling.</p>
 
+    <!-- Resolved Issues -->
+    <div class="sub-heading" id="bd-resolved">Resolved Issues</div>
+    <ul class="resolved-list">
+      <li><span>Hardcoded <code>opacity: 0.90</code> removed from Danger/Heavy Transaction (<code>21:111576</code>) and Disabled/Heavy Transaction (<code>3714:3863</code>) inner containers. Both now at opacity 1, consistent with the other 66 variants. <span class="tag-fixed">C3 Fixed</span></span></li>
+      <li><span>State property values renamed to match token semantic names across all 60 affected variants: <code>Info</code> → <code>Information</code>, <code>Success</code> → <code>Positive</code>, <code>Warning</code> → <code>Notice</code>, <code>Danger</code> → <code>Negative</code>, <code>Disabled</code> → <code>Muted</code>. Figma State values now align 1:1 with token namespace — cleaner Code Connect mapping, no translation layer needed. <span class="tag-fixed">C2 Fixed</span></span></li>
+    </ul>
+
     <!-- Open Issues -->
     <div class="sub-heading" id="bd-open">Open Issues</div>
     <ul class="resolved-list">
       <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
-      <li><span>Danger/Heavy and Disabled/Heavy Transaction variants have hardcoded <code>opacity: 0.90</code> on container -- inconsistent with other variants <span class="tag-open">C3</span></span></li>
-      <li><span>State property names (Info, Success, Warning, Danger, Disabled) don't match token semantic names (information, positive, notice, negative, muted) -- minor friction for Code Connect mapping <span class="tag-open">C2</span></span></li>
     </ul>
 
     <!-- Design Recommendations -->
@@ -850,6 +855,25 @@ open-issues: C7
     <!-- ══ Tab: Changelog ═════════════════════════════════════════════ -->
     <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
 
+    <div class="sub-heading" id="bd-v110" style="margin-top:0">1.1.0 -- April 2026 <span class="tab-version-badge minor">Minor</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Structural closure -- node 21:111526</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Opacity normalized</strong> -- Hardcoded <code>opacity: 0.90</code> removed from Danger/Heavy Transaction (<code>21:111576</code>) and Disabled/Heavy Transaction (<code>3714:3863</code>) inner containers. Both now at opacity 1, consistent with the other 66 variants.
+          <span class="tag-fixed">Fixed</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C3 Fixed</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>State values renamed to match token semantics</strong> -- 60 variants renamed: <code>Info</code> -> <code>Information</code>, <code>Success</code> -> <code>Positive</code>, <code>Warning</code> -> <code>Notice</code>, <code>Danger</code> -> <code>Negative</code>, <code>Disabled</code> -> <code>Muted</code>. Figma State property now aligns 1:1 with token namespace (<code>main/badge/{information|positive|notice|negative|muted}/{level}/</code>). Cleaner Code Connect mapping with no translation layer.
+          <span class="tag-fixed">Fixed</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C2 Fixed</span>
+      </div>
+    </div>
+
     <div class="sub-heading" id="bd-v100">1.0.0 -- April 2026 <span class="tab-version-badge major">Initial</span></div>
     <div class="changelog">
       <div class="changelog-header">Initial Assessment -- node 21:111526</div>
@@ -863,16 +887,16 @@ open-issues: C7
       <div class="changelog-row">
         <div class="changelog-body">
           <strong>Hardcoded opacity on 2 variants</strong> -- Danger/Heavy and Disabled/Heavy Transaction variants have <code>opacity: 0.90</code> on container instead of using token-driven values. Inconsistent with other variants.
-          <span class="tag-open">Open</span>
+          <span class="tag-fixed">Fixed in 1.1.0</span>
         </div>
-        <span class="changelog-delta delta-open">C3 Open</span>
+        <span class="changelog-delta delta-resolved">C3 Fixed</span>
       </div>
       <div class="changelog-row">
         <div class="changelog-body">
           <strong>State-to-token name mismatch</strong> -- Figma property names (Info, Success, Warning, Danger, Disabled) don't match token semantic names (information, positive, notice, negative, muted). Minor friction for automated Code Connect mapping.
-          <span class="tag-open">Open</span>
+          <span class="tag-fixed">Fixed in 1.1.0</span>
         </div>
-        <span class="changelog-delta delta-open">C2 Open</span>
+        <span class="changelog-delta delta-resolved">C2 Fixed</span>
       </div>
       <div class="changelog-row">
         <div class="changelog-body">

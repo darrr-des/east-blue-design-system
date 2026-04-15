@@ -1,0 +1,21 @@
+[build]
+  publish = "."
+  command = "node assessment-src/build.js"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Netlify Identity — invite-only authentication
+# Users must be explicitly invited via the Netlify dashboard → Identity → Invite users
+# Anyone not in the user list cannot access the site
+
+# Cache control for static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
