@@ -4,37 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>East Blue Design System — Component Assessment</title>
-<script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <!-- ═══════════════════════════════════════════════════════════════════ -->
-<!--  LOGIN GATE                                                         -->
+<!--  AUTHENTICATION                                                    -->
+<!--  Handled by Cloudflare Access at the CDN level.                    -->
+<!--  Users cannot reach this HTML unless they've logged in via CF.     -->
 <!-- ═══════════════════════════════════════════════════════════════════ -->
-<div class="login-screen" id="login-screen">
-  <div class="login-brand">
-    <div class="login-brand-content">
-      <div class="login-brand-icon">
-        <svg width="28" height="28" viewBox="0 0 20 20" fill="none">
-          <rect x="2" y="2" width="6" height="6" rx="1.5" fill="#fff"/>
-          <rect x="12" y="2" width="6" height="6" rx="1.5" fill="#fff" opacity=".75"/>
-          <rect x="2" y="12" width="6" height="6" rx="1.5" fill="#fff" opacity=".75"/>
-          <rect x="12" y="12" width="6" height="6" rx="1.5" fill="#fff" opacity=".45"/>
-        </svg>
-      </div>
-      <div class="login-brand-title">East Blue<br>Design System</div>
-      <div class="login-brand-desc">Component assessment platform for evaluating DS health and native mobile readiness across SwiftUI and Jetpack Compose.</div>
-    </div>
-    <div class="login-brand-footer"><span>Frost Design Group</span></div>
-  </div>
-  <div class="login-form-wrap">
-    <div class="login-form-title">Welcome back</div>
-    <div class="login-form-sub">Sign in with your invited account to access the assessment report.</div>
-    <button class="login-btn" onclick="openNetlifyLogin()" style="margin-top:24px;">Sign In</button>
-    <div class="login-footer-text" style="margin-top:16px;">Access by invitation only. Contact your admin if you need to be added.</div>
-  </div>
-</div>
 
 <!-- ═══════════════════════════════════════════════════════════════════ -->
 <!--  MOBILE TOP BAR                                                    -->
@@ -1299,31 +1277,8 @@ function renderCard(type, change, btn) {
   if (typeof _applyDemo === 'function') _applyDemo();
 })();
 
-/* ── Netlify Identity auth gate ───────────────────────────────────── */
-function showApp() {
-  var ls = document.getElementById('login-screen');
-  if (ls) ls.style.display = 'none';
-}
-function hideApp() {
-  var ls = document.getElementById('login-screen');
-  if (ls) ls.style.display = 'flex';
-}
-function openNetlifyLogin() {
-  if (window.netlifyIdentity) { window.netlifyIdentity.open('login'); }
-}
-
-if (window.netlifyIdentity) {
-  window.netlifyIdentity.on('init', function(user) {
-    if (user) { showApp(); } else { hideApp(); }
-  });
-  window.netlifyIdentity.on('login', function(user) {
-    showApp();
-    window.netlifyIdentity.close();
-  });
-  window.netlifyIdentity.on('logout', function() {
-    hideApp();
-  });
-}
+/* Authentication is handled by Cloudflare Access at the CDN level.
+   No in-page auth logic needed. */
 </script>
 </body>
 </html>
