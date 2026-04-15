@@ -245,13 +245,38 @@ They do **not** see:
 | C6 | Raster backgrounds on 5 initials variants replaced with vector ELLIPSE layers — RESOLVED | Avatar |
 | C3 | Hardcoded opacity: 0.90 on Danger/Heavy and Disabled/Heavy Transaction variants — RESOLVED (set to 1 via plugin) | Badge |
 | C2 | State property values renamed to match token semantic names (Info→Information, Success→Positive, Warning→Notice, Danger→Negative, Disabled→Muted) — RESOLVED across all 60 affected variants | Badge |
+| C2 | Boolean property "with icon" uses yes/no instead of true/false | Chip |
+| C2 | Two separate components ("Filter" and "Filter with Dropdown") share the same pill anatomy and should consolidate into a single Chip with leading/trailing slot props | Chip |
+| C6 | Leading slot uses a hardcoded 24px gray circle "icon-placeholder" instead of a swappable Avatar/Icon instance | Chip |
+| C5 | No pressed / selected / disabled / error states defined across either component | Chip |
 | C5 | No disabled or pressed states — form dropdown missing standard interaction states | Dropdown |
 | C2 | DropdownItem `selected` property uses yes/no string instead of true/false boolean | Dropdown |
 | C6 | trailing-icon uses icon-placeholder RECTANGLE — not a swappable icon instance | Labeled Field |
+| C2 | `type` × `indicator` axes are entangled — only ~10 of 72 theoretical combinations are valid | List Item Asset |
+| C5 | Numbered indicator hardcodes "1." — no way to set per-item number | List Item Asset |
+| C6 | `indicator=Custom` ships a gray circle placeholder instead of a swappable Icon slot | List Item Asset |
+| C2 | `level` property uses string values ("1"/"2"/"3") — should be an integer or inferred from nesting depth | List Item |
+| C6 | Leading asset is an instance-swap placeholder — adopting Figma Slots gives a cleaner native slot mapping | List Item |
+| C2 | List is a layout frame with 8 hardcoded List Item instances — not a variant component. Should be removed or restructured into a real container. | List |
 | C2 | Variant property values use pseudo-numeric strings ("by 4") instead of clean integer enums | Menu Grid |
 | C5 | Service Item only defines `active` color tokens — no pressed/disabled state coverage | Menu Grid |
 | C4 | Variant explosion (4 rows × 5 columns = 20) where two integer props would suffice on native | Menu Grid |
+| C2 | `size` property encodes state — values include "default - error" and "large - error" (space-hyphen-space strings that mix size + state) | Radio Button With Label |
+| C5 | No disabled / selected variants — only unselected state is documented across sizes | Radio Button With Label |
+| C6 | Always instances the small radio — large label doesn't scale the radio accordingly | Radio Button With Label |
+| C2 | `selected` property mixes selection state (unselected/selected) with modifiers (disabled/error) — should split into `selected: Bool` + `state: default/disabled/error` | Radio Button |
+| C2 | `style` enum is conditional — only meaningful when selected, creating a sparse matrix with ~50% invalid combinations | Radio Button |
+| C3 | Large radio is raster-baked — each variant exports the ring+dot as a pre-rendered SVG image instead of vector layers with token fills | Radio Button |
+| C6 | Internal frame is named `.base/checkbox` — should be `.base/radio` | Radio Button |
+| C5 | No pressed or focused states defined | Radio Button |
 | C6 | Trailing icons use icon-placeholder RECTANGLE instead of swappable icon instances | Recipient Field |
+| C2 | Boolean property `isActive?` has a `?` suffix and uses Yes/No values instead of `selected` with true/false | Tab Item |
+| C2 | `hasLeadingIcon` boolean is wired only in horizontal orientation; vertical always renders an icon — inconsistent across orientations | Tab Item |
+| C3 | Counter colors are hardcoded (bg #ECF1FA, label #0F3390) instead of tokens | Tab Item |
+| C6 | Counter is drawn locally instead of instancing the canonical Badge component | Tab Item |
+| C6 | Icon is a hardcoded gray circle `icon-placeholder` — should be a swappable Icon slot | Tab Item |
+| C2 | `tabsCount` is a variant property (2/3/4) — should be removed entirely, container should accept a list of Tab Items | Tabs |
+| C2 | Figma component is named "Tab" (singular) — should be renamed "Tabs" (plural) to match native/industry conventions and disambiguate from the Tab Item atom | Tabs |
 | C2 | Boolean properties use yes/no instead of true/false — blocks direct Swift Bool / Kotlin Boolean mapping | Title Bar |
 | C6 | Trailing icon uses icon-placeholder RECTANGLE instead of swappable icon instance — blocks native icon slot | Title Bar |
 | C2 | Variant property values mix paradigms — "Default" / "2 CTA" / "Version 2" combine generic, count, and version naming | Visual Popup |
@@ -499,12 +524,20 @@ Key conventions:
 | Badge | `21:111526` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Button | `17104:184842` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Checkbox | `17143:2464` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Chip | `18336:22243` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | Dropdown | `23:199480` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Input Field | `17758:3687` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Labeled Field | `17758:3713` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| List Item Asset | `10274:2658` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
+| List Item | `10277:2664` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| List | `10277:4586` | Remove | Not Applicable | 🔁 Re-assessing | — |
 | Menu Grid | `18320:14332` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Radio Button With Label | `844:75143` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Radio Button | `844:75124` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | Recipient Field | `17758:3867` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Select Field | `17758:3786` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Tab Item | `27:89110` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Tabs | `27:89097` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Title Bar | `23:175148` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Visual Popup | `30:81526` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 <!-- @@PROGRESS_TABLE_END@@ -->

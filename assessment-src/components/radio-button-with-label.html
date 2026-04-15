@@ -1,0 +1,514 @@
+<!--
+  RADIO BUTTON WITH LABEL COMPONENT ASSESSMENT
+  Composed row: Radio Button + text label.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 844:75143
+ds-verdict: fix
+native-status: refine
+variants: 4
+ios: HStack wrapping EBRadioButton + Text
+android: Row wrapping EBRadioButton + Text
+open-issues: C2,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] `size` property encodes state — values include "default - error" and "large - error" (space-hyphen-space strings that mix size + state)
+[C5] No disabled / selected variants — only unselected state is documented across sizes
+[C6] Always instances the small radio — large label doesn't scale the radio accordingly
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Radio<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-radio-button-with-label" onclick="showPanel('radio-button-with-label', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Radio Button with Label</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('radio-button-with-label')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <circle cx="14" cy="20" r="6" fill="none" stroke="#D7E0EF" stroke-width="2"/>
+      <rect x="24" y="17" width="44" height="6" rx="1" fill="#445C85" opacity=".5"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Radio Button with Label</div>
+      <span class="badge badge-fix">Fix</span>
+    </div>
+    <div class="summary-card-desc">4 variants with a broken <code>size</code> prop that encodes error state. Missing disabled + selected variants; always uses the small radio instance.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Radio Button with Label</strong></td>
+  <td><span class="badge badge-fix">Fix</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">4</td>
+  <td class="muted">Row of radio + label. <code>size</code> values encode error state; missing disabled + selected; hardcodes the small radio.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-radio-button-with-label">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Radio Button with Label
+          <span class="badge badge-fix">Fix</span>
+          <span class="badge badge-refine">Needs Refinement</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=844-75143" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A form row pairing a Radio Button with a text label. 4 variants across a <code>size</code> property with mixed values: <code>default</code>, <code>large</code>, <code>default - error</code>, <code>large - error</code>. Only the unselected state is documented across sizes.</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Split size + state props</div>
+          <div class="verdict-inline-text">Split the <code>size</code> property into <code>size=default/large</code> and <code>isError: Bool</code>. Add <code>disabled</code> and <code>selected</code> variants. Instance-swap (or Figma Slot) the radio so the large label pairs with a large radio. The label component should track the atom's state via a single <code>selected</code> prop forwarded down.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="rbl-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'rbl-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'rbl-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'rbl-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'rbl-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="rbl-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Contexts are illustrative. Final screens will reference actual GCash patterns. Radio Button with Label appears in form questions and preference settings, stacked vertically as a group.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="34" y="6" width="132" height="108" rx="10" stroke="currentColor" stroke-width="1.2" opacity=".15"/>
+          <!-- Question -->
+          <rect x="42" y="20" width="98" height="6" rx="1" fill="#0A2757" opacity=".65"/>
+          <rect x="42" y="30" width="70" height="4" rx="1" fill="#6780A9"/>
+          <!-- Option 1 selected -->
+          <circle cx="50" cy="50" r="6" fill="#005CE5"/>
+          <circle cx="50" cy="50" r="2" fill="#FFF"/>
+          <rect x="62" y="47" width="60" height="6" rx="1" fill="#445C85" opacity=".7"/>
+          <!-- Option 2 unselected -->
+          <circle cx="50" cy="68" r="6" fill="none" stroke="#D7E0EF" stroke-width="2"/>
+          <rect x="62" y="65" width="72" height="6" rx="1" fill="#445C85" opacity=".55"/>
+          <!-- Option 3 unselected -->
+          <circle cx="50" cy="86" r="6" fill="none" stroke="#D7E0EF" stroke-width="2"/>
+          <rect x="62" y="83" width="56" height="6" rx="1" fill="#445C85" opacity=".55"/>
+          <!-- Continue -->
+          <rect x="42" y="100" width="116" height="12" rx="6" fill="#005CE5" opacity=".85"/>
+          <text x="100" y="109" text-anchor="middle" fill="#FFF" font-size="5.5" font-weight="700" font-family="system-ui">Continue</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="rbl-preview">Live Preview</div>
+    <p class="section-desc">Toggle size + error state. The proposed prop model splits these from the current single entangled <code>size</code> property.</p>
+    <div class="demo-panel" id="rbl-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="rbl-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Proposed API</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">size</span>
+              <select class="demo-panel-select" id="rbl-demo-size" onchange="updateRBLDemo()">
+                <option value="default" selected>default</option>
+                <option value="large">large</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">isError</span>
+              <select class="demo-panel-select" id="rbl-demo-error" onchange="updateRBLDemo()">
+                <option value="false" selected>false</option>
+                <option value="true">true</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">selected</span>
+              <select class="demo-panel-select" id="rbl-demo-selected" onchange="updateRBLDemo()">
+                <option value="false" selected>false</option>
+                <option value="true">true</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="rbl-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Used for mutually exclusive form choices: payment method, shipping option, preference questions.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Carries gap, vertical padding, and typography. Body color, font, and indent all token-bound.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note"><code>size</code> values include <code>"default - error"</code> and <code>"large - error"</code> — space-hyphen-space strings that encode state in a size prop. Breaks native enum mapping. <span class="tag-open tag-c2">C2</span></div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Always instances the small radio — even when <code>size=large</code>. The large label doesn't visually scale the radio accordingly. <span class="tag-open tag-c6">C6</span></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="rbl-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong><code>size</code> property encodes state</strong> — values include <code>"default - error"</code> and <code>"large - error"</code>. Should be two orthogonal props: <code>size=default/large</code> + <code>isError: Bool</code>. <span class="tag-open tag-c2">C2</span></span></li>
+      <li><span><strong>Missing state variants</strong> — no <code>disabled</code> or <code>selected</code> variants. Forms need all four selection states (selected/unselected × enabled/disabled) plus the error variant. <span class="tag-open tag-c5">C5</span></span></li>
+      <li><span><strong>Radio hardcoded to small instance</strong> — even in <code>size=large</code> variants, the radio uses the 16 × 16 small atom. Large label should pair with the 20 × 20 large radio. <span class="tag-open tag-c6">C6</span></span></li>
+      <li><span>Code Connect CLI mappings not registered. <span class="tag-open tag-c7">C7</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="rbl-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Split the <code>size</code> prop</strong>:<br>• <code>size: default / large</code><br>• <code>isError: Bool</code><br>• <code>selected: Bool</code><br>• <code>disabled: Bool</code> (or unified <code>state</code> enum)<br>Flat orthogonal props — eliminates the compound string values. <span class="tag-recommend">Prop model</span></span></li>
+      <li><span><strong>Pair radio size to label size</strong> — <code>size=default</code> → small radio (16 × 16); <code>size=large</code> → large radio (20 × 20). The current always-small behavior breaks visual hierarchy. <span class="tag-recommend">Composition</span></span></li>
+      <li><span><strong>Adopt a Figma Slot for the radio</strong> — lets consumers swap in a Radio Button with any state (selected/disabled/error/etc.) from the atom component. Maps to <code>@ViewBuilder</code> / <code>@Composable</code> slots. <span class="tag-recommend">Figma Slots</span></span></li>
+      <li><span><strong>Add disabled + selected variants</strong> — forms need all state combinations documented. <span class="tag-recommend">State coverage</span></span></li>
+      <li><span><strong>Make the whole row tappable</strong> — labels should be tap targets, not just the radio. Document in Accessibility. <span class="tag-recommend">A11y</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="rbl-styles" style="margin-top:0">Variants</div>
+    <p class="section-desc">4 variants in the current Figma. Default (Primary/Multi-line Label/Light/Small, 14 / 16). Large (Primary/Multi-line Label/Light/Base, 16 / 20). Error variants tint the radio border red.</p>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="rbl-variant-default">Default</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="844:75144" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>844:75144</span></button>
+        </div>
+        <p class="spec-card-desc">Small radio + 14 / 16 label. Default unselected state.</p>
+      </div>
+      <div class="spec-card-preview" id="rbl-preview-default"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="rbl-variant-large">Large</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="844:75150" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>844:75150</span></button>
+        </div>
+        <p class="spec-card-desc">16 / 20 label (Proxima Soft Semibold). Still uses the 16 × 16 radio — should be 20 × 20.</p>
+      </div>
+      <div class="spec-card-preview" id="rbl-preview-large"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="rbl-variant-default-error">Default — error</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="1413:34903" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>1413:34903</span></button>
+        </div>
+        <p class="spec-card-desc">Default size with red radio border. Label text color unchanged.</p>
+      </div>
+      <div class="spec-card-preview" id="rbl-preview-default-error"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="rbl-variant-large-error">Large — error</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="1413:34897" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>1413:34897</span></button>
+        </div>
+        <p class="spec-card-desc">Large size with red radio border.</p>
+      </div>
+      <div class="spec-card-preview" id="rbl-preview-large-error"><!-- JS --></div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Typography</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Size</th><th>DS text style</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">default</td><td class="mono">Primary/Multi-line Label/Light/Small</td><td class="mono">Proxima Soft Semibold · 14 / 16 · +0.25</td></tr>
+          <tr><td class="muted">large</td><td class="mono">Primary/Multi-line Label/Light/Base</td><td class="mono">Proxima Soft Semibold · 16 / 20 · +0.25</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Radio → label gap</td><td class="mono">space/space-12</td><td class="mono">12px</td></tr>
+          <tr><td class="muted">Radio icon offset padding (top)</td><td class="mono">space/space-4</td><td class="mono">4px</td></tr>
+          <tr><td class="muted">Text container padding (default)</td><td class="mono">space/space-4</td><td class="mono">4px vertical</td></tr>
+          <tr><td class="muted">Text container padding (large)</td><td class="mono">—</td><td class="mono">3t / 5b</td></tr>
+          <tr><td class="muted">Default width (demo instance)</td><td class="mono">—</td><td class="mono">63px</td></tr>
+          <tr><td class="muted">Large width (demo instance)</td><td class="mono">—</td><td class="mono">69px</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="table-footnote">Widths reflect the "Label" demo content — real usage hugs the text.</p>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="rbl-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:radio:1.0.0"</span>)
+}</pre>
+    </div>
+
+    <div class="sub-heading" id="rbl-props">Property Mapping <span class="muted" style="font-weight:400;font-size:13px;">(proposed — after split)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Current Figma</th><th>Proposed</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">size=default / large</td><td class="mono">size: EBRadioSize</td><td class="mono">.controlSize(.small/.large)</td><td class="mono">size = EBRadioSize.*</td></tr>
+          <tr><td class="mono">"- error" suffix</td><td class="mono">isError: Bool</td><td class="mono">.ebError(true)</td><td class="mono">isError = true</td></tr>
+          <tr><td class="mono">—</td><td class="mono">selected: Bool</td><td class="mono">selected: Bool</td><td class="mono">selected: Boolean</td></tr>
+          <tr><td class="mono">—</td><td class="mono">label: String</td><td class="mono">title: String</td><td class="mono">label: String</td></tr>
+          <tr><td class="mono">—</td><td class="mono">disabled: Bool</td><td class="mono">.disabled(true)</td><td class="mono">enabled = false</td></tr>
+          <tr><td class="mono">—</td><td class="mono">onToggle</td><td class="mono">onChange: (Bool) -&gt; Void</td><td class="mono">onCheckedChange: (Boolean) -&gt; Unit</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/Radio/EBRadioButtonWithLabel.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/radio/EBRadioButtonWithLabel.kt</div>
+    </div>
+
+    <div class="sub-heading" id="rbl-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'rbl-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'rbl-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Default row</span>
+<span class="typ">EBRadioButtonWithLabel</span>(<span class="str">"Pay with GCash"</span>, <span class="prp">selected</span>: $selection == .gcash) {
+    <span class="kw">selection</span> = .gcash
+}
+
+<span class="cmt">// Large row with error</span>
+<span class="typ">EBRadioButtonWithLabel</span>(<span class="str">"Option A"</span>, <span class="prp">selected</span>: isSelected)
+    .<span class="fn">controlSize</span>(.<span class="prp">large</span>)
+    .<span class="fn">ebError</span>(<span class="kw">true</span>)
+
+<span class="cmt">// Disabled</span>
+<span class="typ">EBRadioButtonWithLabel</span>(<span class="str">"Not available"</span>, <span class="prp">selected</span>: <span class="kw">false</span>)
+    .<span class="fn">disabled</span>(<span class="kw">true</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Default row</span>
+<span class="typ">EBRadioButtonWithLabel</span>(
+    label = <span class="str">"Pay with GCash"</span>,
+    selected = selection == Option.Gcash,
+    onCheckedChange = { selection = Option.Gcash }
+)
+
+<span class="cmt">// Large row with error</span>
+<span class="typ">EBRadioButtonWithLabel</span>(
+    label = <span class="str">"Option A"</span>,
+    selected = isSelected,
+    onCheckedChange = { isSelected = it },
+    size = <span class="typ">EBRadioSize</span>.<span class="prp">Large</span>,
+    isError = <span class="kw">true</span>
+)
+
+<span class="cmt">// Disabled</span>
+<span class="typ">EBRadioButtonWithLabel</span>(
+    label = <span class="str">"Not available"</span>,
+    selected = <span class="kw">false</span>,
+    onCheckedChange = { },
+    enabled = <span class="kw">false</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="rbl-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Requirement</th><th class="center">iOS</th><th class="center">Android</th></tr></thead>
+        <tbody>
+          <tr><td>Whole-row tap target</td><td class="muted">Wrap the row in a <code>Button</code> or tap gesture — label must be tappable, not just the radio</td><td class="muted">Apply <code>Modifier.selectable(...)</code> to the row</td></tr>
+          <tr><td>Group semantics</td><td class="muted">Wrap options in <code>.accessibilityElement(children: .contain)</code></td><td class="muted">Use <code>Modifier.selectableGroup()</code> on parent</td></tr>
+          <tr><td>Role announcement</td><td class="muted">Radio Button role inherited from the atom</td><td class="muted"><code>Role.RadioButton</code> via selectable</td></tr>
+          <tr><td>Error announcement</td><td class="muted">Include error state in the option's accessibility label</td><td class="muted">Use <code>semantics { error(...) }</code></td></tr>
+          <tr><td>Touch target size</td><td class="muted">Row should be at least 44pt tall</td><td class="muted">48dp minimum</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="rbl-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted"><code>icon-ofsset</code> (typo — "offset"), <code>text-container</code>. Minor spelling issue.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted"><code>size</code> values encode error state with space-hyphen-space strings.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Label colors, gap, padding all token-bound.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">HStack / Row with radio + label.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">No disabled, selected, or pressed variants.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Always uses small radio instance — large label doesn't scale the radio.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-refine">Pending</span></td><td class="muted">Blocked by C2 prop split.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="rbl-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(4 total)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>size (current)</th><th>Decomposed</th><th>Node ID</th></tr></thead>
+        <tbody>
+          <tr><td><code>default</code></td><td class="muted">size=default, isError=false</td><td class="mono">844:75144</td></tr>
+          <tr><td><code>large</code></td><td class="muted">size=large, isError=false</td><td class="mono">844:75150</td></tr>
+          <tr><td><code>default - error</code></td><td class="muted">size=default, isError=true</td><td class="mono">1413:34903</td></tr>
+          <tr><td><code>large - error</code></td><td class="muted">size=large, isError=true</td><td class="mono">1413:34897</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-footnote">After the prop split, these 4 become 2 <code>size</code> × 2 <code>isError</code> = 4 clean variants, with <code>selected</code> + <code>disabled</code> added as booleans (not variants).</p>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 844:75143</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Component assessed</strong> — 4 variants (default / large × error). <span class="tag-fixed">Documented</span></div><span class="changelog-delta delta-resolved">Initial</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong><code>size</code> prop encodes state</strong> — "default - error" and "large - error" mix size + state. Should split. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Missing state variants</strong> — No disabled or selected. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Radio hardcoded to small</strong> — large label still uses 16 × 16 radio. <span class="tag-open tag-c6">Open</span></div><span class="changelog-delta delta-open">C6 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Code Connect mappings</strong> — Not registered. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7 Open</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-radio-button-with-label">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-radio-button-with-label"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Radio Button with Label JS ───────────────────────────────────── */
+var _rblDemo = { size: 'default', error: 'false', selected: 'false' };
+
+function _rblBuildRadio(opts) {
+  var isLarge = opts.size === 'large';
+  var box = isLarge ? 20 : 16;
+  var cx = box / 2;
+  var selected = opts.selected === 'true';
+  var error = opts.error === 'true';
+
+  var ringColor, fillColor;
+  if (error && selected) { ringColor = '#D61B2C'; fillColor = '#D61B2C'; }
+  else if (error) { ringColor = '#D61B2C'; fillColor = 'none'; }
+  else if (selected) { ringColor = '#005CE5'; fillColor = '#005CE5'; }
+  else { ringColor = '#D7E0EF'; fillColor = 'none'; }
+
+  var s = '<svg width="' + box + '" height="' + box + '" viewBox="0 0 ' + box + ' ' + box + '" xmlns="http://www.w3.org/2000/svg">';
+  s += '<circle cx="' + cx + '" cy="' + cx + '" r="' + (box / 2 - 1) + '" fill="' + fillColor + '" stroke="' + ringColor + '" stroke-width="2"/>';
+  if (selected) s += '<circle cx="' + cx + '" cy="' + cx + '" r="' + (isLarge ? 3 : 2) + '" fill="#FFFFFF"/>';
+  s += '</svg>';
+  return s;
+}
+
+function _rblBuildRow(opts) {
+  var isLarge = opts.size === 'large';
+  var fontSize = isLarge ? 16 : 14;
+  var lineHeight = isLarge ? 20 : 16;
+  var labelColor = '#445C85';
+  var s = '<div style="display:inline-flex;gap:12px;align-items:flex-start;padding:4px 0;">';
+  s += '<div style="padding-top:' + (isLarge ? 2 : 4) + 'px;">' + _rblBuildRadio(opts) + '</div>';
+  s += '<div style="color:' + labelColor + ';font-family:\'Proxima Soft\', system-ui;font-weight:600;font-size:' + fontSize + 'px;line-height:' + lineHeight + 'px;letter-spacing:0.25px;">Label</div>';
+  s += '</div>';
+  return s;
+}
+
+function updateRBLDemo() {
+  _rblDemo.size = document.getElementById('rbl-demo-size').value;
+  _rblDemo.error = document.getElementById('rbl-demo-error').value;
+  _rblDemo.selected = document.getElementById('rbl-demo-selected').value;
+  var el = document.getElementById('rbl-demo-preview');
+  if (el) el.innerHTML = _rblBuildRow(_rblDemo);
+}
+
+function _rblInitSpecCards() {
+  var cards = [
+    ['rbl-preview-default', { size: 'default', error: 'false', selected: 'false' }],
+    ['rbl-preview-large', { size: 'large', error: 'false', selected: 'false' }],
+    ['rbl-preview-default-error', { size: 'default', error: 'true', selected: 'false' }],
+    ['rbl-preview-large-error', { size: 'large', error: 'true', selected: 'false' }]
+  ];
+  cards.forEach(function(c) {
+    var el = document.getElementById(c[0]);
+    if (el) el.innerHTML = _rblBuildRow(c[1]);
+  });
+}
+
+function _rblInit() {
+  updateRBLDemo();
+  _rblInitSpecCards();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _rblInit);
+else _rblInit();
+</script>
+
+<!--@section-end-->

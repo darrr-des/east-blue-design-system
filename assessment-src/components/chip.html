@@ -1,0 +1,802 @@
+<!--
+  CHIP COMPONENT ASSESSMENT
+  Consolidated from two separate Figma components: "Filter" (6 variants)
+  and "Filter with Dropdown" (2 variants). The DS recommendation is to
+  rename and merge both into a single Chip component.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 18336:22243
+ds-verdict: restructure
+native-status: refine
+variants: 8
+ios: Custom EBChip pill (no native primitive)
+android: Material FilterChip / InputChip (EBChip composable)
+open-issues: C2,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] Boolean property "with icon" uses yes/no instead of true/false
+[C2] Two separate components ("Filter" and "Filter with Dropdown") share the same pill anatomy and should consolidate into a single Chip with leading/trailing slot props
+[C6] Leading slot uses a hardcoded 24px gray circle "icon-placeholder" instead of a swappable Avatar/Icon instance
+[C5] No pressed / selected / disabled / error states defined across either component
+<!--@patterns-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-chip" onclick="showPanel('chip', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Chip</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('chip')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="8" y="13" width="30" height="14" rx="7" fill="#005CE5"/>
+      <circle cx="15" cy="20" r="3.2" fill="#FFFFFF" opacity=".5"/>
+      <text x="25" y="23" fill="#FFFFFF" font-size="6" font-weight="700" font-family="system-ui">Label</text>
+      <rect x="42" y="13" width="30" height="14" rx="7" fill="#EEF2F9"/>
+      <text x="50" y="23" fill="#6780A9" font-size="6" font-weight="700" font-family="system-ui">Sort</text>
+      <path d="M63 19l2 2 2-2" stroke="#005CE5" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Chip</div>
+      <span class="badge badge-rework">Restructure</span>
+    </div>
+    <div class="summary-card-desc">Currently split across 2 components ("Filter" + "Filter with Dropdown"). 8 total variants. Recommend renaming to Chip and consolidating with leading/trailing slot props. C2, C5, C6, C7 open.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Chip</strong></td>
+  <td><span class="badge badge-rework">Restructure</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">8</td>
+  <td class="muted">Pill component used for filters, tags, and pill-shaped dropdown triggers. Currently split into two Figma components that should merge into a single Chip with semantic slot props.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-chip">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Chip
+          <span class="badge badge-rework">Restructure</span>
+          <span class="badge badge-refine">Needs Refinement</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18336-22243" target="_blank" rel="noopener">Filter frame <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18336-22283" target="_blank" rel="noopener">Dropdown frame <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A small pill-shaped component used for filters, tags, selected values, and pill-styled dropdown triggers. Currently split across two Figma components — <strong>Filter</strong> (6 variants) and <strong>Filter with Dropdown</strong> (2 variants) — that share the same pill anatomy and should be consolidated into a single <strong>Chip</strong> component with semantic slot props.</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Recommend rename + consolidation</div>
+          <div class="verdict-inline-text">Rename "Filter" → <strong>Chip</strong> (industry term — Material, Polaris, Carbon all use it). Merge Filter + Filter with Dropdown into one component with <code>style</code> (filled/light/outline), <code>leading</code> (none/avatar/icon), and <code>trailing</code> (none/close/chevron) slot props. Fixes the paradigm mismatch, collapses 8 variants into cleaner prop combinations, and aligns with native chip APIs.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="chip-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'chip-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'chip-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'chip-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'chip-tabs')">Changelog</button>
+    </div>
+
+    <!-- ══ Tab: Overview ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="chip-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Contexts are illustrative. Final screens will reference actual GCash patterns. Chips appear in filter rows below title bars, as applied-filter readouts on list screens, and as pill-styled dropdown triggers for sort/filter controls.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Phone frame -->
+          <rect x="34" y="6" width="132" height="108" rx="10" stroke="currentColor" stroke-width="1.2" opacity=".15"/>
+          <!-- Brand title bar -->
+          <rect x="34" y="6" width="132" height="22" rx="10" fill="#005CE5" opacity=".85"/>
+          <rect x="34" y="20" width="132" height="8" fill="#005CE5" opacity=".85"/>
+          <text x="100" y="20" text-anchor="middle" fill="#FFF" font-size="6" font-weight="700" font-family="system-ui">Title</text>
+          <!-- Chip row -->
+          <rect x="42" y="36" width="50" height="14" rx="7" fill="#005CE5"/>
+          <circle cx="49" cy="43" r="3.2" fill="#FFFFFF" opacity=".5"/>
+          <text x="56" y="46" fill="#FFFFFF" font-size="5.5" font-weight="700" font-family="system-ui">Filter</text>
+          <path d="M85 40l4 4m0-4l-4 4" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round"/>
+          <rect x="96" y="36" width="46" height="14" rx="7" fill="#EEF2F9"/>
+          <text x="103" y="46" fill="#6780A9" font-size="5.5" font-weight="700" font-family="system-ui">Sort by</text>
+          <path d="M132 41l2 2 2-2" stroke="#005CE5" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          <rect x="146" y="36" width="34" height="14" rx="7" fill="#FFFFFF" stroke="#D7E0EF" stroke-width="1.2"/>
+          <text x="152" y="46" fill="#6780A9" font-size="5.5" font-weight="700" font-family="system-ui">Tag</text>
+          <!-- Content skeleton -->
+          <rect x="42" y="60" width="116" height="10" rx="2" fill="currentColor" opacity=".07"/>
+          <rect x="42" y="74" width="116" height="10" rx="2" fill="currentColor" opacity=".07"/>
+          <rect x="42" y="88" width="116" height="10" rx="2" fill="currentColor" opacity=".07"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="chip-preview">Live Preview</div>
+    <p class="section-desc">Toggle style, leading, and trailing to see every combination.</p>
+    <div class="demo-panel" id="chip-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="chip-demo-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">style</span>
+              <select class="demo-panel-select" id="chip-demo-style" onchange="updateChipDemo()">
+                <option value="filled" selected>filled</option>
+                <option value="light">light</option>
+                <option value="outline">outline</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leading</span>
+              <select class="demo-panel-select" id="chip-demo-leading" onchange="updateChipDemo()">
+                <option value="none">none</option>
+                <option value="avatar" selected>avatar</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">trailing</span>
+              <select class="demo-panel-select" id="chip-demo-trailing" onchange="updateChipDemo()">
+                <option value="none">none</option>
+                <option value="close" selected>close</option>
+                <option value="chevron">chevron</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="chip-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Reusable</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Fits filter rows, applied-filter readouts, tag lists, and pill-styled sort/filter triggers. Same shape works across all three use cases — that's the argument for consolidation.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Self-contained</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Carries pill radius, height, padding, typography, and color tokens. All 8 variants share the same base anatomy.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header">
+          <div class="trait-name">Consistent</div>
+          <div class="trait-status">Warn</div>
+        </div>
+        <div class="trait-note">Split across two components — "Filter" uses <code>type</code> (primary/light/outline) + <code>with icon</code> (yes/no), "Filter with Dropdown" uses <code>type</code> (default / "with active time"). Different property schemas, yes/no booleans, and inconsistent value naming. <span class="tag-open tag-c2">C2</span></div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header">
+          <div class="trait-name">Composable</div>
+          <div class="trait-status">Warn</div>
+        </div>
+        <div class="trait-note">Leading slot is a hardcoded 24px gray circle (<code>icon-placeholder</code>) not a real Avatar instance or swappable Icon. Close icon is a vector. Breaks compositional inheritance — changes to Avatar won't propagate. <span class="tag-open tag-c6">C6</span></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="chip-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+            <th>Figma Property</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Active / Selected</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">Filter · type=primary</td>
+            <td class="muted">Filled blue background, white label. Used when a filter is applied.</td>
+          </tr>
+          <tr>
+            <td><strong>Inactive (light)</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">Filter · type=light</td>
+            <td class="muted">Light gray pill, gray label. Used for unapplied filters or tag readouts.</td>
+          </tr>
+          <tr>
+            <td><strong>Inactive (outline)</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">Filter · type=outline</td>
+            <td class="muted">White pill, gray border, gray label. Alternative inactive style.</td>
+          </tr>
+          <tr>
+            <td><strong>Dropdown trigger</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">Filter w/ Dropdown · type=default</td>
+            <td class="muted">Light style with chevron. Used for sort/filter pickers.</td>
+          </tr>
+          <tr>
+            <td><strong>Dropdown with value</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">Filter w/ Dropdown · type=with active time</td>
+            <td class="muted">Dropdown trigger displaying the selected value in blue (<code>label-link</code>).</td>
+          </tr>
+          <tr>
+            <td><strong>Pressed / Disabled / Error</strong></td>
+            <td class="center muted">N/A</td>
+            <td class="center muted">N/A</td>
+            <td class="muted center">—</td>
+            <td class="muted">Not defined in Figma. Engineers must improvise. <span class="tag-open tag-c5">C5</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Open Issues -->
+    <div class="sub-heading" id="chip-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span>Two separate Figma components share the same pill anatomy — <strong>Filter</strong> (6 variants) and <strong>Filter with Dropdown</strong> (2 variants). Should consolidate into a single <strong>Chip</strong> with <code>style</code>, <code>leading</code>, and <code>trailing</code> slot props. <span class="tag-open tag-c2">C2</span></span></li>
+      <li><span>Boolean property <code>with icon</code> uses <code>yes</code>/<code>no</code> instead of <code>true</code>/<code>false</code>. Incompatible with Swift <code>Bool</code> / Kotlin <code>Boolean</code> for Code Connect mapping. <span class="tag-open tag-c2">C2</span></span></li>
+      <li><span>Enum value <code>"with active time"</code> contains spaces and a nonsensical name — should be <code>withValue</code> / <code>hasSelectedValue</code> or collapse into a <code>selectedValue</code> optional string prop. <span class="tag-open tag-c2">C2</span></span></li>
+      <li><span>Leading slot is a hardcoded 24px gray circle (<code>icon-placeholder</code>) — should be a swappable Avatar or Icon instance via instance swap. <span class="tag-open tag-c6">C6</span></span></li>
+      <li><span>No pressed / selected / disabled / error states documented. <span class="tag-open tag-c5">C5</span></span></li>
+      <li><span>Code Connect CLI mappings not registered. <span class="tag-open tag-c7">C7</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="chip-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Rename "Filter" → "Chip"</strong> and merge with "Filter with Dropdown" into one component. Matches industry terminology (Material FilterChip/InputChip, Polaris Tag, Carbon Tag) and lets a single component cover filters, tags, and dropdown triggers. <span class="tag-recommend">Restructure</span></span></li>
+      <li><span><strong>Replace <code>type</code> + <code>with icon</code> + (dropdown) <code>type</code> with three semantic slot props</strong>:<br>• <code>style</code> = <code>filled</code> / <code>light</code> / <code>outline</code><br>• <code>leading</code> = <code>none</code> / <code>avatar</code> / <code>icon</code><br>• <code>trailing</code> = <code>none</code> / <code>close</code> / <code>chevron</code><br>Plus an optional <code>selectedValue</code> string for the "Sort by X" pattern. <span class="tag-recommend">Prop model</span></span></li>
+      <li><span><strong>Replace the 24px placeholder circle with a real slot</strong> — instance-swap an Avatar (for person filters) or Icon (for category filters). Follows the same pattern Avatar Group uses for its inner Avatar composition. <span class="tag-recommend">Asset slot</span></span></li>
+      <li><span><strong>Add pressed / disabled states</strong> so applied-filter chips have a documented pressed affordance (important because they're tappable-to-remove) and disabled filters have a defined appearance. <span class="tag-recommend">State coverage</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ══ Tab: Style ═════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="chip-styles" style="margin-top:0">Styles</div>
+    <p class="section-desc">Three base styles shared across filter and dropdown use cases. Height is 32px across all variants; padding and gap vary with the leading/trailing slots.</p>
+
+    <div class="spec-card" id="chip-spec-filled">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="chip-variant-filled">Filled <span class="muted" style="font-weight:400;">— active filter</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18336:22244" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18336:22244</span></button>
+        </div>
+        <p class="spec-card-desc">Brand blue fill with white label. Represents an active/applied filter. Shown with leading avatar + trailing close.</p>
+      </div>
+      <div class="spec-card-preview" id="chip-preview-filled"><!-- filled by JS --></div>
+    </div>
+
+    <div class="spec-card" id="chip-spec-light">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="chip-variant-light">Light <span class="muted" style="font-weight:400;">— inactive / default</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18336:22257" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18336:22257</span></button>
+        </div>
+        <p class="spec-card-desc">Light gray fill with gray label. Used for inactive filters, tags, or as the base style for dropdown triggers.</p>
+      </div>
+      <div class="spec-card-preview" id="chip-preview-light"><!-- filled by JS --></div>
+    </div>
+
+    <div class="spec-card" id="chip-spec-outline">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="chip-variant-outline">Outline <span class="muted" style="font-weight:400;">— inactive / subtle</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18336:22270" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18336:22270</span></button>
+        </div>
+        <p class="spec-card-desc">White fill with 2px gray border and gray label. Alternative inactive style for surfaces where the light gray pill wouldn't contrast enough.</p>
+      </div>
+      <div class="spec-card-preview" id="chip-preview-outline"><!-- filled by JS --></div>
+    </div>
+
+    <div class="spec-card" id="chip-spec-dropdown">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="chip-variant-dropdown">Dropdown <span class="muted" style="font-weight:400;">— light + trailing chevron</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18336:22284" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18336:22284</span></button>
+        </div>
+        <p class="spec-card-desc">Light style with a trailing chevron. Used as a pill-styled dropdown trigger. The "with active time" variant shows a selected value in blue (<code>label-link</code>) — collapsed under the proposed <code>selectedValue</code> optional prop.</p>
+      </div>
+      <div class="spec-card-preview" id="chip-preview-dropdown"><!-- filled by JS --></div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by Style</div>
+      <p class="style-colors-desc">Three style modes, each with bg, label, and icon tokens. Dropdown adds <code>label-link</code> and <code>chevron</code>.</p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Style</th><th>Role</th><th>Token</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Filled</strong></td><td class="muted">bg</td><td class="mono">main/filter/color/primary/bg</td><td class="mono">#005CE5</td></tr>
+          <tr><td class="muted">—</td><td class="muted">label</td><td class="mono">main/filter/color/primary/label</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">—</td><td class="muted">icon</td><td class="mono">main/filter/color/primary/icon</td><td class="mono">#F6F9FDB8</td></tr>
+          <tr><td><strong>Light</strong></td><td class="muted">bg</td><td class="mono">main/filter/color/secondary/bg</td><td class="mono">#EEF2F9</td></tr>
+          <tr><td class="muted">—</td><td class="muted">label</td><td class="mono">main/filter/color/secondary/label</td><td class="mono">#6780A9</td></tr>
+          <tr><td class="muted">—</td><td class="muted">icon</td><td class="mono">main/filter/color/secondary/icon</td><td class="mono">#7E96BE</td></tr>
+          <tr><td class="muted">—</td><td class="muted">selected value</td><td class="mono">main/filter/color/secondary/label-link</td><td class="mono">#005CE5</td></tr>
+          <tr><td class="muted">—</td><td class="muted">chevron</td><td class="mono">main/filter/color/secondary/chevron</td><td class="mono">#005CE5</td></tr>
+          <tr><td><strong>Outline</strong></td><td class="muted">border</td><td class="mono">main/filter/color/tertiary/border</td><td class="mono">#D7E0EF</td></tr>
+          <tr><td class="muted">—</td><td class="muted">label</td><td class="mono">main/filter/color/tertiary/label</td><td class="mono">#6780A9</td></tr>
+          <tr><td class="muted">—</td><td class="muted">icon</td><td class="mono">main/filter/color/tertiary/icon</td><td class="mono">#7E96BE</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Property</th><th>Token</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Height</td><td class="mono">—</td><td class="mono">32px</td></tr>
+          <tr><td class="muted">Corner radius</td><td class="mono">radius/radius-pill</td><td class="mono">99px</td></tr>
+          <tr><td class="muted">Padding (with leading)</td><td class="mono">—</td><td class="mono">4L / 14R</td></tr>
+          <tr><td class="muted">Padding (no leading)</td><td class="mono">—</td><td class="mono">14 horizontal</td></tr>
+          <tr><td class="muted">Padding (dropdown)</td><td class="mono">space/space-16 · space/space-12</td><td class="mono">16L / 12R</td></tr>
+          <tr><td class="muted">Outline border width</td><td class="mono">—</td><td class="mono">2px</td></tr>
+          <tr><td class="muted">Leading avatar size</td><td class="mono">—</td><td class="mono">24 × 24 (should be Avatar instance)</td></tr>
+          <tr><td class="muted">Close icon size</td><td class="mono">—</td><td class="mono">16 × 16</td></tr>
+          <tr><td class="muted">Chevron size</td><td class="mono">—</td><td class="mono">24 × 24</td></tr>
+          <tr><td class="muted">Gap: icon → label</td><td class="mono">space/space-4</td><td class="mono">4px</td></tr>
+          <tr><td class="muted">Gap: label → close</td><td class="mono">space/space-8</td><td class="mono">8px</td></tr>
+          <tr><td class="muted">Gap: label → selected value (dropdown)</td><td class="mono">space/space-8</td><td class="mono">8px</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Typography</div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Property</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">DS text style</td><td class="mono">Primary/Label/Base</td></tr>
+          <tr><td class="muted">Font</td><td class="mono">Proxima Soft</td></tr>
+          <tr><td class="muted">Weight</td><td class="mono">700 (Bold)</td></tr>
+          <tr><td class="muted">Size</td><td class="mono">16px</td></tr>
+          <tr><td class="muted">Line height</td><td class="mono">16px</td></tr>
+          <tr><td class="muted">Tracking</td><td class="mono">+0.25</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- ══ Tab: Code ══════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="chip-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:chip:1.0.0"</span>)
+}</pre>
+    </div>
+
+    <div class="sub-heading" id="chip-props">Property Mapping <span class="muted" style="font-weight:400;font-size:13px;">(proposed — after rename + consolidation)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Proposed Figma Property</th>
+            <th>SwiftUI Param</th>
+            <th>Compose Param</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">style</td>
+            <td class="mono">.ebStyle(.filled / .light / .outline)</td>
+            <td class="mono">style = EBChipStyle.Filled / Light / Outline</td>
+            <td class="muted">Replaces Filter's <code>type</code> property</td>
+          </tr>
+          <tr>
+            <td class="mono">leading</td>
+            <td class="mono">leading: EBChipLeading?</td>
+            <td class="mono">leading: @Composable (() -> Unit)?</td>
+            <td class="muted"><code>.none</code> / <code>.avatar(...)</code> / <code>.icon(...)</code></td>
+          </tr>
+          <tr>
+            <td class="mono">trailing</td>
+            <td class="mono">trailing: EBChipTrailing?</td>
+            <td class="mono">trailing: EBChipTrailing?</td>
+            <td class="muted"><code>.none</code> / <code>.close</code> / <code>.chevron</code></td>
+          </tr>
+          <tr>
+            <td class="mono">selectedValue</td>
+            <td class="mono">selectedValue: String?</td>
+            <td class="mono">selectedValue: String?</td>
+            <td class="muted">Optional selected-value text (for dropdown "Sort by X" pattern)</td>
+          </tr>
+          <tr>
+            <td class="mono">label</td>
+            <td class="mono">title: String</td>
+            <td class="mono">label: String</td>
+            <td class="muted">Main label text</td>
+          </tr>
+          <tr>
+            <td class="mono">onTap / onClose</td>
+            <td class="mono">action / onRemove</td>
+            <td class="mono">onClick / onRemove</td>
+            <td class="muted">Two callbacks for applied-filter chips (tap body vs. tap close)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/Chip/EBChip.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/chip/EBChip.kt</div>
+    </div>
+
+    <div class="sub-heading" id="chip-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'chip-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'chip-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Applied filter — brand fill, avatar + close</span>
+<span class="typ">EBChip</span>(<span class="str">"Filter Name"</span>,
+    <span class="prp">leading</span>: .<span class="fn">avatar</span>(<span class="typ">EBAvatar</span>(<span class="prp">initials</span>: <span class="str">"DM"</span>)),
+    <span class="prp">trailing</span>: .<span class="prp">close</span>,
+    <span class="prp">onRemove</span>: { /* remove filter */ })
+.<span class="fn">ebStyle</span>(.<span class="prp">filled</span>)
+
+<span class="cmt">// Inactive filter — light, label only</span>
+<span class="typ">EBChip</span>(<span class="str">"Category"</span>)
+    .<span class="fn">ebStyle</span>(.<span class="prp">light</span>)
+
+<span class="cmt">// Dropdown trigger with selected value</span>
+<span class="typ">EBChip</span>(<span class="str">"Sort by"</span>,
+    <span class="prp">selectedValue</span>: <span class="str">"Conservative first"</span>,
+    <span class="prp">trailing</span>: .<span class="prp">chevron</span>,
+    <span class="prp">action</span>: { /* open dropdown */ })
+.<span class="fn">ebStyle</span>(.<span class="prp">light</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Applied filter — brand fill, avatar + close</span>
+<span class="typ">EBChip</span>(
+    <span class="prp">label</span> = <span class="str">"Filter Name"</span>,
+    <span class="prp">style</span> = <span class="typ">EBChipStyle</span>.<span class="prp">Filled</span>,
+    <span class="prp">leading</span> = { <span class="typ">EBAvatar</span>(initials = <span class="str">"DM"</span>) },
+    <span class="prp">trailing</span> = <span class="typ">EBChipTrailing</span>.<span class="prp">Close</span>,
+    <span class="prp">onRemove</span> = { /* remove filter */ }
+)
+
+<span class="cmt">// Inactive filter — light, label only</span>
+<span class="typ">EBChip</span>(
+    <span class="prp">label</span> = <span class="str">"Category"</span>,
+    <span class="prp">style</span> = <span class="typ">EBChipStyle</span>.<span class="prp">Light</span>
+)
+
+<span class="cmt">// Dropdown trigger with selected value</span>
+<span class="typ">EBChip</span>(
+    <span class="prp">label</span> = <span class="str">"Sort by"</span>,
+    <span class="prp">selectedValue</span> = <span class="str">"Conservative first"</span>,
+    <span class="prp">style</span> = <span class="typ">EBChipStyle</span>.<span class="prp">Light</span>,
+    <span class="prp">trailing</span> = <span class="typ">EBChipTrailing</span>.<span class="prp">Chevron</span>,
+    <span class="prp">onClick</span> = { /* open dropdown */ }
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="chip-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Requirement</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tap target</td>
+            <td class="muted">32px height is below HIG 44pt — wrap in a 44pt-tall hit area</td>
+            <td class="muted">32dp height is below Material 48dp — expand touch target via <code>Modifier.minimumInteractiveComponentSize()</code></td>
+          </tr>
+          <tr>
+            <td>Role</td>
+            <td class="muted"><code>.accessibilityAddTraits(.isButton)</code></td>
+            <td class="muted">Use <code>semantics { role = Role.Button }</code></td>
+          </tr>
+          <tr>
+            <td>Close button label</td>
+            <td class="muted"><code>.accessibilityLabel("Remove filter: \(label)")</code></td>
+            <td class="muted"><code>contentDescription = "Remove filter: $label"</code></td>
+          </tr>
+          <tr>
+            <td>Dropdown indicator</td>
+            <td class="muted"><code>.accessibilityHint("Double-tap to change")</code></td>
+            <td class="muted">Announce chevron via role + state</td>
+          </tr>
+          <tr>
+            <td>Selected state</td>
+            <td class="muted"><code>.accessibilityAddTraits(.isSelected)</code> for <code>style=filled</code></td>
+            <td class="muted"><code>selected = true</code> in semantics for active filters</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="chip-guidelines">Usage Guidelines</div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use <code>style=filled</code> for applied/active filters, <code>style=light</code> for inactive filters and dropdown triggers, <code>style=outline</code> when the surface beneath is already light gray.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Mix <code>filled</code> and <code>light</code> chips in the same filter row without intent — it signals "one filter is selected," so using both styles for unrelated reasons misleads the user.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Pair the close affordance with applied filters so users can remove them with a single tap.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Add a close icon to dropdown-trigger chips — the chevron already indicates the tap behavior; a close icon implies removal instead of picking.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Keep the chip label to one or two words. Use <code>selectedValue</code> to show the picked option separately.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Stretch chips to fill width — they're meant to fit their content. If a control needs full width, use a Button or Select Field instead.</p></div>
+    </div>
+
+    <div class="sub-heading" id="chip-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">ID</th>
+            <th class="col-md">Criterion</th>
+            <th class="col-badge">Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Semantic names: <code>container</code>, <code>Placeholder</code>, <code>Close</code>, <code>Chevron Down</code>.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">Split across two components with mismatched property schemas. <code>with icon</code> uses yes/no. Dropdown uses <code>type="with active time"</code>. Rename to Chip and use <code>style</code> / <code>leading</code> / <code>trailing</code>.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors, radii, spacing, and typography bound to tokens.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Maps to custom pill on iOS and <code>FilterChip</code>/<code>InputChip</code> on Android. Single EBChip composable works once consolidated.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">No pressed / disabled / error states. Selected state is implied by <code>style=filled</code> but not defined as a separate variant.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">Leading slot is a hardcoded 24px gray circle (<code>icon-placeholder</code>) — should be a swappable Avatar/Icon instance.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-refine">Pending</span></td><td class="muted">Blocked by C2 consolidation. Clean prop names land once Chip is renamed and merged.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="chip-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(8 total across 2 Figma components)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Source</th><th>Style</th><th>Leading</th><th>Trailing</th><th>Node ID</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Filter</td><td>Filled (primary)</td><td>Avatar</td><td>Close</td><td class="mono">18336:22244</td></tr>
+          <tr><td>Filter</td><td>Filled (primary)</td><td>—</td><td>—</td><td class="mono">18336:22253</td></tr>
+          <tr><td>Filter</td><td>Light</td><td>Avatar</td><td>Close</td><td class="mono">18336:22257</td></tr>
+          <tr><td>Filter</td><td>Light</td><td>—</td><td>—</td><td class="mono">18336:22266</td></tr>
+          <tr><td>Filter</td><td>Outline</td><td>Avatar</td><td>Close</td><td class="mono">18336:22270</td></tr>
+          <tr><td>Filter</td><td>Outline</td><td>—</td><td>—</td><td class="mono">18336:22279</td></tr>
+          <tr><td>Filter w/ Dropdown</td><td>Light</td><td>—</td><td>Chevron</td><td class="mono">18336:22292</td></tr>
+          <tr><td>Filter w/ Dropdown</td><td>Light (w/ selected value)</td><td>—</td><td>Chevron</td><td class="mono">18336:22284</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-footnote">After rename + consolidation, these 8 variants collapse into 3 style × 3 leading × 3 trailing = 27 prop combinations on one Chip component (most unused; actual DS palette is ~8 common combinations).</p>
+
+    </div><!-- /tab code -->
+
+    <!-- ══ Tab: Changelog ═════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · nodes 18336:22243 + 18336:22283</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Assessed as Chip</strong> — Two Figma components ("Filter" with 6 variants, "Filter with Dropdown" with 2 variants) share the same pill anatomy. Recommended rename + consolidation into a single Chip component with semantic slot props.
+          <span class="tag-fixed">Documented</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Initial</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Two-component split, mismatched schemas</strong> — Filter uses <code>type</code> + <code>with icon</code>. Dropdown uses <code>type="with active time"</code>. Booleans are yes/no. Should consolidate to <code>style</code> / <code>leading</code> / <code>trailing</code> + optional <code>selectedValue</code>.
+          <span class="tag-open tag-c2">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C2 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>No pressed/disabled/error states</strong> — Engineers must improvise these affordances.
+          <span class="tag-open tag-c5">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C5 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Leading slot is hardcoded placeholder</strong> — 24px gray circle instead of a swappable Avatar/Icon instance.
+          <span class="tag-open tag-c6">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C6 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Code Connect mappings</strong> — Blocked by C2 rename + consolidation. Clean prop names land once Chip is merged.
+          <span class="tag-open tag-c7">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C7 Open</span>
+      </div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-chip">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-chip"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Chip Component JS ────────────────────────────────────────────── */
+var _chipDemo = { style: 'filled', leading: 'avatar', trailing: 'close' };
+
+function _chipBuildSvg(opts) {
+  var style = opts.style || 'filled';
+  var leading = opts.leading || 'none';
+  var trailing = opts.trailing || 'none';
+  var label = opts.label || 'Filter Name';
+  var selectedValue = opts.selectedValue || '';
+
+  // Approximate layout
+  var h = 32;
+  var padL = leading !== 'none' ? 4 : 14;
+  var padR = trailing !== 'none' && trailing !== 'chevron' ? 14 : (trailing === 'chevron' ? 12 : 14);
+  var leadingW = leading !== 'none' ? 24 : 0;
+  var leadingGap = leading !== 'none' ? 4 : 0;
+  var labelW = label.length * 8 + 2;
+  var svW = selectedValue ? selectedValue.length * 8 + 10 : 0;
+  var trailingGap = trailing !== 'none' ? 8 : 0;
+  var trailingW = trailing === 'close' ? 16 : trailing === 'chevron' ? 24 : 0;
+  var w = padL + leadingW + leadingGap + labelW + svW + trailingGap + trailingW + padR;
+
+  var bg, border, labelColor, iconColor, svColor, chevronColor;
+  if (style === 'filled') {
+    bg = '#005CE5'; border = 'none';
+    labelColor = '#FFFFFF'; iconColor = '#F6F9FD'; chevronColor = '#FFFFFF';
+  } else if (style === 'light') {
+    bg = '#EEF2F9'; border = 'none';
+    labelColor = '#6780A9'; iconColor = '#7E96BE'; chevronColor = '#005CE5';
+  } else {
+    bg = '#FFFFFF'; border = '#D7E0EF';
+    labelColor = '#6780A9'; iconColor = '#7E96BE'; chevronColor = '#005CE5';
+  }
+  svColor = '#005CE5';
+
+  var s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg">';
+  // Background / border
+  if (style === 'outline') {
+    s += '<rect x="1" y="1" width="' + (w - 2) + '" height="' + (h - 2) + '" rx="15" fill="' + bg + '" stroke="' + border + '" stroke-width="2"/>';
+  } else {
+    s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" rx="16" fill="' + bg + '"/>';
+  }
+
+  var x = padL;
+  // Leading
+  if (leading === 'avatar') {
+    s += '<circle cx="' + (x + 12) + '" cy="16" r="12" fill="#C2C6CF"/>';
+    x += 24 + 4;
+  } else if (leading === 'icon') {
+    s += '<rect x="' + (x + 2) + '" y="6" width="20" height="20" rx="4" fill="' + iconColor + '" opacity=".55"/>';
+    x += 24 + 4;
+  }
+  // Label
+  s += '<text x="' + x + '" y="21" fill="' + labelColor + '" font-size="13" font-weight="700" font-family="\'Proxima Soft\', system-ui">' + label + '</text>';
+  x += labelW;
+  // Selected value
+  if (selectedValue) {
+    x += 8;
+    s += '<text x="' + x + '" y="21" fill="' + svColor + '" font-size="13" font-weight="700" font-family="\'Proxima Soft\', system-ui">' + selectedValue + '</text>';
+    x += selectedValue.length * 8;
+  }
+  // Trailing
+  if (trailing === 'close') {
+    x += 8;
+    s += '<g transform="translate(' + x + ', 10)" stroke="' + labelColor + '" stroke-width="1.6" stroke-linecap="round"><line x1="0" y1="0" x2="12" y2="12"/><line x1="12" y1="0" x2="0" y2="12"/></g>';
+  } else if (trailing === 'chevron') {
+    x += 8;
+    s += '<path d="M' + x + ' 14 l 6 6 l 6 -6" stroke="' + chevronColor + '" stroke-width="2" stroke-linecap="round" fill="none"/>';
+  }
+  s += '</svg>';
+  return s;
+}
+
+function updateChipDemo() {
+  _chipDemo.style = document.getElementById('chip-demo-style').value;
+  _chipDemo.leading = document.getElementById('chip-demo-leading').value;
+  _chipDemo.trailing = document.getElementById('chip-demo-trailing').value;
+  var el = document.getElementById('chip-demo-preview');
+  if (el) el.innerHTML = _chipBuildSvg(_chipDemo);
+}
+
+function _chipInitSpecCards() {
+  var cards = [
+    { id: 'chip-preview-filled',   opts: { style: 'filled',  leading: 'avatar', trailing: 'close' } },
+    { id: 'chip-preview-light',    opts: { style: 'light',   leading: 'avatar', trailing: 'close' } },
+    { id: 'chip-preview-outline',  opts: { style: 'outline', leading: 'avatar', trailing: 'close' } },
+    { id: 'chip-preview-dropdown', opts: { style: 'light',   leading: 'none',   trailing: 'chevron', label: 'Sort by', selectedValue: 'Conservative first' } }
+  ];
+  cards.forEach(function(c) {
+    var el = document.getElementById(c.id);
+    if (el) el.innerHTML = _chipBuildSvg(c.opts);
+  });
+}
+
+function _chipInit() {
+  updateChipDemo();
+  _chipInitSpecCards();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _chipInit);
+} else {
+  _chipInit();
+}
+</script>
+
+<!--@section-end-->

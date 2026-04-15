@@ -1,0 +1,483 @@
+<!--
+  LIST ITEM COMPONENT ASSESSMENT
+  Row composing List Item Asset + text body.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 10277:2664
+ds-verdict: fix
+native-status: refine
+variants: 3
+ios: Custom EBListItem HStack
+android: Custom EBListItem Row composable
+open-issues: C2,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] `level` property uses string values ("1"/"2"/"3") — should be an integer or inferred from nesting depth
+[C6] Leading asset is an instance-swap placeholder — adopting Figma Slots gives a cleaner native slot mapping
+<!--@patterns-end-->
+
+<!--@nav-group-start-->List<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-list-item" onclick="showPanel('list-item', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">List Item</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('list-item')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <circle cx="12" cy="20" r="3" fill="#90A8D0"/>
+      <rect x="20" y="18" width="50" height="4" rx="1" fill="#445C85" opacity=".5"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">List Item</div>
+      <span class="badge badge-fix">Fix</span>
+    </div>
+    <div class="summary-card-desc">Row composing List Item Asset + body text. 3 levels (indent by 16/32). Adopting Figma Slots for the asset gives cleaner native slot mapping.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>List Item</strong></td>
+  <td><span class="badge badge-fix">Fix</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">3</td>
+  <td class="muted">Asset + body row. <code>level</code> uses string values. Asset should move from instance-swap to Figma Slot for cleaner Code Connect.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-list-item">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          List Item
+          <span class="badge badge-fix">Fix</span>
+          <span class="badge badge-refine">Needs Refinement</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=10277-2664" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A single row in a list: leading asset + body text. 3 variants by <code>level</code> (1, 2, 3) that control indent (0 / 16 / 32 px). Composes a <strong>List Item Asset</strong> instance for the leading marker.</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Adopt Figma Slots for the asset</div>
+          <div class="verdict-inline-text">The leading asset is today an instance-swap placeholder. Declare a named <code>asset</code> Slot so consumers can drop in any List Item Asset variant (or a custom 16 × 16 component) directly. Maps 1 : 1 to <code>@ViewBuilder</code> / <code>@Composable</code> slots for Code Connect. Also rename <code>level</code> to an integer or drop it in favor of nesting-based indent.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="li-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'li-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'li-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'li-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'li-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="li-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Contexts are illustrative. Final screens will reference actual GCash patterns. List Items compose into multi-line lists on terms pages, onboarding steps, and task checklists.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="34" y="6" width="132" height="108" rx="10" stroke="currentColor" stroke-width="1.2" opacity=".15"/>
+          <rect x="34" y="6" width="132" height="20" rx="10" fill="#005CE5" opacity=".85"/>
+          <rect x="34" y="16" width="132" height="10" fill="#005CE5" opacity=".85"/>
+          <text x="100" y="19" text-anchor="middle" fill="#FFF" font-size="6" font-weight="700" font-family="system-ui">Terms</text>
+          <!-- List items -->
+          <circle cx="46" cy="38" r="2.5" fill="#90A8D0"/>
+          <rect x="54" y="35" width="100" height="6" rx="1" fill="#445C85" opacity=".55"/>
+          <circle cx="46" cy="54" r="2.5" fill="#90A8D0"/>
+          <rect x="54" y="51" width="88" height="6" rx="1" fill="#445C85" opacity=".55"/>
+          <circle cx="62" cy="70" r="2.5" fill="#90A8D0"/>
+          <rect x="70" y="67" width="80" height="6" rx="1" fill="#445C85" opacity=".55"/>
+          <circle cx="78" cy="86" r="2.5" fill="#90A8D0"/>
+          <rect x="86" y="83" width="64" height="6" rx="1" fill="#445C85" opacity=".55"/>
+          <circle cx="46" cy="102" r="2.5" fill="#90A8D0"/>
+          <rect x="54" y="99" width="96" height="6" rx="1" fill="#445C85" opacity=".55"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="li-preview">Live Preview</div>
+    <p class="section-desc">Toggle level + asset variant. The asset slot accepts any List Item Asset.</p>
+    <div class="demo-panel" id="li-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="li-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">level</span>
+              <select class="demo-panel-select" id="li-demo-level" onchange="updateListItemDemo()">
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">asset</span>
+              <select class="demo-panel-select" id="li-demo-asset" onchange="updateListItemDemo()">
+                <option value="bullet" selected>bullet</option>
+                <option value="check">check</option>
+                <option value="check-positive">check-positive</option>
+                <option value="pending">pending</option>
+                <option value="pending-notice">pending-notice</option>
+                <option value="numbered">numbered</option>
+                <option value="custom">custom</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="li-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Used in terms, onboarding, checklists, step indicators. Handles 3 levels of nesting via indent.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Carries gap, indent, and typography bindings. Body text uses <code>Secondary/Bold/Base</code> (BarkAda Semibold 14/20).</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note"><code>level</code> uses string values (<code>"1"/"2"/"3"</code>) instead of integers. Figma won't let you parameterize it either — each level is a separate variant. <span class="tag-open tag-c2">C2</span></div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Leading asset uses instance-swap (default is a gray placeholder circle). Moving to a Figma Slot gives a cleaner composition surface and a direct slot mapping for Code Connect. <span class="tag-open tag-c6">C6</span></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="li-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><code>level</code> property uses string values. Should be an integer param or — ideally — dropped in favor of indent inferred from nesting depth inside the List container. <span class="tag-open tag-c2">C2</span></span></li>
+      <li><span>Leading asset is an instance-swap placeholder. Adopt Figma Slots to get a first-class slot that maps to <code>@ViewBuilder</code> / <code>@Composable</code>. <span class="tag-open tag-c6">C6</span></span></li>
+      <li><span>Code Connect CLI mappings not registered. <span class="tag-open tag-c7">C7</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="li-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Adopt a Figma Slot for the asset</strong> — declare a named <code>asset</code> slot that accepts any List Item Asset instance (or a bare 16 × 16 component). Native maps to <code>@ViewBuilder</code> (SwiftUI) / <code>@Composable</code> slot (Compose) — Code Connect reads it as a real slot parameter. <span class="tag-recommend">Figma Slots</span></span></li>
+      <li><span><strong>Rename or drop <code>level</code></strong> — if keeping the prop, change string values to integers. Better: drop the variant entirely and let indent come from nesting depth inside the List container. <span class="tag-recommend">Rename / Drop</span></span></li>
+      <li><span><strong>Consider a Trailing slot</strong> — product patterns often pair list items with trailing counters, badges, or chevrons. Adding a <code>trailing</code> slot future-proofs the component without creating variant explosion. <span class="tag-recommend">Slot expansion</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="li-styles" style="margin-top:0">Variants</div>
+    <p class="section-desc">3 variants split by indent level. Width ranges from hug (level 1) to 294px (levels 2 + 3).</p>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="li-variant-1">Level 1 <span class="muted" style="font-weight:400;">— no indent</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="10277:2663" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>10277:2663</span></button>
+        </div>
+        <p class="spec-card-desc">Base row. Asset + 270px body. No indent.</p>
+      </div>
+      <div class="spec-card-preview" id="li-preview-1"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="li-variant-2">Level 2 <span class="muted" style="font-weight:400;">— 16px indent</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="10277:2665" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>10277:2665</span></button>
+        </div>
+        <p class="spec-card-desc">Indented 16px. Body fills remaining width of the 294px container.</p>
+      </div>
+      <div class="spec-card-preview" id="li-preview-2"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="li-variant-3">Level 3 <span class="muted" style="font-weight:400;">— 32px indent</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="10277:2788" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>10277:2788</span></button>
+        </div>
+        <p class="spec-card-desc">Indented 32px. Deepest supported level.</p>
+      </div>
+      <div class="spec-card-preview" id="li-preview-3"><!-- JS --></div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Role</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Body text</td><td class="mono">main/list-item/color/default/description</td><td class="mono">#445C85</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="table-footnote">Asset colors are documented on List Item Asset.</p>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Asset → body gap</td><td class="mono">space/space-8</td><td class="mono">8px</td></tr>
+          <tr><td class="muted">Level 2 indent</td><td class="mono">space/space-16</td><td class="mono">16px</td></tr>
+          <tr><td class="muted">Level 3 indent</td><td class="mono">space/space-32</td><td class="mono">32px</td></tr>
+          <tr><td class="muted">Level 1 body width</td><td class="mono">—</td><td class="mono">270px</td></tr>
+          <tr><td class="muted">Levels 2 + 3 container width</td><td class="mono">—</td><td class="mono">294px</td></tr>
+          <tr><td class="muted">Body alignment</td><td class="mono">—</td><td class="mono">items-start (asset top-aligned)</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Typography</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Element</th><th>DS text style</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Body</td><td class="mono">Secondary/Bold/Base</td><td class="mono">BarkAda Semibold · 14 / 20</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="li-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:list:1.0.0"</span>)
+}</pre>
+    </div>
+
+    <div class="sub-heading" id="li-props">Property Mapping <span class="muted" style="font-weight:400;font-size:13px;">(proposed — with Figma Slots)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma</th><th>SwiftUI</th><th>Compose</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">asset (Slot)</td><td class="mono">@ViewBuilder leading</td><td class="mono">leading: @Composable () -&gt; Unit</td><td class="muted">First-class slot — accepts any List Item Asset or custom 16 × 16 component</td></tr>
+          <tr><td class="mono">level=1/2/3</td><td class="mono">level: Int</td><td class="mono">level: Int</td><td class="muted">Controls indent. Better dropped entirely with nesting-based indent.</td></tr>
+          <tr><td class="mono">text content</td><td class="mono">content: String</td><td class="mono">content: String</td><td class="muted">Body text</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/List/EBListItem.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/list/EBListItem.kt</div>
+    </div>
+
+    <div class="sub-heading" id="li-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'li-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'li-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Default bullet</span>
+<span class="typ">EBListItem</span>(<span class="str">"Transactions are reviewed within 24 hours."</span>) {
+    <span class="typ">EBListMarker</span>(<span class="prp">variant</span>: .<span class="prp">bullet</span>)
+}
+
+<span class="cmt">// Ordered with number</span>
+<span class="typ">EBListItem</span>(<span class="str">"Enter your GCash PIN to continue."</span>) {
+    <span class="typ">EBListMarker</span>(<span class="prp">variant</span>: .<span class="prp">numbered</span>, <span class="prp">number</span>: <span class="kw">1</span>)
+}
+.<span class="fn">level</span>(<span class="kw">2</span>)
+
+<span class="cmt">// Custom asset via slot</span>
+<span class="typ">EBListItem</span>(<span class="str">"Saved to Favorites"</span>) {
+    <span class="typ">Image</span>(systemName: <span class="str">"heart.fill"</span>)
+        .<span class="fn">foregroundStyle</span>(.<span class="prp">red</span>)
+}</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Default bullet</span>
+<span class="typ">EBListItem</span>(content = <span class="str">"Transactions are reviewed within 24 hours."</span>) {
+    <span class="typ">EBListMarker</span>(variant = <span class="typ">EBListMarker</span>.<span class="prp">Bullet</span>)
+}
+
+<span class="cmt">// Ordered with number, level 2</span>
+<span class="typ">EBListItem</span>(
+    content = <span class="str">"Enter your GCash PIN to continue."</span>,
+    level = <span class="kw">2</span>
+) {
+    <span class="typ">EBListMarker</span>(variant = <span class="typ">EBListMarker</span>.<span class="prp">Numbered</span>, number = <span class="kw">1</span>)
+}
+
+<span class="cmt">// Custom asset via slot</span>
+<span class="typ">EBListItem</span>(content = <span class="str">"Saved to Favorites"</span>) {
+    <span class="typ">Icon</span>(painterResource(R.drawable.heart), contentDescription = null, tint = <span class="typ">Color</span>.<span class="prp">Red</span>)
+}</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="li-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Requirement</th><th class="center">iOS</th><th class="center">Android</th></tr></thead>
+        <tbody>
+          <tr><td>List container role</td><td class="muted">Wrap List Items in a <code>List</code> for VoiceOver row semantics</td><td class="muted">Use <code>Modifier.semantics { collectionInfo = ... }</code> on parent</td></tr>
+          <tr><td>Marker semantics</td><td class="muted">Decorative markers: <code>.accessibilityHidden(true)</code> on the asset</td><td class="muted">Same — <code>contentDescription = null</code></td></tr>
+          <tr><td>Numbered lists</td><td class="muted">Prepend number to the announced label, or use <code>.accessibilityValue</code></td><td class="muted">Include number in <code>contentDescription</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="li-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Simple row: asset + body text.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted"><code>level</code> uses string values; consider dropping the prop entirely.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Body color, indent, gap tokens all bound.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">HStack / Row with slot.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Display-only; interaction lives on the consumer.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Instance-swap works; Figma Slot would be cleaner and map to native slot params.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-refine">Pending</span></td><td class="muted">Not mapped. Slot adoption improves mapping quality.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="li-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(3 total)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>level</th><th>Indent</th><th>Width</th><th>Node ID</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td class="mono">0</td><td class="mono">hug (body 270px)</td><td class="mono">10277:2663</td></tr>
+          <tr><td>2</td><td class="mono">16px</td><td class="mono">294px</td><td class="mono">10277:2665</td></tr>
+          <tr><td>3</td><td class="mono">32px</td><td class="mono">294px</td><td class="mono">10277:2788</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 10277:2664</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Component assessed</strong> — 3 variants (level 1/2/3). Composes List Item Asset via instance swap. <span class="tag-fixed">Documented</span></div><span class="changelog-delta delta-resolved">Initial</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong><code>level</code> uses string values</strong> — Should be integer or dropped in favor of nesting-based indent. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Asset is instance-swap</strong> — Adopt Figma Slots for first-class slot mapping. <span class="tag-open tag-c6">Open</span></div><span class="changelog-delta delta-open">C6 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Code Connect mappings</strong> — Not registered. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7 Open</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-list-item">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-list-item"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── List Item JS ─────────────────────────────────────────────────── */
+var _liDemo = { level: 1, asset: 'bullet' };
+
+function _liBuildMarker16(variant) {
+  var v = '<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">';
+  switch (variant) {
+    case 'check': v += '<path d="M3 8l3 3 7-7" stroke="#90A8D0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'; break;
+    case 'check-positive': v += '<path d="M3 8l3 3 7-7" stroke="#27C990" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'; break;
+    case 'pending': v += '<circle cx="8" cy="8" r="6.5" fill="none" stroke="#90A8D0" stroke-width="1.5"/><path d="M8 4v4l2.5 1.5" stroke="#90A8D0" stroke-width="1.5" stroke-linecap="round" fill="none"/>'; break;
+    case 'pending-notice': v += '<circle cx="8" cy="8" r="6.5" fill="none" stroke="#CA970C" stroke-width="1.5"/><path d="M8 4v4l2.5 1.5" stroke="#CA970C" stroke-width="1.5" stroke-linecap="round" fill="none"/>'; break;
+    case 'numbered': v += '<rect x="0" y="2" width="16" height="12" rx="6" fill="#EEF2F9"/><text x="8" y="11" text-anchor="middle" fill="#90A8D0" font-size="9" font-weight="700" font-family="\'Proxima Soft\', system-ui">1.</text>'; break;
+    case 'custom': v += '<rect x="1" y="1" width="14" height="14" rx="2" fill="none" stroke="#ADBDDC" stroke-width="1" stroke-dasharray="2 2"/>'; break;
+    default: v += '<circle cx="8" cy="8" r="2.5" fill="#90A8D0"/>';
+  }
+  v += '</svg>';
+  return v;
+}
+
+function _liBuildRow(level, assetVariant) {
+  var indent = level === 2 ? 16 : level === 3 ? 32 : 0;
+  var body = 'List body with level-' + level + ' style';
+  var w = 310;
+  var s = '<div style="display:flex;gap:8px;align-items:flex-start;padding-left:' + indent + 'px;max-width:' + w + 'px;">';
+  s += '<div style="padding-top:2px;">' + _liBuildMarker16(assetVariant) + '</div>';
+  s += '<div style="color:#445C85;font-family:\'BarkAda\', system-ui;font-weight:600;font-size:14px;line-height:20px;">' + body + '</div>';
+  s += '</div>';
+  return s;
+}
+
+function updateListItemDemo() {
+  _liDemo.level = parseInt(document.getElementById('li-demo-level').value, 10);
+  _liDemo.asset = document.getElementById('li-demo-asset').value;
+  var el = document.getElementById('li-demo-preview');
+  if (el) el.innerHTML = _liBuildRow(_liDemo.level, _liDemo.asset);
+}
+
+function _liInitSpecCards() {
+  [1, 2, 3].forEach(function(lv) {
+    var el = document.getElementById('li-preview-' + lv);
+    if (el) el.innerHTML = _liBuildRow(lv, 'bullet');
+  });
+}
+
+function _liInit() {
+  updateListItemDemo();
+  _liInitSpecCards();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _liInit);
+else _liInit();
+</script>
+
+<!--@section-end-->

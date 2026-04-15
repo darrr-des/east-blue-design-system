@@ -1,0 +1,440 @@
+<!--
+  LIST ITEM ASSET COMPONENT ASSESSMENT
+  Leading marker atom composed by List Item.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 10274:2658
+ds-verdict: restructure
+native-status: refine
+variants: 10
+ios: Custom EBListMarker switch view
+android: Custom EBListMarker composable
+open-issues: C2,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] `type` × `indicator` axes are entangled — only ~10 of 72 theoretical combinations are valid
+[C5] Numbered indicator hardcodes "1." — no way to set per-item number
+[C6] `indicator=Custom` ships a gray circle placeholder instead of a swappable Icon slot
+<!--@patterns-end-->
+
+<!--@nav-group-start-->List<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-list-item-asset" onclick="showPanel('list-item-asset', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">List Item Asset</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('list-item-asset')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <circle cx="14" cy="20" r="4" fill="#CA970C"/>
+      <path d="M29 19l2.5 2.5 4-4" stroke="#27C990" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <circle cx="50" cy="20" r="2.5" fill="#90A8D0"/>
+      <text x="66" y="23" text-anchor="middle" fill="#90A8D0" font-size="7" font-weight="700" font-family="system-ui">1.</text>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">List Item Asset</div>
+      <span class="badge badge-rework">Restructure</span>
+    </div>
+    <div class="summary-card-desc">Leading marker atom. `type` × `indicator` × `state` yields 72 theoretical but only ~10 valid combinations. Flatten to one `variant` enum; adopt Figma Slots for custom asset.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>List Item Asset</strong></td>
+  <td><span class="badge badge-rework">Restructure</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">10</td>
+  <td class="muted">Leading marker for List Item. Entangled type×indicator matrix; hardcoded "1." number; custom indicator is a placeholder instead of a slot.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-list-item-asset">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          List Item Asset
+          <span class="badge badge-rework">Restructure</span>
+          <span class="badge badge-refine">Needs Refinement</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=10274-2658" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">The 16 × 16 leading marker atom for a List Item — checks, pending dots, bullets, hollow dots, squares, numbered indicators, and a custom asset slot. Currently exposes three entangled properties (<code>type</code>, <code>indicator</code>, <code>state</code>) that only produce ~10 valid combinations out of 72 theoretical.</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Flatten the variant matrix + adopt Figma Slots</div>
+          <div class="verdict-inline-text">Replace the entangled <code>type</code> × <code>indicator</code> × <code>state</code> axes with a single semantic <code>variant</code> enum (<code>check</code>, <code>check-positive</code>, <code>pending</code>, <code>pending-notice</code>, <code>bullet</code>, <code>hollow</code>, <code>square</code>, <code>numbered</code>, <code>custom</code>). Replace the <code>Custom</code> placeholder circle with a Figma Slot so product teams can drop in any 16×16 asset without instance-swap.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="lia-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'lia-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'lia-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'lia-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'lia-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="lia-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">List Item Asset appears inside List Items — see the <a href="#" onclick="showPanelById('list-item'); return false;">List Item preview</a> for the composed layout.</p>
+
+    <div class="sub-heading" id="lia-preview">Live Preview</div>
+    <p class="section-desc">Pick a variant to see the 16 × 16 marker render.</p>
+    <div class="demo-panel" id="lia-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="lia-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Proposed API</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">variant</span>
+              <select class="demo-panel-select" id="lia-demo-variant" onchange="updateListItemAssetDemo()">
+                <option value="check" selected>check</option>
+                <option value="check-positive">check-positive</option>
+                <option value="pending">pending</option>
+                <option value="pending-notice">pending-notice</option>
+                <option value="bullet">bullet</option>
+                <option value="hollow">hollow</option>
+                <option value="square">square</option>
+                <option value="numbered">numbered</option>
+                <option value="custom">custom (slot)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="lia-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Covers task lists, ordered/unordered lists, and custom-marker lists. Used across onboarding flows, terms pages, and step indicators.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">All colors, sizes, typography bound to tokens. 16 × 16 bounding box is fixed.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Three properties (<code>type</code>, <code>indicator</code>, <code>state</code>) that shouldn't multiply freely — most combinations are invalid. Creates phantom variants in Figma's variant picker. <span class="tag-open tag-c2">C2</span></div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note"><code>indicator=Custom</code> exposes a gray circle <code>icon-placeholder</code> instead of a Figma Slot. Blocks product teams from dropping in custom 16 × 16 assets without local overrides. <span class="tag-open tag-c6">C6</span></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="lia-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span>Variant matrix is entangled — <code>type</code> × <code>indicator</code> × <code>state</code> = 72 theoretical but only ~10 valid combos. Flatten into one <code>variant</code> enum. <span class="tag-open tag-c2">C2</span></span></li>
+      <li><span>Numbered indicator hardcodes "1." — no way to pass the ordinal value. Numbered lists of 5 items all show "1." in Figma. <span class="tag-open tag-c5">C5</span></span></li>
+      <li><span><code>indicator=Custom</code> uses a hardcoded gray circle — should be a Figma Slot that accepts any 16 × 16 asset. <span class="tag-open tag-c6">C6</span></span></li>
+      <li><span>Code Connect CLI mappings not registered. <span class="tag-open tag-c7">C7</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="lia-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Flatten the variant matrix</strong> — replace <code>type</code> + <code>indicator</code> + <code>state</code> with a single semantic <code>variant</code> enum: <code>check</code> / <code>check-positive</code> / <code>pending</code> / <code>pending-notice</code> / <code>bullet</code> / <code>hollow</code> / <code>square</code> / <code>numbered</code> / <code>custom</code>. ~9 real variants, no invalid combinations possible. <span class="tag-recommend">Restructure</span></span></li>
+      <li><span><strong>Adopt a Figma Slot for <code>variant=custom</code></strong> — declare a named <code>asset</code> slot so product teams can drop in any 16 × 16 component instance without editing the master. Maps cleanly to a <code>@ViewBuilder</code> slot (SwiftUI) or <code>@Composable</code> slot (Compose) via Code Connect. <span class="tag-recommend">Figma Slots</span></span></li>
+      <li><span><strong>Parameterize the numbered indicator</strong> — expose a <code>number</code> text property so ordered lists can show the actual ordinal. In Figma this is a text override; in native it's a <code>number: Int</code> param. <span class="tag-recommend">Parameterize</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="lia-styles" style="margin-top:0">Variants</div>
+    <p class="section-desc">9 real variants under the proposed flattened enum. All render inside a 16 × 16 bounding box.</p>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="lia-variant-all">All markers</div>
+        </div>
+        <p class="spec-card-desc">Row of all 9 markers at actual size. Left to right: check, check-positive, pending, pending-notice, bullet, hollow, square, numbered, custom (slot).</p>
+      </div>
+      <div class="spec-card-preview" id="lia-preview-all"><!-- JS --></div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by Variant</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Variant</th><th>Role</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td><strong>check</strong></td><td class="muted">icon</td><td class="mono">main/list-item/color/default/icon-item</td><td class="mono">#90A8D0</td></tr>
+          <tr><td><strong>check-positive</strong></td><td class="muted">icon</td><td class="mono">main/list-item/color/positive/icon-item</td><td class="mono">#27C990</td></tr>
+          <tr><td><strong>pending</strong></td><td class="muted">icon</td><td class="mono">main/list-item/color/default/icon-item</td><td class="mono">#90A8D0</td></tr>
+          <tr><td><strong>pending-notice</strong></td><td class="muted">icon</td><td class="mono">main/list-item/color/notice/icon-item</td><td class="mono">#CA970C</td></tr>
+          <tr><td><strong>bullet / hollow / square</strong></td><td class="muted">icon</td><td class="mono">main/list-item/color/default/icon-item</td><td class="mono">#90A8D0</td></tr>
+          <tr><td><strong>numbered (bg)</strong></td><td class="muted">container bg</td><td class="mono">main/list-item/color/default/icon-bg</td><td class="mono">#EEF2F9</td></tr>
+          <tr><td><strong>numbered (label)</strong></td><td class="muted">number text</td><td class="mono">main/list-item/color/default/icon-item</td><td class="mono">#90A8D0</td></tr>
+          <tr><td><strong>custom</strong></td><td class="muted">—</td><td class="mono">(slot — inherits from provided asset)</td><td class="mono">—</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Bounding box</td><td class="mono">—</td><td class="mono">16 × 16</td></tr>
+          <tr><td class="muted">Check / Pending icon</td><td class="mono">—</td><td class="mono">16 × 16 vector</td></tr>
+          <tr><td class="muted">Bullet / Hollow / Square size</td><td class="mono">—</td><td class="mono">5 × 5</td></tr>
+          <tr><td class="muted">Numbered container radius</td><td class="mono">—</td><td class="mono">16px (pill)</td></tr>
+          <tr><td class="muted">Numbered padding</td><td class="mono">—</td><td class="mono">4L / 2R / 2v</td></tr>
+          <tr><td class="muted">Vertical padding (most variants)</td><td class="mono">space/space-2</td><td class="mono">2px</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Typography</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Variant</th><th>DS text style</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">numbered (pill)</td><td class="mono">Primary/Label/Fine</td><td class="mono">Proxima Soft Bold · 12 / 12 · +0.5</td></tr>
+          <tr><td class="muted">Ordered / Normal (legacy)</td><td class="mono">Primary/Label/Light/Small</td><td class="mono">Proxima Soft Semibold · 14 / 14 · +0.25</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="lia-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:list:1.0.0"</span>)
+}</pre>
+    </div>
+
+    <div class="sub-heading" id="lia-props">Property Mapping <span class="muted" style="font-weight:400;font-size:13px;">(proposed — after flatten)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Current Figma</th><th>Proposed</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">type × indicator × state</td><td class="mono">variant (enum)</td><td class="mono">.ebVariant(.check)</td><td class="mono">variant = EBListMarker.Check</td></tr>
+          <tr><td class="mono">— (hardcoded "1.")</td><td class="mono">number: Int?</td><td class="mono">number: Int?</td><td class="mono">number: Int?</td></tr>
+          <tr><td class="mono">indicator=Custom placeholder</td><td class="mono">Figma Slot → ViewBuilder / @Composable</td><td class="mono">@ViewBuilder asset</td><td class="mono">asset: @Composable () -&gt; Unit</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/List/EBListMarker.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/list/EBListMarker.kt</div>
+    </div>
+
+    <div class="sub-heading" id="lia-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'lia-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'lia-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Standard variants</span>
+<span class="typ">EBListMarker</span>(<span class="prp">variant</span>: .<span class="prp">check</span>)
+<span class="typ">EBListMarker</span>(<span class="prp">variant</span>: .<span class="prp">checkPositive</span>)
+<span class="typ">EBListMarker</span>(<span class="prp">variant</span>: .<span class="prp">pendingNotice</span>)
+
+<span class="cmt">// Numbered</span>
+<span class="typ">EBListMarker</span>(<span class="prp">variant</span>: .<span class="prp">numbered</span>, <span class="prp">number</span>: <span class="kw">1</span>)
+
+<span class="cmt">// Custom — Figma Slot maps to @ViewBuilder</span>
+<span class="typ">EBListMarker</span> {
+    <span class="typ">Image</span>(systemName: <span class="str">"star.fill"</span>)
+        .<span class="fn">foregroundStyle</span>(.<span class="prp">yellow</span>)
+}</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Standard variants</span>
+<span class="typ">EBListMarker</span>(variant = <span class="typ">EBListMarker</span>.<span class="prp">Check</span>)
+<span class="typ">EBListMarker</span>(variant = <span class="typ">EBListMarker</span>.<span class="prp">CheckPositive</span>)
+<span class="typ">EBListMarker</span>(variant = <span class="typ">EBListMarker</span>.<span class="prp">PendingNotice</span>)
+
+<span class="cmt">// Numbered</span>
+<span class="typ">EBListMarker</span>(variant = <span class="typ">EBListMarker</span>.<span class="prp">Numbered</span>, number = <span class="kw">1</span>)
+
+<span class="cmt">// Custom — Figma Slot maps to @Composable slot</span>
+<span class="typ">EBListMarker</span> {
+    <span class="typ">Icon</span>(painterResource(R.drawable.star), contentDescription = null)
+}</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="lia-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Semantic: <code>container</code>, <code>Pending</code>, <code>Checkmark</code>, <code>shape_full</code>.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">Three entangled axes; most combinations invalid. Flatten to single <code>variant</code> enum.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors, typography, spacing bound to tokens.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Custom atom on both platforms — straightforward render switch.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Numbered hardcodes "1."; no per-item ordinal. Otherwise display-only.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted"><code>Custom</code> indicator is a gray circle; should be a Figma Slot.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-refine">Pending</span></td><td class="muted">Not mapped. Clean mapping lands after flatten + Slot adoption.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="lia-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(10 total)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>type</th><th>indicator</th><th>state</th><th>Node ID</th></tr></thead>
+        <tbody>
+          <tr><td>Placeholder</td><td>Placeholder</td><td>Default</td><td class="mono">11100:7988</td></tr>
+          <tr><td>Unordered</td><td>Pending</td><td>Default</td><td class="mono">10935:8155</td></tr>
+          <tr><td>Unordered</td><td>Pending</td><td>Notice</td><td class="mono">10274:2657</td></tr>
+          <tr><td>Unordered</td><td>Check</td><td>Default</td><td class="mono">10935:6195</td></tr>
+          <tr><td>Unordered</td><td>Check</td><td>Positive</td><td class="mono">10730:1059</td></tr>
+          <tr><td>Unordered</td><td>Bullet</td><td>Default</td><td class="mono">10276:2673</td></tr>
+          <tr><td>Unordered</td><td>Hollow</td><td>Default</td><td class="mono">10276:2689</td></tr>
+          <tr><td>Unordered</td><td>Square</td><td>Default</td><td class="mono">10276:2693</td></tr>
+          <tr><td>Ordered</td><td>Custom</td><td>Default</td><td class="mono">10274:2656</td></tr>
+          <tr><td>Ordered</td><td>Normal</td><td>Default</td><td class="mono">10274:2675</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-footnote">After flatten + Slot adoption, these 10 collapse to 9 semantic variants + 1 custom slot — 0 invalid combinations possible.</p>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 10274:2658</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Component assessed</strong> — 10 variants across entangled type × indicator × state. Recommended flatten + Figma Slot adoption. <span class="tag-fixed">Documented</span></div><span class="changelog-delta delta-resolved">Initial</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Variant matrix entangled</strong> — 72 theoretical, ~10 valid. Flatten to one <code>variant</code> enum. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Numbered indicator hardcodes "1."</strong> — Needs a <code>number</code> parameter. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Custom indicator is a placeholder</strong> — Should be a Figma Slot. <span class="tag-open tag-c6">Open</span></div><span class="changelog-delta delta-open">C6 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Code Connect mappings</strong> — Not registered. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7 Open</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-list-item-asset">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-list-item-asset"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── List Item Asset JS ───────────────────────────────────────────── */
+var _liaDemo = { variant: 'check' };
+
+function _liaBuildMarker(variant, scale) {
+  scale = scale || 1;
+  var s = 16 * scale;
+  var v = '<svg width="' + s + '" height="' + s + '" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">';
+  switch (variant) {
+    case 'check':
+      v += '<path d="M3 8l3 3 7-7" stroke="#90A8D0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'; break;
+    case 'check-positive':
+      v += '<path d="M3 8l3 3 7-7" stroke="#27C990" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'; break;
+    case 'pending':
+      v += '<circle cx="8" cy="8" r="6.5" fill="none" stroke="#90A8D0" stroke-width="1.5"/><path d="M8 4v4l2.5 1.5" stroke="#90A8D0" stroke-width="1.5" stroke-linecap="round" fill="none"/>'; break;
+    case 'pending-notice':
+      v += '<circle cx="8" cy="8" r="6.5" fill="none" stroke="#CA970C" stroke-width="1.5"/><path d="M8 4v4l2.5 1.5" stroke="#CA970C" stroke-width="1.5" stroke-linecap="round" fill="none"/>'; break;
+    case 'bullet':
+      v += '<circle cx="8" cy="8" r="2.5" fill="#90A8D0"/>'; break;
+    case 'hollow':
+      v += '<circle cx="8" cy="8" r="2" fill="none" stroke="#90A8D0" stroke-width="1"/>'; break;
+    case 'square':
+      v += '<rect x="5.5" y="5.5" width="5" height="5" rx="1" fill="#90A8D0"/>'; break;
+    case 'numbered':
+      v += '<rect x="0" y="2" width="16" height="12" rx="6" fill="#EEF2F9"/><text x="8" y="11" text-anchor="middle" fill="#90A8D0" font-size="9" font-weight="700" font-family="\'Proxima Soft\', system-ui">1.</text>'; break;
+    case 'custom':
+      v += '<rect x="1" y="1" width="14" height="14" rx="2" fill="none" stroke="#ADBDDC" stroke-width="1" stroke-dasharray="2 2"/><text x="8" y="11" text-anchor="middle" fill="#90A8D0" font-size="6" font-family="\'Proxima Soft\', system-ui">slot</text>'; break;
+  }
+  v += '</svg>';
+  return v;
+}
+
+function updateListItemAssetDemo() {
+  _liaDemo.variant = document.getElementById('lia-demo-variant').value;
+  var el = document.getElementById('lia-demo-preview');
+  if (el) el.innerHTML = _liaBuildMarker(_liaDemo.variant, 3);
+}
+
+function _liaInitSpecCards() {
+  var all = ['check', 'check-positive', 'pending', 'pending-notice', 'bullet', 'hollow', 'square', 'numbered', 'custom'];
+  var html = '<div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;padding:12px 0;">';
+  all.forEach(function(v) {
+    html += '<div style="display:flex;flex-direction:column;align-items:center;gap:6px;">' +
+      _liaBuildMarker(v, 2.5) +
+      '<code style="font-size:11px;color:var(--muted);">' + v + '</code></div>';
+  });
+  html += '</div>';
+  var el = document.getElementById('lia-preview-all');
+  if (el) el.innerHTML = html;
+}
+
+function _liaInit() {
+  updateListItemAssetDemo();
+  _liaInitSpecCards();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _liaInit);
+else _liaInit();
+</script>
+
+<!--@section-end-->
