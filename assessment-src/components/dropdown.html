@@ -243,21 +243,21 @@ open-issues: C2,C5,C6,C7
     <!-- Open Issues -->
     <div class="sub-heading" id="dd-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>DropdownItem <code>selected</code> property uses <code>yes/no</code> string — should be <code>true/false</code> for Swift <code>Bool</code> / Kotlin <code>Boolean</code> mapping <span class="tag-open tag-c2">C2</span></span></li>
-      <li><span>No disabled state — form dropdowns must support non-interactive state for accessibility and conditional form flows <span class="tag-open tag-c5">C5</span></span></li>
-      <li><span>No pressed state — touch feedback expected on mobile platforms (iOS highlight, Android ripple) <span class="tag-open tag-c5">C5</span></span></li>
-      <li><span>Amount variant Peso Sign uses <code>shape_full</code> BOOLEAN_OPERATION — not a clean vector path <span class="tag-open tag-c6">C6</span></span></li>
-      <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
+      <li><span><strong>DropdownItem <code>selected</code> uses <code>yes/no</code> strings.</strong> Should be <code>true/false</code> for direct Swift <code>Bool</code> / Kotlin <code>Boolean</code> mapping in Code Connect. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>No disabled state.</strong> Form dropdowns must support a non-interactive state for accessibility and conditional form flows (e.g. "Country" disabled until "Region" is picked). <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>No pressed state.</strong> Touch feedback is expected on both platforms — iOS highlight, Android ripple. Currently consumers improvise this. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Peso Sign uses a <code>shape_full</code> BOOLEAN_OPERATION.</strong> Not a clean vector path — renders inconsistently across SVG export and native platforms. Flatten to a single path. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked until the boolean and state issues above are resolved. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
     </ul>
 
     <!-- Design Recommendations -->
     <div class="sub-heading" id="dd-recommend">Design Recommendations</div>
     <ul class="recommend-list">
-      <li><span>Add a <code>Disabled</code> state to the variant matrix — required for form accessibility and conditional logic <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Rename <code>type</code> property to <code>isExpanded</code> (true/false) — avoids platform keyword conflicts and aligns with boolean convention <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Rename DropdownItem <code>selected</code> from <code>yes/no</code> to <code>true/false</code> for direct boolean mapping <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Consider extracting Mobile variant into a separate <code>CountryCodeDropdown</code> component — it bundles too many concerns (dropdown + phone input) for a generic dropdown <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Add a <code>selected</code> visual state for DropdownItem (checkmark or background highlight) to indicate current selection <span class="tag-recommend">Suggested</span></span></li>
+      <li><span><strong>Add a <code>Disabled</code> state to the variant matrix.</strong> Required for form accessibility and conditional logic — without it, consumers hack opacity filters on the parent frame. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Rename <code>type</code> to <code>isExpanded</code>.</strong> Avoids platform keyword conflicts (<code>type</code> is reserved in many languages) and aligns with boolean naming convention. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Rename DropdownItem <code>selected</code> values to <code>true/false</code>.</strong> Direct boolean mapping eliminates the string-to-bool conversion layer when wiring Code Connect. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Extract Mobile variant into a dedicated <code>CountryCodeDropdown</code>.</strong> It bundles too many concerns (dropdown + phone input) for a generic dropdown and forces the base component to carry country-specific logic. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Add a selected-visual state to DropdownItem.</strong> Checkmark or background highlight makes the current selection unambiguous — today the open menu looks the same whether an item is picked or not. <span class="tag-recommend">State</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -446,9 +446,9 @@ open-issues: C2,C5,C6,C7
           <tr><th>Layer</th><th>Text Style</th><th>Font</th><th>Size</th><th>Tracking</th><th>Line-height</th></tr>
         </thead>
         <tbody>
-          <tr><td class="muted">Header label</td><td class="mono">Primary/Label/Light/Small</td><td class="mono">Proxima Soft Semibold</td><td class="mono">14px</td><td class="mono">0.25px</td><td class="mono">14px</td></tr>
-          <tr><td class="muted">Trigger placeholder</td><td class="mono">Primary/Label/Light/Small</td><td class="mono">Proxima Soft Semibold</td><td class="mono">14px</td><td class="mono">0.25px</td><td class="mono">14px</td></tr>
-          <tr><td class="muted">Dropdown item</td><td class="mono">Primary/Label/Light/Large</td><td class="mono">Proxima Soft Semibold</td><td class="mono">18px</td><td class="mono">0.25px</td><td class="mono">18px</td></tr>
+          <tr><td class="muted">Header label</td><td class="mono">Primary/Label/Light/Small</td><td class="mono">HeyMeow Rnd Semibold</td><td class="mono">14px</td><td class="mono">0.25px</td><td class="mono">14px</td></tr>
+          <tr><td class="muted">Trigger placeholder</td><td class="mono">Primary/Label/Light/Small</td><td class="mono">HeyMeow Rnd Semibold</td><td class="mono">14px</td><td class="mono">0.25px</td><td class="mono">14px</td></tr>
+          <tr><td class="muted">Dropdown item</td><td class="mono">Primary/Label/Light/Large</td><td class="mono">HeyMeow Rnd Semibold</td><td class="mono">18px</td><td class="mono">0.25px</td><td class="mono">18px</td></tr>
           <tr><td class="muted">Subtext</td><td class="mono">—</td><td class="mono">BarkAda Semibold</td><td class="mono">12px</td><td class="mono">0px</td><td class="mono">18px</td></tr>
         </tbody>
       </table>
@@ -846,13 +846,13 @@ function _ddBuildSvg(variant, type) {
     var totalH = isExpanded ? 468 : 118;
     s = '<svg width="' + w + '" height="' + totalH + '" viewBox="0 0 ' + w + ' ' + totalH + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
     /* label row */
-    s += '<text x="2" y="12" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + labelColor + '">Label</text>';
+    s += '<text x="2" y="12" font-family="HeyMeow Rnd, system-ui" font-size="14" font-weight="600" fill="' + labelColor + '">Label</text>';
     /* info icon */
     s += '<circle cx="52" cy="8" r="8" stroke="' + labelColor + '" stroke-width="1" fill="none" opacity=".4"/>';
     s += '<text x="49" y="12" font-family="system-ui" font-size="10" fill="' + labelColor + '" opacity=".4">i</text>';
     /* trigger field */
     s += '<rect x="0.5" y="22.5" width="' + (w - 1) + '" height="45" rx="5.5" fill="white" stroke="' + st.border + '" stroke-width="' + st.bw + '"/>';
-    s += '<text x="12" y="48" font-family="Proxima Soft, system-ui" font-size="14" fill="' + placeholderColor + '">Select option</text>';
+    s += '<text x="12" y="48" font-family="HeyMeow Rnd, system-ui" font-size="14" fill="' + placeholderColor + '">Select option</text>';
     /* chevron */
     if (isExpanded) {
       s += '<path d="M339 50l5-5 5 5" stroke="' + chevronColor + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
@@ -861,15 +861,15 @@ function _ddBuildSvg(variant, type) {
     }
     /* phone input */
     s += '<rect x="0.5" y="76.5" width="' + (w - 1) + '" height="37" rx="5.5" fill="white" stroke="#D7E0EF" stroke-width="1"/>';
-    s += '<text x="12" y="98" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + labelColor + '">+63</text>';
-    s += '<text x="52" y="98" font-family="Proxima Soft, system-ui" font-size="14" fill="' + placeholderColor + '">XXX XXX XXXX</text>';
+    s += '<text x="12" y="98" font-family="HeyMeow Rnd, system-ui" font-size="14" font-weight="600" fill="' + labelColor + '">+63</text>';
+    s += '<text x="52" y="98" font-family="HeyMeow Rnd, system-ui" font-size="14" fill="' + placeholderColor + '">XXX XXX XXXX</text>';
 
     if (isExpanded) {
       /* dropdown list */
       s += '<rect x="0" y="68" width="' + w + '" height="400" rx="6" fill="white" filter="url(#ddShadow)"/>';
       for (var i = 0; i < 8; i++) {
         var iy = 68 + (i * 50);
-        s += '<text x="12" y="' + (iy + 30) + '" font-family="Proxima Soft, system-ui" font-size="18" font-weight="600" fill="' + itemColor + '">Dropdown Item</text>';
+        s += '<text x="12" y="' + (iy + 30) + '" font-family="HeyMeow Rnd, system-ui" font-size="18" font-weight="600" fill="' + itemColor + '">Dropdown Item</text>';
         if (i < 7) s += '<line x1="0" y1="' + (iy + 50) + '" x2="' + w + '" y2="' + (iy + 50) + '" stroke="' + itemBorder + '" stroke-width="1"/>';
       }
     }
@@ -881,15 +881,15 @@ function _ddBuildSvg(variant, type) {
     /* shadow filter */
     s += '<defs><filter id="ddShadow" x="-4" y="64" width="' + (w + 8) + '" height="410" filterUnits="userSpaceOnUse"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#020E22" flood-opacity="0.16"/></filter></defs>';
     /* header label */
-    s += '<text x="2" y="12" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + labelColor + '">Label</text>';
+    s += '<text x="2" y="12" font-family="HeyMeow Rnd, system-ui" font-size="14" font-weight="600" fill="' + labelColor + '">Label</text>';
     /* trigger field */
     s += '<rect x="0.5" y="22.5" width="' + (w - 1) + '" height="45" rx="5.5" fill="white" stroke="' + st.border + '" stroke-width="' + st.bw + '"/>';
     /* peso sign for Amount */
     if (isAmount) {
-      s += '<text x="12" y="48" font-family="Proxima Soft, system-ui" font-size="15" font-weight="700" fill="' + pesoColor + '" dominant-baseline="central">&#8369;</text>';
-      s += '<text x="30" y="48" font-family="Proxima Soft, system-ui" font-size="14" fill="' + placeholderColor + '">Select option</text>';
+      s += '<text x="12" y="48" font-family="HeyMeow Rnd, system-ui" font-size="15" font-weight="700" fill="' + pesoColor + '" dominant-baseline="central">&#8369;</text>';
+      s += '<text x="30" y="48" font-family="HeyMeow Rnd, system-ui" font-size="14" fill="' + placeholderColor + '">Select option</text>';
     } else {
-      s += '<text x="12" y="48" font-family="Proxima Soft, system-ui" font-size="14" fill="' + placeholderColor + '">Select option</text>';
+      s += '<text x="12" y="48" font-family="HeyMeow Rnd, system-ui" font-size="14" fill="' + placeholderColor + '">Select option</text>';
     }
     /* chevron */
     if (isExpanded) {
@@ -902,7 +902,7 @@ function _ddBuildSvg(variant, type) {
       s += '<rect x="0" y="68" width="' + w + '" height="400" rx="6" fill="white" filter="url(#ddShadow)"/>';
       for (var i = 0; i < 8; i++) {
         var iy = 68 + (i * 50);
-        s += '<text x="12" y="' + (iy + 30) + '" font-family="Proxima Soft, system-ui" font-size="18" font-weight="600" fill="' + itemColor + '">Dropdown Item</text>';
+        s += '<text x="12" y="' + (iy + 30) + '" font-family="HeyMeow Rnd, system-ui" font-size="18" font-weight="600" fill="' + itemColor + '">Dropdown Item</text>';
         if (i < 7) s += '<line x1="0" y1="' + (iy + 50) + '" x2="' + w + '" y2="' + (iy + 50) + '" stroke="' + itemBorder + '" stroke-width="1"/>';
       }
     }

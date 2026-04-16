@@ -144,9 +144,6 @@
 /* ── Reset ───────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: var(--text-sm); }
-@media (min-width: 768px) {
-  html, body { height: 100%; overflow: hidden; }
-}
 code {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -366,7 +363,7 @@ a.sidebar-brand {
   transition: max-height 0.2s ease;
 }
 .nav-section-list.open {
-  max-height: 1000px;
+  max-height: none;
 }
 
 /* ── Nav items ───────────────────────────────────────────────────────── */
@@ -565,7 +562,11 @@ a.sidebar-brand {
   min-height: 100vh;
   background: var(--surface);
 }
+
+/* Desktop: lock body, sidebar and main scroll independently */
 @media (min-width: 768px) {
+  html, body { height: 100%; margin: 0; overflow: hidden; }
+  body { min-height: 0; }
   .main { height: 100vh; overflow-y: auto; min-height: 0; }
 }
 
@@ -1920,6 +1921,19 @@ code {
   outline: none;
   border-color: var(--accent);
 }
+/* Text-input flavor of .demo-panel-select (no chevron bg, room to type) */
+input.demo-panel-input.demo-panel-select,
+.demo-panel-input.demo-panel-select {
+  background-image: none;
+  padding: 5px 10px;
+  min-width: 140px;
+  max-width: 180px;
+  font-family: var(--font-body);
+}
+.demo-panel-input::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
 .demo-bool-toggle {
   position: relative;
   width: 36px;
@@ -2109,7 +2123,1202 @@ code {
   color: var(--muted);
   line-height: 1.5;
   margin-bottom: 0;
+  padding: 0 var(--space-6) var(--space-4);
 }
+
+/* Spec card header layout: title + mode toggle on one row (only when using the flat .spec-card-title pattern) */
+.spec-card-header:has(> .spec-card-title) {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+.spec-card-title {
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex: 1;
+  min-width: 0;
+}
+.spec-card-node {
+  font-size: var(--text-xs);
+  font-weight: 400;
+  color: var(--muted);
+}
+.spec-card-node code {
+  font-size: var(--text-xs);
+}
+
+/* Preview frame inside spec card */
+.spec-card-preview-row {
+  padding: 0 var(--space-6) var(--space-4);
+}
+.spec-preview-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  padding: var(--space-8);
+  background-color: #F8F9FB;
+  background-image: radial-gradient(circle, #DDE0E7 1px, transparent 1px);
+  background-size: 16px 16px;
+  border-radius: var(--radius);
+}
+[data-theme="dark"] .spec-preview-frame {
+  background-color: #1A1A1A;
+  background-image: radial-gradient(circle, #2A2A2A 1px, transparent 1px);
+}
+.spec-preview-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Two-column detail grid inside spec card (alias of spec-card-detail) */
+.spec-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--row-border);
+}
+.spec-detail-grid + .spec-detail-grid {
+  border-top: 1px solid var(--row-border);
+}
+.spec-detail-col {
+  padding: var(--space-4) var(--space-6);
+  border-right: 1px solid var(--row-border);
+  min-width: 0;
+}
+.spec-detail-col:last-child {
+  border-right: none;
+}
+.spec-detail-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 4px 0;
+  font-size: var(--text-sm);
+}
+.spec-detail-row > span:first-child {
+  color: var(--muted);
+  font-size: var(--text-xs);
+  flex-shrink: 0;
+}
+.spec-detail-row code {
+  font-size: var(--text-xs);
+  text-align: right;
+}
+.spec-detail-row.muted { color: var(--muted); }
+
+/* DES / DEV mode toggle (new variant) */
+.mode-toggle-group {
+  display: inline-flex;
+  background: var(--tab-bg);
+  border-radius: 6px;
+  padding: 2px;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.mode-toggle-btn {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  font-family: var(--font-body);
+}
+.mode-toggle-btn.active {
+  background: var(--surface);
+  font-weight: 700;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  color: var(--text);
+}
+
+/* Compact variant of table used inside spec-detail-col */
+.compact-table {
+  font-size: var(--text-xs);
+}
+.compact-table thead th {
+  padding: 4px 6px;
+  font-size: 10px;
+}
+.compact-table tbody td {
+  padding: 4px 6px;
+  font-size: var(--text-xs);
+}
+
+/* Small color swatch dot for inline hex values */
+.swatch-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* Muted variant-count suffix after sub-heading */
+.variants-count {
+  font-weight: 400;
+  color: var(--muted);
+  font-size: var(--text-xs);
+  margin-left: 6px;
+}
+
+/* Verdict-inline restructure variant */
+.verdict-inline.verdict-restructure {
+  background: var(--rework-bg, #FEF2F2);
+  border-color: var(--rework-border, #FCA5A5);
+  color: var(--rework-fg, #991B1B);
+}
+[data-theme="dark"] .verdict-inline.verdict-restructure {
+  background: #3A1818;
+  border-color: #7F2D2D;
+  color: #FCA5A5;
+}
+
+/* Table footnote (small muted note after a table) */
+.table-footnote {
+  font-size: var(--text-xs);
+  color: var(--muted);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+/* ────────────────────────────────────────────────────────────────── */
+/* Component Preview Primitives — pixel-accurate Figma replicas        */
+/* Use these class-based primitives INSIDE .demo-preview and           */
+/* .spec-preview-frame to render component previews. Never use inline  */
+/* styles for previews — all spacing, color, typography, and sizing    */
+/* is token-matched here.                                              */
+/* ────────────────────────────────────────────────────────────────── */
+
+/* --- Typography stacks --- */
+/* Primary font: HeyMeow Rnd (the DS display font, embedded in this    */
+/* site) with system-ui fallbacks for robustness.                      */
+.eb-preview {
+  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  color: #0A2757;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.eb-preview--bark {
+  font-family: "BarkAda", -apple-system, system-ui, sans-serif;
+}
+
+/* =============================================================== */
+/* Header (base / Section Header) — node 18430:2919                  */
+/* =============================================================== */
+.eb-preview-header {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 360px;
+  max-width: 100%;
+  padding: 16px 24px;
+  background: #FFFFFF;
+  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+.eb-preview-header--center { align-items: center; }
+.eb-preview-header__leading-icon {
+  width: 24px;
+  height: 24px;
+  color: #0A2757;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.eb-preview-header__leading-illus {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  background: #C2CFE5;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.eb-preview-header__content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  gap: 2px;
+}
+.eb-preview-header__preamble {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #005CE5;
+  margin: 0;
+}
+.eb-preview-header__title {
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 26px;
+  letter-spacing: 0;
+  color: #0A2757;
+  margin: 0;
+}
+.eb-preview-header__desc {
+  font-family: "BarkAda", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  color: #6780A9;
+  margin: 0;
+}
+.eb-preview-header__trailing {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.eb-preview-header__trailing-illus {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  background: #C2CFE5;
+  flex-shrink: 0;
+  align-self: center;
+}
+.eb-preview-header__link {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 0.25px;
+  color: #005CE5;
+  white-space: nowrap;
+}
+.eb-preview-header__edit-icon {
+  width: 24px;
+  height: 24px;
+  color: #005CE5;
+  flex-shrink: 0;
+}
+.eb-preview-header__counter {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 8px;
+  background: #EEF2F9;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #072592;
+}
+
+/* =============================================================== */
+/* Header - Centered (Page Banner) — node 18430:2858                 */
+/* =============================================================== */
+.eb-preview-header-centered {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 360px;
+  max-width: 100%;
+  padding: 24px 24px 34px;
+  text-align: center;
+  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+.eb-preview-header-centered--dark {
+  background: #1972F9;
+  border-bottom: 1px solid rgba(246, 249, 253, 0.24);
+}
+.eb-preview-header-centered--light {
+  background: #FFFFFF;
+  border-bottom: 1px solid #E8E9ED;
+}
+.eb-preview-header-centered__title {
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 26px;
+  letter-spacing: 0;
+  margin: 0;
+}
+.eb-preview-header-centered--dark  .eb-preview-header-centered__title { color: #FFFFFF; }
+.eb-preview-header-centered--light .eb-preview-header-centered__title { color: #0A2757; }
+.eb-preview-header-centered__sublabel {
+  font-family: "BarkAda", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  display: inline-flex;
+  gap: 2px;
+  margin: 0;
+}
+.eb-preview-header-centered--dark  .eb-preview-header-centered__sublabel-key   { color: rgba(246, 249, 253, 0.72); }
+.eb-preview-header-centered--dark  .eb-preview-header-centered__sublabel-value { color: #FFFFFF; }
+.eb-preview-header-centered--light .eb-preview-header-centered__sublabel-key   { color: #6780A9; }
+.eb-preview-header-centered--light .eb-preview-header-centered__sublabel-value { color: #0A2757; }
+
+/* =============================================================== */
+/* Header - With Logo (Brand App Bar) — node 18430:2875              */
+/* =============================================================== */
+.eb-preview-header-logo {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 360px;
+  max-width: 100%;
+  padding: 24px;
+  background: #1972F9;
+}
+.eb-preview-header-logo__mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: -0.5px;
+}
+.eb-preview-header-logo__mark--light { color: #FFFFFF; }
+.eb-preview-header-logo__mark--dark  { color: #0A2757; }
+.eb-preview-header-logo__glyph {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+/* =============================================================== */
+/* Header - Transaction (Detail Hero) — node 18430:2897              */
+/* =============================================================== */
+.eb-preview-header-tx {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  max-width: 100%;
+  padding: 24px;
+  background: #1972F9;
+  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+.eb-preview-header-tx__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #C2CFE5;
+  flex-shrink: 0;
+}
+.eb-preview-header-tx__title {
+  margin: 8px 0 0 0;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 26px;
+  color: #FFFFFF;
+}
+.eb-preview-header-tx__separator {
+  height: 1px;
+  background: rgba(246, 249, 253, 0.24);
+  margin: 12px 0 8px;
+}
+.eb-preview-header-tx__meta {
+  font-family: "BarkAda", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  display: flex;
+  gap: 8px;
+  margin: 0 0 2px;
+}
+.eb-preview-header-tx__meta-key   { color: rgba(246, 249, 253, 0.72); }
+.eb-preview-header-tx__meta-value { color: #FFFFFF; }
+.eb-preview-header-tx__desc {
+  font-family: "BarkAda", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  color: rgba(246, 249, 253, 0.72);
+  margin: 0;
+}
+
+/* =============================================================== */
+/* Overlay (Scrim) — node 47:329691                                  */
+/* Renders the overlay on top of a phone-sized surface so the        */
+/* translucent effect is visible.                                    */
+/* =============================================================== */
+.eb-preview-overlay-stage {
+  position: relative;
+  width: 260px;
+  height: 380px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #F4F6FA;
+  border: 1px solid #E5E8EF;
+  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+.eb-preview-overlay-stage__content {
+  position: absolute;
+  inset: 0;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.eb-preview-overlay-stage__content-title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  color: #0A2757;
+  margin: 0 0 4px;
+}
+.eb-preview-overlay-stage__card {
+  height: 48px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #E8E9ED;
+}
+.eb-preview-overlay-stage__dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 14, 34, 0.56);
+}
+.eb-preview-overlay-stage__sheet {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  background: #FFFFFF;
+  border-radius: 20px 20px 0 0;
+  padding: 14px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.eb-preview-overlay-stage__handle {
+  width: 40px;
+  height: 4px;
+  background: #C8CDD5;
+  border-radius: 2px;
+  margin: 0 auto 8px;
+}
+.eb-preview-overlay-stage__sheet-title {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #0A2757;
+  margin: 0;
+}
+.eb-preview-overlay-stage__sheet-body {
+  font-family: "BarkAda", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  color: #6780A9;
+  margin: 0;
+}
+.eb-preview-overlay-stage__sheet-btn {
+  margin-top: 6px;
+  height: 40px;
+  background: #1972F9;
+  color: #FFFFFF;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.25px;
+}
+.eb-preview-overlay-stage__dialog {
+  position: absolute;
+  left: 20px; right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.eb-preview-overlay-stage__dialog-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.eb-preview-overlay-stage__dialog-btn {
+  flex: 1;
+  height: 36px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.25px;
+}
+.eb-preview-overlay-stage__dialog-btn--ghost {
+  background: #EEF2F9;
+  color: #0A2757;
+}
+.eb-preview-overlay-stage__dialog-btn--primary {
+  background: #1972F9;
+  color: #FFFFFF;
+}
+
+/* =============================================================== */
+/* Toggle — node 27:30922                                           */
+/* =============================================================== */
+.eb-preview-toggle {
+  display: inline-block;
+  position: relative;
+  background: #C8CDD5;
+  border-radius: 999px;
+  flex-shrink: 0;
+  transition: background 180ms ease, box-shadow 180ms ease;
+}
+.eb-preview-toggle--small  { width: 36px; height: 20px; }
+.eb-preview-toggle--medium { width: 48px; height: 24px; }
+.eb-preview-toggle--large  { width: 56px; height: 30px; }
+.eb-preview-toggle--off              { background: #C8CDD5; }
+.eb-preview-toggle--on               { background: #1972F9; }
+.eb-preview-toggle--pressed.eb-preview-toggle--off { background: #AAB3C0; }
+.eb-preview-toggle--pressed.eb-preview-toggle--on  { background: #0F54BE; }
+.eb-preview-toggle--disabled.eb-preview-toggle--off { background: #EBEEF3; }
+.eb-preview-toggle--disabled.eb-preview-toggle--on  { background: #9BC5FD; }
+.eb-preview-toggle--error.eb-preview-toggle--off   { background: #FAC1C1; }
+.eb-preview-toggle--error.eb-preview-toggle--on    { background: #D81E1E; }
+.eb-preview-toggle--focused {
+  box-shadow: 0 0 0 3px rgba(25, 114, 249, 0.35);
+}
+.eb-preview-toggle__knob {
+  position: absolute;
+  top: 2px;
+  background: #FFFFFF;
+  border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(10, 23, 87, 0.18), 0 0 0 0.5px rgba(10, 23, 87, 0.04);
+  transition: left 180ms ease;
+}
+.eb-preview-toggle--small  .eb-preview-toggle__knob { width: 16px; height: 16px; }
+.eb-preview-toggle--medium .eb-preview-toggle__knob { width: 20px; height: 20px; }
+.eb-preview-toggle--large  .eb-preview-toggle__knob { width: 26px; height: 26px; }
+.eb-preview-toggle--small.eb-preview-toggle--off  .eb-preview-toggle__knob { left: 2px; }
+.eb-preview-toggle--small.eb-preview-toggle--on   .eb-preview-toggle__knob { left: 18px; }
+.eb-preview-toggle--medium.eb-preview-toggle--off .eb-preview-toggle__knob { left: 2px; }
+.eb-preview-toggle--medium.eb-preview-toggle--on  .eb-preview-toggle__knob { left: 26px; }
+.eb-preview-toggle--large.eb-preview-toggle--off  .eb-preview-toggle__knob { left: 2px; }
+.eb-preview-toggle--large.eb-preview-toggle--on   .eb-preview-toggle__knob { left: 28px; }
+.eb-preview-toggle--disabled { cursor: not-allowed; }
+.eb-preview-toggle--disabled .eb-preview-toggle__knob {
+  background: #F4F6FA;
+  box-shadow: none;
+}
+
+/* Interactive toggle — cursor + keyboard focus ring. No hover tint:
+   the Figma component doesn't ship a hover variant today, so the
+   preview doesn't invent one. (Track brightens on active:press only
+   as a subtle affordance.) */
+.eb-preview-toggle--interactive {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}
+.eb-preview-toggle--interactive:focus-visible {
+  box-shadow: 0 0 0 3px rgba(25, 114, 249, 0.35);
+}
+.eb-preview-toggle--interactive:active .eb-preview-toggle__knob {
+  transform: scale(0.94);
+}
+
+/* Setting row (used in Toggle / Toggle-With-Label In Context) */
+.eb-preview-setting-row {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 320px;
+  padding: 14px 16px;
+  background: #FFFFFF;
+  border: 1px solid #E8E9ED;
+  border-radius: 12px;
+  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+.eb-preview-setting-row__labels {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.eb-preview-setting-row__label {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  color: #0A2757;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.eb-preview-setting-row__required {
+  color: #D81E1E;
+  font-weight: 700;
+}
+.eb-preview-setting-row__desc {
+  font-family: "BarkAda", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #6780A9;
+}
+.eb-preview-setting-row--leading > .eb-preview-toggle { order: -1; }
+
+/* Form card — a realistic settings-screen container for "In Context"
+   previews. Wraps multiple rows with a screen-like frame, a title, and
+   section headers. */
+.eb-preview-form-card {
+  box-sizing: border-box;
+  width: 360px;
+  max-width: 100%;
+  background: #F4F6FA;
+  border: 1px solid #E5E8EF;
+  border-radius: 16px;
+  overflow: hidden;
+  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+.eb-preview-form-card__header {
+  padding: 16px 20px 12px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E5E8EF;
+}
+.eb-preview-form-card__title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  color: #0A2757;
+  margin: 0;
+}
+.eb-preview-form-card__subtitle {
+  font-family: "BarkAda", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #6780A9;
+  margin: 4px 0 0;
+}
+.eb-preview-form-card__section {
+  padding: 16px 12px 12px;
+}
+.eb-preview-form-card__section + .eb-preview-form-card__section {
+  border-top: 1px solid #E5E8EF;
+}
+.eb-preview-form-card__section-title {
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6780A9;
+  margin: 0 8px 8px;
+}
+.eb-preview-form-card__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.eb-preview-form-card__rows .eb-preview-setting-row {
+  width: 100%;
+  border-color: #ECEFF5;
+  box-shadow: 0 1px 0 rgba(10, 23, 87, 0.02);
+}
+
+/* =============================================================== */
+/* Alert — node 18444:2012                                          */
+/* Two layout flavors share one component today:                   */
+/* • Banner (fullWidth=yes) — flat, 12 px vertical padding, shadow */
+/* • Card (fullWidth=no)    — left-border accent, bigger padding,  */
+/*   always ships with right icon + Learn More action              */
+/* =============================================================== */
+.eb-preview-alert {
+  box-sizing: border-box;
+  width: 360px;
+  max-width: 100%;
+  display: flex;
+  gap: 8px;
+  border-radius: 4px;
+  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+.eb-preview-alert--banner {
+  padding: 12px 16px;
+  align-items: center;
+  box-shadow: 0 1px 3px 0 rgba(232, 238, 242, 0.79);
+}
+.eb-preview-alert--card {
+  padding: 4px 16px 16px 20px;
+  border-left: 6px solid var(--alert-border, transparent);
+  align-items: flex-start;
+}
+
+/* Color variants — each sets bg + CSS custom props for inner elements */
+.eb-preview-alert--neutral {
+  background: #F6F9FD;
+  --alert-title: #0A2757;
+  --alert-desc: #6780A9;
+  --alert-icon: #0A2757;
+  --alert-link: #0A2757;
+  --alert-border: transparent;
+}
+.eb-preview-alert--information {
+  background: #E5F1FF;
+  --alert-title: #072592;
+  --alert-desc: #072592;
+  --alert-icon: #2340A9;
+  --alert-link: #072592;
+  --alert-border: #005CE5;
+}
+.eb-preview-alert--warning {
+  background: #FFF9EB;
+  --alert-title: #6C5009;
+  --alert-desc: #966F0B;
+  --alert-icon: #966F0B;
+  --alert-link: #966F0B;
+  --alert-border: #EBB30A;
+}
+.eb-preview-alert--error {
+  background: #F8E6E6;
+  --alert-title: #D61B2C;
+  --alert-desc: #D61B2C;
+  --alert-icon: #B50707;
+  --alert-link: #D61B2C;
+  --alert-border: #D61B2C;
+}
+.eb-preview-alert--success {
+  background: #E7F8F0;
+  --alert-title: #035E50;
+  --alert-desc: #035E50;
+  --alert-icon: #035E50;
+  --alert-link: #035E50;
+  --alert-border: #27C990;
+}
+
+/* Content column */
+.eb-preview-alert__content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 2px;
+}
+.eb-preview-alert--card .eb-preview-alert__content { padding-top: 4px; }
+.eb-preview-alert__title {
+  color: var(--alert-title);
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  margin: 0;
+}
+.eb-preview-alert--banner .eb-preview-alert__title {
+  font-size: 16px;
+  line-height: 20px;
+}
+.eb-preview-alert--card .eb-preview-alert__title {
+  font-size: 18px;
+  line-height: 23px;
+  padding-top: 7px;
+}
+.eb-preview-alert__desc {
+  color: var(--alert-desc);
+  font-family: "BarkAda", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  margin: 0;
+  opacity: 0.8;
+}
+.eb-preview-alert--neutral .eb-preview-alert__desc { opacity: 1; }
+
+/* Left-icon slot — today a placeholder circle (flagged as C6) */
+.eb-preview-alert__icon-left {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #C2C6CF;
+}
+
+/* Right-icon slot — semantic status glyph */
+.eb-preview-alert__icon-right {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  color: var(--alert-icon);
+}
+.eb-preview-alert--banner .eb-preview-alert__icon-right {
+  width: 24px;
+  height: 24px;
+}
+
+/* Action (Learn More + chevron) — only in card variant */
+.eb-preview-alert__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--alert-link);
+  font-family: "BarkAda", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  margin-top: 8px;
+  padding-left: 3px;
+  opacity: 0.8;
+}
+.eb-preview-alert--neutral .eb-preview-alert__action { opacity: 1; }
+.eb-preview-alert__action-chevron {
+  width: 14px;
+  height: 14px;
+}
+
+/* =============================================================== */
+/* Counter — node 21:43333                                          */
+/* A numeric count pill/circle. 24 px tall. Same bg for both states */
+/* (#EEF2F9); only the label color changes.                         */
+/* =============================================================== */
+.eb-preview-counter {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  min-width: 24px;
+  padding: 0 8px;
+  border-radius: 99px;
+  background: #EEF2F9;
+  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  text-align: center;
+  white-space: nowrap;
+}
+.eb-preview-counter--empty  { color: #C2CFE5; }
+.eb-preview-counter--filled { color: #072592; }
+
+/* =============================================================== */
+/* Generic Card — node 23:86050                                     */
+/* Tappable list row with icon/avatar, blurb/tag, heading, 1–2      */
+/* description lines, optional badge, and optional chevron.         */
+/* =============================================================== */
+.eb-preview-gcard {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 360px;
+  padding: 16px 12px 16px 24px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E5EBF4;
+  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+.eb-preview-gcard__icon {
+  background: #C2C6CF;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-right: 24px;
+}
+.eb-preview-gcard__icon--64 { width: 64px; height: 64px; }
+.eb-preview-gcard__icon--52 { width: 52px; height: 52px; }
+.eb-preview-gcard__icon--46 { width: 46px; height: 46px; }
+.eb-preview-gcard__icon--40 { width: 40px; height: 40px; }
+.eb-preview-gcard__icon--32 { width: 32px; height: 32px; }
+.eb-preview-gcard__icon--24 { width: 24px; height: 24px; }
+.eb-preview-gcard__content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-top: 5px;
+}
+.eb-preview-gcard__subtitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 2px;
+  margin-bottom: 4px;
+}
+.eb-preview-gcard__blurb {
+  color: #005CE5;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  opacity: 0.9;
+}
+.eb-preview-gcard__tag {
+  display: inline-block;
+  background: #D61B2C;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  padding: 3px 4px 1px;
+  border-radius: 4px;
+}
+.eb-preview-gcard__heading {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 23px;
+  color: #0A2757;
+  letter-spacing: 0.25px;
+  margin: 0;
+}
+.eb-preview-gcard__desc-line {
+  font-family: "BarkAda", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  margin: 0;
+  display: flex;
+  gap: 2px;
+  padding-left: 1px;
+}
+.eb-preview-gcard__desc-line--first { margin-top: 2px; }
+.eb-preview-gcard__desc-label { color: #90A8D0; flex-shrink: 0; }
+.eb-preview-gcard__desc-value { color: #445C85; flex: 1; min-width: 0; }
+.eb-preview-gcard__badge {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 8px;
+  padding: 4px 8px 2px;
+  border-radius: 99px;
+  background: #E5F1FF;
+  color: #005CE5;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+}
+.eb-preview-gcard__chevron-wrap {
+  margin-left: 24px;
+  padding-top: 14px;
+  flex-shrink: 0;
+}
+.eb-preview-gcard__chevron {
+  width: 32px;
+  height: 32px;
+  color: #0A2757;
+  display: block;
+}
+
+/* Skeleton — gray rounded placeholders where each slot would be */
+.eb-preview-gcard--skeleton .eb-preview-gcard__icon { background: #E0E6F2; }
+.eb-preview-gcard__sk {
+  background: #E0E6F2;
+  border-radius: 6px;
+  height: 12px;
+}
+.eb-preview-gcard__sk--tag { width: 52px; height: 16px; }
+.eb-preview-gcard__sk--heading { width: 60%; height: 18px; margin-top: 6px; }
+.eb-preview-gcard__sk--desc { width: 85%; height: 12px; margin-top: 6px; }
+.eb-preview-gcard__sk--desc2 { width: 70%; height: 12px; margin-top: 4px; }
+.eb-preview-gcard__sk--badge { width: 48px; height: 18px; margin-top: 10px; border-radius: 99px; }
+.eb-preview-gcard__sk--chevron { width: 16px; height: 16px; margin-left: 24px; margin-top: 14px; flex-shrink: 0; border-radius: 3px; }
+
+/* =============================================================== */
+/* Generic Transaction Card — node 23:86201                         */
+/* 5 layout types under one enum: default / more info / with avatar */
+/* / no amount / skeleton loader. Preview renders each honestly.    */
+/* =============================================================== */
+.eb-preview-gtx {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 360px;
+  padding: 16px 24px 18px 22px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E5EBF4;
+  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+.eb-preview-gtx__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  background: #005CE5;
+  border: 2px solid #E5EBF4;
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.25px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+.eb-preview-gtx__content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 2px;
+}
+.eb-preview-gtx__label {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 18px;
+  color: #0A2757;
+  letter-spacing: 0.25px;
+  margin: 0;
+}
+.eb-preview-gtx__meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.eb-preview-gtx__badge {
+  display: inline-flex;
+  align-items: center;
+  background: #E5F1FF;
+  color: #005CE5;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  padding: 4px 8px 2px;
+  border-radius: 99px;
+  flex-shrink: 0;
+}
+.eb-preview-gtx__meta {
+  font-family: "BarkAda", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  color: #6780A9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.eb-preview-gtx__trailing {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.eb-preview-gtx__amount {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 18px;
+  color: #0A2757;
+  letter-spacing: 0.25px;
+  white-space: nowrap;
+}
+.eb-preview-gtx__menu {
+  color: #005CE5;
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  line-height: 18px;
+}
+.eb-preview-gtx__reference {
+  font-family: "BarkAda", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  color: #6780A9;
+}
+.eb-preview-gtx__sk {
+  background: #E0E6F2;
+  border-radius: 6px;
+  height: 12px;
+}
+.eb-preview-gtx__sk--label { width: 60%; height: 14px; }
+.eb-preview-gtx__sk--date { width: 45%; height: 10px; margin-top: 6px; }
+.eb-preview-gtx__sk--amount { width: 56px; height: 14px; }
+
+/* Generic list row — avatar + label + trailing content (chevron + counter)
+   Used by Counter's In Context to show how the counter composes into a
+   real list-row pattern (matching product usage). */
+.eb-preview-list-row {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 320px;
+  padding: 14px 20px;
+  background: #FFFFFF;
+  border: 1px solid #EDF0F5;
+  border-radius: 12px;
+  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+.eb-preview-list-row__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #C2CFE5;
+  flex-shrink: 0;
+}
+.eb-preview-list-row__label {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #005CE5;
+  letter-spacing: 0.25px;
+}
+.eb-preview-list-row__trailing {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.eb-preview-list-row__chevron {
+  width: 16px;
+  height: 16px;
+  color: #005CE5;
+  flex-shrink: 0;
+}
+
+/* Helper text under a setting row */
+.eb-preview-setting-helper {
+  font-family: "BarkAda", system-ui, sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  color: #6780A9;
+  margin-top: 6px;
+  padding: 0 4px;
+  max-width: 320px;
+}
+.eb-preview-setting-helper--error { color: #D81E1E; }
+
+/* Stack of multiple preview cards (for "In Context" columns) */
+.eb-preview-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+.eb-preview-stack--center { align-items: center; }
+.eb-preview-stack--gap-lg { gap: 20px; }
+.eb-preview-stack--gap-sm { gap: 8px; }
+
+/* Dark-mode tweaks: preview primitives intentionally keep their     */
+/* product surface colors (white/brand blue), regardless of report   */
+/* theme. Only borders/backgrounds of scaffolding tweak. */
+
 .spec-card-preview {
   display: flex;
   align-items: center;

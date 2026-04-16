@@ -1,0 +1,825 @@
+<!--
+  VIEW ONLY FIELD COMPONENT ASSESSMENT (Form Elements)
+  Edit this file to update the View Only Field assessment.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 18403:4520
+ds-verdict: keep
+native-status: refine
+variants: 8
+ios: Custom View (VStack with label + value + optional trailing)
+android: Custom Composable (EBViewOnlyField)
+open-issues: C2,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] Property `variant` is overloaded — encodes 4 trailing content types as one enum. Better as `trailingContent` with values none/badge/textLink/icon.
+[C2] Property value `Size=Default` isn't a true size name — should be `Regular` for consistency with other components.
+[C6] Checkmark uses raster IMG from Figma CDN instead of a vector icon instance.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Form Elements<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-view-only-field" onclick="showPanel('view-only-field', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">View Only Field</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('view-only-field')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="6" y="8" width="22" height="3" rx="1" fill="currentColor" opacity=".2"/>
+      <rect x="6" y="16" width="36" height="4" rx="1" fill="currentColor" opacity=".35"/>
+      <rect x="6" y="26" width="48" height="2" rx="1" fill="currentColor" opacity=".12"/>
+      <rect x="56" y="14" width="16" height="8" rx="4" fill="#005CE5" opacity=".2"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">View Only Field</div>
+    </div>
+    <div class="summary-card-desc">8 variants (4 × 2 sizes). Read-only field with label, value, subtext, and optional trailing badge/link/icon. C2, C6 open.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>View Only Field</strong></td>
+  <td><span class="badge badge-ready">Keep</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">8</td>
+  <td class="muted">Read-only data display. variant × size. Raster checkmark (C6), overloaded variant property (C2).</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-view-only-field">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          View Only Field
+          <span class="badge badge-ready">Keep</span>
+          <span class="badge badge-refine">Needs Refinement</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18403-4520" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A read-only data display field with a muted label, prominent value, optional subtext description, and an optional trailing slot (badge, text link, or icon). 8 variants across <code>variant</code> (Default / with Badge / with Text Link / with Icon) × <code>Size</code> (Default / Large). Part of the Form Elements group — used in profile screens, transaction details, account information displays, and read-only settings.</p>
+      </div>
+      <div class="verdict-inline verdict-refine">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Minor refinements before handoff</div>
+          <div class="verdict-inline-text">Property <code>variant</code> is overloaded with 4 trailing content types — consider renaming to <code>trailingContent</code> (C2). Checkmark uses raster IMG instead of a vector icon (C6).</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="view-only-field-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'view-only-field-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'view-only-field-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'view-only-field-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'view-only-field-tabs')">Changelog</button>
+    </div>
+
+    <!-- ══ Tab: Overview ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <!-- In Context -->
+    <div class="sub-heading" id="vof-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Contexts are illustrative. Final screens will reference actual GCash patterns.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+          <rect x="10" y="8" width="100" height="64" rx="8" stroke="currentColor" stroke-width="1.2" opacity=".15"/>
+          <text x="20" y="20" font-size="5" fill="currentColor" opacity=".15" font-family="system-ui">Account Details</text>
+          <rect x="20" y="26" width="18" height="2" rx="1" fill="currentColor" opacity=".15"/>
+          <rect x="20" y="31" width="38" height="3" rx="1" fill="currentColor" opacity=".3"/>
+          <rect x="20" y="40" width="18" height="2" rx="1" fill="currentColor" opacity=".15"/>
+          <rect x="20" y="45" width="28" height="3" rx="1" fill="currentColor" opacity=".3"/>
+          <rect x="85" y="44" width="15" height="5" rx="2.5" fill="#005CE5" opacity=".2"/>
+          <rect x="20" y="55" width="18" height="2" rx="1" fill="currentColor" opacity=".15"/>
+          <rect x="20" y="60" width="42" height="3" rx="1" fill="currentColor" opacity=".3"/>
+          <path d="M95 58l2 2 4-4" stroke="#005CE5" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity=".3"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Live Preview -->
+    <div class="sub-heading" id="vof-preview">Live Preview</div>
+    <p class="section-desc">Toggle variant and size to see the view-only field update in real time.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="vof-demo-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">variant</span>
+              <select class="demo-panel-select" onchange="_vofDemo.variant=this.value;updateViewOnlyFieldDemo()">
+                <option value="Default" selected>Default</option>
+                <option value="with Badge">with Badge</option>
+                <option value="with Text Link">with Text Link</option>
+                <option value="with Icon">with Icon</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Size</span>
+              <select class="demo-panel-select" onchange="_vofDemo.size=this.value;updateViewOnlyFieldDemo()">
+                <option value="Default" selected>Default</option>
+                <option value="Large">Large</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">hasCheckmark</span>
+              <select class="demo-panel-select" onchange="_vofDemo.checkmark=this.value;updateViewOnlyFieldDemo()">
+                <option value="false" selected>false</option>
+                <option value="true">true</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">hasDescription</span>
+              <select class="demo-panel-select" onchange="_vofDemo.description=this.value;updateViewOnlyFieldDemo()">
+                <option value="true" selected>true</option>
+                <option value="false">false</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DS Health -->
+    <div class="sub-heading" id="vof-health">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Reusable</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Read-only data display used across profile screens, transaction details, account information, settings displays, and confirmation flows. Highly reusable across contexts.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Self-contained</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Bundles label, value, optional subtext, and optional trailing slot (badge/link/icon). All colors token-bound. Typography scales per size (Default / Large).</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header">
+          <div class="trait-name">Consistent</div>
+          <div class="trait-status">Partial</div>
+        </div>
+        <div class="trait-note">Property <code>variant</code> is overloaded — conflates 4 different trailing content types (none/badge/textLink/icon) into one enum. Should be renamed to <code>trailingContent</code>. <code>Size=Default</code> isn't a size name — should be <code>Regular</code>.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Composable</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Composes cleanly in list rows, profile pages, transaction detail sheets, and settings screens. Uses Badge component instance for the "with Badge" variant — good compositional inheritance.</div>
+      </div>
+    </div>
+
+    <!-- Behavior -->
+    <div class="sub-heading" id="vof-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+            <th>Figma Property</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Default</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">variant=Default</td>
+            <td class="muted">Label + value only, no trailing slot.</td>
+          </tr>
+          <tr>
+            <td><strong>with Badge</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">variant=with Badge</td>
+            <td class="muted">Badge instance in the trailing slot (e.g. "Change" status chip).</td>
+          </tr>
+          <tr>
+            <td><strong>with Text Link</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">variant=with Text Link</td>
+            <td class="muted">Text link in the trailing slot (e.g. "What is this?" contextual help).</td>
+          </tr>
+          <tr>
+            <td><strong>with Icon</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">variant=with Icon</td>
+            <td class="muted">Edit icon (pencil) in the trailing slot — typically navigates to an editable state.</td>
+          </tr>
+          <tr>
+            <td><strong>Checkmark</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">hasCheckmark=true</td>
+            <td class="muted">Displays a 13×13 checkmark next to the value (e.g. verified status).</td>
+          </tr>
+          <tr>
+            <td><strong>Description</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">hasDescription=true</td>
+            <td class="muted">Shows a subtext message below the value (e.g. "Message content" helper text).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Open Issues -->
+    <div class="sub-heading" id="vof-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Property <code>variant</code> is overloaded.</strong> Conflates 4 different trailing content types (none, badge, text link, icon) into a single enum. Better expressed as a <code>trailingContent</code> property with semantic values, or split into separate boolean properties per slot. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Property value <code>Size=Default</code> isn't a size name.</strong> "Default" describes the starting state, not a size. Rename to <code>Regular</code> (or <code>Small</code>) for consistency with standard size naming across the DS. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Checkmark is a raster image.</strong> Uses <code>imgCheck</code> from Figma CDN instead of a vector icon instance. Replace with a vector from the DS icon library for clean cross-platform rendering at any DPI. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked until the <code>variant</code> rename and asset fix land. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <!-- Design Recommendations -->
+    <div class="sub-heading" id="vof-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Rename <code>variant</code> to <code>trailingContent</code>.</strong> Values: <code>none</code> / <code>badge</code> / <code>textLink</code> / <code>icon</code>. Clearer intent, cleaner native enum mapping, no invalid combinations. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Rename <code>Size=Default</code> to <code>Size=Regular</code>.</strong> (Or <code>Size=Small</code>, depending on where it sits in the size scale.) Aligns with the Small/Medium/Large convention other components use. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Replace the raster checkmark with a vector icon instance.</strong> Drop in a real Icon from the DS icon library — ensures crisp rendering at any DPI on iOS and Android. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Expose <code>label</code>, <code>value</code>, and <code>description</code> as text overrides.</strong> Designers can then customize copy without editing the master component. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Add an error/warning state.</strong> Read-only fields sometimes need to convey validation status (e.g. "verification pending", "expired"). A <code>status</code> prop covering <code>none</code> / <code>warning</code> / <code>error</code> makes this explicit. <span class="tag-recommend">State</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ══ Tab: Style ═════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="vof-styles" style="margin-top:0">Variants</div>
+    <p class="section-desc">4 variants across 2 sizes = 8 total. All share the same base layout (label + value + optional subtext) with different trailing slot content. Large size uses bigger, bolder value typography.</p>
+
+    <!-- ═══ Default ═══ -->
+    <div class="spec-card" id="vof-spec-default">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="vof-default">Default</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18403:4521" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18403:4521</span></button>
+        </div>
+        <p class="spec-card-desc">Label + value only. Used for plain read-only information display.</p>
+      </div>
+      <div class="spec-card-preview" id="vof-preview-default"><!-- filled by JS --></div>
+    </div>
+
+    <!-- ═══ with Badge ═══ -->
+    <div class="spec-card" id="vof-spec-badge">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="vof-badge">with Badge</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18403:4533" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18403:4533</span></button>
+        </div>
+        <p class="spec-card-desc">Label + value + Badge instance in the trailing slot. Uses Badge component (layout=overflow or similar) for status indicators.</p>
+      </div>
+      <div class="spec-card-preview" id="vof-preview-badge"><!-- filled by JS --></div>
+    </div>
+
+    <!-- ═══ with Text Link ═══ -->
+    <div class="spec-card" id="vof-spec-textlink">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="vof-textlink">with Text Link</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18403:4547" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18403:4547</span></button>
+        </div>
+        <p class="spec-card-desc">Label + value + contextual text link (e.g. "What is this?"). Used for helper/learn-more navigation.</p>
+      </div>
+      <div class="spec-card-preview" id="vof-preview-textlink"><!-- filled by JS --></div>
+    </div>
+
+    <!-- ═══ with Icon ═══ -->
+    <div class="spec-card" id="vof-spec-icon">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="vof-icon">with Icon</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18403:4561" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18403:4561</span></button>
+        </div>
+        <p class="spec-card-desc">Label + value + 24×24 icon (typically Edit pencil) in the trailing slot. Icon typically navigates to an editable state.</p>
+      </div>
+      <div class="spec-card-preview" id="vof-preview-icon"><!-- filled by JS --></div>
+    </div>
+
+    <!-- Colors by State -->
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <p class="style-colors-desc">Display-only component — no interaction states. All colors token-bound.</p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Role</th><th>Token</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Label</td><td class="mono">main/view-only-field/color/label</td><td class="mono">#6780A9</td></tr>
+          <tr><td class="muted">Value text</td><td class="mono">main/view-only-field/color/text</td><td class="mono">#0A2757</td></tr>
+          <tr><td class="muted">Text link</td><td class="mono">main/view-only-field/color/label-link</td><td class="mono">#005CE5</td></tr>
+          <tr><td class="muted">Edit icon</td><td class="mono">main/view-only-field/color/icon</td><td class="mono">#005CE5</td></tr>
+          <tr><td class="muted">Subtext description</td><td class="mono">main/subtext-message/primary/label</td><td class="mono">#6780A9</td></tr>
+          <tr><td class="muted">Badge bg (default)</td><td class="mono">main/badge/information/light/background</td><td class="mono">#E5F1FF</td></tr>
+          <tr><td class="muted">Badge label</td><td class="mono">main/badge/information/light/label</td><td class="mono">#005CE5</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Layout -->
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Property</th><th>Default</th><th>Large</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Height</td><td class="mono">57px</td><td class="mono">71px</td></tr>
+          <tr><td class="muted">Width</td><td class="mono">360px</td><td class="mono">360px</td></tr>
+          <tr><td class="muted">Label-value gap</td><td class="mono">8px</td><td class="mono">8px</td></tr>
+          <tr><td class="muted">Subtext top padding</td><td class="mono">4px</td><td class="mono">4px</td></tr>
+          <tr><td class="muted">Trailing icon size</td><td class="mono">24 × 24</td><td class="mono">24 × 24</td></tr>
+          <tr><td class="muted">Checkmark size</td><td class="mono">13 × 13</td><td class="mono">13 × 13</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="style-colors">
+      <div class="style-colors-title">Typography</div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>Default Size</th><th>Large Size</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Label</td><td class="mono">Primary/Label/Light/Small — 14px Semibold</td><td class="mono">Primary/Label/Light/Base — 16px Semibold</td></tr>
+          <tr><td class="muted">Value text</td><td class="mono">Primary/Label/Light/Base — 16px Semibold</td><td class="mono">Primary/Headlines/Section — 22px Bold</td></tr>
+          <tr><td class="muted">Subtext description</td><td class="mono">Secondary/Bold/Small Caption — 10px Semibold (BarkAda)</td><td class="mono">Secondary/Bold/Caption — 12px Semibold (BarkAda)</td></tr>
+          <tr><td class="muted">Text link</td><td class="mono">12px Semibold (BarkAda)</td><td class="mono">12px Semibold (BarkAda)</td></tr>
+          <tr><td class="muted">Badge label</td><td class="mono">Primary/Label/Fine — 12px Bold</td><td class="mono">Primary/Label/Fine — 12px Bold</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- ══ Tab: Code ══════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <!-- Installation -->
+    <div class="sub-heading" id="vof-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:form-elements:1.0.0"</span>)
+}</pre>
+    </div>
+    <p class="table-footnote">Package not yet published. These are the planned distribution paths.</p>
+
+    <!-- Property Mapping -->
+    <div class="sub-heading" id="vof-props">Property Mapping</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Figma Property</th>
+            <th>SwiftUI Param</th>
+            <th>Compose Param</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">variant=Default</td>
+            <td class="mono">(default — no trailing)</td>
+            <td class="mono">trailing = null</td>
+            <td class="muted">No trailing slot content</td>
+          </tr>
+          <tr>
+            <td class="mono">variant=with Badge <span class="tag-open tag-c2">rename</span></td>
+            <td class="mono">trailing: { EBBadge(...) }</td>
+            <td class="mono">trailing = { EBBadge(...) }</td>
+            <td class="muted">Pass a Badge composable to the trailing slot</td>
+          </tr>
+          <tr>
+            <td class="mono">variant=with Text Link <span class="tag-open tag-c2">rename</span></td>
+            <td class="mono">trailing: { Button("...") {} }</td>
+            <td class="mono">trailing = { TextButton(...) }</td>
+            <td class="muted">Pass a text button</td>
+          </tr>
+          <tr>
+            <td class="mono">variant=with Icon <span class="tag-open tag-c2">rename</span></td>
+            <td class="mono">trailing: { Image(...) }</td>
+            <td class="mono">trailing = { Icon(...) }</td>
+            <td class="muted">Pass an icon (tap handler optional)</td>
+          </tr>
+          <tr>
+            <td class="mono">Size=Default <span class="tag-open tag-c2">rename</span></td>
+            <td class="mono">.controlSize(.regular)</td>
+            <td class="mono">size = EBFieldSize.Regular</td>
+            <td class="muted">Rename Size=Default to Size=Regular</td>
+          </tr>
+          <tr>
+            <td class="mono">Size=Large</td>
+            <td class="mono">.controlSize(.large)</td>
+            <td class="mono">size = EBFieldSize.Large</td>
+            <td class="muted">Bigger, bolder value typography</td>
+          </tr>
+          <tr>
+            <td class="mono">hasCheckmark (boolean)</td>
+            <td class="mono">isVerified: Bool</td>
+            <td class="mono">isVerified: Boolean</td>
+            <td class="muted">Shows checkmark next to value</td>
+          </tr>
+          <tr>
+            <td class="mono">hasDescription (boolean)</td>
+            <td class="mono">description: String?</td>
+            <td class="mono">description: String?</td>
+            <td class="muted">Optional subtext below value</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/FormElements/EBViewOnlyField.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/form/EBViewOnlyField.kt</div>
+    </div>
+
+    <!-- Usage Snippets -->
+    <div class="sub-heading" id="vof-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+
+    <div class="sub-heading toc-child" id="vof-snip-default">Default</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'vof-usage-default','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'vof-usage-default','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBViewOnlyField</span>(
+    <span class="prp">label</span>: <span class="str">"Mobile Number"</span>,
+    <span class="prp">value</span>: <span class="str">"+63 917 123 4567"</span>,
+    <span class="prp">description</span>: <span class="str">"This is your verified number"</span>
+)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBViewOnlyField</span>(
+    <span class="prp">label</span> = <span class="str">"Mobile Number"</span>,
+    <span class="prp">value</span> = <span class="str">"+63 917 123 4567"</span>,
+    <span class="prp">description</span> = <span class="str">"This is your verified number"</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="vof-snip-badge">with Badge</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'vof-usage-badge','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'vof-usage-badge','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBViewOnlyField</span>(
+    <span class="prp">label</span>: <span class="str">"Account Status"</span>,
+    <span class="prp">value</span>: <span class="str">"Active"</span>,
+    <span class="prp">trailing</span>: {
+        <span class="typ">EBBadge</span>(<span class="str">"Change"</span>, <span class="prp">state</span>: .<span class="prp">information</span>, <span class="prp">level</span>: .<span class="prp">light</span>)
+    }
+)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBViewOnlyField</span>(
+    <span class="prp">label</span> = <span class="str">"Account Status"</span>,
+    <span class="prp">value</span> = <span class="str">"Active"</span>,
+    <span class="prp">trailing</span> = {
+        <span class="typ">EBBadge</span>(
+            <span class="prp">text</span> = <span class="str">"Change"</span>,
+            <span class="prp">state</span> = <span class="typ">BadgeState</span>.<span class="prp">Information</span>,
+            <span class="prp">level</span> = <span class="typ">BadgeLevel</span>.<span class="prp">Light</span>
+        )
+    }
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="vof-snip-icon">with Icon (Edit)</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'vof-usage-icon','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'vof-usage-icon','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBViewOnlyField</span>(
+    <span class="prp">label</span>: <span class="str">"Email Address"</span>,
+    <span class="prp">value</span>: <span class="str">"dhar@frostdesigngroup.com"</span>,
+    <span class="prp">trailing</span>: {
+        <span class="typ">Button</span>(<span class="prp">action</span>: { <span class="cmt">/* navigate to edit */</span> }) {
+            <span class="typ">Image</span>(<span class="prp">systemName</span>: <span class="str">"pencil"</span>)
+        }
+    }
+)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBViewOnlyField</span>(
+    <span class="prp">label</span> = <span class="str">"Email Address"</span>,
+    <span class="prp">value</span> = <span class="str">"dhar@frostdesigngroup.com"</span>,
+    <span class="prp">trailing</span> = {
+        <span class="typ">IconButton</span>(<span class="prp">onClick</span> = { <span class="cmt">/* navigate to edit */</span> }) {
+            <span class="typ">Icon</span>(<span class="typ">Icons</span>.<span class="prp">Default</span>.<span class="prp">Edit</span>, <span class="prp">contentDescription</span> = <span class="str">"Edit"</span>)
+        }
+    }
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <!-- Accessibility -->
+    <div class="sub-heading" id="vof-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Requirement</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Accessibility label</td>
+            <td class="muted"><code>.accessibilityLabel("\(label): \(value)")</code></td>
+            <td class="muted"><code>contentDescription = "$label: $value"</code></td>
+          </tr>
+          <tr>
+            <td>Trailing action (with Icon)</td>
+            <td class="muted">Button with <code>.accessibilityLabel("Edit \(label)")</code></td>
+            <td class="muted">IconButton with <code>contentDescription = "Edit $label"</code></td>
+          </tr>
+          <tr>
+            <td>Text link</td>
+            <td class="muted">Button with <code>.accessibilityHint("Opens help")</code></td>
+            <td class="muted">TextButton with <code>semantics { role = Role.Button }</code></td>
+          </tr>
+          <tr>
+            <td>Min touch target (trailing action)</td>
+            <td class="center muted">44 × 44 pt</td>
+            <td class="center muted">48 × 48 dp</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Usage Guidelines -->
+    <div class="sub-heading" id="vof-guidelines">Usage Guidelines</div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use View Only Field to display verified or system-set data (phone number, email, account status) where the user shouldn't edit directly.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Use for editable input — use Input Field, Labeled Field, or Select Field instead. Read-only fields imply the value is final or managed elsewhere.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use the <code>with Icon</code> variant with a pencil to indicate the field can be edited in a separate screen — provides a clear tap target.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Rely on the icon alone without an accessibility label — screen readers need to announce the trailing action's purpose.</p></div>
+    </div>
+
+    <!-- Criteria Scorecard -->
+    <div class="sub-heading" id="vof-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">ID</th>
+            <th class="col-md">Criterion</th>
+            <th class="col-badge">Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Semantic names: <code>container</code>, <code>content-container</code>, <code>text-container</code>, <code>badge-container</code>, <code>text-link-container</code>, <code>icon-container</code>. Clean hierarchy.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Property <code>variant</code> is overloaded (4 trailing content types as one enum). <code>Size=Default</code> isn't a size name — should be <code>Regular</code>.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors bound to design tokens. Space, typography, and badge tokens all present.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Maps cleanly to SwiftUI VStack / Compose Column with label + value + optional trailing closure.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Display-only component — no interaction states expected. Trailing actions (icon/text link) handle their own tap states.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Checkmark uses a raster IMG from Figma CDN. Edit icon is a clean vector. Replace checkmark with an icon component instance.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-refine">Pending</span></td><td class="muted">No CLI mappings registered yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Variants Inventory -->
+    <div class="sub-heading" id="vof-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(8 total)</span></div>
+    <p class="section-desc">4 <code>variant</code> values × 2 <code>Size</code> values. Two booleans (<code>hasCheckmark</code>, <code>hasDescription</code>) apply to all variants.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>variant</th><th>Size</th><th>Height</th><th>Node ID</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Default</td><td>Default</td><td class="mono">57</td><td class="mono">18403:4521</td></tr>
+          <tr><td>with Badge</td><td>Default</td><td class="mono">57</td><td class="mono">18403:4533</td></tr>
+          <tr><td>with Text Link</td><td>Default</td><td class="mono">57</td><td class="mono">18403:4547</td></tr>
+          <tr><td>with Icon</td><td>Default</td><td class="mono">57</td><td class="mono">18403:4561</td></tr>
+          <tr><td>Default</td><td>Large</td><td class="mono">71</td><td class="mono">18403:4575</td></tr>
+          <tr><td>with Badge</td><td>Large</td><td class="mono">71</td><td class="mono">18403:4587</td></tr>
+          <tr><td>with Text Link</td><td>Large</td><td class="mono">71</td><td class="mono">18403:4601</td></tr>
+          <tr><td>with Icon</td><td>Large</td><td class="mono">71</td><td class="mono">18403:4615</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- ══ Tab: Changelog ═════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 18403:4520</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Component assessed</strong> — 8 variants documented across variant (Default/with Badge/with Text Link/with Icon) × Size (Default/Large). Read-only data display field with label, value, optional subtext, and optional trailing slot. Grouped under Form Elements.
+          <span class="tag-fixed">Documented</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Initial</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Overloaded variant property</strong> — <code>variant</code> conflates 4 different trailing content types into one enum. Should be renamed to <code>trailingContent</code> or split into semantic properties.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C2 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Size=Default should be Size=Regular</strong> — "Default" isn't a size name; describes starting state, not dimension.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C2 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Raster checkmark</strong> — Checkmark uses a raster IMG from Figma CDN instead of a vector icon instance. Replace with icon library component.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C6 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Code Connect mappings</strong> — No CLI mappings registered yet.
+          <span class="tag-open tag-c7">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C7 Open</span>
+      </div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-view-only-field">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-view-only-field"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── View Only Field Component JS ─────────────────────────────────── */
+var _vofDemo = { variant: 'Default', size: 'Default', checkmark: 'false', description: 'true' };
+
+function _vofBuildSvg(variant, size, checkmark, description) {
+  var w = 360;
+  var isLarge = size === 'Large';
+  var labelSize = isLarge ? 16 : 14;
+  var valueSize = isLarge ? 22 : 16;
+  var valueWeight = isLarge ? 700 : 600;
+  var descSize = isLarge ? 12 : 10;
+  var h = isLarge ? 71 : 57;
+  if (description === 'true') h += (isLarge ? 22 : 18);
+
+  var s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+
+  /* Label */
+  var labelY = labelSize - 1;
+  s += '<text x="0" y="' + labelY + '" font-family="HeyMeow Rnd, system-ui" font-size="' + labelSize + '" font-weight="600" fill="#6780A9">Label</text>';
+
+  /* Value text */
+  var valueY = labelY + 8 + valueSize;
+  s += '<text x="0" y="' + valueY + '" font-family="HeyMeow Rnd, system-ui" font-size="' + valueSize + '" font-weight="' + valueWeight + '" fill="#0A2757">Text</text>';
+
+  /* Checkmark */
+  if (checkmark === 'true') {
+    var textWidth = valueSize * 1.8;
+    var checkX = textWidth + 8;
+    var checkY = valueY - valueSize + 3;
+    s += '<path d="M' + checkX + ' ' + (checkY + 6) + 'l3 3 6-7" stroke="#005CE5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
+  }
+
+  /* Trailing slot */
+  if (variant === 'with Badge') {
+    var badgeY = isLarge ? (labelY + 20) : (labelY + 12);
+    s += '<rect x="' + (w - 60) + '" y="' + badgeY + '" width="54" height="16" rx="8" fill="#E5F1FF"/>';
+    s += '<text x="' + (w - 33) + '" y="' + (badgeY + 11) + '" text-anchor="middle" font-family="HeyMeow Rnd, system-ui" font-size="11" font-weight="700" fill="#005CE5">Change</text>';
+  } else if (variant === 'with Text Link') {
+    var linkY = isLarge ? 12 : 10;
+    s += '<text x="' + w + '" y="' + linkY + '" text-anchor="end" font-family="BarkAda, system-ui" font-size="12" font-weight="600" fill="#005CE5">What is this?</text>';
+  } else if (variant === 'with Icon') {
+    var iconX = w - 20;
+    var iconY = isLarge ? 16 : 8;
+    s += '<g transform="translate(' + iconX + ', ' + iconY + ')" stroke="#005CE5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none">';
+    s += '<path d="M12 20h9"/>';
+    s += '<path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>';
+    s += '</g>';
+  }
+
+  /* Description subtext */
+  if (description === 'true') {
+    var descY = valueY + (isLarge ? 22 : 18);
+    s += '<text x="0" y="' + descY + '" font-family="BarkAda, system-ui" font-size="' + descSize + '" font-weight="600" fill="#6780A9">Message content</text>';
+  }
+
+  s += '</svg>';
+  return s;
+}
+
+function updateViewOnlyFieldDemo() {
+  var el = document.getElementById('vof-demo-preview');
+  if (el) el.innerHTML = _vofBuildSvg(_vofDemo.variant, _vofDemo.size, _vofDemo.checkmark, _vofDemo.description);
+}
+
+function _vofInitSpecCards() {
+  var map = { 'default': 'Default', 'badge': 'with Badge', 'textlink': 'with Text Link', 'icon': 'with Icon' };
+  Object.keys(map).forEach(function(key) {
+    var el = document.getElementById('vof-preview-' + key);
+    if (el) el.innerHTML = _vofBuildSvg(map[key], 'Default', 'false', 'true');
+  });
+}
+
+function _vofInit() {
+  updateViewOnlyFieldDemo();
+  _vofInitSpecCards();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _vofInit);
+} else {
+  _vofInit();
+}
+</script>
+
+<!--@section-end-->

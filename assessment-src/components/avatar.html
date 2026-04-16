@@ -116,7 +116,7 @@ open-issues: C7
         <div class="demo-preview" id="ava-demo-preview">
           <svg id="ava-demo-svg" width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="32" cy="32" r="30" fill="#005CE5" stroke="#E5EBF4" stroke-width="2"/>
-            <text x="32" y="38" text-anchor="middle" fill="white" font-size="22" font-weight="700" font-family="'Proxima Soft', system-ui, sans-serif">DM</text>
+            <text x="32" y="38" text-anchor="middle" fill="white" font-size="22" font-weight="700" font-family="'HeyMeow Rnd', system-ui, sans-serif">DM</text>
           </svg>
         </div>
         <div class="demo-figma-panel">
@@ -240,19 +240,19 @@ open-issues: C7
     <!-- Open Issues -->
     <div class="sub-heading" id="ava-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Structural issues are resolved — registration can proceed against the current <code>type</code> × <code>shape</code> × <code>size</code> schema. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
     </ul>
 
     <!-- Noted — Library-level (not a component blocker) -->
     <div class="sub-heading" id="ava-noted">Noted — Library-level</div>
     <ul class="resolved-list">
-      <li><span>Token name typo: <code>main/avatar/brand/intials</code> still missing second "i" — should be <code>initials</code>. Lives in the shared Variables collection, not in this component — so it's tracked here for visibility but not counted as an Avatar-level blocker. Fix requires renaming in Figma → Variables panel. <span class="tag-fixed">C2 Noted</span></span></li>
+      <li><span><strong>Token name typo — <code>intials</code>.</strong> The token <code>main/avatar/brand/intials</code> is missing the second "i" (should be <code>initials</code>). Lives in the shared Variables collection, not in this component — tracked here for visibility but not counted as an Avatar-level blocker. Fix requires renaming in Figma → Variables panel. <span class="tag-fixed">C2 Noted</span></span></li>
     </ul>
 
     <!-- Design Recommendations -->
     <div class="sub-heading" id="ava-recommend">Design Recommendations</div>
     <ul class="recommend-list">
-      <li><span>Add a <code>badge</code> overlay slot for status indicators (online/offline dot, notification count) — common in chat, contacts, and profile lists <span class="tag-recommend">Suggested</span></span></li>
+      <li><span><strong>Add a status <code>badge</code> overlay slot.</strong> Common in chat, contacts, and profile lists — online/offline dots, notification counts, verified checkmarks. Today consumers stack a Badge manually on top of Avatar; a built-in slot encodes the correct offset and sizing. <span class="tag-recommend">Slot</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -276,7 +276,7 @@ open-issues: C7
         <div class="spec-card-preview">
           <svg id="ava-spec-dark-svg" width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="32" cy="32" r="30" fill="#005CE5" stroke="#E5EBF4" stroke-width="2"/>
-            <text x="32" y="38" text-anchor="middle" fill="white" font-size="22" font-weight="700" font-family="'Proxima Soft', system-ui, sans-serif">DM</text>
+            <text x="32" y="38" text-anchor="middle" fill="white" font-size="22" font-weight="700" font-family="'HeyMeow Rnd', system-ui, sans-serif">DM</text>
           </svg>
         </div>
         <div class="demo-figma-panel">
@@ -350,7 +350,7 @@ open-issues: C7
         <div class="spec-card-preview">
           <svg id="ava-spec-light-svg" width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="32" cy="32" r="30" fill="#F6F9FD" stroke="#E5EBF4" stroke-width="2"/>
-            <text x="32" y="38" text-anchor="middle" fill="#2340A9" font-size="22" font-weight="700" font-family="'Proxima Soft', system-ui, sans-serif">LM</text>
+            <text x="32" y="38" text-anchor="middle" fill="#2340A9" font-size="22" font-weight="700" font-family="'HeyMeow Rnd', system-ui, sans-serif">LM</text>
           </svg>
         </div>
         <div class="demo-figma-panel">
@@ -884,7 +884,7 @@ function _buildAvatarSvg(type, sizePx) {
     svg += '<ellipse cx="' + half + '" cy="' + (p * 0.75) + '" rx="' + bodyRx + '" ry="' + bodyRy + '" fill="#9BABC4" opacity=".4"/>';
   } else if (c.initials) {
     var textY = half + s.fontSize * 0.35;
-    svg += '<text x="' + half + '" y="' + textY + '" text-anchor="middle" fill="' + c.text + '" font-size="' + s.fontSize + '" font-weight="700" font-family="\'Proxima Soft\', system-ui, sans-serif">' + c.initials + '</text>';
+    svg += '<text x="' + half + '" y="' + textY + '" text-anchor="middle" fill="' + c.text + '" font-size="' + s.fontSize + '" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui, sans-serif">' + c.initials + '</text>';
   }
   svg += '</svg>';
   return svg;
@@ -963,7 +963,7 @@ function updateAvatarSpecCard(cardType, prop, value) {
     var typo = _avatarTypography[sz];
     var th = '<div class="spec-detail-label">Typography</div><div class="spec-props">';
     th += '<div class="spec-prop"><span class="spec-prop-key">Text Style</span><span class="spec-prop-val mono">' + typo.textStyle + '</span></div>';
-    th += '<div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">Proxima Soft Bold</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">HeyMeow Rnd Bold</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">' + typo.fontSize + '</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Line-height</span><span class="spec-prop-val mono">' + typo.lineHeight + '</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Tracking</span><span class="spec-prop-val mono">' + typo.tracking + '</span></div>';

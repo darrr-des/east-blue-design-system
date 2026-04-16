@@ -241,17 +241,17 @@ open-issues: C2,C5,C7
     <!-- Open Issues -->
     <div class="sub-heading" id="tabs-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Component name is singular ("Tab") — should be plural ("Tabs") to match the container semantics and disambiguate from the Tab Item atom. <span class="tag-open tag-c2">C2</span></span></li>
-      <li><span><code>tabsCount</code> is a variant property with string values (<code>"2"/"3"/"4"</code>). Native tabs take a list; the count should not be a discrete variant. <span class="tag-open tag-c2">C2</span></span></li>
-      <li><span>No scrollable / overflow variant documented. For 5+ tabs, native uses <code>ScrollableTabRow</code> on Android or horizontal scroll on iOS — DS has no pattern. <span class="tag-open tag-c5">C5</span></span></li>
-      <li><span>Code Connect CLI mappings not registered. <span class="tag-open tag-c7">C7</span></span></li>
+      <li><span><strong>Component name is singular ("Tab").</strong> Should be plural ("Tabs") to match the container semantics and disambiguate from the Tab Item atom. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong><code>tabsCount</code> is a variant with string values.</strong> <code>"2"/"3"/"4"</code> — native tabs take a list; the count should not be a discrete Figma variant. Drop the property and let the container accept a collection. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>No scrollable / overflow variant documented.</strong> For 5+ tabs, native uses <code>ScrollableTabRow</code> on Android and horizontal scroll on iOS — DS has no pattern, so engineers improvise. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked until the plural rename and <code>tabsCount</code> drop land. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
     </ul>
 
     <div class="sub-heading" id="tabs-recommend">Design Recommendations</div>
     <ul class="recommend-list">
       <li><span><strong>Rename "Tab" → "Tabs"</strong> (plural). Matches the atom/container pattern already used by Avatar + Avatar Group and Menu Grid + Service Item. <span class="tag-recommend">Rename</span></span></li>
-      <li><span><strong>Drop the <code>tabsCount</code> variant.</strong> The container should be a single flexible component that accepts an array of Tab Items. Collapses 3 variants → 1. <span class="tag-recommend">Restructure</span></span></li>
-      <li><span><strong>Add a scrollable variant</strong> (or document that 5+ tabs should switch to a ScrollableTabRow pattern). Prevents engineers from improvising overflow behavior. <span class="tag-recommend">State coverage</span></span></li>
+      <li><span><strong>Drop the <code>tabsCount</code> variant.</strong> The container should be a single flexible component that accepts an array of Tab Items. Collapses 3 variants → 1. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Add a scrollable variant</strong> (or document that 5+ tabs should switch to a ScrollableTabRow pattern). Prevents engineers from improvising overflow behavior. <span class="tag-recommend">State</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -564,7 +564,7 @@ function _tabsBuildSvg(count, active) {
     // Icon circle
     s += '<circle cx="' + (x + tabW / 2) + '" cy="28" r="16" fill="#C2C6CF"/>';
     // Label
-    s += '<text x="' + (x + tabW / 2) + '" y="60" text-anchor="middle" fill="' + (isActive ? '#005CE5' : '#6780A9') + '" font-size="11" font-weight="700" font-family="\'Proxima Soft\', system-ui">Label</text>';
+    s += '<text x="' + (x + tabW / 2) + '" y="60" text-anchor="middle" fill="' + (isActive ? '#005CE5' : '#6780A9') + '" font-size="11" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Label</text>';
     // Bottom border
     s += '<rect x="' + x + '" y="' + (h - 2) + '" width="' + tabW + '" height="2" fill="' + (isActive ? '#005CE5' : '#E5EBF4') + '"/>';
   }

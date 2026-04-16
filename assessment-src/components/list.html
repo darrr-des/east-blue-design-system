@@ -131,14 +131,14 @@ open-issues: none
 
     <div class="sub-heading" id="list-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Not a real component — a frame with 8 hardcoded List Item instances. No variants, no properties, no slots.</span></li>
+      <li><span><strong>Not a real component.</strong> List today is a frame with 8 hardcoded List Item instances — no property set, no variants, no slots. Consumers can't populate it with their own items without detaching and rebuilding from the List Item atom. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
     </ul>
 
     <div class="sub-heading" id="list-recommend">Design Recommendations</div>
     <ul class="recommend-list">
-      <li><span><strong>Remove List from the sticker sheet.</strong> Publish List Item (and List Item Asset) as the shipped components. Consumers stack List Items themselves using auto-layout — same pattern as plain text lists. Keeps the sticker sheet focused on reusable atoms. <span class="tag-recommend">Option A — Remove</span></span></li>
-      <li><span><strong>Or restructure into a real container.</strong> Expose a single flexible List component with auto-layout that accepts a collection of List Items (same approach proposed for Tabs dropping <code>tabsCount</code>). Native maps to <code>ForEach</code> / <code>LazyColumn</code>. Provides a documented home for list-level concerns like spacing, dividers, or separators. <span class="tag-recommend">Option B — Restructure</span></span></li>
-      <li><span><strong>If restructuring</strong>, consider adding list-level props for spacing (<code>gap=8/12/16</code>) and an optional divider between items. These are the decisions that logically belong to a container, not an item. <span class="tag-recommend">Restructure scope</span></span></li>
+      <li><span><strong>Remove List from the sticker sheet.</strong> Publish List Item (and List Item Asset) as the shipped components. Consumers stack List Items themselves using auto-layout — same pattern as plain text lists. Keeps the sticker sheet focused on reusable atoms. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Or restructure into a real container.</strong> Expose a single flexible List component with auto-layout that accepts a collection of List Items (same approach proposed for Tabs dropping <code>tabsCount</code>). Native maps to <code>ForEach</code> / <code>LazyColumn</code>. Provides a documented home for list-level concerns like spacing, dividers, or separators. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>If restructuring</strong>, consider adding list-level props for spacing (<code>gap=8/12/16</code>) and an optional divider between items. These are the decisions that logically belong to a container, not an item. <span class="tag-recommend">Property</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->

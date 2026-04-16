@@ -1,0 +1,591 @@
+<!--
+  OVERLAY COMPONENT ASSESSMENT
+  Single-variant translucent scrim used to dim background content behind modals, sheets, and dialogs.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 47:329691
+ds-verdict: fix
+native-status: refine
+variants: 1
+ios: ZStack + Rectangle().fill(Color(hex: "020E22", opacity: 0.56)).ignoresSafeArea() behind .sheet / .fullScreenCover
+android: Scrim composable (Material 3) or Box with background(color = colorBgOverlayStrong)
+open-issues: C2,C4,C5,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C4] Scrim-type components are fixed to sticker-sheet dimensions (360×640) instead of Fill parent — breaks drop-in composability.
+[C2] Token named *overlay-strong* implies a weak/standard counterpart, but only one strength is exposed as a component property.
+<!--@patterns-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-overlay" onclick="showPanel('overlay', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Overlay</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('overlay')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="6" y="4" width="68" height="32" rx="3" fill="#FFFFFF" stroke="#E5E8EF"/>
+      <rect x="6" y="4" width="68" height="32" rx="3" fill="#020E22" opacity="0.56"/>
+      <rect x="22" y="22" width="36" height="10" rx="2" fill="#FFFFFF"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Overlay</div>
+      <span class="badge badge-fix">Fix</span>
+    </div>
+    <div class="summary-card-desc">Translucent layer that dims background content behind modals, sheets, and dialogs. Single variant, token-bound fill, fixed frame size.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Overlay</strong></td>
+  <td><span class="badge badge-fix">Fix</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">1</td>
+  <td class="muted">Single-variant scrim using <code>bg/color-bg-overlay-strong</code>. Fixed 360×640 frame, no strength variants, dismiss contract not annotated.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-overlay">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Overlay
+          <span class="badge badge-fix">Fix</span>
+          <span class="badge badge-refine">Refine</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=47-329691" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A translucent scrim that dims background content behind modals, bottom sheets, dialogs, and side drawers. One inner layer <code>dim</code> filled with <code>bg/color-bg-overlay-strong</code> (<code>#020E228F</code> · 56% opacity). Used to signal "the screen is in a modal state" and to surface the floating content above it.</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Keep — with minor fixes before native handoff</div>
+          <div class="verdict-inline-text">Overlay is correctly token-bound and maps cleanly to native primitives (SwiftUI <code>.presentationBackground</code>, Compose <code>Scrim</code>). Before linking, resize to Fill parent, decide whether a standard-strength variant is needed, and annotate the tap-to-dismiss contract.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="overlay-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'overlay-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'overlay-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'overlay-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'overlay-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="overlay-in-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Overlay sits between page content and a floating surface (bottom sheet, dialog, drawer). It dims the content below to focus attention on the surface above.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="overlay-context-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="overlay-preview">Live Preview</div>
+    <p class="section-desc">The overlay's single visual state — a flat, token-bound dim layer. There are no interactive properties on the component itself; dismiss and show/hide behaviors live in the surface it sits behind.</p>
+    <div class="demo-panel" id="overlay-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="overlay-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">background</span>
+              <select id="overlay-ctrl-bg" class="demo-panel-select" onchange="_overlayUpdate()">
+                <option value="light">light</option>
+                <option value="dark">dark</option>
+                <option value="image">image</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">surface above</span>
+              <select id="overlay-ctrl-surface" class="demo-panel-select" onchange="_overlayUpdate()">
+                <option value="none">none</option>
+                <option value="sheet" selected>sheet</option>
+                <option value="dialog">dialog</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="overlay-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Works as the dim layer behind any modal surface, but the fixed 360×640 frame forces consumers to resize on every use. Should Fill parent.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Owns its fill and opacity, bound to a semantic token. Nothing external required to render.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Token is named <code>overlay-strong</code> suggesting a standard-strength companion, but only one strength is exposed as a component. Naming implies a set of two.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Intended to sit behind sheets/dialogs/drawers, but lacks fill-parent sizing and a documented z-index order.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="overlay-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Behavior</th><th class="center">iOS</th><th class="center">Android</th><th>Figma Spec</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Show / hide</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="muted">Not defined</td><td class="muted">Fades with the presentation transition of its owning surface.</td></tr>
+          <tr><td><strong>Tap to dismiss</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="muted">Not annotated</td><td class="muted">Contract: tap-scrim dismisses unless surface is marked modal.</td></tr>
+          <tr><td><strong>Scroll lock</strong></td><td class="center muted">Implicit</td><td class="center muted">Implicit</td><td class="muted">Handled by surface</td><td class="muted">Owning sheet/dialog locks background scroll on mount.</td></tr>
+          <tr><td><strong>Focus / a11y</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="muted">Implicit</td><td class="muted">Scrim itself is not focusable — owning surface traps focus.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="overlay-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>No strength variants.</strong> Only <code>bg/color-bg-overlay-strong</code> (56%) is exposed. Token name implies a standard-strength (32%) counterpart that isn't surfaced. Consider a <code>Strength = Standard | Strong</code> property. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Fixed frame size 360×640.</strong> Forces consumers to resize the instance every time. Should use auto-layout Fill on both axes so it scales to any parent. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>Tap-to-dismiss contract not annotated.</strong> The standard behavior (tap-scrim dismisses, unless the surface is modal) should be documented on the component so designers and devs agree on the contract. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>No Code Connect mapping.</strong> Trivial once the size and variant questions above are settled. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="overlay-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Set frame to Fill parent.</strong> Change both width and height from fixed to Fill so Overlay adapts to any container (phone, tablet, custom sheet). Matches how native <code>Scrim</code> behaves. <span class="tag-recommend">Composition</span></span></li>
+      <li><span><strong>Decide on strength variants.</strong> Two paths: (a) add <code>Strength = Standard (32%) | Strong (56%)</code> property and bind to two tokens, matching Material 3; or (b) keep a single 56% strength and rename the token from <code>overlay-strong</code> to <code>overlay</code> so the name stops implying a second variant exists. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Annotate the dismiss contract.</strong> Add a description on the component: <em>"Tap-outside dismisses the surface above, unless the surface is modal (requires explicit action)."</em> This closes the gap between designer intent and developer implementation. <span class="tag-recommend">Docs</span></span></li>
+      <li><span><strong>Document layer order.</strong> Add a short note: <code>Content → Overlay → Floating surface (Sheet / Dialog / Drawer)</code>. Prevents teams from accidentally putting the floating surface under the scrim. <span class="tag-recommend">Docs</span></span></li>
+      <li><span><strong>Naming note (informational).</strong> Other DS call this primitive <em>Scrim</em> (Material 3), <em>Backdrop</em> (Fluent / Polaris), <em>Mask</em> (Ant), <em>Blanket</em> (Atlassian), <em>Underlay</em> (Spectrum). Team keeps <strong>Overlay</strong> — worth documenting here so cross-DS references aren't confusing. <span class="tag-recommend">Docs</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Default · Strong <span class="spec-card-node">node <code>47:329691</code></span></div>
+        <div class="mode-toggle-group">
+          <button class="mode-toggle-btn active" onclick="_overlaySpecMode('des')">DES</button>
+          <button class="mode-toggle-btn" onclick="_overlaySpecMode('dev')">DEV</button>
+        </div>
+      </div>
+      <p class="spec-card-desc">The only current variant — a flat translucent fill at 56% opacity of the overlay color. Drop it behind any sheet, dialog, or drawer.</p>
+
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame">
+          <div class="spec-preview-body" id="overlay-spec-preview"><!-- JS --></div>
+        </div>
+      </div>
+
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-detail-row"><span>Name</span><code>Overlay</code></div>
+          <div class="spec-detail-row"><span>Variants</span><code>1</code></div>
+          <div class="spec-detail-row"><span>Properties</span><span class="muted">None exposed</span></div>
+          <div class="spec-detail-row"><span>Inner layer</span><code>dim</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors by State</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>Dim fill</td>
+                  <td><code>bg/color-bg-overlay-strong</code></td>
+                  <td><span class="swatch-dot" style="background:#020E228F"></span><code>#020E228F</code></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="table-footnote">Hex includes 56% alpha channel (<code>8F</code>). Base color <code>#020E22</code> is the DS neutral-darkest; alpha does the dimming.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Width (sticker sheet)</span><code>360</code></div>
+          <div class="spec-detail-row"><span>Height (sticker sheet)</span><code>640</code></div>
+          <div class="spec-detail-row"><span>Recommended sizing</span><code>Fill × Fill</code></div>
+          <div class="spec-detail-row"><span>Corner radius</span><code>0</code></div>
+          <div class="spec-detail-row"><span>Border</span><span class="muted">None</span></div>
+          <div class="spec-detail-row"><span>Padding</span><span class="muted">None</span></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row muted"><span>N/A</span><span>No text layers</span></div>
+        </div>
+      </div>
+
+      <div class="code-card-body">
+        <div class="platform-tabs">
+          <button class="platform-tab active" onclick="switchPlatform(this,'overlay-default','swift')">SwiftUI</button>
+          <button class="platform-tab" onclick="switchPlatform(this,'overlay-default','compose')">Compose</button>
+        </div>
+        <div class="platform-panel active" data-tab="swift">
+          <div class="code-block-wrap">
+            <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+            <pre class="code-snippet"><span class="cmt">// Direct placement — recommended for full-screen overlays</span>
+<span class="typ">EBOverlay</span>()
+    .<span class="prp">ignoresSafeArea</span>()
+
+<span class="cmt">// Behind a sheet surface</span>
+.<span class="prp">sheet</span>(<span class="prp">isPresented</span>: $showSheet) {
+    <span class="typ">EBBottomSheet</span> { ... }
+        .<span class="prp">presentationBackground</span>(.<span class="prp">ebOverlay</span>())
+}</pre>
+          </div>
+        </div>
+        <div class="platform-panel" data-tab="compose">
+          <div class="code-block-wrap">
+            <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+            <pre class="code-snippet"><span class="cmt">// Direct placement — recommended for full-screen overlays</span>
+<span class="typ">EBOverlay</span>(<span class="prp">modifier</span> = <span class="typ">Modifier</span>.<span class="fn">fillMaxSize</span>())
+
+<span class="cmt">// Behind a sheet surface — Material 3 Scrim is the primitive</span>
+<span class="typ">ModalBottomSheet</span>(
+    onDismissRequest = { showSheet = false },
+    scrimColor = <span class="typ">EBTokens</span>.bgOverlayStrong
+) { ... }</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="overlay-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'overlay-install','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'overlay-install','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Swift Package Manager</span>
+.<span class="fn">package</span>(<span class="prp">url</span>: <span class="str">"https://github.com/gcash/eb-design-system-ios"</span>, <span class="prp">from</span>: <span class="str">"1.0.0"</span>)
+
+<span class="kw">import</span> EBDesignSystem</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// build.gradle.kts</span>
+implementation(<span class="str">"com.gcash.designsystem:eb-components:1.0.0"</span>)
+
+<span class="kw">import</span> com.gcash.designsystem.components.EBOverlay</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="overlay-mapping">Property Mapping</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma property</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">None exposed</td><td><code>EBOverlay()</code> — no parameters today.</td><td><code>EBOverlay(modifier: Modifier = Modifier)</code></td></tr>
+          <tr><td class="muted">(proposed) Strength</td><td><code>.ebStrength(.standard | .strong)</code></td><td><code>strength = EBOverlayStrength.Standard | Strong</code></td></tr>
+          <tr><td class="muted">(proposed) onDismiss</td><td><code>.onTapGesture { onDismiss() }</code></td><td><code>Modifier.clickable { onDismiss() }</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="overlay-paths">Suggested file paths</div>
+    <ul class="resolved-list">
+      <li><code>ios/Components/Overlay/EBOverlay.swift</code></li>
+      <li><code>android/components/overlay/EBOverlay.kt</code></li>
+    </ul>
+
+    <div class="sub-heading" id="overlay-usage">Usage</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'overlay-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'overlay-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// 1 · Standalone overlay (e.g. loading blocker)</span>
+<span class="typ">ZStack</span> {
+    PageContent()
+    <span class="kw">if</span> isBusy {
+        <span class="typ">EBOverlay</span>()
+            .<span class="prp">ignoresSafeArea</span>()
+            .<span class="prp">onTapGesture</span> { }  <span class="cmt">// blocks taps but doesn't dismiss</span>
+    }
+}
+
+<span class="cmt">// 2 · Behind a bottom sheet — with dismiss</span>
+.<span class="prp">sheet</span>(<span class="prp">isPresented</span>: $showSheet) {
+    <span class="typ">EBBottomSheet</span>(<span class="prp">onDismiss</span>: { showSheet = <span class="kw">false</span> }) { ... }
+        .<span class="prp">presentationBackground</span>(.<span class="prp">ebOverlay</span>())
+        .<span class="prp">presentationDetents</span>([.medium, .large])
+}
+
+<span class="cmt">// 3 · Non-dismissible modal (requires explicit action)</span>
+.<span class="prp">fullScreenCover</span>(<span class="prp">isPresented</span>: $showDialog) {
+    <span class="typ">EBDialog</span> { ... }
+        .<span class="prp">presentationBackground</span>(.<span class="prp">ebOverlay</span>())
+        .<span class="prp">interactiveDismissDisabled</span>(<span class="kw">true</span>)
+}</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// 1 · Standalone overlay (e.g. loading blocker)</span>
+<span class="typ">Box</span>(<span class="typ">Modifier</span>.<span class="fn">fillMaxSize</span>()) {
+    PageContent()
+    <span class="kw">if</span> (isBusy) {
+        <span class="typ">EBOverlay</span>(<span class="typ">Modifier</span>.<span class="fn">fillMaxSize</span>())
+    }
+}
+
+<span class="cmt">// 2 · Behind a bottom sheet — Material 3 Scrim is the primitive</span>
+<span class="typ">ModalBottomSheet</span>(
+    onDismissRequest = { showSheet = <span class="kw">false</span> },
+    scrimColor = <span class="typ">EBTokens</span>.bgOverlayStrong
+) { <span class="typ">EBBottomSheet</span> { ... } }
+
+<span class="cmt">// 3 · Non-dismissible dialog</span>
+<span class="typ">Dialog</span>(
+    onDismissRequest = { },
+    properties = <span class="typ">DialogProperties</span>(dismissOnClickOutside = <span class="kw">false</span>)
+) {
+    <span class="typ">EBOverlay</span>(<span class="typ">Modifier</span>.<span class="fn">fillMaxSize</span>())
+    <span class="typ">EBDialog</span> { ... }
+}</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="overlay-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Not focusable itself</strong></td><td class="muted">Overlay is decorative. Do not expose it to VoiceOver — focus belongs to the surface above.</td><td class="muted">Use <code>Modifier.clearAndSetSemantics { }</code> on the scrim so TalkBack ignores it.</td></tr>
+          <tr><td><strong>Modal announcement</strong></td><td class="muted">The sheet/dialog above owns <code>.accessibilityAddTraits(.isModal)</code>.</td><td class="muted">The sheet/dialog above owns <code>semantics { paneTitle = "..." }</code> and modal behavior.</td></tr>
+          <tr><td><strong>Tap-to-dismiss target</strong></td><td class="muted">Full-screen tap area counts as the dismiss hit region — comfortably above the 44×44pt target.</td><td class="muted">Full-screen tap area — comfortably above the 48×48dp target.</td></tr>
+          <tr><td><strong>Reduce transparency</strong></td><td class="muted">Respect <code>UIAccessibility.isReduceTransparencyEnabled</code> — fall back to an opaque dim color if true.</td><td class="muted">Respect <code>Settings.Global.TRANSITION_ANIMATION_SCALE</code> and high-contrast mode — increase opacity or swap to solid dim.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="overlay-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Pair Overlay with a floating surface (sheet, dialog, drawer) to create a focused modal moment.</li>
+          <li>Set the overlay to Fill parent so it covers whatever container it lives in.</li>
+          <li>Document the dismiss contract — tap-outside dismisses, unless the surface is marked modal.</li>
+          <li>Animate the overlay's opacity alongside the floating surface so they feel like one motion.</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't use Overlay as a page background or to visually tint content — use a surface token instead.</li>
+          <li>Don't stack multiple overlays on top of each other; promote to a full-screen experience.</li>
+          <li>Don't forget to block background taps — tapping through the scrim is always a bug.</li>
+          <li>Don't hardcode <code>#020E228F</code> in code — bind to <code>bg/color-bg-overlay-strong</code>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="overlay-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Inner layer named <code>dim</code> — semantic and accurate.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">No properties exposed. Token name <code>overlay-strong</code> implies a standard-strength counterpart that isn't available. Either add a <code>Strength</code> property or drop the <em>-strong</em> qualifier from the token.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Fill bound to <code>bg/color-bg-overlay-strong</code>.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Maps cleanly to SwiftUI <code>.presentationBackground</code> and Compose <code>Scrim</code>, but fixed 360×640 frame needs to become Fill × Fill before linking.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Tap-to-dismiss behavior is implicit — should be annotated on the component as a documented contract.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-na">N/A</span></td><td class="muted">No assets or icons.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">No Code Connect mapping yet. Trivial once sizing and strength are finalized.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="overlay-variants">Variants Inventory <span class="variants-count">(1 total)</span></div>
+    <p>Single variant — no property matrix.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Name</th><th>Node</th><th>Dimensions</th><th>Fill</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="mono center">1</td>
+            <td><strong>Overlay / Strong</strong></td>
+            <td><code>47:329691</code></td>
+            <td>360 × 640</td>
+            <td><span class="swatch-dot" style="background:#020E228F"></span><code>bg/color-bg-overlay-strong</code></td>
+            <td class="muted">Default state — the single shipped variant.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 47:329691</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>DS Health</strong> — Single-variant scrim, token-bound fill. Reusable/Composable flagged Partial due to fixed frame size. <span class="tag-fixed">Documented</span></div><span class="changelog-delta delta-resolved">Baseline</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — Strength variants</strong> — Only <code>strong</code> (56%) exposed, token name implies a <code>standard</code> counterpart. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C4 — Fill parent</strong> — Current 360×640 frame should be Fill × Fill. <span class="tag-open tag-c4">Open</span></div><span class="changelog-delta delta-open">C4</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C5 — Dismiss contract</strong> — Tap-to-dismiss not annotated on the component. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C7 — Code Connect</strong> — No mapping registered. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Naming note</strong> — Other DS call this Scrim / Backdrop / Mask / Blanket / Underlay. Team keeps <em>Overlay</em>. Documented for cross-DS reference. <span class="tag-fixed">Convention</span></div><span class="changelog-delta delta-resolved">Info</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-overlay">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-overlay"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Overlay JS ─────────────────────────────────────────────────── */
+/* Renders the Overlay (scrim) over a miniature phone-like surface so
+   the translucent 56% dim is actually visible. Uses class-based
+   primitives from styles.css (.eb-preview-overlay-stage*).            */
+
+function _overlayStageMarkup(opts) {
+  var surface = opts.surface || 'sheet';
+  var bgTone  = opts.bg || 'light';
+  var showDim = opts.dim !== false;
+
+  // Background content — a fake app screen sitting behind the dim.
+  var content =
+    '<div class="eb-preview-overlay-stage__content">' +
+      '<div class="eb-preview-overlay-stage__content-title eb-preview">Activity</div>' +
+      '<div class="eb-preview-overlay-stage__card"></div>' +
+      '<div class="eb-preview-overlay-stage__card"></div>' +
+      '<div class="eb-preview-overlay-stage__card"></div>' +
+      '<div class="eb-preview-overlay-stage__card"></div>' +
+    '</div>';
+
+  var dim = showDim ? '<div class="eb-preview-overlay-stage__dim"></div>' : '';
+
+  var floatingSurface = '';
+  if (surface === 'sheet') {
+    floatingSurface =
+      '<div class="eb-preview-overlay-stage__sheet eb-preview">' +
+        '<div class="eb-preview-overlay-stage__handle"></div>' +
+        '<p class="eb-preview-overlay-stage__sheet-title">Send Money</p>' +
+        '<p class="eb-preview-overlay-stage__sheet-body">Choose a recipient from your contacts or enter a mobile number.</p>' +
+        '<div class="eb-preview-overlay-stage__sheet-btn">Continue</div>' +
+      '</div>';
+  } else if (surface === 'dialog') {
+    floatingSurface =
+      '<div class="eb-preview-overlay-stage__dialog eb-preview">' +
+        '<p class="eb-preview-overlay-stage__sheet-title">Confirm transfer?</p>' +
+        '<p class="eb-preview-overlay-stage__sheet-body">You are about to send ₱1,500.00 to Juan Dela Cruz. This cannot be undone.</p>' +
+        '<div class="eb-preview-overlay-stage__dialog-actions">' +
+          '<div class="eb-preview-overlay-stage__dialog-btn eb-preview-overlay-stage__dialog-btn--ghost">Cancel</div>' +
+          '<div class="eb-preview-overlay-stage__dialog-btn eb-preview-overlay-stage__dialog-btn--primary">Confirm</div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  var stageBg = bgTone === 'dark'  ? 'background:#0A1628;' :
+                bgTone === 'image' ? 'background:linear-gradient(135deg,#4876D6 0%,#6B93E5 100%);' : '';
+
+  return '<div class="eb-preview-overlay-stage" ' + (stageBg ? 'style="' + stageBg + '"' : '') + '>' +
+    content + dim + floatingSurface +
+  '</div>';
+}
+
+function _overlayUpdate() {
+  var bg      = document.getElementById('overlay-ctrl-bg');
+  var surface = document.getElementById('overlay-ctrl-surface');
+  var preview = document.getElementById('overlay-demo-preview');
+  if (!preview) return;
+  preview.innerHTML = _overlayStageMarkup({
+    bg: bg ? bg.value : 'light',
+    surface: surface ? surface.value : 'sheet',
+    dim: true
+  });
+}
+
+function _overlaySpecMode(mode) {
+  var btns = document.querySelectorAll('#panel-overlay .mode-toggle-btn');
+  btns.forEach(function(b) { b.classList.remove('active'); });
+  var sel = document.querySelector('#panel-overlay .mode-toggle-btn[onclick*="\'' + mode + '\'"]');
+  if (sel) sel.classList.add('active');
+  var el = document.getElementById('overlay-spec-preview');
+  if (!el) return;
+  if (mode === 'dev') {
+    el.innerHTML =
+      '<div class="dev-spec-block">' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">name</span><span class="dev-spec-val">Overlay</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">node</span><span class="dev-spec-val">47:329691</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">dim.fill</span><span class="dev-spec-val">bg/color-bg-overlay-strong · #020E228F</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">dim.size</span><span class="dev-spec-val">Fill × Fill (recommended)</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">radius</span><span class="dev-spec-val">0</span></div>' +
+      '</div>';
+  } else {
+    el.innerHTML = _overlayStageMarkup({bg:'light', surface:'sheet', dim:true});
+  }
+}
+
+function _overlayInit() {
+  var ctx = document.getElementById('overlay-context-preview');
+  if (ctx) ctx.innerHTML = _overlayStageMarkup({bg:'light', surface:'sheet', dim:true});
+  _overlayUpdate();
+  var spec = document.getElementById('overlay-spec-preview');
+  if (spec) spec.innerHTML = _overlayStageMarkup({bg:'light', surface:'sheet', dim:true});
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _overlayInit);
+else _overlayInit();
+</script>
+
+<!--@section-end-->

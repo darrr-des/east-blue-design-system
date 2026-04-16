@@ -1,0 +1,494 @@
+<!--
+  HEADER - TRANSACTION COMPONENT ASSESSMENT ("Detail Hero" pattern)
+  Card-hero header with avatar, title, divider, optional email row, and description.
+  Structurally a card hero — not a header. Recommend moving out of the Header family.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 18430:2897
+ds-verdict: restructure
+native-status: rework
+variants: 2
+ios: EBDetailHero view — card-hero composition, not an app bar
+android: EBDetailHero composable
+open-issues: C1,C2,C4,C5,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C4] "Header - Transaction" is structurally a card hero (avatar + title + divider + label-value + description) misfiled as a header. Should live in the card-patterns family.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Header<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-header-transaction" onclick="showPanel('header-transaction', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Header - Transaction</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('header-transaction')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="4" y="4" width="72" height="32" rx="4" fill="#005CE5"/>
+      <circle cx="14" cy="13" r="4" fill="#C8D8F5"/>
+      <rect x="22" y="11" width="30" height="5" rx="1" fill="#FFFFFF"/>
+      <rect x="10" y="22" width="60" height="1" fill="#FFFFFF" opacity="0.5"/>
+      <rect x="10" y="27" width="40" height="4" rx="1" fill="#FFFFFF" opacity="0.8"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Header - Transaction</div>
+      <span class="badge badge-rework">Restructure</span>
+    </div>
+    <div class="summary-card-desc">Avatar + title + divider + optional email + description on brand surface. Not a header — it's a card hero pattern. Rename to <strong>Detail Hero</strong> and move out of Header family.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Header - Transaction</strong></td>
+  <td><span class="badge badge-rework">Restructure</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">2</td>
+  <td class="muted">Card hero, not a header. Rename to <strong>Detail Hero</strong>, move out of Header family. Label-value row should compose the Labeled Field (or a dedicated inline pair) pattern.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-header-transaction">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Header - Transaction
+          <span class="badge badge-rework">Restructure</span>
+          <span class="badge badge-rework">Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18430-2897" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A brand-surface hero block with an avatar, title ("Add Label Here"), a horizontal divider, an optional inline <code>email: address@example.com</code> row, and 1–2 lines of description. Used on transaction detail and recipient profile screens. Structurally this is a <strong>card hero</strong>, not a header — its anatomy (avatar + title + divider + label-value + body) matches the hero patterns seen in profile cards and detail screens across other DS. 2 variants: <code>email = yes | no</code>.</p>
+      </div>
+      <div class="verdict-inline verdict-restructure">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Restructure — move out of Header family, rename to Detail Hero</div>
+          <div class="verdict-inline-text">This is not a header. It has no navigation role, no title-only scope, and a card-like structure (avatar + divider + inline label-value). Rename to <strong>Detail Hero</strong> and rehome with card/hero patterns. Then re-architect: the avatar should be a real <strong>Avatar</strong> instance, the email row should compose an inline label-value pair, and the description should accept structured content. See <a href="#" onclick="showPanelById('header');return false;">Header family restructure</a>.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="header-transaction-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'header-transaction-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'header-transaction-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'header-transaction-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'header-transaction-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="header-transaction-in-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Detail Hero appears at the top of transaction detail screens and recipient profile cards — introducing the person or transaction below the app bar.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="header-transaction-context-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="header-transaction-preview">Live Preview</div>
+    <div class="demo-panel" id="header-transaction-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="header-transaction-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">email</span>
+              <select id="header-transaction-ctrl-email" class="demo-panel-select" onchange="_headerTransactionUpdate()">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="header-transaction-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Reusable as a hero block, but misfiled as a header and tightly coupled to transaction-specific copy ("email:"). Generic card hero should accept any label-value rows.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Avatar slot is a placeholder circle (not a real Avatar instance). Label-value row is drawn, not composed.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">"Header" prefix misleads — this solves a card-hero problem. Pattern should live with card/hero primitives.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Single <code>email</code> boolean can't extend to other metadata rows (phone, MCC, reference number). Needs a flexible rows slot.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="header-transaction-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>State</th><th class="center">iOS</th><th class="center">Android</th><th>Figma Spec</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Default (no email)</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">email=no</td><td class="muted">Avatar + title + divider + description.</td></tr>
+          <tr><td><strong>With email</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">email=yes</td><td class="muted">Adds an inline <code>email: value</code> row above the description.</td></tr>
+          <tr><td><strong>Pressed / Disabled</strong></td><td class="center muted">N/A</td><td class="center muted">N/A</td><td class="muted">—</td><td class="muted">Static — no interactive states.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="header-transaction-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Misfiled as a header.</strong> Anatomy is a card hero (avatar + title + divider + label-value + description). Rename to <strong>Detail Hero</strong> and move out of the Header family. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>Avatar is a placeholder, not an instance.</strong> Should accept a real Avatar instance (status ring, initials, image — all of which Avatar already supports). <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>Label-value row is hardcoded to "email:".</strong> A detail hero needs flexible metadata rows (phone, reference #, MCC, transaction ID). Replace the boolean with a rows slot or accept a Labeled Field instance. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Pressed state on avatar is not defined</strong> — if the avatar is tappable (opens profile, edits photo), it needs state coverage. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>No Code Connect mapping.</strong> Blocked on the Detail Hero rehome decision. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="header-transaction-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Rename to Detail Hero</strong> and move out of the Header family. Rehome next to Visual Popup / card primitives. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Replace the avatar placeholder with a real Avatar instance.</strong> Avatar already supports image, initials, and status ring — no reason to re-draw it here. <span class="tag-recommend">Composition</span></span></li>
+      <li><span><strong>Replace <code>email=yes|no</code> with a flexible rows slot.</strong> <code>metadata: [LabelValuePair]</code> lets consumers supply any number of rows (email, phone, reference, MCC). Each row could be a small inline-label component or a Labeled Field variant. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Expose <code>surface = brand | default</code></strong> (same pattern as Page Banner). Detail heroes on settings screens may want the default surface. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>See siblings:</strong> <a href="#" onclick="showPanelById('header');return false;">Header</a>, <a href="#" onclick="showPanelById('header-centered');return false;">Header - Centered</a>, <a href="#" onclick="showPanelById('header-with-logo');return false;">Header - With Logo</a>. <span class="tag-recommend">Family</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">No email <span class="spec-card-node">node <code>18430:2906</code></span></div>
+      </div>
+      <p class="spec-card-desc">The minimal variant — avatar + title + divider + description. Used when the profile/transaction has no extra metadata to show.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="header-transaction-spec-1"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-detail-row"><span>email</span><code>no</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr></thead>
+              <tbody>
+                <tr><td>Surface</td><td><code>surface/brand</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td></tr>
+                <tr><td>Title</td><td><code>text/on-brand</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5E8EF"></span><code>#FFFFFF</code></td></tr>
+                <tr><td>Description</td><td><code>text/on-brand-muted</code></td><td><span class="swatch-dot" style="background:#C8D8F5"></span><code>#C8D8F5</code></td></tr>
+                <tr><td>Divider</td><td><code>border/on-brand-subtle</code></td><td><span class="swatch-dot" style="background:#2B6BEA"></span><code>#2B6BEA</code></td></tr>
+                <tr><td>Avatar fill</td><td class="muted">(placeholder)</td><td><span class="swatch-dot" style="background:#C8CDD5"></span><code>#C8CDD5</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Width</span><code>Fill</code></div>
+          <div class="spec-detail-row"><span>Height</span><code>220 (hug)</code></div>
+          <div class="spec-detail-row"><span>Padding</span><code>space/space-24</code></div>
+          <div class="spec-detail-row"><span>Avatar size</span><code>48 × 48</code></div>
+          <div class="spec-detail-row"><span>Gap (stacked)</span><code>space/space-12</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>Title</span><code>Heading/L · BarkAda 20/26</code></div>
+          <div class="spec-detail-row"><span>Description</span><code>Body/S · 13/18</code></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">With email row <span class="spec-card-node">node <code>18430:2898</code></span></div>
+      </div>
+      <p class="spec-card-desc">Adds an inline <code>email: value</code> row between the divider and the description. Used on recipient profile cards.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="header-transaction-spec-2"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-detail-row"><span>email</span><code>yes</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Proposed</div>
+          <div class="spec-detail-row"><span>Generic rows slot</span><code>metadata: [LabelValuePair]</code></div>
+          <div class="spec-detail-row"><span>Row anatomy</span><code>muted label · strong value</code></div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="header-transaction-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'header-transaction-install','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'header-transaction-install','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">.<span class="fn">package</span>(<span class="prp">url</span>: <span class="str">"https://github.com/gcash/eb-design-system-ios"</span>, <span class="prp">from</span>: <span class="str">"1.0.0"</span>)
+
+<span class="kw">import</span> EBDesignSystem</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">implementation(<span class="str">"com.gcash.designsystem:eb-components:1.0.0"</span>)
+
+<span class="kw">import</span> com.gcash.designsystem.components.EBDetailHero</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="header-transaction-mapping">Property Mapping (Proposed — Detail Hero)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma (today)</th><th>Figma (proposed)</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">(implicit)</td><td><code>title: String</code></td><td><code>title: String</code></td><td><code>title: String</code></td></tr>
+          <tr><td class="muted">(placeholder)</td><td><code>avatar: Avatar</code> (instance)</td><td><code>avatar: EBAvatar</code></td><td><code>avatar: @Composable (() -&gt; Unit)</code></td></tr>
+          <tr><td><code>email: boolean</code></td><td><code>metadata: [LabelValuePair]</code></td><td><code>metadata: [EBLabelValue]</code></td><td><code>metadata: List&lt;EBLabelValue&gt;</code></td></tr>
+          <tr><td class="muted">(implicit)</td><td><code>description?: String</code></td><td><code>description: String?</code></td><td><code>description: String?</code></td></tr>
+          <tr><td class="muted">(implicit brand)</td><td><code>surface: brand | default</code></td><td><code>.ebSurface(.brand)</code> modifier</td><td><code>surface = EBSurface.Brand</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="header-transaction-paths">Suggested file paths</div>
+    <ul class="resolved-list">
+      <li><code>ios/Components/DetailHero/EBDetailHero.swift</code></li>
+      <li><code>android/components/detailhero/EBDetailHero.kt</code></li>
+    </ul>
+
+    <div class="sub-heading" id="header-transaction-usage">Usage</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'header-transaction-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'header-transaction-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Recipient profile card</span>
+<span class="typ">EBDetailHero</span>(
+    <span class="prp">title</span>: <span class="str">"Juan Dela Cruz"</span>,
+    <span class="prp">avatar</span>: <span class="typ">EBAvatar</span>(<span class="prp">initials</span>: <span class="str">"JD"</span>),
+    <span class="prp">metadata</span>: [
+        .<span class="fn">init</span>(<span class="prp">label</span>: <span class="str">"email"</span>, <span class="prp">value</span>: <span class="str">"juan@gmail.com"</span>),
+        .<span class="fn">init</span>(<span class="prp">label</span>: <span class="str">"phone"</span>, <span class="prp">value</span>: <span class="str">"0917 123 4567"</span>)
+    ],
+    <span class="prp">description</span>: <span class="str">"Recipient since 2023"</span>
+)
+.<span class="prp">ebSurface</span>(.<span class="prp">brand</span>)
+
+<span class="cmt">// Transaction detail</span>
+<span class="typ">EBDetailHero</span>(
+    <span class="prp">title</span>: <span class="str">"₱1,500.00"</span>,
+    <span class="prp">avatar</span>: <span class="typ">EBAvatar</span>(<span class="prp">icon</span>: .arrowUp),
+    <span class="prp">metadata</span>: [.<span class="fn">init</span>(<span class="prp">label</span>: <span class="str">"ref #"</span>, <span class="prp">value</span>: <span class="str">"2026-0414-00917"</span>)],
+    <span class="prp">description</span>: <span class="str">"Sent to GCash account"</span>
+)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Recipient profile card</span>
+<span class="typ">EBDetailHero</span>(
+    title = <span class="str">"Juan Dela Cruz"</span>,
+    avatar = { <span class="typ">EBAvatar</span>(initials = <span class="str">"JD"</span>) },
+    metadata = listOf(
+        <span class="typ">EBLabelValue</span>(<span class="str">"email"</span>, <span class="str">"juan@gmail.com"</span>),
+        <span class="typ">EBLabelValue</span>(<span class="str">"phone"</span>, <span class="str">"0917 123 4567"</span>)
+    ),
+    description = <span class="str">"Recipient since 2023"</span>,
+    surface = <span class="typ">EBSurface</span>.Brand
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="header-transaction-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Heading trait</strong></td><td class="muted">Apply to the title line.</td><td class="muted"><code>Modifier.semantics { heading() }</code> on the title.</td></tr>
+          <tr><td><strong>Avatar a11y</strong></td><td class="muted">If decorative, mark <code>.accessibilityHidden(true)</code>. If identifying, label with person's name.</td><td class="muted">Same — <code>contentDescription</code> empty when decorative, or person's name when identifying.</td></tr>
+          <tr><td><strong>Label-value pairs</strong></td><td class="muted">Group each pair with <code>.accessibilityElement(children: .combine)</code> so VoiceOver reads "email, juan@gmail.com" as one utterance.</td><td class="muted">Use <code>Modifier.semantics(mergeDescendants = true)</code> per row.</td></tr>
+          <tr><td><strong>Contrast on brand surface</strong></td><td class="muted">White text on #005CE5 = 8.5:1 ✓. Muted #C8D8F5 on #005CE5 = 2.1:1 — fails AA body text. Use only for secondary labels ≥14pt bold.</td><td class="muted">Same ratios — reserve muted color for label text, not body copy.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="header-transaction-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Use as a hero card at the top of detail/profile screens — after the app bar, before the content.</li>
+          <li>Supply real Avatar instances (image, initials, icon) — not placeholder circles.</li>
+          <li>Use the metadata rows for short label-value pairs only (email, phone, reference).</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't confuse with a header or app bar — this is a card hero.</li>
+          <li>Don't pack more than 2–3 metadata rows — use a list below the hero instead.</li>
+          <li>Don't put interactive controls inside the hero — keep actions in the bar above or the content below.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="header-transaction-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">"Header - Transaction" misfiled. Rename to <strong>Detail Hero</strong>.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted"><code>email=yes|no</code> should become <code>metadata: [LabelValuePair]</code>.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Surface, title, description tokens bound.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Avatar should be a real instance; metadata should be structured, not drawn.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Avatar pressed state not defined — needed if tappable.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Avatar is a drawn placeholder, not a vector Avatar instance.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked on rehome + avatar-instance decisions.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="header-transaction-variants">Variants Inventory <span class="variants-count">(2 total)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Node</th><th>email</th><th>Dimensions</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">1</td><td><code>18430:2906</code></td><td>no</td><td>360 × 220</td></tr>
+          <tr><td class="mono center">2</td><td><code>18430:2898</code></td><td>yes</td><td>360 × 191</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 18430:2897</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Restructure</strong> — Not a header. Rename to <strong>Detail Hero</strong> and move out of the Header family. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">Architecture</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — metadata rows</strong> — Replace <code>email=yes|no</code> with a flexible <code>metadata: [LabelValuePair]</code> slot. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C4 — Avatar instance</strong> — Replace drawn placeholder with a real Avatar instance. <span class="tag-open tag-c4">Open</span></div><span class="changelog-delta delta-open">C4</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C5 — Avatar state</strong> — Define pressed/disabled for tappable avatar. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C7 — Code Connect</strong> — Blocked. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-header-transaction">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-header-transaction"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Header - Transaction (Detail Hero) JS ──────────────────────── */
+/* Pixel-accurate replica of node 18430:2897.
+   Surface: #1972F9 brand, 360 × 191/220. Padding 24 all.
+   Avatar: 32×32 #C2CFE5 pill.
+   Title:  HeyMeow Rnd Bold 22/26 white.
+   Separator: 1px 24%-white.
+   Meta: key 72%-white, value white, 14/20 BarkAda Semibold.
+   Description: BarkAda Semibold 12/18 72%-white.                    */
+
+function _headerTransactionRender(opts) {
+  var hasEmail = opts.email === 'yes';
+  var html = '<div class="eb-preview eb-preview-header-tx">' +
+    '<div class="eb-preview-header-tx__avatar" aria-hidden="true"></div>' +
+    '<p class="eb-preview-header-tx__title">Add Label Here</p>' +
+    '<div class="eb-preview-header-tx__separator"></div>';
+  if (hasEmail) {
+    html +=
+      '<p class="eb-preview-header-tx__meta">' +
+        '<span class="eb-preview-header-tx__meta-key">email:</span>' +
+        '<span class="eb-preview-header-tx__meta-value">email@gmail.com</span>' +
+      '</p>';
+  }
+  html +=
+    '<p class="eb-preview-header-tx__desc">Add description here.<br>Add description here.</p>' +
+  '</div>';
+  return html;
+}
+
+function _headerTransactionContextMarkup() {
+  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-lg">' +
+    _headerTransactionRender({email:'yes'}) +
+    _headerTransactionRender({email:'no'}) +
+  '</div>';
+}
+
+function _headerTransactionUpdate() {
+  var email   = document.getElementById('header-transaction-ctrl-email');
+  var preview = document.getElementById('header-transaction-demo-preview');
+  if (!preview) return;
+  preview.innerHTML = _headerTransactionRender({email: email ? email.value : 'no'});
+}
+
+function _headerTransactionInit() {
+  var ctx = document.getElementById('header-transaction-context-preview');
+  if (ctx) ctx.innerHTML = _headerTransactionContextMarkup();
+  _headerTransactionUpdate();
+  var s1 = document.getElementById('header-transaction-spec-1');
+  if (s1) s1.innerHTML = _headerTransactionRender({email:'no'});
+  var s2 = document.getElementById('header-transaction-spec-2');
+  if (s2) s2.innerHTML = _headerTransactionRender({email:'yes'});
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _headerTransactionInit);
+else _headerTransactionInit();
+</script>
+
+<!--@section-end-->

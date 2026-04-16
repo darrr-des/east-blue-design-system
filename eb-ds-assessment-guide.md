@@ -237,6 +237,10 @@ They do **not** see:
 | Criterion | Pattern | First Found In |
 |---|---|---|
 | C7 | Code Connect mappings not yet registered — no native component files linked via Code Connect CLI | Accordion |
+| C2 | Four booleans use `yes`/`no` strings with inconsistent casing (`No` in one variant, `no`/`yes` elsewhere). | Alert |
+| C2 | `Type=Default` is a neutral appearance mixed in with the semantic set (Information / Warning / Error / Success). | Alert |
+| C1 | Two structurally different layouts (full-width banner vs bordered accent card) share one component — the axis that separates them is named `Full Width` which hides the real difference (border accent + action). | Alert |
+| C6 | Left-icon slot is a 24 × 24 `icon-placeholder` circle, not a swappable Icon instance. | Alert |
 | C2 | Property renamed from "no. of initals" → "layout" with semantic values pair/trio/quad/overflow (RESOLVED — replaces "count" with numeric strings) | Avatar Group |
 | C5 | Overflow variant layout=overflow added with "+N" badge in bottom-right slot (RESOLVED) | Avatar Group |
 | C6 | Inner avatar children are hardcoded 24px containers — do not use Avatar component instances with size prop | Avatar Group |
@@ -249,8 +253,21 @@ They do **not** see:
 | C2 | Two separate components ("Filter" and "Filter with Dropdown") share the same pill anatomy and should consolidate into a single Chip with leading/trailing slot props | Chip |
 | C6 | Leading slot uses a hardcoded 24px gray circle "icon-placeholder" instead of a swappable Avatar/Icon instance | Chip |
 | C5 | No pressed / selected / disabled / error states defined across either component | Chip |
+| C2 | `with limit` boolean property uses `yes`/`no` strings instead of `true`/`false`. | Counter |
+| C2 | Count + limit values are hardcoded text ("0 / 10", "10 / 10") instead of parameterized — not usable for real counts. | Counter |
 | C5 | No disabled or pressed states — form dropdown missing standard interaction states | Dropdown |
 | C2 | DropdownItem `selected` property uses yes/no string instead of true/false boolean | Dropdown |
+| C2 | `iconSize` uses 6 numeric values (64 / 52 / 46 / 40 / 32 / 24) — should collapse to 3–4 semantic sizes (XL / L / M / S). | Generic Card |
+| C1 | Icon slot is a hardcoded placeholder circle, not an Avatar or Icon instance — blocks swappable composition. | Generic Card |
+| C6 | Chevron is a raster image (<code>shape_full</code> PNG) rather than a vector glyph. | Generic Card |
+| C1 | A single `type` enum hides 5 structurally different layouts (default / more information / with avatar / no amount / skeleton loader) — should be slot-based composition with a separate state axis. | Generic Transaction Card |
+| C2 | `type=no amount` and `type=more information` describe what's missing or vague rather than the semantic role of each layout. | Generic Transaction Card |
+| C2 | Label uses Proxima Soft Semibold (600) while Generic Card's heading uses Bold (700) — inconsistent title weight across the card family. | Generic Transaction Card |
+| C2 | "type=dark\|light" property name describes appearance instead of semantic intent — convention is "surface" or "tone". | Header Centered |
+| C4 | "Header - Transaction" is structurally a card hero (avatar + title + divider + label-value + description) misfiled as a header. Should live in the card-patterns family. | Header Transaction |
+| C4 | A second app-bar component exists only to swap the title for a logo — should be a slot on the existing Title Bar instead of a sibling component. | Header With Logo |
+| C1 | Four separate components all named "Header*" conflate 4 distinct semantic roles (section header, page banner, brand app bar, detail hero). | Header |
+| C2 | 8 independent boolean props create 256 theoretical combos but only 16 are built — the boolean model lies. Trailing-slot booleans should collapse into a single enum slot. | Header |
 | C6 | trailing-icon uses icon-placeholder RECTANGLE — not a swappable icon instance | Labeled Field |
 | C2 | `type` × `indicator` axes are entangled — only ~10 of 72 theoretical combinations are valid | List Item Asset |
 | C5 | Numbered indicator hardcodes "1." — no way to set per-item number | List Item Asset |
@@ -261,6 +278,8 @@ They do **not** see:
 | C2 | Variant property values use pseudo-numeric strings ("by 4") instead of clean integer enums | Menu Grid |
 | C5 | Service Item only defines `active` color tokens — no pressed/disabled state coverage | Menu Grid |
 | C4 | Variant explosion (4 rows × 5 columns = 20) where two integer props would suffice on native | Menu Grid |
+| C4 | Scrim-type components are fixed to sticker-sheet dimensions (360×640) instead of Fill parent — breaks drop-in composability. | Overlay |
+| C2 | Token named *overlay-strong* implies a weak/standard counterpart, but only one strength is exposed as a component property. | Overlay |
 | C2 | `size` property encodes state — values include "default - error" and "large - error" (space-hyphen-space strings that mix size + state) | Radio Button With Label |
 | C5 | No disabled / selected variants — only unselected state is documented across sizes | Radio Button With Label |
 | C6 | Always instances the small radio — large label doesn't scale the radio accordingly | Radio Button With Label |
@@ -279,6 +298,20 @@ They do **not** see:
 | C2 | Figma component is named "Tab" (singular) — should be renamed "Tabs" (plural) to match native/industry conventions and disambiguate from the Tab Item atom | Tabs |
 | C2 | Boolean properties use yes/no instead of true/false — blocks direct Swift Bool / Kotlin Boolean mapping | Title Bar |
 | C6 | Trailing icon uses icon-placeholder RECTANGLE instead of swappable icon instance — blocks native icon slot | Title Bar |
+| C1 | Toggle - With Label is a layout frame with a Toggle instance + text, not a real component. No property set, no variants — identical pattern to the (current) List and Tabs components flagged as layout-only. | Toggle With Label |
+| C2 | Toggle uses `isActive = Yes \| No` while Checkbox uses `isSelected = true \| false`. Selection controls across the DS should share one property schema. | Toggle |
+| C5 | Toggle exposes only Default + Disabled states — missing Pressed, Focused, and Error. | Toggle |
+| C2 | `hasLabel` boolean uses yes/no instead of true/false | Upload File |
+| C2 | `state="Upload error"` contains a space — non-native enum value | Upload File |
+| C2 | `state="Uploaded with thumbnail"` is orthogonal to the other states — should be a separate `hasThumbnail: Bool` | Upload File |
+| C3 | All border tokens misspelled as `boder` — `main/upload-file/color/default/boder` and `main/upload-file/color/error/boder` | Upload File |
+| C3 | Thumbnail placeholder bg is hardcoded `#0057E4` with 5% opacity baked in | Upload File |
+| C6 | Thumbnail is a gray placeholder block instead of a Figma Slot for swappable preview | Upload File |
+| C6 | Progress bar is a Lottie animation — external asset dependency, must be bundled with the native package | Upload File |
+| C5 | No disabled, pressed, or focused states defined | Upload File |
+| C2 | Property `variant` is overloaded — encodes 4 trailing content types as one enum. Better as `trailingContent` with values none/badge/textLink/icon. | View Only Field |
+| C2 | Property value `Size=Default` isn't a true size name — should be `Regular` for consistency with other components. | View Only Field |
+| C6 | Checkmark uses raster IMG from Figma CDN instead of a vector icon instance. | View Only Field |
 | C2 | Variant property values mix paradigms — "Default" / "2 CTA" / "Version 2" combine generic, count, and version naming | Visual Popup |
 | C6 | Hero image is a flat raster placeholder with "Replace me" overlay instead of a swappable image slot | Visual Popup |
 | C5 | No destructive/error/loading variant; close affordance only on Version 2 | Visual Popup |
@@ -519,19 +552,28 @@ Key conventions:
 | Component | Node | DS Verdict | Native Status | Status | Notes |
 |---|---|---|---|---|---|
 | Accordion | `16870:9288` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Alert | `18444:2012` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Avatar Group | `18276:4554` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Avatar | `17143:4488` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Badge | `21:111526` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Button | `17104:184842` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Checkbox | `17143:2464` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Chip | `18336:22243` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
+| Counter | `21:43333` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Dropdown | `23:199480` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Generic Card | `23:86050` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Generic Transaction Card | `23:86201` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
+| Header Centered | `18430:2858` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Header Transaction | `18430:2897` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Header With Logo | `18430:2875` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
+| Header | `18430:2919` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Input Field | `17758:3687` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Labeled Field | `17758:3713` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | List Item Asset | `10274:2658` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | List Item | `10277:2664` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | List | `10277:4586` | Remove | Not Applicable | 🔁 Re-assessing | — |
 | Menu Grid | `18320:14332` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Overlay | `47:329691` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Radio Button With Label | `844:75143` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Radio Button | `844:75124` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | Recipient Field | `17758:3867` | Keep | Needs Refinement | 🔁 Re-assessing | — |
@@ -539,6 +581,10 @@ Key conventions:
 | Tab Item | `27:89110` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Tabs | `27:89097` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Title Bar | `23:175148` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Toggle With Label | `27:30918` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Toggle | `27:30922` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Upload File | `4068:4209` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| View Only Field | `18403:4520` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Visual Popup | `30:81526` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 <!-- @@PROGRESS_TABLE_END@@ -->
 

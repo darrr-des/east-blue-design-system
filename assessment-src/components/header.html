@@ -1,0 +1,700 @@
+<!--
+  HEADER COMPONENT ASSESSMENT (base — "Section Header" pattern)
+  In-screen section-title block with preamble/description/icon/illustrations/link/edit/counter slots.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 18430:2919
+ds-verdict: restructure
+native-status: rework
+variants: 16
+ios: EBSectionHeader view composing Text, Icon/Image, and optional trailing control
+android: EBSectionHeader composable sitting above LazyColumn sections
+open-issues: C1,C2,C4,C5,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] Four separate components all named "Header*" conflate 4 distinct semantic roles (section header, page banner, brand app bar, detail hero).
+[C2] 8 independent boolean props create 256 theoretical combos but only 16 are built — the boolean model lies. Trailing-slot booleans should collapse into a single enum slot.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Header<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-header" onclick="showPanel('header', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Header</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('header')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="6" y="6" width="34" height="4" rx="1" fill="#005CE5"/>
+      <rect x="6" y="14" width="50" height="6" rx="1" fill="#0A2757"/>
+      <rect x="6" y="24" width="44" height="4" rx="1" fill="#90A8D0"/>
+      <rect x="60" y="14" width="14" height="4" rx="1" fill="#005CE5"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Header</div>
+      <span class="badge badge-rework">Restructure</span>
+    </div>
+    <div class="summary-card-desc">Section-title block with preamble, description, and trailing slots (icon, illustration, link, edit, counter). 16 variants via 8 booleans — collapse to 3 slots.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Header</strong></td>
+  <td><span class="badge badge-rework">Restructure</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">16</td>
+  <td class="muted">Section-title block. 8 boolean props should collapse into <code>leadingMedia</code> + <code>trailing</code> enum slots. Part of a 4-component "Header" family needing rename + split.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-header">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Header
+          <span class="badge badge-rework">Restructure</span>
+          <span class="badge badge-rework">Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18430-2919" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">In-screen <strong>section-title block</strong> (e.g. <em>"Recent transactions · View all"</em>). 16 variants generated from 8 independent boolean properties: <code>preamble</code>, <code>description</code>, <code>icon</code>, <code>left illustration</code>, <code>right illustration</code>, <code>link</code>, <code>edit</code>, <code>counter</code>. Not a navigation header or app bar — see Title Bar for that. Part of a 4-component "Header" family that needs restructuring.</p>
+      </div>
+      <div class="verdict-inline verdict-restructure">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Restructure — rename, split, and collapse the variant matrix</div>
+          <div class="verdict-inline-text">Today four components share the "Header" prefix but solve four different problems. The base Header (this one) should be renamed <strong>Section Header</strong>, its 8 boolean slots collapsed into 3 props (<code>preamble</code>, <code>leadingMedia</code>, <code>trailing</code>), and the sibling "Header - *" components either renamed by role or merged into existing primitives. See the <strong>Family Restructure</strong> section below for the full plan.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="header-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'header-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'header-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'header-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'header-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="header-in-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Section headers sit above grouped content — a list of transactions, a set of services, a carousel of offers — to label the section and optionally expose a trailing action.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="header-context-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="header-preview">Live Preview</div>
+    <p class="section-desc">Toggle the slots to see how the current 16-variant matrix responds. Note how many combinations are theoretically possible but not built — that's the boolean-model tax.</p>
+    <div class="demo-panel" id="header-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="header-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">preamble</span>
+              <select id="header-ctrl-preamble" class="demo-panel-select" onchange="_headerUpdate()">
+                <option value="no">no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">description</span>
+              <select id="header-ctrl-description" class="demo-panel-select" onchange="_headerUpdate()">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leading media</span>
+              <select id="header-ctrl-leading" class="demo-panel-select" onchange="_headerUpdate()">
+                <option value="none" selected>none</option>
+                <option value="icon">icon</option>
+                <option value="illustration">illustration</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">trailing</span>
+              <select id="header-ctrl-trailing" class="demo-panel-select" onchange="_headerUpdate()">
+                <option value="none" selected>none</option>
+                <option value="illustration">illustration</option>
+                <option value="link">link</option>
+                <option value="edit">edit</option>
+                <option value="counter">counter</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="header-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Works across many screen sections, but boolean slots force consumers to think in invalid combinations (icon + left illustration + right illustration all true?).</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Owns its typography, spacing, and color tokens. No external state required.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">The "Header" name is shared with three structurally different components (Centered, With Logo, Transaction). Property model (8 booleans) conflicts with the enum-slot model used by other components in the DS.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Actionable slots (link, edit, counter) are drawn in-place rather than accepting Button/Badge/Link instances. Consumers can't swap in their own action component.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="header-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>State</th><th class="center">iOS</th><th class="center">Android</th><th>Figma Spec</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Default</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">16 variants</td><td class="muted">The only state today — no pressed/disabled/focused.</td></tr>
+          <tr><td><strong>Trailing action pressed</strong></td><td class="center muted">Via slot</td><td class="center muted">Via slot</td><td class="muted">Not modeled</td><td class="muted">Link, edit, counter should be real Button/Link instances that carry their own pressed state.</td></tr>
+          <tr><td><strong>Disabled</strong></td><td class="center muted">N/A</td><td class="center muted">N/A</td><td class="muted">Not modeled</td><td class="muted">Section headers are informational — no disabled variant needed.</td></tr>
+          <tr><td><strong>Focused (a11y)</strong></td><td class="center muted">N/A</td><td class="center muted">N/A</td><td class="muted">—</td><td class="muted">Focus lives on the trailing action, not the header itself.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="header-family-restructure">Family Restructure — the big picture</div>
+    <p class="section-desc">The Header family spans four components that share a visual prefix but solve four different problems. Before cleaning this component, align on the family shape.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Today</th><th>Proposed</th><th>Semantic role</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Header</strong> (this component) · 16 variants</td><td><strong>Section Header</strong></td><td class="muted">In-screen section title</td><td class="muted">Rename + collapse 8 booleans → 3 props.</td></tr>
+          <tr><td><strong>Header - Centered</strong> · 4 variants</td><td><strong>Page Banner</strong></td><td class="muted">Centered page/modal title</td><td class="muted">Rename. Swap <code>type=dark|light</code> for <code>surface=brand|default</code>.</td></tr>
+          <tr><td><strong>Header - With Logo</strong> · 2 variants</td><td><em>Merge into</em> <strong>Title Bar</strong></td><td class="muted">Brand app bar</td><td class="muted">Add <code>leading = title | logo</code> slot to Title Bar. Retire this file.</td></tr>
+          <tr><td><strong>Header - Transaction</strong> · 2 variants</td><td><strong>Detail Hero</strong></td><td class="muted">Card hero — not a header</td><td class="muted">Move out of Header family. Rehome near Visual Popup / card patterns.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="header-proposed-api">Proposed API — Section Header</div>
+    <p class="section-desc">From 8 booleans to 3 props — covering the same design space with zero invalid combinations.</p>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'header-api','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'header-api','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Proposed API — replaces 8 boolean props with 3</span>
+<span class="typ">EBSectionHeader</span>(
+    <span class="prp">preamble</span>: <span class="str">"RECENT"</span>,
+    <span class="prp">title</span>: <span class="str">"Transactions"</span>,
+    <span class="prp">description</span>: <span class="str">"Your activity this month"</span>,
+    <span class="prp">leadingMedia</span>: .<span class="prp">icon</span>(<span class="typ">Image</span>(systemName: <span class="str">"chart.bar"</span>)),
+    <span class="prp">trailing</span>: .<span class="prp">link</span>(<span class="str">"View All"</span>, action: onViewAll)
+)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Proposed API — slot-based with typed trailing enum</span>
+<span class="typ">EBSectionHeader</span>(
+    title = <span class="str">"Transactions"</span>,
+    preamble = <span class="str">"RECENT"</span>,
+    description = <span class="str">"Your activity this month"</span>,
+    leadingMedia = { <span class="typ">Icon</span>(<span class="typ">EBIcons</span>.Chart, contentDescription = <span class="kw">null</span>) },
+    trailing = <span class="typ">EBHeaderTrailing</span>.<span class="fn">Link</span>(<span class="str">"View All"</span>, onClick = onViewAll)
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="header-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Family-wide naming conflict.</strong> "Header" prefix conflates 4 roles (section header, page banner, brand bar, detail hero). Rename each by role. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>8 boolean props, 256 theoretical combos, 16 built.</strong> The boolean model implies combinations that don't exist. Collapse <code>icon</code> + <code>left illustration</code> into <code>leadingMedia</code>, and <code>right illustration</code> + <code>link</code> + <code>edit</code> + <code>counter</code> into <code>trailing</code>. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Trailing actions aren't real components.</strong> Link ("View All"), Edit, and Counter are drawn in-place rather than accepting Button / Badge / Link instances. Breaks composition and blocks state handling (pressed, disabled). <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>No pressed/disabled states</strong> on the actionable slots. Natively, those slots need full state coverage — at minimum pressed + disabled. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>No Code Connect mappings.</strong> Trivial once slots are enumerated. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="header-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Rename to "Section Header".</strong> Unambiguously signals in-screen section title; frees "Header" namespace. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Collapse to 3 props</strong> — <code>preamble?</code>, <code>leadingMedia?: icon | illustration</code>, <code>trailing?: illustration | link | edit | counter</code> — plus the required <code>title</code>. Eliminates invalid combos, drops variant count from 16 to ~6 canonical patterns. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Promote actionable slots to real components.</strong> "View All" becomes a <strong>Text Button</strong> instance. "Edit" becomes an <strong>Icon Button</strong>. "Counter" becomes a <strong>Badge</strong> instance. Each carries its own pressed/disabled states. <span class="tag-recommend">Composition</span></span></li>
+      <li><span><strong>Move "Header - Transaction" out of the family.</strong> It's a card hero, not a header. Rename to Detail Hero and rehome near Visual Popup. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Merge "Header - With Logo" into Title Bar.</strong> Add <code>leading = title | logo</code> slot to Title Bar instead of maintaining a second app-bar component. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>See siblings:</strong> <a href="#" onclick="showPanelById('header-centered');return false;">Header - Centered</a>, <a href="#" onclick="showPanelById('header-with-logo');return false;">Header - With Logo</a>, <a href="#" onclick="showPanelById('header-transaction');return false;">Header - Transaction</a>. Restructure is a family-wide decision. <span class="tag-recommend">Family</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Title only (baseline) <span class="spec-card-node">node <code>18430:2932</code></span></div>
+        <div class="mode-toggle-group">
+          <button class="mode-toggle-btn active" onclick="_headerSpecMode('des', 1)">DES</button>
+          <button class="mode-toggle-btn" onclick="_headerSpecMode('dev', 1)">DEV</button>
+        </div>
+      </div>
+      <p class="spec-card-desc">The simplest variant — a bare title. This is the baseline the other 15 variants layer slots onto.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="header-spec-1"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-detail-row"><span>preamble</span><code>no</code></div>
+          <div class="spec-detail-row"><span>description</span><code>no</code></div>
+          <div class="spec-detail-row"><span>all media/action slots</span><code>no</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>Title style</span><code>Heading/L — BarkAda 18/24</code></div>
+          <div class="spec-detail-row"><span>Color</span><code>text/primary · #0A2757</code></div>
+        </div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Width</span><code>Fill</code></div>
+          <div class="spec-detail-row"><span>Height</span><code>58 (hug)</code></div>
+          <div class="spec-detail-row"><span>Padding</span><code>0</code></div>
+          <div class="spec-detail-row"><span>Gap (stacked slots)</span><code>space/space-4</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors by State</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr></thead>
+              <tbody>
+                <tr><td>Title</td><td><code>text/primary</code></td><td><span class="swatch-dot" style="background:#0A2757"></span><code>#0A2757</code></td></tr>
+                <tr><td>Preamble</td><td><code>text/brand</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td></tr>
+                <tr><td>Description</td><td><code>text/secondary</code></td><td><span class="swatch-dot" style="background:#90A8D0"></span><code>#90A8D0</code></td></tr>
+                <tr><td>Link label</td><td><code>text/brand</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Full stack (preamble + title + description) <span class="spec-card-node">node <code>18430:2920</code></span></div>
+      </div>
+      <p class="spec-card-desc">All three text slots filled. This is the canonical "announce a section" pattern.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="header-spec-2"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-detail-row"><span>preamble</span><code>yes</code></div>
+          <div class="spec-detail-row"><span>description</span><code>yes</code></div>
+          <div class="spec-detail-row"><span>media/actions</span><code>no</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>Preamble</span><code>Label/S caps · 12/16 · text/brand</code></div>
+          <div class="spec-detail-row"><span>Title</span><code>Heading/L · 18/24 · text/primary</code></div>
+          <div class="spec-detail-row"><span>Description</span><code>Body/S · 12/16 · text/secondary</code></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Title + trailing link <span class="spec-card-node">node <code>18430:2984</code></span></div>
+      </div>
+      <p class="spec-card-desc">Title on the left, "View All" link on the right. Common list-section pattern.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="header-spec-3"><!-- JS --></div></div>
+      </div>
+      <p class="section-desc"><strong>Proposed:</strong> the "View All" text should be an instance of <code>EBTextButton</code> — not a drawn text layer — so it inherits pressed/disabled states automatically.</p>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Title + trailing edit <span class="spec-card-node">node <code>18430:2989</code></span></div>
+      </div>
+      <p class="spec-card-desc">Title left, pencil icon + "Edit details" link right. Used on profile/settings sections.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="header-spec-4"><!-- JS --></div></div>
+      </div>
+      <p class="section-desc"><strong>Proposed:</strong> "Edit details" should be an <code>EBTextButton</code> with <code>leadingIcon: Image("pencil")</code>. That's already a supported pattern in Button — no new component needed.</p>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Title + trailing counter <span class="spec-card-node">node <code>18430:2996</code></span></div>
+      </div>
+      <p class="spec-card-desc">Title left, numeric counter pill right. Used on inbox/notifications.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="header-spec-5"><!-- JS --></div></div>
+      </div>
+      <p class="section-desc"><strong>Proposed:</strong> counter should be an instance of <code>EBBadge</code> (numeric variant). Badge already handles count + overflow ("99+") correctly.</p>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="header-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'header-install','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'header-install','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">.<span class="fn">package</span>(<span class="prp">url</span>: <span class="str">"https://github.com/gcash/eb-design-system-ios"</span>, <span class="prp">from</span>: <span class="str">"1.0.0"</span>)
+
+<span class="kw">import</span> EBDesignSystem</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">implementation(<span class="str">"com.gcash.designsystem:eb-components:1.0.0"</span>)
+
+<span class="kw">import</span> com.gcash.designsystem.components.EBSectionHeader</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="header-mapping">Property Mapping (Proposed)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma (today)</th><th>Figma (proposed)</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td><code>preamble: boolean</code></td><td><code>preamble?: String</code></td><td><code>preamble: String?</code></td><td><code>preamble: String?</code></td></tr>
+          <tr><td class="muted">(implicit)</td><td><code>title: String</code></td><td><code>title: String</code> (required)</td><td><code>title: String</code> (required)</td></tr>
+          <tr><td><code>description: boolean</code></td><td><code>description?: String</code></td><td><code>description: String?</code></td><td><code>description: String?</code></td></tr>
+          <tr><td><code>icon</code> + <code>left illustration</code></td><td><code>leadingMedia?: icon | illustration</code></td><td><code>leadingMedia: EBLeadingMedia?</code></td><td><code>leadingMedia: @Composable (() -&gt; Unit)?</code></td></tr>
+          <tr><td><code>right illustration</code> + <code>link</code> + <code>edit</code> + <code>counter</code></td><td><code>trailing?: illustration | link | edit | counter</code></td><td><code>trailing: EBHeaderTrailing?</code></td><td><code>trailing: EBHeaderTrailing?</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="header-paths">Suggested file paths</div>
+    <ul class="resolved-list">
+      <li><code>ios/Components/SectionHeader/EBSectionHeader.swift</code></li>
+      <li><code>android/components/sectionheader/EBSectionHeader.kt</code></li>
+    </ul>
+
+    <div class="sub-heading" id="header-usage">Usage</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'header-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'header-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// 1 · Title only</span>
+<span class="typ">EBSectionHeader</span>(<span class="prp">title</span>: <span class="str">"Services"</span>)
+
+<span class="cmt">// 2 · Title + View All link</span>
+<span class="typ">EBSectionHeader</span>(
+    <span class="prp">title</span>: <span class="str">"Transactions"</span>,
+    <span class="prp">trailing</span>: .<span class="prp">link</span>(<span class="str">"View All"</span>, action: onViewAll)
+)
+
+<span class="cmt">// 3 · Full stack with leading icon</span>
+<span class="typ">EBSectionHeader</span>(
+    <span class="prp">preamble</span>: <span class="str">"RECENT"</span>,
+    <span class="prp">title</span>: <span class="str">"Activity"</span>,
+    <span class="prp">description</span>: <span class="str">"Past 30 days"</span>,
+    <span class="prp">leadingMedia</span>: .<span class="prp">icon</span>(<span class="typ">Image</span>(systemName: <span class="str">"chart.bar"</span>))
+)
+
+<span class="cmt">// 4 · Title + counter badge</span>
+<span class="typ">EBSectionHeader</span>(
+    <span class="prp">title</span>: <span class="str">"Notifications"</span>,
+    <span class="prp">trailing</span>: .<span class="prp">counter</span>(<span class="kw">12</span>)
+)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// 1 · Title only</span>
+<span class="typ">EBSectionHeader</span>(title = <span class="str">"Services"</span>)
+
+<span class="cmt">// 2 · Title + View All link</span>
+<span class="typ">EBSectionHeader</span>(
+    title = <span class="str">"Transactions"</span>,
+    trailing = <span class="typ">EBHeaderTrailing</span>.<span class="fn">Link</span>(<span class="str">"View All"</span>, onClick = onViewAll)
+)
+
+<span class="cmt">// 3 · Full stack with leading icon</span>
+<span class="typ">EBSectionHeader</span>(
+    preamble = <span class="str">"RECENT"</span>,
+    title = <span class="str">"Activity"</span>,
+    description = <span class="str">"Past 30 days"</span>,
+    leadingMedia = { <span class="typ">Icon</span>(<span class="typ">EBIcons</span>.Chart, contentDescription = <span class="kw">null</span>) }
+)
+
+<span class="cmt">// 4 · Title + counter badge</span>
+<span class="typ">EBSectionHeader</span>(
+    title = <span class="str">"Notifications"</span>,
+    trailing = <span class="typ">EBHeaderTrailing</span>.<span class="fn">Counter</span>(<span class="kw">12</span>)
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="header-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Heading trait</strong></td><td class="muted">Apply <code>.accessibilityAddTraits(.isHeader)</code> to the title.</td><td class="muted">Apply <code>Modifier.semantics { heading() }</code> to the title text.</td></tr>
+          <tr><td><strong>Trailing action label</strong></td><td class="muted">Link/Edit/Counter must each carry their own accessibility label. Counter should announce count ("12 unread").</td><td class="muted">Same — each trailing slot owns its own semantics.</td></tr>
+          <tr><td><strong>Minimum touch target</strong></td><td class="muted">Trailing interactive element must be ≥44×44pt.</td><td class="muted">Trailing interactive element must be ≥48×48dp.</td></tr>
+          <tr><td><strong>Reading order</strong></td><td class="muted">Preamble → Title → Description → Trailing. VoiceOver follows DOM order.</td><td class="muted">Same reading order — TalkBack follows composition order.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="header-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Use for in-screen section titles above grouped content.</li>
+          <li>Keep the title short — ideally one line, max two.</li>
+          <li>When you need a trailing action, use a real Button/Link/Badge instance.</li>
+          <li>Apply the heading a11y trait so screen readers can navigate by headings.</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't use Section Header as a page title or app bar — use Title Bar / Page Banner.</li>
+          <li>Don't stack multiple leading media (icon + illustration both filled).</li>
+          <li>Don't draw "View All" as static text — use Text Button so it handles pressed/disabled.</li>
+          <li>Don't combine every slot on one instance — the 256-combo temptation is the anti-pattern this component is built on.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="header-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">"Header" prefix shared with 3 structurally different components. Rename to <strong>Section Header</strong>.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">8 booleans → 3 props (<code>preamble</code>, <code>leadingMedia</code>, <code>trailing</code>). Drops 16 variants to ~6 canonical patterns.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Typography and color bound to DS tokens.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Maps to a simple <code>EBSectionHeader</code> view/composable once slots collapse. Trailing actions should be real Button/Badge instances, not drawn.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Header itself is static; trailing actions inherit Button/Link state coverage once they become instances.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Confirm leading/trailing "illustration" slots accept vector instances (Avatar / Icon / custom). Placeholder circle suggests unverified.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Cannot map until property model collapses and trailing slots resolve to real components.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="header-variants">Variants Inventory <span class="variants-count">(16 total)</span></div>
+    <p>Today: 8 independent boolean properties — <code>preamble</code>, <code>description</code>, <code>icon</code>, <code>left illustration</code>, <code>right illustration</code>, <code>link</code>, <code>edit</code>, <code>counter</code>. 2⁸ = <strong>256 theoretical combos</strong>, only <strong>16 built</strong> — most combinations are either invalid or unsupported.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Group</th><th>Count</th><th>Slots enabled</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Text-only</strong></td><td>4</td><td class="muted">preamble × description permutations</td></tr>
+          <tr><td><strong>With right icon (top-aligned)</strong></td><td>4</td><td class="muted">preamble × description × icon</td></tr>
+          <tr><td><strong>With leading illustration</strong></td><td>2</td><td class="muted">description × left illustration</td></tr>
+          <tr><td><strong>With trailing illustration</strong></td><td>2</td><td class="muted">description × right illustration</td></tr>
+          <tr><td><strong>With link (View All)</strong></td><td>2</td><td class="muted">description × link</td></tr>
+          <tr><td><strong>With edit</strong></td><td>1</td><td class="muted">edit only</td></tr>
+          <tr><td><strong>With counter</strong></td><td>1</td><td class="muted">counter only</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details style="margin-top:16px;">
+      <summary style="cursor:pointer;padding:8px 12px;background:var(--row-hover,#F4F6FA);border-radius:6px;font-weight:600;font-size:13px;color:var(--text,#0A1628);user-select:none;">View full breakdown (16 rows)</summary>
+      <div class="table-wrap" style="margin-top:12px;">
+        <table>
+          <thead><tr><th>#</th><th>Node</th><th>Preamble</th><th>Description</th><th>Icon</th><th>L-Illus</th><th>R-Illus</th><th>Link</th><th>Edit</th><th>Counter</th></tr></thead>
+          <tbody>
+            <tr><td class="mono center">1</td><td><code>18430:2920</code></td><td>✓</td><td>✓</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td class="mono center">2</td><td><code>18430:2925</code></td><td>✓</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td class="mono center">3</td><td><code>18430:2929</code></td><td></td><td>✓</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td class="mono center">4</td><td><code>18430:2932</code></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td class="mono center">5</td><td><code>18430:2934</code></td><td>✓</td><td>✓</td><td>✓</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td class="mono center">6</td><td><code>18430:2941</code></td><td>✓</td><td></td><td>✓</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td class="mono center">7</td><td><code>18430:2947</code></td><td></td><td>✓</td><td>✓</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td class="mono center">8</td><td><code>18430:2952</code></td><td></td><td></td><td>✓</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td class="mono center">9</td><td><code>18430:2956</code></td><td></td><td>✓</td><td></td><td>✓</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td class="mono center">10</td><td><code>18430:2962</code></td><td></td><td></td><td></td><td>✓</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td class="mono center">11</td><td><code>18430:2967</code></td><td></td><td>✓</td><td></td><td></td><td>✓</td><td></td><td></td><td></td></tr>
+            <tr><td class="mono center">12</td><td><code>18430:2973</code></td><td></td><td></td><td></td><td></td><td>✓</td><td></td><td></td><td></td></tr>
+            <tr><td class="mono center">13</td><td><code>18430:2978</code></td><td></td><td>✓</td><td></td><td></td><td></td><td>✓</td><td></td><td></td></tr>
+            <tr><td class="mono center">14</td><td><code>18430:2984</code></td><td></td><td></td><td></td><td></td><td></td><td>✓</td><td></td><td></td></tr>
+            <tr><td class="mono center">15</td><td><code>18430:2989</code></td><td></td><td></td><td></td><td></td><td></td><td></td><td>✓</td><td></td></tr>
+            <tr><td class="mono center">16</td><td><code>18430:2996</code></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>✓</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 18430:2919</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Restructure</strong> — Rename to Section Header, collapse 8 boolean props into 3 slots (<code>preamble</code>, <code>leadingMedia</code>, <code>trailing</code>). <span class="tag-open tag-c1 tag-c2">Open</span></div><span class="changelog-delta delta-open">Architecture</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Family restructure plan</strong> — 4 "Header*" components should be renamed by role; "With Logo" merges into Title Bar; "Transaction" moves out of family. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">Family</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Trailing actions should be real components</strong> — Link/Edit/Counter should be Text Button / Icon Button / Badge instances, not drawn in-place. <span class="tag-open tag-c4">Open</span></div><span class="changelog-delta delta-open">C4</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C7 — Code Connect</strong> — Blocked until property model collapses. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-header">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-header"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Header (Section Header) JS ─────────────────────────────────── */
+/* Pixel-accurate replica of node 18430:2919.
+   Specs: 360px wide, 24×16 padding, #FFFFFF bg, no border.
+   Preamble: HeyMeow Rnd Bold 14/14 #005CE5, tracking 0.25
+   Title:    HeyMeow Rnd Bold 22/26 #0A2757
+   Desc:     BarkAda Semibold 12/18 #6780A9
+   Link:     HeyMeow Rnd Bold 16/16 #005CE5
+   Counter:  24×24 pill, #EEF2F9 bg, #072592 label                   */
+
+var EB_HEADER_EDIT_SVG =
+  '<svg class="eb-preview-header__edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>';
+
+var EB_HEADER_LEADING_ICON_SVG =
+  '<svg class="eb-preview-header__leading-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-6"/></svg>';
+
+function _headerRenderVariant(opts) {
+  var preamble    = opts.preamble === 'yes';
+  var description = opts.description === 'yes';
+  var leading     = opts.leading || 'none';
+  var trailing    = opts.trailing || 'none';
+
+  var centerAlign = (trailing === 'link' || trailing === 'edit' || trailing === 'counter') && !preamble && !description;
+
+  var html = '<div class="eb-preview eb-preview-header' + (centerAlign ? ' eb-preview-header--center' : '') + '">';
+
+  if (leading === 'icon') {
+    html += EB_HEADER_LEADING_ICON_SVG;
+  } else if (leading === 'illustration') {
+    html += '<div class="eb-preview-header__leading-illus" aria-hidden="true"></div>';
+  }
+
+  html += '<div class="eb-preview-header__content">';
+  if (preamble) html += '<p class="eb-preview-header__preamble">Preamble</p>';
+  html += '<p class="eb-preview-header__title">Heading</p>';
+  if (description) html += '<p class="eb-preview-header__desc">Description goes here</p>';
+  html += '</div>';
+
+  if (trailing === 'illustration') {
+    html += '<div class="eb-preview-header__trailing-illus" aria-hidden="true"></div>';
+  } else if (trailing === 'link') {
+    html += '<span class="eb-preview-header__trailing"><span class="eb-preview-header__link">View All</span></span>';
+  } else if (trailing === 'edit') {
+    html += '<span class="eb-preview-header__trailing">' + EB_HEADER_EDIT_SVG + '<span class="eb-preview-header__link">Edit details</span></span>';
+  } else if (trailing === 'counter') {
+    html += '<span class="eb-preview-header__counter">0</span>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function _headerContextMarkup() {
+  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-lg">' +
+    _headerRenderVariant({preamble:'yes', description:'yes', leading:'none', trailing:'link'}) +
+    _headerRenderVariant({preamble:'no',  description:'no',  leading:'none', trailing:'counter'}) +
+    _headerRenderVariant({preamble:'no',  description:'yes', leading:'illustration', trailing:'none'}) +
+  '</div>';
+}
+
+function _headerUpdate() {
+  var preamble    = document.getElementById('header-ctrl-preamble');
+  var description = document.getElementById('header-ctrl-description');
+  var leading     = document.getElementById('header-ctrl-leading');
+  var trailing    = document.getElementById('header-ctrl-trailing');
+  var preview     = document.getElementById('header-demo-preview');
+  if (!preview) return;
+  preview.innerHTML = _headerRenderVariant({
+    preamble:    preamble ? preamble.value : 'no',
+    description: description ? description.value : 'yes',
+    leading:     leading ? leading.value : 'none',
+    trailing:    trailing ? trailing.value : 'none'
+  });
+}
+
+function _headerSpecMode(mode, cardNum) { /* reserved for DES/DEV toggle */ }
+
+function _headerInit() {
+  var ctx = document.getElementById('header-context-preview');
+  if (ctx) ctx.innerHTML = _headerContextMarkup();
+  _headerUpdate();
+  var cards = [
+    { id: 'header-spec-1', opts: {preamble:'no',  description:'no',  leading:'none', trailing:'none'} },
+    { id: 'header-spec-2', opts: {preamble:'yes', description:'yes', leading:'none', trailing:'none'} },
+    { id: 'header-spec-3', opts: {preamble:'no',  description:'no',  leading:'none', trailing:'link'} },
+    { id: 'header-spec-4', opts: {preamble:'no',  description:'no',  leading:'none', trailing:'edit'} },
+    { id: 'header-spec-5', opts: {preamble:'no',  description:'no',  leading:'none', trailing:'counter'} }
+  ];
+  cards.forEach(function(c) {
+    var el = document.getElementById(c.id);
+    if (el) el.innerHTML = _headerRenderVariant(c.opts);
+  });
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _headerInit);
+else _headerInit();
+</script>
+
+<!--@section-end-->

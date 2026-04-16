@@ -248,23 +248,23 @@ open-issues: C2,C3,C5,C6,C7
     <!-- Open Issues -->
     <div class="sub-heading" id="ti-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Property <code>isActive?</code> has a <code>?</code> in its name and uses <code>Yes</code>/<code>No</code> values. Rename to <code>selected</code> with <code>true</code>/<code>false</code>. <span class="tag-open tag-c2">C2</span></span></li>
-      <li><span>Leading-icon slot is inconsistent across orientations — vertical always renders an icon, horizontal gates it on <code>hasLeadingIcon</code>. Unify to a single <code>leading=none/icon</code> prop. <span class="tag-open tag-c2">C2</span></span></li>
-      <li><span>Counter pill uses hardcoded hex values (<code>#ECF1FA</code> bg, <code>#0F3390</code> label) instead of tokens. <span class="tag-open tag-c3">C3</span></span></li>
-      <li><span>Counter is drawn locally instead of instancing the canonical <strong>Badge</strong> component. Breaks compositional inheritance. <span class="tag-open tag-c6">C6</span></span></li>
-      <li><span>Icon is a hardcoded 32px (vertical) / 24px (horizontal) gray circle <code>icon-placeholder</code> instead of a swappable Icon slot. <span class="tag-open tag-c6">C6</span></span></li>
-      <li><span>No pressed / disabled states documented. <span class="tag-open tag-c5">C5</span></span></li>
-      <li><span>Code Connect CLI mappings not registered. <span class="tag-open tag-c7">C7</span></span></li>
+      <li><span><strong>Property <code>isActive?</code> has a <code>?</code> in its name.</strong> And uses <code>Yes</code>/<code>No</code> values. Rename to <code>selected</code> with <code>true</code>/<code>false</code> to match Checkbox/Radio conventions. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Leading-icon slot is inconsistent across orientations.</strong> Vertical always renders an icon; horizontal gates it on <code>hasLeadingIcon</code>. Unify to a single <code>leading = none | icon</code> prop that behaves identically in both orientations. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Counter pill uses hardcoded hex values.</strong> <code>#ECF1FA</code> bg, <code>#0F3390</code> label — not bound to tokens, so theme changes won't propagate. <span class="tag-open tag-c3">C3 · Token Coverage</span></span></li>
+      <li><span><strong>Counter is drawn locally instead of instancing Badge.</strong> Breaks compositional inheritance — future Badge updates (color, sizing, overflow) won't reach Tab Item. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>Icon is a hardcoded placeholder circle.</strong> 32px (vertical) / 24px (horizontal) gray <code>icon-placeholder</code> — should be a swappable Icon slot via instance swap. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>No pressed / disabled states documented.</strong> Tap feedback and non-interactive state are critical for a tab atom — engineers are improvising them today. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked until property rename, slot adoption, and state coverage land. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
     </ul>
 
     <div class="sub-heading" id="ti-recommend">Design Recommendations</div>
     <ul class="recommend-list">
       <li><span><strong>Rename <code>isActive?</code> → <code>selected</code></strong> with <code>true</code>/<code>false</code> values. Matches Swift <code>Bool</code> / Kotlin <code>Boolean</code> for Code Connect. <span class="tag-recommend">Rename</span></span></li>
-      <li><span><strong>Unify the leading-icon slot</strong> — replace the always-on vertical icon and the <code>hasLeadingIcon</code> boolean with a single <code>leading=none/icon</code> slot that behaves identically across orientations. <span class="tag-recommend">Prop model</span></span></li>
+      <li><span><strong>Unify the leading-icon slot</strong> — replace the always-on vertical icon and the <code>hasLeadingIcon</code> boolean with a single <code>leading=none/icon</code> slot that behaves identically across orientations. <span class="tag-recommend">Property</span></span></li>
       <li><span><strong>Replace the local counter pill with a Badge instance</strong>. Badge already ships tokenized colors and will inherit any future token changes. Same pattern used when Avatar Group was repointed to the canonical Avatar. <span class="tag-recommend">Composition</span></span></li>
-      <li><span><strong>Replace <code>icon-placeholder</code> with a swappable Icon slot</strong> (instance-swap). Lets product teams drop in any icon without editing the master. <span class="tag-recommend">Asset slot</span></span></li>
-      <li><span><strong>Add <code>pressed</code> and <code>disabled</code> states</strong> as explicit variants so engineers don't have to improvise tap feedback. <span class="tag-recommend">State coverage</span></span></li>
-      <li><span><strong>Add tokens for the counter</strong> under <code>main/tab/counter/{bg,label}</code> if keeping it standalone, or adopt Badge's existing tokens. <span class="tag-recommend">Tokens</span></span></li>
+      <li><span><strong>Replace <code>icon-placeholder</code> with a swappable Icon slot</strong> (instance-swap). Lets product teams drop in any icon without editing the master. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Add <code>pressed</code> and <code>disabled</code> states</strong> as explicit variants so engineers don't have to improvise tap feedback. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Add tokens for the counter</strong> under <code>main/tab/counter/{bg,label}</code> if keeping it standalone, or adopt Badge's existing tokens. <span class="tag-recommend">Token</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -372,9 +372,9 @@ open-issues: C2,C3,C5,C6,C7
           <tr><th>Size</th><th>DS text style</th><th>Spec</th></tr>
         </thead>
         <tbody>
-          <tr><td class="muted">Small</td><td class="mono">Primary/Label/Base</td><td class="mono">Proxima Soft Bold · 16 / 16 · +0.25</td></tr>
-          <tr><td class="muted">Large</td><td class="mono">Primary/Label/Large</td><td class="mono">Proxima Soft Bold · 18 / 18 · +0.25</td></tr>
-          <tr><td class="muted">Counter</td><td class="mono">— (hardcoded)</td><td class="mono">Proxima Soft Bold · 12 / 12 · +0.5</td></tr>
+          <tr><td class="muted">Small</td><td class="mono">Primary/Label/Base</td><td class="mono">HeyMeow Rnd Bold · 16 / 16 · +0.25</td></tr>
+          <tr><td class="muted">Large</td><td class="mono">Primary/Label/Large</td><td class="mono">HeyMeow Rnd Bold · 18 / 18 · +0.25</td></tr>
+          <tr><td class="muted">Counter</td><td class="mono">— (hardcoded)</td><td class="mono">HeyMeow Rnd Bold · 12 / 12 · +0.5</td></tr>
         </tbody>
       </table>
       </div>
@@ -685,7 +685,7 @@ function _tiBuildSvg(opts) {
     // Icon
     s += '<circle cx="' + (w / 2) + '" cy="28" r="16" fill="#C2C6CF"/>';
     // Label
-    s += '<text x="' + (w / 2) + '" y="' + (h - 22) + '" text-anchor="middle" fill="' + labelColor + '" font-size="' + fontSize + '" font-weight="700" font-family="\'Proxima Soft\', system-ui">Label</text>';
+    s += '<text x="' + (w / 2) + '" y="' + (h - 22) + '" text-anchor="middle" fill="' + labelColor + '" font-size="' + fontSize + '" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Label</text>';
     // Border
     s += '<rect x="0" y="' + (h - 2) + '" width="' + w + '" height="2" fill="' + borderColor + '"/>';
     // Red dot
@@ -704,11 +704,11 @@ function _tiBuildSvg(opts) {
     s += '<circle cx="' + (x + 10) + '" cy="' + (h / 2) + '" r="10" fill="#B3B3B3"/>';
     x += 24;
   }
-  s += '<text x="' + x + '" y="' + (h / 2 + 5) + '" fill="' + labelColor + '" font-size="' + fontSize + '" font-weight="700" font-family="\'Proxima Soft\', system-ui">Label</text>';
+  s += '<text x="' + x + '" y="' + (h / 2 + 5) + '" fill="' + labelColor + '" font-size="' + fontSize + '" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Label</text>';
   x += 38;
   if (counter) {
     s += '<rect x="' + x + '" y="' + (h / 2 - 9) + '" width="22" height="18" rx="9" fill="#ECF1FA"/>';
-    s += '<text x="' + (x + 11) + '" y="' + (h / 2 + 4) + '" text-anchor="middle" fill="#0F3390" font-size="10" font-weight="700" font-family="\'Proxima Soft\', system-ui">0</text>';
+    s += '<text x="' + (x + 11) + '" y="' + (h / 2 + 4) + '" text-anchor="middle" fill="#0F3390" font-size="10" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">0</text>';
   }
   s += '<rect x="0" y="' + (h - 2) + '" width="' + w + '" height="2" fill="' + borderColor + '"/>';
   if (dot) s += '<circle cx="' + (w - 8) + '" cy="8" r="3" fill="#D81E1E"/>';

@@ -366,8 +366,25 @@ function toggleCompSection(e) {
   if (e) { e.stopPropagation(); }
   var list = document.getElementById('comp-list');
   var btn = document.getElementById('comp-toggle');
-  if (list) list.classList.toggle('open');
-  if (btn) btn.classList.toggle('open');
+  if (!list) return;
+  var isOpen = list.classList.contains('open');
+  if (isOpen) {
+    /* Closing: set to current height, force reflow, then animate to 0 */
+    list.style.maxHeight = list.scrollHeight + 'px';
+    requestAnimationFrame(function() {
+      list.style.maxHeight = '0px';
+    });
+    list.classList.remove('open');
+    if (btn) btn.classList.remove('open');
+  } else {
+    /* Opening: set to current height, then remove constraint after transition */
+    list.classList.add('open');
+    if (btn) btn.classList.add('open');
+    list.style.maxHeight = list.scrollHeight + 'px';
+    setTimeout(function() {
+      if (list.classList.contains('open')) list.style.maxHeight = '';
+    }, 220);
+  }
 }
 
 /* ── Nav group toggle ─────────────────────────────────────────────── */
@@ -494,7 +511,7 @@ function _applyDemo() {
   el.style.height       = sz.height;
   el.style.boxSizing    = 'border-box';
   el.style.borderRadius = '99px';
-  el.style.fontFamily   = "'Proxima Soft', sans-serif";
+  el.style.fontFamily   = "'HeyMeow Rnd', sans-serif";
   el.style.fontWeight   = '700';
   el.style.cursor       = (_demo.state === 'disabled' || _demo.state === 'loading') ? 'not-allowed' : 'pointer';
   el.style.opacity      = '1';
@@ -650,7 +667,7 @@ function updateSpecCard(cardStyle, prop, value) {
     el.style.height       = sz.height;
     el.style.boxSizing    = 'border-box';
     el.style.borderRadius = '99px';
-    el.style.fontFamily   = "'Proxima Soft', sans-serif";
+    el.style.fontFamily   = "'HeyMeow Rnd', sans-serif";
     el.style.fontWeight   = '700';
     el.style.cursor       = (card.state === 'disabled' || card.state === 'loading') ? 'not-allowed' : 'pointer';
     el.style.opacity      = '1';
@@ -740,7 +757,7 @@ function updateSpecCard(cardStyle, prop, value) {
   if (typoEl) {
     var sizeData = _specSizeData[card.size];
     var th = '<div class="spec-detail-label">Typography</div><div class="spec-props">';
-    th += '<div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">Proxima Soft Bold</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">HeyMeow Rnd Bold</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Text Style</span><span class="spec-prop-val mono">' + sizeData.textStyle + '</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">' + sizeData.fontSize + 'px</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Tracking</span><span class="spec-prop-val mono">0.25px</span></div>';

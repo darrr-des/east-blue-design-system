@@ -241,15 +241,15 @@ open-issues: C7
     <!-- Open Issues -->
     <div class="sub-heading" id="rf-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Structural work is complete — registration can proceed against the 8-variant <code>State × isFilled</code> schema. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
     </ul>
 
     <!-- Design Recommendations -->
     <div class="sub-heading" id="rf-recommend">Design Recommendations</div>
     <ul class="recommend-list">
-      <li><span>Replace <code>icon-placeholder</code> RECTANGLEs with swappable icon component instances — enables phonebook, scan QR, or other action icons without editing the base component <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Document the 56px height rationale — clarify in DS guidelines why Recipient Field is taller than the standard 46px form fields (two-line layout: label + value) <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Consider adding an <code>errorMessage</code> slot below the field for inline validation text, consistent with other form elements <span class="tag-recommend">Suggested</span></span></li>
+      <li><span><strong>Replace icon placeholders with swappable icon instances.</strong> The two <code>icon-placeholder</code> RECTANGLEs block instance-swap — phonebook, scan-QR, and other trailing actions can't be dropped in without detaching the master. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Document the 56px height rationale.</strong> Recipient Field is taller than the standard 46px form fields because of the two-line label + value layout. Call this out in the DS guidelines so it's not mistaken for a design error. <span class="tag-recommend">Docs</span></span></li>
+      <li><span><strong>Add an <code>errorMessage</code> slot below the field.</strong> Inline validation text keeps the field self-contained and matches the pattern proposed for the other form fields. <span class="tag-recommend">Slot</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -424,11 +424,11 @@ open-issues: C7
         <table>
           <tbody>
             <tr><td class="muted" colspan="2"><strong>#label (top line)</strong></td></tr>
-            <tr><td class="muted">Font</td><td class="mono">Proxima Soft Semibold</td></tr>
+            <tr><td class="muted">Font</td><td class="mono">HeyMeow Rnd Semibold</td></tr>
             <tr><td class="muted">Size</td><td class="mono">12px</td></tr>
             <tr><td class="muted">Tracking</td><td class="mono">0.5</td></tr>
             <tr><td class="muted" colspan="2"><strong>#text-placeholder (bottom line)</strong></td></tr>
-            <tr><td class="muted">Font</td><td class="mono">Proxima Soft Semibold</td></tr>
+            <tr><td class="muted">Font</td><td class="mono">HeyMeow Rnd Semibold</td></tr>
             <tr><td class="muted">Size</td><td class="mono">14px</td></tr>
             <tr><td class="muted">Tracking</td><td class="mono">0.25</td></tr>
           </tbody>
@@ -865,9 +865,9 @@ function _rfBuildSvg(state, filled) {
   var s = '<svg width="366" height="56" viewBox="0 0 366 56" fill="none">';
   s += '<rect x="0.5" y="0.5" width="365" height="55" rx="5.5" fill="' + c.bg + '"' + borderAttr + '/>';
   /* label (top line) */
-  s += '<text x="12" y="22" font-family="Proxima Soft, system-ui" font-size="12" font-weight="600" fill="' + lc + '" letter-spacing="0.5">Mobile Number</text>';
+  s += '<text x="12" y="22" font-family="HeyMeow Rnd, system-ui" font-size="12" font-weight="600" fill="' + lc + '" letter-spacing="0.5">Mobile Number</text>';
   /* value/placeholder (bottom line) */
-  s += '<text x="12" y="40" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + textColor + '" letter-spacing="0.25">' + textVal + '</text>';
+  s += '<text x="12" y="40" font-family="HeyMeow Rnd, system-ui" font-size="14" font-weight="600" fill="' + textColor + '" letter-spacing="0.25">' + textVal + '</text>';
   /* trailing icon placeholders */
   s += '<rect x="298" y="12" width="32" height="32" rx="16" fill="#C2C6CF" opacity=".35"/>';
   s += '<rect x="332" y="12" width="32" height="32" rx="16" fill="#C2C6CF" opacity=".35"/>';

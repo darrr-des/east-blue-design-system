@@ -240,16 +240,16 @@ open-issues: C7
     <!-- Open Issues -->
     <div class="sub-heading" id="sf-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Structural work is complete — registration can proceed against the 8-variant <code>State × isFilled</code> schema. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
     </ul>
 
     <!-- Design Recommendations -->
     <div class="sub-heading" id="sf-recommend">Design Recommendations</div>
     <ul class="recommend-list">
-      <li><span>Replace the <code>shape_full</code> BOOLEAN_OPERATION in Peso Sign with a single flattened vector path for consistent cross-platform rendering <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Provide a vector version of the Philippine flag or use an icon instance from the DS icon library instead of a raster IMAGE fill <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Consider generalizing the field to support other currency symbols and flags via configurable slots — would increase reuse across multi-currency flows <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Add a <code>helperText</code> slot below the field for validation messages — currently error state has no text guidance <span class="tag-recommend">Suggested</span></span></li>
+      <li><span><strong>Flatten the Peso Sign <code>shape_full</code> BOOLEAN_OPERATION.</strong> Boolean-operation paths render inconsistently across SVG export and native platforms. Replace with a single flattened vector path. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Use a vector flag asset.</strong> The Philippine flag is currently a raster IMAGE fill. Swap to a vector from the DS icon library so it stays crisp across DPIs and platforms. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Generalize to multi-currency.</strong> Expose currency symbol and flag as configurable slots so the field can support other currencies (USD, EUR, SGD) without creating a new component per currency. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Add a <code>helperText</code> slot.</strong> Error state has no accompanying text guidance today — add a slot for validation messages consistent with the other form fields. <span class="tag-recommend">Slot</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -429,9 +429,9 @@ open-issues: C7
           <tr><th>Layer</th><th>Property</th><th>Value</th></tr>
         </thead>
         <tbody>
-          <tr><td class="muted" rowspan="2">#label</td><td class="muted">Font</td><td class="mono">Proxima Soft Semibold</td></tr>
+          <tr><td class="muted" rowspan="2">#label</td><td class="muted">Font</td><td class="mono">HeyMeow Rnd Semibold</td></tr>
           <tr><td class="muted">Size</td><td class="mono">16px</td></tr>
-          <tr><td class="muted" rowspan="2">#value</td><td class="muted">Font</td><td class="mono">Proxima Soft</td></tr>
+          <tr><td class="muted" rowspan="2">#value</td><td class="muted">Font</td><td class="mono">HeyMeow Rnd</td></tr>
           <tr><td class="muted">Size</td><td class="mono">14px</td></tr>
         </tbody>
       </table>
@@ -808,11 +808,11 @@ function _sfBuildSvg(state, filled) {
   /* container */
   s += '<rect x="0.5" y="0.5" width="365" height="45" rx="5.5" fill="' + c.bg + '"' + borderAttr + '/>';
   /* peso sign — vertically centered in 46px container */
-  s += '<text x="12" y="23" font-family="Proxima Soft, system-ui" font-size="15" font-weight="700" fill="' + pc + '" dominant-baseline="central">&#8369;</text>';
+  s += '<text x="12" y="23" font-family="HeyMeow Rnd, system-ui" font-size="15" font-weight="700" fill="' + pc + '" dominant-baseline="central">&#8369;</text>';
   /* label */
-  s += '<text x="36" y="20" font-family="Proxima Soft, system-ui" font-size="16" font-weight="600" fill="' + labelColor + '">#label</text>';
+  s += '<text x="36" y="20" font-family="HeyMeow Rnd, system-ui" font-size="16" font-weight="600" fill="' + labelColor + '">#label</text>';
   /* value */
-  s += '<text x="36" y="36" font-family="Proxima Soft, system-ui" font-size="14" fill="' + textColor + '">' + (filled === 'true' ? '1,000.00' : '#value') + '</text>';
+  s += '<text x="36" y="36" font-family="HeyMeow Rnd, system-ui" font-size="14" fill="' + textColor + '">' + (filled === 'true' ? '1,000.00' : '#value') + '</text>';
   /* flag container */
   s += '<rect x="298" y="15" width="25" height="16" rx="2" fill="#0038A8" opacity="' + flagOpacity + '"/>';
   s += '<rect x="298" y="20.3" width="25" height="5.4" fill="#CE1126" opacity="' + flagOpacity + '"/>';

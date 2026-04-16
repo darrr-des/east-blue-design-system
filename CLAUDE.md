@@ -176,6 +176,55 @@ open-issues: [comma-separated criterion IDs, or "none"]
 
 ---
 
+## Open Issues & Design Recommendations — Format
+
+Every component's **Open Issues** and **Design Recommendations** lists must follow the bold-headline + description + tag pattern:
+
+```html
+<li><span>
+  <strong>Headline statement.</strong>
+  Description with rationale and context.
+  <span class="tag-open tag-c#">C# · Full Criterion Name</span>
+</span></li>
+```
+
+### Open Issues tags — use the criterion that best classifies the problem
+
+Always `tag-open tag-c#` + full criterion name:
+
+- `C1 · Layer Structure & Naming`
+- `C2 · Variant & Property Naming`
+- `C3 · Token Coverage`
+- `C4 · Native Mappability`
+- `C5 · Interaction State Coverage`
+- `C6 · Asset & Icon Quality`
+- `C7 · Code Connect Linkability`
+
+### Design Recommendations tags — canonical 10-tag set
+
+Use only these tags (class `tag-recommend`). No ad-hoc labels like "Suggested", "Optional", "Schema", "Visual language" — they dilute the vocabulary.
+
+| Tag | When to use |
+|---|---|
+| **Rename** | Change a name or value (component, property, enum value, token) |
+| **Property** | Reshape the property schema (collapse, split, add/remove props, change value types) |
+| **Slot** | Adopt Figma Slots or add/fix a named content slot (leading, trailing, asset) |
+| **State** | Add missing interaction states or state variants (pressed, focused, disabled, error, loading) |
+| **Token** | Create, rename, or fix a design token or token binding |
+| **Asset** | Replace raster with vector, flatten a BOOLEAN_OPERATION, provide a vector icon/flag |
+| **Composition** | Instance-swap to a canonical sibling, compose via existing DS components |
+| **Family** | Cross-component decisions within a family (merge, split, consolidate, add a sibling) |
+| **A11y** | Accessibility-specific recommendation |
+| **Docs** | Documentation, annotation, or convention — no Figma change required |
+
+### Holistic restructures
+
+Do **not** create dedicated sub-sections like "Normalization Plan" or "Proposed Architecture" on individual components. A multi-axis restructure belongs in a single **Design Recommendation** bullet — the bold headline names the change, the description summarizes the target schema and variant math. If the comparison is too big for one bullet, split into two bullets, don't promote to a separate section. This keeps every component's page structurally identical.
+
+The only exception is **family-level overviews** (e.g. Header's 4-component family), which live on the family's *lead* component and act as navigation for the whole family. Do not add them to individual components.
+
+---
+
 ## Assessment Workflow (Read-Only)
 
 For each Figma component URL:
@@ -241,19 +290,33 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | Component | Node | Variants | DS | Native | Open |
 |---|---|---|---|---|---|
 | Accordion | `16870:9288` | 6 | Keep | Refine | C7 |
+| Alert | `18444:2012` | 20 | Fix | Refine | C1,C2,C5,C6,C7 |
 | **Avatar** | | | | | |
 | Avatar | `17143:4488` | 21 | Keep | Refine | C2,C7 |
 | Avatar Group | `18276:4554` | 4 | Fix | Refine | C7 |
 | Badge | `21:111526` | 68 | Keep | Refine | C7 |
 | Button | `17104:184842` | 180 | Keep | Refine | C7 |
+| **Card** | | | | | |
+| Generic Card | `23:86050` | 12 | Fix | Refine | C2,C5,C6,C7 |
+| Generic Transaction Card | `23:86201` | 5 | Restructure | Refine | C1,C2,C5,C7 |
 | Checkbox | `17143:2464` | 33 | Keep | Refine | C7 |
-| **Form Elements** | | | | | |
+| Counter | `21:43333` | 4 | Fix | Refine | C2,C5,C7 |
+| **Header** | | | | | |
+| Header | `18430:2919` | 16 | Restructure | Rework | C1,C2,C4,C5,C7 |
+| Header - Centered | `18430:2858` | 4 | Restructure | Rework | C1,C2,C7 |
+| Header - With Logo | `18430:2875` | 2 | Consolidate | Rework | C1,C2,C4,C7 |
+| Header - Transaction | `18430:2897` | 2 | Restructure | Rework | C1,C2,C4,C5,C7 |
 | Input Field | `17758:3687` | 8 | Keep | Refine | C7 |
 | Labeled Field | `17758:3713` | 8 | Keep | Refine | C7 |
 | Select Field | `17758:3786` | 8 | Keep | Refine | C7 |
 | Recipient Field | `17758:3867` | 8 | Keep | Refine | C7 |
+| View Only Field | `18403:4520` | 8 | Keep | Refine | C2,C6,C7 |
 | Dropdown | `23:199480` | 8 | Fix | Refine | C2,C5,C6,C7 |
+| Overlay | `47:329691` | 1 | Fix | Refine | C2,C4,C5,C7 |
 | Title Bar | `23:175148` | 20 | Keep | Refine | C2,C6,C7 |
+| **Toggle** | | | | | |
+| Toggle | `27:30922` | 4 | Fix | Refine | C2,C5,C7 |
+| Toggle - With Label | `27:30918` | 1 | Restructure | Rework | C1,C2,C4,C5,C7 |
 
 ---
 

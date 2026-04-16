@@ -1,0 +1,630 @@
+<!--
+  COUNTER COMPONENT ASSESSMENT
+  Small numeric pill/circle for counts and progress indicators. 4 variants across state × with limit.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 21:43333
+ds-verdict: fix
+native-status: refine
+variants: 4
+ios: Custom EBCounter view — Text in a Capsule
+android: Custom EBCounter composable — Text inside rounded Surface
+open-issues: C2,C5,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] `with limit` boolean property uses `yes`/`no` strings instead of `true`/`false`.
+[C2] Count + limit values are hardcoded text ("0 / 10", "10 / 10") instead of parameterized — not usable for real counts.
+<!--@patterns-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-counter" onclick="showPanel('counter', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Counter</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('counter')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="8" y="14" width="26" height="12" rx="6" fill="#EEF2F9"/>
+      <text x="21" y="23" text-anchor="middle" fill="#C2CFE5" font-size="8" font-weight="700" font-family="system-ui">0/10</text>
+      <rect x="42" y="14" width="30" height="12" rx="6" fill="#EEF2F9"/>
+      <text x="57" y="23" text-anchor="middle" fill="#072592" font-size="8" font-weight="700" font-family="system-ui">10/10</text>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Counter</div>
+      <span class="badge badge-fix">Fix</span>
+    </div>
+    <div class="summary-card-desc">Numeric count pill with two formats: single integer for counts, "N / M" slash for progress-against-capacity. 4 variants. Parameterize count + limit, fix boolean naming, add 99+ overflow.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Counter</strong></td>
+  <td><span class="badge badge-fix">Fix</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">4</td>
+  <td class="muted">Numeric count pill. Two formats (single integer, "N / M" slash). Rename <code>with limit</code> → <code>hasLimit</code>, parameterize <code>count</code> / <code>limit</code>, add <code>99+</code> overflow.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-counter">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Counter
+          <span class="badge badge-fix">Fix</span>
+          <span class="badge badge-refine">Refine</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=21-43333" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A small numeric pill used as trailing content in list rows, tab items, and section headers. Two formats: <strong>single integer</strong> for counts (notifications, unread, pending items) and <strong>N / M slash</strong> for progress-against-capacity (slots used, steps completed). Fixed 24 px tall, hugs digit width. 4 variants across <code>state</code> (empty / filled) × <code>with limit</code> (yes / no).</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Fix — parameterize values and clean boolean naming</div>
+          <div class="verdict-inline-text">Both formats (single-integer + slash) belong. The fixes are: rename <code>with limit</code> → <code>hasLimit</code> with <code>true/false</code>; parameterize <code>count: Int</code> and <code>limit: Int?</code>; add <code>99+</code> overflow handling. Variant count stays at 4.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="counter-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'counter-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'counter-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'counter-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'counter-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="counter-in-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Counter appears inline with text to show counts — section headers for unread notifications, tab item badges for pending items, limit/slot usage displays.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="counter-context-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="counter-preview">Live Preview</div>
+    <p class="section-desc">Flip <code>with limit</code> to switch between the two formats. Type <code>count</code> (and <code>limit</code> when applicable) to see the pill hug digit width. Try <code>247</code> with <code>maxDisplay=99</code> to see the overflow collapse to <code>99+</code>. <code>state</code> auto-derives from count: <code>0</code> is muted empty, anything else is brand-blue filled.</p>
+    <div class="demo-panel" id="counter-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="counter-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Content</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">count</span>
+              <input type="text" id="counter-ctrl-count" class="demo-panel-select demo-panel-input" value="5" oninput="_counterUpdate()" placeholder="0">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">limit</span>
+              <input type="text" id="counter-ctrl-limit" class="demo-panel-select demo-panel-input" value="10" oninput="_counterUpdate()" placeholder="10">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">maxDisplay</span>
+              <input type="text" id="counter-ctrl-max" class="demo-panel-select demo-panel-input" value="99" oninput="_counterUpdate()" placeholder="99">
+            </div>
+          </div>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">with limit</span>
+              <select id="counter-ctrl-withlimit" class="demo-panel-select" onchange="_counterUpdate()">
+                <option value="no" selected>no (single integer)</option>
+                <option value="yes">yes (N / M slash)</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">state</span>
+              <select id="counter-ctrl-state" class="demo-panel-select" onchange="_counterUpdate()">
+                <option value="auto" selected>auto (from count)</option>
+                <option value="filled">filled (override)</option>
+                <option value="empty">empty (override)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="counter-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Generic count primitive — used across Section Header, Tab Item, and standalone notification contexts.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Owns its typography, color tokens, and radius. Nothing external required to render.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note"><code>with limit</code> uses <code>yes/no</code> strings instead of <code>true/false</code>. Count/limit values are hardcoded text — not usable for real counts without detaching.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Hugs content width, drops into any inline layout (Section Header, Tab Item) without manual sizing.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="counter-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>State</th><th class="center">iOS</th><th class="center">Android</th><th>Figma Spec</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Empty</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">state=empty</td><td class="muted">Count is 0. Muted label, same bg. Used to indicate "nothing pending".</td></tr>
+          <tr><td><strong>Filled</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">state=filled</td><td class="muted">Count is greater than 0. Brand-blue label, same bg. Used when there's activity to surface.</td></tr>
+          <tr><td><strong>With limit</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">with limit=yes</td><td class="muted">Renders "N / M" (e.g. "3 / 10") — for slot/limit displays like "beneficiaries used".</td></tr>
+          <tr><td><strong>Without limit</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">with limit=no</td><td class="muted">Renders a single integer. Used for unread counts, inbox badges.</td></tr>
+          <tr><td><strong>Pressed / Disabled</strong></td><td class="center muted">N/A</td><td class="center muted">N/A</td><td class="muted">—</td><td class="muted">Counter is display-only — no interactive states.</td></tr>
+          <tr><td><strong>Overflow (99+)</strong></td><td class="center muted">Missing</td><td class="center muted">Missing</td><td class="muted">Not modeled</td><td class="muted">Real counts can exceed 99 (unread messages, notifications). Need overflow display ("99+") — not built today.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="counter-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong><code>with limit</code> uses <code>yes/no</code> strings.</strong> Should be <code>hasLimit: true/false</code> for direct Swift <code>Bool</code> / Kotlin <code>Boolean</code> mapping. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Count and limit values are hardcoded text.</strong> "0 / 10" and "10 / 10" are baked into each variant — consumers must detach to show any other value. Expose <code>count: Int</code> and <code>limit: Int?</code> as parameters so the component renders its own formatted string. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>No overflow handling for large counts.</strong> Inbox counts routinely exceed 99 (unread messages, notifications). The single-integer format needs "99+" display; the slash format needs equivalent overflow when count exceeds the limit. Not modeled today. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Trivial once parameterization and boolean rename land. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="counter-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Rename <code>with limit</code> to <code>hasLimit</code>.</strong> Change values from <code>yes/no</code> strings to <code>true/false</code>. Aligns with the boolean naming convention used across the DS. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Expose <code>count</code> and <code>limit</code> as parameters.</strong> <code>count: Int</code> (required) + <code>limit: Int?</code> (optional — activates slash format when set). Drop the text overrides; the component formats the string itself. Eliminates the "detach to change the number" anti-pattern. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Derive <code>state</code> from <code>count</code>.</strong> Empty when <code>count == 0</code>, filled otherwise. Removes one property the consumer has to set manually. Allow explicit override for edge cases. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Add overflow handling for both formats.</strong> Single-integer: <code>count &gt; maxDisplay</code> renders "99+". Slash format: <code>count &gt; limit</code> should clamp display or render "limit+" to prevent visual overflow. Pattern used in Material / Apple badges. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Document the two use cases.</strong> Single-integer = <em>how many of X are there</em> (notifications, unread, pending). Slash format = <em>progress against capacity</em> (slots used, steps completed). Clarify in the spec so teams pick the right format. <span class="tag-recommend">Docs</span></span></li>
+      <li><span><strong>Document Counter ↔ Badge relationship.</strong> Counter = numeric (count, progress). Badge = status/tag label (Success, Premium). Teams reach for the wrong one without this guidance. <span class="tag-recommend">Docs</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Empty — with limit <span class="spec-card-node">node <code>21:43334</code></span></div>
+      </div>
+      <p class="spec-card-desc">Slash format showing zero progress against a limit ("0 / 10"). Muted label on neutral bg. Used when no slots are filled yet.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="counter-spec-1"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-detail-row"><span>state</span><code>empty</code></div>
+          <div class="spec-detail-row"><span>with limit</span><code>yes</code></div>
+          <div class="spec-detail-row"><span>Example text</span><code>0 / 10</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors by State</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr></thead>
+              <tbody>
+                <tr><td>Surface</td><td><code>empty/bg</code></td><td><span class="swatch-dot" style="background:#EEF2F9;border:1px solid #E0E5EE"></span><code>#EEF2F9</code></td></tr>
+                <tr><td>Label</td><td><code>empty/label</code></td><td><span class="swatch-dot" style="background:#C2CFE5"></span><code>#C2CFE5</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Height</span><code>24</code></div>
+          <div class="spec-detail-row"><span>Padding</span><code>0 × 8 (hug width)</code></div>
+          <div class="spec-detail-row"><span>Corner radius</span><code>99 (pill)</code></div>
+          <div class="spec-detail-row"><span>Example width</span><code>53 (for "0 / 10")</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>Style</span><code>Primary/Label/Small</code></div>
+          <div class="spec-detail-row"><span>Font</span><code>HeyMeow Rnd Bold</code></div>
+          <div class="spec-detail-row"><span>Size / line-height</span><code>14 / 14</code></div>
+          <div class="spec-detail-row"><span>Letter-spacing</span><code>+0.25</code></div>
+          <div class="spec-detail-row"><span>Alignment</span><code>center</code></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Filled — with limit <span class="spec-card-node">node <code>21:43336</code></span></div>
+      </div>
+      <p class="spec-card-desc">Slash format with a filled count ("10 / 10"). Brand-blue label on neutral bg. Used when capacity is at or approaching the limit.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="counter-spec-2"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-detail-row"><span>state</span><code>filled</code></div>
+          <div class="spec-detail-row"><span>with limit</span><code>yes</code></div>
+          <div class="spec-detail-row"><span>Example text</span><code>10 / 10</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr></thead>
+              <tbody>
+                <tr><td>Surface</td><td><code>filled/bg</code></td><td><span class="swatch-dot" style="background:#EEF2F9;border:1px solid #E0E5EE"></span><code>#EEF2F9</code></td></tr>
+                <tr><td>Label</td><td><code>filled/label</code></td><td><span class="swatch-dot" style="background:#072592"></span><code>#072592</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Single integer <span class="spec-card-node">nodes <code>21:43338</code>, <code>21:43340</code></span></div>
+      </div>
+      <p class="spec-card-desc">Standalone count — notifications, unread messages, pending items. Hugs tightly around the digit (24 × 24 for single digit, grows for 2+ digits). Empty state shown muted; filled state shown in brand-blue. Pairs with overflow handling ("99+") once <code>count</code> is parameterized.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="counter-spec-3"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-detail-row"><span>with limit</span><code>no</code></div>
+          <div class="spec-detail-row"><span>state</span><code>empty | filled</code></div>
+          <div class="spec-detail-row"><span>Example text</span><code>0</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Min-width</span><code>24 (circle for single digit)</code></div>
+          <div class="spec-detail-row"><span>Max-width</span><code>hug (grows with digit count)</code></div>
+          <div class="spec-detail-row"><span>Padding</span><code>0 × 8</code></div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="counter-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'counter-install','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'counter-install','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">.<span class="fn">package</span>(<span class="prp">url</span>: <span class="str">"https://github.com/gcash/eb-design-system-ios"</span>, <span class="prp">from</span>: <span class="str">"1.0.0"</span>)
+
+<span class="kw">import</span> EBDesignSystem</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">implementation(<span class="str">"com.gcash.designsystem:eb-components:1.0.0"</span>)
+
+<span class="kw">import</span> com.gcash.designsystem.components.EBCounter</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="counter-mapping">Property Mapping (Proposed)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma (today)</th><th>Figma (proposed)</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">(hardcoded text "0 / 10", "10 / 10")</td><td><code>count: Int</code></td><td><code>count: Int</code></td><td><code>count: Int</code></td></tr>
+          <tr><td><code>with limit: yes | no</code></td><td><code>limit: Int?</code> (nil = single-integer format; set = slash format)</td><td><code>limit: Int?</code></td><td><code>limit: Int?</code></td></tr>
+          <tr><td><code>state: empty | filled</code></td><td><em>derived</em> from count (0 = empty, &gt;0 = filled)</td><td><em>auto</em>, with override</td><td><em>auto</em>, with override</td></tr>
+          <tr><td class="muted">(not modeled)</td><td><code>maxDisplay: Int = 99</code></td><td><code>maxDisplay: Int = 99</code></td><td><code>maxDisplay: Int = 99</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="counter-paths">Suggested file paths</div>
+    <ul class="resolved-list">
+      <li><code>ios/Components/Counter/EBCounter.swift</code></li>
+      <li><code>android/components/counter/EBCounter.kt</code></li>
+    </ul>
+
+    <div class="sub-heading" id="counter-usage">Usage</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'counter-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'counter-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Single integer — notification count</span>
+<span class="typ">EBCounter</span>(<span class="prp">count</span>: unreadCount)
+
+<span class="cmt">// Overflow — renders "99+" when count &gt; 99</span>
+<span class="typ">EBCounter</span>(<span class="prp">count</span>: <span class="kw">247</span>)
+
+<span class="cmt">// Slash format — progress against capacity</span>
+<span class="typ">EBCounter</span>(<span class="prp">count</span>: beneficiaries.count, <span class="prp">limit</span>: <span class="kw">10</span>)  <span class="cmt">// "3 / 10"</span>
+
+<span class="cmt">// Trailing counter inside a list row</span>
+<span class="typ">EBListRow</span>(
+    <span class="prp">leading</span>: <span class="typ">EBAvatar</span>(<span class="prp">initials</span>: <span class="str">"JD"</span>),
+    <span class="prp">label</span>: <span class="str">"Messages"</span>,
+    <span class="prp">trailing</span>: .<span class="prp">counter</span>(unreadCount)
+)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Single integer — notification count</span>
+<span class="typ">EBCounter</span>(count = unreadCount)
+
+<span class="cmt">// Overflow — renders "99+" when count &gt; 99</span>
+<span class="typ">EBCounter</span>(count = <span class="kw">247</span>)
+
+<span class="cmt">// Slash format — progress against capacity</span>
+<span class="typ">EBCounter</span>(count = beneficiaries.size, limit = <span class="kw">10</span>)  <span class="cmt">// "3 / 10"</span>
+
+<span class="cmt">// Trailing counter inside a list row</span>
+<span class="typ">EBListRow</span>(
+    leading = { <span class="typ">EBAvatar</span>(initials = <span class="str">"JD"</span>) },
+    label = <span class="str">"Messages"</span>,
+    trailing = { <span class="typ">EBCounter</span>(count = unreadCount) }
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="counter-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Context-aware label</strong></td><td class="muted">Set <code>.accessibilityLabel("5 unread messages")</code> — screen readers should hear what the number means, not just the digits.</td><td class="muted">Set <code>contentDescription = "5 unread messages"</code>.</td></tr>
+          <tr><td><strong>Zero state</strong></td><td class="muted">When <code>count == 0</code>, default behavior (<code>hideWhenZero: true</code>) removes the pill from the accessibility tree entirely. Best practice — nothing to announce.</td><td class="muted">Same — hidden at zero by default.</td></tr>
+          <tr><td><strong>Overflow</strong></td><td class="muted">Announce the actual count, not "99+" — e.g. <code>"247 unread"</code>. The "99+" is a visual truncation, not the truth.</td><td class="muted">Same — screen reader gets the real number.</td></tr>
+          <tr><td><strong>Contrast</strong></td><td class="muted">Filled: #072592 on #EEF2F9 = 11.8:1 ✓. Empty: #C2CFE5 on #EEF2F9 = 1.4:1 — fails AA. Empty is decorative (shown only when the user opts out of <code>hideWhenZero</code>); don't use for counts that must be read.</td><td class="muted">Same ratios apply.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="counter-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Use for numeric counts — unread messages, pending items, slots used.</li>
+          <li>Pair with a screen-reader-friendly label ("3 of 10 beneficiaries", not "3 / 10").</li>
+          <li>Hide the counter when <code>count == 0</code> if the zero state is the norm (prevents muted pills cluttering the UI).</li>
+          <li>Prefer Counter + Section Header / Tab Item compositions over standalone use.</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't use Counter for status labels ("New", "Draft") — use Badge.</li>
+          <li>Don't put non-numeric text inside — this isn't a generic chip.</li>
+          <li>Don't attach onClick / onPress — Counter is a display primitive. Wrap the parent in an interactive container if needed.</li>
+          <li>Don't hardcode the count/limit text by detaching — use the (proposed) <code>count</code> / <code>limit</code> props.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="counter-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Clean one-layer structure (container + label).</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted"><code>with limit</code> → <code>hasLimit</code> (bool). Parameterize count/limit.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Surface + label bound to <code>main/counter/color/*</code>.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Maps to a tiny <code>EBCounter</code> view/composable — Text inside a Capsule.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Display-only — no interactive states needed. But overflow ("99+") for large counts is missing.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-na">N/A</span></td><td class="muted">No assets.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Trivial once parameterization + boolean rename land.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="counter-variants">Variants Inventory <span class="variants-count">(4 total)</span></div>
+    <p><code>state</code> (2) × <code>with limit</code> (2) = <strong>4 variants</strong>. Both formats are kept — they solve different problems: single-integer for counts, slash for progress.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Node</th><th>state</th><th>with limit</th><th>Format</th><th>Example</th><th>Dimensions</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">1</td><td><code>21:43334</code></td><td>empty</td><td>yes</td><td class="muted">slash</td><td><code>0 / 10</code></td><td>53 × 24</td></tr>
+          <tr><td class="mono center">2</td><td><code>21:43336</code></td><td>filled</td><td>yes</td><td class="muted">slash</td><td><code>10 / 10</code></td><td>59 × 24</td></tr>
+          <tr><td class="mono center">3</td><td><code>21:43338</code></td><td>empty</td><td>no</td><td class="muted">single integer</td><td><code>0</code></td><td>25 × 24</td></tr>
+          <tr><td class="mono center">4</td><td><code>21:43340</code></td><td>filled</td><td>no</td><td class="muted">single integer</td><td><code>0</code></td><td>24 × 24</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 21:43333</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Fix</strong> — Keep both formats (single integer + slash). Rename <code>with limit</code> → <code>hasLimit</code>, parameterize <code>count</code> + <code>limit</code>, add <code>99+</code> overflow. Variant count stays at 4. <span class="tag-open tag-c2 tag-c5">Open</span></div><span class="changelog-delta delta-open">Schema</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — Boolean naming</strong> — <code>with limit: yes/no</code> → <code>hasLimit: true/false</code>. Direct Swift <code>Bool</code> / Kotlin <code>Boolean</code> mapping. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — Parameterize values</strong> — Expose <code>count: Int</code> + <code>limit: Int?</code>; drop hardcoded text. Derive <code>state</code> from count. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C5 — Overflow</strong> — Add <code>maxDisplay</code> (default 99); counts beyond render "99+" in single-integer format, and clamp in slash format. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C7 — Code Connect</strong> — Trivial once parameterization + rename land. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-counter">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-counter"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Counter JS ─────────────────────────────────────────────────── */
+/* Counter — single-integer count pill. `count` drives the text.
+   Overflow collapses to "maxDisplay+" (e.g. "99+"). `state` auto-
+   derives from count unless explicitly overridden.                   */
+
+function _counterRender(opts) {
+  var rawCount   = opts.count;
+  var rawLimit   = opts.limit;
+  var rawMax     = opts.maxDisplay;
+  var withLimit  = opts.withLimit === 'yes';
+  var stateMode  = opts.state || 'auto';
+
+  // Parse count
+  var countNum = parseInt(rawCount, 10);
+  if (isNaN(countNum) || countNum < 0) countNum = 0;
+
+  var maxNum = parseInt(rawMax, 10);
+  if (isNaN(maxNum) || maxNum < 1) maxNum = 99;
+
+  var displayText;
+  if (withLimit) {
+    // Slash format — render "count / limit". Clamp count to limit visually.
+    var limitNum = parseInt(rawLimit, 10);
+    if (isNaN(limitNum) || limitNum < 1) limitNum = 10;
+    var shownCount = Math.min(countNum, limitNum);
+    displayText = shownCount + ' / ' + limitNum;
+  } else {
+    // Single-integer format with overflow
+    displayText = (countNum > maxNum) ? (maxNum + '+') : String(countNum);
+  }
+
+  // Derive state
+  var isFilled;
+  if (stateMode === 'filled')      isFilled = true;
+  else if (stateMode === 'empty')  isFilled = false;
+  else                              isFilled = countNum > 0;
+
+  var classes = [
+    'eb-preview',
+    'eb-preview-counter',
+    isFilled ? 'eb-preview-counter--filled' : 'eb-preview-counter--empty'
+  ];
+  return '<span class="' + classes.join(' ') + '">' + _counterEscape(displayText) + '</span>';
+}
+
+function _counterEscape(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+/* In Context — Counter as trailing content on a list row (matches
+   real product usage: Avatar + Label + Chevron + Counter).           */
+function _counterChevronSvg() {
+  return '<svg class="eb-preview-list-row__chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">' +
+    '<path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' +
+  '</svg>';
+}
+
+function _counterListRow(label, count, withLimit, limit) {
+  return '<div class="eb-preview eb-preview-list-row">' +
+    '<div class="eb-preview-list-row__avatar" aria-hidden="true"></div>' +
+    '<div class="eb-preview-list-row__label">' + _counterEscape(label) + '</div>' +
+    '<div class="eb-preview-list-row__trailing">' +
+      _counterChevronSvg() +
+      _counterRender({
+        count: count,
+        withLimit: withLimit || 'no',
+        limit: limit || '10',
+        maxDisplay: '99',
+        state: 'auto'
+      }) +
+    '</div>' +
+  '</div>';
+}
+
+function _counterContextMarkup() {
+  // Three realistic uses — two single-integer list rows + one slash-format
+  // row showing progress-against-capacity (beneficiaries used).
+  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm">' +
+    _counterListRow('Notifications', 5,   'no') +
+    _counterListRow('Activity',      247, 'no') +
+    _counterListRow('Beneficiaries', 3,   'yes', '10') +
+  '</div>';
+}
+
+function _counterUpdate() {
+  var state     = document.getElementById('counter-ctrl-state');
+  var countEl   = document.getElementById('counter-ctrl-count');
+  var limitEl   = document.getElementById('counter-ctrl-limit');
+  var maxEl     = document.getElementById('counter-ctrl-max');
+  var withLimit = document.getElementById('counter-ctrl-withlimit');
+  var preview   = document.getElementById('counter-demo-preview');
+  if (!preview) return;
+  preview.innerHTML = _counterRender({
+    state:      state ? state.value : 'auto',
+    count:      countEl ? countEl.value : '5',
+    limit:      limitEl ? limitEl.value : '10',
+    maxDisplay: maxEl ? maxEl.value : '99',
+    withLimit:  withLimit ? withLimit.value : 'no'
+  });
+}
+
+function _counterInit() {
+  var ctx = document.getElementById('counter-context-preview');
+  if (ctx) ctx.innerHTML = _counterContextMarkup();
+  _counterUpdate();
+
+  // Spec 1 — empty slash
+  var s1 = document.getElementById('counter-spec-1');
+  if (s1) s1.innerHTML = _counterRender({count:'0', limit:'10', withLimit:'yes', state:'empty'});
+
+  // Spec 2 — filled slash
+  var s2 = document.getElementById('counter-spec-2');
+  if (s2) s2.innerHTML = _counterRender({count:'10', limit:'10', withLimit:'yes', state:'filled'});
+
+  // Spec 3 — empty + filled single-integer side by side
+  var s3 = document.getElementById('counter-spec-3');
+  if (s3) s3.innerHTML = '<div style="display:inline-flex;gap:12px;align-items:center;">' +
+    _counterRender({count:'0', withLimit:'no', state:'empty'}) +
+    _counterRender({count:'5', withLimit:'no', state:'auto'}) +
+    _counterRender({count:'247', withLimit:'no', maxDisplay:'99', state:'auto'}) +
+  '</div>';
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _counterInit);
+else _counterInit();
+</script>
+
+<!--@section-end-->

@@ -123,11 +123,11 @@ for (const entry of navEntries) {
   } else {
     const groupId = entry.name.toLowerCase().replace(/\s+/g, '-');
     navItems += `<div class="nav-group">\n`;
-    navItems += `  <button class="nav-group-toggle open" onclick="toggleNavGroup('${groupId}', this)">\n`;
+    navItems += `  <button class="nav-group-toggle" onclick="toggleNavGroup('${groupId}', this)">\n`;
     navItems += `    <span class="nav-comp-name">${entry.name}</span>\n`;
     navItems += `    <svg class="nav-group-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 6l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>\n`;
     navItems += `  </button>\n`;
-    navItems += `  <div class="nav-group-list open" id="nav-group-${groupId}">\n`;
+    navItems += `  <div class="nav-group-list" id="nav-group-${groupId}">\n`;
     for (const itemHtml of groupItems[entry.name]) {
       navItems += '    ' + itemHtml + '\n';
     }

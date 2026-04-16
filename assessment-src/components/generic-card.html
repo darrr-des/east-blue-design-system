@@ -1,0 +1,684 @@
+<!--
+  GENERIC CARD COMPONENT ASSESSMENT
+  Tappable list row with icon, blurb+tag, heading, description lines, badge, chevron.
+  12 Figma variants across iconSize × state + 6 orthogonal boolean slot props.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 23:86050
+ds-verdict: fix
+native-status: refine
+variants: 12
+ios: Custom EBGenericCard view — composed HStack row
+android: Custom EBGenericCard composable — Row with leading/content/trailing slots
+open-issues: C2,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] `iconSize` uses 6 numeric values (64 / 52 / 46 / 40 / 32 / 24) — should collapse to 3–4 semantic sizes (XL / L / M / S).
+[C1] Icon slot is a hardcoded placeholder circle, not an Avatar or Icon instance — blocks swappable composition.
+[C6] Chevron is a raster image (<code>shape_full</code> PNG) rather than a vector glyph.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Card<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-generic-card" onclick="showPanel('generic-card', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Generic Card</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('generic-card')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <circle cx="14" cy="20" r="9" fill="#C2C6CF"/>
+      <rect x="28" y="10" width="16" height="3" rx="1" fill="#005CE5"/>
+      <rect x="46" y="10" width="9" height="3" rx="1" fill="#D61B2C"/>
+      <rect x="28" y="16" width="32" height="5" rx="1" fill="#0A2757"/>
+      <rect x="28" y="24" width="26" height="2" rx="1" fill="#90A8D0"/>
+      <rect x="28" y="29" width="12" height="4" rx="2" fill="#E5F1FF"/>
+      <path d="M70 17l3 3-3 3" stroke="#0A2757" stroke-width="1.3" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Generic Card</div>
+      <span class="badge badge-fix">Fix</span>
+    </div>
+    <div class="summary-card-desc">Tappable list row (360×146) with icon, blurb + tag, heading, 1–2 description lines, optional badge, chevron. 12 variants (iconSize × state) with 6 orthogonal slot toggles.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Generic Card</strong></td>
+  <td><span class="badge badge-fix">Fix</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">12</td>
+  <td class="muted">Collapse iconSize to semantic scale. Icon → swappable Avatar/Icon slot. Vector chevron. Pressed state.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-generic-card">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Generic Card
+          <span class="badge badge-fix">Fix</span>
+          <span class="badge badge-refine">Refine</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=23-86050" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A tappable list-row card used for product/service entries — 360×146 fixed container with a leading icon slot, a content block (blurb + tag pill, heading, 1–2 description lines, optional bottom badge), and a trailing chevron. 12 Figma variants across <code>iconSize</code> (64/52/46/40/32/24) × <code>state</code> (Default / skeleton), plus 6 orthogonal boolean slot toggles: <code>hasBlurb</code>, <code>hasTag</code>, <code>hasSubtitle</code>, <code>has2ndDescription</code>, <code>hasBadge</code>, <code>hasChevron</code>.</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Fix — collapse iconSize, swap placeholders to slots, ship the pressed state</div>
+          <div class="verdict-inline-text">Rename <code>iconSize</code> to semantic values (XL / L / M / S). Replace the icon placeholder with a swappable Avatar / Icon slot via instance swap. Replace the raster chevron with a vector. Add a pressed state — this is clearly a tappable row but only Default + skeleton are modeled today.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="generic-card-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'generic-card-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'generic-card-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'generic-card-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'generic-card-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="gcard-in-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Generic Card stacks vertically into a scrolling list — product catalogs, service menus, transaction history detail screens. Icon size tightens as the density of the list increases.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="gcard-context-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="gcard-preview">Live Preview</div>
+    <p class="section-desc">Type your own copy to test flexibility. Toggle slots individually to see how the card responds when pieces are hidden. Flip <code>state</code> between Default and skeleton to see the loading pattern.</p>
+    <div class="demo-panel" id="gcard-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="gcard-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Content</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">blurb</span>
+              <input type="text" id="gcard-ctrl-blurb" class="demo-panel-select demo-panel-input" value="Blurb" oninput="_gcardUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">tag</span>
+              <input type="text" id="gcard-ctrl-tag" class="demo-panel-select demo-panel-input" value="Tag" oninput="_gcardUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">heading</span>
+              <input type="text" id="gcard-ctrl-heading" class="demo-panel-select demo-panel-input" value="Heading Goes Here" oninput="_gcardUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">description</span>
+              <input type="text" id="gcard-ctrl-desc" class="demo-panel-select demo-panel-input" value="Description goes here" oninput="_gcardUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">badge</span>
+              <input type="text" id="gcard-ctrl-badge" class="demo-panel-select demo-panel-input" value="Label" oninput="_gcardUpdate()">
+            </div>
+          </div>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">iconSize</span>
+              <select id="gcard-ctrl-iconsize" class="demo-panel-select" onchange="_gcardUpdate()">
+                <option value="64" selected>64</option>
+                <option value="52">52</option>
+                <option value="46">46</option>
+                <option value="40">40</option>
+                <option value="32">32</option>
+                <option value="24">24</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">state</span>
+              <select id="gcard-ctrl-state" class="demo-panel-select" onchange="_gcardUpdate()">
+                <option value="default" selected>Default</option>
+                <option value="skeleton">skeleton</option>
+              </select>
+            </div>
+          </div>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Slots</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">hasSubtitle</span>
+              <select id="gcard-ctrl-hassubtitle" class="demo-panel-select" onchange="_gcardUpdate()">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">hasBlurb</span>
+              <select id="gcard-ctrl-hasblurb" class="demo-panel-select" onchange="_gcardUpdate()">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">hasTag</span>
+              <select id="gcard-ctrl-hastag" class="demo-panel-select" onchange="_gcardUpdate()">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">has2ndDesc</span>
+              <select id="gcard-ctrl-has2desc" class="demo-panel-select" onchange="_gcardUpdate()">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">hasBadge</span>
+              <select id="gcard-ctrl-hasbadge" class="demo-panel-select" onchange="_gcardUpdate()">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">hasChevron</span>
+              <select id="gcard-ctrl-haschevron" class="demo-panel-select" onchange="_gcardUpdate()">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="gcard-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Solid general-purpose list-row card. Works across catalogs, services, transaction history, and detail-screen rows.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Owns colors, typography, spacing tokens. But the icon is drawn (placeholder circle) not instanced, and the chevron ships as a raster.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">6 numeric <code>iconSize</code> values is a lot. Tag uses Badge (good) and bottom pill uses Badge (good) — composition is correct where it happens.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Stacks cleanly into a scrollable list. Skeleton state is a first-class variant — rare and worth highlighting as a DS convention.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="gcard-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>State</th><th class="center">iOS</th><th class="center">Android</th><th>Figma Spec</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Default</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">state=Default</td><td class="muted">Normal row — all content visible, chevron shown when <code>hasChevron</code>.</td></tr>
+          <tr><td><strong>Skeleton (loading)</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">state=skeleton</td><td class="muted">Loading pattern — gray rounded placeholders where each content slot would render. Kudos for shipping this as a first-class variant.</td></tr>
+          <tr><td><strong>Pressed</strong></td><td class="center muted">Missing</td><td class="center muted">Missing</td><td class="muted">Not built</td><td class="muted">Tappable row (has chevron) — needs a pressed state with background tint for tap feedback.</td></tr>
+          <tr><td><strong>Disabled</strong></td><td class="center muted">Missing</td><td class="center muted">Missing</td><td class="muted">Not built</td><td class="muted">For temporarily-unavailable services (e.g. maintenance). Typically dimmed label + muted icon.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="gcard-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong><code>iconSize</code> uses 6 numeric values.</strong> <code>64 / 52 / 46 / 40 / 32 / 24</code> is too granular — consumers can't tell when to pick 46 vs 40. Collapse to 3–4 semantic sizes (XL / L / M / S) with fixed pixel values behind the scenes. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Icon slot is a hardcoded placeholder circle.</strong> Not an Avatar or Icon instance — blocks swappable composition. Designers can't drop in a brand icon, illustration, or Avatar without detaching. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>Chevron is a raster image.</strong> Ships as a PNG (<code>shape_full</code>) rather than a vector glyph — blurs at large render sizes and blocks token-based tinting. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>No pressed / disabled states.</strong> Has a chevron, so clearly tappable — but only Default + skeleton states are built. Pressed tint and disabled appearance are standard row affordances. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked until iconSize collapse + icon-slot adoption land. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="gcard-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Collapse <code>iconSize</code> to semantic sizes.</strong> <code>xl (64) / l (52) / m (40) / s (32)</code> — drops 6 numeric values to 4 meaningful ones. (46 and 24 can be retired or mapped to the nearest semantic size.) Matches how Avatar sizes are named elsewhere. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Replace the icon placeholder with a Figma Slot.</strong> Accept an Avatar instance (for person/brand rows) or an Icon instance (for service rows). Native maps to <code>@ViewBuilder</code> (SwiftUI) or <code>@Composable</code> slot (Compose) via Code Connect. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Convert the chevron to a vector.</strong> Replace the raster <code>shape_full</code> with a vector path — token-bindable color and crisp at any scale. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Add pressed + disabled states.</strong> Pressed: subtle bg tint on the whole row. Disabled: muted label + icon opacity. Rows are tappable and need both. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Document the skeleton pattern as a DS convention.</strong> Generic Card's skeleton variant is exactly the pattern other row/card components should follow. Call it out in the guidelines so the same loading treatment spreads consistently. <span class="tag-recommend">Docs</span></span></li>
+      <li><span><strong>See sibling:</strong> <a href="#" onclick="showPanelById('generic-transaction-card');return false;">Generic Transaction Card</a>. Similar "card row" primitive — the two could share a common schema once both are cleaned up. <span class="tag-recommend">Family</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Default — iconSize=64 <span class="spec-card-node">node <code>23:86051</code></span></div>
+      </div>
+      <p class="spec-card-desc">Full-featured row: icon + blurb with tag, heading, 2 description lines, bottom badge, chevron.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="gcard-spec-1"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Width × Height</span><code>360 × 146</code></div>
+          <div class="spec-detail-row"><span>Padding</span><code>16 24 16 12</code></div>
+          <div class="spec-detail-row"><span>Gap (icon ↔ content)</span><code>24</code></div>
+          <div class="spec-detail-row"><span>Gap (content ↔ chevron)</span><code>24</code></div>
+          <div class="spec-detail-row"><span>Bottom border</span><code>1 px</code></div>
+          <div class="spec-detail-row"><span>Icon size</span><code>64 × 64</code></div>
+          <div class="spec-detail-row"><span>Chevron size</span><code>32 × 32</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors by State</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr></thead>
+              <tbody>
+                <tr><td>Surface</td><td><code>card-list/bg</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span><code>#FFFFFF</code></td></tr>
+                <tr><td>Bottom border</td><td><code>card-list/border</code></td><td><span class="swatch-dot" style="background:#E5EBF4"></span><code>#E5EBF4</code></td></tr>
+                <tr><td>Heading</td><td><code>card-list/label-header</code></td><td><span class="swatch-dot" style="background:#0A2757"></span><code>#0A2757</code></td></tr>
+                <tr><td>Blurb</td><td><code>card-list/label-blurb</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code> @ 90%</td></tr>
+                <tr><td>Description label</td><td><code>card-list/label</code></td><td><span class="swatch-dot" style="background:#90A8D0"></span><code>#90A8D0</code></td></tr>
+                <tr><td>Description value</td><td><code>card-list/description</code></td><td><span class="swatch-dot" style="background:#445C85"></span><code>#445C85</code></td></tr>
+                <tr><td>Icon placeholder</td><td class="muted">(not tokenized)</td><td><span class="swatch-dot" style="background:#C2C6CF"></span><code>#C2C6CF</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>Heading</span><code>HeyMeow Rnd Bold · 18 / 23 · +0.25</code></div>
+          <div class="spec-detail-row"><span>Blurb</span><code>HeyMeow Rnd Bold · 14 / 14 · +0.25</code></div>
+          <div class="spec-detail-row"><span>Description</span><code>BarkAda Semibold · 12 / 18 · +0</code></div>
+          <div class="spec-detail-row"><span>Tag label</span><code>HeyMeow Rnd Bold · 12 / 12 · +0.5</code></div>
+          <div class="spec-detail-row"><span>Badge label</span><code>HeyMeow Rnd Bold · 12 / 12 · +0.5</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Composed sub-components</div>
+          <div class="spec-detail-row"><span>Tag</span><code>Badge · Negative · Heavy</code></div>
+          <div class="spec-detail-row"><span>Bottom pill</span><code>Badge · Information · Light</code></div>
+          <div class="spec-detail-row muted"><span>Icon (today)</span><span>Drawn placeholder</span></div>
+          <div class="spec-detail-row muted"><span>Icon (proposed)</span><span>Avatar / Icon slot</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Skeleton — loading state <span class="spec-card-node">node <code>852:52316</code></span></div>
+      </div>
+      <p class="spec-card-desc">The loading pattern for the card. Every content slot becomes a rounded rectangle placeholder in neutral gray. Use while awaiting data.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="gcard-spec-2"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Placeholder color</div>
+          <div class="spec-detail-row"><span>Fill</span><code>#E0E6F2</code></div>
+          <div class="spec-detail-row"><span>Radius</span><code>6 (rects) · 50% (icon circle)</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Best practice</div>
+          <div class="spec-detail-row muted"><span>Animation</span><span>Optional shimmer sweep, 1.2 s ease-in-out</span></div>
+          <div class="spec-detail-row muted"><span>Transition</span><span>Fade skeleton → content on load</span></div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="gcard-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'gcard-install','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'gcard-install','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">.<span class="fn">package</span>(<span class="prp">url</span>: <span class="str">"https://github.com/gcash/eb-design-system-ios"</span>, <span class="prp">from</span>: <span class="str">"1.0.0"</span>)
+
+<span class="kw">import</span> EBDesignSystem</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">implementation(<span class="str">"com.gcash.designsystem:eb-components:1.0.0"</span>)
+
+<span class="kw">import</span> com.gcash.designsystem.components.EBGenericCard</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="gcard-mapping">Property Mapping (Proposed)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma (today)</th><th>Figma (proposed)</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td><code>iconSize: 64 | 52 | 46 | 40 | 32 | 24</code></td><td><code>size: xl | l | m | s</code></td><td><code>.controlSize(.large)</code> etc.</td><td><code>size: EBGenericCardSize</code></td></tr>
+          <tr><td class="muted">(drawn circle)</td><td><code>leadingMedia: Avatar | Icon</code> (slot)</td><td><code>leadingMedia: EBLeadingMedia?</code></td><td><code>leadingMedia: @Composable (() -&gt; Unit)?</code></td></tr>
+          <tr><td class="muted">(hardcoded text)</td><td><code>heading: String</code></td><td><code>heading: String</code></td><td><code>heading: String</code></td></tr>
+          <tr><td><code>hasBlurb</code></td><td><code>blurb?: String</code></td><td><code>blurb: String?</code></td><td><code>blurb: String?</code></td></tr>
+          <tr><td><code>hasTag</code></td><td><code>tag?: Badge</code> (instance)</td><td><code>tag: EBBadge?</code></td><td><code>tag: @Composable (() -&gt; Unit)?</code></td></tr>
+          <tr><td><code>hasSubtitle</code></td><td class="muted">(derived: shown if <code>blurb</code> or <code>tag</code> present)</td><td class="muted">—</td><td class="muted">—</td></tr>
+          <tr><td class="muted">(hardcoded "Description goes here")</td><td><code>descriptions: [LabelValue]</code></td><td><code>descriptions: [EBLabelValue]</code></td><td><code>descriptions: List&lt;EBLabelValue&gt;</code></td></tr>
+          <tr><td><code>has2ndDescription</code></td><td class="muted">(derived: up to N rows rendered)</td><td class="muted">—</td><td class="muted">—</td></tr>
+          <tr><td><code>hasBadge</code></td><td><code>badge?: Badge</code> (instance)</td><td><code>badge: EBBadge?</code></td><td><code>badge: @Composable (() -&gt; Unit)?</code></td></tr>
+          <tr><td><code>hasChevron</code></td><td><code>showChevron: Bool = true</code></td><td><code>showChevron: Bool = true</code></td><td><code>showChevron: Boolean = true</code></td></tr>
+          <tr><td><code>state: Default | skeleton</code></td><td><code>loading: Bool</code></td><td><code>loading: Bool</code></td><td><code>loading: Boolean</code></td></tr>
+          <tr><td class="muted">(not modeled)</td><td><code>onTap?: () -&gt; Void</code></td><td><code>onTap: (() -&gt; Void)?</code></td><td><code>onClick: (() -&gt; Unit)?</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="gcard-paths">Suggested file paths</div>
+    <ul class="resolved-list">
+      <li><code>ios/Components/GenericCard/EBGenericCard.swift</code></li>
+      <li><code>android/components/genericcard/EBGenericCard.kt</code></li>
+    </ul>
+
+    <div class="sub-heading" id="gcard-usage">Usage</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'gcard-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'gcard-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Full-featured row</span>
+<span class="typ">EBGenericCard</span>(
+    <span class="prp">leadingMedia</span>: .<span class="prp">icon</span>(<span class="typ">Image</span>(<span class="str">"send-money"</span>)),
+    <span class="prp">blurb</span>: <span class="str">"PROMO"</span>,
+    <span class="prp">tag</span>: <span class="typ">EBBadge</span>(<span class="str">"New"</span>, state: .negative),
+    <span class="prp">heading</span>: <span class="str">"Send Money Abroad"</span>,
+    <span class="prp">descriptions</span>: [
+        .<span class="fn">init</span>(<span class="prp">label</span>: <span class="str">"Fee:"</span>, <span class="prp">value</span>: <span class="str">"Free for first transfer"</span>),
+        .<span class="fn">init</span>(<span class="prp">label</span>: <span class="str">"Delivery:"</span>, <span class="prp">value</span>: <span class="str">"Same day"</span>)
+    ],
+    <span class="prp">badge</span>: <span class="typ">EBBadge</span>(<span class="str">"Recommended"</span>, state: .information, level: .light)
+) {
+    onRowTap()
+}
+.<span class="prp">controlSize</span>(.<span class="prp">large</span>)
+
+<span class="cmt">// Loading state</span>
+<span class="typ">EBGenericCard</span>.<span class="prp">skeleton</span>(<span class="prp">size</span>: .<span class="prp">large</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Full-featured row</span>
+<span class="typ">EBGenericCard</span>(
+    leadingMedia = { <span class="typ">EBIcon</span>(<span class="typ">EBIcons</span>.SendMoney) },
+    blurb = <span class="str">"PROMO"</span>,
+    tag = { <span class="typ">EBBadge</span>(<span class="str">"New"</span>, state = <span class="typ">EBBadgeState</span>.Negative) },
+    heading = <span class="str">"Send Money Abroad"</span>,
+    descriptions = listOf(
+        <span class="typ">EBLabelValue</span>(<span class="str">"Fee:"</span>, <span class="str">"Free for first transfer"</span>),
+        <span class="typ">EBLabelValue</span>(<span class="str">"Delivery:"</span>, <span class="str">"Same day"</span>)
+    ),
+    badge = { <span class="typ">EBBadge</span>(<span class="str">"Recommended"</span>, state = <span class="typ">EBBadgeState</span>.Information, level = <span class="typ">EBBadgeLevel</span>.Light) },
+    size = <span class="typ">EBGenericCardSize</span>.Large,
+    onClick = { onRowTap() }
+)
+
+<span class="cmt">// Loading state</span>
+<span class="typ">EBGenericCard</span>.Skeleton(size = <span class="typ">EBGenericCardSize</span>.Large)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="gcard-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Row as a button</strong></td><td class="muted">Whole row wrapped in <code>Button</code> with combined <code>accessibilityLabel</code> (heading + blurb + tag).</td><td class="muted"><code>Modifier.clickable { onTap() }.semantics(mergeDescendants = true)</code> on the row.</td></tr>
+          <tr><td><strong>Combined announcement</strong></td><td class="muted">"Send Money Abroad, PROMO, New, Free for first transfer, Same day, Recommended" — VoiceOver reads top-to-bottom.</td><td class="muted">Same reading order — TalkBack follows composition.</td></tr>
+          <tr><td><strong>Loading state</strong></td><td class="muted">Announce "Loading" once on mount; suppress per-placeholder announcements.</td><td class="muted">Apply <code>contentDescription = "Loading"</code> to the skeleton container.</td></tr>
+          <tr><td><strong>Min touch target</strong></td><td class="muted">146 px row height ≫ 44 pt ✓</td><td class="muted">146 dp ≫ 48 dp ✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="gcard-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Use for navigational lists of services, products, or detail entries.</li>
+          <li>Stack vertically into a scrollable list — don't put side-by-side.</li>
+          <li>Show the skeleton variant while data loads — never blank rows.</li>
+          <li>Match <code>iconSize</code> to list density (XL for top-level, S for dense sub-lists).</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't use for transaction history rows — use <a href="#" onclick="showPanelById('generic-transaction-card');return false;">Generic Transaction Card</a>.</li>
+          <li>Don't overload the blurb + tag combo — one accent is enough per row.</li>
+          <li>Don't hide the chevron if the row is tappable — the affordance is the point.</li>
+          <li>Don't mix iconSizes in the same list.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="gcard-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Clean container / content / chevron hierarchy. Tag and bottom pill are Badge instances.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">6 numeric <code>iconSize</code> values — collapse to semantic scale.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors bound to <code>main/card-list/color/*</code> + Badge tokens.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Maps cleanly to a row composable once icon slot + chevron are fixed.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Default + skeleton built. Missing pressed + disabled for a tappable row.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Icon placeholder isn't an instance; chevron is a raster.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked until iconSize rename and icon slot adoption land.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="gcard-variants">Variants Inventory <span class="variants-count">(12 total)</span></div>
+    <p><code>iconSize</code> (6) × <code>state</code> (2) = <strong>12 variants</strong>. The 6 boolean slot props (<code>hasBlurb</code>, <code>hasTag</code>, <code>hasSubtitle</code>, <code>has2ndDescription</code>, <code>hasBadge</code>, <code>hasChevron</code>) toggle content independently and don't multiply the variant count.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>iconSize</th><th>Default node</th><th>Skeleton node</th><th>Dimensions</th></tr></thead>
+        <tbody>
+          <tr><td><strong>64</strong></td><td><code>23:86051</code></td><td><code>852:52316</code></td><td>360 × 146</td></tr>
+          <tr><td><strong>52</strong></td><td><code>23:86076</code></td><td><code>915:32965</code></td><td>360 × 146</td></tr>
+          <tr><td><strong>46</strong></td><td><code>23:86101</code></td><td><code>915:32978</code></td><td>360 × 146</td></tr>
+          <tr><td><strong>40</strong></td><td><code>23:86126</code></td><td><code>915:32991</code></td><td>360 × 146</td></tr>
+          <tr><td><strong>32</strong></td><td><code>23:86151</code></td><td><code>915:33328</code></td><td>360 × 146</td></tr>
+          <tr><td><strong>24</strong></td><td><code>23:86176</code></td><td><code>915:33315</code></td><td>360 × 146</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 23:86050</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Fix</strong> — Collapse iconSize to semantic scale, swap icon placeholder for a slot, vectorize the chevron, add pressed state. <span class="tag-open tag-c2 tag-c5 tag-c6">Open</span></div><span class="changelog-delta delta-open">Schema</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Skeleton pattern acknowledged</strong> — First-class loading variant is rare and valuable. Adopt this pattern across the card/row family. <span class="tag-fixed">Noted</span></div><span class="changelog-delta delta-resolved">Praise</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — iconSize collapse</strong> — 6 numeric values → 4 semantic sizes (xl/l/m/s). <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C6 — Icon slot + vector chevron</strong> — Adopt Figma Slot for leading media; vectorize chevron. <span class="tag-open tag-c6">Open</span></div><span class="changelog-delta delta-open">C6</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C5 — Pressed / disabled</strong> — Tappable row needs both. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C7 — Code Connect</strong> — Blocked on above. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-generic-card">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-generic-card"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Generic Card JS ────────────────────────────────────────────── */
+/* Pixel-accurate replica of node 23:86050. Content is editable via
+   panel inputs. 8 properties toggle slots independently (matches
+   Figma's non-variant boolean props).                               */
+
+function _gcardChevronSvg() {
+  return '<svg class="eb-preview-gcard__chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+    '<path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+  '</svg>';
+}
+
+function _gcardEscape(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function _gcardRender(opts) {
+  var iconSize    = opts.iconSize || '64';
+  var state       = opts.state || 'default';
+  var hasSubtitle = opts.hasSubtitle !== 'no';
+  var hasBlurb    = opts.hasBlurb !== 'no';
+  var hasTag      = opts.hasTag !== 'no';
+  var has2desc    = opts.has2desc !== 'no';
+  var hasBadge    = opts.hasBadge !== 'no';
+  var hasChevron  = opts.hasChevron !== 'no';
+
+  var blurb   = opts.blurb || 'Blurb';
+  var tag     = opts.tag || 'Tag';
+  var heading = opts.heading || 'Heading Goes Here';
+  var desc    = opts.desc || 'Description goes here';
+  var badge   = opts.badge || 'Label';
+
+  if (state === 'skeleton') {
+    return '<div class="eb-preview eb-preview-gcard eb-preview-gcard--skeleton">' +
+      '<div class="eb-preview-gcard__icon eb-preview-gcard__icon--' + iconSize + '"></div>' +
+      '<div class="eb-preview-gcard__content">' +
+        '<div class="eb-preview-gcard__sk eb-preview-gcard__sk--tag"></div>' +
+        '<div class="eb-preview-gcard__sk eb-preview-gcard__sk--heading"></div>' +
+        '<div class="eb-preview-gcard__sk eb-preview-gcard__sk--desc"></div>' +
+        '<div class="eb-preview-gcard__sk eb-preview-gcard__sk--desc2"></div>' +
+        '<div class="eb-preview-gcard__sk eb-preview-gcard__sk--badge"></div>' +
+      '</div>' +
+      '<div class="eb-preview-gcard__sk eb-preview-gcard__sk--chevron"></div>' +
+    '</div>';
+  }
+
+  var html = '<div class="eb-preview eb-preview-gcard">';
+  html += '<div class="eb-preview-gcard__icon eb-preview-gcard__icon--' + iconSize + '"></div>';
+  html += '<div class="eb-preview-gcard__content">';
+
+  if (hasSubtitle && (hasBlurb || hasTag)) {
+    html += '<div class="eb-preview-gcard__subtitle">';
+    if (hasBlurb) html += '<span class="eb-preview-gcard__blurb">' + _gcardEscape(blurb) + '</span>';
+    if (hasTag)   html += '<span class="eb-preview-gcard__tag">' + _gcardEscape(tag) + '</span>';
+    html += '</div>';
+  }
+
+  html += '<p class="eb-preview-gcard__heading">' + _gcardEscape(heading) + '</p>';
+
+  html += '<p class="eb-preview-gcard__desc-line eb-preview-gcard__desc-line--first">' +
+    '<span class="eb-preview-gcard__desc-label">Label:</span>' +
+    '<span class="eb-preview-gcard__desc-value">' + _gcardEscape(desc) + '</span>' +
+  '</p>';
+
+  if (has2desc) {
+    html += '<p class="eb-preview-gcard__desc-line">' +
+      '<span class="eb-preview-gcard__desc-label">Label:</span>' +
+      '<span class="eb-preview-gcard__desc-value">' + _gcardEscape(desc) + '</span>' +
+    '</p>';
+  }
+
+  if (hasBadge) {
+    html += '<span class="eb-preview-gcard__badge">' + _gcardEscape(badge) + '</span>';
+  }
+
+  html += '</div>';
+
+  if (hasChevron) {
+    html += '<div class="eb-preview-gcard__chevron-wrap">' + _gcardChevronSvg() + '</div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function _gcardContextMarkup() {
+  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm">' +
+    _gcardRender({iconSize:'64', state:'default', hasSubtitle:'yes', hasBlurb:'yes', hasTag:'yes', has2desc:'yes', hasBadge:'yes', hasChevron:'yes', blurb:'PROMO', tag:'New', heading:'Send Money Abroad', desc:'Same day delivery', badge:'Recommended'}) +
+    _gcardRender({iconSize:'52', state:'default', hasSubtitle:'yes', hasBlurb:'yes', hasTag:'no', has2desc:'yes', hasBadge:'no', hasChevron:'yes', blurb:'BILLS', heading:'Pay Bills', desc:'Over 500 billers supported'}) +
+    _gcardRender({iconSize:'40', state:'skeleton'}) +
+  '</div>';
+}
+
+function _gcardUpdate() {
+  var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
+  var preview = document.getElementById('gcard-demo-preview');
+  if (!preview) return;
+  preview.innerHTML = _gcardRender({
+    iconSize:    getVal('gcard-ctrl-iconsize', '64'),
+    state:       getVal('gcard-ctrl-state', 'default'),
+    hasSubtitle: getVal('gcard-ctrl-hassubtitle', 'yes'),
+    hasBlurb:    getVal('gcard-ctrl-hasblurb', 'yes'),
+    hasTag:      getVal('gcard-ctrl-hastag', 'yes'),
+    has2desc:    getVal('gcard-ctrl-has2desc', 'yes'),
+    hasBadge:    getVal('gcard-ctrl-hasbadge', 'yes'),
+    hasChevron:  getVal('gcard-ctrl-haschevron', 'yes'),
+    blurb:       getVal('gcard-ctrl-blurb', 'Blurb'),
+    tag:         getVal('gcard-ctrl-tag', 'Tag'),
+    heading:     getVal('gcard-ctrl-heading', 'Heading Goes Here'),
+    desc:        getVal('gcard-ctrl-desc', 'Description goes here'),
+    badge:       getVal('gcard-ctrl-badge', 'Label')
+  });
+}
+
+function _gcardInit() {
+  var ctx = document.getElementById('gcard-context-preview');
+  if (ctx) ctx.innerHTML = _gcardContextMarkup();
+  _gcardUpdate();
+
+  var s1 = document.getElementById('gcard-spec-1');
+  if (s1) s1.innerHTML = _gcardRender({iconSize:'64', state:'default', hasSubtitle:'yes', hasBlurb:'yes', hasTag:'yes', has2desc:'yes', hasBadge:'yes', hasChevron:'yes'});
+
+  var s2 = document.getElementById('gcard-spec-2');
+  if (s2) s2.innerHTML = _gcardRender({iconSize:'64', state:'skeleton'});
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _gcardInit);
+else _gcardInit();
+</script>
+
+<!--@section-end-->

@@ -1,0 +1,808 @@
+<!--
+  ALERT COMPONENT ASSESSMENT
+  Inline notification primitive. 20 variants across Type × Full Width × Left Icon × Right Icon × Description.
+  Two structurally different layouts (banner vs accent card) share one component today.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 18444:2012
+ds-verdict: fix
+native-status: refine
+variants: 20
+ios: Custom EBAlert view — inline banner / card
+android: Custom EBAlert composable (Material 3 Banner as reference)
+open-issues: C1,C2,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] Four booleans use `yes`/`no` strings with inconsistent casing (`No` in one variant, `no`/`yes` elsewhere).
+[C2] `Type=Default` is a neutral appearance mixed in with the semantic set (Information / Warning / Error / Success).
+[C1] Two structurally different layouts (full-width banner vs bordered accent card) share one component — the axis that separates them is named `Full Width` which hides the real difference (border accent + action).
+[C6] Left-icon slot is a 24 × 24 `icon-placeholder` circle, not a swappable Icon instance.
+<!--@patterns-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-alert" onclick="showPanel('alert', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Alert</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('alert')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="4" y="8" width="72" height="10" rx="2" fill="#E5F1FF"/>
+      <rect x="4" y="8" width="3" height="10" fill="#005CE5"/>
+      <rect x="11" y="11" width="30" height="3" rx="1" fill="#072592"/>
+      <circle cx="68" cy="13" r="3" stroke="#2340A9" stroke-width="1.2" fill="none"/>
+      <rect x="4" y="22" width="72" height="10" rx="2" fill="#FFF9EB"/>
+      <rect x="11" y="25" width="34" height="3" rx="1" fill="#6C5009"/>
+      <path d="M66 29l2-3 2 3z" fill="#966F0B"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Alert</div>
+      <span class="badge badge-fix">Fix</span>
+    </div>
+    <div class="summary-card-desc">Inline notification in 5 types (Default / Information / Warning / Error / Success). 20 variants mix two layouts (banner + accent card) under one component — property schema needs cleanup.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Alert</strong></td>
+  <td><span class="badge badge-fix">Fix</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">20</td>
+  <td class="muted">Banner + accent card conflated under one component. 4 booleans use <code>yes/no</code> (with inconsistent casing). Left-icon placeholder; no dismiss state.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-alert">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Alert
+          <span class="badge badge-fix">Fix</span>
+          <span class="badge badge-refine">Refine</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18444-2012" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">An inline notification primitive. 20 variants spanning <code>Type</code> (Default / Information / Warning / Error / Success) × <code>Full Width</code> × <code>Left Icon</code> × <code>Right Icon</code> × <code>Description</code>. Today the <code>Full Width</code> boolean actually switches between two structurally different layouts: a flat inline banner (full-width) and a bordered accent card with a "Learn More" action (non-full-width).</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Fix — clarify property schema before native handoff</div>
+          <div class="verdict-inline-text">Normalize boolean values, replace the placeholder left-icon with a swappable slot, and expose an explicit <code>style = banner | card</code> (or split into two components) so the two layouts aren't hidden behind a <code>fullWidth</code> boolean. Add a dismiss contract while you're in there.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="alert-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'alert-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'alert-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'alert-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'alert-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="alert-in-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Alerts sit inline in forms, payment flows, and detail screens to communicate status, validation, or supplementary guidance. The accent-card style is often used for onboarding tips; the banner style is used for transient validation.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="alert-context-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="alert-preview">Live Preview</div>
+    <p class="section-desc">Type into the title and description to stress-test the layout. Flip <code>Full Width</code> to see the two layouts — the non-full-width "card" style always ships a Learn More action and a right icon (it's really a different component dressed up as a variant, per Open Issues).</p>
+    <div class="demo-panel" id="alert-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="alert-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Content</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">title</span>
+              <input type="text" id="alert-ctrl-title" class="demo-panel-select demo-panel-input" value="This is for the title." oninput="_alertUpdate()" placeholder="Title text">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">description</span>
+              <input type="text" id="alert-ctrl-desc" class="demo-panel-select demo-panel-input" value="This is the description. Put the description here." oninput="_alertUpdate()" placeholder="Description text">
+            </div>
+          </div>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Type</span>
+              <select id="alert-ctrl-type" class="demo-panel-select" onchange="_alertUpdate()">
+                <option value="neutral">Default</option>
+                <option value="information" selected>Information</option>
+                <option value="warning">Warning</option>
+                <option value="error">Error</option>
+                <option value="success">Success</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Full Width</span>
+              <select id="alert-ctrl-fullwidth" class="demo-panel-select" onchange="_alertUpdate()">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Left Icon</span>
+              <select id="alert-ctrl-lefticon" class="demo-panel-select" onchange="_alertUpdate()">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Right Icon</span>
+              <select id="alert-ctrl-righticon" class="demo-panel-select" onchange="_alertUpdate()">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Description</span>
+              <select id="alert-ctrl-showdesc" class="demo-panel-select" onchange="_alertUpdate()">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="alert-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Generic notification primitive — drops into forms, detail screens, and flows across the app.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Owns its colors, spacing, and typography tokens. But the Learn More action is drawn in-place — not an instance of Text Button — so it can't inherit pressed/disabled states.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Boolean properties use <code>yes/no</code> strings with inconsistent casing (<code>No</code> vs <code>no</code>). <code>Type=Default</code> mixes a neutral appearance into an otherwise-semantic set.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Composes into forms fine, but the left-icon slot is a hardcoded placeholder circle — can't swap in an icon from the DS icon library.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="alert-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Behavior</th><th class="center">iOS</th><th class="center">Android</th><th>Figma Spec</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Show / hide</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="muted">Not modeled</td><td class="muted">Alerts fade/slide in on mount. Host-screen concern, not component state.</td></tr>
+          <tr><td><strong>Action tap (Learn More)</strong></td><td class="center muted">Drawn</td><td class="center muted">Drawn</td><td class="muted">No button</td><td class="muted">Learn More text + chevron is a drawn element — no pressed state. Should be a Text Button instance.</td></tr>
+          <tr><td><strong>Dismiss (X close)</strong></td><td class="center muted">Missing</td><td class="center muted">Missing</td><td class="muted">Not built</td><td class="muted">Dismissable alerts need an X button + <code>onDismiss</code> callback. Not modeled today.</td></tr>
+          <tr><td><strong>A11y announcement</strong></td><td class="center muted">Implicit</td><td class="center muted">Implicit</td><td class="muted">Not annotated</td><td class="muted">Error alerts should announce as <code>role="alert"</code> / <code>LiveRegion.Assertive</code>. Informational use <code>role="status"</code> / <code>LiveRegion.Polite</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="alert-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Boolean properties use <code>yes/no</code> strings.</strong> <code>Full Width</code>, <code>Left Icon</code>, <code>Right Icon</code>, <code>Description</code> — and <code>Full Width</code> has inconsistent casing (<code>No</code> on the non-full-width Information variant, <code>no</code> elsewhere). Blocks direct Swift <code>Bool</code> / Kotlin <code>Boolean</code> mapping. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Two layouts hidden behind <code>Full Width</code>.</strong> Non-full-width variants are accent cards (left border + Learn More action); full-width variants are flat banners. The axis name describes the width, not the real structural difference. Either split into two components or rename to <code>style = banner | card</code>. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong><code>Type=Default</code> mixes with semantic types.</strong> Default is a neutral appearance; Information / Warning / Error / Success are semantic statuses. Mixing them in one enum blurs the mental model. Rename to <code>Neutral</code> or put it on a separate axis. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Left-icon slot is a placeholder circle.</strong> 24 × 24 gray <code>icon-placeholder</code> — not swappable via instance-swap. Consumers can't drop in a real Icon from the DS icon library. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>No dismiss / close state.</strong> Dismissable alerts are a standard pattern (X button on the right, <code>onDismiss</code> callback). Not modeled in any of the 20 variants. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Learn More action is drawn in-place.</strong> Text + chevron aren't a real Text Button instance — no pressed or disabled state coverage, can't swap in "Try again", "View details", etc. without editing the master. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked until schema cleanup and slot adoption land. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="alert-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Normalize boolean values and casing.</strong> <code>Full Width</code> / <code>Left Icon</code> / <code>Right Icon</code> / <code>Description</code> → <code>true/false</code>. Eliminates the <code>No</code>/<code>no</code> casing bug. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Expose <code>style = banner | card</code>.</strong> Makes the real difference explicit: <code>card</code> has the left-border accent + action link, <code>banner</code> is the flat inline surface. Either this, or split into two components (<code>AlertBanner</code> + <code>AlertCard</code>). <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Rename <code>Type=Default</code> to <code>Neutral</code>.</strong> Disambiguates from "the default / unset value" and matches the semantic naming of its siblings. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Replace the left-icon placeholder with a swappable Icon slot.</strong> Adopt Figma Slots so product teams can drop in any Icon from the DS library without editing the master. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Add a dismissable variant</strong> with an X icon on the right and an <code>onDismiss</code> callback contract. Pairs with a default timeout for transient alerts. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Promote the Learn More action to a Text Button slot.</strong> Gains pressed / disabled states automatically, and lets consumers swap copy ("View details", "Try again", "Undo") without editing the master. Same pattern Button will have once trailing slots ship. <span class="tag-recommend">Composition</span></span></li>
+      <li><span><strong>Document the A11y live-region mapping.</strong> Error alerts should announce as assertive; informational alerts as polite. Spell this out in the component spec so engineers wire the right roles. <span class="tag-recommend">A11y</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Banner — Information <span class="spec-card-node">node <code>18444:2087</code></span></div>
+      </div>
+      <p class="spec-card-desc">Flat inline banner. 360 wide, 12 × 16 padding, 4 px radius, soft shadow. Optional left icon, optional right icon, optional description.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="alert-spec-1"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-detail-row"><span>Type</span><code>Information</code></div>
+          <div class="spec-detail-row"><span>Full Width</span><code>yes</code></div>
+          <div class="spec-detail-row"><span>Left Icon</span><code>no</code></div>
+          <div class="spec-detail-row"><span>Right Icon</span><code>yes</code></div>
+          <div class="spec-detail-row"><span>Description</span><code>yes</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors (Information)</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr></thead>
+              <tbody>
+                <tr><td>Surface</td><td><code>info/bg</code></td><td><span class="swatch-dot" style="background:#E5F1FF;border:1px solid #CFE0F5"></span><code>#E5F1FF</code></td></tr>
+                <tr><td>Title</td><td><code>info/label-title</code></td><td><span class="swatch-dot" style="background:#072592"></span><code>#072592</code></td></tr>
+                <tr><td>Description</td><td><code>info/description</code></td><td><span class="swatch-dot" style="background:#072592"></span><code>#072592</code> @ 80%</td></tr>
+                <tr><td>Icon</td><td><code>info/icon</code></td><td><span class="swatch-dot" style="background:#2340A9"></span><code>#2340A9</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Width</span><code>360</code></div>
+          <div class="spec-detail-row"><span>Padding (desc=yes)</span><code>12 × 16</code></div>
+          <div class="spec-detail-row"><span>Padding (desc=no)</span><code>12 × 16</code></div>
+          <div class="spec-detail-row"><span>Corner radius</span><code>4</code></div>
+          <div class="spec-detail-row"><span>Shadow</span><code>0 1 3 rgba(232,238,242,.79)</code></div>
+          <div class="spec-detail-row"><span>Gap (icon ↔ content)</span><code>8</code></div>
+          <div class="spec-detail-row"><span>Right icon size</span><code>24 × 24</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>Title style</span><code>Primary/Multi-line Label/Base</code></div>
+          <div class="spec-detail-row"><span>Title font</span><code>HeyMeow Rnd Bold</code></div>
+          <div class="spec-detail-row"><span>Title size</span><code>16 / 20 · +0.25</code></div>
+          <div class="spec-detail-row"><span>Desc style</span><code>Secondary/Bold/Caption</code></div>
+          <div class="spec-detail-row"><span>Desc font</span><code>BarkAda Semibold</code></div>
+          <div class="spec-detail-row"><span>Desc size</span><code>12 / 18 · +0</code></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Accent Card — Information <span class="spec-card-node">node <code>18444:2019</code></span></div>
+      </div>
+      <p class="spec-card-desc">Card with a 6 px left-border accent. Always ships a right icon + Learn More action + description. Title is larger (18 / 23) than the banner.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="alert-spec-2"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-detail-row"><span>Type</span><code>Information</code></div>
+          <div class="spec-detail-row"><span>Full Width</span><code>No</code></div>
+          <div class="spec-detail-row"><span>Left Icon</span><code>no</code></div>
+          <div class="spec-detail-row"><span>Right Icon</span><code>yes</code></div>
+          <div class="spec-detail-row"><span>Description</span><code>yes</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Additional colors</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr></thead>
+              <tbody>
+                <tr><td>Left-border accent</td><td><code>info/border</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td></tr>
+                <tr><td>Link label</td><td><code>info/label-link</code></td><td><span class="swatch-dot" style="background:#072592"></span><code>#072592</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Width</span><code>360</code></div>
+          <div class="spec-detail-row"><span>Padding</span><code>4 16 16 20</code></div>
+          <div class="spec-detail-row"><span>Left border</span><code>6 px solid accent</code></div>
+          <div class="spec-detail-row"><span>Corner radius</span><code>4</code></div>
+          <div class="spec-detail-row"><span>Right icon size</span><code>32 × 32</code></div>
+          <div class="spec-detail-row"><span>Chevron size</span><code>16 × 16</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography (card)</div>
+          <div class="spec-detail-row"><span>Title style</span><code>Primary/Headlines/Block</code></div>
+          <div class="spec-detail-row"><span>Title size</span><code>18 / 23 · +0.25</code></div>
+          <div class="spec-detail-row"><span>Learn More size</span><code>12 / 18 · +0</code></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Colors by Type <span class="spec-card-node">5 types × token set</span></div>
+      </div>
+      <p class="spec-card-desc">All five types share the same token structure: <code>main/alert/color/{type}/{bg, border, label-title, description, icon, label-link}</code>. The values below document the full palette.</p>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col spec-detail-full">
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>TYPE</th><th>BG</th><th>BORDER</th><th>TITLE</th><th>DESCRIPTION</th><th>ICON</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>Default (Neutral)</strong></td>
+                  <td><span class="swatch-dot" style="background:#F6F9FD;border:1px solid #E5EBF4"></span><code>#F6F9FD</code></td>
+                  <td class="muted">—</td>
+                  <td><span class="swatch-dot" style="background:#0A2757"></span><code>#0A2757</code></td>
+                  <td><span class="swatch-dot" style="background:#6780A9"></span><code>#6780A9</code></td>
+                  <td class="muted">—</td>
+                </tr>
+                <tr>
+                  <td><strong>Information</strong></td>
+                  <td><span class="swatch-dot" style="background:#E5F1FF;border:1px solid #CFE0F5"></span><code>#E5F1FF</code></td>
+                  <td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td>
+                  <td><span class="swatch-dot" style="background:#072592"></span><code>#072592</code></td>
+                  <td><span class="swatch-dot" style="background:#072592"></span><code>#072592</code> @ 80%</td>
+                  <td><span class="swatch-dot" style="background:#2340A9"></span><code>#2340A9</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Warning</strong></td>
+                  <td><span class="swatch-dot" style="background:#FFF9EB;border:1px solid #F2E2B5"></span><code>#FFF9EB</code></td>
+                  <td><span class="swatch-dot" style="background:#EBB30A"></span><code>#EBB30A</code></td>
+                  <td><span class="swatch-dot" style="background:#6C5009"></span><code>#6C5009</code></td>
+                  <td><span class="swatch-dot" style="background:#966F0B"></span><code>#966F0B</code></td>
+                  <td><span class="swatch-dot" style="background:#966F0B"></span><code>#966F0B</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Error</strong></td>
+                  <td><span class="swatch-dot" style="background:#F8E6E6;border:1px solid #EABEBE"></span><code>#F8E6E6</code></td>
+                  <td><span class="swatch-dot" style="background:#D61B2C"></span><code>#D61B2C</code></td>
+                  <td><span class="swatch-dot" style="background:#D61B2C"></span><code>#D61B2C</code></td>
+                  <td><span class="swatch-dot" style="background:#D61B2C"></span><code>#D61B2C</code></td>
+                  <td><span class="swatch-dot" style="background:#B50707"></span><code>#B50707</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Success</strong></td>
+                  <td><span class="swatch-dot" style="background:#E7F8F0;border:1px solid #BEE8D7"></span><code>#E7F8F0</code></td>
+                  <td><span class="swatch-dot" style="background:#27C990"></span><code>#27C990</code></td>
+                  <td><span class="swatch-dot" style="background:#035E50"></span><code>#035E50</code></td>
+                  <td><span class="swatch-dot" style="background:#035E50"></span><code>#035E50</code></td>
+                  <td><span class="swatch-dot" style="background:#035E50"></span><code>#035E50</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="alert-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'alert-install','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'alert-install','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">.<span class="fn">package</span>(<span class="prp">url</span>: <span class="str">"https://github.com/gcash/eb-design-system-ios"</span>, <span class="prp">from</span>: <span class="str">"1.0.0"</span>)
+
+<span class="kw">import</span> EBDesignSystem</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">implementation(<span class="str">"com.gcash.designsystem:eb-components:1.0.0"</span>)
+
+<span class="kw">import</span> com.gcash.designsystem.components.EBAlert</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="alert-mapping">Property Mapping (Proposed)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma (today)</th><th>Figma (proposed)</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td><code>Type: Default | Information | Warning | Error | Success</code></td><td><code>type: neutral | information | warning | error | success</code></td><td><code>type: EBAlertType</code></td><td><code>type: EBAlertType</code></td></tr>
+          <tr><td><code>Full Width: yes | No</code></td><td><code>style: banner | card</code></td><td><code>.ebAlertStyle(.banner)</code> modifier</td><td><code>style: EBAlertStyle</code></td></tr>
+          <tr><td><code>Left Icon: yes | no</code></td><td><code>leadingIcon?: Icon</code> (slot)</td><td><code>leadingIcon: Image?</code></td><td><code>leadingIcon: @Composable (() -&gt; Unit)?</code></td></tr>
+          <tr><td><code>Right Icon: yes | no</code></td><td><code>trailingIcon?: Icon</code> (slot, auto for semantic types)</td><td><code>trailingIcon: Image?</code></td><td><code>trailingIcon: @Composable (() -&gt; Unit)?</code></td></tr>
+          <tr><td><code>Description: yes | no</code></td><td><code>description?: String</code></td><td><code>description: String?</code></td><td><code>description: String?</code></td></tr>
+          <tr><td class="muted">(implicit)</td><td><code>title: String</code></td><td><code>title: String</code></td><td><code>title: String</code></td></tr>
+          <tr><td class="muted">(not modeled)</td><td><code>action?: TextButton</code> (card only)</td><td><code>action: EBTextButton?</code></td><td><code>action: @Composable (() -&gt; Unit)?</code></td></tr>
+          <tr><td class="muted">(not modeled)</td><td><code>onDismiss?: () -&gt; Void</code></td><td><code>onDismiss: (() -&gt; Void)?</code></td><td><code>onDismiss: (() -&gt; Unit)?</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="alert-paths">Suggested file paths</div>
+    <ul class="resolved-list">
+      <li><code>ios/Components/Alert/EBAlert.swift</code></li>
+      <li><code>android/components/alert/EBAlert.kt</code></li>
+    </ul>
+
+    <div class="sub-heading" id="alert-usage">Usage</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'alert-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'alert-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Inline banner — most common form</span>
+<span class="typ">EBAlert</span>(
+    <span class="prp">type</span>: .<span class="prp">information</span>,
+    <span class="prp">title</span>: <span class="str">"Your ID is being reviewed"</span>,
+    <span class="prp">description</span>: <span class="str">"We'll notify you within 24 hours."</span>,
+    <span class="prp">trailingIcon</span>: <span class="typ">Image</span>(<span class="str">"info.circle"</span>)
+)
+.<span class="prp">ebAlertStyle</span>(.<span class="prp">banner</span>)
+
+<span class="cmt">// Accent card — with action</span>
+<span class="typ">EBAlert</span>(
+    <span class="prp">type</span>: .<span class="prp">warning</span>,
+    <span class="prp">title</span>: <span class="str">"Transaction limit approaching"</span>,
+    <span class="prp">description</span>: <span class="str">"You've used 80% of this month's ₱50,000 limit."</span>,
+    <span class="prp">action</span>: <span class="typ">EBTextButton</span>(<span class="str">"Learn more"</span>, trailing: .<span class="prp">chevron</span>)
+)
+.<span class="prp">ebAlertStyle</span>(.<span class="prp">card</span>)
+
+<span class="cmt">// Dismissable</span>
+<span class="typ">EBAlert</span>(
+    <span class="prp">type</span>: .<span class="prp">success</span>,
+    <span class="prp">title</span>: <span class="str">"Transfer completed"</span>,
+    <span class="prp">onDismiss</span>: { showAlert = <span class="kw">false</span> }
+)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Inline banner — most common form</span>
+<span class="typ">EBAlert</span>(
+    type = <span class="typ">EBAlertType</span>.Information,
+    title = <span class="str">"Your ID is being reviewed"</span>,
+    description = <span class="str">"We'll notify you within 24 hours."</span>,
+    trailingIcon = { <span class="typ">Icon</span>(<span class="typ">EBIcons</span>.Info, contentDescription = <span class="kw">null</span>) },
+    style = <span class="typ">EBAlertStyle</span>.Banner
+)
+
+<span class="cmt">// Accent card — with action</span>
+<span class="typ">EBAlert</span>(
+    type = <span class="typ">EBAlertType</span>.Warning,
+    title = <span class="str">"Transaction limit approaching"</span>,
+    description = <span class="str">"You've used 80% of this month's ₱50,000 limit."</span>,
+    action = { <span class="typ">EBTextButton</span>(<span class="str">"Learn more"</span>, trailingIcon = <span class="typ">EBIcons</span>.ChevronRight, onClick = onLearnMore) },
+    style = <span class="typ">EBAlertStyle</span>.Card
+)
+
+<span class="cmt">// Dismissable</span>
+<span class="typ">EBAlert</span>(
+    type = <span class="typ">EBAlertType</span>.Success,
+    title = <span class="str">"Transfer completed"</span>,
+    onDismiss = { showAlert = <span class="kw">false</span> }
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="alert-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Live region — error</strong></td><td class="muted">Post <code>UIAccessibility.Notification.announcement</code> with <code>.high</code> priority on mount.</td><td class="muted"><code>Modifier.semantics { liveRegion = LiveRegionMode.Assertive }</code> on the container.</td></tr>
+          <tr><td><strong>Live region — info / success</strong></td><td class="muted">Post announcement with default priority.</td><td class="muted"><code>LiveRegionMode.Polite</code> on the container.</td></tr>
+          <tr><td><strong>Action label</strong></td><td class="muted">Text Button inside action slot owns its own label + hint.</td><td class="muted">Text Button inside action slot owns its own <code>contentDescription</code>.</td></tr>
+          <tr><td><strong>Dismiss button</strong></td><td class="muted">Icon Button with <code>accessibilityLabel: "Dismiss"</code>.</td><td class="muted">Icon Button with <code>contentDescription = "Dismiss"</code>.</td></tr>
+          <tr><td><strong>Color contrast</strong></td><td class="muted">All title/description colors on their type-surface tested to ≥4.5:1. Verified in variable defs.</td><td class="muted">Same ratios apply.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="alert-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Use inline banners for transient feedback (validation errors, success confirmations).</li>
+          <li>Use accent cards for persistent guidance (onboarding tips, limit warnings).</li>
+          <li>Pair an error alert with focus management — move keyboard focus to the alert on mount.</li>
+          <li>Keep copy short: title is one sentence; description is 1–2 lines.</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't stack more than one alert per section — consolidate or prioritize.</li>
+          <li>Don't use alerts for in-line field validation — use the field's error state.</li>
+          <li>Don't mix semantic types in the same screen region (e.g. info + warning side-by-side) — it dilutes meaning.</li>
+          <li>Don't draw a "dismiss" X manually — use the dismissable variant (once added).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="alert-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Two layouts (banner + card) hidden behind <code>Full Width</code> — rename to <code>style</code> or split.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Booleans <code>yes/no</code> with inconsistent casing; <code>Type=Default</code> mixes with semantic types.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All 5 types fully tokenized under <code>main/alert/color/*</code>.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Maps cleanly to a custom <code>EBAlert</code> view / composable once schema cleans up.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">No dismiss state; Learn More isn't a real button — no pressed coverage.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Left-icon slot is a placeholder circle — adopt a Figma Slot.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked until schema cleanup + slot adoption land.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="alert-variants">Variants Inventory <span class="variants-count">(20 total)</span></div>
+    <p><code>Type</code> (5) × layout combos = <strong>20 built variants</strong> out of 2<sup>4</sup> × 5 = 80 theoretical combinations.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Group</th><th>Count</th><th>Axes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Accent card</strong></td><td>4</td><td class="muted">fullWidth=No, L=no, R=yes, desc=yes · Information / Warning / Error / Success</td></tr>
+          <tr><td><strong>Banner — right icon, desc</strong></td><td>5</td><td class="muted">fullWidth=yes, L=no, R=yes, desc=yes · all 5 types</td></tr>
+          <tr><td><strong>Banner — left icon, desc</strong></td><td>5</td><td class="muted">fullWidth=yes, L=yes, R=no, desc=yes · all 5 types</td></tr>
+          <tr><td><strong>Banner — left icon, no desc</strong></td><td>5</td><td class="muted">fullWidth=yes, L=yes, R=no, desc=no · all 5 types</td></tr>
+          <tr><td><strong>Default — full width, no icons, with desc</strong></td><td>1</td><td class="muted">fullWidth=yes, L=no, R=no, desc=yes · Default only</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details style="margin-top:16px;">
+      <summary style="cursor:pointer;padding:8px 12px;background:var(--row-hover,#F4F6FA);border-radius:6px;font-weight:600;font-size:13px;color:var(--text,#0A1628);user-select:none;">View full breakdown (20 rows)</summary>
+      <div class="table-wrap" style="margin-top:12px;">
+        <table>
+          <thead><tr><th>#</th><th>Node</th><th>Type</th><th>Full Width</th><th>Left Icon</th><th>Right Icon</th><th>Description</th><th>Dimensions</th></tr></thead>
+          <tbody>
+            <tr><td class="mono center">1</td><td><code>18444:2013</code></td><td>Default</td><td>yes</td><td>no</td><td>no</td><td>yes</td><td>360 × 86</td></tr>
+            <tr><td class="mono center">2</td><td><code>18444:2019</code></td><td>Information</td><td>No</td><td>no</td><td>yes</td><td>yes</td><td>360 × 138</td></tr>
+            <tr><td class="mono center">3</td><td><code>18444:2033</code></td><td>Warning</td><td>No</td><td>no</td><td>yes</td><td>yes</td><td>360 × 138</td></tr>
+            <tr><td class="mono center">4</td><td><code>18444:2047</code></td><td>Error</td><td>No</td><td>no</td><td>yes</td><td>yes</td><td>360 × 138</td></tr>
+            <tr><td class="mono center">5</td><td><code>18444:2065</code></td><td>Success</td><td>No</td><td>no</td><td>yes</td><td>yes</td><td>360 × 138</td></tr>
+            <tr><td class="mono center">6</td><td><code>18444:2083</code></td><td>Default</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>360 × 48</td></tr>
+            <tr><td class="mono center">7</td><td><code>18444:2087</code></td><td>Information</td><td>yes</td><td>no</td><td>yes</td><td>yes</td><td>360 × 60</td></tr>
+            <tr><td class="mono center">8</td><td><code>18444:2096</code></td><td>Warning</td><td>yes</td><td>no</td><td>yes</td><td>yes</td><td>360 × 60</td></tr>
+            <tr><td class="mono center">9</td><td><code>18444:2105</code></td><td>Error</td><td>yes</td><td>no</td><td>yes</td><td>yes</td><td>360 × 60</td></tr>
+            <tr><td class="mono center">10</td><td><code>18444:2118</code></td><td>Success</td><td>yes</td><td>no</td><td>yes</td><td>yes</td><td>360 × 60</td></tr>
+            <tr><td class="mono center">11</td><td><code>18444:2131</code></td><td>Default</td><td>yes</td><td>yes</td><td>no</td><td>yes</td><td>360 × 84</td></tr>
+            <tr><td class="mono center">12</td><td><code>18444:2138</code></td><td>Information</td><td>yes</td><td>yes</td><td>no</td><td>yes</td><td>360 × 84</td></tr>
+            <tr><td class="mono center">13</td><td><code>18444:2145</code></td><td>Warning</td><td>yes</td><td>yes</td><td>no</td><td>yes</td><td>360 × 84</td></tr>
+            <tr><td class="mono center">14</td><td><code>18444:2152</code></td><td>Error</td><td>yes</td><td>yes</td><td>no</td><td>yes</td><td>360 × 84</td></tr>
+            <tr><td class="mono center">15</td><td><code>18444:2159</code></td><td>Success</td><td>yes</td><td>yes</td><td>no</td><td>yes</td><td>360 × 84</td></tr>
+            <tr><td class="mono center">16</td><td><code>18444:2166</code></td><td>Default</td><td>yes</td><td>yes</td><td>no</td><td>no</td><td>360 × 48</td></tr>
+            <tr><td class="mono center">17</td><td><code>18444:2171</code></td><td>Information</td><td>yes</td><td>yes</td><td>no</td><td>no</td><td>360 × 48</td></tr>
+            <tr><td class="mono center">18</td><td><code>18444:2176</code></td><td>Warning</td><td>yes</td><td>yes</td><td>no</td><td>no</td><td>360 × 48</td></tr>
+            <tr><td class="mono center">19</td><td><code>18444:2181</code></td><td>Error</td><td>yes</td><td>yes</td><td>no</td><td>no</td><td>360 × 48</td></tr>
+            <tr><td class="mono center">20</td><td><code>18444:2186</code></td><td>Success</td><td>yes</td><td>yes</td><td>no</td><td>no</td><td>360 × 48</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 18444:2012</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Fix</strong> — Normalize booleans, replace placeholder left-icon with a real Slot, split the two layouts explicitly, and add a dismiss contract. <span class="tag-open tag-c1 tag-c2 tag-c5 tag-c6">Open</span></div><span class="changelog-delta delta-open">Schema</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — Property naming</strong> — Four booleans on <code>yes/no</code> with inconsistent casing; <code>Type=Default</code> mixes with semantic types. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C1 — Two layouts, one component</strong> — Banner + accent card hidden behind <code>fullWidth</code>. Rename to <code>style</code> or split. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C6 — Left-icon placeholder</strong> — 24 × 24 <code>icon-placeholder</code> circle; adopt Figma Slots. <span class="tag-open tag-c6">Open</span></div><span class="changelog-delta delta-open">C6</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C5 — State coverage</strong> — No dismiss; Learn More isn't a real button. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C7 — Code Connect</strong> — Blocked on schema cleanup. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-alert">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-alert"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Alert JS ───────────────────────────────────────────────────── */
+/* Pixel-accurate replica of node 18444:2012 variants.
+   Two layouts (banner / card) distinguished by the fullWidth axis.
+   Content (title + description) is editable via demo-panel inputs;
+   all 5 property dropdowns flip the preview live.                   */
+
+function _alertIconRightSvg(type) {
+  // 32×32 vector glyph per semantic type. currentColor from CSS var.
+  var fill = 'var(--alert-icon)';
+  if (type === 'information') {
+    return '<svg class="eb-preview-alert__icon-right" viewBox="0 0 32 32" fill="none" aria-hidden="true">' +
+      '<circle cx="16" cy="16" r="13" stroke="' + fill + '" stroke-width="2" fill="none"/>' +
+      '<circle cx="16" cy="10" r="1.6" fill="' + fill + '"/>' +
+      '<rect x="14.5" y="13.5" width="3" height="10" rx="1" fill="' + fill + '"/>' +
+    '</svg>';
+  }
+  if (type === 'warning') {
+    return '<svg class="eb-preview-alert__icon-right" viewBox="0 0 32 32" fill="none" aria-hidden="true">' +
+      '<path d="M16 5 L29 27 L3 27 Z" stroke="' + fill + '" stroke-width="2" fill="none" stroke-linejoin="round"/>' +
+      '<rect x="14.8" y="13" width="2.4" height="7" rx="1" fill="' + fill + '"/>' +
+      '<circle cx="16" cy="23" r="1.4" fill="' + fill + '"/>' +
+    '</svg>';
+  }
+  if (type === 'error') {
+    return '<svg class="eb-preview-alert__icon-right" viewBox="0 0 32 32" fill="none" aria-hidden="true">' +
+      '<circle cx="16" cy="16" r="13" stroke="' + fill + '" stroke-width="2" fill="none"/>' +
+      '<rect x="14.8" y="8" width="2.4" height="11" rx="1" fill="' + fill + '"/>' +
+      '<circle cx="16" cy="22.5" r="1.5" fill="' + fill + '"/>' +
+    '</svg>';
+  }
+  if (type === 'success') {
+    return '<svg class="eb-preview-alert__icon-right" viewBox="0 0 32 32" fill="none" aria-hidden="true">' +
+      '<circle cx="16" cy="16" r="13" stroke="' + fill + '" stroke-width="2" fill="none"/>' +
+      '<path d="M10 16.5 L14.5 21 L23 12.5" stroke="' + fill + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' +
+    '</svg>';
+  }
+  // neutral — a generic dot
+  return '<svg class="eb-preview-alert__icon-right" viewBox="0 0 32 32" fill="none" aria-hidden="true">' +
+    '<circle cx="16" cy="16" r="13" stroke="' + fill + '" stroke-width="2" fill="none"/>' +
+  '</svg>';
+}
+
+function _alertChevronSvg() {
+  return '<svg class="eb-preview-alert__action-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">' +
+    '<path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' +
+  '</svg>';
+}
+
+function _alertRender(opts) {
+  var type       = opts.type || 'information';
+  var isBanner   = (opts.fullWidth !== 'no');
+  var leftIcon   = opts.leftIcon === 'yes';
+  var rightIcon  = opts.rightIcon === 'yes';
+  var showDesc   = opts.showDesc !== 'no';
+  var title      = opts.title || '\u00A0';
+  var desc       = opts.desc || '';
+
+  var styleClass = isBanner ? 'eb-preview-alert--banner' : 'eb-preview-alert--card';
+  var colorClass = 'eb-preview-alert--' + type;
+
+  var html = '<div class="eb-preview eb-preview-alert ' + styleClass + ' ' + colorClass + '">';
+
+  // Left-icon slot — today a placeholder circle
+  if (leftIcon && isBanner) {
+    html += '<div class="eb-preview-alert__icon-left" aria-hidden="true"></div>';
+  }
+
+  html += '<div class="eb-preview-alert__content">';
+  html += '<p class="eb-preview-alert__title">' + _alertEscape(title) + '</p>';
+  if (showDesc && desc) {
+    html += '<p class="eb-preview-alert__desc">' + _alertEscape(desc) + '</p>';
+  }
+  // Card variant always ships the Learn More action per Figma
+  if (!isBanner) {
+    html += '<span class="eb-preview-alert__action">Learn More' + _alertChevronSvg() + '</span>';
+  }
+  html += '</div>';
+
+  // Right-icon slot — semantic glyph. Banner + card both support it.
+  if (rightIcon) {
+    html += _alertIconRightSvg(type);
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function _alertEscape(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function _alertContextMarkup() {
+  // Three realistic in-product examples: payment banner, form warning card,
+  // success confirmation banner — all different types/styles.
+  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-lg">' +
+    _alertRender({
+      type:'information', fullWidth:'no', leftIcon:'no', rightIcon:'yes', showDesc:'yes',
+      title:'Your ID is being reviewed',
+      desc:'We\'ll notify you within 24 hours. You can continue using GCash normally in the meantime.'
+    }) +
+    _alertRender({
+      type:'warning', fullWidth:'yes', leftIcon:'no', rightIcon:'yes', showDesc:'yes',
+      title:'Transaction limit approaching',
+      desc:'You\'ve used 80% of this month\'s ₱50,000 transfer limit.'
+    }) +
+    _alertRender({
+      type:'success', fullWidth:'yes', leftIcon:'no', rightIcon:'yes', showDesc:'no',
+      title:'Transfer completed successfully',
+      desc:''
+    }) +
+  '</div>';
+}
+
+function _alertUpdate() {
+  var type      = document.getElementById('alert-ctrl-type');
+  var fullWidth = document.getElementById('alert-ctrl-fullwidth');
+  var leftIcon  = document.getElementById('alert-ctrl-lefticon');
+  var rightIcon = document.getElementById('alert-ctrl-righticon');
+  var showDesc  = document.getElementById('alert-ctrl-showdesc');
+  var title     = document.getElementById('alert-ctrl-title');
+  var desc      = document.getElementById('alert-ctrl-desc');
+  var preview   = document.getElementById('alert-demo-preview');
+  if (!preview) return;
+  preview.innerHTML = _alertRender({
+    type:      type ? type.value : 'information',
+    fullWidth: fullWidth ? fullWidth.value : 'yes',
+    leftIcon:  leftIcon ? leftIcon.value : 'no',
+    rightIcon: rightIcon ? rightIcon.value : 'yes',
+    showDesc:  showDesc ? showDesc.value : 'yes',
+    title:     title ? title.value : 'This is for the title.',
+    desc:      desc ? desc.value : 'This is the description. Put the description here.'
+  });
+}
+
+function _alertInit() {
+  var ctx = document.getElementById('alert-context-preview');
+  if (ctx) ctx.innerHTML = _alertContextMarkup();
+  _alertUpdate();
+
+  // Spec card 1 — Information banner
+  var s1 = document.getElementById('alert-spec-1');
+  if (s1) s1.innerHTML = _alertRender({
+    type:'information', fullWidth:'yes', leftIcon:'no', rightIcon:'yes', showDesc:'yes',
+    title:'This is for the title.',
+    desc:'This is the description. Put the description here.'
+  });
+
+  // Spec card 2 — Information accent card
+  var s2 = document.getElementById('alert-spec-2');
+  if (s2) s2.innerHTML = _alertRender({
+    type:'information', fullWidth:'no', leftIcon:'no', rightIcon:'yes', showDesc:'yes',
+    title:'This is for the title.',
+    desc:'This is the description. Put the description here. This is the description. Put the description here.'
+  });
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _alertInit);
+else _alertInit();
+</script>
+
+<!--@section-end-->

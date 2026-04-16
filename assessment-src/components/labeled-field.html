@@ -245,15 +245,15 @@ open-issues: C7
     <!-- Open Issues -->
     <div class="sub-heading" id="lf-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Structural work is complete — registration can proceed against the 8-variant <code>State × isFilled</code> schema. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
     </ul>
 
     <!-- Design Recommendations -->
     <div class="sub-heading" id="lf-recommend">Design Recommendations</div>
     <ul class="recommend-list">
-      <li><span>Replace <code>Button - XSmall</code> hardcoded instance with a named <code>action</code> slot so consumers can swap in different button variants or remove the action entirely <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Replace <code>icon-placeholder</code> RECTANGLE in <code>trailing-icon</code> with a swappable icon instance — enables consumers to override the trailing icon via Figma instance swap <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Consider adding a <code>helperText</code> slot below the field for validation messages — currently handled externally <span class="tag-recommend">Suggested</span></span></li>
+      <li><span><strong>Replace hardcoded <code>Button - XSmall</code> with an <code>action</code> slot.</strong> Today the trailing action is baked in — consumers can't swap in other button variants or remove it. A named slot makes the action composable via instance swap. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Replace <code>trailing-icon</code> placeholder with a swappable icon instance.</strong> The current <code>icon-placeholder</code> RECTANGLE blocks designers from overriding the trailing icon without detaching. Follow the instance-swap pattern used elsewhere in the DS. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Add a <code>helperText</code> slot.</strong> Validation messages and hint copy are handled externally today — a first-class slot keeps the form anatomy self-contained. <span class="tag-recommend">Slot</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -425,7 +425,7 @@ open-issues: C7
         <div class="table-wrap">
           <table>
             <tbody>
-              <tr><td class="muted">Font</td><td class="mono">Proxima Soft</td></tr>
+              <tr><td class="muted">Font</td><td class="mono">HeyMeow Rnd</td></tr>
               <tr><td class="muted">Weight</td><td class="mono">Semibold (600)</td></tr>
               <tr><td class="muted">Size</td><td class="mono">14px</td></tr>
               <tr><td class="muted">Letter spacing</td><td class="mono">0.25</td></tr>
@@ -870,12 +870,12 @@ function _lfBuildSvg(state, filled) {
   s += '<rect x="12" y="11" width="24" height="24" rx="4" fill="' + iconFill + '" opacity="0.2"/>';
   s += '<circle cx="24" cy="23" r="4" fill="' + iconFill + '" opacity="0.5"/>';
   /* label text */
-  s += '<text x="44" y="19" font-family="Proxima Soft, system-ui" font-size="11" font-weight="600" fill="' + labelColor + '" letter-spacing="0.25" opacity="0.7">Label</text>';
+  s += '<text x="44" y="19" font-family="HeyMeow Rnd, system-ui" font-size="11" font-weight="600" fill="' + labelColor + '" letter-spacing="0.25" opacity="0.7">Label</text>';
   /* value text */
-  s += '<text x="44" y="33" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + valueColor + '" letter-spacing="0.25">' + (filled === 'Yes' ? 'Value' : 'Placeholder') + '</text>';
+  s += '<text x="44" y="33" font-family="HeyMeow Rnd, system-ui" font-size="14" font-weight="600" fill="' + valueColor + '" letter-spacing="0.25">' + (filled === 'Yes' ? 'Value' : 'Placeholder') + '</text>';
   /* action button */
   s += '<rect x="260" y="11" width="60" height="24" rx="12" fill="' + btnBg + '"/>';
-  s += '<text x="290" y="27" font-family="Proxima Soft, system-ui" font-size="11" font-weight="600" fill="' + btnText + '" text-anchor="middle">Action</text>';
+  s += '<text x="290" y="27" font-family="HeyMeow Rnd, system-ui" font-size="11" font-weight="600" fill="' + btnText + '" text-anchor="middle">Action</text>';
   /* trailing icon placeholder */
   s += '<rect x="330" y="11" width="24" height="24" rx="4" fill="' + iconFill + '" opacity="0.2"/>';
   s += '<circle cx="342" cy="23" r="4" fill="' + iconFill + '" opacity="0.5"/>';

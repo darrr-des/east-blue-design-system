@@ -1,0 +1,633 @@
+<!--
+  GENERIC TRANSACTION CARD COMPONENT ASSESSMENT
+  Compact transaction row with label, date metadata, and trailing amount/menu/reference.
+  5 variants under one `type` enum that hides 5 structurally different layouts.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 23:86201
+ds-verdict: restructure
+native-status: refine
+variants: 5
+ios: Custom EBTransactionRow view — composed HStack
+android: Custom EBTransactionRow composable — Row with leading/content/trailing slots
+open-issues: C1,C2,C5,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] A single `type` enum hides 5 structurally different layouts (default / more information / with avatar / no amount / skeleton loader) — should be slot-based composition with a separate state axis.
+[C2] `type=no amount` and `type=more information` describe what's missing or vague rather than the semantic role of each layout.
+[C2] Label uses Proxima Soft Semibold (600) while Generic Card's heading uses Bold (700) — inconsistent title weight across the card family.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Card<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-generic-transaction-card" onclick="showPanel('generic-transaction-card', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Generic Transaction Card</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('generic-transaction-card')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="6" y="10" width="20" height="4" rx="1" fill="#0A2757"/>
+      <rect x="6" y="18" width="8" height="3" rx="1" fill="#E5F1FF"/>
+      <rect x="16" y="18" width="28" height="3" rx="1" fill="#6780A9"/>
+      <rect x="52" y="10" width="22" height="4" rx="1" fill="#0A2757"/>
+      <rect x="6" y="28" width="68" height="1" fill="#E5EBF4"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Generic Transaction Card</div>
+      <span class="badge badge-rework">Restructure</span>
+    </div>
+    <div class="summary-card-desc">Transaction history row. 5 type variants hide 5 different layouts — should be slot-based composition. Reconcile heading weight with Generic Card.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Generic Transaction Card</strong></td>
+  <td><span class="badge badge-rework">Restructure</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">5</td>
+  <td class="muted">Replace <code>type</code> enum with slot-based composition (leading, trailing, meta). Rename absence-based values. Align heading weight with Generic Card.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-generic-transaction-card">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Generic Transaction Card
+          <span class="badge badge-rework">Restructure</span>
+          <span class="badge badge-refine">Refine</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=23-86201" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A compact transaction-history row with a label, date/time metadata (plus an optional badge tag), and trailing content (amount, menu button, or a reference number). 5 variants under a single <code>type</code> enum: <code>default</code>, <code>more information</code>, <code>with avatar</code>, <code>no amount</code>, <code>skeleton loader</code>. Used inside GCash Jr. transaction lists and Detailed Transaction History screens.</p>
+      </div>
+      <div class="verdict-inline verdict-restructure">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Restructure — type enum hides 5 different layouts</div>
+          <div class="verdict-inline-text">The five <code>type</code> values are visually distinct layouts, not variants of the same pattern. Replace the enum with slot-based composition (<code>leadingMedia?</code>, <code>badge?</code>, <code>trailing = amount | menu | reference</code>, <code>loading</code>). Same fix pattern as Alert's <code>Full Width</code>. Also align heading weight with Generic Card (both should use Bold, not Semibold).</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="generic-transaction-card-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'generic-transaction-card-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'generic-transaction-card-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'generic-transaction-card-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'generic-transaction-card-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="gtx-in-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Transaction-history rows stack vertically in the Activity / Transactions screen. Different rows use different variants depending on the context (recipient avatar, reference number, action menu).</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="gtx-context-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="gtx-preview">Live Preview</div>
+    <p class="section-desc">Flip <code>type</code> to swap between the 5 layouts. Content inputs stress-test flexibility. Notice how different types expose different slots — today Figma encodes this as a single enum; the proposal is to expose slots directly.</p>
+    <div class="demo-panel" id="gtx-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="gtx-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Content</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">label</span>
+              <input type="text" id="gtx-ctrl-label" class="demo-panel-select demo-panel-input" value="Juan Dela Cruz" oninput="_gtxUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">badge</span>
+              <input type="text" id="gtx-ctrl-badge" class="demo-panel-select demo-panel-input" value="Sent" oninput="_gtxUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">date / meta</span>
+              <input type="text" id="gtx-ctrl-date" class="demo-panel-select demo-panel-input" value="Apr 14, 2026, 10:24 AM" oninput="_gtxUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">amount</span>
+              <input type="text" id="gtx-ctrl-amount" class="demo-panel-select demo-panel-input" value="PHP 1,500.00" oninput="_gtxUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">reference</span>
+              <input type="text" id="gtx-ctrl-ref" class="demo-panel-select demo-panel-input" value="GC123456789876543" oninput="_gtxUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">avatar initials</span>
+              <input type="text" id="gtx-ctrl-initials" class="demo-panel-select demo-panel-input" value="JD" oninput="_gtxUpdate()">
+            </div>
+          </div>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">type</span>
+              <select id="gtx-ctrl-type" class="demo-panel-select" onchange="_gtxUpdate()">
+                <option value="default" selected>default</option>
+                <option value="more-information">more information</option>
+                <option value="with-avatar">with avatar</option>
+                <option value="no-amount">no amount</option>
+                <option value="skeleton">skeleton loader</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="gtx-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Solid transaction-row primitive — covers the main patterns seen in Activity screens.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Owns tokens, composes Avatar + Badge correctly. Good structure internally.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">5 structurally different layouts hidden behind one <code>type</code> enum. Heading uses Semibold 600 while Generic Card uses Bold 700 — inconsistent across the card family.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Today consumers must pick a <code>type</code> and live with its fixed slot composition. A slot-based API would let them mix freely (e.g. avatar + reference).</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="gtx-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>State</th><th class="center">iOS</th><th class="center">Android</th><th>Figma Spec</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Default</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">type=default</td><td class="muted">Label + badge + date + amount. The baseline transaction row.</td></tr>
+          <tr><td><strong>With avatar</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">type=with avatar</td><td class="muted">Adds a 32 × 32 Avatar at the leading edge. Used for person-to-person transactions.</td></tr>
+          <tr><td><strong>More information</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">type=more information</td><td class="muted">Replaces the badge with an overflow menu button (⋯). Used when a row has context-menu actions.</td></tr>
+          <tr><td><strong>No amount</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">type=no amount</td><td class="muted">Swaps the amount for a trailing badge; swaps date for a reference number. Used for confirmations without monetary value.</td></tr>
+          <tr><td><strong>Skeleton loader</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">type=skeleton loader</td><td class="muted">Loading placeholder pattern. Worth documenting alongside Generic Card's skeleton as a DS-wide convention.</td></tr>
+          <tr><td><strong>Pressed</strong></td><td class="center muted">Missing</td><td class="center muted">Missing</td><td class="muted">Not built</td><td class="muted">Rows typically drill into transaction detail — need pressed tint for tap feedback.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="gtx-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong><code>type</code> enum hides 5 structurally different layouts.</strong> Same anti-pattern as Alert's <code>Full Width</code> boolean. <code>default</code> / <code>more information</code> / <code>with avatar</code> / <code>no amount</code> are not variants of one pattern — they're four different slot compositions. Replace with a slot-based API (<code>leadingMedia</code>, <code>badge</code>, <code>trailing</code>, <code>loading</code>). <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong><code>no amount</code> and <code>more information</code> describe absence, not role.</strong> Value names should describe what the variant IS, not what it lacks. <code>no amount</code> becomes "swap amount for a trailing badge"; <code>more information</code> becomes "show action menu." Once slot-based, the enum disappears entirely. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Heading uses Semibold (600) while Generic Card uses Bold (700).</strong> Inconsistent title weight across the card family. Standardize — either both Bold or both Semibold. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>No pressed / disabled states.</strong> Transaction rows drill into a detail screen on tap — need pressed tint. Also disabled state for pending/failed transactions that can't be reopened. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked on the slot restructure. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="gtx-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Replace <code>type</code> with slot-based props.</strong> <code>leadingMedia?: Avatar | Icon | none</code>, <code>badge?: Badge</code>, <code>metadata: String</code>, <code>trailing: amount | menu | badge | reference</code>, <code>loading: Bool</code>. Eliminates the 5-type union and lets consumers compose any valid row without editing the master. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Align heading weight with Generic Card.</strong> Pick one (Bold 700 is more common across the DS) and apply it to both components. Card family should read as one system, not two dialects. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Promote skeleton to a cross-family convention.</strong> Generic Card + Generic Transaction Card both ship skeletons — document the pattern (<code>#E0E6F2</code> fill, rounded rect placeholders, no spinner) as the DS loading standard so future card/row primitives follow the same treatment. <span class="tag-recommend">Docs</span></span></li>
+      <li><span><strong>Add pressed + disabled states.</strong> Pressed: subtle bg tint across the whole row. Disabled: muted label + amount opacity. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Reconcile with Generic Card.</strong> The two share ~80 % of the "row with leading / trailing / meta" shape. Consider a shared <code>EBRow</code> primitive with variants for "with subtitle" (Generic Card) and "with metadata + amount" (Generic Transaction Card). <span class="tag-recommend">Family</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Default — label + badge + date + amount <span class="spec-card-node">node <code>23:86202</code></span></div>
+      </div>
+      <p class="spec-card-desc">The baseline transaction row. Leading label, mid-row badge + date metadata, trailing amount. 78 px tall.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="gtx-spec-1"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Width</span><code>360</code></div>
+          <div class="spec-detail-row"><span>Padding</span><code>16 24 18 22</code></div>
+          <div class="spec-detail-row"><span>Content gap</span><code>6</code></div>
+          <div class="spec-detail-row"><span>Meta-row gap</span><code>8</code></div>
+          <div class="spec-detail-row"><span>Bottom border</span><code>1 px</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors by State</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr></thead>
+              <tbody>
+                <tr><td>Surface</td><td><code>card-list/bg</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span><code>#FFFFFF</code></td></tr>
+                <tr><td>Bottom border</td><td><code>card-list/border</code></td><td><span class="swatch-dot" style="background:#E5EBF4"></span><code>#E5EBF4</code></td></tr>
+                <tr><td>Label / Amount</td><td><code>card-list/label-header</code></td><td><span class="swatch-dot" style="background:#0A2757"></span><code>#0A2757</code></td></tr>
+                <tr><td>Metadata</td><td><code>card-list/label-metadata</code></td><td><span class="swatch-dot" style="background:#6780A9"></span><code>#6780A9</code></td></tr>
+                <tr><td>Badge bg</td><td><code>badge/information/light/bg</code></td><td><span class="swatch-dot" style="background:#E5F1FF;border:1px solid #CFE0F5"></span><code>#E5F1FF</code></td></tr>
+                <tr><td>Badge label</td><td><code>badge/information/light/label</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>Label (title)</span><code>HeyMeow Rnd Semibold · 18 / 18 · +0.25</code></div>
+          <div class="spec-detail-row"><span>Amount</span><code>HeyMeow Rnd Semibold · 18 / 18 · +0.25</code></div>
+          <div class="spec-detail-row"><span>Metadata (date)</span><code>BarkAda Semibold · 12 / 18 · +0</code></div>
+          <div class="spec-detail-row"><span>Badge label</span><code>HeyMeow Rnd Bold · 12 / 12 · +0.5</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Composed sub-components</div>
+          <div class="spec-detail-row"><span>Badge</span><code>Badge · Information · Light</code></div>
+          <div class="spec-detail-row"><span>Avatar (in "with avatar")</span><code>Avatar · dark-initials · 32 px</code></div>
+          <div class="spec-detail-row muted"><span>Heading weight</span><span>Uses Semibold 600 — inconsistent with Generic Card's Bold 700 (flagged)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">With avatar <span class="spec-card-node">node <code>23:86224</code></span></div>
+      </div>
+      <p class="spec-card-desc">Adds a 32 × 32 Avatar at the leading edge (instance-swapped from the Avatar component). Used for person-to-person transactions.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="gtx-spec-2"><!-- JS --></div></div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">No amount <span class="spec-card-node">node <code>23:86237</code></span></div>
+      </div>
+      <p class="spec-card-desc">Used for non-monetary confirmations (KYC acknowledgments, voucher redemptions). Swaps amount for a trailing badge and the date row for a reference number.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="gtx-spec-3"><!-- JS --></div></div>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="gtx-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'gtx-install','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'gtx-install','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">.<span class="fn">package</span>(<span class="prp">url</span>: <span class="str">"https://github.com/gcash/eb-design-system-ios"</span>, <span class="prp">from</span>: <span class="str">"1.0.0"</span>)
+
+<span class="kw">import</span> EBDesignSystem</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">implementation(<span class="str">"com.gcash.designsystem:eb-components:1.0.0"</span>)
+
+<span class="kw">import</span> com.gcash.designsystem.components.EBTransactionRow</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="gtx-mapping">Property Mapping (Proposed)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma (today)</th><th>Figma (proposed)</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">(hardcoded)</td><td><code>label: String</code></td><td><code>label: String</code></td><td><code>label: String</code></td></tr>
+          <tr><td class="muted">(hardcoded)</td><td><code>metadata?: String</code></td><td><code>metadata: String?</code></td><td><code>metadata: String?</code></td></tr>
+          <tr><td><code>type=with avatar</code></td><td><code>leadingMedia?: Avatar</code> (slot)</td><td><code>leadingMedia: EBAvatar?</code></td><td><code>leadingMedia: @Composable (() -&gt; Unit)?</code></td></tr>
+          <tr><td class="muted">(drawn)</td><td><code>badge?: Badge</code> (slot)</td><td><code>badge: EBBadge?</code></td><td><code>badge: @Composable (() -&gt; Unit)?</code></td></tr>
+          <tr><td><code>type=default/with avatar</code></td><td><code>trailing = .amount(String)</code></td><td><code>trailing: EBRowTrailing</code></td><td><code>trailing: EBRowTrailing</code></td></tr>
+          <tr><td><code>type=more information</code></td><td><code>trailing = .menu(() -&gt; Void)</code></td><td>同上</td><td>同上</td></tr>
+          <tr><td><code>type=no amount</code></td><td><code>trailing = .badge(Badge)</code> + <code>metadata = reference</code></td><td>同上</td><td>同上</td></tr>
+          <tr><td><code>type=skeleton loader</code></td><td><code>loading: Bool</code></td><td><code>loading: Bool</code></td><td><code>loading: Boolean</code></td></tr>
+          <tr><td class="muted">(not modeled)</td><td><code>onTap?: () -&gt; Void</code></td><td><code>onTap: (() -&gt; Void)?</code></td><td><code>onClick: (() -&gt; Unit)?</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="gtx-paths">Suggested file paths</div>
+    <ul class="resolved-list">
+      <li><code>ios/Components/TransactionRow/EBTransactionRow.swift</code></li>
+      <li><code>android/components/transactionrow/EBTransactionRow.kt</code></li>
+    </ul>
+
+    <div class="sub-heading" id="gtx-usage">Usage</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'gtx-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'gtx-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Default — label + badge + date + amount</span>
+<span class="typ">EBTransactionRow</span>(
+    <span class="prp">label</span>: <span class="str">"Juan Dela Cruz"</span>,
+    <span class="prp">badge</span>: <span class="typ">EBBadge</span>(<span class="str">"Sent"</span>, state: .information, level: .light),
+    <span class="prp">metadata</span>: <span class="str">"Apr 14, 2026, 10:24 AM"</span>,
+    <span class="prp">trailing</span>: .<span class="prp">amount</span>(<span class="str">"PHP 1,500.00"</span>)
+) { onRowTap() }
+
+<span class="cmt">// With avatar</span>
+<span class="typ">EBTransactionRow</span>(
+    <span class="prp">leadingMedia</span>: <span class="typ">EBAvatar</span>(<span class="prp">initials</span>: <span class="str">"JD"</span>),
+    <span class="prp">label</span>: <span class="str">"Juan Dela Cruz"</span>,
+    <span class="prp">badge</span>: <span class="typ">EBBadge</span>(<span class="str">"Sent"</span>),
+    <span class="prp">metadata</span>: <span class="str">"Apr 14, 2026, 10:24 AM"</span>,
+    <span class="prp">trailing</span>: .<span class="prp">amount</span>(<span class="str">"PHP 1,500.00"</span>)
+)
+
+<span class="cmt">// No amount — trailing badge + reference number</span>
+<span class="typ">EBTransactionRow</span>(
+    <span class="prp">label</span>: <span class="str">"KYC Verification"</span>,
+    <span class="prp">metadata</span>: <span class="str">"Reference No: GC123456789876543"</span>,
+    <span class="prp">trailing</span>: .<span class="prp">badge</span>(<span class="typ">EBBadge</span>(<span class="str">"Approved"</span>, state: .success))
+)
+
+<span class="cmt">// Loading</span>
+<span class="typ">EBTransactionRow</span>.<span class="prp">skeleton</span>()</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Default — label + badge + date + amount</span>
+<span class="typ">EBTransactionRow</span>(
+    label = <span class="str">"Juan Dela Cruz"</span>,
+    badge = { <span class="typ">EBBadge</span>(<span class="str">"Sent"</span>) },
+    metadata = <span class="str">"Apr 14, 2026, 10:24 AM"</span>,
+    trailing = <span class="typ">EBRowTrailing</span>.Amount(<span class="str">"PHP 1,500.00"</span>),
+    onClick = { onRowTap() }
+)
+
+<span class="cmt">// With avatar</span>
+<span class="typ">EBTransactionRow</span>(
+    leadingMedia = { <span class="typ">EBAvatar</span>(initials = <span class="str">"JD"</span>) },
+    label = <span class="str">"Juan Dela Cruz"</span>,
+    badge = { <span class="typ">EBBadge</span>(<span class="str">"Sent"</span>) },
+    metadata = <span class="str">"Apr 14, 2026, 10:24 AM"</span>,
+    trailing = <span class="typ">EBRowTrailing</span>.Amount(<span class="str">"PHP 1,500.00"</span>)
+)
+
+<span class="cmt">// No amount — trailing badge + reference</span>
+<span class="typ">EBTransactionRow</span>(
+    label = <span class="str">"KYC Verification"</span>,
+    metadata = <span class="str">"Reference No: GC123456789876543"</span>,
+    trailing = <span class="typ">EBRowTrailing</span>.BadgeSlot { <span class="typ">EBBadge</span>(<span class="str">"Approved"</span>) }
+)
+
+<span class="cmt">// Loading</span>
+<span class="typ">EBTransactionRow</span>.Skeleton()</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="gtx-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Row as button</strong></td><td class="muted">Whole row in <code>Button</code> with combined label (person + amount + date).</td><td class="muted"><code>Modifier.clickable { onTap() }.semantics(mergeDescendants = true)</code>.</td></tr>
+          <tr><td><strong>Currency announcement</strong></td><td class="muted">"Juan Dela Cruz, Sent, 1,500 pesos, April 14 10:24 AM" — use localized currency formatter, not raw "PHP 1,500.00".</td><td class="muted">Same — announce via <code>contentDescription</code> with currency formatter applied.</td></tr>
+          <tr><td><strong>Reference number</strong></td><td class="muted">Spell out long reference numbers for clarity: "GC 1 2 3 4..." — avoid run-together digits.</td><td class="muted">Same.</td></tr>
+          <tr><td><strong>Loading</strong></td><td class="muted">Announce "Loading transactions" once on mount.</td><td class="muted"><code>contentDescription = "Loading"</code> on skeleton container.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="gtx-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Use for transaction history lists (Activity, Send / Receive logs).</li>
+          <li>Use avatar variant for person-to-person transactions.</li>
+          <li>Use skeleton on load — never a blank list.</li>
+          <li>Format currency per locale; format dates per user preference.</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't mix <code>type</code> values in the same list without reason — it looks unstable.</li>
+          <li>Don't use for service/catalog rows — use <a href="#" onclick="showPanelById('generic-card');return false;">Generic Card</a>.</li>
+          <li>Don't omit the date/meta — transaction rows without context are confusing.</li>
+          <li>Don't hide the row in a pressed state — the row still exists, it's just visually pressed.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="gtx-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted"><code>type</code> enum hides 5 layouts — restructure to slot-based.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Absence-based value names; heading weight inconsistent with Generic Card.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Colors bound to <code>main/card-list/color/*</code>.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Maps cleanly once slots replace the type enum.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">No pressed / disabled. Skeleton ✓.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Avatar + Badge composed correctly as instances.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked on restructure.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="gtx-variants">Variants Inventory <span class="variants-count">(5 total)</span></div>
+    <p><code>type</code> is a single enum with 5 values, each a structurally different layout.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Node</th><th>type</th><th>Layout</th><th>Dimensions</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">1</td><td><code>23:86202</code></td><td>default</td><td>label · badge · date · amount</td><td>360 × 78</td></tr>
+          <tr><td class="mono center">2</td><td><code>23:86213</code></td><td>more information</td><td>label · date · amount · menu (⋯)</td><td>360 × 76</td></tr>
+          <tr><td class="mono center">3</td><td><code>23:86224</code></td><td>with avatar</td><td>avatar · label · badge · date · amount</td><td>360 × 84</td></tr>
+          <tr><td class="mono center">4</td><td><code>23:86237</code></td><td>no amount</td><td>label · reference · trailing badge</td><td>360 × 76</td></tr>
+          <tr><td class="mono center">5</td><td><code>903:190942</code></td><td>skeleton loader</td><td>loading placeholders</td><td>360 × 81</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 23:86201</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Restructure</strong> — Replace <code>type</code> enum (5 layouts) with slot-based composition. Align heading weight with Generic Card. Add pressed state. <span class="tag-open tag-c1 tag-c2 tag-c5">Open</span></div><span class="changelog-delta delta-open">Architecture</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C1 — Type enum hides layouts</strong> — Same anti-pattern as Alert's <code>Full Width</code>. Split into <code>leadingMedia</code>, <code>badge</code>, <code>trailing</code>, <code>loading</code>. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — Absence-based names</strong> — <code>no amount</code> / <code>more information</code> describe what's missing. Semantic slot names replace them. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — Heading weight inconsistency</strong> — Semibold 600 vs Generic Card's Bold 700. Standardize across card family. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C5 — Pressed state</strong> — Transaction rows drill into detail on tap; needs tap feedback. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Skeleton pattern ✓</strong> — First-class loading variant, matches Generic Card. Adopt as DS-wide convention. <span class="tag-fixed">Noted</span></div><span class="changelog-delta delta-resolved">Praise</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C7 — Code Connect</strong> — Blocked on restructure. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-generic-transaction-card">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-generic-transaction-card"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Generic Transaction Card JS ────────────────────────────────── */
+/* 5 variants, 5 layouts. Preview renders each honestly — the prop
+   switch produces visibly different rows (the whole point of the
+   "this is 5 components hiding as 1" argument in Open Issues).      */
+
+function _gtxEscape(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function _gtxBadge(text) {
+  return '<span class="eb-preview-gtx__badge">' + _gtxEscape(text) + '</span>';
+}
+
+function _gtxAvatar(initials) {
+  return '<span class="eb-preview-gtx__avatar">' + _gtxEscape((initials || 'G').substring(0, 2)) + '</span>';
+}
+
+function _gtxRender(opts) {
+  var type     = opts.type || 'default';
+  var label    = opts.label || 'Label';
+  var badge    = opts.badge || 'Label';
+  var date     = opts.date || 'Date XX, XXXX, Time (AM,PM)';
+  var amount   = opts.amount || 'PHP XX.XX';
+  var ref      = opts.ref || 'Reference No: GC123456789876543';
+  var initials = opts.initials || 'JD';
+
+  if (type === 'skeleton') {
+    return '<div class="eb-preview eb-preview-gtx">' +
+      '<div class="eb-preview-gtx__content">' +
+        '<div class="eb-preview-gtx__sk eb-preview-gtx__sk--label"></div>' +
+        '<div class="eb-preview-gtx__sk eb-preview-gtx__sk--date"></div>' +
+      '</div>' +
+      '<div class="eb-preview-gtx__trailing">' +
+        '<div class="eb-preview-gtx__sk eb-preview-gtx__sk--amount"></div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  var html = '<div class="eb-preview eb-preview-gtx">';
+
+  if (type === 'with-avatar') {
+    html += _gtxAvatar(initials);
+  }
+
+  html += '<div class="eb-preview-gtx__content">';
+  html += '<p class="eb-preview-gtx__label">' + _gtxEscape(label) + '</p>';
+
+  if (type === 'no-amount') {
+    html += '<p class="eb-preview-gtx__reference">' + _gtxEscape(ref) + '</p>';
+  } else {
+    html += '<div class="eb-preview-gtx__meta-row">';
+    if (type === 'default' || type === 'with-avatar') {
+      html += _gtxBadge(badge);
+    }
+    html += '<span class="eb-preview-gtx__meta">' + _gtxEscape(date) + '</span>';
+    html += '</div>';
+  }
+
+  html += '</div>';
+
+  // Trailing
+  html += '<div class="eb-preview-gtx__trailing">';
+  if (type === 'no-amount') {
+    html += _gtxBadge(badge);
+  } else {
+    html += '<span class="eb-preview-gtx__amount">' + _gtxEscape(amount) + '</span>';
+    if (type === 'more-information') {
+      html += '<span class="eb-preview-gtx__menu" aria-hidden="true">⋯</span>';
+    }
+  }
+  html += '</div>';
+
+  html += '</div>';
+  return html;
+}
+
+function _gtxContextMarkup() {
+  // A realistic Activity-screen segment showing 3 transactions + a skeleton row
+  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm">' +
+    _gtxRender({type:'with-avatar', label:'Juan Dela Cruz',       badge:'Sent',     date:'Apr 14, 2026, 10:24 AM', amount:'PHP 1,500.00', initials:'JD'}) +
+    _gtxRender({type:'default',     label:'Globe Postpaid',       badge:'Paid',     date:'Apr 12, 2026, 09:15 AM', amount:'PHP 999.00'}) +
+    _gtxRender({type:'no-amount',   label:'KYC Verification',                        ref:'Reference No: GC987654321012345',          badge:'Approved'}) +
+    _gtxRender({type:'skeleton'}) +
+  '</div>';
+}
+
+function _gtxUpdate() {
+  var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
+  var preview = document.getElementById('gtx-demo-preview');
+  if (!preview) return;
+  preview.innerHTML = _gtxRender({
+    type:     getVal('gtx-ctrl-type', 'default'),
+    label:    getVal('gtx-ctrl-label', 'Juan Dela Cruz'),
+    badge:    getVal('gtx-ctrl-badge', 'Sent'),
+    date:     getVal('gtx-ctrl-date', 'Apr 14, 2026, 10:24 AM'),
+    amount:   getVal('gtx-ctrl-amount', 'PHP 1,500.00'),
+    ref:      getVal('gtx-ctrl-ref', 'GC123456789876543'),
+    initials: getVal('gtx-ctrl-initials', 'JD')
+  });
+}
+
+function _gtxInit() {
+  var ctx = document.getElementById('gtx-context-preview');
+  if (ctx) ctx.innerHTML = _gtxContextMarkup();
+  _gtxUpdate();
+
+  var s1 = document.getElementById('gtx-spec-1');
+  if (s1) s1.innerHTML = _gtxRender({type:'default', label:'Label', badge:'Label', date:'Date XX, XXXX, Time (AM,PM)', amount:'PHP XX.XX'});
+
+  var s2 = document.getElementById('gtx-spec-2');
+  if (s2) s2.innerHTML = _gtxRender({type:'with-avatar', label:'Label', badge:'Label', date:'Date XX, XXXX, Time (AM,PM)', amount:'XXX.XX', initials:'G'});
+
+  var s3 = document.getElementById('gtx-spec-3');
+  if (s3) s3.innerHTML = _gtxRender({type:'no-amount', label:'Label', ref:'Reference No: GC123456789876543', badge:'Label'});
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _gtxInit);
+else _gtxInit();
+</script>
+
+<!--@section-end-->

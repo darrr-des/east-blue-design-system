@@ -1,0 +1,490 @@
+<!--
+  HEADER - CENTERED COMPONENT ASSESSMENT ("Page Banner" pattern)
+  Centered label banner with optional description, light/dark surface.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 18430:2858
+ds-verdict: restructure
+native-status: rework
+variants: 4
+ios: EBPageBanner view with .ebSurface(.brand | .default) modifier
+android: EBPageBanner composable with surface parameter
+open-issues: C1,C2,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] "type=dark|light" property name describes appearance instead of semantic intent — convention is "surface" or "tone".
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Header<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-header-centered" onclick="showPanel('header-centered', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Header - Centered</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('header-centered')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="4" y="4" width="72" height="32" rx="4" fill="#005CE5"/>
+      <rect x="24" y="12" width="32" height="6" rx="1" fill="#FFFFFF"/>
+      <rect x="20" y="22" width="40" height="4" rx="1" fill="#FFFFFF" opacity="0.7"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Header - Centered</div>
+      <span class="badge badge-rework">Restructure</span>
+    </div>
+    <div class="summary-card-desc">Centered label with optional sub-label, on brand or default surface. Rename to Page Banner; swap <code>type=dark|light</code> for <code>surface=brand|default</code>.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Header - Centered</strong></td>
+  <td><span class="badge badge-rework">Restructure</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">4</td>
+  <td class="muted">Centered title banner. Rename to <strong>Page Banner</strong>, swap <code>type</code> for <code>surface</code>.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-header-centered">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Header - Centered
+          <span class="badge badge-rework">Restructure</span>
+          <span class="badge badge-rework">Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18430-2858" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A centered label banner sitting at the top of a screen, modal, or feature. 4 variants from <code>type = dark | light</code> × <code>description = yes | no</code>. The <em>dark</em> variant uses a brand-blue surface with white text; the <em>light</em> variant uses a default surface with dark text. Used for page titles in modal sheets, settings sub-screens, and feature banners.</p>
+      </div>
+      <div class="verdict-inline verdict-restructure">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Restructure — rename and re-label the surface property</div>
+          <div class="verdict-inline-text">Rename to <strong>Page Banner</strong> — "Header" conflates with three structurally different components. Replace <code>type = dark | light</code> with <code>surface = brand | default</code> — the current name describes appearance, not semantic intent. See the <a href="#" onclick="showPanelById('header');return false;">Header family restructure</a> for the full plan.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="header-centered-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'header-centered-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'header-centered-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'header-centered-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'header-centered-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="header-centered-in-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Page Banner sits at the top of a screen, modal, or feature card — centered, taking full width, setting the title of the surface below it.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="header-centered-context-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="header-centered-preview">Live Preview</div>
+    <div class="demo-panel" id="header-centered-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="header-centered-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">type</span>
+              <select id="header-centered-ctrl-type" class="demo-panel-select" onchange="_headerCenteredUpdate()">
+                <option value="dark" selected>dark</option>
+                <option value="light">light</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">description</span>
+              <select id="header-centered-ctrl-desc" class="demo-panel-select" onchange="_headerCenteredUpdate()">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="header-centered-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Generic page banner, reusable anywhere a centered title is needed.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Owns its typography, color tokens, and surface fill.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Shares "Header" prefix with 3 structurally different components. <code>type=dark|light</code> names appearance rather than semantic tone.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Drops into any screen, modal, or card as a page title.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="header-centered-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>State</th><th class="center">iOS</th><th class="center">Android</th><th>Figma Spec</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Default (brand)</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">type=dark</td><td class="muted">White text on brand-blue surface.</td></tr>
+          <tr><td><strong>Default (default)</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">type=light</td><td class="muted">Dark text on default surface.</td></tr>
+          <tr><td><strong>Pressed</strong></td><td class="center muted">N/A</td><td class="center muted">N/A</td><td class="muted">—</td><td class="muted">Banner is informational — no pressed state.</td></tr>
+          <tr><td><strong>Disabled</strong></td><td class="center muted">N/A</td><td class="center muted">N/A</td><td class="muted">—</td><td class="muted">Not interactive.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="header-centered-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Rename to Page Banner.</strong> "Header" prefix shared with 3 structurally different components. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>Rename <code>type=dark|light</code> to <code>surface=brand|default</code>.</strong> Current name describes appearance; convention is to name by semantic surface role. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>No Code Connect mapping.</strong> <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="header-centered-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Rename to Page Banner.</strong> Frees the "Header" namespace and signals semantic role clearly. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Use <code>surface = brand | default</code></strong> instead of <code>type = dark | light</code>. Matches how other DS components (Button appearance, Badge tone) describe surface variants. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Optional: expose <code>alignment</code> prop</strong> (center | leading) for teams that want a left-aligned variant without creating a new component. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>See siblings:</strong> <a href="#" onclick="showPanelById('header');return false;">Header</a>, <a href="#" onclick="showPanelById('header-with-logo');return false;">Header - With Logo</a>, <a href="#" onclick="showPanelById('header-transaction');return false;">Header - Transaction</a>. <span class="tag-recommend">Family</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Dark / brand surface <span class="spec-card-node">node <code>18430:2859</code></span></div>
+      </div>
+      <p class="spec-card-desc">White title on brand-blue surface. The "hero" variant — used for primary feature banners.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="header-centered-spec-1"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-detail-row"><span>type</span><code>dark</code></div>
+          <div class="spec-detail-row"><span>description</span><code>yes</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr></thead>
+              <tbody>
+                <tr><td>Surface</td><td><code>surface/brand</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td></tr>
+                <tr><td>Title</td><td><code>text/on-brand</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5E8EF"></span><code>#FFFFFF</code></td></tr>
+                <tr><td>Description</td><td><code>text/on-brand-muted</code></td><td><span class="swatch-dot" style="background:#C8D8F5"></span><code>#C8D8F5</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Width</span><code>Fill</code></div>
+          <div class="spec-detail-row"><span>Height</span><code>104 (hug)</code></div>
+          <div class="spec-detail-row"><span>Padding</span><code>space/space-24 space/space-16</code></div>
+          <div class="spec-detail-row"><span>Gap</span><code>space/space-4</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>Title</span><code>Heading/L · BarkAda 18/24</code></div>
+          <div class="spec-detail-row"><span>Description</span><code>Body/S · 12/16</code></div>
+          <div class="spec-detail-row"><span>Alignment</span><code>center</code></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Light / default surface <span class="spec-card-node">node <code>18430:2865</code></span></div>
+      </div>
+      <p class="spec-card-desc">Dark title on default surface. Used for modal sheet titles and subdued banners.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="header-centered-spec-2"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-detail-row"><span>type</span><code>light</code></div>
+          <div class="spec-detail-row"><span>description</span><code>yes</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr></thead>
+              <tbody>
+                <tr><td>Surface</td><td><code>surface/default</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5E8EF"></span><code>#FFFFFF</code></td></tr>
+                <tr><td>Title</td><td><code>text/primary</code></td><td><span class="swatch-dot" style="background:#0A2757"></span><code>#0A2757</code></td></tr>
+                <tr><td>Description</td><td><code>text/secondary</code></td><td><span class="swatch-dot" style="background:#90A8D0"></span><code>#90A8D0</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="header-centered-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'header-centered-install','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'header-centered-install','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">.<span class="fn">package</span>(<span class="prp">url</span>: <span class="str">"https://github.com/gcash/eb-design-system-ios"</span>, <span class="prp">from</span>: <span class="str">"1.0.0"</span>)
+
+<span class="kw">import</span> EBDesignSystem</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">implementation(<span class="str">"com.gcash.designsystem:eb-components:1.0.0"</span>)
+
+<span class="kw">import</span> com.gcash.designsystem.components.EBPageBanner</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="header-centered-mapping">Property Mapping (Proposed)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma (today)</th><th>Figma (proposed)</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">(implicit)</td><td><code>title: String</code></td><td><code>title: String</code></td><td><code>title: String</code></td></tr>
+          <tr><td><code>description: boolean</code></td><td><code>description?: String</code></td><td><code>description: String?</code></td><td><code>description: String?</code></td></tr>
+          <tr><td><code>type: dark | light</code></td><td><code>surface: brand | default</code></td><td><code>.ebSurface(.brand)</code> modifier</td><td><code>surface = EBSurface.Brand</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="header-centered-paths">Suggested file paths</div>
+    <ul class="resolved-list">
+      <li><code>ios/Components/PageBanner/EBPageBanner.swift</code></li>
+      <li><code>android/components/pagebanner/EBPageBanner.kt</code></li>
+    </ul>
+
+    <div class="sub-heading" id="header-centered-usage">Usage</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'header-centered-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'header-centered-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Brand surface with description</span>
+<span class="typ">EBPageBanner</span>(
+    <span class="prp">title</span>: <span class="str">"Send Money"</span>,
+    <span class="prp">description</span>: <span class="str">"To any GCash user"</span>
+)
+.<span class="prp">ebSurface</span>(.<span class="prp">brand</span>)
+
+<span class="cmt">// Default surface, title only</span>
+<span class="typ">EBPageBanner</span>(<span class="prp">title</span>: <span class="str">"Settings"</span>)
+    .<span class="prp">ebSurface</span>(.<span class="prp">default</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Brand surface with description</span>
+<span class="typ">EBPageBanner</span>(
+    title = <span class="str">"Send Money"</span>,
+    description = <span class="str">"To any GCash user"</span>,
+    surface = <span class="typ">EBSurface</span>.Brand
+)
+
+<span class="cmt">// Default surface, title only</span>
+<span class="typ">EBPageBanner</span>(title = <span class="str">"Settings"</span>, surface = <span class="typ">EBSurface</span>.Default)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="header-centered-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Heading trait</strong></td><td class="muted"><code>.accessibilityAddTraits(.isHeader)</code> on the title.</td><td class="muted"><code>Modifier.semantics { heading() }</code> on the title.</td></tr>
+          <tr><td><strong>Contrast</strong></td><td class="muted">Brand surface: white on #005CE5 = 8.5:1 ✓. Default surface: #0A2757 on #FFFFFF = 15.4:1 ✓.</td><td class="muted">Same contrast ratios apply.</td></tr>
+          <tr><td><strong>Screen reader order</strong></td><td class="muted">Title → Description. VoiceOver reads in DOM order.</td><td class="muted">Same — TalkBack follows composition order.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="header-centered-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Use as a page title banner at the top of a screen, modal, or feature card.</li>
+          <li>Pick <code>brand</code> surface for hero/promotional banners; <code>default</code> for subdued titles.</li>
+          <li>Apply the heading a11y trait so screen readers can navigate by structure.</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't use for in-screen section titles — use Section Header.</li>
+          <li>Don't use for app-level top bars — use Title Bar.</li>
+          <li>Don't stack multiple banners on one screen.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="header-centered-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Rename to <strong>Page Banner</strong>.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Rename <code>type=dark|light</code> → <code>surface=brand|default</code>.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Surface and text tokens bound.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Maps cleanly to a <code>EBPageBanner</code> view/composable.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-na">N/A</span></td><td class="muted">Static — no interactive states.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-na">N/A</span></td><td class="muted">No assets.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Trivial once renamed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="header-centered-variants">Variants Inventory <span class="variants-count">(4 total)</span></div>
+    <p><code>type</code> × <code>description</code> = <strong>4 variants</strong>.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Node</th><th>type</th><th>description</th><th>Dimensions</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">1</td><td><code>18430:2859</code></td><td>dark</td><td>yes</td><td>360 × 104</td></tr>
+          <tr><td class="mono center">2</td><td><code>18430:2865</code></td><td>light</td><td>yes</td><td>360 × 104</td></tr>
+          <tr><td class="mono center">3</td><td><code>18430:2871</code></td><td>dark</td><td>no</td><td>360 × 84</td></tr>
+          <tr><td class="mono center">4</td><td><code>18430:2873</code></td><td>light</td><td>no</td><td>360 × 84</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 18430:2858</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Restructure</strong> — Rename to <strong>Page Banner</strong>. Swap <code>type=dark|light</code> for <code>surface=brand|default</code>. <span class="tag-open tag-c1 tag-c2">Open</span></div><span class="changelog-delta delta-open">Naming</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C7 — Code Connect</strong> — Trivial mapping once renamed. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-header-centered">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-header-centered"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Header - Centered (Page Banner) JS ─────────────────────────── */
+/* Pixel-accurate replica of node 18430:2858.
+   Dark variant: #1972F9 bg, white title, 72%-white "Label:" key,
+   white value, 24%-white bottom border.
+   Light variant: white bg, #0A2757 title, #6780A9 key, dark value.
+   Size: 360px × hug. Padding: 24 24 34 24.                          */
+
+function _headerCenteredRender(opts) {
+  var isDark  = opts.type === 'dark';
+  var hasDesc = opts.desc === 'yes';
+  var themeClass = isDark ? 'eb-preview-header-centered--dark' : 'eb-preview-header-centered--light';
+  var html = '<div class="eb-preview eb-preview-header-centered ' + themeClass + '">' +
+    '<p class="eb-preview-header-centered__title">Label</p>';
+  if (hasDesc) {
+    html +=
+      '<p class="eb-preview-header-centered__sublabel">' +
+        '<span class="eb-preview-header-centered__sublabel-key">Label:</span>' +
+        '<span class="eb-preview-header-centered__sublabel-value">&nbsp;Add Content</span>' +
+      '</p>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function _headerCenteredContextMarkup() {
+  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-lg">' +
+    _headerCenteredRender({type:'dark',  desc:'yes'}) +
+    _headerCenteredRender({type:'light', desc:'no'}) +
+  '</div>';
+}
+
+function _headerCenteredUpdate() {
+  var type    = document.getElementById('header-centered-ctrl-type');
+  var desc    = document.getElementById('header-centered-ctrl-desc');
+  var preview = document.getElementById('header-centered-demo-preview');
+  if (!preview) return;
+  preview.innerHTML = _headerCenteredRender({
+    type: type ? type.value : 'dark',
+    desc: desc ? desc.value : 'yes'
+  });
+}
+
+function _headerCenteredInit() {
+  var ctx = document.getElementById('header-centered-context-preview');
+  if (ctx) ctx.innerHTML = _headerCenteredContextMarkup();
+  _headerCenteredUpdate();
+  var s1 = document.getElementById('header-centered-spec-1');
+  if (s1) s1.innerHTML = _headerCenteredRender({type:'dark',  desc:'yes'});
+  var s2 = document.getElementById('header-centered-spec-2');
+  if (s2) s2.innerHTML = _headerCenteredRender({type:'light', desc:'yes'});
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _headerCenteredInit);
+else _headerCenteredInit();
+</script>
+
+<!--@section-end-->

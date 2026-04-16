@@ -236,19 +236,19 @@ open-issues: C2, C6, C7
     <!-- Open Issues -->
     <div class="sub-heading" id="tb-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Boolean properties (<code>leading icon</code>, <code>trailing icon</code>, <code>leading control</code>, <code>subtext</code>, <code>title block</code>) use <code>yes/no</code> instead of <code>true/false</code> -- incompatible with Swift <code>Bool</code> and Kotlin <code>Boolean</code> <span class="tag-open">C2</span></span></li>
-      <li><span>Trailing icon uses <code>icon-placeholder</code> RECTANGLE (24x24) instead of a swappable icon instance -- blocks native icon slot mapping <span class="tag-open">C6</span></span></li>
-      <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
+      <li><span><strong>Boolean properties use <code>yes/no</code> strings.</strong> <code>leading icon</code>, <code>trailing icon</code>, <code>leading control</code>, <code>subtext</code>, <code>title block</code> — all incompatible with Swift <code>Bool</code> / Kotlin <code>Boolean</code> for Code Connect. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Trailing icon is a placeholder RECTANGLE.</strong> The 24×24 <code>icon-placeholder</code> blocks instance swap — native icon slot mapping can't be wired until this becomes a swappable Icon instance. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked until boolean values and placeholder rectangles are fixed. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
     </ul>
 
     <!-- Design Recommendations -->
     <div class="sub-heading" id="tb-recommend">Design Recommendations</div>
     <ul class="recommend-list">
-      <li><span>Rename boolean properties from <code>yes/no</code> to <code>true/false</code> for direct native boolean mapping <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Replace trailing icon <code>icon-placeholder</code> RECTANGLE with a swappable icon instance from the DS icon library (e.g. more/ellipsis, share, search) <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Make <code>leading control</code> dependency explicit -- consider a separate property or document that it requires <code>leading icon=yes</code> and <code>trailing icon=no</code> <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Consider adding a dark/transparent variant for screens with hero images or gradient backgrounds <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Add <code>showAsset</code> property documentation -- currently only available when <code>title block=yes</code>; its purpose (background image) should be explicitly described in the component spec <span class="tag-recommend">Suggested</span></span></li>
+      <li><span><strong>Rename boolean values from <code>yes/no</code> to <code>true/false</code>.</strong> Direct native boolean mapping eliminates the string-to-bool layer when wiring Code Connect. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Replace trailing icon placeholder with a real Icon instance.</strong> Drop in an actual icon from the DS library (e.g. more/ellipsis, share, search) so product teams can instance-swap without editing the master. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Make <code>leading control</code> dependency explicit.</strong> Today it requires <code>leading icon=yes</code> and <code>trailing icon=no</code> — document it in the spec or promote it to a separate property so the constraint is enforced, not assumed. <span class="tag-recommend">Docs</span></span></li>
+      <li><span><strong>Add a dark / transparent variant.</strong> For screens with hero images or gradient backgrounds (home, campaign pages, onboarding), the current opaque bar is wrong — a transparent variant lets the hero breathe through. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Document the <code>showAsset</code> property.</strong> Currently only available when <code>title block=yes</code>; its purpose (background image behind the title) should be explicitly described in the component spec. <span class="tag-recommend">Docs</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -453,10 +453,10 @@ open-issues: C2, C6, C7
           <tr><th>Layer</th><th>Text Style</th><th>Font</th><th>Size</th><th>Tracking</th><th>Line-height</th></tr>
         </thead>
         <tbody>
-          <tr><td class="muted">Title</td><td class="mono">Primary/Label/Light/Base</td><td class="mono">Proxima Soft Semibold</td><td class="mono">16px</td><td class="mono">0.25px</td><td class="mono">16px</td></tr>
-          <tr><td class="muted">Subtext</td><td class="mono">Primary/Label/Light/Fine</td><td class="mono">Proxima Soft Semibold</td><td class="mono">12px</td><td class="mono">0.5px</td><td class="mono">12px</td></tr>
-          <tr><td class="muted">Header</td><td class="mono">Primary/Headlines/Light/Area</td><td class="mono">Proxima Soft Semibold</td><td class="mono">26px</td><td class="mono">0.85px</td><td class="mono">31px</td></tr>
-          <tr><td class="muted">CTA (control)</td><td class="mono">Primary/Label/Light/Small</td><td class="mono">Proxima Soft Semibold</td><td class="mono">14px</td><td class="mono">0.25px</td><td class="mono">14px</td></tr>
+          <tr><td class="muted">Title</td><td class="mono">Primary/Label/Light/Base</td><td class="mono">HeyMeow Rnd Semibold</td><td class="mono">16px</td><td class="mono">0.25px</td><td class="mono">16px</td></tr>
+          <tr><td class="muted">Subtext</td><td class="mono">Primary/Label/Light/Fine</td><td class="mono">HeyMeow Rnd Semibold</td><td class="mono">12px</td><td class="mono">0.5px</td><td class="mono">12px</td></tr>
+          <tr><td class="muted">Header</td><td class="mono">Primary/Headlines/Light/Area</td><td class="mono">HeyMeow Rnd Semibold</td><td class="mono">26px</td><td class="mono">0.85px</td><td class="mono">31px</td></tr>
+          <tr><td class="muted">CTA (control)</td><td class="mono">Primary/Label/Light/Small</td><td class="mono">HeyMeow Rnd Semibold</td><td class="mono">14px</td><td class="mono">0.25px</td><td class="mono">14px</td></tr>
         </tbody>
       </table>
       </div>
@@ -856,7 +856,7 @@ function _tbBuildHtml(opts) {
   var totalH = statusH + titleRowH + blockH;
 
   var h = '';
-  h += '<div style="width:' + w + 'px;max-width:100%;background:' + bg + ';border-radius:4px;overflow:hidden;font-family:Proxima Soft,system-ui,sans-serif;color:#FFF;">';
+  h += '<div style="width:' + w + 'px;max-width:100%;background:' + bg + ';border-radius:4px;overflow:hidden;font-family:HeyMeow Rnd,system-ui,sans-serif;color:#FFF;">';
 
   /* ── Status bar ── */
   h += '<div style="height:' + statusH + 'px;display:flex;align-items:flex-end;padding:0 20px 8px;justify-content:space-between;font-size:12px;font-weight:600;">';
@@ -994,15 +994,15 @@ function updateTbSpecCard(cardType, prop, value) {
   var typoEl = document.getElementById('tb-spec-' + cardType + '-typo');
   if (typoEl) {
     var th = '<div class="spec-detail-label">Typography</div><div class="spec-props">';
-    th += '<div class="spec-prop"><span class="spec-prop-key">Title</span><span class="spec-prop-val mono">Primary/Label/Light/Base -- Proxima Soft Semibold 16px</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Title</span><span class="spec-prop-val mono">Primary/Label/Light/Base -- HeyMeow Rnd Semibold 16px</span></div>';
     if (card.subtext === 'yes') {
-      th += '<div class="spec-prop"><span class="spec-prop-key">Subtext</span><span class="spec-prop-val mono">Primary/Label/Light/Fine -- Proxima Soft Semibold 12px</span></div>';
+      th += '<div class="spec-prop"><span class="spec-prop-key">Subtext</span><span class="spec-prop-val mono">Primary/Label/Light/Fine -- HeyMeow Rnd Semibold 12px</span></div>';
     }
     if (card.leadingControl === 'yes') {
-      th += '<div class="spec-prop"><span class="spec-prop-key">CTA</span><span class="spec-prop-val mono">Primary/Label/Light/Small -- Proxima Soft Semibold 14px</span></div>';
+      th += '<div class="spec-prop"><span class="spec-prop-key">CTA</span><span class="spec-prop-val mono">Primary/Label/Light/Small -- HeyMeow Rnd Semibold 14px</span></div>';
     }
     if (card.titleBlock === 'yes') {
-      th += '<div class="spec-prop"><span class="spec-prop-key">Header</span><span class="spec-prop-val mono">Primary/Headlines/Light/Area -- Proxima Soft Semibold 26px</span></div>';
+      th += '<div class="spec-prop"><span class="spec-prop-key">Header</span><span class="spec-prop-val mono">Primary/Headlines/Light/Area -- HeyMeow Rnd Semibold 26px</span></div>';
     }
     th += '</div>';
     typoEl.innerHTML = th;

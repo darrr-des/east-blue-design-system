@@ -224,14 +224,14 @@ open-issues: C7
     <!-- Open Issues -->
     <div class="sub-heading" id="avg-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Code Connect CLI mappings not registered. <span class="tag-open tag-c7">C7</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Structural work (count → layout rename, overflow variant, instance swap to canonical Avatar) is complete — registration can proceed. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
     </ul>
 
 
     <div class="sub-heading" id="avg-recommend">Design Recommendations</div>
     <ul class="recommend-list">
-      <li><span>Consider adding size variants (e.g. <code>groupSize=small/medium/large</code>) — current 48×48 is one size only. Bigger groups may need larger containers for readability. <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Consolidate the duplicate Avatar component at <code>21:94766</code> — now that Avatar Group points at the canonical <code>17143:4488</code>, the duplicate should be deprecated and eventually removed in a future DS cleanup pass. <span class="tag-recommend">DS Hygiene</span></span></li>
+      <li><span><strong>Add size variants.</strong> Current 48×48 container is fixed — bigger groups (5+ avatars) benefit from a larger container for readability. Propose <code>groupSize = small | medium | large</code> with appropriate inner avatar sizes. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Deprecate the duplicate Avatar at <code>21:94766</code>.</strong> Now that Avatar Group points at the canonical <code>17143:4488</code>, the duplicate should be marked deprecated and removed in a future DS cleanup pass. <span class="tag-recommend">Family</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -641,7 +641,7 @@ function _avgBuildSvg(count) {
     var borderColor = '#E5EBF4';
     var textColor = p.type === 'brand' ? '#FFFFFF' : '#2340A9';
     s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + (r - 1) + '" fill="' + bg + '" stroke="' + borderColor + '" stroke-width="1.5"/>';
-    s += '<text x="' + cx + '" y="' + (cy + 3) + '" text-anchor="middle" fill="' + textColor + '" font-size="8" font-weight="700" font-family="\'Proxima Soft\', system-ui, sans-serif">' + p.initials + '</text>';
+    s += '<text x="' + cx + '" y="' + (cy + 3) + '" text-anchor="middle" fill="' + textColor + '" font-size="8" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui, sans-serif">' + p.initials + '</text>';
   });
   s += '</svg>';
   return s;

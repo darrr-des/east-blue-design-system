@@ -265,20 +265,20 @@ open-issues: C2,C5,C6,C7
     <!-- Open Issues -->
     <div class="sub-heading" id="chip-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Two separate Figma components share the same pill anatomy — <strong>Filter</strong> (6 variants) and <strong>Filter with Dropdown</strong> (2 variants). Should consolidate into a single <strong>Chip</strong> with <code>style</code>, <code>leading</code>, and <code>trailing</code> slot props. <span class="tag-open tag-c2">C2</span></span></li>
-      <li><span>Boolean property <code>with icon</code> uses <code>yes</code>/<code>no</code> instead of <code>true</code>/<code>false</code>. Incompatible with Swift <code>Bool</code> / Kotlin <code>Boolean</code> for Code Connect mapping. <span class="tag-open tag-c2">C2</span></span></li>
-      <li><span>Enum value <code>"with active time"</code> contains spaces and a nonsensical name — should be <code>withValue</code> / <code>hasSelectedValue</code> or collapse into a <code>selectedValue</code> optional string prop. <span class="tag-open tag-c2">C2</span></span></li>
-      <li><span>Leading slot is a hardcoded 24px gray circle (<code>icon-placeholder</code>) — should be a swappable Avatar or Icon instance via instance swap. <span class="tag-open tag-c6">C6</span></span></li>
-      <li><span>No pressed / selected / disabled / error states documented. <span class="tag-open tag-c5">C5</span></span></li>
-      <li><span>Code Connect CLI mappings not registered. <span class="tag-open tag-c7">C7</span></span></li>
+      <li><span><strong>Two components share the same pill anatomy.</strong> <em>Filter</em> (6 variants) and <em>Filter with Dropdown</em> (2 variants) should consolidate into a single <em>Chip</em> with <code>style</code>, <code>leading</code>, and <code>trailing</code> slot props. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Boolean values use <code>yes/no</code> instead of <code>true/false</code>.</strong> The <code>with icon</code> property is incompatible with Swift <code>Bool</code> / Kotlin <code>Boolean</code> for Code Connect. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Enum value <code>"with active time"</code> contains spaces and unclear naming.</strong> Should be <code>withValue</code> / <code>hasSelectedValue</code>, or collapsed into an optional <code>selectedValue: String</code> prop. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Leading slot is a hardcoded placeholder circle.</strong> The 24px gray <code>icon-placeholder</code> blocks instance swap — should be a swappable Avatar or Icon. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>No pressed / selected / disabled / error states.</strong> State coverage missing — chips are interactive (tap-to-apply, tap-to-remove) and need full state documentation. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked until the two-component consolidation and prop rename land. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
     </ul>
 
     <div class="sub-heading" id="chip-recommend">Design Recommendations</div>
     <ul class="recommend-list">
-      <li><span><strong>Rename "Filter" → "Chip"</strong> and merge with "Filter with Dropdown" into one component. Matches industry terminology (Material FilterChip/InputChip, Polaris Tag, Carbon Tag) and lets a single component cover filters, tags, and dropdown triggers. <span class="tag-recommend">Restructure</span></span></li>
-      <li><span><strong>Replace <code>type</code> + <code>with icon</code> + (dropdown) <code>type</code> with three semantic slot props</strong>:<br>• <code>style</code> = <code>filled</code> / <code>light</code> / <code>outline</code><br>• <code>leading</code> = <code>none</code> / <code>avatar</code> / <code>icon</code><br>• <code>trailing</code> = <code>none</code> / <code>close</code> / <code>chevron</code><br>Plus an optional <code>selectedValue</code> string for the "Sort by X" pattern. <span class="tag-recommend">Prop model</span></span></li>
-      <li><span><strong>Replace the 24px placeholder circle with a real slot</strong> — instance-swap an Avatar (for person filters) or Icon (for category filters). Follows the same pattern Avatar Group uses for its inner Avatar composition. <span class="tag-recommend">Asset slot</span></span></li>
-      <li><span><strong>Add pressed / disabled states</strong> so applied-filter chips have a documented pressed affordance (important because they're tappable-to-remove) and disabled filters have a defined appearance. <span class="tag-recommend">State coverage</span></span></li>
+      <li><span><strong>Rename "Filter" → "Chip"</strong> and merge with "Filter with Dropdown" into one component. Matches industry terminology (Material FilterChip/InputChip, Polaris Tag, Carbon Tag) and lets a single component cover filters, tags, and dropdown triggers. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Replace <code>type</code> + <code>with icon</code> + (dropdown) <code>type</code> with three semantic slot props</strong>:<br>• <code>style</code> = <code>filled</code> / <code>light</code> / <code>outline</code><br>• <code>leading</code> = <code>none</code> / <code>avatar</code> / <code>icon</code><br>• <code>trailing</code> = <code>none</code> / <code>close</code> / <code>chevron</code><br>Plus an optional <code>selectedValue</code> string for the "Sort by X" pattern. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Replace the 24px placeholder circle with a real slot</strong> — instance-swap an Avatar (for person filters) or Icon (for category filters). Follows the same pattern Avatar Group uses for its inner Avatar composition. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Add pressed / disabled states</strong> so applied-filter chips have a documented pressed affordance (important because they're tappable-to-remove) and disabled filters have a defined appearance. <span class="tag-recommend">State</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -392,7 +392,7 @@ open-issues: C2,C5,C6,C7
         </thead>
         <tbody>
           <tr><td class="muted">DS text style</td><td class="mono">Primary/Label/Base</td></tr>
-          <tr><td class="muted">Font</td><td class="mono">Proxima Soft</td></tr>
+          <tr><td class="muted">Font</td><td class="mono">HeyMeow Rnd</td></tr>
           <tr><td class="muted">Weight</td><td class="mono">700 (Bold)</td></tr>
           <tr><td class="muted">Size</td><td class="mono">16px</td></tr>
           <tr><td class="muted">Line height</td><td class="mono">16px</td></tr>
@@ -746,12 +746,12 @@ function _chipBuildSvg(opts) {
     x += 24 + 4;
   }
   // Label
-  s += '<text x="' + x + '" y="21" fill="' + labelColor + '" font-size="13" font-weight="700" font-family="\'Proxima Soft\', system-ui">' + label + '</text>';
+  s += '<text x="' + x + '" y="21" fill="' + labelColor + '" font-size="13" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">' + label + '</text>';
   x += labelW;
   // Selected value
   if (selectedValue) {
     x += 8;
-    s += '<text x="' + x + '" y="21" fill="' + svColor + '" font-size="13" font-weight="700" font-family="\'Proxima Soft\', system-ui">' + selectedValue + '</text>';
+    s += '<text x="' + x + '" y="21" fill="' + svColor + '" font-size="13" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">' + selectedValue + '</text>';
     x += selectedValue.length * 8;
   }
   // Trailing

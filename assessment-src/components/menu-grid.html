@@ -252,16 +252,16 @@ open-issues: C2,C5,C7
     <!-- Open Issues -->
     <div class="sub-heading" id="mg-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Variant property values use pseudo-numeric strings — <code>Row="by 4"</code>, <code>Column="by 4"</code>. Should be plain integers (<code>rows: 4</code>, <code>columns: 4</code>) for clean native enum/int mapping. <span class="tag-open tag-c2">C2</span></span></li>
-      <li><span>Service Item only defines an <code>active</code> color set. No <code>pressed</code> or <code>disabled</code> color tokens — engineers must invent these on native. <span class="tag-open tag-c5">C5</span></span></li>
-      <li><span>Code Connect CLI mappings not registered. <span class="tag-open tag-c7">C7</span></span></li>
+      <li><span><strong>Variant values use pseudo-numeric strings.</strong> <code>Row="by 4"</code>, <code>Column="by 4"</code> can't map cleanly to native ints or enums. Should be plain integers (<code>rows: 4</code>, <code>columns: 4</code>). <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Service Item only defines an <code>active</code> color set.</strong> No <code>pressed</code> or <code>disabled</code> tokens exist — engineers must invent these colors on native. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked until the variant explosion and token gaps are addressed. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
     </ul>
 
     <div class="sub-heading" id="mg-recommend">Design Recommendations</div>
     <ul class="recommend-list">
-      <li><span>Replace the 20-variant matrix with a single component exposing two integer properties (<code>rows</code>, <code>columns</code>) — variant explosion is a Figma-only construct; native uses a lazy grid that takes any int. Could collapse to ~1–2 variants. <span class="tag-recommend">Restructure</span></span></li>
-      <li><span>Add <code>pressed</code> and <code>disabled</code> color tokens to <code>dashboard/service-item/color/*</code> so all states are documented at the token layer, not improvised in code. <span class="tag-recommend">Token gap</span></span></li>
-      <li><span>Consider documenting Service Item as its own first-class DS component — currently it's a child of Menu Grid but is reused independently across other surfaces. <span class="tag-recommend">DS Hygiene</span></span></li>
+      <li><span><strong>Replace the 20-variant matrix with two integer props.</strong> <code>rows</code> and <code>columns</code> as ints. Variant explosion is a Figma-only construct; native uses a lazy grid that takes any int. Could collapse to ~1–2 variants. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Add <code>pressed</code> and <code>disabled</code> color tokens.</strong> Extend <code>dashboard/service-item/color/*</code> so all states are documented at the token layer, not improvised in code. <span class="tag-recommend">Token</span></span></li>
+      <li><span><strong>Promote Service Item to a first-class DS component.</strong> It's currently a child of Menu Grid but is reused independently across other surfaces. Publishing it standalone (same pattern as Avatar + Avatar Group) makes reuse explicit. <span class="tag-recommend">Family</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -355,7 +355,7 @@ open-issues: C2,C5,C7
         </thead>
         <tbody>
           <tr><td class="muted">DS text style</td><td class="mono">Primary/Label/Fine</td></tr>
-          <tr><td class="muted">Font</td><td class="mono">Proxima Soft</td></tr>
+          <tr><td class="muted">Font</td><td class="mono">HeyMeow Rnd</td></tr>
           <tr><td class="muted">Weight</td><td class="mono">700 (Bold)</td></tr>
           <tr><td class="muted">Size</td><td class="mono">12px</td></tr>
           <tr><td class="muted">Line height</td><td class="mono">12px</td></tr>
@@ -655,7 +655,7 @@ function _mgBuildSvg(rows, cols) {
       var iconCx = x + cellW / 2;
       var iconCy = y + 20;
       s += '<rect x="' + (iconCx - 14) + '" y="' + (iconCy - 14) + '" width="28" height="28" rx="4" fill="#005CE5" opacity=".9"/>';
-      s += '<text x="' + iconCx + '" y="' + (y + 50) + '" text-anchor="middle" fill="#072592" font-size="9" font-weight="700" font-family="\'Proxima Soft\', system-ui, sans-serif">Label</text>';
+      s += '<text x="' + iconCx + '" y="' + (y + 50) + '" text-anchor="middle" fill="#072592" font-size="9" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui, sans-serif">Label</text>';
     }
   }
   s += '</svg>';

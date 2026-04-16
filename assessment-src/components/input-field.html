@@ -234,15 +234,15 @@ open-issues: C7
     <!-- Open Issues -->
     <div class="sub-heading" id="inf-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Structural work is complete — registration can proceed against the 8-variant <code>State × isFilled</code> schema. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
     </ul>
 
     <!-- Design Recommendations -->
     <div class="sub-heading" id="inf-recommend">Design Recommendations</div>
     <ul class="recommend-list">
-      <li><span>Continue standardizing text layer naming across all Form Elements — Input Field now uses <code>#label</code>; verify remaining fields follow suit <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Consider adding a <code>helperText</code> slot below the field for validation messages and hints — currently handled externally <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Add a <code>leadingIcon</code> and <code>trailingIcon</code> boolean slot to Input Field (Labeled Field already has these) for search inputs and clear buttons <span class="tag-recommend">Suggested</span></span></li>
+      <li><span><strong>Standardize text layer naming across Form Elements.</strong> Input Field now uses <code>#label</code>; verify the remaining fields (Labeled, Select, Recipient, View Only) follow the same convention so Code Connect label-slot mapping is uniform. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Add a <code>helperText</code> slot below the field.</strong> Validation messages and hint copy are currently handled outside the component — a first-class slot keeps form anatomy self-contained and matches native <code>TextField</code> hint affordances. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Add <code>leadingIcon</code> / <code>trailingIcon</code> slots.</strong> Labeled Field already has these — extend to Input Field for search, clear, and validation-indicator use cases. Lets the DS cover the full form-element palette without per-screen customization. <span class="tag-recommend">Slot</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -740,7 +740,7 @@ function _infBuildSvg(state, filled) {
   var borderAttr = c.border === 'none' ? '' : ' stroke="' + c.border + '" stroke-width="1.5"';
   var s = '<svg width="366" height="46" viewBox="0 0 366 46" fill="none">';
   s += '<rect x="0.5" y="0.5" width="365" height="45" rx="5.5" fill="' + c.bg + '"' + borderAttr + '/>';
-  s += '<text x="12" y="27" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + textColor + '" letter-spacing="0.25">' + (filled === 'true' ? 'Placeholder' : 'Placeholder') + '</text>';
+  s += '<text x="12" y="27" font-family="HeyMeow Rnd, system-ui" font-size="14" font-weight="600" fill="' + textColor + '" letter-spacing="0.25">' + (filled === 'true' ? 'Placeholder' : 'Placeholder') + '</text>';
   s += '</svg>';
   return s;
 }

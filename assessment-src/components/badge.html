@@ -238,16 +238,15 @@ open-issues: C7
     <!-- Open Issues -->
     <div class="sub-heading" id="bd-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Code Connect CLI mappings not registered <span class="tag-open tag-c7">C7</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Structural work through v1.1 (state rename, opacity fix) is done — registration can proceed against the 68-variant schema. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
     </ul>
 
     <!-- Design Recommendations -->
     <div class="sub-heading" id="bd-recommend">Design Recommendations</div>
     <ul class="recommend-list">
-      <li><span>Remove hardcoded <code>opacity: 0.90</code> from Danger/Heavy and Disabled/Heavy Transaction variants to ensure consistency across all variants <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Consider aligning State property names with token semantic names (e.g. <code>State=Information</code> instead of <code>State=Info</code>) to reduce Code Connect mapping friction <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Add an icon slot (leading) for badges that need visual reinforcement -- common in status badges across fintech apps <span class="tag-recommend">Suggested</span></span></li>
-      <li><span>Primary and Brand states only support Heavy level -- consider adding Medium/Light levels if these states need lower-emphasis variants in future <span class="tag-recommend">Suggested</span></span></li>
+      <li><span><strong>Add a leading icon slot.</strong> Common pattern in fintech status badges (warning triangle, check circle, info icon). Today consumers can't pair an icon with a badge without detaching. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Consider Medium / Light levels for Primary and Brand.</strong> These states only support Heavy today — if lower-emphasis variants are needed (subtle pill, ghost badge), add them now rather than waiting for a future break. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Numeric count variant.</strong> Notification badges (inbox unread count, cart count) overlap Badge's visual space but aren't formalized here. Either document that consumers use Counter instead, or add a <code>count</code> variant with overflow handling (<code>"99+"</code>). <span class="tag-recommend">Property</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -574,8 +573,8 @@ open-issues: C7
           <tr><th>Type</th><th>Text Style</th><th>Font</th><th>Size</th><th>Tracking</th><th>Line-height</th></tr>
         </thead>
         <tbody>
-          <tr><td class="muted">Default / Voucher / Transaction</td><td class="mono">Primary/Label/Fine</td><td class="mono">Proxima Soft Bold</td><td class="mono">12px</td><td class="mono">0.5px</td><td class="mono">12px</td></tr>
-          <tr><td class="muted">Dashboard</td><td class="mono">Primary/Label/Tiny</td><td class="mono">Proxima Soft Bold</td><td class="mono">10px</td><td class="mono">0.25px</td><td class="mono">10px</td></tr>
+          <tr><td class="muted">Default / Voucher / Transaction</td><td class="mono">Primary/Label/Fine</td><td class="mono">HeyMeow Rnd Bold</td><td class="mono">12px</td><td class="mono">0.5px</td><td class="mono">12px</td></tr>
+          <tr><td class="muted">Dashboard</td><td class="mono">Primary/Label/Tiny</td><td class="mono">HeyMeow Rnd Bold</td><td class="mono">10px</td><td class="mono">0.25px</td><td class="mono">10px</td></tr>
         </tbody>
       </table>
       </div>
@@ -1002,7 +1001,7 @@ function _bdBuildHtml(state, level, type) {
   var style = 'display:inline-block;';
   style += 'background:' + c.bg + ';';
   style += 'color:' + c.label + ';';
-  style += 'font-family:Proxima Soft,system-ui,sans-serif;';
+  style += 'font-family:HeyMeow Rnd,system-ui,sans-serif;';
   style += 'font-weight:700;';
   style += 'font-size:' + fs + 'px;';
   style += 'line-height:' + fs + 'px;';
@@ -1098,7 +1097,7 @@ function updateBadgeSpecCard(cardType, prop, value) {
     var isDash = (card.type === 'Dashboard');
     var th = '<div class="spec-detail-label">Typography</div><div class="spec-props">';
     th += '<div class="spec-prop"><span class="spec-prop-key">Text Style</span><span class="spec-prop-val mono">' + (isDash ? 'Primary/Label/Tiny' : 'Primary/Label/Fine') + '</span></div>';
-    th += '<div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">Proxima Soft Bold</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">HeyMeow Rnd Bold</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">' + (isDash ? '10px' : '12px') + '</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Tracking</span><span class="spec-prop-val mono">' + (isDash ? '0.25px' : '0.5px') + '</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Line-height</span><span class="spec-prop-val mono">' + (isDash ? '10px' : '12px') + '</span></div>';

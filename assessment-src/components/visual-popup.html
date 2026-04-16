@@ -227,18 +227,18 @@ open-issues: C2,C5,C6,C7
     <!-- Open Issues -->
     <div class="sub-heading" id="vp-open">Open Issues</div>
     <ul class="resolved-list">
-      <li><span>Variant naming mixes paradigms — <code>Default</code> (generic), <code>2 CTA</code> (count), <code>Version 2</code> (version). Native enum mapping needs one semantic axis. Suggested: <code>single-cta</code> / <code>dual-cta</code> / <code>dismissible</code>. <span class="tag-open tag-c2">C2</span></span></li>
-      <li><span>No destructive/error/loading state coverage — engineers must improvise these for "Cancel transaction?", error confirms, and async submit flows. <span class="tag-open tag-c5">C5</span></span></li>
-      <li><span>Hero image is a flat raster placeholder with a "Replace me" overlay. Should be a swappable Image slot (component instance) so product teams override per-popup without editing the master. <span class="tag-open tag-c6">C6</span></span></li>
-      <li><span>Code Connect CLI mappings not registered. <span class="tag-open tag-c7">C7</span></span></li>
+      <li><span><strong>Variant naming mixes paradigms.</strong> <code>Default</code> (generic), <code>2 CTA</code> (count), and <code>Version 2</code> (version) can't coexist as one enum. Collapse to a single semantic axis: <code>single-cta</code> / <code>dual-cta</code> / <code>dismissible</code>. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>No destructive / error / loading state coverage.</strong> Engineers must improvise these for "Cancel transaction?", error confirms, and async submit flows. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Hero image is a raster placeholder with "Replace me" overlay.</strong> Should be a swappable Image slot (component instance) so product teams override per-popup without editing the master. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked until the variant naming and asset-slot issues above are resolved. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
     </ul>
 
     <div class="sub-heading" id="vp-recommend">Design Recommendations</div>
     <ul class="recommend-list">
-      <li><span>Rename property <code>Type</code> values to a single semantic axis: <code>single-cta</code>, <code>dual-cta</code>, <code>dismissible</code>. Eliminates the version/count/default mix and maps cleanly to <code>EBVisualPopupKind</code> enum. <span class="tag-recommend">Restructure</span></span></li>
-      <li><span>Replace the raster <code>Modals Asset</code> with a swappable Image slot — a component placeholder that product teams can instance-swap with their illustration. Matches the pattern Avatar uses for the <code>image</code> type. <span class="tag-recommend">Asset slot</span></span></li>
-      <li><span>Add a <code>destructive</code> boolean (or <code>kind=destructive</code> mode) so destructive confirms (Cancel / Logout / Delete) can use red CTAs without bespoke overrides. <span class="tag-recommend">State coverage</span></span></li>
-      <li><span>Consider a <code>loading</code> state for the primary CTA — async submits in popups currently have no documented affordance. Could reuse the planned Button loading state. <span class="tag-recommend">State coverage</span></span></li>
+      <li><span><strong>Collapse <code>Type</code> to one semantic enum.</strong> Values: <code>single-cta</code>, <code>dual-cta</code>, <code>dismissible</code>. Eliminates the version/count/default mix and maps cleanly to an <code>EBVisualPopupKind</code> enum. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Replace the raster <code>Modals Asset</code> with a swappable Image slot.</strong> A component placeholder that product teams can instance-swap with their illustration — matches the pattern Avatar uses for its <code>image</code> type. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Add a <code>destructive</code> mode.</strong> Whether as a boolean or a <code>kind=destructive</code> variant — lets destructive confirms (Cancel / Logout / Delete) use red CTAs without bespoke overrides. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Add a <code>loading</code> state for the primary CTA.</strong> Async submits in popups currently have no documented affordance — reuse the planned Button loading state rather than invent a new pattern. <span class="tag-recommend">State</span></span></li>
     </ul>
 
     </div><!-- /tab usage -->
@@ -334,10 +334,10 @@ open-issues: C2,C5,C6,C7
           <tr><th>Element</th><th>DS text style</th><th>Spec</th></tr>
         </thead>
         <tbody>
-          <tr><td class="muted">Title</td><td class="mono">Primary/Headlines/Section</td><td class="mono">Proxima Soft Bold · 22 / 26</td></tr>
+          <tr><td class="muted">Title</td><td class="mono">Primary/Headlines/Section</td><td class="mono">HeyMeow Rnd Bold · 22 / 26</td></tr>
           <tr><td class="muted">Description</td><td class="mono">Secondary/Default/Base</td><td class="mono">BarkAda Medium · 14 / 20</td></tr>
-          <tr><td class="muted">Preamble (V2)</td><td class="mono">Primary/Label/Tiny</td><td class="mono">Proxima Soft Bold · 10 / 10 · +0.25</td></tr>
-          <tr><td class="muted">CTA label</td><td class="mono">Primary/Label/Large</td><td class="mono">Proxima Soft Bold · 18 / 18 · +0.25</td></tr>
+          <tr><td class="muted">Preamble (V2)</td><td class="mono">Primary/Label/Tiny</td><td class="mono">HeyMeow Rnd Bold · 10 / 10 · +0.25</td></tr>
+          <tr><td class="muted">CTA label</td><td class="mono">Primary/Label/Large</td><td class="mono">HeyMeow Rnd Bold · 18 / 18 · +0.25</td></tr>
         </tbody>
       </table>
       </div>
@@ -691,11 +691,11 @@ function _vpBuildSvg(type) {
     // Version 2: light-gray container only (white outer has zero padding so it's not visible)
     s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" rx="6" fill="#F6F9FD"/>';
     // Preamble
-    s += '<text x="20" y="26" fill="#90A8D0" font-size="6" font-weight="700" font-family="\'Proxima Soft\', system-ui">PREAMBLE</text>';
+    s += '<text x="20" y="26" fill="#90A8D0" font-size="6" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">PREAMBLE</text>';
     // Close icon
     s += '<g transform="translate(' + (w - 28) + ', 18) " stroke="#6780A9" stroke-width="1.4" stroke-linecap="round"><line x1="0" y1="0" x2="8" y2="8"/><line x1="8" y1="0" x2="0" y2="8"/></g>';
     // Title
-    s += '<text x="20" y="42" fill="#0A2757" font-size="11" font-weight="700" font-family="\'Proxima Soft\', system-ui">Put the title here</text>';
+    s += '<text x="20" y="42" fill="#0A2757" font-size="11" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Put the title here</text>';
     // Description
     s += '<text x="20" y="56" fill="#6780A9" font-size="7" font-family="\'BarkAda\', system-ui">Add description here.</text>';
     s += '<text x="20" y="66" fill="#6780A9" font-size="7" font-family="\'BarkAda\', system-ui">Add description here.</text>';
@@ -703,14 +703,14 @@ function _vpBuildSvg(type) {
     s += _vpImagePlaceholder(20, 78, w - 40, 100, 6);
     // CTA
     s += '<rect x="20" y="' + (h - 36) + '" width="' + (w - 40) + '" height="22" rx="11" fill="#005CE5"/>';
-    s += '<text x="' + (w / 2) + '" y="' + (h - 21) + '" text-anchor="middle" fill="#FFFFFF" font-size="9" font-weight="700" font-family="\'Proxima Soft\', system-ui">Okay</text>';
+    s += '<text x="' + (w / 2) + '" y="' + (h - 21) + '" text-anchor="middle" fill="#FFFFFF" font-size="9" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Okay</text>';
   } else {
     // Default / 2 CTA: hero on top
     s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" rx="4" fill="#FFFFFF" stroke="#E5EBF4" stroke-width="0.8"/>';
     // Hero placeholder (top corners rounded only)
     s += _vpImagePlaceholder(0, 0, w, 100, 4, true);
     // Title
-    s += '<text x="' + (w / 2) + '" y="128" text-anchor="middle" fill="#0A2757" font-size="12" font-weight="700" font-family="\'Proxima Soft\', system-ui">Put the title here</text>';
+    s += '<text x="' + (w / 2) + '" y="128" text-anchor="middle" fill="#0A2757" font-size="12" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Put the title here</text>';
     // Description
     s += '<text x="' + (w / 2) + '" y="146" text-anchor="middle" fill="#6780A9" font-size="8" font-family="\'BarkAda\', system-ui">Add description here.</text>';
     s += '<text x="' + (w / 2) + '" y="158" text-anchor="middle" fill="#6780A9" font-size="8" font-family="\'BarkAda\', system-ui">Add description here.</text>';
@@ -718,12 +718,12 @@ function _vpBuildSvg(type) {
     if (type === '2cta') {
       // Outline primary + text tertiary
       s += '<rect x="20" y="180" width="' + (w - 40) + '" height="24" rx="12" fill="#FFFFFF" stroke="#005CE5" stroke-width="2"/>';
-      s += '<text x="' + (w / 2) + '" y="196" text-anchor="middle" fill="#005CE5" font-size="9" font-weight="700" font-family="\'Proxima Soft\', system-ui">Label</text>';
-      s += '<text x="' + (w / 2) + '" y="232" text-anchor="middle" fill="#005CE5" font-size="9" font-weight="700" font-family="\'Proxima Soft\', system-ui">Label</text>';
+      s += '<text x="' + (w / 2) + '" y="196" text-anchor="middle" fill="#005CE5" font-size="9" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Label</text>';
+      s += '<text x="' + (w / 2) + '" y="232" text-anchor="middle" fill="#005CE5" font-size="9" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Label</text>';
     } else {
       // Single primary
       s += '<rect x="20" y="190" width="' + (w - 40) + '" height="26" rx="13" fill="#005CE5"/>';
-      s += '<text x="' + (w / 2) + '" y="207" text-anchor="middle" fill="#FFFFFF" font-size="10" font-weight="700" font-family="\'Proxima Soft\', system-ui">Okay</text>';
+      s += '<text x="' + (w / 2) + '" y="207" text-anchor="middle" fill="#FFFFFF" font-size="10" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Okay</text>';
     }
   }
 
