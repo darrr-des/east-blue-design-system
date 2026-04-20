@@ -1,0 +1,698 @@
+<!--
+  LIST (ACTION ROW) COMPONENT ASSESSMENT
+  Tappable action-list row family: base + with Counter + with Description.
+  3 sibling Figma components that should consolidate into one slot-driven row.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 18577:14545
+ds-verdict: restructure
+native-status: rework
+variants: 15
+ios: Custom EBActionListRow view — Button wrapping an HStack
+android: Custom EBActionListRow composable — Row inside clickable Surface
+open-issues: C1,C2,C4,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] Three sibling Figma components (List, List - with Counter, List - with Description) encode what should be one row with optional description + optional trailing counter slots.
+[C1] Leading icon is a bare gray circle "Placeholder" layer (#C2C6CF) — no real icon content, same instance-swap placeholder anti-pattern as List Item.
+[C2] `List` + `List - with Description` use Semibold 16 Neutral (#0A2757); `List - with Counter` uses Bold 18 Brand Blue (#005CE5). Same family, two different label typographies.
+[C2] Hidden `Space2` / `Space16` spacer annotation nodes leak into the production component as rendered layers.
+[C5] State enum is Default / Disabled / Loading — no Pressed state on a component whose primary purpose is tap navigation.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Action List<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-action-list" onclick="showPanel('action-list', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Action List</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('action-list')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <circle cx="14" cy="20" r="5" fill="#C2C6CF"/>
+      <rect x="24" y="18" width="22" height="4" rx="1" fill="#0A2757"/>
+      <rect x="52" y="17" width="14" height="6" rx="1" fill="#005CE5" opacity=".85"/>
+      <path d="M70 16l4 4-4 4" stroke="#005CE5" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Action List</div>
+      <span class="badge badge-rework">Restructure</span>
+    </div>
+    <div class="summary-card-desc">Tappable action-list row with leading icon, label, optional description, and a trailing CTA / counter / chevron. Currently 3 sibling Figma components (base + Counter + Description) that should collapse into one.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Action List</strong></td>
+  <td><span class="badge badge-rework">Restructure</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">15</td>
+  <td class="muted">3 sibling components (base, with Counter, with Description) should consolidate into one <code>List</code> row with <code>description?</code>, <code>trailing</code>, <code>hasCounter</code> props. Add Pressed state. Reconcile label typography. Replace placeholder icon with a slot.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-action-list">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Action List
+          <span class="badge badge-rework">Restructure</span>
+          <span class="badge badge-rework">Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18577-14545" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A tappable row used in action-list menus (Settings, Help, Profile sub-screens) — leading icon, label, optional description, trailing CTA / counter / chevron. Today it ships as <strong>three sibling components</strong>: <code>List</code> (<code>18577:14545</code>, 6 variants), <code>List - with Counter</code> (<code>18577:14637</code>, 6 variants), and <code>List - with Description</code> (<code>18577:14604</code>, 3 variants) — 15 variants total across the family. Each sibling uses a different label treatment and a slightly different padding scheme.</p>
+      </div>
+      <div class="verdict-inline verdict-restructure">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Collapse 3 siblings into one slot-driven row</div>
+          <div class="verdict-inline-text">The three components differ by <em>presence</em> — a description line, a trailing counter — not by role. Replace with one <code>List</code> component with <code>description?: String</code>, <code>trailing: .cta | .counter | .chevron | .none</code>, plus a named <code>leading</code> slot for the icon. Align label typography across the family (currently Semibold 16 Neutral vs. Bold 18 Brand). Add a Pressed state — these rows are primary nav targets. Reconcile with <a href="#" onclick="showPanelById('list-item');return false;">List Item</a> (display-only body rows) and clarify when to use which.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="lit-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'lit-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'lit-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'lit-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'lit-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="lit-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Action-list rows stack inside Settings / Profile / Help menus. A typical screen mixes variants with/without description and with/without trailing counter.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="34" y="6" width="132" height="108" rx="10" stroke="currentColor" stroke-width="1.2" opacity=".15"/>
+          <rect x="34" y="6" width="132" height="20" rx="10" fill="#005CE5" opacity=".85"/>
+          <rect x="34" y="16" width="132" height="10" fill="#005CE5" opacity=".85"/>
+          <text x="100" y="19" text-anchor="middle" fill="#FFF" font-size="6" font-weight="700" font-family="system-ui">Settings</text>
+          <!-- Row 1: icon + label + CTA + chevron -->
+          <circle cx="44" cy="38" r="3" fill="#C2C6CF"/>
+          <rect x="50" y="35" width="40" height="5" rx="1" fill="#0A2757"/>
+          <text x="146" y="40" fill="#005CE5" font-size="5" font-weight="700" font-family="system-ui">View</text>
+          <path d="M158 37l2 2-2 2" stroke="#005CE5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <!-- Row 2: icon + label + counter -->
+          <circle cx="44" cy="54" r="3" fill="#C2C6CF"/>
+          <rect x="50" y="51" width="52" height="5" rx="1" fill="#005CE5" opacity=".9"/>
+          <rect x="146" y="50" width="10" height="7" rx="3.5" fill="#EEF2F9"/>
+          <text x="151" y="56" text-anchor="middle" fill="#072592" font-size="4.5" font-weight="700" font-family="system-ui">3</text>
+          <!-- Row 3: icon + label + description + chevron -->
+          <circle cx="44" cy="70" r="3" fill="#C2C6CF"/>
+          <rect x="50" y="67" width="36" height="5" rx="1" fill="#0A2757"/>
+          <rect x="50" y="74" width="60" height="3" rx="1" fill="#6780A9"/>
+          <path d="M158 69l2 2-2 2" stroke="#0A2757" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <!-- Row 4: skeleton -->
+          <rect x="40" y="90" width="8" height="8" rx="4" fill="#EEF2F9"/>
+          <rect x="52" y="91" width="80" height="5" rx="1" fill="#EEF2F9"/>
+          <rect x="146" y="91" width="14" height="5" rx="1" fill="#EEF2F9"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="lit-preview">Live Preview</div>
+    <p class="section-desc">Swap between the 3 sibling shapes and their states. Notice how the Counter variant reads in a different label style than the other two — that's the "Consistent" warning below.</p>
+    <div class="demo-panel" id="lit-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="lit-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Shape</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">variant</span>
+              <select class="demo-panel-select" id="lit-ctrl-variant" onchange="updateLitDemo()">
+                <option value="base" selected>base (List)</option>
+                <option value="counter">with Counter</option>
+                <option value="description">with Description</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">state</span>
+              <select class="demo-panel-select" id="lit-ctrl-state" onchange="updateLitDemo()">
+                <option value="default" selected>Default</option>
+                <option value="disabled">Disabled</option>
+                <option value="loading">Loading</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">density</span>
+              <select class="demo-panel-select" id="lit-ctrl-density" onchange="updateLitDemo()">
+                <option value="compact" selected>Compact</option>
+                <option value="expanded">Expanded</option>
+              </select>
+            </div>
+          </div>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Content</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">label</span>
+              <input type="text" id="lit-ctrl-label" class="demo-panel-select demo-panel-input" value="Label" oninput="updateLitDemo()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">description</span>
+              <input type="text" id="lit-ctrl-desc" class="demo-panel-select demo-panel-input" value="description" oninput="updateLitDemo()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">counter</span>
+              <input type="text" id="lit-ctrl-counter" class="demo-panel-select demo-panel-input" value="3" oninput="updateLitDemo()">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="lit-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Used across Settings, Help Center, Profile, Wallet sub-screens. Covers the main action-list row patterns.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Colors and padding bound to <code>main/action-list/*</code> tokens. Loading skeleton uses <code>bg/color-bg-strong</code> for placeholders. Leaked internal spacer annotations (<code>_space_2</code>, <code>_space_16</code>) are rendered inside production instances. <span class="tag-open tag-c1">C1</span></div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Three sibling components encode a single row pattern by presence. Label typography diverges: <code>List</code> and <code>List - with Description</code> use Semibold 16 Neutral (<code>#0A2757</code>); <code>List - with Counter</code> uses Bold 18 Brand Blue (<code>#005CE5</code>). <span class="tag-open tag-c2">C2</span></div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Leading icon is an always-gray placeholder circle, not a Figma Slot. Trailing content is baked into each sibling rather than driven by a <code>trailing</code> enum. <span class="tag-open tag-c4">C4</span> <span class="tag-open tag-c6">C6</span></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="lit-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>State</th><th class="center">iOS</th><th class="center">Android</th><th>Figma Spec</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Default</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">State=Default</td><td class="muted">Baseline row. Label in Neutral Dark (or Brand Blue on the Counter variant).</td></tr>
+          <tr><td><strong>Disabled</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">State=Disabled</td><td class="muted">Label → <code>#C2CFE5</code>, chevron → <code>#9BC5FD</code>, CTA → <code>#9BC5FD</code>, counter bg stays <code>#EEF2F9</code> but label → <code>#C2CFE5</code>.</td></tr>
+          <tr><td><strong>Loading</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">State=Loading</td><td class="muted">Icon becomes a neutral ring; label + trailing become 16 px pill placeholders filled with <code>#EEF2F9</code>.</td></tr>
+          <tr><td><strong>Pressed</strong></td><td class="center muted">Missing</td><td class="center muted">Missing</td><td class="muted">Not built</td><td class="muted">Action rows are tap targets — a pressed state (row tint + possibly label darken) is a baseline expectation for native.</td></tr>
+          <tr><td><strong>Focused</strong></td><td class="center muted">Missing</td><td class="center muted">Missing</td><td class="muted">Not built</td><td class="muted">TV / keyboard focus ring not defined. Android a11y also relies on it.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="lit-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Three sibling components for one row pattern.</strong> <code>List</code>, <code>List - with Counter</code>, and <code>List - with Description</code> differ only by the presence of a description line and/or a trailing counter. Collapse into a single <code>List</code> component with optional <code>description</code> and a <code>trailing</code> union. <span class="tag-open tag-c1">C1 · Layer Structure &amp; Naming</span></span></li>
+      <li><span><strong>Label typography diverges across the family.</strong> <code>List</code> + <code>List - with Description</code> use Proxima Soft Semibold 16 / Neutral Dark (<code>#0A2757</code>). <code>List - with Counter</code> uses Proxima Soft Bold 18 / Brand Blue (<code>#005CE5</code>). Same row family should read as one thing. Pick one token (<code>label</code> or <code>label-brand</code>) and one size. <span class="tag-open tag-c2">C2 · Variant &amp; Property Naming</span></span></li>
+      <li><span><strong>Leaked spacer annotation layers.</strong> Internal <code>_space_2</code> (<code>4115:3220</code>) and <code>_space_16</code> (<code>21:40139</code>) annotation frames are rendered as opacity-0 layers inside every production instance. Artifacts of authoring, not part of the public component. Remove or move to a separate documentation artboard. <span class="tag-open tag-c1">C1 · Layer Structure &amp; Naming</span></span></li>
+      <li><span><strong>Leading icon is a gray placeholder.</strong> All three siblings default to a <code>#C2C6CF</code> filled 32 px circle under a frame named <em>Placeholder</em>. Same instance-swap anti-pattern as <a href="#" onclick="showPanelById('list-item');return false;">List Item</a>. Adopt a Figma Slot so consumers can drop in a real icon (or an Avatar). <span class="tag-open tag-c6">C6 · Asset &amp; Icon Quality</span></span></li>
+      <li><span><strong>No Pressed state.</strong> These rows are the primary tap surface for navigation menus. The State enum exposes only Default / Disabled / Loading. Add Pressed (tinted bg and/or chevron darken). <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Trailing content is baked per sibling.</strong> CTA text lives on the base, a filled Counter lives on the Counter sibling, and a chevron appears only sometimes. Introduce a <code>trailing</code> enum (<code>.cta(String) | .counter(Int) | .chevron | .none</code>) so one component covers all three patterns. Maps cleanly to native enums. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked on the consolidation + slot adoption. Adding mappings for three siblings would cement the wrong schema. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="lit-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Consolidate into one <code>List</code> row.</strong> One component with properties <code>label: String</code>, <code>description?: String</code>, <code>trailing: .cta(String) | .counter(Int) | .chevron | .none</code>, <code>density: .compact | .expanded</code>, <code>state: .default | .pressed | .disabled | .loading</code>, plus a <code>leading</code> slot. Replaces 15 variants across 3 components with roughly 4 × 4 = 16 state-permutations of one schema. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Add a <code>leading</code> Figma Slot for the icon.</strong> Maps 1:1 to <code>@ViewBuilder</code> (SwiftUI) and a <code>@Composable</code> slot (Compose). Accepts Icon, Avatar, or a custom 32 px component. Remove the placeholder fill entirely — empty slot means no leading. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Reconcile label typography.</strong> Pick one: either Neutral Dark Semibold 16 (matches <code>List Item</code> + most action rows) or Brand Blue Bold 18 (matches the current Counter sibling). Neutral is the safer default — Brand Blue reads like a <em>link</em>, which the whole row already behaves as. Apply the choice to all three shapes. <span class="tag-recommend">Token</span></span></li>
+      <li><span><strong>Add Pressed (and ideally Focused) states.</strong> Pressed = <code>bg</code> tints to <code>#F4F6FA</code>, chevron / CTA darkens one step. Focused = 2 px brand ring at 2 px offset. Baseline for native row components. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Remove <code>_space_2</code> / <code>_space_16</code> spacer annotations.</strong> These are authoring artifacts. Move to a separate "Annotations" artboard or delete once the auto-layout is settled. They export as opacity-0 layers to consumers. <span class="tag-recommend">Composition</span></span></li>
+      <li><span><strong>Disambiguate vs <code>List Item</code>.</strong> This component is <em>tappable action navigation</em> (icon + label + trailing CTA/counter/chevron). <code>List Item</code> is <em>display body rows</em> (bullet + text for terms/steps). Document the distinction and cross-link the two — today the names don't telegraph which is which. <span class="tag-recommend">Docs</span></span></li>
+      <li><span><strong>Rename the family.</strong> <code>List</code> collides with the native-platform word for a scroll container, and the "Action List" shorthand the team uses internally doesn't appear in Figma. Consider <code>ActionListRow</code> / <code>EBActionListRow</code> — disambiguates from display lists and from plain list items. <span class="tag-recommend">Rename</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="lit-styles" style="margin-top:0">Variants</div>
+    <p class="section-desc">Three sibling components, 15 variants combined. Previews show the Default state of each shape.</p>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="lit-variant-base">List <span class="muted" style="font-weight:400;">— icon + label + CTA + chevron</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18577:14545" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18577:14545</span></button>
+        </div>
+        <p class="spec-card-desc">Baseline row. 6 variants (State × Density). Label in Neutral Dark Semibold 16. Trailing CTA text + 24 px chevron icon. 360 × 48 (compact) / 360 × 56 (expanded).</p>
+      </div>
+      <div class="spec-card-preview" id="lit-preview-base"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="lit-variant-counter">List - with Counter <span class="muted" style="font-weight:400;">— icon + label + counter + chevron</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18577:14637" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18577:14637</span></button>
+        </div>
+        <p class="spec-card-desc">Adds a trailing <a href="#" onclick="showPanelById('counter');return false;">Counter</a> pill. 6 variants (Density × State). Card-like container with <code>radius-2</code> (6 px) corners and <code>Depth/D0</code> drop-shadow — differs from the base's flat row. Label switches to Bold 18 Brand Blue. 360 × 56 / 360 × 64.</p>
+      </div>
+      <div class="spec-card-preview" id="lit-preview-counter"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="lit-variant-desc">List - with Description <span class="muted" style="font-weight:400;">— icon + label + description + CTA + chevron</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18577:14604" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18577:14604</span></button>
+        </div>
+        <p class="spec-card-desc">Adds a secondary description line under the label. 3 variants (State only — no Density axis). Label matches the base (Semibold 16 Neutral). Description uses Semibold 12 / tracking-wider / <code>main/action-list/color/default/description</code> (<code>#6780A9</code>). 360 × 60.</p>
+      </div>
+      <div class="spec-card-preview" id="lit-preview-desc"><!-- JS --></div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Role</th><th>Token</th><th>Default</th><th>Disabled</th><th>Loading</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Row bg</td><td class="mono">main/action-list/color/default/bg</td><td class="mono"><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span>#FFFFFF</td><td class="mono"><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span>#FFFFFF</td><td class="mono"><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span>#FFFFFF</td></tr>
+          <tr><td class="muted">Label (base &amp; with-description)</td><td class="mono">main/action-list/color/default/label</td><td class="mono"><span class="swatch-dot" style="background:#0A2757"></span>#0A2757</td><td class="mono"><span class="swatch-dot" style="background:#C2CFE5"></span>#C2CFE5</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Label (with-counter)</td><td class="mono">main/action-list/color/default/label-brand</td><td class="mono"><span class="swatch-dot" style="background:#005CE5"></span>#005CE5</td><td class="mono"><span class="swatch-dot" style="background:#C2CFE5"></span>#C2CFE5</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Description</td><td class="mono">main/action-list/color/default/description</td><td class="mono"><span class="swatch-dot" style="background:#6780A9"></span>#6780A9</td><td class="mono"><span class="swatch-dot" style="background:#C2CFE5"></span>#C2CFE5</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Trailing CTA label</td><td class="mono">main/action-list/color/default/label-link</td><td class="mono"><span class="swatch-dot" style="background:#005CE5"></span>#005CE5</td><td class="mono"><span class="swatch-dot" style="background:#9BC5FD"></span>#9BC5FD</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Chevron</td><td class="mono">main/action-list/color/default/chevron</td><td class="mono"><span class="swatch-dot" style="background:#005CE5"></span>#005CE5</td><td class="mono"><span class="swatch-dot" style="background:#9BC5FD"></span>#9BC5FD</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Counter bg</td><td class="mono">main/counter/color/filled/bg</td><td class="mono"><span class="swatch-dot" style="background:#EEF2F9"></span>#EEF2F9</td><td class="mono"><span class="swatch-dot" style="background:#EEF2F9"></span>#EEF2F9</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Counter label</td><td class="mono">main/counter/color/filled/label</td><td class="mono"><span class="swatch-dot" style="background:#072592"></span>#072592</td><td class="mono"><span class="swatch-dot" style="background:#C2CFE5"></span>#C2CFE5</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Skeleton fill</td><td class="mono">bg/color-bg-strong</td><td class="mono">—</td><td class="mono">—</td><td class="mono"><span class="swatch-dot" style="background:#EEF2F9"></span>#EEF2F9</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="table-footnote">Pressed state has no defined colors — open issue.</p>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Frame width</td><td class="mono">—</td><td class="mono">360px (fill container in product)</td></tr>
+          <tr><td class="muted">Row height — base</td><td class="mono">—</td><td class="mono">48 (compact) / 56 (expanded)</td></tr>
+          <tr><td class="muted">Row height — with Counter</td><td class="mono">—</td><td class="mono">56 (compact) / 64 (expanded)</td></tr>
+          <tr><td class="muted">Row height — with Description</td><td class="mono">—</td><td class="mono">60 (no density axis)</td></tr>
+          <tr><td class="muted">Icon size</td><td class="mono">—</td><td class="mono">32 × 32</td></tr>
+          <tr><td class="muted">Icon → label gap</td><td class="mono">space/space-12</td><td class="mono">12px</td></tr>
+          <tr><td class="muted">Wrapper padding (compact)</td><td class="mono">space/space-12 + 7/11</td><td class="mono">12px / 7px (compact) · 12px / 11px (expanded)</td></tr>
+          <tr><td class="muted">Description gap</td><td class="mono">space/space-6</td><td class="mono">6px</td></tr>
+          <tr><td class="muted">Counter radius</td><td class="mono">radius/radius-round</td><td class="mono">99999px (pill)</td></tr>
+          <tr><td class="muted">Counter size</td><td class="mono">—</td><td class="mono">24 × 24 (filled) / h24 (empty)</td></tr>
+          <tr><td class="muted">Card radius (with Counter)</td><td class="mono">radius/radius-2</td><td class="mono">6px</td></tr>
+          <tr><td class="muted">Card shadow (with Counter)</td><td class="mono">Depth/D0</td><td class="mono">0 1 3 0 · #E8EEF2C9</td></tr>
+          <tr><td class="muted">Chevron size</td><td class="mono">—</td><td class="mono">24 × 24 (base + with-description) / 32 × 32 (with-counter)</td></tr>
+          <tr><td class="muted">Spacer annotations</td><td class="mono">—</td><td class="mono"><code>_space_2</code>, <code>_space_16</code> leak through (opacity 0)</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Typography</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Element</th><th>DS text style</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Label — base &amp; with-description</td><td class="mono">Primary/Label/Light/Base</td><td class="mono">Proxima Soft Semibold · 16 / 16 · +0.25</td></tr>
+          <tr><td class="muted">Label — with-counter</td><td class="mono">Primary/Label/Large</td><td class="mono">Proxima Soft Bold · 18 / 18 · +0.25</td></tr>
+          <tr><td class="muted">Description</td><td class="mono">Primary/Multi-line Label/Light/Fine</td><td class="mono">Proxima Soft Semibold · 12 / 14 · +0.5</td></tr>
+          <tr><td class="muted">Trailing CTA</td><td class="mono">Primary/Label/Light/Base</td><td class="mono">Proxima Soft Semibold · 16 / 16 · +0.25</td></tr>
+          <tr><td class="muted">Counter label</td><td class="mono">Primary/Label/Small</td><td class="mono">Proxima Soft Bold · 14 / 14 · +0.25</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="table-footnote">Two different label styles across the family is the core C2 Warn — reconcile to one text style.</p>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="lit-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:list:1.0.0"</span>)
+}</pre>
+    </div>
+
+    <div class="sub-heading" id="lit-props">Property Mapping <span class="muted" style="font-weight:400;font-size:13px;">(proposed — after consolidation)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma (today)</th><th>Figma (proposed)</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">3 sibling components</td><td class="mono">1 component: <code>List</code></td><td class="mono">EBActionListRow</td><td class="mono">EBActionListRow</td></tr>
+          <tr><td class="mono">icon (Placeholder)</td><td class="mono">leading (Slot)</td><td class="mono">@ViewBuilder leading</td><td class="mono">leading: @Composable () -&gt; Unit</td></tr>
+          <tr><td class="mono">label: String</td><td class="mono">label: String</td><td class="mono">label: String</td><td class="mono">label: String</td></tr>
+          <tr><td class="mono">description (only on sibling)</td><td class="mono">description?: String</td><td class="mono">description: String?</td><td class="mono">description: String? = null</td></tr>
+          <tr><td class="mono">trailingComponent (bool) / counter (bool) / chevron (bool)</td><td class="mono">trailing: .cta(String) | .counter(Int) | .chevron | .none</td><td class="mono">trailing: EBRowTrailing</td><td class="mono">trailing: EBRowTrailing</td></tr>
+          <tr><td class="mono">density: Compact/Expanded</td><td class="mono">density: .compact / .expanded</td><td class="mono">.controlSize(.regular / .large)</td><td class="mono">density: EBDensity</td></tr>
+          <tr><td class="mono">state: Default/Disabled/Loading</td><td class="mono">state: .default / .pressed / .disabled / .loading</td><td class="mono">.disabled(Bool) + intrinsic press + loading: Bool</td><td class="mono">enabled: Boolean + loading: Boolean</td></tr>
+          <tr><td class="mono">bottomBorder: Bool</td><td class="mono">bottomBorder: Bool</td><td class="mono">divider: Bool</td><td class="mono">divider: Boolean</td></tr>
+          <tr><td class="mono">(not modeled)</td><td class="mono">onTap</td><td class="mono">action: () -&gt; Void</td><td class="mono">onClick: () -&gt; Unit</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/List/EBActionListRow.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/list/EBActionListRow.kt</div>
+    </div>
+
+    <div class="sub-heading" id="lit-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'lit-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'lit-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Base — icon + label + CTA + chevron</span>
+<span class="typ">EBActionListRow</span>(<span class="str">"Payment methods"</span>, <span class="prp">trailing</span>: .<span class="prp">cta</span>(<span class="str">"View"</span>)) {
+    <span class="typ">Image</span>(systemName: <span class="str">"creditcard.fill"</span>)
+} action: { openPaymentMethods() }
+
+<span class="cmt">// With counter — shows 3 pending items</span>
+<span class="typ">EBActionListRow</span>(<span class="str">"Notifications"</span>, <span class="prp">trailing</span>: .<span class="prp">counter</span>(<span class="kw">3</span>)) {
+    <span class="typ">Image</span>(systemName: <span class="str">"bell.fill"</span>)
+} action: { openNotifications() }
+
+<span class="cmt">// With description + chevron</span>
+<span class="typ">EBActionListRow</span>(
+    <span class="str">"Profile"</span>,
+    <span class="prp">description</span>: <span class="str">"Name, photo, and contact info"</span>,
+    <span class="prp">trailing</span>: .<span class="prp">chevron</span>
+) {
+    <span class="typ">Image</span>(systemName: <span class="str">"person.crop.circle"</span>)
+} action: { openProfile() }
+
+<span class="cmt">// Loading</span>
+<span class="typ">EBActionListRow</span>.<span class="prp">skeleton</span>()</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Base — icon + label + CTA + chevron</span>
+<span class="typ">EBActionListRow</span>(
+    label = <span class="str">"Payment methods"</span>,
+    leading = { <span class="typ">Icon</span>(<span class="typ">Icons</span>.Default.CreditCard, contentDescription = null) },
+    trailing = <span class="typ">EBRowTrailing</span>.Cta(<span class="str">"View"</span>),
+    onClick = { openPaymentMethods() }
+)
+
+<span class="cmt">// With counter</span>
+<span class="typ">EBActionListRow</span>(
+    label = <span class="str">"Notifications"</span>,
+    leading = { <span class="typ">Icon</span>(<span class="typ">Icons</span>.Default.Notifications, contentDescription = null) },
+    trailing = <span class="typ">EBRowTrailing</span>.Counter(<span class="kw">3</span>),
+    onClick = { openNotifications() }
+)
+
+<span class="cmt">// With description + chevron</span>
+<span class="typ">EBActionListRow</span>(
+    label = <span class="str">"Profile"</span>,
+    description = <span class="str">"Name, photo, and contact info"</span>,
+    leading = { <span class="typ">Icon</span>(<span class="typ">Icons</span>.Default.Person, contentDescription = null) },
+    trailing = <span class="typ">EBRowTrailing</span>.Chevron,
+    onClick = { openProfile() }
+)
+
+<span class="cmt">// Loading</span>
+<span class="typ">EBActionListRow</span>.Skeleton()</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="lit-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Row as button</strong></td><td class="muted">Wrap row in <code>Button</code>; mark decorative leading icon with <code>.accessibilityHidden(true)</code>.</td><td class="muted"><code>Modifier.clickable { … }.semantics(mergeDescendants = true) { role = Role.Button }</code>.</td></tr>
+          <tr><td><strong>Combined label</strong></td><td class="muted">Announce label + description + trailing counter as one phrase: "Notifications, 3 unread".</td><td class="muted">Same — build via <code>contentDescription</code>.</td></tr>
+          <tr><td><strong>Touch target</strong></td><td class="muted">Minimum 44 × 44 — expanded density hits this; compact (48 px row) is safe; ensure whole row is the tap target, not just the chevron.</td><td class="muted">Minimum 48 × 48dp — same.</td></tr>
+          <tr><td><strong>Loading</strong></td><td class="muted">Announce "Loading" once; disable tap while loading.</td><td class="muted">Same — <code>enabled = false</code> plus <code>contentDescription = "Loading"</code>.</td></tr>
+          <tr><td><strong>Focus ring</strong></td><td class="muted">Provide a focused treatment for external keyboards.</td><td class="muted">Focus ring required for TV / external keyboards.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="lit-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Use for tappable settings / help / profile menu rows that navigate to another screen.</li>
+          <li>Use description for secondary context — keep it short (one line).</li>
+          <li>Use counter for rows with a pending-item count (Notifications, Inbox).</li>
+          <li>Always provide a leading icon — empty rows feel broken.</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't use for display body rows (terms, onboarding steps) — use <a href="#" onclick="showPanelById('list-item');return false;">List Item</a>.</li>
+          <li>Don't use for transaction history rows — use <a href="#" onclick="showPanelById('generic-transaction-card');return false;">Generic Transaction Card</a>.</li>
+          <li>Don't mix the Counter and non-Counter siblings in the same list — the inconsistent label treatment reads as a bug until the families are reconciled.</li>
+          <li>Don't omit the chevron on rows that navigate — users rely on it as an affordance cue.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="lit-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">3 sibling components for one pattern. Spacer annotations leak into production.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Inconsistent label typography across siblings. Counter sibling uses a different text style than its peers.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors / paddings bound to <code>main/action-list/*</code>, <code>space/*</code>, <code>radius/*</code> tokens.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Maps cleanly once trailing is a single enum instead of three booleans across three components.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">No Pressed / Focused. Disabled + Loading present.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Leading icon is a gray placeholder circle — move to a Figma Slot.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked on consolidation. Mapping three siblings would cement the wrong schema.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="lit-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(15 total — across 3 components)</span></div>
+    <p>3 sibling components. Base + Counter multiply State (3) × Density (2) = 6 each. Description axis = State (3). Total <strong>6 + 6 + 3 = 15 variants</strong>.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Component</th><th>Axes</th><th>Count</th><th>Node</th></tr></thead>
+        <tbody>
+          <tr><td><strong>List</strong></td><td>State (3) × Density (2)</td><td class="mono">6</td><td class="mono">18577:14545</td></tr>
+          <tr><td><strong>List - with Counter</strong></td><td>Density (2) × State (3)</td><td class="mono">6</td><td class="mono">18577:14637</td></tr>
+          <tr><td><strong>List - with Description</strong></td><td>State (3)</td><td class="mono">3</td><td class="mono">18577:14604</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details style="margin-top:16px;">
+      <summary style="cursor:pointer;padding:8px 12px;background:var(--row-hover,#F4F6FA);border-radius:6px;font-weight:600;font-size:13px;color:var(--text,#0A1628);user-select:none;">View full per-variant breakdown (15 rows)</summary>
+      <div class="table-wrap" style="margin-top:12px;">
+        <table>
+          <thead><tr><th>#</th><th>Component</th><th>State</th><th>Density</th><th>Dimensions</th><th>Node</th></tr></thead>
+          <tbody>
+            <tr><td class="mono center">1</td><td>List</td><td>Default</td><td>Compact</td><td class="mono">360 × 48</td><td class="mono">18577:14546</td></tr>
+            <tr><td class="mono center">2</td><td>List</td><td>Default</td><td>Expanded</td><td class="mono">360 × 56</td><td class="mono">18577:14557</td></tr>
+            <tr><td class="mono center">3</td><td>List</td><td>Disabled</td><td>Compact</td><td class="mono">360 × 48</td><td class="mono">18577:14568</td></tr>
+            <tr><td class="mono center">4</td><td>List</td><td>Disabled</td><td>Expanded</td><td class="mono">360 × 56</td><td class="mono">18577:14579</td></tr>
+            <tr><td class="mono center">5</td><td>List</td><td>Loading</td><td>Compact</td><td class="mono">360 × 48</td><td class="mono">18577:14590</td></tr>
+            <tr><td class="mono center">6</td><td>List</td><td>Loading</td><td>Expanded</td><td class="mono">360 × 56</td><td class="mono">18577:14597</td></tr>
+            <tr><td class="mono center">7</td><td>List - with Counter</td><td>Default</td><td>Compact</td><td class="mono">360 × 56</td><td class="mono">18577:14638</td></tr>
+            <tr><td class="mono center">8</td><td>List - with Counter</td><td>Default</td><td>Expanded</td><td class="mono">360 × 64</td><td class="mono">18577:14647</td></tr>
+            <tr><td class="mono center">9</td><td>List - with Counter</td><td>Disabled</td><td>Compact</td><td class="mono">360 × 56</td><td class="mono">18577:14656</td></tr>
+            <tr><td class="mono center">10</td><td>List - with Counter</td><td>Disabled</td><td>Expanded</td><td class="mono">360 × 64</td><td class="mono">18577:14665</td></tr>
+            <tr><td class="mono center">11</td><td>List - with Counter</td><td>Loading</td><td>Compact</td><td class="mono">360 × 56</td><td class="mono">18577:14674</td></tr>
+            <tr><td class="mono center">12</td><td>List - with Counter</td><td>Loading</td><td>Expanded</td><td class="mono">360 × 64</td><td class="mono">18577:14679</td></tr>
+            <tr><td class="mono center">13</td><td>List - with Description</td><td>Default</td><td>—</td><td class="mono">360 × 60</td><td class="mono">18577:14605</td></tr>
+            <tr><td class="mono center">14</td><td>List - with Description</td><td>Disabled</td><td>—</td><td class="mono">360 × 60</td><td class="mono">18577:14617</td></tr>
+            <tr><td class="mono center">15</td><td>List - with Description</td><td>Loading</td><td>—</td><td class="mono">360 × 60</td><td class="mono">18577:14629</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · nodes 18577:14545, 18577:14637, 18577:14604</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Restructure</strong> — Collapse 3 sibling components into one slot-driven <code>List</code> row. Reconcile label typography. Add Pressed state. <span class="tag-open tag-c1 tag-c2 tag-c5">Open</span></div><span class="changelog-delta delta-open">Architecture</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C1 — 3 siblings for 1 pattern</strong> — Description and Counter are <em>additive</em> features, not different components. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C1 — Spacer annotations leak</strong> — <code>_space_2</code> / <code>_space_16</code> are authoring artifacts exported as opacity-0 layers. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — Divergent label typography</strong> — Semibold 16 Neutral vs. Bold 18 Brand across siblings. Same family must read as one. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C4 — Trailing baked per sibling</strong> — Replace CTA / Counter / Chevron booleans with a single <code>trailing</code> enum. <span class="tag-open tag-c4">Open</span></div><span class="changelog-delta delta-open">C4</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C5 — Missing Pressed state</strong> — Action rows are the primary nav tap target. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C6 — Placeholder icon</strong> — Leading is a gray <code>#C2C6CF</code> circle. Adopt a Figma Slot. <span class="tag-open tag-c6">Open</span></div><span class="changelog-delta delta-open">C6</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C7 — Code Connect</strong> — Blocked on consolidation. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Tokens ✓</strong> — Colors / paddings / radii all bound to <code>main/action-list/*</code>. <span class="tag-fixed">Noted</span></div><span class="changelog-delta delta-resolved">Praise</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-action-list">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-action-list"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Action List JS ─────────────────────────────────────────── */
+/* 3 sibling shapes × 3 states. Preview renders the shape + state picked
+   in the playground. Counter sibling intentionally renders its label in
+   the brand-blue Bold 18 style to visualize the C2 inconsistency.      */
+
+function _litEscape(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function _litIcon(disabled, loading) {
+  if (loading) {
+    return '<div style="width:32px;height:32px;border-radius:50%;background:#EEF2F9;flex-shrink:0;"></div>';
+  }
+  var fill = '#C2C6CF';
+  return '<div style="width:32px;height:32px;border-radius:50%;background:' + fill + ';flex-shrink:0;opacity:' + (disabled ? '.5' : '1') + ';"></div>';
+}
+
+function _litChevron(color) {
+  return '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M10 6l6 6-6 6" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
+
+function _litRender(opts) {
+  var variant = opts.variant || 'base';
+  var state   = opts.state   || 'default';
+  var density = opts.density || 'compact';
+  var label   = opts.label   || 'Label';
+  var desc    = opts.desc    || 'description';
+  var counter = opts.counter || '3';
+
+  var isLoading  = state === 'loading';
+  var isDisabled = state === 'disabled';
+  var labelColor   = isDisabled ? '#C2CFE5' : (variant === 'counter' ? '#005CE5' : '#0A2757');
+  var descColor    = isDisabled ? '#C2CFE5' : '#6780A9';
+  var ctaColor     = isDisabled ? '#9BC5FD' : '#005CE5';
+  var chevColor    = isDisabled ? '#9BC5FD' : (variant === 'counter' ? '#005CE5' : '#0A2757');
+  var counterBg    = '#EEF2F9';
+  var counterColor = isDisabled ? '#C2CFE5' : '#072592';
+
+  var padV = density === 'expanded' ? 12 : 8;
+  var rowExtra = variant === 'counter' ? 'border-radius:6px;box-shadow:0 1px 3px 0 rgba(232,238,242,.79);' : '';
+  var bg = '#FFFFFF';
+
+  var labelFontSize = variant === 'counter' ? 18 : 16;
+  var labelWeight   = variant === 'counter' ? 700 : 600;
+
+  var html = '<div style="width:360px;background:' + bg + ';' + rowExtra + '">';
+  html += '<div style="display:flex;align-items:center;gap:12px;padding:' + padV + 'px 12px;">';
+
+  // Leading icon (always present except loading w/ no icon — we always show)
+  html += _litIcon(isDisabled, isLoading);
+
+  // Body
+  if (isLoading) {
+    html += '<div style="flex:1 0 0;display:flex;flex-direction:column;gap:6px;min-width:0;">';
+    html += '<div style="height:16px;border-radius:2px;background:#EEF2F9;"></div>';
+    if (variant === 'description') {
+      html += '<div style="height:12px;border-radius:2px;background:#EEF2F9;width:60%;"></div>';
+    }
+    html += '</div>';
+    html += '<div style="height:16px;width:51px;border-radius:2px;background:#EEF2F9;flex-shrink:0;"></div>';
+  } else {
+    html += '<div style="flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0;">';
+    html += '<div style="font-family:\'Proxima Soft\',system-ui;font-size:' + labelFontSize + 'px;line-height:' + labelFontSize + 'px;font-weight:' + labelWeight + ';letter-spacing:0.25px;color:' + labelColor + ';">' + _litEscape(label) + '</div>';
+    if (variant === 'description') {
+      html += '<div style="font-family:\'Proxima Soft\',system-ui;font-size:12px;line-height:14px;font-weight:600;letter-spacing:0.5px;color:' + descColor + ';">' + _litEscape(desc) + '</div>';
+    }
+    html += '</div>';
+
+    // Trailing
+    if (variant === 'counter') {
+      html += '<div style="display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 8px;border-radius:999px;background:' + counterBg + ';color:' + counterColor + ';font-family:\'Proxima Soft\',system-ui;font-size:14px;font-weight:700;letter-spacing:0.25px;flex-shrink:0;">' + _litEscape(counter) + '</div>';
+    } else {
+      html += '<span style="font-family:\'Proxima Soft\',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:' + ctaColor + ';flex-shrink:0;">CTA</span>';
+    }
+    html += _litChevron(chevColor);
+  }
+
+  html += '</div>';
+  html += '</div>';
+  return html;
+}
+
+function updateLitDemo() {
+  var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
+  var el = document.getElementById('lit-demo-preview');
+  if (!el) return;
+  el.innerHTML = _litRender({
+    variant: getVal('lit-ctrl-variant', 'base'),
+    state:   getVal('lit-ctrl-state',   'default'),
+    density: getVal('lit-ctrl-density', 'compact'),
+    label:   getVal('lit-ctrl-label',   'Label'),
+    desc:    getVal('lit-ctrl-desc',    'description'),
+    counter: getVal('lit-ctrl-counter', '3')
+  });
+}
+
+function _litInitSpecCards() {
+  var b = document.getElementById('lit-preview-base');
+  if (b) b.innerHTML = _litRender({variant:'base', state:'default', density:'compact', label:'Label'});
+  var c = document.getElementById('lit-preview-counter');
+  if (c) c.innerHTML = _litRender({variant:'counter', state:'default', density:'compact', label:'Label', counter:'3'});
+  var d = document.getElementById('lit-preview-desc');
+  if (d) d.innerHTML = _litRender({variant:'description', state:'default', density:'compact', label:'Label', desc:'description'});
+}
+
+function _litInit() {
+  updateLitDemo();
+  _litInitSpecCards();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _litInit);
+else _litInit();
+</script>
+
+<!--@section-end-->

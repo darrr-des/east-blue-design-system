@@ -687,7 +687,7 @@ a.sidebar-brand {
 /* ── Component Grid ──────────────────────────────────────────────────── */
 .comp-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-4);
   margin-bottom: var(--space-12);
 }
@@ -883,12 +883,12 @@ td code, td .mono-inline {
 }
 .summary-card-name {
   font-family: var(--font-heading);
-  font-size: var(--text-sm);
+  font-size: 20px;
   font-weight: 500;
   color: var(--text);
 }
 .summary-card-desc {
-  font-size: var(--text-xs);
+  font-size: 14px;
   color: var(--muted);
   line-height: 1.5;
 }

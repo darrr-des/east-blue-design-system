@@ -290,6 +290,10 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | Component | Node | Variants | DS | Native | Open |
 |---|---|---|---|---|---|
 | Accordion | `16870:9288` | 6 | Keep | Refine | C7 |
+| **Action List** | | | | | |
+| Action List | `18577:14545` | 6 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
+| Action List - with Counter | `18577:14637` | 6 | Consolidate | Rework | C1,C2,C4,C7 |
+| Action List - with Description | `18577:14604` | 3 | Consolidate | Rework | C1,C2,C4,C5,C7 |
 | **Ads** | | | | | |
 | Ad Space | `18563:9789` | 7 | Keep | Ready | none |
 | Alert | `18444:2012` | 20 | Fix | Refine | C1,C2,C5,C6,C7 |
@@ -309,13 +313,13 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | Counter | `18482:71321` | 4 | Fix | Refine | C2,C5,C7 |
 | **Dropdown** | | | | | |
 | Dropdown | `18482:31910` | 8 | Fix | Refine | C2,C5,C6,C7 |
-| Dropdown Item | `23:199453` | 9 | Fix | Refine | C2,C4,C5,C6,C7 |
+| Dropdown Item | `18577:13033` | 9 | Fix | Refine | C2,C4,C5,C6,C7 |
 | Dropdown Item Group | `6383:3446` | 1 | Consolidate | N/A | C1,C2,C4,C7 |
 | **Form Elements** | | | | | |
 | Input Field | `17758:3687` | 8 | Keep | Refine | C7 |
 | Labeled Field | `17758:3713` | 8 | Keep | Refine | C7 |
 | Recipient Field | `17758:3867` | 8 | Keep | Refine | C7 |
-| Search Field | `50:78117` | 2 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
+| Search Field | `18577:14520` | 2 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
 | Select Field | `17758:3786` | 8 | Keep | Refine | C7 |
 | Upload File | `18482:35064` | — | Fix | Refine | — |
 | View Only Field | `18403:4520` | 8 | Keep | Refine | C2,C6,C7 |
@@ -327,7 +331,7 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | Inline Text | `21:138492` | 5 | Restructure | Refine | C1,C2,C5,C6,C7 |
 | Modal | `18507:71705` | 7 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
 | Overlay | `47:329691` | 1 | Fix | Refine | C2,C4,C5,C7 |
-| Progress Bar | `27:64946` | 11 | Restructure | Rework | C1,C2,C5,C6,C7 |
+| Progress Bar | `18577:13227` | 11 | Restructure | Rework | C1,C2,C5,C6,C7 |
 | Title Bar | `23:175148` | 20 | Keep | Refine | C2,C6,C7 |
 | **Toggle** | | | | | |
 | Toggle | `18482:36508` | 4 | Fix | Refine | C2,C5,C7 |

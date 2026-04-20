@@ -1,0 +1,562 @@
+<!--
+  LIST - WITH DESCRIPTION COMPONENT ASSESSMENT
+  Action List row (Label + description subtitle). Sibling of base List + List - with Counter.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 18577:14604
+ds-verdict: consolidate
+native-status: rework
+variants: 3
+ios: SwiftUI List row (headline + supportingContent)
+android: Material 3 ListItem (headlineContent + supportingContent)
+open-issues: C1,C2,C4,C5,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C4] Sibling component duplicates base List anatomy just to expose a second text line — native `ListItem.supportingContent` / SwiftUI `VStack` of primary + secondary labels handle this as one parameter
+[C5] Description variant ships only 3 states (Default / Disabled / Loading) vs base List's 6 (adds Density axis) — diverging state coverage inside the same family
+[C1] Leading asset is still a raw 32px circle placeholder (`icon-placeholder` fill `#c2c6cf`) — not a List Item Asset instance
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Action List<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-action-list-description" onclick="showPanel('action-list-description', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Action List - with Description</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('action-list-description')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <circle cx="14" cy="20" r="6" fill="#C2C6CF"/>
+      <rect x="26" y="14" width="28" height="5" rx="1" fill="#0A2757"/>
+      <rect x="26" y="23" width="22" height="4" rx="1" fill="#6780A9"/>
+      <rect x="60" y="17" width="10" height="5" rx="1" fill="#005CE5"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Action List - with Description</div>
+      <span class="badge badge-consolidate">Consolidate</span>
+    </div>
+    <div class="summary-card-desc">Action-list row with a secondary description line below the label. Should collapse into base List via an optional <code>description</code> slot.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Action List - with Description</strong></td>
+  <td><span class="badge badge-consolidate">Consolidate</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">3</td>
+  <td class="muted">Sibling row adding a description subtitle. Native <code>supportingContent</code> handles this with one optional parameter — merge into base List.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-action-list-description">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Action List - with Description
+          <span class="badge badge-consolidate">Consolidate</span>
+          <span class="badge badge-rework">Requires Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18577-14604" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">An action-list row with a secondary description line beneath the primary label. 3 variants across <code>State</code> (Default / Disabled / Loading). Sibling of base <strong>List</strong> (<code>18577:14545</code>) and <strong>List - with Counter</strong> (<code>18577:14637</code>) — all three share the same container, tokens (<code>main/action-list/...</code>), and trailing CTA + chevron anatomy.</p>
+      </div>
+      <div class="verdict-inline verdict-consolidate">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Merge into base List via a <code>description</code> slot</div>
+          <div class="verdict-inline-text">This component duplicates the entire base <strong>List</strong> anatomy just to render a 12/14 description line under the label. Native platforms already expose this as one parameter — SwiftUI composes primary + secondary labels in a <code>VStack</code>, Material 3's <code>ListItem</code> has <code>supportingContent</code>. Collapse all three siblings (<em>List</em>, <em>with Description</em>, <em>with Counter</em>) into one Action List component with optional <code>description</code> and <code>trailing</code> slots. This also closes the Density-coverage gap (base List has Compact + Expanded; this variant does not).</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="litd-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'litd-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'litd-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'litd-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'litd-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="litd-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Contexts are illustrative. Description rows appear in settings lists, notification preferences, and profile menus where each row needs a subtitle explaining the action.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="200" height="140" viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="34" y="6" width="132" height="128" rx="10" stroke="currentColor" stroke-width="1.2" opacity=".15"/>
+          <rect x="34" y="6" width="132" height="20" rx="10" fill="#005CE5" opacity=".85"/>
+          <rect x="34" y="16" width="132" height="10" fill="#005CE5" opacity=".85"/>
+          <text x="100" y="19" text-anchor="middle" fill="#FFF" font-size="6" font-weight="700" font-family="system-ui">Notifications</text>
+          <!-- Row 1 -->
+          <circle cx="48" cy="44" r="6" fill="#C2C6CF"/>
+          <rect x="60" y="38" width="48" height="5" rx="1" fill="#0A2757"/>
+          <rect x="60" y="46" width="62" height="4" rx="1" fill="#6780A9"/>
+          <text x="148" y="44" fill="#005CE5" font-size="6" font-weight="600" font-family="system-ui">Edit</text>
+          <!-- Row 2 -->
+          <circle cx="48" cy="74" r="6" fill="#C2C6CF"/>
+          <rect x="60" y="68" width="60" height="5" rx="1" fill="#0A2757"/>
+          <rect x="60" y="76" width="72" height="4" rx="1" fill="#6780A9"/>
+          <text x="148" y="74" fill="#005CE5" font-size="6" font-weight="600" font-family="system-ui">On</text>
+          <!-- Row 3 -->
+          <circle cx="48" cy="104" r="6" fill="#C2C6CF"/>
+          <rect x="60" y="98" width="54" height="5" rx="1" fill="#0A2757"/>
+          <rect x="60" y="106" width="66" height="4" rx="1" fill="#6780A9"/>
+          <text x="148" y="104" fill="#005CE5" font-size="6" font-weight="600" font-family="system-ui">Off</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="litd-preview">Live Preview</div>
+    <p class="section-desc">Toggle state, icon, trailing CTA, and chevron. Loading state replaces content with shimmer rows.</p>
+    <div class="demo-panel" id="litd-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="litd-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">state</span>
+              <select class="demo-panel-select" id="litd-demo-state" onchange="updateListItemTdDemo()">
+                <option value="Default" selected>Default</option>
+                <option value="Disabled">Disabled</option>
+                <option value="Loading">Loading</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">icon</span>
+              <select class="demo-panel-select" id="litd-demo-icon" onchange="updateListItemTdDemo()">
+                <option value="true" selected>true</option>
+                <option value="false">false</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">trailingComponent</span>
+              <select class="demo-panel-select" id="litd-demo-trailing" onchange="updateListItemTdDemo()">
+                <option value="true" selected>true</option>
+                <option value="false">false</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">chevron</span>
+              <select class="demo-panel-select" id="litd-demo-chevron" onchange="updateListItemTdDemo()">
+                <option value="true" selected>true</option>
+                <option value="false">false</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">bottomBorder</span>
+              <select class="demo-panel-select" id="litd-demo-border" onchange="updateListItemTdDemo()">
+                <option value="false" selected>false</option>
+                <option value="true">true</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="litd-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Works for any settings or notification list row with a subtitle. Duplicates base List's anatomy instead of reusing it — a <code>description</code> slot on the base component would handle this.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Carries its own text styles (<code>Primary/Label/Light/Base</code> + <code>Primary/Multi-line Label/Light/Fine</code>), background, and spacing.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Ships only 3 states vs base List's 6 (missing Density axis). Leading asset is a raw <code>#c2c6cf</code> circle placeholder, not an instance of List Item Asset. <span class="tag-open tag-c5">C5</span> <span class="tag-open tag-c1">C1</span></div>
+      </div>
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">Exists as a standalone sibling of base List rather than a compositional variant — bloats the library and forces consumers to swap entire components just to add a subtitle. <span class="tag-open tag-c4">C4</span></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="litd-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>State</th><th>iOS</th><th>Android</th><th>Figma property</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Default</strong></td><td class="muted">Text + subtitle render; chevron visible</td><td class="muted">Text + supporting text render; chevron visible</td><td class="mono">state=Default</td><td class="muted">Label <code>#0A2757</code>, description <code>#6780A9</code></td></tr>
+          <tr><td><strong>Disabled</strong></td><td class="muted"><code>.disabled(true)</code> — tap ignored, opacity reduced</td><td class="muted"><code>enabled = false</code> — 38% content alpha</td><td class="mono">state=Disabled</td><td class="muted">Label + description both recolor to <code>#c2cfe5</code>, CTA to <code>#9bc5fd</code></td></tr>
+          <tr><td><strong>Loading</strong></td><td class="muted">Skeleton with <code>redacted(reason:)</code> or shimmer overlay</td><td class="muted">Skeleton shimmer via <code>Modifier.placeholder(...)</code></td><td class="mono">state=Loading</td><td class="muted">Two shimmer lines replace text; trailing icon becomes a 53px shimmer block</td></tr>
+          <tr><td><strong>Pressed</strong></td><td class="muted">Not defined in Figma</td><td class="muted">Not defined in Figma</td><td class="mono">—</td><td class="muted">Missing — native pressed token should map to <code>main/action-list/color/pressed/bg</code> (to be added) <span class="tag-open tag-c5">C5</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="litd-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Sibling component duplicates base List anatomy.</strong> A 12/14 description line is a single optional parameter on every native list primitive (SwiftUI secondary label, Material <code>supportingContent</code>). Standalone sibling forces consumers to swap whole components instead of flipping one prop. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>Leading asset is a raw <code>#c2c6cf</code> placeholder.</strong> The icon container is a 32px filled circle with a hard-coded gray — not an instance of List Item Asset, not bound to a token. Consumers can override via instance-swap but the default is visually broken. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>Missing Density axis.</strong> Base List ships <code>Density=Compact</code> (48px) and <code>Density=Expanded</code> (56px). This variant skips the axis entirely, producing a 70–76px row with no Compact counterpart. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>No Pressed state.</strong> Only Default / Disabled / Loading are modeled. Action lists are tappable — pressed styling should live in Figma as a token so native <code>.pressed</code> / <code>ripple</code> can reference it. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked until family consolidation lands — no point mapping a component that will be removed. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="litd-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Consolidate the List family into one Action List component.</strong> Collapse base <em>List</em>, <em>List - with Counter</em>, and <em>Action List - with Description</em> into a single component with optional <code>description: String?</code> and <code>trailing</code> slot (CTA text / Counter / custom). Variant math drops from 6 + 3 + 3 = 12 down to 3 states × 2 densities = 6, with description and counter becoming boolean/slot properties. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Replace the leading-icon placeholder with a Figma Slot.</strong> The raw 32px <code>#c2c6cf</code> circle should become a named <code>leading</code> slot accepting any List Item Asset instance or a 32 × 32 icon. Maps 1:1 to SwiftUI <code>@ViewBuilder leading</code> / Compose <code>leadingContent</code>. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Add Density × Pressed coverage to the merged component.</strong> The consolidated Action List should carry Compact (48px) + Expanded (56px) from base List, plus a Pressed visual state so tokens like <code>main/action-list/color/pressed/bg</code> exist for native ripple/highlight. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Rename the component family to match the token namespace.</strong> Tokens use <code>main/action-list/...</code> but Figma names the component <code>List</code>. Rename the merged component to <code>Action List</code> so Figma, tokens, and native API (<code>EBActionList</code>) all agree. <span class="tag-recommend">Rename</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="litd-styles" style="margin-top:0">Variants</div>
+    <p class="section-desc">3 variants split by <code>State</code>. Default shows full row; Disabled dims label + description + CTA + chevron; Loading swaps content for shimmer lines.</p>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="litd-variant-default">State=Default</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18577:14605" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18577:14605</span></button>
+        </div>
+        <p class="spec-card-desc">Active row. Leading icon + label + description + optional CTA + chevron.</p>
+      </div>
+      <div class="spec-card-preview" id="litd-preview-default"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="litd-variant-disabled">State=Disabled</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18577:14617" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18577:14617</span></button>
+        </div>
+        <p class="spec-card-desc">Non-interactive. Label + description recolor to <code>#c2cfe5</code>; CTA + chevron use <code>#9bc5fd</code>.</p>
+      </div>
+      <div class="spec-card-preview" id="litd-preview-disabled"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="litd-variant-loading">State=Loading</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18577:14629" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18577:14629</span></button>
+        </div>
+        <p class="spec-card-desc">Skeleton. Two shimmer lines replace text; trailing is a 53px shimmer block.</p>
+      </div>
+      <div class="spec-card-preview" id="litd-preview-loading"><!-- JS --></div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Role</th><th>Token</th><th>Default</th><th>Disabled</th><th>Loading</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Row bg</td><td class="mono">main/action-list/color/{state}/bg</td><td class="mono">#FFFFFF</td><td class="mono">#FFFFFF</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Label</td><td class="mono">main/action-list/color/{state}/label</td><td class="mono">#0A2757</td><td class="mono">#C2CFE5</td><td class="mono">–</td></tr>
+          <tr><td class="muted">Description</td><td class="mono">main/action-list/color/{state}/description</td><td class="mono">#6780A9</td><td class="mono">#C2CFE5</td><td class="mono">–</td></tr>
+          <tr><td class="muted">CTA label</td><td class="mono">main/action-list/color/default/label-link</td><td class="mono">#005CE5</td><td class="mono">#9BC5FD</td><td class="mono">–</td></tr>
+          <tr><td class="muted">Chevron</td><td class="mono">main/action-list/color/{state}/chevron</td><td class="mono">#005CE5</td><td class="mono">#9BC5FD</td><td class="mono">–</td></tr>
+          <tr><td class="muted">Skeleton line / block</td><td class="mono">bg/color-bg-strong</td><td class="mono">–</td><td class="mono">–</td><td class="mono">#EEF2F9</td></tr>
+          <tr><td class="muted">Leading placeholder</td><td class="mono">—</td><td class="mono">#C2C6CF</td><td class="mono">#C2C6CF</td><td class="mono">–</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="table-footnote">Leading placeholder fill is hardcoded in the symbol — not bound to a token. Flagged under C1.</p>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Row width</td><td class="mono">—</td><td class="mono">360px (fixed)</td></tr>
+          <tr><td class="muted">Row height</td><td class="mono">—</td><td class="mono">60px (hug, 2 text lines + 6px gap)</td></tr>
+          <tr><td class="muted">Outer padding (Default / Disabled)</td><td class="mono">space/space-12</td><td class="mono">12px all sides</td></tr>
+          <tr><td class="muted">Loading padding</td><td class="mono">space/space-12, space/space-24</td><td class="mono">14px vertical · 12px left · 24px right</td></tr>
+          <tr><td class="muted">Icon → text gap</td><td class="mono">space/space-12</td><td class="mono">12px</td></tr>
+          <tr><td class="muted">Label → description gap</td><td class="mono">space/space-6</td><td class="mono">6px</td></tr>
+          <tr><td class="muted">Leading icon size</td><td class="mono">—</td><td class="mono">32 × 32</td></tr>
+          <tr><td class="muted">Chevron wrapper padding</td><td class="mono">space/space-4</td><td class="mono">4px top/bottom · 4px left/right</td></tr>
+          <tr><td class="muted">Chevron icon size</td><td class="mono">—</td><td class="mono">24 × 24</td></tr>
+          <tr><td class="muted">Corner radius</td><td class="mono">radius/radius-0</td><td class="mono">0 (square)</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Typography</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Element</th><th>DS text style</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Label</td><td class="mono">Primary/Label/Light/Base</td><td class="mono">Proxima Soft Semibold · 16 / 16 · tracking 0.25</td></tr>
+          <tr><td class="muted">Description</td><td class="mono">Primary/Multi-line Label/Light/Fine</td><td class="mono">Proxima Soft Semibold · 12 / 14 · tracking 0.5</td></tr>
+          <tr><td class="muted">CTA</td><td class="mono">Primary/Label/Light/Base</td><td class="mono">Proxima Soft Semibold · 16 / 16 · tracking 0.25</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="litd-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:list:1.0.0"</span>)
+}</pre>
+    </div>
+
+    <div class="sub-heading" id="litd-props">Property Mapping <span class="muted" style="font-weight:400;font-size:13px;">(proposed — consolidated Action List)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma</th><th>SwiftUI</th><th>Compose</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">label</td><td class="mono">title: String</td><td class="mono">title: String</td><td class="muted">Primary label</td></tr>
+          <tr><td class="mono">description?</td><td class="mono">subtitle: String?</td><td class="mono">supportingContent: String?</td><td class="muted">Optional — this component becomes <code>description != nil</code> on base List</td></tr>
+          <tr><td class="mono">icon (Slot)</td><td class="mono">@ViewBuilder leading</td><td class="mono">leadingContent: @Composable () -&gt; Unit</td><td class="muted">32 × 32 — accepts List Item Asset or custom icon</td></tr>
+          <tr><td class="mono">trailingComponent (Slot)</td><td class="mono">@ViewBuilder trailing</td><td class="mono">trailingContent: @Composable () -&gt; Unit</td><td class="muted">CTA text / Counter / custom</td></tr>
+          <tr><td class="mono">chevron</td><td class="mono">showChevron: Bool</td><td class="mono">showChevron: Boolean</td><td class="muted">Renders a 24 × 24 chevron after the trailing slot</td></tr>
+          <tr><td class="mono">bottomBorder</td><td class="mono">showDivider: Bool</td><td class="mono">showDivider: Boolean</td><td class="muted">Bottom hairline; handled by parent List in native</td></tr>
+          <tr><td class="mono">state</td><td class="mono">.disabled(true), loading modifier</td><td class="mono">enabled = false, loading param</td><td class="muted">Disabled + Loading handled via standard APIs</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/List/EBActionList.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/list/EBActionList.kt</div>
+    </div>
+
+    <div class="sub-heading" id="litd-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'litd-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'litd-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// With description + CTA + chevron</span>
+<span class="typ">EBActionList</span>(
+    <span class="prp">title</span>: <span class="str">"Notifications"</span>,
+    <span class="prp">subtitle</span>: <span class="str">"Receive alerts for new transactions"</span>,
+    <span class="prp">leading</span>: { <span class="typ">EBListItemAsset</span>(.<span class="prp">icon</span>(<span class="str">"bell"</span>)) },
+    <span class="prp">trailing</span>: { <span class="typ">Text</span>(<span class="str">"Edit"</span>).<span class="fn">foregroundStyle</span>(.<span class="prp">blue</span>) },
+    <span class="prp">showChevron</span>: <span class="kw">true</span>
+)
+
+<span class="cmt">// Disabled</span>
+<span class="typ">EBActionList</span>(<span class="prp">title</span>: <span class="str">"Premium"</span>, <span class="prp">subtitle</span>: <span class="str">"Unlock higher limits"</span>)
+    .<span class="fn">disabled</span>(<span class="kw">true</span>)
+
+<span class="cmt">// Loading</span>
+<span class="typ">EBActionList</span>(<span class="prp">title</span>: <span class="str">""</span>, <span class="prp">subtitle</span>: <span class="str">""</span>)
+    .<span class="fn">redacted</span>(<span class="prp">reason</span>: .<span class="prp">placeholder</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// With description + CTA + chevron</span>
+<span class="typ">EBActionList</span>(
+    title = <span class="str">"Notifications"</span>,
+    supportingContent = <span class="str">"Receive alerts for new transactions"</span>,
+    leadingContent = { <span class="typ">EBListItemAsset</span>(<span class="typ">Icon</span>.<span class="prp">Bell</span>) },
+    trailingContent = { <span class="typ">Text</span>(<span class="str">"Edit"</span>, color = <span class="typ">Color</span>.<span class="prp">Blue</span>) },
+    showChevron = <span class="kw">true</span>
+)
+
+<span class="cmt">// Disabled</span>
+<span class="typ">EBActionList</span>(
+    title = <span class="str">"Premium"</span>,
+    supportingContent = <span class="str">"Unlock higher limits"</span>,
+    enabled = <span class="kw">false</span>
+)
+
+<span class="cmt">// Loading</span>
+<span class="typ">EBActionList</span>(title = <span class="str">""</span>, loading = <span class="kw">true</span>)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="litd-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Requirement</th><th class="center">iOS</th><th class="center">Android</th></tr></thead>
+        <tbody>
+          <tr><td>Touch target</td><td class="muted">Row is tappable via <code>Button</code> wrapper or <code>.onTapGesture</code>; min 44pt</td><td class="muted"><code>Modifier.clickable(...)</code>; min 48dp</td></tr>
+          <tr><td>Combined label</td><td class="muted"><code>.accessibilityElement(children: .combine)</code> so VoiceOver reads "Label, description, button"</td><td class="muted"><code>Modifier.semantics(mergeDescendants = true) { role = Role.Button }</code></td></tr>
+          <tr><td>Disabled state</td><td class="muted"><code>.disabled(true)</code> — VoiceOver announces "dimmed"</td><td class="muted"><code>enabled = false</code> — TalkBack announces "disabled"</td></tr>
+          <tr><td>Loading state</td><td class="muted"><code>.accessibilityLabel("Loading")</code> on skeleton rows</td><td class="muted"><code>Modifier.semantics { contentDescription = "Loading" }</code></td></tr>
+          <tr><td>Chevron semantics</td><td class="muted">Decorative — <code>.accessibilityHidden(true)</code></td><td class="muted"><code>contentDescription = null</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="litd-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Leading asset is a raw <code>#c2c6cf</code> circle placeholder, not a List Item Asset instance or a Figma Slot.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Property names are clean (<code>state</code>, <code>icon</code>, <code>chevron</code>, <code>description</code>) but the Density axis from base List is missing.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All label, description, CTA, chevron, bg colors bound to <code>main/action-list/...</code>. Spacing uses <code>space/*</code>.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Sibling component for what natives handle as a single parameter. Consolidate with base List.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Default / Disabled / Loading only — no Pressed. Action lists are tappable; pressed token needed.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Chevron is a vector instance. Leading placeholder is decorative, user-provided via instance swap.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked — consolidate family first, then map once.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="litd-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(3 total)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>State</th><th>Width × Height</th><th>Padding</th><th>Notes</th><th>Node ID</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Default</strong></td><td class="mono">360 × 60</td><td class="mono">12 all sides</td><td class="muted">Label + description + CTA + chevron</td><td class="mono">18577:14605</td></tr>
+          <tr><td><strong>Disabled</strong></td><td class="mono">360 × 60</td><td class="mono">12 all sides</td><td class="muted">Label + description recolored; CTA + chevron dimmed</td><td class="mono">18577:14617</td></tr>
+          <tr><td><strong>Loading</strong></td><td class="mono">360 × 60</td><td class="mono">14 V · 12 L · 24 R</td><td class="muted">Two shimmer lines + 53px trailing shimmer block</td><td class="mono">18577:14629</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 18577:14604</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Component assessed</strong> — 3 variants (Default / Disabled / Loading). Sibling of base List + List with Counter. <span class="tag-fixed">Documented</span></div><span class="changelog-delta delta-resolved">Initial</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Leading placeholder hardcoded</strong> — 32px circle fill <code>#c2c6cf</code>, not an instance of List Item Asset. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Missing Density axis</strong> — Base List ships Compact + Expanded; this sibling ships neither. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Sibling duplicates base List</strong> — Description is a single optional parameter on every native list primitive; collapse into one Action List with <code>description</code> slot. <span class="tag-open tag-c4">Open</span></div><span class="changelog-delta delta-open">C4 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>No Pressed state</strong> — Action list is tappable; pressed token should exist. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Code Connect mappings</strong> — Not registered; blocked until family consolidation. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7 Open</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-action-list-description">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-action-list-description"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Action List - with Description JS ─────────────────────────────────────── */
+var _litdDemo = { state: 'Default', icon: true, trailing: true, chevron: true, border: false };
+
+function _litdChevronSvg(color) {
+  return '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
+
+function _litdBuildRow(state, icon, trailing, chevron, border) {
+  var labelColor = state === 'Disabled' ? '#C2CFE5' : '#0A2757';
+  var descColor = state === 'Disabled' ? '#C2CFE5' : '#6780A9';
+  var ctaColor = state === 'Disabled' ? '#9BC5FD' : '#005CE5';
+  var chevColor = state === 'Disabled' ? '#9BC5FD' : '#005CE5';
+  var s = '';
+
+  if (state === 'Loading') {
+    s += '<div style="display:flex;align-items:center;gap:12px;padding:14px 24px 14px 12px;width:360px;background:#FFF;box-sizing:border-box;' + (border ? 'border-bottom:1px solid #EEF2F9;' : '') + '">';
+    if (icon) s += '<div style="width:32px;height:32px;border-radius:99px;background:#EEF2F9;flex:0 0 auto;"></div>';
+    s += '<div style="flex:1;display:flex;flex-direction:column;gap:6px;min-width:0;">';
+    s += '<div style="height:16px;border-radius:2px;background:#EEF2F9;width:100%;"></div>';
+    s += '<div style="height:8px;border-radius:2px;background:#EEF2F9;width:100%;"></div>';
+    s += '</div>';
+    s += '<div style="height:16px;width:53px;border-radius:2px;background:#EEF2F9;flex:0 0 auto;"></div>';
+    s += '</div>';
+    return s;
+  }
+
+  s += '<div style="display:flex;align-items:center;padding:12px;width:360px;background:#FFF;box-sizing:border-box;' + (border ? 'border-bottom:1px solid #EEF2F9;' : '') + '">';
+  s += '<div style="display:flex;align-items:flex-start;gap:12px;flex:1;min-width:0;">';
+  if (icon) s += '<div style="padding-top:2px;flex:0 0 auto;"><div style="width:32px;height:32px;border-radius:99px;background:#C2C6CF;"></div></div>';
+  s += '<div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;justify-content:center;">';
+  s += '<div style="font-family:\'Proxima Soft\', system-ui;font-weight:600;font-size:16px;line-height:16px;letter-spacing:0.25px;color:' + labelColor + ';">Label</div>';
+  s += '<div style="font-family:\'Proxima Soft\', system-ui;font-weight:600;font-size:12px;line-height:14px;letter-spacing:0.5px;color:' + descColor + ';">description</div>';
+  s += '</div>';
+  s += '</div>';
+  if (trailing) s += '<div style="padding-left:8px;font-family:\'Proxima Soft\', system-ui;font-weight:600;font-size:16px;letter-spacing:0.25px;color:' + ctaColor + ';flex:0 0 auto;">CTA</div>';
+  if (chevron) s += '<div style="padding:4px;flex:0 0 auto;">' + _litdChevronSvg(chevColor) + '</div>';
+  s += '</div>';
+  return s;
+}
+
+function updateListItemTdDemo() {
+  _litdDemo.state = document.getElementById('litd-demo-state').value;
+  _litdDemo.icon = document.getElementById('litd-demo-icon').value === 'true';
+  _litdDemo.trailing = document.getElementById('litd-demo-trailing').value === 'true';
+  _litdDemo.chevron = document.getElementById('litd-demo-chevron').value === 'true';
+  _litdDemo.border = document.getElementById('litd-demo-border').value === 'true';
+  var el = document.getElementById('litd-demo-preview');
+  if (el) el.innerHTML = _litdBuildRow(_litdDemo.state, _litdDemo.icon, _litdDemo.trailing, _litdDemo.chevron, _litdDemo.border);
+}
+
+function _litdInitSpecCards() {
+  var map = [
+    { id: 'default', state: 'Default' },
+    { id: 'disabled', state: 'Disabled' },
+    { id: 'loading', state: 'Loading' }
+  ];
+  map.forEach(function(v) {
+    var el = document.getElementById('litd-preview-' + v.id);
+    if (el) el.innerHTML = _litdBuildRow(v.state, true, true, true, false);
+  });
+}
+
+function _litdInit() {
+  updateListItemTdDemo();
+  _litdInitSpecCards();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _litdInit);
+else _litdInit();
+</script>
+
+<!--@section-end-->

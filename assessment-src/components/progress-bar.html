@@ -6,7 +6,7 @@
 
 <!--@meta-start-->
 status: assessed
-node: 27:64946
+node: 18577:13227
 ds-verdict: restructure
 native-status: rework
 variants: 11
@@ -53,7 +53,7 @@ open-issues: C1,C2,C5,C6,C7
       <div class="summary-card-name">Progress Bar</div>
       <span class="badge badge-restructure">Restructure</span>
     </div>
-    <div class="summary-card-desc">Linear task-progress indicator. 11 percentage variants (0, 10, 20, …, 100). Fill and track are raster images, and progress is modelled as a discrete enum instead of a continuous value. Collapse to a single component with <code>progress: Float</code> (0–1) + states (determinate, indeterminate, success, error), swap rasters for token-bound strokes, map to native <code>ProgressView</code> / <code>LinearProgressIndicator</code>.</div>
+    <div class="summary-card-desc">Linear indicator that shows task completion progress along a horizontal track.</div>
   </div>
 </div>
 <!--@summary-card-end-->
@@ -84,7 +84,7 @@ open-issues: C1,C2,C5,C6,C7
           Progress Bar
           <span class="badge badge-restructure">Restructure</span>
           <span class="badge badge-rework">Rework</span>
-          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=27-64946" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18577-13227" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
         </div>
         <p class="comp-desc">A linear task-progress indicator — a brand-blue fill over a light-blue track, used to show how far along a multi-step task is (KYC, file upload, form wizard). Today the component ships <strong>11 variants</strong> for <code>percentage = 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100</code>, each rendered by swapping a pair of pre-sized raster PNGs (<code>back</code> + <code>front</code>). There is no continuous value, no indeterminate animation, and no success / error state.</p>
       </div>
@@ -442,7 +442,7 @@ open-issues: C1,C2,C5,C6,C7
     <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
     <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
     <div class="changelog">
-      <div class="changelog-header">Initial Assessment · node 27:64946</div>
+      <div class="changelog-header">Initial Assessment · node 18577:13227</div>
       <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Restructure</strong> — Collapse 11 <code>percentage</code> variants into a single component with continuous <code>progress: Float</code> (0–1). Add <code>state</code> axis (determinate / indeterminate / success / error). Replace raster back/front with token-bound rectangles. <span class="tag-open tag-c2 tag-c5 tag-c6">Open</span></div><span class="changelog-delta delta-open">Schema</span></div>
       <div class="changelog-row"><div class="changelog-body"><strong>C1 — Layer naming</strong> — Rename <code>back</code> → <code>Track</code> and <code>front</code> → <code>Fill</code>. Aligns with native terminology. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1</span></div>
       <div class="changelog-row"><div class="changelog-body"><strong>C2 — Continuous value</strong> — Replace <code>percentage: 0 | 10 | … | 100</code> enum with <code>progress: Float</code> (0–1). Renaming from <code>percentage</code> to <code>progress</code> aligns with iOS / Compose conventions. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>

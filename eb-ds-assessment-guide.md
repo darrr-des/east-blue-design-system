@@ -237,6 +237,17 @@ They do **not** see:
 | Criterion | Pattern | First Found In |
 |---|---|---|
 | C7 | Code Connect mappings not yet registered — no native component files linked via Code Connect CLI | Accordion |
+| C1 | Variant sibling ("with Counter") duplicates the base transaction row — same 2 × 3 (density × state) matrix with a trailing Counter instance added. Should be a `trailing` slot on the base row, not a standalone component. | Action List Counter |
+| C2 | `Density` (PascalCase) vs `state` (lowercase) — inconsistent casing on the same component. Base Transaction row has the same mismatch. | Action List Counter |
+| C4 | Loading state still renders the trailing pill as a skeleton rectangle instead of omitting the Counter slot — the skeleton doesn't match what a real Counter occupies. | Action List Counter |
+| C4 | Sibling component duplicates base List anatomy just to expose a second text line — native `ListItem.supportingContent` / SwiftUI `VStack` of primary + secondary labels handle this as one parameter | Action List Description |
+| C5 | Description variant ships only 3 states (Default / Disabled / Loading) vs base List's 6 (adds Density axis) — diverging state coverage inside the same family | Action List Description |
+| C1 | Leading asset is still a raw 32px circle placeholder (`icon-placeholder` fill `#c2c6cf`) — not a List Item Asset instance | Action List Description |
+| C1 | Three sibling Figma components (List, List - with Counter, List - with Description) encode what should be one row with optional description + optional trailing counter slots. | Action List |
+| C1 | Leading icon is a bare gray circle "Placeholder" layer (#C2C6CF) — no real icon content, same instance-swap placeholder anti-pattern as List Item. | Action List |
+| C2 | `List` + `List - with Description` use Semibold 16 Neutral (#0A2757); `List - with Counter` uses Bold 18 Brand Blue (#005CE5). Same family, two different label typographies. | Action List |
+| C2 | Hidden `Space2` / `Space16` spacer annotation nodes leak into the production component as rendered layers. | Action List |
+| C5 | State enum is Default / Disabled / Loading — no Pressed state on a component whose primary purpose is tap navigation. | Action List |
 | C1 | Component splintering by size family resolved — 3 separate components (banners, promos, heroes) collapsed into a single <code>Ad Space</code> with a 7-value <code>size</code> enum. | Ad Space |
 | C2 | <code>hifi</code> / <code>midfi</code> fidelity axis eliminated — was a placeholder-authoring crutch masquerading as a variant. Loading state is now an orthogonal <code>isLoading</code> boolean; real media lives in a <code>content</code> slot. | Ad Space |
 | C4 | <code>carousel=yes</code> pseudo-variant retired — carousel wrapping is a parent layout concern. Multiple <code>hero-md</code> Ad Spaces now compose inside the DS Carousel container, no dedicated "Ad Carousel" component. | Ad Space |
@@ -589,6 +600,9 @@ Key conventions:
 | Component | Node | DS Verdict | Native Status | Status | Notes |
 |---|---|---|---|---|---|
 | Accordion | `16870:9288` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Action List Counter | `18577:14637` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
+| Action List Description | `18577:14604` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
+| Action List | `18577:14545` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Ad Space | `18563:9789` | Keep | Ready | 🔁 Re-assessing | — |
 | Alert | `18444:2012` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Avatar Group | `18276:4554` | Fix | Needs Refinement | 🔁 Re-assessing | — |
@@ -602,7 +616,7 @@ Key conventions:
 | Chip | `18336:22243` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | Counter | `18482:71321` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Dropdown Item Group | `6383:3446` | Consolidate | Not Applicable | 🔁 Re-assessing | — |
-| Dropdown Item | `23:199453` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Dropdown Item | `18577:13033` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Dropdown | `18482:31910` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Generic Card | `18482:35806` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Generic Transaction Card | `18482:35753` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
@@ -619,11 +633,11 @@ Key conventions:
 | Menu Grid | `18320:14332` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Modal | `18507:71705` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Overlay | `47:329691` | Fix | Needs Refinement | 🔁 Re-assessing | — |
-| Progress Bar | `27:64946` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Progress Bar | `18577:13227` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Radio Button With Label | `18482:35673` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Radio Button | `18482:35698` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | Recipient Field | `17758:3867` | Keep | Needs Refinement | 🔁 Re-assessing | — |
-| Search Field | `50:78117` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Search Field | `18577:14520` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Select Field | `17758:3786` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Tab Item | `18482:33262` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Tabs | `18482:33249` | Fix | Needs Refinement | 🔁 Re-assessing | — |
