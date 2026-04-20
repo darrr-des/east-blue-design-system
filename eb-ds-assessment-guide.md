@@ -249,6 +249,26 @@ They do **not** see:
 | C6 | Raster backgrounds on 5 initials variants replaced with vector ELLIPSE layers — RESOLVED | Avatar |
 | C3 | Hardcoded opacity: 0.90 on Danger/Heavy and Disabled/Heavy Transaction variants — RESOLVED (set to 1 via plugin) | Badge |
 | C2 | State property values renamed to match token semantic names (Info→Information, Success→Positive, Warning→Notice, Danger→Negative, Disabled→Muted) — RESOLVED across all 60 affected variants | Badge |
+| C2 | `type` enum conflates content variant (`default` / `with icon`) with loading state (`skeleton loader`) — skeleton should be an orthogonal `isLoading` boolean, not a peer value in a content enum. | Carousel Card |
+| C6 | Banner uses a hardcoded `replace-this-asset` PNG plus a purple `#e6e1ef` `mix-blend-multiply` dimmer layer — both should resolve via an image slot and an optional tint token, not a static PNG. | Carousel Card |
+| C6 | With-icon variant's round badge is a `#c2c6cf` filled circle (no instance swap) — blocks icon customization. | Carousel Card |
+| C5 | No pressed/focused state — carousel cards are tappable and navigate somewhere, so they need at least pressed feedback. | Carousel Card |
+| C7 | Family has 5 near-duplicate components (Carousel Card, Carousel - Discount Card, Carousel - Item, Carousel Item - Center, Carousel Item - Side) that should collapse to 1–2 canonical primitives. | Carousel Card |
+| C1 | Layer names include `_space_12` spacer with `opacity:0` and hardcoded `#0500ff` fill — dev-mode artifact that should be a spacing token, not an invisible element. | Carousel Discount Card |
+| C1 | `Asset Placeholder` and `replace-this-asset` layer names leak template authoring affordances into the shipped component. | Carousel Discount Card |
+| C2 | `type` property conflates media layout (`default` / `with violator`) with loading state (`skeleton loader`) on a single axis — should split into `violator: bool` + `isLoading: bool`. | Carousel Discount Card |
+| C4 | Perforated voucher edge is baked into the banner image — ties the component to voucher aesthetics and blocks reuse for non-voucher discount cards. | Carousel Discount Card |
+| C6 | Banner image, `replace-this-asset`, and the perforate edge are all raster assets stitched with mask layers — fragile and non-tokenizable. | Carousel Discount Card |
+| C7 | `violator` label text is hardcoded "New" — not parameterized as a prop. | Carousel Discount Card |
+| C1 | "Carousel Item - Center" / "Carousel Item - Side" split encodes carousel layout position as a structural component variant — position/focus state is runtime layout behavior, not component identity. | Carousel Item Center |
+| C2 | `hasTextLink` enum mixes string values `yes`, `no`, and `Default` — three-value enum that reads like a boolean with a typo. Should be a boolean or a semantic enum. | Carousel Item Center |
+| C2 | `type` enum values `Default`, `with Icon`, `Headline` mix unrelated axes — icon presence is a slot question, headline vs default is a content-weight question. They should not share one axis. | Carousel Item Center |
+| C6 | Hero image is a raster PNG (`imgAssetDark`) baked into the variant. No image slot, no instance-swappable asset. | Carousel Item Center |
+| C6 | Chevron in the "learn more" action is a raster PNG (`imgShapeFull`), not a vector glyph. | Carousel Item Center |
+| C5 | No pressed / focused / disabled states. Tile has a tappable button and is itself a tappable carousel cell, but only the static "focused" appearance is modeled. | Carousel Item Center |
+| C4 | Position-specific duplicate component — "Side" encodes scroll position (focused vs unfocused neighbor) as a Figma component rather than a runtime layout effect. Native carousel APIs handle focus-aware scale/opacity at the container level; there should be no separate "side" DS component. | Carousel Item Side |
+| C1 | Height-only duplicate — Side shares identical schema, property axes, tokens, and layer structure with Carousel Item - Center. The only delta is the container height (146 vs 160). Not a DS concern. | Carousel Item Side |
+| C6 | Raster chevron (<code>shape_full</code>) duplicated from Center — compounds the same asset issue across a component that shouldn't exist. | Carousel Item Side |
 | C2 | Boolean property "with icon" uses yes/no instead of true/false | Chip |
 | C2 | Two separate components ("Filter" and "Filter with Dropdown") share the same pill anatomy and should consolidate into a single Chip with leading/trailing slot props | Chip |
 | C6 | Leading slot uses a hardcoded 24px gray circle "icon-placeholder" instead of a swappable Avatar/Icon instance | Chip |
@@ -578,6 +598,11 @@ Key conventions:
 | Avatar | `17143:4488` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Badge | `18482:28972` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Button | `17104:184842` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Carousel Card | `23:121311` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Carousel Discount Card | `18543:2761` | Consolidate | Needs Refinement | 🔁 Re-assessing | — |
+| Carousel Item Center | `18543:2984` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
+| Carousel Item Side | `18543:3099` | Remove | Not Applicable | 🔁 Re-assessing | — |
+| Carousel Item | `—` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
 | Checkbox | `17143:2464` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Chip | `18336:22243` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | Counter | `18482:71321` | Fix | Needs Refinement | 🔁 Re-assessing | — |

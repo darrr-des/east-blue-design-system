@@ -1,0 +1,663 @@
+<!--
+  CAROUSEL ITEM - CENTER COMPONENT ASSESSMENT
+  Promotional carousel tile, 312×160, rendered as the focused card in a peeking carousel.
+  Identical anatomy and tokens to Carousel Item - Side (312×146) — the 14 px height delta
+  is the only structural difference. Position-specific card variants are a layout anti-pattern.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 18543:2984
+ds-verdict: consolidate
+native-status: rework
+variants: 10
+ios: Merge into EBCarouselItem (ScrollView + .scrollTargetBehavior(.viewAligned) + .scrollTransition)
+android: Merge into EBCarouselItem (HorizontalPager + graphicsLayer { scaleX / alpha = lerp(pageOffset) })
+open-issues: C1,C2,C4,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] "Carousel Item - Center" / "Carousel Item - Side" split encodes carousel layout position as a structural component variant — position/focus state is runtime layout behavior, not component identity.
+[C2] `hasTextLink` enum mixes string values `yes`, `no`, and `Default` — three-value enum that reads like a boolean with a typo. Should be a boolean or a semantic enum.
+[C2] `type` enum values `Default`, `with Icon`, `Headline` mix unrelated axes — icon presence is a slot question, headline vs default is a content-weight question. They should not share one axis.
+[C6] Hero image is a raster PNG (`imgAssetDark`) baked into the variant. No image slot, no instance-swappable asset.
+[C6] Chevron in the "learn more" action is a raster PNG (`imgShapeFull`), not a vector glyph.
+[C5] No pressed / focused / disabled states. Tile has a tappable button and is itself a tappable carousel cell, but only the static "focused" appearance is modeled.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Carousel<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-carousel-item-center" onclick="showPanel('carousel-item-center', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Carousel Item - Center</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('carousel-item-center')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="6" y="8" width="68" height="24" rx="3" fill="#FFFFFF" stroke="#E5EBF4"/>
+      <rect x="10" y="12" width="18" height="3" rx="1" fill="#2340A9"/>
+      <rect x="10" y="18" width="22" height="2" rx="1" fill="#6780A9"/>
+      <rect x="10" y="24" width="10" height="3" rx="1" fill="#005CE5"/>
+      <rect x="40" y="12" width="30" height="16" rx="2" fill="#FFD6CE"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Carousel Item - Center</div>
+      <span class="badge badge-consolidate">Consolidate</span>
+    </div>
+    <div class="summary-card-desc">Focused promotional carousel tile, 312×160. Same anatomy and tokens as Carousel Item - Side (312×146) — position and scale belong to the carousel container, not the tile.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Carousel Item - Center</strong></td>
+  <td><span class="badge badge-consolidate">Consolidate</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">10</td>
+  <td class="muted">Merge with Carousel Item - Side. Position and scale belong to the carousel container, not the tile. Split <code>hasTextLink</code> and <code>type</code>. Vectorize chevron, add image slot.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-carousel-item-center">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Carousel Item - Center
+          <span class="badge badge-consolidate">Consolidate</span>
+          <span class="badge badge-rework">Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18543-2984" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">The "focused" tile for a peeking carousel — 312×160, 18px vertical padding, 8px corner radius, Proxima Soft heading + BarkAda description + optional "learn more" action. 10 variants across <code>mode</code> (Dark Text / Light Text) × <code>type</code> (Default / with Icon / Headline) × <code>hasTextLink</code> (yes / no / Default) × <code>hasPreamble</code> (yes / no). Its sibling <strong>Carousel Item - Side</strong> (<code>18543:3099</code>) uses the same schema, tokens, and layer anatomy — it is 14 px shorter (146 vs 160) and otherwise identical.</p>
+      </div>
+      <div class="verdict-inline verdict-consolidate">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Consolidate — merge Center + Side into one Carousel Item; move focus treatment to the container</div>
+          <div class="verdict-inline-text">A name like "Center" encodes carousel <em>layout position</em> as a structural component variant. Position and the visual treatment that follows (scale, opacity) are runtime layout state owned by the carousel container, not DS components. Ship one <code>EBCarouselItem</code> with the anatomy shared by Center and Side; let the carousel apply scale/opacity via scroll progress on native.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="carousel-item-center-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'carousel-item-center-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'carousel-item-center-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'carousel-item-center-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'carousel-item-center-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="ccc-in-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Center tiles sit in the focused slot of a peeking carousel — full opacity, full scale — while Side tiles flank them at a smaller visual weight. On native, that focus treatment is driven by scroll progress, not by swapping component identities.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="ccc-context-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="ccc-preview">Live Preview</div>
+    <p class="section-desc">Flip between modes and types to see how the 10 documented variants render. Note that <code>hasTextLink</code> offers three values — <code>yes</code>, <code>no</code>, and a literal <code>Default</code> on Light Text mode — a leaked enum that should be a boolean.</p>
+    <div class="demo-panel" id="ccc-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="ccc-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">mode</span>
+              <select id="ccc-ctrl-mode" class="demo-panel-select" onchange="_cccUpdate()">
+                <option value="dark" selected>Dark Text</option>
+                <option value="light">Light Text</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">type</span>
+              <select id="ccc-ctrl-type" class="demo-panel-select" onchange="_cccUpdate()">
+                <option value="default" selected>Default</option>
+                <option value="icon">with Icon</option>
+                <option value="headline">Headline</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">hasTextLink</span>
+              <select id="ccc-ctrl-link" class="demo-panel-select" onchange="_cccUpdate()">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">hasPreamble</span>
+              <select id="ccc-ctrl-preamble" class="demo-panel-select" onchange="_cccUpdate()">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+          </div>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Content</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">preamble</span>
+              <input type="text" id="ccc-ctrl-preamble-text" class="demo-panel-select demo-panel-input" value="Preamble" oninput="_cccUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">heading</span>
+              <input type="text" id="ccc-ctrl-heading" class="demo-panel-select demo-panel-input" value="Heading" oninput="_cccUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">description</span>
+              <input type="text" id="ccc-ctrl-desc" class="demo-panel-select demo-panel-input" value="Add description here." oninput="_cccUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">button</span>
+              <input type="text" id="ccc-ctrl-btn" class="demo-panel-select demo-panel-input" value="Button" oninput="_cccUpdate()">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="ccc-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">The tile itself is reusable as a promo banner, but existing only as the "center" position locks it to one carousel layout. The sibling "Side" component is the same anatomy — duplication, not reuse.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Owns its tokens (<code>main/carousel/color/*</code>) and shadow. But the hero image is a baked raster, the chevron is a raster, and the icon is a placeholder circle — none are instance-swappable.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Property naming mixes boolean-shaped enums (<code>hasTextLink: yes | no | Default</code>) and compounded axes (<code>type: Default | with Icon | Headline</code> mixes slot and content-weight).</div>
+      </div>
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">Named for its place inside a carousel (Center) — a composition rule should never leak into a component name. Center + Side should be one tile, composed by the carousel.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="ccc-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>State</th><th class="center">iOS</th><th class="center">Android</th><th>Figma Spec</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Focused (center)</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">Carousel Item - Center, 312×160</td><td class="muted">Runtime state on native — driven by scroll progress. Container applies <code>scale=1.0</code>, <code>opacity=1.0</code> to the focused page.</td></tr>
+          <tr><td><strong>Unfocused (side)</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">Carousel Item - Side, 312×146</td><td class="muted">Same tile — container interpolates <code>scale</code> / <code>opacity</code> by <code>pageOffset</code>. Do not encode as a separate component.</td></tr>
+          <tr><td><strong>Pressed</strong></td><td class="center muted">Missing</td><td class="center muted">Missing</td><td class="muted">Not built</td><td class="muted">Tile is tappable (leads to promo destination). Needs a pressed tint.</td></tr>
+          <tr><td><strong>Focused (keyboard / D-pad)</strong></td><td class="center muted">Missing</td><td class="center muted">Missing</td><td class="muted">Not built</td><td class="muted">External keyboard / Android TV / RTL focus ring — no focus treatment.</td></tr>
+          <tr><td><strong>Disabled</strong></td><td class="center muted">Missing</td><td class="center muted">Missing</td><td class="muted">Not built</td><td class="muted">Promotions that are expired or region-locked.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="ccc-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Position encoded as a component name.</strong> "Center" and its sibling "Side" describe where the tile renders inside a carousel, not what the tile <em>is</em>. The 14 px height delta (160 vs 146) is the only structural difference — every token, layer, and property mirrors across both. A position-specific component is a layout anti-pattern. <span class="tag-open tag-c1">C1 · Layer Structure &amp; Naming</span></span></li>
+      <li><span><strong><code>hasTextLink</code> is a three-value enum masquerading as a boolean.</strong> Values are <code>yes</code>, <code>no</code>, and a literal <code>Default</code> (Light Text mode only). Should be either a boolean (<code>showAction: Bool</code>) or a slot (<code>action?: Button</code>). <span class="tag-open tag-c2">C2 · Variant &amp; Property Naming</span></span></li>
+      <li><span><strong><code>type</code> compounds two unrelated axes.</strong> <code>Default</code>, <code>with Icon</code>, and <code>Headline</code> mix slot presence (icon or not) and content-weight (headline-only vs heading+description). These are orthogonal — should be split into a <code>leadingIcon?</code> slot and a <code>variant: headline | standard</code> property. <span class="tag-open tag-c2">C2 · Variant &amp; Property Naming</span></span></li>
+      <li><span><strong>Position is layout, not component identity.</strong> SwiftUI <code>.scrollTransition</code> and Compose <code>graphicsLayer { pageOffset }</code> express focus treatment as a runtime transform. Shipping a "Center" component blocks both platforms from their idiomatic path. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>No pressed, focused, or disabled state.</strong> The tile is interactive (tappable + an embedded "learn more" button) but only the static rest state is modeled. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Hero image is a baked raster.</strong> <code>imgAssetDark</code> / <code>imgModeLightTextTypeDefaultHasTextLinkYesHasPreambleNo</code> are placed as PNGs on the tile, not as an Image slot. Promo artwork is per-campaign — it must be a slot so consumers swap in their own asset without detaching. <span class="tag-open tag-c6">C6 · Asset &amp; Icon Quality</span></span></li>
+      <li><span><strong>Chevron is a raster PNG.</strong> <code>imgShapeFull</code> in the "learn more" action is a raster image, not a vector glyph — blurs at scale and blocks token-based tinting. <span class="tag-open tag-c6">C6 · Asset &amp; Icon Quality</span></span></li>
+      <li><span><strong>Code Connect not registered.</strong> Blocked until the family consolidation lands — any mapping authored against "Carousel Item - Center" has to be redone once Center + Side merge. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="ccc-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Merge "Center" + "Side" into one <code>Carousel Item</code>.</strong> Same width (312), same anatomy, same tokens. Promote the 160 px height as the tile's intrinsic height; retire the 146 px variant. Position-specific styling (scale, opacity) lives in the carousel container on native. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Move focus treatment to the carousel container.</strong> On native, scroll progress drives the transform: iOS <code>ScrollView + .scrollTargetBehavior(.viewAligned) + .scrollTransition { c, p in c.scaleEffect(p.isIdentity ? 1 : 0.92).opacity(p.isIdentity ? 1 : 0.7) }</code>; Compose <code>HorizontalPager + graphicsLayer { val o = pageOffset.absoluteValue.coerceIn(0f, 1f); scaleX = lerp(0.92f, 1f, 1f - o); alpha = lerp(0.7f, 1f, 1f - o) }</code>. No "Center"/"Side" component variants required. <span class="tag-recommend">Composition</span></span></li>
+      <li><span><strong>Rename the tile to remove the positional suffix.</strong> "Carousel Item - Center" → "Carousel Item". Names like "Center" / "Side" describe layout position — a smell that the abstraction is wrong. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Collapse <code>hasTextLink</code> to a boolean.</strong> <code>hasTextLink: yes | no | Default</code> → <code>showAction: Bool</code> (or a nullable action slot). The literal <code>Default</code> value reads as a typo and only appears on one mode. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Split <code>type</code> into <code>variant</code> + <code>leadingIcon?</code>.</strong> <code>Default | with Icon | Headline</code> compounds unrelated axes. Extract an icon slot and keep a content-weight property: <code>variant: standard | headline</code>. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Add a hero image slot.</strong> The promo artwork varies per campaign — it must be an Image slot (instance-swappable), not a baked raster. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Vectorize the chevron.</strong> Replace <code>shape_full</code> raster with a vector icon so color binds to <code>text/color-text-primary</code> / <code>text/color-text-inverse</code> and stays crisp. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Add pressed + focused states.</strong> Tile is tappable with an embedded action — needs at least a pressed tint and a keyboard/D-pad focus ring. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Document the carousel as a composition, not a roster of cards.</strong> The Carousel family today lists five separate components (Card, Discount Card, Item, Item - Center, Item - Side). Reframe as one tile composed by one container; document the per-tile variant matrix once. <span class="tag-recommend">Docs</span></span></li>
+      <li><span><strong>See siblings:</strong> <a href="#" onclick="showPanelById('carousel-item-side');return false;">Carousel Item - Side</a>, <a href="#" onclick="showPanelById('carousel-item');return false;">Carousel - Item</a>, <a href="#" onclick="showPanelById('carousel-card');return false;">Carousel Card</a>, <a href="#" onclick="showPanelById('carousel-discount-card');return false;">Carousel - Discount Card</a>. The whole family is a single consolidation candidate — one tile + one container. <span class="tag-recommend">Family</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Dark Text · Default · hasTextLink=yes <span class="spec-card-node">node <code>18543:2985</code></span></div>
+      </div>
+      <p class="spec-card-desc">Canonical dark-text variant: white surface with the hero image as a raster, heading + description in the carousel blue palette, and a "Button →" action. Use on light-image backgrounds.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="ccc-spec-1"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Width × Height</span><code>312 × 160</code></div>
+          <div class="spec-detail-row"><span>Padding</span><code>18 20</code></div>
+          <div class="spec-detail-row"><span>Corner radius</span><code>radius/radius-3 · 8</code></div>
+          <div class="spec-detail-row"><span>Content width</span><code>129</code></div>
+          <div class="spec-detail-row"><span>Max content height</span><code>124</code></div>
+          <div class="spec-detail-row"><span>Shadow</span><code>0 13 14 -8 · #020E22 @ 16%</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors by Mode</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>MODE</th><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr></thead>
+              <tbody>
+                <tr><td>Dark Text</td><td>Surface</td><td><code>bg/color-bg-main</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span><code>#FFFFFF</code></td></tr>
+                <tr><td>Dark Text</td><td>Heading</td><td><code>main/carousel/color/label-header</code></td><td><span class="swatch-dot" style="background:#2340A9"></span><code>#2340A9</code></td></tr>
+                <tr><td>Dark Text</td><td>Description</td><td><code>main/carousel/color/description</code></td><td><span class="swatch-dot" style="background:#6780A9"></span><code>#6780A9</code> @ 60%</td></tr>
+                <tr><td>Dark Text</td><td>Preamble</td><td><code>text/color-text-stronger</code></td><td><span class="swatch-dot" style="background:#072592"></span><code>#072592</code> @ 60%</td></tr>
+                <tr><td>Dark Text</td><td>Action label</td><td><code>text/color-text-primary</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td></tr>
+                <tr><td>Light Text</td><td>Surface</td><td class="muted">(hero image fills)</td><td class="muted">–</td></tr>
+                <tr><td>Light Text</td><td>Heading</td><td><code>text/color-text-inverse</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span><code>#FFFFFF</code></td></tr>
+                <tr><td>Light Text</td><td>Description</td><td><code>text/color-text-inverse</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span><code>#FFFFFF</code></td></tr>
+                <tr><td>Light Text</td><td>Preamble</td><td><code>text/color-text-inverse-weak</code></td><td><span class="swatch-dot" style="background:#F6F9FD"></span><code>#F6F9FD</code> @ 80%</td></tr>
+                <tr><td>Light Text</td><td>Action label</td><td><code>text/color-text-inverse</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span><code>#FFFFFF</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>Heading text style</span><code>Primary/Headlines/Block</code></div>
+          <div class="spec-detail-row"><span>Heading</span><code>Proxima Soft Bold · 18 / 23 · +0.25</code></div>
+          <div class="spec-detail-row"><span>Description text style</span><code>Secondary/Bold/Caption</code></div>
+          <div class="spec-detail-row"><span>Description</span><code>BarkAda Semibold · 12 / 18 · +0</code></div>
+          <div class="spec-detail-row"><span>Preamble text style</span><code>Primary/Label/Fine</code></div>
+          <div class="spec-detail-row"><span>Preamble</span><code>Proxima Soft Bold · 12 / 12 · +0.5</code></div>
+          <div class="spec-detail-row"><span>Action text style</span><code>Secondary/Heavy/Base</code></div>
+          <div class="spec-detail-row"><span>Action</span><code>BarkAda Bold · 14 / 20 · +0</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Composed elements</div>
+          <div class="spec-detail-row muted"><span>Hero image (today)</span><span>Baked raster PNG</span></div>
+          <div class="spec-detail-row muted"><span>Hero image (proposed)</span><span>Image slot (instance-swappable)</span></div>
+          <div class="spec-detail-row muted"><span>Chevron (today)</span><span>Raster PNG — <code>shape_full</code></span></div>
+          <div class="spec-detail-row muted"><span>Chevron (proposed)</span><span>Vector icon, token-tinted</span></div>
+          <div class="spec-detail-row muted"><span>Icon (when type=with Icon)</span><span>Drawn placeholder circle</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Light Text · Default · hasTextLink=yes · hasPreamble=yes <span class="spec-card-node">node <code>18543:3065</code></span></div>
+      </div>
+      <p class="spec-card-desc">Full-content light-text variant: preamble + heading + description + action, rendered over a dark hero image. All text uses <code>text/color-text-inverse</code>.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="ccc-spec-2"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Width × Height</span><code>312 × 160</code></div>
+          <div class="spec-detail-row"><span>Padding</span><code>18 20</code></div>
+          <div class="spec-detail-row"><span>Gap — heading → description</span><code>space/space-2 · 2</code></div>
+          <div class="spec-detail-row"><span>Gap — description → action</span><code>space/space-16 · 16</code></div>
+          <div class="spec-detail-row"><span>Chevron size</span><code>24 × 24 (raster)</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Comparison to sibling</div>
+          <div class="spec-detail-row"><span>Center height</span><code>160</code></div>
+          <div class="spec-detail-row"><span>Side height</span><code>146</code></div>
+          <div class="spec-detail-row"><span>Delta</span><code>14 px</code></div>
+          <div class="spec-detail-row"><span>Width / tokens / anatomy</span><code>identical</code></div>
+          <div class="spec-detail-row muted"><span>Conclusion</span><span>One tile, not two</span></div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="ccc-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'ccc-install','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'ccc-install','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">.<span class="fn">package</span>(<span class="prp">url</span>: <span class="str">"https://github.com/gcash/eb-design-system-ios"</span>, <span class="prp">from</span>: <span class="str">"1.0.0"</span>)
+
+<span class="kw">import</span> EBDesignSystem</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">implementation(<span class="str">"com.gcash.designsystem:eb-components:1.0.0"</span>)
+
+<span class="kw">import</span> com.gcash.designsystem.components.EBCarouselItem
+<span class="kw">import</span> com.gcash.designsystem.components.EBCarousel</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="ccc-mapping">Property Mapping (Proposed, post-consolidation)</div>
+    <p class="section-desc">Center + Side merge into one <code>EBCarouselItem</code>. Focus treatment moves to the container's scroll-progress API.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma (today)</th><th>Figma (proposed)</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">(separate Center + Side components)</td><td><code>CarouselItem</code> (single)</td><td><code>EBCarouselItem</code></td><td><code>EBCarouselItem</code></td></tr>
+          <tr><td><code>mode: Dark Text | Light Text</code></td><td><code>mode: light | dark</code></td><td><code>.ebMode(.light)</code></td><td><code>mode: EBCarouselItemMode</code></td></tr>
+          <tr><td><code>type: Default | with Icon | Headline</code></td><td><code>variant: standard | headline</code> + <code>leadingIcon?</code></td><td><code>variant: EBCarouselItemVariant</code> · <code>leadingIcon: Image?</code></td><td><code>variant: …</code> · <code>leadingIcon: @Composable (() -&gt; Unit)?</code></td></tr>
+          <tr><td><code>hasTextLink: yes | no | Default</code></td><td><code>action?: Button</code> (slot)</td><td><code>action: EBCarouselAction?</code></td><td><code>action: @Composable (() -&gt; Unit)?</code></td></tr>
+          <tr><td><code>hasPreamble</code></td><td><code>preamble?: String</code></td><td><code>preamble: String?</code></td><td><code>preamble: String?</code></td></tr>
+          <tr><td class="muted">(baked hero image)</td><td><code>image: ImageRef</code> (slot)</td><td><code>image: Image</code></td><td><code>image: @Composable () -&gt; Unit</code></td></tr>
+          <tr><td class="muted">(hardcoded "Heading")</td><td><code>heading: String</code></td><td><code>heading: String</code></td><td><code>heading: String</code></td></tr>
+          <tr><td class="muted">(hardcoded description)</td><td><code>description: String?</code></td><td><code>description: String?</code></td><td><code>description: String?</code></td></tr>
+          <tr><td class="muted">(not modeled)</td><td><code>onTap?: () -&gt; Void</code></td><td><code>onTap: (() -&gt; Void)?</code></td><td><code>onClick: (() -&gt; Unit)?</code></td></tr>
+          <tr><td class="muted">(encoded as "Center"/"Side")</td><td class="muted">— owned by container —</td><td><code>.scrollTransition { … }</code></td><td><code>graphicsLayer { pageOffset }</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="ccc-paths">Suggested file paths</div>
+    <ul class="resolved-list">
+      <li><code>ios/Components/Carousel/EBCarouselItem.swift</code></li>
+      <li><code>ios/Components/Carousel/EBCarousel.swift</code> (container)</li>
+      <li><code>android/components/carousel/EBCarouselItem.kt</code></li>
+      <li><code>android/components/carousel/EBCarousel.kt</code> (container)</li>
+    </ul>
+
+    <div class="sub-heading" id="ccc-usage">Usage — post-consolidation</div>
+    <p class="section-desc">The container owns focus treatment; the tile is identity-agnostic. No "center" or "side" appears anywhere in the API.</p>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'ccc-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'ccc-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Peeking carousel — container drives the focus transform</span>
+<span class="typ">ScrollView</span>(.<span class="prp">horizontal</span>, <span class="prp">showsIndicators</span>: <span class="kw">false</span>) {
+    <span class="typ">HStack</span>(<span class="prp">spacing</span>: 12) {
+        <span class="typ">ForEach</span>(promos) { promo <span class="kw">in</span>
+            <span class="typ">EBCarouselItem</span>(
+                <span class="prp">mode</span>: promo.darkText ? .dark : .light,
+                <span class="prp">image</span>: <span class="typ">Image</span>(promo.asset),
+                <span class="prp">preamble</span>: promo.preamble,
+                <span class="prp">heading</span>: promo.heading,
+                <span class="prp">description</span>: promo.body,
+                <span class="prp">action</span>: .<span class="fn">init</span>(<span class="str">"Learn more"</span>) { open(promo) }
+            )
+            .<span class="prp">scrollTransition</span> { content, phase <span class="kw">in</span>
+                content
+                    .<span class="fn">scaleEffect</span>(phase.isIdentity ? 1.0 : 0.92)
+                    .<span class="fn">opacity</span>(phase.isIdentity ? 1.0 : 0.7)
+            }
+        }
+    }
+    .<span class="prp">scrollTargetLayout</span>()
+}
+.<span class="prp">scrollTargetBehavior</span>(.<span class="prp">viewAligned</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Peeking carousel — container drives the focus transform</span>
+<span class="typ">HorizontalPager</span>(
+    state = pagerState,
+    contentPadding = <span class="typ">PaddingValues</span>(horizontal = 40.dp),
+    pageSpacing = 12.dp
+) { page ->
+    <span class="typ">EBCarouselItem</span>(
+        mode = <span class="kw">if</span> (promos[page].darkText) <span class="typ">EBCarouselItemMode</span>.Dark <span class="kw">else</span> <span class="typ">EBCarouselItemMode</span>.Light,
+        image = { <span class="typ">Image</span>(painter = painterResource(promos[page].asset), contentDescription = <span class="kw">null</span>) },
+        preamble = promos[page].preamble,
+        heading = promos[page].heading,
+        description = promos[page].body,
+        action = { <span class="typ">TextButton</span>(onClick = { open(promos[page]) }) { <span class="typ">Text</span>(<span class="str">"Learn more"</span>) } },
+        modifier = <span class="typ">Modifier</span>.graphicsLayer {
+            <span class="kw">val</span> offset = ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction)
+                .absoluteValue.coerceIn(0f, 1f)
+            scaleX = lerp(0.92f, 1f, 1f - offset)
+            scaleY = scaleX
+            alpha  = lerp(0.7f, 1f, 1f - offset)
+        }
+    )
+}</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="ccc-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Tile as a button</strong></td><td class="muted">Wrap in <code>Button</code>; combine preamble + heading + description into <code>accessibilityLabel</code>.</td><td class="muted"><code>Modifier.clickable { onTap() }.semantics(mergeDescendants = true)</code>.</td></tr>
+          <tr><td><strong>Hero image decorative</strong></td><td class="muted">Hero image is decorative background — <code>.accessibilityHidden(true)</code>.</td><td class="muted"><code>contentDescription = null</code> on the background image.</td></tr>
+          <tr><td><strong>Carousel announcement</strong></td><td class="muted">Container announces "Page N of M" on focus change.</td><td class="muted"><code>pagerState</code> collects page changes; announce via <code>liveRegion</code>.</td></tr>
+          <tr><td><strong>Contrast (Light Text mode)</strong></td><td class="muted">White-on-image — verify hero image has a dark enough overlay for AA contrast (4.5:1 for body text).</td><td class="muted">Same — scrim or gradient overlay mandatory when placing white text on promo artwork.</td></tr>
+          <tr><td><strong>Reduce Motion</strong></td><td class="muted">Honor <code>accessibilityReduceMotion</code> — snap to focused tile without scale animation.</td><td class="muted">Honor <code>android.provider.Settings.Global.TRANSITION_ANIMATION_SCALE</code> — skip scale/opacity lerp.</td></tr>
+          <tr><td><strong>Min touch target</strong></td><td class="muted">160 pt height ≫ 44 pt ✓</td><td class="muted">160 dp ≫ 48 dp ✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="ccc-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Ship one <code>EBCarouselItem</code> tile — let the carousel container drive focus treatment.</li>
+          <li>Use <code>mode: light</code> for dark hero images, <code>mode: dark</code> for light hero images.</li>
+          <li>Keep preamble short (one or two words) — it's a category tag, not a subtitle.</li>
+          <li>Always ship a destination — tiles are tappable, not informational-only.</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't encode position ("Center", "Side") as a component name.</li>
+          <li>Don't bake the hero image — use an image slot so campaigns can swap assets.</li>
+          <li>Don't rely on the placeholder icon — replace with an instance-swappable Icon slot.</li>
+          <li>Don't pair Light Text mode with an image that lacks a dark scrim.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="ccc-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Component name encodes carousel position ("Center"). Content/asset/chevron layer names are fine; the problem is at the component level, not inside it.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted"><code>hasTextLink</code> is a three-value enum masquerading as a boolean; <code>type</code> compounds slot and content-weight axes.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All text, surface, and shadow values bound to <code>main/carousel/color/*</code>, <code>text/color-text-*</code>, <code>radius/radius-3</code>, <code>elevation/app/shadow-higher</code>.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Position-as-component blocks SwiftUI <code>.scrollTransition</code> and Compose <code>HorizontalPager + graphicsLayer</code> — the idiomatic native paths.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Only a static rest state exists. No pressed, focused (keyboard/D-pad), or disabled treatment for a tappable tile with an embedded button.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Hero image is a baked raster; chevron is a raster PNG; icon (when <code>type=with Icon</code>) is a drawn placeholder circle.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked until family consolidation lands — any mapping authored now is thrown away once Center + Side merge.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="ccc-variants">Variants Inventory <span class="variants-count">(10 total)</span></div>
+    <p><code>mode</code> (2) × <code>type</code> (3) × <code>hasTextLink</code> (3) × <code>hasPreamble</code> (2) = <strong>36 combos</strong> but only <strong>10 are populated</strong> — the matrix is sparse. <em>After consolidation with Carousel Item - Side, all 10 collapse to a single tile with runtime focus treatment.</em></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>mode</th><th>type</th><th>hasTextLink</th><th>hasPreamble</th><th>Node</th><th>Dimensions</th></tr></thead>
+        <tbody>
+          <tr><td>Dark Text</td><td>Default</td><td>yes</td><td>no</td><td><code>18543:2985</code></td><td>312 × 160</td></tr>
+          <tr><td>Dark Text</td><td>with Icon</td><td>no</td><td>no</td><td><code>18543:2999</code></td><td>312 × 160</td></tr>
+          <tr><td>Dark Text</td><td>Default</td><td>yes</td><td>yes</td><td><code>18543:3008</code></td><td>312 × 160</td></tr>
+          <tr><td>Dark Text</td><td>Headline</td><td>yes</td><td>yes</td><td><code>18543:3023</code></td><td>312 × 160</td></tr>
+          <tr><td>Dark Text</td><td>Default</td><td>no</td><td>no</td><td><code>18543:3036</code></td><td>312 × 160</td></tr>
+          <tr><td>Light Text</td><td>Default</td><td>yes</td><td>no</td><td><code>18543:3042</code></td><td>312 × 160</td></tr>
+          <tr><td>Light Text</td><td>Default</td><td>Default</td><td>no</td><td><code>18543:3056</code></td><td>312 × 160</td></tr>
+          <tr><td>Light Text</td><td>Default</td><td>yes</td><td>yes</td><td><code>18543:3065</code></td><td>312 × 160</td></tr>
+          <tr><td>Light Text</td><td>Headline</td><td>yes</td><td>yes</td><td><code>18543:3080</code></td><td>312 × 160</td></tr>
+          <tr><td>Light Text</td><td>Default</td><td>no</td><td>no</td><td><code>18543:3093</code></td><td>312 × 160</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 18543:2984</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Consolidate</strong> — Merge Carousel Item - Center (160 h) + Carousel Item - Side (146 h) into one <code>Carousel Item</code>. Move focus treatment (scale, opacity) to the carousel container on native. <span class="tag-open tag-c1 tag-c4">Open</span></div><span class="changelog-delta delta-open">Family</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C1 — Position-as-component</strong> — "Center" / "Side" encode layout position as component identity. Smell that the abstraction is wrong. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — Property schema</strong> — <code>hasTextLink: yes | no | Default</code> is a three-value enum pretending to be boolean; <code>type</code> mixes slot and content-weight axes. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C4 — Native mappability</strong> — Position-as-component blocks SwiftUI <code>.scrollTransition</code> and Compose <code>HorizontalPager + graphicsLayer</code>. <span class="tag-open tag-c4">Open</span></div><span class="changelog-delta delta-open">C4</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C5 — Interaction states</strong> — No pressed, keyboard-focused, or disabled state for a tappable tile with an embedded action. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C6 — Assets</strong> — Hero image baked as raster, chevron is a raster PNG, icon is a placeholder circle. Need image slot + vector chevron + icon slot. <span class="tag-open tag-c6">Open</span></div><span class="changelog-delta delta-open">C6</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C7 — Code Connect</strong> — Blocked on family consolidation. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-carousel-item-center">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-carousel-item-center"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Carousel Item - Center JS ────────────────────────────────────── */
+/* Simplified replica of node 18543:2984. Renders the documented
+   10-variant matrix (mode × type × hasTextLink × hasPreamble).
+   Hero image is represented by a CSS gradient stand-in — production
+   tiles ship a baked raster today (an open issue).                    */
+
+function _cccEscape(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function _cccChevronSvg(colorClass) {
+  return '<svg class="eb-preview-ccc__chevron ' + (colorClass || '') + '" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+    '<path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+  '</svg>';
+}
+
+function _cccIconDot() {
+  return '<span class="eb-preview-ccc__icon-dot" aria-hidden="true"></span>';
+}
+
+function _cccRender(opts) {
+  var mode     = opts.mode || 'dark';
+  var type     = opts.type || 'default';
+  var link     = opts.link || 'yes';
+  var preamble = opts.preamble === 'yes';
+
+  var preambleText = opts.preambleText || 'Preamble';
+  var heading      = opts.heading || 'Heading';
+  var desc         = opts.desc || 'Add description here.';
+  var btn          = opts.btn || 'Button';
+
+  var cls = 'eb-preview eb-preview-ccc eb-preview-ccc--' + mode;
+  var html = '<div class="' + cls + '">';
+
+  // Hero / background stand-in
+  html += '<div class="eb-preview-ccc__hero eb-preview-ccc__hero--' + mode + '"></div>';
+
+  html += '<div class="eb-preview-ccc__content">';
+
+  if (type === 'icon' && !preamble) {
+    html += _cccIconDot();
+  }
+
+  if (preamble) {
+    html += '<div class="eb-preview-ccc__preamble">' + _cccEscape(preambleText) + '</div>';
+  }
+
+  html += '<div class="eb-preview-ccc__heading eb-preview-ccc__heading--' + (type === 'headline' ? 'xl' : 'std') + '">' + _cccEscape(heading) + '</div>';
+
+  if (type !== 'headline' || preamble) {
+    html += '<div class="eb-preview-ccc__desc">' + _cccEscape(desc) + '</div>';
+  }
+
+  if (link === 'yes') {
+    html += '<div class="eb-preview-ccc__action">' +
+      '<span class="eb-preview-ccc__action-label">' + _cccEscape(btn) + '</span>' +
+      _cccChevronSvg() +
+    '</div>';
+  }
+
+  html += '</div>';
+  html += '</div>';
+  return html;
+}
+
+function _cccContextMarkup() {
+  return '<div class="eb-preview-stack eb-preview-stack--row eb-preview-stack--gap-sm">' +
+    _cccRender({mode:'dark', type:'default', link:'yes', preamble:'no', heading:'Heading', desc:'Add description here.', btn:'Button'}) +
+    _cccRender({mode:'light', type:'default', link:'yes', preamble:'yes', preambleText:'Preamble', heading:'Heading', desc:'Add description here.', btn:'Button'}) +
+    _cccRender({mode:'dark', type:'headline', link:'yes', preamble:'yes', preambleText:'Preamble', heading:'Add your title here.', btn:'Button'}) +
+  '</div>';
+}
+
+function _cccUpdate() {
+  var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
+  var preview = document.getElementById('ccc-demo-preview');
+  if (!preview) return;
+  preview.innerHTML = _cccRender({
+    mode:         getVal('ccc-ctrl-mode', 'dark'),
+    type:         getVal('ccc-ctrl-type', 'default'),
+    link:         getVal('ccc-ctrl-link', 'yes'),
+    preamble:     getVal('ccc-ctrl-preamble', 'no'),
+    preambleText: getVal('ccc-ctrl-preamble-text', 'Preamble'),
+    heading:      getVal('ccc-ctrl-heading', 'Heading'),
+    desc:         getVal('ccc-ctrl-desc', 'Add description here.'),
+    btn:          getVal('ccc-ctrl-btn', 'Button')
+  });
+}
+
+function _cccInit() {
+  var ctx = document.getElementById('ccc-context-preview');
+  if (ctx) ctx.innerHTML = _cccContextMarkup();
+  _cccUpdate();
+
+  var s1 = document.getElementById('ccc-spec-1');
+  if (s1) s1.innerHTML = _cccRender({mode:'dark', type:'default', link:'yes', preamble:'no'});
+
+  var s2 = document.getElementById('ccc-spec-2');
+  if (s2) s2.innerHTML = _cccRender({mode:'light', type:'default', link:'yes', preamble:'yes'});
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _cccInit);
+else _cccInit();
+</script>
+
+<!--@section-end-->
