@@ -1,0 +1,966 @@
+<!--
+  DROPDOWN ITEM COMPONENT ASSESSMENT
+  Edit this file to update the Dropdown Item assessment.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 23:199453
+ds-verdict: fix
+native-status: refine
+variants: 9
+ios: List row / Menu row (custom EBDropdownItem)
+android: DropdownMenuItem (Material 3)
+open-issues: C2,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] Enum value typo `disabeld` (should be `disabled`) — ships in the variant name and leaks into generated code
+[C6] Raster PNG country flag (Philippines) embedded in `country` variant — not a vector asset
+[C5] No explicit pressed/hover/focused states — only `selected` on/off plus a `disabled` variant
+[C4] `disabeld` is modeled as a `type` value rather than an orthogonal `state`/`disabled` axis, colliding with content type
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Dropdown<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-dropdown-item" onclick="showPanel('dropdown-item', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Dropdown Item</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('dropdown-item')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="6" y="6" width="68" height="10" rx="1" fill="currentColor" opacity=".06"/>
+      <rect x="10" y="9" width="24" height="2" rx="1" fill="currentColor" opacity=".25"/>
+      <line x1="6" y1="16" x2="74" y2="16" stroke="currentColor" stroke-width=".5" opacity=".15"/>
+      <rect x="6" y="16" width="68" height="10" rx="1" fill="currentColor" opacity=".06"/>
+      <rect x="10" y="19" width="28" height="2" rx="1" fill="currentColor" opacity=".35"/>
+      <rect x="56" y="18" width="14" height="5" rx="1" fill="#D61B2C" opacity=".5"/>
+      <line x1="6" y1="26" x2="74" y2="26" stroke="currentColor" stroke-width=".5" opacity=".15"/>
+      <rect x="6" y="26" width="68" height="10" rx="1" fill="currentColor" opacity=".06"/>
+      <rect x="10" y="29" width="6" height="4" rx="1" fill="currentColor" opacity=".25"/>
+      <rect x="18" y="29" width="20" height="2" rx="1" fill="currentColor" opacity=".25"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Dropdown Item</div>
+      <span class="badge badge-fix">Fix</span>
+    </div>
+    <div class="summary-card-desc">9 variants across type (text / amount / country / text with tag / disabeld) × selected (true/false). Row primitive used inside Dropdown. C2, C5, C6 open.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Dropdown Item</strong></td>
+  <td><span class="badge badge-fix">Fix</span></td>
+  <td><span class="badge badge-refine">Needs Refinement</span></td>
+  <td class="muted">9</td>
+  <td class="muted">Row primitive for Dropdown. `disabeld` typo (C2). Raster flag in country (C6). No pressed state (C5).</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-dropdown-item">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Dropdown Item
+          <span class="badge badge-fix">Fix</span>
+          <span class="badge badge-refine">Needs Refinement</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=23-199453" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">The row primitive used inside Dropdown and Dropdown Item Group. 9 variants across type (text / amount / country / text with tag / disabeld) × selected (true/false). Carries the label, optional badge tag, peso amount, or country flag + dial code, plus a bottom divider. Selected state uses brand blue for the label; disabled uses a soft fill and muted label.</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Fix required before handoff</div>
+          <div class="verdict-inline-text">Enum value typo <code>disabeld</code> (C2). Country variant uses a raster PNG flag (C6). No pressed/focused state variants (C5). Disabled is modeled as a <code>type</code> value rather than an orthogonal state (C4).</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Tab bar ──────────────────────────────────────────────── -->
+    <div data-tab-group="dropdown-item-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'dropdown-item-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'dropdown-item-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'dropdown-item-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'dropdown-item-tabs')">Changelog</button>
+    </div>
+
+    <!-- ══ Tab: Overview ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <!-- In Context -->
+    <div class="sub-heading" id="ddi-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Dropdown Item is the row primitive consumed by the Dropdown overlay and by Dropdown Item Group. Not used standalone.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+          <rect x="10" y="8" width="100" height="64" rx="6" stroke="currentColor" stroke-width="1" opacity=".15"/>
+          <rect x="14" y="14" width="92" height="11" rx="1" fill="currentColor" opacity=".05"/>
+          <rect x="18" y="18" width="40" height="3" rx="1" fill="currentColor" opacity=".3"/>
+          <line x1="14" y1="25" x2="106" y2="25" stroke="currentColor" stroke-width=".5" opacity=".15"/>
+          <rect x="14" y="25" width="92" height="11" rx="1" fill="currentColor" opacity=".05"/>
+          <rect x="18" y="29" width="32" height="3" rx="1" fill="#005CE5" opacity=".4"/>
+          <line x1="14" y1="36" x2="106" y2="36" stroke="currentColor" stroke-width=".5" opacity=".15"/>
+          <rect x="14" y="36" width="92" height="11" rx="1" fill="currentColor" opacity=".05"/>
+          <rect x="18" y="40" width="24" height="3" rx="1" fill="currentColor" opacity=".3"/>
+          <rect x="80" y="39" width="18" height="5" rx="1" fill="#D61B2C" opacity=".5"/>
+          <line x1="14" y1="47" x2="106" y2="47" stroke="currentColor" stroke-width=".5" opacity=".15"/>
+          <rect x="14" y="47" width="92" height="11" rx="1" fill="currentColor" opacity=".05"/>
+          <rect x="18" y="51" width="8" height="4" rx=".5" fill="currentColor" opacity=".3"/>
+          <rect x="28" y="51" width="28" height="3" rx="1" fill="currentColor" opacity=".3"/>
+          <line x1="14" y1="58" x2="106" y2="58" stroke="currentColor" stroke-width=".5" opacity=".15"/>
+          <rect x="14" y="58" width="92" height="11" rx="1" fill="currentColor" opacity=".04"/>
+          <rect x="18" y="62" width="30" height="3" rx="1" fill="currentColor" opacity=".15"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Live Preview -->
+    <div class="sub-heading" id="ddi-preview">Live Preview</div>
+    <p class="section-desc">Toggle type and selected to see the row update in real time.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="ddi-demo-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">type</span>
+              <select class="demo-panel-select" onchange="_ddiDemo.type=this.value;updateDropdownItemDemo()">
+                <option value="text">text</option>
+                <option value="text with tag">text with tag</option>
+                <option value="amount">amount</option>
+                <option value="country">country</option>
+                <option value="disabeld">disabeld</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">selected</span>
+              <select class="demo-panel-select" onchange="_ddiDemo.selected=this.value;updateDropdownItemDemo()">
+                <option value="false">false</option>
+                <option value="true">true</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DS Health -->
+    <div class="sub-heading" id="ddi-health">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Reusable</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Single row primitive that powers every Dropdown overlay and Dropdown Item Group. Covers plain text, tag labeled, amount, country, and disabled content types from one component.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Self-contained</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Ships its own divider, padding, label styling, optional badge slot, peso sign, and flag slot. Tokens cover default, active, and disabled roles via <code>main/dropdown-item/color/*</code>.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header">
+          <div class="trait-name">Consistent</div>
+          <div class="trait-status">Warn</div>
+        </div>
+        <div class="trait-note">Enum value <code>disabeld</code> is misspelled and ships in the generated TypeScript type. Disabled is modeled as a <code>type</code> rather than an orthogonal state, so you cannot combine it with text / amount / country cleanly.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header">
+          <div class="trait-name">Composable</div>
+          <div class="trait-status">Partial</div>
+        </div>
+        <div class="trait-note">Fits inside Dropdown overlay and Dropdown Item Group. The country variant hardcodes the Philippines flag as a raster image rather than a swappable flag slot, which blocks reuse for any other locale.</div>
+      </div>
+    </div>
+
+    <!-- Behavior -->
+    <div class="sub-heading" id="ddi-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+            <th>Figma Property</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Default (unselected)</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">selected=false</td>
+            <td class="muted">Label #0A2757, bottom border #E5EBF4.</td>
+          </tr>
+          <tr>
+            <td><strong>Selected</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">selected=true</td>
+            <td class="muted">Label #005CE5 (brand), same divider. No background highlight — relies on text color alone.</td>
+          </tr>
+          <tr>
+            <td><strong>Disabled</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">type=disabeld</td>
+            <td class="muted">Soft fill #F6F9FD, label #C2CFE5. Modeled as a content type rather than a state (C4).</td>
+          </tr>
+          <tr>
+            <td><strong>Pressed</strong></td>
+            <td class="center"><span class="missing">No</span></td>
+            <td class="center"><span class="missing">No</span></td>
+            <td class="mono">—</td>
+            <td class="muted">Not defined. iOS highlight and Android ripple will have to be improvised at instance level.</td>
+          </tr>
+          <tr>
+            <td><strong>Focused</strong></td>
+            <td class="center"><span class="missing">No</span></td>
+            <td class="center"><span class="missing">No</span></td>
+            <td class="mono">—</td>
+            <td class="muted">Not defined. Required for keyboard / D-pad navigation in dropdown overlays.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Open Issues -->
+    <div class="sub-heading" id="ddi-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Enum value <code>disabeld</code> is misspelled.</strong> The variant name ships into the generated TS type (<code>type?: "text" | "amount" | "country" | "text with tag" | "disabeld"</code>). Every consumer has to mirror the typo or lose autocomplete. Rename to <code>disabled</code>. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Country flag is a raster PNG.</strong> The <code>country</code> variant embeds a Philippines image (<code>imgPhilippines</code>) as a raster fill, not a vector flag instance. Blocks clean native handoff and freezes the row to a single locale. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>No pressed or focused state variants.</strong> Only <code>selected</code> on/off plus a pseudo-disabled type. Touch feedback (iOS highlight, Android ripple) and keyboard focus are not covered at the DS layer. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Disabled is modeled as a <code>type</code> value.</strong> It collides with content types (text, amount, country) — you can't express "amount + disabled" or "country + disabled" in the current schema. Should be an orthogonal <code>state</code> / <code>disabled</code> axis. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>No selected-visual affordance beyond label color.</strong> Selected state only changes label hex (#0A2757 → #005CE5). A checkmark trailing slot or background fill would make the picked item unambiguous, especially for color-blind users. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked by the typo, missing states, and raster asset above. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <!-- Design Recommendations -->
+    <div class="sub-heading" id="ddi-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Rename <code>disabeld</code> enum value to <code>disabled</code>.</strong> Zero visual change, fixes the type surface, and unblocks Code Connect naming hygiene. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Promote disabled to its own axis.</strong> Split the current 5-value <code>type</code> into two props: <code>type</code> (text / text with tag / amount / country) × <code>disabled</code> (true / false). Matches how every native primitive models enabled/disabled and collapses the matrix to 4 × 2 × 2 (selected) = 16 compositional variants with clean semantics. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Replace the raster Philippines flag with a vector flag slot.</strong> Introduce a <code>leadingAsset</code> slot (or `flag` slot) that accepts a vector flag instance. Current PNG blocks reuse for any non-PH locale and ships a raster asset to native. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Add pressed and focused state variants.</strong> Define a state axis so iOS highlight and Android ripple map to tokenized backgrounds instead of being improvised at instance level. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Add an explicit selected-visual affordance.</strong> A trailing checkmark (or tokenized background fill) on <code>selected=true</code> removes the reliance on label color alone — improves accessibility and scannability. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Generalize the amount variant around a trailing value slot.</strong> Instead of a baked-in peso + amount text, expose a trailing content slot that the peso sign and amount compose into. Opens the row to reuse for any key/value pair (balance, fee, exchange rate). <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Register Code Connect mapping to <code>EBDropdownItem</code>.</strong> After the rename and state work, wire the Figma properties 1:1 to the SwiftUI / Compose API. <span class="tag-recommend">Docs</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ══ Tab: Style ═════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="ddi-styles" style="margin-top:0">Variants</div>
+    <p class="section-desc">9 variants across type (text / amount / country / text with tag / disabeld) × selected (true/false). Note: <code>disabeld</code> only ships with <code>selected=false</code>, so the matrix is 4 × 2 + 1 = 9.</p>
+
+    <!-- ═══ Text ═══ -->
+    <div class="spec-card" id="ddi-spec-text">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="ddi-text">Text</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="23:199456" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>23:199456</span></button>
+        </div>
+        <p class="spec-card-desc">Plain text row. Default content type used by Dropdown. Label switches from neutral #0A2757 (default) to brand #005CE5 (selected).</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="ddi-text-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">type</span>
+              <span class="demo-panel-value">text</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">selected</span>
+              <select class="demo-panel-select" onchange="updateDropdownItemSpecCard('text', this.value)">
+                <option value="false" selected>false</option>
+                <option value="true">true</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Text with tag ═══ -->
+    <div class="spec-card" id="ddi-spec-tag">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="ddi-tag">Text with tag</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="883:29328" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>883:29328</span></button>
+        </div>
+        <p class="spec-card-desc">Row with a trailing Badge instance (Negative/Heavy variant in stock). Used when an option needs an inline status label.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="ddi-tag-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">type</span>
+              <span class="demo-panel-value">text with tag</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">selected</span>
+              <select class="demo-panel-select" onchange="updateDropdownItemSpecCard('tag', this.value)">
+                <option value="false" selected>false</option>
+                <option value="true">true</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Amount ═══ -->
+    <div class="spec-card" id="ddi-spec-amount">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="ddi-amount">Amount</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="23:199458" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>23:199458</span></button>
+        </div>
+        <p class="spec-card-desc">Peso sign (vector, Proxima-sized) + amount text. Icon currency token flips to brand on selected.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="ddi-amount-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">type</span>
+              <span class="demo-panel-value">amount</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">selected</span>
+              <select class="demo-panel-select" onchange="updateDropdownItemSpecCard('amount', this.value)">
+                <option value="false" selected>false</option>
+                <option value="true">true</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Country ═══ -->
+    <div class="spec-card" id="ddi-spec-country">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="ddi-country">Country</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="23:199472" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>23:199472</span></button>
+        </div>
+        <p class="spec-card-desc">Leading flag (25 × 16, 2px radius) + country name and dial code. <strong>Flag is a raster PNG</strong>, not a vector instance — open issue (C6).</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="ddi-country-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">type</span>
+              <span class="demo-panel-value">country</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">selected</span>
+              <select class="demo-panel-select" onchange="updateDropdownItemSpecCard('country', this.value)">
+                <option value="false" selected>false</option>
+                <option value="true">true</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Disabeld ═══ -->
+    <div class="spec-card" id="ddi-spec-disabled">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="ddi-disabled">Disabeld <span class="badge badge-rework">Typo</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="883:30386" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>883:30386</span></button>
+        </div>
+        <p class="spec-card-desc">Soft fill row with muted label. Currently only exists at <code>selected=false</code>. <strong>Enum value is misspelled (<code>disabeld</code>)</strong> — open issue (C2).</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="ddi-disabled-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">type</span>
+              <span class="demo-panel-value">disabeld</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">selected</span>
+              <span class="demo-panel-value">false</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colors by State -->
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <p class="style-colors-desc">All color roles are bound to the <code>main/dropdown-item/color/*</code> token family. Dropdown Item has no variable modes — colors are keyed by state only.</p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>ROLE</th><th>TOKEN</th><th>DEFAULT</th><th>SELECTED</th><th>DISABLED</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Row bg</td><td class="mono">main/dropdown-item/color/{state}/bg</td><td class="mono">transparent</td><td class="mono">transparent</td><td class="mono">#F6F9FD</td></tr>
+          <tr><td class="muted">Label</td><td class="mono">main/dropdown-item/color/{state}/label</td><td class="mono">#0A2757</td><td class="mono">#005CE5</td><td class="mono">#C2CFE5</td></tr>
+          <tr><td class="muted">Bottom border</td><td class="mono">main/dropdown-item/color/{state}/border</td><td class="mono">#E5EBF4</td><td class="mono">#E5EBF4</td><td class="mono">#E5EBF4</td></tr>
+          <tr><td class="muted">Peso sign (amount)</td><td class="mono">main/dropdown-item/color/{state}/icon-currency</td><td class="mono">#0A2757</td><td class="mono">#005CE5</td><td class="mono">–</td></tr>
+          <tr><td class="muted">Badge bg (text with tag)</td><td class="mono">main/badge/negative/heavy/background</td><td class="mono">#D61B2C</td><td class="mono">#D61B2C</td><td class="mono">–</td></tr>
+          <tr><td class="muted">Badge label (text with tag)</td><td class="mono">main/badge/negative/heavy/label</td><td class="mono">#FFFFFF</td><td class="mono">#FFFFFF</td><td class="mono">–</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Layout -->
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Property</th><th>Value</th><th>Token</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Row width</td><td class="mono">366px (fill)</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Row height</td><td class="mono">50px (text / text with tag) · 51.2–52px (amount / country)</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Padding top/bottom</td><td class="mono">16px</td><td class="mono">space/space-16</td></tr>
+          <tr><td class="muted">Padding left</td><td class="mono">12px</td><td class="mono">space/space-12</td></tr>
+          <tr><td class="muted">Padding right</td><td class="mono">16px</td><td class="mono">space/space-16</td></tr>
+          <tr><td class="muted">Gap (country / text with tag)</td><td class="mono">8px</td><td class="mono">space/space-8</td></tr>
+          <tr><td class="muted">Flag size (country)</td><td class="mono">25 × 16</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Flag radius</td><td class="mono">2px</td><td class="mono">radius/radius-1 (approx)</td></tr>
+          <tr><td class="muted">Peso sign size (amount)</td><td class="mono">18 × 18</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Bottom border</td><td class="mono">1px solid</td><td class="mono">main/dropdown-item/color/{state}/border</td></tr>
+          <tr><td class="muted">Row corner radius</td><td class="mono">0</td><td class="mono">radius/radius-0</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="style-colors">
+      <div class="style-colors-title">Typography</div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>Text Style</th><th>Font</th><th>Size</th><th>Tracking</th><th>Line-height</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Label (all types)</td><td class="mono">Primary/Label/Light/Large</td><td class="mono">Proxima Soft Semibold</td><td class="mono">18px</td><td class="mono">0.25px</td><td class="mono">18px</td></tr>
+          <tr><td class="muted">Amount text</td><td class="mono">Primary/Label/Light/Large</td><td class="mono">Proxima Soft Semibold</td><td class="mono">18px</td><td class="mono">0.25px</td><td class="mono">18px</td></tr>
+          <tr><td class="muted">Badge label (text with tag)</td><td class="mono">Primary/Label/Fine</td><td class="mono">Proxima Soft Bold</td><td class="mono">12px</td><td class="mono">0.5px</td><td class="mono">12px</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- ══ Tab: Code ══════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <!-- Installation -->
+    <div class="sub-heading" id="ddi-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:dropdown:1.0.0"</span>)
+}</pre>
+    </div>
+    <p class="code-label">Import</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="kw">import</span> EastBlueDS  <span class="cmt">// SwiftUI</span>
+<span class="kw">import</span> com.eastblue.ds.dropdown.*  <span class="cmt">// Compose</span></pre>
+    </div>
+    <p class="table-footnote">Dropdown Item is bundled with the Dropdown package. The planned SwiftUI API exposes it as <code>EBDropdownItem</code>; on Compose it maps to Material 3's <code>DropdownMenuItem</code> with EB-styled content.</p>
+
+    <!-- Property Mapping -->
+    <div class="sub-heading" id="ddi-props">Property Mapping</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Figma Property</th>
+            <th>SwiftUI Param</th>
+            <th>Compose Param</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">type = text</td>
+            <td class="mono">EBDropdownItem(label:)</td>
+            <td class="mono">DropdownMenuItem(text = { Text(label) })</td>
+            <td class="muted">Default content type</td>
+          </tr>
+          <tr>
+            <td class="mono">type = text with tag</td>
+            <td class="mono">EBDropdownItem(label:tag:)</td>
+            <td class="mono">trailing = { EBBadge(…) }</td>
+            <td class="muted">Trailing Badge slot (Negative/Heavy in stock)</td>
+          </tr>
+          <tr>
+            <td class="mono">type = amount</td>
+            <td class="mono">.ebStyle(.amount)</td>
+            <td class="mono">style = EBDropdownItemStyle.Amount</td>
+            <td class="muted">Leading peso sign + trailing amount text</td>
+          </tr>
+          <tr>
+            <td class="mono">type = country</td>
+            <td class="mono">EBDropdownItem(flag:name:dialCode:)</td>
+            <td class="mono">leadingIcon = { FlagIcon(…) }</td>
+            <td class="muted">Flag must be a vector instance — raster PNG is an open issue (C6)</td>
+          </tr>
+          <tr>
+            <td class="mono">type = disabeld <span class="badge badge-rework">Typo</span></td>
+            <td class="mono">.disabled(true)</td>
+            <td class="mono">enabled = false</td>
+            <td class="muted">Should be an orthogonal <code>disabled</code> prop, not a type value (C4)</td>
+          </tr>
+          <tr>
+            <td class="mono">selected = true</td>
+            <td class="mono">isSelected: Bool</td>
+            <td class="mono">selected: Boolean</td>
+            <td class="muted">Switches label + icon-currency token to active</td>
+          </tr>
+          <tr>
+            <td class="mono">selected = false</td>
+            <td class="mono">isSelected: Bool (default)</td>
+            <td class="mono">selected: Boolean (default)</td>
+            <td class="muted">Default unselected state</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/Dropdown/EBDropdownItem.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/dropdown/EBDropdownItem.kt</div>
+    </div>
+
+    <!-- Usage Snippets -->
+    <div class="sub-heading" id="ddi-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+
+    <div class="sub-heading toc-child" id="ddi-snip-text">Text</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'ddi-usage-text','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'ddi-usage-text','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBDropdownItem</span>(<span class="str">"Dropdown Item"</span>)
+    .<span class="fn">isSelected</span>(category == <span class="str">"item"</span>)
+    .<span class="fn">onTap</span> { category = <span class="str">"item"</span> }</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBDropdownItem</span>(
+    <span class="prp">label</span> = <span class="str">"Dropdown Item"</span>,
+    <span class="prp">selected</span> = selected == <span class="str">"item"</span>,
+    <span class="prp">onClick</span> = { selected = <span class="str">"item"</span> }
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="ddi-snip-tag">Text with tag</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'ddi-usage-tag','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'ddi-usage-tag','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBDropdownItem</span>(<span class="str">"Dropdown Item"</span>) {
+    <span class="typ">EBBadge</span>(<span class="str">"Label"</span>, <span class="prp">level</span>: .<span class="prp">heavy</span>, <span class="prp">state</span>: .<span class="prp">negative</span>)
+}</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBDropdownItem</span>(
+    <span class="prp">label</span> = <span class="str">"Dropdown Item"</span>,
+    <span class="prp">trailing</span> = { <span class="typ">EBBadge</span>(<span class="str">"Label"</span>, level = <span class="typ">EBBadgeLevel</span>.Heavy, state = <span class="typ">EBBadgeState</span>.Negative) }
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="ddi-snip-amount">Amount</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'ddi-usage-amt','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'ddi-usage-amt','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBDropdownItem</span>(<span class="prp">amount</span>: <span class="str">"1,000.00"</span>)
+    .<span class="fn">ebStyle</span>(.<span class="prp">amount</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBDropdownItem</span>(
+    <span class="prp">label</span> = <span class="str">"1,000.00"</span>,
+    <span class="prp">style</span> = <span class="typ">EBDropdownItemStyle</span>.<span class="prp">Amount</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="ddi-snip-country">Country</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'ddi-usage-ctry','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'ddi-usage-ctry','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBDropdownItem</span>(
+    <span class="prp">flag</span>: <span class="typ">Image</span>(<span class="str">"flag_ph"</span>),
+    <span class="prp">name</span>: <span class="str">"Philippines"</span>,
+    <span class="prp">dialCode</span>: <span class="str">"+63"</span>
+)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBDropdownItem</span>(
+    <span class="prp">label</span> = <span class="str">"Philippines +63"</span>,
+    <span class="prp">leadingIcon</span> = { <span class="typ">FlagIcon</span>(<span class="typ">CountryCode</span>.PH) }
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <!-- Accessibility -->
+    <div class="sub-heading" id="ddi-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Requirement</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Minimum touch target</td>
+            <td class="center muted">44 × 44 pt (row is 50pt tall)</td>
+            <td class="center muted">48 × 48 dp</td>
+          </tr>
+          <tr>
+            <td>Accessibility label</td>
+            <td class="muted"><code>.accessibilityLabel("Philippines, +63")</code></td>
+            <td class="muted"><code>contentDescription = "Philippines, +63"</code></td>
+          </tr>
+          <tr>
+            <td>Role</td>
+            <td class="muted"><code>.accessibilityAddTraits(.isButton)</code></td>
+            <td class="muted"><code>Role.Button</code></td>
+          </tr>
+          <tr>
+            <td>Selected announcement</td>
+            <td class="muted"><code>.accessibilityAddTraits(.isSelected)</code></td>
+            <td class="muted"><code>selected = true</code> in semantics</td>
+          </tr>
+          <tr>
+            <td>Disabled announcement</td>
+            <td class="muted"><code>.disabled(true)</code> → VoiceOver says "dimmed"</td>
+            <td class="muted"><code>enabled = false</code> → TalkBack says "disabled"</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Usage Guidelines -->
+    <div class="sub-heading" id="ddi-guidelines">Usage Guidelines</div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Consume Dropdown Item through Dropdown or Dropdown Item Group. Keep labels short — 18px Semibold is the only supported text size.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Don't use Dropdown Item outside a dropdown overlay. For standalone list rows, use the List Item component instead.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Pair selected state with a trailing checkmark (once added) so the picked item is unambiguous, especially on the country and amount variants.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Don't rely on the <code>disabeld</code> type to build disabled versions of amount or country — it only ships for the text content type. Use the planned <code>disabled</code> state axis instead.</p></div>
+    </div>
+
+    <!-- Criteria Scorecard -->
+    <div class="sub-heading" id="ddi-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">ID</th>
+            <th class="col-md">Criterion</th>
+            <th class="col-badge">Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Semantic names: <code>container</code>, <code>name</code>, <code>offset</code>, <code>Peso Sign - Proxima</code>, <code>Field Trailing Flag</code>, <code>philippines</code>.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">Enum value <code>disabeld</code> is misspelled and ships into the generated TS type.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors bound to <code>main/dropdown-item/color/*</code>; space + radius + typography tokens all present.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Maps to a custom SwiftUI row / Material 3 <code>DropdownMenuItem</code>. Disabled should be an orthogonal prop, not a type value.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">No pressed or focused variants. Selected state relies on label color alone — no checkmark or background fill.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">Country variant uses a raster PNG flag, not a vector instance. Peso sign is a vector via <code>Peso Sign - Proxima</code>.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-refine">Pending</span></td><td class="muted">No CLI mappings registered yet; blocked by C2, C5, C6.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Code Connect -->
+    <div class="sub-heading" id="ddi-cc">Code Connect</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Aspect</th><th class="col-badge">Status</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Property naming</td><td><span class="badge badge-rework">Blocked</span></td><td class="muted">Rename <code>disabeld</code> → <code>disabled</code> before registering</td></tr>
+          <tr><td>Asset quality</td><td><span class="badge badge-rework">Blocked</span></td><td class="muted">Replace raster PH flag with vector flag slot</td></tr>
+          <tr><td>State coverage</td><td><span class="badge badge-rework">Blocked</span></td><td class="muted">Pressed / focused variants missing</td></tr>
+          <tr><td>Native component file</td><td><span class="badge badge-refine">Pending</span></td><td class="muted">EBDropdownItem.swift / EBDropdownItem.kt not yet created</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Variants Inventory -->
+    <div class="sub-heading" id="ddi-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(9 total)</span></div>
+    <p class="section-desc">5 <code>type</code> values × 2 <code>selected</code> values = 10 theoretical slots, but <code>disabeld</code> only ships with <code>selected=false</code>, giving 9 actual variants.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>type</th><th>selected</th><th>Node ID</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>text</td><td>false</td><td class="mono">23:199454</td><td class="muted">Neutral label</td></tr>
+          <tr><td>text</td><td>true</td><td class="mono">23:199456</td><td class="muted">Brand label</td></tr>
+          <tr><td>text with tag</td><td>false</td><td class="mono">883:29328</td><td class="muted">Trailing Badge instance</td></tr>
+          <tr><td>text with tag</td><td>true</td><td class="mono">883:30370</td><td class="muted">Brand label + Badge</td></tr>
+          <tr><td>amount</td><td>false</td><td class="mono">23:199458</td><td class="muted">Peso sign + "X,XXX.XX"</td></tr>
+          <tr><td>amount</td><td>true</td><td class="mono">23:199465</td><td class="muted">Brand peso + brand label</td></tr>
+          <tr><td>country</td><td>false</td><td class="mono">23:199472</td><td class="muted">Raster flag + "Philippines +63"</td></tr>
+          <tr><td>country</td><td>true</td><td class="mono">23:199476</td><td class="muted">Brand "Philippines +63"</td></tr>
+          <tr><td>disabeld <span class="badge badge-rework">Typo</span></td><td>false</td><td class="mono">883:30386</td><td class="muted">Soft fill + muted label</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- ══ Tab: Changelog ═════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 23:199453</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Component assessed</strong> — 9 variants documented across type (text / amount / country / text with tag / disabeld) × selected (true/false). Row primitive for Dropdown overlay.
+          <span class="tag-fixed">Documented</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Initial</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Enum value <code>disabeld</code> misspelled</strong> — ships into the generated TS type. Rename to <code>disabled</code>.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C2 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Country variant uses a raster PNG flag</strong> — Philippines image is bitmap, not a vector flag instance. Blocks reuse and native handoff.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C6 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>No pressed or focused state variants</strong> — only <code>selected</code> on/off and a pseudo-disabled content type. Touch/keyboard feedback unmodeled.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C5 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Disabled modeled as <code>type</code> value</strong> — collides with content types (text / amount / country). Should be an orthogonal <code>disabled</code> axis.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C4 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Code Connect mappings</strong> — no CLI mappings registered yet; blocked by C2, C5, C6.
+          <span class="tag-open tag-c7">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C7 Open</span>
+      </div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <!-- On This Page -->
+  <aside class="page-toc" id="toc-dropdown-item">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-dropdown-item"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Dropdown Item Component JS ─────────────────────────────────── */
+var _ddiDemo = { type: 'text', selected: 'false' };
+
+function _ddiBuildSvg(type, selected) {
+  var isSelected = (selected === 'true' || selected === true);
+  var w = 366;
+  var h = 50;
+  var labelColor = '#0A2757';
+  var selectedColor = '#005CE5';
+  var disabledLabel = '#C2CFE5';
+  var disabledBg = '#F6F9FD';
+  var borderColor = '#E5EBF4';
+  var badgeBg = '#D61B2C';
+  var pesoColorDefault = '#0A2757';
+  var pesoColorSelected = '#005CE5';
+
+  var s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+
+  /* disabled background */
+  if (type === 'disabeld') {
+    s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" fill="' + disabledBg + '"/>';
+  }
+
+  /* bottom divider */
+  s += '<line x1="0" y1="' + (h - 0.5) + '" x2="' + w + '" y2="' + (h - 0.5) + '" stroke="' + borderColor + '" stroke-width="1"/>';
+
+  var textColor = isSelected ? selectedColor : labelColor;
+  if (type === 'disabeld') textColor = disabledLabel;
+
+  if (type === 'text' || type === 'text with tag' || type === 'disabeld') {
+    /* left-aligned label */
+    s += '<text x="12" y="31" font-family="Proxima Soft, system-ui" font-size="18" font-weight="600" fill="' + textColor + '">Dropdown Item</text>';
+    if (type === 'text with tag') {
+      /* trailing badge — 42px wide */
+      var bx = w - 16 - 42;
+      s += '<rect x="' + bx + '" y="16" width="42" height="18" rx="4" fill="' + badgeBg + '"/>';
+      s += '<text x="' + (bx + 21) + '" y="28" font-family="Proxima Soft, system-ui" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">Label</text>';
+    }
+  } else if (type === 'amount') {
+    var pesoColor = isSelected ? pesoColorSelected : pesoColorDefault;
+    /* Peso glyph */
+    s += '<text x="12" y="32" font-family="Proxima Soft, system-ui" font-size="18" font-weight="700" fill="' + pesoColor + '">&#8369;</text>';
+    s += '<text x="34" y="32" font-family="Proxima Soft, system-ui" font-size="18" font-weight="600" fill="' + textColor + '">X,XXX.XX</text>';
+  } else if (type === 'country') {
+    /* flag — stylized PH tricolor to stand in for the raster */
+    var fx = 12, fy = 17;
+    s += '<rect x="' + fx + '" y="' + fy + '" width="25" height="16" rx="2" fill="#FCFCFC" stroke="#E5EBF4" stroke-width="0.5"/>';
+    s += '<path d="M' + fx + ' ' + fy + 'h25v8H' + fx + 'z" fill="#0038A8"/>';
+    s += '<path d="M' + fx + ' ' + (fy + 8) + 'h25v8H' + fx + 'z" fill="#CE1126"/>';
+    s += '<path d="M' + fx + ' ' + fy + 'l10 8-10 8z" fill="#FFFFFF"/>';
+    s += '<circle cx="' + (fx + 4) + '" cy="' + (fy + 8) + '" r="1.5" fill="#FCD116"/>';
+    /* label */
+    s += '<text x="' + (fx + 25 + 8) + '" y="31" font-family="Proxima Soft, system-ui" font-size="18" font-weight="600" fill="' + textColor + '">Philippines +63</text>';
+  }
+
+  s += '</svg>';
+  return s;
+}
+
+function updateDropdownItemDemo() {
+  var el = document.getElementById('ddi-demo-preview');
+  if (el) el.innerHTML = _ddiBuildSvg(_ddiDemo.type, _ddiDemo.selected);
+}
+
+function updateDropdownItemSpecCard(variant, selected) {
+  var map = { text: 'text', tag: 'text with tag', amount: 'amount', country: 'country', disabled: 'disabeld' };
+  var type = map[variant] || 'text';
+  var el = document.getElementById('ddi-' + variant + '-preview');
+  if (el) el.innerHTML = _ddiBuildSvg(type, selected);
+}
+
+function _ddiInitSpecCards() {
+  updateDropdownItemSpecCard('text', 'false');
+  updateDropdownItemSpecCard('tag', 'false');
+  updateDropdownItemSpecCard('amount', 'false');
+  updateDropdownItemSpecCard('country', 'false');
+  updateDropdownItemSpecCard('disabled', 'false');
+}
+
+function _ddiInit() {
+  updateDropdownItemDemo();
+  _ddiInitSpecCards();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _ddiInit);
+} else {
+  _ddiInit();
+}
+</script>
+
+<!--@section-end-->

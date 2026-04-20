@@ -7,7 +7,7 @@
 
 <!--@meta-start-->
 status: assessed
-node: 23:86201
+node: 18482:35753
 ds-verdict: restructure
 native-status: refine
 variants: 5
@@ -80,7 +80,7 @@ open-issues: C1,C2,C5,C7
           Generic Transaction Card
           <span class="badge badge-rework">Restructure</span>
           <span class="badge badge-refine">Refine</span>
-          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=23-86201" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18482-35753" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
         </div>
         <p class="comp-desc">A compact transaction-history row with a label, date/time metadata (plus an optional badge tag), and trailing content (amount, menu button, or a reference number). 5 variants under a single <code>type</code> enum: <code>default</code>, <code>more information</code>, <code>with avatar</code>, <code>no amount</code>, <code>skeleton loader</code>. Used inside GCash Jr. transaction lists and Detailed Transaction History screens.</p>
       </div>
@@ -222,7 +222,7 @@ open-issues: C1,C2,C5,C7
 
     <div class="spec-card">
       <div class="spec-card-header">
-        <div class="spec-card-title">Default — label + badge + date + amount <span class="spec-card-node">node <code>23:86202</code></span></div>
+        <div class="spec-card-title">Default — label + badge + date + amount <span class="spec-card-node">node <code>18482:35754</code></span></div>
       </div>
       <p class="spec-card-desc">The baseline transaction row. Leading label, mid-row badge + date metadata, trailing amount. 78 px tall.</p>
       <div class="spec-card-preview-row">
@@ -273,7 +273,7 @@ open-issues: C1,C2,C5,C7
 
     <div class="spec-card">
       <div class="spec-card-header">
-        <div class="spec-card-title">With avatar <span class="spec-card-node">node <code>23:86224</code></span></div>
+        <div class="spec-card-title">With avatar <span class="spec-card-node">node <code>18482:35776</code></span></div>
       </div>
       <p class="spec-card-desc">Adds a 32 × 32 Avatar at the leading edge (instance-swapped from the Avatar component). Used for person-to-person transactions.</p>
       <div class="spec-card-preview-row">
@@ -283,7 +283,7 @@ open-issues: C1,C2,C5,C7
 
     <div class="spec-card">
       <div class="spec-card-header">
-        <div class="spec-card-title">No amount <span class="spec-card-node">node <code>23:86237</code></span></div>
+        <div class="spec-card-title">No amount <span class="spec-card-node">node <code>18482:35789</code></span></div>
       </div>
       <p class="spec-card-desc">Used for non-monetary confirmations (KYC acknowledgments, voucher redemptions). Swaps amount for a trailing badge and the date row for a reference number.</p>
       <div class="spec-card-preview-row">
@@ -472,11 +472,11 @@ open-issues: C1,C2,C5,C7
       <table>
         <thead><tr><th>#</th><th>Node</th><th>type</th><th>Layout</th><th>Dimensions</th></tr></thead>
         <tbody>
-          <tr><td class="mono center">1</td><td><code>23:86202</code></td><td>default</td><td>label · badge · date · amount</td><td>360 × 78</td></tr>
-          <tr><td class="mono center">2</td><td><code>23:86213</code></td><td>more information</td><td>label · date · amount · menu (⋯)</td><td>360 × 76</td></tr>
-          <tr><td class="mono center">3</td><td><code>23:86224</code></td><td>with avatar</td><td>avatar · label · badge · date · amount</td><td>360 × 84</td></tr>
-          <tr><td class="mono center">4</td><td><code>23:86237</code></td><td>no amount</td><td>label · reference · trailing badge</td><td>360 × 76</td></tr>
-          <tr><td class="mono center">5</td><td><code>903:190942</code></td><td>skeleton loader</td><td>loading placeholders</td><td>360 × 81</td></tr>
+          <tr><td class="mono center">1</td><td><code>18482:35754</code></td><td>default</td><td>label · badge · date · amount</td><td>360 × 78</td></tr>
+          <tr><td class="mono center">2</td><td><code>18482:35765</code></td><td>more information</td><td>label · date · amount · menu (⋯)</td><td>360 × 76</td></tr>
+          <tr><td class="mono center">3</td><td><code>18482:35776</code></td><td>with avatar</td><td>avatar · label · badge · date · amount</td><td>360 × 84</td></tr>
+          <tr><td class="mono center">4</td><td><code>18482:35789</code></td><td>no amount</td><td>label · reference · trailing badge</td><td>360 × 76</td></tr>
+          <tr><td class="mono center">5</td><td><code>18482:35797</code></td><td>skeleton loader</td><td>loading placeholders</td><td>360 × 81</td></tr>
         </tbody>
       </table>
     </div>
@@ -487,7 +487,7 @@ open-issues: C1,C2,C5,C7
     <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
     <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
     <div class="changelog">
-      <div class="changelog-header">Initial Assessment · node 23:86201</div>
+      <div class="changelog-header">Initial Assessment · node 18482:35753</div>
       <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Restructure</strong> — Replace <code>type</code> enum (5 layouts) with slot-based composition. Align heading weight with Generic Card. Add pressed state. <span class="tag-open tag-c1 tag-c2 tag-c5">Open</span></div><span class="changelog-delta delta-open">Architecture</span></div>
       <div class="changelog-row"><div class="changelog-body"><strong>C1 — Type enum hides layouts</strong> — Same anti-pattern as Alert's <code>Full Width</code>. Split into <code>leadingMedia</code>, <code>badge</code>, <code>trailing</code>, <code>loading</code>. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1</span></div>
       <div class="changelog-row"><div class="changelog-body"><strong>C2 — Absence-based names</strong> — <code>no amount</code> / <code>more information</code> describe what's missing. Semantic slot names replace them. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>

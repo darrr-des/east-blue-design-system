@@ -87,28 +87,37 @@ let navItems     = '';
 let summaryCards = '';
 let summaryRows  = '';
 let sections     = '';
-const groupItems = {};   // groupName → [navHtml, ...]
-const openGroups = new Set();
-let pendingGroup = null;
 
-// First pass: collect all items, grouping where needed
-const navEntries = [];
+// Extract the display name from a nav HTML block (the text inside .nav-comp-name)
+function getNavDisplayName(navHtml) {
+  const m = navHtml.match(/class="nav-comp-name"[^>]*>([^<]+)</);
+  return m ? m[1].trim() : '';
+}
+
+// First pass: collect items. Groups hold their children; top-level items are
+// placed directly. We sort by display name afterwards so the sidebar order is
+// alphabetical regardless of filename.
+const groupItems = {};           // groupName → [{ name, html }]
+const topLevel   = [];           // [{ type, name, html? }]
+const seenGroups = new Set();
+
 for (const file of files) {
   const content = fs.readFileSync(path.join(compDir, file), 'utf8');
   console.log(`  + ${file}`);
 
   const navGroup = extract(content, 'nav-group');
   const navHtml  = extract(content, 'nav');
+  const name     = getNavDisplayName(navHtml);
 
   if (navGroup) {
     if (!groupItems[navGroup]) groupItems[navGroup] = [];
-    groupItems[navGroup].push(navHtml);
-    if (!openGroups.has(navGroup)) {
-      navEntries.push({ type: 'group', name: navGroup });
-      openGroups.add(navGroup);
+    groupItems[navGroup].push({ name, html: navHtml });
+    if (!seenGroups.has(navGroup)) {
+      topLevel.push({ type: 'group', name: navGroup });
+      seenGroups.add(navGroup);
     }
   } else {
-    navEntries.push({ type: 'item', html: navHtml });
+    topLevel.push({ type: 'item', name, html: navHtml });
   }
 
   summaryCards += extract(content, 'summary-card') + '\n';
@@ -116,8 +125,16 @@ for (const file of files) {
   sections     += extract(content, 'section')      + '\n\n';
 }
 
+// Sort top-level by display name (groups use their group name)
+topLevel.sort((a, b) => a.name.localeCompare(b.name));
+
+// Sort each group's children by display name
+for (const g of Object.keys(groupItems)) {
+  groupItems[g].sort((a, b) => a.name.localeCompare(b.name));
+}
+
 // Build final nav HTML
-for (const entry of navEntries) {
+for (const entry of topLevel) {
   if (entry.type === 'item') {
     navItems += entry.html + '\n';
   } else {
@@ -128,8 +145,8 @@ for (const entry of navEntries) {
     navItems += `    <svg class="nav-group-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 6l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>\n`;
     navItems += `  </button>\n`;
     navItems += `  <div class="nav-group-list" id="nav-group-${groupId}">\n`;
-    for (const itemHtml of groupItems[entry.name]) {
-      navItems += '    ' + itemHtml + '\n';
+    for (const item of groupItems[entry.name]) {
+      navItems += '    ' + item.html + '\n';
     }
     navItems += `  </div>\n`;
     navItems += `</div>\n`;

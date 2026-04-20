@@ -6,7 +6,7 @@
 
 <!--@meta-start-->
 status: assessed
-node: 21:43333
+node: 18482:71321
 ds-verdict: fix
 native-status: refine
 variants: 4
@@ -75,7 +75,7 @@ open-issues: C2,C5,C7
           Counter
           <span class="badge badge-fix">Fix</span>
           <span class="badge badge-refine">Refine</span>
-          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=21-43333" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18482-71321" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
         </div>
         <p class="comp-desc">A small numeric pill used as trailing content in list rows, tab items, and section headers. Two formats: <strong>single integer</strong> for counts (notifications, unread, pending items) and <strong>N / M slash</strong> for progress-against-capacity (slots used, steps completed). Fixed 24 px tall, hugs digit width. 4 variants across <code>state</code> (empty / filled) × <code>with limit</code> (yes / no).</p>
       </div>
@@ -210,7 +210,7 @@ open-issues: C2,C5,C7
 
     <div class="spec-card">
       <div class="spec-card-header">
-        <div class="spec-card-title">Empty — with limit <span class="spec-card-node">node <code>21:43334</code></span></div>
+        <div class="spec-card-title">Empty — with limit <span class="spec-card-node">node <code>18482:71322</code></span></div>
       </div>
       <p class="spec-card-desc">Slash format showing zero progress against a limit ("0 / 10"). Muted label on neutral bg. Used when no slots are filled yet.</p>
       <div class="spec-card-preview-row">
@@ -257,7 +257,7 @@ open-issues: C2,C5,C7
 
     <div class="spec-card">
       <div class="spec-card-header">
-        <div class="spec-card-title">Filled — with limit <span class="spec-card-node">node <code>21:43336</code></span></div>
+        <div class="spec-card-title">Filled — with limit <span class="spec-card-node">node <code>18482:71324</code></span></div>
       </div>
       <p class="spec-card-desc">Slash format with a filled count ("10 / 10"). Brand-blue label on neutral bg. Used when capacity is at or approaching the limit.</p>
       <div class="spec-card-preview-row">
@@ -287,7 +287,7 @@ open-issues: C2,C5,C7
 
     <div class="spec-card">
       <div class="spec-card-header">
-        <div class="spec-card-title">Single integer <span class="spec-card-node">nodes <code>21:43338</code>, <code>21:43340</code></span></div>
+        <div class="spec-card-title">Single integer <span class="spec-card-node">nodes <code>18482:71326</code>, <code>18482:71328</code></span></div>
       </div>
       <p class="spec-card-desc">Standalone count — notifications, unread messages, pending items. Hugs tightly around the digit (24 × 24 for single digit, grows for 2+ digits). Empty state shown muted; filled state shown in brand-blue. Pairs with overflow handling ("99+") once <code>count</code> is parameterized.</p>
       <div class="spec-card-preview-row">
@@ -462,10 +462,10 @@ open-issues: C2,C5,C7
       <table>
         <thead><tr><th>#</th><th>Node</th><th>state</th><th>with limit</th><th>Format</th><th>Example</th><th>Dimensions</th></tr></thead>
         <tbody>
-          <tr><td class="mono center">1</td><td><code>21:43334</code></td><td>empty</td><td>yes</td><td class="muted">slash</td><td><code>0 / 10</code></td><td>53 × 24</td></tr>
-          <tr><td class="mono center">2</td><td><code>21:43336</code></td><td>filled</td><td>yes</td><td class="muted">slash</td><td><code>10 / 10</code></td><td>59 × 24</td></tr>
-          <tr><td class="mono center">3</td><td><code>21:43338</code></td><td>empty</td><td>no</td><td class="muted">single integer</td><td><code>0</code></td><td>25 × 24</td></tr>
-          <tr><td class="mono center">4</td><td><code>21:43340</code></td><td>filled</td><td>no</td><td class="muted">single integer</td><td><code>0</code></td><td>24 × 24</td></tr>
+          <tr><td class="mono center">1</td><td><code>18482:71322</code></td><td>empty</td><td>yes</td><td class="muted">slash</td><td><code>0 / 10</code></td><td>53 × 24</td></tr>
+          <tr><td class="mono center">2</td><td><code>18482:71324</code></td><td>filled</td><td>yes</td><td class="muted">slash</td><td><code>10 / 10</code></td><td>59 × 24</td></tr>
+          <tr><td class="mono center">3</td><td><code>18482:71326</code></td><td>empty</td><td>no</td><td class="muted">single integer</td><td><code>0</code></td><td>25 × 24</td></tr>
+          <tr><td class="mono center">4</td><td><code>18482:71328</code></td><td>filled</td><td>no</td><td class="muted">single integer</td><td><code>0</code></td><td>24 × 24</td></tr>
         </tbody>
       </table>
     </div>
@@ -476,7 +476,7 @@ open-issues: C2,C5,C7
     <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
     <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
     <div class="changelog">
-      <div class="changelog-header">Initial Assessment · node 21:43333</div>
+      <div class="changelog-header">Initial Assessment · node 18482:71321</div>
       <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Fix</strong> — Keep both formats (single integer + slash). Rename <code>with limit</code> → <code>hasLimit</code>, parameterize <code>count</code> + <code>limit</code>, add <code>99+</code> overflow. Variant count stays at 4. <span class="tag-open tag-c2 tag-c5">Open</span></div><span class="changelog-delta delta-open">Schema</span></div>
       <div class="changelog-row"><div class="changelog-body"><strong>C2 — Boolean naming</strong> — <code>with limit: yes/no</code> → <code>hasLimit: true/false</code>. Direct Swift <code>Bool</code> / Kotlin <code>Boolean</code> mapping. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
       <div class="changelog-row"><div class="changelog-body"><strong>C2 — Parameterize values</strong> — Expose <code>count: Int</code> + <code>limit: Int?</code>; drop hardcoded text. Derive <code>state</code> from count. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>

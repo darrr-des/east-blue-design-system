@@ -255,6 +255,12 @@ They do **not** see:
 | C5 | No pressed / selected / disabled / error states defined across either component | Chip |
 | C2 | `with limit` boolean property uses `yes`/`no` strings instead of `true`/`false`. | Counter |
 | C2 | Count + limit values are hardcoded text ("0 / 10", "10 / 10") instead of parameterized — not usable for real counts. | Counter |
+| C1 | Fixed composition of 8 DropdownItem instances — no slot or parameterization, last row is a detached frame instead of a component instance | Dropdown Item Group |
+| C4 | Popover surface modeled as a standalone component, not composed via native Menu / DropdownMenu primitives | Dropdown Item Group |
+| C2 | Enum value typo `disabeld` (should be `disabled`) — ships in the variant name and leaks into generated code | Dropdown Item |
+| C6 | Raster PNG country flag (Philippines) embedded in `country` variant — not a vector asset | Dropdown Item |
+| C5 | No explicit pressed/hover/focused states — only `selected` on/off plus a `disabled` variant | Dropdown Item |
+| C4 | `disabeld` is modeled as a `type` value rather than an orthogonal `state`/`disabled` axis, colliding with content type | Dropdown Item |
 | C5 | No disabled or pressed states — form dropdown missing standard interaction states | Dropdown |
 | C2 | DropdownItem `selected` property uses yes/no string instead of true/false boolean | Dropdown |
 | C2 | `iconSize` uses 6 numeric values (64 / 52 / 46 / 40 / 32 / 24) — should collapse to 3–4 semantic sizes (XL / L / M / S). | Generic Card |
@@ -268,6 +274,9 @@ They do **not** see:
 | C4 | A second app-bar component exists only to swap the title for a logo — should be a slot on the existing Title Bar instead of a sibling component. | Header With Logo |
 | C1 | Four separate components all named "Header*" conflate 4 distinct semantic roles (section header, page banner, brand app bar, detail hero). | Header |
 | C2 | 8 independent boolean props create 256 theoretical combos but only 16 are built — the boolean model lies. Trailing-slot booleans should collapse into a single enum slot. | Header |
+| C1 | A single `type` enum hides 5 structurally different trailing-content compositions (plain value / value + clipboard / badge / value + description / value + description + text-link) — should be orthogonal boolean slots (hasCopy, hasDescription, hasTextLink) with a unified trailing slot so Badge can be instance-swapped. | Inline Text |
+| C2 | `type=with Clipboard` / `with Badge` / `with Description` / `with Text Link` mix two axes — "what sits in the trailing slot" (value / badge) and "what sits under the label" (description / text-link). A single enum conflates them. | Inline Text |
+| C6 | Badge variant is drawn inline (hardcoded information/light fill, hardcoded "Label" text) instead of instance-swapped from the canonical Badge component — creates a parallel styling source of truth. | Inline Text |
 | C6 | trailing-icon uses icon-placeholder RECTANGLE — not a swappable icon instance | Labeled Field |
 | C2 | `type` × `indicator` axes are entangled — only ~10 of 72 theoretical combinations are valid | List Item Asset |
 | C5 | Numbered indicator hardcodes "1." — no way to set per-item number | List Item Asset |
@@ -278,8 +287,16 @@ They do **not** see:
 | C2 | Variant property values use pseudo-numeric strings ("by 4") instead of clean integer enums | Menu Grid |
 | C5 | Service Item only defines `active` color tokens — no pressed/disabled state coverage | Menu Grid |
 | C4 | Variant explosion (4 rows × 5 columns = 20) where two integer props would suffice on native | Menu Grid |
+| C1 | Opacity-0 spacer frames (`_space_16`, `_space_12`) are used inside the modal body instead of auto-layout gap — creates invisible non-semantic layers that native translators can't map. | Modal |
+| C2 | Axis values mix separator styles — `transaction_v1` / `transaction_v2` use snake_case, `2 - horizontal` / `1 - vertical` use space-dashed-space. Within a single property. | Modal |
+| C4 | Two unrelated layouts (general-purpose dialog + transaction receipt) are compressed into one component via a `type` enum — transaction variants carry receipt-specific inner rows, copy-to-clipboard icon, and reference number slots that don't belong in a generic modal. | Modal |
+| C6 | Transaction variant uses raster PNG assets for the copy-to-clipboard icon (`shape_half`, `shape_full`) instead of a vector icon instance. | Modal |
+| C7 | Component duplicates scope with a separately-maintained Modal elsewhere in the file (node `47:329691` "Overlay" and generic popup container) — two sources of truth for the same concept. | Modal |
 | C4 | Scrim-type components are fixed to sticker-sheet dimensions (360×640) instead of Fill parent — breaks drop-in composability. | Overlay |
 | C2 | Token named *overlay-strong* implies a weak/standard counterpart, but only one strength is exposed as a component property. | Overlay |
+| C2 | Progress encoded as discrete enum `percentage=0\|10\|…\|100` instead of a continuous numeric `progress: 0..1` — forces 11 variants for a single scalar. | Progress Bar |
+| C6 | Track and fill rendered as raster `<img>` assets (back/front PNGs) instead of token-driven rectangles or vector strokes. Blocks theming and resolution independence. | Progress Bar |
+| C5 | No indeterminate / buffered / success / error states modeled — only determinate fill in 10%-step jumps. | Progress Bar |
 | C2 | `size` property encodes state — values include "default - error" and "large - error" (space-hyphen-space strings that mix size + state) | Radio Button With Label |
 | C5 | No disabled / selected variants — only unselected state is documented across sizes | Radio Button With Label |
 | C6 | Always instances the small radio — large label doesn't scale the radio accordingly | Radio Button With Label |
@@ -289,6 +306,10 @@ They do **not** see:
 | C6 | Internal frame is named `.base/checkbox` — should be `.base/radio` | Radio Button |
 | C5 | No pressed or focused states defined | Radio Button |
 | C6 | Trailing icons use icon-placeholder RECTANGLE instead of swappable icon instances | Recipient Field |
+| C5 | Search-specific text input exposing only Default/Filled — focused, error, and disabled states are absent, blocking 1:1 mapping to native search primitives. | Search Field |
+| C6 | Search glyph rendered as a raster `img` (`shape_full`) rather than a vector instance — inconsistent with the confirmed-vector chevrons used elsewhere in Form Elements. | Search Field |
+| C1 | Trailing slot contains an unresolved `Placeholder` wrapper with a raw `icon-placeholder` pink circle — shipping a DS component with placeholder layers still in the tree. | Search Field |
+| C4 | Container uses `border-top + border-bottom` only (no left/right, `radius-0`) — diverges from every other Form Element sibling, which use a full rounded-rect stroke. | Search Field |
 | C2 | Boolean property `isActive?` has a `?` suffix and uses Yes/No values instead of `selected` with true/false | Tab Item |
 | C2 | `hasLeadingIcon` boolean is wired only in horizontal orientation; vertical always renders an icon — inconsistent across orientations | Tab Item |
 | C3 | Counter colors are hardcoded (bg #ECF1FA, label #0F3390) instead of tokens | Tab Item |
@@ -555,37 +576,43 @@ Key conventions:
 | Alert | `18444:2012` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Avatar Group | `18276:4554` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Avatar | `17143:4488` | Keep | Needs Refinement | 🔁 Re-assessing | — |
-| Badge | `21:111526` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Badge | `18482:28972` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Button | `17104:184842` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Checkbox | `17143:2464` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Chip | `18336:22243` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
-| Counter | `21:43333` | Fix | Needs Refinement | 🔁 Re-assessing | — |
-| Dropdown | `23:199480` | Fix | Needs Refinement | 🔁 Re-assessing | — |
-| Generic Card | `23:86050` | Fix | Needs Refinement | 🔁 Re-assessing | — |
-| Generic Transaction Card | `23:86201` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
+| Counter | `18482:71321` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Dropdown Item Group | `6383:3446` | Consolidate | Not Applicable | 🔁 Re-assessing | — |
+| Dropdown Item | `23:199453` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Dropdown | `18482:31910` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Generic Card | `18482:35806` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Generic Transaction Card | `18482:35753` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | Header Centered | `18430:2858` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Header Transaction | `18430:2897` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Header With Logo | `18430:2875` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
 | Header | `18430:2919` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Inline Text | `21:138492` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | Input Field | `17758:3687` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Labeled Field | `17758:3713` | Keep | Needs Refinement | 🔁 Re-assessing | — |
-| List Item Asset | `10274:2658` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
-| List Item | `10277:2664` | Fix | Needs Refinement | 🔁 Re-assessing | — |
-| List | `10277:4586` | Remove | Not Applicable | 🔁 Re-assessing | — |
+| List Item Asset | `18482:34406` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
+| List Item | `18482:34429` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| List | `18482:34737` | Remove | Not Applicable | 🔁 Re-assessing | — |
 | Menu Grid | `18320:14332` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Modal | `18507:71705` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Overlay | `47:329691` | Fix | Needs Refinement | 🔁 Re-assessing | — |
-| Radio Button With Label | `844:75143` | Fix | Needs Refinement | 🔁 Re-assessing | — |
-| Radio Button | `844:75124` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
+| Progress Bar | `27:64946` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Radio Button With Label | `18482:35673` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Radio Button | `18482:35698` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | Recipient Field | `17758:3867` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Search Field | `50:78117` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Select Field | `17758:3786` | Keep | Needs Refinement | 🔁 Re-assessing | — |
-| Tab Item | `27:89110` | Fix | Needs Refinement | 🔁 Re-assessing | — |
-| Tabs | `27:89097` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Tab Item | `18482:33262` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Tabs | `18482:33249` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Title Bar | `23:175148` | Keep | Needs Refinement | 🔁 Re-assessing | — |
-| Toggle With Label | `27:30918` | Restructure | Requires Rework | 🔁 Re-assessing | — |
-| Toggle | `27:30922` | Fix | Needs Refinement | 🔁 Re-assessing | — |
-| Upload File | `4068:4209` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Toggle With Label | `18482:36538` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Toggle | `18482:36508` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Upload File | `18482:35064` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | View Only Field | `18403:4520` | Keep | Needs Refinement | 🔁 Re-assessing | — |
-| Visual Popup | `30:81526` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Visual Popup | `18477:23788` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 <!-- @@PROGRESS_TABLE_END@@ -->
 
 ### Open Issues
