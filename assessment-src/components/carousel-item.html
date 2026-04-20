@@ -1,9 +1,14 @@
 <!--
   CAROUSEL - ITEM COMPONENT ASSESSMENT
-  Peeking-carousel banner card. 282×160 with a background image, preamble/heading/description
+  Peeking-carousel banner card. ~312×160 with a background image, preamble/heading/description
   text stack, and a button + chevron "learn more" link. 10 variants across Mode × Type ×
-  hasTextLink × hasPreamble. Nearly identical to Carousel Item - Center (312×160) and
-  Carousel Item - Side (312×146) — same schema, only dimensions differ.
+  hasTextLink × hasPreamble.
+
+  NOTE: This file is the canonical record for the full "Carousel Item" family. The old
+  sibling records Carousel Item - Center (18543:2984) and Carousel Item - Side (18543:3099)
+  were deleted on 2026-04-19 because they share 100% of this schema — Center vs Side is a
+  runtime layout concern (scale + opacity on scroll progress), not a component identity.
+  All consolidation notes apply here.
   Run `node assessment-src/build.js` to regenerate report.html
 -->
 
@@ -588,6 +593,7 @@ function _citRender(opts) {
   var linkColor      = mode === 'light' ? '#FFFFFF' : '#005CE5';
 
   var html = '<div class="eb-preview eb-preview-cit ' + bgClass + focusCls + '">';
+  html += '<div class="eb-preview-cit__hero"></div>';
   html += '<div class="eb-preview-cit__content">';
 
   if (hasPreamble) {

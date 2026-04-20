@@ -237,6 +237,11 @@ They do **not** see:
 | Criterion | Pattern | First Found In |
 |---|---|---|
 | C7 | Code Connect mappings not yet registered — no native component files linked via Code Connect CLI | Accordion |
+| C1 | Component splintering by size family resolved — 3 separate components (banners, promos, heroes) collapsed into a single <code>Ad Space</code> with a 7-value <code>size</code> enum. | Ad Space |
+| C2 | <code>hifi</code> / <code>midfi</code> fidelity axis eliminated — was a placeholder-authoring crutch masquerading as a variant. Loading state is now an orthogonal <code>isLoading</code> boolean; real media lives in a <code>content</code> slot. | Ad Space |
+| C4 | <code>carousel=yes</code> pseudo-variant retired — carousel wrapping is a parent layout concern. Multiple <code>hero-md</code> Ad Spaces now compose inside the DS Carousel container, no dedicated "Ad Carousel" component. | Ad Space |
+| C6 | Hardcoded rasters and "Replace this image" placeholder assets retired — <code>content</code> is a Figma Slot that accepts an AdMob view, an image, or an illustration. | Ad Space |
+| C7 | Naming simplified for 1:1 native mapping — <code>banner-*</code> maps to AdMob primitives, <code>promo-*</code> / <code>hero-*</code> map to a custom <code>EBAdSpace</code> view on both platforms. | Ad Space |
 | C2 | Four booleans use `yes`/`no` strings with inconsistent casing (`No` in one variant, `no`/`yes` elsewhere). | Alert |
 | C2 | `Type=Default` is a neutral appearance mixed in with the semantic set (Information / Warning / Error / Success). | Alert |
 | C1 | Two structurally different layouts (full-width banner vs bordered accent card) share one component — the axis that separates them is named `Full Width` which hides the real difference (border accent + action). | Alert |
@@ -260,15 +265,6 @@ They do **not** see:
 | C4 | Perforated voucher edge is baked into the banner image — ties the component to voucher aesthetics and blocks reuse for non-voucher discount cards. | Carousel Discount Card |
 | C6 | Banner image, `replace-this-asset`, and the perforate edge are all raster assets stitched with mask layers — fragile and non-tokenizable. | Carousel Discount Card |
 | C7 | `violator` label text is hardcoded "New" — not parameterized as a prop. | Carousel Discount Card |
-| C1 | "Carousel Item - Center" / "Carousel Item - Side" split encodes carousel layout position as a structural component variant — position/focus state is runtime layout behavior, not component identity. | Carousel Item Center |
-| C2 | `hasTextLink` enum mixes string values `yes`, `no`, and `Default` — three-value enum that reads like a boolean with a typo. Should be a boolean or a semantic enum. | Carousel Item Center |
-| C2 | `type` enum values `Default`, `with Icon`, `Headline` mix unrelated axes — icon presence is a slot question, headline vs default is a content-weight question. They should not share one axis. | Carousel Item Center |
-| C6 | Hero image is a raster PNG (`imgAssetDark`) baked into the variant. No image slot, no instance-swappable asset. | Carousel Item Center |
-| C6 | Chevron in the "learn more" action is a raster PNG (`imgShapeFull`), not a vector glyph. | Carousel Item Center |
-| C5 | No pressed / focused / disabled states. Tile has a tappable button and is itself a tappable carousel cell, but only the static "focused" appearance is modeled. | Carousel Item Center |
-| C4 | Position-specific duplicate component — "Side" encodes scroll position (focused vs unfocused neighbor) as a Figma component rather than a runtime layout effect. Native carousel APIs handle focus-aware scale/opacity at the container level; there should be no separate "side" DS component. | Carousel Item Side |
-| C1 | Height-only duplicate — Side shares identical schema, property axes, tokens, and layer structure with Carousel Item - Center. The only delta is the container height (146 vs 160). Not a DS concern. | Carousel Item Side |
-| C6 | Raster chevron (<code>shape_full</code>) duplicated from Center — compounds the same asset issue across a component that shouldn't exist. | Carousel Item Side |
 | C2 | Boolean property "with icon" uses yes/no instead of true/false | Chip |
 | C2 | Two separate components ("Filter" and "Filter with Dropdown") share the same pill anatomy and should consolidate into a single Chip with leading/trailing slot props | Chip |
 | C6 | Leading slot uses a hardcoded 24px gray circle "icon-placeholder" instead of a swappable Avatar/Icon instance | Chip |
@@ -593,6 +589,7 @@ Key conventions:
 | Component | Node | DS Verdict | Native Status | Status | Notes |
 |---|---|---|---|---|---|
 | Accordion | `16870:9288` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Ad Space | `18563:9789` | Keep | Ready | 🔁 Re-assessing | — |
 | Alert | `18444:2012` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Avatar Group | `18276:4554` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Avatar | `17143:4488` | Keep | Needs Refinement | 🔁 Re-assessing | — |
@@ -600,8 +597,6 @@ Key conventions:
 | Button | `17104:184842` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Carousel Card | `23:121311` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Carousel Discount Card | `18543:2761` | Consolidate | Needs Refinement | 🔁 Re-assessing | — |
-| Carousel Item Center | `18543:2984` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
-| Carousel Item Side | `18543:3099` | Remove | Not Applicable | 🔁 Re-assessing | — |
 | Carousel Item | `—` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
 | Checkbox | `17143:2464` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Chip | `18336:22243` | Restructure | Needs Refinement | 🔁 Re-assessing | — |

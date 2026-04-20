@@ -4272,6 +4272,430 @@ pre.code-snippet .prp { color: #0369A1; }
 }
 
 /* ═════════════════════════════════════════════════════════════════════
+   CAROUSEL FAMILY — live preview primitives
+   Covers: ccard (Carousel Card), cdcard (Discount Card), cit (Item),
+   ccc (Item - Center), csi (Item - Side). All 5 use an SVG image
+   placeholder for the banner/hero area so the previews render something.
+   ═════════════════════════════════════════════════════════════════════ */
+
+.eb-preview-stack--row { flex-direction: row; flex-wrap: wrap; align-items: flex-start; }
+
+/* Shared image placeholder — soft gray gradient + a "Replace me"
+   label centered in the frame, matching Figma's placeholder convention. */
+.eb-preview-ccard__banner-img,
+.eb-preview-cdcard__banner-img,
+.eb-preview-cit__hero,
+.eb-preview-ccc__hero,
+.eb-preview-csi__hero {
+  position: relative;
+  background:
+    linear-gradient(135deg, #C9D2E0 0%, #97A5BF 100%);
+}
+.eb-preview-ccard__banner-img::after,
+.eb-preview-cdcard__banner-img::after,
+.eb-preview-cit__hero::after,
+.eb-preview-ccc__hero::after,
+.eb-preview-csi__hero::after {
+  content: 'Replace me';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #B84B4B;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 2px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ── Carousel Card (140w vertical) ───────────────────────────────── */
+.eb-preview-ccard {
+  display: flex;
+  flex-direction: column;
+  width: 140px;
+  font-family: var(--font-body);
+}
+.eb-preview-ccard__banner {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.eb-preview-ccard__banner-img {
+  position: absolute;
+  inset: 0;
+}
+.eb-preview-ccard__banner-dimmer {
+  position: absolute;
+  inset: 0;
+  background: #E6E1EF;
+  mix-blend-mode: multiply;
+  opacity: 0.4;
+}
+.eb-preview-ccard__banner-shadow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 73px;
+  background: linear-gradient(0deg, rgba(4,5,6,1) 0%, rgba(4,5,6,0) 100%);
+  mix-blend-mode: multiply;
+  opacity: 0.4;
+  pointer-events: none;
+}
+.eb-preview-ccard__banner-icon {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: #005CE5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.eb-preview-ccard__banner-icon svg { width: 16px; height: 16px; color: #fff; }
+.eb-preview-ccard__banner--skeleton {
+  background: #EEF2F9;
+}
+.eb-preview-ccard__content {
+  display: flex;
+  flex-direction: column;
+  padding-top: 12px;
+}
+.eb-preview-ccard__content--skeleton { padding-top: 16px; gap: 12px; }
+.eb-preview-ccard__title {
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23px;
+  color: #2340A9;
+  margin: 0;
+}
+.eb-preview-ccard__desc {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: #6780A9;
+  font-weight: 600;
+}
+.eb-preview-ccard__sk {
+  background: #EEF2F9;
+  border-radius: 4px;
+}
+.eb-preview-ccard__sk--title { height: 16px; width: 100%; }
+.eb-preview-ccard__sk--desc  { height: 10px; width: 100%; }
+.eb-preview-ccard__sk--desc2 { height: 10px; width: 97px; }
+
+/* ── Carousel Discount Card (140w, perforate notch, violator badge) ─ */
+.eb-preview-cdcard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 140px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(2,14,34,0.08);
+  overflow: hidden;
+  font-family: var(--font-body);
+}
+.eb-preview-cdcard__banner {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+}
+.eb-preview-cdcard__banner-img {
+  position: absolute;
+  inset: 0;
+}
+.eb-preview-cdcard__violator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #005CE5;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  z-index: 2;
+}
+.eb-preview-cdcard__perforate {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 10px;
+  background:
+    radial-gradient(circle at 0 50%, transparent 5px, #fff 5.5px),
+    radial-gradient(circle at 100% 50%, transparent 5px, #fff 5.5px);
+  pointer-events: none;
+}
+.eb-preview-cdcard__content {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 8px;
+}
+.eb-preview-cdcard__label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0A2757;
+  line-height: 18px;
+}
+.eb-preview-cdcard__value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #005CE5;
+}
+.eb-preview-cdcard--skeleton { box-shadow: none; background: transparent; }
+.eb-preview-cdcard__sk-banner { height: 140px; background: #EEF2F9; border-radius: 4px; }
+.eb-preview-cdcard__sk-content { padding-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.eb-preview-cdcard__sk { background: #EEF2F9; border-radius: 4px; }
+.eb-preview-cdcard__sk--title { height: 14px; width: 90%; }
+.eb-preview-cdcard__sk--amount { height: 14px; width: 50%; }
+
+/* ── Carousel Item (peeking hero card, 312 wide) ─────────────────── */
+/* DOM order is .hero then .content (as written by the render fn), but
+   Figma has content on the LEFT and hero on the RIGHT — so row-reverse. */
+.eb-preview-cit,
+.eb-preview-ccc,
+.eb-preview-csi {
+  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: stretch;
+  width: 312px;
+  height: 160px;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: var(--font-body);
+  box-shadow: 0 4px 12px rgba(2,14,34,0.08);
+}
+.eb-preview-csi { height: 146px; } /* Side is 14px shorter */
+
+/* Background-mode tints (blue or pink-peach) */
+.eb-preview-cit--bg-dark,
+.eb-preview-ccc--bg-dark,
+.eb-preview-csi--bg-dark { background: linear-gradient(135deg, #2F78F5 0%, #105BE5 100%); color: #fff; }
+
+.eb-preview-cit--bg-light,
+.eb-preview-ccc--bg-light,
+.eb-preview-csi--bg-light { background: linear-gradient(135deg, #FFE7D3 0%, #FCC8AE 100%); color: #0A2757; }
+
+/* Side variant scaling cue — slightly dim/opacify so the visual tells the story */
+.eb-preview-cit--side,
+.eb-preview-csi-side { opacity: 0.8; transform: scale(0.97); transform-origin: center; }
+
+/* Content stack (heading + preamble + desc + button) on the left */
+.eb-preview-cit__content,
+.eb-preview-ccc__content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 6px;
+  justify-content: flex-start;
+}
+.eb-preview-cit__preamble,
+.eb-preview-ccc__preamble {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+.eb-preview-cit__heading,
+.eb-preview-ccc__heading {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 22px;
+  margin: 0;
+}
+.eb-preview-cit__heading--light,
+.eb-preview-ccc__heading--light { color: #fff; }
+.eb-preview-cit__desc,
+.eb-preview-ccc__desc {
+  font-size: 12px;
+  line-height: 16px;
+  margin: 0;
+  opacity: 0.85;
+}
+.eb-preview-cit__link,
+.eb-preview-ccc__action,
+.eb-preview-ccc__action-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: auto;
+}
+.eb-preview-cit__chev,
+.eb-preview-ccc__chevron {
+  width: 12px;
+  height: 12px;
+}
+.eb-preview-cit__icon,
+.eb-preview-ccc__icon-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.4);
+  margin-bottom: 4px;
+}
+
+/* Hero image on the right */
+.eb-preview-cit__hero,
+.eb-preview-ccc__hero,
+.eb-preview-csi__hero {
+  width: 150px;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+.eb-preview-cit__hero--dark,
+.eb-preview-ccc__hero--dark { filter: saturate(1.1); }
+
+/* Strip container for the 10-variant grid */
+.eb-preview-cit-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 312px);
+  gap: 16px;
+}
+
+/* ═════════════════════════════════════════════════════════════════════
+   AD SPACE — live preview primitives
+   One shape with 7 sizes across 3 families (banner / promo / hero).
+   ═════════════════════════════════════════════════════════════════════ */
+.eb-preview-adspace {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #F6F9FD;
+  border: 1px solid #E5EBF4;
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: var(--font-body);
+}
+
+/* Size-family wrappers: banner = full-surface ad mock */
+.eb-preview-adspace--banner-sm   { width: 320px; height: 50px; }
+.eb-preview-adspace--banner-lg   { width: 320px; height: 100px; }
+.eb-preview-adspace--banner-mrec { width: 300px; height: 250px; }
+
+/* Promo tiles — image + caption underneath */
+.eb-preview-adspace--promo-sm { width: 131px; height: 126px; border-radius: 6px; }
+.eb-preview-adspace--promo-md { width: 224px; height: 200px; border-radius: 8px; }
+
+/* Hero banners — image overlay + caption */
+.eb-preview-adspace--hero-sm { width: 296px; height: 174px; border-radius: 8px; }
+.eb-preview-adspace--hero-md { width: 336px; height: 174px; border-radius: 8px; }
+
+/* Banner family — flat placeholder with subtle "Ad" label */
+.eb-preview-adspace__banner-fill {
+  flex: 1;
+  background: linear-gradient(135deg, #D7E0EE 0%, #B7C5DD 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3C4A5C;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  position: relative;
+}
+.eb-preview-adspace__banner-dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(10,39,87,0.04);
+  pointer-events: none;
+}
+.eb-preview-adspace__banner-label {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(10,39,87,0.45);
+  background: rgba(255,255,255,0.7);
+  padding: 1px 4px;
+  border-radius: 2px;
+  letter-spacing: 0.06em;
+}
+
+/* Promo / hero — image + caption */
+.eb-preview-adspace__image {
+  position: relative;
+  background: linear-gradient(135deg, #C9D2E0 0%, #97A5BF 100%);
+  flex-shrink: 0;
+}
+.eb-preview-adspace__image--full { flex: 1; }
+.eb-preview-adspace--promo-sm .eb-preview-adspace__image { height: 98px; }
+.eb-preview-adspace--promo-md .eb-preview-adspace__image { height: 152px; }
+.eb-preview-adspace--hero-sm  .eb-preview-adspace__image,
+.eb-preview-adspace--hero-md  .eb-preview-adspace__image { flex: 1; }
+
+.eb-preview-adspace__image-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #B84B4B;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.eb-preview-adspace__caption {
+  font-size: 12px;
+  font-weight: 600;
+  color: #0A2757;
+  line-height: 14px;
+}
+.eb-preview-adspace__caption--below {
+  padding: 8px 10px;
+  background: #fff;
+}
+.eb-preview-adspace__caption--overlay {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+/* Loading state: skeleton overlay covers everything */
+.eb-preview-adspace--loading .eb-preview-adspace__image,
+.eb-preview-adspace--loading .eb-preview-adspace__banner-fill {
+  background: #EEF2F9;
+}
+.eb-preview-adspace--loading .eb-preview-adspace__image-label,
+.eb-preview-adspace--loading .eb-preview-adspace__banner-label,
+.eb-preview-adspace--loading .eb-preview-adspace__caption { display: none; }
+.eb-preview-adspace__skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+  animation: eb-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes eb-skeleton-shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ═════════════════════════════════════════════════════════════════════
    FLOATING RAIL NAV — PROTOTYPE
    Activated by body.rail-nav. Hides .sidebar and shows a single floating
    white card: 48px icon rail + 192px list panel (240px total), 16px inset

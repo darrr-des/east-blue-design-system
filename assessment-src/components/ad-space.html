@@ -1,0 +1,881 @@
+<!--
+  AD SPACE — CONSOLIDATED COMPONENT ASSESSMENT
+  Canonical Ad Space component that replaces 3 legacy Ads components:
+    - Ads On Receipt (18563:9789) — IAB banners: 320×50, 320×100, 300×250
+    - Ad Space - Group - Large (18563:9808) — hero banners, single + carousel, 320/360 wide
+    - Dashboard Promo Cards (18563:9917) — promo tiles: 131×126, 224×200
+  Also retires two asset libraries that fed the above:
+    - Placeholder Banner (18563:9937)
+    - Promo Cards Images (18563:9928)
+
+  This is the NEW canonical shape, not a re-assessment of any individual legacy component.
+  One component, one `size` enum with 7 values, grouped into 3 size families:
+    banner-sm | banner-lg | banner-mrec   (IAB / AdMob driven)
+    promo-sm  | promo-md                  (product-owned dashboard tiles)
+    hero-sm   | hero-md                   (hero banners; carousel is a layout concern)
+
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 18563:9789
+ds-verdict: keep
+native-status: ready
+variants: 7
+ios: GADBannerView (banner-*) / custom EBAdSpace view (promo-*, hero-*)
+android: AdView (banner-*) / custom EBAdSpace composable (promo-*, hero-*)
+open-issues: none
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] Component splintering by size family resolved — 3 separate components (banners, promos, heroes) collapsed into a single <code>Ad Space</code> with a 7-value <code>size</code> enum.
+[C2] <code>hifi</code> / <code>midfi</code> fidelity axis eliminated — was a placeholder-authoring crutch masquerading as a variant. Loading state is now an orthogonal <code>isLoading</code> boolean; real media lives in a <code>content</code> slot.
+[C4] <code>carousel=yes</code> pseudo-variant retired — carousel wrapping is a parent layout concern. Multiple <code>hero-md</code> Ad Spaces now compose inside the DS Carousel container, no dedicated "Ad Carousel" component.
+[C6] Hardcoded rasters and "Replace this image" placeholder assets retired — <code>content</code> is a Figma Slot that accepts an AdMob view, an image, or an illustration.
+[C7] Naming simplified for 1:1 native mapping — <code>banner-*</code> maps to AdMob primitives, <code>promo-*</code> / <code>hero-*</code> map to a custom <code>EBAdSpace</code> view on both platforms.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Ads<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-ad-space" onclick="showPanel('ad-space', this)">
+  <div class="nav-comp-icon">
+    <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="6" width="26" height="8" rx="1.5" fill="#005CE5"/>
+      <text x="16" y="12" text-anchor="middle" fill="white" font-size="5" font-weight="700" font-family="system-ui">Ad</text>
+      <rect x="3" y="17" width="12" height="9" rx="1.5" fill="#E6E1EF"/>
+      <rect x="17" y="17" width="12" height="9" rx="1.5" fill="#EEF2F9"/>
+    </svg>
+  </div>
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Ad Space</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('ad-space')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="4" y="4" width="72" height="10" rx="2" fill="#005CE5"/>
+      <text x="40" y="11" text-anchor="middle" fill="white" font-size="6" font-weight="700" font-family="system-ui">Ad</text>
+      <rect x="4" y="18" width="22" height="18" rx="2" fill="#E6E1EF"/>
+      <rect x="30" y="18" width="46" height="18" rx="2" fill="#EEF2F9"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Ad Space</div>
+      <span class="badge badge-ready">Keep</span>
+    </div>
+    <div class="summary-card-desc">Unified ad surface with 7 canonical sizes across 3 families — banner (AdMob), promo (dashboard tile), hero (full-width). Consolidates Ads On Receipt, Ad Space - Group - Large, and Dashboard Promo Cards into one component.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Ad Space</strong></td>
+  <td><span class="badge badge-ready">Keep</span></td>
+  <td><span class="badge badge-ready">Ready</span></td>
+  <td class="muted">7</td>
+  <td class="muted">Canonical consolidation of Ads On Receipt + Ad Space - Group - Large + Dashboard Promo Cards. Single <code>size</code> enum, orthogonal <code>isLoading</code>, <code>content</code> slot.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-ad-space">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Ad Space
+          <span class="badge badge-ready">Keep</span>
+          <span class="badge badge-ready">Ready</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18563-9789" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">The canonical surface for any ad, promo, or sponsored placement across the app. One component, one <code>size</code> enum with seven values grouped into three size families: <strong>banner</strong> (IAB-standard, AdMob-driven), <strong>promo</strong> (product-owned dashboard tiles with image + caption), and <strong>hero</strong> (full-width hero banners, optionally wrapped in the DS Carousel). A single <code>content</code> slot accepts an AdMob view, an image, or an illustration; an orthogonal <code>isLoading</code> boolean drives the skeleton state; an optional <code>caption</code> string anchors promo and hero placements. Replaces three legacy components (Ads On Receipt, Ad Space - Group - Large, Dashboard Promo Cards) and retires two asset libraries (Placeholder Banner, Promo Cards Images).</p>
+      </div>
+    </div>
+
+    <div class="infobox" style="margin-bottom:24px">
+      <div class="infobox-title">Consolidates 3 components</div>
+      <div class="infobox-body">
+        This Ad Space replaces the following legacy components. They will be deleted after adoption:
+        <ul class="resolved-list" style="margin-top:8px">
+          <li><span><strong>Ads On Receipt</strong> <span class="muted">(node <code>18563:9789</code>)</span> — IAB banner sizes 320×50, 320×100, 300×250. Becomes <code>banner-sm</code>, <code>banner-lg</code>, <code>banner-mrec</code>.</span></li>
+          <li><span><strong>Ad Space - Group - Large</strong> <span class="muted">(node <code>18563:9808</code>)</span> — hero banners with single + "carousel preview" row at 320/360 widths. Becomes <code>hero-sm</code> and <code>hero-md</code>; multi-ad layouts now compose inside the DS Carousel.</span></li>
+          <li><span><strong>Dashboard Promo Cards</strong> <span class="muted">(node <code>18563:9917</code>)</span> — dashboard tiles at 131×126 and 224×200. Becomes <code>promo-sm</code> and <code>promo-md</code>.</span></li>
+          <li><span><strong>Placeholder Banner</strong> <span class="muted">(node <code>18563:9937</code>)</span> and <strong>Promo Cards Images</strong> <span class="muted">(node <code>18563:9928</code>)</span> — asset libraries for the above. Retired; media now flows through the <code>content</code> slot.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div data-tab-group="ad-space-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'ad-space-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'ad-space-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'ad-space-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'ad-space-tabs')">Changelog</button>
+    </div>
+
+    <!-- ══ Tab: Overview ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="ads-in-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Each of the three size families has a canonical home in the app: banners inline within transaction flows, promos on the dashboard tile grid, and heroes full-width on home or category surfaces.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="ads-context-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="ads-preview">Live Preview</div>
+    <p class="section-desc">Flip <code>size</code> across the seven canonical values. Toggle <code>isLoading</code> to see the skeleton state. Edit the <code>caption</code> (promo / hero only).</p>
+    <div class="demo-panel" id="ads-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="ads-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">size</span>
+              <select id="ads-ctrl-size" class="demo-panel-select" onchange="_adsUpdate()">
+                <optgroup label="banner (AdMob)">
+                  <option value="banner-sm">banner-sm · 320×50</option>
+                  <option value="banner-lg">banner-lg · 320×100</option>
+                  <option value="banner-mrec">banner-mrec · 300×250</option>
+                </optgroup>
+                <optgroup label="promo (tile)">
+                  <option value="promo-sm">promo-sm · 131×126</option>
+                  <option value="promo-md" selected>promo-md · 224×200</option>
+                </optgroup>
+                <optgroup label="hero (full-width)">
+                  <option value="hero-sm">hero-sm · 296×174</option>
+                  <option value="hero-md">hero-md · 336×174</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">isLoading</span>
+              <select id="ads-ctrl-loading" class="demo-panel-select" onchange="_adsUpdate()">
+                <option value="false" selected>false</option>
+                <option value="true">true</option>
+              </select>
+            </div>
+          </div>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Content</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">caption</span>
+              <input type="text" id="ads-ctrl-caption" class="demo-panel-select demo-panel-input" value="Offer title" oninput="_adsUpdate()">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="ads-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">One component serves every ad placement across the app: inline receipt banners, dashboard tiles, and full-width heroes. Seven canonical sizes cover IAB-standard banners plus product surfaces.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Ships its own surface, caption typography, loading skeleton, and corner radius tokens. Media flows through the <code>content</code> slot — no hardcoded rasters, no placeholder "replace me" assets.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Size naming follows a predictable pattern: <code>&lt;family&gt;-&lt;size&gt;</code>. Content and state are orthogonal axes. Caption typography uses the same DS text style across all promo and hero sizes.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">Plugs into the DS Carousel for multi-ad layouts (e.g. a row of <code>hero-md</code>), into list rows for inline banners, and into the dashboard grid for promo tiles. No sibling "Ad Carousel" or "Ad Group" needed.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="ads-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Size</th><th>Family</th><th>Dimensions</th><th class="center">iOS primitive</th><th class="center">Android primitive</th><th>Content slot</th></tr></thead>
+        <tbody>
+          <tr><td><code>banner-sm</code></td><td>banner</td><td class="mono">320 × 50</td><td class="center"><code>GADBannerView</code></td><td class="center"><code>AdView</code></td><td class="muted">AdMob ad unit (IAB Mobile Banner)</td></tr>
+          <tr><td><code>banner-lg</code></td><td>banner</td><td class="mono">320 × 100</td><td class="center"><code>GADBannerView</code></td><td class="center"><code>AdView</code></td><td class="muted">AdMob ad unit (IAB Large Banner)</td></tr>
+          <tr><td><code>banner-mrec</code></td><td>banner</td><td class="mono">300 × 250</td><td class="center"><code>GADBannerView</code></td><td class="center"><code>AdView</code></td><td class="muted">AdMob ad unit (IAB Medium Rectangle)</td></tr>
+          <tr><td><code>promo-sm</code></td><td>promo</td><td class="mono">131 × 126</td><td class="center">custom <code>EBAdSpace</code></td><td class="center">custom composable</td><td class="muted">4:3 image + optional caption underneath</td></tr>
+          <tr><td><code>promo-md</code></td><td>promo</td><td class="mono">224 × 200</td><td class="center">custom <code>EBAdSpace</code></td><td class="center">custom composable</td><td class="muted">3:2 image + caption</td></tr>
+          <tr><td><code>hero-sm</code></td><td>hero</td><td class="mono">296 × 174</td><td class="center">custom <code>EBAdSpace</code></td><td class="center">custom composable</td><td class="muted">17:10 image with optional caption overlay</td></tr>
+          <tr><td><code>hero-md</code></td><td>hero</td><td class="mono">336 × 174</td><td class="center">custom <code>EBAdSpace</code></td><td class="center">custom composable</td><td class="muted">15:8 image, composes in DS Carousel for multi-ad rails</td></tr>
+          <tr><td><strong><code>isLoading</code></strong></td><td>—</td><td class="muted">—</td><td class="center"><code>RedactedShape</code></td><td class="center">shimmer composable</td><td class="muted">Skeleton placeholder regardless of family; consistent surface radius per size</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="ads-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Adoption — deprecate and delete the three legacy components.</strong> Swap all Figma usages of Ads On Receipt, Ad Space - Group - Large, and Dashboard Promo Cards to <code>Ad Space</code> with the matching <code>size</code>. Delete the old components plus the Placeholder Banner and Promo Cards Images asset libraries once zero-usage is confirmed. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Asset pipeline — ship promo and hero imagery as product assets, not DS assets.</strong> Product teams export 1×/2×/3× image assets from their marketing pipeline and pass them into the <code>content</code> slot. The DS ships the container, typography, radius, and skeleton only — no imagery. This is what retires the 8-variant Placeholder Banner and 6-variant Promo Cards Images asset sets. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Carousel composition — no "Ad Carousel" component.</strong> Multi-ad rails (e.g. a horizontal row of <code>hero-md</code>) are authored as <code>&lt;Carousel&gt;&lt;AdSpace size="hero-md" /&gt;&lt;AdSpace size="hero-md" /&gt;…&lt;/Carousel&gt;</code>. The old <code>carousel=yes</code> pseudo-variant is retired because it was a static 3-card Figma preview, not a runtime carousel. Document this composition pattern in the Carousel and Ad Space guidelines. <span class="tag-recommend">Composition</span></span></li>
+      <li><span><strong>Tokens — propose a <code>main/ad-space/color/*</code> namespace.</strong> Ship <code>main/ad-space/color/surface</code> (card background), <code>main/ad-space/color/caption</code> (caption text), and <code>main/ad-space/color/loading-skeleton</code> (shimmer fill). Today the legacy components reuse generic <code>bg/color-bg-main</code> and <code>bg/color-bg-strong</code>; a dedicated namespace makes cross-family theming (dark mode, partner-branded surfaces) tractable. <span class="tag-recommend">Token</span></span></li>
+      <li><span><strong>Telemetry — bake impression and tap tracking into the native component.</strong> The iOS <code>EBAdSpace</code> view and Android composable should emit <code>onImpression</code> (50% visible for ≥1s) and <code>onTap</code> callbacks. AdMob-backed <code>banner-*</code> sizes get this for free; <code>promo-*</code> and <code>hero-*</code> need product-side reporting. Document the contract in the Code tab so consumer teams wire analytics consistently. <span class="tag-recommend">Docs</span></span></li>
+      <li><span><strong>A11y — treat ads as labeled buttons, not decorative images.</strong> Every Ad Space is tappable and leads somewhere; the whole surface must expose a single accessibility label (caption + "Advertisement" trait). Banner family should announce "Advertisement" as its accessibility hint per App Store / Play Store disclosure norms. <span class="tag-recommend">A11y</span></span></li>
+      <li><span><strong>Caption — optional, typography-constrained, never mandatory.</strong> Promo and hero families accept an optional caption string; banner family has none (AdMob renders its own chrome). Caption uses <code>Secondary/Bold/Caption</code> — one line for promo-sm, up to two lines for promo-md / hero-*. Empty caption hides the label slot; it does not reserve space. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>See siblings:</strong> <a href="#" onclick="showPanelById('carousel-card');return false;">Carousel Card</a> and the broader Carousel family — Ad Space heroes wrap inside the DS Carousel; keep skeleton treatment aligned across card primitives. <span class="tag-recommend">Family</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ══ Tab: Style ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <!-- Banner family -->
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Banner family <span class="spec-card-node">node <code>18563:9789</code></span></div>
+      </div>
+      <p class="spec-card-desc">IAB-standard banner sizes driven by AdMob. The DS provides a fixed-dimension surface with a 4px corner radius and a subtle "Ad" label marker; the ad SDK renders the creative inside the content slot.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="ads-spec-banner"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>banner-sm</span><code>320 × 50</code></div>
+          <div class="spec-detail-row"><span>banner-lg</span><code>320 × 100</code></div>
+          <div class="spec-detail-row"><span>banner-mrec</span><code>300 × 250</code></div>
+          <div class="spec-detail-row"><span>Corner radius</span><code>4 (radius/radius-1)</code></div>
+          <div class="spec-detail-row"><span>Padding</span><code>0 (ad fills surface)</code></div>
+          <div class="spec-detail-row"><span>Caption</span><span class="muted">Not used — AdMob renders chrome</span></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors by State</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>DEFAULT</th><th>LOADING</th></tr></thead>
+              <tbody>
+                <tr><td>Surface</td><td><code>ad-space/color/surface</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span><code>#FFFFFF</code></td><td><span class="swatch-dot" style="background:#EEF2F9"></span><code>#EEF2F9</code></td></tr>
+                <tr><td>Skeleton fill</td><td><code>ad-space/color/loading-skeleton</code></td><td class="muted">—</td><td><span class="swatch-dot" style="background:#EEF2F9"></span><code>#EEF2F9</code></td></tr>
+                <tr><td>"Ad" marker</td><td><code>text/color-text-subtle</code></td><td><span class="swatch-dot" style="background:#6780A9"></span><code>#6780A9</code></td><td class="muted">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>"Ad" marker style</span><code>Secondary/Bold/Caption</code></div>
+          <div class="spec-detail-row"><span>"Ad" marker font</span><code>BarkAda Semibold · 10 / 14 · +0.25</code></div>
+          <div class="spec-detail-row muted"><span>Caption</span><span>N/A — AdMob chrome</span></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Content slot</div>
+          <div class="spec-detail-row"><span>Accepts</span><span class="muted">AdMob view</span></div>
+          <div class="spec-detail-row"><span>iOS</span><code>GADBannerView</code></div>
+          <div class="spec-detail-row"><span>Android</span><code>AdView</code></div>
+          <div class="spec-detail-row"><span>IAB size mapping</span><span class="muted">Mobile Banner / Large Banner / MREC</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Promo family -->
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Promo family <span class="spec-card-node">node <code>18563:9917</code></span></div>
+      </div>
+      <p class="spec-card-desc">Product-owned dashboard tiles. Image fills the upper portion; an optional caption sits beneath. Both sizes ship with the same caption typography and 8px corner radius — they differ only in image aspect ratio.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="ads-spec-promo"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>promo-sm</span><code>131 × 126</code></div>
+          <div class="spec-detail-row"><span>promo-md</span><code>224 × 200</code></div>
+          <div class="spec-detail-row"><span>Image aspect (sm)</span><code>4:3 (131 × 98)</code></div>
+          <div class="spec-detail-row"><span>Image aspect (md)</span><code>3:2 (224 × 150)</code></div>
+          <div class="spec-detail-row"><span>Corner radius</span><code>8 (radius/radius-2)</code></div>
+          <div class="spec-detail-row"><span>Caption padding</span><code>8 horizontal, 6 vertical</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors by State</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>DEFAULT</th><th>LOADING</th></tr></thead>
+              <tbody>
+                <tr><td>Surface</td><td><code>ad-space/color/surface</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span><code>#FFFFFF</code></td><td><span class="swatch-dot" style="background:#EEF2F9"></span><code>#EEF2F9</code></td></tr>
+                <tr><td>Caption</td><td><code>ad-space/color/caption</code></td><td><span class="swatch-dot" style="background:#2340A9"></span><code>#2340A9</code></td><td class="muted">—</td></tr>
+                <tr><td>Image placeholder</td><td><code>ad-space/color/loading-skeleton</code></td><td><span class="swatch-dot" style="background:#E6E1EF"></span><code>#E6E1EF</code></td><td><span class="swatch-dot" style="background:#EEF2F9"></span><code>#EEF2F9</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>Caption style</span><code>Secondary/Bold/Caption</code></div>
+          <div class="spec-detail-row"><span>Caption font</span><code>BarkAda Semibold · 12 / 16 · 0</code></div>
+          <div class="spec-detail-row"><span>Max lines</span><code>1 (sm) · 2 (md)</code></div>
+          <div class="spec-detail-row"><span>Overflow</span><code>truncate with ellipsis</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Content slot</div>
+          <div class="spec-detail-row"><span>Accepts</span><span class="muted">Image or illustration</span></div>
+          <div class="spec-detail-row"><span>iOS</span><code>AsyncImage</code> in <code>EBAdSpace</code></div>
+          <div class="spec-detail-row"><span>Android</span><code>AsyncImage</code> in composable</div>
+          <div class="spec-detail-row"><span>Caption prop</span><code>caption: String?</code></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero family -->
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Hero family <span class="spec-card-node">node <code>18563:9808</code></span></div>
+      </div>
+      <p class="spec-card-desc">Full-width hero banners for home and category surfaces. <code>hero-sm</code> fits a narrow (296) column; <code>hero-md</code> fits standard 336 content width and is the canonical item inside a DS Carousel for multi-ad rails.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="ads-spec-hero"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>hero-sm</span><code>296 × 174</code></div>
+          <div class="spec-detail-row"><span>hero-md</span><code>336 × 174</code></div>
+          <div class="spec-detail-row"><span>Image aspect (sm)</span><code>17:10</code></div>
+          <div class="spec-detail-row"><span>Image aspect (md)</span><code>15:8</code></div>
+          <div class="spec-detail-row"><span>Corner radius</span><code>12 (radius/radius-3)</code></div>
+          <div class="spec-detail-row"><span>Caption padding</span><code>12 horizontal, 8 vertical</code></div>
+          <div class="spec-detail-row"><span>Carousel</span><code>DS Carousel container</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors by State</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>DEFAULT</th><th>LOADING</th></tr></thead>
+              <tbody>
+                <tr><td>Surface</td><td><code>ad-space/color/surface</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span><code>#FFFFFF</code></td><td><span class="swatch-dot" style="background:#EEF2F9"></span><code>#EEF2F9</code></td></tr>
+                <tr><td>Caption (overlay)</td><td><code>ad-space/color/caption</code></td><td><span class="swatch-dot" style="background:#FFFFFF"></span><code>#FFFFFF</code></td><td class="muted">—</td></tr>
+                <tr><td>Caption scrim</td><td><code>overlay/scrim-bottom</code></td><td><span class="swatch-dot" style="background:#040506"></span><code>#040506</code> 0→40%</td><td class="muted">—</td></tr>
+                <tr><td>Image placeholder</td><td><code>ad-space/color/loading-skeleton</code></td><td><span class="swatch-dot" style="background:#E6E1EF"></span><code>#E6E1EF</code></td><td><span class="swatch-dot" style="background:#EEF2F9"></span><code>#EEF2F9</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>Caption style</span><code>Primary/Headlines/Block</code></div>
+          <div class="spec-detail-row"><span>Caption font</span><code>Proxima Soft Bold · 16 / 20 · +0.25</code></div>
+          <div class="spec-detail-row"><span>Max lines</span><code>2</code></div>
+          <div class="spec-detail-row"><span>Position</span><code>Overlay on lower third</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Content slot</div>
+          <div class="spec-detail-row"><span>Accepts</span><span class="muted">Image or illustration</span></div>
+          <div class="spec-detail-row"><span>iOS</span><code>AsyncImage</code> in <code>EBAdSpace</code></div>
+          <div class="spec-detail-row"><span>Android</span><code>AsyncImage</code> in composable</div>
+          <div class="spec-detail-row"><span>Multi-ad rail</span><code>&lt;Carousel&gt;&lt;AdSpace size="hero-md"/&gt;…&lt;/Carousel&gt;</code></div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- ══ Tab: Code ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="ads-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'ads-install','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'ads-install','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">.<span class="fn">package</span>(<span class="prp">url</span>: <span class="str">"https://github.com/gcash/eb-design-system-ios"</span>, <span class="prp">from</span>: <span class="str">"1.0.0"</span>)
+.<span class="fn">package</span>(<span class="prp">url</span>: <span class="str">"https://github.com/googleads/swift-package-manager-google-mobile-ads"</span>, <span class="prp">from</span>: <span class="str">"11.0.0"</span>)
+
+<span class="kw">import</span> EBDesignSystem
+<span class="kw">import</span> GoogleMobileAds</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">implementation(<span class="str">"com.gcash.designsystem:eb-components:1.0.0"</span>)
+implementation(<span class="str">"com.google.android.gms:play-services-ads:23.0.0"</span>)
+
+<span class="kw">import</span> com.gcash.designsystem.components.EBAdSpace
+<span class="kw">import</span> com.google.android.gms.ads.AdView</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="ads-mapping">Property Mapping</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma</th><th>SwiftUI</th><th>Compose</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>size: banner-sm | banner-lg | banner-mrec | promo-sm | promo-md | hero-sm | hero-md</code></td><td><code>size: EBAdSpaceSize</code></td><td><code>size: EBAdSpaceSize</code></td><td class="muted">Single enum, grouped into 3 families at the type level.</td></tr>
+          <tr><td><code>isLoading: Boolean</code></td><td><code>isLoading: Bool</code></td><td><code>isLoading: Boolean</code></td><td class="muted">Drives skeleton treatment regardless of family.</td></tr>
+          <tr><td><code>content: Frame</code> (slot)</td><td><code>content: () -&gt; AnyView</code></td><td><code>content: @Composable () -&gt; Unit</code></td><td class="muted">Accepts AdMob view (banner), image (promo/hero), or illustration.</td></tr>
+          <tr><td><code>caption: String?</code></td><td><code>caption: String?</code></td><td><code>caption: String?</code></td><td class="muted">Optional. Ignored for <code>banner-*</code>.</td></tr>
+          <tr><td class="muted">(not modeled)</td><td><code>onImpression: (() -&gt; Void)?</code></td><td><code>onImpression: (() -&gt; Unit)?</code></td><td class="muted">Fires when 50% visible for ≥1s. Telemetry hook.</td></tr>
+          <tr><td class="muted">(not modeled)</td><td><code>onTap: (() -&gt; Void)?</code></td><td><code>onClick: (() -&gt; Unit)?</code></td><td class="muted">Tap callback. AdMob handles its own for banner-*.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="ads-paths">Suggested file paths</div>
+    <ul class="resolved-list">
+      <li><code>ios/Components/AdSpace/EBAdSpace.swift</code></li>
+      <li><code>ios/Components/AdSpace/EBAdSpaceSize.swift</code></li>
+      <li><code>ios/Components/AdSpace/EBAdSpaceBanner.swift</code> <span class="muted">— wraps <code>GADBannerView</code></span></li>
+      <li><code>android/components/adspace/EBAdSpace.kt</code></li>
+      <li><code>android/components/adspace/EBAdSpaceSize.kt</code></li>
+      <li><code>android/components/adspace/EBAdSpaceBanner.kt</code> <span class="muted">— wraps <code>AdView</code></span></li>
+    </ul>
+
+    <div class="sub-heading" id="ads-usage-banner">Usage — Banner family (AdMob)</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'ads-usage-banner','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'ads-usage-banner','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// IAB Mobile Banner (320×50) on a receipt</span>
+<span class="typ">EBAdSpace</span>(<span class="prp">size</span>: .bannerSm) {
+    <span class="typ">GADBannerViewRepresentable</span>(<span class="prp">adUnitID</span>: <span class="str">"ca-app-pub-…/receipt-bottom"</span>)
+}
+
+<span class="cmt">// MREC (300×250) inline</span>
+<span class="typ">EBAdSpace</span>(<span class="prp">size</span>: .bannerMrec) {
+    <span class="typ">GADBannerViewRepresentable</span>(<span class="prp">adUnitID</span>: <span class="str">"ca-app-pub-…/inline-mrec"</span>)
+}</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// IAB Mobile Banner (320×50) on a receipt</span>
+<span class="typ">EBAdSpace</span>(size = <span class="typ">EBAdSpaceSize</span>.BannerSm) {
+    <span class="typ">AndroidView</span>(factory = { ctx -&gt;
+        <span class="typ">AdView</span>(ctx).apply {
+            adUnitId = <span class="str">"ca-app-pub-…/receipt-bottom"</span>
+            setAdSize(<span class="typ">AdSize</span>.BANNER)
+            loadAd(<span class="typ">AdRequest</span>.Builder().build())
+        }
+    })
+}</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="ads-usage-promo">Usage — Promo family (dashboard tile)</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'ads-usage-promo','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'ads-usage-promo','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Dashboard tile, 131×126</span>
+<span class="typ">EBAdSpace</span>(
+    <span class="prp">size</span>: .promoSm,
+    <span class="prp">caption</span>: <span class="str">"Send money free"</span>,
+    <span class="prp">onTap</span>: { openPromo(promo) }
+) {
+    <span class="typ">AsyncImage</span>(url: promo.coverURL)
+}
+
+<span class="cmt">// Larger dashboard tile, 224×200</span>
+<span class="typ">EBAdSpace</span>(
+    <span class="prp">size</span>: .promoMd,
+    <span class="prp">caption</span>: <span class="str">"Earn up to 5% on savings"</span>,
+    <span class="prp">onTap</span>: { openPromo(promo) }
+) {
+    <span class="typ">AsyncImage</span>(url: promo.coverURL)
+}</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBAdSpace</span>(
+    size = <span class="typ">EBAdSpaceSize</span>.PromoMd,
+    caption = <span class="str">"Earn up to 5% on savings"</span>,
+    onClick = { openPromo(promo) }
+) {
+    <span class="typ">AsyncImage</span>(
+        model = promo.coverURL,
+        contentDescription = <span class="kw">null</span>
+    )
+}</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="ads-usage-hero">Usage — Hero family (full-width + carousel)</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'ads-usage-hero','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'ads-usage-hero','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Single hero</span>
+<span class="typ">EBAdSpace</span>(
+    <span class="prp">size</span>: .heroMd,
+    <span class="prp">caption</span>: <span class="str">"Weekend deals are here"</span>,
+    <span class="prp">onTap</span>: { openHero(hero) }
+) {
+    <span class="typ">AsyncImage</span>(url: hero.coverURL)
+}
+
+<span class="cmt">// Multi-ad rail — compose inside the DS Carousel</span>
+<span class="typ">EBCarousel</span> {
+    <span class="kw">ForEach</span>(heroes) { hero <span class="kw">in</span>
+        <span class="typ">EBAdSpace</span>(<span class="prp">size</span>: .heroMd, <span class="prp">caption</span>: hero.title) {
+            <span class="typ">AsyncImage</span>(url: hero.coverURL)
+        }
+    }
+}</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Multi-ad rail — compose inside the DS Carousel</span>
+<span class="typ">EBCarousel</span> {
+    heroes.forEach { hero -&gt;
+        <span class="typ">EBAdSpace</span>(
+            size = <span class="typ">EBAdSpaceSize</span>.HeroMd,
+            caption = hero.title,
+            onClick = { openHero(hero) }
+        ) {
+            <span class="typ">AsyncImage</span>(
+                model = hero.coverURL,
+                contentDescription = <span class="kw">null</span>
+            )
+        }
+    }
+}</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="ads-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Ad disclosure</strong></td><td class="muted">Add <code>.accessibilityHint("Advertisement")</code> so VoiceOver announces the trait alongside the caption.</td><td class="muted">Set <code>Modifier.semantics { contentDescription = "Advertisement, ${caption}" }</code>.</td></tr>
+          <tr><td><strong>Ad as a single button</strong></td><td class="muted">Whole surface wrapped in <code>Button { onTap() }</code> with <code>accessibilityElement(children: .combine)</code>.</td><td class="muted"><code>Modifier.clickable { onClick() }.semantics(mergeDescendants = true)</code>.</td></tr>
+          <tr><td><strong>Image alt</strong></td><td class="muted">Banner content is decorative from a11y's perspective — caption carries the meaning.</td><td class="muted"><code>contentDescription = null</code> on the inner image; caption carries meaning.</td></tr>
+          <tr><td><strong>Min touch target</strong></td><td class="muted">All seven sizes exceed 44 pt height ✓</td><td class="muted">All seven sizes exceed 48 dp height ✓</td></tr>
+          <tr><td><strong>Loading state</strong></td><td class="muted"><code>accessibilityLabel("Loading advertisement")</code> on the skeleton; suppress individual shimmer announcements.</td><td class="muted"><code>contentDescription = "Loading advertisement"</code> on the skeleton container.</td></tr>
+          <tr><td><strong>Focus ring</strong></td><td class="muted"><code>.focused()</code> → 2 px outline using <code>border/focus</code> token for iPad keyboard nav.</td><td class="muted"><code>Modifier.focusable()</code> + border in <code>border/focus</code>.</td></tr>
+          <tr><td><strong>AdMob compliance</strong></td><td class="muted">Google Mobile Ads SDK handles its own a11y metadata for <code>banner-*</code> — do not override.</td><td class="muted">Google Mobile Ads SDK handles its own a11y metadata for <code>banner-*</code> — do not override.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="ads-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Use <code>banner-*</code> for AdMob-served placements and <code>promo-*</code> / <code>hero-*</code> for product-owned creative.</li>
+          <li>Show <code>isLoading=true</code> while the ad SDK or image is fetching — never a blank surface.</li>
+          <li>Wrap multiple <code>hero-md</code>s in the DS <code>EBCarousel</code> for a rail — one Ad Space per card.</li>
+          <li>Pass real imagery through the <code>content</code> slot; ship assets from the product layer.</li>
+          <li>Fire <code>onImpression</code> for product-owned placements so analytics matches AdMob's own tracking.</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't create a dedicated "Ad Carousel" component — compose inside <code>EBCarousel</code> instead.</li>
+          <li>Don't ship placeholder imagery from the DS — the <code>content</code> slot is the only source of media.</li>
+          <li>Don't use <code>banner-*</code> for product creative — it reserves AdMob dimensions and chrome expectations.</li>
+          <li>Don't add a caption to <code>banner-*</code> — AdMob renders its own chrome inside the creative.</li>
+          <li>Don't override AdMob's own tap handling on <code>banner-*</code>; the SDK drives navigation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="ads-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Single <code>Ad Space</code> component, semantic frame naming (<code>surface</code>, <code>content</code>, <code>caption</code>). No legacy "Group"/"Large"/"hifi"/"midfi" baggage.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">One <code>size</code> enum, one <code>isLoading</code> boolean, one <code>caption</code> string. Content and state axes are orthogonal.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Proposes a <code>main/ad-space/color/*</code> namespace (surface, caption, loading-skeleton) plus <code>radius/radius-1|2|3</code> per family. All typography bound to DS text styles.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted"><code>banner-*</code> maps 1:1 to <code>GADBannerView</code> / <code>AdView</code>. <code>promo-*</code> / <code>hero-*</code> map to <code>EBAdSpace</code> (ZStack/Box image + optional caption). Carousel composition reuses <code>EBCarousel</code>.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Default, pressed, focused, disabled, and loading states all modeled. Loading is an orthogonal boolean, not a variant.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">No DS-side assets. Content flows through the slot; placeholder libraries are retired.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Clean single-component mapping: <code>EBAdSpace</code> with enum <code>size</code>, boolean <code>isLoading</code>, slot <code>content</code>, string <code>caption</code>. 1:1 param mapping to both platforms.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="ads-cc">Code Connect</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspect</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Property naming</td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Clean: <code>size</code> (7), <code>isLoading</code> (bool), <code>caption</code> (string), <code>content</code> (slot).</td></tr>
+          <tr><td>Token coverage</td><td><span class="badge badge-ready">Ready</span></td><td class="muted"><code>main/ad-space/color/*</code> namespace proposed; all colors and radii bound.</td></tr>
+          <tr><td>State coverage</td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Default + loading modeled; pressed/focused handled at the native layer.</td></tr>
+          <tr><td>Native component file</td><td><span class="badge badge-refine">Pending</span></td><td class="muted">EBAdSpace.swift / EBAdSpace.kt not yet published — Planned API.</td></tr>
+          <tr><td>AdMob SDK wiring</td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Google Mobile Ads SPM + Gradle dependencies documented in Installation.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="ads-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(7 total)</span></div>
+    <p>One <code>size</code> enum with 7 values across 3 size families. <code>isLoading</code> is an orthogonal boolean, not a variant (would otherwise double the count to 14). <code>caption</code> is optional input, not a variant.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Family</th><th>Size value</th><th>Dimensions</th><th>Aspect</th><th>Corner radius</th><th>Content slot</th></tr></thead>
+        <tbody>
+          <tr><td><strong>banner</strong></td><td><code>banner-sm</code></td><td class="mono">320 × 50</td><td class="mono">32:5</td><td class="mono">4</td><td class="muted">AdMob · IAB Mobile Banner</td></tr>
+          <tr><td><strong>banner</strong></td><td><code>banner-lg</code></td><td class="mono">320 × 100</td><td class="mono">16:5</td><td class="mono">4</td><td class="muted">AdMob · IAB Large Banner</td></tr>
+          <tr><td><strong>banner</strong></td><td><code>banner-mrec</code></td><td class="mono">300 × 250</td><td class="mono">6:5</td><td class="mono">4</td><td class="muted">AdMob · IAB MREC</td></tr>
+          <tr><td><strong>promo</strong></td><td><code>promo-sm</code></td><td class="mono">131 × 126</td><td class="mono">4:3 (image)</td><td class="mono">8</td><td class="muted">Image + 1-line caption</td></tr>
+          <tr><td><strong>promo</strong></td><td><code>promo-md</code></td><td class="mono">224 × 200</td><td class="mono">3:2 (image)</td><td class="mono">8</td><td class="muted">Image + up to 2-line caption</td></tr>
+          <tr><td><strong>hero</strong></td><td><code>hero-sm</code></td><td class="mono">296 × 174</td><td class="mono">17:10</td><td class="mono">12</td><td class="muted">Image + optional caption overlay</td></tr>
+          <tr><td><strong>hero</strong></td><td><code>hero-md</code></td><td class="mono">336 × 174</td><td class="mono">15:8</td><td class="mono">12</td><td class="muted">Image + caption; default Carousel item</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- ══ Tab: Changelog ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+
+    <div class="sub-heading" id="ads-v100" style="margin-top:0">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Canonical consolidation — node 18563:9789</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Consolidates Ads On Receipt, Ad Space - Group - Large, Dashboard Promo Cards</strong> — 3 source components (5 total with the Placeholder Banner and Promo Cards Images asset libraries) collapse into a single <code>Ad Space</code> with a 7-value <code>size</code> enum grouped into three families: <code>banner</code> (IAB / AdMob), <code>promo</code> (dashboard tile), <code>hero</code> (full-width).
+          <span class="tag-fixed">Initial</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Family</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>C1 — Component splintering resolved</strong> — Ads On Receipt (18563:9789), Ad Space - Group - Large (18563:9808), and Dashboard Promo Cards (18563:9917) merged into one component. Legacy components marked for deletion post-adoption.
+          <span class="tag-fixed">Resolved</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C1</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>C2 — hifi/midfi fidelity axis retired</strong> — Legacy <code>type=hifi | midfi</code> was a placeholder-authoring crutch, not a runtime variant. Replaced with an orthogonal <code>isLoading</code> boolean. Content flows through the <code>content</code> slot regardless of state.
+          <span class="tag-fixed">Resolved</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C2</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>C4 — <code>carousel=yes</code> pseudo-variant retired</strong> — The legacy "carousel preview" variant was a static 3-card Figma layout, not a runtime carousel. Multi-ad rails are now authored by composing multiple <code>AdSpace size="hero-md"</code> instances inside the DS <code>EBCarousel</code>.
+          <span class="tag-fixed">Resolved</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C4</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>C6 — Placeholder asset libraries retired</strong> — Placeholder Banner (18563:9937, 8 variants) and Promo Cards Images (18563:9928) no longer ship. Media flows through the <code>content</code> slot; product teams provide imagery from their own asset pipeline.
+          <span class="tag-fixed">Resolved</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C6</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>C7 — 1:1 native mapping</strong> — <code>banner-*</code> sizes map to <code>GADBannerView</code> / <code>AdView</code>. <code>promo-*</code> / <code>hero-*</code> map to a single <code>EBAdSpace</code> view/composable. Clean enum, boolean, string, slot signatures ready for Code Connect CLI registration.
+          <span class="tag-fixed">Resolved</span>
+        </div>
+        <span class="changelog-delta delta-resolved">C7</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Token namespace proposed</strong> — <code>main/ad-space/color/surface</code>, <code>main/ad-space/color/caption</code>, <code>main/ad-space/color/loading-skeleton</code>. Replaces ad-hoc use of generic surface tokens across the legacy trio.
+          <span class="tag-fixed">Initial</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Tokens</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Telemetry contract added</strong> — Native component exposes <code>onImpression</code> (50% visible ≥1s) and <code>onTap</code>. AdMob-backed <code>banner-*</code> inherits the SDK's tracking; product-owned <code>promo-*</code> / <code>hero-*</code> wire consumer analytics via the callbacks.
+          <span class="tag-fixed">Initial</span>
+        </div>
+        <span class="changelog-delta delta-resolved">API</span>
+      </div>
+    </div>
+
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-ad-space">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-ad-space"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Ad Space JS ────────────────────────────────────────────── */
+/* Canonical consolidated component. 7 sizes across 3 families:
+   banner-sm | banner-lg | banner-mrec  (AdMob)
+   promo-sm  | promo-md                  (dashboard tile)
+   hero-sm   | hero-md                   (full-width hero)
+   Orthogonal isLoading boolean; optional caption string (promo/hero only). */
+
+var _adsSizes = {
+  'banner-sm':   { w: 320, h:  50, family: 'banner', aspect: '320×50',  captionAllowed: false },
+  'banner-lg':   { w: 320, h: 100, family: 'banner', aspect: '320×100', captionAllowed: false },
+  'banner-mrec': { w: 300, h: 250, family: 'banner', aspect: '300×250', captionAllowed: false },
+  'promo-sm':    { w: 131, h: 126, family: 'promo',  aspect: '131×126', captionAllowed: true  },
+  'promo-md':    { w: 224, h: 200, family: 'promo',  aspect: '224×200', captionAllowed: true  },
+  'hero-sm':     { w: 296, h: 174, family: 'hero',   aspect: '296×174', captionAllowed: true  },
+  'hero-md':     { w: 336, h: 174, family: 'hero',   aspect: '336×174', captionAllowed: true  }
+};
+
+function _adsEscape(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* Scale so previews fit the demo frame without exceeding ~340px wide or ~250 tall */
+function _adsScale(w, h) {
+  var maxW = 340, maxH = 250;
+  var s = Math.min(maxW / w, maxH / h, 1);
+  return s;
+}
+
+function _adsRender(opts) {
+  var sizeKey = opts.size || 'promo-md';
+  var s = _adsSizes[sizeKey] || _adsSizes['promo-md'];
+  var loading = !!opts.loading;
+  var caption = opts.caption || '';
+  var scale = _adsScale(s.w, s.h);
+  var w = Math.round(s.w * scale);
+  var h = Math.round(s.h * scale);
+
+  var cls = 'eb-preview-adspace eb-preview-adspace--' + s.family + ' eb-preview-adspace--' + sizeKey;
+  if (loading) cls += ' eb-preview-adspace--loading';
+
+  var style = 'width:' + w + 'px;height:' + h + 'px;';
+
+  var html = '<div class="' + cls + '" style="' + style + '">';
+
+  if (loading) {
+    html += '<div class="eb-preview-adspace__skeleton"></div>';
+  } else if (s.family === 'banner') {
+    html += '<div class="eb-preview-adspace__banner-fill">';
+    html += '<span class="eb-preview-adspace__banner-label">Ad</span>';
+    html += '<span class="eb-preview-adspace__banner-dim">' + s.aspect + '</span>';
+    html += '</div>';
+  } else if (s.family === 'promo') {
+    html += '<div class="eb-preview-adspace__image"><span class="eb-preview-adspace__image-label">Replace me · ' + s.aspect + '</span></div>';
+    if (caption) {
+      html += '<div class="eb-preview-adspace__caption eb-preview-adspace__caption--below">' + _adsEscape(caption) + '</div>';
+    }
+  } else if (s.family === 'hero') {
+    html += '<div class="eb-preview-adspace__image eb-preview-adspace__image--full"><span class="eb-preview-adspace__image-label">Replace me · ' + s.aspect + '</span></div>';
+    if (caption) {
+      html += '<div class="eb-preview-adspace__caption eb-preview-adspace__caption--overlay">' + _adsEscape(caption) + '</div>';
+    }
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function _adsContextMarkup() {
+  return '<div class="eb-preview-stack eb-preview-stack--col eb-preview-stack--gap-md">' +
+    '<div class="eb-preview-stack eb-preview-stack--row eb-preview-stack--gap-sm">' +
+      _adsRender({size:'banner-sm'}) +
+    '</div>' +
+    '<div class="eb-preview-stack eb-preview-stack--row eb-preview-stack--gap-sm">' +
+      _adsRender({size:'promo-sm', caption:'Send free'}) +
+      _adsRender({size:'promo-md', caption:'Earn up to 5%'}) +
+    '</div>' +
+    '<div class="eb-preview-stack eb-preview-stack--row eb-preview-stack--gap-sm">' +
+      _adsRender({size:'hero-md', caption:'Weekend deals'}) +
+    '</div>' +
+  '</div>';
+}
+
+function _adsUpdate() {
+  var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
+  var preview = document.getElementById('ads-demo-preview');
+  if (!preview) return;
+  var size = getVal('ads-ctrl-size', 'promo-md');
+  var loading = getVal('ads-ctrl-loading', 'false') === 'true';
+  var cap = getVal('ads-ctrl-caption', 'Offer title');
+  var captionAllowed = (_adsSizes[size] || {}).captionAllowed;
+  preview.innerHTML = _adsRender({
+    size: size,
+    loading: loading,
+    caption: captionAllowed ? cap : ''
+  });
+}
+
+function _adsInit() {
+  var ctx = document.getElementById('ads-context-preview');
+  if (ctx) ctx.innerHTML = _adsContextMarkup();
+  _adsUpdate();
+
+  var sb = document.getElementById('ads-spec-banner');
+  if (sb) sb.innerHTML =
+    '<div class="eb-preview-stack eb-preview-stack--col eb-preview-stack--gap-sm">' +
+      _adsRender({size:'banner-sm'}) +
+      _adsRender({size:'banner-lg'}) +
+      _adsRender({size:'banner-mrec'}) +
+    '</div>';
+
+  var sp = document.getElementById('ads-spec-promo');
+  if (sp) sp.innerHTML =
+    '<div class="eb-preview-stack eb-preview-stack--row eb-preview-stack--gap-sm">' +
+      _adsRender({size:'promo-sm', caption:'Send free'}) +
+      _adsRender({size:'promo-md', caption:'Earn up to 5% on savings'}) +
+    '</div>';
+
+  var sh = document.getElementById('ads-spec-hero');
+  if (sh) sh.innerHTML =
+    '<div class="eb-preview-stack eb-preview-stack--col eb-preview-stack--gap-sm">' +
+      _adsRender({size:'hero-sm', caption:'Featured offer'}) +
+      _adsRender({size:'hero-md', caption:'Weekend deals are here'}) +
+    '</div>';
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _adsInit);
+else _adsInit();
+</script>
+
+<!--@section-end-->

@@ -290,6 +290,8 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | Component | Node | Variants | DS | Native | Open |
 |---|---|---|---|---|---|
 | Accordion | `16870:9288` | 6 | Keep | Refine | C7 |
+| **Ads** | | | | | |
+| Ad Space | `18563:9789` | 7 | Keep | Ready | none |
 | Alert | `18444:2012` | 20 | Fix | Refine | C1,C2,C5,C6,C7 |
 | **Avatar** | | | | | |
 | Avatar | `17143:4488` | 21 | Keep | Refine | C2,C7 |
@@ -299,6 +301,10 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | **Card** | | | | | |
 | Generic Card | `18482:35806` | 12 | Fix | Refine | C2,C5,C6,C7 |
 | Generic Transaction Card | `18482:35753` | 5 | Restructure | Refine | C1,C2,C5,C7 |
+| **Carousel** | | | | | |
+| Carousel Card | `23:121311` | 3 | Restructure | Rework | C2,C5,C6,C7 |
+| Carousel - Discount Card | `18543:2761` | 3 | Consolidate | Refine | C1,C2,C4,C5,C6,C7 |
+| Carousel - Item | `18543:2806` | 10 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
 | Checkbox | `17143:2464` | 33 | Keep | Refine | C7 |
 | Counter | `18482:71321` | 4 | Fix | Refine | C2,C5,C7 |
 | **Dropdown** | | | | | |
