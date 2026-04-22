@@ -1,0 +1,558 @@
+<!--
+  TABLE COMPONENT ASSESSMENT
+  Three nested components (Table, Table - Item, Table - Label) that together form tabular rows.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 47:326260
+ds-verdict: restructure
+native-status: rework
+variants: 9
+ios: LazyVStack / List of EBTableRow (no native iPhone Table primitive)
+android: LazyColumn of EBTableRow (Material has no Table primitive)
+open-issues: C1,C2,C4,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] Table is split into three component records (Table, Table - Item, Table - Label) but only the parent is consumed in screens — Item and Label exist as orphan sub-components that never get placed directly.
+[C2] `no. of columns` uses string values ("2"/"3"/"4") with a period in the property name — must be renamed to an integer `columnCount` or removed in favor of a data-driven API.
+[C4] "Table" is a desktop-web pattern. On mobile, tabular data is either a vertical stack of label/value pairs (Inline Text) or a horizontally-scrollable list — no native iOS/Android primitive matches the current layout.
+[C5] No interaction states (hover/pressed/selected) on rows. Pattern-level screens place Tables as static rows with no tap target.
+[C6] Header `icon=yes` variants render a raw `#C2C6CF` placeholder circle — not a real vector slot or instance-swap. Consumers have no documented way to set the icon.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Table<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-table" onclick="showPanel('table', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Table</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('table')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="6" y="6" width="68" height="10" rx="1.5" fill="#E5EBF4"/>
+      <rect x="10" y="9" width="14" height="4" rx="1" fill="#0A2757"/>
+      <rect x="30" y="9" width="10" height="4" rx="1" fill="#0A2757" opacity=".7"/>
+      <rect x="44" y="9" width="10" height="4" rx="1" fill="#0A2757" opacity=".7"/>
+      <rect x="58" y="9" width="10" height="4" rx="1" fill="#0A2757" opacity=".7"/>
+      <rect x="10" y="22" width="14" height="3" rx="1" fill="#0A2757"/>
+      <rect x="30" y="22" width="10" height="3" rx="1" fill="#6780A9"/>
+      <rect x="44" y="22" width="10" height="3" rx="1" fill="#6780A9"/>
+      <rect x="58" y="22" width="10" height="3" rx="1" fill="#6780A9"/>
+      <rect x="10" y="30" width="14" height="3" rx="1" fill="#0A2757"/>
+      <rect x="30" y="30" width="10" height="3" rx="1" fill="#6780A9"/>
+      <rect x="44" y="30" width="10" height="3" rx="1" fill="#6780A9"/>
+      <rect x="58" y="30" width="10" height="3" rx="1" fill="#6780A9"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Table</div>
+      <span class="badge badge-rework">Restructure</span>
+    </div>
+    <div class="summary-card-desc">Row-based tabular layout with header + content variants. Three nested components (Table, Table - Item, Table - Label) that likely collapse into one data-driven row.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Table</strong></td>
+  <td><span class="badge badge-rework">Restructure</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">9</td>
+  <td class="muted">3-component family (Table, Table - Item, Table - Label) composed into rows. Variants are a matrix of <code>type</code> × <code>no. of columns</code> × <code>icon</code>. Should collapse into a data-driven row and be evaluated against List + Inline Text for mobile contexts.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-table">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Table
+          <span class="badge badge-rework">Restructure</span>
+          <span class="badge badge-rework">Requires Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=47-326260" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A tabular row primitive rendered as a 360px-wide strip with a label column and 1–3 right-aligned description columns. Published as a 9-variant component matrix (<code>type</code>: header/content · <code>no. of columns</code>: 2/3/4 · <code>icon</code>: yes/no — icon only applies to headers). Two orphan sub-components <strong>Table - Item</strong> and <strong>Table - Label</strong> are defined but never placed directly in screens.</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Collapse the family and rethink Table on mobile</div>
+          <div class="verdict-inline-text">The 3-component setup (Table + Table - Item + Table - Label) hardcodes a column-count variant matrix that doesn't scale. On mobile, tabular data almost always renders as a vertical stack of label/value pairs — which is exactly what the existing <strong>Inline Text</strong> component already does. Evaluate whether Table should ship as a DS primitive at all, or be reserved for true data-dense desktop contexts while mobile screens compose <code>List</code> + <code>Inline Text</code> rows instead. If Table stays, collapse the matrix into a single data-driven row (<code>columns: [Column]</code>) with named <code>leading</code> / <code>trailing</code> slots and optional per-row icon.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="table-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'table-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'table-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'table-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'table-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="table-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Sticker sheet shows Table instances stacked on a Template Screen to build a static 6-row pattern — 1 header row + 5 content rows. No scroll, no sort, no selection.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="220" height="130" viewBox="0 0 220 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="40" y="6" width="140" height="120" rx="10" stroke="currentColor" stroke-width="1.2" opacity=".2"/>
+          <rect x="40" y="6" width="140" height="18" rx="10" fill="#005CE5" opacity=".85"/>
+          <rect x="40" y="14" width="140" height="10" fill="#005CE5" opacity=".85"/>
+          <text x="110" y="18" text-anchor="middle" fill="#FFF" font-size="7" font-weight="700" font-family="system-ui">Title</text>
+          <!-- Header row -->
+          <rect x="40" y="28" width="140" height="16" fill="#F6F9FD"/>
+          <text x="46" y="38" fill="#0A2757" font-size="5" font-weight="700" font-family="system-ui">Header</text>
+          <text x="94" y="38" text-anchor="middle" fill="#0A2757" font-size="5" font-weight="600" font-family="system-ui">Column</text>
+          <text x="128" y="38" text-anchor="middle" fill="#0A2757" font-size="5" font-weight="600" font-family="system-ui">Column</text>
+          <text x="162" y="38" text-anchor="middle" fill="#0A2757" font-size="5" font-weight="600" font-family="system-ui">Column</text>
+          <line x1="40" y1="44" x2="180" y2="44" stroke="#E5EBF4"/>
+          <!-- Content rows -->
+          <text x="46" y="54" fill="#0A2757" font-size="5" font-weight="700" font-family="system-ui">Label</text>
+          <text x="94" y="54" text-anchor="middle" fill="#0A2757" font-size="5" font-family="system-ui">Desc</text>
+          <text x="128" y="54" text-anchor="middle" fill="#0A2757" font-size="5" font-family="system-ui">Desc</text>
+          <text x="162" y="54" text-anchor="middle" fill="#0A2757" font-size="5" font-family="system-ui">Desc</text>
+          <text x="46" y="66" fill="#0A2757" font-size="5" font-weight="700" font-family="system-ui">Label</text>
+          <text x="94" y="66" text-anchor="middle" fill="#0A2757" font-size="5" font-family="system-ui">Desc</text>
+          <text x="128" y="66" text-anchor="middle" fill="#0A2757" font-size="5" font-family="system-ui">Desc</text>
+          <text x="162" y="66" text-anchor="middle" fill="#0A2757" font-size="5" font-family="system-ui">Desc</text>
+          <text x="46" y="78" fill="#0A2757" font-size="5" font-weight="700" font-family="system-ui">Label</text>
+          <text x="94" y="78" text-anchor="middle" fill="#0A2757" font-size="5" font-family="system-ui">Desc</text>
+          <text x="128" y="78" text-anchor="middle" fill="#0A2757" font-size="5" font-family="system-ui">Desc</text>
+          <text x="162" y="78" text-anchor="middle" fill="#0A2757" font-size="5" font-family="system-ui">Desc</text>
+          <text x="46" y="90" fill="#0A2757" font-size="5" font-weight="700" font-family="system-ui">Label</text>
+          <text x="94" y="90" text-anchor="middle" fill="#0A2757" font-size="5" font-family="system-ui">Desc</text>
+          <text x="128" y="90" text-anchor="middle" fill="#0A2757" font-size="5" font-family="system-ui">Desc</text>
+          <text x="162" y="90" text-anchor="middle" fill="#0A2757" font-size="5" font-family="system-ui">Desc</text>
+          <rect x="56" y="104" width="108" height="14" rx="7" fill="#005CE5"/>
+          <text x="110" y="114" text-anchor="middle" fill="#FFF" font-size="6" font-weight="700" font-family="system-ui">Label</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="table-preview">Live Preview</div>
+    <p class="section-desc">Toggle type (header / content), column count, and icon (header only). Labels and descriptions use placeholder copy.</p>
+    <div class="demo-panel" id="table-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="table-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">type</span>
+              <select class="demo-panel-select" id="table-demo-type" onchange="updateTableDemo()">
+                <option value="header" selected>header</option>
+                <option value="content">content</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">no. of columns</span>
+              <select class="demo-panel-select" id="table-demo-cols" onchange="updateTableDemo()">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">icon <span class="muted" style="font-size:11px;">(header only)</span></span>
+              <select class="demo-panel-select" id="table-demo-icon" onchange="updateTableDemo()">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="table-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Works for the narrow case of 2–4 equal-width columns with a left label and right descriptions. Breaks for mixed widths, amounts, badges, or sortable columns — all common table use cases.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Header row carries bg, border, label/column typography; content row carries label + description. But column count is locked at build time — consumers can't add or remove columns without detaching.</div>
+      </div>
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note"><code>no. of columns</code> is a string enum with a period in the name — collides with C2 naming conventions. Three orphan sibling components (Table, Table - Item, Table - Label) when one data-driven row would suffice. <span class="tag-open tag-c2">C2</span></div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Items and Labels are declared as reusable atoms but the parent Table doesn't slot them — it re-implements the label and description directly. No real composition.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="table-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Three orphan components instead of one data-driven row.</strong> Table, Table - Item, and Table - Label are published as separate components but only Table is consumed — Item and Label are never placed directly. Should collapse into a single row primitive that accepts a columns array. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong><code>no. of columns</code> uses string enum with a period in the property name.</strong> Should be an integer <code>columnCount</code> — the period breaks code-friendly naming and the string "2"/"3"/"4" can't interpolate to a data-driven row count. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>No native mobile primitive matches this layout.</strong> iOS SwiftUI <code>Table</code> is macOS/iPad-only; Material Compose has no Table primitive. On phones, tabular data is a vertical stack of label/value pairs (Inline Text) or a horizontally-scrollable list. Current 360px-fixed rows don't adapt. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>No interaction state coverage.</strong> Rows have no hover, pressed, focused, selected, or disabled states. If rows are ever tappable (drill-down into a row detail), there's no visual affordance. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Header icon is a raw placeholder circle.</strong> <code>icon=yes</code> variants render a hardcoded <code>#C2C6CF</code> 24px circle with no instance swap or named slot. Consumers have no documented way to set the icon. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked until the family consolidates and native decision lands. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="table-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Reconsider whether Table belongs in a mobile-first DS.</strong> GCash ships on phones where tables almost never render as true HTML-style tables. The sticker sheet pattern screen is doing what <strong>Inline Text</strong> already does — a stack of label / value rows. Two cleaner paths: (a) remove Table from core DS, publish usage guidance pointing to <code>List</code> + <code>Inline Text</code> for label/value data; (b) keep Table but scope it to genuine multi-column data (transaction history, scheduled payments, etc.) and rebuild it as a data-driven row. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Collapse the three-component family into one row primitive.</strong> Merge <em>Table</em>, <em>Table - Item</em>, and <em>Table - Label</em> into a single <strong>Table Row</strong> component with a <code>columns</code> slot array and a <code>role</code> variant (<code>header</code> / <code>content</code>). Eliminates the <code>no. of columns</code> variant explosion — 9 records collapse into 2 + slot content. Published node count drops from 3 components / 14 variants to 1 component / 2 variants. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Rename <code>no. of columns</code> to an integer (or drop it entirely).</strong> The period in the property name breaks C2 naming conventions. If the data-driven restructure lands, column count is inferred from the <code>columns</code> array and the prop disappears. Otherwise rename to <code>columnCount</code> with integer values. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Replace the header icon placeholder with a named slot.</strong> Declare an <code>icon</code> Slot on the header-role row so consumers drop in any 24px icon component. Drop the <code>icon=yes/no</code> boolean — slot presence signals intent. Maps cleanly to <code>@ViewBuilder</code> / <code>@Composable</code> slot. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Add row interaction states.</strong> If rows are ever tappable (drill-down row detail, sortable columns), publish <code>default</code> / <code>pressed</code> / <code>selected</code> / <code>disabled</code> state variants. If rows stay display-only, document that explicitly so native devs wrap in a non-interactive container. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Introduce shared label/value token set with Inline Text.</strong> Table label and Inline Text label serve the same semantic role — "a thing and its value". Aligning tokens (<code>main/table/color/label</code> with <code>main/inline-text/*</code>) reduces drift and supports cross-component theming. <span class="tag-recommend">Token</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="table-styles" style="margin-top:0">Variants</div>
+    <p class="section-desc">9 variants split across <code>type</code> (header / content) × <code>no. of columns</code> (2 / 3 / 4) × <code>icon</code> (yes / no — header only; content always has icon=no).</p>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="table-variant-header">Header row <span class="muted" style="font-weight:400;">— 37 / 65px tall</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="47:323224" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>47:323224</span></button>
+        </div>
+        <p class="spec-card-desc">Subtle-bg row with bottom border. Primary-bold label on the left, semibold columns on the right. <code>icon=yes</code> grows height from 37 to 65px and adds a 24px placeholder circle above each column.</p>
+      </div>
+      <div class="spec-card-preview" id="table-preview-header"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="table-variant-content">Content row <span class="muted" style="font-weight:400;">— 56px tall</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="47:325869" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>47:325869</span></button>
+        </div>
+        <p class="spec-card-desc">White bg. Bold 12px label on the left, 10px BarkAda Semibold description columns on the right (1, 2, or 3 of them).</p>
+      </div>
+      <div class="spec-card-preview" id="table-preview-content"><!-- JS --></div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Role</th><th>Token</th><th>Default</th><th>Pressed</th><th>Disabled</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Header bg</td><td class="mono">main/table/color/bg-subtle</td><td class="mono">#F6F9FD</td><td class="mono">–</td><td class="mono">–</td></tr>
+          <tr><td class="muted">Content bg</td><td class="mono">main/table/color/bg</td><td class="mono">#FFFFFF</td><td class="mono">–</td><td class="mono">–</td></tr>
+          <tr><td class="muted">Row border</td><td class="mono">main/table/color/border</td><td class="mono">#E5EBF4</td><td class="mono">–</td><td class="mono">–</td></tr>
+          <tr><td class="muted">Label / column text</td><td class="mono">main/table/color/label</td><td class="mono">#0A2757</td><td class="mono">–</td><td class="mono">–</td></tr>
+          <tr><td class="muted">Description text</td><td class="mono">main/table/color/description</td><td class="mono">#6780A9</td><td class="mono">–</td><td class="mono">–</td></tr>
+          <tr><td class="muted">Header icon placeholder</td><td class="mono">— (hardcoded)</td><td class="mono">#C2C6CF</td><td class="mono">–</td><td class="mono">–</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="table-footnote">No interaction states today — no hover / pressed / selected / disabled tokens are defined. Header icon placeholder is hardcoded hex, not a token. <span class="tag-open tag-c6">C6</span></p>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Row width (fixed)</td><td class="mono">—</td><td class="mono">360px</td></tr>
+          <tr><td class="muted">Header height (icon=no)</td><td class="mono">—</td><td class="mono">37px</td></tr>
+          <tr><td class="muted">Header height (icon=yes)</td><td class="mono">—</td><td class="mono">65px</td></tr>
+          <tr><td class="muted">Content row height</td><td class="mono">—</td><td class="mono">56px</td></tr>
+          <tr><td class="muted">Horizontal padding</td><td class="mono">space/space-24</td><td class="mono">24px</td></tr>
+          <tr><td class="muted">Header pt / pb</td><td class="mono">space/space-8, space/space-12</td><td class="mono">8 / 12px</td></tr>
+          <tr><td class="muted">Content py</td><td class="mono">—</td><td class="mono">12px</td></tr>
+          <tr><td class="muted">Column gap</td><td class="mono">—</td><td class="mono">16px</td></tr>
+          <tr><td class="muted">Label width</td><td class="mono">—</td><td class="mono">99px min</td></tr>
+          <tr><td class="muted">Header icon size</td><td class="mono">—</td><td class="mono">24 × 24px</td></tr>
+          <tr><td class="muted">Icon → column gap</td><td class="mono">space/space-2</td><td class="mono">2px</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Typography</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Element</th><th>DS text style</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Header label</td><td class="mono">Primary/Label/Small</td><td class="mono">Proxima Soft Bold · 14 / 14 · +0.25</td></tr>
+          <tr><td class="muted">Header column</td><td class="mono">Primary/Multi-line Label/Light/Fine</td><td class="mono">Proxima Soft Semibold · 12 / 14 · +0.5</td></tr>
+          <tr><td class="muted">Content label</td><td class="mono">Primary/Label/Fine</td><td class="mono">Proxima Soft Bold · 12 / 12 · +0.5</td></tr>
+          <tr><td class="muted">Content description</td><td class="mono">Secondary/Bold/Small Caption</td><td class="mono">BarkAda Semibold · 10 / 15 · 0</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="table-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:table:1.0.0"</span>)
+}</pre>
+    </div>
+
+    <div class="sub-heading" id="table-props">Property Mapping <span class="muted" style="font-weight:400;font-size:13px;">(proposed — data-driven)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma</th><th>SwiftUI</th><th>Compose</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">type=header/content</td><td class="mono">role: .header / .content</td><td class="mono">role = EBTableRowRole.Header / Content</td><td class="muted">Header styles bg-subtle + bottom border; content is plain white.</td></tr>
+          <tr><td class="mono">no. of columns (drop)</td><td class="mono">columns: [Column]</td><td class="mono">columns: List&lt;Column&gt;</td><td class="muted">Column count inferred from the data array — no separate prop.</td></tr>
+          <tr><td class="mono">icon (slot)</td><td class="mono">leadingIcon: Image?</td><td class="mono">leadingIcon: @Composable (() -&gt; Unit)?</td><td class="muted">Header-only. Drop icon=yes/no boolean — slot presence signals intent.</td></tr>
+          <tr><td class="mono">Label here text</td><td class="mono">label: String</td><td class="mono">label: String</td><td class="muted">Left-aligned primary label.</td></tr>
+          <tr><td class="mono">Description text (xN)</td><td class="mono">columns: [Column]</td><td class="mono">columns: List&lt;Column&gt;</td><td class="muted">Each Column has its own text / alignment / optional secondary value.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/Table/EBTableRow.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/table/EBTableRow.kt</div>
+    </div>
+
+    <div class="sub-heading" id="table-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'table-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'table-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Option A — dedicated row primitive (if Table stays in DS)</span>
+<span class="typ">VStack</span>(<span class="prp">spacing</span>: <span class="kw">0</span>) {
+    <span class="typ">EBTableRow</span>(
+        <span class="prp">role</span>: .<span class="prp">header</span>,
+        <span class="prp">label</span>: <span class="str">"Header"</span>,
+        <span class="prp">columns</span>: [<span class="str">"Column"</span>, <span class="str">"Column"</span>, <span class="str">"Column"</span>]
+    )
+    <span class="typ">ForEach</span>(rows) { row <span class="kw">in</span>
+        <span class="typ">EBTableRow</span>(
+            <span class="prp">role</span>: .<span class="prp">content</span>,
+            <span class="prp">label</span>: row.<span class="prp">label</span>,
+            <span class="prp">columns</span>: row.<span class="prp">values</span>
+        )
+    }
+}
+
+<span class="cmt">// Option B — compose with Inline Text (recommended for mobile)</span>
+<span class="typ">VStack</span>(<span class="prp">spacing</span>: <span class="kw">12</span>) {
+    <span class="typ">EBInlineText</span>(<span class="prp">label</span>: <span class="str">"Amount"</span>,      <span class="prp">value</span>: <span class="str">"₱1,000.00"</span>)
+    <span class="typ">EBInlineText</span>(<span class="prp">label</span>: <span class="str">"Reference"</span>,   <span class="prp">value</span>: <span class="str">"0000 0123 4567"</span>)
+    <span class="typ">EBInlineText</span>(<span class="prp">label</span>: <span class="str">"Date"</span>,        <span class="prp">value</span>: <span class="str">"Apr 22, 2026"</span>)
+}</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Option A — dedicated row primitive (if Table stays in DS)</span>
+<span class="typ">Column</span> {
+    <span class="typ">EBTableRow</span>(
+        role = <span class="typ">EBTableRowRole</span>.<span class="prp">Header</span>,
+        label = <span class="str">"Header"</span>,
+        columns = listOf(<span class="str">"Column"</span>, <span class="str">"Column"</span>, <span class="str">"Column"</span>)
+    )
+    rows.<span class="fn">forEach</span> { row -&gt;
+        <span class="typ">EBTableRow</span>(
+            role = <span class="typ">EBTableRowRole</span>.<span class="prp">Content</span>,
+            label = row.label,
+            columns = row.values
+        )
+    }
+}
+
+<span class="cmt">// Option B — compose with Inline Text (recommended for mobile)</span>
+<span class="typ">Column</span>(verticalArrangement = <span class="typ">Arrangement</span>.<span class="fn">spacedBy</span>(<span class="kw">12</span>.dp)) {
+    <span class="typ">EBInlineText</span>(label = <span class="str">"Amount"</span>,      value = <span class="str">"₱1,000.00"</span>)
+    <span class="typ">EBInlineText</span>(label = <span class="str">"Reference"</span>,   value = <span class="str">"0000 0123 4567"</span>)
+    <span class="typ">EBInlineText</span>(label = <span class="str">"Date"</span>,        value = <span class="str">"Apr 22, 2026"</span>)
+}</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="table-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Requirement</th><th class="center">iOS</th><th class="center">Android</th></tr></thead>
+        <tbody>
+          <tr><td>Tabular semantics</td><td class="muted">On iPad/macOS use <code>Table</code>; on iPhone use <code>accessibilityElement(children: .combine)</code> per row so each reads as "Label, value, value".</td><td class="muted">Wrap in <code>Modifier.semantics { collectionInfo = CollectionInfo(rowCount, columnCount) }</code>.</td></tr>
+          <tr><td>Header vs content row</td><td class="muted">Use <code>.accessibilityAddTraits(.isHeader)</code> on header rows.</td><td class="muted">Use <code>Modifier.semantics { heading() }</code> on header rows.</td></tr>
+          <tr><td>Column headers without visible text</td><td class="muted">If icon-only header columns exist, provide <code>.accessibilityLabel</code>.</td><td class="muted">Set <code>contentDescription</code> on the icon slot.</td></tr>
+          <tr><td>Row-level tap</td><td class="muted">If rows become tappable, wrap row in <code>Button</code> with <code>.accessibilityHint</code>.</td><td class="muted">Wrap in <code>Modifier.clickable</code> with <code>role = Role.Button</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="table-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">3 orphan components (Table, Table - Item, Table - Label) where 1 data-driven row would suffice.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted"><code>no. of columns</code> uses string enum with a period; should be integer or dropped.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Label / bg / border bound to <code>main/table/*</code>. Header icon placeholder uses hardcoded <code>#C2C6CF</code>.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">No native iOS/Android mobile primitive. Needs a mobile rethink — list of label/value pairs vs true desktop table.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">No hover / pressed / selected / disabled states.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Header icon is a raw placeholder circle with no slot or instance swap.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked until family consolidation and native decision land.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="table-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(9 total across the family root)</span></div>
+    <p>Table ships 9 variants. Family siblings <strong>Table - Item</strong> (3 variants) and <strong>Table - Label</strong> (2 variants) are declared but never placed directly in screens — only Table is consumed.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>type</th><th>no. of columns</th><th>icon</th><th>Height</th><th>Node ID</th></tr></thead>
+        <tbody>
+          <tr><td>header</td><td class="mono">2</td><td class="mono">no</td><td class="mono">37px</td><td class="mono">47:323220</td></tr>
+          <tr><td>header</td><td class="mono">3</td><td class="mono">no</td><td class="mono">37px</td><td class="mono">47:323222</td></tr>
+          <tr><td>header</td><td class="mono">4</td><td class="mono">no</td><td class="mono">37px</td><td class="mono">47:323224</td></tr>
+          <tr><td>header</td><td class="mono">2</td><td class="mono">yes</td><td class="mono">65px</td><td class="mono">47:323221</td></tr>
+          <tr><td>header</td><td class="mono">3</td><td class="mono">yes</td><td class="mono">65px</td><td class="mono">47:323223</td></tr>
+          <tr><td>header</td><td class="mono">4</td><td class="mono">yes</td><td class="mono">65px</td><td class="mono">47:323225</td></tr>
+          <tr><td>content</td><td class="mono">2</td><td class="mono">no</td><td class="mono">56px</td><td class="mono">47:325867</td></tr>
+          <tr><td>content</td><td class="mono">3</td><td class="mono">no</td><td class="mono">56px</td><td class="mono">47:325868</td></tr>
+          <tr><td>content</td><td class="mono">4</td><td class="mono">no</td><td class="mono">56px</td><td class="mono">47:325869</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-footnote">Family siblings: Table - Item <span class="mono">27:322607</span> (3 variants — description / icon / empty), Table - Label <span class="mono">27:322640</span> (2 variants — description=no / yes). Both would fold into the proposed data-driven <code>columns</code> slot.</p>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 47:326260</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Family assessed</strong> — 3 published components (Table / Table - Item / Table - Label) with 9 + 3 + 2 variants. Only Table is consumed in screens. <span class="tag-fixed">Documented</span></div><span class="changelog-delta delta-resolved">Initial</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Three orphan components</strong> — Table - Item and Table - Label exist but are never placed directly. Recommend collapsing into one data-driven row. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong><code>no. of columns</code> naming</strong> — String enum with a period in the property name. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>No native mobile primitive</strong> — Mobile tables are almost always stacks of label/value pairs (Inline Text) — reconsider whether Table belongs in the DS at all. <span class="tag-open tag-c4">Open</span></div><span class="changelog-delta delta-open">C4 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>No interaction states</strong> — No hover / pressed / selected / disabled state variants. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Header icon is a raw placeholder</strong> — Hardcoded <code>#C2C6CF</code> circle with no slot or instance swap. <span class="tag-open tag-c6">Open</span></div><span class="changelog-delta delta-open">C6 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Code Connect mappings</strong> — Not registered. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7 Open</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-table">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-table"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Table JS ─────────────────────────────────────────────────────── */
+var _tableDemo = { type: 'header', cols: 4, icon: 'no' };
+
+function _tableBuildRow(type, cols, icon) {
+  var W = 360;
+  var padH = 24;
+  var gap = 16;
+  var isHeader = type === 'header';
+  var bg = isHeader ? '#F6F9FD' : '#FFFFFF';
+  var border = isHeader ? 'border-bottom:1px solid #E5EBF4;' : '';
+  var height = isHeader ? (icon === 'yes' ? 65 : 37) : 56;
+  var labelFont = isHeader
+    ? 'font-family:\'Proxima Soft\', system-ui; font-weight:700; font-size:14px; line-height:14px; letter-spacing:0.25px;'
+    : 'font-family:\'Proxima Soft\', system-ui; font-weight:700; font-size:12px; line-height:12px; letter-spacing:0.5px;';
+  var colFont = isHeader
+    ? 'font-family:\'Proxima Soft\', system-ui; font-weight:600; font-size:12px; line-height:14px; letter-spacing:0.5px;'
+    : 'font-family:\'BarkAda\', system-ui; font-weight:600; font-size:10px; line-height:15px;';
+  var labelText = isHeader ? 'Header' : 'Label here';
+  var colText = isHeader ? 'Column' : 'Description';
+
+  var s = '<div style="width:' + W + 'px; height:' + height + 'px; background:' + bg + '; ' + border + ' padding:0 ' + padH + 'px; display:flex; align-items:center; gap:' + gap + 'px; box-sizing:border-box; color:#0A2757;">';
+  // Label column
+  s += '<div style="min-width:99px; width:99px; ' + labelFont + '">' + labelText + '</div>';
+  // Data columns
+  var colsNum = parseInt(cols, 10);
+  for (var i = 0; i < colsNum - 1; i++) {
+    s += '<div style="flex:1 0 0; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;">';
+    if (isHeader && icon === 'yes') {
+      s += '<div style="width:24px; height:24px; background:#C2C6CF; border-radius:41px;"></div>';
+    }
+    s += '<span style="' + colFont + ' text-align:center;">' + colText + '</span>';
+    s += '</div>';
+  }
+  s += '</div>';
+  return s;
+}
+
+function updateTableDemo() {
+  _tableDemo.type = document.getElementById('table-demo-type').value;
+  _tableDemo.cols = document.getElementById('table-demo-cols').value;
+  _tableDemo.icon = document.getElementById('table-demo-icon').value;
+  // Force icon=no for content rows (icon is header-only in the Figma schema)
+  var effectiveIcon = _tableDemo.type === 'content' ? 'no' : _tableDemo.icon;
+  var el = document.getElementById('table-demo-preview');
+  if (el) el.innerHTML = _tableBuildRow(_tableDemo.type, _tableDemo.cols, effectiveIcon);
+}
+
+function _tableInitSpecCards() {
+  var h = document.getElementById('table-preview-header');
+  if (h) h.innerHTML = _tableBuildRow('header', 4, 'no');
+  var c = document.getElementById('table-preview-content');
+  if (c) c.innerHTML = _tableBuildRow('content', 4, 'no');
+}
+
+function _tableInit() {
+  updateTableDemo();
+  _tableInitSpecCards();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tableInit);
+else _tableInit();
+</script>
+
+<!--@section-end-->

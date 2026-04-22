@@ -1,0 +1,779 @@
+<!--
+  TOOLTIP V2 COMPONENT ASSESSMENT
+  Floating nudge/popover with header, description, icon, dismiss close, 1–2 CTAs, and a
+  directional pointer (top/right/bottom/left). 8 variants; 1 of 3 Tooltip siblings.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 70:14908
+ds-verdict: restructure
+native-status: rework
+variants: 8
+ios: Custom EBTooltip view — Text + optional Image + optional Button inside a rounded rect with a triangular pointer overlay. For onboarding flow: TipKit (iOS 17+).
+android: Custom EBTooltip composable — Material 3 RichTooltip for the onboarding/CTA flavor, PlainTooltip for the single-line flavor.
+open-issues: C1,C2,C4,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] Component is named `Tooltip V2` — a version suffix inside a production DS component name implies a V1 that should have been deleted. No consumer should ever have to choose between versions.
+[C1] Three Tooltip siblings exist (Tooltip V2, Onboarding - Tooltip, Tooltip Blurred and Transparent) that differ by appearance treatment, not by role.
+[C2] 4 independent booleans (`pointerTop`, `pointerRight`, `pointerBottom`, `pointerLeft`) model a single enum choice — nothing prevents a consumer from enabling all four pointers at once.
+[C6] Pointer triangle is flattened to a raster image fill (`imgPointer`, `imgPointer1`, `imgPointer2`, `imgPointer3`) rather than a vector shape — 4 rotated copies of what should be one vector.
+[C6] Leading icon is a flat `#C2C6CF` circle named "Placeholder" — same instance-swap anti-pattern as Action List / List Item.
+[C1] Close `X` is an image asset (`imgShapeFull`) inside a generic "Close" frame rather than a DS close-icon instance.
+[C5] No interaction states exposed (Pressed / Focused / Dismissing / Appearing).
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Tooltip<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-tooltip-v2" onclick="showPanel('tooltip-v2', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Tooltip V2</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('tooltip-v2')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="10" y="8" width="60" height="22" rx="3" fill="#FFFFFF" stroke="#E5EBF4"/>
+      <path d="M36 30 l4 4 4 -4" fill="#FFFFFF" stroke="#E5EBF4"/>
+      <rect x="16" y="13" width="20" height="3" rx="1" fill="#0A2757"/>
+      <rect x="16" y="19" width="34" height="2" rx="1" fill="#6780A9"/>
+      <rect x="16" y="23" width="28" height="2" rx="1" fill="#6780A9"/>
+      <path d="M62 12 l4 4 -4 4 -4 -4 z" fill="none" stroke="#0A2757" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M60 13 l4 4 M64 13 l-4 4" stroke="#0A2757" stroke-width="1.3" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Tooltip V2</div>
+      <span class="badge badge-rework">Restructure</span>
+    </div>
+    <div class="summary-card-desc">Directional floating nudge with header, description, dismiss, optional icon + 1–2 CTAs, and a pointer on any of 4 sides. 8 variants. One of 3 sibling Tooltip components that should consolidate.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Tooltip V2</strong></td>
+  <td><span class="badge badge-rework">Restructure</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">8</td>
+  <td class="muted">Version-suffix name hides no V1. Pointer direction is 4 booleans instead of 1 enum. Pointer triangle is a raster, icon is a placeholder circle. Part of a 3-component Tooltip family that should collapse into one.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-tooltip-v2">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Tooltip V2
+          <span class="badge badge-rework">Restructure</span>
+          <span class="badge badge-rework">Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=70-14908" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A directional floating popover — used for tips, pointers-to-action, and short in-product explanations. Contains a header, description, close <code>X</code>, optional leading icon, optional 1–2 CTAs, and a pointer triangle on any of four sides. Ships as <strong>8 variants</strong> across 4 axes (<code>CTA</code>, <code>Icon</code>, <code>Description</code>, <code>Header</code>) — and is one of <strong>three Tooltip siblings</strong> in the DS (<code>Tooltip V2</code>, <code>Onboarding - Tooltip</code>, <code>Tooltip Blurred and Transparent</code>). The version suffix in the name is the first red flag.</p>
+      </div>
+      <div class="verdict-inline verdict-restructure">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Unify 3 Tooltip siblings into one Tooltip component; drop the "V2" suffix</div>
+          <div class="verdict-inline-text">This component, <a href="#" onclick="event.preventDefault();">Onboarding - Tooltip</a>, and <a href="#" onclick="event.preventDefault();">Tooltip Blurred and Transparent</a> model the same primitive with different skins. Merge into one <code>Tooltip</code> with <code>placement: .top | .right | .bottom | .left</code> (one enum, not 4 booleans), <code>appearance: .default | .onboarding | .translucent</code>, <code>hasArrow</code>, <code>hasDismiss</code>, and a content slot. Replace the raster pointer with a vector, the placeholder icon circle with a Figma Slot, and strip the <code>V2</code> suffix — production component names should never carry a version. Maps cleanly to <code>TipKit</code> / <code>PlainTooltip</code> / <code>RichTooltip</code> on native.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="tt2-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'tt2-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'tt2-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'tt2-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'tt2-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="tt2-family" style="margin-top:0">Tooltip Family</div>
+    <p class="section-desc">Three sibling components in the DS do roughly the same job. They differ by skin, not role.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Component</th><th>Node</th><th>Variants</th><th>What's different</th><th>Proposed role</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Tooltip V2</strong> (this)</td><td class="mono">70:14908</td><td class="mono center">8</td><td class="muted">Header/Description/Icon/CTA presence axes. Opaque white surface.</td><td class="muted"><code>appearance: .default</code></td></tr>
+          <tr><td><strong>Onboarding - Tooltip</strong></td><td class="mono">51:17066</td><td class="mono center">—</td><td class="muted">Walkthrough / coach-mark flavor — typically richer content, step indicator, prev/next CTAs.</td><td class="muted"><code>appearance: .onboarding</code></td></tr>
+          <tr><td><strong>Tooltip Blurred and Transparent</strong></td><td class="mono">49:335349</td><td class="mono center">—</td><td class="muted">Translucent surface with backdrop blur — used over photographic / high-contrast content.</td><td class="muted"><code>appearance: .translucent</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="section-desc">Target architecture: one <code>Tooltip</code> with an <code>appearance</code> enum, one <code>placement</code> enum replacing the 4 pointer booleans, optional <code>hasArrow</code> / <code>hasDismiss</code>, and a single content slot that accepts either a simple string or a rich sub-tree.</p>
+
+    <div class="sub-heading" id="tt2-context">In Context</div>
+    <p class="section-desc">Tooltips sit over a target element (tab, button, icon, card) with a pointer aimed at the thing they describe.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="34" y="6" width="132" height="108" rx="10" stroke="currentColor" stroke-width="1.2" opacity=".15"/>
+          <rect x="34" y="6" width="132" height="20" rx="10" fill="#005CE5" opacity=".85"/>
+          <text x="100" y="19" text-anchor="middle" fill="#FFF" font-size="6" font-weight="700" font-family="system-ui">Wallet</text>
+          <!-- target: icon on toolbar -->
+          <circle cx="150" cy="42" r="4" fill="#005CE5"/>
+          <!-- tooltip bubble -->
+          <rect x="50" y="52" width="88" height="36" rx="3" fill="#FFFFFF" stroke="#E5EBF4"/>
+          <path d="M138 58 l4 -4 0 8 z" fill="#FFFFFF" stroke="#E5EBF4" stroke-linejoin="round"/>
+          <rect x="56" y="58" width="32" height="4" rx="1" fill="#0A2757"/>
+          <rect x="56" y="66" width="60" height="2" rx="1" fill="#6780A9"/>
+          <rect x="56" y="71" width="50" height="2" rx="1" fill="#6780A9"/>
+          <rect x="118" y="78" width="16" height="6" rx="3" fill="#005CE5"/>
+          <text x="126" y="83" text-anchor="middle" fill="#FFF" font-size="4" font-weight="700" font-family="system-ui">Next</text>
+          <!-- bg cards -->
+          <rect x="42" y="98" width="60" height="10" rx="2" fill="#EEF2F9"/>
+          <rect x="106" y="98" width="56" height="10" rx="2" fill="#EEF2F9"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="tt2-preview">Live Preview</div>
+    <p class="section-desc">Toggle content slots, placement, and the CTA axis. Note that pointer direction in today's Figma is <strong>4 independent booleans</strong> — the demo below uses the correct single enum shape.</p>
+    <div class="demo-panel" id="tt2-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="tt2-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Content</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">header</span>
+              <select class="demo-panel-select" id="tt2-ctrl-header" onchange="updateTt2Demo()">
+                <option value="true" selected>shown</option>
+                <option value="false">hidden</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">description</span>
+              <select class="demo-panel-select" id="tt2-ctrl-desc" onchange="updateTt2Demo()">
+                <option value="true" selected>shown</option>
+                <option value="false">hidden</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">icon</span>
+              <select class="demo-panel-select" id="tt2-ctrl-icon" onchange="updateTt2Demo()">
+                <option value="false" selected>hidden</option>
+                <option value="true">shown</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">cta</span>
+              <select class="demo-panel-select" id="tt2-ctrl-cta" onchange="updateTt2Demo()">
+                <option value="none">none</option>
+                <option value="one" selected>one</option>
+                <option value="two">two</option>
+              </select>
+            </div>
+          </div>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Placement</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">pointer</span>
+              <select class="demo-panel-select" id="tt2-ctrl-pointer" onchange="updateTt2Demo()">
+                <option value="top">top</option>
+                <option value="right">right</option>
+                <option value="bottom" selected>bottom</option>
+                <option value="left">left</option>
+                <option value="none">none</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="tt2-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Covers the main in-product tooltip pattern across onboarding, tips, and nudges. But because 3 siblings exist for 3 skins, consumers have to hunt for the right one — the primitive is fragmented. <span class="tag-open tag-c1">C1</span></div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Surface, type, and spacing bind to <code>main/nudge/*</code> + <code>space/*</code> tokens. But the pointer arrow is a raster image (4 rotated copies of one shape) and the leading icon is a gray placeholder circle, not a slot. <span class="tag-open tag-c6">C6</span></div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Component is named <code>Tooltip V2</code> — version suffixes don't belong in production DS names. Pointer direction is 4 separate booleans rather than one enum, letting consumers set nonsensical combinations (e.g. all 4 pointers on). <span class="tag-open tag-c2">C2</span></div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">No Figma Slot for leading icon or body content. CTAs are baked Button instances that re-implement pill padding rather than composing the Button component consistently across variants (one variant uses px-16 / py-12, another uses px-8 / py-6). <span class="tag-open tag-c4">C4</span></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="tt2-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Behavior</th><th class="center">iOS</th><th class="center">Android</th><th>Figma Spec</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Show / hide</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="muted">Not annotated</td><td class="muted">Expected: fade + slight scale-in anchored on the pointer side.</td></tr>
+          <tr><td><strong>Tap close (X)</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">Close layer</td><td class="muted">Dismiss icon is present in markup but not wired to a property or interaction. Contract should be explicit.</td></tr>
+          <tr><td><strong>Tap outside</strong></td><td class="center muted">Implicit</td><td class="center muted">Implicit</td><td class="muted">Not defined</td><td class="muted">Standard tooltip contract — tap-outside dismisses. Should be documented on the component.</td></tr>
+          <tr><td><strong>Primary CTA</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">CTA=one / two</td><td class="muted">Advances in onboarding or performs the tip's primary action.</td></tr>
+          <tr><td><strong>Secondary CTA</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">CTA=two</td><td class="muted">"Back" in onboarding; "Learn more" in tips.</td></tr>
+          <tr><td><strong>Pressed / Focused</strong></td><td class="center muted">Missing</td><td class="center muted">Missing</td><td class="muted">Not built</td><td class="muted">CTAs and close have no pressed/focused treatment on the tooltip component itself. Inner Button instances handle their own press, but close + the tooltip surface do not.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="tt2-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Component is named <code>Tooltip V2</code>.</strong> Version suffixes don't belong in production DS component names — they imply a V1 that wasn't removed, and force consumers to choose which version is "right". Rename to <code>Tooltip</code> and delete V1 (or, if V1 is still in use, merge/deprecate before renaming). <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Three sibling Tooltip components for one primitive.</strong> <code>Tooltip V2</code> (70:14908), <code>Onboarding - Tooltip</code> (51:17066), and <code>Tooltip Blurred and Transparent</code> (49:335349) all model the same floating popover with different skins. Collapse into one <code>Tooltip</code> with an <code>appearance</code> enum. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>Pointer direction is 4 independent booleans.</strong> <code>pointerTop</code>, <code>pointerRight</code>, <code>pointerBottom</code>, <code>pointerLeft</code> — nothing prevents a consumer from enabling two or all four. A single <code>placement: .top | .right | .bottom | .left | .none</code> enum is the correct shape. Maps 1:1 to <code>TipKit</code> <code>.arrowEdge</code> and Compose <code>TooltipAnchorPosition</code>. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Pointer triangle is a raster asset.</strong> 4 separate image fills (<code>imgPointer</code>, <code>imgPointer1</code>, <code>imgPointer2</code>, <code>imgPointer3</code>) for what should be one vector shape rotated per edge. Replace with a single vector triangle component; rotation handled by the <code>placement</code> enum. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>Leading icon is a gray placeholder circle.</strong> The <code>Icon=yes</code> variant renders a flat <code>#C2C6CF</code> 46 px circle under a "Placeholder" frame — same anti-pattern as Action List / List Item. Replace with a named <code>leading</code> Figma Slot so consumers can drop in an Icon, Avatar, or illustration. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>Close (X) is an image asset, not a DS icon instance.</strong> The dismiss control uses <code>imgShapeFull</code> inside a generic "Close" frame rather than an instance of the DS's <code>icon/close</code>. That hides the icon from a11y / token updates and blocks Code Connect from seeing it as a real control. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>CTA Button padding drifts between variants.</strong> <code>CTA=one, Header=yes</code> uses <code>px-16 / py-12</code>; <code>CTA=one, Header=no</code> uses <code>px-12 / py-6</code>; <code>CTA=two</code> uses yet another combo. The underlying <code>Button - XSmall</code> instance should be identical across all variants — same size mode, same padding. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>No dismiss / show states modeled.</strong> Close button exists visually but carries no interaction property; there is no Pressed / Focused state on the dismiss control or on CTAs at the tooltip level. Tooltips also have an implicit "appearing / dismissing" lifecycle that isn't documented. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked on the consolidation + slot adoption + enum conversion. Mapping the current 3-sibling / 4-boolean shape to native would cement the wrong schema. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="tt2-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Consolidate the 3 Tooltip siblings into one component.</strong> New schema: <code>placement: .top | .right | .bottom | .left</code> (replaces the 4 booleans), <code>appearance: .default | .onboarding | .translucent</code> (replaces the 3 sibling components), <code>hasArrow: Bool</code>, <code>hasDismiss: Bool</code>, <code>cta: .none | .primary | .primaryAndSecondary</code>, plus a <code>leading</code> slot for icon/avatar and a content slot for the body. Replaces today's <code>8 + ? + ?</code> variants across 3 components with roughly <code>4 placement × 3 appearance × 3 cta = 36</code> permutations of one clean schema. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Rename <code>Tooltip V2</code> → <code>Tooltip</code>.</strong> Version suffixes shouldn't appear in production DS names. If V1 is still referenced anywhere, migrate its instances first, then delete V1, then drop the suffix. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Replace 4 pointer booleans with a single <code>placement</code> enum.</strong> Prevents nonsensical states (all 4 pointers on), maps 1:1 to SwiftUI <code>.arrowEdge</code> and Compose <code>TooltipAnchorPosition</code>, and reduces the variant matrix dramatically. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Replace the raster pointer with a vector triangle.</strong> Today there are 4 separate rasters (top/right/bottom/left). One vector shape, rotated per <code>placement</code>, fills the same role with zero asset burden, scales cleanly, and picks up token color updates automatically. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Adopt a <code>leading</code> Figma Slot for the icon.</strong> Drop the <code>#C2C6CF</code> placeholder circle. Maps to <code>@ViewBuilder</code> (SwiftUI) and a <code>@Composable</code> slot (Compose). Empty slot = no leading. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Instance-swap the close button to <code>icon/close</code>.</strong> Use the canonical DS close-icon instance rather than an inline <code>imgShapeFull</code>. Gets you token-driven color, a11y labeling, and press-state handling for free. <span class="tag-recommend">Composition</span></span></li>
+      <li><span><strong>Normalize CTA Button padding.</strong> Every tooltip variant uses the same Button size mode (XSmall). Enforce one padding via the Button component itself — don't let the tooltip override. <span class="tag-recommend">Composition</span></span></li>
+      <li><span><strong>Document the dismiss contract + lifecycle.</strong> Add a description on the component: <em>"Tap the close X or tap outside to dismiss, unless <code>hasDismiss = false</code> (force interaction with CTA). Tooltip appears with fade + slight scale from the pointer anchor; dismisses with reverse."</em> Close the gap between designer intent and dev implementation. <span class="tag-recommend">Docs</span></span></li>
+      <li><span><strong>Add Pressed / Focused on the close control and CTAs.</strong> Inner Button instances handle their own states, but the close X does not — it's an image. Once it becomes an icon-button instance, states follow. <span class="tag-recommend">State</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="tt2-styles" style="margin-top:0">Variants</div>
+    <p class="section-desc">8 variants across 4 axes — <code>CTA</code> (none/one/two) × <code>Icon</code> (yes/no) × <code>Description</code> (yes/no) × <code>Header</code> (yes/no). Only 8 of the 24 theoretical combinations ship; the rest aren't exposed.</p>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="tt2-variant-hero">CTA=one · Icon=yes · Description · Header <span class="muted" style="font-weight:400;">— the hero variant</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="70:14907" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>70:14907</span></button>
+        </div>
+        <p class="spec-card-desc">Full-shape onboarding variant. Leading icon placeholder + header + description + primary CTA + close. 359 × 181.</p>
+      </div>
+      <div class="spec-card-preview" id="tt2-preview-hero"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="tt2-variant-text-cta">CTA=one · Description · Header <span class="muted" style="font-weight:400;">— tip with action</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="7977:12260" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>7977:12260</span></button>
+        </div>
+        <p class="spec-card-desc">Text-only tip with a primary CTA. No leading icon. 359 × 155. Inherits different outer padding (<code>px-16 py-12</code>) than the hero variant (<code>p-16</code>).</p>
+      </div>
+      <div class="spec-card-preview" id="tt2-preview-text-cta"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="tt2-variant-icon-dismiss">CTA=none · Icon=yes · Description · Header <span class="muted" style="font-weight:400;">— icon + explanatory text</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="70:14903" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>70:14903</span></button>
+        </div>
+        <p class="spec-card-desc">Dismissible explanatory tooltip with an icon. 359 × 137.</p>
+      </div>
+      <div class="spec-card-preview" id="tt2-preview-icon-dismiss"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="tt2-variant-text">CTA=none · Description · Header <span class="muted" style="font-weight:400;">— plain tip card</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="70:14902" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>70:14902</span></button>
+        </div>
+        <p class="spec-card-desc">Plain text tip with header + description + close. 359 × 119.</p>
+      </div>
+      <div class="spec-card-preview" id="tt2-preview-text"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="tt2-variant-header-only">CTA=none · Header only <span class="muted" style="font-weight:400;">— pointer/label</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="70:14900" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>70:14900</span></button>
+        </div>
+        <p class="spec-card-desc">Single-line title pointer — used to label or point at a UI element. 359 × 79.</p>
+      </div>
+      <div class="spec-card-preview" id="tt2-preview-header-only"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="tt2-variant-desc-only">CTA=none · Description only <span class="muted" style="font-weight:400;">— concise explanation</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="70:14901" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>70:14901</span></button>
+        </div>
+        <p class="spec-card-desc">Description-only tooltip — short explanatory body, no title. 359 × 92.</p>
+      </div>
+      <div class="spec-card-preview" id="tt2-preview-desc-only"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="tt2-variant-two-cta">CTA=two · Description <span class="muted" style="font-weight:400;">— back + next walkthrough</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="70:14905" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>70:14905</span></button>
+        </div>
+        <p class="spec-card-desc">Two-CTA walkthrough step: outline "Back" + filled "Next". 359 × 136.</p>
+      </div>
+      <div class="spec-card-preview" id="tt2-preview-two-cta"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="tt2-variant-cta-no-header">CTA=one · Description · no Header <span class="muted" style="font-weight:400;">— tip → single CTA</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="70:14906" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>70:14906</span></button>
+        </div>
+        <p class="spec-card-desc">Body + single CTA, no header. 359 × 136. Uses <code>px-12 / py-6</code> CTA padding — different from the two variants above.</p>
+      </div>
+      <div class="spec-card-preview" id="tt2-preview-cta-no-header"><!-- JS --></div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Role</th><th>Token</th><th>Default</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Surface</td><td class="mono">main/nudge/color/primary/bg</td><td class="mono"><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span>#FFFFFF</td></tr>
+          <tr><td class="muted">Border</td><td class="mono">main/nudge/color/primary/border</td><td class="mono"><span class="swatch-dot" style="background:#E5EBF4"></span>#E5EBF4</td></tr>
+          <tr><td class="muted">Header label</td><td class="mono">main/nudge/color/primary/label</td><td class="mono"><span class="swatch-dot" style="background:#0A2757"></span>#0A2757</td></tr>
+          <tr><td class="muted">Description</td><td class="mono">main/nudge/color/primary/description</td><td class="mono"><span class="swatch-dot" style="background:#6780A9"></span>#6780A9</td></tr>
+          <tr><td class="muted">Close icon</td><td class="mono">main/nudge/color/primary/icon-close</td><td class="mono"><span class="swatch-dot" style="background:#0A2757"></span>#0A2757</td></tr>
+          <tr><td class="muted">Leading icon placeholder</td><td class="mono">—</td><td class="mono"><span class="swatch-dot" style="background:#C2C6CF"></span>#C2C6CF <span class="muted">(not tokenized — placeholder)</span></td></tr>
+          <tr><td class="muted">CTA primary bg</td><td class="mono">main/button/primary/brand/enabled/bg</td><td class="mono"><span class="swatch-dot" style="background:#005CE5"></span>#005CE5</td></tr>
+          <tr><td class="muted">CTA primary label</td><td class="mono">main/button/primary/brand/enabled/label</td><td class="mono"><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span>#FFFFFF</td></tr>
+          <tr><td class="muted">CTA secondary border / label</td><td class="mono">main/button/secondary/brand/enabled/border</td><td class="mono"><span class="swatch-dot" style="background:#005CE5"></span>#005CE5</td></tr>
+          <tr><td class="muted">Pointer triangle</td><td class="mono">—</td><td class="mono"><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span>raster (4 images)</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="table-footnote">No Pressed / Disabled states modeled at the tooltip level. Pointer triangle should inherit the surface + border tokens once it becomes a vector.</p>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Surface width</td><td class="mono">—</td><td class="mono">335 px (content) · 359 px (with offsets)</td></tr>
+          <tr><td class="muted">Surface corner radius</td><td class="mono">radius/radius-2</td><td class="mono">6 px</td></tr>
+          <tr><td class="muted">Surface border</td><td class="mono">main/nudge/color/primary/border</td><td class="mono">1 px solid</td></tr>
+          <tr><td class="muted">Surface padding — hero</td><td class="mono">space/space-16</td><td class="mono">16 px all sides</td></tr>
+          <tr><td class="muted">Surface padding — text+CTA</td><td class="mono">space/space-16 · space/space-12</td><td class="mono">16 / 12 (inconsistent with hero)</td></tr>
+          <tr><td class="muted">Leading icon size</td><td class="mono">—</td><td class="mono">46 × 46 (placeholder circle)</td></tr>
+          <tr><td class="muted">Close size</td><td class="mono">—</td><td class="mono">18 × 18 (image asset)</td></tr>
+          <tr><td class="muted">Pointer width / height</td><td class="mono">—</td><td class="mono">24 × 12 (raster image)</td></tr>
+          <tr><td class="muted">Icon → text gap</td><td class="mono">space/space-4</td><td class="mono">4 px</td></tr>
+          <tr><td class="muted">Text-container gap</td><td class="mono">space/space-8</td><td class="mono">8 px</td></tr>
+          <tr><td class="muted">CTA row gap (two CTAs)</td><td class="mono">space/space-8</td><td class="mono">8 px (justify between)</td></tr>
+          <tr><td class="muted">CTA Button — size</td><td class="mono">—</td><td class="mono">XSmall (Button component)</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="table-footnote">Padding drifts between variants — hero uses <code>p-16</code>, <code>CTA=one+Header</code> uses <code>px-16 / py-12</code>. Should be one rule.</p>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Typography</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Element</th><th>DS text style</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Header</td><td class="mono">Primary/Headlines/Block</td><td class="mono">Proxima Soft Bold · 18 / 23 · +0.25</td></tr>
+          <tr><td class="muted">Description</td><td class="mono">Secondary/Bold/Caption</td><td class="mono">BarkAda Semibold · 12 / 18 · +0</td></tr>
+          <tr><td class="muted">CTA label</td><td class="mono">Primary/Label/Base</td><td class="mono">Proxima Soft Bold · 16 / 16 · +0.25</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="table-footnote">BarkAda (secondary) is used only for the description. Custom-font standing action item applies.</p>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="tt2-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:tooltip:1.0.0"</span>)
+}</pre>
+    </div>
+
+    <div class="sub-heading" id="tt2-props">Property Mapping <span class="muted" style="font-weight:400;font-size:13px;">(proposed — after consolidation)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma (today)</th><th>Figma (proposed)</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">3 sibling components</td><td class="mono">1 component: <code>Tooltip</code></td><td class="mono">EBTooltip</td><td class="mono">EBTooltip</td></tr>
+          <tr><td class="mono">(sibling = appearance)</td><td class="mono">appearance: .default / .onboarding / .translucent</td><td class="mono">.ebAppearance(.default / .onboarding / .translucent)</td><td class="mono">appearance: EBTooltipAppearance</td></tr>
+          <tr><td class="mono">pointerTop/Right/Bottom/Left: Bool × 4</td><td class="mono">placement: .top / .right / .bottom / .left / .none</td><td class="mono">arrowEdge: Edge</td><td class="mono">anchorPosition: EBTooltipAnchor</td></tr>
+          <tr><td class="mono">header: Bool + text baked</td><td class="mono">title: String?</td><td class="mono">title: String?</td><td class="mono">title: String? = null</td></tr>
+          <tr><td class="mono">description: Bool + text baked</td><td class="mono">body: String? (or content slot)</td><td class="mono">body: String?</td><td class="mono">body: String? = null</td></tr>
+          <tr><td class="mono">icon: Bool (gray placeholder)</td><td class="mono">leading (Slot)</td><td class="mono">@ViewBuilder leading</td><td class="mono">leading: @Composable () -&gt; Unit</td></tr>
+          <tr><td class="mono">Close image asset (always)</td><td class="mono">hasDismiss: Bool</td><td class="mono">dismissible: Bool</td><td class="mono">dismissible: Boolean = true</td></tr>
+          <tr><td class="mono">cta: none / one / two</td><td class="mono">cta: .none / .primary(String) / .pair(back, next)</td><td class="mono">primary / secondary: TooltipAction?</td><td class="mono">primaryAction / secondaryAction: TooltipAction?</td></tr>
+          <tr><td class="mono">outlineButton: Bool</td><td class="mono">(absorbed into cta.pair)</td><td class="mono">—</td><td class="mono">—</td></tr>
+          <tr><td class="mono">(not modeled)</td><td class="mono">hasArrow: Bool</td><td class="mono">arrow: Bool</td><td class="mono">showArrow: Boolean = true</td></tr>
+          <tr><td class="mono">(not modeled)</td><td class="mono">onDismiss</td><td class="mono">onDismiss: () -&gt; Void</td><td class="mono">onDismiss: () -&gt; Unit</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/Tooltip/EBTooltip.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/tooltip/EBTooltip.kt</div>
+    </div>
+
+    <div class="sub-heading" id="tt2-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'tt2-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'tt2-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Simple tip — title + body, pointer below</span>
+<span class="typ">EBTooltip</span>(
+    <span class="prp">title</span>: <span class="str">"Quick transfers"</span>,
+    <span class="prp">body</span>: <span class="str">"Tap here to send money to recent contacts."</span>,
+    <span class="prp">placement</span>: .<span class="prp">bottom</span>
+)
+.<span class="prp">onDismiss</span> { showTip = <span class="kw">false</span> }
+
+<span class="cmt">// Walkthrough step — two CTAs</span>
+<span class="typ">EBTooltip</span>(
+    <span class="prp">title</span>: <span class="str">"Step 2 of 4"</span>,
+    <span class="prp">body</span>: <span class="str">"Review your balance before confirming."</span>,
+    <span class="prp">placement</span>: .<span class="prp">top</span>,
+    <span class="prp">cta</span>: .<span class="prp">pair</span>(back: <span class="str">"Back"</span>, next: <span class="str">"Next"</span>)
+)
+.<span class="prp">ebAppearance</span>(.<span class="prp">onboarding</span>)
+
+<span class="cmt">// Rich — custom leading slot</span>
+<span class="typ">EBTooltip</span>(<span class="prp">title</span>: <span class="str">"Welcome"</span>, <span class="prp">body</span>: <span class="str">"Tap a card to begin."</span>) {
+    <span class="typ">Image</span>(systemName: <span class="str">"sparkles"</span>)
+}
+
+<span class="cmt">// iOS 17 + Tips — recommended for onboarding flows</span>
+.<span class="prp">popoverTip</span>(quickTransferTip)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Simple tip</span>
+<span class="typ">EBTooltip</span>(
+    title = <span class="str">"Quick transfers"</span>,
+    body = <span class="str">"Tap here to send money to recent contacts."</span>,
+    placement = <span class="typ">EBTooltipPlacement</span>.Bottom,
+    onDismiss = { showTip = <span class="kw">false</span> }
+)
+
+<span class="cmt">// Walkthrough step — two CTAs, onboarding skin</span>
+<span class="typ">EBTooltip</span>(
+    title = <span class="str">"Step 2 of 4"</span>,
+    body = <span class="str">"Review your balance before confirming."</span>,
+    placement = <span class="typ">EBTooltipPlacement</span>.Top,
+    appearance = <span class="typ">EBTooltipAppearance</span>.Onboarding,
+    primaryAction = <span class="typ">TooltipAction</span>(<span class="str">"Next"</span>, onClick = { advance() }),
+    secondaryAction = <span class="typ">TooltipAction</span>(<span class="str">"Back"</span>, onClick = { rewind() })
+)
+
+<span class="cmt">// Custom leading slot</span>
+<span class="typ">EBTooltip</span>(
+    title = <span class="str">"Welcome"</span>,
+    body = <span class="str">"Tap a card to begin."</span>,
+    leading = { <span class="typ">Icon</span>(<span class="typ">Icons</span>.Default.AutoAwesome, contentDescription = null) }
+)
+
+<span class="cmt">// Material 3 PlainTooltip equivalent</span>
+<span class="typ">PlainTooltip</span> { <span class="typ">Text</span>(<span class="str">"Shortcut"</span>) }</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="tt2-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Role + focus</strong></td><td class="muted">Announce tooltip as <code>.accessibilityAddTraits(.isModal)</code> when <code>hasDismiss = true</code> — otherwise role <code>.staticText</code>.</td><td class="muted"><code>semantics { role = Role.Popup }</code> on the container; TalkBack focuses it on appear.</td></tr>
+          <tr><td><strong>Close control</strong></td><td class="muted">Wrap close as a <code>Button</code> with <code>accessibilityLabel</code> "Dismiss tip" and 44×44 hit target.</td><td class="muted"><code>IconButton</code> with <code>contentDescription = "Dismiss tip"</code>; 48×48dp minimum.</td></tr>
+          <tr><td><strong>Dismiss-outside</strong></td><td class="muted">Respect <code>UIAccessibility.isVoiceOverRunning</code> — do not auto-dismiss tooltips while VO is active.</td><td class="muted">Do not auto-dismiss while TalkBack is active; hold the tooltip until the user explicitly moves on.</td></tr>
+          <tr><td><strong>Reduce motion</strong></td><td class="muted">Respect <code>UIAccessibility.isReduceMotionEnabled</code> — skip the scale-in animation; fade only.</td><td class="muted">Respect <code>Settings.Global.TRANSITION_ANIMATION_SCALE</code> — fade only when user has motion reduced.</td></tr>
+          <tr><td><strong>Combined label</strong></td><td class="muted">Read title + body + "Dismiss" as one phrase; avoid reading pointer.</td><td class="muted">Same; set <code>mergeDescendants = true</code> on the container.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="tt2-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Use for short, transient explanations or pointer-to-action nudges tied to a specific element.</li>
+          <li>Anchor the pointer at the target — consistency helps users associate the tip with its referent.</li>
+          <li>Prefer one primary CTA; use two only for onboarding walkthroughs (Back + Next).</li>
+          <li>Provide a dismiss control unless the tooltip is a required onboarding gate.</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't use Tooltip for error / status messaging — use <a href="#" onclick="showPanelById('alert');return false;">Alert</a>.</li>
+          <li>Don't use Tooltip for large or scrollable content — promote to <a href="#" onclick="showPanelById('modal');return false;">Modal</a>.</li>
+          <li>Don't stack multiple tooltips simultaneously — one focal point per screen.</li>
+          <li>Don't enable more than one pointer direction — pick one with <code>placement</code> (when the schema lands).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="tt2-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">3 sibling components for one primitive. Close uses a raw image asset inside a generic frame rather than an <code>icon/close</code> instance.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Version suffix in the component name (<code>Tooltip V2</code>). Pointer direction is 4 booleans instead of one enum.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Surface, border, label, description, and CTA colors bound to <code>main/nudge/*</code> and <code>main/button/*</code> tokens. Spacing via <code>space/*</code>.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Maps cleanly once pointer booleans → <code>placement</code> enum and sibling skins → <code>appearance</code> enum. CTA padding inconsistencies block a 1:1 Button reuse.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">No Pressed / Focused on close. No lifecycle (appearing / dismissing) annotated. Close isn't wired to a dismiss property.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Pointer is 4 raster images (one per edge). Leading icon is a gray placeholder circle. Close is an image asset.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked on consolidation + enum conversion + slot adoption. Mapping today's shape would cement the wrong schema.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="tt2-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(8 total)</span></div>
+    <p>4 booleans and one 3-value enum yield <strong>8 shipped variants</strong> out of a 24-cell theoretical matrix (<code>CTA (3) × Icon (2) × Description (2) × Header (2) = 24</code>). Only the 8 meaningful combinations are exposed. Pointer direction is 4 additional booleans outside the variant matrix.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>CTA</th><th>Icon</th><th>Description</th><th>Header</th><th>Dimensions</th><th>Node</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">1</td><td class="mono">one</td><td class="mono">yes</td><td class="mono">yes</td><td class="mono">yes</td><td class="mono">359 × 181</td><td class="mono">70:14907</td></tr>
+          <tr><td class="mono center">2</td><td class="mono">one</td><td class="mono">no</td><td class="mono">yes</td><td class="mono">yes</td><td class="mono">359 × 155</td><td class="mono">7977:12260</td></tr>
+          <tr><td class="mono center">3</td><td class="mono">none</td><td class="mono">yes</td><td class="mono">yes</td><td class="mono">yes</td><td class="mono">359 × 137</td><td class="mono">70:14903</td></tr>
+          <tr><td class="mono center">4</td><td class="mono">none</td><td class="mono">no</td><td class="mono">yes</td><td class="mono">yes</td><td class="mono">359 × 119</td><td class="mono">70:14902</td></tr>
+          <tr><td class="mono center">5</td><td class="mono">none</td><td class="mono">no</td><td class="mono">no</td><td class="mono">yes</td><td class="mono">359 × 79</td><td class="mono">70:14900</td></tr>
+          <tr><td class="mono center">6</td><td class="mono">none</td><td class="mono">no</td><td class="mono">yes</td><td class="mono">no</td><td class="mono">359 × 92</td><td class="mono">70:14901</td></tr>
+          <tr><td class="mono center">7</td><td class="mono">two</td><td class="mono">no</td><td class="mono">yes</td><td class="mono">no</td><td class="mono">359 × 136</td><td class="mono">70:14905</td></tr>
+          <tr><td class="mono center">8</td><td class="mono">one</td><td class="mono">no</td><td class="mono">yes</td><td class="mono">no</td><td class="mono">359 × 136</td><td class="mono">70:14906</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 70:14908</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Restructure</strong> — Consolidate 3 sibling Tooltip components; drop the <code>V2</code> suffix; replace 4 pointer booleans with one <code>placement</code> enum; replace raster pointer with vector; replace placeholder icon with a Figma Slot. <span class="tag-open tag-c1 tag-c2">Open</span></div><span class="changelog-delta delta-open">Architecture</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C1 — 3 siblings for 1 primitive</strong> — Tooltip V2, Onboarding - Tooltip, Tooltip Blurred and Transparent. Merge via <code>appearance</code> enum. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — Version suffix in name</strong> — <code>Tooltip V2</code> shouldn't exist in production; no V1 surfaces in the file. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — Pointer is 4 booleans</strong> — Replace <code>pointerTop/Right/Bottom/Left</code> with a single <code>placement</code> enum. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C4 — CTA padding drift</strong> — Same XSmall Button, three different paddings across variants. Normalize. <span class="tag-open tag-c4">Open</span></div><span class="changelog-delta delta-open">C4</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C5 — No dismiss/focus states</strong> — Close is decorative; Pressed / Focused / Lifecycle not modeled. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C6 — Raster pointer + placeholder icon</strong> — 4 raster images for the pointer; gray circle for the leading icon. Vector + slot. <span class="tag-open tag-c6">Open</span></div><span class="changelog-delta delta-open">C6</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C7 — Code Connect</strong> — Blocked on the architectural changes above. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Tokens ✓</strong> — Surface / border / label / description / CTA colors all bound to <code>main/nudge/*</code> and <code>main/button/*</code>. Spacing via <code>space/*</code>. <span class="tag-fixed">Noted</span></div><span class="changelog-delta delta-resolved">Praise</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-tooltip-v2">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-tooltip-v2"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Tooltip V2 JS ──────────────────────────────────────────────
+   Renders the tooltip with header / description / icon / CTA toggles
+   and a pointer anchored at top / right / bottom / left (or none).
+   Uses class-free inline markup so the preview works without extra CSS. */
+
+function _tt2Escape(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function _tt2Pointer(dir) {
+  if (dir === 'none') return '';
+  var common = 'position:absolute;width:0;height:0;';
+  if (dir === 'top') {
+    return '<div style="' + common + 'left:50%;top:-8px;transform:translateX(-50%);border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:8px solid #FFFFFF;filter:drop-shadow(0 -1px 0 #E5EBF4);"></div>';
+  }
+  if (dir === 'bottom') {
+    return '<div style="' + common + 'left:50%;bottom:-8px;transform:translateX(-50%);border-left:8px solid transparent;border-right:8px solid transparent;border-top:8px solid #FFFFFF;filter:drop-shadow(0 1px 0 #E5EBF4);"></div>';
+  }
+  if (dir === 'left') {
+    return '<div style="' + common + 'top:50%;left:-8px;transform:translateY(-50%);border-top:8px solid transparent;border-bottom:8px solid transparent;border-right:8px solid #FFFFFF;filter:drop-shadow(-1px 0 0 #E5EBF4);"></div>';
+  }
+  return '<div style="' + common + 'top:50%;right:-8px;transform:translateY(-50%);border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:8px solid #FFFFFF;filter:drop-shadow(1px 0 0 #E5EBF4);"></div>';
+}
+
+function _tt2Close() {
+  return '<div style="flex-shrink:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center;">' +
+    '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1l10 10M11 1L1 11" stroke="#0A2757" stroke-width="1.6" stroke-linecap="round"/></svg>' +
+  '</div>';
+}
+
+function _tt2PlaceholderIcon() {
+  return '<div style="flex-shrink:0;width:46px;height:46px;border-radius:58.9px;background:#C2C6CF;"></div>';
+}
+
+function _tt2PrimaryBtn(label) {
+  return '<div style="display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;border-radius:99px;background:#005CE5;color:#FFFFFF;font-family:\'Proxima Soft\',system-ui;font-size:16px;line-height:16px;font-weight:700;letter-spacing:0.25px;">' + _tt2Escape(label) + '</div>';
+}
+
+function _tt2OutlineBtn(label) {
+  return '<div style="display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;border-radius:99px;background:#FFFFFF;color:#005CE5;border:2px solid #005CE5;font-family:\'Proxima Soft\',system-ui;font-size:16px;line-height:16px;font-weight:700;letter-spacing:0.25px;">' + _tt2Escape(label) + '</div>';
+}
+
+function _tt2Render(opts) {
+  var header      = opts.header !== false;
+  var description = opts.description !== false;
+  var icon        = opts.icon === true;
+  var cta         = opts.cta || 'one';
+  var pointer     = opts.pointer || 'bottom';
+
+  var wrapPad = 'padding:16px;';
+
+  var html = '<div style="display:flex;justify-content:center;align-items:center;width:100%;padding:40px 12px;">';
+  html += '<div style="position:relative;width:335px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:6px;' + wrapPad + 'box-sizing:border-box;">';
+
+  // Pointer
+  html += _tt2Pointer(pointer);
+
+  // Body container (icon + text + close)
+  html += '<div style="display:flex;align-items:flex-start;gap:8px;">';
+
+  // Leading icon (placeholder)
+  if (icon) {
+    html += _tt2PlaceholderIcon();
+  }
+
+  // Text block
+  html += '<div style="flex:1 0 0;min-width:0;display:flex;flex-direction:column;gap:4px;">';
+  if (header) {
+    html += '<div style="font-family:\'Proxima Soft\',system-ui;font-size:18px;line-height:23px;font-weight:700;letter-spacing:0.25px;color:#0A2757;">Header</div>';
+  }
+  if (description) {
+    html += '<div style="font-family:\'BarkAda\',\'Proxima Soft\',system-ui;font-size:12px;line-height:18px;font-weight:600;color:#6780A9;">Description goes here. This is the second sentence. The third sentence.</div>';
+  }
+  html += '</div>';
+
+  // Close
+  html += _tt2Close();
+  html += '</div>';
+
+  // CTA row
+  if (cta !== 'none') {
+    html += '<div style="display:flex;align-items:center;margin-top:16px;';
+    html += cta === 'two' ? 'justify-content:space-between;' : 'justify-content:flex-end;';
+    html += '">';
+    if (cta === 'two') {
+      html += _tt2OutlineBtn('Back');
+      html += _tt2PrimaryBtn('Next');
+    } else {
+      html += _tt2PrimaryBtn('Next');
+    }
+    html += '</div>';
+  }
+
+  html += '</div>';  // tooltip box
+  html += '</div>';  // wrap
+  return html;
+}
+
+function updateTt2Demo() {
+  var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
+  var el = document.getElementById('tt2-demo-preview');
+  if (!el) return;
+  el.innerHTML = _tt2Render({
+    header:      getVal('tt2-ctrl-header', 'true') === 'true',
+    description: getVal('tt2-ctrl-desc',   'true') === 'true',
+    icon:        getVal('tt2-ctrl-icon',   'false') === 'true',
+    cta:         getVal('tt2-ctrl-cta',    'one'),
+    pointer:     getVal('tt2-ctrl-pointer','bottom')
+  });
+}
+
+function _tt2InitSpecCards() {
+  var map = [
+    ['tt2-preview-hero',          {header:true, description:true, icon:true,  cta:'one',  pointer:'bottom'}],
+    ['tt2-preview-text-cta',      {header:true, description:true, icon:false, cta:'one',  pointer:'left'}],
+    ['tt2-preview-icon-dismiss',  {header:true, description:true, icon:true,  cta:'none', pointer:'right'}],
+    ['tt2-preview-text',          {header:true, description:true, icon:false, cta:'none', pointer:'bottom'}],
+    ['tt2-preview-header-only',   {header:true, description:false,icon:false, cta:'none', pointer:'bottom'}],
+    ['tt2-preview-desc-only',     {header:false,description:true, icon:false, cta:'none', pointer:'bottom'}],
+    ['tt2-preview-two-cta',       {header:false,description:true, icon:false, cta:'two',  pointer:'top'}],
+    ['tt2-preview-cta-no-header', {header:false,description:true, icon:false, cta:'one',  pointer:'bottom'}]
+  ];
+  map.forEach(function (pair) {
+    var el = document.getElementById(pair[0]);
+    if (el) el.innerHTML = _tt2Render(pair[1]);
+  });
+}
+
+function _tt2Init() {
+  updateTt2Demo();
+  _tt2InitSpecCards();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tt2Init);
+else _tt2Init();
+</script>
+
+<!--@section-end-->

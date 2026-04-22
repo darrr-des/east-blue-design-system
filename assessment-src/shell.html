@@ -1022,13 +1022,13 @@ function buildToc(panelId) {
   headings.forEach(function(h) {
     var text = h.textContent.trim();
     if (!text || text.length > 60) return;
-    /* Skip non-heading elements */
-    if (!h.classList.contains('sub-heading') && !h.classList.contains('verdict-card') && !h.classList.contains('demo-panel')) return;
+    /* Skip non-heading elements. Demo panels are NOT included — the
+       Live Preview sub-heading immediately above them already covers it. */
+    if (!h.classList.contains('sub-heading') && !h.classList.contains('verdict-card')) return;
     /* Skip spec card headings that are children — they'll be added as nested */
     if (h.classList.contains('toc-child')) return;
     var label = text;
     if (h.classList.contains('verdict-card')) label = 'Overview';
-    if (h.classList.contains('demo-panel')) label = 'Live Demo';
     var link = document.createElement('button');
     link.className = 'page-toc-link';
     link.textContent = label;

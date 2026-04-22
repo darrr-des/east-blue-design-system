@@ -1,0 +1,825 @@
+<!--
+  SUBTEXT MESSAGE COMPONENT ASSESSMENT
+  Helper / success / error message that appears beneath form fields.
+  Edit this file to update the Subtext Message assessment.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 18687:71133
+ds-verdict: restructure
+native-status: rework
+variants: 6
+ios: Text (supportingText convention)
+android: supportingText slot (Material 3 TextField)
+open-issues: C1,C2,C4,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] Layer named `shape_full` inside icon container — generic flattened name, suggests boolean-operation or raster shape rather than vector Icon instance
+[C2] Boolean property `leadingLabel` is misnamed: the "Label" text actually renders trailing in the layout. Naming contradicts rendered position and will mislead native param names.
+[C4] Anatomy diverges by variant: Primary has no icon slot, Success + Error hardcode specific icons (Checkmark / Close). Not a uniform slot contract.
+<!--@patterns-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-subtext-message" onclick="showPanel('subtext-message', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Subtext Message</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('subtext-message')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <circle cx="16" cy="20" r="5" stroke="currentColor" stroke-width="1.2" opacity=".35"/>
+      <path d="M14 20l1.6 1.6L18 19.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity=".35"/>
+      <rect x="26" y="17" width="42" height="2.4" rx="1" fill="currentColor" opacity=".3"/>
+      <rect x="26" y="22" width="28" height="2" rx="1" fill="currentColor" opacity=".18"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Subtext Message</div>
+      <span class="badge badge-restructure">Restructure</span>
+    </div>
+    <div class="summary-card-desc">Helper / success / error message displayed below form fields. 6 variants across Variant (Primary/Success/Error) × Size (Base/Small).</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Subtext Message</strong></td>
+  <td><span class="badge badge-restructure">Restructure</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">6</td>
+  <td class="muted">Field helper text. Variant × Size. Anatomy asymmetry + misnamed <code>leadingLabel</code> boolean. Consider folding into form-field <code>supportingText</code> slot.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-subtext-message">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Subtext Message
+          <span class="badge badge-restructure">Restructure</span>
+          <span class="badge badge-rework">Requires Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18687-71133" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">Helper / success / error message shown below form fields. 6 variants across Variant (Primary/Success/Error) × Size (Base/Small). Icon appears only for Success and Error. Currently a standalone DS primitive — composed in by consumers beneath Input Field, Labeled Field, Select Field, Recipient Field, Dropdown, etc.</p>
+      </div>
+      <div class="verdict-inline verdict-restructure">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Restructure before native handoff</div>
+          <div class="verdict-inline-text">Asymmetric anatomy (Primary has no icon, Success/Error hardcode icons), misnamed <code>leadingLabel</code> boolean, generic <code>shape_full</code> icon layers, no disabled state. Decide: keep as standalone primitive or fold into form-field <code>supportingText</code> slot.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Tab bar ──────────────────────────────────────────────── -->
+    <div data-tab-group="subtext-message-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'subtext-message-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'subtext-message-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'subtext-message-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'subtext-message-tabs')">Changelog</button>
+    </div>
+
+    <!-- ══ Tab: Overview ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <!-- In Context -->
+    <div class="sub-heading" id="stm-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Appears directly beneath form fields — Input, Labeled, Select, Recipient, Dropdown — to communicate helper hints, success confirmation, or validation errors.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="160" height="100" viewBox="0 0 160 100" fill="none">
+          <rect x="12" y="14" width="136" height="28" rx="5" stroke="currentColor" stroke-width="1.2" opacity=".25"/>
+          <rect x="22" y="24" width="54" height="3" rx="1" fill="currentColor" opacity=".18"/>
+          <circle cx="22" cy="54" r="5" stroke="#D61B2C" stroke-width="1.2"/>
+          <path d="M19.8 54l1.5 1.5 2.9-2.9" stroke="#D61B2C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <rect x="34" y="51" width="90" height="3" rx="1" fill="#D61B2C" opacity=".75"/>
+          <rect x="34" y="57" width="62" height="2.2" rx="1" fill="#D61B2C" opacity=".5"/>
+          <rect x="12" y="76" width="136" height="14" rx="3" fill="currentColor" opacity=".08"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Live Preview -->
+    <div class="sub-heading" id="stm-preview">Live Preview</div>
+    <p class="section-desc">Toggle variant, size, leading label, and trailing icon to see the subtext update in real time.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="stm-demo-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Variant</span>
+              <select class="demo-panel-select" onchange="_stmDemo.variant=this.value;updateSubtextMessageDemo()">
+                <option value="Primary">Primary</option>
+                <option value="Success">Success</option>
+                <option value="Error">Error</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Size</span>
+              <select class="demo-panel-select" onchange="_stmDemo.size=this.value;updateSubtextMessageDemo()">
+                <option value="Base">Base</option>
+                <option value="Small" selected>Small</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">leadingLabel</span>
+              <select class="demo-panel-select" onchange="_stmDemo.leadingLabel=this.value;updateSubtextMessageDemo()">
+                <option value="true">true</option>
+                <option value="false" selected>false</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">trailingIcon</span>
+              <select class="demo-panel-select" onchange="_stmDemo.trailingIcon=this.value;updateSubtextMessageDemo()">
+                <option value="true" selected>true</option>
+                <option value="false">false</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DS Health -->
+    <div class="sub-heading" id="stm-health">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card partial">
+        <div class="trait-header">
+          <div class="trait-name">Reusable</div>
+          <div class="trait-status">Partial</div>
+        </div>
+        <div class="trait-note">Works under any form field. But it's only ever rendered beneath a field — in practice it's a field-composition concern, not a standalone primitive. No disabled variant to mirror field disabled state.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header">
+          <div class="trait-name">Self-contained</div>
+          <div class="trait-status">Partial</div>
+        </div>
+        <div class="trait-note">Carries own type, color, spacing, and icon per variant. However, Success / Error icons are drawn shapes named <code>shape_full</code> — not instance-swapped from the DS Icon library.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header">
+          <div class="trait-name">Consistent</div>
+          <div class="trait-status">Warn</div>
+        </div>
+        <div class="trait-note">Anatomy diverges by variant — Primary has no icon slot, Success / Error hardcode icons. Boolean <code>leadingLabel</code> is misnamed (the Label text renders trailing in the flex row).</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header">
+          <div class="trait-name">Composable</div>
+          <div class="trait-status">Partial</div>
+        </div>
+        <div class="trait-note">Instance-placed under form fields today. Native equivalents (SwiftUI convention, Compose <code>supportingText</code>) treat this as a field slot, not a peer component — suggesting it should be folded in.</div>
+      </div>
+    </div>
+
+    <!-- Behavior -->
+    <div class="sub-heading" id="stm-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Variant</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+            <th>Figma Property</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Primary (helper)</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">Variant=Primary</td>
+            <td class="muted">Neutral weaker text #6780A9. No icon.</td>
+          </tr>
+          <tr>
+            <td><strong>Success</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">Variant=Success</td>
+            <td class="muted">Green text #048570, filled check icon #12AF80.</td>
+          </tr>
+          <tr>
+            <td><strong>Error</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">Variant=Error</td>
+            <td class="muted">Red text + icon #D61B2C.</td>
+          </tr>
+          <tr>
+            <td><strong>Disabled</strong></td>
+            <td class="center muted">—</td>
+            <td class="center muted">—</td>
+            <td class="mono">—</td>
+            <td class="muted">No disabled variant today. When parent field is disabled, there's no matched subtext state.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Open Issues -->
+    <div class="sub-heading" id="stm-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Anatomy diverges by variant.</strong> Primary has no icon, Success / Error hardcode specific icons (Checkmark Circular / Close). The "leading icon" is not a uniform slot — it's an if-branch on Variant. Consumers can't override the Success / Error icon without detaching. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong><code>leadingLabel</code> boolean is misnamed.</strong> The "Label" text actually renders on the trailing side of the flex row (after the message content), not leading. Naming contradicts rendered position and will mislead SwiftUI / Compose param names downstream. <span class="tag-open tag-c2">C2 · Variant &amp; Property Naming</span></span></li>
+      <li><span><strong>Icon layer named <code>shape_full</code>.</strong> The inner 12×12 shape inside the Checkmark / Close containers carries a generic, flattened-style name. Suggests a raster image fill or BOOLEAN_OPERATION rather than a proper vector Icon instance swappable from the DS Icon library. <span class="tag-open tag-c6">C6 · Asset &amp; Icon Quality</span></span></li>
+      <li><span><strong>Container layers named generically.</strong> Nested frames labeled <code>container</code> and <code>content</code> don't describe role — Code Connect slot inference relies on semantic names like <code>#leading-icon</code>, <code>#message</code>, <code>#label</code>. <span class="tag-open tag-c1">C1 · Layer Structure &amp; Naming</span></span></li>
+      <li><span><strong>No Disabled variant.</strong> When the parent field is disabled, the subtext has no paired state — consumers either hide it or rely on manual opacity adjustments. Every sibling form field carries a Disabled state; the subtext should too. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked behind C1 / C2 / C4 / C6. Also depends on the family-level decision below — whether this stays a standalone component or folds into the form-field <code>supportingText</code> slot. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <!-- Design Recommendations -->
+    <div class="sub-heading" id="stm-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Fold Subtext Message into each form field as a <code>supportingText</code> slot.</strong> This is the native convention on both platforms — Material 3 <code>TextField</code> exposes <code>supportingText</code>, and SwiftUI pairs a <code>Text</code> under the field using the same validation state. Folding it in removes the C4 / C5 gaps (field already has Disabled + Error states) and lets consumers drive the message by passing <code>supportingText: String?</code> + deriving color from <code>isError</code>. The standalone component can stay as an annotation helper for designers but is no longer the canonical consumer integration path. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Rename <code>leadingLabel</code> → <code>trailingLabel</code>.</strong> The "Label" text renders at the end of the flex row — the property name must match rendered position so SwiftUI / Compose params don't surprise developers. If the intent is to actually make the Label leading, swap the layer order in Figma and keep the current name. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Normalize anatomy with a real leading-icon slot across all variants.</strong> Rebuild so every variant shares the same structure: optional <code>#leading-icon</code> (Icon instance) → <code>#message</code> (text) → optional <code>#trailing-label</code> (Label text). Primary keeps icon = off by default; Success / Error default icon = on. This lets one <code>Variant</code> enum + one boolean icon slot + one boolean label slot cover all six variants uniformly. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Replace <code>shape_full</code> with DS Icon library instances.</strong> Swap the Success checkmark and Error close for <code>Icon=Checkmark Circular</code> and <code>Icon=Close</code> instance-swaps bound to <code>main/subtext-message/*/icon</code> tokens. Flattened boolean shapes can't be retinted, recolored, or resized cleanly and they block Code Connect 1:1 icon param mapping. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Add a Disabled variant.</strong> Match the 4-state contract of every sibling form field (Default / Active / Error / Disabled). When the parent field is disabled, the subtext needs a paired muted color token (e.g. <code>main/subtext-message/disabled/label</code>). <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Rename container layers.</strong> <code>container</code> → <code>#leading-icon-slot</code>, <code>content</code> → <code>#content</code>, inner shape → <code>#icon-glyph</code>. Semantic names drive Code Connect slot inference. <span class="tag-recommend">Rename</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ══ Tab: Style ═════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="stm-styles" style="margin-top:0">Variants</div>
+    <p class="section-desc">6 variants across 2 axes: Variant (Primary / Success / Error) × Size (Base / Small). Base uses 12/18 caption type, Small uses 10/15 small caption.</p>
+
+    <!-- ═══ Primary ═══ -->
+    <div class="spec-card" id="stm-spec-primary">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="stm-primary">Primary (helper)</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="11855:8764" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>11855:8764</span></button>
+        </div>
+        <p class="spec-card-desc">Neutral helper text. No icon. Used for hints, formatting examples, or ambient guidance under a field.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="stm-primary-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Variant</span>
+              <span class="demo-panel-value">Primary</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Size</span>
+              <select class="demo-panel-select" onchange="updateSubtextMessageSpecCard('primary','size',this.value)">
+                <option value="Base">Base</option>
+                <option value="Small" selected>Small</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Success ═══ -->
+    <div class="spec-card" id="stm-spec-success">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="stm-success">Success</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="11855:8770" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>11855:8770</span></button>
+        </div>
+        <p class="spec-card-desc">Valid input confirmation. Green text with filled circular checkmark.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="stm-success-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Variant</span>
+              <span class="demo-panel-value">Success</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Size</span>
+              <select class="demo-panel-select" onchange="updateSubtextMessageSpecCard('success','size',this.value)">
+                <option value="Base">Base</option>
+                <option value="Small" selected>Small</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Error ═══ -->
+    <div class="spec-card" id="stm-spec-error">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="stm-error">Error</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="11855:8782" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>11855:8782</span></button>
+        </div>
+        <p class="spec-card-desc">Validation error. Red text with filled circular close icon.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="stm-error-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Variant</span>
+              <span class="demo-panel-value">Error</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Size</span>
+              <select class="demo-panel-select" onchange="updateSubtextMessageSpecCard('error','size',this.value)">
+                <option value="Base">Base</option>
+                <option value="Small" selected>Small</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colors by Variant -->
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by Variant</div>
+      <p class="style-colors-desc">Each variant binds its own label (and icon, where applicable) token. No appearance modes. No disabled state.</p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>VARIANT</th><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Primary</strong></td><td class="muted">label</td><td class="mono">main/subtext-message/primary/label</td><td class="mono">#6780A9</td></tr>
+          <tr><td><strong>Success</strong></td><td class="muted">label</td><td class="mono">main/subtext-message/success/label</td><td class="mono">#048570</td></tr>
+          <tr><td><strong>Success</strong></td><td class="muted">icon</td><td class="mono">main/subtext-message/success/icon</td><td class="mono">#12AF80</td></tr>
+          <tr><td><strong>Error</strong></td><td class="muted">label</td><td class="mono">main/subtext-message/error/label</td><td class="mono">#D61B2C</td></tr>
+          <tr><td><strong>Error</strong></td><td class="muted">icon</td><td class="mono">main/subtext-message/error/icon</td><td class="mono">#D61B2C</td></tr>
+          <tr><td class="muted">Disabled</td><td class="muted">—</td><td class="muted">— (missing)</td><td class="muted">—</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="style-colors">
+      <div class="style-colors-title">Typography by Size</div>
+      <p class="style-colors-desc">Both sizes use the Secondary (BarkAda Semibold) type scale.</p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>SIZE</th><th>TEXT STYLE</th><th>FONT</th><th>SIZE</th><th>LINE HEIGHT</th><th>WEIGHT</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Base</strong></td><td class="mono">Secondary/Bold/Caption</td><td class="mono">BarkAda</td><td class="mono">12 px</td><td class="mono">18 px</td><td class="mono">Semibold (600)</td></tr>
+          <tr><td><strong>Small</strong></td><td class="mono">Secondary/Bold/Small Caption</td><td class="mono">BarkAda</td><td class="mono">10 px</td><td class="mono">15 px</td><td class="mono">Semibold (600)</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Layout -->
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>PROPERTY</th><th>VALUE</th><th>TOKEN</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Padding left</td><td class="mono">2 px</td><td class="mono">space/space-2</td></tr>
+          <tr><td>Padding top</td><td class="mono">4 px</td><td class="mono">space/space-4</td></tr>
+          <tr><td>Gap (icon ↔ content)</td><td class="mono">4 px</td><td class="mono">space/space-4</td></tr>
+          <tr><td>Icon frame</td><td class="mono">16 × 16 px</td><td class="mono">—</td></tr>
+          <tr><td>Icon glyph</td><td class="mono">12 × 12 px</td><td class="mono">—</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- ══ Tab: Code ══════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <!-- Installation -->
+    <div class="sub-heading" id="stm-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:form-elements:1.0.0"</span>)
+}</pre>
+    </div>
+    <p class="code-label">Import</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="kw">import</span> EastBlueDS  <span class="cmt">// SwiftUI</span>
+<span class="kw">import</span> com.eastblue.ds.form.*  <span class="cmt">// Compose</span></pre>
+    </div>
+    <p class="table-footnote">Package not yet published. These are the planned distribution paths.</p>
+
+    <!-- Property Mapping -->
+    <div class="sub-heading" id="stm-props">Property Mapping</div>
+    <p class="section-desc">Assumes the recommended architecture: <code>supportingText</code> slot on each form field (preferred), with this standalone component as a secondary annotation helper.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Figma Property</th>
+            <th>SwiftUI Param</th>
+            <th>Compose Param</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">Variant = Primary</td>
+            <td class="mono">.ebSubtextStyle(.primary)</td>
+            <td class="mono">style = EBSubtextStyle.Primary</td>
+            <td class="muted">Neutral helper text. When used via field <code>supportingText</code>, this is the default style.</td>
+          </tr>
+          <tr>
+            <td class="mono">Variant = Success</td>
+            <td class="mono">.ebSubtextStyle(.success)</td>
+            <td class="mono">style = EBSubtextStyle.Success</td>
+            <td class="muted">Green with checkmark icon.</td>
+          </tr>
+          <tr>
+            <td class="mono">Variant = Error</td>
+            <td class="mono">.ebSubtextStyle(.error)</td>
+            <td class="mono">style = EBSubtextStyle.Error</td>
+            <td class="muted">Red with close icon. Field-side: derived from <code>isError</code>.</td>
+          </tr>
+          <tr>
+            <td class="mono">Size = Base / Small</td>
+            <td class="mono">.controlSize(.regular / .small)</td>
+            <td class="mono">size = EBSubtextSize.Base / Small</td>
+            <td class="muted">Typography scale only.</td>
+          </tr>
+          <tr>
+            <td class="mono">leadingLabel (Yes/No)</td>
+            <td class="mono">trailingLabel: String?</td>
+            <td class="mono">trailingLabel: String? = null</td>
+            <td class="muted">Needs rename — property is misnamed (renders trailing, not leading).</td>
+          </tr>
+          <tr>
+            <td class="mono">trailingIcon (Yes/No)</td>
+            <td class="mono">leadingIcon: Image?</td>
+            <td class="mono">leadingIcon: @Composable (() -&gt; Unit)?</td>
+            <td class="muted">Slot is actually leading. Default icon per variant, or pass custom.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/FormElements/EBSubtextMessage.swift</div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/form/EBSubtextMessage.kt</div>
+    </div>
+
+    <!-- Usage Snippets -->
+    <div class="sub-heading" id="stm-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+
+    <div class="sub-heading toc-child" id="stm-snip-field">Preferred: via form-field <code>supportingText</code></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'stm-usage-field','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'stm-usage-field','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBInputField</span>(<span class="str">"Email"</span>, <span class="prp">text</span>: $email)
+    .<span class="fn">ebError</span>(!isValid)
+    .<span class="fn">ebSupportingText</span>(<span class="str">"Enter a valid email address"</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBInputField</span>(
+    <span class="prp">value</span> = email,
+    <span class="prp">onValueChange</span> = { email = it },
+    <span class="prp">placeholder</span> = <span class="str">"Email"</span>,
+    <span class="prp">isError</span> = !isValid,
+    <span class="prp">supportingText</span> = { <span class="typ">Text</span>(<span class="str">"Enter a valid email address"</span>) }
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="stm-snip-standalone">Standalone primitive</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'stm-usage-standalone','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'stm-usage-standalone','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBSubtextMessage</span>(<span class="str">"Valid message content"</span>)
+    .<span class="fn">ebSubtextStyle</span>(.success)
+    .<span class="fn">controlSize</span>(.small)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBSubtextMessage</span>(
+    <span class="prp">text</span> = <span class="str">"Valid message content"</span>,
+    <span class="prp">style</span> = <span class="typ">EBSubtextStyle</span>.Success,
+    <span class="prp">size</span> = <span class="typ">EBSubtextSize</span>.Small
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <!-- Accessibility -->
+    <div class="sub-heading" id="stm-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Requirement</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Error announcement</td>
+            <td class="muted">Wire to field <code>.accessibilityValue</code> so VoiceOver reads the error with the field value.</td>
+            <td class="muted">Use <code>semantics { error(msg) }</code> on the field, not a standalone live region.</td>
+          </tr>
+          <tr>
+            <td>Icon is decorative</td>
+            <td class="muted">Mark the leading icon <code>.accessibilityHidden(true)</code> — the text carries the meaning.</td>
+            <td class="muted">Icon <code>contentDescription = null</code>; semantics go on the text.</td>
+          </tr>
+          <tr>
+            <td>Dynamic Type / font scaling</td>
+            <td class="muted">Caption type must scale with Dynamic Type. Don't hard-lock font size.</td>
+            <td class="muted">Use <code>sp</code> units and respect <code>fontScale</code>.</td>
+          </tr>
+          <tr>
+            <td>Color-only meaning</td>
+            <td class="muted">Pair red with the close icon so red isn't the sole error cue.</td>
+            <td class="muted">Same — both a color and an icon are required for error/success.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Usage Guidelines -->
+    <div class="sub-heading" id="stm-guidelines">Usage Guidelines</div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Pass the message via the parent field's <code>supportingText</code> slot. This keeps validation state and message colocated.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Render this beneath a field as a separate sibling component — the parent field can't coordinate disabled / error state with an external peer.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Keep error messages specific and actionable ("Enter 11 digits, starting with 09"). Use Primary for ambient hints, Success for confirmation.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Use Success as a decorative "looks good!" under every valid field — reserve it for meaningful post-validation confirmation.</p></div>
+    </div>
+
+    <!-- Criteria Scorecard -->
+    <div class="sub-heading" id="stm-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">ID</th>
+            <th class="col-md">Criterion</th>
+            <th class="col-badge">Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Generic <code>container</code>, <code>content</code>, <code>shape_full</code> layers. No semantic slot names.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted"><code>leadingLabel</code> renders trailing — name contradicts position. Booleans already true/false (good).</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Dedicated <code>main/subtext-message/*</code> tokens for label + icon. Spacing uses <code>space/*</code>.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Anatomy diverges by variant. Natively this is a field slot (<code>supportingText</code>), not a peer component.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">No Disabled variant. Sibling fields have 4 states; subtext has 3 variants.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Icons are <code>shape_full</code> layers — likely flattened / boolean shapes, not vector Icon instances.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked until family decision + C1 / C2 / C4 / C6 resolved.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Code Connect -->
+    <div class="sub-heading" id="stm-cc">Code Connect</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Aspect</th><th class="col-badge">Status</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Property naming</td><td><span class="badge badge-rework">Rework</span></td><td class="muted"><code>leadingLabel</code> must be renamed to match rendered position</td></tr>
+          <tr><td>Slot inference</td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Generic layer names block slot detection</td></tr>
+          <tr><td>State coverage</td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Missing Disabled variant</td></tr>
+          <tr><td>Native component file</td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Depends on family decision: standalone <code>EBSubtextMessage</code> or field <code>supportingText</code> slot</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Variants Inventory -->
+    <div class="sub-heading" id="stm-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(6 total)</span></div>
+    <p class="section-desc">3 <code>Variant</code> values × 2 <code>Size</code> values. The <code>leadingLabel</code> and <code>trailingIcon</code> booleans are not part of the 6 — they toggle at the instance level.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Variant</th><th>Size</th><th>Node ID</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Primary</td><td>Base</td><td class="mono">11855:8764</td></tr>
+          <tr><td>Primary</td><td>Small</td><td class="mono">11855:8767</td></tr>
+          <tr><td>Success</td><td>Base</td><td class="mono">11855:8770</td></tr>
+          <tr><td>Success</td><td>Small</td><td class="mono">11855:8776</td></tr>
+          <tr><td>Error</td><td>Base</td><td class="mono">11855:8782</td></tr>
+          <tr><td>Error</td><td>Small</td><td class="mono">11855:8788</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- ══ Tab: Changelog ═════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 18687:71133</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Component assessed</strong> — 6 variants documented (3 Variant × 2 Size). Primary / Success / Error with Base and Small sizes. Used as helper / validation message beneath Form Elements.
+          <span class="tag-fixed">Documented</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Initial</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Anatomy diverges by variant</strong> — Primary has no icon slot; Success / Error hardcode specific icons. Not a uniform slot contract.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C4 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>leadingLabel misnamed</strong> — The "Label" text renders on the trailing side of the flex row. Property name contradicts rendered position.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C2 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Icon layer named <code>shape_full</code></strong> — Inner 12×12 glyph carries a generic, flattened-style name. Suggests raster fill or boolean op rather than a proper vector Icon instance.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C6 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Container layers named generically</strong> — <code>container</code> / <code>content</code> don't describe role.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C1 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>No Disabled variant</strong> — Sibling form fields all carry Disabled. Subtext doesn't.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C5 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Code Connect mappings</strong> — Not registered. Blocked by family decision (fold into field <code>supportingText</code> slot vs keep standalone) + C1 / C2 / C4 / C6.
+          <span class="tag-open tag-c7">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C7 Open</span>
+      </div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <!-- On This Page -->
+  <aside class="page-toc" id="toc-subtext-message">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-subtext-message"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Subtext Message Component JS ──────────────────────────────────── */
+var _stmDemo = { variant: 'Primary', size: 'Small', leadingLabel: 'false', trailingIcon: 'true' };
+
+var _stmColors = {
+  Primary: { label: '#6780A9', icon: null },
+  Success: { label: '#048570', icon: '#12AF80' },
+  Error:   { label: '#D61B2C', icon: '#D61B2C' }
+};
+
+function _stmBuildSvg(variant, size, leadingLabel, trailingIcon) {
+  var c = _stmColors[variant] || _stmColors.Primary;
+  var fontSize = (size === 'Base') ? 12 : 10;
+  var lineHeight = (size === 'Base') ? 18 : 15;
+  var height = lineHeight + 8;
+  var hasIcon = (variant !== 'Primary') && (trailingIcon === 'true');
+  var hasLabel = (variant === 'Primary' || variant === 'Success' || variant === 'Error') && (leadingLabel === 'true');
+  var message = (variant === 'Primary') ? 'Message content' : (variant === 'Success') ? 'Valid message content' : 'Invalid message content';
+  var width = 260;
+  var x = 2;
+  var s = '<svg width="' + width + '" height="' + height + '" viewBox="0 0 ' + width + ' ' + height + '" fill="none">';
+  if (hasIcon) {
+    s += '<g transform="translate(' + x + ',' + ((height - 16) / 2) + ')">';
+    s += '<circle cx="8" cy="8" r="7" fill="' + c.icon + '"/>';
+    if (variant === 'Success') {
+      s += '<path d="M5 8.3l2.1 2.1L11.2 6" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
+    } else {
+      s += '<path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>';
+    }
+    s += '</g>';
+    x += 16 + 4;
+  }
+  var textY = (height / 2) + (fontSize / 3);
+  s += '<text x="' + x + '" y="' + textY + '" font-family="HeyMeow Rnd, system-ui, sans-serif" font-size="' + fontSize + '" font-weight="600" fill="' + c.label + '" letter-spacing="0">' + message + '</text>';
+  if (hasLabel) {
+    var labelX = width - 40;
+    var labelColor = (variant === 'Success') ? '#048570' : (variant === 'Error') ? '#D61B2C' : '#6780A9';
+    s += '<text x="' + labelX + '" y="' + textY + '" font-family="HeyMeow Rnd, system-ui, sans-serif" font-size="' + fontSize + '" font-weight="600" fill="' + labelColor + '" letter-spacing="0">Label</text>';
+  }
+  s += '</svg>';
+  return s;
+}
+
+function updateSubtextMessageDemo() {
+  var el = document.getElementById('stm-demo-preview');
+  if (el) el.innerHTML = _stmBuildSvg(_stmDemo.variant, _stmDemo.size, _stmDemo.leadingLabel, _stmDemo.trailingIcon);
+}
+
+var _stmSpecState = {
+  primary: { size: 'Small' },
+  success: { size: 'Small' },
+  error:   { size: 'Small' }
+};
+
+function updateSubtextMessageSpecCard(variantKey, prop, value) {
+  if (_stmSpecState[variantKey]) _stmSpecState[variantKey][prop] = value;
+  var el = document.getElementById('stm-' + variantKey + '-preview');
+  if (!el) return;
+  var variantName = variantKey.charAt(0).toUpperCase() + variantKey.slice(1);
+  var leadingLabel = 'false';
+  var trailingIcon = (variantKey === 'primary') ? 'false' : 'true';
+  el.innerHTML = _stmBuildSvg(variantName, _stmSpecState[variantKey].size, leadingLabel, trailingIcon);
+}
+
+function _stmInitSpecCards() {
+  updateSubtextMessageSpecCard('primary', 'size', 'Small');
+  updateSubtextMessageSpecCard('success', 'size', 'Small');
+  updateSubtextMessageSpecCard('error', 'size', 'Small');
+}
+
+function _stmInit() {
+  updateSubtextMessageDemo();
+  _stmInitSpecCards();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _stmInit);
+} else {
+  _stmInit();
+}
+</script>
+
+<!--@section-end-->

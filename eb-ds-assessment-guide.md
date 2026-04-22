@@ -257,6 +257,8 @@ They do **not** see:
 | C2 | `Type=Default` is a neutral appearance mixed in with the semantic set (Information / Warning / Error / Success). | Alert |
 | C1 | Two structurally different layouts (full-width banner vs bordered accent card) share one component — the axis that separates them is named `Full Width` which hides the real difference (border accent + action). | Alert |
 | C6 | Left-icon slot is a 24 × 24 `icon-placeholder` circle, not a swappable Icon instance. | Alert |
+| C6 | Peso Sign glyph imported as raster image (imgShapeFull) instead of vector instance of Peso Sign - Proxima icon | Amount Text Field |
+| C5 | Amount entry component ships without Active (focused) or Disabled states — only Default / Filled / Error | Amount Text Field |
 | C2 | Property renamed from "no. of initals" → "layout" with semantic values pair/trio/quad/overflow (RESOLVED — replaces "count" with numeric strings) | Avatar Group |
 | C5 | Overflow variant layout=overflow added with "+N" badge in bottom-right slot (RESOLVED) | Avatar Group |
 | C6 | Inner avatar children are hardcoded 24px containers — do not use Avatar component instances with size prop | Avatar Group |
@@ -265,6 +267,13 @@ They do **not** see:
 | C6 | Raster backgrounds on 5 initials variants replaced with vector ELLIPSE layers — RESOLVED | Avatar |
 | C3 | Hardcoded opacity: 0.90 on Danger/Heavy and Disabled/Heavy Transaction variants — RESOLVED (set to 1 via plugin) | Badge |
 | C2 | State property values renamed to match token semantic names (Info→Information, Success→Positive, Warning→Notice, Danger→Negative, Disabled→Muted) — RESOLVED across all 60 affected variants | Badge |
+| C1 | Component name ("Bottom Drawer") and token namespace ("bottom-header") disagree — scope of the component is not the bottom sheet, it's the header-plus-body skeleton of a sheet. The actual sheet primitives (drag handle, detents, scrim, snap behaviour) are not present. | Bottom Sheet |
+| C1 | Content region is modeled as 4 hardcoded decorative placeholder rectangles (UI Slot, SLOT 2, SLOT 3, SLOT 4) toggled by booleans — not Figma Slots. Designers cannot instance-swap content without detaching. | Bottom Sheet |
+| C2 | The Alignment axis (Left Align vs Center Align) is not just a text-align switch — it silently adds a headerSlot on Center (used for progress bar / stepper) and removes the Close X. Two different component shapes collapsed into one enum. | Bottom Sheet |
+| C4 | Close X icon is hardcoded to the Left Align variant only and absent from Center Align. Dismiss affordance should be a slot or modeled as a behaviour of the wrapping sheet, not baked-in asymmetrically per alignment. | Bottom Sheet |
+| C4 | No drag handle node exists in the component — the sheet surface is drawn as a top-rounded rectangle with no grabber. Native presents this via platform APIs; if the Figma model pretends to ship the surface only (minus handle) it implies the wrong native mapping. | Bottom Sheet |
+| C6 | Close icon (`shape_full`) is rendered from a remote raster asset (PNG URL from Figma CDN) rather than a vector Icon instance. | Bottom Sheet |
+| C7 | Scope overlap with Modal (`18507:71705`) and Overlay (`47:329691`): three separately-maintained components share the "present a floating surface above a scrim" concern. Bottom Sheet needs to consume Overlay, not redeclare the surface. | Bottom Sheet |
 | C2 | `type` enum conflates content variant (`default` / `with icon`) with loading state (`skeleton loader`) — skeleton should be an orthogonal `isLoading` boolean, not a peer value in a content enum. | Carousel Card |
 | C6 | Banner uses a hardcoded `replace-this-asset` PNG plus a purple `#e6e1ef` `mix-blend-multiply` dimmer layer — both should resolve via an image slot and an optional tint token, not a static PNG. | Carousel Card |
 | C6 | With-icon variant's round badge is a `#c2c6cf` filled circle (no instance swap) — blocks icon customization. | Carousel Card |
@@ -319,6 +328,12 @@ They do **not** see:
 | C4 | Two unrelated layouts (general-purpose dialog + transaction receipt) are compressed into one component via a `type` enum — transaction variants carry receipt-specific inner rows, copy-to-clipboard icon, and reference number slots that don't belong in a generic modal. | Modal |
 | C6 | Transaction variant uses raster PNG assets for the copy-to-clipboard icon (`shape_half`, `shape_full`) instead of a vector icon instance. | Modal |
 | C7 | Component duplicates scope with a separately-maintained Modal elsewhere in the file (node `47:329691` "Overlay" and generic popup container) — two sources of truth for the same concept. | Modal |
+| C1 | Component is named `Onboarding - Tooltip` but contains nothing onboarding-specific — no step indicator, no Next/Skip/Back CTAs, no progress dots. It is a plain header + description + close tip with a pointer. The "Onboarding" prefix misleads consumers into choosing it for walkthroughs it cannot support. | Onboarding Tooltip |
+| C1 | Three Tooltip siblings exist (Tooltip V2, Onboarding - Tooltip, Tooltip Blurred and Transparent) that differ by pointer/placement axis more than by role — Onboarding-Tooltip is essentially Tooltip V2 minus the content axes. | Onboarding Tooltip |
+| C2 | Pointer direction is one `pointer` enum here but 4 booleans in Tooltip V2 — inconsistent schema across sibling components that should already have been consolidated. | Onboarding Tooltip |
+| C6 | Pointer triangle is flattened to 4 raster image fills (`imgPointer`, `imgPointer1`, `imgPointer2`, `imgPointer3`) — four rotated copies of what should be one vector shape. Same anti-pattern as Tooltip V2. | Onboarding Tooltip |
+| C1 | Close `X` is a raw image asset (`imgShapeFull`) inside a generic "Close" frame rather than an instance of the DS's `icon/close`. | Onboarding Tooltip |
+| C5 | No interaction states exposed (Pressed / Focused on close, Appearing / Dismissing lifecycle). | Onboarding Tooltip |
 | C4 | Scrim-type components are fixed to sticker-sheet dimensions (360×640) instead of Fill parent — breaks drop-in composability. | Overlay |
 | C2 | Token named *overlay-strong* implies a weak/standard counterpart, but only one strength is exposed as a component property. | Overlay |
 | C2 | Progress encoded as discrete enum `percentage=0\|10\|…\|100` instead of a continuous numeric `progress: 0..1` — forces 11 variants for a single scalar. | Progress Bar |
@@ -337,18 +352,69 @@ They do **not** see:
 | C6 | Search glyph rendered as a raster `img` (`shape_full`) rather than a vector instance — inconsistent with the confirmed-vector chevrons used elsewhere in Form Elements. | Search Field |
 | C1 | Trailing slot contains an unresolved `Placeholder` wrapper with a raw `icon-placeholder` pink circle — shipping a DS component with placeholder layers still in the tree. | Search Field |
 | C4 | Container uses `border-top + border-bottom` only (no left/right, `radius-0`) — diverges from every other Form Element sibling, which use a full rounded-rect stroke. | Search Field |
+| C1 | Step count modeled as 3 sibling components (`Stepper - Bullet - 3 Steps`, `- 4 Steps`, `- 5 Steps`) instead of a single component with a `steps: Int` property. Same anti-pattern as Stepper - Circular (9 siblings). | Stepper Bullet |
+| C6 | Each dot is rendered as a raster `<img>` ellipse — two PNGs per sibling (filled + track). Blocks theming and breaks at non-1x DPI; the dot is the easiest possible vector (an 8×8 filled circle). | Stepper Bullet |
+| C2 | `highlighted = 1st \| 2nd \| ... \| Nth` variant axis encodes the current step as an ordinal enum, not an integer. Ordinal labels don't scale and collide with the scalar nature of "step N". | Stepper Bullet |
+| C5 | No connector line / rail between dots — each dot is isolated. Users can't see direction of travel (how far between current and next) the way a line-connected bullet stepper normally shows. | Stepper Bullet |
+| C1 | Step count modeled as 9 sibling components (`Stepper - Circular - 2 Steps` through `… - 10 Steps`) instead of a single component with a `steps: Int` (or `total: Int` + `current: Int`) parameter. 9x the maintenance for a scalar axis. | Stepper Circular |
+| C6 | Each step circle renders its ring arc via a pre-baked raster `<img>` (one asset per step index) instead of a stroked SVG arc driven by progress math. Blocks theming, breaks at non-1x, and ships 10+ PNGs per Figma component. | Stepper Circular |
+| C2 | `number=1\|2\|…\|10` variant axis encodes the hardcoded step count, not the current step. The "current step" concept is implicit in the variant name and not surfaced as a property. | Stepper Circular |
+| C2 | Total step count encoded as 10 boolean `prop1Stepper…prop10Steppers` visibility props rather than a single scalar `total: Int`. Forces consumers to toggle 10 unrelated toggles to set "show 4 dashes". | Stepper Dash |
+| C2 | Current step modeled as an ordinal enum (`highlighted = 1st \| 2nd \| … \| 10th`) instead of a numeric `current: Int`. Reads as a cardinal, not a ratio — blocks `current / total` math on the consumer side. | Stepper Dash |
+| C1 | Inner dash layers labelled `1st`, `2nd`, …, `6th` with positions 7–10 all duplicated as `6th` (copy-paste bug). Inspector can't disambiguate which dash is which. | Stepper Dash |
+| C1 | Layer named `shape_full` inside icon container — generic flattened name, suggests boolean-operation or raster shape rather than vector Icon instance | Subtext Message |
+| C2 | Boolean property `leadingLabel` is misnamed: the "Label" text actually renders trailing in the layout. Naming contradicts rendered position and will mislead native param names. | Subtext Message |
+| C4 | Anatomy diverges by variant: Primary has no icon slot, Success + Error hardcode specific icons (Checkmark / Close). Not a uniform slot contract. | Subtext Message |
 | C2 | Boolean property `isActive?` has a `?` suffix and uses Yes/No values instead of `selected` with true/false | Tab Item |
 | C2 | `hasLeadingIcon` boolean is wired only in horizontal orientation; vertical always renders an icon — inconsistent across orientations | Tab Item |
 | C3 | Counter colors are hardcoded (bg #ECF1FA, label #0F3390) instead of tokens | Tab Item |
 | C6 | Counter is drawn locally instead of instancing the canonical Badge component | Tab Item |
 | C6 | Icon is a hardcoded gray circle `icon-placeholder` — should be a swappable Icon slot | Tab Item |
+| C1 | Table - Scheduling is a third parallel Table-family record. Schema diverges again: a `type` enum gates a fixed number of nested detail row-pairs (none / 2 / 4) — different from Table's `type × no. of columns × icon` matrix and from Table - Transaction's peso-amount content row. | Table Scheduling |
+| C2 | `type` values are natural-language strings (`"no display amount"`, `"2 amounts display"`, `"4 amounts display"`) embedding the count in a sentence — should be an integer `detailCount: 0 \| 2 \| 4` or a data-driven `details: [Pair]` array. | Table Scheduling |
+| C4 | Scheduling is a list-of-payment-rows pattern, not a table. On mobile it maps to a list cell with a date header, a primary amount, and nested label/value pairs — native <code>List</code> / <code>LazyColumn</code> composed of <code>EBInlineText</code>, not a Table primitive. | Table Scheduling |
+| C5 | No interaction states. A scheduled payment row is typically tappable (to view or edit the scheduled entry) and can be disabled (past / cancelled) — none of that coverage exists. | Table Scheduling |
+| C6 | Peso prefix is the same raster <code>Peso Sign - Proxima</code> image fill as Table - Transaction. Compounds the raster-asset debt across the family. | Table Scheduling |
+| C1 | Table - Transaction duplicates the Table family schema (type × no. of columns × icon) but only covers 2 and 3 column counts, and dedicates the content row to a peso-prefixed amount pattern — overlaps heavily with Generic Transaction Card and Inline Text. | Table Transaction |
+| C2 | `no. of columns` reuses the same period-in-name string enum from Table; property is redundant when a data-driven columns array would encode count. | Table Transaction |
+| C4 | The peso sign in the amount column is a raster `img` fill pulled from a Figma asset URL, not a Swift SF Symbol / Compose drawable — blocks native handoff. | Table Transaction |
+| C5 | Content row has no interaction states; amount cells don't distinguish positive / negative / zero amounts despite this being a transaction surface. | Table Transaction |
+| C6 | `Peso Sign - Proxima` ships as a raster asset in the generated code. On mobile, currency prefixes are text (`₱`) or a local vector, not a bitmap. | Table Transaction |
+| C1 | Table is split into three component records (Table, Table - Item, Table - Label) but only the parent is consumed in screens — Item and Label exist as orphan sub-components that never get placed directly. | Table |
+| C2 | `no. of columns` uses string values ("2"/"3"/"4") with a period in the property name — must be renamed to an integer `columnCount` or removed in favor of a data-driven API. | Table |
+| C4 | "Table" is a desktop-web pattern. On mobile, tabular data is either a vertical stack of label/value pairs (Inline Text) or a horizontally-scrollable list — no native iOS/Android primitive matches the current layout. | Table |
+| C5 | No interaction states (hover/pressed/selected) on rows. Pattern-level screens place Tables as static rows with no tap target. | Table |
+| C6 | Header `icon=yes` variants render a raw `#C2C6CF` placeholder circle — not a real vector slot or instance-swap. Consumers have no documented way to set the icon. | Table |
 | C2 | `tabsCount` is a variant property (2/3/4) — should be removed entirely, container should accept a list of Tab Items | Tabs |
 | C2 | Figma component is named "Tab" (singular) — should be renamed "Tabs" (plural) to match native/industry conventions and disambiguate from the Tab Item atom | Tabs |
 | C2 | Boolean properties use yes/no instead of true/false — blocks direct Swift Bool / Kotlin Boolean mapping | Title Bar |
 | C6 | Trailing icon uses icon-placeholder RECTANGLE instead of swappable icon instance — blocks native icon slot | Title Bar |
+| C1 | A separate component exists solely to add a button slot — action belongs on the base Toast as an optional prop, not a sibling component. | Toast With Button |
+| C2 | `type` axis uses `default \| light` (no `error`, no `pending`) — same axis name as base Toast but a different, narrower value set. The shared concept "surface theme" is named inconsistently across siblings. | Toast With Button |
+| C2 | `description=yes\|no` is a sizing + slot flag rolled into a string enum — should be `supportingText?: String` (an optional slot) and the padding change should follow from content presence, not a duplicate variant. | Toast With Button |
+| C4 | Embeds the `.[DEPRECATED] Button - Small/XS` instance (node 21:164490, flagged for deletion) — blocks native implementation until the action surface is migrated to Button - XSmall. | Toast With Button |
+| C6 | No leading icon axis — base Toast has `With Icon`, this sibling silently drops it. Consolidation loses a concept unless the merged component keeps the icon slot. | Toast With Button |
+| C1 | Two Toast components (Toast + Toast - With Button) model the same primitive — action is an axis, not a separate component. | Toast |
+| C2 | `theme` axis uses `default \| light \| dark` with `default` meaning "destructive" only on Error — the enum mixes a neutral appearance concept with a semantic status mode. | Toast |
+| C2 | `Large Label` is a sizing axis phrased as a content flag — reads as "does it have a large label" not "size: small \| base". | Toast |
+| C2 | Booleans use `yes/no` strings, blocking direct Swift `Bool` / Kotlin `Boolean` mapping. | Toast |
+| C6 | Pending variants ship an `icon-placeholder` 16/24 px gray circle instead of a real spinner — no ProgressView / CircularProgressIndicator instance. | Toast |
+| C5 | No auto-dismiss duration, no swipe-to-dismiss, no tap-to-dismiss annotated. | Toast |
 | C1 | Toggle - With Label is a layout frame with a Toggle instance + text, not a real component. No property set, no variants — identical pattern to the (current) List and Tabs components flagged as layout-only. | Toggle With Label |
 | C2 | Toggle uses `isActive = Yes \| No` while Checkbox uses `isSelected = true \| false`. Selection controls across the DS should share one property schema. | Toggle |
 | C5 | Toggle exposes only Default + Disabled states — missing Pressed, Focused, and Error. | Toggle |
+| C1 | A visual treatment ("Blurred and Transparent") is shipped as its own Figma component rather than as an `appearance` property on the canonical Tooltip. Native platforms model translucent surfaces via modifiers (`.ultraThinMaterial`, `Modifier.blur()`), not separate types. | Tooltip Blurred |
+| C1 | Third of three Tooltip siblings in the DS — the primitive is fragmented by skin. | Tooltip Blurred |
+| C4 | Backdrop-blur and translucency are platform material effects on iOS/Android, not discrete component shapes. Modelling them as their own component guarantees the Figma schema will never map cleanly to native. | Tooltip Blurred |
+| C6 | Pointer triangle is a flattened raster (4 rotated image copies, one per edge) — identical anti-pattern to Tooltip V2. | Tooltip Blurred |
+| C5 | No interaction states (Pressed / Focused / Dismissing). No dismiss affordance at all. | Tooltip Blurred |
+| C2 | Component name contains a conjunction ("Blurred and Transparent") describing a visual effect rather than a role. | Tooltip Blurred |
+| C2 | Component is named `Tooltip V2` — a version suffix inside a production DS component name implies a V1 that should have been deleted. No consumer should ever have to choose between versions. | Tooltip V2 |
+| C2 | 4 independent booleans (`pointerTop`, `pointerRight`, `pointerBottom`, `pointerLeft`) model a single enum choice — nothing prevents a consumer from enabling all four pointers at once. | Tooltip V2 |
+| C6 | Pointer triangle is flattened to a raster image fill (`imgPointer`, `imgPointer1`, `imgPointer2`, `imgPointer3`) rather than a vector shape — 4 rotated copies of what should be one vector. | Tooltip V2 |
+| C6 | Leading icon is a flat `#C2C6CF` circle named "Placeholder" — same instance-swap anti-pattern as Action List / List Item. | Tooltip V2 |
+| C1 | Close `X` is an image asset (`imgShapeFull`) inside a generic "Close" frame rather than a DS close-icon instance. | Tooltip V2 |
+| C5 | No interaction states exposed (Pressed / Focused / Dismissing / Appearing). | Tooltip V2 |
 | C2 | `hasLabel` boolean uses yes/no instead of true/false | Upload File |
 | C2 | `state="Upload error"` contains a space — non-native enum value | Upload File |
 | C2 | `state="Uploaded with thumbnail"` is orthogonal to the other states — should be a separate `hasThumbnail: Bool` | Upload File |
@@ -605,9 +671,11 @@ Key conventions:
 | Action List | `18577:14545` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Ad Space | `18563:9789` | Keep | Ready | 🔁 Re-assessing | — |
 | Alert | `18444:2012` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Amount Text Field | `152:48122` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Avatar Group | `18276:4554` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Avatar | `17143:4488` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Badge | `18482:28972` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Bottom Sheet | `12817:43833` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Button | `17104:184842` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Carousel Card | `23:121311` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Carousel Discount Card | `18543:2761` | Consolidate | Needs Refinement | 🔁 Re-assessing | — |
@@ -624,7 +692,7 @@ Key conventions:
 | Header Transaction | `18430:2897` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Header With Logo | `18430:2875` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
 | Header | `18430:2919` | Restructure | Requires Rework | 🔁 Re-assessing | — |
-| Inline Text | `21:138492` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
+| Inline Text | `18652:71101` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | Input Field | `17758:3687` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Labeled Field | `17758:3713` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | List Item Asset | `18482:34406` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
@@ -632,6 +700,7 @@ Key conventions:
 | List | `18482:34737` | Remove | Not Applicable | 🔁 Re-assessing | — |
 | Menu Grid | `18320:14332` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Modal | `18507:71705` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Onboarding Tooltip | `51:17066` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
 | Overlay | `47:329691` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Progress Bar | `18577:13227` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Radio Button With Label | `18482:35673` | Fix | Needs Refinement | 🔁 Re-assessing | — |
@@ -639,11 +708,22 @@ Key conventions:
 | Recipient Field | `17758:3867` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Search Field | `18577:14520` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Select Field | `17758:3786` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Stepper Bullet | `27:48287` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Stepper Circular | `27:47768` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Stepper Dash | `18649:5223` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Subtext Message | `18687:71133` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Tab Item | `18482:33262` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Table Scheduling | `47:324365` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
+| Table Transaction | `47:324709` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
+| Table | `47:326260` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Tabs | `18482:33249` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Title Bar | `23:175148` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Toast With Button | `27:53205` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
+| Toast | `27:53135` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Toggle With Label | `18482:36538` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Toggle | `18482:36508` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Tooltip Blurred | `49:335349` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
+| Tooltip V2 | `70:14908` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Upload File | `18482:35064` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | View Only Field | `18403:4520` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Visual Popup | `18477:23788` | Fix | Needs Refinement | 🔁 Re-assessing | — |

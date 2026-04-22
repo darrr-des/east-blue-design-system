@@ -1,0 +1,649 @@
+<!--
+  TOOLTIP BLURRED AND TRANSPARENT COMPONENT ASSESSMENT
+  Third Tooltip sibling. Dark translucent surface (#0A2757 @ 80%) + backdrop-blur(2.5px).
+  4 variants on `pointer` (top/right/bottom/left). Header + Description only — no icon,
+  no close, no CTA. Target: fold into the unified `Tooltip` with `appearance: .translucent`.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 49:335349
+ds-verdict: consolidate
+native-status: rework
+variants: 4
+ios: Absorbed into EBTooltip — apply `.background(.ultraThinMaterial)` (iOS 15+) or `.ebAppearance(.translucent)` modifier; no dedicated component needed.
+android: Absorbed into EBTooltip — use a backdrop-blur `Modifier.blur()` or Haze effect behind the surface; `appearance = EBTooltipAppearance.Translucent`.
+open-issues: C1,C2,C4,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] A visual treatment ("Blurred and Transparent") is shipped as its own Figma component rather than as an `appearance` property on the canonical Tooltip. Native platforms model translucent surfaces via modifiers (`.ultraThinMaterial`, `Modifier.blur()`), not separate types.
+[C1] Third of three Tooltip siblings in the DS — the primitive is fragmented by skin.
+[C4] Backdrop-blur and translucency are platform material effects on iOS/Android, not discrete component shapes. Modelling them as their own component guarantees the Figma schema will never map cleanly to native.
+[C6] Pointer triangle is a flattened raster (4 rotated image copies, one per edge) — identical anti-pattern to Tooltip V2.
+[C5] No interaction states (Pressed / Focused / Dismissing). No dismiss affordance at all.
+[C2] Component name contains a conjunction ("Blurred and Transparent") describing a visual effect rather than a role.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Tooltip<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-tooltip-blurred" onclick="showPanel('tooltip-blurred', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Tooltip Blurred and Transparent</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('tooltip-blurred')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <defs>
+        <linearGradient id="tbt-card-bg" x1="0" y1="0" x2="80" y2="40" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#C2CCDF"/>
+          <stop offset="1" stop-color="#E5EBF4"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="80" height="40" rx="3" fill="url(#tbt-card-bg)"/>
+      <rect x="10" y="8" width="60" height="22" rx="3" fill="#0A2757" fill-opacity="0.8"/>
+      <path d="M36 30 l4 4 4 -4" fill="#0A2757" fill-opacity="0.8"/>
+      <rect x="16" y="13" width="20" height="3" rx="1" fill="#FFFFFF"/>
+      <rect x="16" y="19" width="34" height="2" rx="1" fill="#F6F9FD" fill-opacity="0.8"/>
+      <rect x="16" y="23" width="28" height="2" rx="1" fill="#F6F9FD" fill-opacity="0.8"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Tooltip Blurred and Transparent</div>
+      <span class="badge badge-rework">Consolidate</span>
+    </div>
+    <div class="summary-card-desc">Directional dark-translucent tooltip with a 2.5 px backdrop blur. Header + description only; 4 placement variants. A visual treatment, not a component — should collapse into the unified Tooltip via <code>appearance: .translucent</code>.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Tooltip Blurred and Transparent</strong></td>
+  <td><span class="badge badge-rework">Consolidate</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">4</td>
+  <td class="muted">Third sibling Tooltip. Translucent dark surface + backdrop blur modelled as its own component. Native platforms handle translucency via <code>.ultraThinMaterial</code> / <code>Modifier.blur()</code> — fold into canonical Tooltip as <code>appearance: .translucent</code>.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-tooltip-blurred">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Tooltip Blurred and Transparent
+          <span class="badge badge-rework">Consolidate</span>
+          <span class="badge badge-rework">Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=49-335349" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A dark-translucent directional tooltip intended for use over photographic or high-contrast content. Surface is <code>#0A2757</code> at <strong>80% opacity</strong> with a <strong>2.5 px backdrop blur</strong>; contains a header and description (no icon, no close, no CTA); ships as <strong>4 variants</strong> on a single <code>pointer</code> enum (top/right/bottom/left). This is the <strong>third Tooltip sibling</strong> in the DS — alongside <code>Tooltip V2</code> and <code>Onboarding - Tooltip</code> — and is the weakest case for a distinct component: "blurred and transparent" is a <em>visual treatment</em>, not a <em>role</em>.</p>
+      </div>
+      <div class="verdict-inline verdict-restructure">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Fold into the canonical Tooltip as <code>appearance: .translucent</code></div>
+          <div class="verdict-inline-text">Backdrop-blur + translucency is a material effect, not a distinct component. iOS expresses it with <code>.background(.ultraThinMaterial)</code> (or a tinted <code>.regularMaterial</code>); Compose does it with <code>Modifier.blur()</code> on an underlying layer (or a Haze library for true backdrop blur). Collapse this component into the unified <a href="#" onclick="event.preventDefault();showPanelById('tooltip-v2');return false;">Tooltip</a> proposed on the V2 page as one of three <code>appearance</code> values (<code>.default | .onboarding | .translucent</code>). The translucent appearance binds to a <code>main/nudge/color/secondary/*</code> token set on the surface and swaps the label colors for the light-on-dark pair. No dedicated component; no "V2"-style duplicate.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="tbt-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'tbt-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'tbt-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'tbt-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'tbt-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="tbt-family" style="margin-top:0">Tooltip Family</div>
+    <p class="section-desc">Three sibling components in the DS do roughly the same job. They differ by skin, not role. The family-level target architecture lives on the <a href="#" onclick="event.preventDefault();showPanelById('tooltip-v2');return false;">Tooltip V2</a> page; this entry documents where this specific sibling slots in.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Component</th><th>Node</th><th>Variants</th><th>What's different</th><th>Proposed role</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Tooltip V2</strong></td><td class="mono">70:14908</td><td class="mono center">8</td><td class="muted">Opaque white surface. Header/Description/Icon/CTA presence axes.</td><td class="muted"><code>appearance: .default</code></td></tr>
+          <tr><td><strong>Onboarding - Tooltip</strong></td><td class="mono">51:17066</td><td class="mono center">—</td><td class="muted">Walkthrough / coach-mark flavor — richer content, step indicator, prev/next CTAs.</td><td class="muted"><code>appearance: .onboarding</code></td></tr>
+          <tr><td><strong>Tooltip Blurred and Transparent</strong> (this)</td><td class="mono">49:335349</td><td class="mono center">4</td><td class="muted">Dark translucent surface (<code>#0A2757</code> @ 80%) + 2.5 px backdrop blur. Header + description only.</td><td class="muted"><code>appearance: .translucent</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="section-desc">Of the three siblings, this one has the <strong>weakest case for standalone existence</strong> — its schema is a strict subset of V2's (header + description only, no icon/close/CTA), and its visual differentiation reduces to two tokens (secondary surface / secondary label) plus a material effect that lives on the platform, not in Figma.</p>
+
+    <div class="sub-heading" id="tbt-context">In Context</div>
+    <p class="section-desc">Used over photographic, gradient, or high-contrast imagery where an opaque white tooltip would feel heavy. The backdrop blur keeps the background legible while the dark surface carries white type with full contrast.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="tbt-ctx-bg" x1="34" y1="6" x2="166" y2="114" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#003B8C"/>
+              <stop offset="1" stop-color="#005CE5"/>
+            </linearGradient>
+          </defs>
+          <rect x="34" y="6" width="132" height="108" rx="10" fill="url(#tbt-ctx-bg)"/>
+          <circle cx="70" cy="40" r="14" fill="#FFFFFF" opacity=".25"/>
+          <circle cx="128" cy="86" r="22" fill="#FFFFFF" opacity=".2"/>
+          <!-- target: icon on toolbar -->
+          <circle cx="150" cy="42" r="4" fill="#FFFFFF"/>
+          <!-- translucent tooltip bubble -->
+          <rect x="50" y="52" width="88" height="36" rx="3" fill="#0A2757" fill-opacity="0.8"/>
+          <path d="M138 58 l4 -4 0 8 z" fill="#0A2757" fill-opacity="0.8"/>
+          <rect x="56" y="58" width="32" height="4" rx="1" fill="#FFFFFF"/>
+          <rect x="56" y="66" width="60" height="2" rx="1" fill="#F6F9FD" fill-opacity=".8"/>
+          <rect x="56" y="71" width="50" height="2" rx="1" fill="#F6F9FD" fill-opacity=".8"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="tbt-preview">Live Preview</div>
+    <p class="section-desc">Toggle header presence and placement. This sibling has no CTA, icon, or close control — if you need those, use <code>Tooltip V2</code>. Under the unified target schema, all three flavors share one component and these toggles become <code>appearance</code> + <code>placement</code> + content flags.</p>
+    <div class="demo-panel" id="tbt-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="tbt-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Content</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">header</span>
+              <select class="demo-panel-select" id="tbt-ctrl-header" onchange="updateTbtDemo()">
+                <option value="true" selected>shown</option>
+                <option value="false">hidden</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">description</span>
+              <select class="demo-panel-select" id="tbt-ctrl-desc" onchange="updateTbtDemo()">
+                <option value="true" selected>shown</option>
+                <option value="false">hidden</option>
+              </select>
+            </div>
+          </div>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Placement</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">pointer</span>
+              <select class="demo-panel-select" id="tbt-ctrl-pointer" onchange="updateTbtDemo()">
+                <option value="top" selected>top</option>
+                <option value="right">right</option>
+                <option value="bottom">bottom</option>
+                <option value="left">left</option>
+              </select>
+            </div>
+          </div>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Backdrop</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">scene</span>
+              <select class="demo-panel-select" id="tbt-ctrl-scene" onchange="updateTbtDemo()">
+                <option value="photo" selected>photo</option>
+                <option value="gradient">gradient</option>
+                <option value="flat">flat</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="tbt-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Covers a real use case (tooltips over imagery), but the <em>component</em> is the wrong unit of reuse — the reusable thing is a translucent <em>appearance</em> on the canonical Tooltip. Today a consumer must pick between 3 sibling components to choose a skin. <span class="tag-open tag-c1">C1</span></div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Surface, label, and description colors bind to <code>main/nudge/color/secondary/*</code> tokens; spacing to <code>space/*</code>; radius to <code>radius/radius-2</code>. Blur amount (2.5 px) is a raw literal — no <code>effect/blur-*</code> token. Pointer is a raster. <span class="tag-open tag-c6">C6</span></div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Component name is a visual-effect description ("Blurred and Transparent") rather than a role. Pointer direction is already correctly modelled as a single <code>pointer</code> enum here — which makes the 4-boolean shape on <code>Tooltip V2</code> even harder to defend. <span class="tag-open tag-c2">C2</span></div>
+      </div>
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">No slots for leading icon or body content. No dismiss control. No CTA support. If a consumer needs any of those, they must switch to a different Tooltip component — a clear signal this should be an appearance, not a component. <span class="tag-open tag-c4">C4</span></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="tbt-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Behavior</th><th class="center">iOS</th><th class="center">Android</th><th>Figma Spec</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Show / hide</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="muted">Not annotated</td><td class="muted">Expected: fade + slight scale-in anchored on the pointer side. Under the unified schema, shared with other <code>appearance</code> values.</td></tr>
+          <tr><td><strong>Backdrop blur</strong></td><td class="center"><span class="check">Material</span></td><td class="center"><span class="check">Modifier</span></td><td class="mono">backdrop-blur 2.5 px</td><td class="muted">iOS: <code>.background(.ultraThinMaterial)</code> or a custom blurred <code>UIVisualEffectView</code>. Compose: <code>Modifier.blur()</code> or a Haze effect for true behind-content blur.</td></tr>
+          <tr><td><strong>Tap outside</strong></td><td class="center muted">Implicit</td><td class="center muted">Implicit</td><td class="muted">Not defined</td><td class="muted">Standard tooltip contract — tap-outside dismisses. Same as other Tooltip siblings.</td></tr>
+          <tr><td><strong>Pressed / Focused</strong></td><td class="center muted">Missing</td><td class="center muted">Missing</td><td class="muted">Not built</td><td class="muted">No interaction states modelled. No dismiss affordance at all — consumer must rely on tap-outside or a timer.</td></tr>
+          <tr><td><strong>Reduce transparency</strong></td><td class="center muted">Required</td><td class="center muted">Required</td><td class="muted">Not defined</td><td class="muted">iOS: respect <code>UIAccessibility.isReduceTransparencyEnabled</code> — fall back to an opaque <code>#0A2757</code> surface. Android: same fallback when high-contrast mode is on.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="tbt-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Visual treatment shipped as a standalone component.</strong> "Blurred and Transparent" describes a surface material + opacity, not a component role. The reusable unit is an <code>appearance</code> flag on the canonical Tooltip, not a separate Figma component. iOS and Compose both model this as a modifier applied to an existing view — never as a distinct type. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>Third sibling Tooltip for one primitive.</strong> Alongside <code>Tooltip V2</code> (70:14908) and <code>Onboarding - Tooltip</code> (51:17066), this duplicates the tooltip primitive. Fold all three into one component with <code>appearance: .default | .onboarding | .translucent</code>. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>Component name describes a visual effect, not a role.</strong> "Tooltip Blurred and Transparent" chains two adjectives instead of naming what the component does. Under the unified schema, this becomes <code>Tooltip / appearance=.translucent</code> — the role stays "Tooltip", and the treatment is a property value. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Backdrop blur is a platform material, not a Figma shape.</strong> The 2.5 px blur is modelled as a Figma layer effect, but native platforms provide this via <code>.ultraThinMaterial</code> (SwiftUI), <code>UIVisualEffectView</code> (UIKit), and <code>Modifier.blur()</code> / Haze libraries (Compose). A 1:1 Code Connect mapping of today's shape would emit a drawn blur surface instead of calling the correct platform API. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>No icon, close, or CTA support.</strong> Schema is a strict subset of Tooltip V2 (header + description only). Consumers needing a leading icon, dismiss X, or a CTA must abandon this component and switch to V2 — losing the translucent surface in the process. An <code>appearance</code> property on one unified component removes this forced trade-off. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>Pointer triangle is a raster asset.</strong> 4 separate image fills (<code>imgPointer</code>, <code>imgPointer1</code>, <code>imgPointer2</code>, <code>imgPointer3</code>) — one per edge — for what should be a single vector shape rotated by the <code>pointer</code> enum. Same anti-pattern as Tooltip V2. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>No interaction states.</strong> No Pressed / Focused / Dismissing states modelled. There is no dismiss control at all — no close X, no tap-to-dismiss contract in the component, no lifecycle annotation. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Blur amount (2.5 px) is a raw literal.</strong> Not bound to an <code>effect/blur-*</code> token. If the DS later introduces a translucent-surface token set, this component won't pick up the change automatically. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked on the consolidation — mapping today's shape would cement a standalone "translucent tooltip" type that shouldn't exist. Map once as one of the <code>appearance</code> values of the unified Tooltip. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="tbt-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Fold this component into the unified Tooltip as <code>appearance: .translucent</code>.</strong> Deprecate the standalone "Tooltip Blurred and Transparent" node. The translucent appearance flips surface and label tokens (<code>main/nudge/color/secondary/bg</code> + <code>main/nudge/color/secondary/label</code>) and, on native, applies <code>.background(.ultraThinMaterial)</code> / <code>Modifier.blur()</code>. No new component; no schema duplication. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Drop the visual-effect name.</strong> Rename to — or merge away as — <code>Tooltip</code> with <code>appearance=.translucent</code>. Component names should describe roles, not treatments. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Bind the translucent surface to a named token set.</strong> Today the surface is <code>main/nudge/color/secondary/bg</code> (<code>#0A2757</code> raw) paired with an 80% group opacity. Move to a proper <code>main/nudge/color/translucent/{bg,label,description}</code> token set with the alpha baked in, so the <code>.translucent</code> appearance picks up theme updates automatically. <span class="tag-recommend">Token</span></span></li>
+      <li><span><strong>Tokenize the blur radius.</strong> Replace the raw <code>2.5</code> px literal with an <code>effect/blur-tooltip</code> (or similar) token. Any future translucent surface (Modal, Overlay, Sheet) can then reuse the same value. <span class="tag-recommend">Token</span></span></li>
+      <li><span><strong>Replace the raster pointer with a vector triangle shared across appearances.</strong> One vector shape, rotated per <code>placement</code>, picks up the appearance's surface token automatically. Fixes the raster problem across all 3 siblings at once. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Instance-swap (conceptually) to the canonical Tooltip.</strong> Consumers currently using this component should swap to <code>Tooltip / appearance=.translucent</code> during the migration; leave a short-lived alias variant if needed to avoid breaking existing instances. <span class="tag-recommend">Composition</span></span></li>
+      <li><span><strong>Document the reduce-transparency fallback.</strong> When iOS <code>isReduceTransparencyEnabled</code> or Android high-contrast is on, fall back to a solid <code>#0A2757</code> surface (no blur). Write this on the unified Tooltip's accessibility section so all consumers see it. <span class="tag-recommend">A11y</span></span></li>
+      <li><span><strong>Document <code>.translucent</code> as photography-only.</strong> Annotate on the unified Tooltip: <em>"Use <code>.translucent</code> only over photographic or gradient backgrounds; for flat UI backgrounds, prefer <code>.default</code>."</em> Gives designers a clear usage rule. <span class="tag-recommend">Docs</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="tbt-styles" style="margin-top:0">Variants</div>
+    <p class="section-desc">4 variants on a single <code>pointer</code> enum — <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code>. Header + description are always present in today's shipped variants (the underlying code exposes a <code>showHeader</code> prop, but it isn't wired to a Figma variant property). Under the unified Tooltip, these 4 collapse into the shared <code>placement</code> enum.</p>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="tbt-variant-top">pointer=top <span class="muted" style="font-weight:400;">— pointer anchored above surface</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="49:335345" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>49:335345</span></button>
+        </div>
+        <p class="spec-card-desc">Pointer above the surface — anchors a target element below. 336 × 89.</p>
+      </div>
+      <div class="spec-card-preview" id="tbt-preview-top"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="tbt-variant-right">pointer=right <span class="muted" style="font-weight:400;">— pointer on right edge</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="49:335347" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>49:335347</span></button>
+        </div>
+        <p class="spec-card-desc">Pointer on the right — anchors a target element to the right of the surface. 348 × 77.</p>
+      </div>
+      <div class="spec-card-preview" id="tbt-preview-right"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="tbt-variant-bottom">pointer=bottom <span class="muted" style="font-weight:400;">— pointer below surface</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="49:335348" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>49:335348</span></button>
+        </div>
+        <p class="spec-card-desc">Pointer below the surface — anchors a target element above. 336 × 89.</p>
+      </div>
+      <div class="spec-card-preview" id="tbt-preview-bottom"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="tbt-variant-left">pointer=left <span class="muted" style="font-weight:400;">— pointer on left edge</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="49:335346" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>49:335346</span></button>
+        </div>
+        <p class="spec-card-desc">Pointer on the left — anchors a target element to the left of the surface. 348 × 77.</p>
+      </div>
+      <div class="spec-card-preview" id="tbt-preview-left"><!-- JS --></div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Role</th><th>Token</th><th>Default</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Surface</td><td class="mono">main/nudge/color/secondary/bg</td><td class="mono"><span class="swatch-dot" style="background:#0A2757"></span>#0A2757 <span class="muted">@ 80% group opacity</span></td></tr>
+          <tr><td class="muted">Backdrop blur</td><td class="mono">— <span class="muted">(untokenized literal)</span></td><td class="mono">2.5 px</td></tr>
+          <tr><td class="muted">Header label</td><td class="mono">main/nudge/color/secondary/label</td><td class="mono"><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span>#FFFFFF</td></tr>
+          <tr><td class="muted">Description</td><td class="mono">main/nudge/color/secondary/description</td><td class="mono"><span class="swatch-dot" style="background:#F6F9FD"></span>#F6F9FD <span class="muted">@ 80% (#F6F9FDCC)</span></td></tr>
+          <tr><td class="muted">Pointer triangle</td><td class="mono">— <span class="muted">(raster, 4 images)</span></td><td class="mono"><span class="swatch-dot" style="background:#0A2757"></span>#0A2757 <span class="muted">(baked into raster)</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="table-footnote">No Pressed / Disabled states modelled at the tooltip level. No close / CTA — those roles are absent from this sibling. Blur amount should move to a token (<code>effect/blur-tooltip</code>) alongside the translucent surface tokens.</p>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Surface width — top / bottom</td><td class="mono">—</td><td class="mono">336 px</td></tr>
+          <tr><td class="muted">Surface width — left / right</td><td class="mono">—</td><td class="mono">336 px (content) · 348 px (with pointer offset)</td></tr>
+          <tr><td class="muted">Surface corner radius</td><td class="mono">radius/radius-2</td><td class="mono">6 px</td></tr>
+          <tr><td class="muted">Surface padding</td><td class="mono">space/space-16</td><td class="mono">16 px all sides</td></tr>
+          <tr><td class="muted">Surface background alpha</td><td class="mono">—</td><td class="mono">0.80 (group opacity)</td></tr>
+          <tr><td class="muted">Backdrop blur</td><td class="mono">—</td><td class="mono">2.5 px (untokenized)</td></tr>
+          <tr><td class="muted">Header → description gap</td><td class="mono">space/space-4</td><td class="mono">4 px</td></tr>
+          <tr><td class="muted">Pointer width / height</td><td class="mono">—</td><td class="mono">22 × 12 (top/bottom) · 20 × 12 (left/right) — raster</td></tr>
+          <tr><td class="muted">Pointer → surface gap</td><td class="mono">space/space-0</td><td class="mono">0 px (abutting)</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="table-footnote">No internal CTA / icon / close dimensions — those roles are absent from this sibling. Unified with Tooltip's full schema, the translucent appearance would inherit the same layout tokens as default/onboarding.</p>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Typography</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Element</th><th>DS text style</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Header</td><td class="mono">Primary/Headlines/Block</td><td class="mono">Proxima Soft Bold · 18 / 23 · +0.25</td></tr>
+          <tr><td class="muted">Description</td><td class="mono">Secondary/Bold/Caption</td><td class="mono">BarkAda Semibold · 12 / 18 · +0</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="table-footnote">Type styles identical to <code>Tooltip V2</code> — only the color tokens change (white-on-dark vs dark-on-white). Another signal that "translucent" is an appearance, not a component. Custom-font standing action item applies (BarkAda).</p>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="tbt-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="section-desc">This sibling shares a package with the unified Tooltip. No separate component module.</p>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:tooltip:1.0.0"</span>)
+}</pre>
+    </div>
+
+    <div class="sub-heading" id="tbt-props">Property Mapping <span class="muted" style="font-weight:400;font-size:13px;">(proposed — after consolidation)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma (today)</th><th>Figma (proposed)</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">Tooltip Blurred and Transparent</td><td class="mono">Tooltip <em>(same component)</em></td><td class="mono">EBTooltip</td><td class="mono">EBTooltip</td></tr>
+          <tr><td class="mono">(distinct sibling)</td><td class="mono">appearance: .translucent</td><td class="mono">.ebAppearance(.translucent)</td><td class="mono">appearance = EBTooltipAppearance.Translucent</td></tr>
+          <tr><td class="mono">pointer: top / right / bottom / left</td><td class="mono">placement: .top / .right / .bottom / .left</td><td class="mono">arrowEdge: Edge</td><td class="mono">anchorPosition: EBTooltipAnchor</td></tr>
+          <tr><td class="mono">header (baked text)</td><td class="mono">title: String?</td><td class="mono">title: String?</td><td class="mono">title: String? = null</td></tr>
+          <tr><td class="mono">description (baked text)</td><td class="mono">body: String?</td><td class="mono">body: String?</td><td class="mono">body: String? = null</td></tr>
+          <tr><td class="mono">backdrop-blur 2.5 px (raw)</td><td class="mono">(absorbed into .translucent appearance)</td><td class="mono">.background(.ultraThinMaterial)</td><td class="mono">Modifier.blur(radius = 2.5.dp)</td></tr>
+          <tr><td class="mono">surface @ 80% opacity</td><td class="mono">main/nudge/color/translucent/bg</td><td class="mono">Color.nudgeTranslucentBg</td><td class="mono">EBColors.nudgeTranslucentBg</td></tr>
+          <tr><td class="mono">(not modelled — no close)</td><td class="mono">hasDismiss: Bool (inherited)</td><td class="mono">dismissible: Bool</td><td class="mono">dismissible: Boolean = true</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI</div>
+      <div class="path-box">ios/Components/Tooltip/EBTooltip.swift <span class="muted">(shared — no separate file)</span></div>
+      <div class="path-label">Jetpack Compose</div>
+      <div class="path-box">android/components/tooltip/EBTooltip.kt <span class="muted">(shared — no separate file)</span></div>
+    </div>
+
+    <div class="sub-heading" id="tbt-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'tbt-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'tbt-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Translucent tooltip over imagery</span>
+<span class="typ">EBTooltip</span>(
+    <span class="prp">title</span>: <span class="str">"Featured deal"</span>,
+    <span class="prp">body</span>: <span class="str">"Limited-time discount on your next top-up."</span>,
+    <span class="prp">placement</span>: .<span class="prp">top</span>
+)
+.<span class="prp">ebAppearance</span>(.<span class="prp">translucent</span>)
+
+<span class="cmt">// Under the hood, .translucent applies:</span>
+<span class="cmt">//   .background(.ultraThinMaterial)</span>
+<span class="cmt">//   .foregroundStyle(.white)</span>
+<span class="cmt">// + respects UIAccessibility.isReduceTransparencyEnabled</span></pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Translucent tooltip over imagery</span>
+<span class="typ">EBTooltip</span>(
+    title = <span class="str">"Featured deal"</span>,
+    body = <span class="str">"Limited-time discount on your next top-up."</span>,
+    placement = <span class="typ">EBTooltipPlacement</span>.Top,
+    appearance = <span class="typ">EBTooltipAppearance</span>.Translucent
+)
+
+<span class="cmt">// Under the hood, .Translucent applies:</span>
+<span class="cmt">//   Modifier.blur(radius = 2.5.dp) on the backing layer</span>
+<span class="cmt">//   background = nudgeTranslucentBg (#0A2757 @ 80%)</span>
+<span class="cmt">// + respects high-contrast settings (falls back to solid #0A2757)</span></pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="tbt-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Reduce transparency</strong></td><td class="muted">Respect <code>UIAccessibility.isReduceTransparencyEnabled</code> — fall back to an opaque <code>#0A2757</code> surface with no blur.</td><td class="muted">Respect high-contrast text setting — fall back to an opaque <code>#0A2757</code> surface with no blur.</td></tr>
+          <tr><td><strong>Contrast</strong></td><td class="muted">White-on-<code>#0A2757</code> meets WCAG AA at both states. Over photographic backdrops, the 80% alpha + blur keeps contrast above 4.5:1 in the designer's tested scenes.</td><td class="muted">Same. Always test the <code>.translucent</code> appearance over real content; do not use it for critical error messaging.</td></tr>
+          <tr><td><strong>Reduce motion</strong></td><td class="muted">Respect <code>UIAccessibility.isReduceMotionEnabled</code> — fade only; skip scale-in.</td><td class="muted">Respect <code>Settings.Global.TRANSITION_ANIMATION_SCALE</code> — fade only when motion is reduced.</td></tr>
+          <tr><td><strong>Role</strong></td><td class="muted">Announce as tooltip; group title + body via <code>.accessibilityElement(children: .combine)</code>.</td><td class="muted"><code>semantics { role = Role.Popup; mergeDescendants = true }</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="tbt-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Use the translucent appearance <em>only</em> over photographic, gradient, or richly-colored backgrounds where an opaque tooltip would feel heavy.</li>
+          <li>Verify contrast against the actual content behind the tooltip — a busy background can still reduce legibility even with 80% alpha + blur.</li>
+          <li>Fall back to the default (opaque) appearance when reduce-transparency or high-contrast is active.</li>
+          <li>Prefer the unified Tooltip's <code>appearance</code> property; don't branch on component type at the call site.</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't use the translucent appearance over flat UI backgrounds — use <code>appearance: .default</code>.</li>
+          <li>Don't use for error or status messaging — use <a href="#" onclick="showPanelById('alert');return false;">Alert</a>.</li>
+          <li>Don't ship a standalone "translucent tooltip" component — this sibling should be deprecated in favor of one <code>appearance</code> value on the unified Tooltip.</li>
+          <li>Don't hardcode the blur radius in product code — bind to the <code>effect/blur-tooltip</code> (or equivalent) token.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="tbt-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Third sibling for one primitive. A visual treatment shipped as a discrete component. Consolidate into the canonical Tooltip.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Component name is a visual-effect description ("Blurred and Transparent"). Should collapse into <code>Tooltip / appearance=.translucent</code>.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-refine">Refine</span></td><td class="muted">Surface, label, description, radius, and spacing all bound to tokens. The <strong>blur amount</strong> (2.5 px) and the <strong>80% group opacity</strong> are raw literals — move to a translucent-surface token set.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Backdrop-blur is a platform material (<code>.ultraThinMaterial</code> / <code>Modifier.blur()</code>), not a component shape. A 1:1 Figma→native mapping today would emit a drawn blur layer instead of calling the correct API. Fixes when consolidated as an <code>appearance</code> value.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">No Pressed / Focused / Dismissing states. No dismiss affordance at all (no close X).</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Pointer triangle is 4 raster images (one per edge). Same anti-pattern as <code>Tooltip V2</code>.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked on consolidation — mapping today's shape would cement a duplicate component. Map once as one of the unified Tooltip's <code>appearance</code> values.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="tbt-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(4 total)</span></div>
+    <p>One enum axis yields <strong>4 variants</strong> — <code>pointer: top / right / bottom / left</code>. Header + description are present in all shipped variants. Under the unified Tooltip, these 4 collapse into the shared <code>placement</code> enum, and the distinguishing surface treatment moves to <code>appearance=.translucent</code>.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Pointer</th><th>Dimensions</th><th>Node</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">1</td><td class="mono">top</td><td class="mono">336 × 89</td><td class="mono">49:335345</td></tr>
+          <tr><td class="mono center">2</td><td class="mono">right</td><td class="mono">348 × 77</td><td class="mono">49:335347</td></tr>
+          <tr><td class="mono center">3</td><td class="mono">bottom</td><td class="mono">336 × 89</td><td class="mono">49:335348</td></tr>
+          <tr><td class="mono center">4</td><td class="mono">left</td><td class="mono">348 × 77</td><td class="mono">49:335346</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 49:335349</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Consolidate</strong> — Fold into the canonical Tooltip as <code>appearance: .translucent</code>. Do not ship a separate "Tooltip Blurred and Transparent" component. <span class="tag-open tag-c1 tag-c4">Open</span></div><span class="changelog-delta delta-open">Architecture</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C1 — Third sibling for one primitive</strong> — Tooltip V2, Onboarding - Tooltip, Tooltip Blurred and Transparent. Merge via <code>appearance</code> enum. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — Visual-effect name</strong> — "Blurred and Transparent" describes a treatment, not a role. Collapse to <code>Tooltip / appearance=.translucent</code>. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C4 — Backdrop-blur is a platform material</strong> — iOS uses <code>.ultraThinMaterial</code>; Compose uses <code>Modifier.blur()</code>. A component can't model a native modifier 1:1. <span class="tag-open tag-c4">Open</span></div><span class="changelog-delta delta-open">C4</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C5 — No interaction states, no dismiss</strong> — No Pressed / Focused / Dismissing; no close control at all. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C6 — Raster pointer + untokenized blur</strong> — 4 raster pointer images; blur radius (2.5 px) is a raw literal. <span class="tag-open tag-c6">Open</span></div><span class="changelog-delta delta-open">C6</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C7 — Code Connect</strong> — Blocked on consolidation. Mapping today's shape would cement a duplicate. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Pointer enum ✓</strong> — Unlike <code>Tooltip V2</code>'s 4-boolean pointer shape, this sibling already uses a single <code>pointer</code> enum — the correct model. <span class="tag-fixed">Noted</span></div><span class="changelog-delta delta-resolved">Praise</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Tokens ✓</strong> — Surface / label / description bound to <code>main/nudge/color/secondary/*</code>. Spacing via <code>space/*</code>. Radius via <code>radius/radius-2</code>. <span class="tag-fixed">Noted</span></div><span class="changelog-delta delta-resolved">Praise</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-tooltip-blurred">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-tooltip-blurred"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Tooltip Blurred and Transparent JS ─────────────────────────
+   Renders the dark translucent tooltip over a selectable backdrop
+   scene (photo / gradient / flat) with a pointer on any of 4 sides.
+   No CTA / icon / close — schema is header + description only. */
+
+function _tbtEscape(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function _tbtPointer(dir) {
+  var common = 'position:absolute;width:0;height:0;';
+  if (dir === 'top') {
+    return '<div style="' + common + 'left:50%;top:-8px;transform:translateX(-50%);border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:8px solid rgba(10,39,87,0.8);"></div>';
+  }
+  if (dir === 'bottom') {
+    return '<div style="' + common + 'left:50%;bottom:-8px;transform:translateX(-50%);border-left:8px solid transparent;border-right:8px solid transparent;border-top:8px solid rgba(10,39,87,0.8);"></div>';
+  }
+  if (dir === 'left') {
+    return '<div style="' + common + 'top:50%;left:-8px;transform:translateY(-50%);border-top:8px solid transparent;border-bottom:8px solid transparent;border-right:8px solid rgba(10,39,87,0.8);"></div>';
+  }
+  return '<div style="' + common + 'top:50%;right:-8px;transform:translateY(-50%);border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:8px solid rgba(10,39,87,0.8);"></div>';
+}
+
+function _tbtScene(scene) {
+  if (scene === 'gradient') {
+    return 'background:linear-gradient(135deg,#003B8C 0%,#005CE5 50%,#00B4D8 100%);';
+  }
+  if (scene === 'flat') {
+    return 'background:#EEF2F9;';
+  }
+  // photo — synthetic photographic-feel backdrop using layered gradients + noise-like radial dots
+  return 'background:' +
+    'radial-gradient(circle at 20% 30%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 18%),' +
+    'radial-gradient(circle at 75% 70%, rgba(255,210,120,0.45) 0%, rgba(255,210,120,0) 22%),' +
+    'radial-gradient(circle at 60% 20%, rgba(255,120,160,0.35) 0%, rgba(255,120,160,0) 25%),' +
+    'linear-gradient(135deg,#2B4F7A 0%,#5A7AAD 50%,#B36B8A 100%);';
+}
+
+function _tbtRender(opts) {
+  var header      = opts.header !== false;
+  var description = opts.description !== false;
+  var pointer     = opts.pointer || 'top';
+  var scene       = opts.scene || 'photo';
+
+  var html = '<div style="display:flex;justify-content:center;align-items:center;width:100%;padding:40px 12px;' + _tbtScene(scene) + 'border-radius:8px;">';
+  html += '<div style="position:relative;width:336px;background:rgba(10,39,87,0.80);backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px);border-radius:6px;padding:16px;box-sizing:border-box;display:flex;flex-direction:column;gap:4px;">';
+
+  html += _tbtPointer(pointer);
+
+  if (header) {
+    html += '<div style="font-family:\'Proxima Soft\',system-ui;font-size:18px;line-height:23px;font-weight:700;letter-spacing:0.25px;color:#FFFFFF;">Header</div>';
+  }
+  if (description) {
+    html += '<div style="font-family:\'BarkAda\',\'Proxima Soft\',system-ui;font-size:12px;line-height:18px;font-weight:600;color:rgba(246,249,253,0.8);">Description goes here</div>';
+  }
+
+  html += '</div>';  // tooltip box
+  html += '</div>';  // wrap
+  return html;
+}
+
+function updateTbtDemo() {
+  var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
+  var el = document.getElementById('tbt-demo-preview');
+  if (!el) return;
+  el.innerHTML = _tbtRender({
+    header:      getVal('tbt-ctrl-header', 'true') === 'true',
+    description: getVal('tbt-ctrl-desc',   'true') === 'true',
+    pointer:     getVal('tbt-ctrl-pointer','top'),
+    scene:       getVal('tbt-ctrl-scene',  'photo')
+  });
+}
+
+function _tbtInitSpecCards() {
+  var map = [
+    ['tbt-preview-top',    {header:true, description:true, pointer:'top',    scene:'photo'}],
+    ['tbt-preview-right',  {header:true, description:true, pointer:'right',  scene:'photo'}],
+    ['tbt-preview-bottom', {header:true, description:true, pointer:'bottom', scene:'photo'}],
+    ['tbt-preview-left',   {header:true, description:true, pointer:'left',   scene:'photo'}]
+  ];
+  map.forEach(function (pair) {
+    var el = document.getElementById(pair[0]);
+    if (el) el.innerHTML = _tbtRender(pair[1]);
+  });
+}
+
+function _tbtInit() {
+  updateTbtDemo();
+  _tbtInitSpecCards();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tbtInit);
+else _tbtInit();
+</script>
+
+<!--@section-end-->

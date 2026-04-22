@@ -4572,6 +4572,47 @@ pre.code-snippet .prp { color: #0369A1; }
 }
 
 /* ═════════════════════════════════════════════════════════════════════
+   PROGRESS BAR — live preview primitive
+   ═════════════════════════════════════════════════════════════════════ */
+.eb-preview-progress-bar {
+  position: relative;
+  display: block;
+  height: 4px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: transparent;
+}
+.eb-preview-progress-bar__track {
+  position: absolute;
+  inset: 0;
+  background: #E5EBF4;
+  border-radius: 999px;
+}
+.eb-preview-progress-bar__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 999px;
+  transition: width 0.25s ease, background 0.15s ease;
+}
+.eb-preview-progress-bar__indeterminate {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 30%;
+  border-radius: 999px;
+  animation: eb-progress-indeterminate 1.4s ease-in-out infinite;
+}
+@keyframes eb-progress-indeterminate {
+  0%   { left: -30%; width: 30%; }
+  50%  { left: 40%;  width: 40%; }
+  100% { left: 100%; width: 30%; }
+}
+.eb-preview-stack--gap-xs { gap: 4px; }
+.eb-preview-stack--start  { align-items: flex-start; }
+[data-theme="dark"] .eb-preview-progress-bar__track { background: rgba(255,255,255,0.1); }
+
+/* ═════════════════════════════════════════════════════════════════════
    AD SPACE — live preview primitives
    One shape with 7 sizes across 3 families (banner / promo / hero).
    ═════════════════════════════════════════════════════════════════════ */

@@ -1,0 +1,1078 @@
+<!--
+  BOTTOM SHEET COMPONENT ASSESSMENT
+  Bottom-anchored sheet. Currently shipped as "Bottom Drawer" with a 2-variant
+  Alignment axis (Left | Center) — really just a sheet HEADER block masquerading
+  as a full sheet. No drag handle, no detent system, no scrim, content region is
+  4 dashed-rectangle decorative placeholders, CTAs hard-baked. Needs a full
+  restructure into a shell + content slot + detent-aware wrapper mapped to
+  SwiftUI .sheet / Compose ModalBottomSheet.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 12817:43833
+ds-verdict: restructure
+native-status: rework
+variants: 2
+ios: .sheet(isPresented:) with .presentationDetents([.medium, .large]) + .presentationDragIndicator(.visible) — iOS 16+. Fallback: UIViewControllerRepresentable wrapping UISheetPresentationController.
+android: ModalBottomSheet(onDismissRequest:, sheetState:, dragHandle:, content:) — Material 3
+open-issues: C1,C2,C4,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] Component name ("Bottom Drawer") and token namespace ("bottom-header") disagree — scope of the component is not the bottom sheet, it's the header-plus-body skeleton of a sheet. The actual sheet primitives (drag handle, detents, scrim, snap behaviour) are not present.
+[C1] Content region is modeled as 4 hardcoded decorative placeholder rectangles (UI Slot, SLOT 2, SLOT 3, SLOT 4) toggled by booleans — not Figma Slots. Designers cannot instance-swap content without detaching.
+[C2] The Alignment axis (Left Align vs Center Align) is not just a text-align switch — it silently adds a headerSlot on Center (used for progress bar / stepper) and removes the Close X. Two different component shapes collapsed into one enum.
+[C4] Close X icon is hardcoded to the Left Align variant only and absent from Center Align. Dismiss affordance should be a slot or modeled as a behaviour of the wrapping sheet, not baked-in asymmetrically per alignment.
+[C4] No drag handle node exists in the component — the sheet surface is drawn as a top-rounded rectangle with no grabber. Native presents this via platform APIs; if the Figma model pretends to ship the surface only (minus handle) it implies the wrong native mapping.
+[C6] Close icon (`shape_full`) is rendered from a remote raster asset (PNG URL from Figma CDN) rather than a vector Icon instance.
+[C7] Scope overlap with Modal (`18507:71705`) and Overlay (`47:329691`): three separately-maintained components share the "present a floating surface above a scrim" concern. Bottom Sheet needs to consume Overlay, not redeclare the surface.
+<!--@patterns-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-bottom-sheet" onclick="showPanel('bottom-sheet', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Bottom Sheet</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('bottom-sheet')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="2" y="2" width="76" height="36" rx="3" fill="#020E22" opacity="0.25"/>
+      <path d="M6 20 h68 v16 a2 2 0 0 1 -2 2 h-64 a2 2 0 0 1 -2 -2 z M6 22 a2 2 0 0 1 2 -2 h64 a2 2 0 0 1 2 2" fill="#FFFFFF" stroke="#E5EBF4"/>
+      <rect x="34" y="22" width="12" height="2" rx="1" fill="#C2C6CF"/>
+      <rect x="12" y="28" width="22" height="2" rx="1" fill="#0A2757"/>
+      <rect x="12" y="32" width="40" height="2" rx="1" fill="#6780A9"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Bottom Sheet</div>
+      <span class="badge badge-restructure">Restructure</span>
+    </div>
+    <div class="summary-card-desc">Bottom-anchored sheet surface. Currently shipped as a 2-variant "Bottom Drawer" header skeleton — needs a full rebuild around a content slot and native detent system.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Bottom Sheet</strong></td>
+  <td><span class="badge badge-restructure">Restructure</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">2</td>
+  <td class="muted">Shipped as "Bottom Drawer" with a 2-variant Alignment axis. No drag handle, no detent axis, no scrim composition, content is 4 decorative placeholder rectangles (not Figma Slots), close X is raster and asymmetric across alignments. Scope overlaps with Modal + Overlay.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-bottom-sheet">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Bottom Sheet
+          <span class="badge badge-restructure">Restructure</span>
+          <span class="badge badge-rework">Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=12817-43833" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">The bottom-anchored sheet surface used to host list pickers, confirmations, forms, filters, and onboarding pages. Currently registered in Figma as <strong>Bottom Drawer</strong> (2 variants via <code>Alignment = Left Align | Center Align</code>). The actual in-product usage spans dozens of content shapes — ID pickers, transfer confirmations, tips lists, welcome cards, switch-account confirmations — but the DS component only models the top header block plus two hard-baked CTAs; content is 4 decorative placeholder rectangles. This is really a sheet <em>header</em> masquerading as a full sheet.</p>
+      </div>
+      <div class="verdict-inline verdict-restructure">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Restructure — rebuild around a content slot and delegate sheet mechanics to the platform</div>
+          <div class="verdict-inline-text">Three structural problems stack: (1) scope is wrong — the component is the sheet header, not the sheet; (2) the content region is 4 decorative boxes instead of a Figma Slot, so every real usage detaches or adds a new product-local variant; and (3) it overlaps with <code>Modal</code> (<code>18507:71705</code>) and <code>Overlay</code> (<code>47:329691</code>), all three independently declaring what a floating-surface-over-scrim looks like. Proposal: rebuild as <code>EBBottomSheet</code> — a thin wrapper around SwiftUI <code>.sheet</code> / Compose <code>ModalBottomSheet</code> — with explicit <em>dragHandle</em>, <em>header</em>, <em>content</em>, and <em>footer</em> slots, and consume the already-assessed Overlay for the scrim.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="bottom-sheet-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'bottom-sheet-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'bottom-sheet-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'bottom-sheet-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'bottom-sheet-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="bottom-sheet-in-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Bottom Sheet anchors to the bottom edge over a dimmed background. In the sticker-sheet context file (<code>12522:109042</code>), instances are used across a wide range of content shapes: ID pickers, confirmation dialogs, transfer summaries, tips lists, welcome cards, and switch-account prompts — each with different inner composition, all wrapped in the same surface.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="bottom-sheet-context-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="bottom-sheet-preview">Live Preview</div>
+    <p class="section-desc">Toggle between <code>Alignment</code> values and the proposed future controls (detent, drag handle, scrim). The <em>content</em> options below the current Figma axis are previews of the proposed restructure — none exist in Figma today.</p>
+    <div class="demo-panel" id="bottom-sheet-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="bottom-sheet-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties (current)</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">alignment</span>
+              <select id="bottom-sheet-ctrl-align" class="demo-panel-select" onchange="_bottomSheetUpdate()">
+                <option value="left" selected>Left Align</option>
+                <option value="center">Center Align</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">preamble</span>
+              <select id="bottom-sheet-ctrl-preamble" class="demo-panel-select" onchange="_bottomSheetUpdate()">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">description</span>
+              <select id="bottom-sheet-ctrl-desc" class="demo-panel-select" onchange="_bottomSheetUpdate()">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">cta</span>
+              <select id="bottom-sheet-ctrl-cta" class="demo-panel-select" onchange="_bottomSheetUpdate()">
+                <option value="2" selected>primary + tertiary</option>
+                <option value="1">primary only</option>
+                <option value="0">none</option>
+              </select>
+            </div>
+          </div>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Proposed (not in Figma yet)</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">detent</span>
+              <select id="bottom-sheet-ctrl-detent" class="demo-panel-select" onchange="_bottomSheetUpdate()">
+                <option value="medium" selected>medium</option>
+                <option value="large">large</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">drag handle</span>
+              <select id="bottom-sheet-ctrl-handle" class="demo-panel-select" onchange="_bottomSheetUpdate()">
+                <option value="yes" selected>visible</option>
+                <option value="no">hidden</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">scrim</span>
+              <select id="bottom-sheet-ctrl-scrim" class="demo-panel-select" onchange="_bottomSheetUpdate()">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">content</span>
+              <select id="bottom-sheet-ctrl-content" class="demo-panel-select" onchange="_bottomSheetUpdate()">
+                <option value="text" selected>text + CTAs</option>
+                <option value="list">list picker</option>
+                <option value="form">form fields</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="bottom-sheet-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">The component ships only the header block — every real product usage (list picker, confirmation, form, tips list) has to either detach or duplicate the surface. Content region is 4 fixed placeholder rectangles, not a slot.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Owns its surface bg, header colours, and CTA buttons via token bindings, but redraws the modal-surface concern already owned by the separately-maintained Overlay component. Scrim is not part of the component — consumers must add Overlay by hand every time.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Token namespace is <code>main/bottom-header/color/*</code>, but the component is named <em>Bottom Drawer</em> — neither name matches common usage "Bottom Sheet". The Alignment axis silently changes the shape of the component (Center drops Close X, adds a headerSlot). Two axis values behave like two separate components.</div>
+      </div>
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">Content cannot be swapped without detaching. CTAs are hard-baked Button instances (1 primary + 1 tertiary) — count and pairing are fixed. No way to compose DS Action List, Form fields, or Filter chips inside the sheet as a first-class operation.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="bottom-sheet-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Behavior</th><th class="center">iOS</th><th class="center">Android</th><th>Figma Spec</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Present / dismiss</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="muted">Not annotated</td><td class="muted">iOS: <code>.sheet(isPresented:)</code>. Android: <code>ModalBottomSheet(onDismissRequest:)</code>. Slide-up entrance implied by pattern, not documented on the component.</td></tr>
+          <tr><td><strong>Drag handle (grabber)</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="muted"><span class="badge badge-fix">Missing</span></td><td class="muted">No handle node in Figma. iOS renders via <code>.presentationDragIndicator(.visible)</code>. Material 3 renders via <code>ModalBottomSheet(dragHandle = { BottomSheetDefaults.DragHandle() })</code>.</td></tr>
+          <tr><td><strong>Detent snapping (medium / large)</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="muted"><span class="badge badge-fix">Missing</span></td><td class="muted">Sheet height in Figma is driven by content height only — no half / full axis. Natively handled via <code>.presentationDetents([.medium, .large])</code> / <code>SheetValue.PartiallyExpanded</code>.</td></tr>
+          <tr><td><strong>Swipe-down-to-dismiss</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="muted">Not annotated</td><td class="muted">Platform-native gesture — should be configurable via a <em>dismissible</em> boolean on the wrapper.</td></tr>
+          <tr><td><strong>Scrim / tap-outside dismiss</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="muted">Not composed</td><td class="muted">Scrim lives in the separate Overlay component today (<code>47:329691</code>). Sheet should consume it, not redraw.</td></tr>
+          <tr><td><strong>Close button (X)</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="muted">Asymmetric</td><td class="muted">Only present on <code>Left Align</code>. Raster PNG. Should become a <em>trailing</em> slot in a title-bar region, available to both alignments.</td></tr>
+          <tr><td><strong>Header slot (e.g. stepper)</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="muted">Center Align only</td><td class="muted">Center Align silently adds a <code>headerSlot</code> used for progress bars / steppers. Left Align has no equivalent. Either surface it on both or model as its own region.</td></tr>
+          <tr><td><strong>Content scroll lock</strong></td><td class="center muted">Implicit</td><td class="center muted">Implicit</td><td class="muted">Not documented</td><td class="muted">Background scroll locked while sheet is presented; sheet's own content scrolls independently when detent &lt; content height.</td></tr>
+          <tr><td><strong>Empty / loading / error (content)</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="muted">Not modeled</td><td class="muted">Content slot owner's responsibility; sheet itself has no intrinsic empty/loading/error state.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="bottom-sheet-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Component scope is the header, not the sheet.</strong> "Bottom Drawer" only models the rounded top surface plus a header and hard-baked CTA row. The actual sheet primitives — drag handle, detents, scrim, snap behaviour, swipe-down-to-dismiss — are absent. Every product usage in the context file (<code>12522:109042</code>) has to re-compose the sheet by hand. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>Content region is 4 decorative placeholder rectangles, not a Slot.</strong> Inside the body, <code>UI Slot</code>, <code>SLOT 2</code>, <code>SLOT 3</code>, <code>SLOT 4</code> are pink-dashed <code>#FFECF8</code> rectangles toggled by booleans <code>showSlot1..4</code>. They are not Figma Slots — designers can't instance-swap in Action List rows, form fields, or Filter chips without detaching. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>Alignment axis hides a second component.</strong> Left Align and Center Align are not just text-alignment differences: Left Align has an icon placeholder + title block + Close X on the right; Center Align has a separate <code>headerSlot</code> (used for progress bars / steppers) + title block and no Close X. These are two distinct layouts collapsed into one enum. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>No drag handle primitive.</strong> Nothing in the Figma tree renders a drag handle ("grabber"). iOS and Android expect this as an explicit visual affordance the user grabs to resize. Either add a handle node bound to a token, or document that rendering is delegated to the platform primitive. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>No detent axis.</strong> There's no <code>medium / large / fitContent</code> axis on the component. Sheet height is whatever the decorative slots sum to. Native APIs require a discrete detent set; the Figma model doesn't reflect this. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>Scope overlap with Modal and Overlay.</strong> Bottom Sheet, Modal (<code>18507:71705</code>), and Overlay (<code>47:329691</code>) all independently model "surface above a scrim". None of them compose each other. The scrim should live in Overlay (already assessed); Modal and Bottom Sheet should consume it. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+      <li><span><strong>Close X is raster and asymmetric.</strong> The close icon is a Figma CDN PNG asset (<code>shape_full</code>) rendered only on Left Align — Center Align has no dismiss affordance at all. Both alignments should offer the same affordance, and it should be a vector Icon instance bound to <code>main/bottom-header/color/icon-close</code>. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>CTAs are hard-baked, not composable.</strong> A single primary button + a single tertiary button are instance-swapped inside the component with booleans <code>primaryAction</code> / <code>secondaryAction</code>. Consumers who need one button, two horizontal buttons, three stacked options, or a link-only footer have to detach. CTA should be a footer slot receiving any button composition. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>Icon placeholder is a raw grey circle, not a Slot.</strong> Left Align's leading icon is a hardcoded <code>#C2C6CF</code> circle inside an <code>icon-placeholder</code> frame. Same anti-pattern as Modal's icon slot. Should be a Figma Slot backed by the Icon component. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>Token namespace and component name disagree.</strong> The component is named "Bottom Drawer" while its tokens live in <code>main/bottom-header/color/*</code>. DS literature (Material, HIG) and this report use "Bottom Sheet". Pick one name and propagate: rename the component, rename the token collection, or both. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>No Code Connect mapping.</strong> Blocked until the restructure lands — mapping the current schema would hardcode the wrong architecture. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="bottom-sheet-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Restructure around a clean shell with four named slots.</strong> Target shape: <code>EBBottomSheet(isPresented, detents, dragHandle, header, content, footer)</code>. <em>header</em> = optional title bar region (title, preamble, leading icon, trailing icon / close). <em>content</em> = the one and only body Slot — accepts any DS composition (Action List, form fields, filter chips, tips list). <em>footer</em> = button group pinned to the bottom. Every current product usage becomes a <strong>composition</strong>: list picker = BottomSheet + Action List; confirmation = BottomSheet + description + button group; form = BottomSheet + Labeled Fields + button group; tips list = BottomSheet + numbered list; welcome card = BottomSheet + illustration + button group. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Promote the body to a real Figma Slot.</strong> Replace the 4 pink-dashed placeholder rectangles with a single named <code>content</code> Slot (Figma's Slot feature). Default to an empty 24-padded frame; let consumers instance-swap in Action List rows, form fields, or any other DS primitive without detaching. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Consolidate the Bottom Sheet / Modal / Overlay family.</strong> Canonical hierarchy: <code>Overlay</code> (scrim primitive, already shipped) → consumed by both <code>Modal</code> (centered dialog) and <code>Bottom Sheet</code> (bottom-anchored sheet). The three ship distinct anchor positions but share the scrim. Do not collapse Modal and Bottom Sheet into one — native platforms treat them as separate APIs (<code>.sheet</code> vs <code>.alert</code> / <code>Dialog</code> vs <code>ModalBottomSheet</code>). <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Replace the Alignment enum with a proper header schema.</strong> Split the silent shape-shift into explicit properties: <code>titleAlignment = left | center</code> (just text-align), <code>leadingSlot</code> (icon / avatar / empty), <code>trailingSlot</code> (close X / icon button / empty), <code>aboveTitleSlot</code> (stepper / progress bar / empty). Both alignments now share the same structural shape, just different text-align and slot content. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Add an explicit detent axis.</strong> Introduce <code>Detent = medium | large | fitContent</code> as a Figma variant — even if visually similar, this makes the Code Connect mapping 1:1 with <code>.presentationDetents([.medium, .large])</code> / <code>SheetValue.PartiallyExpanded</code>. Designers can then show in mocks which detent a sheet resolves to. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Add a drag-handle primitive.</strong> Vector rect, 32×4, radius 4, bound to a new token <code>main/bottom-header/color/drag-handle</code> (suggest <code>#C2C6CF</code>). Ship as its own tiny component so Modal-style sheets can omit it and Bottom Sheet can include it. Default visible for Bottom Sheet. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Footer action group should be a slot, not baked buttons.</strong> Replace the <code>primaryAction</code> + <code>secondaryAction</code> booleans with a <code>footer</code> slot that accepts any button composition — 0, 1, 2 horizontal, 2 vertical, link-only, icon+label. Same fix that Modal needs, and both should share a new <code>EBButtonGroup</code> primitive if the team wants to keep the DS tight. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Replace the raster close icon with a vector instance.</strong> Swap the Figma CDN PNG close for the DS vector <em>Close</em> icon, and bind colour to <code>main/bottom-header/color/icon-close</code> (<code>#6780A9</code>). Available on both alignments via the trailing slot. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Convert the leading icon-placeholder into an Icon slot.</strong> Same pattern as Modal: add a Figma Slot for the leading icon backed by the Icon component so designers can swap without detaching. Default to a neutral status icon or nothing. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Rename the component and its token namespace.</strong> Pick one: either rename the component to <strong>Bottom Sheet</strong> and rename the token collection from <code>main/bottom-header/color/*</code> to <code>main/bottom-sheet/color/*</code>, or keep "Drawer" and align tokens to <code>main/bottom-drawer/*</code>. Current disagreement between component name, token name, and common DS vocabulary costs designers every time they search. Recommended: rename to <strong>Bottom Sheet</strong> to match Material / HIG / this assessment. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Annotate the present / dismiss / gesture contract.</strong> Document on the component: slide-up entrance, fade-out-with-scrim exit, swipe-down-to-dismiss, tap-outside-dismiss, ESC/back button behaviour, focus trap, restore-focus-on-close. Developers currently have to infer these from adjacent patterns. <span class="tag-recommend">Docs</span></span></li>
+      <li><span><strong>Add a dismissible/modal switch.</strong> Some flows (transfer confirmation, destructive action) need a non-swipe-dismiss sheet. Surface this as <code>dismissible: bool</code> on the component, mapping to iOS <code>.interactiveDismissDisabled(!dismissible)</code> and Compose <code>sheetState.confirmValueChange</code>. <span class="tag-recommend">State</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <!-- Left Align spec card -->
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Left Align <span class="spec-card-node">node <code>12522:12860</code></span></div>
+        <div class="mode-toggle-group">
+          <button class="mode-toggle-btn active" onclick="_bottomSheetSpecMode('left','des')">DES</button>
+          <button class="mode-toggle-btn" onclick="_bottomSheetSpecMode('left','dev')">DEV</button>
+        </div>
+      </div>
+      <p class="spec-card-desc">Header aligned to the leading edge. Ships with an optional leading icon placeholder, preamble + title stack, a trailing close X, then the decorative body slots and 2 hard-baked CTAs.</p>
+
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame">
+          <div class="spec-preview-body" id="bottom-sheet-spec-preview-left"><!-- JS --></div>
+        </div>
+      </div>
+
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-detail-row"><span>Name</span><code>Bottom Drawer</code></div>
+          <div class="spec-detail-row"><span>alignment</span><code>Left Align</code></div>
+          <div class="spec-detail-row"><span>iconPlaceholder</span><code>boolean (default true)</code></div>
+          <div class="spec-detail-row"><span>preamble</span><code>boolean (default true)</code></div>
+          <div class="spec-detail-row"><span>header</span><code>string "Title here of the header..."</code></div>
+          <div class="spec-detail-row"><span>description</span><code>boolean (default true)</code></div>
+          <div class="spec-detail-row"><span>showSlot1..4</span><code>booleans — decorative only</code></div>
+          <div class="spec-detail-row"><span>primaryAction</span><code>boolean (default true)</code></div>
+          <div class="spec-detail-row"><span>secondaryAction</span><code>boolean (default true)</code></div>
+          <div class="spec-detail-row"><span>Close X</span><span class="muted">Hardcoded — raster PNG</span></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors by State</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr></thead>
+              <tbody>
+                <tr><td>Surface bg</td><td><code>main/bottom-header/color/bg</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span><code>#FFFFFF</code></td></tr>
+                <tr><td>Preamble</td><td><code>main/bottom-header/color/preamble</code></td><td><span class="swatch-dot" style="background:#90A8D0"></span><code>#90A8D0</code></td></tr>
+                <tr><td>Title / Header</td><td><code>main/bottom-header/color/header</code></td><td><span class="swatch-dot" style="background:#0A2757"></span><code>#0A2757</code></td></tr>
+                <tr><td>Description</td><td><code>main/bottom-header/color/description</code></td><td><span class="swatch-dot" style="background:#445C85"></span><code>#445C85</code></td></tr>
+                <tr><td>Close icon</td><td><code>main/bottom-header/color/icon-close</code></td><td><span class="swatch-dot" style="background:#6780A9"></span><code>#6780A9</code></td></tr>
+                <tr><td>Icon placeholder</td><td class="muted">(hardcoded)</td><td><span class="swatch-dot" style="background:#C2C6CF"></span><code>#C2C6CF</code></td></tr>
+                <tr><td>Primary CTA bg</td><td><code>main/button/primary/brand/enabled/bg</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td></tr>
+                <tr><td>Primary CTA label</td><td><code>main/button/primary/brand/enabled/label</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span><code>#FFFFFF</code></td></tr>
+                <tr><td>Tertiary CTA label</td><td><code>main/button/tertiary/brand/enabled/label</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td></tr>
+              </tbody>
+            </table>
+            <div class="table-footnote">Surface, preamble, header, description, and close-icon colours bind to <code>main/bottom-header/color/*</code>. Icon-placeholder grey is hardcoded — should be replaced with an Icon Slot bound to a semantic token.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Width</span><code>360</code></div>
+          <div class="spec-detail-row"><span>Height (default)</span><code>324</code></div>
+          <div class="spec-detail-row"><span>Corner radius (top)</span><code>8</code></div>
+          <div class="spec-detail-row"><span>Corner radius (bottom)</span><code>0</code></div>
+          <div class="spec-detail-row"><span>Header padding</span><code>pt 24 · pb 8 · pl 24 · pr 48</code></div>
+          <div class="spec-detail-row"><span>Header gap (icon ↔ title)</span><code>8</code></div>
+          <div class="spec-detail-row"><span>Preamble ↔ title gap</span><code>6</code></div>
+          <div class="spec-detail-row"><span>Content padding</span><code>24 sides · 32 bottom</code></div>
+          <div class="spec-detail-row"><span>Description pb</span><code>12</code></div>
+          <div class="spec-detail-row"><span>CTA group padding</span><code>px 24 · pb 36</code></div>
+          <div class="spec-detail-row"><span>CTA gap</span><code>12</code></div>
+          <div class="spec-detail-row"><span>Primary button radius</span><code>99 (pill)</code></div>
+          <div class="spec-detail-row"><span>Close icon size</span><code>24 · top 24 · right 24</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>Preamble style</span><code>Primary/Label/Small</code></div>
+          <div class="spec-detail-row"><span>Preamble font</span><code>Proxima Soft · Bold · 14 / 14</code></div>
+          <div class="spec-detail-row"><span>Preamble tracking</span><code>0.25</code></div>
+          <div class="spec-detail-row"><span>Title style</span><code>Primary/Headlines/Section</code></div>
+          <div class="spec-detail-row"><span>Title font</span><code>Proxima Soft · Bold · 22 / 26</code></div>
+          <div class="spec-detail-row"><span>Title tracking</span><code>0</code></div>
+          <div class="spec-detail-row"><span>Description style</span><code>Secondary/Default/Base</code></div>
+          <div class="spec-detail-row"><span>Description font</span><code>BarkAda · Medium · 14 / 20</code></div>
+          <div class="spec-detail-row"><span>CTA label style</span><code>Primary/Label/Large</code></div>
+          <div class="spec-detail-row"><span>CTA font</span><code>Proxima Soft · Bold · 18 / 18</code></div>
+          <div class="spec-detail-row"><span>Header alignment</span><code>left</code></div>
+        </div>
+      </div>
+
+      <div class="code-card-body">
+        <div class="platform-tabs">
+          <button class="platform-tab active" onclick="switchPlatform(this,'bottom-sheet-left','swift')">SwiftUI</button>
+          <button class="platform-tab" onclick="switchPlatform(this,'bottom-sheet-left','compose')">Compose</button>
+        </div>
+        <div class="platform-panel active" data-tab="swift">
+          <div class="code-block-wrap">
+            <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+            <pre class="code-snippet"><span class="cmt">// Left-aligned header · two CTAs stacked</span>
+.<span class="prp">sheet</span>(<span class="prp">isPresented</span>: $showSheet) {
+    <span class="typ">EBBottomSheet</span>(
+        <span class="prp">titleAlignment</span>: .leading,
+        <span class="prp">leading</span>: { <span class="typ">EBAvatar</span>(image) },
+        <span class="prp">trailing</span>: { <span class="typ">EBIconButton</span>(.close) { showSheet = <span class="kw">false</span> } },
+        <span class="prp">preamble</span>: <span class="str">"Preamble here"</span>,
+        <span class="prp">title</span>: <span class="str">"Title here of the header"</span>,
+        <span class="prp">description</span>: <span class="str">"This area is designated for descriptions."</span>
+    ) {
+        <span class="cmt">// content slot — any DS composition</span>
+        <span class="typ">EBActionList</span> { ... }
+    } <span class="prp">footer</span>: {
+        <span class="typ">EBButton</span>(<span class="str">"Label"</span>) { ... }
+        <span class="typ">EBTextButton</span>(<span class="str">"Label"</span>) { ... }
+    }
+    .<span class="prp">presentationDetents</span>([.medium, .large])
+    .<span class="prp">presentationDragIndicator</span>(.visible)
+}</pre>
+          </div>
+        </div>
+        <div class="platform-panel" data-tab="compose">
+          <div class="code-block-wrap">
+            <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+            <pre class="code-snippet"><span class="cmt">// Left-aligned header · two CTAs stacked</span>
+<span class="kw">if</span> (showSheet) {
+    <span class="typ">EBBottomSheet</span>(
+        titleAlignment = <span class="typ">Alignment</span>.Start,
+        leading = { <span class="typ">EBAvatar</span>(image) },
+        trailing = { <span class="typ">EBIconButton</span>(<span class="typ">Icons</span>.Close) { showSheet = <span class="kw">false</span> } },
+        preamble = <span class="str">"Preamble here"</span>,
+        title = <span class="str">"Title here of the header"</span>,
+        description = <span class="str">"This area is designated for descriptions."</span>,
+        detents = listOf(<span class="typ">Detent</span>.Medium, <span class="typ">Detent</span>.Large),
+        onDismissRequest = { showSheet = <span class="kw">false</span> },
+        footer = {
+            <span class="typ">EBButton</span>(onClick = {}) { <span class="typ">Text</span>(<span class="str">"Label"</span>) }
+            <span class="typ">EBTextButton</span>(onClick = {}) { <span class="typ">Text</span>(<span class="str">"Label"</span>) }
+        }
+    ) {
+        <span class="typ">EBActionList</span> { ... }
+    }
+}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Align spec card -->
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Center Align <span class="spec-card-node">node <code>12817:43834</code></span></div>
+        <div class="mode-toggle-group">
+          <button class="mode-toggle-btn active" onclick="_bottomSheetSpecMode('center','des')">DES</button>
+          <button class="mode-toggle-btn" onclick="_bottomSheetSpecMode('center','dev')">DEV</button>
+        </div>
+      </div>
+      <p class="spec-card-desc">Header centered. Silently drops the leading icon + trailing close X and adds an above-title <code>headerSlot</code> used for progress bars / steppers. Same body placeholders and hard-baked CTAs as Left Align.</p>
+
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame">
+          <div class="spec-preview-body" id="bottom-sheet-spec-preview-center"><!-- JS --></div>
+        </div>
+      </div>
+
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Properties</div>
+          <div class="spec-detail-row"><span>Name</span><code>Bottom Drawer</code></div>
+          <div class="spec-detail-row"><span>alignment</span><code>Center Align</code></div>
+          <div class="spec-detail-row"><span>headerSlot</span><code>boolean (default true) — above-title</code></div>
+          <div class="spec-detail-row"><span>preamble</span><code>boolean (default true)</code></div>
+          <div class="spec-detail-row"><span>header</span><code>string "Title here of the header..."</code></div>
+          <div class="spec-detail-row"><span>description</span><code>boolean (default true)</code></div>
+          <div class="spec-detail-row"><span>Leading icon</span><span class="muted">Not present in Center Align</span></div>
+          <div class="spec-detail-row"><span>Close X</span><span class="muted">Not present in Center Align</span></div>
+          <div class="spec-detail-row"><span>primaryAction</span><code>boolean (default true)</code></div>
+          <div class="spec-detail-row"><span>secondaryAction</span><code>boolean (default true)</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors by State</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr></thead>
+              <tbody>
+                <tr><td>Surface bg</td><td><code>main/bottom-header/color/bg</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span><code>#FFFFFF</code></td></tr>
+                <tr><td>Preamble</td><td><code>main/bottom-header/color/preamble</code></td><td><span class="swatch-dot" style="background:#90A8D0"></span><code>#90A8D0</code></td></tr>
+                <tr><td>Title / Header</td><td><code>main/bottom-header/color/header</code></td><td><span class="swatch-dot" style="background:#0A2757"></span><code>#0A2757</code></td></tr>
+                <tr><td>Description</td><td><code>main/bottom-header/color/description</code></td><td><span class="swatch-dot" style="background:#445C85"></span><code>#445C85</code></td></tr>
+                <tr><td>Primary CTA bg</td><td><code>main/button/primary/brand/enabled/bg</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td></tr>
+                <tr><td>Primary CTA label</td><td><code>main/button/primary/brand/enabled/label</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span><code>#FFFFFF</code></td></tr>
+                <tr><td>Tertiary CTA label</td><td><code>main/button/tertiary/brand/enabled/label</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td></tr>
+              </tbody>
+            </table>
+            <div class="table-footnote">Center Align shares the same <code>main/bottom-header/color/*</code> bindings as Left Align. No icon-close token surfaced because the close X is absent here — this is the asymmetry called out in Open Issues.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Width</span><code>360</code></div>
+          <div class="spec-detail-row"><span>Height (default)</span><code>330</code></div>
+          <div class="spec-detail-row"><span>Corner radius (top)</span><code>8</code></div>
+          <div class="spec-detail-row"><span>Header padding</span><code>pt 24 · pb 8 · px 24</code></div>
+          <div class="spec-detail-row"><span>Header gap (slot ↔ title)</span><code>16</code></div>
+          <div class="spec-detail-row"><span>Preamble ↔ title gap</span><code>6</code></div>
+          <div class="spec-detail-row"><span>Header slot height</span><code>~16 (progress bar / stepper)</code></div>
+          <div class="spec-detail-row"><span>Content padding</span><code>24 sides · 32 bottom</code></div>
+          <div class="spec-detail-row"><span>Description pb</span><code>12</code></div>
+          <div class="spec-detail-row"><span>CTA group padding</span><code>px 24 · pb 36</code></div>
+          <div class="spec-detail-row"><span>CTA gap</span><code>12</code></div>
+          <div class="spec-detail-row"><span>Primary button radius</span><code>99 (pill)</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>Preamble style</span><code>Primary/Label/Small</code></div>
+          <div class="spec-detail-row"><span>Preamble font</span><code>Proxima Soft · Bold · 14 / 14</code></div>
+          <div class="spec-detail-row"><span>Title style</span><code>Primary/Headlines/Section</code></div>
+          <div class="spec-detail-row"><span>Title font</span><code>Proxima Soft · Bold · 22 / 26</code></div>
+          <div class="spec-detail-row"><span>Description style</span><code>Secondary/Default/Base</code></div>
+          <div class="spec-detail-row"><span>Description font</span><code>BarkAda · Medium · 14 / 20</code></div>
+          <div class="spec-detail-row"><span>CTA label style</span><code>Primary/Label/Large</code></div>
+          <div class="spec-detail-row"><span>CTA font</span><code>Proxima Soft · Bold · 18 / 18</code></div>
+          <div class="spec-detail-row"><span>Header alignment</span><code>center</code></div>
+        </div>
+      </div>
+
+      <div class="code-card-body">
+        <div class="platform-tabs">
+          <button class="platform-tab active" onclick="switchPlatform(this,'bottom-sheet-center','swift')">SwiftUI</button>
+          <button class="platform-tab" onclick="switchPlatform(this,'bottom-sheet-center','compose')">Compose</button>
+        </div>
+        <div class="platform-panel active" data-tab="swift">
+          <div class="code-block-wrap">
+            <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+            <pre class="code-snippet"><span class="cmt">// Centered header · above-title progress bar · two CTAs</span>
+.<span class="prp">sheet</span>(<span class="prp">isPresented</span>: $showSheet) {
+    <span class="typ">EBBottomSheet</span>(
+        <span class="prp">titleAlignment</span>: .center,
+        <span class="prp">aboveTitle</span>: { <span class="typ">EBProgressBar</span>(<span class="prp">step</span>: 2, <span class="prp">of</span>: 5) },
+        <span class="prp">preamble</span>: <span class="str">"Preamble here"</span>,
+        <span class="prp">title</span>: <span class="str">"Title here of the header"</span>,
+        <span class="prp">description</span>: <span class="str">"This area is designated for descriptions."</span>
+    ) {
+        <span class="cmt">// content slot</span>
+        <span class="typ">EBForm</span> { ... }
+    } <span class="prp">footer</span>: {
+        <span class="typ">EBButton</span>(<span class="str">"Next"</span>) { ... }
+        <span class="typ">EBTextButton</span>(<span class="str">"Cancel"</span>) { ... }
+    }
+    .<span class="prp">presentationDetents</span>([.large])
+    .<span class="prp">presentationDragIndicator</span>(.visible)
+}</pre>
+          </div>
+        </div>
+        <div class="platform-panel" data-tab="compose">
+          <div class="code-block-wrap">
+            <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+            <pre class="code-snippet"><span class="cmt">// Centered header · above-title progress bar · two CTAs</span>
+<span class="kw">if</span> (showSheet) {
+    <span class="typ">EBBottomSheet</span>(
+        titleAlignment = <span class="typ">Alignment</span>.Center,
+        aboveTitle = { <span class="typ">EBProgressBar</span>(step = 2, total = 5) },
+        preamble = <span class="str">"Preamble here"</span>,
+        title = <span class="str">"Title here of the header"</span>,
+        description = <span class="str">"This area is designated for descriptions."</span>,
+        detents = listOf(<span class="typ">Detent</span>.Large),
+        onDismissRequest = { showSheet = <span class="kw">false</span> },
+        footer = {
+            <span class="typ">EBButton</span>(onClick = {}) { <span class="typ">Text</span>(<span class="str">"Next"</span>) }
+            <span class="typ">EBTextButton</span>(onClick = {}) { <span class="typ">Text</span>(<span class="str">"Cancel"</span>) }
+        }
+    ) {
+        <span class="typ">EBForm</span> { ... }
+    }
+}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="bottom-sheet-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'bottom-sheet-install','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'bottom-sheet-install','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Swift Package Manager — requires iOS 16+ for .presentationDetents</span>
+.<span class="fn">package</span>(<span class="prp">url</span>: <span class="str">"https://github.com/gcash/eb-design-system-ios"</span>, <span class="prp">from</span>: <span class="str">"1.0.0"</span>)
+
+<span class="kw">import</span> EBDesignSystem</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// build.gradle.kts — uses Material 3 ModalBottomSheet</span>
+implementation(<span class="str">"com.gcash.designsystem:eb-components:1.0.0"</span>)
+implementation(<span class="str">"androidx.compose.material3:material3:1.2.0"</span>)
+
+<span class="kw">import</span> com.gcash.designsystem.components.EBBottomSheet</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="bottom-sheet-mapping">Property Mapping <span class="badge badge-planned">Proposed — post-restructure</span></div>
+    <p class="section-desc">The current Figma schema (<code>alignment</code> + 9 booleans) is not fit for 1:1 mapping. The table below maps the <strong>proposed</strong> post-restructure schema to native APIs.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Proposed Figma property</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td><code>isPresented</code></td><td><code>.sheet(isPresented: $binding)</code></td><td><code>if (showSheet) ModalBottomSheet(onDismissRequest:)</code></td></tr>
+          <tr><td><code>detents</code></td><td><code>.presentationDetents([.medium, .large])</code></td><td><code>sheetState = rememberModalBottomSheetState(…)</code> + <code>Detent</code> enum</td></tr>
+          <tr><td><code>dragHandle = visible|hidden</code></td><td><code>.presentationDragIndicator(.visible / .hidden)</code></td><td><code>dragHandle = { BottomSheetDefaults.DragHandle() }</code> or <code>null</code></td></tr>
+          <tr><td><code>titleAlignment = leading|center</code></td><td><code>titleAlignment: .leading / .center</code></td><td><code>titleAlignment = Alignment.Start / Center</code></td></tr>
+          <tr><td><code>leading</code> slot</td><td><code>leading: { EBAvatar(…) }</code> (ViewBuilder)</td><td><code>leading: @Composable () -&gt; Unit</code></td></tr>
+          <tr><td><code>trailing</code> slot (e.g. close)</td><td><code>trailing: { EBIconButton(.close) { dismiss() } }</code></td><td><code>trailing: @Composable () -&gt; Unit</code></td></tr>
+          <tr><td><code>aboveTitle</code> slot (progress / stepper)</td><td><code>aboveTitle: { EBProgressBar(…) }</code></td><td><code>aboveTitle: @Composable () -&gt; Unit</code></td></tr>
+          <tr><td><code>preamble</code></td><td><code>preamble: String?</code></td><td><code>preamble: String? = null</code></td></tr>
+          <tr><td><code>title</code></td><td><code>title: String</code></td><td><code>title: String</code></td></tr>
+          <tr><td><code>description</code></td><td><code>description: String?</code></td><td><code>description: String? = null</code></td></tr>
+          <tr><td><code>content</code> slot</td><td><code>@ViewBuilder content: () -&gt; Content</code> (trailing closure)</td><td><code>content: @Composable ColumnScope.() -&gt; Unit</code></td></tr>
+          <tr><td><code>footer</code> slot</td><td><code>footer: () -&gt; Footer</code></td><td><code>footer: @Composable RowScope.() -&gt; Unit</code></td></tr>
+          <tr><td><code>dismissible</code></td><td><code>.interactiveDismissDisabled(!dismissible)</code></td><td><code>sheetState.confirmValueChange = { dismissible }</code></td></tr>
+          <tr><td class="muted">(legacy) <code>alignment = Left Align</code></td><td class="muted">→ split into <code>titleAlignment</code> + <code>leading</code> + <code>trailing</code></td><td class="muted">→ split into <code>titleAlignment</code> + <code>leading</code> + <code>trailing</code></td></tr>
+          <tr><td class="muted">(legacy) <code>showSlot1..4</code> booleans</td><td class="muted">→ removed, replaced by <code>content</code> slot</td><td class="muted">→ removed, replaced by <code>content</code> slot</td></tr>
+          <tr><td class="muted">(legacy) <code>primaryAction</code> / <code>secondaryAction</code></td><td class="muted">→ removed, replaced by <code>footer</code> slot</td><td class="muted">→ removed, replaced by <code>footer</code> slot</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="bottom-sheet-paths">Suggested file paths</div>
+    <ul class="resolved-list">
+      <li><code>ios/Components/BottomSheet/EBBottomSheet.swift</code></li>
+      <li><code>ios/Components/BottomSheet/EBBottomSheetModifier.swift</code> (thin wrapper around <code>.sheet</code>)</li>
+      <li><code>ios/Components/BottomSheet/EBBottomSheetLegacy.swift</code> (iOS 15 fallback via <code>UIViewControllerRepresentable</code>)</li>
+      <li><code>android/components/bottomsheet/EBBottomSheet.kt</code></li>
+      <li><code>android/components/bottomsheet/EBBottomSheetDefaults.kt</code></li>
+    </ul>
+
+    <div class="sub-heading" id="bottom-sheet-usage">Usage <span class="badge badge-planned">Proposed API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'bottom-sheet-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'bottom-sheet-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// 1 · List picker — BottomSheet + Action List rows in content slot</span>
+.<span class="prp">sheet</span>(<span class="prp">isPresented</span>: $showPicker) {
+    <span class="typ">EBBottomSheet</span>(
+        <span class="prp">title</span>: <span class="str">"Provide a valid ID to unlock GCredit"</span>,
+        <span class="prp">trailing</span>: { <span class="typ">EBIconButton</span>(.close) { showPicker = <span class="kw">false</span> } }
+    ) {
+        <span class="typ">EBActionList</span> {
+            <span class="kw">ForEach</span>(ids) { id <span class="kw">in</span>
+                <span class="typ">EBActionRow</span>(id.name) { select(id) }
+            }
+        }
+    } <span class="prp">footer</span>: {
+        <span class="typ">EBButton</span>(<span class="str">"Next"</span>) { advance() }
+        <span class="typ">EBTextButton</span>(<span class="str">"Do it later"</span>) { dismiss() }
+    }
+    .<span class="prp">presentationDetents</span>([.large])
+}
+
+<span class="cmt">// 2 · Confirmation dialog — description + button group</span>
+.<span class="prp">sheet</span>(<span class="prp">isPresented</span>: $showConfirm) {
+    <span class="typ">EBBottomSheet</span>(
+        <span class="prp">title</span>: <span class="str">"Are you sure?"</span>,
+        <span class="prp">description</span>: <span class="str">"By proceeding, I agree to share my mobile number with GCash."</span>,
+        <span class="prp">leading</span>: { <span class="typ">EBAvatar</span>(recipient.photo) }
+    ) { <span class="typ">EmptyView</span>() } <span class="prp">footer</span>: {
+        <span class="typ">EBButton</span>(<span class="str">"Proceed"</span>) { proceed() }
+    }
+    .<span class="prp">presentationDetents</span>([.medium])
+}
+
+<span class="cmt">// 3 · Form — BottomSheet + Labeled Fields in content slot</span>
+.<span class="prp">sheet</span>(<span class="prp">isPresented</span>: $showForm) {
+    <span class="typ">EBBottomSheet</span>(
+        <span class="prp">titleAlignment</span>: .center,
+        <span class="prp">aboveTitle</span>: { <span class="typ">EBProgressBar</span>(<span class="prp">step</span>: 2, <span class="prp">of</span>: 5) },
+        <span class="prp">title</span>: <span class="str">"Welcome to GInsure!"</span>
+    ) {
+        <span class="typ">EBLabeledField</span>(<span class="str">"Full name"</span>, <span class="prp">text</span>: $name)
+        <span class="typ">EBLabeledField</span>(<span class="str">"Mobile number"</span>, <span class="prp">text</span>: $mobile)
+    } <span class="prp">footer</span>: {
+        <span class="typ">EBButton</span>(<span class="str">"Next"</span>) { save() }
+        <span class="typ">EBTextButton</span>(<span class="str">"Cancel"</span>) { dismiss() }
+    }
+    .<span class="prp">presentationDetents</span>([.large])
+}
+
+<span class="cmt">// 4 · Non-dismissible — destructive confirmation</span>
+.<span class="prp">sheet</span>(<span class="prp">isPresented</span>: $showDelete) {
+    <span class="typ">EBBottomSheet</span>(
+        <span class="prp">title</span>: <span class="str">"You're about to switch accounts"</span>,
+        <span class="prp">dismissible</span>: <span class="kw">false</span>
+    ) { <span class="typ">EmptyView</span>() } <span class="prp">footer</span>: {
+        <span class="typ">EBButton</span>(<span class="str">"Proceed"</span>, <span class="prp">role</span>: .destructive) { proceed() }
+        <span class="typ">EBTextButton</span>(<span class="str">"Cancel"</span>) { showDelete = <span class="kw">false</span> }
+    }
+    .<span class="prp">presentationDetents</span>([.medium])
+    .<span class="prp">interactiveDismissDisabled</span>(<span class="kw">true</span>)
+}</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// 1 · List picker — BottomSheet + Action List rows in content slot</span>
+<span class="kw">if</span> (showPicker) {
+    <span class="typ">EBBottomSheet</span>(
+        title = <span class="str">"Provide a valid ID to unlock GCredit"</span>,
+        trailing = { <span class="typ">EBIconButton</span>(<span class="typ">Icons</span>.Close) { showPicker = <span class="kw">false</span> } },
+        detents = listOf(<span class="typ">Detent</span>.Large),
+        onDismissRequest = { showPicker = <span class="kw">false</span> },
+        footer = {
+            <span class="typ">EBButton</span>(onClick = ::advance) { <span class="typ">Text</span>(<span class="str">"Next"</span>) }
+            <span class="typ">EBTextButton</span>(onClick = ::dismiss) { <span class="typ">Text</span>(<span class="str">"Do it later"</span>) }
+        }
+    ) {
+        <span class="typ">EBActionList</span> {
+            ids.forEach { id -&gt; <span class="typ">EBActionRow</span>(id.name, onClick = { select(id) }) }
+        }
+    }
+}
+
+<span class="cmt">// 2 · Confirmation dialog — description + button group</span>
+<span class="typ">EBBottomSheet</span>(
+    title = <span class="str">"Are you sure?"</span>,
+    description = <span class="str">"By proceeding, I agree to share my mobile number with GCash."</span>,
+    leading = { <span class="typ">EBAvatar</span>(recipient.photo) },
+    detents = listOf(<span class="typ">Detent</span>.Medium),
+    onDismissRequest = {},
+    footer = { <span class="typ">EBButton</span>(onClick = ::proceed) { <span class="typ">Text</span>(<span class="str">"Proceed"</span>) } }
+) { <span class="cmt">// no content</span> }
+
+<span class="cmt">// 3 · Non-dismissible — destructive confirmation</span>
+<span class="typ">EBBottomSheet</span>(
+    title = <span class="str">"You're about to switch accounts"</span>,
+    dismissible = <span class="kw">false</span>,
+    detents = listOf(<span class="typ">Detent</span>.Medium),
+    onDismissRequest = {},
+    footer = {
+        <span class="typ">EBButton</span>(onClick = ::proceed, colors = <span class="typ">EBButtonDefaults</span>.destructiveColors()) { <span class="typ">Text</span>(<span class="str">"Proceed"</span>) }
+        <span class="typ">EBTextButton</span>(onClick = { showDelete = <span class="kw">false</span> }) { <span class="typ">Text</span>(<span class="str">"Cancel"</span>) }
+    }
+) { }</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="bottom-sheet-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Modal trait</strong></td><td class="muted"><code>.sheet</code> applies the modal trait automatically — VoiceOver traps focus inside the sheet.</td><td class="muted"><code>ModalBottomSheet</code> treats content as modal by default — TalkBack swipe is contained.</td></tr>
+          <tr><td><strong>Focus management</strong></td><td class="muted">Focus moves to the sheet on present; restores to trigger on dismiss. If a first-field focus is desired, use <code>.focused($firstField)</code>.</td><td class="muted">Focus enters sheet content on show; restored to trigger on dismiss. Request initial focus via <code>LaunchedEffect</code> + <code>focusRequester</code>.</td></tr>
+          <tr><td><strong>Title as heading</strong></td><td class="muted">Mark the title Text with <code>.accessibilityAddTraits(.isHeader)</code> so VoiceOver reads it first.</td><td class="muted">Use <code>Modifier.semantics { heading() }</code> on the title; set <code>paneTitle</code> on the sheet surface.</td></tr>
+          <tr><td><strong>Drag handle announcement</strong></td><td class="muted">iOS's built-in grabber is announced as "Adjustable". Custom handles need <code>.accessibilityLabel("Resize sheet")</code> and <code>.accessibilityAdjustableAction</code>.</td><td class="muted">Material 3 default handle exposes resize action. Custom handles need <code>Modifier.semantics { contentDescription = "Resize sheet" }</code>.</td></tr>
+          <tr><td><strong>Dismiss gesture</strong></td><td class="muted">Swipe-down + ESC + tap-outside all route through <code>isPresented</code>. For non-dismissible, use <code>.interactiveDismissDisabled(true)</code>.</td><td class="muted">Back gesture + tap-outside via <code>onDismissRequest</code>. Non-dismissible: <code>sheetState.confirmValueChange = { false }</code>.</td></tr>
+          <tr><td><strong>Close button (if trailing slot)</strong></td><td class="muted">Wrap 24×24 icon in a ≥44×44pt tappable area. Label: <code>.accessibilityLabel("Close")</code>.</td><td class="muted">Wrap 24×24 icon in a ≥48×48dp tappable area. <code>contentDescription = stringResource(R.string.close)</code>.</td></tr>
+          <tr><td><strong>Destructive CTA</strong></td><td class="muted">Use <code>role: .destructive</code> on the footer button.</td><td class="muted">Use <code>EBButtonDefaults.destructiveColors()</code> and explicit <code>contentDescription</code>.</td></tr>
+          <tr><td><strong>Reduce motion</strong></td><td class="muted">Respect <code>UIAccessibility.isReduceMotionEnabled</code> — skip slide-up / use cross-fade.</td><td class="muted">Respect <code>Settings.Global.ANIMATOR_DURATION_SCALE</code> — shorten animation when accessibility demands it.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="bottom-sheet-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Use Bottom Sheet for content picks, list selections, filter panels, confirmations with supporting context, and multi-step forms that benefit from an anchored surface.</li>
+          <li>Always pair the sheet with Overlay for the scrim — delegate to the platform if possible (SwiftUI's <code>.sheet</code> provides it; Compose's <code>ModalBottomSheet</code> provides it).</li>
+          <li>Show the drag handle when the sheet supports multiple detents. Hide it when the sheet is a single, fixed-height surface.</li>
+          <li>Put heavy primary action in the footer slot; keep the content slot scrollable for long content.</li>
+          <li>Use <code>titleAlignment: .center</code> with the <code>aboveTitle</code> slot (progress bar / stepper) for onboarding and multi-step flows.</li>
+          <li>Make the sheet <code>dismissible: false</code> only when an explicit user choice is required (destructive actions, legal confirmations).</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't use Bottom Sheet for quick toasts or brief notifications — use Alert or a snackbar pattern.</li>
+          <li>Don't hardcode content into the sheet variant — use the <code>content</code> slot and compose DS primitives.</li>
+          <li>Don't use Bottom Sheet for full-screen navigation; use a route / screen instead.</li>
+          <li>Don't stack bottom sheets — resolve the current sheet before presenting another.</li>
+          <li>Don't draw your own scrim inside the sheet content; the platform or Overlay primitive owns it.</li>
+          <li>Don't fork a new "Bottom Sheet" variant when a content shape changes — the shell stays the same, content in the slot varies.</li>
+          <li>Don't omit the close affordance when <code>dismissible: false</code>. Every sheet needs at least one way out (footer CTA or trailing close).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="bottom-sheet-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Scope is the header, not the sheet. Content region is 4 decorative placeholder rectangles instead of a Figma Slot. Icon-placeholder is a raw circle. Component name ("Bottom Drawer") disagrees with token namespace ("bottom-header") and DS convention ("Bottom Sheet").</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Alignment axis collapses two structurally different layouts (Left has leading icon + close X; Center has above-title headerSlot + no close X). No detent axis. 9 booleans (<code>showSlot1..4</code>, <code>primaryAction</code>, <code>secondaryAction</code>, <code>preamble</code>, <code>description</code>, <code>iconPlaceholder</code>) that should be slots.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Surface, preamble, header, description, close icon all bound to <code>main/bottom-header/color/*</code>. Icon-placeholder grey (<code>#C2C6CF</code>) is hardcoded. Drag-handle token doesn't exist yet (component has no handle).</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Does not map to <code>.sheet</code> / <code>ModalBottomSheet</code> as-is. No detent axis, no drag handle, no dismissible contract, hard-baked CTAs. After restructure → clean 1:1 mapping.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Only default state. No drag states (resting / dragging / snapping), no present / dismiss transition annotation, no empty / loading / error state guidance for the content slot.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Close X is a remote raster PNG (<code>shape_full</code> from Figma CDN) rather than a vector Icon instance. Icon-placeholder is a raw <code>#C2C6CF</code> circle, not a vector icon slot.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked on restructure. Scope overlap with Modal and Overlay must be resolved; mapping the current schema would hardcode the wrong architecture.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="bottom-sheet-cc">Code Connect readiness</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Aspect</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Component boundary</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Needs to consume Overlay and stop redeclaring the surface. Needs to expose a real <code>content</code> slot before mapping.</td></tr>
+          <tr><td><strong>Property names</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Replace <code>alignment</code> + 9 booleans with <code>titleAlignment</code> + named slots (<code>leading</code>, <code>trailing</code>, <code>aboveTitle</code>, <code>content</code>, <code>footer</code>) + <code>detents</code>.</td></tr>
+          <tr><td><strong>Token bindings</strong></td><td><span class="badge badge-refine">Needs Refinement</span></td><td class="muted">Most colours bound to <code>main/bottom-header/color/*</code>. Hardcoded icon-placeholder grey needs a token. Drag-handle token (new) needed.</td></tr>
+          <tr><td><strong>Slot architecture</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">No Figma Slots in use today. Promote body, footer, leading, trailing, and above-title to first-class Slots.</td></tr>
+          <tr><td><strong>State coverage</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Add detent axis and dismissible boolean. Drag states are platform-native — document delegation.</td></tr>
+          <tr><td><strong>Platform API alignment</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Target is iOS 16+ <code>.sheet</code> + Material 3 <code>ModalBottomSheet</code>. Fallback for iOS 15 via <code>UIViewControllerRepresentable</code>/<code>UISheetPresentationController</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="bottom-sheet-variants">Variants Inventory <span class="variants-count">(2 total)</span></div>
+    <p>Single axis — <code>Alignment = Left Align | Center Align</code>. The header shape-shifts across these two values (see Open Issues).</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Alignment</th><th>Node</th><th>Dimensions</th><th>Header slots present</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="mono center">1</td>
+            <td><strong>Left Align</strong></td>
+            <td><code>12522:12860</code></td>
+            <td>360 × 324</td>
+            <td class="muted">iconPlaceholder (leading) · preamble · title · Close X (trailing, raster)</td>
+            <td class="muted">Title + preamble left-aligned next to optional leading icon. Close X fixed top-right at (24, 24).</td>
+          </tr>
+          <tr>
+            <td class="mono center">2</td>
+            <td><strong>Center Align</strong></td>
+            <td><code>12817:43834</code></td>
+            <td>360 × 330</td>
+            <td class="muted">headerSlot (above-title, e.g. progress bar) · preamble · title</td>
+            <td class="muted">No leading icon, no close X. Adds an <code>headerSlot</code> used for progress bars / steppers. Title + preamble centered.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="section-desc" style="margin-top:12px"><strong>Gaps:</strong> No drag handle, no detent axis, no trailing close on Center Align, no leading icon on Center Align, no above-title slot on Left Align. The "two variants" hide at least four separate shape differences.</p>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 12817:43833</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>DS Health</strong> — 2 variants across 1 axis (<code>alignment</code>). Reusable and Composable both Fail: content is decorative placeholders, CTAs are hard-baked, no Slot architecture. <span class="tag-fixed">Documented</span></div><span class="changelog-delta delta-resolved">Baseline</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C1 — Component scope</strong> — Registered as "Bottom Drawer" but only models the sheet header + CTA area. Actual sheet primitives (drag handle, detents, scrim) absent. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C1 — Content region</strong> — 4 decorative placeholder rectangles (<code>UI Slot</code>, <code>SLOT 2..4</code>) toggled by booleans instead of a Figma Slot. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — Alignment axis</strong> — Left vs Center are not just text-alignment; Center adds an above-title headerSlot and drops Close X. Two component shapes collapsed into one enum. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — Naming disagreement</strong> — Component named "Bottom Drawer", tokens in <code>main/bottom-header/color/*</code>, DS convention is "Bottom Sheet". Recommend rename to Bottom Sheet. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C4 — Native mappability</strong> — No detent axis, no drag handle, hard-baked CTAs. Does not map to <code>.sheet</code> / <code>ModalBottomSheet</code> until restructure. <span class="tag-open tag-c4">Open</span></div><span class="changelog-delta delta-open">C4</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C5 — Interaction states</strong> — No drag states, no empty / loading / error guidance for the content slot, no present / dismiss transition annotation. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C6 — Raster close icon</strong> — Close X is a Figma CDN PNG (<code>shape_full</code>). Should be a vector Icon instance bound to <code>main/bottom-header/color/icon-close</code>. <span class="tag-open tag-c6">Open</span></div><span class="changelog-delta delta-open">C6</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C7 — Code Connect</strong> — Blocked on restructure. Scope overlap with Modal (<code>18507:71705</code>) and Overlay (<code>47:329691</code>) must be resolved first. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Family note</strong> — Recommended hierarchy: Overlay (scrim, shipped) → consumed by Modal (centered) + Bottom Sheet (bottom-anchored). Do not collapse Modal and Bottom Sheet; native APIs are distinct. <span class="tag-fixed">Family</span></div><span class="changelog-delta delta-resolved">Family</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Typography note</strong> — Description uses <code>BarkAda</code> (secondary font) at <code>Secondary/Default/Base</code>. Covered by the standing custom-font action item. <span class="tag-fixed">Info</span></div><span class="changelog-delta delta-resolved">Info</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-bottom-sheet">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-bottom-sheet"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Bottom Sheet JS ──────────────────────────────────────────────── */
+/* Renders miniature phone-like previews of the Bottom Sheet using
+   inline HTML. Shows the current Figma schema (alignment, CTAs)
+   plus proposed-but-not-in-Figma controls (detent, drag handle,
+   scrim, content shape) so the user can visualise the restructure. */
+
+function _bottomSheetCardMarkup(opts) {
+  var align   = opts.align || 'left';
+  var pre     = opts.preamble !== 'no';
+  var desc    = opts.desc !== 'no';
+  var cta     = opts.cta || '2';
+  var handle  = opts.handle !== 'no';
+  var content = opts.content || 'text';
+
+  var handleBlock = handle
+    ? '<div style="width:32px;height:4px;background:#C2C6CF;border-radius:2px;margin:8px auto 0;"></div>'
+    : '';
+
+  var headerBlock = '';
+  if (align === 'left') {
+    headerBlock =
+      '<div style="display:flex;align-items:flex-start;gap:8px;padding:16px 48px 8px 18px;position:relative;">' +
+        '<div style="width:24px;height:24px;border-radius:50%;background:#C2C6CF;flex-shrink:0;margin-top:2px;"></div>' +
+        '<div style="flex:1;">' +
+          (pre ? '<div style="font-size:10px;color:#90A8D0;font-weight:700;margin-bottom:3px;">Preamble here...</div>' : '') +
+          '<div style="font-family:\'Proxima Soft\',sans-serif;font-weight:700;font-size:14px;color:#0A2757;line-height:1.2;">Title here of the header...</div>' +
+        '</div>' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="position:absolute;right:18px;top:18px;opacity:0.8;"><path d="M6 6l12 12M18 6L6 18" stroke="#6780A9" stroke-width="2" stroke-linecap="round"/></svg>' +
+      '</div>';
+  } else {
+    headerBlock =
+      '<div style="padding:16px 18px 8px 18px;text-align:center;">' +
+        '<div style="height:4px;background:linear-gradient(90deg,#005CE5 60%,#E5EBF4 60%);border-radius:2px;margin-bottom:10px;"></div>' +
+        (pre ? '<div style="font-size:10px;color:#90A8D0;font-weight:700;margin-bottom:3px;">Preamble here...</div>' : '') +
+        '<div style="font-family:\'Proxima Soft\',sans-serif;font-weight:700;font-size:14px;color:#0A2757;line-height:1.2;">Title here of the header...</div>' +
+      '</div>';
+  }
+
+  // Content region — currently decorative, but we preview the proposed
+  // slot compositions so the user can imagine the restructure.
+  var contentBlock = '';
+  var alignCenter = (align === 'center');
+  if (content === 'text') {
+    contentBlock =
+      '<div style="padding:0 18px 20px;' + (alignCenter ? 'text-align:center;' : '') + '">' +
+        (desc ? '<div style="font-family:\'BarkAda\',serif;font-style:italic;font-size:11px;color:#445C85;line-height:1.5;">This area is designated for descriptions...</div>' : '') +
+      '</div>';
+  } else if (content === 'list') {
+    contentBlock =
+      '<div style="padding:0 18px 16px;">' +
+        '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #E5EBF4;font-size:11px;color:#0A2757;"><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid #C2C6CF;"></span>Driver\'s License</div>' +
+        '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #E5EBF4;font-size:11px;color:#0A2757;"><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid #005CE5;background:#005CE5;"></span>Passport</div>' +
+        '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;font-size:11px;color:#0A2757;"><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid #C2C6CF;"></span>UMID</div>' +
+      '</div>';
+  } else if (content === 'form') {
+    contentBlock =
+      '<div style="padding:0 18px 16px;display:flex;flex-direction:column;gap:8px;">' +
+        '<div><div style="font-size:9px;color:#90A8D0;font-weight:700;margin-bottom:3px;">FULL NAME</div><div style="height:26px;border:1px solid #C2C6CF;border-radius:4px;padding:0 8px;display:flex;align-items:center;font-size:10px;color:#0A2757;">Juan Dela Cruz</div></div>' +
+        '<div><div style="font-size:9px;color:#90A8D0;font-weight:700;margin-bottom:3px;">MOBILE NUMBER</div><div style="height:26px;border:1px solid #C2C6CF;border-radius:4px;padding:0 8px;display:flex;align-items:center;font-size:10px;color:#0A2757;">+63 9XX XXX XXXX</div></div>' +
+      '</div>';
+  }
+
+  var ctaBlock = '';
+  if (cta === '2') {
+    ctaBlock =
+      '<div style="padding:4px 18px 20px;display:flex;flex-direction:column;gap:8px;">' +
+        '<div style="height:28px;background:#005CE5;border-radius:99px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;">Label</div>' +
+        '<div style="height:22px;display:flex;align-items:center;justify-content:center;color:#005CE5;font-size:11px;font-weight:700;">Label</div>' +
+      '</div>';
+  } else if (cta === '1') {
+    ctaBlock =
+      '<div style="padding:4px 18px 20px;">' +
+        '<div style="height:28px;background:#005CE5;border-radius:99px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;">Label</div>' +
+      '</div>';
+  } else {
+    ctaBlock = '<div style="height:8px;"></div>';
+  }
+
+  return (
+    '<div style="background:#fff;border-top-left-radius:12px;border-top-right-radius:12px;width:240px;overflow:hidden;box-shadow:0 -2px 10px rgba(2,14,34,0.08);">' +
+      handleBlock +
+      headerBlock +
+      contentBlock +
+      ctaBlock +
+    '</div>'
+  );
+}
+
+function _bottomSheetStageMarkup(opts) {
+  var scrim  = opts.scrim !== 'no';
+  var detent = opts.detent || 'medium';
+  var card   = _bottomSheetCardMarkup(opts);
+
+  // Determine sheet vertical position based on detent.
+  var sheetOffset = (detent === 'large') ? '32px' : '110px';
+
+  return (
+    '<div style="position:relative;width:280px;height:360px;margin:0 auto;background:#F6F9FD;border-radius:18px;overflow:hidden;border:1px solid #E5EBF4;">' +
+      // Fake app content behind
+      '<div style="padding:14px;">' +
+        '<div style="width:60%;height:8px;background:#D9E2EC;border-radius:3px;margin-bottom:10px;"></div>' +
+        '<div style="width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;"></div>' +
+        '<div style="width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;"></div>' +
+        '<div style="width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;"></div>' +
+      '</div>' +
+      // Scrim
+      (scrim ? '<div style="position:absolute;inset:0;background:#020E22;opacity:0.56;"></div>' : '') +
+      // Bottom sheet anchored to bottom
+      '<div style="position:absolute;left:50%;transform:translateX(-50%);bottom:0;top:' + sheetOffset + ';display:flex;align-items:flex-start;justify-content:center;">' +
+        card +
+      '</div>' +
+    '</div>'
+  );
+}
+
+function _bottomSheetUpdate() {
+  var align    = document.getElementById('bottom-sheet-ctrl-align');
+  var preamble = document.getElementById('bottom-sheet-ctrl-preamble');
+  var descEl   = document.getElementById('bottom-sheet-ctrl-desc');
+  var ctaEl    = document.getElementById('bottom-sheet-ctrl-cta');
+  var detentEl = document.getElementById('bottom-sheet-ctrl-detent');
+  var handleEl = document.getElementById('bottom-sheet-ctrl-handle');
+  var scrimEl  = document.getElementById('bottom-sheet-ctrl-scrim');
+  var contEl   = document.getElementById('bottom-sheet-ctrl-content');
+  var preview  = document.getElementById('bottom-sheet-demo-preview');
+  if (!preview) return;
+  preview.innerHTML = _bottomSheetStageMarkup({
+    align:    align    ? align.value    : 'left',
+    preamble: preamble ? preamble.value : 'yes',
+    desc:     descEl   ? descEl.value   : 'yes',
+    cta:      ctaEl    ? ctaEl.value    : '2',
+    detent:   detentEl ? detentEl.value : 'medium',
+    handle:   handleEl ? handleEl.value : 'yes',
+    scrim:    scrimEl  ? scrimEl.value  : 'yes',
+    content:  contEl   ? contEl.value   : 'text'
+  });
+}
+
+function _bottomSheetSpecMode(card, mode) {
+  var panel = document.querySelector('#panel-bottom-sheet');
+  if (!panel) return;
+  // Scope toggle buttons to the clicked spec card
+  var cardIds = { left: 'bottom-sheet-spec-preview-left', center: 'bottom-sheet-spec-preview-center' };
+  var previewId = cardIds[card];
+  if (!previewId) return;
+  var previewEl = document.getElementById(previewId);
+  if (!previewEl) return;
+
+  // Find the two mode-toggle buttons for this card and toggle active state
+  var cardEl = previewEl.closest('.spec-card');
+  if (cardEl) {
+    var btns = cardEl.querySelectorAll('.mode-toggle-btn');
+    btns.forEach(function(b) { b.classList.remove('active'); });
+    var sel = cardEl.querySelector('.mode-toggle-btn[onclick*="\'' + mode + '\'"]');
+    if (sel) sel.classList.add('active');
+  }
+
+  if (mode === 'dev') {
+    var rows = '';
+    if (card === 'left') {
+      rows =
+        '<div class="dev-spec-row"><span class="dev-spec-key">name</span><span class="dev-spec-val">Bottom Drawer</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">node</span><span class="dev-spec-val">12522:12860</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">alignment</span><span class="dev-spec-val">Left Align</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">size</span><span class="dev-spec-val">360 × 324</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">radius (top)</span><span class="dev-spec-val">8</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">surface.bg</span><span class="dev-spec-val">main/bottom-header/color/bg · #FFFFFF</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">preamble.color</span><span class="dev-spec-val">main/bottom-header/color/preamble · #90A8D0</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">header.color</span><span class="dev-spec-val">main/bottom-header/color/header · #0A2757</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">description.color</span><span class="dev-spec-val">main/bottom-header/color/description · #445C85</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">icon-close.color</span><span class="dev-spec-val">main/bottom-header/color/icon-close · #6780A9</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">icon-close.asset</span><span class="dev-spec-val">raster PNG (Figma CDN) — should be vector</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">cta.primary.bg</span><span class="dev-spec-val">main/button/primary/brand/enabled/bg · #005CE5</span></div>';
+    } else {
+      rows =
+        '<div class="dev-spec-row"><span class="dev-spec-key">name</span><span class="dev-spec-val">Bottom Drawer</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">node</span><span class="dev-spec-val">12817:43834</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">alignment</span><span class="dev-spec-val">Center Align</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">size</span><span class="dev-spec-val">360 × 330</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">radius (top)</span><span class="dev-spec-val">8</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">surface.bg</span><span class="dev-spec-val">main/bottom-header/color/bg · #FFFFFF</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">header-slot</span><span class="dev-spec-val">above-title · ~16 px tall</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">preamble.color</span><span class="dev-spec-val">main/bottom-header/color/preamble · #90A8D0</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">header.color</span><span class="dev-spec-val">main/bottom-header/color/header · #0A2757</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">description.color</span><span class="dev-spec-val">main/bottom-header/color/description · #445C85</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">icon-close</span><span class="dev-spec-val">not present (asymmetry vs Left Align)</span></div>' +
+        '<div class="dev-spec-row"><span class="dev-spec-key">cta.primary.bg</span><span class="dev-spec-val">main/button/primary/brand/enabled/bg · #005CE5</span></div>';
+    }
+    previewEl.innerHTML = '<div class="dev-spec-block">' + rows + '</div>';
+  } else {
+    previewEl.innerHTML = _bottomSheetCardMarkup({
+      align:    (card === 'center' ? 'center' : 'left'),
+      preamble: 'yes',
+      desc:     'yes',
+      cta:      '2',
+      handle:   'no',  // Figma component has no handle; DES view reflects the current state
+      content:  'text'
+    });
+  }
+}
+
+function _bottomSheetInit() {
+  var ctx = document.getElementById('bottom-sheet-context-preview');
+  if (ctx) ctx.innerHTML = _bottomSheetStageMarkup({align:'left', preamble:'yes', desc:'yes', cta:'2', detent:'medium', handle:'yes', scrim:'yes', content:'list'});
+  _bottomSheetUpdate();
+  _bottomSheetSpecMode('left', 'des');
+  _bottomSheetSpecMode('center', 'des');
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _bottomSheetInit);
+else _bottomSheetInit();
+</script>
+
+<!--@section-end-->

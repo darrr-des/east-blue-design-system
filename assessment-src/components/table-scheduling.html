@@ -1,0 +1,547 @@
+<!--
+  TABLE - SCHEDULING COMPONENT ASSESSMENT
+  Third parallel Table-family record: date + peso-prefixed amount + optional label/value detail grid.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 47:324365
+ds-verdict: consolidate
+native-status: rework
+variants: 3
+ios: VStack of EBInlineText rows (date / amount / schedule details)
+android: Column of EBInlineText rows (date / amount / schedule details)
+open-issues: C1,C2,C4,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] Table - Scheduling is a third parallel Table-family record. Schema diverges again: a `type` enum gates a fixed number of nested detail row-pairs (none / 2 / 4) — different from Table's `type × no. of columns × icon` matrix and from Table - Transaction's peso-amount content row.
+[C2] `type` values are natural-language strings (`"no display amount"`, `"2 amounts display"`, `"4 amounts display"`) embedding the count in a sentence — should be an integer `detailCount: 0 | 2 | 4` or a data-driven `details: [Pair]` array.
+[C4] Scheduling is a list-of-payment-rows pattern, not a table. On mobile it maps to a list cell with a date header, a primary amount, and nested label/value pairs — native <code>List</code> / <code>LazyColumn</code> composed of <code>EBInlineText</code>, not a Table primitive.
+[C5] No interaction states. A scheduled payment row is typically tappable (to view or edit the scheduled entry) and can be disabled (past / cancelled) — none of that coverage exists.
+[C6] Peso prefix is the same raster <code>Peso Sign - Proxima</code> image fill as Table - Transaction. Compounds the raster-asset debt across the family.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Table<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-table-scheduling" onclick="showPanel('table-scheduling', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Table - Scheduling</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('table-scheduling')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="6" y="4" width="68" height="32" rx="2" fill="#FFFFFF" stroke="#E5EBF4"/>
+      <text x="10" y="13" fill="#0A2757" font-size="6" font-weight="700" font-family="system-ui">MMM DD</text>
+      <text x="56" y="13" fill="#005CE5" font-size="6" font-weight="700" font-family="system-ui">₱X.XX</text>
+      <text x="10" y="22" fill="#6780A9" font-size="5" font-weight="600" font-family="system-ui">Label</text>
+      <text x="32" y="22" fill="#6780A9" font-size="5" font-weight="600" font-family="system-ui">Label</text>
+      <text x="32" y="28" fill="#0A2757" font-size="5" font-weight="700" font-family="system-ui">PHP</text>
+      <text x="52" y="22" fill="#6780A9" font-size="5" font-weight="600" font-family="system-ui">Label</text>
+      <text x="52" y="28" fill="#0A2757" font-size="5" font-weight="700" font-family="system-ui">PHP</text>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Table - Scheduling</div>
+      <span class="badge badge-rework">Consolidate</span>
+    </div>
+    <div class="summary-card-desc">Scheduled-payment row: date header + peso amount, with optional 2- or 4-cell label/value detail grid. Third parallel Table-family record — schema diverges again and re-ships the raster peso glyph.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Table - Scheduling</strong></td>
+  <td><span class="badge badge-rework">Consolidate</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">3</td>
+  <td class="muted">Scheduled-payment row (date + primary peso amount) with 0 / 2 / 4 nested label/value detail cells. Duplicates the Table family's peso-amount primitive; on mobile this is a List cell composed of Inline Text, not a table row.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-table-scheduling">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Table - Scheduling
+          <span class="badge badge-rework">Consolidate</span>
+          <span class="badge badge-rework">Requires Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=47-324365" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A scheduled-payment row: a top <em>date-amount</em> line (date label on the left, peso-prefixed primary amount on the right) and an optional grid of nested label / value detail pairs below. Component description reads "Use to present Scheduled Payment information clearly to user." Published as 3 variants selected by the <code>type</code> enum: <code>no display amount</code> (date + amount only), <code>2 amounts display</code> (one row of 2 detail pairs), <code>4 amounts display</code> (two rows of 2 detail pairs = 4 total). Third parallel record in the Table family alongside <strong>Table</strong> and <strong>Table - Transaction</strong>.</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Fold into the Table consolidation; compose from Inline Text, not re-author</div>
+          <div class="verdict-inline-text">Table - Scheduling is the third feature-specific composition in the Table family (after Table - Transaction). It re-creates a date + peso-amount primary line and a grid of label/value pairs — layouts the DS already covers with <strong>Inline Text</strong> stacked inside a <strong>Generic Transaction Card</strong> or native <strong>List</strong> cell. Three records for three product surfaces (generic table, transaction limits, scheduled payments) is a family-level smell: the base pattern is "label / value rows with optional peso prefix," and every sibling duplicates it with narrower coverage. Recommend removing Table - Scheduling from core DS and documenting a "scheduled payment" recipe on the Table page that composes <code>EBInlineText</code> rows — same guidance as Table - Transaction. Mobile scheduling surfaces (auto-debit plans, installment schedules) already render as vertical lists on iOS and Android; no phone surface needs this fixed 360px grid.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="table-scheduling-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'table-scheduling-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'table-scheduling-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'table-scheduling-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'table-scheduling-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="table-scheduling-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Scheduled payments screen (auto-debit, installment plans, standing orders): a list of upcoming payment rows stamped with a date, the total debit amount, and — where relevant — a breakdown of principal / interest / fee components.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="220" height="150" viewBox="0 0 220 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="40" y="6" width="140" height="138" rx="10" stroke="currentColor" stroke-width="1.2" opacity=".2"/>
+          <rect x="40" y="6" width="140" height="18" rx="10" fill="#005CE5" opacity=".85"/>
+          <rect x="40" y="14" width="140" height="10" fill="#005CE5" opacity=".85"/>
+          <text x="110" y="18" text-anchor="middle" fill="#FFF" font-size="7" font-weight="700" font-family="system-ui">Payment Schedule</text>
+          <!-- row 1 -->
+          <text x="48" y="38" fill="#0A2757" font-size="6" font-weight="700" font-family="system-ui">MAY 10, 2026</text>
+          <text x="165" y="38" text-anchor="end" fill="#005CE5" font-size="6" font-weight="700" font-family="system-ui">₱1,250.00</text>
+          <text x="86" y="48" text-anchor="middle" fill="#6780A9" font-size="5" font-weight="600" font-family="system-ui">Principal</text>
+          <text x="86" y="55" text-anchor="middle" fill="#0A2757" font-size="5" font-weight="700" font-family="system-ui">PHP 1,100</text>
+          <text x="140" y="48" text-anchor="middle" fill="#6780A9" font-size="5" font-weight="600" font-family="system-ui">Interest</text>
+          <text x="140" y="55" text-anchor="middle" fill="#0A2757" font-size="5" font-weight="700" font-family="system-ui">PHP 150</text>
+          <line x1="44" y1="62" x2="176" y2="62" stroke="#E5EBF4"/>
+          <!-- row 2 -->
+          <text x="48" y="74" fill="#0A2757" font-size="6" font-weight="700" font-family="system-ui">JUN 10, 2026</text>
+          <text x="165" y="74" text-anchor="end" fill="#005CE5" font-size="6" font-weight="700" font-family="system-ui">₱1,250.00</text>
+          <text x="86" y="84" text-anchor="middle" fill="#6780A9" font-size="5" font-weight="600" font-family="system-ui">Principal</text>
+          <text x="86" y="91" text-anchor="middle" fill="#0A2757" font-size="5" font-weight="700" font-family="system-ui">PHP 1,110</text>
+          <text x="140" y="84" text-anchor="middle" fill="#6780A9" font-size="5" font-weight="600" font-family="system-ui">Interest</text>
+          <text x="140" y="91" text-anchor="middle" fill="#0A2757" font-size="5" font-weight="700" font-family="system-ui">PHP 140</text>
+          <line x1="44" y1="98" x2="176" y2="98" stroke="#E5EBF4"/>
+          <!-- row 3 (no detail) -->
+          <text x="48" y="110" fill="#0A2757" font-size="6" font-weight="700" font-family="system-ui">JUL 10, 2026</text>
+          <text x="165" y="110" text-anchor="end" fill="#005CE5" font-size="6" font-weight="700" font-family="system-ui">₱1,250.00</text>
+          <line x1="44" y1="116" x2="176" y2="116" stroke="#E5EBF4"/>
+          <rect x="56" y="124" width="108" height="14" rx="7" fill="#005CE5"/>
+          <text x="110" y="134" text-anchor="middle" fill="#FFF" font-size="6" font-weight="700" font-family="system-ui">Manage Schedule</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="table-scheduling-preview">Live Preview</div>
+    <p class="section-desc">Toggle the <code>type</code> enum to cycle through the three variants: date + amount only, + 2 detail cells, or + 4 detail cells (two rows).</p>
+    <div class="demo-panel" id="table-scheduling-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="table-scheduling-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">type</span>
+              <select class="demo-panel-select" id="table-scheduling-demo-type" onchange="updateTableSchedulingDemo()">
+                <option value="no">no display amount</option>
+                <option value="2">2 amounts display</option>
+                <option value="4" selected>4 amounts display</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="table-scheduling-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Locked to date + peso-prefixed amount + optional 2/4-cell label/value grid. Any scheduling surface that needs 1, 3, or N detail cells, a status chip, or a non-peso currency has to detach.</div>
+      </div>
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">Primary amount renders a raster <code>Peso Sign - Proxima</code> image fill (same remote <code>figma.com/api/mcp/asset/*</code> URL as Table - Transaction). Detail cells prefix amounts with the literal string <code>"PHP"</code>, mixing glyph and text prefixes inside one component.</div>
+      </div>
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">Does not reuse Table's <code>type × no. of columns × icon</code> schema — introduces a brand-new <code>type</code> enum whose values embed the detail count in a sentence (<code>"2 amounts display"</code>). Third family member, third shape.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Not built from Table, Inline Text, or Generic Transaction Card — re-implements the label / value cell inline. A true composition would nest <code>EBInlineText</code> instances for each detail pair.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="table-scheduling-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Third parallel Table-family record with a new schema.</strong> After Table (<code>type × no. of columns × icon</code>) and Table - Transaction (<code>type × no. of columns × icon</code>, peso content), Scheduling introduces <em>another</em> axis shape: a single <code>type</code> enum that gates a fixed 0 / 2 / 4 detail count. Three records, three different schemas for the same underlying "rows of label/value pairs" idea. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong><code>type</code> values embed the detail count in a sentence.</strong> Values are <code>"no display amount"</code>, <code>"2 amounts display"</code>, <code>"4 amounts display"</code> — natural-language strings that bake the count into the property. Should be an integer <code>detailCount: 0 | 2 | 4</code>, or — better — replaced by a data-driven <code>details: [Pair]</code> array that accepts any length. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>No native mobile primitive matches the layout.</strong> Payment schedules on iOS and Android render as list cells (<code>List</code> / <code>LazyColumn</code>) — a date header, an accessory amount, and optional secondary label/value rows. The 360px fixed grid is a desktop pattern; on phone width the two-cell detail row already crowds at the 12px type scale used here. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>No tap, pressed, or disabled states.</strong> A scheduled payment row is typically tappable — to view, edit, or cancel the scheduled entry — and can be visually disabled (past / cancelled / skipped). None of that coverage exists. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Peso sign is a raster image asset.</strong> Primary amount's currency prefix is an <code>&lt;img&gt;</code> pointing at a Figma-hosted bitmap, same remote URL as Table - Transaction. Detail amounts, meanwhile, use the literal string <code>"PHP"</code> — two different currency-prefix treatments in one component. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked until the family consolidation decision lands — Code Connect for Scheduling would just duplicate the Inline Text mapping. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="table-scheduling-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Remove Table - Scheduling from core DS; publish as a recipe on Table's page composing Inline Text rows.</strong> Same guidance as Table - Transaction. Recipe reads: "For scheduled-payment lists (auto-debit, installments, standing orders), compose a date / primary-amount header row with <code>EBInlineText</code>, then stack additional <code>EBInlineText</code> rows for breakdown details inside a <code>Generic Transaction Card</code> or native <code>List</code> cell." Eliminates 3 variants, a raster peso asset, and the mixed <code>₱</code>/<code>PHP</code> prefix inconsistency. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Collapse the Table family (Table + Table - Transaction + Table - Scheduling) into one data-driven row primitive.</strong> If the family is retained for wider surfaces, publish a single <code>EBTableRow</code> with <code>role: .header | .content</code> and a <code>columns: [Column]</code> array where each column carries its own <code>format: .text | .amount | .date</code>. Scheduling's date-header + amount + detail-grid becomes: one row with two columns (date / amount), followed by N rows with detail pairs. Collapses 18 family variants into 2 role variants × data. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Rename <code>type</code> values to integers, or drop the property.</strong> If Scheduling is kept, rename to <code>detailCount: 0 | 2 | 4</code> (no sentence fragments in property values). If merged into Inline Text / Table's data-driven row, drop the property entirely — the count is inferred from the details array. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Unify the currency prefix treatment.</strong> Primary amount uses a raster peso glyph; detail amounts use the literal string <code>"PHP"</code>. Pick one. Preferred: the Unicode <code>₱</code> glyph (U+20B1) everywhere, rendered in the row's type style — drop the raster asset and drop the <code>"PHP"</code> literal. Alternative: ship a vector peso icon (<code>icon/currency/peso-sm</code>) for the primary line and an optional <code>"PHP"</code> prefix for breakdown values, wired up as real tokens / slots. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Compose each detail cell from Inline Text.</strong> The component already matches Inline Text's <code>label</code> + <code>value</code> shape (<code>main/table/color/label-preamble</code> on top, <code>main/table/color/label</code> below). Instance-swap to <code>Inline Text</code> so the tokens consolidate under <code>main/inline-text/*</code> and state / a11y improvements flow through to every consumer. <span class="tag-recommend">Composition</span></span></li>
+      <li><span><strong>Add row interaction states if Scheduling stays.</strong> A scheduled-payment row is tappable — add <code>State=Pressed</code> and <code>State=Disabled</code> variants (disabled = past / cancelled with muted labels and a strike or tag). Without these, every consumer re-invents the tap target. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Document scheduling semantics.</strong> If Scheduling is kept, add guidance on which amounts belong on the primary line (total debit) vs. breakdown cells (principal / interest / fee / tax). Prevents the component from being used as a generic 3-amount row on non-scheduling surfaces. <span class="tag-recommend">Docs</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="table-scheduling-styles" style="margin-top:0">Variants</div>
+    <p class="section-desc">3 variants selected by the <code>type</code> enum. All three share the top <em>date-amount row</em>; types <code>2 amounts display</code> and <code>4 amounts display</code> append a details grid of label / value pairs below.</p>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="table-scheduling-variant-no-display">type = no display amount <span class="muted" style="font-weight:400;">— 50.5px tall</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="47:324362" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>47:324362</span></button>
+        </div>
+        <p class="spec-card-desc">Minimum variant. A single date-amount row: a 108px left-aligned date label (<code>MMM DD, YYYY</code>) and a right-aligned peso-prefixed primary amount. No detail rows.</p>
+      </div>
+      <div class="spec-card-preview" id="table-scheduling-preview-no"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="table-scheduling-variant-2-amounts">type = 2 amounts display <span class="muted" style="font-weight:400;">— 89.5px tall</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="47:324363" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>47:324363</span></button>
+        </div>
+        <p class="spec-card-desc">Date-amount row + one detail row. Details row carries a 111px "row-item" leading label and two equal-width cells in the remaining space, each a <code>Label</code> / <code>PHP X,XXX.XX</code> pair.</p>
+      </div>
+      <div class="spec-card-preview" id="table-scheduling-preview-2"><!-- JS --></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="table-scheduling-variant-4-amounts">type = 4 amounts display <span class="muted" style="font-weight:400;">— 132.5px tall</span></div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="47:324364" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>47:324364</span></button>
+        </div>
+        <p class="spec-card-desc">Date-amount row + two detail rows (4 cells total). Second detail row shares the same 111px gutter and two label/value cells as the first, with 12px gap between detail rows.</p>
+      </div>
+      <div class="spec-card-preview" id="table-scheduling-preview-4"><!-- JS --></div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Role</th><th>Token</th><th>Default</th><th>Pressed</th><th>Disabled</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Row bg</td><td class="mono">main/table/color/bg</td><td class="mono">#FFFFFF</td><td class="mono">–</td><td class="mono">–</td></tr>
+          <tr><td class="muted">Date label</td><td class="mono">main/table/color/label</td><td class="mono">#0A2757</td><td class="mono">–</td><td class="mono">–</td></tr>
+          <tr><td class="muted">Primary amount</td><td class="mono">main/table/color/label-amount</td><td class="mono">#005CE5</td><td class="mono">–</td><td class="mono">–</td></tr>
+          <tr><td class="muted">Currency glyph (peso, primary)</td><td class="mono">main/table/color/icon-currency-primary</td><td class="mono">#005CE5</td><td class="mono">–</td><td class="mono">–</td></tr>
+          <tr><td class="muted">Detail preamble label</td><td class="mono">main/table/color/label-preamble</td><td class="mono">#6780A9</td><td class="mono">–</td><td class="mono">–</td></tr>
+          <tr><td class="muted">Detail value</td><td class="mono">main/table/color/label</td><td class="mono">#0A2757</td><td class="mono">–</td><td class="mono">–</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="table-footnote">No interaction states. The primary-amount peso glyph is a raster fill despite the token <code>main/table/color/icon-currency-primary</code> existing for its color. Detail amounts use a literal <code>"PHP"</code> string prefix with no token indirection. <span class="tag-open tag-c6">C6</span></p>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Token</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Row width (fixed)</td><td class="mono">—</td><td class="mono">360px</td></tr>
+          <tr><td class="muted">Height — no display amount</td><td class="mono">—</td><td class="mono">50.5px</td></tr>
+          <tr><td class="muted">Height — 2 amounts display</td><td class="mono">—</td><td class="mono">89.5px</td></tr>
+          <tr><td class="muted">Height — 4 amounts display</td><td class="mono">—</td><td class="mono">132.5px</td></tr>
+          <tr><td class="muted">Horizontal padding</td><td class="mono">—</td><td class="mono">24px</td></tr>
+          <tr><td class="muted">Vertical padding</td><td class="mono">space/space-16</td><td class="mono">16px</td></tr>
+          <tr><td class="muted">Date column width</td><td class="mono">—</td><td class="mono">108px</td></tr>
+          <tr><td class="muted">Detail leading column width</td><td class="mono">—</td><td class="mono">111px</td></tr>
+          <tr><td class="muted">Date-row → details-row gap</td><td class="mono">—</td><td class="mono">8px</td></tr>
+          <tr><td class="muted">Detail row → detail row gap</td><td class="mono">—</td><td class="mono">12px</td></tr>
+          <tr><td class="muted">Detail label → value gap</td><td class="mono">—</td><td class="mono">4px</td></tr>
+          <tr><td class="muted">Detail cell gap</td><td class="mono">—</td><td class="mono">8px</td></tr>
+          <tr><td class="muted">Peso glyph size</td><td class="mono">—</td><td class="mono">15 × 15px (raster)</td></tr>
+          <tr><td class="muted">Peso → amount gap</td><td class="mono">—</td><td class="mono">2px</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="style-colors">
+      <div class="style-colors-title">Typography</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Element</th><th>DS text style</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Date label</td><td class="mono">Primary/Label/Light/Fine</td><td class="mono">Proxima Soft Semibold · 12 / 12 · +0.5</td></tr>
+          <tr><td class="muted">Primary amount</td><td class="mono">Primary/Label/Small</td><td class="mono">Proxima Soft Bold · 14 / 14 · +0.25</td></tr>
+          <tr><td class="muted">Detail preamble label</td><td class="mono">Primary/Multi-line Label/Light/Fine</td><td class="mono">Proxima Soft Semibold · 12 / 14 · +0.5</td></tr>
+          <tr><td class="muted">Detail value (PHP X,XXX.XX)</td><td class="mono">Primary/Label/Light/Fine</td><td class="mono">Proxima Soft Semibold · 12 / 12 · +0.5</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="table-scheduling-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <div class="infobox infobox-code">
+      <p style="margin:0;">Table - Scheduling is recommended for removal. The API shown below assumes the preferred mobile path: compose <code>EBInlineText</code> rows inside <code>EBGenericTransactionCard</code> or a plain <code>VStack</code>/<code>Column</code>. If Scheduling is retained, it re-uses Table's installation (<code>eb-ds-ios</code>, <code>com.eastblue.ds:table</code>).</p>
+    </div>
+
+    <div class="sub-heading" id="table-scheduling-props">Property Mapping <span class="muted" style="font-weight:400;font-size:13px;">(proposed — route to primitives)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma</th><th>SwiftUI</th><th>Compose</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">type (drop)</td><td class="mono">details: [EBInlineText]</td><td class="mono">details: List&lt;EBInlineText&gt;</td><td class="muted">Count is inferred from the details array — no property needed. Accepts 0, 2, 4, or any N.</td></tr>
+          <tr><td class="mono">Date label (MMM DD, YYYY)</td><td class="mono">EBInlineText(label:, value:)</td><td class="mono">EBInlineText(label =, value =)</td><td class="muted">Row header is a two-column Inline Text: date on the left, primary amount on the right.</td></tr>
+          <tr><td class="mono">Primary amount (peso + X,XXX.XX)</td><td class="mono">Text("\u{20B1}" + amount).ebAmountStyle(.primary)</td><td class="mono">Text("₱$amount", style = EBAmountStyle.Primary)</td><td class="muted">Unicode peso glyph in the row's type style. Drop the raster asset.</td></tr>
+          <tr><td class="mono">Detail Label / PHP X,XXX.XX</td><td class="mono">EBInlineText(label:, value:)</td><td class="mono">EBInlineText(label =, value =)</td><td class="muted">Each detail cell collapses into an Inline Text pair. <code>"PHP"</code> prefix is part of the value string.</td></tr>
+          <tr><td class="mono">Row tap target</td><td class="mono">.onTapGesture { … } / Button</td><td class="mono">Modifier.clickable { … }</td><td class="muted">Add if the surface supports viewing / editing a scheduled entry.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI (if retained)</div>
+      <div class="path-box">ios/Components/Table/EBTableSchedulingRow.swift</div>
+      <div class="path-label">Jetpack Compose (if retained)</div>
+      <div class="path-box">android/components/table/EBTableSchedulingRow.kt</div>
+    </div>
+
+    <div class="sub-heading" id="table-scheduling-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'table-scheduling-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'table-scheduling-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Recommended — compose with Inline Text (phone-width)</span>
+<span class="typ">EBGenericTransactionCard</span> {
+    <span class="typ">EBInlineText</span>(<span class="prp">label</span>: <span class="str">"MAY 10, 2026"</span>, <span class="prp">value</span>: <span class="str">"₱1,250.00"</span>)
+        .<span class="fn">ebAmountStyle</span>(.<span class="prp">primary</span>)
+    <span class="typ">HStack</span> {
+        <span class="typ">EBInlineText</span>(<span class="prp">label</span>: <span class="str">"Principal"</span>, <span class="prp">value</span>: <span class="str">"PHP 1,100.00"</span>)
+        <span class="typ">EBInlineText</span>(<span class="prp">label</span>: <span class="str">"Interest"</span>,  <span class="prp">value</span>: <span class="str">"PHP 150.00"</span>)
+    }
+}
+
+<span class="cmt">// Option B — if Scheduling row is retained</span>
+<span class="typ">EBTableSchedulingRow</span>(
+    <span class="prp">date</span>: <span class="typ">Date</span>(),
+    <span class="prp">amount</span>: <span class="kw">1250.00</span>,
+    <span class="prp">details</span>: [
+        .<span class="fn">init</span>(<span class="str">"Principal"</span>, <span class="str">"PHP 1,100.00"</span>),
+        .<span class="fn">init</span>(<span class="str">"Interest"</span>,  <span class="str">"PHP 150.00"</span>)
+    ]
+)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Recommended — compose with Inline Text (phone-width)</span>
+<span class="typ">EBGenericTransactionCard</span> {
+    <span class="typ">EBInlineText</span>(label = <span class="str">"MAY 10, 2026"</span>, value = <span class="str">"₱1,250.00"</span>,
+                 style = <span class="typ">EBAmountStyle</span>.<span class="prp">Primary</span>)
+    <span class="typ">Row</span> {
+        <span class="typ">EBInlineText</span>(label = <span class="str">"Principal"</span>, value = <span class="str">"PHP 1,100.00"</span>)
+        <span class="typ">EBInlineText</span>(label = <span class="str">"Interest"</span>,  value = <span class="str">"PHP 150.00"</span>)
+    }
+}
+
+<span class="cmt">// Option B — if Scheduling row is retained</span>
+<span class="typ">EBTableSchedulingRow</span>(
+    date = <span class="typ">LocalDate</span>.<span class="fn">now</span>(),
+    amount = <span class="kw">1250.00</span>,
+    details = listOf(
+        <span class="typ">SchedulingDetail</span>(<span class="str">"Principal"</span>, <span class="str">"PHP 1,100.00"</span>),
+        <span class="typ">SchedulingDetail</span>(<span class="str">"Interest"</span>,  <span class="str">"PHP 150.00"</span>)
+    )
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="table-scheduling-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Requirement</th><th class="center">iOS</th><th class="center">Android</th></tr></thead>
+        <tbody>
+          <tr><td>Row semantics</td><td class="muted">If tappable, wrap as <code>Button</code> with <code>.accessibilityLabel("Scheduled payment, May 10 2026, 1,250 pesos")</code> — combine the date and amount into one spoken phrase.</td><td class="muted">Wrap in <code>Modifier.clickable</code> + <code>Modifier.semantics(mergeDescendants = true)</code>; set <code>contentDescription</code> to a full spoken phrase.</td></tr>
+          <tr><td>Currency glyph fallback</td><td class="muted">Use Unicode <code>\u{20B1}</code> inline — avoid a raster image that won't scale with Dynamic Type.</td><td class="muted">Use Unicode <code>₱</code> inline — avoid a bitmap that won't respect font-scale settings.</td></tr>
+          <tr><td>Date formatting</td><td class="muted">Use <code>Date.FormatStyle</code> with the user's locale; don't hardcode <code>MMM DD, YYYY</code>.</td><td class="muted">Use <code>DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)</code>; don't hardcode format string.</td></tr>
+          <tr><td>Detail label / value pairing</td><td class="muted">Group each detail cell so VoiceOver reads "Principal, 1,100 pesos" as one element, not two.</td><td class="muted">Group each detail cell so TalkBack reads "Principal, 1,100 pesos" as one element, not two.</td></tr>
+          <tr><td>Disabled / past rows</td><td class="muted">Past or cancelled schedules: <code>.accessibilityHint("Past payment")</code> + muted label tokens.</td><td class="muted">Past or cancelled schedules: <code>Modifier.semantics { stateDescription = "Past payment" }</code> + muted label tokens.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="table-scheduling-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Third parallel record in the Table family with yet another schema. Should fold in, not stand alone.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted"><code>type</code> values embed the detail count in sentence fragments ("2 amounts display").</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">bg / label / label-amount / label-preamble / icon-currency-primary bound. The literal <code>"PHP"</code> string prefix on detail amounts has no token indirection.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Scheduled payments are a List / LazyColumn pattern on mobile, not a fixed-width grid.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">No tap, pressed, or disabled states — rows are typically tappable (edit / cancel) or disabled (past / cancelled).</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Peso glyph is a raster image; detail amounts use a literal <code>"PHP"</code> prefix. Two currency-prefix treatments in one component.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked until the family consolidation decision lands.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="table-scheduling-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(3 total)</span></div>
+    <p>A single <code>type</code> axis with 3 values. No cross-axis matrix — detail count is the only variant driver.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>type</th><th>Detail cells</th><th>Height</th><th>Node ID</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">no display amount</td><td class="mono">0</td><td class="mono">50.5px</td><td class="mono">47:324362</td></tr>
+          <tr><td class="mono">2 amounts display</td><td class="mono">2 (1 row × 2 cells)</td><td class="mono">89.5px</td><td class="mono">47:324363</td></tr>
+          <tr><td class="mono">4 amounts display</td><td class="mono">4 (2 rows × 2 cells)</td><td class="mono">132.5px</td><td class="mono">47:324364</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-footnote">Detail layout is locked to pairs of 2 cells. No 1-cell, 3-cell, or N-cell variants exist — a data-driven details array would cover all shapes in one record.</p>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 47:324365</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Family assessed</strong> — 3 variants selected by a single <code>type</code> enum. Third parallel Table-family record (Table, Table - Transaction, Table - Scheduling). <span class="tag-fixed">Documented</span></div><span class="changelog-delta delta-resolved">Initial</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Third family schema divergence</strong> — Introduces a new <code>type</code> enum instead of reusing Table's <code>type × no. of columns × icon</code> or Transaction's schema. Recommend folding into Inline Text / Table data-driven row. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Sentence-fragment enum values</strong> — <code>"no display amount"</code> / <code>"2 amounts display"</code> / <code>"4 amounts display"</code> bake the detail count into natural-language strings. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>No native mobile primitive</strong> — Scheduled payments are a List / LazyColumn pattern on mobile, not a fixed 360px grid. <span class="tag-open tag-c4">Open</span></div><span class="changelog-delta delta-open">C4 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>No interaction / disabled states</strong> — Scheduling rows are typically tappable or visually muted for past / cancelled entries. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Mixed currency prefix treatments</strong> — Primary amount ships as a raster peso glyph; detail amounts use a literal <code>"PHP"</code> string. <span class="tag-open tag-c6">Open</span></div><span class="changelog-delta delta-open">C6 Open</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Code Connect mappings</strong> — Not registered. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7 Open</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-table-scheduling">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-table-scheduling"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Table - Scheduling JS ─────────────────────────────────────── */
+var _tableSchedDemo = { type: '4' };
+
+function _tableSchedBuildRow(type) {
+  var W = 360;
+  var padH = 24;
+  var padV = 16;
+  var bg = '#FFFFFF';
+  var border = 'border-bottom:1px solid #E5EBF4;';
+  var dateFont = 'font-family:\'Proxima Soft\', system-ui; font-weight:600; font-size:12px; line-height:12px; letter-spacing:0.5px; color:#0A2757;';
+  var amountFont = 'font-family:\'Proxima Soft\', system-ui; font-weight:700; font-size:14px; line-height:14px; letter-spacing:0.25px; color:#005CE5;';
+  var preambleFont = 'font-family:\'Proxima Soft\', system-ui; font-weight:600; font-size:12px; line-height:14px; letter-spacing:0.5px; color:#6780A9;';
+  var valueFont = 'font-family:\'Proxima Soft\', system-ui; font-weight:600; font-size:12px; line-height:12px; letter-spacing:0.5px; color:#0A2757;';
+
+  var containerGap = type === 'no' ? 0 : 8;
+  var s = '<div style="width:' + W + 'px; background:' + bg + '; ' + border + ' padding:' + padV + 'px ' + padH + 'px; box-sizing:border-box; display:flex; flex-direction:column; gap:' + containerGap + 'px;">';
+
+  // date-amount row
+  s += '<div style="display:flex; align-items:center; width:100%;">';
+  s += '<div style="width:108px; ' + dateFont + '">MMM DD, YYYY</div>';
+  s += '<div style="flex:1 0 0; display:flex; align-items:center; justify-content:flex-end; gap:2px;">';
+  s += '<span style="' + amountFont + '">₱</span>';
+  s += '<span style="' + amountFont + '">X,XXX.XX</span>';
+  s += '</div>';
+  s += '</div>';
+
+  function detailRow() {
+    var r = '<div style="display:flex; align-items:flex-start; width:100%;">';
+    r += '<div style="width:111px; ' + preambleFont + '">Label</div>';
+    r += '<div style="flex:1 0 0; display:flex; gap:8px;">';
+    r += '<div style="flex:1 0 0; display:flex; flex-direction:column; gap:4px;"><div style="' + preambleFont + '">Label</div><div style="' + valueFont + '">PHP X,XXX.XX</div></div>';
+    r += '<div style="flex:1 0 0; display:flex; flex-direction:column; gap:4px;"><div style="' + preambleFont + '">Label</div><div style="' + valueFont + '">PHP X,XXX.XX</div></div>';
+    r += '</div></div>';
+    return r;
+  }
+
+  if (type === '2' || type === '4') {
+    var detailsGap = type === '4' ? 12 : 0;
+    s += '<div style="display:flex; flex-direction:column; gap:' + detailsGap + 'px; width:100%;">';
+    s += detailRow();
+    if (type === '4') {
+      // second row: leading gutter is blank
+      var r2 = '<div style="display:flex; align-items:flex-start; width:100%;">';
+      r2 += '<div style="width:111px;"></div>';
+      r2 += '<div style="flex:1 0 0; display:flex; gap:8px;">';
+      r2 += '<div style="flex:1 0 0; display:flex; flex-direction:column; gap:4px;"><div style="' + preambleFont + '">Label</div><div style="' + valueFont + '">PHP X,XXX.XX</div></div>';
+      r2 += '<div style="flex:1 0 0; display:flex; flex-direction:column; gap:4px;"><div style="' + preambleFont + '">Label</div><div style="' + valueFont + '">PHP X,XXX.XX</div></div>';
+      r2 += '</div></div>';
+      s += r2;
+    }
+    s += '</div>';
+  }
+
+  s += '</div>';
+  return s;
+}
+
+function updateTableSchedulingDemo() {
+  _tableSchedDemo.type = document.getElementById('table-scheduling-demo-type').value;
+  var el = document.getElementById('table-scheduling-demo-preview');
+  if (el) el.innerHTML = _tableSchedBuildRow(_tableSchedDemo.type);
+}
+
+function _tableSchedInitSpecCards() {
+  var n = document.getElementById('table-scheduling-preview-no');
+  if (n) n.innerHTML = _tableSchedBuildRow('no');
+  var t2 = document.getElementById('table-scheduling-preview-2');
+  if (t2) t2.innerHTML = _tableSchedBuildRow('2');
+  var t4 = document.getElementById('table-scheduling-preview-4');
+  if (t4) t4.innerHTML = _tableSchedBuildRow('4');
+}
+
+function _tableSchedInit() {
+  updateTableSchedulingDemo();
+  _tableSchedInitSpecCards();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tableSchedInit);
+else _tableSchedInit();
+</script>
+
+<!--@section-end-->

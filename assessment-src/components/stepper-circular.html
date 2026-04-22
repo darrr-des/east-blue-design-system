@@ -1,0 +1,584 @@
+<!--
+  STEPPER - CIRCULAR FAMILY ASSESSMENT
+  9 sibling components (2..10 Steps), each a row of N circular step indicators.
+  Canonical record — step count should be a runtime prop, not 9 separate files.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 27:47768
+ds-verdict: restructure
+native-status: rework
+variants: 9
+ios: ProgressView(value:total:) with custom style, or custom EBStepperCircular
+android: LinearProgressIndicator with custom track/indicator, or custom EBStepperCircular
+open-issues: C1,C2,C4,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] Step count modeled as 9 sibling components (`Stepper - Circular - 2 Steps` through `… - 10 Steps`) instead of a single component with a `steps: Int` (or `total: Int` + `current: Int`) parameter. 9x the maintenance for a scalar axis.
+[C6] Each step circle renders its ring arc via a pre-baked raster `<img>` (one asset per step index) instead of a stroked SVG arc driven by progress math. Blocks theming, breaks at non-1x, and ships 10+ PNGs per Figma component.
+[C2] `number=1|2|…|10` variant axis encodes the hardcoded step count, not the current step. The "current step" concept is implicit in the variant name and not surfaced as a property.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Stepper<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-stepper-circular" onclick="showPanel('stepper-circular', this)">
+  <div class="nav-comp-icon">
+    <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="7" cy="16" r="4" fill="none" stroke="#005CE5" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="4" fill="none" stroke="#005CE5" stroke-width="1.5" stroke-dasharray="12 20"/>
+      <circle cx="25" cy="16" r="4" fill="none" stroke="#D2E5FF" stroke-width="1.5"/>
+    </svg>
+  </div>
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Stepper - Circular</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('stepper-circular')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <circle cx="14" cy="20" r="7" fill="none" stroke="#005CE5" stroke-width="1.5"/>
+      <text x="14" y="23" text-anchor="middle" font-family="system-ui" font-size="8" font-weight="700" fill="#005CE5">1</text>
+      <circle cx="32" cy="20" r="7" fill="none" stroke="#D2E5FF" stroke-width="1.5"/>
+      <path d="M32 13 A7 7 0 0 1 38.3 24.5" fill="none" stroke="#005CE5" stroke-width="1.5"/>
+      <text x="32" y="23" text-anchor="middle" font-family="system-ui" font-size="8" font-weight="700" fill="#005CE5">2</text>
+      <circle cx="50" cy="20" r="7" fill="none" stroke="#D2E5FF" stroke-width="1.5"/>
+      <text x="50" y="23" text-anchor="middle" font-family="system-ui" font-size="8" font-weight="700" fill="#005CE5">3</text>
+      <circle cx="68" cy="20" r="7" fill="none" stroke="#D2E5FF" stroke-width="1.5"/>
+      <text x="68" y="23" text-anchor="middle" font-family="system-ui" font-size="8" font-weight="700" fill="#005CE5">4</text>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Stepper - Circular</div>
+      <span class="badge badge-restructure">Restructure</span>
+    </div>
+    <div class="summary-card-desc">Row of numbered circles with a progress arc showing position through a multi-step flow. 9 sibling components today (2–10 steps); should be one component with a <code>steps</code> prop.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Stepper - Circular</strong></td>
+  <td><span class="badge badge-restructure">Restructure</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">9</td>
+  <td class="muted">Step count (2–10) ships as 9 sibling components, each a row of N 45×45 circles. Every circle's ring arc is a raster PNG per step index. Collapse to a single <code>Stepper - Circular</code> with <code>steps: Int</code> (and <code>current: Int</code>) properties; redraw arcs as stroked SVG / Canvas so the ring derives from <code>current / total</code> instead of an image swap.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-stepper-circular">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Stepper - Circular
+          <span class="badge badge-restructure">Restructure</span>
+          <span class="badge badge-rework">Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=27-47768" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A horizontal row of numbered circles — each circle's ring shows how far through a multi-step flow the user is. Today the component ships as <strong>9 separate sibling components</strong> (<code>Stepper - Circular - 2 Steps</code> through <code>… - 10 Steps</code>), one per hardcoded step count. Inside each one, every step circle is a 45×45 symbol (<code>number=1…N</code>) whose ring arc is a pre-rendered raster <code>&lt;img&gt;</code>. There is no single <code>Stepper</code> component, no <code>steps</code> prop, and no <code>current</code> prop — the "current" step is implicit in which variant the designer drops in.</p>
+      </div>
+      <div class="verdict-inline verdict-restructure">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Restructure — collapse 9 sibling components into one <code>Stepper - Circular</code> with <code>steps</code> and <code>current</code> properties</div>
+          <div class="verdict-inline-text">Step count is a scalar — not a component axis. The current schema has 9 top-level components (2..10 steps) and inside each, 10 symbols of pre-rendered ring arcs. Every step count ships ~N PNGs. Rebuild as a single component: <code>steps: Int</code> (range 2–10) and <code>current: Int</code> (1..steps). Redraw the ring as a stroked SVG arc derived from <code>current / steps</code> so the fill scales with math, not image swaps. Native side maps to a custom <code>EBStepperCircular(current:total:)</code> rendered over an <code>HStack</code> / <code>Row</code> of <code>Circle</code> shapes with <code>.trim(from:to:)</code> or <code>drawArc</code>.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="stepper-circular-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'stepper-circular-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'stepper-circular-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'stepper-circular-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'stepper-circular-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="stepper-circular-in-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Stepper - Circular appears at the top of multi-step flows (onboarding, KYC, form wizards) to show position and total count. Consumers pair it with a screen title and step-specific content.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="stepper-circular-context-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="stepper-circular-preview">Live Preview</div>
+    <p class="section-desc">Adjust <code>steps</code> and <code>current</code> to see the proposed parameterized component. The ring arc for the active step is derived from <code>current / steps</code>; completed steps show a full ring; upcoming steps show only the track.</p>
+    <div class="demo-panel" id="stepper-circular-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="stepper-circular-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Content (proposed)</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">steps</span>
+              <select id="stepper-circular-ctrl-steps" class="demo-panel-select" onchange="_stepperCircularUpdate()">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">current</span>
+              <input type="range" id="stepper-circular-ctrl-current" class="demo-panel-select demo-panel-input" min="1" max="4" step="1" value="2" oninput="_stepperCircularUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">value</span>
+              <span class="demo-panel-value" id="stepper-circular-ctrl-value">2 of 4</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="stepper-circular-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Visually fits any multi-step flow, but the 9-sibling split forces consumers to swap components when step count changes, not just a prop.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Each step circle's ring arc renders via raster <code>&lt;img&gt;</code>. ~10 PNGs per sibling × 9 siblings ≈ 50+ assets for what should be one SVG arc with two parameters.</div>
+      </div>
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">Step count modelled as 9 top-level components. Every other scalar in the DS (Badge counter, Progress Bar target) is a property, not a component family. Breaks the naming hierarchy — "Stepper - Circular" is not a component, it's nine.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Fixed 45-px circles at 20-px gaps fit most screen widths for 2–6 steps; at 7+ steps the total width exceeds a typical mobile canvas (410+ px). No responsive shrink or wrap behavior.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="stepper-circular-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>State</th><th class="center">iOS</th><th class="center">Android</th><th>Figma Spec</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Completed step</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">ring = full</td><td class="muted">Step index &lt; current. Full ring fill in brand blue, number in brand blue.</td></tr>
+          <tr><td><strong>Current step</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">ring = partial arc</td><td class="muted">Step index = current. Arc fills <code>current / steps</code> of the ring; number in brand blue.</td></tr>
+          <tr><td><strong>Upcoming step</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">ring = track only</td><td class="muted">Step index &gt; current. Track-only ring in light blue; number still in brand blue.</td></tr>
+          <tr><td><strong>Clickable / interactive</strong></td><td class="center muted">Optional</td><td class="center muted">Optional</td><td class="muted">Not modeled</td><td class="muted">Some wizards let the user tap a completed step to go back. No pressed / focused state exists today; add if interactive behavior is desired.</td></tr>
+          <tr><td><strong>Vertical orientation</strong></td><td class="center muted">Missing</td><td class="center muted">Missing</td><td class="muted">Not modeled</td><td class="muted">Horizontal only. Vertical steppers (common on narrow screens or list layouts) would need a second orientation mode or a sibling.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="stepper-circular-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Step count is modeled as 9 sibling components instead of a <code>steps</code> prop.</strong> Today the family ships as <code>Stepper - Circular - 2 Steps</code>, <code>… - 3 Steps</code>, … <code>… - 10 Steps</code> — 9 top-level components that differ only by hardcoded count. Every other design system exposes one <code>Stepper</code> with <code>steps: Int</code> (or <code>total: Int</code> + <code>current: Int</code>). 9× maintenance, 9× Code Connect mapping, and no path to N=11+ without adding a 10th file. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>Step ring arcs are pre-rendered raster <code>&lt;img&gt;</code> assets, one per step index.</strong> Each <code>number=N</code> symbol's ring is a baked PNG — the progressive fill is achieved by image swap, not by math. Blocks theming (can't retint), breaks at high DPI, and ships dozens of assets the native renderer doesn't need. Should be a stroked SVG arc with <code>strokeDasharray</code> (or <code>Circle().trim(from:to:)</code> on iOS, <code>drawArc</code> on Compose). <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>Variant axis <code>number</code> encodes position, not a property.</strong> The inner symbol uses <code>number = 1 | 2 | … | N</code> which both labels the circle (the displayed digit) and implicitly sets the ring-arc raster. Two concerns collapsed into one enum. Should be: <code>index: Int</code> (the number shown) and <code>status: completed | current | upcoming</code> (the visual). <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>No native primitive is a 1:1 match — this needs a custom component.</strong> SwiftUI has no built-in circular stepper; Material 3 shows only a linear <code>Stepper</code>. Both platforms require a custom <code>EBStepperCircular</code> built from a <code>Row</code>/<code>HStack</code> of <code>Circle</code>/<code>Box</code> shapes with arc-drawn progress. Today's raster baking makes this worse — the dev can't reuse the asset. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>No pressed / focused / disabled state modeled.</strong> Wizards often allow tapping a completed step to return to it. With no interaction states in Figma, the developer has to invent hover / pressed treatment and the designer has no reference. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked until the family collapses to one component and the raster arcs are replaced with vector strokes. Mapping 9 separate siblings would codify the anti-pattern into the tooling. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="stepper-circular-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Collapse all 9 siblings into one <code>Stepper - Circular</code> with <code>steps</code> and <code>current</code> properties.</strong> Delete <code>Stepper - Circular - 2 Steps</code> through <code>… - 10 Steps</code> as separate components. Create one <code>Stepper - Circular</code> with <code>steps: 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10</code> (enum) and <code>current: 1 | 2 | … | 10</code> — or, if Figma supports integer ranges, a numeric property. Variant math drops from 9 top-level components × ~10 step symbols = ~90 variant assets to 1 component with a runtime-computed arc. Native API: <code>EBStepperCircular(current: Int, total: Int)</code>. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Split the inner symbol's <code>number</code> axis into <code>index</code> (digit shown) and <code>status</code> (ring treatment).</strong> Today one enum does both. Separate them: <code>index: Int</code> for the label text and <code>status: completed | current | upcoming</code> for the ring fill. The outer component then computes status per slot from <code>current</code>. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Replace raster ring arcs with stroked SVG / vector arcs.</strong> Each step circle's ring should be a 2-px stroked circle with <code>stroke-dasharray</code> (or two half-circles via <code>trim</code>). Colors bound to <code>main/stepper/color/bg-track</code> (unfilled) and <code>main/stepper/color/bg</code> (filled). Same visual output, theme-able, resolution-independent, no PNG assets. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Add a <code>completed</code> visual state with a checkmark icon option.</strong> Many wizards replace the digit with a check once a step is done. Today there's no variant for this — everything shows a number. Add <code>showCheckOnComplete: Bool</code> (or model it into the <code>status</code> enum as <code>completed-check</code>). <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Add an <code>orientation</code> property for vertical layouts.</strong> Long flows (8+ steps) don't fit a phone-width row. Vertical stacks are common for checkout or document review wizards. Add <code>orientation: horizontal | vertical</code> and spec the connector line between circles for both axes. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Spec a connector line between circles.</strong> Today the 9 sibling frames space circles with a 20-px gap but no visible connector. Most steppers draw a line from the trailing edge of one circle to the leading edge of the next, tinted to match completed (brand) vs upcoming (track) states. Add this to the spec — it's the difference between "a row of circles" and "a stepper". <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Rename layers <code>step-container</code> → <code>Ring</code> (and the ring arc layer → <code>Arc</code>).</strong> "step-container" is a technical label; "Ring" is what a designer or developer searches for. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Build as a custom native component, not a ProgressView wrapper.</strong> Neither SwiftUI <code>ProgressView</code> nor Material <code>LinearProgressIndicator</code> visually match this pattern. Ship a dedicated <code>EBStepperCircular</code>: iOS uses an <code>HStack</code> of <code>ZStack { Circle().stroke(track); Circle().trim(from:0,to:progress).stroke(fill); Text(index) }</code>; Android uses a <code>Row</code> of <code>Box(Modifier.size(45.dp))</code> with <code>Canvas</code> drawing <code>drawArc(sweepAngle = progress * 360f)</code>. <span class="tag-recommend">Composition</span></span></li>
+      <li><span><strong>Announce "Step X of Y" to screen readers.</strong> The component is decorative by default — assistive tech reads only the number. Wrap in a semantic container that announces <code>"Step \(current) of \(total)"</code> (SwiftUI <code>.accessibilityLabel</code>, Compose <code>Modifier.semantics { contentDescription = … }</code>). <span class="tag-recommend">A11y</span></span></li>
+      <li><span><strong>Document the canonical composition and retire the sibling names.</strong> Update the sticker sheet page to show one <code>Stepper - Circular</code> with property controls; add a migration note pointing <code>Stepper - Circular - N Steps</code> consumers to the new <code>steps</code> prop. <span class="tag-recommend">Docs</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Stepper - Circular <span class="spec-card-node">canonical node <code>27:47768</code> (10 Steps) · sibling frames <code>27:47819…27:48036</code></span></div>
+      </div>
+      <p class="spec-card-desc">Row of N 45×45 numbered circles, each with a ring that indicates position through the flow. 9 hardcoded sibling frames today; target is one component with a <code>steps</code> prop.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="stepper-circular-spec-1"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Properties (today)</div>
+          <div class="spec-detail-row"><span>Top-level component</span><code>Stepper - Circular - N Steps</code> (×9)</div>
+          <div class="spec-detail-row"><span>Inner symbol</span><code>number = 1 | 2 | … | N</code></div>
+          <div class="spec-detail-row"><span>Ring implementation</span><code>raster &lt;img&gt;</code></div>
+          <div class="spec-detail-row"><span>Layout</span><code>horizontal only</code></div>
+          <div class="spec-detail-label" style="margin-top:12px;">Properties (proposed)</div>
+          <div class="spec-detail-row"><span>steps</span><code>2 | 3 | … | 10</code></div>
+          <div class="spec-detail-row"><span>current</span><code>1 | 2 | … | steps</code></div>
+          <div class="spec-detail-row"><span>orientation</span><code>horizontal | vertical</code></div>
+          <div class="spec-detail-row"><span>status (per slot)</span><code>completed | current | upcoming</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors by State</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>VALUE</th></tr></thead>
+              <tbody>
+                <tr><td>Ring (track / upcoming)</td><td><code>main/stepper/color/bg-track</code></td><td><span class="swatch-dot" style="background:#D2E5FF;border:1px solid #BFD6F2"></span><code>#D2E5FF</code></td></tr>
+                <tr><td>Ring (fill / current + completed)</td><td><code>main/stepper/color/bg</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td></tr>
+                <tr><td>Label (digit)</td><td><code>main/stepper/color/label</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td></tr>
+              </tbody>
+            </table>
+            <p class="table-footnote muted">All three roles already use <code>main/stepper/color/*</code> tokens — token coverage is clean. The restructure work is schema, not color.</p>
+          </div>
+        </div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Step circle size</span><code>45 × 45</code></div>
+          <div class="spec-detail-row"><span>Ring stroke width</span><code>~2 (raster-baked)</code></div>
+          <div class="spec-detail-row"><span>Gap between circles</span><code>20 (space/space-20)</code></div>
+          <div class="spec-detail-row"><span>Outer frame padding</span><code>20 vertical, 20 horizontal</code></div>
+          <div class="spec-detail-row"><span>Total width (N steps)</span><code>45 × N + 20 × (N−1) + 40</code></div>
+          <div class="spec-detail-row"><span>Height</span><code>85</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>DS style</span><code>Primary/Headlines/Block</code></div>
+          <div class="spec-detail-row"><span>Font</span><code>Proxima Soft Bold</code></div>
+          <div class="spec-detail-row"><span>Size</span><code>18</code></div>
+          <div class="spec-detail-row"><span>Line height</span><code>23</code></div>
+          <div class="spec-detail-row"><span>Tracking</span><code>0.25</code></div>
+          <div class="spec-detail-row muted"><em>Digits are center-aligned within the 45×45 circle.</em></div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="stepper-circular-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="section-desc">No native primitive matches the circular stepper pattern — ship a custom <code>EBStepperCircular</code> component on both platforms.</p>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'stepper-circular-install','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'stepper-circular-install','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">.<span class="fn">package</span>(<span class="prp">url</span>: <span class="str">"https://github.com/gcash/eb-design-system-ios"</span>, <span class="prp">from</span>: <span class="str">"1.0.0"</span>)
+
+<span class="kw">import</span> EBDesignSystem</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">implementation(<span class="str">"com.gcash.designsystem:eb-components:1.0.0"</span>)
+
+<span class="kw">import</span> com.gcash.designsystem.components.EBStepperCircular</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="stepper-circular-mapping">Property Mapping (Proposed)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma (today)</th><th>Figma (proposed)</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td><code>Stepper - Circular - N Steps</code> (×9 siblings)</td><td><code>Stepper - Circular</code> (single component)</td><td><code>EBStepperCircular</code></td><td><code>EBStepperCircular</code></td></tr>
+          <tr><td class="muted">(implicit in sibling name)</td><td><code>steps: 2…10</code></td><td><code>total: Int</code></td><td><code>total: Int</code></td></tr>
+          <tr><td class="muted">(implicit in <code>number</code> variant)</td><td><code>current: 1…steps</code></td><td><code>current: Int</code></td><td><code>current: Int</code></td></tr>
+          <tr><td><code>number = 1 | … | N</code> (inner symbol)</td><td><code>index: Int</code> + <code>status: completed | current | upcoming</code></td><td class="muted">(derived internally from <code>current</code>)</td><td class="muted">(derived internally from <code>current</code>)</td></tr>
+          <tr><td class="muted">(horizontal only)</td><td><code>orientation: horizontal | vertical</code></td><td><code>orientation: Axis = .horizontal</code></td><td><code>orientation: EBStepperOrientation = Horizontal</code></td></tr>
+          <tr><td class="muted">(raster arc)</td><td>Stroked SVG / Canvas arc</td><td><code>Circle().trim(from: 0, to: progress).stroke(...)</code></td><td><code>Canvas { drawArc(sweepAngle = progress * 360f) }</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="stepper-circular-paths">Suggested file paths</div>
+    <ul class="resolved-list">
+      <li><code>ios/Components/StepperCircular/EBStepperCircular.swift</code> — custom view with HStack of ring + digit</li>
+      <li><code>android/components/stepper/EBStepperCircular.kt</code> — Row of Canvas-drawn circular step indicators</li>
+      <li class="muted">No native primitive is a 1:1 match. A custom component is required on both platforms.</li>
+    </ul>
+
+    <div class="sub-heading" id="stepper-circular-usage">Usage</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'stepper-circular-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'stepper-circular-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// KYC wizard — step 2 of 4</span>
+<span class="typ">EBStepperCircular</span>(<span class="prp">current</span>: <span class="kw">2</span>, <span class="prp">total</span>: <span class="kw">4</span>)
+
+<span class="cmt">// Long form wizard — step 5 of 8</span>
+<span class="typ">EBStepperCircular</span>(<span class="prp">current</span>: <span class="kw">5</span>, <span class="prp">total</span>: <span class="kw">8</span>)
+
+<span class="cmt">// Vertical layout for narrow columns</span>
+<span class="typ">EBStepperCircular</span>(<span class="prp">current</span>: <span class="kw">3</span>, <span class="prp">total</span>: <span class="kw">6</span>, <span class="prp">orientation</span>: .vertical)
+
+<span class="cmt">// With check-on-complete — digit replaced by checkmark once done</span>
+<span class="typ">EBStepperCircular</span>(<span class="prp">current</span>: <span class="kw">4</span>, <span class="prp">total</span>: <span class="kw">5</span>, <span class="prp">showCheckOnComplete</span>: <span class="kw">true</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// KYC wizard — step 2 of 4</span>
+<span class="typ">EBStepperCircular</span>(current = <span class="kw">2</span>, total = <span class="kw">4</span>)
+
+<span class="cmt">// Long form wizard — step 5 of 8</span>
+<span class="typ">EBStepperCircular</span>(current = <span class="kw">5</span>, total = <span class="kw">8</span>)
+
+<span class="cmt">// Vertical layout for narrow columns</span>
+<span class="typ">EBStepperCircular</span>(
+    current = <span class="kw">3</span>,
+    total = <span class="kw">6</span>,
+    orientation = <span class="typ">EBStepperOrientation</span>.Vertical
+)
+
+<span class="cmt">// With check-on-complete — digit replaced by checkmark once done</span>
+<span class="typ">EBStepperCircular</span>(
+    current = <span class="kw">4</span>,
+    total = <span class="kw">5</span>,
+    showCheckOnComplete = <span class="kw">true</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="stepper-circular-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Progress role</strong></td><td class="muted">Wrap the row in <code>.accessibilityElement(children: .ignore)</code> and expose a single label. Set <code>.accessibilityValue("Step \(current) of \(total)")</code>.</td><td class="muted">Treat the row as a single semantic node via <code>Modifier.semantics(mergeDescendants = true)</code> with <code>contentDescription = "Step $current of $total"</code>.</td></tr>
+          <tr><td><strong>Value announcement</strong></td><td class="muted">VoiceOver reads "Step 2 of 4". Avoid announcing each circle individually — it's noisy and position-less.</td><td class="muted">TalkBack reads the merged label. Update <code>stateDescription</code> when <code>current</code> changes to trigger re-announcement.</td></tr>
+          <tr><td><strong>Icon-only digits</strong></td><td class="muted">The digit itself is already semantic. Ensure contrast: #005CE5 on white = 5.3:1 ✓</td><td class="muted">Same. Digit color passes WCAG AA for non-text graphics.</td></tr>
+          <tr><td><strong>Interactive steps</strong></td><td class="muted">If completed steps are tappable, wrap each in a <code>Button</code> with <code>.accessibilityHint("Tap to return to step \(index)")</code>. Pressed state inherits from the button.</td><td class="muted">Use <code>Modifier.clickable(onClickLabel = "Return to step $index")</code>. Ripple indication appears natively.</td></tr>
+          <tr><td><strong>Contrast</strong></td><td class="muted">Ring fill #005CE5 on track #D2E5FF = 3.1:1 — passes 3:1 for non-text graphics (WCAG 1.4.11). OK.</td><td class="muted">Same ratio.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="stepper-circular-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Use for multi-step flows where the user needs to know position and total count (onboarding, KYC, checkout).</li>
+          <li>Place at the top of the screen or immediately under the title bar.</li>
+          <li>Pair with a step-specific heading ("Step 2: Verify your email") so the stepper + title form a progress pair.</li>
+          <li>Switch to vertical orientation when step count × 45 + gaps exceeds the column width.</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't use for flows with fewer than 3 steps — a simpler "Step 1 of 2" text label is clearer.</li>
+          <li>Don't use for linear progress where total steps are unknown — use <code>Progress Bar</code> (indeterminate) instead.</li>
+          <li>Don't ship the 9 sibling components in product code — consume the parameterized version.</li>
+          <li>Don't let total steps exceed 10 horizontally on mobile — wrap, shrink, or switch to vertical.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="stepper-circular-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Step count is modeled as 9 sibling components instead of a property. Collapse to a single <code>Stepper - Circular</code>. Also rename <code>step-container</code> → <code>Ring</code>.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Inner <code>number</code> axis conflates digit label and ring-arc rendering. Split into <code>index</code> + <code>status</code> (and lift <code>current</code> / <code>steps</code> to the top-level component).</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors bound to <code>main/stepper/color/{bg, bg-track, label}</code>. Typography bound to <code>Primary/Headlines/Block</code>. Gap bound to <code>space/space-20</code>.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">No native primitive matches. Requires a custom <code>EBStepperCircular</code>. Today's raster arcs block direct primitive composition.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">No pressed / focused / disabled / tappable-completed state modeled. Missing vertical orientation and check-on-complete variants.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Ring arcs are raster <code>&lt;img&gt;</code> — one PNG per step index per sibling component. Replace with stroked SVG / Canvas arcs.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked until 9 siblings collapse into one component and raster arcs are replaced with vector strokes.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="stepper-circular-variants">Variants Inventory <span class="variants-count">(9 sibling components · ~63 total step symbols)</span></div>
+    <p>Today: <strong>9 sibling components</strong>, one per hardcoded step count. Each sibling contains <code>N</code> step symbols (<code>number = 1 … N</code>) with baked raster ring arcs. Sum of step symbols: 2+3+4+5+6+7+8+9+10 = <strong>54</strong> step symbols (+ 9 outer frames = ~63 nodes). Target: <strong>1 component</strong> with <code>steps: 2…10</code> and <code>current: 1…steps</code> as runtime properties; ring arcs drawn by math, not asset.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Sibling component</th><th>Node</th><th>Frame width</th><th>Step symbols</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">1</td><td><code>Stepper - Circular - 2 Steps</code></td><td><code>27:48036</code></td><td>150</td><td class="muted">2 (<code>number = 1, 2</code>)</td></tr>
+          <tr><td class="mono center">2</td><td><code>Stepper - Circular - 3 Steps</code></td><td><code>27:48020</code></td><td>215</td><td class="muted">3</td></tr>
+          <tr><td class="mono center">3</td><td><code>Stepper - Circular - 4 Steps</code></td><td><code>27:47999</code></td><td>280</td><td class="muted">4</td></tr>
+          <tr><td class="mono center">4</td><td><code>Stepper - Circular - 5 Steps</code></td><td><code>27:47973</code></td><td>345</td><td class="muted">5</td></tr>
+          <tr><td class="mono center">5</td><td><code>Stepper - Circular - 6 Steps</code></td><td><code>27:47942</code></td><td>410</td><td class="muted">6</td></tr>
+          <tr><td class="mono center">6</td><td><code>Stepper - Circular - 7 Steps</code></td><td><code>27:47906</code></td><td>475</td><td class="muted">7</td></tr>
+          <tr><td class="mono center">7</td><td><code>Stepper - Circular - 8 Steps</code></td><td><code>27:47865</code></td><td>540</td><td class="muted">8</td></tr>
+          <tr><td class="mono center">8</td><td><code>Stepper - Circular - 9 Steps</code></td><td><code>27:47819</code></td><td>605</td><td class="muted">9</td></tr>
+          <tr><td class="mono center">9</td><td><code>Stepper - Circular - 10 Steps</code></td><td><code>27:47768</code></td><td>670</td><td class="muted">10 (<code>number = 1…10</code>)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · canonical node 27:47768 (10 Steps) + 8 siblings</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Restructure</strong> — Collapse 9 sibling components (<code>Stepper - Circular - 2…10 Steps</code>) into one <code>Stepper - Circular</code> with <code>steps: Int</code> and <code>current: Int</code> properties. Replace raster ring arcs with stroked SVG / Canvas. <span class="tag-open tag-c1 tag-c2 tag-c6">Open</span></div><span class="changelog-delta delta-open">Schema</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C1 — Family structure</strong> — 9 top-level components differ only by hardcoded step count. Collapse into a single component with a <code>steps</code> property. Rename <code>step-container</code> layer → <code>Ring</code>. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — Property shape</strong> — Inner <code>number = 1…N</code> conflates digit label and arc-fill rendering. Split into <code>index</code> (label) + <code>status</code> (ring treatment). Lift <code>current</code> and <code>steps</code> to the parent component. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C4 — Native mapping</strong> — No native primitive matches. Requires custom <code>EBStepperCircular</code> on both platforms built over HStack/Row of stroked circles. <span class="tag-open tag-c4">Open</span></div><span class="changelog-delta delta-open">C4</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C5 — Missing states</strong> — Add pressed / focused for interactive steps, vertical orientation, and check-on-complete option. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C6 — Raster arcs</strong> — Each step's ring is a pre-baked PNG. Replace with stroked SVG circles bound to <code>main/stepper/color/bg-track</code> and <code>main/stepper/color/bg</code>. <span class="tag-open tag-c6">Open</span></div><span class="changelog-delta delta-open">C6</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C7 — Code Connect</strong> — Mappings pending restructure. Mapping 9 separate siblings would codify the anti-pattern. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-stepper-circular">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-stepper-circular"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Stepper - Circular JS ──────────────────────────────────────── */
+/* Renders a horizontal row of numbered circles. Each circle has a
+   track ring (upcoming) plus an arc-fill whose length is derived
+   from the step's status: completed = full, current = partial
+   (current / steps), upcoming = none.                              */
+
+function _stepperCircularRingMarkup(index, status, progress) {
+  var size = 45;
+  var cx = size / 2;
+  var cy = size / 2;
+  var r = 20;
+  var circumference = 2 * Math.PI * r;
+
+  var trackColor = '#D2E5FF';
+  var fillColor  = '#005CE5';
+  var labelColor = '#005CE5';
+
+  var dashLen;
+  if (status === 'completed') dashLen = circumference;
+  else if (status === 'upcoming') dashLen = 0;
+  else /* current */ dashLen = circumference * progress;
+
+  var dashArray = dashLen + ' ' + (circumference - dashLen);
+  var dashOffset = circumference / 4; /* start at 12 o'clock */
+
+  return '<div class="eb-preview-stepper-circle" style="position:relative;width:' + size + 'px;height:' + size + 'px;display:inline-flex;align-items:center;justify-content:center;">' +
+    '<svg width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '" style="position:absolute;inset:0;">' +
+      '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + trackColor + '" stroke-width="2.5"/>' +
+      (dashLen > 0 ? '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + fillColor + '" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="' + dashArray + '" stroke-dashoffset="' + dashOffset + '" transform="rotate(-90 ' + cx + ' ' + cy + ')"/>' : '') +
+    '</svg>' +
+    '<span style="position:relative;font:700 16px \'Proxima Soft\', system-ui, sans-serif;color:' + labelColor + ';letter-spacing:0.25px;">' + index + '</span>' +
+  '</div>';
+}
+
+function _stepperCircularRender(current, total) {
+  var parts = [];
+  for (var i = 1; i <= total; i++) {
+    var status, progress = 1;
+    if (i < current) status = 'completed';
+    else if (i === current) { status = 'current'; progress = current / total; }
+    else status = 'upcoming';
+    parts.push(_stepperCircularRingMarkup(i, status, progress));
+  }
+  return '<div class="eb-preview eb-preview-stepper-circular" style="display:flex;align-items:center;gap:20px;padding:12px 0;flex-wrap:wrap;justify-content:center;">' +
+    parts.join('') +
+  '</div>';
+}
+
+function _stepperCircularContextMarkup() {
+  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm" style="padding:8px 0;">' +
+    '<div style="font:500 13px system-ui;color:#3C4A5C;margin-bottom:6px;">Onboarding · Step 2 of 4</div>' +
+    _stepperCircularRender(2, 4) +
+    '<div style="font:500 13px system-ui;color:#3C4A5C;margin:18px 0 6px;">KYC · Step 5 of 8</div>' +
+    _stepperCircularRender(5, 8) +
+    '<div style="font:500 13px system-ui;color:#3C4A5C;margin:18px 0 6px;">Checkout · Step 3 of 3</div>' +
+    _stepperCircularRender(3, 3) +
+  '</div>';
+}
+
+function _stepperCircularUpdate() {
+  var stepsEl   = document.getElementById('stepper-circular-ctrl-steps');
+  var currentEl = document.getElementById('stepper-circular-ctrl-current');
+  var valueEl   = document.getElementById('stepper-circular-ctrl-value');
+  var preview   = document.getElementById('stepper-circular-demo-preview');
+  if (!preview) return;
+
+  var steps = stepsEl ? parseInt(stepsEl.value, 10) : 4;
+  if (isNaN(steps) || steps < 2) steps = 2;
+  if (steps > 10) steps = 10;
+
+  if (currentEl) {
+    currentEl.max = steps;
+    var current = parseInt(currentEl.value, 10);
+    if (isNaN(current) || current < 1) current = 1;
+    if (current > steps) { current = steps; currentEl.value = steps; }
+    if (valueEl) valueEl.textContent = current + ' of ' + steps;
+    preview.innerHTML = _stepperCircularRender(current, steps);
+  }
+}
+
+function _stepperCircularInit() {
+  var ctx = document.getElementById('stepper-circular-context-preview');
+  if (ctx) ctx.innerHTML = _stepperCircularContextMarkup();
+  _stepperCircularUpdate();
+
+  var s1 = document.getElementById('stepper-circular-spec-1');
+  if (s1) {
+    s1.innerHTML = '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm" style="padding:12px 0;">' +
+      '<div style="font:500 13px system-ui;color:#3C4A5C;margin-bottom:4px;">4 steps, current = 2</div>' +
+      _stepperCircularRender(2, 4) +
+      '<div style="font:500 13px system-ui;color:#3C4A5C;margin:16px 0 4px;">7 steps, current = 5</div>' +
+      _stepperCircularRender(5, 7) +
+      '<div style="font:500 13px system-ui;color:#3C4A5C;margin:16px 0 4px;">10 steps, current = 10 (all completed)</div>' +
+      _stepperCircularRender(10, 10) +
+    '</div>';
+  }
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _stepperCircularInit);
+else _stepperCircularInit();
+</script>
+
+<!--@section-end-->

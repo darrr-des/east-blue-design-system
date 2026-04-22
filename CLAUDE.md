@@ -301,6 +301,7 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | Avatar | `17143:4488` | 21 | Keep | Refine | C2,C7 |
 | Avatar Group | `18276:4554` | 4 | Fix | Refine | C7 |
 | Badge | `18482:28972` | 68 | Keep | Refine | C7 |
+| Bottom Sheet | `12817:43833` | 2 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
 | Button | `17104:184842` | 180 | Keep | Refine | C7 |
 | **Card** | | | | | |
 | Generic Card | `18482:35806` | 12 | Fix | Refine | C2,C5,C6,C7 |
@@ -316,6 +317,7 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | Dropdown Item | `18577:13033` | 9 | Fix | Refine | C2,C4,C5,C6,C7 |
 | Dropdown Item Group | `6383:3446` | 1 | Consolidate | N/A | C1,C2,C4,C7 |
 | **Form Elements** | | | | | |
+| Amount Text Field | `152:48122` | 12 | Restructure | Rework | C2,C5,C6,C7 |
 | Input Field | `17758:3687` | 8 | Keep | Refine | C7 |
 | Labeled Field | `17758:3713` | 8 | Keep | Refine | C7 |
 | Recipient Field | `17758:3867` | 8 | Keep | Refine | C7 |
@@ -328,14 +330,30 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | Header - Centered | `18430:2858` | 4 | Restructure | Rework | C1,C2,C7 |
 | Header - With Logo | `18430:2875` | 2 | Consolidate | Rework | C1,C2,C4,C7 |
 | Header - Transaction | `18430:2897` | 2 | Restructure | Rework | C1,C2,C4,C5,C7 |
-| Inline Text | `21:138492` | 5 | Restructure | Refine | C1,C2,C5,C6,C7 |
+| Inline Text | `18652:71101` | 5 | Restructure | Refine | C1,C2,C5,C6,C7 |
 | Modal | `18507:71705` | 7 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
 | Overlay | `47:329691` | 1 | Fix | Refine | C2,C4,C5,C7 |
 | Progress Bar | `18577:13227` | 11 | Restructure | Rework | C1,C2,C5,C6,C7 |
+| **Stepper** | | | | | |
+| Stepper - Dash | `18649:5223` | 10 | Restructure | Rework | C1,C2,C4,C5,C7 |
+| Stepper - Bullet | `27:48287` | 3 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
+| Stepper - Circular | `27:47768` | 9 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
+| Subtext Message | `18687:71133` | 6 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
+| **Table** | | | | | |
+| Table | `47:326260` | 9 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
+| Table Transaction | `47:324709` | 6 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
+| Table Scheduling | `47:324365` | 3 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
 | Title Bar | `23:175148` | 20 | Keep | Refine | C2,C6,C7 |
+| **Toast** | | | | | |
+| Toast | `27:53135` | 16 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
+| Toast - With Button | `27:53205` | 4 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
 | **Toggle** | | | | | |
 | Toggle | `18482:36508` | 4 | Fix | Refine | C2,C5,C7 |
 | Toggle - With Label | `18482:36538` | 1 | Restructure | Rework | C1,C2,C4,C5,C7 |
+| **Tooltip** | | | | | |
+| Tooltip V2 | `70:14908` | 8 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
+| Onboarding - Tooltip | `51:17066` | 4 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
+| Tooltip Blurred and Transparent | `49:335349` | 4 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
 
 ---
 
