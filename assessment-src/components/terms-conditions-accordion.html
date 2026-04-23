@@ -1,0 +1,271 @@
+<!--
+  TERMS AND CONDITIONS ACCORDION ASSESSMENT
+  A product composition disguised as a DS component — the canonical Accordion
+  (16870:9288) with "Terms & Conditions" hardcoded as the title and 4 list-item
+  rows hardcoded as the expanded body. Ship as usage of EBAccordion instead.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 5119:5447
+ds-verdict: remove
+native-status: na
+variants: 2
+ios: usage of EBAccordion
+android: usage of EBAccordion
+open-issues: none
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C7] Product composition disguised as a DS component — an instance of the canonical Accordion with a hardcoded title string and hardcoded body. No unique schema, tokens, or behavior. Should be documented as a usage example of the base Accordion, not shipped as its own component.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Voucher<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-terms-conditions-accordion" onclick="showPanel('terms-conditions-accordion', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Terms &amp; Conditions Accordion</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('terms-conditions-accordion')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="10" y="8" width="60" height="10" rx="2" fill="#E5EBF4"/>
+      <rect x="14" y="11" width="22" height="4" rx="1" fill="#0A2757"/>
+      <path d="M62 12l3 3 3-3" stroke="#005CE5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="10" y="22" width="60" height="12" rx="2" fill="#F6F9FD"/>
+      <circle cx="16" cy="26" r="1.2" fill="#90A8D0"/>
+      <rect x="20" y="25" width="30" height="2" rx="1" fill="#445C85" opacity=".5"/>
+      <circle cx="16" cy="30" r="1.2" fill="#90A8D0"/>
+      <rect x="20" y="29" width="36" height="2" rx="1" fill="#445C85" opacity=".5"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Terms &amp; Conditions Accordion</div>
+      <span class="badge badge-rework">Remove</span>
+    </div>
+    <div class="summary-card-desc">Canonical Accordion with a hardcoded "Terms &amp; Conditions" title and hardcoded body — not a distinct component. Replace with a usage example of the base Accordion.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Terms &amp; Conditions Accordion</strong></td>
+  <td><span class="badge badge-rework">Remove</span></td>
+  <td><span class="badge badge-na">Not Applicable</span></td>
+  <td class="muted">2</td>
+  <td class="muted">Product composition of the canonical <code>Accordion</code> (<code>16870:9288</code>) with a hardcoded title and body. Remove from the DS; document as usage of <code>EBAccordion</code>.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-terms-conditions-accordion">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Terms &amp; Conditions Accordion
+          <span class="badge badge-rework">Remove</span>
+          <span class="badge badge-na">N/A</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=5119-5447" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">Two variants (<code>expanded=yes</code>, <code>expanded=no</code>) of the canonical <a href="#" onclick="showPanelById('accordion');return false;">Accordion</a> with the title hardcoded to "Terms &amp; Conditions" and the expanded body hardcoded to a fixed list of four voucher rules. It carries no unique schema, no unique tokens, and no unique behavior — every color references <code>main/accordion/*</code> tokens directly from the canonical Accordion.</p>
+      </div>
+      <div class="verdict-inline verdict-rework">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Remove — use the canonical Accordion</div>
+          <div class="verdict-inline-text">The DS already ships one <a href="#" onclick="showPanelById('accordion');return false;"><code>Accordion</code></a> primitive with a <code>title</code> prop and a content slot. Every time a product needs an accordion with a different title or body, the answer is to author a new instance — not to ship a new sibling. Replace this component with a documented usage example: <code>EBAccordion(title: "Terms &amp; Conditions", content: [...])</code>.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="tc-accordion-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'tc-accordion-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'tc-accordion-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'tc-accordion-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="tc-accordion-preview" style="margin-top:0">Current Figma</div>
+    <p class="section-desc">Two variants — collapsed and expanded. Both reuse the canonical Accordion's tokens (<code>main/accordion/color/*</code>) for header, label, chevron, and border; the expanded body packs four list rows bound to <code>main/list-item/color/default/*</code>. No tokens or structure are unique to this component.</p>
+    <div class="demo-panel" id="tc-accordion-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="tc-accordion-demo-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="tc-accordion-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">Not reusable — the title is hardcoded to "Terms &amp; Conditions" and the body is a fixed list of four voucher rules. Any other use case must detach and rebuild.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Structure is correct, but every token it carries belongs to the canonical Accordion. This component adds no styles or logic of its own.</div>
+      </div>
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">Breaks the DS pattern where components are primitives with props. This is a composition (a filled-in instance) disguised as a component, and it would set a precedent for a sibling per hardcoded title.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Pass</div></div>
+        <div class="trait-note">The composition itself is clean — it uses the canonical Accordion tokens and embeds list rows correctly. That's exactly why it should live in product code, not as a DS atom.</div>
+      </div>
+    </div>
+
+    </div><!-- /tab usage -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="tc-accordion-code-usage" style="margin-top:0">Native equivalent <span class="badge badge-planned">Planned API</span></div>
+    <p class="section-desc">Use the canonical <code>EBAccordion</code> with a product-defined title and body. No dedicated "Terms &amp; Conditions" component is needed on either platform.</p>
+
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'tc-accordion-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'tc-accordion-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Just use the canonical Accordion</span>
+<span class="typ">EBAccordion</span>(<span class="prp">title</span>: <span class="str">"Terms &amp; Conditions"</span>) {
+    <span class="typ">VStack</span>(<span class="prp">alignment</span>: .<span class="prp">leading</span>, <span class="prp">spacing</span>: <span class="kw">8</span>) {
+        <span class="typ">ForEach</span>(rules) { rule <span class="kw">in</span>
+            <span class="typ">EBListItem</span>(rule.<span class="prp">text</span>)
+        }
+    }
+}</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Just use the canonical Accordion</span>
+<span class="typ">EBAccordion</span>(title = <span class="str">"Terms &amp; Conditions"</span>) {
+    <span class="typ">Column</span>(verticalArrangement = <span class="typ">Arrangement</span>.<span class="fn">spacedBy</span>(<span class="kw">8</span>.dp)) {
+        rules.<span class="fn">forEach</span> { rule -&gt;
+            <span class="typ">EBListItem</span>(content = rule.text)
+        }
+    }
+}</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="tc-accordion-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Layers match the canonical Accordion.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Only an <code>expanded</code> boolean — identical to the canonical Accordion's state axis.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors bound to <code>main/accordion/*</code> and <code>main/list-item/*</code> tokens from the canonical components.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-na">N/A</span></td><td class="muted">Do not map. Use <code>EBAccordion</code> with a product-defined title and body.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Inherits expanded/collapsed from the canonical Accordion.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Chevron and check icons are vector instances.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-na">N/A</span></td><td class="muted">Not linkable — no native counterpart. Consumers call <code>EBAccordion</code> directly.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 5119:5447</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Assessed as a product composition</strong> — Instance of the canonical Accordion (<code>16870:9288</code>) with hardcoded title and body. No unique schema or tokens. <span class="tag-fixed">Documented</span></div><span class="changelog-delta delta-resolved">Initial</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Recommendation: Remove</strong> — Delete from the sticker sheet and publish as a usage example of <code>EBAccordion</code>. Sets the precedent that product-specific compositions do not become DS siblings. <span class="tag-open">Open</span></div><span class="changelog-delta delta-open">Design Decision</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-terms-conditions-accordion">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-terms-conditions-accordion"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Terms & Conditions Accordion JS ─────────────────────────────── */
+function _tcAccordionRow(text) {
+  var s = '<div style="display:flex;gap:8px;align-items:flex-start;">';
+  s += '<div style="padding-top:2px;flex:0 0 auto;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6 11.5 13 4.5" stroke="#90A8D0" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
+  s += '<div style="color:#445C85;font-family:\'BarkAda\', system-ui;font-weight:600;font-size:14px;line-height:20px;">' + text + '</div>';
+  s += '</div>';
+  return s;
+}
+
+function _tcAccordionBuildPreview() {
+  var rules = [
+    'Valid from March 11 to 14, 2021',
+    'Dine in, Take out, or Drive-thru: 11am until closing, or until supplies last',
+    'The promo is not valid in conjunction with other promos or discounts.',
+    'Metro Manila only.'
+  ];
+  var shell = 'max-width:336px;display:flex;flex-direction:column;gap:12px;';
+  var headerBase = 'display:flex;align-items:center;justify-content:space-between;padding:20px 16px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:8px;';
+  var titleStyle = 'color:#0A2757;font-family:\'Proxima Soft\', system-ui;font-weight:700;font-size:16px;line-height:20px;letter-spacing:.25px;';
+  var chevron = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 8l4 4 4-4" stroke="#005CE5" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var chevronUp = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 12l4-4 4 4" stroke="#005CE5" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  var s = '<div style="' + shell + '">';
+
+  // Collapsed variant
+  s += '<div style="' + headerBase + '">';
+  s +=   '<div style="' + titleStyle + '">Terms &amp; Conditions</div>';
+  s +=   chevron;
+  s += '</div>';
+
+  // Expanded variant
+  s += '<div style="display:flex;flex-direction:column;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:8px;overflow:hidden;">';
+  s +=   '<div style="display:flex;align-items:center;justify-content:space-between;padding:20px 16px;">';
+  s +=     '<div style="' + titleStyle + '">Terms &amp; Conditions</div>';
+  s +=     chevronUp;
+  s +=   '</div>';
+  s +=   '<div style="background:#F6F9FD;padding:16px;display:flex;flex-direction:column;gap:8px;">';
+  rules.forEach(function(r){ s += _tcAccordionRow(r); });
+  s +=   '</div>';
+  s += '</div>';
+
+  s += '</div>';
+  return s;
+}
+
+function _tcAccordionInit() {
+  var el = document.getElementById('tc-accordion-demo-preview');
+  if (el) el.innerHTML = _tcAccordionBuildPreview();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tcAccordionInit);
+else _tcAccordionInit();
+</script>
+
+<!--@section-end-->

@@ -1,0 +1,487 @@
+<!--
+  HORIZONTAL VOUCHER — ASSESSMENT
+  Single symbol, 336 × 265, no variant axes declared. Ships 6 boolean property toggles
+  (amount, asset, badges, description, header, validityPeriod). A full-width 336×144
+  image frame sits on top of a 336-wide content block (title + description + price +
+  validity + single row of 4 hardcoded badges).
+
+  Every text string is hardcoded placeholder: "Grab Food", "This is the description of
+  the voucher.", "PHP 100.00", "PHP 150.00", "Validity: Dec 25 2022 - Jan 5 2023".
+  The image frame carries TWO duplicated discount-badge instances stacked at the same
+  position (top-right) — one reading "10% off" and the other "35% off". The image is a
+  raster photograph baked into the frame. No state axis — contrast with Voucher Card
+  Horizontal (5119:1786) which ships Default/Limited/Expiring/Used/Expired.
+
+  Verdict: Consolidate. This, Vertical Voucher (5119:1635), and Voucher Card
+  Horizontal (5119:1786) are three parallel records of what should be one Voucher
+  Card component with orientation + state axes, text slots, and a Voucher Asset
+  image slot. Voucher Card Horizontal is the canonical sibling (only one with a
+  state axis) — merge into it.
+
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 5121:4533
+ds-verdict: consolidate
+native-status: rework
+variants: 1
+ios: EBVoucherCard(orientation: .horizontal) — VStack composing voucher image frame + text slots
+android: EBVoucherCard(orientation = Horizontal) — Column composing voucher image frame + text slots
+open-issues: C1,C2,C4,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] Two stacked discount Badge instances at the same anchor — the <code>Voucher Asset</code> image frame (5121:4534) contains two Badge instances (<code>I5121:4534;6983:110671</code> reading "10% off" and <code>I5121:4534;6983:110685</code> reading "35% off"), both absolutely positioned at the same top-right coordinates. Only one is ever visible at a time, but nothing in the property schema picks between them — the "10% off" badge layer is simply dead weight in the symbol.
+[C2] Six booleans where most should be strings or a composable array — <code>amount</code>, <code>asset</code>, <code>badges</code>, <code>description</code>, <code>header</code>, <code>validityPeriod</code>. Every one controls visibility only; the strings ("Grab Food", "PHP 100.00", "PHP 150.00", validity date range) are all frozen inside the symbol. Consumers cannot render a real voucher without detaching.
+[C2] Discount amount is baked into the image frame — "10% off" and "35% off" are hardcoded Badge label strings inside the Voucher Asset, not a property on the parent Horizontal Voucher. A voucher offering "BUY1 TAKE1" or "50% off" cannot be rendered without detaching.
+[C2] Four hardcoded status badges in a single row — "Limited", "Expiring", "Hot", "Discounted" are baked inside the <code>badges</code> frame as fixed Badge instances. The <code>badges</code> boolean toggles the entire row on or off; there is no way to render just one or two badges, and no way to choose which badges apply.
+[C4] Orientation is implicit in the component name, not a variant axis — Horizontal Voucher, Vertical Voucher (5119:1635), and Voucher Card Horizontal (5119:1786) are three separate components for what is a single component with an <code>orientation</code> axis. Changing orientation requires swapping the entire instance, not flipping a property.
+[C5] No state axis — Voucher Card Horizontal ships Default/Limited/Expiring/Used/Expired with per-state background, label color, and badge treatment. Horizontal Voucher has no state concept at all; a used or expired horizontal voucher cannot be rendered in greyed-out treatment without detaching.
+[C6] Image is a raster photograph baked into the frame — the hero image (<code>Paste Image Here</code> / <code>imgPasteImageHere</code>) is a 336×144 raster asset with the "GrabFood" wordmark burned into the pixels. Partner branding, ticket shape, and image content are all frozen. Should be an Image Slot that accepts any Voucher Asset variant.
+[C7] No Code Connect target — the handoff API is <code>EBVoucherCard(orientation:, state:, title:, price:, originalPrice:, validity:, badges: [...], image: )</code>. A 6-boolean symbol with frozen strings, stacked discount badges, and a raster hero image has no 1:1 native analog.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Voucher<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-horizontal-voucher" onclick="showPanel('horizontal-voucher', this)">
+  <div class="nav-comp-icon">
+    <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="5" width="26" height="22" rx="2" fill="#FFFFFF" stroke="#C8CDD5" stroke-width="1"/>
+      <path d="M3 5h26a2 2 0 0 1 2 2v7H1V7a2 2 0 0 1 2-2Z" fill="#D63A2F"/>
+      <rect x="24" y="7.5" width="6" height="3" rx="0.6" fill="#1972F9"/>
+      <text x="27" y="9.9" text-anchor="middle" fill="white" font-size="2.2" font-weight="700" font-family="system-ui">35%</text>
+      <rect x="5" y="17" width="4" height="1.6" rx="0.3" fill="#2340A9"/>
+      <rect x="9.5" y="17" width="4" height="1.6" rx="0.3" fill="#D61B2C"/>
+      <rect x="14" y="17" width="3" height="1.6" rx="0.3" fill="#B50707"/>
+      <rect x="17.5" y="17" width="5" height="1.6" rx="0.3" fill="#1972F9"/>
+      <rect x="5" y="20" width="12" height="1.3" rx="0.3" fill="#0A2757"/>
+      <rect x="5" y="22.5" width="5" height="1.3" rx="0.3" fill="#005CE5"/>
+      <rect x="11" y="22.5" width="5" height="1" rx="0.3" fill="#90A8D0"/>
+      <rect x="5" y="24.8" width="14" height="0.9" rx="0.3" fill="#6780A9"/>
+    </svg>
+  </div>
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Horizontal Voucher</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('horizontal-voucher')">
+  <div class="summary-card-preview">
+    <svg width="110" height="80" viewBox="0 0 110 80" fill="none">
+      <rect x="4" y="6" width="102" height="68" rx="3" fill="#FFFFFF" stroke="#C8CDD5" stroke-width="1"/>
+      <path d="M4 6h102a3 3 0 0 1 3 3v26H1V9a3 3 0 0 1 3-3Z" fill="#D63A2F"/>
+      <rect x="90" y="10" width="16" height="5.5" rx="1" fill="#1972F9"/>
+      <text x="98" y="14.3" text-anchor="middle" fill="white" font-size="3.5" font-weight="700" font-family="system-ui">35%</text>
+      <rect x="10" y="43" width="10" height="3" rx="0.6" fill="#2340A9"/>
+      <rect x="22" y="43" width="11" height="3" rx="0.6" fill="#D61B2C"/>
+      <rect x="35" y="43" width="7" height="3" rx="0.6" fill="#B50707"/>
+      <rect x="44" y="43" width="14" height="3" rx="0.6" fill="#1972F9"/>
+      <rect x="10" y="50" width="38" height="2.4" rx="0.5" fill="#0A2757"/>
+      <rect x="10" y="56" width="32" height="1.8" rx="0.5" fill="#445C85"/>
+      <rect x="10" y="62" width="16" height="2.6" rx="0.5" fill="#005CE5"/>
+      <rect x="28" y="62.3" width="14" height="2" rx="0.5" fill="#90A8D0"/>
+      <rect x="10" y="68" width="40" height="1.5" rx="0.4" fill="#6780A9"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Horizontal Voucher</div>
+      <span class="badge badge-rework">Consolidate</span>
+    </div>
+    <div class="summary-card-desc">Single 336×265 symbol with a full-width 336×144 raster hero image and 6 boolean toggles over hardcoded content. Two duplicate discount badges ("10% off" + "35% off") stacked at the same anchor. Four hardcoded row badges. No state axis. Parallel record to Vertical Voucher and Voucher Card Horizontal.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Horizontal Voucher</strong></td>
+  <td><span class="badge badge-rework">Consolidate</span></td>
+  <td><span class="badge badge-rework">Rework</span></td>
+  <td class="muted">1</td>
+  <td class="muted">Single symbol, no variants, 6 boolean toggles with hardcoded text, raster image, and two stacked discount badges. Merge with Vertical Voucher + Voucher Card Horizontal into one <code>Voucher Card</code> with <code>orientation</code> + <code>state</code> axes and text/badge/image slots.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-horizontal-voucher">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Horizontal Voucher
+          <span class="badge badge-rework">Consolidate</span>
+          <span class="badge badge-rework">Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=5121-4533" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A 336-wide horizontal voucher tile composed of a full-width 336×144 raster hero image (with the "GrabFood" wordmark and two stacked discount Badge instances — "10% off" and "35% off" — both anchored top-right) plus a content block with a single row of 4 hardcoded status badges ("Limited", "Expiring", "Hot", "Discounted"), a hardcoded title ("Grab Food"), description, price (PHP 100.00 with PHP 150.00 strikethrough), and validity period. 1 symbol, no variants, 6 boolean toggles. All text and badge labels are frozen placeholder strings.</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Consolidate into one Voucher Card with orientation + state axes</div>
+          <div class="verdict-inline-text">Horizontal Voucher, Vertical Voucher (<code>5119:1635</code>), and Voucher Card Horizontal (<code>5119:1786</code>) are three parallel records of the same component. Merge into a single <code>Voucher Card</code> with <code>orientation: vertical | horizontal</code>, <code>state: default | limited | expiring | used | expired</code> (borrowed from Voucher Card Horizontal — the canonical sibling since it ships the state axis), an image Slot that accepts Voucher Asset instances, a composable <code>badges: [Badge]</code> array, and text slots for title / description / price / original price / validity. Drop the 6 booleans in favor of real string properties.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="horizontal-voucher-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'horizontal-voucher-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'horizontal-voucher-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'horizontal-voucher-tabs')">Changelog</button>
+    </div>
+
+    <!-- ══ Tab: Overview ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="hv-preview" style="margin-top:0">Current Figma</div>
+    <p class="section-desc">Single symbol, 336 × 265. A 336×144 raster hero image sits on top of a 336-wide content block. The image carries two duplicate discount Badges stacked at the same top-right anchor ("10% off" and "35% off"). The content block holds a single row of 4 hardcoded badges, a hardcoded title, description, price (with strikethrough original), and validity period. Every text string is placeholder; every badge label is frozen.</p>
+    <div class="demo-panel" id="hv-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="hv-demo-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="hv-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">All text content is hardcoded placeholder. Consumers cannot set a title ("Grab Food"), price (PHP 100.00), validity, or badge label without detaching. A "reusable" voucher component that can only render one frozen sample string is not reusable.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">The symbol carries its own layout, spacing, and token-bound colors via <code>main/vouchers/color/default/*</code>. But it ships two stacked discount Badge instances ("10% off" + "35% off") at the same anchor, assuming one is invisible — nothing in the schema picks between them.</div>
+      </div>
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">Parallel to Vertical Voucher and Voucher Card Horizontal — three components for one concept. Voucher Card Horizontal ships a proper <code>state</code> axis (Default/Limited/Expiring/Used/Expired); Horizontal Voucher ships none. Property shape diverges across the family (6 booleans here vs 8 in Vertical vs 2 booleans + 4-state enum in Voucher Card Horizontal).</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Nests Badge instances for the badge row (composition works). But the hero image is a raster asset baked into the frame, not a Voucher Asset instance — consumers cannot swap partner imagery without detaching. And since all voucher content is locked placeholder, a parent screen cannot compose real voucher data.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="hv-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspect</th><th>iOS</th><th>Android</th><th class="col-badge">Figma</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Hero image</td><td class="muted">Image Slot: <code>image: () -&gt; some View</code></td><td class="muted"><code>image: @Composable () -&gt; Unit</code></td><td><code>asset</code> boolean (raster frozen)</td><td class="muted">Currently a 336×144 raster with the "GrabFood" wordmark baked in. Should accept any Voucher Asset variant.</td></tr>
+          <tr><td>Discount amount</td><td class="muted"><code>discount: String?</code> on image slot</td><td class="muted">Same</td><td>Two stacked Badges ("10% off" + "35% off")</td><td class="muted">Two Badge instances at the same anchor. Should be a single <code>discount</code> string property on the Voucher Asset, not two stacked layers.</td></tr>
+          <tr><td>Title</td><td class="muted"><code>title: String</code></td><td class="muted"><code>title: String</code></td><td><code>header</code> boolean (string hardcoded)</td><td class="muted">"Grab Good" frozen in the symbol. Boolean only toggles visibility.</td></tr>
+          <tr><td>Description</td><td class="muted"><code>description: String?</code></td><td class="muted">Same</td><td><code>description</code> boolean (string hardcoded)</td><td class="muted">"This is the description of the voucher." frozen.</td></tr>
+          <tr><td>Price / original</td><td class="muted"><code>price: String, originalPrice: String?</code></td><td class="muted">Same</td><td><code>amount</code> boolean (strings hardcoded)</td><td class="muted">"PHP 100.00" and "PHP 150.00" frozen; one boolean toggles both.</td></tr>
+          <tr><td>Validity</td><td class="muted"><code>validity: String?</code></td><td class="muted">Same</td><td><code>validityPeriod</code> boolean (string hardcoded)</td><td class="muted">"Validity: Dec 25 2022 - Jan 5 2023" frozen.</td></tr>
+          <tr><td>Status badges</td><td class="muted"><code>badges: [EBBadge]</code></td><td class="muted"><code>badges: List&lt;EBBadge&gt;</code></td><td><code>badges</code> boolean (row of 4 hardcoded)</td><td class="muted">Single row of 4 fixed badge labels ("Limited", "Expiring", "Hot", "Discounted"). Row-level visibility only.</td></tr>
+          <tr><td>State</td><td class="muted"><code>state: .default | .limited | .expiring | .used | .expired</code></td><td class="muted">Same enum</td><td class="muted">Not modelled</td><td class="muted">Absent entirely. Voucher Card Horizontal has it; Horizontal Voucher does not.</td></tr>
+          <tr><td>Tap target</td><td class="muted">Entire card as <code>Button</code> with <code>PlainButtonStyle</code></td><td class="muted"><code>Card</code> with <code>onClick</code> + ripple</td><td class="muted">Not modelled</td><td class="muted">Vouchers are always tappable; current symbol has no pressed/disabled states.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="hv-resolved">Resolved Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Voucher content tokens exist.</strong> Background (<code>text/color-text-inverse</code> = white card surface), title (<code>main/vouchers/color/default/label-title</code>), description (<code>label-description</code>), amount (<code>label-amount</code>), strikethrough amount (rendered as <code>#90a8d0</code>, matches <code>label-amount-original</code>), and metadata (<code>label-metadata</code>) are all bound to the voucher component's variable collection. <span class="tag-open tag-c3">C3 · Token Coverage</span></span></li>
+      <li><span><strong>Card elevation is tokenised.</strong> The card uses <code>app/shadow/shadow-low</code> (0px/0px/4px, <code>elevation/app/shadow-low/color</code> rgba(2,14,34,0.06)). No hardcoded shadow values on the parent frame. <span class="tag-open tag-c3">C3 · Token Coverage</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="hv-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Three parallel components for one concept.</strong> Horizontal Voucher, Vertical Voucher (<code>5119:1635</code>), and Voucher Card Horizontal (<code>5119:1786</code>) share the same anatomy — voucher image + title + description + price + validity + status badges — but ship as three separate components with divergent property shapes. This is a family-level consolidation, not a single-component fix. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>No state axis.</strong> Voucher Card Horizontal ships Default / Limited / Expiring / Used / Expired as a proper state variant that drives background, label colors, and badge treatment. Horizontal Voucher has no state concept — a used or expired horizontal voucher cannot be rendered in greyed-out treatment. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>All text content is hardcoded placeholder.</strong> Title "Grab Food", description "This is the description of the voucher.", price "PHP 100.00", original price "PHP 150.00", and validity "Validity: Dec 25 2022 - Jan 5 2023" are all frozen strings inside the symbol. Booleans toggle visibility but not content. Consumers cannot render a real voucher without detaching. <span class="tag-open tag-c2">C2 · Variant &amp; Property Naming</span></span></li>
+      <li><span><strong>Two stacked discount Badges at the same anchor.</strong> The Voucher Asset image frame nests two Badge instances (<code>I5121:4534;6983:110671</code> "10% off" and <code>I5121:4534;6983:110685</code> "35% off") both absolutely positioned at the top-right. Only one is ever intended to be visible, but no property selects between them — both render on top of each other in the raw symbol. <span class="tag-open tag-c1">C1 · Layer Structure &amp; Naming</span></span></li>
+      <li><span><strong>Discount amount is baked into the image frame.</strong> The "35% off" / "10% off" label is a hardcoded Badge text inside the Voucher Asset, not a property on the parent Horizontal Voucher. A voucher offering "50% off" or "BUY1 TAKE1" cannot be rendered. Should be a <code>discount: String?</code> property on the image slot. <span class="tag-open tag-c2">C2 · Variant &amp; Property Naming</span></span></li>
+      <li><span><strong>Status badges are row-level, not array-level.</strong> The <code>badges</code> boolean toggles a single fixed row of 4 hardcoded Badge instances ("Limited" + "Expiring" + "Hot" + "Discounted") on or off. A real voucher with one "Limited" badge and nothing else cannot be rendered. Badges should be a composable array, not a fixed row. <span class="tag-open tag-c2">C2 · Variant &amp; Property Naming</span></span></li>
+      <li><span><strong>Hero image is a raster photograph with burned-in partner wordmark.</strong> <code>Paste Image Here</code> / <code>imgPasteImageHere</code> is a 336×144 raster asset with the "GrabFood" wordmark burned into the pixels. Partner branding and image content are frozen. Should be an Image Slot that accepts any Voucher Asset variant (GrabFood, Globe, Smart, Shopee, etc.). <span class="tag-open tag-c6">C6 · Asset &amp; Icon Quality</span></span></li>
+      <li><span><strong>No native component maps to this shape.</strong> 6 booleans with hardcoded content do not map to any reasonable native API. A proper <code>EBVoucherCard</code> takes title, price, validity, badges array, and image as parameters — not six visibility toggles over frozen strings. Code Connect has no 1:1 target. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>Code Connect cannot link a 6-boolean symbol with frozen strings.</strong> Even if a mapping existed, swapping the "title" string, the hero image, or the badge labels would require detaching the component. Linkability requires real string/array properties and an image Slot first. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="hv-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Merge the three voucher cards into a single Voucher Card component.</strong> Horizontal Voucher + Vertical Voucher + Voucher Card Horizontal become one component with <code>orientation: vertical | horizontal</code> (swaps the layout axis) and <code>state: default | limited | expiring | used | expired</code> (borrowed from Voucher Card Horizontal — the canonical sibling since it already ships the state axis). Target shape: 2 orientations × 5 states = 10 variants instead of three separate components with divergent schemas. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Promote every text string to a property.</strong> Add <code>title: String</code>, <code>description: String</code>, <code>price: String</code>, <code>originalPrice: String?</code>, <code>validity: String?</code>. Retire the <code>header</code> / <code>amount</code> / <code>description</code> / <code>validityPeriod</code> booleans — visibility falls out of whether the string is empty. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Replace the stacked discount Badges with one <code>discount</code> string on the image slot.</strong> Drop the duplicated "10% off" and "35% off" Badge instances inside the Voucher Asset frame. Expose <code>discount: String?</code> on the voucher-image Slot so any discount value ("10% off", "50% off", "BUY1 TAKE1") can be rendered without editing the symbol. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Adopt a Figma Slot for the hero image.</strong> Replace the raster <code>Paste Image Here</code> fill with a Slot that accepts a Voucher Asset instance (or any partner illustration component). The discount overlay and the raster wordmark both move into the swapped-in asset, not into the parent Voucher. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Replace the fixed 4-badge row with a composable badges array.</strong> Drop the single <code>badges</code> boolean. Expose a badges Slot that accepts 0..n Badge instances and wraps when it runs out of width. Consumers choose which badges apply ("Limited" alone, "Hot" + "Discounted", "New" + "Featured", etc.). <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Add the state axis missing from Horizontal Voucher.</strong> Used and Expired vouchers render in greyed-out treatment with muted labels and a dimmed hero image — a pattern Voucher Card Horizontal already ships. Port the same 5-state treatment to the unified Voucher Card. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Remove the dead <code>10% off</code> Badge layer.</strong> The image frame carries both <code>I5121:4534;6983:110671</code> ("10% off") and <code>I5121:4534;6983:110685</code> ("35% off") at identical coordinates; after the <code>discount</code> property above is introduced, only one Badge instance should remain, with its text bound to the new property. <span class="tag-recommend">Composition</span></span></li>
+      <li><span><strong>Document that Voucher Card is the tap target.</strong> Vouchers are always tappable entry points to the voucher detail screen. The unified component should ship a pressed/focused state on the card frame; the handoff is an <code>onTap</code> closure, not an internal CTA button. <span class="tag-recommend">Docs</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ══ Tab: Code ══════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="hv-code-usage" style="margin-top:0">Native equivalent <span class="badge badge-planned">Planned API</span></div>
+    <p class="section-desc">Native models the voucher family as a single <code>EBVoucherCard</code> with orientation, state, text properties, a composable badges array, and a Voucher Asset image parameter. The current Horizontal Voucher's 6 booleans do not have a 1:1 native analog; consumers write real strings and state enums instead.</p>
+
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'hv-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'hv-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Proposed API — unified Voucher Card (horizontal orientation)</span>
+<span class="typ">EBVoucherCard</span>(
+    <span class="prp">orientation</span>: .<span class="prp">horizontal</span>,
+    <span class="prp">state</span>: .<span class="prp">limited</span>,
+    <span class="prp">title</span>: <span class="str">"Grab Food"</span>,
+    <span class="prp">description</span>: <span class="str">"Get a discount on your next GrabFood order."</span>,
+    <span class="prp">price</span>: <span class="str">"PHP 100.00"</span>,
+    <span class="prp">originalPrice</span>: <span class="str">"PHP 150.00"</span>,
+    <span class="prp">validity</span>: <span class="str">"Dec 25 2022 - Jan 5 2023"</span>,
+    <span class="prp">badges</span>: [
+        <span class="typ">EBBadge</span>(<span class="str">"Limited"</span>, <span class="prp">style</span>: .<span class="prp">informationHeavy</span>),
+        <span class="typ">EBBadge</span>(<span class="str">"Expiring"</span>, <span class="prp">style</span>: .<span class="prp">negativeHeavy</span>)
+    ]
+) {
+    <span class="typ">EBVoucherImageFrame</span>(<span class="prp">discount</span>: <span class="str">"35% off"</span>) {
+        <span class="typ">Image</span>(<span class="str">"voucher-grabfood"</span>).<span class="fn">resizable</span>().<span class="fn">scaledToFill</span>()
+    }
+}
+.<span class="fn">onTapGesture</span> { <span class="cmt">// navigate to voucher details</span> }
+
+<span class="cmt">// Used/expired treatment</span>
+<span class="typ">EBVoucherCard</span>(<span class="prp">orientation</span>: .<span class="prp">horizontal</span>, <span class="prp">state</span>: .<span class="prp">used</span>, <span class="prp">title</span>: <span class="str">"Grab Food"</span>, <span class="prp">price</span>: <span class="str">"PHP 100.00"</span>) {
+    <span class="typ">EBVoucherImageFrame</span> {
+        <span class="typ">Image</span>(<span class="str">"voucher-grabfood"</span>).<span class="fn">resizable</span>().<span class="fn">scaledToFill</span>()
+    }
+}</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Proposed API — unified Voucher Card (horizontal orientation)</span>
+<span class="typ">EBVoucherCard</span>(
+    orientation = <span class="typ">EBVoucherOrientation</span>.Horizontal,
+    state = <span class="typ">EBVoucherState</span>.Limited,
+    title = <span class="str">"Grab Food"</span>,
+    description = <span class="str">"Get a discount on your next GrabFood order."</span>,
+    price = <span class="str">"PHP 100.00"</span>,
+    originalPrice = <span class="str">"PHP 150.00"</span>,
+    validity = <span class="str">"Dec 25 2022 - Jan 5 2023"</span>,
+    badges = <span class="fn">listOf</span>(
+        <span class="typ">EBBadge</span>(<span class="str">"Limited"</span>, style = <span class="typ">EBBadgeStyle</span>.InformationHeavy),
+        <span class="typ">EBBadge</span>(<span class="str">"Expiring"</span>, style = <span class="typ">EBBadgeStyle</span>.NegativeHeavy)
+    ),
+    onClick = { <span class="cmt">/* navigate to voucher details */</span> },
+    image = {
+        <span class="typ">EBVoucherImageFrame</span>(discount = <span class="str">"35% off"</span>) {
+            <span class="typ">Image</span>(
+                painter = <span class="fn">painterResource</span>(<span class="typ">R</span>.drawable.voucher_grabfood),
+                contentDescription = <span class="kw">null</span>,
+                contentScale = <span class="typ">ContentScale</span>.Crop
+            )
+        }
+    }
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="hv-mapping">Property Mapping (Proposed)</div>
+    <p>The current 6 booleans do not map cleanly to native. The table below shows the <em>target</em> shape after the family consolidation — each row captures what the proposed <code>EBVoucherCard</code> replaces from the current Horizontal Voucher.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Current Figma</th><th>Proposed Figma</th><th>SwiftUI</th><th>Compose</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">—</td><td><code>orientation</code></td><td class="muted"><code>orientation: EBVoucherOrientation</code></td><td class="muted"><code>orientation = EBVoucherOrientation</code></td><td class="muted">vertical | horizontal — collapses 3 components into 1</td></tr>
+          <tr><td class="mono">—</td><td><code>state</code></td><td class="muted"><code>state: EBVoucherState</code></td><td class="muted"><code>state = EBVoucherState</code></td><td class="muted">default | limited | expiring | used | expired (port from Voucher Card Horizontal)</td></tr>
+          <tr><td class="mono"><code>asset</code> (boolean, raster frozen)</td><td>Image Slot</td><td class="muted">trailing closure</td><td class="muted"><code>image: @Composable () -&gt; Unit</code></td><td class="muted">Accepts any EBVoucherImageFrame instance; partner wordmark lives inside the asset, not the parent</td></tr>
+          <tr><td class="mono">"10% off" + "35% off" Badges</td><td><code>discount</code> on Voucher Asset</td><td class="muted"><code>EBVoucherImageFrame(discount: "35% off")</code></td><td class="muted"><code>EBVoucherImageFrame(discount = "35% off")</code></td><td class="muted">One string on the image-frame child, not two stacked Badge layers on the parent</td></tr>
+          <tr><td class="mono"><code>header</code> (boolean, string frozen)</td><td><code>title</code> (string)</td><td class="muted"><code>title: String</code></td><td class="muted"><code>title: String</code></td><td class="muted">Visibility = whether string is empty</td></tr>
+          <tr><td class="mono"><code>description</code> (boolean, string frozen)</td><td><code>description</code> (string)</td><td class="muted"><code>description: String?</code></td><td class="muted">Same</td><td class="muted">Same</td></tr>
+          <tr><td class="mono"><code>amount</code> (boolean, PHP 100 / PHP 150 frozen)</td><td><code>price</code> + <code>originalPrice</code></td><td class="muted"><code>price: String, originalPrice: String?</code></td><td class="muted">Same</td><td class="muted">Two strings, strikethrough applied to originalPrice</td></tr>
+          <tr><td class="mono"><code>validityPeriod</code> (boolean, string frozen)</td><td><code>validity</code> (string)</td><td class="muted"><code>validity: String?</code></td><td class="muted">Same</td><td class="muted">Same</td></tr>
+          <tr><td class="mono"><code>badges</code> (boolean, row of 4 hardcoded)</td><td><code>badges</code> Slot</td><td class="muted"><code>badges: [EBBadge]</code></td><td class="muted"><code>badges: List&lt;EBBadge&gt;</code></td><td class="muted">Composable array, wraps on overflow</td></tr>
+          <tr><td class="mono">—</td><td>—</td><td class="muted"><code>onTap: () -&gt; Void</code></td><td class="muted"><code>onClick: () -&gt; Unit</code></td><td class="muted">Card is the tap target</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="hv-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Two discount Badge instances ("10% off" + "35% off") stacked at the same anchor inside the Voucher Asset frame. Text layers are unnamed. <code>Paste Image Here</code> is a generic placeholder layer name.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">6 booleans where most should be strings (title, price, validity) or a Slot (badges, image). <code>badges</code> boolean toggles a fixed row of 4 hardcoded badges. All content is frozen placeholder.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">Title, description, amount, strikethrough amount, and metadata are all bound to <code>main/vouchers/color/default/*</code>. Card elevation uses <code>app/shadow/shadow-low</code>. Typography uses named text styles (Primary/Multi-line Label/Base, Primary/Label/Small, Secondary/Default/Caption, Secondary/Default/Fine).</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Parallel to 2 other voucher components with divergent schemas. Native has one <code>EBVoucherCard</code>, not three. 6 booleans with frozen strings and a raster hero have no native analog.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">No state axis at all. Voucher Card Horizontal ships Default/Limited/Expiring/Used/Expired; Horizontal Voucher has none. No pressed/focused/disabled on the card frame either.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Hero image is a raster photograph with the "GrabFood" wordmark burned into the pixels. Discount amount is baked into stacked Badge instances, not a property.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Cannot map. Frozen strings, row-level badge toggle, stacked discount badges, and raster hero do not have 1:1 native parameters. Linkability requires the family consolidation first.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="hv-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(1 total)</span></div>
+    <p>Single symbol, no variant axes declared. All configurability is through 6 boolean property toggles on the lone instance.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Node ID</th><th>Name</th><th>Dimensions</th><th>Property toggles</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="mono"><code>5121:4533</code></td>
+            <td>Horizontal Voucher</td>
+            <td class="muted">336 × 265 (with all properties on)</td>
+            <td class="muted"><code>amount</code>, <code>asset</code>, <code>badges</code>, <code>description</code>, <code>header</code>, <code>validityPeriod</code> — all boolean, all default <code>true</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="section-desc" style="margin-top:16px;">Nested instances (two discount badges stacked at the same anchor; row of four status badges with hardcoded labels):</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Node ID</th><th>Layer</th><th>Kind</th><th>Dimensions</th></tr></thead>
+        <tbody>
+          <tr><td class="mono"><code>5121:4534</code></td><td><code>Voucher Asset</code></td><td>Image frame (raster + 2 stacked discount badges)</td><td class="muted">336 × 144</td></tr>
+          <tr><td class="mono"><code>I5121:4534;6983:110671</code></td><td><code>Voucher Asset</code> &gt; Badge "10% off"</td><td>Badge instance (brand/heavy)</td><td class="muted">auto</td></tr>
+          <tr><td class="mono"><code>I5121:4534;6983:110685</code></td><td><code>Voucher Asset</code> &gt; Badge "35% off"</td><td>Badge instance (brand/heavy)</td><td class="muted">auto</td></tr>
+          <tr><td class="mono"><code>5121:4537</code></td><td><code>badges</code> &gt; Badge "Limited"</td><td>Badge instance (information/heavy)</td><td class="muted">auto</td></tr>
+          <tr><td class="mono"><code>5121:4538</code></td><td><code>badges</code> &gt; Badge "Expiring"</td><td>Badge instance (negative/heavy)</td><td class="muted">auto</td></tr>
+          <tr><td class="mono"><code>5121:4539</code></td><td><code>badges</code> &gt; Badge "Hot"</td><td>Badge instance (destructive)</td><td class="muted">auto</td></tr>
+          <tr><td class="mono"><code>5121:4540</code></td><td><code>badges</code> &gt; Badge "Discounted"</td><td>Badge instance (brand/heavy)</td><td class="muted">auto</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- ══ Tab: Changelog ════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 5121:4533</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Assessed with Consolidate verdict.</strong> Single symbol with no variants, 6 boolean toggles, hardcoded content, raster hero image, and two stacked discount Badges. Parallel to Vertical Voucher (<code>5119:1635</code>) and Voucher Card Horizontal (<code>5119:1786</code>). <span class="tag-open">Open</span></div><span class="changelog-delta delta-open">Design Decision</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Proposed family-level merge.</strong> Collapse the 3 voucher components into one <code>Voucher Card</code> with <code>orientation</code> + <code>state</code> axes, text slots (title, description, price, originalPrice, validity), a badges array, and a voucher image Slot. Target: 2 × 5 = 10 variants instead of 3 divergent components. <span class="tag-open">Open</span></div><span class="changelog-delta delta-open">Design Decision</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-horizontal-voucher">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-horizontal-voucher"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Horizontal Voucher JS ─────────────────────────────────────────── */
+function _hvHero(w, h, c1, c2, label, badgeText) {
+  var notchR = 6;
+  var s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" style="display:block">';
+  s += '<defs>';
+  s += '<clipPath id="hv-clip-' + w + '-' + h + '-' + label + '"><path d="M0 0 H' + w + ' V' + h + ' H0 Z" /></clipPath>';
+  s += '<linearGradient id="hv-g-' + w + '-' + h + '-' + label + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + c1 + '"/><stop offset="1" stop-color="' + c2 + '"/></linearGradient>';
+  s += '</defs>';
+  s += '<g clip-path="url(#hv-clip-' + w + '-' + h + '-' + label + ')">';
+  s += '<rect width="' + w + '" height="' + h + '" fill="url(#hv-g-' + w + '-' + h + '-' + label + ')"/>';
+  if (label) {
+    s += '<text x="' + (w / 2) + '" y="' + (h / 2 + 6) + '" text-anchor="middle" fill="rgba(255,255,255,0.95)" font-size="22" font-weight="700" font-family="system-ui">' + label + '</text>';
+  }
+  // perforated line near the bottom
+  s += '<line x1="6" y1="' + (h - 8) + '" x2="' + (w - 6) + '" y2="' + (h - 8) + '" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="2 3" opacity="0.7"/>';
+  s += '</g>';
+  if (badgeText) {
+    var bw = 52, bh = 22;
+    var bx = w - bw;
+    var by = 12;
+    s += '<g transform="translate(' + bx + ',' + by + ')">';
+    s += '<rect x="0" y="0" width="' + bw + '" height="' + bh + '" fill="#1972F9" rx="0"/>';
+    s += '<text x="' + (bw / 2) + '" y="' + (bh / 2 + 4) + '" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="700" font-family="system-ui">' + badgeText + '</text>';
+    s += '</g>';
+  }
+  s += '</svg>';
+  return s;
+}
+
+function _hvCard(opts) {
+  var asset = opts.asset !== false;
+  var badges = opts.badges !== false;
+  var header = opts.header !== false;
+  var desc = opts.desc !== false;
+  var amount = opts.amount !== false;
+  var validity = opts.validity !== false;
+  var label = opts.label || 'Horizontal Voucher';
+
+  var s = '<div style="display:flex;flex-direction:column;gap:6px;align-items:center;">';
+  s += '<div style="width:336px;background:#FFFFFF;border:1px solid #E6EAF2;border-radius:4px;overflow:hidden;box-shadow:0 1px 4px rgba(10,39,87,0.06);">';
+  if (asset) {
+    s += _hvHero(336, 144, '#D63A2F', '#8C1A15', 'GrabFood', '35% off');
+  }
+  // Content block
+  s += '<div style="padding:8px 12px 12px 12px;display:flex;flex-direction:column;gap:4px;">';
+  if (badges) {
+    s += '<div style="display:flex;gap:4px;flex-wrap:wrap;">';
+    s += '<span style="background:#2340A9;color:#FFF;font-size:10px;font-weight:700;font-family:\'Proxima Soft\',system-ui;padding:3px 4px 1px 4px;border-radius:4px;letter-spacing:0.5px;">Limited</span>';
+    s += '<span style="background:#D61B2C;color:#FFF;font-size:10px;font-weight:700;font-family:\'Proxima Soft\',system-ui;padding:3px 4px 1px 4px;border-radius:4px;letter-spacing:0.5px;">Expiring</span>';
+    s += '<span style="background:#B50707;color:#FFF;font-size:10px;font-weight:700;font-family:\'Proxima Soft\',system-ui;padding:3px 4px 1px 4px;border-radius:4px;letter-spacing:0.5px;">Hot</span>';
+    s += '<span style="background:#1972F9;color:#FFF;font-size:10px;font-weight:700;font-family:\'Proxima Soft\',system-ui;padding:3px 4px 1px 4px;border-radius:4px;letter-spacing:0.5px;">Discounted</span>';
+    s += '</div>';
+  }
+  if (header) {
+    s += '<div style="color:#0A2757;font-size:16px;font-weight:700;font-family:\'Proxima Soft\',system-ui;line-height:20px;letter-spacing:0.25px;">Grab Food</div>';
+  }
+  if (desc) {
+    s += '<div style="color:#445C85;font-size:12px;font-family:\'BarkAda\',system-ui;line-height:18px;">This is the description of the voucher.</div>';
+  }
+  if (amount) {
+    s += '<div style="display:flex;gap:6px;align-items:center;">';
+    s += '<div style="color:#005CE5;font-size:14px;font-weight:700;font-family:\'Proxima Soft\',system-ui;letter-spacing:0.25px;">PHP 100.00</div>';
+    s += '<div style="color:#90A8D0;font-size:12px;font-family:\'BarkAda\',system-ui;text-decoration:line-through;">PHP 150.00</div>';
+    s += '</div>';
+  }
+  if (validity) {
+    s += '<div style="color:#6780A9;font-size:8px;font-family:\'BarkAda\',system-ui;letter-spacing:0;">Validity: Dec 25 2022 - Jan 5 2023</div>';
+  }
+  s += '</div>';
+  s += '</div>';
+  s += '<div style="color:#666;font-size:10px;font-family:system-ui;font-weight:600;">' + label + '</div>';
+  s += '</div>';
+  return s;
+}
+
+function _hvBuildPreview() {
+  var s = '<div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;justify-content:center;">';
+  s += _hvCard({ label: 'Default (all props on)' });
+  s += _hvCard({ badges: false, desc: false, label: 'Minimal — header + price + validity' });
+  s += '</div>';
+  return s;
+}
+
+function _hvInit() {
+  var el = document.getElementById('hv-demo-preview');
+  if (el) el.innerHTML = _hvBuildPreview();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _hvInit);
+else _hvInit();
+</script>
+
+<!--@section-end-->

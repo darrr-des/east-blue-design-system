@@ -1,0 +1,460 @@
+<!--
+  VOUCHER ASSET — ASSESSMENT
+  20 variants across type (midfi/hifi) × size (small/large) × use case (10) × orientation (default/horizontal).
+  Each variant is a raster image fill in a ticket-shaped clipping frame, with a Badge instance
+  hard-wired to "35% off". Use case is effectively an illustration category (restaurant, vacation,
+  beverage, snack, fashion, party, meal, games, food) promoted into a component variant.
+
+  Verdict: Restructure. Use case does not belong as a Figma variant axis — it's illustration
+  content. type=midfi vs type=hifi is an authoring-fidelity concern, not a product concern.
+  Recommend collapsing to a single Voucher Image Frame with size + orientation enums and an image Slot.
+
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 5119:1664
+ds-verdict: restructure
+native-status: rework
+variants: 20
+ios: Image (asset catalog) behind EBVoucherImageFrame view
+android: Image (drawable) behind EBVoucherImageFrame composable
+open-issues: C1,C2,C4,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C2] Illustration category promoted to a variant axis — <code>use case</code> has 10 values (restaurant, vacation, beverage, snack, fashion, party, meal, games, food, default). Every new voucher category forces a new component variant. Should be an instance-swapped image Slot, not a variant.
+[C2] Fidelity axis <code>type=midfi|hifi</code> — "mid-fidelity" placeholder vs "hi-fidelity" final artwork is an authoring concern (wireframe vs final), not a product axis. Same pattern retired on Ad Space; should be an orthogonal <code>isLoading</code> or a separate placeholder asset, not a variant value.
+[C4] Cartesian is sparse — 10 use cases × 2 sizes × 2 orientations = 40 possible; only 20 shipped. Orientation=horizontal exists for <code>default</code> (midfi) and <code>food</code> (hifi) only; most use cases have no horizontal artwork. The matrix is not closed.
+[C6] All artwork is raster image fill — no vector illustrations, no token-driven coloring. The "35% off" Badge is hardcoded inside the component, so the voucher amount is not a property.
+[C7] Native mapping is not a component — the correct handoff for a category illustration is an asset catalog entry (<code>Image("voucher-restaurant-large")</code>), not a Code-Connected component. Only the ticket frame + badge overlay warrants a component.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Voucher<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-voucher-asset" onclick="showPanel('voucher-asset', this)">
+  <div class="nav-comp-icon">
+    <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 10a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4v-3Z" fill="#E6E1EF"/>
+      <rect x="18" y="11" width="9" height="5" rx="1" fill="#1972F9"/>
+      <text x="22.5" y="14.7" text-anchor="middle" fill="white" font-size="3.2" font-weight="700" font-family="system-ui">35%</text>
+    </svg>
+  </div>
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Voucher Asset</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('voucher-asset')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <path d="M6 10a2 2 0 0 1 2-2h64a2 2 0 0 1 2 2v8a2 2 0 0 0 0 4v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-8a2 2 0 0 0 0-4v-8Z" fill="#E6E1EF"/>
+      <rect x="54" y="14" width="18" height="8" rx="1.5" fill="#1972F9"/>
+      <text x="63" y="20" text-anchor="middle" fill="white" font-size="5" font-weight="700" font-family="system-ui">35%</text>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Voucher Asset</div>
+      <span class="badge badge-rework">Restructure</span>
+    </div>
+    <div class="summary-card-desc">Ticket-shaped raster illustration with a hardcoded "35% off" Badge. 20 variants sprawl across use-case categories — a variant axis that's really illustration content.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Voucher Asset</strong></td>
+  <td><span class="badge badge-rework">Restructure</span></td>
+  <td><span class="badge badge-rework">Rework</span></td>
+  <td class="muted">20</td>
+  <td class="muted">Illustration artwork disguised as a component. Retire <code>use case</code> + <code>type</code> axes, collapse to a single Voucher Image Frame with an image Slot. Native handoff is asset catalog, not Code Connect.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-voucher-asset">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Voucher Asset
+          <span class="badge badge-rework">Restructure</span>
+          <span class="badge badge-rework">Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=5119-1664" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A ticket-shaped raster image used as the visual for voucher placements — a full-bleed photo clipped into a notched-ticket frame, with a Badge instance anchored to the right edge displaying "35% off". The current component has four property axes: <code>type</code> (midfi | hifi), <code>size</code> (small | large), <code>use case</code> (10 category values: default, restaurant, vacation, beverage, snack, fashion, party, meal, games, food), and <code>orientation</code> (default | horizontal). 20 variants ship out of a possible 40 in the cartesian space. Every variant is a hardcoded image fill; the "35% off" string is baked in.</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Collapse use-case variants into an image Slot</div>
+          <div class="verdict-inline-text">Use case is illustration content — it does not belong as a Figma variant axis. A new category launch should not require a new DS variant. Retire <code>type=midfi|hifi</code> (authoring fidelity, not product concern) and <code>use case</code> (content, not variant). Ship a single <code>Voucher Image Frame</code> with <code>size: small | large</code> + <code>orientation: vertical | horizontal</code>, plus an image Slot and a <code>discount</code> string. Category artwork lives in a separate asset library, instance-swapped into the Slot.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="voucher-asset-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'voucher-asset-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'voucher-asset-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'voucher-asset-tabs')">Changelog</button>
+    </div>
+
+    <!-- ══ Tab: Overview ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="va-preview" style="margin-top:0">Current Figma</div>
+    <p class="section-desc">20 variants across type × size × use case × orientation. The top row is the <code>midfi</code> "Placeholder image" wireframes; the rest are <code>hifi</code> raster photos per category. Every tile has the same hardcoded "35% off" Badge pinned to the right edge.</p>
+    <div class="demo-panel" id="va-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="va-demo-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="va-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">Tied to specific illustration categories. Consumers cannot supply their own voucher image — they must pick from the 10 baked-in use cases or detach the component.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Ships the ticket frame and Badge instance, but the voucher amount ("35% off") is hardcoded into the image, not a property. Consumers can't change the discount without swapping the whole variant.</div>
+      </div>
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">Property schema is contradictory. <code>type=midfi</code> is an authoring state, <code>use case</code> is content, <code>size</code> and <code>orientation</code> are geometry. Cartesian space is sparse — only default and food exist in horizontal; most use cases don't. New categories require new variants.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Used inside Vertical Voucher, Horizontal Voucher, and Voucher Card Horizontal — composition works. But since content is locked to 10 categories, the parent voucher components inherit the same constraint.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="va-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspect</th><th>iOS</th><th>Android</th><th class="col-badge">Figma</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Image source</td><td class="muted"><code>Image</code> from asset catalog</td><td class="muted"><code>Image</code> from drawable resources</td><td><code>use case</code> enum</td><td class="muted">Native doesn't switch on an enum — it reads a named asset. The Figma enum is a Figma-only crutch.</td></tr>
+          <tr><td>Size</td><td class="muted">Fixed frames: 162×100 (small), 162×153 (large)</td><td class="muted">Same</td><td><code>size</code> enum</td><td class="muted">Two fixed sizes; horizontal variants override to 336×144.</td></tr>
+          <tr><td>Discount label</td><td class="muted"><code>EBBadge("35% off", style: .brandHeavy)</code></td><td class="muted"><code>EBBadge("35% off", style = BrandHeavy)</code></td><td>Badge instance</td><td class="muted">Currently hardcoded string. Should be a <code>discount</code> property on the parent component.</td></tr>
+          <tr><td>Clipping shape</td><td class="muted">Custom <code>Path</code> with notch cutouts</td><td class="muted">Custom <code>Shape</code> with notches</td><td>Mask</td><td class="muted">Ticket notch + dashed center line is the only DS-specific visual primitive here.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="va-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Use-case axis promotes illustration content into variants.</strong> 10 use-case values (restaurant, vacation, beverage, snack, fashion, party, meal, games, food, default) mean every new voucher category ships a new DS variant. This is the same anti-pattern Ad Space retired. Consumers should instance-swap an illustration into a Slot, not pick from a DS-owned enum. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Fidelity axis <code>type=midfi|hifi</code> is not a product concern.</strong> Mid-fidelity "Placeholder image" wireframes vs hi-fidelity final photos is an authoring-workflow state, not a variant the product should expose. Native has no concept of "mid-fidelity"; this axis will not map. Same pattern retired on Ad Space. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Cartesian space is sparse (20/40 shipped).</strong> 10 use cases × 2 sizes × 2 orientations = 40 possible variants. Only 20 actually exist. Horizontal orientation only exists for <code>default</code> (midfi wireframe) and <code>food</code> (hifi GrabFood). Most use cases have no horizontal artwork. The matrix is authored ad-hoc, not systematically. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>Discount amount "35% off" is hardcoded.</strong> The Badge instance inside every variant renders a fixed "35% off" string. There is no property to change the voucher discount — consumers with a 50% off or BUY1TAKE1 promo must detach. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>All artwork is raster image fill.</strong> 19 of 20 variants are photographic images; 1 is a grey placeholder. No vector illustrations, no token-driven coloring. Images live inside the component, not in a separate asset library, which means they ship with every DS publish and bloat the library. <span class="tag-open tag-c6">C6 · Asset &amp; Icon Quality</span></span></li>
+      <li><span><strong>No native component to map to.</strong> Native handoff for category illustration is an asset catalog entry (<code>Image("voucher-restaurant-large")</code>) — not a Code-Connected DS component. Only the ticket frame + badge overlay warrants a component on native. The use-case enum has no iOS/Android correlate. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>Code Connect cannot map a 10-value content enum.</strong> Even if a mapping existed, it would force 10 named image assets per size × orientation combination into the codebase, locked to the Figma enum. Any new category requires a Figma variant ship + a native code ship in lockstep. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="va-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Collapse into one Voucher Image Frame component.</strong> Retire <code>use case</code> and <code>type</code>. Keep <code>size: small | large</code> and <code>orientation: vertical | horizontal</code>. Add an image Slot that accepts any illustration instance, plus a <code>discount</code> string (default "35% off") that drives the Badge. Target schema: 2 × 2 = 4 variants instead of 20. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Move category artwork to a separate Voucher Illustrations library.</strong> Ship a sibling library with named illustration instances organized by category (Food, Travel, Entertainment, etc.). Consumers instance-swap the illustration into the Voucher Image Frame's Slot. New categories are added to the library, not to the DS component. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Adopt a Figma Slot for the image fill.</strong> The current pattern (hardcoded image fill per variant) prevents consumers from using branded partner artwork (GrabFood, Tim Hortons, etc. — already visible in current variants) without detaching. A Slot lets product teams bring their own asset. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Promote <code>discount</code> to a string property.</strong> Extract the "35% off" text out of the variants so vouchers can show any discount format ("50% off", "BUY1 TAKE1", "₱100 OFF"). The Badge instance is already composable; only the string needs exposing. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Close the orientation matrix.</strong> Either commit to supporting horizontal for every size (ship the missing artwork through the Slot), or drop orientation as an axis and let parents set aspect ratio. The current sparse matrix (2 horizontal variants out of 20) signals the axis is accidental. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Native handoff is asset catalog, not Code Connect.</strong> Document that voucher illustrations ship via <code>Assets.xcassets</code> (iOS) and <code>res/drawable/</code> (Android). The DS component's Code Connect mapping should cover only the ticket frame + Badge + discount string; category art is a product-team responsibility. <span class="tag-recommend">Docs</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ══ Tab: Code ══════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="va-code-usage" style="margin-top:0">Native equivalent <span class="badge badge-planned">Planned API</span></div>
+    <p class="section-desc">Native splits this into two layers: (1) <code>EBVoucherImageFrame</code>, the ticket-shape container with notch + dashed separator + Badge overlay, and (2) category artwork, which lives in the platform asset catalog and is passed in as an <code>Image</code>. The current Figma <code>use case</code> enum is not modelled natively — consumers pick the asset name directly.</p>
+
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'va-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'va-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Proposed API — restructured component</span>
+<span class="typ">EBVoucherImageFrame</span>(
+    <span class="prp">size</span>: .<span class="prp">large</span>,
+    <span class="prp">orientation</span>: .<span class="prp">vertical</span>,
+    <span class="prp">discount</span>: <span class="str">"35% off"</span>
+) {
+    <span class="typ">Image</span>(<span class="str">"voucher-restaurant"</span>)   <span class="cmt">// from asset catalog</span>
+        .<span class="fn">resizable</span>()
+        .<span class="fn">scaledToFill</span>()
+}
+
+<span class="cmt">// Horizontal hero voucher</span>
+<span class="typ">EBVoucherImageFrame</span>(<span class="prp">size</span>: .<span class="prp">large</span>, <span class="prp">orientation</span>: .<span class="prp">horizontal</span>, <span class="prp">discount</span>: <span class="str">"50% off"</span>) {
+    <span class="typ">Image</span>(<span class="str">"voucher-food-grabfood"</span>).<span class="fn">resizable</span>().<span class="fn">scaledToFill</span>()
+}</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Proposed API — restructured component</span>
+<span class="typ">EBVoucherImageFrame</span>(
+    size = <span class="typ">EBVoucherImageFrameSize</span>.Large,
+    orientation = <span class="typ">EBVoucherImageFrameOrientation</span>.Vertical,
+    discount = <span class="str">"35% off"</span>
+) {
+    <span class="typ">Image</span>(
+        painter = <span class="fn">painterResource</span>(<span class="typ">R</span>.drawable.voucher_restaurant),
+        contentDescription = <span class="kw">null</span>,
+        contentScale = <span class="typ">ContentScale</span>.Crop
+    )
+}
+
+<span class="cmt">// Horizontal hero voucher</span>
+<span class="typ">EBVoucherImageFrame</span>(
+    size = <span class="typ">EBVoucherImageFrameSize</span>.Large,
+    orientation = <span class="typ">EBVoucherImageFrameOrientation</span>.Horizontal,
+    discount = <span class="str">"50% off"</span>
+) {
+    <span class="typ">Image</span>(<span class="fn">painterResource</span>(<span class="typ">R</span>.drawable.voucher_food_grabfood), <span class="kw">null</span>, contentScale = <span class="typ">ContentScale</span>.Crop)
+}</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="va-mapping">Property Mapping (Proposed)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma (proposed)</th><th>SwiftUI</th><th>Compose</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>size</code></td><td class="muted"><code>size: EBVoucherImageFrameSize</code></td><td class="muted"><code>size = EBVoucherImageFrameSize</code></td><td class="muted">small (162×100) | large (162×153)</td></tr>
+          <tr><td><code>orientation</code></td><td class="muted"><code>orientation: .vertical | .horizontal</code></td><td class="muted"><code>orientation = Vertical | Horizontal</code></td><td class="muted">Horizontal large is 336×144</td></tr>
+          <tr><td><code>discount</code> (string)</td><td class="muted"><code>discount: String</code></td><td class="muted"><code>discount: String</code></td><td class="muted">Renders via <code>EBBadge</code> overlay</td></tr>
+          <tr><td>Image Slot</td><td class="muted"><code>content: () -&gt; Image</code></td><td class="muted"><code>content: @Composable () -&gt; Unit</code></td><td class="muted">Consumer-supplied illustration</td></tr>
+          <tr><td class="mono"><s>use case</s></td><td class="muted">—</td><td class="muted">—</td><td class="muted">Retired — asset name is consumer's choice</td></tr>
+          <tr><td class="mono"><s>type</s> (midfi/hifi)</td><td class="muted">—</td><td class="muted">—</td><td class="muted">Retired — authoring fidelity, not a product axis</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="va-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">20 variants with sparse orientation coverage — only <code>default</code> and <code>food</code> have horizontal artwork. Matrix is not closed.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted"><code>use case</code> is content, not a variant. <code>type=midfi|hifi</code> is authoring fidelity, not a product axis. <code>"35% off"</code> is hardcoded.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-refine">Refine</span></td><td class="muted">Badge uses token-bound colors and typography. Image fills bypass tokens (raster).</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">No native correlate for a 10-value illustration enum. Correct handoff is asset catalog + lean frame component.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-na">N/A</span></td><td class="muted">Display-only artwork; no interactive states.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">All raster. 19/20 variants are photos; 1 placeholder. Assets should live in a sibling library, not the component.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Cannot map a 10-value content enum 1:1 to a native parameter. Linkability requires collapsing use case first.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="va-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(20 total)</span></div>
+    <p>Current shape: <code>type</code> × <code>size</code> × <code>use case</code> × <code>orientation</code>. Cartesian space is 2 × 2 × 10 × 2 = 80, only 20 shipped. Heavily skewed toward <code>type=hifi</code> / <code>orientation=Default</code> (16 of 20). <code>midfi</code> exists only for <code>use case=Default</code>; every other use case has only <code>hifi</code> artwork.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Use case</th><th>Sizes shipped</th><th>Orientations shipped</th><th>Count</th></tr></thead>
+        <tbody>
+          <tr><td>Default (midfi)</td><td class="muted">small, large</td><td class="muted">Default, horizontal</td><td class="center">3</td></tr>
+          <tr><td>Restaurant</td><td class="muted">small, large</td><td class="muted">Default</td><td class="center">2</td></tr>
+          <tr><td>Vacation</td><td class="muted">small, large</td><td class="muted">Default</td><td class="center">2</td></tr>
+          <tr><td>Beverage</td><td class="muted">small, large</td><td class="muted">Default</td><td class="center">2</td></tr>
+          <tr><td>Snack</td><td class="muted">small, large</td><td class="muted">Default</td><td class="center">2</td></tr>
+          <tr><td>Fashion</td><td class="muted">small, large</td><td class="muted">Default</td><td class="center">2</td></tr>
+          <tr><td>Party</td><td class="muted">small, large</td><td class="muted">Default</td><td class="center">2</td></tr>
+          <tr><td>Meal</td><td class="muted">small, large</td><td class="muted">Default</td><td class="center">2</td></tr>
+          <tr><td>Games</td><td class="muted">small, large</td><td class="muted">Default</td><td class="center">2</td></tr>
+          <tr><td>Food</td><td class="muted">large</td><td class="muted">horizontal</td><td class="center">1</td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="3" style="text-align:right"><strong>Total</strong></td><td class="center"><strong>20</strong></td></tr></tfoot>
+      </table>
+    </div>
+
+    <details style="margin-top:16px;">
+      <summary style="cursor:pointer;padding:8px 12px;background:var(--row-hover,#F4F6FA);border-radius:6px;font-weight:600;font-size:13px;color:var(--text,#0A1628);user-select:none;">View full type × size × use case × orientation breakdown (20 rows)</summary>
+      <div class="table-wrap" style="margin-top:12px;">
+        <table>
+          <thead><tr><th>Node ID</th><th>type</th><th>size</th><th>use case</th><th>orientation</th><th>Dimensions</th></tr></thead>
+          <tbody>
+            <tr><td class="mono"><code>5119:1665</code></td><td>midfi</td><td>small</td><td>Default</td><td>Default</td><td class="muted">162 × 100</td></tr>
+            <tr><td class="mono"><code>5119:1669</code></td><td>midfi</td><td>large</td><td>Default</td><td>Default</td><td class="muted">162 × 153</td></tr>
+            <tr><td class="mono"><code>5119:1673</code></td><td>midfi</td><td>large</td><td>default</td><td>horizontal</td><td class="muted">336 × 144</td></tr>
+            <tr><td class="mono"><code>5119:1682</code></td><td>hifi</td><td>small</td><td>restaurant</td><td>Default</td><td class="muted">162 × 100</td></tr>
+            <tr><td class="mono"><code>5119:1687</code></td><td>hifi</td><td>large</td><td>restaurant</td><td>Default</td><td class="muted">162 × 153</td></tr>
+            <tr><td class="mono"><code>5119:1692</code></td><td>hifi</td><td>small</td><td>vacation</td><td>Default</td><td class="muted">162 × 100</td></tr>
+            <tr><td class="mono"><code>5119:1697</code></td><td>hifi</td><td>large</td><td>vacation</td><td>Default</td><td class="muted">162 × 153</td></tr>
+            <tr><td class="mono"><code>5119:1702</code></td><td>hifi</td><td>small</td><td>beverage</td><td>Default</td><td class="muted">162 × 100</td></tr>
+            <tr><td class="mono"><code>5119:1707</code></td><td>hifi</td><td>large</td><td>beverage</td><td>Default</td><td class="muted">162 × 153</td></tr>
+            <tr><td class="mono"><code>5119:1712</code></td><td>hifi</td><td>small</td><td>snack</td><td>Default</td><td class="muted">162 × 100</td></tr>
+            <tr><td class="mono"><code>5119:1717</code></td><td>hifi</td><td>large</td><td>snack</td><td>Default</td><td class="muted">162 × 153</td></tr>
+            <tr><td class="mono"><code>5119:1722</code></td><td>hifi</td><td>small</td><td>fashion</td><td>Default</td><td class="muted">162 × 100</td></tr>
+            <tr><td class="mono"><code>5119:1727</code></td><td>hifi</td><td>large</td><td>fashion</td><td>Default</td><td class="muted">162 × 153</td></tr>
+            <tr><td class="mono"><code>5119:1732</code></td><td>hifi</td><td>small</td><td>party</td><td>Default</td><td class="muted">162 × 100</td></tr>
+            <tr><td class="mono"><code>5119:1737</code></td><td>hifi</td><td>large</td><td>party</td><td>Default</td><td class="muted">162 × 153</td></tr>
+            <tr><td class="mono"><code>5119:1742</code></td><td>hifi</td><td>small</td><td>meal</td><td>Default</td><td class="muted">162 × 100</td></tr>
+            <tr><td class="mono"><code>5119:1747</code></td><td>hifi</td><td>large</td><td>meal</td><td>Default</td><td class="muted">162 × 153</td></tr>
+            <tr><td class="mono"><code>5119:1752</code></td><td>hifi</td><td>small</td><td>games</td><td>Default</td><td class="muted">162 × 100</td></tr>
+            <tr><td class="mono"><code>5119:1757</code></td><td>hifi</td><td>large</td><td>games</td><td>Default</td><td class="muted">162 × 153</td></tr>
+            <tr><td class="mono"><code>5119:1762</code></td><td>hifi</td><td>large</td><td>food</td><td>horizontal</td><td class="muted">336 × 144</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    </div><!-- /tab code -->
+
+    <!-- ══ Tab: Changelog ════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 5119:1664</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Assessed with Restructure verdict.</strong> 20-variant sprawl driven by a 10-value <code>use case</code> enum and a <code>type=midfi|hifi</code> fidelity axis — both are anti-patterns. <span class="tag-open">Open</span></div><span class="changelog-delta delta-open">Design Decision</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Proposed restructure.</strong> Collapse to a single Voucher Image Frame with <code>size</code> + <code>orientation</code> + image Slot + <code>discount</code> string. Move category artwork to a sibling asset library. Target: 4 variants instead of 20. <span class="tag-open">Open</span></div><span class="changelog-delta delta-open">Design Decision</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-voucher-asset">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-voucher-asset"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Voucher Asset JS ─────────────────────────────────────────────── */
+function _vaTicket(w, h, label, badgeText, badgeRight, bg) {
+  var notchR = 6;
+  var cx = w / 2;
+  // Path: rounded-corner rect with two semicircular notches on left/right centers and a dashed line across
+  var s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" style="display:block">';
+  s += '<defs><clipPath id="va-clip-' + w + '-' + h + '"><path d="M8 0 H' + (w - 8) + ' Q' + w + ' 0 ' + w + ' 8 V' + (h / 2 - notchR) + ' A' + notchR + ' ' + notchR + ' 0 0 0 ' + w + ' ' + (h / 2 + notchR) + ' V' + (h - 8) + ' Q' + w + ' ' + h + ' ' + (w - 8) + ' ' + h + ' H8 Q0 ' + h + ' 0 ' + (h - 8) + ' V' + (h / 2 + notchR) + ' A' + notchR + ' ' + notchR + ' 0 0 0 0 ' + (h / 2 - notchR) + ' V8 Q0 0 8 0 Z" /></clipPath></defs>';
+  s += '<g clip-path="url(#va-clip-' + w + '-' + h + ')">';
+  s += '<rect width="' + w + '" height="' + h + '" fill="' + bg + '"/>';
+  if (label) {
+    s += '<text x="' + cx + '" y="' + (h / 2 - 8) + '" text-anchor="middle" fill="#445C85" font-size="11" font-weight="700" font-family="system-ui">' + label + '</text>';
+  }
+  s += '</g>';
+  // Dashed separator
+  s += '<line x1="8" y1="' + (h / 2) + '" x2="' + (w - 8) + '" y2="' + (h / 2) + '" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="2 3"/>';
+  // Badge
+  if (badgeText) {
+    var bw = 52, bh = 20;
+    var bx = w - bw;
+    var by = h / 2 - bh / 2;
+    s += '<g transform="translate(' + bx + ',' + by + ')">';
+    s += '<path d="M0 0 H' + bw + ' V' + bh + ' H0 Q-0 ' + bh + ' -0 ' + (bh - 4) + ' V4 Q0 0 0 0 Z" fill="#1972F9"/>';
+    s += '<rect x="0" y="0" width="' + bw + '" height="' + bh + '" rx="0" fill="#1972F9"/>';
+    s += '<path d="M4 0 H' + bw + ' V' + bh + ' H4 Q0 ' + bh + ' 0 ' + (bh - 4) + ' V4 Q0 0 4 0 Z" fill="#1972F9"/>';
+    s += '<text x="' + (bw / 2) + '" y="' + (bh / 2 + 4) + '" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="700" font-family="system-ui">' + badgeText + '</text>';
+    s += '</g>';
+  }
+  s += '</svg>';
+  return s;
+}
+
+function _vaPhotoTicket(w, h, swatch1, swatch2, label, badgeText) {
+  var s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" style="display:block">';
+  var notchR = 6;
+  s += '<defs>';
+  s += '<clipPath id="va-pc-' + w + '-' + h + '-' + label + '"><path d="M8 0 H' + (w - 8) + ' Q' + w + ' 0 ' + w + ' 8 V' + (h / 2 - notchR) + ' A' + notchR + ' ' + notchR + ' 0 0 0 ' + w + ' ' + (h / 2 + notchR) + ' V' + (h - 8) + ' Q' + w + ' ' + h + ' ' + (w - 8) + ' ' + h + ' H8 Q0 ' + h + ' 0 ' + (h - 8) + ' V' + (h / 2 + notchR) + ' A' + notchR + ' ' + notchR + ' 0 0 0 0 ' + (h / 2 - notchR) + ' V8 Q0 0 8 0 Z" /></clipPath>';
+  s += '<linearGradient id="vag-' + label + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + swatch1 + '"/><stop offset="1" stop-color="' + swatch2 + '"/></linearGradient>';
+  s += '</defs>';
+  s += '<g clip-path="url(#va-pc-' + w + '-' + h + '-' + label + ')">';
+  s += '<rect width="' + w + '" height="' + h + '" fill="url(#vag-' + label + ')"/>';
+  s += '<text x="' + (w / 2) + '" y="' + (h / 2 - 14) + '" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="10" font-weight="700" font-family="system-ui">' + label + '</text>';
+  s += '</g>';
+  s += '<line x1="8" y1="' + (h / 2) + '" x2="' + (w - 8) + '" y2="' + (h / 2) + '" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="2 3"/>';
+  if (badgeText) {
+    var bw = 48, bh = 18;
+    var bx = w - bw;
+    var by = h / 2 - bh / 2;
+    s += '<g transform="translate(' + bx + ',' + by + ')">';
+    s += '<rect x="0" y="0" width="' + bw + '" height="' + bh + '" fill="#1972F9" rx="0"/>';
+    s += '<text x="' + (bw / 2) + '" y="' + (bh / 2 + 4) + '" text-anchor="middle" fill="#FFFFFF" font-size="10" font-weight="700" font-family="system-ui">' + badgeText + '</text>';
+    s += '</g>';
+  }
+  s += '</svg>';
+  return s;
+}
+
+function _vaBuildPreview() {
+  var cases = [
+    { k: 'Placeholder', c1: '#C8CDD5', c2: '#B6BBC3', midfi: true },
+    { k: 'Restaurant', c1: '#D63A2F', c2: '#8C1A15' },
+    { k: 'Vacation', c1: '#2CA6C8', c2: '#0F5D75' },
+    { k: 'Beverage', c1: '#D4A373', c2: '#7A4C24' },
+    { k: 'Snack', c1: '#B87333', c2: '#6B3D15' },
+    { k: 'Fashion', c1: '#9AA0A6', c2: '#4A4F55' },
+    { k: 'Party', c1: '#5D3A9E', c2: '#2A1B4F' },
+    { k: 'Meal', c1: '#6B8E23', c2: '#365010' },
+    { k: 'Games', c1: '#1E3A5F', c2: '#0B1A33' },
+    { k: 'Food', c1: '#3A2418', c2: '#1A0F0A' }
+  ];
+  var s = '<div style="display:flex;flex-direction:column;gap:14px;">';
+  s += '<div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;">';
+  cases.slice(0, 9).forEach(function(c) {
+    var col = '<div style="display:flex;flex-direction:column;gap:8px;align-items:center;">';
+    if (c.midfi) {
+      col += _vaTicket(110, 68, 'Placeholder', '35% off', true, '#D6D3DC');
+      col += _vaTicket(110, 104, 'Placeholder', '35% off', true, '#D6D3DC');
+    } else {
+      col += _vaPhotoTicket(110, 68, c.c1, c.c2, c.k, '35% off');
+      col += _vaPhotoTicket(110, 104, c.c1, c.c2, c.k, '35% off');
+    }
+    col += '<div style="color:#666;font-size:10px;font-family:system-ui;font-weight:600;">' + c.k.toLowerCase() + '</div>';
+    col += '</div>';
+    s += col;
+  });
+  s += '</div>';
+  // Horizontal row
+  s += '<div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;">';
+  s += '<div style="display:flex;flex-direction:column;gap:6px;align-items:center;">';
+  s += _vaTicket(226, 96, 'Placeholder Image', '35% off', true, '#D6D3DC');
+  s += '<div style="color:#666;font-size:10px;font-family:system-ui;font-weight:600;">default · horizontal</div>';
+  s += '</div>';
+  s += '<div style="display:flex;flex-direction:column;gap:6px;align-items:center;">';
+  s += _vaPhotoTicket(226, 96, '#3A2418', '#1A0F0A', 'Food', '35% off');
+  s += '<div style="color:#666;font-size:10px;font-family:system-ui;font-weight:600;">food · horizontal</div>';
+  s += '</div>';
+  s += '</div>';
+  s += '</div>';
+  return s;
+}
+
+function _vaInit() {
+  var el = document.getElementById('va-demo-preview');
+  if (el) el.innerHTML = _vaBuildPreview();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _vaInit);
+else _vaInit();
+</script>
+
+<!--@section-end-->

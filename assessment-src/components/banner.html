@@ -1,0 +1,741 @@
+<!--
+  BANNER COMPONENT ASSESSMENT
+  Neutral-background promotional banner with an image asset + content stack
+  (optional preamble, heading, description, optional button link). 20 Figma
+  variants across Property (Within A Container | Full Width) × position
+  (left | right) × with link (yes/no) × with button (yes/no) ×
+  with preamble (yes/no) × with icon (yes/no).
+
+  Last component of the assessment pass (#74). Shares ~95% of its schema with
+  Carousel - Item — the only meaningful difference is the carousel peek/snap
+  behaviour which belongs on the container, not the item. Consolidation
+  recommendation mirrors the Carousel family framing.
+
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 756:82673
+ds-verdict: restructure
+native-status: rework
+variants: 20
+ios: Custom EBBanner view (HStack image + content VStack, inside a Button)
+android: Custom EBBanner composable (Row with conditional ordering)
+open-issues: C1,C2,C4,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] Sparse cartesian variant axis — 5 boolean-ish axes (Property × position × with link × with button × with preamble × with icon) would yield 64 combinations; only 20 ship, with impossible states (e.g. `with link=yes` + `with button=yes`) excluded by authoring convention rather than by the schema.
+[C2] Property names use spaces (`with link`, `with button`, `with preamble`, `with icon`) — not valid in any native codegen target. Should be camelCase (`hasLink`, `hasAction`, `hasPreamble`, `hasLeadingAsset`).
+[C2] `Property` is a meta-name that conveys nothing — its values (`Within A Container` | `Full Width`) describe a padding/container layout concern, not a semantic mode.
+[C4] Image asset is an instance of a separate "Banner Asset Placeholder" component — there's no first-class Figma Slot, so product teams swap via instance-override rather than a declared slot API.
+[C4] Chevron ships as a raster `shape_full` PNG glyph embedded in the `learn-more` sub-component — not a vector instance.
+[C5] No pressed, focused, or disabled states are modeled; banners are tappable and need a pressed response.
+[C6] `with icon=yes` variant renders a drawn grey circle placeholder instead of a swappable Icon / Avatar / Illustration instance.
+[C7] Property names with spaces + five boolean-ish axes produce no usable 1:1 parameter surface for SwiftUI or Compose Code Connect.
+<!--@patterns-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-banner" onclick="showPanel('banner', this)">
+  <div class="nav-comp-icon">
+    <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="8" width="28" height="16" rx="2" fill="#EEF3FB" stroke="#B8CFF8" stroke-width="1"/>
+      <circle cx="8" cy="16" r="4" fill="#005CE5"/>
+      <rect x="14" y="12" width="12" height="2" rx="1" fill="#072592"/>
+      <rect x="14" y="16" width="10" height="1.5" rx="0.75" fill="#6780A9"/>
+      <rect x="14" y="20" width="6" height="1.5" rx="0.75" fill="#005CE5"/>
+    </svg>
+  </div>
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Banner</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('banner')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="4" y="6" width="72" height="28" rx="3" fill="#EEF3FB" stroke="#B8CFF8" stroke-width="1"/>
+      <circle cx="15" cy="20" r="7" fill="#005CE5"/>
+      <rect x="28" y="12" width="22" height="3" rx="1" fill="#072592"/>
+      <rect x="28" y="18" width="30" height="2" rx="1" fill="#6780A9"/>
+      <rect x="28" y="23" width="16" height="2" rx="1" fill="#6780A9"/>
+      <rect x="28" y="28" width="12" height="2" rx="1" fill="#005CE5"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Banner</div>
+      <span class="badge badge-restructure">Restructure</span>
+    </div>
+    <div class="summary-card-desc">Neutral-background promo banner with a leading image/icon, preamble, heading, description, and an optional button link. 20 variants across 5 boolean-ish axes.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Banner</strong></td>
+  <td><span class="badge badge-restructure">Restructure</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">20</td>
+  <td class="muted">Rename space-separated booleans, collapse link/button into one action enum, add leading asset + background slots, vectorize chevron, add pressed state, consolidate with Carousel - Item.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-banner">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="navigateComponents({target:this})">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Components
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Banner
+          <span class="badge badge-restructure">Restructure</span>
+          <span class="badge badge-rework">Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=756-82673" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A neutral-background promotional banner — leading image or icon alongside a text stack (optional preamble, heading, optional description) and an optional button link. 20 Figma variants across <code>Property</code> (Within A Container / Full Width) × <code>position</code> (left / right) × <code>with link</code> × <code>with button</code> × <code>with preamble</code> × <code>with icon</code>. Shares ~95% of its schema with <a href="#" onclick="showPanelById('carousel-item');return false;">Carousel - Item</a> — the only meaningful difference is the carousel's peek/snap behaviour, which belongs on the container, not the item.</p>
+      </div>
+      <div class="verdict-inline verdict-restructure">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Restructure — collapse 5 boolean-ish axes into a clean API, add asset/background slots, consolidate with Carousel - Item</div>
+          <div class="verdict-inline-text">Property names with spaces (<code>with link</code>, <code>with button</code>, <code>with preamble</code>, <code>with icon</code>) don't survive codegen. <code>with link</code> + <code>with button</code> describe mutually exclusive CTAs and should be one <code>action</code> enum. <code>with icon</code> is too narrow — a leading <code>asset</code> slot accepting Icon / Avatar / Illustration / Image is more reusable. <code>Property = Within A Container | Full Width</code> is a padding/layout concern owned by the parent. Background image and chevron should be vector slots. Finally, Banner and Carousel - Item share enough DNA to be one component with carousel behaviour on the container.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="banner-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'banner-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'banner-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'banner-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'banner-tabs')">Changelog</button>
+    </div>
+
+    <!-- Overview -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="bnr-in-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Banner is used in-flow as a promotional callout — typically between sections on a Home or Dashboard screen. "Within A Container" leaves horizontal padding on either side so the banner sits as a card; "Full Width" bleeds edge-to-edge. The image or icon sits on the opposite side of the text per the <code>position</code> axis.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="bnr-context-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="bnr-preview">Live Preview</div>
+    <p class="section-desc">Edit the text or flip the property toggles to see how the banner reflows. The image is a flat placeholder in this preview; in Figma it's an instance of a separate "Banner Asset Placeholder" component.</p>
+    <div class="demo-panel" id="bnr-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="bnr-demo-preview"><!-- JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Content</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">preamble</span>
+              <input type="text" id="bnr-ctrl-preamble" class="demo-panel-select demo-panel-input" value="Preamble" oninput="_bnrUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">heading</span>
+              <input type="text" id="bnr-ctrl-heading" class="demo-panel-select demo-panel-input" value="Heading" oninput="_bnrUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">description</span>
+              <input type="text" id="bnr-ctrl-desc" class="demo-panel-select demo-panel-input" value="Add description here." oninput="_bnrUpdate()">
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">action label</span>
+              <input type="text" id="bnr-ctrl-action" class="demo-panel-select demo-panel-input" value="Button" oninput="_bnrUpdate()">
+            </div>
+          </div>
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Property</span>
+              <select id="bnr-ctrl-property" class="demo-panel-select" onchange="_bnrUpdate()">
+                <option value="container" selected>Within A Container</option>
+                <option value="full">Full Width</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">position</span>
+              <select id="bnr-ctrl-position" class="demo-panel-select" onchange="_bnrUpdate()">
+                <option value="left" selected>left</option>
+                <option value="right">right</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">with preamble</span>
+              <select id="bnr-ctrl-preamble-flag" class="demo-panel-select" onchange="_bnrUpdate()">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">with icon</span>
+              <select id="bnr-ctrl-icon-flag" class="demo-panel-select" onchange="_bnrUpdate()">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">action</span>
+              <select id="bnr-ctrl-action-flag" class="demo-panel-select" onchange="_bnrUpdate()">
+                <option value="button" selected>with button</option>
+                <option value="link">with link</option>
+                <option value="none">none</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="bnr-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Banner reads cleanly across promo, info, and up-sell contexts, but the image asset is an instance of a sibling component (not a declared slot) and the icon variant bakes in a grey placeholder — both force product teams to detach or fork to drop in real artwork.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Card chrome, text tokens, and colors resolve to <code>main/banner/color/*</code>. But the chevron on the button link is a raster <code>shape_full</code> PNG, and the icon placeholder is a drawn circle — neither is self-contained as a vector instance.</div>
+      </div>
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">Five boolean-ish axes with space-separated names (<code>with link</code>, <code>with button</code>, <code>with preamble</code>, <code>with icon</code>) — no other DS component uses spaces in property names. <code>Property = Within A Container | Full Width</code> is a padding concern named like a semantic mode. <code>with link</code> + <code>with button</code> are mutually exclusive but modeled as independent booleans.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Nests cleanly into Home/Dashboard scrollers and maps to iOS <code>HStack</code> / Compose <code>Row</code>. Duplicates ~95% of <a href="#" onclick="showPanelById('carousel-item');return false;">Carousel - Item</a>'s schema — the two should be one component.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="bnr-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>State</th><th class="center">iOS</th><th class="center">Android</th><th>Figma Spec</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Default</strong></td><td class="center"><span class="check">Yes</span></td><td class="center"><span class="check">Yes</span></td><td class="mono">Property × position × with link × with button × with preamble × with icon</td><td class="muted">Static banner; whole card is the tap target when an action is present.</td></tr>
+          <tr><td><strong>Pressed</strong></td><td class="center muted">Missing</td><td class="center muted">Missing</td><td class="muted">Not built</td><td class="muted">Tappable banner lacks pressed feedback — needs a subtle scale-down or overlay tint.</td></tr>
+          <tr><td><strong>Focused</strong></td><td class="center muted">Missing</td><td class="center muted">Missing</td><td class="muted">Not built</td><td class="muted">Keyboard / D-pad focus ring needed when used in an a11y-first flow.</td></tr>
+          <tr><td><strong>Within A Container</strong></td><td class="center muted">Container padding</td><td class="center muted">Container padding</td><td class="mono">Property=Within A Container</td><td class="muted">12 px outer padding + 8 px corner radius around the banner card. Owned by the parent layout on native — not a component variant.</td></tr>
+          <tr><td><strong>Full Width</strong></td><td class="center muted">Edge-to-edge</td><td class="center muted">Edge-to-edge</td><td class="mono">Property=Full Width</td><td class="muted">No outer padding, no corner radius. Also owned by the parent layout.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="bnr-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Property names use spaces.</strong> <code>with link</code>, <code>with button</code>, <code>with preamble</code>, <code>with icon</code> aren't valid identifiers in any native codegen target. Should be camelCase: <code>hasLink</code>, <code>hasAction</code>, <code>hasPreamble</code>, <code>hasLeadingAsset</code>. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong><code>Property</code> is a meta-name, not a semantic one.</strong> Its values (<code>Within A Container</code> / <code>Full Width</code>) describe outer padding and corner radius — a layout concern the parent should own. Rename to <code>padding</code> if kept, or drop the axis entirely and let the consumer control width + padding. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong><code>with link</code> + <code>with button</code> encode mutually exclusive CTAs as independent booleans.</strong> Both are text + chevron link styles — the distinction is cosmetic. This schema admits the impossible state <code>with link=yes</code> + <code>with button=yes</code> (excluded by authoring convention, not by the schema). Collapse into one <code>action</code> enum. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Sparse cartesian variant space.</strong> 5 boolean-ish axes × 2 container modes would yield 64 combinations; only 20 ship. Author manually pruned invalid combos — that logic should live in the schema (enums, mutually exclusive props), not in variant authoring discipline. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>No first-class image slot.</strong> The image is an instance of a separate "Banner Asset Placeholder" component — product teams swap via instance-override rather than a declared Figma Slot. Should be a named <code>asset</code> slot accepting an Image, Illustration, or Gradient. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong><code>with icon=yes</code> renders a drawn grey circle.</strong> The icon slot is a flat <code>#C2C6CF</code> circle, not a swappable Icon / Avatar / Illustration instance. Can't carry a token-bound color or glyph. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>Chevron is a raster <code>shape_full</code> PNG.</strong> The "learn more" arrow ships as an <code>&lt;img&gt;</code> asset. Doesn't scale cleanly and can't take a token tint. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>No pressed / focused / disabled states.</strong> The whole banner is tappable but only Default is modeled. Native platforms need pressed (tap feedback) and focused (keyboard/D-pad) at minimum. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Container padding modeled as a component variant.</strong> <code>Within A Container</code> adds 12 px outer padding and wraps the inner card in a rounded container; <code>Full Width</code> drops both. On native this is a layout-level decision (parent gives Banner its width + padding), not a Figma variant. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked until properties are renamed, axes are collapsed, and asset/background slots are adopted. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="bnr-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Rename space-separated booleans to camelCase.</strong> <code>with link</code> → <code>hasLink</code>, <code>with button</code> → <code>hasAction</code>, <code>with preamble</code> → <code>hasPreamble</code>, <code>with icon</code> → <code>hasLeadingAsset</code>. Matches the DS-wide naming fix applied to Carousel Item and the Form family. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Collapse <code>with link</code> + <code>with button</code> into one <code>action</code> enum.</strong> <code>action: .none | .link("Label") | .button("Label")</code>. Mutually exclusive CTAs shouldn't be modeled as independent booleans — the schema should make <code>with link=yes + with button=yes</code> unrepresentable. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Replace <code>with icon</code> boolean with a leading <code>asset</code> slot.</strong> Accept an Icon, Avatar, Illustration, or Image instance. Native: <code>leadingAsset: @ViewBuilder</code> (SwiftUI) / <code>leadingAsset: @Composable () -&gt; Unit</code> (Compose). Eliminates the rigid icon-only placeholder. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Add a <code>background</code> / image slot.</strong> Replace the "Banner Asset Placeholder" instance with a first-class Figma Slot that accepts an Image, Illustration, or Gradient. Native: <code>background: AnyView</code> / <code>background: @Composable () -&gt; Unit</code>. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Rename <code>Property</code> → drop it or make it <code>padding</code>.</strong> <code>Within A Container</code> vs <code>Full Width</code> is a padding + radius concern owned by the parent layout on native. Either remove the axis entirely (the banner fills whatever width its parent hands it) or rename to <code>padding: .container | .full</code>. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Rename <code>position</code> → <code>imagePosition</code>.</strong> More specific and self-documenting. Keep as <code>.left | .right</code> enum. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Consolidate with <a href="#" onclick="showPanelById('carousel-item');return false;">Carousel - Item</a>.</strong> Both components have preamble / heading / description / button / image-with-position slots. The only difference is peek/snap behaviour — which belongs on the carousel container (scroll snap + scale/opacity transforms), not a sibling component. Target: one <code>EBBanner</code> used standalone or inside <code>EBCarousel</code>. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Vectorize the chevron.</strong> Swap the raster <code>shape_full</code> for a vector Icon instance — crisp at any scale, token-bound tint. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Add pressed + focused states.</strong> Pressed: 0.98 scale or 6–8% overlay on tap. Focused: 2 px focus ring at <code>border/focus</code>. Banners are always tappable and need both feedback signals. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Announce as a single actionable element.</strong> VoiceOver and TalkBack should read <em>preamble + heading + description + action label</em> as one announcement with a button/link role. <span class="tag-recommend">A11y</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- Style -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Within A Container · position=left · with preamble · with button <span class="spec-card-node">node <code>756:82655</code></span></div>
+      </div>
+      <p class="spec-card-desc">The most content-rich variant — preamble + heading + description + button link, with the image on the right and the content column left-aligned. Wraps in a rounded card with 12 px outer padding.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="bnr-spec-1"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Outer frame</span><code>360 × 155 (hug)</code></div>
+          <div class="spec-detail-row"><span>Outer padding</span><code>12 (space/space-12)</code></div>
+          <div class="spec-detail-row"><span>Inner card padding</span><code>16</code></div>
+          <div class="spec-detail-row"><span>Corner radius</span><code>8 (radius/radius-3)</code></div>
+          <div class="spec-detail-row"><span>Content column width</span><code>216 (pl=120 reserved for image)</code></div>
+          <div class="spec-detail-row"><span>Content gap</span><code>2 between lines · 16 before button (space/space-2, space/space-16)</code></div>
+          <div class="spec-detail-row"><span>Image asset area</span><code>360 × 152 absolute (centered, behind content)</code></div>
+          <div class="spec-detail-row"><span>Chevron size</span><code>24 × 24</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Colors by State</div>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead><tr><th>ROLE</th><th>TOKEN</th><th>DEFAULT</th></tr></thead>
+              <tbody>
+                <tr><td>Card bg</td><td><code>main/banner/color/bg</code></td><td><span class="swatch-dot" style="background:#FFFFFF;border:1px solid #E5EBF4"></span><code>#FFFFFF</code></td></tr>
+                <tr><td>Preamble</td><td><code>main/banner/color/label-preamble</code> @ 60%</td><td><span class="swatch-dot" style="background:#072592"></span><code>#072592</code></td></tr>
+                <tr><td>Heading</td><td><code>main/banner/color/label-title</code></td><td><span class="swatch-dot" style="background:#072592"></span><code>#072592</code></td></tr>
+                <tr><td>Description</td><td><code>main/banner/color/description</code></td><td><span class="swatch-dot" style="background:#6780A9"></span><code>#6780A9</code></td></tr>
+                <tr><td>Action label</td><td><code>main/banner/color/label-link</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td></tr>
+                <tr><td>Chevron tint</td><td><code>main/banner/color/icon</code></td><td><span class="swatch-dot" style="background:#005CE5"></span><code>#005CE5</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Typography</div>
+          <div class="spec-detail-row"><span>Preamble</span><code>Primary/Label/Fine</code></div>
+          <div class="spec-detail-row"><span>· Font / Size / LH</span><code>Proxima Soft Bold · 12 / 12</code></div>
+          <div class="spec-detail-row"><span>· Tracking</span><code>+0.5 (tracking-wider)</code></div>
+          <div class="spec-detail-row"><span>Heading</span><code>Primary/Headlines/Block</code></div>
+          <div class="spec-detail-row"><span>· Font / Size / LH</span><code>Proxima Soft Bold · 18 / 23</code></div>
+          <div class="spec-detail-row"><span>· Tracking</span><code>+0.25 (tracking-wide)</code></div>
+          <div class="spec-detail-row"><span>Description</span><code>Secondary/Bold/Caption</code></div>
+          <div class="spec-detail-row"><span>· Font / Size / LH</span><code>BarkAda Semibold · 12 / 18</code></div>
+          <div class="spec-detail-row"><span>Action label</span><code>Secondary/Heavy/Base</code></div>
+          <div class="spec-detail-row"><span>· Font / Size / LH</span><code>BarkAda Bold · 14 / 20</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Composed sub-components</div>
+          <div class="spec-detail-row muted"><span>Image</span><span>Instance of "Banner Asset Placeholder"</span></div>
+          <div class="spec-detail-row muted"><span>Image (proposed)</span><span>Named <code>asset</code> slot</span></div>
+          <div class="spec-detail-row muted"><span>Chevron</span><span>Raster <code>shape_full</code> today</span></div>
+          <div class="spec-detail-row muted"><span>Chevron (proposed)</span><span>Vector Icon instance</span></div>
+          <div class="spec-detail-row muted"><span>Icon (with icon variant)</span><span>Drawn grey circle today</span></div>
+          <div class="spec-detail-row muted"><span>Icon (proposed)</span><span>Leading Icon / Avatar slot</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Full Width · position=right · with button <span class="spec-card-node">node <code>756:82667</code></span></div>
+      </div>
+      <p class="spec-card-desc">Edge-to-edge variant — no outer padding, no corner radius. The banner's own 16 px padding sits directly against the screen edges. Used when the banner is the hero element of the section.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="bnr-spec-2"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Width × Height</span><code>360 × 119 (hug)</code></div>
+          <div class="spec-detail-row"><span>Outer padding</span><code>0 (full-width)</code></div>
+          <div class="spec-detail-row"><span>Inner padding</span><code>16</code></div>
+          <div class="spec-detail-row"><span>Corner radius</span><code>0</code></div>
+          <div class="spec-detail-row"><span>Content column width</span><code>184</code></div>
+          <div class="spec-detail-row"><span>Image asset area</span><code>360 × 152 absolute (centered)</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Proposed rename</div>
+          <div class="spec-detail-row"><span>Property</span><code>Property=Full Width → padding=none</code></div>
+          <div class="spec-detail-row"><span>Or drop</span><code>let parent control width + padding</code></div>
+          <div class="spec-detail-row muted"><span>Rationale</span><span>Container padding is a layout concern, not a component identity axis</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-header">
+        <div class="spec-card-title">Within A Container · with icon · no action <span class="spec-card-node">node <code>756:82657</code></span></div>
+      </div>
+      <p class="spec-card-desc">Icon-led variant — replaces the image with a drawn grey circle placeholder. No action CTA. Used when the banner is informational rather than promotional.</p>
+      <div class="spec-card-preview-row">
+        <div class="spec-preview-frame"><div class="spec-preview-body" id="bnr-spec-3"><!-- JS --></div></div>
+      </div>
+      <div class="spec-detail-grid">
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Layout</div>
+          <div class="spec-detail-row"><span>Outer frame</span><code>360 × 176 (hug)</code></div>
+          <div class="spec-detail-row"><span>Icon placeholder</span><code>19.692 × 19.692 circle (#C2C6CF)</code></div>
+          <div class="spec-detail-row"><span>Content column</span><code>240 (pl=119)</code></div>
+          <div class="spec-detail-row"><span>Gap</span><code>4 between icon and heading</code></div>
+        </div>
+        <div class="spec-detail-col">
+          <div class="spec-detail-label">Proposed rename</div>
+          <div class="spec-detail-row"><span>Property</span><code>with icon → leadingAsset slot</code></div>
+          <div class="spec-detail-row muted"><span>Rationale</span><span>Accept Icon, Avatar, Illustration, or Image</span></div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- Code -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="bnr-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'bnr-install','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'bnr-install','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">.<span class="fn">package</span>(<span class="prp">url</span>: <span class="str">"https://github.com/gcash/eb-design-system-ios"</span>, <span class="prp">from</span>: <span class="str">"1.0.0"</span>)
+
+<span class="kw">import</span> EBDesignSystem</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet">implementation(<span class="str">"com.gcash.designsystem:eb-components:1.0.0"</span>)
+
+<span class="kw">import</span> com.gcash.designsystem.components.EBBanner</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="bnr-mapping">Property Mapping (Proposed)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Figma (today)</th><th>Figma (proposed)</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+        <tbody>
+          <tr><td><code>Property: Within A Container | Full Width</code></td><td><code>padding: container | none</code> <em>(or drop)</em></td><td class="muted">Parent layout</td><td class="muted">Parent layout</td></tr>
+          <tr><td><code>position: left | right</code></td><td><code>imagePosition: left | right</code></td><td><code>imagePosition: .left</code></td><td><code>imagePosition = EBBannerImagePosition.Left</code></td></tr>
+          <tr><td><code>with preamble</code></td><td><code>preamble?: String</code></td><td><code>preamble: String?</code></td><td><code>preamble: String?</code></td></tr>
+          <tr><td><code>with link</code> + <code>with button</code></td><td><code>action: .none | .link | .button</code></td><td><code>action: EBBannerAction?</code></td><td><code>action: EBBannerAction?</code></td></tr>
+          <tr><td><code>with icon</code></td><td><code>leadingAsset</code> slot</td><td><code>leadingAsset: () -&gt; AnyView</code></td><td><code>leadingAsset: @Composable (() -&gt; Unit)?</code></td></tr>
+          <tr><td class="muted">(Banner Asset Placeholder instance)</td><td><code>background: Image | Illustration</code> slot</td><td><code>background: AnyView</code></td><td><code>background: @Composable () -&gt; Unit</code></td></tr>
+          <tr><td class="muted">(raster chevron)</td><td>vector Icon</td><td class="muted">Built into <code>.link</code>/<code>.button</code> action</td><td class="muted">Built into <code>.link</code>/<code>.button</code> action</td></tr>
+          <tr><td class="muted">(not modeled)</td><td><code>onTap: () -&gt; Void</code></td><td><code>onTap: (() -&gt; Void)?</code></td><td><code>onClick: (() -&gt; Unit)?</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="bnr-paths">Suggested file paths</div>
+    <ul class="resolved-list">
+      <li><code>ios/Components/Banner/EBBanner.swift</code></li>
+      <li><code>ios/Components/Banner/EBBannerAction.swift</code> — <code>.none | .link | .button</code></li>
+      <li><code>android/components/banner/EBBanner.kt</code></li>
+      <li><code>android/components/banner/EBBannerAction.kt</code></li>
+    </ul>
+
+    <div class="sub-heading" id="bnr-usage">Usage</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'bnr-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'bnr-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Promo banner — image on the right, button link action</span>
+<span class="typ">EBBanner</span>(
+    <span class="prp">preamble</span>: <span class="str">"PROMO"</span>,
+    <span class="prp">heading</span>: <span class="str">"New user bonus"</span>,
+    <span class="prp">description</span>: <span class="str">"₱50 cashback on your first transfer."</span>,
+    <span class="prp">action</span>: .<span class="prp">button</span>(<span class="str">"Claim"</span>),
+    <span class="prp">imagePosition</span>: .<span class="prp">right</span>,
+    <span class="prp">background</span>: { <span class="typ">Image</span>(<span class="str">"promo-hero"</span>).<span class="prp">resizable</span>() }
+) { onClaim() }
+
+<span class="cmt">// Info banner — leading icon, no action</span>
+<span class="typ">EBBanner</span>(
+    <span class="prp">heading</span>: <span class="str">"Verify your account"</span>,
+    <span class="prp">description</span>: <span class="str">"Tap here to complete your KYC."</span>,
+    <span class="prp">action</span>: .<span class="prp">none</span>,
+    <span class="prp">imagePosition</span>: .<span class="prp">left</span>,
+    <span class="prp">leadingAsset</span>: { <span class="typ">Icon</span>(.<span class="prp">infoCircle</span>) }
+)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Promo banner — image on the right, button link action</span>
+<span class="typ">EBBanner</span>(
+    preamble = <span class="str">"PROMO"</span>,
+    heading = <span class="str">"New user bonus"</span>,
+    description = <span class="str">"₱50 cashback on your first transfer."</span>,
+    action = <span class="typ">EBBannerAction</span>.<span class="fn">Button</span>(<span class="str">"Claim"</span>) { onClaim() },
+    imagePosition = <span class="typ">EBBannerImagePosition</span>.Right,
+    background = { <span class="typ">Image</span>(painterResource(<span class="typ">R</span>.drawable.promo_hero), <span class="prp">contentDescription</span> = <span class="kw">null</span>) }
+)
+
+<span class="cmt">// Info banner — leading icon, no action</span>
+<span class="typ">EBBanner</span>(
+    heading = <span class="str">"Verify your account"</span>,
+    description = <span class="str">"Tap here to complete your KYC."</span>,
+    imagePosition = <span class="typ">EBBannerImagePosition</span>.Left,
+    leadingAsset = { <span class="typ">EBIcon</span>(<span class="typ">EBIcons</span>.InfoCircle) }
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="bnr-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-md">Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Whole-card tap target</strong></td><td class="muted">Wrap in <code>Button</code> with combined <code>accessibilityLabel</code> (preamble + heading + description + action).</td><td class="muted"><code>Modifier.clickable().semantics(mergeDescendants = true)</code>.</td></tr>
+          <tr><td><strong>Role announcement</strong></td><td class="muted"><code>.accessibilityAddTraits(.isButton)</code> when <code>action</code> is set.</td><td class="muted"><code>Role.Button</code> inside <code>semantics</code>.</td></tr>
+          <tr><td><strong>Decorative image</strong></td><td class="muted"><code>.accessibilityHidden(true)</code> on the background image view.</td><td class="muted"><code>contentDescription = null</code> on the background <code>Image</code>.</td></tr>
+          <tr><td><strong>Focus ring</strong></td><td class="muted">Default SwiftUI focus ring (tvOS + iPadOS keyboard nav).</td><td class="muted">D-pad focus: 2 dp outline at <code>border/focus</code>.</td></tr>
+          <tr><td><strong>Min touch target</strong></td><td class="muted">360 × (93-176) ≫ 44 pt ✓</td><td class="muted">360 × (93-176) ≫ 48 dp ✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="bnr-guidelines">Usage Guidelines</div>
+    <div class="do-dont-grid">
+      <div class="do-dont-col do">
+        <div class="do-dont-title"><span class="tag-fixed">Do</span></div>
+        <ul class="do-dont-list">
+          <li>Use Banner for in-flow promo / info callouts — between content sections.</li>
+          <li>Pick <code>imagePosition</code> based on reading flow — LTR locales usually prefer <code>.left</code> image + right-aligned text, or vice versa.</li>
+          <li>Keep the heading to 1-2 lines — 18 pt Bold headline, narrow content column.</li>
+          <li>Use preamble for category context (PROMO, NEW, TIP).</li>
+          <li>Let the parent layout decide outer padding — don't rely on <code>Property=Within A Container</code>.</li>
+        </ul>
+      </div>
+      <div class="do-dont-col dont">
+        <div class="do-dont-title"><span class="tag-open">Don't</span></div>
+        <ul class="do-dont-list">
+          <li>Don't use both a link and a button — <code>action</code> is single-CTA by design.</li>
+          <li>Don't stack Banner inside a carousel — use <a href="#" onclick="showPanelById('carousel-item');return false;">Carousel - Item</a> (or, post-consolidation, <code>EBBanner</code> inside <code>EBCarousel</code>).</li>
+          <li>Don't bake text into the image — background is decorative only.</li>
+          <li>Don't use the drawn-circle icon placeholder in production — always pass a real <code>leadingAsset</code>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="bnr-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Sparse cartesian — 5 boolean-ish axes × 2 container modes yields 64 combos; 20 ship. Container-padding axis conflates layout with identity.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Property names use spaces (<code>with link</code>, <code>with button</code>, <code>with preamble</code>, <code>with icon</code>). <code>Property</code> is a meta-name. <code>with link</code> + <code>with button</code> encode mutually exclusive CTAs as two booleans.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors bind to <code>main/banner/color/*</code>; radii to <code>radius/radius-3</code>; spacing to <code>space/space-*</code>; bg to <code>main/banner/color/bg</code>.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Image is an instance (not a slot); container-padding axis doesn't map to native; icon-only asset axis is rigid.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Only Default — no pressed, focused, or disabled for a tappable banner.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-rework">Requires Rework</span></td><td class="muted">Raster <code>shape_full</code> chevron. Drawn grey circle icon placeholder. Image asset is a separate component instance.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked on property renames, axis collapse, and slot adoption.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="bnr-variants">Variants Inventory <span class="variants-count">(20 total)</span></div>
+    <p><code>Property</code> (2) × <code>position</code> (2) × <code>with link</code> × <code>with button</code> × <code>with preamble</code> × <code>with icon</code> — if all boolean combinations shipped, 2 × 2 × 2 × 2 × 2 × 2 = 64 variants. The author pruned invalid combos (<code>with link=yes</code> + <code>with button=yes</code>, <code>with icon=yes</code> + <code>with button=yes</code>, etc.) and shipped <strong>20</strong> variants — 10 per <code>Property</code> mode, mirrored across <code>position=left|right</code>.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Content shape</th><th>Property</th><th>Count</th><th>Example nodes (left · right)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>heading + desc + button</strong></td><td>Within A Container</td><td>2</td><td><code>756:82659</code> · <code>756:82653</code></td></tr>
+          <tr><td>heading + desc + button</td><td>Full Width</td><td>2</td><td><code>756:82669</code> · <code>756:82667</code></td></tr>
+          <tr><td><strong>heading + desc + icon (no action)</strong></td><td>Within A Container</td><td>2</td><td><code>756:82657</code> · <code>756:82658</code></td></tr>
+          <tr><td>heading + desc + icon (no action)</td><td>Full Width</td><td>2</td><td><code>756:82668</code> · <code>756:82672</code></td></tr>
+          <tr><td><strong>preamble + heading + desc + button</strong></td><td>Within A Container</td><td>2</td><td><code>756:82655</code> · <code>756:82656</code></td></tr>
+          <tr><td>preamble + heading + desc + button</td><td>Full Width</td><td>2</td><td><code>756:82664</code> · <code>756:82662</code></td></tr>
+          <tr><td><strong>heading + desc + link</strong></td><td>Within A Container</td><td>2</td><td><code>756:82654</code> · <code>756:82671</code></td></tr>
+          <tr><td>heading + desc + link</td><td>Full Width</td><td>2</td><td><code>756:82663</code> · <code>756:82670</code></td></tr>
+          <tr><td><strong>heading + desc (no action)</strong></td><td>Within A Container</td><td>2</td><td><code>756:82665</code> · <code>756:82666</code></td></tr>
+          <tr><td>heading + desc (no action)</td><td>Full Width</td><td>2</td><td><code>756:82661</code> · <code>756:82660</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details style="margin-top:16px;">
+      <summary style="cursor:pointer;padding:8px 12px;background:var(--row-hover,#F4F6FA);border-radius:6px;font-weight:600;font-size:13px;color:var(--text,#0A1628);user-select:none;">View full variant breakdown (20 rows)</summary>
+      <div class="table-wrap" style="margin-top:12px;">
+        <table>
+          <thead><tr><th>Node</th><th>Property</th><th>position</th><th>with link</th><th>with button</th><th>with preamble</th><th>with icon</th><th>Dimensions</th></tr></thead>
+          <tbody>
+            <tr><td><code>756:82653</code></td><td>Within A Container</td><td>right</td><td>no</td><td>yes</td><td>no</td><td>no</td><td>360 × 143</td></tr>
+            <tr><td><code>756:82659</code></td><td>Within A Container</td><td>left</td><td>no</td><td>yes</td><td>no</td><td>no</td><td>360 × 143</td></tr>
+            <tr><td><code>756:82667</code></td><td>Full Width</td><td>right</td><td>no</td><td>yes</td><td>no</td><td>no</td><td>360 × 119</td></tr>
+            <tr><td><code>756:82669</code></td><td>Full Width</td><td>left</td><td>no</td><td>yes</td><td>no</td><td>no</td><td>360 × 119</td></tr>
+            <tr><td><code>756:82658</code></td><td>Within A Container</td><td>right</td><td>no</td><td>no</td><td>no</td><td>yes</td><td>360 × 176</td></tr>
+            <tr><td><code>756:82657</code></td><td>Within A Container</td><td>left</td><td>no</td><td>no</td><td>no</td><td>yes</td><td>360 × 176</td></tr>
+            <tr><td><code>756:82672</code></td><td>Full Width</td><td>right</td><td>no</td><td>no</td><td>no</td><td>yes</td><td>360 × 152</td></tr>
+            <tr><td><code>756:82668</code></td><td>Full Width</td><td>left</td><td>no</td><td>no</td><td>no</td><td>yes</td><td>360 × 152</td></tr>
+            <tr><td><code>756:82656</code></td><td>Within A Container</td><td>right</td><td>no</td><td>yes</td><td>yes</td><td>no</td><td>360 × 155</td></tr>
+            <tr><td><code>756:82655</code></td><td>Within A Container</td><td>left</td><td>no</td><td>yes</td><td>yes</td><td>no</td><td>360 × 155</td></tr>
+            <tr><td><code>756:82662</code></td><td>Full Width</td><td>right</td><td>no</td><td>yes</td><td>yes</td><td>no</td><td>360 × 131</td></tr>
+            <tr><td><code>756:82664</code></td><td>Full Width</td><td>left</td><td>no</td><td>yes</td><td>yes</td><td>no</td><td>360 × 131</td></tr>
+            <tr><td><code>756:82671</code></td><td>Within A Container</td><td>right</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>360 × 141</td></tr>
+            <tr><td><code>756:82654</code></td><td>Within A Container</td><td>left</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>360 × 141</td></tr>
+            <tr><td><code>756:82670</code></td><td>Full Width</td><td>right</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>360 × 117</td></tr>
+            <tr><td><code>756:82663</code></td><td>Full Width</td><td>left</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>360 × 117</td></tr>
+            <tr><td><code>756:82666</code></td><td>Within A Container</td><td>right</td><td>no</td><td>no</td><td>no</td><td>no</td><td>360 × 117</td></tr>
+            <tr><td><code>756:82665</code></td><td>Within A Container</td><td>left</td><td>no</td><td>no</td><td>no</td><td>no</td><td>360 × 117</td></tr>
+            <tr><td><code>756:82660</code></td><td>Full Width</td><td>right</td><td>no</td><td>no</td><td>no</td><td>no</td><td>360 × 93</td></tr>
+            <tr><td><code>756:82661</code></td><td>Full Width</td><td>left</td><td>no</td><td>no</td><td>no</td><td>no</td><td>360 × 93</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    </div><!-- /tab code -->
+
+    <!-- Changelog -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 756:82673</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Verdict: Restructure</strong> — Rename space-separated booleans, collapse link/button into one action enum, add leading asset + background slots, vectorize chevron, add pressed state, consolidate with Carousel - Item. <span class="tag-open tag-c1 tag-c2 tag-c4 tag-c5 tag-c6 tag-c7">Open</span></div><span class="changelog-delta delta-open">Family</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C1 — Sparse cartesian axes</strong> — 5 boolean-ish axes × 2 container modes = 64 combos; 20 ship. Invalid combos pruned by convention, not by schema. <span class="tag-open tag-c1">Open</span></div><span class="changelog-delta delta-open">C1</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C2 — Property names with spaces</strong> — <code>with link</code>, <code>with button</code>, <code>with preamble</code>, <code>with icon</code>, and meta-named <code>Property</code>. Mutually exclusive CTAs modeled as independent booleans. <span class="tag-open tag-c2">Open</span></div><span class="changelog-delta delta-open">C2</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C4 — Image slot + container-padding axis</strong> — Image is a sibling-component instance, not a Figma Slot. <code>Property=Within A Container | Full Width</code> conflates layout with identity. <span class="tag-open tag-c4">Open</span></div><span class="changelog-delta delta-open">C4</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C5 — Missing interaction states</strong> — No pressed, focused, or disabled for a tappable banner. <span class="tag-open tag-c5">Open</span></div><span class="changelog-delta delta-open">C5</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C6 — Raster chevron + drawn icon placeholder</strong> — Vectorize chevron; swap drawn circle for a leading asset slot. <span class="tag-open tag-c6">Open</span></div><span class="changelog-delta delta-open">C6</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>C7 — Code Connect</strong> — Blocked on renames, axis collapse, and slot adoption. <span class="tag-open tag-c7">Open</span></div><span class="changelog-delta delta-open">C7</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-banner">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-banner"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Banner JS ─────────────────────────────────────────────────────
+   Flat approximation of Banner (node 756:82673). Mocks the image
+   asset with a soft gradient rectangle + "Replace me" chip. Wires
+   the six property toggles + four content inputs.                   */
+
+function _bnrEscape(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function _bnrChevronSvg(color) {
+  return '<svg class="eb-preview-bnr__chev" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="16" height="16">' +
+    '<path d="M9 6l6 6-6 6" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+  '</svg>';
+}
+
+function _bnrAssetMarkup() {
+  return '<div class="eb-preview-bnr__asset">' +
+    '<div class="eb-preview-bnr__asset-disk"></div>' +
+    '<div class="eb-preview-bnr__asset-chip">Replace me</div>' +
+  '</div>';
+}
+
+function _bnrIconMarkup() {
+  return '<div class="eb-preview-bnr__asset eb-preview-bnr__asset--icon">' +
+    '<div class="eb-preview-bnr__icon-dot"></div>' +
+  '</div>';
+}
+
+function _bnrRender(opts) {
+  var property    = opts.property || 'container';       // container | full
+  var position    = opts.position || 'left';            // left | right
+  var hasPreamble = opts.hasPreamble === 'yes';
+  var hasIcon     = opts.hasIcon === 'yes';
+  var action      = opts.action || 'button';            // button | link | none
+
+  var preamble = opts.preamble || 'Preamble';
+  var heading  = opts.heading  || 'Heading';
+  var desc     = opts.desc     || 'Add description here.';
+  var actionLabel = opts.actionLabel || 'Button';
+
+  var propCls = property === 'full' ? ' eb-preview-bnr--full' : ' eb-preview-bnr--container';
+  var posCls  = position === 'right' ? ' eb-preview-bnr--img-right' : ' eb-preview-bnr--img-left';
+
+  var assetHtml = hasIcon ? _bnrIconMarkup() : _bnrAssetMarkup();
+
+  var contentHtml = '<div class="eb-preview-bnr__content">';
+  if (hasPreamble) {
+    contentHtml += '<div class="eb-preview-bnr__preamble">' + _bnrEscape(preamble) + '</div>';
+  }
+  contentHtml += '<div class="eb-preview-bnr__heading">' + _bnrEscape(heading) + '</div>';
+  contentHtml += '<div class="eb-preview-bnr__desc">' + _bnrEscape(desc) + '</div>';
+  if (action !== 'none') {
+    contentHtml += '<div class="eb-preview-bnr__link">' +
+      '<span>' + _bnrEscape(actionLabel) + '</span>' +
+      _bnrChevronSvg('#005CE5') +
+    '</div>';
+  }
+  contentHtml += '</div>';
+
+  var inner = position === 'right'
+    ? contentHtml + assetHtml
+    : assetHtml + contentHtml;
+
+  var html = '<div class="eb-preview eb-preview-bnr' + propCls + posCls + '">' +
+    '<div class="eb-preview-bnr__card">' + inner + '</div>' +
+  '</div>';
+
+  return html;
+}
+
+function _bnrContextMarkup() {
+  return '<div class="eb-preview-bnr-strip">' +
+    _bnrRender({property:'container', position:'left', hasPreamble:'yes', hasIcon:'no', action:'button', preamble:'PROMO', heading:'New user bonus', desc:'₱50 cashback on your first transfer.', actionLabel:'Claim'}) +
+    _bnrRender({property:'full', position:'right', hasPreamble:'no', hasIcon:'no', action:'link', heading:'Pay Bills', desc:'Over 500 billers supported.', actionLabel:'Learn more'}) +
+    _bnrRender({property:'container', position:'left', hasPreamble:'no', hasIcon:'yes', action:'none', heading:'Verify your account', desc:'Tap here to complete your KYC.'}) +
+  '</div>';
+}
+
+function _bnrUpdate() {
+  var get = function (id, fb) { var el = document.getElementById(id); return el ? el.value : fb; };
+  var preview = document.getElementById('bnr-demo-preview');
+  if (!preview) return;
+  preview.innerHTML = _bnrRender({
+    property:    get('bnr-ctrl-property', 'container'),
+    position:    get('bnr-ctrl-position', 'left'),
+    hasPreamble: get('bnr-ctrl-preamble-flag', 'no'),
+    hasIcon:     get('bnr-ctrl-icon-flag', 'no'),
+    action:      get('bnr-ctrl-action-flag', 'button'),
+    preamble:    get('bnr-ctrl-preamble', 'Preamble'),
+    heading:     get('bnr-ctrl-heading', 'Heading'),
+    desc:        get('bnr-ctrl-desc', 'Add description here.'),
+    actionLabel: get('bnr-ctrl-action', 'Button')
+  });
+}
+
+function _bnrInit() {
+  var ctx = document.getElementById('bnr-context-preview');
+  if (ctx) ctx.innerHTML = _bnrContextMarkup();
+  _bnrUpdate();
+
+  var s1 = document.getElementById('bnr-spec-1');
+  if (s1) s1.innerHTML = _bnrRender({property:'container', position:'right', hasPreamble:'yes', hasIcon:'no', action:'button', preamble:'Preamble', heading:'Heading', desc:'Add description here.', actionLabel:'Button'});
+
+  var s2 = document.getElementById('bnr-spec-2');
+  if (s2) s2.innerHTML = _bnrRender({property:'full', position:'right', hasPreamble:'no', hasIcon:'no', action:'button', heading:'Heading', desc:'Add description here.', actionLabel:'Button'});
+
+  var s3 = document.getElementById('bnr-spec-3');
+  if (s3) s3.innerHTML = _bnrRender({property:'container', position:'left', hasPreamble:'no', hasIcon:'yes', action:'none', heading:'Heading', desc:'This is a description for this banner. This is a description for this banner.'});
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _bnrInit);
+else _bnrInit();
+</script>
+
+<!--@section-end-->

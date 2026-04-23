@@ -267,6 +267,14 @@ They do **not** see:
 | C6 | Raster backgrounds on 5 initials variants replaced with vector ELLIPSE layers — RESOLVED | Avatar |
 | C3 | Hardcoded opacity: 0.90 on Danger/Heavy and Disabled/Heavy Transaction variants — RESOLVED (set to 1 via plugin) | Badge |
 | C2 | State property values renamed to match token semantic names (Info→Information, Success→Positive, Warning→Notice, Danger→Negative, Disabled→Muted) — RESOLVED across all 60 affected variants | Badge |
+| C1 | Sparse cartesian variant axis — 5 boolean-ish axes (Property × position × with link × with button × with preamble × with icon) would yield 64 combinations; only 20 ship, with impossible states (e.g. `with link=yes` + `with button=yes`) excluded by authoring convention rather than by the schema. | Banner |
+| C2 | Property names use spaces (`with link`, `with button`, `with preamble`, `with icon`) — not valid in any native codegen target. Should be camelCase (`hasLink`, `hasAction`, `hasPreamble`, `hasLeadingAsset`). | Banner |
+| C2 | `Property` is a meta-name that conveys nothing — its values (`Within A Container` \| `Full Width`) describe a padding/container layout concern, not a semantic mode. | Banner |
+| C4 | Image asset is an instance of a separate "Banner Asset Placeholder" component — there's no first-class Figma Slot, so product teams swap via instance-override rather than a declared slot API. | Banner |
+| C4 | Chevron ships as a raster `shape_full` PNG glyph embedded in the `learn-more` sub-component — not a vector instance. | Banner |
+| C5 | No pressed, focused, or disabled states are modeled; banners are tappable and need a pressed response. | Banner |
+| C6 | `with icon=yes` variant renders a drawn grey circle placeholder instead of a swappable Icon / Avatar / Illustration instance. | Banner |
+| C7 | Property names with spaces + five boolean-ish axes produce no usable 1:1 parameter surface for SwiftUI or Compose Code Connect. | Banner |
 | C1 | Component name ("Bottom Drawer") and token namespace ("bottom-header") disagree — scope of the component is not the bottom sheet, it's the header-plus-body skeleton of a sheet. The actual sheet primitives (drag handle, detents, scrim, snap behaviour) are not present. | Bottom Sheet |
 | C1 | Content region is modeled as 4 hardcoded decorative placeholder rectangles (UI Slot, SLOT 2, SLOT 3, SLOT 4) toggled by booleans — not Figma Slots. Designers cannot instance-swap content without detaching. | Bottom Sheet |
 | C2 | The Alignment axis (Left Align vs Center Align) is not just a text-align switch — it silently adds a headerSlot on Center (used for progress bar / stepper) and removes the Close X. Two different component shapes collapsed into one enum. | Bottom Sheet |
@@ -291,6 +299,25 @@ They do **not** see:
 | C5 | No pressed / selected / disabled / error states defined across either component | Chip |
 | C2 | `with limit` boolean property uses `yes`/`no` strings instead of `true`/`false`. | Counter |
 | C2 | Count + limit values are hardcoded text ("0 / 10", "10 / 10") instead of parameterized — not usable for real counts. | Counter |
+| C1 | Day-of-week layer names (`Sunday`, `Monday`...) used as semantic roles instead of index/role-based naming — shows through to handoff | Date Picker Group |
+| C2 | `Type = Date \| Year \| Month` axis name is misleading — "Date" is actually the day grid view; native convention is `mode: day \| month \| year` | Date Picker Group |
+| C4 | Year panel uses a fake `Scrollbar` overlay drawn as geometry instead of a scrollable container — handoff has no way to represent overflow/scroll state | Date Picker Group |
+| C4 | Month variant has no Prev chevron (only Next), asymmetric from Date and Year which both have bidirectional navigation | Date Picker Group |
+| C5 | No Selected, Pressed, Hover, Focus, Today, In-Range, Out-of-Range, or Disabled states on the grid cells — only a single "Today" ring and a "Prev/Next month" disabled day are present | Date Picker Group |
+| C6 | Chevron glyphs exported as raster `shape_full` assets instead of vector icon instances | Date Picker Group |
+| C6 | No explicit tokens for the picker surface itself (`main/date-picker/group/*`) — panel reuses `month-header` tokens as a proxy bg/border | Date Picker Group |
+| C1 | Cell sibling pair (Date Picker - Item 32×32, Month and Year Picker - Item 100×32) duplicate the same selectable-cell primitive at different sizes — one unified Picker Cell with a `kind` axis would replace both | Date Picker Item |
+| C2 | `Type = Default \| Today \| Selected \| Range (Middle) \| Prev/Next` mixes display roles (Default, Today, Prev/Next) with selection state (Selected, Range Middle) on a single axis | Date Picker Item |
+| C2 | Variant name `Range (Middle)` uses parentheses/space in the value — rename to `range-middle` for clean code-connect output | Date Picker Item |
+| C4 | Range highlight ends (`Range highlight end`, `Range highlight start`) are absolutely positioned siblings that overflow the cell by 28–34% — range continuity across cells is represented as per-cell decoration instead of row-level geometry | Date Picker Item |
+| C5 | State axis is present but only Default and Today carry a Disabled variant — Selected, Range Middle, and Prev/Next have no Disabled form | Date Picker Item |
+| C5 | No Pressed, Hover, or Focused states on any Type | Date Picker Item |
+| C5 | Today + Selected is not a distinct variant — unclear which wins when today is also the selected date | Date Picker Item |
+| C6 | Selected cell is a solid fill vs Today cell is a 1.5px ring — acceptable visually, but not tokenized as a shared "selection emphasis" pattern shared with Month/Year cells | Date Picker Item |
+| C2 | State × isDisabled produces invalid combinations — Disabled is conceptually a state, not an orthogonal boolean, yielding 5 of 8 variants actually used | Date Picker |
+| C6 | Calendar glyph exported as raster `shape_full` image rather than a vector icon instance | Date Picker |
+| C4 | Popover (Date Picker - Group) is composed inline inside the trigger rather than being positioned as an overlay — blocks 1:1 native dialog mapping | Date Picker |
+| C5 | Missing Error state despite living in a Select Field family where Error is canonical | Date Picker |
 | C1 | Fixed composition of 8 DropdownItem instances — no slot or parameterization, last row is a detached frame instead of a component instance | Dropdown Item Group |
 | C4 | Popover surface modeled as a standalone component, not composed via native Menu / DropdownMenu primitives | Dropdown Item Group |
 | C2 | Enum value typo `disabeld` (should be `disabled`) — ships in the variant name and leaks into generated code | Dropdown Item |
@@ -310,6 +337,14 @@ They do **not** see:
 | C4 | A second app-bar component exists only to swap the title for a logo — should be a slot on the existing Title Bar instead of a sibling component. | Header With Logo |
 | C1 | Four separate components all named "Header*" conflate 4 distinct semantic roles (section header, page banner, brand app bar, detail hero). | Header |
 | C2 | 8 independent boolean props create 256 theoretical combos but only 16 are built — the boolean model lies. Trailing-slot booleans should collapse into a single enum slot. | Header |
+| C1 | Two stacked discount Badge instances at the same anchor — the <code>Voucher Asset</code> image frame (5121:4534) contains two Badge instances (<code>I5121:4534;6983:110671</code> reading "10% off" and <code>I5121:4534;6983:110685</code> reading "35% off"), both absolutely positioned at the same top-right coordinates. Only one is ever visible at a time, but nothing in the property schema picks between them — the "10% off" badge layer is simply dead weight in the symbol. | Horizontal Voucher |
+| C2 | Six booleans where most should be strings or a composable array — <code>amount</code>, <code>asset</code>, <code>badges</code>, <code>description</code>, <code>header</code>, <code>validityPeriod</code>. Every one controls visibility only; the strings ("Grab Food", "PHP 100.00", "PHP 150.00", validity date range) are all frozen inside the symbol. Consumers cannot render a real voucher without detaching. | Horizontal Voucher |
+| C2 | Discount amount is baked into the image frame — "10% off" and "35% off" are hardcoded Badge label strings inside the Voucher Asset, not a property on the parent Horizontal Voucher. A voucher offering "BUY1 TAKE1" or "50% off" cannot be rendered without detaching. | Horizontal Voucher |
+| C2 | Four hardcoded status badges in a single row — "Limited", "Expiring", "Hot", "Discounted" are baked inside the <code>badges</code> frame as fixed Badge instances. The <code>badges</code> boolean toggles the entire row on or off; there is no way to render just one or two badges, and no way to choose which badges apply. | Horizontal Voucher |
+| C4 | Orientation is implicit in the component name, not a variant axis — Horizontal Voucher, Vertical Voucher (5119:1635), and Voucher Card Horizontal (5119:1786) are three separate components for what is a single component with an <code>orientation</code> axis. Changing orientation requires swapping the entire instance, not flipping a property. | Horizontal Voucher |
+| C5 | No state axis — Voucher Card Horizontal ships Default/Limited/Expiring/Used/Expired with per-state background, label color, and badge treatment. Horizontal Voucher has no state concept at all; a used or expired horizontal voucher cannot be rendered in greyed-out treatment without detaching. | Horizontal Voucher |
+| C6 | Image is a raster photograph baked into the frame — the hero image (<code>Paste Image Here</code> / <code>imgPasteImageHere</code>) is a 336×144 raster asset with the "GrabFood" wordmark burned into the pixels. Partner branding, ticket shape, and image content are all frozen. Should be an Image Slot that accepts any Voucher Asset variant. | Horizontal Voucher |
+| C7 | No Code Connect target — the handoff API is <code>EBVoucherCard(orientation:, state:, title:, price:, originalPrice:, validity:, badges: [...], image: )</code>. A 6-boolean symbol with frozen strings, stacked discount badges, and a raster hero image has no 1:1 native analog. | Horizontal Voucher |
 | C1 | A single `type` enum hides 5 structurally different trailing-content compositions (plain value / value + clipboard / badge / value + description / value + description + text-link) — should be orthogonal boolean slots (hasCopy, hasDescription, hasTextLink) with a unified trailing slot so Badge can be instance-swapped. | Inline Text |
 | C2 | `type=with Clipboard` / `with Badge` / `with Description` / `with Text Link` mix two axes — "what sits in the trailing slot" (value / badge) and "what sits under the label" (description / text-link). A single enum conflates them. | Inline Text |
 | C6 | Badge variant is drawn inline (hardcoded information/light fill, hardcoded "Label" text) instead of instance-swapped from the canonical Badge component — creates a parallel styling source of truth. | Inline Text |
@@ -328,6 +363,14 @@ They do **not** see:
 | C4 | Two unrelated layouts (general-purpose dialog + transaction receipt) are compressed into one component via a `type` enum — transaction variants carry receipt-specific inner rows, copy-to-clipboard icon, and reference number slots that don't belong in a generic modal. | Modal |
 | C6 | Transaction variant uses raster PNG assets for the copy-to-clipboard icon (`shape_half`, `shape_full`) instead of a vector icon instance. | Modal |
 | C7 | Component duplicates scope with a separately-maintained Modal elsewhere in the file (node `47:329691` "Overlay" and generic popup container) — two sources of truth for the same concept. | Modal |
+| C1 | Sibling cell pair (Date Picker - Item 32×32, Month and Year Picker - Item 100×32) duplicate the same selectable-cell primitive at different sizes — one unified Picker Cell with a `kind` axis would replace both | Month Year Picker Item |
+| C1 | Inner frame is named `Month` regardless of whether the cell renders a month or year label — reused as the year cell too without renaming, meaning the layer name lies for half the instances | Month Year Picker Item |
+| C2 | State axis is NARROWER than its sibling day cell — only `Type = Default \| Today \| Selected` with no Disabled, no Pressed, no Focused. Cells in the same family should share a consistent state shape, even if values differ | Month Year Picker Item |
+| C3 | Cell reuses `main/date-picker/day/color/*` tokens for a non-day cell — the token scope is misleadingly named `day` while also being used for month and year cells. Either rename to `main/date-picker/cell/*` or split into `main/picker-cell/{day\|month\|year}/*` | Month Year Picker Item |
+| C5 | No Disabled variant — unreachable when a parent disables the picker or blocks a date range | Month Year Picker Item |
+| C5 | No Pressed, Hover, or Focused state variants | Month Year Picker Item |
+| C5 | No Today + Selected variant — unclear which presentation wins when the current month/year is also the selected one | Month Year Picker Item |
+| C6 | Today ring is 1px on this cell vs 1.5px on the sibling day cell — same visual pattern with different stroke weights across siblings | Month Year Picker Item |
 | C1 | Component is named `Onboarding - Tooltip` but contains nothing onboarding-specific — no step indicator, no Next/Skip/Back CTAs, no progress dots. It is a plain header + description + close tip with a pointer. The "Onboarding" prefix misleads consumers into choosing it for walkthroughs it cannot support. | Onboarding Tooltip |
 | C1 | Three Tooltip siblings exist (Tooltip V2, Onboarding - Tooltip, Tooltip Blurred and Transparent) that differ by pointer/placement axis more than by role — Onboarding-Tooltip is essentially Tooltip V2 minus the content axes. | Onboarding Tooltip |
 | C2 | Pointer direction is one `pointer` enum here but 4 booleans in Tooltip V2 — inconsistent schema across sibling components that should already have been consolidated. | Onboarding Tooltip |
@@ -387,6 +430,9 @@ They do **not** see:
 | C6 | Header `icon=yes` variants render a raw `#C2C6CF` placeholder circle — not a real vector slot or instance-swap. Consumers have no documented way to set the icon. | Table |
 | C2 | `tabsCount` is a variant property (2/3/4) — should be removed entirely, container should accept a list of Tab Items | Tabs |
 | C2 | Figma component is named "Tab" (singular) — should be renamed "Tabs" (plural) to match native/industry conventions and disambiguate from the Tab Item atom | Tabs |
+| C7 | Product composition disguised as a DS component — an instance of the canonical Accordion with a hardcoded title string and hardcoded body. No unique schema, tokens, or behavior. Should be documented as a usage example of the base Accordion, not shipped as its own component. | Terms Conditions Accordion |
+| C4 | Desktop resize-handle glyph baked into mobile multi-line field — native platforms auto-grow, no user-facing resize affordance exists on iOS/Android | Text Area |
+| C1 | Raster PNG resize-handle icon instead of vector — four PNG assets referenced (one per state) for a 12×12px glyph that is itself the wrong pattern for mobile | Text Area |
 | C2 | Boolean properties use yes/no instead of true/false — blocks direct Swift Bool / Kotlin Boolean mapping | Title Bar |
 | C6 | Trailing icon uses icon-placeholder RECTANGLE instead of swappable icon instance — blocks native icon slot | Title Bar |
 | C1 | A separate component exists solely to add a button slot — action belongs on the base Toast as an optional prop, not a sibling component. | Toast With Button |
@@ -423,12 +469,34 @@ They do **not** see:
 | C6 | Thumbnail is a gray placeholder block instead of a Figma Slot for swappable preview | Upload File |
 | C6 | Progress bar is a Lottie animation — external asset dependency, must be bundled with the native package | Upload File |
 | C5 | No disabled, pressed, or focused states defined | Upload File |
+| C1 | Two asset sizes bundled in one symbol — large (153h) and small (100h) Voucher Asset instances are both nested and toggled via <code>largeAsset</code> / <code>smallAsset</code> booleans. Nothing enforces mutual exclusion, so the default symbol renders both stacked (465h tall). Should be a single <code>assetSize</code> enum, not two booleans. | Vertical Voucher |
+| C2 | Text content is hardcoded placeholder copy — title, description, PHP 100.00 price, PHP 150.00 strikethrough, and "Validity: Dec 25 2022 - Jan 5 2023" are all frozen strings. Consumers cannot set a voucher title, amount, or validity without detaching. | Vertical Voucher |
+| C2 | Badges are hardcoded labels inside the symbol — "Limited", "Expiring", "Hot", "Discounted" are fixed across two fixed rows toggled via <code>prop1stRowBadges</code> / <code>prop2ndRowBadges</code>. Consumers cannot choose which badges to show; they can only turn row-1 or row-2 on/off as a unit. | Vertical Voucher |
+| C7 | No Code Connect target — the handoff API should be <code>EBVoucherCard(orientation:, state:, title:, price:, originalPrice:, validity:, badges: [...], image: )</code>. Nothing in the current component maps 1:1 to that shape. 8 booleans with hardcoded content cannot link to a native component. | Vertical Voucher |
 | C2 | Property `variant` is overloaded — encodes 4 trailing content types as one enum. Better as `trailingContent` with values none/badge/textLink/icon. | View Only Field |
 | C2 | Property value `Size=Default` isn't a true size name — should be `Regular` for consistency with other components. | View Only Field |
 | C6 | Checkmark uses raster IMG from Figma CDN instead of a vector icon instance. | View Only Field |
 | C2 | Variant property values mix paradigms — "Default" / "2 CTA" / "Version 2" combine generic, count, and version naming | Visual Popup |
 | C6 | Hero image is a flat raster placeholder with "Replace me" overlay instead of a swappable image slot | Visual Popup |
 | C5 | No destructive/error/loading variant; close affordance only on Version 2 | Visual Popup |
+| C2 | Illustration category promoted to a variant axis — <code>use case</code> has 10 values (restaurant, vacation, beverage, snack, fashion, party, meal, games, food, default). Every new voucher category forces a new component variant. Should be an instance-swapped image Slot, not a variant. | Voucher Asset |
+| C2 | Fidelity axis <code>type=midfi\|hifi</code> — "mid-fidelity" placeholder vs "hi-fidelity" final artwork is an authoring concern (wireframe vs final), not a product axis. Same pattern retired on Ad Space; should be an orthogonal <code>isLoading</code> or a separate placeholder asset, not a variant value. | Voucher Asset |
+| C4 | Cartesian is sparse — 10 use cases × 2 sizes × 2 orientations = 40 possible; only 20 shipped. Orientation=horizontal exists for <code>default</code> (midfi) and <code>food</code> (hifi) only; most use cases have no horizontal artwork. The matrix is not closed. | Voucher Asset |
+| C6 | All artwork is raster image fill — no vector illustrations, no token-driven coloring. The "35% off" Badge is hardcoded inside the component, so the voucher amount is not a property. | Voucher Asset |
+| C7 | Native mapping is not a component — the correct handoff for a category illustration is an asset catalog entry (<code>Image("voucher-restaurant-large")</code>), not a Code-Connected component. Only the ticket frame + badge overlay warrants a component. | Voucher Asset |
+| C1 | Two parallel partner-image trees for the same frame — <code>voucher</code> (limited/expiring) and <code>Voucher Image V1</code> (used/expired) are two complete sibling subtrees inside the 96×111 partner-image frame, gated by the state enum. Layers differ only by background fill (<code>bg/color-bg-primary</code> #005CE5 vs <code>bg/color-bg-overlay-weak</code> rgba(2,14,34,0.24)) and mix-blend mode — should be a single subtree with state-driven tokens. | Voucher Card Horizontal |
+| C2 | State enum drives four separate visual concerns at once — background (active vs greyed), label colors (default vs expired), badge style (information/heavy vs negative/heavy vs muted/light), and badge text ("Limited" / "Expiring" / "Used" / "Expired"). The badge text is derived from state but not independently addressable; a consumer cannot show "New" or "Featured" on a limited voucher. | Voucher Card Horizontal |
+| C2 | Every piece of content is hardcoded — title "Buy Load Globe Go90", price "PHP 50.00", original price "PHP 90.00", validity "Validity: Dec 25 2022 - Jan 5 2023". Booleans <code>badge</code> and <code>crossedValue</code> only toggle visibility. No string properties. | Voucher Card Horizontal |
+| C4 | Three components for one concept — this (5119:1786), Vertical Voucher (5119:1635), and Horizontal Voucher (5121:4533) are three parallel records of the same idea. This one carries the proper state coverage; the other two do not. Merge into one component with <code>orientation</code> + <code>state</code> axes. | Voucher Card Horizontal |
+| C5 | "GET VOUCHER" CTA has no interactive state — it's a rotated text label inside the partner-image frame, not a Button instance. No pressed / focused / disabled state on the card or on the CTA. Vouchers are always tappable; the entire card should be the tap target and the CTA frame should be a Button if a secondary action is needed. | Voucher Card Horizontal |
+| C6 | Partner logo is a raster image (GCash icon PNG) masked into the perforated ticket shape — <code>imgLogoNoText</code>, <code>imgGCashLogosV2RgbIconBwWhiteTransparent</code>, <code>imgPerforate</code>, <code>imgVoucherImageV1</code> are all raster assets. The logo cannot be swapped to a partner brand (Globe, Smart, GrabFood) without detaching. | Voucher Card Horizontal |
+| C7 | Two-boolean + 4-enum surface does not map 1:1 to native. The proposed <code>EBVoucherCard(orientation:, state:, title:, price:, originalPrice:, validity:, logo:, onTap:)</code> shape cannot link until strings become properties and the logo becomes a slot. | Voucher Card Horizontal |
+| C1 | Screen masquerading as a component — a 336×704 symbol with no variants, only four optional-content booleans (<code>accordion</code>, <code>badge</code>, <code>slashedAmount</code>, <code>tCWithTextLink</code>). It is a page-level composition, not a primitive. DS primitives are reusable across screens; this is one specific screen. | Voucher Details |
+| C2 | Booleans named after internal layers — <code>accordion</code>, <code>badge</code>, <code>tCWithTextLink</code> toggle whether specific child instances render. They are not behavioral states, not semantic roles; they are "show this optional subtree" switches. True DS props describe intent (<code>hasLimitedBadge</code>, <code>hasOriginalPrice</code>) or are behavioral states, not child-node visibility. | Voucher Details |
+| C2 | Mixed T&amp;C display patterns — the component ships both a <code>tCWithTextLink</code> plain-text section AND a <code>Terms &amp; Conditions Accordion</code> inside the same symbol, as two independent booleans. Any real voucher screen picks one or the other, never both. The combinatorial boolean surface is 2^4 = 16 states of which ~4 are legitimate. | Voucher Details |
+| C4 | Native handoff is a Screen/View, not a Component — SwiftUI would model this as a scrollable <code>VoucherDetailsView</code> parent, not a single View with optional subviews. The merchant header, amount block, and accordion each map to their own primitives. | Voucher Details |
+| C5 | No interaction states — voucher is interactive on mobile (tap to redeem, accordion expands, "See full promo mechanics" link), but the symbol ships only one visual state. Accordion expanded state leaks in only because the embedded accordion instance happens to be <code>expanded=yes</code>. | Voucher Details |
+| C7 | Not linkable as a unit — Code Connect would have to map 4 booleans to a 4-argument native View, which defeats the point. The real DS-to-native contract is at the primitive level (Logo, Badge, Accordion, ListItem), not at the screen level. | Voucher Details |
 <!-- @@DISCOVERED_PATTERNS_END@@ -->
 
 ---
@@ -675,6 +743,7 @@ Key conventions:
 | Avatar Group | `18276:4554` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Avatar | `17143:4488` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Badge | `18482:28972` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Banner | `756:82673` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Bottom Sheet | `12817:43833` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Button | `17104:184842` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Carousel Card | `23:121311` | Restructure | Requires Rework | 🔁 Re-assessing | — |
@@ -683,6 +752,9 @@ Key conventions:
 | Checkbox | `17143:2464` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Chip | `18336:22243` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | Counter | `18482:71321` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Date Picker Group | `18431:2822` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
+| Date Picker Item | `12874:42180` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
+| Date Picker | `12879:49826` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Dropdown Item Group | `6383:3446` | Consolidate | Not Applicable | 🔁 Re-assessing | — |
 | Dropdown Item | `18577:13033` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Dropdown | `18482:31910` | Fix | Needs Refinement | 🔁 Re-assessing | — |
@@ -692,6 +764,7 @@ Key conventions:
 | Header Transaction | `18430:2897` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Header With Logo | `18430:2875` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
 | Header | `18430:2919` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Horizontal Voucher | `5121:4533` | Consolidate | Requires Rework | 🟡 In Progress | — |
 | Inline Text | `18652:71101` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | Input Field | `17758:3687` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Labeled Field | `17758:3713` | Keep | Needs Refinement | 🔁 Re-assessing | — |
@@ -700,6 +773,7 @@ Key conventions:
 | List | `18482:34737` | Remove | Not Applicable | 🔁 Re-assessing | — |
 | Menu Grid | `18320:14332` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Modal | `18507:71705` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Month Year Picker Item | `18414:5854` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
 | Onboarding Tooltip | `51:17066` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
 | Overlay | `47:329691` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Progress Bar | `18577:13227` | Restructure | Requires Rework | 🔁 Re-assessing | — |
@@ -717,6 +791,8 @@ Key conventions:
 | Table Transaction | `47:324709` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
 | Table | `47:326260` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Tabs | `18482:33249` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Terms Conditions Accordion | `5119:5447` | Remove | Not Applicable | 🔁 Re-assessing | — |
+| Text Area | `3070:21245` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
 | Title Bar | `23:175148` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Toast With Button | `27:53205` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
 | Toast | `27:53135` | Restructure | Requires Rework | 🔁 Re-assessing | — |
@@ -725,8 +801,12 @@ Key conventions:
 | Tooltip Blurred | `49:335349` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
 | Tooltip V2 | `70:14908` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Upload File | `18482:35064` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Vertical Voucher | `5119:1635` | Consolidate | Requires Rework | 🟡 In Progress | — |
 | View Only Field | `18403:4520` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Visual Popup | `18477:23788` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Voucher Asset | `5119:1664` | Restructure | Requires Rework | 🟡 In Progress | — |
+| Voucher Card Horizontal | `5119:1786` | Restructure | Requires Rework | 🟡 In Progress | — |
+| Voucher Details | `5119:5368` | Product Layer | Not Applicable | 🟡 In Progress | — |
 <!-- @@PROGRESS_TABLE_END@@ -->
 
 ### Open Issues

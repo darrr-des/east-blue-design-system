@@ -1,0 +1,478 @@
+<!--
+  VOUCHER CARD HORIZONTAL — ASSESSMENT
+  4 variants by state: limited / expiring / used / expired. 336 × 111 per variant.
+  Two booleans: `badge` (shows the state badge top-left of the partner image) and
+  `crossedValue` (shows strikethrough original price). State drives background,
+  label colors, partner-image treatment (full-color brand vs greyed overlay),
+  and badge color (information/heavy / negative/heavy / muted/light).
+
+  This is the canonical sibling in the voucher-card family — it is the only one of
+  the three that models state properly. Vertical Voucher (5119:1635) and Horizontal
+  Voucher (5121:4533) are parallel records that lack the state axis. Merge target:
+  one Voucher Card with orientation × state, push the consolidation from here.
+
+  Verdict: Restructure. The state axis is good; the architecture (3 parallel
+  components for 2 orientations × 4 states) is not. Title, price, original price,
+  validity, and partner logo are all hardcoded strings/image fills with no slot or
+  property. "GET VOUCHER" CTA is a baked, rotated text label — not a Button.
+
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 5119:1786
+ds-verdict: restructure
+native-status: rework
+variants: 4
+ios: EBVoucherCard(orientation: .horizontal, state: .limited | .expiring | .used | .expired)
+android: EBVoucherCard(orientation = Horizontal, state = VoucherState.Limited | Expiring | Used | Expired)
+open-issues: C1,C2,C4,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] Two parallel partner-image trees for the same frame — <code>voucher</code> (limited/expiring) and <code>Voucher Image V1</code> (used/expired) are two complete sibling subtrees inside the 96×111 partner-image frame, gated by the state enum. Layers differ only by background fill (<code>bg/color-bg-primary</code> #005CE5 vs <code>bg/color-bg-overlay-weak</code> rgba(2,14,34,0.24)) and mix-blend mode — should be a single subtree with state-driven tokens.
+[C2] State enum drives four separate visual concerns at once — background (active vs greyed), label colors (default vs expired), badge style (information/heavy vs negative/heavy vs muted/light), and badge text ("Limited" / "Expiring" / "Used" / "Expired"). The badge text is derived from state but not independently addressable; a consumer cannot show "New" or "Featured" on a limited voucher.
+[C2] Every piece of content is hardcoded — title "Buy Load Globe Go90", price "PHP 50.00", original price "PHP 90.00", validity "Validity: Dec 25 2022 - Jan 5 2023". Booleans <code>badge</code> and <code>crossedValue</code> only toggle visibility. No string properties.
+[C4] Three components for one concept — this (5119:1786), Vertical Voucher (5119:1635), and Horizontal Voucher (5121:4533) are three parallel records of the same idea. This one carries the proper state coverage; the other two do not. Merge into one component with <code>orientation</code> + <code>state</code> axes.
+[C5] "GET VOUCHER" CTA has no interactive state — it's a rotated text label inside the partner-image frame, not a Button instance. No pressed / focused / disabled state on the card or on the CTA. Vouchers are always tappable; the entire card should be the tap target and the CTA frame should be a Button if a secondary action is needed.
+[C6] Partner logo is a raster image (GCash icon PNG) masked into the perforated ticket shape — <code>imgLogoNoText</code>, <code>imgGCashLogosV2RgbIconBwWhiteTransparent</code>, <code>imgPerforate</code>, <code>imgVoucherImageV1</code> are all raster assets. The logo cannot be swapped to a partner brand (Globe, Smart, GrabFood) without detaching.
+[C7] Two-boolean + 4-enum surface does not map 1:1 to native. The proposed <code>EBVoucherCard(orientation:, state:, title:, price:, originalPrice:, validity:, logo:, onTap:)</code> shape cannot link until strings become properties and the logo becomes a slot.
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Voucher<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-voucher-card-horizontal" onclick="showPanel('voucher-card-horizontal', this)">
+  <div class="nav-comp-icon">
+    <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="10" width="26" height="12" rx="1.5" fill="#FFFFFF" stroke="#C8CDD5" stroke-width="1"/>
+      <path d="M21 10h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-6V10Z" fill="#005CE5"/>
+      <circle cx="24.5" cy="16" r="2.2" stroke="#FFFFFF" stroke-width="1" fill="none"/>
+      <circle cx="24.5" cy="16" r="0.7" fill="#FFFFFF"/>
+      <rect x="20.6" y="10" width="0.8" height="12" fill="#E6EAF2"/>
+      <rect x="5" y="12" width="12" height="1.6" rx="0.3" fill="#0A2757"/>
+      <rect x="5" y="15" width="8" height="1.3" rx="0.3" fill="#2340A9"/>
+      <rect x="5" y="18.5" width="10" height="1" rx="0.3" fill="#445C85"/>
+      <rect x="21" y="10.5" width="5" height="2" rx="0.3" fill="#2340A9"/>
+    </svg>
+  </div>
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Voucher Card Horizontal</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('voucher-card-horizontal')">
+  <div class="summary-card-preview">
+    <svg width="96" height="44" viewBox="0 0 96 44" fill="none">
+      <rect x="2" y="4" width="92" height="36" rx="3" fill="#FFFFFF" stroke="#C8CDD5" stroke-width="1"/>
+      <path d="M68 4h24a2 2 0 0 1 2 2v32a2 2 0 0 1-2 2H68V4Z" fill="#005CE5"/>
+      <circle cx="81" cy="22" r="6" stroke="#FFFFFF" stroke-width="1.2" fill="none"/>
+      <circle cx="81" cy="22" r="2" fill="#FFFFFF"/>
+      <rect x="67" y="4" width="1" height="36" fill="#E6EAF2"/>
+      <rect x="5" y="9" width="26" height="3" rx="0.5" fill="#0A2757"/>
+      <rect x="5" y="15" width="16" height="3" rx="0.5" fill="#2340A9"/>
+      <rect x="24" y="15" width="16" height="2.5" rx="0.5" fill="#90A8D0"/>
+      <rect x="5" y="32" width="44" height="2" rx="0.5" fill="#6780A9"/>
+      <rect x="68" y="7" width="14" height="5" rx="0.6" fill="#2340A9"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Voucher Card Horizontal</div>
+      <span class="badge badge-rework">Restructure</span>
+    </div>
+    <div class="summary-card-desc">336×111 horizontal voucher with a proper 4-state axis (limited / expiring / used / expired). State drives bg, label colors, and badge style. All text is hardcoded placeholder; the partner logo is a raster GCash asset. Canonical sibling in the 3-component voucher family — push the consolidation from here.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Voucher Card Horizontal</strong></td>
+  <td><span class="badge badge-rework">Restructure</span></td>
+  <td><span class="badge badge-rework">Rework</span></td>
+  <td class="muted">4</td>
+  <td class="muted">4-state variant (limited / expiring / used / expired) is the correct pattern, but text content is hardcoded and partner logo is raster. Merge with Vertical Voucher + Horizontal Voucher into one <code>Voucher Card</code> with <code>orientation</code> + <code>state</code> axes. Port this state coverage to the unified component.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-voucher-card-horizontal">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Voucher Card Horizontal
+          <span class="badge badge-rework">Restructure</span>
+          <span class="badge badge-rework">Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=5119-1786" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">A 336 × 111 horizontal voucher card with a text content block on the left (title, price, strikethrough original price, validity) and a 96-wide perforated partner-image frame on the right containing the GCash logo and a rotated "GET VOUCHER" CTA label. Ships 4 state variants — <code>limited</code>, <code>expiring</code>, <code>used</code>, <code>expired</code> — plus two boolean toggles (<code>badge</code>, <code>crossedValue</code>). State drives background (active vs greyed), label colors, and the corner badge (information/heavy "Limited" / negative/heavy "Expiring" / muted/light "Used" / muted/light "Expired"). This is the canonical sibling in the voucher-card family — the only one of three parallel components that models state.</p>
+      </div>
+      <div class="verdict-inline verdict-fix">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Merge the voucher-card family, port the state axis to the unified component</div>
+          <div class="verdict-inline-text">Voucher Card Horizontal, Vertical Voucher (<code>5119:1635</code>), and Horizontal Voucher (<code>5121:4533</code>) are three parallel records of the same component. This one carries the canonical state coverage the others lack — <code>state: limited | expiring | used | expired</code>. The consolidation target is a single <code>Voucher Card</code> with <code>orientation: vertical | horizontal</code> × <code>state</code> (5 values if a <code>default</code> is added), text Slots for title / price / originalPrice / validity, a logo Slot for partner branding, and a composable badges array replacing the hardcoded state-to-badge mapping. Push the merge from here, not from the other siblings.</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-tab-group="voucher-card-horizontal-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'voucher-card-horizontal-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'voucher-card-horizontal-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'voucher-card-horizontal-tabs')">Changelog</button>
+    </div>
+
+    <!-- ══ Tab: Overview ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <div class="sub-heading" id="vch-preview" style="margin-top:0">Current Figma</div>
+    <p class="section-desc">4 state variants at 336 × 111. Left content block uses voucher-color tokens for title, amount, and metadata. Right partner-image frame is a raster GCash asset with a perforated edge and a rotated "GET VOUCHER" text label. Badge corner-ribbon color changes per state: information/heavy #2340A9 (Limited), negative/heavy #D61B2C (Expiring), muted/light #C2C5CA (Used / Expired).</p>
+    <div class="demo-panel" id="vch-demo">
+      <div class="demo-layout">
+        <div class="demo-preview" id="vch-demo-preview"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="vch-traits">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card fail">
+        <div class="trait-header"><div class="trait-name">Reusable</div><div class="trait-status">Fail</div></div>
+        <div class="trait-note">Title "Buy Load Globe Go90", price "PHP 50.00", original price "PHP 90.00", and validity string are all hardcoded inside the symbol. The partner logo is a raster GCash asset baked into the right frame. Any real voucher (a Globe load voucher, a GrabFood 50% off, a Shopee ₱100 off) cannot render without detaching.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header"><div class="trait-name">Self-contained</div><div class="trait-status">Partial</div></div>
+        <div class="trait-note">Colors are token-bound (<code>main/vouchers/color/default/*</code> and <code>main/vouchers/color/expired/*</code>). Typography uses named text styles (Primary/Multi-line Label/Base, Primary/Label/Small, Secondary/Bold/Small Caption). The card does carry its own layout and state treatment — but the logo raster, the "GET VOUCHER" CTA text, and the validity date are all frozen.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Consistent</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Correctly models <code>state</code> as a variant axis — the other two voucher-card siblings (Vertical Voucher, Horizontal Voucher) do not. But the three components ship as three separate records with divergent property shapes. Family-level inconsistency.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header"><div class="trait-name">Composable</div><div class="trait-status">Warn</div></div>
+        <div class="trait-note">Nests a Badge instance (composition works). But the partner-image frame is a bespoke raster tree, not an instance-swap slot; and the content block has no text slots. A parent screen cannot compose real voucher data into this card.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading" id="vch-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Aspect</th><th>iOS</th><th>Android</th><th class="col-badge">Figma</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>State</td><td class="muted"><code>state: .limited | .expiring | .used | .expired</code></td><td class="muted"><code>state = VoucherState.Limited | Expiring | Used | Expired</code></td><td><code>state</code> enum (4)</td><td class="muted">Drives bg, label colors, partner-image treatment, and corner badge. Add a <code>default</code> fifth state for vouchers without a status callout.</td></tr>
+          <tr><td>Title</td><td class="muted"><code>title: String</code></td><td class="muted"><code>title: String</code></td><td class="muted">Hardcoded "Buy Load Globe Go90"</td><td class="muted">No property; must be set via detach.</td></tr>
+          <tr><td>Price / original</td><td class="muted"><code>price: String, originalPrice: String?</code></td><td class="muted">Same</td><td><code>crossedValue</code> boolean (strings hardcoded)</td><td class="muted">"PHP 50.00" and "PHP 90.00" frozen; boolean only toggles visibility of the strikethrough.</td></tr>
+          <tr><td>Validity</td><td class="muted"><code>validity: String?</code></td><td class="muted">Same</td><td class="muted">Hardcoded "Validity: Dec 25 2022 - Jan 5 2023"</td><td class="muted">No property; must be set via detach.</td></tr>
+          <tr><td>Status badge</td><td class="muted"><code>badge: EBBadge?</code></td><td class="muted"><code>badge: EBBadge?</code></td><td><code>badge</code> boolean + state-derived text</td><td class="muted">"Limited" / "Expiring" / "Used" / "Expired" are derived from <code>state</code>. Consumers cannot set their own badge text.</td></tr>
+          <tr><td>Partner logo</td><td class="muted"><code>logo: Image</code> slot</td><td class="muted"><code>logo: @Composable () -&gt; Unit</code></td><td class="muted">Raster GCash asset</td><td class="muted">No slot — logo is baked into the partner-image frame.</td></tr>
+          <tr><td>CTA</td><td class="muted">Entire card as <code>Button</code> with <code>PlainButtonStyle</code></td><td class="muted"><code>Card</code> with <code>onClick</code> + ripple</td><td class="muted">"GET VOUCHER" rotated text (non-interactive)</td><td class="muted">Card is the tap target; the rotated text is decorative, not a Button instance.</td></tr>
+          <tr><td>Tap state</td><td class="muted">Pressed: opacity 0.7 or scale 0.98</td><td class="muted">Ripple via <code>Modifier.clickable</code></td><td class="muted">Not modelled</td><td class="muted">No pressed/focused/disabled on the card frame.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="vch-resolved">Resolved Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>State axis is modelled correctly.</strong> Unlike Vertical Voucher and Horizontal Voucher, this component ships a proper <code>state</code> variant driving background, label colors, partner-image tint, and badge style. The 4-value enum (limited / expiring / used / expired) is the canonical shape to port to the unified Voucher Card. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Voucher color tokens are bound.</strong> Background (<code>main/vouchers/color/default/bg</code>, <code>main/vouchers/color/expired/bg</code>), title (<code>default/label-title</code> #0A2757, <code>expired/label-title</code> #445C85), amount (<code>label-amount-horizontal</code> #2340A9, <code>expired/label-amount</code> #6780A9), original amount (<code>label-amount-original</code> #90A8D0), and metadata (<code>expired/label-metadata</code> #6780A9) all resolve through the voucher component variable collection. <span class="tag-open tag-c3">C3 · Token Coverage</span></span></li>
+      <li><span><strong>Badge instance is a DS component.</strong> The corner ribbon is a real Badge instance — styled via <code>main/badge/information/heavy/background</code>, <code>main/badge/negative/heavy/background</code>, or <code>main/badge/muted/light/background</code> depending on state. Composition works; only the label string is state-derived rather than user-settable. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+      <li><span><strong>Shadow uses the app elevation token.</strong> <code>app/shadow/shadow-low</code> (0 0 4 0 #020e220f) is applied to the card frame. <span class="tag-open tag-c3">C3 · Token Coverage</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="vch-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Three parallel components for one concept.</strong> Voucher Card Horizontal, Vertical Voucher (<code>5119:1635</code>), and Horizontal Voucher (<code>5121:4533</code>) are three separate records of the same component. This is a family-level consolidation — the unified <code>Voucher Card</code> needs <code>orientation: vertical | horizontal</code> × <code>state: default | limited | expiring | used | expired</code> = 10 variants, not three divergent symbols. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>All text content is hardcoded.</strong> Title "Buy Load Globe Go90", price "PHP 50.00", original price "PHP 90.00", and validity "Validity: Dec 25 2022 - Jan 5 2023" are frozen strings inside every variant. Booleans <code>badge</code> and <code>crossedValue</code> only toggle visibility — they do not accept content. Consumers cannot render a real voucher without detaching. <span class="tag-open tag-c2">C2 · Variant &amp; Property Naming</span></span></li>
+      <li><span><strong>Badge text is state-derived, not independently settable.</strong> The corner ribbon label flips between "Limited" / "Expiring" / "Used" / "Expired" based on the <code>state</code> enum. A consumer who wants to show "New" or "Featured" on a limited voucher cannot — state and badge label are conflated. Split into <code>state</code> (drives visual treatment) + <code>badge</code> (independent Slot/string). <span class="tag-open tag-c2">C2 · Variant &amp; Property Naming</span></span></li>
+      <li><span><strong>Partner logo is a raster GCash asset with no slot.</strong> <code>imgLogoNoText</code>, <code>imgGCashLogosV2RgbIconBwWhiteTransparent</code>, and <code>imgVoucherImageV1</code> are raster image fills inside the 96×111 partner-image frame. Vouchers for Globe, Smart, GrabFood, or Shopee all render with the GCash logo. No logo Slot exists. <span class="tag-open tag-c6">C6 · Asset &amp; Icon Quality</span></span></li>
+      <li><span><strong>Duplicated partner-image subtrees per state.</strong> <code>voucher</code> (used by limited/expiring) and <code>Voucher Image V1</code> (used by used/expired) are two complete parallel subtrees inside the same frame — differing only by background fill (<code>bg/color-bg-primary</code> vs <code>bg/color-bg-overlay-weak</code>). Should be a single subtree with state-driven tokens. <span class="tag-open tag-c1">C1 · Layer Structure &amp; Naming</span></span></li>
+      <li><span><strong>"GET VOUCHER" rotated text is not a Button.</strong> The CTA label is a rotated <code>&lt;p&gt;</code> inside the partner-image frame — not a Button instance, no pressed/focused/disabled state, no onTap handler semantics. If tapping the partner half is supposed to redeem the voucher, that needs to be an actual Button or the whole card needs to be the tap target. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Perforated ticket edge is a raster mask.</strong> <code>imgPerforate</code> is a raster image used as a mask to produce the perforated dashed edge between the content block and partner frame. Should be a vector path or an SVG mask; at 1× / 2× / 3× the raster will alias. <span class="tag-open tag-c6">C6 · Asset &amp; Icon Quality</span></span></li>
+      <li><span><strong>No default (neutral) state.</strong> Every variant renders a corner badge. A voucher that is simply available (neither limited nor expiring) has no option to render without a badge beyond setting <code>badge=false</code>, which drops the callout but keeps the limited-state visual treatment. Add a <code>default</code> state for active-but-unflagged vouchers. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Two-boolean + 4-enum surface cannot map 1:1 to native.</strong> A proper <code>EBVoucherCard(orientation:, state:, title:, price:, originalPrice:, validity:, logo:, badge:, onTap:)</code> shape has no 1:1 correspondence in the current component — title/price/originalPrice/validity/logo are all hardcoded. Code Connect linkability requires the family consolidation and property-ification first. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <div class="sub-heading" id="vch-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Merge the three voucher cards into a single Voucher Card component.</strong> Vertical Voucher + Horizontal Voucher + Voucher Card Horizontal collapse into one component with <code>orientation: vertical | horizontal</code> × <code>state: default | limited | expiring | used | expired</code> = 10 variants. Port <em>this</em> component's state axis to the unified schema; port Vertical Voucher's content-block structure; drop Horizontal Voucher entirely. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Promote every text string to a property.</strong> Add <code>title: String</code>, <code>price: String</code>, <code>originalPrice: String?</code>, <code>validity: String?</code>. Retire the <code>crossedValue</code> boolean — visibility falls out of whether <code>originalPrice</code> is set. Keep the text-style bindings intact. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Split <code>state</code> (visual treatment) from <code>badge</code> (label).</strong> Keep <code>state</code> as the 5-value enum that drives bg / label colors / partner-image treatment. Expose <code>badge: EBBadge?</code> as an independent Slot so consumers can pick any badge style and text ("New", "Featured", "Limited", custom). The current state-to-badge-text mapping becomes the <em>default</em> badge when none is supplied. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Adopt a Figma Slot for the partner logo.</strong> Replace the raster GCash asset with a 64×64 logo Slot inside the partner-image frame. Consumers instance-swap partner brand marks (Globe, Smart, GrabFood, Shopee, etc.) without detaching. Keep the perforated ticket shape and overlay treatment in the frame itself. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Collapse the two partner-image subtrees into one.</strong> <code>voucher</code> (limited/expiring) and <code>Voucher Image V1</code> (used/expired) are duplicate layer trees differing only by background token. A single subtree gated by state-driven fills (<code>main/vouchers/color/{state}/partner-bg</code>) removes the duplication. <span class="tag-recommend">Composition</span></span></li>
+      <li><span><strong>Add a <code>default</code> state.</strong> Current states are all "flagged" — active-but-unflagged vouchers have no clean render. Add <code>state: default</code> with the active (non-greyed) treatment and no corner badge by default. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Replace the perforated raster mask with a vector path.</strong> The perforated ticket edge should be an SVG path or a vector mask — not a raster image. Same treatment as recommended for Voucher Asset. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Make the card the tap target; remove the rotated "GET VOUCHER" text as a faux-button.</strong> The entire card is the semantic action ("redeem / open voucher details"). Document the handoff as <code>onTap</code>; keep "GET VOUCHER" only as a decorative label if product still wants it visible, or drop it entirely. <span class="tag-recommend">Docs</span></span></li>
+      <li><span><strong>Add pressed / focused / disabled to the card frame.</strong> Vouchers are always tappable — the unified Voucher Card needs a pressed state variant (e.g. opacity 0.8 or scale 0.98), a focused state for keyboard navigation, and a disabled treatment for unavailable vouchers distinct from <code>expired</code>. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>Rename the duplicated <code>Badge</code> layers per state.</strong> All four badge layers are named <code>Badge</code> with no variant-qualifying name. After the family merge, there should be a single <code>badge-slot</code> layer; until then, name them <code>badge-limited</code> / <code>badge-expiring</code> / <code>badge-used</code> / <code>badge-expired</code> for clarity. <span class="tag-recommend">Rename</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ══ Tab: Code ══════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <div class="sub-heading" id="vch-code-usage" style="margin-top:0">Native equivalent <span class="badge badge-planned">Planned API</span></div>
+    <p class="section-desc">Native models the whole voucher family as a single <code>EBVoucherCard</code> with <code>orientation</code> + <code>state</code> axes, text properties, a <code>logo</code> image slot, and an optional <code>badge</code> overriding the state default. This horizontal card is <code>orientation: .horizontal</code>; its 4 states port 1:1 to the native <code>VoucherState</code> enum.</p>
+
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'vch-usage','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'vch-usage','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Proposed API — unified Voucher Card (horizontal orientation)</span>
+<span class="typ">EBVoucherCard</span>(
+    <span class="prp">orientation</span>: .<span class="prp">horizontal</span>,
+    <span class="prp">state</span>: .<span class="prp">limited</span>,
+    <span class="prp">title</span>: <span class="str">"Buy Load Globe Go90"</span>,
+    <span class="prp">price</span>: <span class="str">"PHP 50.00"</span>,
+    <span class="prp">originalPrice</span>: <span class="str">"PHP 90.00"</span>,
+    <span class="prp">validity</span>: <span class="str">"Dec 25 2022 - Jan 5 2023"</span>
+) {
+    <span class="typ">Image</span>(<span class="str">"partner-globe"</span>)   <span class="cmt">// logo slot</span>
+        .<span class="fn">resizable</span>()
+        .<span class="fn">scaledToFit</span>()
+}
+.<span class="fn">onTapGesture</span> { <span class="cmt">// navigate to voucher details</span> }
+
+<span class="cmt">// Expiring, with strikethrough price</span>
+<span class="typ">EBVoucherCard</span>(<span class="prp">orientation</span>: .<span class="prp">horizontal</span>, <span class="prp">state</span>: .<span class="prp">expiring</span>, <span class="prp">title</span>: <span class="str">"GrabFood ₱100 OFF"</span>, <span class="prp">price</span>: <span class="str">"PHP 50.00"</span>, <span class="prp">originalPrice</span>: <span class="str">"PHP 150.00"</span>, <span class="prp">validity</span>: <span class="str">"Ends today"</span>) {
+    <span class="typ">Image</span>(<span class="str">"partner-grabfood"</span>).<span class="fn">resizable</span>().<span class="fn">scaledToFit</span>()
+}
+
+<span class="cmt">// Used / expired — greyed treatment, not tappable</span>
+<span class="typ">EBVoucherCard</span>(<span class="prp">orientation</span>: .<span class="prp">horizontal</span>, <span class="prp">state</span>: .<span class="prp">expired</span>, <span class="prp">title</span>: <span class="str">"Shopee ₱50 OFF"</span>, <span class="prp">price</span>: <span class="str">"PHP 20.00"</span>, <span class="prp">validity</span>: <span class="str">"Expired Apr 1, 2026"</span>) {
+    <span class="typ">Image</span>(<span class="str">"partner-shopee"</span>).<span class="fn">resizable</span>().<span class="fn">scaledToFit</span>()
+}
+
+<span class="cmt">// Override the state-default badge</span>
+<span class="typ">EBVoucherCard</span>(
+    <span class="prp">orientation</span>: .<span class="prp">horizontal</span>,
+    <span class="prp">state</span>: .<span class="prp">default</span>,
+    <span class="prp">title</span>: <span class="str">"Tim Hortons Breakfast"</span>,
+    <span class="prp">price</span>: <span class="str">"PHP 120.00"</span>,
+    <span class="prp">badge</span>: <span class="typ">EBBadge</span>(<span class="str">"New"</span>, <span class="prp">style</span>: .<span class="prp">brandHeavy</span>)
+) {
+    <span class="typ">Image</span>(<span class="str">"partner-timhortons"</span>).<span class="fn">resizable</span>().<span class="fn">scaledToFit</span>()
+}</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="cmt">// Proposed API — unified Voucher Card (horizontal orientation)</span>
+<span class="typ">EBVoucherCard</span>(
+    orientation = <span class="typ">EBVoucherOrientation</span>.Horizontal,
+    state = <span class="typ">EBVoucherState</span>.Limited,
+    title = <span class="str">"Buy Load Globe Go90"</span>,
+    price = <span class="str">"PHP 50.00"</span>,
+    originalPrice = <span class="str">"PHP 90.00"</span>,
+    validity = <span class="str">"Dec 25 2022 - Jan 5 2023"</span>,
+    onClick = { <span class="cmt">/* navigate to voucher details */</span> },
+    logo = {
+        <span class="typ">Image</span>(
+            painter = <span class="fn">painterResource</span>(<span class="typ">R</span>.drawable.partner_globe),
+            contentDescription = <span class="kw">null</span>,
+            contentScale = <span class="typ">ContentScale</span>.Fit
+        )
+    }
+)
+
+<span class="cmt">// Expiring, with strikethrough price</span>
+<span class="typ">EBVoucherCard</span>(
+    orientation = <span class="typ">EBVoucherOrientation</span>.Horizontal,
+    state = <span class="typ">EBVoucherState</span>.Expiring,
+    title = <span class="str">"GrabFood ₱100 OFF"</span>,
+    price = <span class="str">"PHP 50.00"</span>,
+    originalPrice = <span class="str">"PHP 150.00"</span>,
+    validity = <span class="str">"Ends today"</span>,
+    onClick = { },
+    logo = { <span class="typ">Image</span>(<span class="fn">painterResource</span>(<span class="typ">R</span>.drawable.partner_grabfood), <span class="kw">null</span>) }
+)
+
+<span class="cmt">// Override the state-default badge</span>
+<span class="typ">EBVoucherCard</span>(
+    orientation = <span class="typ">EBVoucherOrientation</span>.Horizontal,
+    state = <span class="typ">EBVoucherState</span>.Default,
+    title = <span class="str">"Tim Hortons Breakfast"</span>,
+    price = <span class="str">"PHP 120.00"</span>,
+    badge = <span class="typ">EBBadge</span>(<span class="str">"New"</span>, style = <span class="typ">EBBadgeStyle</span>.BrandHeavy),
+    onClick = { },
+    logo = { <span class="typ">Image</span>(<span class="fn">painterResource</span>(<span class="typ">R</span>.drawable.partner_timhortons), <span class="kw">null</span>) }
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading" id="vch-mapping">Property Mapping (Proposed)</div>
+    <p>Current shape is 4 state variants + 2 booleans with hardcoded content. The table below shows the <em>target</em> shape after the family consolidation — each row captures what the proposed <code>EBVoucherCard</code> replaces.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Current Figma</th><th>Proposed Figma</th><th>SwiftUI</th><th>Compose</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">—</td><td><code>orientation</code></td><td class="muted"><code>orientation: EBVoucherOrientation</code></td><td class="muted"><code>orientation = EBVoucherOrientation</code></td><td class="muted">vertical | horizontal — collapses 3 components into 1</td></tr>
+          <tr><td class="mono"><code>state</code> (4 values)</td><td><code>state</code> (5 values)</td><td class="muted"><code>state: EBVoucherState</code></td><td class="muted"><code>state = EBVoucherState</code></td><td class="muted">Add <code>default</code> for active-but-unflagged vouchers</td></tr>
+          <tr><td class="mono">hardcoded "Buy Load Globe Go90"</td><td><code>title</code> (string)</td><td class="muted"><code>title: String</code></td><td class="muted"><code>title: String</code></td><td class="muted">Property, not frozen</td></tr>
+          <tr><td class="mono">hardcoded "PHP 50.00"</td><td><code>price</code> (string)</td><td class="muted"><code>price: String</code></td><td class="muted"><code>price: String</code></td><td class="muted">Property, not frozen</td></tr>
+          <tr><td class="mono"><code>crossedValue</code> (boolean, "PHP 90.00" frozen)</td><td><code>originalPrice</code> (string)</td><td class="muted"><code>originalPrice: String?</code></td><td class="muted"><code>originalPrice: String?</code></td><td class="muted">Visibility = whether string is non-nil</td></tr>
+          <tr><td class="mono">hardcoded "Validity: …"</td><td><code>validity</code> (string)</td><td class="muted"><code>validity: String?</code></td><td class="muted"><code>validity: String?</code></td><td class="muted">Consumer supplies the date range</td></tr>
+          <tr><td class="mono">raster GCash logo</td><td>logo Slot</td><td class="muted">trailing closure</td><td class="muted"><code>logo: @Composable () -&gt; Unit</code></td><td class="muted">Partner brand mark, instance-swappable</td></tr>
+          <tr><td class="mono"><code>badge</code> (boolean, state-derived label)</td><td><code>badge</code> Slot (optional)</td><td class="muted"><code>badge: EBBadge?</code></td><td class="muted"><code>badge: EBBadge?</code></td><td class="muted">State drives the default; consumer can override</td></tr>
+          <tr><td class="mono">"GET VOUCHER" rotated text</td><td>— (remove or decorative)</td><td class="muted"><code>onTap: () -&gt; Void</code></td><td class="muted"><code>onClick: () -&gt; Unit</code></td><td class="muted">Card is the tap target</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="vch-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="col-id">ID</th><th class="col-md">Criterion</th><th class="col-badge">Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure &amp; Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Two parallel partner-image subtrees (<code>voucher</code> vs <code>Voucher Image V1</code>) for active vs greyed states. Four badge layers all named <code>Badge</code>. Content block uses generic <code>container</code> / <code>price</code> names but text layers are unnamed.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant &amp; Property Naming</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">State enum drives bg + label colors + badge style + badge text all at once. Title, price, original price, validity are frozen strings. <code>crossedValue</code> boolean should be a nullable <code>originalPrice</code> string.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors bound to <code>main/vouchers/color/{default|expired}/*</code> and <code>main/badge/{information|negative|muted}/{heavy|light}/*</code>. Typography uses named text styles. Shadow uses <code>app/shadow/shadow-low</code>.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Parallel to 2 other voucher components with divergent schemas. Native is one <code>EBVoucherCard</code>, not three. Strings/logo need property-ification before any 1:1 mapping.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">4 state variants are good but no <code>default</code>, no pressed/focused/disabled on the card frame, and the "GET VOUCHER" CTA is a non-interactive rotated text label rather than a Button.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset &amp; Icon Quality</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Partner logo is raster (<code>imgLogoNoText</code>, GCash PNG). Perforated ticket edge uses a raster mask (<code>imgPerforate</code>). Should be vector / SVG path.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Cannot map with hardcoded strings and no logo slot. Linkability requires the family consolidation + property-ification first.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading" id="vch-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(4 total)</span></div>
+    <p>Single axis: <code>state</code>. All 4 variants render at 336 × 111. Booleans <code>badge</code> (default <code>true</code>) and <code>crossedValue</code> (default <code>true</code>) apply uniformly across states.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Node ID</th><th>Variant</th><th>Dimensions</th><th>Badge style</th><th>Partner-image treatment</th></tr></thead>
+        <tbody>
+          <tr><td class="mono"><code>5119:1787</code></td><td><code>state=limited</code></td><td class="muted">336 × 111</td><td class="muted">information/heavy #2340A9, label "Limited"</td><td class="muted">Full-color bg (<code>bg/color-bg-primary</code> #005CE5) + white GCash logo</td></tr>
+          <tr><td class="mono"><code>5119:1807</code></td><td><code>state=expiring</code></td><td class="muted">336 × 111</td><td class="muted">negative/heavy #D61B2C, label "Expiring"</td><td class="muted">Full-color bg (<code>bg/color-bg-primary</code> #005CE5) + white GCash logo</td></tr>
+          <tr><td class="mono"><code>5119:1827</code></td><td><code>state=used</code></td><td class="muted">336 × 111</td><td class="muted">muted/light #C2C5CA, label "Used"</td><td class="muted">Greyed overlay (<code>bg/color-bg-overlay-weak</code> rgba(2,14,34,0.24)), mix-blend-multiply</td></tr>
+          <tr><td class="mono"><code>5119:1847</code></td><td><code>state=expired</code></td><td class="muted">336 × 111</td><td class="muted">muted/light #C2C5CA, label "Expired"</td><td class="muted">Greyed overlay (<code>bg/color-bg-overlay-weak</code> rgba(2,14,34,0.24)), mix-blend-multiply</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="section-desc" style="margin-top:16px;">Notable nested nodes (duplicated per variant):</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Node ID</th><th>Layer</th><th>Kind</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono"><code>5119:1806</code></td><td><code>Badge</code> "Limited"</td><td>Badge instance</td><td class="muted">information/heavy style</td></tr>
+          <tr><td class="mono"><code>5119:1826</code></td><td><code>Badge</code> "Expiring"</td><td>Badge instance</td><td class="muted">negative/heavy style</td></tr>
+          <tr><td class="mono"><code>5119:1846</code></td><td><code>Badge</code> "Used"</td><td>Badge instance</td><td class="muted">muted/light style</td></tr>
+          <tr><td class="mono"><code>5119:1866</code></td><td><code>Badge</code> "Expired"</td><td>Badge instance</td><td class="muted">muted/light style</td></tr>
+          <tr><td class="mono"><code>5119:1799</code> / <code>5119:1819</code></td><td><code>voucher</code></td><td>Partner-image subtree (active)</td><td class="muted">Used for limited / expiring — full-color treatment</td></tr>
+          <tr><td class="mono"><code>5119:1839</code> / <code>5119:1859</code></td><td><code>Voucher Image V1</code></td><td>Partner-image subtree (greyed)</td><td class="muted">Used for used / expired — overlay-weak treatment</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- ══ Tab: Changelog ════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 5119:1786</div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Assessed with Restructure verdict.</strong> 4-state variant (limited / expiring / used / expired) is the canonical state axis for the voucher family — the only one of three parallel voucher cards that models state. Text content, partner logo, and perforated edge are hardcoded / raster. <span class="tag-open">Open</span></div><span class="changelog-delta delta-open">Design Decision</span></div>
+      <div class="changelog-row"><div class="changelog-body"><strong>Proposed family-level merge.</strong> Collapse this, Vertical Voucher (<code>5119:1635</code>), and Horizontal Voucher (<code>5121:4533</code>) into a single <code>Voucher Card</code> with <code>orientation</code> + <code>state</code> axes. Port this component's state coverage to the unified schema. Target: 2 × 5 = 10 variants instead of 3 divergent components. <span class="tag-open">Open</span></div><span class="changelog-delta delta-open">Design Decision</span></div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <aside class="page-toc" id="toc-voucher-card-horizontal">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-voucher-card-horizontal"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Voucher Card Horizontal JS ─────────────────────────────────── */
+function _vchCard(state) {
+  var isGreyed = state === 'used' || state === 'expired';
+  var titleColor = isGreyed ? '#445C85' : '#0A2757';
+  var amountColor = isGreyed ? '#6780A9' : '#2340A9';
+  var metadataColor = isGreyed ? '#6780A9' : '#445C85';
+  var partnerBg = isGreyed ? '#8A96AF' : '#005CE5';
+  var badgeBg, badgeLabel;
+  if (state === 'limited') { badgeBg = '#2340A9'; badgeLabel = 'Limited'; }
+  else if (state === 'expiring') { badgeBg = '#D61B2C'; badgeLabel = 'Expiring'; }
+  else if (state === 'used') { badgeBg = '#C2C5CA'; badgeLabel = 'Used'; }
+  else { badgeBg = '#C2C5CA'; badgeLabel = 'Expired'; }
+
+  var s = '<div style="display:flex;flex-direction:column;gap:6px;align-items:center;">';
+  s += '<div style="width:336px;height:111px;display:flex;background:#FFFFFF;border-radius:6px;overflow:hidden;box-shadow:0 0 4px rgba(2,14,34,0.06);font-family:\'Proxima Soft\',system-ui;">';
+
+  // Content block (left)
+  s += '<div style="flex:1;padding:12px;display:flex;flex-direction:column;justify-content:space-between;min-width:0;">';
+  s += '<div style="display:flex;flex-direction:column;gap:4px;">';
+  s += '<div style="color:' + titleColor + ';font-size:16px;font-weight:700;line-height:20px;letter-spacing:0.25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Buy Load Globe Go90</div>';
+  s += '<div style="display:flex;gap:4px;align-items:center;">';
+  s += '<div style="color:' + amountColor + ';font-size:14px;font-weight:700;letter-spacing:0.25px;">PHP 50.00</div>';
+  s += '<div style="color:#90A8D0;font-size:14px;font-weight:600;text-decoration:line-through;letter-spacing:0.25px;">PHP 90.00</div>';
+  s += '</div>';
+  s += '</div>';
+  s += '<div style="color:' + metadataColor + ';font-size:10px;font-family:\'BarkAda\',system-ui;font-weight:600;line-height:15px;">Validity: Dec 25 2022 - Jan 5 2023</div>';
+  s += '</div>';
+
+  // Partner image (right) — 96 wide, perforated edge, logo, GET VOUCHER
+  s += '<div style="position:relative;width:96px;height:111px;background:' + partnerBg + ';overflow:hidden;">';
+  // Perforated dashed edge (left)
+  s += '<div style="position:absolute;left:0;top:0;bottom:0;width:1px;border-left:1px dashed rgba(255,255,255,0.9);"></div>';
+  // Logo circle (GCash-ish G)
+  s += '<div style="position:absolute;left:calc(50% - 22px);top:calc(50% - 22px);width:44px;height:44px;border:3px solid #FFFFFF;border-right-color:transparent;border-radius:50%;opacity:' + (isGreyed ? '0.55' : '1') + ';"></div>';
+  s += '<div style="position:absolute;left:calc(50% - 5px);top:calc(50% - 5px);width:10px;height:10px;background:#FFFFFF;border-radius:50%;opacity:' + (isGreyed ? '0.55' : '1') + ';"></div>';
+  // Right sliver with rotated GET VOUCHER
+  s += '<div style="position:absolute;right:0;top:0;bottom:0;width:28px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(255,255,255,0.6);">';
+  s += '<div style="transform:rotate(-90deg);color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;white-space:nowrap;">GET VOUCHER</div>';
+  s += '</div>';
+  // Corner badge (top-left)
+  s += '<div style="position:absolute;top:8px;left:0;background:' + badgeBg + ';color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;padding:4px 8px 2px 8px;border-top-right-radius:4px;border-bottom-right-radius:4px;line-height:10px;">' + badgeLabel + '</div>';
+  s += '</div>';
+
+  s += '</div>';
+  s += '<div style="color:#666;font-size:10px;font-family:system-ui;font-weight:600;">state=' + state + '</div>';
+  s += '</div>';
+  return s;
+}
+
+function _vchBuildPreview() {
+  var s = '<div style="display:flex;flex-direction:column;gap:14px;align-items:center;">';
+  s += _vchCard('limited');
+  s += _vchCard('expiring');
+  s += _vchCard('used');
+  s += _vchCard('expired');
+  s += '</div>';
+  return s;
+}
+
+function _vchInit() {
+  var el = document.getElementById('vch-demo-preview');
+  if (el) el.innerHTML = _vchBuildPreview();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _vchInit);
+else _vchInit();
+</script>
+
+<!--@section-end-->

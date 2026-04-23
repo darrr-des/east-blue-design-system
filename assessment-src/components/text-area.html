@@ -1,0 +1,870 @@
+<!--
+  TEXT AREA COMPONENT ASSESSMENT (Form Elements)
+  Edit this file to update the Text Area assessment.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 3070:21245
+ds-verdict: consolidate
+native-status: rework
+variants: 8
+ios: TextField(text:, axis: .vertical).lineLimit(3...6)
+android: OutlinedTextField(singleLine = false, maxLines = 6)
+open-issues: C1,C2,C4,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C4] Desktop resize-handle glyph baked into mobile multi-line field — native platforms auto-grow, no user-facing resize affordance exists on iOS/Android
+[C1] Raster PNG resize-handle icon instead of vector — four PNG assets referenced (one per state) for a 12×12px glyph that is itself the wrong pattern for mobile
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Form Elements<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-text-area" onclick="showPanel('text-area', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Text Area</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('text-area')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="10" y="6" width="60" height="28" rx="3" stroke="currentColor" stroke-width="1.2" opacity=".2"/>
+      <rect x="16" y="12" width="42" height="2" rx="1" fill="currentColor" opacity=".15"/>
+      <rect x="16" y="18" width="34" height="2" rx="1" fill="currentColor" opacity=".15"/>
+      <path d="M64 30l4-4M66 30l2-2" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity=".3"/>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Text Area</div>
+      <span class="badge badge-consolidate">Consolidate</span>
+    </div>
+    <div class="summary-card-desc">Multi-line text input sibling of Input Field. Ships with desktop resize-handle glyph that has no native mobile equivalent — candidate to fold into Input Field via a <code>multiline</code> / <code>lineLimit</code> prop.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Text Area</strong></td>
+  <td><span class="badge badge-consolidate">Consolidate</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">8</td>
+  <td class="muted">Fold into Input Field. Native platforms model multi-line as a single TextField with <code>axis: .vertical</code> / <code>singleLine=false</code>.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-text-area">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Text Area
+          <span class="badge badge-consolidate">Consolidate</span>
+          <span class="badge badge-rework">Requires Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=3070-21245" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">Multi-line text input with placeholder, filled, focus, error, and disabled states. 8 variants across State × isFilled. Mirrors Input Field's schema exactly — differs only in line count and a desktop resize-handle glyph. Native platforms treat multi-line as a single TextField modifier, not a distinct component.</p>
+      </div>
+      <div class="verdict-inline verdict-consolidate">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Consolidate into Input Field</div>
+          <div class="verdict-inline-text">Text Area duplicates Input Field's State × isFilled schema with identical tokens (renamed under <code>main/text-area/*</code>). SwiftUI exposes multi-line via <code>axis: .vertical</code> on <code>TextField</code>; Compose exposes it via <code>singleLine=false</code>. Fold into Input Field with a <code>multiline</code> / <code>lineLimit</code> prop so the DS maps 1:1 to the native primitive.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Tab bar ──────────────────────────────────────────────── -->
+    <div data-tab-group="text-area-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'text-area-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'text-area-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'text-area-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'text-area-tabs')">Changelog</button>
+    </div>
+
+    <!-- ══ Tab: Overview ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <!-- In Context -->
+    <div class="sub-heading" id="ta-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">Typical mobile contexts: feedback forms, message composers, notes, support request descriptions.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+          <rect x="10" y="8" width="100" height="64" rx="8" stroke="currentColor" stroke-width="1.2" opacity=".15"/>
+          <rect x="20" y="16" width="80" height="10" rx="2" fill="currentColor" opacity=".08"/>
+          <rect x="20" y="30" width="80" height="32" rx="3" stroke="currentColor" stroke-width="1" opacity=".2"/>
+          <rect x="24" y="35" width="60" height="2" rx="1" fill="currentColor" opacity=".1"/>
+          <rect x="24" y="41" width="55" height="2" rx="1" fill="currentColor" opacity=".1"/>
+          <rect x="24" y="47" width="40" height="2" rx="1" fill="currentColor" opacity=".1"/>
+          <rect x="20" y="66" width="80" height="6" rx="3" fill="currentColor" opacity=".08"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Live Preview -->
+    <div class="sub-heading" id="ta-preview">Live Preview</div>
+    <p class="section-desc">Toggle state and fill to see the text area update in real time.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="ta-demo-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">state</span>
+              <select class="demo-panel-select" onchange="_taDemo.state=this.value;updateTextAreaDemo()">
+                <option value="default">default</option>
+                <option value="active">active</option>
+                <option value="error">error</option>
+                <option value="disabled">disabled</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">isFilled</span>
+              <select class="demo-panel-select" onchange="_taDemo.filled=this.value;updateTextAreaDemo()">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">isExpandable</span>
+              <select class="demo-panel-select" onchange="_taDemo.expandable=this.value;updateTextAreaDemo()">
+                <option value="true" selected>true</option>
+                <option value="false">false</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DS Health -->
+    <div class="sub-heading" id="ta-health">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card warn">
+        <div class="trait-header">
+          <div class="trait-name">Reusable</div>
+          <div class="trait-status">Warn</div>
+        </div>
+        <div class="trait-note">Works anywhere multi-line text is needed, but duplicates Input Field's State × isFilled schema. Reuse is better served by extending Input Field with a <code>multiline</code> flag than by shipping a parallel component.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header">
+          <div class="trait-name">Self-contained</div>
+          <div class="trait-status">Partial</div>
+        </div>
+        <div class="trait-note">Carries its own border, fill, and text styles per state. No <code>label</code> slot, no <code>helperText</code>/error-message slot, no <code>characterCount</code> slot — validation and labeling are pushed onto every consuming screen.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header">
+          <div class="trait-name">Consistent</div>
+          <div class="trait-status">Warn</div>
+        </div>
+        <div class="trait-note"><code>isFilled=yes/no</code> (C2, same anti-pattern Input Field already fixed). <code>state=active</code> instead of <code>focused</code> matches Input Field but diverges from the broader DS verb set. Tokens duplicated under <code>main/text-area/*</code> with identical values to <code>main/input-field/*</code>.</div>
+      </div>
+      <div class="trait-card partial">
+        <div class="trait-header">
+          <div class="trait-name">Composable</div>
+          <div class="trait-status">Partial</div>
+        </div>
+        <div class="trait-note">Nests in form layouts, but has no sibling wrapper (no Labeled Text Area) and no slot contract for icons or character count. The <code>expand-icon</code> frame holds a fixed raster glyph rather than a swappable node.</div>
+      </div>
+    </div>
+
+    <!-- Behavior -->
+    <div class="sub-heading" id="ta-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+            <th>Figma Property</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Default</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">state=default</td>
+            <td class="muted">1px #D7E0EF border, white bg. Resize glyph shown.</td>
+          </tr>
+          <tr>
+            <td><strong>Active (Focused)</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">state=active</td>
+            <td class="muted">2px #005CE5 border. Should rename to <code>focused</code> to match platform vocabulary.</td>
+          </tr>
+          <tr>
+            <td><strong>Error</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">state=error</td>
+            <td class="muted">2px #D61B2C border. No inline error-message slot.</td>
+          </tr>
+          <tr>
+            <td><strong>Disabled</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">state=disabled</td>
+            <td class="muted">#EEF2F9 bg, border hidden, text #C2CFE5.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Open Issues -->
+    <div class="sub-heading" id="ta-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Boolean property uses Yes/No.</strong> <code>isFilled=yes/no</code> cannot map to Swift <code>Bool</code> or Kotlin <code>Boolean</code> without a translation layer. Input Field already fixed this — Text Area should follow. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Desktop resize-handle glyph baked into a mobile component.</strong> The <code>text-area icon</code> (12×12px, bottom-right) mirrors the browser-only <code>resize: both</code> affordance. Native <code>TextField(axis: .vertical)</code> / <code>OutlinedTextField(maxLines = n)</code> auto-grow without a user-facing handle — the glyph has no native equivalent and should not ship in mobile variants. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>Resize handle is a raster PNG, once per state.</strong> Four separate PNG assets are referenced for the same 12×12px glyph. Even if the handle survives, it should be a single vector instance tinted by <code>main/text-area/color/&#123;state&#125;/icon-resizer</code>. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>No <code>label</code> or <code>helperText</code> slot.</strong> Labels and validation messages are handled by the consumer, so every screen re-implements the anatomy. Native multi-line text fields expose both as first-class parameters. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>No <code>characterCount</code> / limit affordance.</strong> Multi-line entry is the canonical use case for character limits (comments, reviews, message composers). There is no count slot and no <code>maxLength</code> hook — the DS cannot represent limit state today. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Tokens duplicated under <code>main/text-area/*</code>.</strong> Every value in <code>main/text-area/color/*</code> mirrors <code>main/input-field/color/*</code> exactly. If Text Area folds into Input Field, this namespace collapses; if it stays, the two token sets should alias a shared <code>main/field/*</code> collection to prevent drift. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked by property naming and the multi-line-vs-Input Field decision. Cannot register until the family shape is finalized. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <!-- Design Recommendations -->
+    <div class="sub-heading" id="ta-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Fold Text Area into Input Field as a <code>multiline</code> / <code>lineLimit</code> prop.</strong> SwiftUI models this as <code>TextField(text:, axis: .vertical).lineLimit(3...6)</code>; Compose models it as <code>OutlinedTextField(singleLine = false, maxLines = 6)</code>. Both are the same primitive with a single flag. Mirroring that in Figma collapses 8 variants into 0 net new variants on Input Field (add a <code>multiline</code> boolean to the existing 8-variant matrix) and removes the duplicated token namespace. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Rename <code>isFilled</code> to use <code>true/false</code>.</strong> Same fix Input Field already shipped in 1.1.0. Required for Swift <code>Bool</code> / Kotlin <code>Boolean</code> mapping. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Rename <code>state=active</code> to <code>state=focused</code>.</strong> Matches SwiftUI <code>@FocusState</code> and Compose <code>FocusRequester</code> vocabulary. Apply to Input Field and the whole Form Elements family at once so the rename lands once. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Drop the desktop resize handle on mobile variants.</strong> If Text Area survives as a sibling, remove the <code>expand-icon</code> frame — it has no native equivalent on iOS/Android. Keep it only if a web/desktop DS variant is in scope, gated behind a platform axis. <span class="tag-recommend">Asset</span></span></li>
+      <li><span><strong>Add a <code>helperText</code> slot and a <code>characterCount</code> slot beneath the field.</strong> Multi-line is the canonical character-count surface. Expose a supporting-text row that can host either error copy, hint copy, or a count — matching Material 3's <code>supportingText</code> / <code>counter</code> pattern. If Text Area folds into Input Field, this slot lives on Input Field and serves both single- and multi-line. <span class="tag-recommend">Slot</span></span></li>
+      <li><span><strong>Alias <code>main/text-area/*</code> to a shared <code>main/field/*</code> collection.</strong> If the family stays split for any reason, the two token sets must reference a single source so border/bg/placeholder/disabled colors never drift. Preferable outcome: delete <code>main/text-area/*</code> outright after consolidation. <span class="tag-recommend">Token</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ══ Tab: Style ═════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="ta-styles" style="margin-top:0">States</div>
+    <p class="section-desc">8 variants across 2 axes: <code>state</code> (default/active/error/disabled) × <code>isFilled</code> (yes/no). All share a 328px-wide container with 6px corner radius. Filled variants are 62px tall (2 lines of content); empty variants are 46px tall.</p>
+
+    <!-- ═══ Default ═══ -->
+    <div class="spec-card" id="ta-spec-default">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="ta-default">Default</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="3070:21242" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>3070:21242</span></button>
+        </div>
+        <p class="spec-card-desc">Idle state with gray border. Resize-handle glyph sits in the bottom-right regardless of fill.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="ta-default-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">state</span>
+              <span class="demo-panel-value">default</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">isFilled</span>
+              <select class="demo-panel-select" onchange="updateTextAreaSpecCard('default',this.value)">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Active ═══ -->
+    <div class="spec-card" id="ta-spec-active">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="ta-active">Active (Focused)</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="3070:21243" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>3070:21243</span></button>
+        </div>
+        <p class="spec-card-desc">Focused state with 2px blue border. Rename target: <code>focused</code>.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="ta-active-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">state</span>
+              <span class="demo-panel-value">active</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">isFilled</span>
+              <select class="demo-panel-select" onchange="updateTextAreaSpecCard('active',this.value)">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Error ═══ -->
+    <div class="spec-card" id="ta-spec-error">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="ta-error">Error</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="3070:21244" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>3070:21244</span></button>
+        </div>
+        <p class="spec-card-desc">Validation error state with 2px red border. No inline error-message slot — copy is the consumer's responsibility.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="ta-error-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">state</span>
+              <span class="demo-panel-value">error</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">isFilled</span>
+              <select class="demo-panel-select" onchange="updateTextAreaSpecCard('error',this.value)">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Disabled ═══ -->
+    <div class="spec-card" id="ta-spec-disabled">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="ta-disabled">Disabled</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="3070:21241" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>3070:21241</span></button>
+        </div>
+        <p class="spec-card-desc">Non-interactive state with gray fill and muted text. Border hidden.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="ta-disabled-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">state</span>
+              <span class="demo-panel-value">disabled</span>
+            </div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">isFilled</span>
+              <select class="demo-panel-select" onchange="updateTextAreaSpecCard('disabled',this.value)">
+                <option value="no" selected>no</option>
+                <option value="yes">yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colors by State -->
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by State</div>
+      <p class="style-colors-desc">All four color roles are bound to <code>main/text-area/color/&#123;state&#125;/*</code> tokens. Every value mirrors the equivalent <code>main/input-field/color/*</code> token — motivation for consolidation.</p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Role</th><th>Token</th><th>DEFAULT</th><th>ACTIVE</th><th>ERROR</th><th>DISABLED</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Border</td><td class="mono">text-area/color/&#123;state&#125;/border</td><td class="mono">#D7E0EF</td><td class="mono">#005CE5</td><td class="mono">#D61B2C</td><td class="mono">hidden</td></tr>
+          <tr><td class="muted">Background</td><td class="mono">text-area/color/&#123;state&#125;/bg</td><td class="mono">#FFFFFF</td><td class="mono">#FFFFFF</td><td class="mono">#FFFFFF</td><td class="mono">#EEF2F9</td></tr>
+          <tr><td class="muted">Text (filled)</td><td class="mono">text-area/color/&#123;state&#125;/text</td><td class="mono">#0A2757</td><td class="mono">#0A2757</td><td class="mono">#0A2757</td><td class="mono">#C2CFE5</td></tr>
+          <tr><td class="muted">Placeholder</td><td class="mono">text-area/color/&#123;state&#125;/placeholder</td><td class="mono">#C2CFE5</td><td class="mono">#C2CFE5</td><td class="mono">#C2CFE5</td><td class="mono">#C2CFE5</td></tr>
+          <tr><td class="muted">Resize glyph</td><td class="mono">text-area/color/&#123;state&#125;/icon-resizer</td><td class="mono">#D7E0EF</td><td class="mono">#D7E0EF</td><td class="mono">#D7E0EF</td><td class="mono">#D7E0EF</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Layout + Typography -->
+    <div class="sub-heading" id="ta-layout">Layout & Typography</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Value</th><th>Token</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Width</td><td class="mono">328px (fill)</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Height (empty)</td><td class="mono">46px</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Height (filled, 2 lines)</td><td class="mono">62px</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Padding top</td><td class="mono">10px</td><td class="mono">space/space-10</td></tr>
+          <tr><td class="muted">Padding bottom</td><td class="mono">8px</td><td class="mono">space/space-8</td></tr>
+          <tr><td class="muted">Padding left</td><td class="mono">12px</td><td class="mono">space/space-12</td></tr>
+          <tr><td class="muted">Padding right</td><td class="mono">8px</td><td class="mono">space/space-8</td></tr>
+          <tr><td class="muted">Corner radius</td><td class="mono">6px</td><td class="mono">radius/radius-2</td></tr>
+          <tr><td class="muted">Border (default)</td><td class="mono">1px</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Border (active/error)</td><td class="mono">2px</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Resize glyph</td><td class="mono">12 × 12px</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Text style</td><td class="mono">Primary/Multi-line Label/Light/Small</td><td class="mono">—</td></tr>
+          <tr><td class="muted">Font</td><td class="mono">Proxima Soft Semibold</td><td class="mono">font-family/font-primary</td></tr>
+          <tr><td class="muted">Size</td><td class="mono">14px</td><td class="mono">font-size/font-size-20</td></tr>
+          <tr><td class="muted">Line-height</td><td class="mono">16px</td><td class="mono">line-height/leading-25</td></tr>
+          <tr><td class="muted">Tracking</td><td class="mono">0.25</td><td class="mono">letter-spacing/tracking-wide</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- ══ Tab: Code ══════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <!-- Installation -->
+    <div class="sub-heading" id="ta-install" style="margin-top:0">Installation <span class="badge badge-planned">Planned API</span></div>
+    <p class="section-desc">Text Area is proposed to consolidate into <code>EBInputField</code> via a <code>lineLimit</code> / <code>maxLines</code> parameter. The install path below is shared with Input Field.</p>
+    <p class="code-label">iOS — Swift Package Manager</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="cmt">// In Xcode: File → Add Package Dependencies</span>
+<span class="str">"https://github.com/AY-Org/eb-ds-ios"</span></pre>
+    </div>
+    <p class="code-label">Android — Gradle (Kotlin DSL)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="fn">dependencies</span> {
+    <span class="fn">implementation</span>(<span class="str">"com.eastblue.ds:form-elements:1.0.0"</span>)
+}</pre>
+    </div>
+    <p class="code-label">Import</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="kw">import</span> EastBlueDS  <span class="cmt">// SwiftUI</span>
+<span class="kw">import</span> com.eastblue.ds.form.*  <span class="cmt">// Compose</span></pre>
+    </div>
+    <p class="table-footnote">Package not yet published. These are the planned distribution paths.</p>
+
+    <!-- Property Mapping -->
+    <div class="sub-heading" id="ta-props">Property Mapping</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Figma Property</th>
+            <th>SwiftUI Param</th>
+            <th>Compose Param</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">(text content)</td>
+            <td class="mono">text: Binding&lt;String&gt;</td>
+            <td class="mono">value: String</td>
+            <td class="muted">Derived from text content</td>
+          </tr>
+          <tr>
+            <td class="mono">isFilled (yes/no)</td>
+            <td class="mono">—</td>
+            <td class="mono">—</td>
+            <td class="muted">Derived from <code>text.isEmpty</code>; not a native param</td>
+          </tr>
+          <tr>
+            <td class="mono">(multi-line default)</td>
+            <td class="mono">axis: .vertical</td>
+            <td class="mono">singleLine = false</td>
+            <td class="muted">The trait that makes this a "text area"</td>
+          </tr>
+          <tr>
+            <td class="mono">(auto-grow range)</td>
+            <td class="mono">.lineLimit(3...6)</td>
+            <td class="mono">maxLines = 6</td>
+            <td class="muted">Replaces the desktop resize handle</td>
+          </tr>
+          <tr>
+            <td class="mono">state = default</td>
+            <td class="mono">—</td>
+            <td class="mono">—</td>
+            <td class="muted">Default idle state</td>
+          </tr>
+          <tr>
+            <td class="mono">state = active</td>
+            <td class="mono">@FocusState</td>
+            <td class="mono">interactionSource</td>
+            <td class="muted">Keyboard active</td>
+          </tr>
+          <tr>
+            <td class="mono">state = error</td>
+            <td class="mono">.ebError(true)</td>
+            <td class="mono">isError = true</td>
+            <td class="muted">Validation failed</td>
+          </tr>
+          <tr>
+            <td class="mono">state = disabled</td>
+            <td class="mono">.disabled(true)</td>
+            <td class="mono">enabled = false</td>
+            <td class="muted">Non-interactive</td>
+          </tr>
+          <tr>
+            <td class="mono">isExpandable</td>
+            <td class="mono">—</td>
+            <td class="mono">—</td>
+            <td class="muted">Desktop-only resize handle; no native equivalent</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI (proposed consolidation)</div>
+      <div class="path-box">ios/Components/FormElements/EBInputField.swift</div>
+      <div class="path-label">Jetpack Compose (proposed consolidation)</div>
+      <div class="path-box">android/components/form/EBInputField.kt</div>
+    </div>
+
+    <!-- Usage Snippets -->
+    <div class="sub-heading" id="ta-snippets">Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+
+    <div class="sub-heading toc-child" id="ta-snip-default">Multi-line (default)</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'ta-usage-def','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'ta-usage-def','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBInputField</span>(<span class="str">"Tell us more"</span>, <span class="prp">text</span>: $value, <span class="prp">axis</span>: .<span class="kw">vertical</span>)
+    .<span class="fn">lineLimit</span>(<span class="num">3</span>...<span class="num">6</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBInputField</span>(
+    <span class="prp">value</span> = text,
+    <span class="prp">onValueChange</span> = { text = it },
+    <span class="prp">placeholder</span> = <span class="str">"Tell us more"</span>,
+    <span class="prp">singleLine</span> = <span class="kw">false</span>,
+    <span class="prp">maxLines</span> = <span class="num">6</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="ta-snip-error">Error</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'ta-usage-err','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'ta-usage-err','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBInputField</span>(<span class="str">"Tell us more"</span>, <span class="prp">text</span>: $value, <span class="prp">axis</span>: .<span class="kw">vertical</span>)
+    .<span class="fn">lineLimit</span>(<span class="num">3</span>...<span class="num">6</span>)
+    .<span class="fn">ebError</span>(<span class="kw">true</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBInputField</span>(
+    <span class="prp">value</span> = text,
+    <span class="prp">onValueChange</span> = { text = it },
+    <span class="prp">placeholder</span> = <span class="str">"Tell us more"</span>,
+    <span class="prp">singleLine</span> = <span class="kw">false</span>,
+    <span class="prp">maxLines</span> = <span class="num">6</span>,
+    <span class="prp">isError</span> = <span class="kw">true</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <div class="sub-heading toc-child" id="ta-snip-disabled">Disabled</div>
+    <div class="code-card-body">
+    <div class="platform-tabs">
+      <button class="platform-tab active" onclick="switchPlatform(this,'ta-usage-dis','swift')">SwiftUI</button>
+      <button class="platform-tab" onclick="switchPlatform(this,'ta-usage-dis','compose')">Compose</button>
+    </div>
+    <div class="platform-panel active" data-tab="swift">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBInputField</span>(<span class="str">"Tell us more"</span>, <span class="prp">text</span>: $value, <span class="prp">axis</span>: .<span class="kw">vertical</span>)
+    .<span class="fn">lineLimit</span>(<span class="num">3</span>...<span class="num">6</span>)
+    .<span class="fn">disabled</span>(<span class="kw">true</span>)</pre>
+      </div>
+    </div>
+    <div class="platform-panel" data-tab="compose">
+      <div class="code-block-wrap">
+        <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+        <pre class="code-snippet"><span class="typ">EBInputField</span>(
+    <span class="prp">value</span> = text,
+    <span class="prp">onValueChange</span> = { text = it },
+    <span class="prp">placeholder</span> = <span class="str">"Tell us more"</span>,
+    <span class="prp">singleLine</span> = <span class="kw">false</span>,
+    <span class="prp">maxLines</span> = <span class="num">6</span>,
+    <span class="prp">enabled</span> = <span class="kw">false</span>
+)</pre>
+      </div>
+    </div>
+    </div>
+
+    <!-- Accessibility -->
+    <div class="sub-heading" id="ta-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Requirement</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Minimum touch target</td>
+            <td class="center muted">44 x 44 pt (per-line height 22pt, container ≥44pt)</td>
+            <td class="center muted">48 x 48 dp</td>
+          </tr>
+          <tr>
+            <td>Accessibility label</td>
+            <td class="muted"><code>.accessibilityLabel("Comment")</code></td>
+            <td class="muted"><code>contentDescription</code></td>
+          </tr>
+          <tr>
+            <td>Error announcement</td>
+            <td class="muted">VoiceOver reads error via <code>.accessibilityValue</code></td>
+            <td class="muted">TalkBack reads error via <code>semantics { error() }</code></td>
+          </tr>
+          <tr>
+            <td>Character-count announcement</td>
+            <td class="muted">Announce remaining via <code>.accessibilityValue</code> when a limit is set</td>
+            <td class="muted">Expose via <code>supportingText</code> semantics</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Usage Guidelines -->
+    <div class="sub-heading" id="ta-guidelines">Usage Guidelines</div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Use for free-form responses expected to exceed one line — feedback, comments, messages, notes.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Use for short structured inputs (name, phone, code) — Input Field's single-line default is more appropriate and faster to fill.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Pair with a visible label above the field and a helper-text row below for character counts or format hints.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Rely on the desktop resize handle on mobile — mobile fields auto-grow within <code>lineLimit</code>/<code>maxLines</code> and the handle has no native behavior.</p></div>
+    </div>
+
+    <!-- Criteria Scorecard -->
+    <div class="sub-heading" id="ta-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">ID</th>
+            <th class="col-md">Criterion</th>
+            <th class="col-badge">Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">Duplicate token namespace <code>main/text-area/*</code> mirrors <code>main/input-field/*</code> exactly. Text layer structure is clean.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Fail</span></td><td class="muted"><code>isFilled=yes/no</code> (same anti-pattern Input Field already resolved). <code>state=active</code> should be <code>focused</code>.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-ready">Ready</span></td><td class="muted">All colors bound to <code>main/text-area/color/*</code>. Spacing and radius tokens resolved.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Rework</span></td><td class="muted">Exists as a distinct component but native platforms treat multi-line as a single TextField with <code>axis: .vertical</code> / <code>singleLine=false</code>. Desktop resize handle has no native equivalent.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">All 4 interaction states present. Missing slots: label, helper/error text, character count.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-rework">Fail</span></td><td class="muted">Resize glyph is a raster PNG referenced four times (once per state) instead of a single vector instance.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked by the consolidation decision and property renames.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Code Connect -->
+    <div class="sub-heading" id="ta-cc">Code Connect</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Aspect</th><th class="col-badge">Status</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Property naming</td><td><span class="badge badge-rework">Fail</span></td><td class="muted"><code>isFilled=yes/no</code> cannot map to native booleans</td></tr>
+          <tr><td>Component identity</td><td><span class="badge badge-rework">Fail</span></td><td class="muted">Native platforms have no standalone TextArea primitive; consolidation into Input Field is required first</td></tr>
+          <tr><td>Native component file</td><td><span class="badge badge-refine">Pending</span></td><td class="muted">Proposed target: <code>EBInputField</code> with multi-line flag</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Variants Inventory -->
+    <div class="sub-heading" id="ta-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(8 total)</span></div>
+    <p class="section-desc">4 <code>state</code> values × 2 <code>isFilled</code> values.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>state</th><th>isFilled</th><th>Height</th><th>Node ID</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>default</td><td>yes</td><td class="mono">62px</td><td class="mono">3070:21242</td></tr>
+          <tr><td>default</td><td>no</td><td class="mono">46px</td><td class="mono">3070:21239</td></tr>
+          <tr><td>active</td><td>yes</td><td class="mono">62px</td><td class="mono">3070:21243</td></tr>
+          <tr><td>active</td><td>no</td><td class="mono">46px</td><td class="mono">3070:21238</td></tr>
+          <tr><td>error</td><td>yes</td><td class="mono">62px</td><td class="mono">3070:21244</td></tr>
+          <tr><td>error</td><td>no</td><td class="mono">46px</td><td class="mono">3070:21240</td></tr>
+          <tr><td>disabled</td><td>yes</td><td class="mono">62px</td><td class="mono">3070:21241</td></tr>
+          <tr><td>disabled</td><td>no</td><td class="mono">46px</td><td class="mono">3070:21237</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    </div><!-- /tab code -->
+
+    <!-- ══ Tab: Changelog ═════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 3070:21245</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Component assessed</strong> — 8 variants documented across <code>state</code> (default/active/error/disabled) × <code>isFilled</code> (yes/no). Multi-line sibling of Input Field within the Form Elements group.
+          <span class="tag-fixed">Documented</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Initial</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Consolidation proposed</strong> — Fold Text Area into Input Field via a <code>multiline</code> / <code>lineLimit</code> prop to match SwiftUI <code>axis: .vertical</code> and Compose <code>singleLine=false</code>.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">Family</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Boolean property uses Yes/No</strong> — <code>isFilled=yes/no</code> instead of <code>true/false</code>. Same anti-pattern Input Field already resolved.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C2 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Desktop resize-handle glyph</strong> — 12×12px raster PNG in the bottom-right has no native mobile equivalent; iOS/Android auto-grow without a user-facing handle.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C4, C6 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Duplicate token namespace</strong> — <code>main/text-area/color/*</code> values mirror <code>main/input-field/color/*</code> exactly; candidate for aliasing or deletion after consolidation.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C1 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Code Connect mappings</strong> — No CLI mappings registered yet. Blocked by consolidation decision and property renames.
+          <span class="tag-open tag-c7">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C7 Open</span>
+      </div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <!-- On This Page -->
+  <aside class="page-toc" id="toc-text-area">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-text-area"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Text Area Component JS ──────────────────────────────────────── */
+var _taDemo = { state: 'default', filled: 'no', expandable: 'true' };
+
+var _taColors = {
+  default:  { border: '#D7E0EF', bg: '#FFFFFF', borderW: 1 },
+  active:   { border: '#005CE5', bg: '#FFFFFF', borderW: 2 },
+  error:    { border: '#D61B2C', bg: '#FFFFFF', borderW: 2 },
+  disabled: { border: 'none',    bg: '#EEF2F9', borderW: 0 }
+};
+var _taTextColors = {
+  default:  { filled: '#0A2757', empty: '#C2CFE5' },
+  active:   { filled: '#0A2757', empty: '#C2CFE5' },
+  error:    { filled: '#0A2757', empty: '#C2CFE5' },
+  disabled: { filled: '#C2CFE5', empty: '#C2CFE5' }
+};
+
+function _taBuildSvg(state, filled, expandable) {
+  var c = _taColors[state] || _taColors.default;
+  var tc = _taTextColors[state] || _taTextColors.default;
+  var filledYes = (filled === 'yes');
+  var h = filledYes ? 62 : 46;
+  var textColor = filledYes ? tc.filled : tc.empty;
+  var borderAttr = c.border === 'none' ? '' : ' stroke="' + c.border + '" stroke-width="' + c.borderW + '"';
+  var s = '<svg width="328" height="' + h + '" viewBox="0 0 328 ' + h + '" fill="none">';
+  s += '<rect x="0.5" y="0.5" width="327" height="' + (h - 1) + '" rx="5.5" fill="' + c.bg + '"' + borderAttr + '/>';
+  if (filledYes) {
+    s += '<text x="12" y="24" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + textColor + '" letter-spacing="0.25">This a text area. This a text area.</text>';
+    s += '<text x="12" y="42" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + textColor + '" letter-spacing="0.25">This a text area. This a text area.</text>';
+  } else {
+    s += '<text x="12" y="27" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + textColor + '" letter-spacing="0.25">Placeholder</text>';
+  }
+  if (expandable === 'true') {
+    var gy = h - 12;
+    var gc = '#D7E0EF';
+    s += '<path d="M' + (328 - 14) + ' ' + (gy + 10) + 'L' + (328 - 6) + ' ' + (gy + 2) + 'M' + (328 - 10) + ' ' + (gy + 10) + 'L' + (328 - 6) + ' ' + (gy + 6) + '" stroke="' + gc + '" stroke-width="1.2" stroke-linecap="round"/>';
+  }
+  s += '</svg>';
+  return s;
+}
+
+function updateTextAreaDemo() {
+  var el = document.getElementById('ta-demo-preview');
+  if (el) el.innerHTML = _taBuildSvg(_taDemo.state, _taDemo.filled, _taDemo.expandable);
+}
+
+function updateTextAreaSpecCard(state, filled) {
+  var el = document.getElementById('ta-' + state + '-preview');
+  if (el) el.innerHTML = _taBuildSvg(state, filled, 'true');
+}
+
+function _taInitSpecCards() {
+  updateTextAreaSpecCard('default', 'no');
+  updateTextAreaSpecCard('active', 'no');
+  updateTextAreaSpecCard('error', 'no');
+  updateTextAreaSpecCard('disabled', 'no');
+}
+
+function _taInit() {
+  updateTextAreaDemo();
+  _taInitSpecCards();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _taInit);
+} else {
+  _taInit();
+}
+</script>
+
+<!--@section-end-->

@@ -301,6 +301,7 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | Avatar | `17143:4488` | 21 | Keep | Refine | C2,C7 |
 | Avatar Group | `18276:4554` | 4 | Fix | Refine | C7 |
 | Badge | `18482:28972` | 68 | Keep | Refine | C7 |
+| Banner | `756:82673` | 20 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
 | Bottom Sheet | `12817:43833` | 2 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
 | Button | `17104:184842` | 180 | Keep | Refine | C7 |
 | **Card** | | | | | |
@@ -312,6 +313,11 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | Carousel - Item | `18543:2806` | 10 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
 | Checkbox | `17143:2464` | 33 | Keep | Refine | C7 |
 | Counter | `18482:71321` | 4 | Fix | Refine | C2,C5,C7 |
+| **Date Picker** | | | | | |
+| Date Picker | `12879:49826` | 5 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
+| Date Picker - Group | `18431:2822` | 3 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
+| Date Picker - Item | `12874:42180` | 7 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
+| Month and Year Picker - Item | `18414:5854` | 3 | Consolidate | Rework | C1,C2,C3,C4,C5,C6,C7 |
 | **Dropdown** | | | | | |
 | Dropdown | `18482:31910` | 8 | Fix | Refine | C2,C5,C6,C7 |
 | Dropdown Item | `18577:13033` | 9 | Fix | Refine | C2,C4,C5,C6,C7 |
@@ -323,6 +329,7 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | Recipient Field | `17758:3867` | 8 | Keep | Refine | C7 |
 | Search Field | `18577:14520` | 2 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
 | Select Field | `17758:3786` | 8 | Keep | Refine | C7 |
+| Text Area | `3070:21245` | 8 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
 | Upload File | `18482:35064` | — | Fix | Refine | — |
 | View Only Field | `18403:4520` | 8 | Keep | Refine | C2,C6,C7 |
 | **Header** | | | | | |
@@ -354,6 +361,13 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 | Tooltip V2 | `70:14908` | 8 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
 | Onboarding - Tooltip | `51:17066` | 4 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
 | Tooltip Blurred and Transparent | `49:335349` | 4 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
+| **Voucher** | | | | | |
+| Voucher Asset | `5119:1664` | 20 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
+| Vertical Voucher | `5119:1635` | 1 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
+| Voucher Card Horizontal | `5119:1786` | 4 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
+| Horizontal Voucher | `5121:4533` | 1 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
+| Terms and Conditions Accordion | `5119:5447` | 2 | Remove | N/A | none |
+| Voucher Details | `5119:5368` | 1 | Product Layer | N/A | C1,C2,C4,C5,C7 |
 
 ---
 

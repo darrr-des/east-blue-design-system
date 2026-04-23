@@ -1,0 +1,782 @@
+<!--
+  MONTH AND YEAR PICKER - ITEM COMPONENT ASSESSMENT (Date Picker family)
+  A 100×32 selectable cell used inside the Month and Year Picker views of
+  Date Picker - Group. 3 variants across Type (Default, Today, Selected).
+  Sibling to Date Picker - Item (32×32 day cell) — both are the same
+  selectable-cell primitive at different pixel sizes.
+  Edit this file to update the Month and Year Picker - Item assessment.
+  Run `node assessment-src/build.js` to regenerate report.html
+-->
+
+<!--@meta-start-->
+status: assessed
+node: 18414:5854
+ds-verdict: consolidate
+native-status: rework
+variants: 3
+ios: (rendered by DatePicker(.graphical) month/year view)
+android: (rendered by Material 3 DatePicker month/year view)
+open-issues: C1,C2,C3,C4,C5,C6,C7
+<!--@meta-end-->
+
+<!--@patterns-start-->
+[C1] Sibling cell pair (Date Picker - Item 32×32, Month and Year Picker - Item 100×32) duplicate the same selectable-cell primitive at different sizes — one unified Picker Cell with a `kind` axis would replace both
+[C1] Inner frame is named `Month` regardless of whether the cell renders a month or year label — reused as the year cell too without renaming, meaning the layer name lies for half the instances
+[C2] State axis is NARROWER than its sibling day cell — only `Type = Default | Today | Selected` with no Disabled, no Pressed, no Focused. Cells in the same family should share a consistent state shape, even if values differ
+[C3] Cell reuses `main/date-picker/day/color/*` tokens for a non-day cell — the token scope is misleadingly named `day` while also being used for month and year cells. Either rename to `main/date-picker/cell/*` or split into `main/picker-cell/{day|month|year}/*`
+[C5] No Disabled variant — unreachable when a parent disables the picker or blocks a date range
+[C5] No Pressed, Hover, or Focused state variants
+[C5] No Today + Selected variant — unclear which presentation wins when the current month/year is also the selected one
+[C6] Today ring is 1px on this cell vs 1.5px on the sibling day cell — same visual pattern with different stroke weights across siblings
+<!--@patterns-end-->
+
+<!--@nav-group-start-->Date Picker<!--@nav-group-end-->
+
+<!--@nav-start-->
+<button class="nav-comp" id="nav-month-year-picker-item" onclick="showPanel('month-year-picker-item', this)">
+  <div class="nav-comp-body">
+    <div class="nav-comp-name">Month and Year Picker - Item</div>
+  </div>
+  <div class="nav-comp-status"></div>
+</button>
+<!--@nav-end-->
+
+<!--@summary-card-start-->
+<div class="summary-card" onclick="showPanelById('month-year-picker-item')">
+  <div class="summary-card-preview">
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+      <rect x="8" y="12" width="20" height="14" rx="2" fill="currentColor" opacity=".06"/>
+      <text x="18" y="22" text-anchor="middle" font-family="system-ui" font-size="5" fill="currentColor" opacity=".55">Jan</text>
+      <rect x="30" y="12" width="20" height="14" rx="2" fill="none" stroke="#005CE5" stroke-width="1"/>
+      <text x="40" y="22" text-anchor="middle" font-family="system-ui" font-size="5" fill="#005CE5">Feb</text>
+      <rect x="52" y="12" width="20" height="14" rx="2" fill="#005CE5"/>
+      <text x="62" y="22" text-anchor="middle" font-family="system-ui" font-size="5" fill="#fff" font-weight="700">Mar</text>
+    </svg>
+  </div>
+  <div class="summary-card-body">
+    <div class="summary-card-header">
+      <div class="summary-card-name">Month and Year Picker - Item</div>
+      <span class="badge badge-consolidate">Consolidate</span>
+    </div>
+    <div class="summary-card-desc">100×32 selectable cell used inside the Date Picker Month and Year views. 3 variants on Type. Candidate to merge with Date Picker - Item into one unified Picker Cell.</div>
+  </div>
+</div>
+<!--@summary-card-end-->
+
+<!--@summary-row-start-->
+<tr>
+  <td><strong>Month and Year Picker - Item</strong></td>
+  <td><span class="badge badge-consolidate">Consolidate</span></td>
+  <td><span class="badge badge-rework">Requires Rework</span></td>
+  <td class="muted">3</td>
+  <td class="muted">100×32 month/year cell. Narrower state axis than sibling day cell (no Disabled / Pressed / Focused). Reuses <code>main/date-picker/day/*</code> tokens. Merge with Date Picker - Item into one Picker Cell.</td>
+</tr>
+<!--@summary-row-end-->
+
+<!--@section-start-->
+<div class="panel" id="panel-month-year-picker-item">
+  <div class="panel-layout">
+  <div class="content-wrap">
+
+    <button class="back-btn" onclick="showPanelById('overview')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12 6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Overview
+    </button>
+
+    <div class="comp-header">
+      <div class="comp-header-body">
+        <div class="comp-name">
+          Month and Year Picker - Item
+          <span class="badge badge-consolidate">Consolidate</span>
+          <span class="badge badge-rework">Requires Rework</span>
+          <a class="comp-figma-link" href="https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18414-5854" target="_blank" rel="noopener">Component link <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <p class="comp-desc">The 100×32 selectable cell rendered inside the Date Picker - Group <code>Type=Month</code> and <code>Type=Year</code> views. 3 variants on a single axis: <code>Type = Default | Today | Selected</code>. No Disabled, no Pressed, no Focused — a narrower state axis than the sibling day cell. The same Figma component is instance-swapped as both a month cell (Jan, Feb, Mar…) and a year cell (2024, 2025…); the inner frame is named <code>Month</code> regardless. Sibling to Date Picker - Item (32×32 day cell) — both are the same selectable-cell primitive at different pixel sizes.</p>
+      </div>
+      <div class="verdict-inline verdict-consolidate">
+        <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor"/></svg>
+        <div class="verdict-inline-body">
+          <div class="verdict-inline-title">Consolidate into a unified Picker Cell</div>
+          <div class="verdict-inline-text">This cell and Date Picker - Item are the same selectable-cell primitive at different pixel sizes (100×32 vs 32×32) with identical state semantics (Default / Today / Selected). Collapse both into a single <code>Picker Cell</code> with <code>kind: day | month | year</code> + <code>state: default | today | selected | disabled</code>. This cell currently lacks Disabled, Pressed, and Focused entirely — the unification should rectangularize the state axis across all kinds.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Tab bar ──────────────────────────────────────────────── -->
+    <div data-tab-group="month-year-picker-item-tabs">
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="switchTab(this, 'usage', 'month-year-picker-item-tabs')">Overview</button>
+      <button class="comp-tab" onclick="switchTab(this, 'style', 'month-year-picker-item-tabs')">Style</button>
+      <button class="comp-tab" onclick="switchTab(this, 'code', 'month-year-picker-item-tabs')">Code</button>
+      <button class="comp-tab" onclick="switchTab(this, 'changelog', 'month-year-picker-item-tabs')">Changelog</button>
+    </div>
+
+    <!-- ══ Tab: Overview ══════════════════════════════════════════════ -->
+    <div class="comp-tab-content active" data-tab="usage" role="tabpanel">
+
+    <!-- In Context -->
+    <div class="sub-heading" id="mypi-context" style="margin-top:0">In Context</div>
+    <p class="section-desc">The cell is instance-swapped inside Date Picker - Group when the user switches to Month or Year view. 12 cells are rendered as a 4 × 3 month grid, or 20 cells as a 4 × 5 year grid. Same Figma component for both — only the text label changes.</p>
+    <div class="ctx-wrap">
+      <div class="ctx-placeholder">
+        <svg width="160" height="120" viewBox="0 0 160 120" fill="none">
+          <rect x="10" y="8" width="140" height="104" rx="4" fill="currentColor" opacity=".03" stroke="currentColor" stroke-width=".8" stroke-opacity=".25"/>
+          <g fill="currentColor" font-family="system-ui" font-size="5" opacity=".55">
+            <rect x="18" y="18" width="28" height="14" rx="2" fill="currentColor" opacity=".08"/><text x="32" y="28" text-anchor="middle">Jan</text>
+            <rect x="50" y="18" width="28" height="14" rx="2" fill="none" stroke="#005CE5" stroke-width=".8" opacity="1"/><text x="64" y="28" text-anchor="middle" fill="#005CE5" opacity="1">Feb</text>
+            <rect x="82" y="18" width="28" height="14" rx="2" fill="#005CE5" opacity="1"/><text x="96" y="28" text-anchor="middle" fill="#fff" opacity="1" font-weight="700">Mar</text>
+            <rect x="114" y="18" width="28" height="14" rx="2" fill="currentColor" opacity=".08"/><text x="128" y="28" text-anchor="middle">Apr</text>
+            <rect x="18" y="38" width="28" height="14" rx="2" fill="currentColor" opacity=".08"/><text x="32" y="48" text-anchor="middle">May</text>
+            <rect x="50" y="38" width="28" height="14" rx="2" fill="currentColor" opacity=".08"/><text x="64" y="48" text-anchor="middle">Jun</text>
+            <rect x="82" y="38" width="28" height="14" rx="2" fill="currentColor" opacity=".08"/><text x="96" y="48" text-anchor="middle">Jul</text>
+            <rect x="114" y="38" width="28" height="14" rx="2" fill="currentColor" opacity=".08"/><text x="128" y="48" text-anchor="middle">Aug</text>
+            <rect x="18" y="58" width="28" height="14" rx="2" fill="currentColor" opacity=".08"/><text x="32" y="68" text-anchor="middle">Sep</text>
+            <rect x="50" y="58" width="28" height="14" rx="2" fill="currentColor" opacity=".08"/><text x="64" y="68" text-anchor="middle">Oct</text>
+            <rect x="82" y="58" width="28" height="14" rx="2" fill="currentColor" opacity=".08"/><text x="96" y="68" text-anchor="middle">Nov</text>
+            <rect x="114" y="58" width="28" height="14" rx="2" fill="currentColor" opacity=".08"/><text x="128" y="68" text-anchor="middle">Dec</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Live Preview -->
+    <div class="sub-heading" id="mypi-preview">Live Preview</div>
+    <p class="section-desc">Switch <code>Type</code> to compare the 3 published variants. There is only one axis — the cell does not publish Disabled, Pressed, or Focused states.</p>
+    <div class="demo-panel">
+      <div class="demo-layout">
+        <div class="demo-preview" id="mypi-demo-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row">
+              <span class="demo-panel-label">Type</span>
+              <select class="demo-panel-select" onchange="_mypiDemo.type=this.value;updateMonthYearPickerItemDemo()">
+                <option value="Default">Default</option>
+                <option value="Today">Today</option>
+                <option value="Selected">Selected</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DS Health -->
+    <div class="sub-heading" id="mypi-health">DS Health</div>
+    <div class="trait-grid">
+      <div class="trait-card warn">
+        <div class="trait-header">
+          <div class="trait-name">Reusable</div>
+          <div class="trait-status">Warn</div>
+        </div>
+        <div class="trait-note">Used inside Date Picker - Group for both the Month and Year views — which is good. But because it is a separate sibling from the 32×32 day cell, the picker has to instance-swap between two near-identical components depending on the view. A single <code>Picker Cell</code> with a <code>kind</code> axis would be truly reusable.</div>
+      </div>
+      <div class="trait-card pass">
+        <div class="trait-header">
+          <div class="trait-name">Self-contained</div>
+          <div class="trait-status">Pass</div>
+        </div>
+        <div class="trait-note">Bg, label, border, radius, padding, and typography are all token-bound. No absolute-positioned overflow, no external dependencies — the cell is a clean self-contained pill.</div>
+      </div>
+      <div class="trait-card warn">
+        <div class="trait-header">
+          <div class="trait-name">Consistent</div>
+          <div class="trait-status">Warn</div>
+        </div>
+        <div class="trait-note">State axis is <em>narrower</em> than the sibling day cell (no Disabled, no Pressed, no Focused). The Today ring is also 1px here but 1.5px on the day cell — same visual pattern with drift. Cells in the same family should share state shape and stroke tokens.</div>
+      </div>
+      <div class="trait-card fail">
+        <div class="trait-header">
+          <div class="trait-name">Composable</div>
+          <div class="trait-status">Fail</div>
+        </div>
+        <div class="trait-note">Doesn't compose into a native picker — SwiftUI <code>DatePicker(.graphical)</code> and Material 3 <code>DatePicker</code> render their own month/year views. And as a DS primitive it duplicates Date Picker - Item at a different size instead of being one <code>Picker Cell</code> with a <code>kind</code> axis.</div>
+      </div>
+    </div>
+
+    <!-- Behavior -->
+    <div class="sub-heading" id="mypi-behavior">Behavior</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+            <th>Figma Property</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Default</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">Type=Default</td>
+            <td class="muted">Plain label on white. <code>#0A2757</code> primary label. No ring, no fill.</td>
+          </tr>
+          <tr>
+            <td><strong>Today</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">Type=Today</td>
+            <td class="muted">1px blue border, blue label. Marks the current month or year. Border thickness differs from the sibling day cell's 1.5px ring.</td>
+          </tr>
+          <tr>
+            <td><strong>Selected</strong></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="center"><span class="check">Yes</span></td>
+            <td class="mono">Type=Selected</td>
+            <td class="muted">Solid blue fill (<code>#005CE5</code>), white bold label. Uses the shared <code>main/date-picker/day/color/selected/*</code> token scope.</td>
+          </tr>
+          <tr>
+            <td><strong>Disabled</strong></td>
+            <td class="center"><span class="missing">No</span></td>
+            <td class="center"><span class="missing">No</span></td>
+            <td class="mono">—</td>
+            <td class="muted">Not defined on any Type. Sibling day cell exposes State=Disabled for Default and Today — this cell has no equivalent, so a disabled month or year has no token-bound appearance.</td>
+          </tr>
+          <tr>
+            <td><strong>Pressed / Focused / Hover</strong></td>
+            <td class="center"><span class="missing">No</span></td>
+            <td class="center"><span class="missing">No</span></td>
+            <td class="mono">—</td>
+            <td class="muted">Not defined. Native pickers supply these automatically, but a custom wrapper has no tokens to apply.</td>
+          </tr>
+          <tr>
+            <td><strong>Today + Selected</strong></td>
+            <td class="center"><span class="missing">No</span></td>
+            <td class="center"><span class="missing">No</span></td>
+            <td class="mono">—</td>
+            <td class="muted">Not defined. Unclear which presentation wins when the current month/year is also the selected one.</td>
+          </tr>
+          <tr>
+            <td><strong>Touch target</strong></td>
+            <td class="center"><span class="missing">100×32</span></td>
+            <td class="center"><span class="missing">100×32</span></td>
+            <td class="mono">—</td>
+            <td class="muted">Height is 32px — below WCAG minimum 44×44 on the vertical axis. Native pickers enforce their own hit areas; any custom wrapper would need to pad the tap zone.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Open Issues -->
+    <div class="sub-heading" id="mypi-open">Open Issues</div>
+    <ul class="resolved-list">
+      <li><span><strong>Sibling duplication with Date Picker - Item.</strong> The two components are the same selectable-cell primitive at different pixel sizes (100×32 vs 32×32) with overlapping state semantics (Default, Today, Selected). Maintaining them as siblings doubles the variant surface and forces the Group panel to instance-swap based on view. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>Inner frame is always named <code>Month</code> — even when it's the year cell.</strong> The same Figma component is instance-swapped as both a month cell (Jan, Feb, Mar…) and a year cell (2024, 2025…), but the inner auto-layout frame is named <code>Month</code> in all three variants. The layer name lies for half the instances. <span class="tag-open tag-c1">C1 · Layer Structure & Naming</span></span></li>
+      <li><span><strong>State axis is narrower than the sibling day cell.</strong> The day cell has <code>Type</code> × <code>State=Enabled|Disabled</code>. This cell has a single <code>Type</code> axis with no State at all. Cells in the same family should share the same state shape — even if specific values differ by <code>kind</code>. <span class="tag-open tag-c2">C2 · Variant & Property Naming</span></span></li>
+      <li><span><strong>Tokens named <code>main/date-picker/day/*</code> are used for non-day cells.</strong> The cell's bg and label resolve to <code>main/date-picker/day/color/selected/*</code> and <code>main/date-picker/day/color/unselected/*</code> — but it's rendering a month or year, not a day. The token scope is misleadingly named. Either rename to <code>main/date-picker/cell/*</code> or split into <code>main/picker-cell/{day|month|year}/*</code>. <span class="tag-open tag-c3">C3 · Token Coverage</span></span></li>
+      <li><span><strong>Cell has no 1:1 native primitive.</strong> Both SwiftUI <code>DatePicker(.graphical)</code> and Material 3 <code>DatePicker</code> render their own month/year views and don't accept a custom cell view. This Figma component is therefore a reference spec, not a mappable component — should be marked as such or merged into the Picker Cell family. <span class="tag-open tag-c4">C4 · Native Mappability</span></span></li>
+      <li><span><strong>No Disabled variant.</strong> When a parent limits the pickable date range, disabled months or years have no token-bound appearance on this cell. The sibling day cell at least ships Disabled on Default and Today — this cell has no Disabled form for any Type. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>No Pressed, Hover, or Focused variants.</strong> Tap feedback (iOS ripple / Android state layer) and keyboard focus ring are not defined. Native pickers supply these automatically, but any custom wrapper has no tokens to apply. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Today + Selected collision is unresolved.</strong> There is no variant for the common case of the current month/year being the selected one. The design team should decide which presentation wins (ring + fill, fill-only, or a hybrid) and publish a variant. <span class="tag-open tag-c5">C5 · Interaction State Coverage</span></span></li>
+      <li><span><strong>Today ring thickness drifts from the sibling day cell.</strong> This cell uses a 1px border; the sibling day cell uses a 1.5px ring. Same visual pattern, different stroke weight — selection/today emphasis should be one token shared across Picker Cell kinds, not per-component values. <span class="tag-open tag-c6">C6 · Asset & Icon Quality</span></span></li>
+      <li><span><strong>Code Connect mappings not registered.</strong> Blocked by the native-pickers-own-it direction (C4) and by the pending Picker Cell family unification (C1). Map only once the unified component exists and the wrapper surface is confirmed. <span class="tag-open tag-c7">C7 · Code Connect Linkability</span></span></li>
+    </ul>
+
+    <!-- Design Recommendations -->
+    <div class="sub-heading" id="mypi-recommend">Design Recommendations</div>
+    <ul class="recommend-list">
+      <li><span><strong>Family — Consolidate Date Picker - Item + Month and Year Picker - Item into ONE <code>Picker Cell</code>.</strong> Both are selectable cells with identical state semantics (Default / Today / Selected); only pixel size (32×32 vs 100×32) and corner radius (30px pill vs 8px rounded-rect) differ. Proposed schema: <code>kind = day | month | year</code> + <code>state = default | today | selected | disabled</code> (plus <code>range-middle | prev-next</code> exposed only when <code>kind=day</code>). Collapses 10 sibling variants across two components into one component with two clean axes. A single native <code>PickerCell</code> composable renders the correct dimensions, radius, and typography per <code>kind</code>. <span class="tag-recommend">Family</span></span></li>
+      <li><span><strong>Property — Add a <code>State</code> axis to match the day cell.</strong> Even before consolidation, promote the single-axis <code>Type</code> schema into <code>Type × State = Enabled | Disabled | Pressed | Focused</code> to align with the day cell's shape. At minimum, publish <code>Disabled</code> variants for Default, Today, and Selected so the cell is usable in a date-range-restricted picker. <span class="tag-recommend">Property</span></span></li>
+      <li><span><strong>Rename — Fix the inner frame name.</strong> The inner auto-layout frame is named <code>Month</code> in all three variants, but the same component is instance-swapped as the year cell too. Rename to <code>Cell</code> or <code>Label Container</code> so it reads true for both Month and Year views. <span class="tag-recommend">Rename</span></span></li>
+      <li><span><strong>Token — Rename <code>main/date-picker/day/*</code> to <code>main/date-picker/cell/*</code>.</strong> The shared token scope is named <code>day</code> but also resolves for month and year cells. Rename (or split into <code>main/picker-cell/{day|month|year}/*</code> if treatments intentionally diverge) so the token name honestly describes what it styles. <span class="tag-recommend">Token</span></span></li>
+      <li><span><strong>Token — Share a selection-emphasis token across Picker Cell kinds.</strong> Create <code>main/picker-cell/selection/*</code> tokens that resolve to either "fill" or "ring" based on <code>kind</code>, and harmonise the Today ring stroke (1px here, 1.5px on the day cell) on a single <code>border/picker-cell/today</code> token. <span class="tag-recommend">Token</span></span></li>
+      <li><span><strong>State — Add Pressed, Focused, and Today+Selected variants.</strong> Extend the state coverage with Pressed and Focused (needed for any custom wrapper rendering tap / keyboard affordances), and publish a decision variant for the common "today is also selected" case. <span class="tag-recommend">State</span></span></li>
+      <li><span><strong>A11y — Flag the 32px height as below minimum target.</strong> The 100×32 cell is below WCAG 2.5.5 minimum 44×44 on the vertical axis. If a custom wrapper is ever built, pad the tap zone vertically so the hit area meets 44px. Document on the component so consumers don't ship the tight target outside the native picker context. <span class="tag-recommend">A11y</span></span></li>
+      <li><span><strong>Docs — Mark as reference, not a production component.</strong> Given that both platforms render their own month/year views inside the native <code>DatePicker</code>, this cell is a visual reference for the token-styled wrapper, not a component developers rebuild. Add a description banner and a <code>_reference</code> prefix once the Picker Cell family unification lands. <span class="tag-recommend">Docs</span></span></li>
+    </ul>
+
+    </div><!-- /tab usage -->
+
+    <!-- ══ Tab: Style ═════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="style" role="tabpanel">
+
+    <div class="sub-heading" id="mypi-styles" style="margin-top:0">Variants</div>
+    <p class="section-desc">3 published variants on a single <code>Type</code> axis. All share a 100×32 frame, 8px corner radius, 4px label gap, and <code>Primary/Label/Light/Small</code> typography. Selected switches to <code>Primary/Label/Small</code> (bold).</p>
+
+    <!-- ═══ Default ═══ -->
+    <div class="spec-card" id="mypi-spec-default">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="mypi-default">Default</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18414:5851" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18414:5851</span></button>
+        </div>
+        <p class="spec-card-desc">The base month/year cell. Plain label on white, no ring or fill.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="mypi-default-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row"><span class="demo-panel-label">Type</span><span class="demo-panel-value">Default</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Today ═══ -->
+    <div class="spec-card" id="mypi-spec-today">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="mypi-today">Today</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18414:5852" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18414:5852</span></button>
+        </div>
+        <p class="spec-card-desc">Today marker. 1px blue border, blue label. Note: thinner than the day cell's 1.5px ring.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="mypi-today-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row"><span class="demo-panel-label">Type</span><span class="demo-panel-value">Today</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Selected ═══ -->
+    <div class="spec-card" id="mypi-spec-selected">
+      <div class="spec-card-header">
+        <div class="spec-card-header-row">
+          <div class="sub-heading toc-child" id="mypi-selected">Selected</div>
+          <button class="spec-node-copy" onclick="copyNode(this)" data-node="18414:5853" title="Copy Figma node ID"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/></svg> <span>18414:5853</span></button>
+        </div>
+        <p class="spec-card-desc">Currently-selected month or year. Solid blue fill, white bold label. No Disabled form.</p>
+      </div>
+      <div class="demo-layout">
+        <div class="spec-card-preview" id="mypi-selected-preview"><!-- filled by JS --></div>
+        <div class="demo-figma-panel">
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">Properties</div>
+            <div class="demo-panel-row"><span class="demo-panel-label">Type</span><span class="demo-panel-value">Selected</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colors by State -->
+    <div class="style-colors">
+      <div class="style-colors-title">Colors by Type</div>
+      <p class="style-colors-desc">All cell colors are bound to tokens — but the tokens live under the <code>main/date-picker/day/*</code> scope even though this cell renders months and years. Selected uses <code>main/date-picker/day/color/selected/*</code>; Default/Today use <code>main/date-picker/day/color/unselected/*</code> plus the shared primary text and border tokens for the ring and label. The scope name is a mismatch — flagged as C3.</p>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Type</th><th>Role</th><th>Token</th><th>VALUE</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Default</td><td class="muted">bg</td><td class="mono">main/date-picker/day/color/unselected/bg</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Default</td><td class="muted">label</td><td class="mono">main/date-picker/day/color/unselected/label</td><td class="mono">#0A2757</td></tr>
+          <tr><td class="muted">Today</td><td class="muted">bg</td><td class="mono">main/date-picker/day/color/unselected/bg</td><td class="mono">#FFFFFF</td></tr>
+          <tr><td class="muted">Today</td><td class="muted">border</td><td class="mono">border/color-border-primary</td><td class="mono">#005CE5 (1px)</td></tr>
+          <tr><td class="muted">Today</td><td class="muted">label</td><td class="mono">text/color-text-primary</td><td class="mono">#005CE5</td></tr>
+          <tr><td class="muted">Selected</td><td class="muted">bg</td><td class="mono">main/date-picker/day/color/selected/bg</td><td class="mono">#005CE5</td></tr>
+          <tr><td class="muted">Selected</td><td class="muted">label</td><td class="mono">main/date-picker/day/color/selected/label</td><td class="mono">#FFFFFF</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Layout -->
+    <div class="style-colors">
+      <div class="style-colors-title">Layout</div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Cell size</td><td class="mono">100 × 32</td></tr>
+          <tr><td class="muted">Corner radius</td><td class="mono">8px (<code>radius/radius-3</code>)</td></tr>
+          <tr><td class="muted">Padding</td><td class="mono">10px top, 8px bottom, 12px horizontal</td></tr>
+          <tr><td class="muted">Label gap</td><td class="mono">4px (<code>space/space-4</code>)</td></tr>
+          <tr><td class="muted">Today border</td><td class="mono">1px solid</td></tr>
+          <tr><td class="muted">Grid gap (month view 4×3)</td><td class="mono">per Date Picker - Group</td></tr>
+          <tr><td class="muted">Grid gap (year view 4×5)</td><td class="mono">per Date Picker - Group</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="style-colors">
+      <div class="style-colors-title">Typography</div>
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Variant</th><th>Text Style</th><th>Font</th><th>Weight</th><th>Size</th><th>Line-height</th><th>Tracking</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">Default / Today</td><td class="mono">Primary/Label/Light/Small</td><td class="mono">Proxima Soft</td><td class="mono">Semibold (600)</td><td class="mono">14px</td><td class="mono">14px</td><td class="mono">0.25px</td></tr>
+          <tr><td class="muted">Selected</td><td class="mono">Primary/Label/Small</td><td class="mono">Proxima Soft</td><td class="mono">Bold (700)</td><td class="mono">14px</td><td class="mono">14px</td><td class="mono">0.25px</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    </div><!-- /tab style -->
+
+    <!-- ══ Tab: Code ══════════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="code" role="tabpanel">
+
+    <!-- Installation -->
+    <div class="sub-heading" id="mypi-install" style="margin-top:0">Native Handling <span class="badge badge-na">Native Owns It</span></div>
+    <p class="section-desc">The month/year cell is drawn by the native picker. SwiftUI <code>DatePicker(.graphical)</code> exposes a Month/Year wheel/list and Material 3 <code>DatePicker</code> exposes an input-style Year picker inside its header — neither accepts a custom cell slot. Token-tint the native picker to match the DS appearance — don't ship a custom <code>EBMonthYearPickerItem</code> composable.</p>
+
+    <p class="code-label">iOS — SwiftUI</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="typ">DatePicker</span>(
+    <span class="str">"Birth Month"</span>,
+    <span class="prp">selection</span>: $date,
+    <span class="prp">displayedComponents</span>: .date
+)
+.<span class="fn">datePickerStyle</span>(.graphical)
+.<span class="fn">tint</span>(<span class="typ">Color</span>.ebBrand)           <span class="cmt">// Selected month/year fill</span>
+.<span class="fn">accentColor</span>(<span class="typ">Color</span>.ebBrand)     <span class="cmt">// Today marker</span>
+<span class="cmt">// Tap the month/year header in .graphical style to toggle
+// the month/year list view. No custom cell slot is exposed.</span></pre>
+    </div>
+
+    <p class="code-label">Android — Jetpack Compose (Material 3)</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><span class="kw">val</span> state = <span class="fn">rememberDatePickerState</span>()
+<span class="typ">DatePicker</span>(
+    <span class="prp">state</span> = state,
+    <span class="prp">colors</span> = <span class="typ">DatePickerDefaults</span>.<span class="fn">colors</span>(
+        <span class="prp">selectedYearContainerColor</span> = <span class="typ">EBColors</span>.brand,
+        <span class="prp">selectedYearContentColor</span>   = <span class="typ">EBColors</span>.onBrand,
+        <span class="prp">currentYearContentColor</span>    = <span class="typ">EBColors</span>.brand,     <span class="cmt">// "Today" year</span>
+        <span class="prp">yearContentColor</span>           = <span class="typ">EBColors</span>.onSurface
+    )
+)
+<span class="cmt">// Material 3 renders each year cell; month navigation uses
+// arrow buttons in the default mode (no month-grid surface).</span></pre>
+    </div>
+
+    <p class="table-footnote">If the product absolutely needs a custom month/year grid (e.g. a birth-month picker separated from day selection), build a non-native grid and compose <code>PickerCell(kind: .month | .year)</code> inside it — but at that point you lose the native a11y and locale handling.</p>
+
+    <!-- Property Mapping -->
+    <div class="sub-heading" id="mypi-props">Property Mapping</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Figma Property</th>
+            <th>SwiftUI Equivalent</th>
+            <th>Compose Equivalent</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">Type=Default</td>
+            <td class="mono">(default rendering)</td>
+            <td class="mono">yearContentColor / monthContentColor</td>
+            <td class="muted">Base month/year cell. Uses primary text token.</td>
+          </tr>
+          <tr>
+            <td class="mono">Type=Today</td>
+            <td class="mono">.accentColor / automatic current-year marker</td>
+            <td class="mono">currentYearContentColor</td>
+            <td class="muted">Native pickers detect "today" from <code>Calendar.current</code>; only the emphasis color is supplied.</td>
+          </tr>
+          <tr>
+            <td class="mono">Type=Selected</td>
+            <td class="mono">.tint (via selection binding)</td>
+            <td class="mono">selectedYearContainerColor / selectedYearContentColor</td>
+            <td class="muted">Solid fill. Selection is derived from the bound <code>Date</code>.</td>
+          </tr>
+          <tr>
+            <td class="mono">(missing) Disabled</td>
+            <td class="mono">in: Date... range parameter</td>
+            <td class="mono">yearRange / selectableDates</td>
+            <td class="muted">Enforced via the allowable range — picker dims out-of-range months/years automatically. Figma has no token for this state.</td>
+          </tr>
+          <tr>
+            <td class="mono">(missing) Pressed / Focused</td>
+            <td class="mono">—</td>
+            <td class="mono">—</td>
+            <td class="muted">Native pickers supply tap feedback and focus ring automatically. Figma needs variants for any custom wrapper.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox infobox-code">
+      <div class="path-label">SwiftUI (if ever materialized, else reference only)</div>
+      <div class="path-box">ios/Components/DatePicker/EBPickerCell.swift · kind: month | year</div>
+      <div class="path-label">Jetpack Compose (if ever materialized, else reference only)</div>
+      <div class="path-box">android/components/datepicker/EBPickerCell.kt · kind: Month | Year</div>
+    </div>
+
+    <!-- Accessibility -->
+    <div class="sub-heading" id="mypi-a11y">Accessibility</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Requirement</th>
+            <th class="center">iOS</th>
+            <th class="center">Android</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Touch target (44 × 44 min)</td>
+            <td class="muted">Figma cell is 100 × 32 — native picker extends vertical hit area</td>
+            <td class="muted">Figma cell is 100 × 32 — native picker extends vertical hit area</td>
+          </tr>
+          <tr>
+            <td>Screen reader label</td>
+            <td class="muted">VoiceOver: "March, Month" / "2026, Year" (from <code>DatePicker</code>)</td>
+            <td class="muted">TalkBack: "March" / "2026" with "selected" state</td>
+          </tr>
+          <tr>
+            <td>Selected announcement</td>
+            <td class="muted">"Selected" trait added automatically</td>
+            <td class="muted">"Selected" state added automatically</td>
+          </tr>
+          <tr>
+            <td>Focus ring</td>
+            <td class="muted">System focus ring on iPad / hw keyboard</td>
+            <td class="muted">System focus indicator on D-Pad / hw keyboard</td>
+          </tr>
+          <tr>
+            <td>Disabled announcement</td>
+            <td class="muted">"Dimmed" trait when outside <code>in:</code> range</td>
+            <td class="muted">"Disabled" state when outside <code>selectableDates</code></td>
+          </tr>
+          <tr>
+            <td>Dynamic Type / font scaling</td>
+            <td class="muted">Automatic</td>
+            <td class="muted">Automatic</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Usage Guidelines -->
+    <div class="sub-heading" id="mypi-guidelines">Usage Guidelines</div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Treat this cell as a visual reference for how the native picker's month and year views should look in GCash theme — colors, ring thickness, radius, and label weight.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Don't ship a standalone <code>EBMonthYearPickerItem</code> composable. Native pickers render their own month/year cells; a custom cell composable has no slot to plug into.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>If you genuinely need a custom month/year grid, merge with Date Picker - Item into a unified <code>PickerCell(kind:, state:)</code> and compose it inside a custom grid.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Don't maintain Date Picker - Item and Month and Year Picker - Item as siblings — they're the same primitive at different sizes.</p></div>
+    </div>
+    <div class="guideline-row">
+      <div class="guideline-do"><h4>Do</h4><p>Rely on the native picker for locale-aware month names, era handling, VoiceOver / TalkBack, and minDate/maxDate enforcement on both the month and year axes.</p></div>
+      <div class="guideline-dont"><h4>Don't</h4><p>Don't draw disabled months/years manually. Pass an <code>in:</code> range (SwiftUI) or <code>selectableDates</code> (Compose) and let the platform dim them.</p></div>
+    </div>
+
+    <!-- Criteria Scorecard -->
+    <div class="sub-heading" id="mypi-criteria">Criteria Scorecard</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">ID</th>
+            <th class="col-md">Criterion</th>
+            <th class="col-badge">Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono center">C1</td><td><strong>Layer Structure & Naming</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">Sibling-duplication with Date Picker - Item. Inner frame named <code>Month</code> even when used as the year cell.</td></tr>
+          <tr><td class="mono center">C2</td><td><strong>Variant & Property Naming</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">Narrower state axis than the sibling day cell — single <code>Type</code> axis with no <code>State</code>. Cells in the same family should share state shape.</td></tr>
+          <tr><td class="mono center">C3</td><td><strong>Token Coverage</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">All values are token-bound, but tokens are scoped <code>main/date-picker/day/*</code> on a cell that renders months and years. Rename to <code>main/date-picker/cell/*</code> or split per kind.</td></tr>
+          <tr><td class="mono center">C4</td><td><strong>Native Mappability</strong></td><td><span class="badge badge-rework">Not Applicable / Rework</span></td><td class="muted">Native pickers own the month/year view and don't accept a custom cell view. Reference-only unless merged into a custom <code>PickerCell</code>.</td></tr>
+          <tr><td class="mono center">C5</td><td><strong>Interaction State Coverage</strong></td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">No Disabled, no Pressed, no Focused, no Today + Selected. Single-axis variant matrix with no State dimension.</td></tr>
+          <tr><td class="mono center">C6</td><td><strong>Asset & Icon Quality</strong></td><td><span class="badge badge-refine">Partial</span></td><td class="muted">No raster assets. But Today ring is 1px here vs 1.5px on the sibling day cell — should be one shared token.</td></tr>
+          <tr><td class="mono center">C7</td><td><strong>Code Connect Linkability</strong></td><td><span class="badge badge-empty">Not Mapped</span></td><td class="muted">Blocked by C4 (native owns it) and by the pending Picker Cell family unification.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Code Connect -->
+    <div class="sub-heading" id="mypi-cc">Code Connect</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Aspect</th><th class="col-badge">Status</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Property naming</td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">Add a <code>State</code> axis; align with day cell shape or merge into <code>PickerCell</code>.</td></tr>
+          <tr><td>Family unification</td><td><span class="badge badge-rework">Pending</span></td><td class="muted">Merge with Date Picker - Item into <code>PickerCell</code> with <code>kind: day | month | year</code>.</td></tr>
+          <tr><td>Token scope</td><td><span class="badge badge-rework">Needs Fix</span></td><td class="muted">Rename <code>main/date-picker/day/*</code> to <code>main/date-picker/cell/*</code> (or split per kind).</td></tr>
+          <tr><td>Native component file</td><td><span class="badge badge-empty">Pending</span></td><td class="muted">No standalone composable — native <code>DatePicker</code> renders month/year cells. Only materialize <code>EBPickerCell</code> if a custom grid is ever built.</td></tr>
+          <tr><td>Recommendation</td><td><span class="badge badge-consolidate">Consolidate</span></td><td class="muted">Merge into PickerCell, mark as reference spec for the native picker's month/year view.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Variants Inventory -->
+    <div class="sub-heading" id="mypi-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(3 total)</span></div>
+    <p class="section-desc">3 variants on a single <code>Type</code> axis. The sibling day cell has 7 variants on <code>Type × State</code> — this cell lacks the <code>State</code> dimension entirely.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Type</th><th>Dimensions</th><th>Emphasis</th><th>Node ID</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Default</td><td class="mono">100 × 32</td><td class="mono">none</td><td class="mono">18414:5851</td></tr>
+          <tr><td>Today</td><td class="mono">100 × 32</td><td class="mono">1px blue border</td><td class="mono">18414:5852</td></tr>
+          <tr><td>Selected</td><td class="mono">100 × 32</td><td class="mono">solid blue fill, white bold label</td><td class="mono">18414:5853</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-footnote">Missing: Disabled, Pressed, Focused, Hover, Today + Selected — no State axis published.</p>
+
+    </div><!-- /tab code -->
+
+    <!-- ══ Tab: Changelog ═════════════════════════════════════════════ -->
+    <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+    <div class="sub-heading">1.0.0 — April 2026 <span class="tab-version-badge major">Initial</span></div>
+    <div class="changelog">
+      <div class="changelog-header">Initial Assessment · node 18414:5854</div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Component assessed</strong> — 3 variants on a single <code>Type</code> axis. 100×32 rounded-rect cell with token-bound colors, spacing, radius, and typography.
+          <span class="tag-fixed">Documented</span>
+        </div>
+        <span class="changelog-delta delta-resolved">Initial</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Sibling duplication with Date Picker - Item</strong> — Same selectable-cell primitive at different sizes. Proposal: collapse both into <code>Picker Cell</code> with <code>kind: day | month | year</code>.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C1 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Inner frame named <code>Month</code> across all variants</strong> — Same component instance-swapped as both month and year cell; layer name is inaccurate for year instances.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C1 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>State axis narrower than sibling day cell</strong> — Single <code>Type</code> axis only. No <code>State</code> dimension, so Disabled / Pressed / Focused are all missing. Cells in the same family should share state shape.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C2 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Tokens scoped <code>main/date-picker/day/*</code> used for non-day cell</strong> — Bg and label tokens are named <code>day</code> but style months and years. Rename to <code>main/date-picker/cell/*</code> or split per <code>kind</code>.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C3 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>No native primitive for a month/year cell</strong> — Native <code>DatePicker</code> renders its own month/year cells on both platforms. Reference-only unless a custom grid is built.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C4 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Disabled / Pressed / Focused / Today+Selected missing</strong> — No <code>State</code> axis published at all. The common "today is also selected" combination is undefined.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C5 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Today ring thickness drifts from sibling day cell</strong> — 1px here vs 1.5px on Date Picker - Item. Align on one shared stroke token per Picker Cell kind.
+          <span class="tag-open">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C6 Open</span>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-body">
+          <strong>Code Connect not registered</strong> — Blocked by the native-pickers-own-it direction and by the pending Picker Cell family unification.
+          <span class="tag-open tag-c7">Open</span>
+        </div>
+        <span class="changelog-delta delta-open">C7 Open</span>
+      </div>
+    </div>
+    </div><!-- /tab changelog -->
+
+    </div><!-- /data-tab-group -->
+  </div><!-- /content-wrap -->
+
+  <!-- On This Page -->
+  <aside class="page-toc" id="toc-month-year-picker-item">
+    <div class="page-toc-label">On this page</div>
+    <nav class="page-toc-nav" id="toc-nav-month-year-picker-item"></nav>
+  </aside>
+
+  </div><!-- /panel-layout -->
+</div>
+
+<script>
+/* ── Month and Year Picker - Item Component JS ─────────────────────── */
+var _mypiDemo = { type: 'Default', label: 'March' };
+
+function _mypiBuildCell(type, label) {
+  /*
+    Render a single 100×32 cell matching the Figma variant.
+    - Default: white bg, primary label (#0A2757)
+    - Today: 1px blue border, blue label
+    - Selected: solid blue fill, white bold label
+  */
+  var bg = '#FFFFFF';
+  var border = 'none';
+  var color = '#0A2757';
+  var fontWeight = '600';
+
+  if (type === 'Today') {
+    border = '1px solid #005CE5';
+    color = '#005CE5';
+  } else if (type === 'Selected') {
+    bg = '#005CE5';
+    color = '#FFFFFF';
+    fontWeight = '700';
+  }
+
+  return ''
+    + '<div style="display:inline-block;font-family:\'Proxima Soft\', system-ui, sans-serif;">'
+    +   '<div style="box-sizing:border-box;width:100px;height:32px;background:' + bg + ';border:' + border + ';border-radius:8px;padding:10px 12px 8px;display:flex;align-items:center;justify-content:center;gap:4px;color:' + color + ';font-weight:' + fontWeight + ';font-size:14px;line-height:14px;letter-spacing:.25px;">'
+    +     label
+    +   '</div>'
+    + '</div>';
+}
+
+function _mypiFramedCell(type, label) {
+  /* Wrap the cell in a neutral backdrop so small cells are visible in the demo panel. */
+  return ''
+    + '<div style="display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;">'
+    +   _mypiBuildCell(type, label)
+    + '</div>';
+}
+
+function updateMonthYearPickerItemDemo() {
+  var demo = document.getElementById('mypi-demo-preview');
+  if (demo) demo.innerHTML = _mypiFramedCell(_mypiDemo.type, _mypiDemo.label);
+  var specs = [
+    { id: 'mypi-default-preview',  type: 'Default',  label: 'March' },
+    { id: 'mypi-today-preview',    type: 'Today',    label: 'March' },
+    { id: 'mypi-selected-preview', type: 'Selected', label: 'March' }
+  ];
+  specs.forEach(function(s) {
+    var el = document.getElementById(s.id);
+    if (el) el.innerHTML = _mypiFramedCell(s.type, s.label);
+  });
+}
+
+function _mypiInit() {
+  updateMonthYearPickerItemDemo();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _mypiInit);
+} else {
+  _mypiInit();
+}
+</script>
+<!--@section-end-->
