@@ -1,100 +1,135 @@
 ---
-import Standalone from '../layouts/Standalone.astro';
-import { componentManifest } from '../data/components/_index';
-import fs from 'node:fs';
-import path from 'node:path';
+import Base from '../layouts/Base.astro';
 
-// Compute live stats from the component data
-const DATA_DIR = path.resolve(process.cwd(), 'src/data/components');
-let openTotal = 0;
-let resolvedTotal = 0;
-for (const slug of componentManifest.map((c) => c.slug)) {
-  try {
-    const raw = fs.readFileSync(path.join(DATA_DIR, slug + '.ts'), 'utf8');
-    const m = raw.match(/= ({[\s\S]*});\s*$/);
-    if (!m) continue;
-    const data = new Function('return ' + m[1])();
-    openTotal += (data.overview?.open || []).length;
-    resolvedTotal += (data.overview?.resolved || []).length;
-  } catch {}
-}
-const componentCount = componentManifest.length;
+const steps = [
+  {
+    num: '01',
+    eyebrow: 'Assess',
+    title: 'Evaluate',
+    body: 'Inspect each Figma component against 7 criteria covering structure, naming, tokens, states, and Code Connect readiness.',
+  },
+  {
+    num: '02',
+    eyebrow: 'Document',
+    title: 'Write',
+    body: 'Author a per-component data file in src/data/components/ with verdicts, traits, spec cards, and SwiftUI/Compose snippets.',
+  },
+  {
+    num: '03',
+    eyebrow: 'Build',
+    title: 'Assemble',
+    body: 'Run npm run build — Astro compiles all 79 component pages into static HTML automatically.',
+  },
+  {
+    num: '04',
+    eyebrow: 'Ship',
+    title: 'Publish',
+    body: 'Commit and push to main. The deploy workflow rebuilds the live site automatically.',
+  },
+];
+
+const criteria = [
+  { id: 'C1', name: 'Layer Structure & Naming',     check: 'Layers should use semantic names like leading-icon or content — not Figma defaults like Frame 42 or Group 7. The hierarchy should be logical and free of orphaned wrappers.' },
+  { id: 'C2', name: 'Variant & Property Naming',    check: 'Booleans should be true/false (not yes/no), enums should match the values native code expects, and property names should map cleanly to API parameters.' },
+  { id: 'C3', name: 'Token Coverage',               check: 'Every color, size, radius, and spacing value should be bound to a design token. No hardcoded hex codes or pixel values.' },
+  { id: 'C4', name: 'Native Mappability',           check: 'The component should map cleanly to a native SwiftUI / Compose primitive. No web-only patterns (CSS-only effects, hover-dependent UX, etc.).' },
+  { id: 'C5', name: 'Interaction State Coverage',   check: 'All required states should exist as variants: default, pressed, focused, disabled, and any feature-specific states (loading, error, etc.).' },
+  { id: 'C6', name: 'Asset & Icon Quality',         check: 'Icons should be vector instances with token-based coloring. No raster PNGs, no flattened paths, no hardcoded fills.' },
+  { id: 'C7', name: 'Code Connect Linkability',     check: 'Property names should map 1:1 to native parameters with no transformation needed. Code Connect mapping should be straightforward.' },
+];
+
+const traits = [
+  { rating: 'Pass',    cls: 'pass',    body: 'Fully met — ready for native handoff.' },
+  { rating: 'Partial', cls: 'partial', body: 'Mostly met with minor gaps (e.g. missing icon slots, but text variants work).' },
+  { rating: 'Warn',    cls: 'warn',    body: 'Significant concerns that limit reuse or block handoff (e.g. naming issues, raster assets, hardcoded values).' },
+  { rating: 'Fail',    cls: 'fail',    body: 'Broken — blocks DS inclusion or native implementation (e.g. flattened icons, no separable layers).' },
+];
+
+const verdicts = [
+  { name: 'Keep',          cls: 'badge-keep',          body: 'All 4 traits pass. Ship as-is.' },
+  { name: 'Fix',           cls: 'badge-fix',           body: 'Belongs in DS but has specific issues. Mostly pass/partial with a few warn.' },
+  { name: 'Restructure',   cls: 'badge-restructure',   body: 'Needs significant property or architectural changes.' },
+  { name: 'Consolidate',   cls: 'badge-consolidate',   body: 'Merge into another component.' },
+  { name: 'Product Layer', cls: 'badge-product-layer', body: 'Too feature-specific for core DS.' },
+  { name: 'Remove',        cls: 'badge-remove',        body: 'Redundant, deprecated, or not a DS concern.' },
+];
 ---
-<Standalone title="East Blue — Design System Assessment">
-  <div class="home-shell">
-    <div class="home-content">
-      <header class="home-hero">
-        <div class="home-brand">
-          <div class="home-brand-icon">
-            <svg width="22" height="22" viewBox="0 0 16 16" fill="none">
-              <rect x="1" y="1" width="5" height="5" rx="1" fill="#fff" />
-              <rect x="9" y="1" width="5" height="5" rx="1" fill="#fff" opacity=".75" />
-              <rect x="1" y="9" width="5" height="5" rx="1" fill="#fff" opacity=".75" />
-              <rect x="9" y="9" width="5" height="5" rx="1" fill="#fff" opacity=".45" />
-            </svg>
-          </div>
-          <div class="home-brand-text">
-            <h1>East Blue</h1>
-            <p>Design System Assessment</p>
-          </div>
-        </div>
-
-        <div class="home-stats">
-          <span class="home-pill home-pill-blue">
-            <span class="home-pill-dot"></span>
-            {componentCount} components
-          </span>
-          <span class="home-pill home-pill-amber">
-            <span class="home-pill-dot"></span>
-            {openTotal} open issues
-          </span>
-          <span class="home-pill home-pill-green">
-            <span class="home-pill-dot"></span>
-            {resolvedTotal} resolved
-          </span>
-        </div>
+<Base title="East Blue — Design System Assessment">
+  <div class="page">
+    <div class="page-content">
+      <header class="page-header">
+        <h1>Overview</h1>
+        <p>Evaluating DS health and native mobile readiness for SwiftUI and Jetpack Compose.</p>
       </header>
 
-      <section class="home-resources">
-        <div class="home-resources-label">Resources</div>
+      <section class="page-section">
+        <h2>How It Works</h2>
+        <p class="section-desc">Each component is evaluated against seven criteria. The report is self-contained and versions alongside the design system.</p>
 
-        <a class="home-resource-card" href="/report">
-          <div class="home-resource-icon home-resource-icon-blue">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.6" />
-              <path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-            </svg>
-          </div>
-          <div class="home-resource-body">
-            <div class="home-resource-title">Assessment Report</div>
-            <div class="home-resource-desc">Full component evaluation — verdicts, interaction states, tokens, and action items</div>
-          </div>
-          <svg class="home-resource-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </a>
-
-        <a class="home-resource-card" href="/eb-ds-assessment-guide">
-          <div class="home-resource-icon home-resource-icon-green">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M5 4h14v16H7a2 2 0 0 1-2-2V4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
-              <path d="M5 18a2 2 0 0 1 2-2h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-              <path d="M9 8h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-            </svg>
-          </div>
-          <div class="home-resource-body">
-            <div class="home-resource-title">Assessment Guide</div>
-            <div class="home-resource-desc">Quick-reference summary of open issues, patterns, and component status</div>
-          </div>
-          <svg class="home-resource-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </a>
+        <div class="how-grid">
+          {steps.map((s) => (
+            <div class="how-card">
+              <div class="how-step">{s.num} — {s.eyebrow}</div>
+              <div class="how-title">{s.title}</div>
+              <p class="how-desc">{s.body}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
-      <footer class="home-footer">
-        April 2026 · For internal use only
-      </footer>
+      <section class="page-section">
+        <h2>Assessment Criteria</h2>
+        <p class="section-desc">The overall status reflects the weakest criterion — one unresolved issue can block Code Connect linkability.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="col-id">ID</th>
+                <th class="col-md">Criterion</th>
+                <th>What we check</th>
+              </tr>
+            </thead>
+            <tbody>
+              {criteria.map((c) => (
+                <tr>
+                  <td class="mono"><strong>{c.id}</strong></td>
+                  <td><strong>{c.name}</strong></td>
+                  <td>{c.check}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <h2>Trait Ratings</h2>
+        <p class="section-desc">Per-trait scores for each component (Reusable, Self-contained, Consistent, Composable).</p>
+
+        <div class="legend-grid">
+          {traits.map((t) => (
+            <div class="legend-row">
+              <span class={`trait-rating ${t.cls}`}>{t.rating}</span>
+              <span class="legend-body">{t.body}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="page-section">
+        <h2>DS Verdicts</h2>
+        <p class="section-desc">Overall DS Health outcome from all 4 traits.</p>
+
+        <div class="legend-grid">
+          {verdicts.map((v) => (
+            <div class="legend-row">
+              <span class={`badge ${v.cls}`}>{v.name}</span>
+              <span class="legend-body">{v.body}</span>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   </div>
-</Standalone>
+</Base>
