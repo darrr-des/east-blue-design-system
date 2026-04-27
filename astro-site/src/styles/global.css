@@ -411,24 +411,46 @@ a.sidebar-brand {
 
 .nav-dot { display: none; }
 
-/* Components row — link + chevron button as separate flex items */
+/* Components row — link + chevron button as a unified row.
+   Hover/active states live on .nav-item-row; children stay transparent
+   so the whole row reads as one interactive surface. */
 .nav-item-row {
   display: flex;
   align-items: stretch;
   border-radius: 6px;
   margin-bottom: 1px;
-  transition: background 0.08s ease;
+  transition: background 0.08s ease, color 0.08s ease;
 }
-.nav-item-row.active { background: var(--accent-light); }
-[data-theme="dark"] .nav-item-row.active { background: rgba(107, 154, 239, 0.08); }
+.nav-item-row:hover {
+  background: rgba(100, 106, 120, 0.06);
+  color: var(--text);
+}
+[data-theme="dark"] .nav-item-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+.nav-item-row.active {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+.nav-item-row.active:hover {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+[data-theme="dark"] .nav-item-row.active,
+[data-theme="dark"] .nav-item-row.active:hover {
+  background: rgba(107, 154, 239, 0.08);
+}
+
+/* Children — keep transparent so the row's bg owns the visual */
 .nav-item-row > .nav-item {
   flex: 1;
   margin: 0;
   border-radius: 6px 0 0 6px;
+  background: transparent !important;
 }
-.nav-item-row.active > .nav-item.active {
-  background: transparent;
-}
+.nav-item-row > .nav-item:hover { background: transparent; }
+.nav-item-row > .nav-item.active { background: transparent; color: inherit; }
+
 .nav-item-chevron-btn {
   display: inline-flex;
   align-items: center;
@@ -437,17 +459,10 @@ a.sidebar-brand {
   background: transparent;
   border: none;
   cursor: pointer;
-  color: var(--muted);
+  color: inherit;
   border-radius: 0 6px 6px 0;
-  transition: background 0.08s ease, color 0.08s ease;
 }
-.nav-item-chevron-btn:hover {
-  background: rgba(100, 106, 120, 0.06);
-  color: var(--text);
-}
-[data-theme="dark"] .nav-item-chevron-btn:hover {
-  background: rgba(255, 255, 255, 0.04);
-}
+.nav-item-chevron-btn:hover { background: transparent; }
 .nav-item-chevron-btn .nav-section-chevron {
   flex-shrink: 0;
   opacity: 0.5;
@@ -458,7 +473,6 @@ a.sidebar-brand {
   transform: rotate(0deg);
   opacity: 0.8;
 }
-.nav-item-row.active .nav-item-chevron-btn { color: var(--accent); }
 
 /* ── Component nav items ─────────────────────────────────────────────── */
 .nav-comp {
