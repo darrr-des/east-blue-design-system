@@ -135,4 +135,19 @@ const isGuide      = pathname === '/eb-ds-assessment-guide';
 
     <a class={`nav-item${isGuide ? ' active' : ''}`} href="/eb-ds-assessment-guide">Assessment Guide</a>
   </nav>
+
+  <!-- User info + logout (populated by AuthGate via window.__ebUser) -->
+  <div class="sidebar-user" id="sidebar-user" style="display:none;">
+    <img class="sidebar-user-avatar" id="sidebar-user-avatar" alt="" />
+    <div class="sidebar-user-text">
+      <div class="sidebar-user-name" id="sidebar-user-name"></div>
+      <div class="sidebar-user-email" id="sidebar-user-email"></div>
+    </div>
+    <button class="sidebar-user-logout" onclick="window.__ebSignOut && window.__ebSignOut()" title="Sign out" aria-label="Sign out">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <path d="M6 3H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        <path d="M9 5l3 3-3 3M12 8H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+  </div>
 </aside>

@@ -11,6 +11,43 @@
 (function () {
   'use strict';
 
+  // ── Sidebar user info + logout (driven by AuthGate's eb:auth-ready) ──
+  function paintSidebarUser(user) {
+    if (!user) return;
+    var box = document.getElementById('sidebar-user');
+    var nameEl = document.getElementById('sidebar-user-name');
+    var emailEl = document.getElementById('sidebar-user-email');
+    var avatarEl = document.getElementById('sidebar-user-avatar');
+    if (!box || !nameEl || !emailEl || !avatarEl) return;
+    nameEl.textContent = user.name || user.email || 'Signed in';
+    emailEl.textContent = user.email || '';
+    if (user.picture) {
+      avatarEl.src = user.picture;
+      avatarEl.style.display = 'block';
+    } else {
+      avatarEl.style.display = 'none';
+    }
+    box.style.display = 'flex';
+  }
+  // Paint immediately if AuthGate already cached it on window.__ebUser
+  if (window.__ebUser) paintSidebarUser(window.__ebUser);
+  // Paint when AuthGate finishes its check
+  document.addEventListener('eb:auth-ready', function (e) { paintSidebarUser(e.detail); });
+  // Re-paint after Astro view transitions (sidebar is persisted, but DOM survives)
+  document.addEventListener('astro:page-load', function () {
+    if (window.__ebUser) paintSidebarUser(window.__ebUser);
+  });
+
+  // Sign-out — call backend, drop local token, send to /login
+  window.__ebSignOut = async function () {
+    var backend = (window.__EB_AUTH_BACKEND_URL) || 'http://localhost:3001';
+    try {
+      await fetch(backend + '/auth/logout', { method: 'POST', credentials: 'include' });
+    } catch (e) { /* network errors don't matter on logout */ }
+    try { localStorage.removeItem('eb_auth_token'); } catch (e) {}
+    window.location.href = '/login';
+  };
+
   // ── Sidebar nav section toggle ───────────────────────────────────────
   window.toggleNavSection = function (btn) {
     var list = btn.nextElementSibling;

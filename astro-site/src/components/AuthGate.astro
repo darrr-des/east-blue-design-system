@@ -1,0 +1,59 @@
+---
+/**
+ * AuthGate — client-side authentication gate.
+ *
+ * Inserted at the top of <body> on every page rendered via Base.astro.
+ * Hides the body until /auth/me confirms a valid session, then either
+ * shows the page or redirects to /login.
+ *
+ * Static-site friendly: no SSR / middleware required. The check runs
+ * after the HTML is parsed but before content becomes visible.
+ *
+ * Skip the gate on the /login route itself.
+ */
+const AUTH_BACKEND_URL = import.meta.env.PUBLIC_AUTH_BACKEND_URL || 'http://localhost:3001';
+---
+
+<!-- Hide body until the auth check resolves -->
+<style is:inline>
+  body.auth-checking { visibility: hidden; }
+</style>
+
+<script is:inline define:vars={{ AUTH_BACKEND_URL }}>
+  (function () {
+    // Expose for shared scripts (sign-out handler in assessment.js)
+    window.__EB_AUTH_BACKEND_URL = AUTH_BACKEND_URL;
+
+    // Skip the gate on the login page itself
+    if (window.location.pathname === '/login') return;
+
+    document.body.classList.add('auth-checking');
+
+    var token = localStorage.getItem('eb_auth_token');
+    var headers = {};
+    if (token) headers.Authorization = 'Bearer ' + token;
+
+    fetch(AUTH_BACKEND_URL + '/auth/me', {
+      method: 'GET',
+      credentials: 'include',
+      headers: headers,
+    })
+      .then(function (r) {
+        if (!r.ok) throw new Error('unauthorized');
+        return r.json();
+      })
+      .then(function (data) {
+        // Cache user on window for the sidebar (and anywhere else)
+        window.__ebUser = data.user;
+        // Reveal the page
+        document.body.classList.remove('auth-checking');
+        // Notify any listeners (sidebar updates user info)
+        document.dispatchEvent(new CustomEvent('eb:auth-ready', { detail: data.user }));
+      })
+      .catch(function () {
+        // Not authenticated — bounce to /login, preserving intent
+        var next = encodeURIComponent(window.location.pathname + window.location.search);
+        window.location.replace('/login?next=' + next);
+      });
+  })();
+</script>

@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
+import AuthGate from '../components/AuthGate.astro';
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
@@ -19,6 +20,7 @@ const { title, bodyClass = '', activeSlug } = Astro.props;
     <ClientRouter />
   </head>
   <body class={bodyClass}>
+    <AuthGate />
     <Sidebar activeSlug={activeSlug} transition:persist />
     <main class="main" transition:animate="fade">
       <slot />
