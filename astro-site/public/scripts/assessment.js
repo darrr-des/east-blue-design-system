@@ -57,16 +57,26 @@
   };
 
   // ── Components top-level expand/collapse ────────────────────────────
-  // preventNav=true → chevron button: toggle only, don't navigate.
-  // preventNav=false → label link: toggle AND let the link navigate.
-  // Either way the whole row is interactive — clicking anywhere on it
-  // expands/collapses the list.
+  // Three behaviors:
+  //   1. Chevron click (preventNav=true)     → toggle only, never navigate.
+  //   2. Label click on the destination page → toggle only (suppress the
+  //      no-op self-navigation that would re-render the persisted sidebar
+  //      and snap .open back to its server-rendered value).
+  //   3. Label click elsewhere               → don't toggle, let the link
+  //      navigate normally; the new page's server render places .open
+  //      based on the new pathname.
   window.toggleComponentsSection = function (event, preventNav) {
-    if (preventNav) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    var row = event.currentTarget.closest('.nav-item-row');
+    var target = event.currentTarget;
+    var isLink = target.tagName === 'A';
+    var sameDest = isLink &&
+      target.pathname.replace(/\/$/, '') === window.location.pathname.replace(/\/$/, '');
+
+    if (!preventNav && !sameDest) return; // case 3 — let the link navigate
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    var row = target.closest('.nav-item-row');
     if (!row) return;
     var list = row.nextElementSibling;
     if (!list || !list.classList.contains('nav-components-list')) return;
