@@ -19,6 +19,18 @@
     btn.classList.toggle('open', open);
   };
 
+  // ── Components top-level expand/collapse (separate from link click) ──
+  window.toggleComponentsSection = function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    var row = event.currentTarget.closest('.nav-item-row');
+    if (!row) return;
+    var list = row.nextElementSibling;
+    if (!list || !list.classList.contains('nav-components-list')) return;
+    var open = list.classList.toggle('open');
+    row.classList.toggle('open', open);
+  };
+
   // ── Sidebar active-state sync (works with Astro view transitions) ───
   // The Sidebar is `transition:persist`, so the DOM survives navigations
   // — but its .active highlight must follow the current URL. After every

@@ -70,12 +70,16 @@ const isGuide      = pathname === '/eb-ds-assessment-guide';
     {/* Top-level nav */}
     <a class={`nav-item${isOverview ? ' active' : ''}`} href="/">Overview</a>
 
-    <a class={`nav-item nav-item-toggleable${isComponents ? ' active open' : ''}`} href="/components">
-      <span>Components</span>
-      <svg class="nav-section-chevron" width="12" height="12" viewBox="0 0 16 16" fill="none">
-        <path d="M5 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-    </a>
+    <div class={`nav-item-row${isComponents ? ' active open' : ''}`}>
+      <a class={`nav-item nav-item-toggleable${isComponents ? ' active' : ''}`} href="/components">
+        <span>Components</span>
+      </a>
+      <button class="nav-item-chevron-btn" onclick="toggleComponentsSection(event)" aria-label="Toggle components list">
+        <svg class="nav-section-chevron" width="12" height="12" viewBox="0 0 16 16" fill="none">
+          <path d="M5 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
     <div class={`nav-section-list nav-components-list${isComponents ? ' open' : ''}`}>
       {rows.map((row) =>
         row.kind === 'item' ? (

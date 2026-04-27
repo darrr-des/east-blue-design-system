@@ -406,20 +406,51 @@ a.sidebar-brand {
 
 .nav-dot { display: none; }
 
-/* nav-item with chevron (Components top-level) */
-.nav-item-toggleable {
-  justify-content: space-between;
+/* Components row — link + chevron button as separate flex items */
+.nav-item-row {
+  display: flex;
+  align-items: stretch;
+  border-radius: 6px;
+  margin-bottom: 1px;
+  transition: background 0.08s ease;
 }
-.nav-item-toggleable .nav-section-chevron {
+.nav-item-row.active { background: var(--accent-light); }
+[data-theme="dark"] .nav-item-row.active { background: rgba(107, 154, 239, 0.08); }
+.nav-item-row > .nav-item {
+  flex: 1;
+  margin: 0;
+  border-radius: 6px 0 0 6px;
+}
+.nav-item-row.active > .nav-item.active {
+  background: transparent;
+}
+.nav-item-chevron-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-3);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  border-radius: 0 6px 6px 0;
+  transition: background 0.08s ease, color 0.08s ease;
+}
+.nav-item-chevron-btn:hover {
+  background: rgba(100, 106, 120, 0.08);
+  color: var(--text);
+}
+.nav-item-chevron-btn .nav-section-chevron {
   flex-shrink: 0;
-  opacity: 0.4;
+  opacity: 0.5;
   transition: transform 0.15s ease, opacity 0.15s ease;
   transform: rotate(-90deg);
 }
-.nav-item-toggleable.open .nav-section-chevron {
+.nav-item-row.open .nav-item-chevron-btn .nav-section-chevron {
   transform: rotate(0deg);
-  opacity: 0.7;
+  opacity: 0.8;
 }
+.nav-item-row.active .nav-item-chevron-btn { color: var(--accent); }
 
 /* ── Component nav items ─────────────────────────────────────────────── */
 .nav-comp {
