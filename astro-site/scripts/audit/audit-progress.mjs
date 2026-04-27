@@ -7,6 +7,10 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const DATA_DIR = path.resolve(path.dirname(__filename), '../../src/data/components');
 const REQUIRED = ['Properties', 'Colors', 'Layout', 'Typography'];
+// Verdicts where a component is intentionally cardless (deprecation / consolidation /
+// product-screen scope). The infobox in overview.open + overview.recommendations
+// already documents the canonical sibling — spec cards aren't expected.
+const CARDLESS_VERDICTS = new Set(['remove', 'consolidate', 'product-layer']);
 const files = fs.readdirSync(DATA_DIR).filter((f) => f.endsWith('.ts') && f !== '_index.ts').sort();
 
 let totalCards = 0;
@@ -49,17 +53,22 @@ for (const f of files) {
     if (cLen >= 20) sectionCount.compose++;
   }
 
+  // Detect a verdict that makes a component intentionally cardless.
+  const verdictKind = (data.meta?.badges || []).map((b) => b.kind).find((k) => CARDLESS_VERDICTS.has(k));
   componentScores[slug] = {
     name: data.meta?.name || slug,
     total: cards.length,
     full: fullCnt,
+    cardlessByVerdict: !!verdictKind && cards.length === 0,
   };
 }
 
 const fullyDoneComponents = Object.values(componentScores).filter((v) => v.total > 0 && v.full === v.total).length;
+const cardlessByVerdictCt = Object.values(componentScores).filter((v) => v.cardlessByVerdict).length;
 const startedComponents   = Object.values(componentScores).filter((v) => v.full > 0).length;
-const noCardsComponents   = Object.values(componentScores).filter((v) => v.total === 0).length;
+const noCardsComponents   = Object.values(componentScores).filter((v) => v.total === 0 && !v.cardlessByVerdict).length;
 const emptyComponents     = Object.values(componentScores).filter((v) => v.total > 0 && v.full === 0).length;
+const completeComponents  = fullyDoneComponents + cardlessByVerdictCt;
 
 const pct = (n, d) => d === 0 ? '0%' : `${Math.round((n / d) * 100)}%`;
 
@@ -70,10 +79,12 @@ console.log('');
 console.log('  AT THE COMPONENT LEVEL');
 console.log('────────────────────────────────────────────────────────');
 console.log(`  Total components:                       ${totalComponents}`);
-console.log(`  Fully complete (every card 100%):       ${fullyDoneComponents}    (${pct(fullyDoneComponents, totalComponents)})`);
+console.log(`  Fully complete (cards or by verdict):   ${completeComponents}    (${pct(completeComponents, totalComponents)})`);
+console.log(`    └─ With full spec cards:              ${fullyDoneComponents}`);
+console.log(`    └─ Intentionally cardless (verdict):  ${cardlessByVerdictCt}`);
 console.log(`  Partially complete (some cards done):   ${startedComponents - fullyDoneComponents}    (${pct(startedComponents - fullyDoneComponents, totalComponents)})`);
 console.log(`  Untouched (zero cards done):            ${emptyComponents}    (${pct(emptyComponents, totalComponents)})`);
-console.log(`  Has no spec cards at all:               ${noCardsComponents}    (${pct(noCardsComponents, totalComponents)})`);
+console.log(`  Missing cards (no verdict reason):      ${noCardsComponents}    (${pct(noCardsComponents, totalComponents)})`);
 console.log('');
 
 console.log('  AT THE CARD LEVEL');
@@ -97,5 +108,5 @@ console.log('  ROADMAP REMAINING');
 console.log('────────────────────────────────────────────────────────');
 const cardsLeft = totalCards - fullyDone;
 console.log(`  Cards still needing work:               ${cardsLeft}`);
-console.log(`  Components needing work:                ${totalComponents - fullyDoneComponents - noCardsComponents}`);
+console.log(`  Components needing work:                ${totalComponents - completeComponents - noCardsComponents}`);
 console.log('');
