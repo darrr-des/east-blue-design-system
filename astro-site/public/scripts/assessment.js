@@ -19,10 +19,16 @@
     btn.classList.toggle('open', open);
   };
 
-  // ── Components top-level expand/collapse (separate from link click) ──
-  window.toggleComponentsSection = function (event) {
-    event.preventDefault();
-    event.stopPropagation();
+  // ── Components top-level expand/collapse ────────────────────────────
+  // preventNav=true → chevron button: toggle only, don't navigate.
+  // preventNav=false → label link: toggle AND let the link navigate.
+  // Either way the whole row is interactive — clicking anywhere on it
+  // expands/collapses the list.
+  window.toggleComponentsSection = function (event, preventNav) {
+    if (preventNav) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
     var row = event.currentTarget.closest('.nav-item-row');
     if (!row) return;
     var list = row.nextElementSibling;
