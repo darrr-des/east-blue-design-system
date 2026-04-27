@@ -1,0 +1,21 @@
+{
+  "name": "frost-auth",
+  "version": "0.1.0",
+  "description": "Standalone authentication backend — Google OAuth login + JWT sessions. Reusable across any frontend.",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=24.4.1"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "google-auth-library": "^9.14.1",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
