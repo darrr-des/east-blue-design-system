@@ -5721,3 +5721,39 @@ body.rail-nav #rail-nav-host .nav-group-list {
   color: var(--muted);
   font-style: italic;
 }
+
+/* ── Family group toggles inside Components list ─────────────────────── */
+/* Family groups (Action List, Avatar, Carousel, etc.) sit alphabetically
+   alongside standalone components — visually they're peers, so they share
+   the same left padding as .nav-comp. */
+.nav-family-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-3) var(--space-4) var(--space-3) var(--space-6);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 6px;
+  transition: background 0.08s ease, color 0.08s ease;
+}
+.nav-family-toggle:hover {
+  background: rgba(100, 106, 120, 0.06);
+  color: var(--text);
+}
+.nav-family-toggle:hover .nav-section-chevron { opacity: 0.7; }
+[data-theme="dark"] .nav-family-toggle:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Items nested inside a family group get extra left indent so the
+   hierarchy is visible (Avatar group → Avatar / Avatar Group items below). */
+.nav-section-list .nav-section-list .nav-comp {
+  padding-left: calc(var(--space-6) + 14px);
+}
