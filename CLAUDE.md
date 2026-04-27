@@ -1,14 +1,19 @@
-# CLAUDE.md — GCash Design System Assessment
+# CLAUDE.md — East Blue Design System
 
 Project rules and context for Claude Code sessions.
-
-**IMPORTANT: This is a read-only assessment rulebook. Do NOT edit Figma components — even if issues are found, only document them in the report. All fixes must be done manually by the design team.**
 
 ---
 
 ## Project Overview
 
-This is a **component assessment report** for the GCash Design System. It evaluates Figma components across two dimensions: **DS Health** (structure/quality) and **Native Mobile Readiness** (SwiftUI + Jetpack Compose handoff). The output is a static HTML site hosted on GitHub Pages.
+East Blue is a **component assessment platform** for the GCash Design System. It evaluates Figma components across two dimensions:
+
+- **DS Health** — structure, naming, reusability, consistency
+- **Native Mobile Readiness** — SwiftUI + Jetpack Compose handoff readiness
+
+The output is a **static Astro site** plus a **standalone Google OAuth backend** (`frost-auth`) that gates access. Both live in this monorepo.
+
+Live: https://eb-ds.frostdesigngroup.com/
 
 ---
 
@@ -21,7 +26,7 @@ This is a **component assessment report** for the GCash Design System. It evalua
   - `mcp__figma__get_metadata` — structure overview, variant counts
   - `mcp__figma__get_screenshot` — visual confirmation
   - `mcp__figma__get_variable_defs` — token audit
-- If an issue is found (e.g. wrong layer name, missing state), **document it as an open issue in the report** — do not attempt to fix it in Figma
+- If an issue is found (e.g. wrong layer name, missing state), **document it as an open issue in the component data** — do not attempt to fix it in Figma
 
 ---
 
@@ -29,21 +34,52 @@ This is a **component assessment report** for the GCash Design System. It evalua
 
 ```
 east-blue-design-system/
-├── report.html                    ← Built output (do not edit directly)
-├── styles.css                     ← Built output (minified from assessment-src/styles.css)
-├── eb-ds-assessment-guide.md   ← Assessment methodology + auto-synced progress tables
-├── eb-ds-assessment-guide.html ← Standalone guide page (fully inlined CSS, edit directly)
-├── CLAUDE.md                      ← This file (read-only assessment rulebook)
-└── assessment-src/
-    ├── shell.html                 ← Shared layout: sidebar, cover, criteria, JS
-    ├── styles.css                 ← Source CSS (unminified) — edit this, not root styles.css
-    ├── build.js                   ← Build script: assembles report.html + minifies CSS
-    ├── sync-guide.js              ← Auto-updates eb-ds-assessment-guide.md from component metadata
-    └── components/
-        ├── accordion.html         ← One file per assessed component
-        ├── button.html
-        ├── checkbox.html
-        └── ...
+├── astro-site/                       Static documentation site (Astro)
+│   ├── src/
+│   │   ├── pages/                    File-based routes
+│   │   │   ├── index.astro           /                 (Overview / home)
+│   │   │   ├── login.astro           /login            (Google sign-in)
+│   │   │   ├── eb-ds-assessment-guide.astro
+│   │   │   └── components/
+│   │   │       ├── index.astro       /components       (grid)
+│   │   │       └── [slug].astro      /components/<slug>
+│   │   ├── components/               Astro components (Sidebar, AuthGate, SpecCard, …)
+│   │   ├── layouts/                  Base (sidebar) + Standalone (login only)
+│   │   ├── lib/auth.ts               Frontend auth client
+│   │   ├── data/
+│   │   │   ├── types.ts              ComponentData TypeScript schema
+│   │   │   └── components/
+│   │   │       ├── _index.ts         Manifest (auto-generated)
+│   │   │       └── <slug>.ts         One per component (78 + cardless)
+│   │   └── styles/global.css         Single stylesheet (light + dark)
+│   ├── public/
+│   │   ├── fonts/                    BarkAda + HeyMeow Rnd (variable WOFF/WOFF2)
+│   │   ├── assets/                   Component preview images, demo PNGs
+│   │   └── scripts/
+│   │       ├── assessment.js         Shared client-side behavior
+│   │       └── demos/<slug>.js       Per-component live preview JS
+│   ├── scripts/
+│   │   ├── audit/                    Coverage reports (run anytime)
+│   │   ├── fills/                    Historical one-shot data fillers
+│   │   └── utils/                    Reusable utilities
+│   ├── astro.config.mjs
+│   └── package.json
+│
+├── auth-backend/                     Standalone auth service (frost-auth)
+│   ├── src/
+│   │   ├── server.js                 Express app + boot
+│   │   ├── auth.js                   POST /auth/google · GET /auth/me · POST /auth/logout
+│   │   ├── middleware.js             JWT verification
+│   │   └── google.js                 Google ID token verification + email allowlist
+│   ├── .env.example
+│   ├── README.md                     Setup + integration guide
+│   └── package.json
+│
+├── eb-ds-assessment-guide.md         Methodology — source of truth (rendered at /eb-ds-assessment-guide)
+├── benchmark.html                    Component roster benchmark snapshot (legacy reference)
+├── _archive_legacy_site/             Soft-archived legacy build (gitignored, local only)
+├── CLAUDE.md                         This file
+└── README.md                         Quick start
 ```
 
 ---
@@ -51,47 +87,85 @@ east-blue-design-system/
 ## Build Process
 
 ```bash
-node assessment-src/build.js
+# Frontend
+cd astro-site
+npm install
+npm run dev                           # → http://localhost:4321
+npm run build                         # → astro-site/dist/
+
+# Auth backend
+cd auth-backend
+npm install
+npm run dev                           # → http://localhost:3001
 ```
 
-1. Reads `shell.html` as the scaffold
-2. Reads every `.html` in `components/` (alphabetical order)
-3. Extracts 4 tagged blocks from each file: `@nav`, `@summary-card`, `@summary-row`, `@section`
-4. Injects into shell at placeholder comments (`@@NAV_ITEMS@@`, `@@SUMMARY_CARDS@@`, etc.)
-5. Minifies HTML + CSS, writes `report.html` and `styles.css` to repo root
-6. Calls `sync-guide.js` to update the assessment guide markdown
+Astro scans `src/pages/` and generates one HTML file per route. Component data is read at build time from `src/data/components/<slug>.ts` and rendered into per-component static pages via `[slug].astro`.
 
-**Always run the build after editing any `assessment-src/` file.**
+Run `node astro-site/scripts/audit/audit-progress.mjs` for live coverage stats.
 
 ---
 
-## Component File Structure
+## Component Data Structure
 
-Each component file in `assessment-src/components/` must contain these tagged blocks:
+Each component lives in `astro-site/src/data/components/<slug>.ts` and exports a typed `ComponentData` object. The full schema is in `src/data/types.ts`.
 
-### Required Blocks
+### Top-level shape
 
-| Block | Purpose |
-|---|---|
-| `<!--@meta-start-->` ... `<!--@meta-end-->` | Machine-readable metadata (status, node, verdicts, variants, platforms, open issues) |
-| `<!--@patterns-start-->` ... `<!--@patterns-end-->` | New anti-patterns discovered, format: `[C#] description` |
-| `<!--@nav-start-->` ... `<!--@nav-end-->` | Sidebar nav button with SVG thumbnail |
-| `<!--@summary-card-start-->` ... `<!--@summary-card-end-->` | Overview page summary card |
-| `<!--@summary-row-start-->` ... `<!--@summary-row-end-->` | Summary table row |
-| `<!--@section-start-->` ... `<!--@section-end-->` | Full assessment panel (tabs, traits, criteria, tokens, etc.) |
+```ts
+export const button: ComponentData = {
+  meta:      { slug, name, node, figmaUrl, description, badges, navGroup?, navIconSvg? },
+  overview:  { inContextNote, livePreviewHtml, traits, behavior, resolved, open, recommendations },
+  style:     { specCards, colorsTables? },
+  code:      { installation, propertyMapping, usageSnippets, accessibility, usageGuidelines, scorecard, codeConnect, variants },
+  changelog: [...]
+};
+```
 
-### Meta Block Fields
+### Meta — badge kinds
 
 ```
-status: assessed | in-progress | re-assessing
-node: [Figma nodeId, e.g. 16870:9288]
-ds-verdict: keep | fix | refine | restructure | consolidate | product-layer | remove
-native-status: ready | refine | rework | na
-variants: [count]
-ios: [native primitive]
-android: [native primitive]
-open-issues: [comma-separated criterion IDs, or "none"]
+DSVerdict:    keep | fix | restructure | consolidate | product-layer | remove
+NativeStatus: ready | refine | rework | na | fix | empty
 ```
+
+### Authoring rules
+
+- Touch only the `<slug>.ts` file — pages auto-rebuild via `[slug].astro`.
+- Run the build after a data edit to verify no schema breakage.
+- The audit script counts a component as **complete** when every spec card has the 4 required DES sections (Properties, Colors, Layout, Typography) AND non-empty SwiftUI + Compose snippets.
+- Components with `dsVerdict ∈ {remove, consolidate, product-layer}` may be intentionally cardless — the audit treats them as complete.
+
+---
+
+## Authentication Architecture
+
+A standalone Express service at `/auth-backend` issues JWTs after verifying Google ID tokens. The Astro site gates content via a small client-side AuthGate that hits `/auth/me` on every page load.
+
+```
+Browser                         /auth-backend                  Google
+   │                                  │                            │
+   │  GET / (any page)                │                            │
+   ├─► AuthGate hides body ──────────►│                            │
+   │                                  │ verify JWT (HS256)         │
+   │  401 ──────────────────────────► /login                       │
+   │                                  │                            │
+   │  /login: GIS button click ──────────────────────────────────► │
+   │                                  │  ID token (RS256)          │
+   │  POST /auth/google ─────────────►│ verify with Google ◄───────┤
+   │                                  │ check email allowlist      │
+   │  ◄─ JWT (cookie + body) ─────────┤                            │
+   │  redirect to /                   │                            │
+```
+
+**Session token (JWT) carries:** `googleId`, `email`, `name`, `picture`.
+
+**Email-domain allowlist** is enforced server-side via `ALLOWED_DOMAINS` (`frostdesigngroup.com`, `gcash.com` by default).
+
+**Frontend integration files:**
+- `src/components/AuthGate.astro` — runs on every page
+- `src/pages/login.astro` — Google Identity Services button
+- `src/lib/auth.ts` — typed helpers
+- Sidebar shows the signed-in user with a sign-out button
 
 ---
 
@@ -106,22 +180,22 @@ open-issues: [comma-separated criterion IDs, or "none"]
 | Consistent | Predictable naming, property types, state coverage |
 | Composable | Nests inside other components, fits hierarchy |
 
-### Trait Ratings (per-trait scores)
+### Trait Ratings
 
-| Rating | CSS Class | Color | When to use |
-|---|---|---|---|
-| **Pass** | `pass` | Green | Fully met — ready for native handoff |
-| **Partial** | `partial` | Blue | Mostly met with minor gaps (e.g. missing icon slots, but text variants work) |
-| **Warn** | `warn` | Orange | Significant concerns that limit reuse or block handoff (e.g. naming issues, raster assets, hardcoded values) |
-| **Fail** | `fail` | Red | Broken — blocks DS inclusion or native implementation (e.g. flattened icons, no separable layers) |
+| Rating | CSS Class | When to use |
+|---|---|---|
+| **Pass** | `pass` | Fully met — ready for native handoff |
+| **Partial** | `partial` | Mostly met with minor gaps |
+| **Warn** | `warn` | Significant concerns that limit reuse or block handoff |
+| **Fail** | `fail` | Broken — blocks DS inclusion or native implementation |
 
-### DS Verdicts (overall DS Health outcome from all 4 traits)
+### DS Verdicts (overall outcome)
 
 | Verdict | Meaning |
 |---|---|
 | **Keep** | All 4 traits pass. Ship as-is. |
 | **Fix** | Belongs in DS but has specific issues. Mostly pass/partial with a few warn. |
-| **Restructure** | Needs significant property or architectural changes. Multiple warn/fail. |
+| **Restructure** | Needs significant property or architectural changes. |
 | **Consolidate** | Merge into another component. |
 | **Product Layer** | Too feature-specific for core DS. |
 | **Remove** | Redundant, deprecated, or not a DS concern. |
@@ -138,41 +212,38 @@ open-issues: [comma-separated criterion IDs, or "none"]
 | C6 | Asset & Icon Quality | Vector instances, token-based coloring |
 | C7 | Code Connect Linkability | Clean property names, 1:1 native param mapping |
 
-### Native Status Levels (overall native readiness from C1–C7)
+### Native Status Levels
 
 | Status | Badge Class | Meaning |
 |---|---|---|
-| **Ready** | `badge-ready` | Linkable as-is. Clean structure, maps well to native. |
-| **Needs Refinement** | `badge-refine` | Minor issues to resolve before linking. |
-| **Requires Rework** | `badge-rework` | Needs redesign before native translation. |
-| **Not Applicable** | `badge-na` | Web-only or removed — skip native assessment. |
-| **Fix** | `badge-fix` | Resolved via Figma. Residual items may remain. |
+| **Ready** | `badge-ready` | Linkable as-is. |
+| **Needs Refinement** | `badge-refine` | Minor issues to resolve. |
+| **Requires Rework** | `badge-rework` | Needs redesign. |
+| **Not Applicable** | `badge-na` | Web-only or removed. |
+| **Fix** | `badge-fix` | Resolved via Figma. |
 | **Not Mapped** | `badge-empty` | No Code Connect mappings registered. |
 
 ---
 
 ## CSS Rules
 
-- **Source CSS**: Edit `assessment-src/styles.css` only. The root `styles.css` is generated.
-- **`eb-ds-assessment-guide.html`**: Has fully inlined CSS. Changes to `assessment-src/styles.css` do NOT propagate — edit its `<style>` block directly.
-- CSS custom properties are defined in `:root` (light) and `[data-theme="dark"]` (dark mode).
-- The tab pill indicator uses `::before` with CSS custom properties `--pill-left` and `--pill-width`, animated via `transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1), width 0.28s cubic-bezier(0.4, 0, 0.2, 1)`.
-- **Do not add `.comp-tabs::before` to the shared theme transition block** — it will override the pill animation.
+- Source: edit `astro-site/src/styles/global.css` only — there is no separate generated stylesheet.
+- CSS custom properties define light theme on `:root` and dark theme on `[data-theme="dark"]`.
+- The tab pill indicator uses `::before` with `--pill-left` and `--pill-width`, animated via `transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1), width 0.28s cubic-bezier(0.4, 0, 0.2, 1)`.
+- Do not add `.comp-tabs::before` to the shared theme transition block — it overrides the pill animation.
 
 ---
 
 ## HTML/CSS Conventions
 
-- No inline `style=` attributes — use CSS classes
-- Badge sizes are normalized: `font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px`
-- Table header color is neutral dark (`--thead-fg: #3C4A5C` light / `#C8CDD5` dark), not blue
-- Nav thumbnails use `width="36" height="36" viewBox="0 0 32 32"` for optical alignment with text
-- Nav component items use `.nav-comp-body > .nav-comp-name` structure
-- Inactive `.nav-comp-name` color matches `.nav-item`: `#666666`
-- Use `resolved-list` for resolved issues, not individual `infobox-resolved` blocks
-- Section headings: plain text, no `A./B./C.` prefixes
-- Interaction States table omits N/A rows — use `table-footnote` if needed
-- Keep copy concise and direct
+- No inline `style=` attributes — use CSS classes (exception: `.ctx-placeholder` SVG patterns where the inline style is intrinsic to the placeholder).
+- Badge sizes are normalized: `font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px`.
+- Table header color is neutral dark (`--thead-fg: #3C4A5C` light / `#C8CDD5` dark), not blue.
+- Nav thumbnails use `width="36" height="36" viewBox="0 0 32 32"` for optical alignment with text.
+- Use `resolved-list` for resolved issues, not individual `infobox-resolved` blocks.
+- Section headings: plain text, no `A./B./C.` prefixes.
+- Interaction States table omits N/A rows — use `table-footnote` if needed.
+- Keep copy concise and direct.
 
 ---
 
@@ -188,9 +259,21 @@ Every component's **Open Issues** and **Design Recommendations** lists must foll
 </span></li>
 ```
 
-### Open Issues tags — use the criterion that best classifies the problem
+In the data file:
 
-Always `tag-open tag-c#` + full criterion name:
+```ts
+open: [
+  {
+    headline: 'Headline statement.',
+    body: 'Description with rationale and context.',
+    tag: { criterion: 'C2', label: 'C2 · Variant & Property Naming' }
+  }
+]
+```
+
+### Open Issues tags
+
+Always `tag-open tag-c#` + the full criterion name:
 
 - `C1 · Layer Structure & Naming`
 - `C2 · Variant & Property Naming`
@@ -202,14 +285,14 @@ Always `tag-open tag-c#` + full criterion name:
 
 ### Design Recommendations tags — canonical 10-tag set
 
-Use only these tags (class `tag-recommend`). No ad-hoc labels like "Suggested", "Optional", "Schema", "Visual language" — they dilute the vocabulary.
+Use only these tags (class `tag-recommend`). No ad-hoc labels.
 
 | Tag | When to use |
 |---|---|
 | **Rename** | Change a name or value (component, property, enum value, token) |
 | **Property** | Reshape the property schema (collapse, split, add/remove props, change value types) |
 | **Slot** | Adopt Figma Slots or add/fix a named content slot (leading, trailing, asset) |
-| **State** | Add missing interaction states or state variants (pressed, focused, disabled, error, loading) |
+| **State** | Add missing interaction states or state variants |
 | **Token** | Create, rename, or fix a design token or token binding |
 | **Asset** | Replace raster with vector, flatten a BOOLEAN_OPERATION, provide a vector icon/flag |
 | **Composition** | Instance-swap to a canonical sibling, compose via existing DS components |
@@ -219,25 +302,30 @@ Use only these tags (class `tag-recommend`). No ad-hoc labels like "Suggested", 
 
 ### Holistic restructures
 
-Do **not** create dedicated sub-sections like "Normalization Plan" or "Proposed Architecture" on individual components. A multi-axis restructure belongs in a single **Design Recommendation** bullet — the bold headline names the change, the description summarizes the target schema and variant math. If the comparison is too big for one bullet, split into two bullets, don't promote to a separate section. This keeps every component's page structurally identical.
+A multi-axis restructure belongs in a single **Design Recommendation** bullet — bold headline names the change, description summarizes the target schema and variant math. If the comparison is too big for one bullet, split into two bullets, don't promote to a separate section.
 
-The only exception is **family-level overviews** (e.g. Header's 4-component family), which live on the family's *lead* component and act as navigation for the whole family. Do not add them to individual components.
+The only exception is **family-level overviews** (e.g. Header's 4-component family), which live on the family's *lead* component.
+
+### Remove verdict
+
+Components marked `dsVerdict: 'remove'` get **no Open Issues** and **no Design Recommendations** — replace with a short infobox pointing to the canonical sibling.
 
 ---
 
-## Assessment Workflow (Read-Only)
+## Assessment Workflow
 
 For each Figma component URL:
 
-1. **`get_design_context`** — Primary tool. Returns code, screenshot, token usage, layer names
-2. **`get_metadata`** — Node structure, variant counts, property names
-3. **`get_variable_defs`** (optional) — Confirm token bindings, extract hex values
-4. **Score** all 4 traits and 7 criteria
-5. **Document all issues as open items** — do NOT fix them in Figma
-6. **Create** `assessment-src/components/[name].html` with all tagged blocks
-7. **Update** `shell.html` cover meta (Components count, Open Issues count)
-8. **Build**: `node assessment-src/build.js`
-9. **Verify** in browser, then commit and push
+1. **`get_design_context`** — Primary tool. Returns code, screenshot, token usage, layer names.
+2. **`get_metadata`** — Node structure, variant counts, property names.
+3. **`get_variable_defs`** (optional) — Confirm token bindings, extract hex values.
+4. **Score** all 4 traits and 7 criteria.
+5. **Document** all issues in `open` and ideas in `recommendations` — do NOT fix them in Figma.
+6. **Edit** `astro-site/src/data/components/<slug>.ts` (create if new).
+7. **Build**: `cd astro-site && npm run build`.
+8. **Verify** at `http://localhost:4321/components/<slug>`, then commit and push.
+
+The audit script (`scripts/audit/audit-progress.mjs`) is the source of truth for "is this complete?".
 
 ---
 
@@ -269,10 +357,10 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 ## Git & Deploy
 
 - Branch: `main`
-- Deploy: GitHub Pages (static, no framework)
-- `.nojekyll` file present to skip Jekyll processing
-- Always run `node assessment-src/build.js` before committing
-- Commit generated files (`report.html`, `styles.css`, `eb-ds-assessment-guide.md`) alongside source changes
+- Deploy: server pulls + rebuilds via `.github/workflows/main.yml` on push to `main`.
+- Server runs nginx in front of `astro-site/dist/` (static) + `auth-backend` as a separate service on port 3001 reverse-proxied at `auth.frostdesigngroup.com`.
+- Always run `cd astro-site && npm run build` locally before pushing significant data changes — catches schema breakage early.
+- The dev server (`npm run dev`) hot-reloads on file changes.
 
 ---
 
@@ -285,100 +373,15 @@ figma.com/design/:fileKey/:fileName?node-id=:nodeId
 
 ---
 
-## Assessed Components
-
-| Component | Node | Variants | DS | Native | Open |
-|---|---|---|---|---|---|
-| Accordion | `16870:9288` | 6 | Keep | Refine | C7 |
-| **Action List** | | | | | |
-| Action List | `18577:14545` | 6 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
-| Action List - with Counter | `18577:14637` | 6 | Consolidate | Rework | C1,C2,C4,C7 |
-| Action List - with Description | `18577:14604` | 3 | Consolidate | Rework | C1,C2,C4,C5,C7 |
-| **Ads** | | | | | |
-| Ad Space | `18563:9789` | 7 | Keep | Ready | none |
-| Alert | `18444:2012` | 20 | Fix | Refine | C1,C2,C5,C6,C7 |
-| **Avatar** | | | | | |
-| Avatar | `17143:4488` | 21 | Keep | Refine | C2,C7 |
-| Avatar Group | `18276:4554` | 4 | Fix | Refine | C7 |
-| Badge | `18482:28972` | 68 | Keep | Refine | C7 |
-| Banner | `756:82673` | 20 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
-| Bottom Sheet | `12817:43833` | 2 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
-| Button | `17104:184842` | 180 | Keep | Refine | C7 |
-| **Card** | | | | | |
-| Generic Card | `18482:35806` | 12 | Fix | Refine | C2,C5,C6,C7 |
-| Generic Transaction Card | `18482:35753` | 5 | Restructure | Refine | C1,C2,C5,C7 |
-| **Carousel** | | | | | |
-| Carousel Card | `23:121311` | 3 | Restructure | Rework | C2,C5,C6,C7 |
-| Carousel - Discount Card | `18543:2761` | 3 | Consolidate | Refine | C1,C2,C4,C5,C6,C7 |
-| Carousel - Item | `18543:2806` | 10 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
-| Checkbox | `17143:2464` | 33 | Keep | Refine | C7 |
-| Counter | `18482:71321` | 4 | Fix | Refine | C2,C5,C7 |
-| **Date Picker** | | | | | |
-| Date Picker | `12879:49826` | 5 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
-| Date Picker - Group | `18431:2822` | 3 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
-| Date Picker - Item | `12874:42180` | 7 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
-| Month and Year Picker - Item | `18414:5854` | 3 | Consolidate | Rework | C1,C2,C3,C4,C5,C6,C7 |
-| **Dropdown** | | | | | |
-| Dropdown | `18482:31910` | 8 | Fix | Refine | C2,C5,C6,C7 |
-| Dropdown Item | `18577:13033` | 9 | Fix | Refine | C2,C4,C5,C6,C7 |
-| Dropdown Item Group | `6383:3446` | 1 | Consolidate | N/A | C1,C2,C4,C7 |
-| **Form Elements** | | | | | |
-| Amount Text Field | `152:48122` | 12 | Restructure | Rework | C2,C5,C6,C7 |
-| Input Field | `17758:3687` | 8 | Keep | Refine | C7 |
-| Labeled Field | `17758:3713` | 8 | Keep | Refine | C7 |
-| Recipient Field | `17758:3867` | 8 | Keep | Refine | C7 |
-| Search Field | `18577:14520` | 2 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
-| Select Field | `17758:3786` | 8 | Keep | Refine | C7 |
-| Text Area | `3070:21245` | 8 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
-| Upload File | `18482:35064` | — | Fix | Refine | — |
-| View Only Field | `18403:4520` | 8 | Keep | Refine | C2,C6,C7 |
-| **Header** | | | | | |
-| Header | `18430:2919` | 16 | Restructure | Rework | C1,C2,C4,C5,C7 |
-| Header - Centered | `18430:2858` | 4 | Restructure | Rework | C1,C2,C7 |
-| Header - With Logo | `18430:2875` | 2 | Consolidate | Rework | C1,C2,C4,C7 |
-| Header - Transaction | `18430:2897` | 2 | Restructure | Rework | C1,C2,C4,C5,C7 |
-| Inline Text | `18652:71101` | 5 | Restructure | Refine | C1,C2,C5,C6,C7 |
-| Modal | `18507:71705` | 7 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
-| Overlay | `47:329691` | 1 | Fix | Refine | C2,C4,C5,C7 |
-| Progress Bar | `18577:13227` | 11 | Restructure | Rework | C1,C2,C5,C6,C7 |
-| **Stepper** | | | | | |
-| Stepper - Dash | `18649:5223` | 10 | Restructure | Rework | C1,C2,C4,C5,C7 |
-| Stepper - Bullet | `27:48287` | 3 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
-| Stepper - Circular | `27:47768` | 9 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
-| Subtext Message | `18687:71133` | 6 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
-| **Table** | | | | | |
-| Table | `47:326260` | 9 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
-| Table Transaction | `47:324709` | 6 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
-| Table Scheduling | `47:324365` | 3 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
-| Title Bar | `23:175148` | 20 | Keep | Refine | C2,C6,C7 |
-| **Toast** | | | | | |
-| Toast | `27:53135` | 16 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
-| Toast - With Button | `27:53205` | 4 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
-| **Toggle** | | | | | |
-| Toggle | `18482:36508` | 4 | Fix | Refine | C2,C5,C7 |
-| Toggle - With Label | `18482:36538` | 1 | Restructure | Rework | C1,C2,C4,C5,C7 |
-| **Tooltip** | | | | | |
-| Tooltip V2 | `70:14908` | 8 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
-| Onboarding - Tooltip | `51:17066` | 4 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
-| Tooltip Blurred and Transparent | `49:335349` | 4 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
-| **Voucher** | | | | | |
-| Voucher Asset | `5119:1664` | 20 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
-| Vertical Voucher | `5119:1635` | 1 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
-| Voucher Card Horizontal | `5119:1786` | 4 | Restructure | Rework | C1,C2,C4,C5,C6,C7 |
-| Horizontal Voucher | `5121:4533` | 1 | Consolidate | Rework | C1,C2,C4,C5,C6,C7 |
-| Terms and Conditions Accordion | `5119:5447` | 2 | Remove | N/A | none |
-| Voucher Details | `5119:5368` | 1 | Product Layer | N/A | C1,C2,C4,C5,C7 |
-
----
-
 ## Code Snippet Conventions
 
 Component documentation has two places where SwiftUI/Compose code appears. Each serves a different audience and must use the correct code style.
 
 ### Style Tab — Per-Appearance Snippets
 
-Show **component API usage** — the code a developer writes to USE the component. Short, focused on the specific appearance being documented.
-```
+Show **component API usage** — the code a developer writes to USE the component. Short, focused on the specific appearance.
+
+```swift
 // ✅ CORRECT — component API
 EBButton("Save Changes")
     .ebAppearance(.filled)
@@ -391,15 +394,15 @@ HStack(alignment: .center, spacing: Constants.spaceSpace0) { ... }
     .cornerRadius(Constants.radiusRadiusPill)
 ```
 
-Do not use Figma Dev Mode auto-generated code (HStack, padding, background, cornerRadius) in documentation snippets. That code describes how to DRAW the container — not how to USE the component. Developers consuming the DS never write container code; they call the component API.
+Do not use Figma Dev Mode auto-generated code in documentation snippets. That code describes how to DRAW the container — not how to USE the component.
 
 ### Code Tab — Full Reference
 
-Shows the complete developer reference: installation, import, property mapping table (Figma → SwiftUI → Compose), usage snippets for ALL appearances, size mode mapping, accessibility requirements, and usage guidelines (do's/don'ts).
+Shows the complete developer reference: installation, import, property mapping table (Figma → SwiftUI → Compose), usage snippets for ALL appearances, size mode mapping, accessibility requirements, and usage guidelines.
 
 ### Naming Pattern
 
-Component API names follow the pattern `EB{ComponentName}`:
+Component API names follow `EB{ComponentName}`:
 - `EBButton` / `EBOutlinedButton` / `EBTextButton`
 - `EBAccordion`
 - `EBAvatar`
@@ -409,50 +412,50 @@ Component API names follow the pattern `EB{ComponentName}`:
 
 | Figma Concept | SwiftUI Pattern | Compose Pattern |
 |---|---|---|
-| Appearance (enum) | `.ebAppearance(.filled)` modifier | Separate composable: `EBButton` / `EBOutlinedButton` / `EBTextButton` |
-| Variant=Destructive | `role: .destructive` parameter | `colors = EBButtonDefaults.destructiveColors()` |
+| Appearance (enum) | `.ebAppearance(.filled)` modifier | Separate composable |
+| Variant=Destructive | `role: .destructive` | `colors = EBButtonDefaults.destructiveColors()` |
 | Size modes | `.controlSize(.large / .regular / .small / .compact / .mini)` | `size = EBButtonSize.Large / Medium / Small / Compact / XSmall` |
 | Boolean slots | Optional parameter: `leadingIcon: Image?` | Composable slot: `leadingIcon = { Icon(…) }` |
 | Disabled state | `.disabled(true)` modifier | `enabled = false` parameter |
 
 ### Planned API Badge
 
-If native components are not yet implemented, mark all code snippets with a `badge-planned` badge labeled "Planned API". This signals to developers that the API shape is final but the package is not yet published.
+If native components are not yet implemented, mark all code snippets with a `badge-planned` badge labeled "Planned API".
 
 ---
 
 ## Mobile Documentation Criteria — 9-Point Assessment
 
-Use this checklist to evaluate every component's documentation before presenting to the user. Score each criterion as Pass, Partial, or Fail. Target: 9/9.
+Use this checklist to evaluate every component's documentation. Score each criterion as Pass, Partial, or Fail. Target: 9/9.
 
 ### Must-Haves (1–5)
 
 | # | Criterion | Pass | Partial | Fail |
 |---|---|---|---|---|
-| 1 | **Live preview / playground** | Interactive preview with all property controls that update visually | Preview exists but missing controls for some properties | No interactive preview or static screenshot only |
-| 2 | **Native install / import** | SPM URL + Gradle dependency + import statements. "Planned API" badge if unpublished | Only one platform shown | No install or import instructions |
-| 3 | **SwiftUI & Compose code snippets** | All styles have SwiftUI + Compose snippets with Copy button. Must show component API (`EBButton("Label")`) — NOT container code (`HStack.padding.background`) | Some styles have snippets, others show placeholders | All blocks show `// Loading...` or container code |
-| 4 | **Props / API table (native)** | Prominent table mapping every Figma property → SwiftUI + Compose equivalent | Table exists but buried or incomplete | No mapping table |
-| 5 | **Variants & states (with code)** | Every style section in Style tab has SwiftUI/Compose component API snippet | Code tab has snippets but Style tab still shows placeholder text | No code paired with visual variants |
+| 1 | **Live preview / playground** | Interactive preview with all property controls | Some controls missing | No interactive preview |
+| 2 | **Native install / import** | SPM URL + Gradle dependency + import statements | Only one platform | None |
+| 3 | **SwiftUI & Compose code snippets** | All styles have component-API snippets with Copy button | Some styles missing | All show `// Loading...` or container code |
+| 4 | **Props / API table (native)** | Prominent table mapping every Figma property → native | Buried or incomplete | Missing |
+| 5 | **Variants & states (with code)** | Every Style tab section has SwiftUI/Compose snippet | Code tab has snippets but Style tab still placeholder | None |
 
 ### Good-to-Haves (6–9)
 
 | # | Criterion | Pass | Partial | Fail |
 |---|---|---|---|---|
-| 6 | **Native platform notes** | Accessibility table with iOS + Android columns (touch targets, focus rings, icon-only labels, destructive role, loading state) | Some notes but not structured or single-platform only | No platform-specific guidance |
-| 7 | **Design token connection** | Each style/appearance shows token name + hex value + state (enabled/pressed/disabled). Per-mode color specs documented | Token names visible but hex breakdowns or per-mode specs missing | Only hex values with no token names |
-| 8 | **Changelog / version history** | Semantic versioning, entries tied to C1–C7, status badges, Figma node IDs | History exists but no criterion linking | No changelog |
-| 9 | **Figma ↔ code mapping** | Property mapping table matches current architecture, suggested file paths shown, Code Connect readiness table present | Mapping exists but references outdated architecture | No Code Connect mapping |
+| 6 | **Native platform notes** | Accessibility table with iOS + Android columns | Single platform only | None |
+| 7 | **Design token connection** | Token name + hex + state per appearance | Names visible but specs missing | Hex only |
+| 8 | **Changelog / version history** | Semver, entries tied to C1–C7, status badges, node IDs | History exists but no criterion linking | None |
+| 9 | **Figma ↔ code mapping** | Property mapping matches current architecture, file paths shown | Outdated architecture references | Missing |
 
 ### Scoring Scale
 
 | Score | Rating |
 |---|---|
-| 9/9 | Excellent — exceeds all top DS benchmarks |
-| 7–8/9 | Strong — on par with Google Material 3 |
+| 9/9 | Excellent — exceeds top DS benchmarks |
+| 7–8/9 | Strong — on par with Material 3 |
 | 5–6/9 | Acceptable — gaps need addressing |
-| 3–4/9 | Weak — significant documentation gaps |
-| 0–2/9 | Not ready — fundamental sections missing |
+| 3–4/9 | Weak |
+| 0–2/9 | Not ready |
 
 ### Stale Content Check
 
@@ -461,116 +464,84 @@ After any component restructure (variant count change, property renaming, archit
 - Verdict summary (variant count, property names)
 - Interactive playground controls (match current properties)
 - Style tab per-style code snippets (match current API)
-- Code tab property mapping table (match current Figma properties)
-- Code tab usage snippets (match current API)
-- Criteria Scorecard notes (match current variant count and property names)
-- Code Connect property mapping (match current architecture)
-- Variants Inventory table (match current variant count and schema)
-- Behavior table (match current states and properties)
+- Code tab property mapping table
+- Code tab usage snippets
+- Criteria Scorecard notes
+- Code Connect property mapping
+- Variants Inventory table
+- Behavior table
 
-If ANY section references an old architecture (wrong variant count, old property names, deprecated properties), mark it as stale and update before presenting.
+Mark any section referencing old architecture as stale and update before presenting.
 
 ### Workflow
 
-1. After completing or updating any component documentation, run through all 9 criteria
-2. Score each as Pass / Partial / Fail
-3. Run the Stale Content Check if the component was restructured
-4. Fix any Partial or Fail items before presenting
-5. Report the final score (e.g. "Button: 7.5/9 — criteria #5 partial, #7 partial")
+1. After completing or updating any component documentation, run through all 9 criteria.
+2. Score each as Pass / Partial / Fail.
+3. Run the Stale Content Check if the component was restructured.
+4. Fix any Partial or Fail items before presenting.
+5. Report the final score (e.g. "Button: 7.5/9 — criteria #5 partial, #7 partial").
 
 ---
 
 ## Style Tab Spec Card Conventions
 
-The Button component's spec card is the baseline. Every component's Style tab spec cards must follow this structure.
+The Button component is the baseline. Every component's Style tab spec cards must follow this structure.
 
 ### Card Anatomy (top to bottom)
 
 1. **Header**: Style name · Node ID · DES/DEV toggle
 2. **Description**: One-line summary of the style's purpose
-3. **Interactive preview**: Component rendering with property controls on the right (dropdowns, toggles)
-4. **Properties + Colors** (two-column row):
-   - Left: PROPERTIES — current values of all Figma properties for this style
-   - Right: COLORS — grouped by role, showing hex swatch + value for all states (Default/Pressed/Disabled), with full semantic token path below each hex value
-5. **Layout + Typography** (two-column row):
-   - Left: LAYOUT — all relevant dimension values (height, padding, radius, border, icon sizes)
-   - Right: TYPOGRAPHY — DS text style reference name first, then individual font properties (font, size, tracking, line-height)
+3. **Interactive preview**: Component rendering with property controls on the right
+4. **Properties + Colors** (two-column row): properties left, colors right (token name + hex per state)
+5. **Layout + Typography** (two-column row): dimensions left, type spec right (DS text style ref + font/size/tracking/line-height)
 
 ### Colors Section Rules
 
-- Group by color role (bg, label, border, icon), not by state
-- Show all states inline per role: Default value, Pressed value, Disabled value
-- Each hex value must have a color swatch dot and the full semantic token path below it
-- Format: `■ #005CE5` then below it `main/button/primary/brand/enabled/bg`
-- If a role doesn't change across states (e.g. border), show one value with token path
-- If the component has appearance modes, the Colors section updates dynamically when the mode dropdown changes
+- Group by color role (bg, label, border, icon), not by state.
+- Show all states inline per role: Default, Pressed, Disabled.
+- Each hex value has a swatch dot and the full semantic token path.
+- Format: `■ #005CE5` then `main/button/primary/brand/enabled/bg`.
+- If a role doesn't change across states (e.g. border), show one value.
+- If the component has appearance modes, the Colors section updates dynamically when the mode dropdown changes.
 
 ### Typography Section Rules
 
-- First row: DS text style reference name (e.g. `Primary/Label/Large`) — this is the Figma text style bound to the text layer
-- Following rows: individual properties (Font, Size, Tracking, Line-height)
-- If the component has multiple text layers (e.g. Accordion has Label + Description), show a subsection per text layer, each with its own DS text style reference
+- First row: DS text style reference name (e.g. `Primary/Label/Large`).
+- Following rows: Font, Size, Tracking, Line-height.
+- Multiple text layers (e.g. Accordion's Label + Description) get a subsection per layer.
 
 ### Layout Section Rules
 
-- Show all relevant dimensions — don't truncate to match simpler components
-- Include: height, width (if not fill), padding H/V, corner radius, border, icon sizes, slot dimensions
-- Values match the current property selection in the interactive preview
+- Show all relevant dimensions.
+- Include: height, width (if not fill), padding H/V, corner radius, border, icon sizes, slot dimensions.
 
 ---
 
 ## Variants Inventory Conventions
 
-The Button component is the reference. Every component's Variants Inventory in the Code tab must follow this two-part pattern when it has more than ~10 variants or a multi-axis matrix (Style × Size × State × …). Components with ≤8 variants may use a single flat table.
+The Button component is the reference. Apply when inventory has >10 rows or a multi-axis matrix. Components with ≤8 variants may use a single flat table.
 
-### Structure (top to bottom)
+### Structure
 
-1. **Heading** with total count: `Variants Inventory (180 total)`
-2. **Multiplier expression** in a `<p>`: e.g. `3 Style × 5 Size × 3 State × 4 Icon Placement = 180 variants`. Call out variable modes separately if they multiply visual states further.
-3. **Grouped summary table** (always visible) — collapses one axis (typically Size) into a comma-separated list per row, with a Count column. Keeps the at-a-glance view compact.
-4. **Full breakdown** in a `<details>` collapsible — labeled `View full {Axis} × {Axis} breakdown (N rows)`. Lists every variant with node IDs, dimensions, and any per-variant details.
-
-### Markup pattern
-
-```html
-<div class="sub-heading" id="xxx-variants">Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">(N total)</span></div>
-<p>A <code>X</code> × B <code>Y</code> × C <code>Z</code> = <strong>N variants</strong>.</p>
-
-<!-- Grouped summary (always visible) -->
-<div class="table-wrap">
-  <table>...compact summary...</table>
-</div>
-
-<!-- Full breakdown (collapsed) -->
-<details style="margin-top:16px;">
-  <summary style="cursor:pointer;padding:8px 12px;background:var(--row-hover,#F4F6FA);border-radius:6px;font-weight:600;font-size:13px;color:var(--text,#0A1628);user-select:none;">View full {Axis} × {Axis} breakdown (N rows)</summary>
-  <div class="table-wrap" style="margin-top:12px;">
-    <table>...full per-variant table with node IDs...</table>
-  </div>
-</details>
-```
-
-### When to apply
-
-- **Apply** when the inventory has >10 rows or a multi-axis matrix (e.g. Button 180, Badge 68, Checkbox 33, Avatar 21, Menu Grid 20, Title Bar 20)
-- **Skip** for components with ≤8 variants (Avatar Group 4, Accordion 6, Dropdown 8, Form fields 8) — a single flat table is more readable
+1. **Heading**: `Variants Inventory (180 total)`
+2. **Multiplier expression**: e.g. `3 Style × 5 Size × 3 State × 4 Icon Placement = 180 variants`.
+3. **Grouped summary table** (always visible) — collapses one axis per row, with a Count column.
+4. **Full breakdown** in `<details>` collapsible — labeled `View full {Axis} × {Axis} breakdown (N rows)`.
 
 ### Rules
 
-- Node IDs belong in the **full breakdown**, not the summary
-- Summary table groups by the highest-cardinality axis (usually Style or Type)
-- Use `<details>` for native collapse — no JS required
-- The collapsible label must include the row count: `(15 rows)`, `(20 rows)`, etc.
+- Node IDs belong in the **full breakdown**, not the summary.
+- Summary groups by the highest-cardinality axis (usually Style or Type).
+- Use `<details>` for native collapse — no JS required.
+- The collapsible label must include the row count.
 
 ---
 
 ## Color Table Conventions
 
-Every component's Style tab must have a color reference table showing that all colors are bound to design tokens from the component variable collection. The table title and structure depend on whether the component uses appearance modes.
+Every component's Style tab must have a color reference table proving all colors are bound to design tokens.
 
-**Note: This convention is provisional.** It is based on the Button and Accordion assessments only. As more components are assessed, new patterns may emerge (e.g. components with nested variable collections, multi-layer token resolution, or hybrid mode/state structures) that require updates to this convention. Treat this as the current best practice, not a locked standard.
-
-### Components WITHOUT appearance modes (e.g. Accordion)
+### Components WITHOUT appearance modes
 
 Title: **"Colors by State"**
 
@@ -579,12 +550,11 @@ Title: **"Colors by State"**
 | Header bg | surface/default | #FFFFFF | – | – |
 | Label | text/primary | #0A2757 | #0A2757 | – |
 
-- No MODE column — the component has no variable modes
-- TOKEN column shows the short token name inline per row
-- List ALL color roles exhaustively
-- Use "–" for non-applicable state/role combinations
+- No MODE column.
+- TOKEN inline per row.
+- Display-only components may use ROLE | TOKEN | VALUE columns.
 
-### Components WITH appearance modes (e.g. Button)
+### Components WITH appearance modes
 
 Title: **"Colors by Appearance Mode"**
 
@@ -594,16 +564,28 @@ Title: **"Colors by Appearance Mode"**
 | Default | label | primary/brand/{state}/label | #FFFFFF | #FFFFFF | #FFFFFF |
 | Destructive | bg | primary/destructive/{state}/bg | #D81E1E | #B01818 | #F5A3A3 |
 
-- MODE as the first column — one group per variable mode
-- TOKEN column shows the short token name inline per row
-- Group rows by mode: all Default roles first, then Destructive, then White, then Subtle
-- List ALL color roles per mode exhaustively
+- MODE as the first column.
+- Group rows by mode: Default → Destructive → White → Subtle.
 
 ### Rules for both formats
 
-- TOKEN column is mandatory — every hex value must have its token name inline in the same row
-- Do NOT put token names as badge pills at the bottom of the table — they belong inline per row
-- Use "DEFAULT" not "ENABLED" for the default state column — matches Figma's State=Default
-- Use "–" for non-applicable state/role combinations
-- Every color the dev needs to implement must appear in the table — bg, label, border, icon, chevron, description, etc.
-- The table proves that all colors are bound to design tokens from the component variable collection — no hardcoded values
+- TOKEN column is mandatory — every hex value has its token name inline.
+- Use **DEFAULT** not **ENABLED** — matches Figma's `State=Default`.
+- Use `–` for non-applicable state/role combinations.
+- Every color the dev needs to implement must appear in the table.
+
+---
+
+## Pre-Delivery Checklist
+
+Before presenting any link to the user, verify:
+
+1. **Live preview demo** — all dropdowns/toggles work and update the preview
+2. **Style tab spec cards** — preview + Figma panel render correctly, detail sections in proper 2-column grid
+3. **JS functions** — every `onchange`/`onclick` in HTML has a matching function with correct signature
+4. **Color map completeness** — all style × appearance × state combos mapped
+5. **CSS classes** — every class referenced in HTML exists in the stylesheet
+6. **Build succeeds** — `npx astro build` runs without errors
+7. **No broken layouts** — grid sections have even count for 2-column layout, tables don't overflow
+
+**DO NOT give the user a link until all 7 checks pass.**
