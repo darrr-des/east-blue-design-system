@@ -6,15 +6,13 @@ const { items } = Astro.props;
 <ul class="resolved-list">
   {items.map((item) => (
     <li>
-      {item.tag ? (
-        <span>
-          {item.headline && <Fragment set:html={`<strong>${item.headline}</strong> `} />}
-          <Fragment set:html={item.body} />
-          <span class={`tag-open tag-${item.tag.criterion.toLowerCase()}`}>{item.tag.label}</span>
-        </span>
-      ) : (
+      <span>
+        {item.headline && <Fragment set:html={`<strong>${item.headline}</strong> `} />}
         <Fragment set:html={item.body} />
-      )}
+        {item.tag && (
+          <span class={`tag-open tag-${item.tag.criterion.toLowerCase()}`}>{item.tag.label}</span>
+        )}
+      </span>
     </li>
   ))}
 </ul>
