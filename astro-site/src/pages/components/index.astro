@@ -1,0 +1,146 @@
+---
+import Base from '../../layouts/Base.astro';
+import { componentManifest } from '../../data/components/_index';
+import fs from 'node:fs';
+import path from 'node:path';
+
+// Load full component data for descriptions, badges, navIcon
+const DATA_DIR = path.resolve(process.cwd(), 'src/data/components');
+type CompCard = {
+  slug: string;
+  name: string;
+  description: string;
+  navGroup?: string;
+  navIconSvg?: string;
+  badges: { kind: string; label: string }[];
+};
+
+const cards: CompCard[] = [];
+let openTotal = 0;
+let resolvedTotal = 0;
+
+for (const item of componentManifest) {
+  try {
+    const raw = fs.readFileSync(path.join(DATA_DIR, item.slug + '.ts'), 'utf8');
+    const m = raw.match(/= ({[\s\S]*});\s*$/);
+    if (!m) continue;
+    const data = new Function('return ' + m[1])();
+    cards.push({
+      slug: item.slug,
+      name: data.meta?.name || item.slug,
+      description: data.meta?.description || '',
+      navGroup: data.meta?.navGroup,
+      navIconSvg: data.meta?.navIconSvg,
+      badges: data.meta?.badges || [],
+    });
+    openTotal += (data.overview?.open || []).length;
+    resolvedTotal += (data.overview?.resolved || []).length;
+  } catch {}
+}
+
+// Group by family
+type Group = { name: string; items: CompCard[] };
+const groupMap = new Map<string, CompCard[]>();
+const standalone: CompCard[] = [];
+for (const c of cards) {
+  if (c.navGroup) {
+    if (!groupMap.has(c.navGroup)) groupMap.set(c.navGroup, []);
+    groupMap.get(c.navGroup)!.push(c);
+  } else {
+    standalone.push(c);
+  }
+}
+standalone.sort((a, b) => a.name.localeCompare(b.name));
+const groups: Group[] = [...groupMap.entries()]
+  .map(([name, items]) => ({ name, items: [...items].sort((a, b) => a.name.localeCompare(b.name)) }))
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+// Weave standalone items + group sections alphabetically
+type Row = { kind: 'item'; item: CompCard } | { kind: 'group'; group: Group };
+const rows: Row[] = [];
+let si = 0, gi = 0;
+while (si < standalone.length || gi < groups.length) {
+  const sName = standalone[si]?.name;
+  const gName = groups[gi]?.name;
+  if (sName && (!gName || sName.localeCompare(gName) < 0)) {
+    rows.push({ kind: 'item', item: standalone[si++] });
+  } else if (gName) {
+    rows.push({ kind: 'group', group: groups[gi++] });
+  }
+}
+
+const totalCount = cards.length;
+
+const badgeCls = (kind: string) => {
+  const map: Record<string, string> = {
+    keep: 'badge-keep', fix: 'badge-fix', restructure: 'badge-restructure',
+    consolidate: 'badge-consolidate', 'product-layer': 'badge-product-layer', remove: 'badge-remove',
+    ready: 'badge-ready', refine: 'badge-refine', rework: 'badge-rework', na: 'badge-na',
+  };
+  return `badge ${map[kind] || ''}`;
+};
+---
+<Base title="Components · East Blue">
+  <div class="page">
+    <div class="page-content components-content">
+      <a class="page-back" href="/">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Home
+      </a>
+
+      <header class="page-header">
+        <h1 class="components-title">Components <span class="components-count">{totalCount}</span></h1>
+        <p>{totalCount} components in East Blue Design System.</p>
+        <div class="components-meta">
+          <span class="components-meta-stat"><span class="components-meta-dot stat-amber"></span>{openTotal} open issues</span>
+          <span class="components-meta-stat"><span class="components-meta-dot stat-green"></span>{resolvedTotal} resolved</span>
+        </div>
+      </header>
+
+      {rows.map((row) =>
+        row.kind === 'item' ? (
+          <div class="comp-grid comp-grid-single">
+            <a class="summary-card" href={`/components/${row.item.slug}`}>
+              {row.item.navIconSvg && (
+                <div class="summary-card-preview" set:html={row.item.navIconSvg} />
+              )}
+              <div class="summary-card-body">
+                <div class="summary-card-header">
+                  <span class="summary-card-name">{row.item.name}</span>
+                  {row.item.badges[0] && (
+                    <span class={badgeCls(row.item.badges[0].kind)}>{row.item.badges[0].label}</span>
+                  )}
+                </div>
+                <p class="summary-card-desc">{row.item.description}</p>
+              </div>
+            </a>
+          </div>
+        ) : (
+          <>
+            <h2 class="components-group-name">{row.group.name}</h2>
+            <div class="comp-grid">
+              {row.group.items.map((item) => (
+                <a class="summary-card" href={`/components/${item.slug}`}>
+                  {item.navIconSvg && (
+                    <div class="summary-card-preview" set:html={item.navIconSvg} />
+                  )}
+                  <div class="summary-card-body">
+                    <div class="summary-card-header">
+                      <span class="summary-card-name">{item.name}</span>
+                      {item.badges[0] && (
+                        <span class={badgeCls(item.badges[0].kind)}>{item.badges[0].label}</span>
+                      )}
+                    </div>
+                    <p class="summary-card-desc">{item.description}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </>
+        )
+      )}
+    </div>
+  </div>
+</Base>

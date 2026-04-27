@@ -1,65 +1,100 @@
 ---
 import Base from '../layouts/Base.astro';
 import { componentManifest } from '../data/components/_index';
+import fs from 'node:fs';
+import path from 'node:path';
 
-const items = [...componentManifest].sort((a, b) => a.name.localeCompare(b.name));
-
-const badgeCls = (kind: string) => {
-  const map: Record<string, string> = {
-    keep: 'badge-keep',
-    fix: 'badge-fix',
-    restructure: 'badge-restructure',
-    consolidate: 'badge-consolidate',
-    'product-layer': 'badge-product-layer',
-    remove: 'badge-remove',
-    ready: 'badge-ready',
-    refine: 'badge-refine',
-    rework: 'badge-rework',
-    na: 'badge-na',
-  };
-  return `badge ${map[kind] || ''}`;
-};
+// Compute live stats from the component data
+const DATA_DIR = path.resolve(process.cwd(), 'src/data/components');
+let openTotal = 0;
+let resolvedTotal = 0;
+for (const slug of componentManifest.map((c) => c.slug)) {
+  try {
+    const raw = fs.readFileSync(path.join(DATA_DIR, slug + '.ts'), 'utf8');
+    const m = raw.match(/= ({[\s\S]*});\s*$/);
+    if (!m) continue;
+    const data = new Function('return ' + m[1])();
+    openTotal += (data.overview?.open || []).length;
+    resolvedTotal += (data.overview?.resolved || []).length;
+  } catch {}
+}
+const componentCount = componentManifest.length;
 ---
-<Base title="GCash DS Assessment — All Components">
-  <div class="panel active">
-    <div class="panel-layout">
-      <div class="content-wrap">
-        <div class="comp-header">
-          <div class="comp-header-body">
-            <div class="comp-name">
-              <span class="comp-name-title">All components</span>
-            </div>
-            <p class="comp-desc">{items.length} components ported from the static HTML report via the migration parser. Click a row to open the full assessment.</p>
+<Base title="East Blue — Design System Assessment">
+  <div class="home-shell">
+    <div class="home-content">
+      <header class="home-hero">
+        <div class="home-brand">
+          <div class="home-brand-icon">
+            <svg width="22" height="22" viewBox="0 0 16 16" fill="none">
+              <rect x="1" y="1" width="5" height="5" rx="1" fill="#fff" />
+              <rect x="9" y="1" width="5" height="5" rx="1" fill="#fff" opacity=".75" />
+              <rect x="1" y="9" width="5" height="5" rx="1" fill="#fff" opacity=".75" />
+              <rect x="9" y="9" width="5" height="5" rx="1" fill="#fff" opacity=".45" />
+            </svg>
+          </div>
+          <div class="home-brand-text">
+            <h1>East Blue</h1>
+            <p>Design System Assessment</p>
           </div>
         </div>
 
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Component</th>
-                <th>Node</th>
-                <th>DS</th>
-                <th>Native</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item) => (
-                <tr>
-                  <td>
-                    <a href={`/components/${item.slug}`}><strong>{item.name}</strong></a>
-                  </td>
-                  <td class="mono muted">{item.node}</td>
-                  {item.badges.slice(0, 2).map((b) => (
-                    <td><span class={badgeCls(b.kind)}>{b.label}</span></td>
-                  ))}
-                  {item.badges.length < 2 && Array.from({ length: 2 - item.badges.length }).map(() => <td class="muted">—</td>)}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div class="home-stats">
+          <span class="home-pill home-pill-blue">
+            <span class="home-pill-dot"></span>
+            {componentCount} components
+          </span>
+          <span class="home-pill home-pill-amber">
+            <span class="home-pill-dot"></span>
+            {openTotal} open issues
+          </span>
+          <span class="home-pill home-pill-green">
+            <span class="home-pill-dot"></span>
+            {resolvedTotal} resolved
+          </span>
         </div>
-      </div>
+      </header>
+
+      <section class="home-resources">
+        <div class="home-resources-label">Resources</div>
+
+        <a class="home-resource-card" href="/components">
+          <div class="home-resource-icon home-resource-icon-blue">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.6" />
+              <path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="home-resource-body">
+            <div class="home-resource-title">Assessment Report</div>
+            <div class="home-resource-desc">Full component evaluation — verdicts, interaction states, tokens, and action items</div>
+          </div>
+          <svg class="home-resource-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+
+        <a class="home-resource-card" href="/guide">
+          <div class="home-resource-icon home-resource-icon-green">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M5 4h14v16H7a2 2 0 0 1-2-2V4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+              <path d="M5 18a2 2 0 0 1 2-2h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+              <path d="M9 8h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="home-resource-body">
+            <div class="home-resource-title">Assessment Guide</div>
+            <div class="home-resource-desc">Quick-reference summary of open issues, patterns, and component status</div>
+          </div>
+          <svg class="home-resource-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </section>
+
+      <footer class="home-footer">
+        April 2026 · For internal use only
+      </footer>
     </div>
   </div>
 </Base>

@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import { marked } from 'marked';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const GUIDE_PATH = path.resolve(process.cwd(), '..', 'eb-ds-assessment-guide.md');
+const md = fs.readFileSync(GUIDE_PATH, 'utf8');
+
+marked.setOptions({
+  breaks: false,
+  gfm: true,
+});
+
+const html = marked.parse(md);
+---
+<Base title="Assessment Guide · East Blue">
+  <div class="page">
+    <div class="page-content guide-content">
+      <a class="page-back" href="/">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Home
+      </a>
+
+      <article class="guide-md" set:html={html} />
+    </div>
+  </div>
+</Base>
