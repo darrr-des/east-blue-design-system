@@ -302,6 +302,7 @@ a.sidebar-brand {
   padding-bottom: var(--space-8);
   overflow-y: auto;
   overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 .sidebar-section-label {
@@ -437,8 +438,11 @@ a.sidebar-brand {
   transition: background 0.08s ease, color 0.08s ease;
 }
 .nav-item-chevron-btn:hover {
-  background: rgba(100, 106, 120, 0.08);
+  background: rgba(100, 106, 120, 0.06);
   color: var(--text);
+}
+[data-theme="dark"] .nav-item-chevron-btn:hover {
+  background: rgba(255, 255, 255, 0.04);
 }
 .nav-item-chevron-btn .nav-section-chevron {
   flex-shrink: 0;
