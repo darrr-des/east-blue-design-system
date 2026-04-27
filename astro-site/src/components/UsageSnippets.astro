@@ -1,0 +1,32 @@
+---
+import type { UsageSnippet } from '../data/types';
+interface Props { slug: string; items: UsageSnippet[]; }
+const { slug, items } = Astro.props;
+---
+<div class="sub-heading" id={`${slug}-snippets`}>Usage Snippets <span class="badge badge-planned">Planned API</span></div>
+{items.map((snip, i) => {
+  const key = `${slug}-usage-${i}`;
+  return (
+    <>
+      <div class="sub-heading toc-child" id={key}>{snip.subheading}</div>
+      <div class="code-card-body">
+        <div class="platform-tabs">
+          <button class={`platform-tab active`} onclick={`switchPlatform(this,'${key}','swift')`}>SwiftUI</button>
+          <button class={`platform-tab`} onclick={`switchPlatform(this,'${key}','compose')`}>Compose</button>
+        </div>
+        <div class="platform-panel active" data-tab="swift">
+          <div class="code-block-wrap">
+            <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+            <pre class="code-snippet"><Fragment set:html={snip.swift} /></pre>
+          </div>
+        </div>
+        <div class="platform-panel" data-tab="compose">
+          <div class="code-block-wrap">
+            <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+            <pre class="code-snippet"><Fragment set:html={snip.compose} /></pre>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+})}

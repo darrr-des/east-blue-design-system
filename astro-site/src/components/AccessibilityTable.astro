@@ -1,0 +1,20 @@
+---
+import type { AccessibilityRow } from '../data/types';
+interface Props { slug: string; rows: AccessibilityRow[]; }
+const { slug, rows } = Astro.props;
+---
+<div class="sub-heading" id={`${slug}-a11y`}>Accessibility</div>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Requirement</th><th>iOS</th><th>Android</th></tr></thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr>
+          <td>{r.requirement}</td>
+          <td set:html={r.ios} />
+          <td set:html={r.android} />
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

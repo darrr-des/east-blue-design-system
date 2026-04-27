@@ -1,0 +1,51 @@
+---
+import type { VariantsInventoryData } from '../data/types';
+interface Props { slug: string; data: VariantsInventoryData; }
+const { slug, data } = Astro.props;
+
+const hasSummary = !!data.summary;
+---
+<div class="sub-heading" id={`${slug}-variants`}>
+  Variants Inventory <span style="font-weight:400;color:var(--muted);font-size:var(--text-xs)">({data.total} total)</span>
+</div>
+<p set:html={data.description} />
+
+{hasSummary && (
+  <div class="table-wrap">
+    <table>
+      <thead><tr>{data.summary!.columns.map((c) => <th>{c}</th>)}</tr></thead>
+      <tbody>
+        {data.summary!.rows.map((r) => (
+          <tr>{r.cells.map((c) => <td set:html={c} />)}</tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}
+
+{hasSummary ? (
+  <details class="variants-details">
+    <summary>{data.collapseLabel || `View full breakdown (${data.rows.length} rows)`}</summary>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>{data.columns.map((c) => <th>{c}</th>)}</tr></thead>
+        <tbody>
+          {data.rows.map((r) => (
+            <tr>{r.cells.map((c) => <td set:html={c} />)}</tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </details>
+) : (
+  <div class="table-wrap">
+    <table>
+      <thead><tr>{data.columns.map((c) => <th>{c}</th>)}</tr></thead>
+      <tbody>
+        {data.rows.map((r) => (
+          <tr>{r.cells.map((c) => <td set:html={c} />)}</tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}

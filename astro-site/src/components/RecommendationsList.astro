@@ -1,0 +1,15 @@
+---
+import type { RecommendItem } from '../data/types';
+interface Props { items: RecommendItem[]; }
+const { items } = Astro.props;
+---
+<ul class="recommend-list">
+  {items.map((item) => (
+    <li>
+      <span>
+        <Fragment set:html={`<strong>${item.headline}</strong> ${item.body}`} />
+        <span class="tag-recommend">{item.tag}</span>
+      </span>
+    </li>
+  ))}
+</ul>

@@ -1,0 +1,35 @@
+---
+import type { BehaviorRow } from '../data/types';
+interface Props { rows: BehaviorRow[]; }
+const { rows } = Astro.props;
+
+const cell = (v: 'yes' | 'no' | 'na') => {
+  if (v === 'yes') return '<span class="check">Yes</span>';
+  if (v === 'no') return '<span class="x">No</span>';
+  return '<span class="muted">N/A</span>';
+};
+---
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>State</th>
+        <th class="center">iOS</th>
+        <th class="center">Android</th>
+        <th>Figma Property</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr>
+          <td><strong>{r.state}</strong></td>
+          <td class={`center${r.ios === 'na' ? ' muted' : ''}`} set:html={cell(r.ios)} />
+          <td class={`center${r.android === 'na' ? ' muted' : ''}`} set:html={cell(r.android)} />
+          <td class={r.property === '—' ? 'muted center' : 'mono'}>{r.property}</td>
+          <td class="muted" set:html={r.notes} />
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

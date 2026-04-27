@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import { componentManifest } from '../data/components/_index';
+
+const items = [...componentManifest].sort((a, b) => a.name.localeCompare(b.name));
+
+const badgeCls = (kind: string) => {
+  const map: Record<string, string> = {
+    keep: 'badge-keep',
+    fix: 'badge-fix',
+    restructure: 'badge-restructure',
+    consolidate: 'badge-consolidate',
+    'product-layer': 'badge-product-layer',
+    remove: 'badge-remove',
+    ready: 'badge-ready',
+    refine: 'badge-refine',
+    rework: 'badge-rework',
+    na: 'badge-na',
+  };
+  return `badge ${map[kind] || ''}`;
+};
+---
+<Base title="GCash DS Assessment — All Components">
+  <div class="panel active">
+    <div class="panel-layout">
+      <div class="content-wrap">
+        <div class="comp-header">
+          <div class="comp-header-body">
+            <div class="comp-name">
+              <span class="comp-name-title">All components</span>
+            </div>
+            <p class="comp-desc">{items.length} components ported from the static HTML report via the migration parser. Click a row to open the full assessment.</p>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Node</th>
+                <th>DS</th>
+                <th>Native</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((item) => (
+                <tr>
+                  <td>
+                    <a href={`/components/${item.slug}`}><strong>{item.name}</strong></a>
+                  </td>
+                  <td class="mono muted">{item.node}</td>
+                  {item.badges.slice(0, 2).map((b) => (
+                    <td><span class={badgeCls(b.kind)}>{b.label}</span></td>
+                  ))}
+                  {item.badges.length < 2 && Array.from({ length: 2 - item.badges.length }).map(() => <td class="muted">—</td>)}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>

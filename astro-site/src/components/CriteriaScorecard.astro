@@ -1,0 +1,30 @@
+---
+import type { ScorecardRow } from '../data/types';
+interface Props { slug: string; rows: ScorecardRow[]; }
+const { slug, rows } = Astro.props;
+
+const badgeCls = (s: string) => `badge badge-${s}`;
+---
+<div class="sub-heading" id={`${slug}-scorecard`}>Criteria Scorecard</div>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th class="col-id">ID</th>
+        <th class="col-md">Criterion</th>
+        <th class="col-badge">Status</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr>
+          <td class="mono center">{r.id}</td>
+          <td><strong>{r.criterion}</strong></td>
+          <td><span class={badgeCls(r.status)}>{r.statusLabel}</span></td>
+          <td class="muted" set:html={r.notes} />
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

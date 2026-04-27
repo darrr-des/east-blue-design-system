@@ -1,0 +1,59 @@
+---
+interface Badge {
+  label: string;
+  kind: 'keep' | 'fix' | 'restructure' | 'consolidate' | 'product-layer' | 'remove' | 'ready' | 'refine' | 'rework' | 'na';
+}
+interface Props {
+  name: string;
+  figmaUrl: string;
+  description: string;
+  badges: Badge[];
+  verdict?: { kind: string; title: string; text: string };
+}
+const { name, figmaUrl, description, badges, verdict } = Astro.props;
+
+const badgeClass = (kind: string) => {
+  const map: Record<string, string> = {
+    keep: 'badge-keep',
+    fix: 'badge-fix',
+    restructure: 'badge-restructure',
+    consolidate: 'badge-consolidate',
+    'product-layer': 'badge-product-layer',
+    remove: 'badge-remove',
+    ready: 'badge-ready',
+    refine: 'badge-refine',
+    rework: 'badge-rework',
+    na: 'badge-na',
+  };
+  return `badge ${map[kind] || ''}`;
+};
+---
+<div class="comp-header">
+  <div class="comp-header-body">
+    <div class="comp-name">
+      <div class="comp-name-badges">
+        {badges.map((b) => <span class={badgeClass(b.kind)}>{b.label}</span>)}
+      </div>
+      <span class="comp-name-title">{name}</span>
+      <a class="comp-figma-link" href={figmaUrl} target="_blank" rel="noopener">
+        Component link
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 7h10v10" />
+          <path d="M7 17 17 7" />
+        </svg>
+      </a>
+    </div>
+    <p class="comp-desc" set:html={description} />
+  </div>
+  {verdict && (
+    <div class={`verdict-inline verdict-${verdict.kind}`}>
+      <svg class="verdict-inline-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm-.75 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zM10 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor" />
+      </svg>
+      <div class="verdict-inline-body">
+        <div class="verdict-inline-title">{verdict.title}</div>
+        <div class="verdict-inline-text" set:html={verdict.text} />
+      </div>
+    </div>
+  )}
+</div>

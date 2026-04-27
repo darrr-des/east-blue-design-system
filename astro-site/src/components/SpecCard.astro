@@ -1,0 +1,90 @@
+---
+/*
+ * SpecCard — the canonical Style-tab card.
+ *
+ * Props:
+ *   cardKey       unique id for DES/DEV toggle wiring (e.g. "btn-filled-large")
+ *   title         card heading (e.g. "Filled · Large · Default")
+ *   node          Figma node id (e.g. "17104:184842")
+ *   description   one-line card description
+ *   previewHtml   raw HTML for the visual preview area (optional)
+ *   sections      DES-view spec sections — array of { label, rows: [{ key, value, mono? }] }
+ *   swift         SwiftUI code block (already syntax-marked with syn-* spans, or plain)
+ *   compose       Compose code block
+ */
+
+interface SpecRow {
+  key: string;
+  value: string;
+  mono?: boolean;
+}
+interface SpecSection {
+  label: string;
+  rows: SpecRow[];
+}
+interface Props {
+  cardKey: string;
+  title: string;
+  node: string;
+  description: string;
+  previewHtml?: string;
+  sections: SpecSection[];
+  swift: string;
+  compose: string;
+}
+const { cardKey, title, node, description, previewHtml, sections, swift, compose } = Astro.props;
+---
+<div class="spec-card" id={`spec-card-${cardKey}`}>
+  <div class="spec-card-header">
+    <div class="spec-card-header-row">
+      <div class="sub-heading toc-child" id={`variant-${cardKey}`} style="margin-top:0">
+        {title}
+      </div>
+      <button class="spec-node-copy" onclick="copyNode(this)" data-node={node} title="Copy Figma node ID">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+          <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3" />
+          <path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3" />
+        </svg>
+        <span>{node}</span>
+      </button>
+      <div class="spec-mode-toggle" onclick={`toggleSpecMode('${cardKey}', this)`}>
+        <span class="spec-mode-label active">DES</span>
+        <span class="spec-mode-label">DEV</span>
+      </div>
+    </div>
+    <p class="spec-card-desc">{description}</p>
+  </div>
+
+  {previewHtml && (
+    <div class="spec-card-preview-row">
+      <div class="spec-preview-frame">
+        <div class="spec-preview-body" set:html={previewHtml} />
+      </div>
+    </div>
+  )}
+
+  <div class="spec-card-detail spec-view-des" data-view={`${cardKey}-des`}>
+    {sections.map((section) => (
+      <div class="spec-detail-section">
+        <div class="spec-detail-label">{section.label}</div>
+        <div class="spec-props">
+          {section.rows.map((row) => (
+            <div class="spec-prop">
+              <span class="spec-prop-key">{row.key}</span>
+              <span class={`spec-prop-val${row.mono ? ' mono' : ''}`} set:html={row.value} />
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="spec-card-detail spec-card-code" data-view={`${cardKey}-dev`} style="display:none">
+    <div class="spec-code-tabs">
+      <button class="spec-code-tab active" onclick="switchCodeTab(this, 'swift')">SWIFTUI</button>
+      <button class="spec-code-tab" onclick="switchCodeTab(this, 'compose')">COMPOSE</button>
+    </div>
+    <pre class="spec-code-block" data-lang="swift"><code set:html={swift} /></pre>
+    <pre class="spec-code-block" data-lang="compose" style="display:none"><code set:html={compose} /></pre>
+  </div>
+</div>

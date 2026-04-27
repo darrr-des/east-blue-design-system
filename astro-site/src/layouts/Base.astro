@@ -1,0 +1,28 @@
+---
+import '../styles/global.css';
+import Sidebar from '../components/Sidebar.astro';
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+  title: string;
+  bodyClass?: string;
+  activeSlug?: string;
+}
+const { title, bodyClass = '', activeSlug } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <ClientRouter />
+  </head>
+  <body class={bodyClass}>
+    <Sidebar activeSlug={activeSlug} transition:persist />
+    <main class="main" transition:animate="fade">
+      <slot />
+    </main>
+    <script src="/scripts/assessment.js" is:inline></script>
+  </body>
+</html>

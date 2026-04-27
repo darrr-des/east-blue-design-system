@@ -1,0 +1,16 @@
+---
+import type { Trait } from '../data/types';
+interface Props { traits: Trait[]; }
+const { traits } = Astro.props;
+---
+<div class="trait-grid">
+  {traits.map((t) => (
+    <div class={`trait-card ${t.rating}`}>
+      <div class="trait-header">
+        <div class="trait-name">{t.name}</div>
+        <div class="trait-status">{t.rating.charAt(0).toUpperCase() + t.rating.slice(1)}</div>
+      </div>
+      <div class="trait-note" set:html={t.note} />
+    </div>
+  ))}
+</div>

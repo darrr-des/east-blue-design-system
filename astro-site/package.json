@@ -1,0 +1,21 @@
+{
+  "name": "eb-ds-assessment",
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "migrate": "node scripts/migrate.mjs",
+    "_comment_migrate": "DESTRUCTIVE — overwrites src/data/components/*.ts from assessment-src/. Only run if you intentionally want to regenerate from legacy HTML.",
+    "audit": "node scripts/audit.mjs",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.0.0",
+    "node-html-parser": "^7.1.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.59.1"
+  }
+}

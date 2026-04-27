@@ -1,0 +1,12 @@
+---
+import type { GuidelinePair } from '../data/types';
+interface Props { slug: string; pairs: GuidelinePair[]; }
+const { slug, pairs } = Astro.props;
+---
+<div class="sub-heading" id={`${slug}-guidelines`}>Usage Guidelines</div>
+{pairs.map((p) => (
+  <div class="guideline-row">
+    <div class="guideline-do"><h4>Do</h4><p>{p.doText}</p></div>
+    <div class="guideline-dont"><h4>Don't</h4><p>{p.dontText}</p></div>
+  </div>
+))}

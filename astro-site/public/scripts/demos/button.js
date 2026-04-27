@@ -1,0 +1,349 @@
+/* Auto-extracted from assessment-src/shell.html (lines 687-1008).
+ * Powers the Button live-preview + per-spec-card interactivity on
+ * /components/button. Re-extract via:
+ *   sed -n '687,1008p' assessment-src/shell.html > demos/button.js
+ *
+ * Calls initSpecCards() and _applyDemo() on load so the captured HTML
+ * is wired up immediately.
+ */
+/* ── Demo controls (v3) ──────────────────────────────────────────── */
+var _demo = { style: 'filled', appearance: 'default', size: 'large', state: 'default', leadingIcon: false, trailingIcon: false, iconPlacement: 'none' };
+
+/* Colors: style → appearance → state → { bg, color, border } */
+var _demoColors = {
+  filled: {
+    default:     { default: { bg:'#005CE5', color:'#FFF', border:'none' },     pressed: { bg:'#2340A9', color:'#FFF', border:'none' },     disabled: { bg:'#9BC5FD', color:'#FFF', border:'none' } },
+    destructive: { default: { bg:'#D81E1E', color:'#FFF', border:'none' },     pressed: { bg:'#B01818', color:'#FFF', border:'none' },     disabled: { bg:'#F5A3A3', color:'#FFF', border:'none' } },
+    white:       { default: { bg:'#FFFFFF', color:'#005CE5', border:'none' },  pressed: { bg:'#EEF2F9', color:'#2340A9', border:'none' },  disabled: { bg:'#F5F7FA', color:'#9BC5FD', border:'none' } },
+    subtle:      { default: { bg:'#E5F1FF', color:'#005CE5', border:'none' },  pressed: { bg:'#D2E5FF', color:'#2340A9', border:'none' },  disabled: { bg:'#EEF5FF', color:'#9BC5FD', border:'none' } }
+  },
+  outline: {
+    default:     { default: { bg:'transparent', color:'#005CE5', border:'2px solid #005CE5' }, pressed: { bg:'transparent', color:'#2340A9', border:'2px solid #2340A9' }, disabled: { bg:'transparent', color:'#9BC5FD', border:'2px solid #9BC5FD' } },
+    destructive: { default: { bg:'transparent', color:'#D81E1E', border:'2px solid #D81E1E' }, pressed: { bg:'transparent', color:'#B01818', border:'2px solid #B01818' }, disabled: { bg:'transparent', color:'#F5A3A3', border:'2px solid #F5A3A3' } },
+    white:       { default: { bg:'transparent', color:'#005CE5', border:'2px solid #005CE5' }, pressed: { bg:'transparent', color:'#2340A9', border:'2px solid #2340A9' }, disabled: { bg:'transparent', color:'#9BC5FD', border:'2px solid #9BC5FD' } },
+    subtle:      { default: { bg:'transparent', color:'#005CE5', border:'2px solid #005CE5' }, pressed: { bg:'transparent', color:'#2340A9', border:'2px solid #2340A9' }, disabled: { bg:'transparent', color:'#9BC5FD', border:'2px solid #9BC5FD' } }
+  },
+  text: {
+    default:     { default: { bg:'transparent', color:'#005CE5', border:'none' }, pressed: { bg:'transparent', color:'#2340A9', border:'none' }, disabled: { bg:'transparent', color:'#9BC5FD', border:'none' } },
+    destructive: { default: { bg:'transparent', color:'#D81E1E', border:'none' }, pressed: { bg:'transparent', color:'#B01818', border:'none' }, disabled: { bg:'transparent', color:'#F5A3A3', border:'none' } },
+    white:       { default: { bg:'transparent', color:'#005CE5', border:'none' }, pressed: { bg:'transparent', color:'#2340A9', border:'none' }, disabled: { bg:'transparent', color:'#9BC5FD', border:'none' } },
+    subtle:      { default: { bg:'transparent', color:'#005CE5', border:'none' }, pressed: { bg:'transparent', color:'#2340A9', border:'none' }, disabled: { bg:'transparent', color:'#9BC5FD', border:'none' } }
+  }
+};
+/* Size table — aligned to Figma source-of-truth (Button_New 17104:184842).
+ * Heights verified via mcp__figma__get_metadata. Font size mapping:
+ *   Large   → Primary/Label/Large (18px)
+ *   Medium  → Primary/Label/Base  (16px)
+ *   Small   → Primary/Label/Base  (16px)
+ *   Compact → Primary/Label/Small (14px)
+ *   XSmall  → Primary/Label/Fine  (12px) */
+var _demoSizes = {
+  large:   { padding:'16px 20px', fontSize:'18px', height:'50px' },
+  medium:  { padding:'12px 16px', fontSize:'16px', height:'48px' },
+  small:   { padding:'8px 12px',  fontSize:'16px', height:'36px' },
+  compact: { padding:'5px 12px',  fontSize:'14px', height:'28px' },
+  xsmall:  { padding:'4px 10px',  fontSize:'12px', height:'24px' }
+};
+
+function _applyDemo() {
+  var el = document.getElementById('demo-btn-live');
+  if (!el) return;
+  var styleMap = _demoColors[_demo.style] || _demoColors['filled'];
+  var appMap = styleMap[_demo.appearance] || styleMap['default'];
+  var effectiveState = _demo.state === 'loading' ? 'disabled' : _demo.state;
+  var c = appMap[effectiveState] || appMap['default'];
+  var sz = _demoSizes[_demo.size] || _demoSizes['large'];
+
+  el.style.background   = c.bg;
+  el.style.color        = c.color;
+  el.style.border       = c.border;
+  el.style.padding      = sz.padding;
+  el.style.fontSize     = sz.fontSize;
+  el.style.height       = sz.height;
+  el.style.boxSizing    = 'border-box';
+  el.style.borderRadius = '99px';
+  el.style.fontFamily   = "'HeyMeow Rnd', sans-serif";
+  el.style.fontWeight   = '700';
+  el.style.cursor       = (_demo.state === 'disabled' || _demo.state === 'loading') ? 'not-allowed' : 'pointer';
+  el.style.opacity      = '1';
+
+  /* Derive icon visibility from iconPlacement (source of truth) with fallback to legacy booleans */
+  var placement = _demo.iconPlacement || 'none';
+  var showLeading = placement === 'leading' || (placement === 'none' && _demo.leadingIcon);
+  var showTrailing = placement === 'trailing' || (placement === 'none' && _demo.trailingIcon);
+  var isIconOnly = placement === 'iconOnly';
+
+  /* Label swap (icon only = no text) */
+  var textEl = document.getElementById('demo-btn-text');
+  if (textEl) {
+    if (isIconOnly) textEl.style.display = 'none';
+    else { textEl.style.display = ''; textEl.textContent = 'Label'; }
+  }
+
+  /* Icon Only = square button — override padding and width */
+  if (isIconOnly) {
+    el.style.padding = '0';
+    el.style.width = sz.height;
+    el.style.justifyContent = 'center';
+  } else {
+    el.style.width = '';
+    el.style.justifyContent = '';
+  }
+
+  /* Icon slots */
+  var iconSize = (_demo.size === 'small' || _demo.size === 'compact' || _demo.size === 'xsmall') ? '16' : '24';
+  var leading = document.getElementById('demo-btn-leading');
+  var trailing = document.getElementById('demo-btn-trailing');
+  if (leading) {
+    leading.style.display = (showLeading || isIconOnly) ? 'block' : 'none';
+    leading.setAttribute('width', iconSize);
+    leading.setAttribute('height', iconSize);
+    leading.setAttribute('viewBox', iconSize === '16' ? '0 0 16 16' : '0 0 24 24');
+    var lPath = leading.querySelector('path');
+    if (lPath) {
+      if (iconSize === '16') {
+        lPath.setAttribute('d', 'M2.13359 5.8498C2.41244 4.3707 3.15349 3.46738 4.59457 3.13974C5.47753 2.93899 6.35971 3.35959 7 3.99988L8 4.99988L9 3.99988C9.6403 3.35967 10.5224 2.93908 11.4053 3.13975C12.8465 3.46728 13.5876 4.37064 13.8664 5.84979C14.0629 6.8923 13.5786 7.92128 12.8284 8.67143L12.5 8.99986L8.70711 12.7928C8.31658 13.1833 7.68342 13.1833 7.29289 12.7928L3.5 8.99986L3.17159 8.67145C2.42143 7.9213 1.93706 6.89231 2.13359 5.8498Z');
+        lPath.setAttribute('stroke-width', '1.2');
+      } else {
+        lPath.setAttribute('d', 'M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z');
+        lPath.setAttribute('stroke-width', '2');
+      }
+    }
+  }
+  if (trailing) {
+    trailing.style.display = showTrailing ? 'block' : 'none';
+    trailing.setAttribute('width', iconSize);
+    trailing.setAttribute('height', iconSize);
+    trailing.setAttribute('viewBox', iconSize === '16' ? '0 0 16 16' : '0 0 24 24');
+    var tPath = trailing.querySelector('path');
+    if (tPath) {
+      if (iconSize === '16') {
+        tPath.setAttribute('d', 'M2.13359 5.8498C2.41244 4.3707 3.15349 3.46738 4.59457 3.13974C5.47753 2.93899 6.35971 3.35959 7 3.99988L8 4.99988L9 3.99988C9.6403 3.35967 10.5224 2.93908 11.4053 3.13975C12.8465 3.46728 13.5876 4.37064 13.8664 5.84979C14.0629 6.8923 13.5786 7.92128 12.8284 8.67143L12.5 8.99986L8.70711 12.7928C8.31658 13.1833 7.68342 13.1833 7.29289 12.7928L3.5 8.99986L3.17159 8.67145C2.42143 7.9213 1.93706 6.89231 2.13359 5.8498Z');
+        tPath.setAttribute('stroke-width', '1.2');
+      } else {
+        tPath.setAttribute('d', 'M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z');
+        tPath.setAttribute('stroke-width', '2');
+      }
+    }
+  }
+
+  var preview = el.closest('.demo-preview');
+  if (preview) preview.classList.toggle('demo-preview-dark', _demo.appearance === 'white');
+}
+
+function setDemoStyle(style) {
+  _demo.style = style;
+  _applyDemo();
+}
+function setDemoAppearance(appearance) {
+  _demo.appearance = appearance;
+  _applyDemo();
+}
+function setDemoSize(size) {
+  _demo.size = size;
+  _applyDemo();
+}
+function setDemoState(state) {
+  _demo.state = state;
+  _applyDemo();
+}
+function setDemoIcon(slot, value) {
+  if (slot === 'leading') _demo.leadingIcon = value;
+  else if (slot === 'trailing') _demo.trailingIcon = value;
+  _applyDemo();
+}
+function setDemoIconPlacement(placement) {
+  _demo.iconPlacement = placement;
+  _applyDemo();
+}
+/* Keep old function names as aliases for backward compat */
+function setDemoVariant(v) { setDemoAppearance(v === 'brand' ? 'default' : v); }
+
+/* ── Spec card previews ──────────────────────────────────────────── */
+var _specCards = {
+  filled:  { style: 'filled',  appearance: 'default', size: 'large', state: 'default', iconPlacement: 'none' },
+  outline: { style: 'outline', appearance: 'default', size: 'large', state: 'default', iconPlacement: 'none' },
+  text:    { style: 'text',    appearance: 'default', size: 'large', state: 'default', iconPlacement: 'none' }
+};
+
+/* Size data for spec card layout/typography (v4.1) */
+var _specSizeData = {
+  large:   { height: 50, paddingH: 20, paddingV: 16, fontSize: 18, textStyle: 'Primary/Label/Large' },
+  medium:  { height: 48, paddingH: 16, paddingV: 12, fontSize: 16, textStyle: 'Primary/Label/Base' },
+  small:   { height: 36, paddingH: 12, paddingV: 8,  fontSize: 16, textStyle: 'Primary/Label/Base' },
+  compact: { height: 28, paddingH: 12, paddingV: 5,  fontSize: 14, textStyle: 'Primary/Label/Small' },
+  xsmall:  { height: 24, paddingH: 10, paddingV: 4,  fontSize: 12, textStyle: 'Primary/Label/Fine' }
+};
+
+/* Color data for spec card detail sections (v4.1 Mode-driven tokens) */
+var _specColorData = {
+  filled: {
+    default:     { label: 'Colors — Default',     rows: [['Default bg','#005CE5','appearance/container/fill'],['Pressed bg','#2340A9','appearance/container/fill-pressed'],['Disabled bg','#9BC5FD','appearance/container/fill-disabled'],['Label','#FFFFFF','appearance/label/color']] },
+    destructive: { label: 'Colors — Destructive', rows: [['Default bg','#D81E1E','appearance/container/fill'],['Pressed bg','#B01818','appearance/container/fill-pressed'],['Disabled bg','#F5A3A3','appearance/container/fill-disabled'],['Label','#FFFFFF','appearance/label/color']] },
+    white:       { label: 'Colors — White',       rows: [['Default bg','#FFFFFF','appearance/container/fill'],['Pressed bg','#EEF2F9','appearance/container/fill-pressed'],['Disabled bg','#F5F7FA','appearance/container/fill-disabled'],['Label','#005CE5','appearance/label/color']] },
+    subtle:      { label: 'Colors — Subtle',      rows: [['Default bg','#E5F1FF','appearance/container/fill'],['Pressed bg','#D2E5FF','appearance/container/fill-pressed'],['Disabled bg','#EEF5FF','appearance/container/fill-disabled'],['Label','#005CE5','appearance/label/color']] }
+  },
+  outline: {
+    default:     { label: 'Colors — Default',     rows: [['Default border','#005CE5','appearance/stroke/color'],['Pressed border','#2340A9','appearance/stroke/color-pressed'],['Disabled border','#9BC5FD','appearance/stroke/color-disabled'],['Label','#005CE5','appearance/label/on-surface/color']] },
+    destructive: { label: 'Colors — Destructive', rows: [['Default border','#D81E1E','appearance/stroke/color'],['Pressed border','#B01818','appearance/stroke/color-pressed'],['Disabled border','#F5A3A3','appearance/stroke/color-disabled'],['Label','#D81E1E','appearance/label/on-surface/color']] },
+    white:       { label: 'Colors — White',       rows: [['Default border','#005CE5','appearance/stroke/color'],['Pressed border','#2340A9','appearance/stroke/color-pressed'],['Disabled border','#9BC5FD','appearance/stroke/color-disabled'],['Label','#005CE5','appearance/label/on-surface/color']] },
+    subtle:      { label: 'Colors — Subtle',      rows: [['Default border','#005CE5','appearance/stroke/color'],['Pressed border','#2340A9','appearance/stroke/color-pressed'],['Disabled border','#9BC5FD','appearance/stroke/color-disabled'],['Label','#005CE5','appearance/label/on-surface/color']] }
+  },
+  text: {
+    default:     { label: 'Colors — Default',     rows: [['Default label','#005CE5','appearance/label/on-surface/color'],['Pressed label','#2340A9','appearance/label/on-surface/color-pressed'],['Disabled label','#9BC5FD','appearance/label/on-surface/color-disabled']] },
+    destructive: { label: 'Colors — Destructive', rows: [['Default label','#D81E1E','appearance/label/on-surface/color'],['Pressed label','#B01818','appearance/label/on-surface/color-pressed'],['Disabled label','#F5A3A3','appearance/label/on-surface/color-disabled']] },
+    white:       { label: 'Colors — White',       rows: [['Default label','#005CE5','appearance/label/on-surface/color'],['Pressed label','#2340A9','appearance/label/on-surface/color-pressed'],['Disabled label','#9BC5FD','appearance/label/on-surface/color-disabled']] },
+    subtle:      { label: 'Colors — Subtle',      rows: [['Default label','#005CE5','appearance/label/on-surface/color'],['Pressed label','#2340A9','appearance/label/on-surface/color-pressed'],['Disabled label','#9BC5FD','appearance/label/on-surface/color-disabled']] }
+  }
+};
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview button */
+  var el = document.getElementById('spec-' + cardStyle + '-btn');
+  if (el) {
+    var styleMap = _demoColors[card.style] || _demoColors['filled'];
+    var appMap = styleMap[card.appearance] || styleMap['default'];
+    var effectiveCardState = card.state === 'loading' ? 'disabled' : card.state;
+    var c = appMap[effectiveCardState] || appMap['default'];
+    var sz = _demoSizes[card.size] || _demoSizes['large'];
+    el.style.background   = c.bg;
+    el.style.color        = c.color;
+    el.style.border       = c.border;
+    el.style.padding      = sz.padding;
+    el.style.fontSize     = sz.fontSize;
+    el.style.height       = sz.height;
+    el.style.boxSizing    = 'border-box';
+    el.style.borderRadius = '99px';
+    el.style.fontFamily   = "'HeyMeow Rnd', sans-serif";
+    el.style.fontWeight   = '700';
+    el.style.cursor       = (card.state === 'disabled' || card.state === 'loading') ? 'not-allowed' : 'pointer';
+    el.style.opacity      = '1';
+
+    /* Loading label swap for spec cards */
+    var specLabel = el.querySelector('span');
+    if (specLabel) specLabel.textContent = card.state === 'loading' ? '●  ●  ●' : 'Label';
+    var preview = el.closest('.spec-card-preview');
+    if (preview) preview.classList.toggle('demo-preview-dark', card.appearance === 'white');
+
+    /* Spec card icon slots */
+    var specIconSize = (card.size === 'small' || card.size === 'compact' || card.size === 'xsmall') ? '16' : '24';
+    var specLeading = document.getElementById('spec-' + cardStyle + '-leading');
+    var specTrailing = document.getElementById('spec-' + cardStyle + '-trailing');
+    var path16 = 'M2.13359 5.8498C2.41244 4.3707 3.15349 3.46738 4.59457 3.13974C5.47753 2.93899 6.35971 3.35959 7 3.99988L8 4.99988L9 3.99988C9.6403 3.35967 10.5224 2.93908 11.4053 3.13975C12.8465 3.46728 13.5876 4.37064 13.8664 5.84979C14.0629 6.8923 13.5786 7.92128 12.8284 8.67143L12.5 8.99986L8.70711 12.7928C8.31658 13.1833 7.68342 13.1833 7.29289 12.7928L3.5 8.99986L3.17159 8.67145C2.42143 7.9213 1.93706 6.89231 2.13359 5.8498Z';
+    var path24 = 'M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z';
+    var placement = card.iconPlacement || 'none';
+    var showLeading = placement === 'leading' || placement === 'iconOnly';
+    var showTrailing = placement === 'trailing';
+    var isIconOnly = placement === 'iconOnly';
+    /* Hide label when icon only */
+    if (specLabel) specLabel.style.display = isIconOnly ? 'none' : '';
+    /* Make icon-only square */
+    if (isIconOnly) {
+      el.style.width = sz.height;
+      el.style.padding = '0';
+      el.style.justifyContent = 'center';
+    } else {
+      el.style.width = '';
+      el.style.justifyContent = '';
+    }
+    [specLeading, specTrailing].forEach(function(svg, idx) {
+      if (!svg) return;
+      var show = idx === 0 ? showLeading : showTrailing;
+      svg.style.display = show ? 'block' : 'none';
+      svg.setAttribute('width', specIconSize);
+      svg.setAttribute('height', specIconSize);
+      svg.setAttribute('viewBox', specIconSize === '16' ? '0 0 16 16' : '0 0 24 24');
+      var p = svg.querySelector('path');
+      if (p) {
+        p.setAttribute('d', specIconSize === '16' ? path16 : path24);
+        p.setAttribute('stroke-width', specIconSize === '16' ? '1.2' : '2');
+      }
+    });
+  }
+
+  /* Update properties text */
+  var spApp = document.querySelector('[data-sp="' + cardStyle + '-appearance"]');
+  var spState = document.querySelector('[data-sp="' + cardStyle + '-state"]');
+  var spSize = document.querySelector('[data-sp="' + cardStyle + '-size"]');
+  if (spApp) spApp.textContent = card.appearance.charAt(0).toUpperCase() + card.appearance.slice(1);
+  if (spState) spState.textContent = card.state.charAt(0).toUpperCase() + card.state.slice(1);
+  if (spSize) spSize.textContent = card.size === 'xsmall' ? 'XSmall' : card.size.charAt(0).toUpperCase() + card.size.slice(1);
+
+  /* Update colors section */
+  var colorsEl = document.getElementById('spec-' + cardStyle + '-colors');
+  if (colorsEl) {
+    var colorData = _specColorData[cardStyle] && _specColorData[cardStyle][card.appearance];
+    if (colorData) {
+      var h = '<div class="spec-detail-label">' + colorData.label + '</div><div class="spec-props">';
+      colorData.rows.forEach(function(r) {
+        var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
+        var tokenHtml = r[2] ? '<span class="spec-token-name">' + r[2] + '</span>' : '';
+        h += '<div class="spec-prop"><span class="spec-prop-key">' + r[0] + '</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + tokenHtml + '</span></div>';
+      });
+      h += '</div>';
+      colorsEl.innerHTML = h;
+    }
+  }
+
+  /* Update layout section */
+  var layoutEl = document.getElementById('spec-' + cardStyle + '-layout');
+  if (layoutEl) {
+    var sizeData = _specSizeData[card.size];
+    var lh = '<div class="spec-detail-label">Layout</div><div class="spec-props">';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Height</span><span class="spec-prop-val mono">' + sizeData.height + 'px</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding H</span><span class="spec-prop-val mono">' + sizeData.paddingH + 'px</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding V</span><span class="spec-prop-val mono">' + sizeData.paddingV + 'px</span></div>';
+    if (cardStyle === 'outline') lh += '<div class="spec-prop"><span class="spec-prop-key">Border</span><span class="spec-prop-val mono">1.5px solid</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Radius</span><span class="spec-prop-val mono">99px</span></div>';
+    lh += '</div>';
+    layoutEl.innerHTML = lh;
+  }
+
+  /* Update typography section */
+  var typoEl = document.getElementById('spec-' + cardStyle + '-typo');
+  if (typoEl) {
+    var sizeData = _specSizeData[card.size];
+    var th = '<div class="spec-detail-label">Typography</div><div class="spec-props">';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">HeyMeow Rnd Bold</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Text Style</span><span class="spec-prop-val mono">' + sizeData.textStyle + '</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">' + sizeData.fontSize + 'px</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Tracking</span><span class="spec-prop-val mono">0.25px</span></div>';
+    th += '</div>';
+    typoEl.innerHTML = th;
+  }
+
+  /* Update DEV code if visible */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView && devView.style.display !== 'none') {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('code');
+    if (codeEl) {
+      codeEl.setAttribute('data-final', getSnippet(cardStyle, lang, card));
+      scrambleCode(cardStyle);
+    }
+  }
+}
+
+/* Initialize spec card colors on page load */
+function initSpecCards() {
+  updateSpecCard('filled', 'appearance', 'default');
+  updateSpecCard('outline', 'appearance', 'default');
+  updateSpecCard('text', 'appearance', 'default');
+}
+
+/* ── Init on every page (re-)load ──────────────────────────────────── */
+(function () {
+  function init() {
+    if (typeof initSpecCards === 'function') initSpecCards();
+    if (typeof _applyDemo === 'function') _applyDemo();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+  // Also run after Astro view-transition swaps (when user navs to/from this page)
+  document.addEventListener('astro:page-load', init);
+})();

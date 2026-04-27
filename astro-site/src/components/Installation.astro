@@ -1,0 +1,19 @@
+---
+import type { Installation as InstallationType } from '../data/types';
+interface Props { slug: string; data: InstallationType; }
+const { slug, data } = Astro.props;
+---
+<div class="sub-heading" id={`${slug}-install`} style="margin-top:0">
+  Installation
+  {data.planned && <span class="badge badge-planned">Planned API</span>}
+</div>
+{data.blocks.map((b) => (
+  <>
+    <p class="code-label">{b.label}</p>
+    <div class="code-block-wrap">
+      <button class="code-copy-btn" onclick="copySnippet(this)">Copy</button>
+      <pre class="code-snippet"><Fragment set:html={b.code} /></pre>
+    </div>
+  </>
+))}
+{data.footnote && <p class="table-footnote">{data.footnote}</p>}

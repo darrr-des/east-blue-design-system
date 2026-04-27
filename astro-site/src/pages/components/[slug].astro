@@ -1,0 +1,185 @@
+---
+import Base from '../../layouts/Base.astro';
+import ComponentHeader from '../../components/ComponentHeader.astro';
+import DSHealth from '../../components/DSHealth.astro';
+import BehaviorTable from '../../components/BehaviorTable.astro';
+import IssuesList from '../../components/IssuesList.astro';
+import RecommendationsList from '../../components/RecommendationsList.astro';
+import SpecCard from '../../components/SpecCard.astro';
+import ColorsTable from '../../components/ColorsTable.astro';
+import Installation from '../../components/Installation.astro';
+import PropertyMapping from '../../components/PropertyMapping.astro';
+import UsageSnippets from '../../components/UsageSnippets.astro';
+import AccessibilityTable from '../../components/AccessibilityTable.astro';
+import UsageGuidelines from '../../components/UsageGuidelines.astro';
+import CriteriaScorecard from '../../components/CriteriaScorecard.astro';
+import CodeConnect from '../../components/CodeConnect.astro';
+import VariantsInventory from '../../components/VariantsInventory.astro';
+import Changelog from '../../components/Changelog.astro';
+import { componentMap, componentManifest } from '../../data/components/_index';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+export function getStaticPaths() {
+  return componentManifest.map((m) => ({ params: { slug: m.slug } }));
+}
+
+const { slug } = Astro.params;
+const data = componentMap[slug!];
+if (!data) throw new Error(`Unknown component: ${slug}`);
+const group = `${data.meta.slug}-tabs`;
+
+// Detect whether this component ships a per-page demo script
+// (extracted from the legacy report into public/scripts/demos/<slug>.js).
+// If present, the page emits a <script src=...> to wire up live-preview
+// dropdowns/toggles. Astro view transitions re-fire its astro:page-load.
+const __astroDir = path.dirname(fileURLToPath(import.meta.url));
+const demoScriptPath = path.resolve(__astroDir, '../../../public/scripts/demos/', `${slug}.js`);
+const hasDemoScript = fs.existsSync(demoScriptPath);
+
+const hasOverview =
+  data.overview.inContextNote ||
+  data.overview.inContextHtml ||
+  data.overview.livePreviewHtml ||
+  data.overview.traits.length ||
+  data.overview.behavior.length ||
+  data.overview.resolved.length ||
+  data.overview.open.length ||
+  data.overview.recommendations.length;
+
+const hasStyle = data.style.specCards.length > 0;
+const hasCode =
+  data.code.installation.blocks.length ||
+  data.code.propertyMapping.rows.length ||
+  data.code.usageSnippets.length ||
+  data.code.accessibility.length ||
+  data.code.usageGuidelines.length ||
+  data.code.scorecard.length ||
+  data.code.codeConnect.length ||
+  (data.code.variants.rows && data.code.variants.rows.length);
+
+const hasChangelog = data.changelog.length > 0;
+---
+<Base title={`${data.meta.name} — GCash DS Assessment`} activeSlug={data.meta.slug}>
+  <div class="panel active" id={`panel-${data.meta.slug}`}>
+    <div class="panel-layout">
+      <div class="content-wrap">
+
+        <ComponentHeader
+          name={data.meta.name}
+          figmaUrl={data.meta.figmaUrl}
+          description={data.meta.description}
+          badges={data.meta.badges}
+          verdict={data.meta.verdict}
+        />
+
+        <div data-tab-group={group}>
+          <div class="comp-tabs">
+            {hasOverview && <button class="comp-tab active" data-tab-id="usage" onclick={`switchTab(this, 'usage', '${group}')`}>Overview</button>}
+            {hasStyle && <button class={hasOverview ? 'comp-tab' : 'comp-tab active'} data-tab-id="style" onclick={`switchTab(this, 'style', '${group}')`}>Style</button>}
+            {hasCode && <button class="comp-tab" data-tab-id="code" onclick={`switchTab(this, 'code', '${group}')`}>Code</button>}
+            {hasChangelog && <button class="comp-tab" data-tab-id="changelog" onclick={`switchTab(this, 'changelog', '${group}')`}>Changelog</button>}
+          </div>
+
+          {/* ── Overview ───────────────────────────────────────── */}
+          {hasOverview && (
+            <div class={`comp-tab-content active`} data-tab="usage" role="tabpanel">
+              {(data.overview.inContextNote || data.overview.inContextHtml) && (
+                <>
+                  <div class="sub-heading" id={`${data.meta.slug}-context`} style="margin-top:0">In Context</div>
+                  {data.overview.inContextNote && <p class="section-desc">{data.overview.inContextNote}</p>}
+                  {data.overview.inContextHtml && (
+                    <div class="ctx-wrap" set:html={data.overview.inContextHtml} />
+                  )}
+                </>
+              )}
+              {data.overview.livePreviewHtml && (
+                <>
+                  <div class="sub-heading" id={`${data.meta.slug}-preview`}>Live Preview</div>
+                  <div class="demo-panel" set:html={data.overview.livePreviewHtml} />
+                </>
+              )}
+              {data.overview.traits.length > 0 && (
+                <>
+                  <div class="sub-heading" id={`${data.meta.slug}-traits`}>DS Health</div>
+                  <DSHealth traits={data.overview.traits} />
+                </>
+              )}
+              {data.overview.behavior.length > 0 && (
+                <>
+                  <div class="sub-heading" id={`${data.meta.slug}-behavior`}>Behavior</div>
+                  <BehaviorTable rows={data.overview.behavior} />
+                </>
+              )}
+              {data.overview.resolved.length > 0 && (
+                <>
+                  <div class="sub-heading" id={`${data.meta.slug}-resolved`}>Resolved Issues</div>
+                  <IssuesList items={data.overview.resolved} />
+                </>
+              )}
+              {data.overview.open.length > 0 && (
+                <>
+                  <div class="sub-heading" id={`${data.meta.slug}-open`}>Open Issues</div>
+                  <IssuesList items={data.overview.open} />
+                </>
+              )}
+              {data.overview.recommendations.length > 0 && (
+                <>
+                  <div class="sub-heading" id={`${data.meta.slug}-recommend`}>Design Recommendations</div>
+                  <RecommendationsList items={data.overview.recommendations} />
+                </>
+              )}
+            </div>
+          )}
+
+          {/* ── Style ──────────────────────────────────────────── */}
+          {hasStyle && (
+            <div class={`comp-tab-content${!hasOverview ? ' active' : ''}`} data-tab="style" role="tabpanel">
+              {data.style.heading && <div class="sub-heading" style="margin-top:0">{data.style.heading}</div>}
+              {data.style.specCards.map((card, i) => (
+                <>
+                  <SpecCard {...card} />
+                  {data.style.colorsTables && data.style.colorsTables[i] && (
+                    <ColorsTable table={data.style.colorsTables[i]} />
+                  )}
+                </>
+              ))}
+            </div>
+          )}
+
+          {/* ── Code ───────────────────────────────────────────── */}
+          {hasCode && (
+            <div class="comp-tab-content" data-tab="code" role="tabpanel">
+              {data.code.installation.blocks.length > 0 && <Installation slug={data.meta.slug} data={data.code.installation} />}
+              {data.code.propertyMapping.rows.length > 0 && <PropertyMapping slug={data.meta.slug} data={data.code.propertyMapping} />}
+              {data.code.usageSnippets.length > 0 && <UsageSnippets slug={data.meta.slug} items={data.code.usageSnippets} />}
+              {data.code.accessibility.length > 0 && <AccessibilityTable slug={data.meta.slug} rows={data.code.accessibility} />}
+              {data.code.usageGuidelines.length > 0 && <UsageGuidelines slug={data.meta.slug} pairs={data.code.usageGuidelines} />}
+              {data.code.scorecard.length > 0 && <CriteriaScorecard slug={data.meta.slug} rows={data.code.scorecard} />}
+              {data.code.codeConnect.length > 0 && <CodeConnect slug={data.meta.slug} rows={data.code.codeConnect} />}
+              {data.code.variants.rows && data.code.variants.rows.length > 0 && <VariantsInventory slug={data.meta.slug} data={data.code.variants} />}
+            </div>
+          )}
+
+          {/* ── Changelog ──────────────────────────────────────── */}
+          {hasChangelog && (
+            <div class="comp-tab-content" data-tab="changelog" role="tabpanel">
+              <Changelog slug={data.meta.slug} entries={data.changelog} />
+            </div>
+          )}
+        </div>
+
+      </div>
+
+      <aside class="page-toc" id={`toc-${data.meta.slug}`}>
+        <div class="page-toc-label">On this page</div>
+        <nav class="page-toc-nav"></nav>
+      </aside>
+    </div>
+  </div>
+
+  {hasDemoScript && (
+    <script src={`/scripts/demos/${data.meta.slug}.js`} is:inline></script>
+  )}
+</Base>

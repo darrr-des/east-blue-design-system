@@ -1,0 +1,106 @@
+---
+import { componentManifest } from '../data/components/_index';
+
+interface Props {
+  activeSlug?: string;
+}
+const { activeSlug } = Astro.props;
+
+type Item = (typeof componentManifest)[number];
+const groups = new Map<string, Item[]>();
+const standalone: Item[] = [];
+
+for (const item of componentManifest) {
+  if (item.navGroup) {
+    if (!groups.has(item.navGroup)) groups.set(item.navGroup, []);
+    groups.get(item.navGroup)!.push(item);
+  } else {
+    standalone.push(item);
+  }
+}
+
+standalone.sort((a, b) => a.name.localeCompare(b.name));
+const orderedGroups = [...groups.entries()]
+  .map(([k, v]) => [k, [...v].sort((a, b) => a.name.localeCompare(b.name))] as const)
+  .sort((a, b) => a[0].localeCompare(b[0]));
+
+// Weave standalone items + group headers alphabetically
+type Row = { kind: 'item'; item: Item } | { kind: 'group'; name: string; items: Item[] };
+const rows: Row[] = [];
+let si = 0;
+let gi = 0;
+while (si < standalone.length || gi < orderedGroups.length) {
+  const sName = standalone[si]?.name;
+  const gName = orderedGroups[gi]?.[0];
+  if (sName && (!gName || sName.localeCompare(gName) < 0)) {
+    rows.push({ kind: 'item', item: standalone[si++] });
+  } else if (gName) {
+    rows.push({ kind: 'group', name: gName, items: orderedGroups[gi][1] });
+    gi++;
+  }
+}
+
+const totalCount = componentManifest.length;
+---
+<aside class="sidebar">
+  <a class="sidebar-brand" href="/">
+    <div class="sidebar-brand-row">
+      <div class="sidebar-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 4h10M3 8h10M3 12h6" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+      </div>
+      <div class="sidebar-brand-text">
+        <div class="sidebar-brand-title-row">
+          <span class="sidebar-wordmark">EB DS Assessment</span>
+        </div>
+        <span class="sidebar-brand-sub">{totalCount} components</span>
+      </div>
+    </div>
+  </a>
+
+  <nav class="sidebar-nav" id="comp-list">
+    {rows.map((row) =>
+      row.kind === 'item' ? (
+        <a
+          class={`nav-comp${activeSlug === row.item.slug ? ' active' : ''}`}
+          href={`/components/${row.item.slug}`}
+        >
+          {row.item.navIconSvg && (
+            <div class="nav-comp-icon" set:html={row.item.navIconSvg} />
+          )}
+          <div class="nav-comp-body">
+            <div class="nav-comp-name">{row.item.name}</div>
+          </div>
+        </a>
+      ) : (
+        <>
+          <button
+            class={`nav-section-toggle${row.items.some((i) => i.slug === activeSlug) ? ' open' : ''}`}
+            onclick="toggleNavSection(this)"
+          >
+            <span>{row.name}</span>
+            <svg class="nav-section-chevron" width="12" height="12" viewBox="0 0 16 16" fill="none">
+              <path d="M5 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class={`nav-section-list${row.items.some((i) => i.slug === activeSlug) ? ' open' : ''}`}>
+            {row.items.map((item) => (
+              <a
+                class={`nav-comp${activeSlug === item.slug ? ' active' : ''}`}
+                href={`/components/${item.slug}`}
+              >
+                {item.navIconSvg && (
+                  <div class="nav-comp-icon" set:html={item.navIconSvg} />
+                )}
+                <div class="nav-comp-body">
+                  <div class="nav-comp-name">{item.name}</div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </>
+      )
+    )}
+  </nav>
+</aside>

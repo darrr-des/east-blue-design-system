@@ -1,0 +1,26 @@
+---
+import type { ChangelogEntry } from '../data/types';
+interface Props { slug: string; entries: ChangelogEntry[]; }
+const { slug, entries } = Astro.props;
+---
+{entries.map((entry, i) => (
+  <>
+    <div
+      class="sub-heading"
+      id={`${slug}-v${entry.version.replace(/\./g, '')}`}
+      style={i === 0 ? 'margin-top:0' : ''}
+    >
+      {entry.version} — {entry.date}
+      <span class={`tab-version-badge ${entry.kind}`}>{entry.kindLabel}</span>
+    </div>
+    <div class="changelog">
+      <div class="changelog-header">{entry.header}</div>
+      {entry.rows.map((row) => (
+        <div class="changelog-row">
+          <div class="changelog-body" set:html={row.body} />
+          {row.delta && <span class={`changelog-delta delta-${row.delta.kind}`}>{row.delta.label}</span>}
+        </div>
+      ))}
+    </div>
+  </>
+))}

@@ -1,0 +1,28 @@
+---
+import type { CodeConnectRow } from '../data/types';
+interface Props { slug: string; rows: CodeConnectRow[]; }
+const { slug, rows } = Astro.props;
+
+const badgeCls = (s: string) => `badge badge-${s}`;
+---
+<div class="sub-heading" id={`${slug}-codeconnect`}>Code Connect</div>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Aspect</th>
+        <th class="col-badge">Status</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr>
+          <td><strong>{r.aspect}</strong></td>
+          <td><span class={badgeCls(r.status)}>{r.statusLabel}</span></td>
+          <td class="muted" set:html={r.notes} />
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

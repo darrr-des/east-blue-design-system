@@ -1,0 +1,29 @@
+---
+import type { PropertyMapping as PMType } from '../data/types';
+interface Props { slug: string; data: PMType; }
+const { slug, data } = Astro.props;
+---
+<div class="sub-heading" id={`${slug}-prop-mapping`}>Property Mapping</div>
+{data.description && <p>{data.description}</p>}
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Figma Property</th><th>SwiftUI</th><th>Compose</th></tr></thead>
+    <tbody>
+      {data.rows.map((r) => (
+        <tr>
+          <td set:html={r.figma} />
+          <td set:html={r.swift} />
+          <td set:html={r.compose} />
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+{data.filePaths && (
+  <div class="infobox infobox-code">
+    <div class="path-label">SwiftUI</div>
+    <div class="path-box">{data.filePaths.swift}</div>
+    <div class="path-label">Jetpack Compose</div>
+    <div class="path-box">{data.filePaths.compose}</div>
+  </div>
+)}
