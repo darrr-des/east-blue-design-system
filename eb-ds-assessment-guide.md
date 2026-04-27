@@ -282,6 +282,11 @@ They do **not** see:
 | C4 | No drag handle node exists in the component — the sheet surface is drawn as a top-rounded rectangle with no grabber. Native presents this via platform APIs; if the Figma model pretends to ship the surface only (minus handle) it implies the wrong native mapping. | Bottom Sheet |
 | C6 | Close icon (`shape_full`) is rendered from a remote raster asset (PNG URL from Figma CDN) rather than a vector Icon instance. | Bottom Sheet |
 | C7 | Scope overlap with Modal (`18507:71705`) and Overlay (`47:329691`): three separately-maintained components share the "present a floating surface above a scrim" concern. Bottom Sheet needs to consume Overlay, not redeclare the surface. | Bottom Sheet |
+| C1 | Component name "Contextual Help" is internal jargon — industry-standard term is "Callout" (Atlassian, GitHub, Notion, Stripe). Name doesn't describe shape or purpose at a glance. | Callout |
+| C2 | Redundant axes: `label=yes/no` + `label size=small/default/no` encode the same information. When `label=no`, `label size` is forced to `no`. Three Cartesian cells (`no/small`, `no/default`) are invalid and unused. | Callout |
+| C2 | `type=default \| information` is a two-value stub of a real intent enum. Real callouts need Info / Success / Warning / Error — the Figma set only ships Default (neutral) and Information (blue). | Callout |
+| C4 | No leading icon slot on any variant. Every mature callout pattern (Material, HIG, GitHub, Notion) leads with an intent-bound icon; this one relies on colour alone — a known accessibility anti-pattern. | Callout |
+| C5 | No Pressed / Hovered / Focused / Disabled states. Callouts often embed inline links or open a sheet — without interactive states, those affordances aren't expressible. | Callout |
 | C2 | `type` enum conflates content variant (`default` / `with icon`) with loading state (`skeleton loader`) — skeleton should be an orthogonal `isLoading` boolean, not a peer value in a content enum. | Carousel Card |
 | C6 | Banner uses a hardcoded `replace-this-asset` PNG plus a purple `#e6e1ef` `mix-blend-multiply` dimmer layer — both should resolve via an image slot and an optional tint token, not a static PNG. | Carousel Card |
 | C6 | With-icon variant's round badge is a `#c2c6cf` filled circle (no instance swap) — blocks icon customization. | Carousel Card |
@@ -293,6 +298,9 @@ They do **not** see:
 | C4 | Perforated voucher edge is baked into the banner image — ties the component to voucher aesthetics and blocks reuse for non-voucher discount cards. | Carousel Discount Card |
 | C6 | Banner image, `replace-this-asset`, and the perforate edge are all raster assets stitched with mask layers — fragile and non-tokenizable. | Carousel Discount Card |
 | C7 | `violator` label text is hardcoded "New" — not parameterized as a prop. | Carousel Discount Card |
+| C2 | Container boolean `active=yes/no` used to drive a nested child's focus state — pushes a private implementation detail into the parent API when the parent is really an arrangement of three siblings (leading icon, field, trailing icon) | Chat Field |
+| C5 | Composer-as-container collapses the full field state matrix (Default/Active/Error/Disabled × isFilled) down to a single `active` boolean, silently dropping Error, Disabled, and isFilled coverage at the chat-field level | Chat Field |
+| C6 | Raster PNG glyphs for both leading (plus/attach) and trailing (send) actions on a 32×32px surface where native would ship vector SF Symbols / Material icons | Chat Field |
 | C2 | Boolean property "with icon" uses yes/no instead of true/false | Chip |
 | C2 | Two separate components ("Filter" and "Filter with Dropdown") share the same pill anatomy and should consolidate into a single Chip with leading/trailing slot props | Chip |
 | C6 | Leading slot uses a hardcoded 24px gray circle "icon-placeholder" instead of a swappable Avatar/Icon instance | Chip |
@@ -326,6 +334,13 @@ They do **not** see:
 | C4 | `disabeld` is modeled as a `type` value rather than an orthogonal `state`/`disabled` axis, colliding with content type | Dropdown Item |
 | C5 | No disabled or pressed states — form dropdown missing standard interaction states | Dropdown |
 | C2 | DropdownItem `selected` property uses yes/no string instead of true/false boolean | Dropdown |
+| C2 | `color` property uses `white` / `grey blue` (with space) instead of `default` / `subtle` — doesn't match token naming (`main/empty-state/color/default/*` and `main/empty-state/color/subtle/*`) | Empty State |
+| C2 | Two booleans named `header` and `header1` — impossible to tell apart from the property sheet. Also `topHeading` / `topDescription` vs bottom header = duplicate title+description surfaces | Empty State |
+| C6 | Icon slot ships a hardcoded gray circle placeholder (`icon-placeholder`, #C2C6CF) — should be a swappable Icon slot | Empty State |
+| C6 | Empty State Asset ships a flat colored rectangle — should be a Figma Slot for the real illustration | Empty State |
+| C2 | Property names contain spaces ("gcash x partner", "grouped logos", "with partner") — invalid for code generation and Code Connect. | Footer |
+| C2 | Six boolean-ish axes (description × label × gcash x partner × alignment × with partner × grouped logos) yield ~96 theoretical combos but only 7 are built — extreme sparse cartesian. | Footer |
+| C6 | Partner logos (CIMB, Fuse, PDAX, Bayad) are baked in as raster `<img>` fills rather than slot-accepted Image instances. | Footer |
 | C2 | `iconSize` uses 6 numeric values (64 / 52 / 46 / 40 / 32 / 24) — should collapse to 3–4 semantic sizes (XL / L / M / S). | Generic Card |
 | C1 | Icon slot is a hardcoded placeholder circle, not an Avatar or Icon instance — blocks swappable composition. | Generic Card |
 | C6 | Chevron is a raster image (<code>shape_full</code> PNG) rather than a vector glyph. | Generic Card |
@@ -345,6 +360,10 @@ They do **not** see:
 | C5 | No state axis — Voucher Card Horizontal ships Default/Limited/Expiring/Used/Expired with per-state background, label color, and badge treatment. Horizontal Voucher has no state concept at all; a used or expired horizontal voucher cannot be rendered in greyed-out treatment without detaching. | Horizontal Voucher |
 | C6 | Image is a raster photograph baked into the frame — the hero image (<code>Paste Image Here</code> / <code>imgPasteImageHere</code>) is a 336×144 raster asset with the "GrabFood" wordmark burned into the pixels. Partner branding, ticket shape, and image content are all frozen. Should be an Image Slot that accepts any Voucher Asset variant. | Horizontal Voucher |
 | C7 | No Code Connect target — the handoff API is <code>EBVoucherCard(orientation:, state:, title:, price:, originalPrice:, validity:, badges: [...], image: )</code>. A 6-boolean symbol with frozen strings, stacked discount badges, and a raster hero image has no 1:1 native analog. | Horizontal Voucher |
+| C3 | `bg-subtle` token bakes in alpha (`rgba(246,249,253,0.24)`) — rendered color depends on whatever sits behind it | Inline Message |
+| C6 | Illustrations (success / loading / error) are raster 3D renders — external assets that must be bundled with the native package | Inline Message |
+| C6 | Loading state uses a Lottie animation (same asset-bundling pattern as Upload File) | Inline Message |
+| C2 | `hasBodyContent` is a boolean, but body content isn't exposed as a slot — consumers can't override the list inside | Inline Message |
 | C1 | A single `type` enum hides 5 structurally different trailing-content compositions (plain value / value + clipboard / badge / value + description / value + description + text-link) — should be orthogonal boolean slots (hasCopy, hasDescription, hasTextLink) with a unified trailing slot so Badge can be instance-swapped. | Inline Text |
 | C2 | `type=with Clipboard` / `with Badge` / `with Description` / `with Text Link` mix two axes — "what sits in the trailing slot" (value / badge) and "what sits under the label" (description / text-link). A single enum conflates them. | Inline Text |
 | C6 | Badge variant is drawn inline (hardcoded information/light fill, hardcoded "Label" text) instead of instance-swapped from the canonical Badge component — creates a parallel styling source of truth. | Inline Text |
@@ -743,12 +762,14 @@ Key conventions:
 | Avatar Group | `18276:4554` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Avatar | `17143:4488` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Badge | `18482:28972` | Keep | Needs Refinement | 🔁 Re-assessing | — |
-| Banner | `756:82673` | Restructure | Requires Rework | 🔁 Re-assessing | — |
+| Banner | `756:82673` | Restructure | Requires Rework | 🟡 In Progress | — |
 | Bottom Sheet | `12817:43833` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Button | `17104:184842` | Keep | Needs Refinement | 🔁 Re-assessing | — |
+| Callout | `23:179895` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Carousel Card | `23:121311` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Carousel Discount Card | `18543:2761` | Consolidate | Needs Refinement | 🔁 Re-assessing | — |
 | Carousel Item | `—` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
+| Chat Field | `23:145915` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Checkbox | `17143:2464` | Keep | Needs Refinement | 🔁 Re-assessing | — |
 | Chip | `18336:22243` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | Counter | `18482:71321` | Fix | Needs Refinement | 🔁 Re-assessing | — |
@@ -758,6 +779,8 @@ Key conventions:
 | Dropdown Item Group | `6383:3446` | Consolidate | Not Applicable | 🔁 Re-assessing | — |
 | Dropdown Item | `18577:13033` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Dropdown | `18482:31910` | Fix | Needs Refinement | 🔁 Re-assessing | — |
+| Empty State | `27:169325` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
+| Footer | `21:215190` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Generic Card | `18482:35806` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Generic Transaction Card | `18482:35753` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | Header Centered | `18430:2858` | Restructure | Requires Rework | 🔁 Re-assessing | — |
@@ -765,6 +788,7 @@ Key conventions:
 | Header With Logo | `18430:2875` | Consolidate | Requires Rework | 🔁 Re-assessing | — |
 | Header | `18430:2919` | Restructure | Requires Rework | 🔁 Re-assessing | — |
 | Horizontal Voucher | `5121:4533` | Consolidate | Requires Rework | 🟡 In Progress | — |
+| Inline Message | `27:168910` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Inline Text | `18652:71101` | Restructure | Needs Refinement | 🔁 Re-assessing | — |
 | Input Field | `17758:3687` | Fix | Needs Refinement | 🔁 Re-assessing | — |
 | Labeled Field | `17758:3713` | Keep | Needs Refinement | 🔁 Re-assessing | — |
