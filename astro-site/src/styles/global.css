@@ -5817,6 +5817,17 @@ body.rail-nav #rail-nav-host .nav-group-list {
   background: rgba(255, 255, 255, 0.04);
 }
 
+/* Family group toggle is "focused" when its children list is open
+   (i.e. the current page is one of its children). Same bg as hover. */
+.nav-family-toggle.open {
+  background: rgba(100, 106, 120, 0.06);
+  color: var(--text);
+}
+[data-theme="dark"] .nav-family-toggle.open {
+  background: rgba(255, 255, 255, 0.04);
+}
+.nav-family-toggle.open .nav-section-chevron { opacity: 0.7; }
+
 /* Items nested inside a family group get extra left indent so the
    hierarchy is visible (Avatar group → Avatar / Avatar Group items below). */
 .nav-section-list .nav-section-list .nav-comp {

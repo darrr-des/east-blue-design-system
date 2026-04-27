@@ -41,9 +41,10 @@ while (si < standalone.length || gi < orderedGroups.length) {
   }
 }
 
-const isOverview   = pathname === '/';
-const isComponents = pathname === '/components' || pathname.startsWith('/components/');
-const isGuide      = pathname === '/eb-ds-assessment-guide';
+const isOverview        = pathname === '/';
+const isComponentsGrid  = pathname === '/components';                          // on the grid page itself → highlight active
+const componentsOpen    = isComponentsGrid || pathname.startsWith('/components/'); // expand the list whenever inside Components
+const isGuide           = pathname === '/eb-ds-assessment-guide';
 ---
 <aside class="sidebar">
   <a class="sidebar-brand" href="/">
@@ -70,9 +71,9 @@ const isGuide      = pathname === '/eb-ds-assessment-guide';
     {/* Top-level nav */}
     <a class={`nav-item${isOverview ? ' active' : ''}`} href="/">Overview</a>
 
-    <div class={`nav-item-row${isComponents ? ' active open' : ''}`}>
+    <div class={`nav-item-row${isComponentsGrid ? ' active' : ''}${componentsOpen ? ' open' : ''}`}>
       <a
-        class={`nav-item nav-item-toggleable${isComponents ? ' active' : ''}`}
+        class={`nav-item nav-item-toggleable${isComponentsGrid ? ' active' : ''}`}
         href="/components"
         onclick="toggleComponentsSection(event, false)"
       >
@@ -84,7 +85,7 @@ const isGuide      = pathname === '/eb-ds-assessment-guide';
         </svg>
       </button>
     </div>
-    <div class={`nav-section-list nav-components-list${isComponents ? ' open' : ''}`}>
+    <div class={`nav-section-list nav-components-list${componentsOpen ? ' open' : ''}`}>
       <div class="nav-section-list-inner">
         {rows.map((row) =>
           row.kind === 'item' ? (
