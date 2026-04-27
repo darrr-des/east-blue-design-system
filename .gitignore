@@ -1,3 +1,31 @@
+# Editor / OS
 .claude/
 .DS_Store
+.vscode/
+*.log
+
+# Secrets
 .env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Astro build outputs / caches
+.astro/
+astro-site/.astro/
+astro-site/dist/
+astro-site/node_modules/
+
+# Soft-archived legacy site (kept on disk only — see _archive_legacy_site/)
+_archive_legacy_site/
+
+# Stale local-only dev files (kept on disk, never pushed)
+test-itm.mjs
+components-preview.html
+overview-preview.html
+
+# Asset dirs used only by the local-only preview HTMLs above
+assets/components-preview/
+assets/overview-preview/
