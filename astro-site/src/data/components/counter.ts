@@ -16,7 +16,12 @@ export const counter: ComponentData = {
         "kind": "refine",
         "label": "Needs Refinement"
       }
-    ]
+    ],
+    "verdict": {
+      "kind": "fix",
+      "title": "Fix — parameterize values and clean boolean naming",
+      "text": "Both formats (single-integer + slash) belong. The fixes are: rename <code>with limit</code> → <code>hasLimit</code> with <code>true/false</code>; parameterize <code>count: Int</code> and <code>limit: Int?</code>; add <code>99+</code> overflow handling. Variant count stays at 4."
+    }
   },
   "overview": {
     "inContextNote": "Counter appears inline with text to show counts — section headers for unread notifications, tab item badges for pending items, limit/slot usage displays.",

@@ -17,7 +17,12 @@ export const toggle: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Toggle"
+    "navGroup": "Toggle",
+    "verdict": {
+      "kind": "fix",
+      "title": "Fix — normalize to the Selection Control schema",
+      "text": "Rename <code>isActive</code> → <code>isSelected</code>, change <code>Yes/No</code> values to <code>true/false</code>, expand states from 2 → 5 (Default, Pressed, Focused, Disabled, Error), add Small/Medium/Large sizes. Once normalized, Toggle sits alongside Checkbox and Radio Button under one shared schema and maps cleanly to native <code>Toggle</code> / <code>Switch</code>."
+    }
   },
   "overview": {
     "inContextNote": "Toggle appears in settings rows, form opt-ins, and any control that flips a single boolean. Usually paired with a label (see Toggle - With Label).",

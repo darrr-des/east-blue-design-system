@@ -17,7 +17,12 @@ export const headerCentered: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Header"
+    "navGroup": "Header",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — rename and re-label the surface property",
+      "text": "Rename to <strong>Page Banner</strong> — \"Header\" conflates with three structurally different components. Replace <code>type = dark | light</code> with <code>surface = brand | default</code> — the current name describes appearance, not semantic intent. See the <a href=\"/components/header\">Header family restructure</a> for the full plan."
+    }
   },
   "overview": {
     "inContextNote": "Page Banner sits at the top of a screen, modal, or feature card — centered, taking full width, setting the title of the surface below it.",

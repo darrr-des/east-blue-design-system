@@ -17,7 +17,12 @@ export const toggleWithLabel: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Toggle"
+    "navGroup": "Toggle",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — promote from frame to real component",
+      "text": "Add a property set: <code>label</code>, optional <code>description</code>, optional <code>helper</code>/<code>error</code> text, <code>required</code> marker, <code>placement = leading | trailing</code>, and inherit Toggle's state + size from the inner Toggle instance. Once built, drop-in for settings rows, form opt-ins, and list items."
+    }
   },
   "overview": {
     "inContextNote": "Labeled toggle is the primary form of Toggle shown in product. Settings rows, feature opt-ins, biometric/notification preferences — nearly all consumer-facing toggles are labeled.",

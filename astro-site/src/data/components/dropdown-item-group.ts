@@ -17,7 +17,12 @@ export const dropdownItemGroup: ComponentData = {
         "label": "Not Applicable"
       }
     ],
-    "navGroup": "Dropdown"
+    "navGroup": "Dropdown",
+    "verdict": {
+      "kind": "consolidate",
+      "title": "Consolidate into Dropdown composition",
+      "text": "Not a reusable DS primitive. Layout is hardcoded (8 rows, last row is a detached frame — not a DropdownItem instance). Native menu infrastructure handles the popover surface on both platforms. Fold into the <code>Dropdown</code> component's expanded state as inline overlay behavior, not a separate component."
+    }
   },
   "overview": {
     "inContextNote": "The group appears immediately below a Dropdown trigger in the expanded state. On native platforms it is rendered by the OS menu primitive, not drawn manually.",

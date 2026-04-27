@@ -17,7 +17,12 @@ export const selectField: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Form Elements"
+    "navGroup": "Form Elements",
+    "verdict": {
+      "kind": "fix",
+      "title": "Fix required before handoff",
+      "text": "Peso sign uses BOOLEAN_OPERATION instead of vector (C6). Flag uses raster IMAGE fill (C6). These block clean native mapping."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",

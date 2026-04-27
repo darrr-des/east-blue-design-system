@@ -17,7 +17,12 @@ export const tableTransaction: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Table"
+    "navGroup": "Table",
+    "verdict": {
+      "kind": "fix",
+      "title": "Fold into Table as a recipe, not a separate primitive",
+      "text": "Table - Transaction is a feature-specific composition of existing DS primitives — a header row (which Table already ships) and a content row that is effectively an <strong>Inline Text</strong> with a peso-prefixed amount. Publishing it as its own component duplicates the Table variant matrix and introduces a raster peso asset to DS surface. On mobile, \"transaction details\" render as vertical label / amount stacks — exactly what <strong>Generic Transaction Card</strong> and <strong>Inline Text</strong> already cover. Recommend removing from core DS and documenting the pattern as a recipe on Table's page: \"For transaction totals, compose an <code>EBInlineText</code> stack; use Table only for multi-column tabular history on wider surfaces.\""
+    }
   },
   "overview": {
     "inContextNote": "Per-variant descriptions cite account limits — e.g. daily / monthly send caps showing used vs. remaining peso amounts in aligned columns. Other GCash surfaces like transaction history and receipts use the Generic Transaction Card vertical stack, not this tabular layout.",

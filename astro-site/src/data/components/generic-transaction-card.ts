@@ -17,7 +17,12 @@ export const genericTransactionCard: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Card"
+    "navGroup": "Card",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — type enum hides 5 different layouts",
+      "text": "The five <code>type</code> values are visually distinct layouts, not variants of the same pattern. Replace the enum with slot-based composition (<code>leadingMedia?</code>, <code>badge?</code>, <code>trailing = amount | menu | reference</code>, <code>loading</code>). Same fix pattern as Alert's <code>Full Width</code>. Also align heading weight with Generic Card (both should use Bold, not Semibold)."
+    }
   },
   "overview": {
     "inContextNote": "Transaction-history rows stack vertically in the Activity / Transactions screen. Different rows use different variants depending on the context (recipient avatar, reference number, action menu).",

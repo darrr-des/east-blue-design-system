@@ -16,7 +16,12 @@ export const visualPopup: ComponentData = {
         "kind": "refine",
         "label": "Needs Refinement"
       }
-    ]
+    ],
+    "verdict": {
+      "kind": "fix",
+      "title": "Open issues remain",
+      "text": "Variant naming mixes paradigms — <code>Default</code> / <code>2 CTA</code> / <code>Version 2</code> (C2). Hero image is a raster placeholder with \"Replace me\" overlay instead of a swappable image slot (C6). No destructive/error/loading state coverage (C5). Code Connect mappings not registered (C7)."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. Visual Popup overlays the app surface to confirm critical actions or onboard users to a new feature.",

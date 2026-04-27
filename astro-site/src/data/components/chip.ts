@@ -16,7 +16,12 @@ export const chip: ComponentData = {
         "kind": "refine",
         "label": "Needs Refinement"
       }
-    ]
+    ],
+    "verdict": {
+      "kind": "fix",
+      "title": "Recommend rename + consolidation",
+      "text": "Rename \"Filter\" → <strong>Chip</strong> (industry term — Material, Polaris, Carbon all use it). Merge Filter + Filter with Dropdown into one component with <code>style</code> (filled/light/outline), <code>leading</code> (none/avatar/icon), and <code>trailing</code> (none/close/chevron) slot props. Fixes the paradigm mismatch, collapses 8 variants into cleaner prop combinations, and aligns with native chip APIs."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",

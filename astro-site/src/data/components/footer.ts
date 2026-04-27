@@ -17,7 +17,12 @@ export const footer: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Header"
+    "navGroup": "Header",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — rename props, collapse partner axes, slot partner logos",
+      "text": "The current 6-axis boolean model invites ~96 invalid combinations for only 7 real shapes. Three of those axes (<code>gcash x partner</code>, <code>with partner</code>, <code>grouped logos</code>) all describe the same thing: which partner logo(s) sit next to GCash. Collapse them into one <code>partnerLogos</code> enum, rename the remaining props to camelCase, and expose a Slot so consumers can instance-swap any partner logo instead of shipping a new variant per brand (CIMB, Fuse, PDAX, Bayad…)."
+    }
   },
   "overview": {
     "inContextNote": "The Footer sits at the bottom of lending/savings/investment flows — carrying regulatory disclosures, partner attribution, and a link to more information on the Help Center.",

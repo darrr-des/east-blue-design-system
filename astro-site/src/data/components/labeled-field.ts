@@ -17,7 +17,12 @@ export const labeledField: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Form Elements"
+    "navGroup": "Form Elements",
+    "verdict": {
+      "kind": "fix",
+      "title": "Fix required before handoff",
+      "text": "Trailing icon uses rectangle placeholder instead of swappable icon instance (C6). Code Connect mappings not yet registered (C7)."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",

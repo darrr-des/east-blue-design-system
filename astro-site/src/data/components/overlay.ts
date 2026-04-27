@@ -16,7 +16,12 @@ export const overlay: ComponentData = {
         "kind": "refine",
         "label": "Needs Refinement"
       }
-    ]
+    ],
+    "verdict": {
+      "kind": "fix",
+      "title": "Keep — with minor fixes before native handoff",
+      "text": "Overlay is correctly token-bound and maps cleanly to native primitives (SwiftUI <code>.presentationBackground</code>, Compose <code>Scrim</code>). Before linking, resize to Fill parent, decide whether a standard-strength variant is needed, and annotate the tap-to-dismiss contract."
+    }
   },
   "overview": {
     "inContextNote": "Overlay sits between page content and a floating surface (bottom sheet, dialog, drawer). It dims the content below to focus attention on the surface above.",

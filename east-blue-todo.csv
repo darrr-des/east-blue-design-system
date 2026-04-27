@@ -1,0 +1,60 @@
+Title,Section,Owner,Status,Effort,Notes
+Restore sidebar brand: East Blue v0.1.0 + Component Assessment,Site Polish,Claude,Not started,15 min,Replace EB DS Assessment with proper brand. Use 2x2 grid logo SVG.
+Add nav items: Overview / Components / Assessment Guide,Site Polish,Claude,Not started,15 min,New routes need to be added to sidebar nav.
+Active state highlighting per route,Site Polish,Claude,Not started,10 min,Sidebar should highlight current section.
+Build Home page hero (East Blue logo + title + subtitle),Site Pages,Claude,Not started,30 min,Replaces current /index.astro. Match legacy landing.
+Add 3 stat pills on home page (components / open issues / post-fix),Site Pages,Claude,Not started,20 min,Compute dynamically from component data.
+Add Resources cards on home page (Assessment Report + Guide),Site Pages,Claude,Not started,15 min,Two clickable cards linking to those pages.
+Add home footer (March 2026 / For internal use only),Site Pages,Claude,Not started,5 min,Match legacy footer.
+Build Overview page (How It Works + 4 steps),Site Pages,Claude,Not started,30 min,New /overview route.
+Add Assessment Criteria table on Overview (C1-C7),Site Pages,Claude,Not started,30 min,Pull copy from CLAUDE.md framework section.
+Add Trait ratings + DS Verdicts legends on Overview,Site Pages,Claude,Not started,15 min,Pass/Partial/Warn/Fail + Keep/Fix/etc.
+Build Components grid page (3-col card layout),Site Pages,Claude,Not started,45 min,New /components route. Card per component.
+Group component grid by family (Avatar / Carousel / etc),Site Pages,Claude,Not started,15 min,Use navGroup field already in data.
+Build Assessment Guide page,Site Pages,Claude,Not started,30 min,Render eb-ds-assessment-guide.md content.
+Add open-issues summary tables to Guide page,Site Pages,Claude,Not started,30 min,Pull from each component data.
+Live preview audit: export Figma screenshots for all 79 components,Live Preview Audit,Claude,Not started,2 hours,Use Figma MCP get_screenshot for each.
+Live preview audit: build side-by-side diff report,Live Preview Audit,Claude,Not started,1 hour,Identify which components are off.
+Live preview audit: fix high-priority components (Button / Avatar / Badge),Live Preview Audit,Claude,Not started,2 hours,Most-visible components first.
+Live preview audit: fix medium-priority components (Card / Carousel / Header / Form),Live Preview Audit,Claude,Not started,3 hours,Second wave.
+Live preview audit: fix remaining components,Live Preview Audit,Claude,Not started,4 hours,Tail of the list.
+Live preview audit: spot-check after each batch,Live Preview Audit,You,Not started,30 min,Visual review on dev server.
+Create Google Cloud project,Auth Setup,You,Not started,10 min,Or use existing if you have one.
+Enable Google OAuth 2.0 Client (Web application),Auth Setup,You,Not started,10 min,In Google Cloud Console.
+Get Client ID + Client Secret from Google,Auth Setup,You,Not started,5 min,Save securely.
+Decide auth service domain,Auth Setup,You,Not started,5 min,auth.frostdesigngroup.com vs IP:port.
+Add authorized redirect URI in Google Cloud,Auth Setup,You,Not started,5 min,Must match service domain.
+Create new GitHub repo (frost-auth),Auth Setup,You,Not started,5 min,Standalone reusable backend.
+Decide hosting,Auth Setup,You,Not started,10 min,Same server as East Blue or separate.
+Scaffold Node.js + Fastify project (frost-auth),Auth Backend,Claude,Not started,30 min,Initial structure + deps.
+Set up SQLite schema for users table,Auth Backend,Claude,Not started,15 min,email / name / picture / created_at.
+Write .env.example with all required keys,Auth Backend,Claude,Not started,10 min,Documents required config.
+Implement endpoint: GET /auth/google,Auth Backend,Claude,Not started,20 min,Redirects to Google consent.
+Implement endpoint: GET /auth/google/callback,Auth Backend,Claude,Not started,30 min,Receives code / issues JWT.
+Implement endpoint: GET /auth/me,Auth Backend,Claude,Not started,15 min,Returns user info from JWT.
+Implement endpoint: POST /auth/logout,Auth Backend,Claude,Not started,10 min,Clears session cookie.
+Implement endpoint: GET /health,Auth Backend,Claude,Not started,5 min,Simple health check.
+Add domain allowlist check (block non-allowed emails),Auth Backend,Claude,Not started,15 min,Configurable via .env.
+Configure CORS for multiple origins,Auth Backend,Claude,Not started,10 min,Allow east-blue + future frontends.
+Set JWT in HttpOnly + Secure + SameSite cookie,Auth Backend,Claude,Not started,15 min,Standard secure cookie config.
+Write README for frost-auth,Auth Backend,Claude,Not started,30 min,Setup / run / deploy. Onboarding for future projects.
+Local testing of auth backend,Auth Backend,Claude,Not started,30 min,curl + browser flow check.
+Smoke-test /health endpoint after deploy,Auth Verify,You,Not started,5 min,After Enzo finishes the server side. Verify it's live.
+Build astro-site auth client wrapper (lib/auth.ts),Auth Integration,Claude,Not started,30 min,Calls frost-auth /auth/me.
+Build login page (pages/login.astro),Auth Integration,Claude,Not started,30 min,Single Sign in with Google button.
+Build Astro middleware for cookie check,Auth Integration,Claude,Not started,30 min,Redirects unauthenticated to /login.
+Add logout button to sidebar,Auth Integration,Claude,Not started,15 min,Calls /auth/logout.
+Add user info (avatar / name) to sidebar footer,Auth Integration,Claude,Not started,20 min,From /auth/me response.
+Add East Blue domain to ALLOWED_ORIGINS,Auth Integration,Claude,Not started,5 min,Coordinate with deployed env.
+End-to-end test: visit site -> login -> see content,Auth Integration,You,Not started,15 min,Final verification.
+Verify live site loads after Enzo updates CI,Deploy Verify,You,Not started,10 min,Smoke test https://eb-ds.frostdesigngroup.com.
+Drop 2 stale git stashes,Cleanup,Claude,Not started,2 min,git stash drop x2.
+Decide fate of _archive_legacy_site/,Cleanup,You,Not started,5 min,Keep on disk or delete. Already off GitHub.
+Update README.md for new astro-site structure,Cleanup,Claude,Not started,20 min,Reflect current architecture.
+Add deployment doc (rebuild + push instructions),Cleanup,Claude,Not started,30 min,For future contributors.
+Add token refresh to auth backend,Auth Polish,Claude,Not started,1 hour,Avoid forced re-login every 7 days.
+Add error pages (login failed / domain not allowed),Auth Polish,Claude,Not started,30 min,Better UX for failures.
+Add admin DB query method to view registered users,Auth Polish,Claude,Not started,30 min,Simple SQL or script.
+Add rate limiting on /auth/* endpoints,Auth Polish,Claude,Not started,30 min,Protect from brute force.
+Add structured logging,Auth Polish,Claude,Not started,30 min,Track logins / failures.
+Document onboarding for future frontends,Auth Polish,Claude,Not started,30 min,How to wire a new app to frost-auth.

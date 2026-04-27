@@ -17,7 +17,12 @@ export const dropdownItem: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Dropdown"
+    "navGroup": "Dropdown",
+    "verdict": {
+      "kind": "fix",
+      "title": "Fix required before handoff",
+      "text": "Enum value typo <code>disabeld</code> (C2). Country variant uses a raster PNG flag (C6). No pressed/focused state variants (C5). Disabled is modeled as a <code>type</code> value rather than an orthogonal state (C4)."
+    }
   },
   "overview": {
     "inContextNote": "Dropdown Item is the row primitive consumed by the Dropdown overlay and by Dropdown Item Group. Not used standalone.",

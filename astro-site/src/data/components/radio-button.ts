@@ -17,7 +17,12 @@ export const radioButton: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Radio"
+    "navGroup": "Radio",
+    "verdict": {
+      "kind": "fix",
+      "title": "Split properties + rebuild as vector",
+      "text": "Replace the sparse <code>selected × style</code> matrix with orthogonal props: <code>selected: Bool</code> + <code>state: default/disabled/error</code>. Retire the <code>checkmark</code> style (it's a checkbox affordance, not a radio). Rebuild the large radio with token-bound vector layers instead of raster SVG images. Rename <code>.base/checkbox</code> → <code>.base/radio</code>. Add pressed + focused states."
+    }
   },
   "overview": {
     "inContextNote": "Radio Buttons appear in Radio Button with Label groups — see the Radio Button with Label preview for the composed form row.",

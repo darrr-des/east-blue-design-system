@@ -17,7 +17,12 @@ export const tabs: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Tabs"
+    "navGroup": "Tabs",
+    "verdict": {
+      "kind": "fix",
+      "title": "Rename + drop count variant",
+      "text": "Rename the Figma component from \"Tab\" → \"Tabs\" (plural) to disambiguate from the Tab Item atom. Drop <code>tabsCount</code> — native tabs accept a list of items, not a fixed count variant. The container becomes one flexible component instead of 3 rigid variants."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. Tabs sit below a Title Bar to switch between screen sections.",

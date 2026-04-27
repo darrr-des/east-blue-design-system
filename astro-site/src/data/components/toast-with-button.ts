@@ -17,7 +17,12 @@ export const toastWithButton: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Toast"
+    "navGroup": "Toast",
+    "verdict": {
+      "kind": "consolidate",
+      "title": "Consolidate — fold into the base Toast",
+      "text": "Remove this component from the family. Base Toast picks up <code>action?: EBToastAction</code> (label + callback) and <code>supportingText?: String</code> (the 10/15 BarkAda second line). Align width with base Toast (312 vs. 330 today) and swap the deprecated Button - Small/XS for Button - XSmall. Covers the \"Undo / Retry / View\" use cases and collapses two components into one."
+    }
   },
   "overview": {
     "inContextNote": "The actionable toast appears after reversible operations — \"Transfer sent · Undo\", \"Message failed · Retry\", \"Photo uploaded · View\". The action button sits right-aligned, tappable without dismissing the toast. Auto-dismiss is suppressed while an action is present.",

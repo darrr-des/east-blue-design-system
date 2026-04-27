@@ -17,7 +17,12 @@ export const headerWithLogo: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Header"
+    "navGroup": "Header",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Consolidate — merge into Title Bar",
+      "text": "This component solves the same problem as Title Bar (<code>23:175148</code>) but swaps the title text for a logo. Rather than maintain two app-bar components, add a <code>leading = title | logo</code> slot to Title Bar and retire this file. One app bar primitive, two behaviours. See <a href=\"/components/header\">Header family restructure</a> for the full plan."
+    }
   },
   "overview": {
     "inContextNote": "Brand app bar appears on splash, login, onboarding, and home screens — anywhere the brand identity should lead before page-specific navigation takes over.",

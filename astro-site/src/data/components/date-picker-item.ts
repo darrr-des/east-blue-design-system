@@ -17,7 +17,12 @@ export const datePickerItem: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Date Picker"
+    "navGroup": "Date Picker",
+    "verdict": {
+      "kind": "consolidate",
+      "title": "Consolidate into a unified Picker Cell",
+      "text": "This cell and Month and Year Picker - Item are the same selectable-cell primitive at different pixel sizes (32×32 vs 100×32) with identical state semantics. Collapse both into a single <code>Picker Cell</code> with <code>kind: day | month | year</code> + <code>state: default | today | selected | range-middle | prev-next | disabled</code>. Also note: at 32×32 the cell is below WCAG's 44×44 minimum touch target (A11y)."
+    }
   },
   "overview": {
     "inContextNote": "The cell is an instance inside Date Picker - Group (Type=Date). 42 cells are rendered across 6 rows × 7 columns. A sibling weekday-header row also instance-swaps this component, which is one of the reasons C1 flags the layer-naming convention.",

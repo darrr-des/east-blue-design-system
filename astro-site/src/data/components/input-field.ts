@@ -17,7 +17,12 @@ export const inputField: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Form Elements"
+    "navGroup": "Form Elements",
+    "verdict": {
+      "kind": "fix",
+      "title": "Fix required before handoff",
+      "text": "isFilled uses Yes/No instead of true/false (C2). Property naming blocks direct Swift Bool / Kotlin Boolean mapping."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",

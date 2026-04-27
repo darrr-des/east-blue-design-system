@@ -17,7 +17,12 @@ export const table: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Table"
+    "navGroup": "Table",
+    "verdict": {
+      "kind": "fix",
+      "title": "Collapse the family and rethink Table on mobile",
+      "text": "The 3-component setup (Table + Table - Item + Table - Label) hardcodes a column-count variant matrix that doesn't scale. On mobile, tabular data almost always renders as a vertical stack of label/value pairs — which is exactly what the existing <strong>Inline Text</strong> component already does. Evaluate whether Table should ship as a DS primitive at all, or be reserved for true data-dense desktop contexts while mobile screens compose <code>List</code> + <code>Inline Text</code> rows instead. If Table stays, collapse the matrix into a single data-driven row (<code>columns: [Column]</code>) with named <code>leading</code> / <code>trailing</code> slots and optional per-row icon."
+    }
   },
   "overview": {
     "inContextNote": "Sticker sheet shows Table instances stacked on a Template Screen to build a static 6-row pattern — 1 header row + 5 content rows. No scroll, no sort, no selection.",

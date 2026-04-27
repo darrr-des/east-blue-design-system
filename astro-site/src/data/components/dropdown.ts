@@ -17,7 +17,12 @@ export const dropdown: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Dropdown"
+    "navGroup": "Dropdown",
+    "verdict": {
+      "kind": "fix",
+      "title": "Fix required before handoff",
+      "text": "Missing disabled and pressed states (C5). DropdownItem <code>selected</code> uses yes/no instead of true/false (C2). Amount variant Peso Sign uses BOOLEAN_OPERATION (C6)."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",

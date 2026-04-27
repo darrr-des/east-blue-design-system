@@ -18,7 +18,12 @@ export const stepperCircular: ComponentData = {
       }
     ],
     "navGroup": "Stepper",
-    "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <circle cx=\"7\" cy=\"16\" r=\"4\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"1.5\"/>\n      <circle cx=\"16\" cy=\"16\" r=\"4\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"1.5\" stroke-dasharray=\"12 20\"/>\n      <circle cx=\"25\" cy=\"16\" r=\"4\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"1.5\"/>\n    </svg>"
+    "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <circle cx=\"7\" cy=\"16\" r=\"4\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"1.5\"/>\n      <circle cx=\"16\" cy=\"16\" r=\"4\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"1.5\" stroke-dasharray=\"12 20\"/>\n      <circle cx=\"25\" cy=\"16\" r=\"4\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"1.5\"/>\n    </svg>",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — collapse 9 sibling components into one <code>Stepper - Circular</code> with <code>steps</code> and <code>current</code> properties",
+      "text": "Step count is a scalar — not a component axis. The current schema has 9 top-level components (2..10 steps) and inside each, 10 symbols of pre-rendered ring arcs. Every step count ships ~N PNGs. Rebuild as a single component: <code>steps: Int</code> (range 2–10) and <code>current: Int</code> (1..steps). Redraw the ring as a stroked SVG arc derived from <code>current / steps</code> so the fill scales with math, not image swaps. Native side maps to a custom <code>EBStepperCircular(current:total:)</code> rendered over an <code>HStack</code> / <code>Row</code> of <code>Circle</code> shapes with <code>.trim(from:to:)</code> or <code>drawArc</code>."
+    }
   },
   "overview": {
     "inContextNote": "Stepper - Circular appears at the top of multi-step flows (onboarding, KYC, form wizards) to show position and total count. Consumers pair it with a screen title and step-specific content.",

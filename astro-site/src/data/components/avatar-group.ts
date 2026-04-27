@@ -17,7 +17,12 @@ export const avatarGroup: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Avatar"
+    "navGroup": "Avatar",
+    "verdict": {
+      "kind": "fix",
+      "title": "All structural issues resolved",
+      "text": "Property renamed to <code>layout</code> with semantic values ✓. Overflow variant added ✓. Inner avatars repointed to canonical Avatar via instance swap ✓. Only C7 (Code Connect) remains — tracked universally across all components."
+    }
   },
   "overview": {
     "inContextNote": "How the avatar group appears in a real product screen — conversation list where grouped chats display stacked avatars (DX Team, David's Surprise Party) alongside single-avatar threads.",

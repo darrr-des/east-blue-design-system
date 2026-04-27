@@ -17,7 +17,12 @@ export const radioButtonWithLabel: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Radio"
+    "navGroup": "Radio",
+    "verdict": {
+      "kind": "fix",
+      "title": "Split size + state props",
+      "text": "Split the <code>size</code> property into <code>size=default/large</code> and <code>isError: Bool</code>. Add <code>disabled</code> and <code>selected</code> variants. Instance-swap (or Figma Slot) the radio so the large label pairs with a large radio. The label component should track the atom's state via a single <code>selected</code> prop forwarded down."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. Radio Button with Label appears in form questions and preference settings, stacked vertically as a group.",

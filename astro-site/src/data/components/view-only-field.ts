@@ -17,7 +17,12 @@ export const viewOnlyField: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Form Elements"
+    "navGroup": "Form Elements",
+    "verdict": {
+      "kind": "refine",
+      "title": "Minor refinements before handoff",
+      "text": "Property <code>variant</code> is overloaded with 4 trailing content types — consider renaming to <code>trailingContent</code> (C2). Checkmark uses raster IMG instead of a vector icon (C6)."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",

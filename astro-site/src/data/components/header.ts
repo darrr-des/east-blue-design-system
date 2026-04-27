@@ -17,7 +17,12 @@ export const header: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Header"
+    "navGroup": "Header",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — rename, split, and collapse the variant matrix",
+      "text": "Today four components share the \"Header\" prefix but solve four different problems. The base Header (this one) should be renamed <strong>Section Header</strong>, its 8 boolean slots collapsed into 3 props (<code>preamble</code>, <code>leadingMedia</code>, <code>trailing</code>), and the sibling \"Header - *\" components either renamed by role or merged into existing primitives. See the <strong>Family Restructure</strong> section below for the full plan."
+    }
   },
   "overview": {
     "inContextNote": "Section headers sit above grouped content — a list of transactions, a set of services, a carousel of offers — to label the section and optionally expose a trailing action.",

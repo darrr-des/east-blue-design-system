@@ -17,7 +17,12 @@ export const carouselCard: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Carousel"
+    "navGroup": "Carousel",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — split the type enum, add slots, consolidate the family",
+      "text": "The <code>type</code> property conflates a content variant (default vs with icon) with a loading state (skeleton) — these should be orthogonal axes. Banner image, dimmer, and icon badge are all hardcoded placeholders instead of instance slots. No pressed/focused state despite the card being tappable. Most importantly, this component is 1 of 5 near-duplicate \"carousel card / item\" components that should consolidate to 1–2 canonical primitives."
+    }
   },
   "overview": {
     "inContextNote": "Carousel Card lives in a horizontal scroller — typically a \"Featured\" or \"For You\" rail on a home or category screen. Cards are peeked (part of the next one visible) to signal scrollability.",

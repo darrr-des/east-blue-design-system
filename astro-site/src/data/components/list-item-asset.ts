@@ -17,7 +17,12 @@ export const listItemAsset: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "List"
+    "navGroup": "List",
+    "verdict": {
+      "kind": "fix",
+      "title": "Flatten the variant matrix + adopt Figma Slots",
+      "text": "Replace the entangled <code>type</code> × <code>indicator</code> × <code>state</code> axes with a single semantic <code>variant</code> enum (<code>check</code>, <code>check-positive</code>, <code>pending</code>, <code>pending-notice</code>, <code>bullet</code>, <code>hollow</code>, <code>square</code>, <code>numbered</code>, <code>custom</code>). Replace the <code>Custom</code> placeholder circle with a Figma Slot so product teams can drop in any 16×16 asset without instance-swap."
+    }
   },
   "overview": {
     "inContextNote": "List Item Asset appears inside List Items — see the List Item preview for the composed layout.",

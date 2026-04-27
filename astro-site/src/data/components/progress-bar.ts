@@ -17,7 +17,12 @@ export const progressBar: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <rect x=\"3\" y=\"14\" width=\"26\" height=\"4\" rx=\"2\" fill=\"#D2E5FF\"/>\n      <rect x=\"3\" y=\"14\" width=\"15\" height=\"4\" rx=\"2\" fill=\"#005CE5\"/>\n    </svg>"
+    "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <rect x=\"3\" y=\"14\" width=\"26\" height=\"4\" rx=\"2\" fill=\"#D2E5FF\"/>\n      <rect x=\"3\" y=\"14\" width=\"15\" height=\"4\" rx=\"2\" fill=\"#005CE5\"/>\n    </svg>",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — collapse 11 percentage variants into one component with a continuous <code>progress</code> value",
+      "text": "Progress is a scalar — not an enum. The current schema cannot represent 37% or 62%, and every variant ships two raster PNGs for what should be two token-bound rectangles. Rebuild as a single component: <code>progress: Float</code> (0–1), <code>state: determinate | indeterminate | success | error</code>. Replace the raster <code>back</code> / <code>front</code> layers with vector strokes bound to <code>main/progress-bar/color/border-track</code> and <code>main/progress-bar/color/border</code>. Native side maps 1:1 to <code>ProgressView</code> / <code>LinearProgressIndicator</code>."
+    }
   },
   "overview": {
     "inContextNote": "Progress Bar appears above or below task content to show completion — KYC steps, file upload progress, multi-step form wizards.",

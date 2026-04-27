@@ -17,7 +17,12 @@ export const toast: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Toast"
+    "navGroup": "Toast",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — collapse the family and clean up the axes",
+      "text": "Merge Toast + Toast - With Button into one component with an optional <code>action</code> slot. Split the overloaded <code>theme</code> axis into <code>appearance = neutral | destructive | pending</code> + <code>theme = light | dark</code>. Replace <code>Large Label</code> with <code>size = small | base</code>. Replace the Pending placeholder circle with a real spinner instance. Add a dismiss contract (swipe + auto-duration)."
+    }
   },
   "overview": {
     "inContextNote": "Toasts float over the app screen — not inline with content. Success toasts confirm completed actions (\"Transfer sent\"), pending toasts acknowledge background work (\"Uploading…\"), and error toasts surface failures that don't block the flow. They auto-dismiss after ~3 seconds unless swiped.",

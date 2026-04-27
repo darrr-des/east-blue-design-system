@@ -17,7 +17,12 @@ export const tooltipBlurred: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Tooltip"
+    "navGroup": "Tooltip",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Fold into the canonical Tooltip as <code>appearance: .translucent</code>",
+      "text": "Backdrop-blur + translucency is a material effect, not a distinct component. iOS expresses it with <code>.background(.ultraThinMaterial)</code> (or a tinted <code>.regularMaterial</code>); Compose does it with <code>Modifier.blur()</code> on an underlying layer (or a Haze library for true backdrop blur). Collapse this component into the unified <a href=\"#\">Tooltip</a> proposed on the V2 page as one of three <code>appearance</code> values (<code>.default | .onboarding | .translucent</code>). The translucent appearance binds to a <code>main/nudge/color/secondary/*</code> token set on the surface and swaps the label colors for the light-on-dark pair. No dedicated component; no \"V2\"-style duplicate."
+    }
   },
   "overview": {
     "inContextNote": "Used over photographic, gradient, or high-contrast imagery where an opaque white tooltip would feel heavy. The backdrop blur keeps the background legible while the dark surface carries white type with full contrast.",

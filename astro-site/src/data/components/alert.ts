@@ -16,7 +16,12 @@ export const alert: ComponentData = {
         "kind": "refine",
         "label": "Needs Refinement"
       }
-    ]
+    ],
+    "verdict": {
+      "kind": "fix",
+      "title": "Fix — clarify property schema before native handoff",
+      "text": "Normalize boolean values, replace the placeholder left-icon with a swappable slot, and expose an explicit <code>style = banner | card</code> (or split into two components) so the two layouts aren't hidden behind a <code>fullWidth</code> boolean. Add a dismiss contract while you're in there."
+    }
   },
   "overview": {
     "inContextNote": "Alerts sit inline in forms, payment flows, and detail screens to communicate status, validation, or supplementary guidance. The accent-card style is often used for onboarding tips; the banner style is used for transient validation.",

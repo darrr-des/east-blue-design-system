@@ -16,7 +16,12 @@ export const modal: ComponentData = {
         "kind": "rework",
         "label": "Requires Rework"
       }
-    ]
+    ],
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — duplicates Overlay scope and compresses two unrelated layouts",
+      "text": "A single <code>Modal</code> component is trying to serve both a general-purpose dialog (default / with icon) and a specialised transaction-receipt layout (transaction_v1 / v2). These are not \"variants\" of the same thing — they have different information architectures, different tokens, and different native mappings. On top of that, Modal overlaps in name and scope with the existing <code>Overlay</code> component (<code>47:329691</code>), which currently ships the scrim only. Consolidate the family: one canonical <strong>Modal</strong> that owns the surface + scrim, and a separate <strong>Transaction Receipt Card</strong> for the receipt layout."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",

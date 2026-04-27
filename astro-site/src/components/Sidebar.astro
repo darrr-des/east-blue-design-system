@@ -1,5 +1,7 @@
 ---
 import { componentManifest } from '../data/components/_index';
+import fs from 'node:fs';
+import path from 'node:path';
 
 interface Props {
   activeSlug?: string;
@@ -7,11 +9,39 @@ interface Props {
 const { activeSlug } = Astro.props;
 const pathname = Astro.url.pathname;
 
-type Item = (typeof componentManifest)[number];
-const groups = new Map<string, Item[]>();
-const standalone: Item[] = [];
+// ── Route flags ───────────────────────────────────────────────────────
+const isOverview   = pathname === '/';
+const isComponents = pathname === '/components' || pathname.startsWith('/components/');
+const isSearch     = pathname === '/search';
+const isIcons      = pathname === '/icons';
+const isStyles     = pathname === '/styles';
+// Whether the second panel (components list) is shown
+const showPanel    = isComponents;
 
-for (const item of componentManifest) {
+// ── Build the components-panel rows from manifest + per-file data ─────
+type ManifestItem = (typeof componentManifest)[number];
+
+// We need each component's badges to compute its dot indicator.
+// Badges aren't on the manifest — load them inline from each <slug>.ts.
+const DATA_DIR = path.resolve(process.cwd(), 'src/data/components');
+type WithBadges = ManifestItem & { badges: { kind: string }[] };
+const enriched: WithBadges[] = componentManifest.map((m) => {
+  let badges: { kind: string }[] = [];
+  try {
+    const raw = fs.readFileSync(path.join(DATA_DIR, m.slug + '.ts'), 'utf8');
+    const match = raw.match(/= ({[\s\S]*});\s*$/);
+    if (match) {
+      const data = new Function('return ' + match[1])();
+      badges = data?.meta?.badges || [];
+    }
+  } catch {}
+  return { ...m, badges };
+});
+
+// Group standalone vs family
+const groups = new Map<string, WithBadges[]>();
+const standalone: WithBadges[] = [];
+for (const item of enriched) {
   if (item.navGroup) {
     if (!groups.has(item.navGroup)) groups.set(item.navGroup, []);
     groups.get(item.navGroup)!.push(item);
@@ -19,17 +49,17 @@ for (const item of componentManifest) {
     standalone.push(item);
   }
 }
-
 standalone.sort((a, b) => a.name.localeCompare(b.name));
 const orderedGroups = [...groups.entries()]
   .map(([k, v]) => [k, [...v].sort((a, b) => a.name.localeCompare(b.name))] as const)
   .sort((a, b) => a[0].localeCompare(b[0]));
 
-// Weave standalone items + group headers alphabetically
-type Row = { kind: 'item'; item: Item } | { kind: 'group'; name: string; items: Item[] };
+// Weave alphabetically — group label sits where it falls
+type Row =
+  | { kind: 'item'; item: WithBadges }
+  | { kind: 'group'; name: string; items: WithBadges[] };
 const rows: Row[] = [];
-let si = 0;
-let gi = 0;
+let si = 0, gi = 0;
 while (si < standalone.length || gi < orderedGroups.length) {
   const sName = standalone[si]?.name;
   const gName = orderedGroups[gi]?.[0];
@@ -41,114 +71,167 @@ while (si < standalone.length || gi < orderedGroups.length) {
   }
 }
 
-const isOverview        = pathname === '/';
-const isComponentsGrid  = pathname === '/components';                          // on the grid page itself → highlight active
-const componentsOpen    = isComponentsGrid || pathname.startsWith('/components/'); // expand the list whenever inside Components
-const isGuide           = pathname === '/eb-ds-assessment-guide';
+// Dot color — derived from the worst badge per the user's mapping:
+//   restructure / rework / consolidate / remove / product-layer  → red
+//   fix / refine                                                 → orange
+//   keep / ready / na / empty                                    → no dot
+const RED = new Set(['restructure', 'rework', 'consolidate', 'remove', 'product-layer']);
+const ORANGE = new Set(['fix', 'refine']);
+function dotFor(badges: { kind: string }[]): 'red' | 'orange' | null {
+  const kinds = badges.map((b) => b.kind);
+  if (kinds.some((k) => RED.has(k))) return 'red';
+  if (kinds.some((k) => ORANGE.has(k))) return 'orange';
+  return null;
+}
+
+// Highest-severity dot per family group (so the parent shows a dot
+// reflecting its worst child).
+function groupDot(items: WithBadges[]): 'red' | 'orange' | null {
+  const dots = items.map((i) => dotFor(i.badges));
+  if (dots.includes('red')) return 'red';
+  if (dots.includes('orange')) return 'orange';
+  return null;
+}
 ---
-<aside class="sidebar">
-  <a class="sidebar-brand" href="/">
-    <div class="sidebar-brand-row">
-      <div class="sidebar-logo">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+<aside class={`sidebar-shell${showPanel ? ' has-panel' : ''}`} data-route={pathname}>
+  {/* ──────────────────  Left rail  ────────────────── */}
+  <div class={`rail${showPanel ? ' rail--collapsed' : ''}`}>
+    <a class="rail-brand" href="/">
+      <div class="rail-brand-logo">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
           <rect x="1" y="1" width="5" height="5" rx="1" fill="#fff" />
           <rect x="9" y="1" width="5" height="5" rx="1" fill="#fff" opacity=".75" />
           <rect x="1" y="9" width="5" height="5" rx="1" fill="#fff" opacity=".75" />
           <rect x="9" y="9" width="5" height="5" rx="1" fill="#fff" opacity=".45" />
         </svg>
       </div>
-      <div class="sidebar-brand-text">
-        <div class="sidebar-brand-title-row">
-          <span class="sidebar-wordmark">East Blue</span>
-          <span class="sidebar-version">v0.1.0</span>
-        </div>
-        <span class="sidebar-brand-sub">Component Assessment</span>
-      </div>
-    </div>
-  </a>
+      <span class="rail-brand-text">East Blue</span>
+      <span class="rail-brand-version">v0.1.0</span>
+    </a>
 
-  <nav class="sidebar-nav" id="comp-list">
-    {/* Top-level nav */}
-    <a class={`nav-item${isOverview ? ' active' : ''}`} href="/">Overview</a>
-
-    <div class={`nav-item-row${isComponentsGrid ? ' active' : ''}${componentsOpen ? ' open' : ''}`}>
-      <a
-        class={`nav-item nav-item-toggleable${isComponentsGrid ? ' active' : ''}`}
-        href="/components"
-        onclick="toggleComponentsSection(event, false)"
-      >
-        <span>Components</span>
+    <nav class="rail-nav" aria-label="Primary">
+      <a class={`rail-item${isSearch ? ' active' : ''}`} href="/search" aria-label="Search">
+        <span class="rail-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+        </span>
+        <span class="rail-label">Search</span>
       </a>
-      <button class="nav-item-chevron-btn" onclick="toggleComponentsSection(event, true)" aria-label="Toggle components list">
-        <svg class="nav-section-chevron" width="12" height="12" viewBox="0 0 16 16" fill="none">
-          <path d="M5 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
+
+      <a class={`rail-item${isOverview ? ' active' : ''}`} href="/" aria-label="Overview">
+        <span class="rail-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+        </span>
+        <span class="rail-label">Overview</span>
+      </a>
+
+      <a class={`rail-item${isComponents ? ' active' : ''}`} href="/components" aria-label="Components">
+        <span class="rail-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+            <polyline points="7.5 4.21 12 6.81 16.5 4.21" />
+            <polyline points="7.5 19.79 7.5 14.6 3 12" />
+            <polyline points="21 12 16.5 14.6 16.5 19.79" />
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+            <line x1="12" y1="22.08" x2="12" y2="12" />
+          </svg>
+        </span>
+        <span class="rail-label">Components</span>
+      </a>
+
+      <a class={`rail-item${isIcons ? ' active' : ''}`} href="/icons" aria-label="Icons">
+        <span class="rail-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="14" width="7" height="7" rx="1" />
+            <rect x="3" y="14" width="7" height="7" rx="1" />
+          </svg>
+        </span>
+        <span class="rail-label">Icons</span>
+      </a>
+
+      <a class={`rail-item${isStyles ? ' active' : ''}`} href="/styles" aria-label="Styles">
+        <span class="rail-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
+            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+          </svg>
+        </span>
+        <span class="rail-label">Styles</span>
+      </a>
+    </nav>
+
+    <div class="rail-footer">
+      <button class="rail-item rail-darkmode" type="button" onclick="toggleTheme && toggleTheme(!document.documentElement.dataset.theme || document.documentElement.dataset.theme !== 'dark')" aria-label="Toggle dark mode">
+        <span class="rail-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </span>
+        <span class="rail-label">Dark mode</span>
       </button>
     </div>
-    <div class={`nav-section-list nav-components-list${componentsOpen ? ' open' : ''}`}>
-      <div class="nav-section-list-inner">
+  </div>
+
+  {/* ──────────────────  Components panel  ────────────────── */}
+  {showPanel && (
+    <div class="panel">
+      <div class="panel-inner">
+        <a class="panel-header" href="/components">
+          <span>Components</span>
+        </a>
+
         {rows.map((row) =>
           row.kind === 'item' ? (
             <a
-              class={`nav-comp${activeSlug === row.item.slug ? ' active' : ''}`}
+              class={`panel-item${activeSlug === row.item.slug ? ' active' : ''}`}
               href={`/components/${row.item.slug}`}
             >
-              {row.item.navIconSvg && (
-                <div class="nav-comp-icon" set:html={row.item.navIconSvg} />
-              )}
-              <div class="nav-comp-body">
-                <div class="nav-comp-name">{row.item.name}</div>
-              </div>
+              <span class="panel-item-label">{row.item.name}</span>
+              {(() => {
+                const d = dotFor(row.item.badges);
+                return d ? <span class={`panel-dot panel-dot--${d}`} aria-hidden="true"></span> : null;
+              })()}
             </a>
           ) : (
-            <>
-              <button
-                class={`nav-section-toggle nav-family-toggle${row.items.some((i) => i.slug === activeSlug) ? ' open' : ''}`}
-                onclick="toggleNavSection(this)"
-              >
-                <span>{row.name}</span>
-                <svg class="nav-section-chevron" width="12" height="12" viewBox="0 0 16 16" fill="none">
-                  <path d="M5 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <details class={`panel-group${row.items.some((i) => i.slug === activeSlug) ? ' active' : ''}`} open={row.items.some((i) => i.slug === activeSlug)}>
+              <summary class="panel-item panel-item--group">
+                <span class="panel-item-label">{row.name}</span>
+                {(() => {
+                  const d = groupDot(row.items);
+                  return d ? <span class={`panel-dot panel-dot--${d}`} aria-hidden="true"></span> : null;
+                })()}
+                <svg class="panel-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
                 </svg>
-              </button>
-              <div class={`nav-section-list${row.items.some((i) => i.slug === activeSlug) ? ' open' : ''}`}>
-                <div class="nav-section-list-inner">
-                  {row.items.map((item) => (
-                    <a
-                      class={`nav-comp${activeSlug === item.slug ? ' active' : ''}`}
-                      href={`/components/${item.slug}`}
-                    >
-                      {item.navIconSvg && (
-                        <div class="nav-comp-icon" set:html={item.navIconSvg} />
-                      )}
-                      <div class="nav-comp-body">
-                        <div class="nav-comp-name">{item.name}</div>
-                      </div>
-                    </a>
-                  ))}
-                </div>
+              </summary>
+              <div class="panel-group-list">
+                {row.items.map((item) => (
+                  <a
+                    class={`panel-item panel-item--child${activeSlug === item.slug ? ' active' : ''}`}
+                    href={`/components/${item.slug}`}
+                  >
+                    <span class="panel-item-label">{item.name}</span>
+                    {(() => {
+                      const d = dotFor(item.badges);
+                      return d ? <span class={`panel-dot panel-dot--${d}`} aria-hidden="true"></span> : null;
+                    })()}
+                  </a>
+                ))}
               </div>
-            </>
+            </details>
           )
         )}
       </div>
     </div>
-
-    <a class={`nav-item${isGuide ? ' active' : ''}`} href="/eb-ds-assessment-guide">Assessment Guide</a>
-  </nav>
-
-  <!-- User info + logout (populated by AuthGate via window.__ebUser) -->
-  <div class="sidebar-user" id="sidebar-user" style="display:none;">
-    <img class="sidebar-user-avatar" id="sidebar-user-avatar" alt="" />
-    <div class="sidebar-user-text">
-      <div class="sidebar-user-name" id="sidebar-user-name"></div>
-      <div class="sidebar-user-email" id="sidebar-user-email"></div>
-    </div>
-    <button class="sidebar-user-logout" onclick="window.__ebSignOut && window.__ebSignOut()" title="Sign out" aria-label="Sign out">
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-        <path d="M6 3H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-        <path d="M9 5l3 3-3 3M12 8H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-    </button>
-  </div>
+  )}
 </aside>

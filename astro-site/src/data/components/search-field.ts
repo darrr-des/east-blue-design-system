@@ -17,7 +17,12 @@ export const searchField: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Form Elements"
+    "navGroup": "Form Elements",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Rework before handoff",
+      "text": "Only Default and Filled exist — no focused, error, or disabled states. Search glyph is a raster <code>img</code>, trailing slot is an unresolved <code>Placeholder</code> circle, and the banded top/bottom border diverges from the rest of the Form Elements family. Consider composing from Input Field + leading/trailing icon slots instead of shipping a bespoke component."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",

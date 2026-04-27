@@ -17,7 +17,12 @@ export const monthYearPickerItem: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Date Picker"
+    "navGroup": "Date Picker",
+    "verdict": {
+      "kind": "consolidate",
+      "title": "Consolidate into a unified Picker Cell",
+      "text": "This cell and Date Picker - Item are the same selectable-cell primitive at different pixel sizes (100×32 vs 32×32) with identical state semantics (Default / Today / Selected). Collapse both into a single <code>Picker Cell</code> with <code>kind: day | month | year</code> + <code>state: default | today | selected | disabled</code>. This cell currently lacks Disabled, Pressed, and Focused entirely — the unification should rectangularize the state axis across all kinds."
+    }
   },
   "overview": {
     "inContextNote": "The cell is instance-swapped inside Date Picker - Group when the user switches to Month or Year view. 12 cells are rendered as a 4 × 3 month grid, or 20 cells as a 4 × 5 year grid. Same Figma component for both — only the text label changes.",

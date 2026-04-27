@@ -8,7 +8,12 @@ export const carouselItem: ComponentData = {
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=",
     "description": "A horizontal-scroll item used as a building block for product/promo carousels.",
     "badges": [],
-    "navGroup": "Carousel"
+    "navGroup": "Carousel",
+    "verdict": {
+      "kind": "consolidate",
+      "title": "Consolidate — merge Carousel - Item + Center + Side into a single position-agnostic component",
+      "text": "All three have the same 10 variants (Mode × Type × hasTextLink × hasPreamble) — only dimensions differ. Position (center vs side) is a runtime layout concern: the carousel container applies scale/opacity based on scroll progress, not via component variants. Collapse to one <code>Carousel Item</code> (or fold into <code>Carousel Card</code>), strip <code>mode</code> in favour of a proper <code>appearance</code> mode set, replace the raster background with a <code>background</code> slot, vectorize the chevron, and add pressed state."
+    }
   },
   "overview": {
     "inContextNote": "Carousel - Item is one card in a horizontal swipe carousel — typically a promotional banner stack on the Home or Dashboard screen. The center item is emphasized; side items peek in at reduced opacity/scale. In today's Figma file, those visual states exist as separate components (Item, Item - Center, Item - Side) rather than being driven by the carousel container.",

@@ -17,7 +17,12 @@ export const termsConditionsAccordion: ComponentData = {
         "label": "Not Applicable"
       }
     ],
-    "navGroup": "Voucher"
+    "navGroup": "Voucher",
+    "verdict": {
+      "kind": "rework",
+      "title": "Remove — use the canonical Accordion",
+      "text": "The DS already ships one <a href=\"/components/accordion\"><code>Accordion</code></a> primitive with a <code>title</code> prop and a content slot. Every time a product needs an accordion with a different title or body, the answer is to author a new instance — not to ship a new sibling. Replace this component with a documented usage example: <code>EBAccordion(title: \"Terms &amp; Conditions\", content: [...])</code>."
+    }
   },
   "overview": {
     "traits": [

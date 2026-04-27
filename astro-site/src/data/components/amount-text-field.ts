@@ -17,7 +17,12 @@ export const amountTextField: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Form Elements"
+    "navGroup": "Form Elements",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure before handoff",
+      "text": "Peso glyph is a raster image (C6), state coverage is incomplete — no Active/Disabled (C5), and <code>label=yes/no</code> needs Boolean naming (C2). Decide whether to keep as a standalone sibling or fold into Input Field as <code>type: .currency</code>."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns (Send Money, Cash-In, Top-up).",

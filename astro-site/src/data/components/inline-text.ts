@@ -16,7 +16,12 @@ export const inlineText: ComponentData = {
         "kind": "refine",
         "label": "Needs Refinement"
       }
-    ]
+    ],
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — type enum hides 5 trailing-slot compositions",
+      "text": "Same anti-pattern as Alert's <code>Full Width</code> and Generic Transaction Card's <code>type</code>. Replace the enum with orthogonal booleans (<code>hasCopy</code>, <code>hasDescription</code>, <code>hasTextLink</code>) plus a unified <code>trailing</code> slot so Badge can be instance-swapped instead of drawn inline. The component itself belongs — its four semantic color tokens (<code>label</code>, <code>label-value</code>, <code>description</code>, <code>label-link</code>) give it enough DS opinion to ship as <code>EBInlineText</code>, but behind a cleaner schema."
+    }
   },
   "overview": {
     "inContextNote": "Inline Text is a composition primitive. You'll find stacks of it inside Generic Transaction Card's detail modal, Send Money confirmation screens, receipt summaries, and fee-breakdown list items. Rarely used standalone.",

@@ -17,7 +17,12 @@ export const tableScheduling: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Table"
+    "navGroup": "Table",
+    "verdict": {
+      "kind": "fix",
+      "title": "Fold into the Table consolidation; compose from Inline Text, not re-author",
+      "text": "Table - Scheduling is the third feature-specific composition in the Table family (after Table - Transaction). It re-creates a date + peso-amount primary line and a grid of label/value pairs — layouts the DS already covers with <strong>Inline Text</strong> stacked inside a <strong>Generic Transaction Card</strong> or native <strong>List</strong> cell. Three records for three product surfaces (generic table, transaction limits, scheduled payments) is a family-level smell: the base pattern is \"label / value rows with optional peso prefix,\" and every sibling duplicates it with narrower coverage. Recommend removing Table - Scheduling from core DS and documenting a \"scheduled payment\" recipe on the Table page that composes <code>EBInlineText</code> rows — same guidance as Table - Transaction. Mobile scheduling surfaces (auto-debit plans, installment schedules) already render as vertical lists on iOS and Android; no phone surface needs this fixed 360px grid."
+    }
   },
   "overview": {
     "inContextNote": "Scheduled payments screen (auto-debit, installment plans, standing orders): a list of upcoming payment rows stamped with a date, the total debit amount, and — where relevant — a breakdown of principal / interest / fee components.",

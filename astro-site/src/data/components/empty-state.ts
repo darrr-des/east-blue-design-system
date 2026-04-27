@@ -16,7 +16,12 @@ export const emptyState: ComponentData = {
         "kind": "refine",
         "label": "Needs Refinement"
       }
-    ]
+    ],
+    "verdict": {
+      "kind": "fix",
+      "title": "Prop schema + slot restructure",
+      "text": "Collapse the two title/description surfaces into one (there's no reason to have both \"top header\" and \"bottom header\"). Rename <code>color=white/grey blue</code> → <code>style=default/subtle</code> to match token naming. Replace icon and asset placeholders with Figma Slots. Resulting prop set: <code>style</code>, <code>title</code>, <code>description</code>, optional slots for <code>icon</code> / <code>asset</code> / <code>action</code>."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. Empty State fills a surface where content would normally sit — empty transaction lists, no search results, first-run tabs.",

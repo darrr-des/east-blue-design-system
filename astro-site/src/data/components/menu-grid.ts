@@ -16,7 +16,12 @@ export const menuGrid: ComponentData = {
         "kind": "refine",
         "label": "Needs Refinement"
       }
-    ]
+    ],
+    "verdict": {
+      "kind": "fix",
+      "title": "Open issues remain",
+      "text": "Variant property values use pseudo-numeric strings (<code>\"by 4\"</code>) instead of integers (C2). Service Item only ships an <code>active</code> color set — no pressed/disabled tokens (C5). Code Connect mappings not yet registered (C7)."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. Menu Grid sits on the dashboard as the primary service shortcut surface — typically Row=2, Column=4 (8 services) on the home screen.",

@@ -18,7 +18,12 @@ export const stepperBullet: ComponentData = {
       }
     ],
     "navGroup": "Stepper",
-    "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <circle cx=\"9\" cy=\"16\" r=\"2.5\" fill=\"#005CE5\"/>\n      <circle cx=\"16\" cy=\"16\" r=\"2.5\" fill=\"#D2E5FF\"/>\n      <circle cx=\"23\" cy=\"16\" r=\"2.5\" fill=\"#D2E5FF\"/>\n    </svg>"
+    "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <circle cx=\"9\" cy=\"16\" r=\"2.5\" fill=\"#005CE5\"/>\n      <circle cx=\"16\" cy=\"16\" r=\"2.5\" fill=\"#D2E5FF\"/>\n      <circle cx=\"23\" cy=\"16\" r=\"2.5\" fill=\"#D2E5FF\"/>\n    </svg>",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — collapse 3 sibling components into one <code>Stepper - Bullet</code> with <code>steps</code> and <code>current</code> properties",
+      "text": "Step count is a scalar, not a component axis. The current schema has 3 top-level components (3/4/5 steps) and inside each, an <code>highlighted = 1st … Nth</code> ordinal enum for the active dot. Rebuild as a single component: <code>steps: Int</code> (3–10) and <code>current: Int</code> (1..steps). Replace the raster dot PNGs with a vector <code>Ellipse</code> whose fill is bound to <code>main/stepper/color/bg</code> (active) or <code>main/stepper/color/bg-track</code> (inactive). Native side maps to a custom <code>EBStepperBullet(current:total:)</code> rendered as an <code>HStack</code> / <code>Row</code> of <code>Circle</code> shapes. Better still: unify Dash + Bullet + Circular into one <code>EBStepper(current:total:style: .bullet | .dash | .circular)</code> API."
+    }
   },
   "overview": {
     "inContextNote": "Stepper - Bullet appears at the top or bottom of multi-step flows — most commonly paginated onboarding, swipeable carousels of tutorial cards, and photo galleries where the user needs a minimal position indicator without numerical labels.",

@@ -17,7 +17,12 @@ export const headerTransaction: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Header"
+    "navGroup": "Header",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — move out of Header family, rename to Detail Hero",
+      "text": "This is not a header. It has no navigation role, no title-only scope, and a card-like structure (avatar + divider + inline label-value). Rename to <strong>Detail Hero</strong> and rehome with card/hero patterns. Then re-architect: the avatar should be a real <strong>Avatar</strong> instance, the email row should compose an inline label-value pair, and the description should accept structured content. See <a href=\"/components/header\">Header family restructure</a>."
+    }
   },
   "overview": {
     "inContextNote": "Detail Hero appears at the top of transaction detail screens and recipient profile cards — introducing the person or transaction below the app bar.",

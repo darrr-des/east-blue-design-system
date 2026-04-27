@@ -17,7 +17,12 @@ export const list: ComponentData = {
         "label": "Not Applicable"
       }
     ],
-    "navGroup": "List"
+    "navGroup": "List",
+    "verdict": {
+      "kind": "fix",
+      "title": "Remove or restructure",
+      "text": "List today is a frame of 8 hardcoded List Item instances — not a reusable component. Two paths forward: (1) remove it from the sticker sheet and keep List Item as the published atom; (2) restructure into a real container that accepts a collection of items (same approach proposed for Tabs)."
+    }
   },
   "overview": {
     "traits": [

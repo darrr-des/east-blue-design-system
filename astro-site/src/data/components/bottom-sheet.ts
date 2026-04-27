@@ -16,7 +16,12 @@ export const bottomSheet: ComponentData = {
         "kind": "rework",
         "label": "Requires Rework"
       }
-    ]
+    ],
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — rebuild around a content slot and delegate sheet mechanics to the platform",
+      "text": "Three structural problems stack: (1) scope is wrong — the component is the sheet header, not the sheet; (2) the content region is 4 decorative boxes instead of a Figma Slot, so every real usage detaches or adds a new product-local variant; and (3) it overlaps with <code>Modal</code> (<code>18507:71705</code>) and <code>Overlay</code> (<code>47:329691</code>), all three independently declaring what a floating-surface-over-scrim looks like. Proposal: rebuild as <code>EBBottomSheet</code> — a thin wrapper around SwiftUI <code>.sheet</code> / Compose <code>ModalBottomSheet</code> — with explicit <em>dragHandle</em>, <em>header</em>, <em>content</em>, and <em>footer</em> slots, and consume the already-assessed Overlay for the scrim."
+    }
   },
   "overview": {
     "inContextNote": "Bottom Sheet anchors to the bottom edge over a dimmed background. In the sticker-sheet context file (12522:109042), instances are used across a wide range of content shapes: ID pickers, confirmation dialogs, transfer summaries, tips lists, welcome cards, and switch-account prompts — each with different inner composition, all wrapped in the same surface.",

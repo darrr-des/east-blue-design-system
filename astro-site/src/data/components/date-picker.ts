@@ -17,7 +17,12 @@ export const datePicker: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Date Picker"
+    "navGroup": "Date Picker",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure required before handoff",
+      "text": "Component is structurally an Input Field with a calendar glyph — the whole calendar panel should be a separate popover, not nested in the trigger. State × isDisabled axes produce invalid combinations (C2). Calendar icon is a raster (C6). No Error/Pressed states (C5). Blocks native <code>DatePicker</code> mapping."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",

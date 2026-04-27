@@ -17,7 +17,12 @@ export const listItem: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "List"
+    "navGroup": "List",
+    "verdict": {
+      "kind": "fix",
+      "title": "Adopt Figma Slots for the asset",
+      "text": "The leading asset is today an instance-swap placeholder. Declare a named <code>asset</code> Slot so consumers can drop in any List Item Asset variant (or a custom 16 × 16 component) directly. Maps 1 : 1 to <code>@ViewBuilder</code> / <code>@Composable</code> slots for Code Connect. Also rename <code>level</code> to an integer or drop it in favor of nesting-based indent."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. List Items compose into multi-line lists on terms pages, onboarding steps, and task checklists.",

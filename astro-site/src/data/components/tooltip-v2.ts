@@ -17,7 +17,12 @@ export const tooltipV2: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Tooltip"
+    "navGroup": "Tooltip",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Unify 3 Tooltip siblings into one Tooltip component; drop the \"V2\" suffix",
+      "text": "This component, <a href=\"#\">Onboarding - Tooltip</a>, and <a href=\"#\">Tooltip Blurred and Transparent</a> model the same primitive with different skins. Merge into one <code>Tooltip</code> with <code>placement: .top | .right | .bottom | .left</code> (one enum, not 4 booleans), <code>appearance: .default | .onboarding | .translucent</code>, <code>hasArrow</code>, <code>hasDismiss</code>, and a content slot. Replace the raster pointer with a vector, the placeholder icon circle with a Figma Slot, and strip the <code>V2</code> suffix — production component names should never carry a version. Maps cleanly to <code>TipKit</code> / <code>PlainTooltip</code> / <code>RichTooltip</code> on native."
+    }
   },
   "overview": {
     "inContextNote": "Tooltips sit over a target element (tab, button, icon, card) with a pointer aimed at the thing they describe.",

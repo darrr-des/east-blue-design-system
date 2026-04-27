@@ -17,7 +17,12 @@ export const actionListCounter: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Action List"
+    "navGroup": "Action List",
+    "verdict": {
+      "kind": "consolidate",
+      "title": "Consolidate — fold into base Action List as a trailing slot",
+      "text": "This variant sibling just adds an <code>EBCounter</code> to the base transaction row. That should be a <code>trailing</code> slot (or a <code>counter: Int?</code> parameter that swaps in a Counter) on the base component — not a second component with a duplicated 2 × 3 density/state matrix. Shipping as a sibling doubles maintenance cost on every token or layout change, and the same anti-pattern will repeat for the \"with Description\" sibling."
+    }
   },
   "overview": {
     "inContextNote": "Used where a row needs to surface a pending count alongside the action — inbox folders, notification categories, or settings entries with outstanding items.",

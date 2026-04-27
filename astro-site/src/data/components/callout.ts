@@ -16,7 +16,12 @@ export const callout: ComponentData = {
         "kind": "rework",
         "label": "Requires Rework"
       }
-    ]
+    ],
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure before native handoff",
+      "text": "Rename to <strong>Callout</strong>, collapse the redundant <code>label</code> + <code>label size</code> booleans into a single <code>labelSize</code> enum, and expand <code>type</code> into a proper 4-value <code>intent</code> enum (info / success / warning / error). Add a leading-icon slot, a trailing action slot, and Pressed / Disabled states."
+    }
   },
   "overview": {
     "inContextNote": "Appears beneath form fields, inside modals, or between screen sections — to clarify what happens next, flag a soft warning, or offer supplemental instructions that don't rise to Alert-level severity.",

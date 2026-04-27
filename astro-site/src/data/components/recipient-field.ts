@@ -17,7 +17,12 @@ export const recipientField: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Form Elements"
+    "navGroup": "Form Elements",
+    "verdict": {
+      "kind": "fix",
+      "title": "Fix required before handoff",
+      "text": "Both trailing icons are non-swappable rectangles (C6). This blocks direct native property mapping for icon slots."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",

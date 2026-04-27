@@ -18,7 +18,12 @@ export const stepperDash: ComponentData = {
       }
     ],
     "navGroup": "Stepper",
-    "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <rect x=\"3\" y=\"15\" width=\"6\" height=\"2\" rx=\"1\" fill=\"#005CE5\"/>\n      <rect x=\"11\" y=\"15\" width=\"6\" height=\"2\" rx=\"1\" fill=\"#005CE5\"/>\n      <rect x=\"19\" y=\"15\" width=\"6\" height=\"2\" rx=\"1\" fill=\"#D2E5FF\"/>\n      <rect x=\"27\" y=\"15\" width=\"2\" height=\"2\" rx=\"1\" fill=\"#D2E5FF\"/>\n    </svg>"
+    "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <rect x=\"3\" y=\"15\" width=\"6\" height=\"2\" rx=\"1\" fill=\"#005CE5\"/>\n      <rect x=\"11\" y=\"15\" width=\"6\" height=\"2\" rx=\"1\" fill=\"#005CE5\"/>\n      <rect x=\"19\" y=\"15\" width=\"6\" height=\"2\" rx=\"1\" fill=\"#D2E5FF\"/>\n      <rect x=\"27\" y=\"15\" width=\"2\" height=\"2\" rx=\"1\" fill=\"#D2E5FF\"/>\n    </svg>",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure — collapse the boolean slot flags and ordinal enum into <code>current: Int</code> + <code>total: Int</code>",
+      "text": "Visually the component is already in great shape — vector dashes, token-bound fills, clean rounded geometry. The structural problem is the schema: <code>highlighted</code> is an ordinal enum (1st…10th) when it should be a number, and the 10 <code>propNStepper</code> booleans emulate what should be a single <code>total</code> scalar. Rebuild as one variant with <code>current: 1…10</code> and <code>total: 2…10</code>, and fix the duplicate <code>6th</code> layer name that covers positions 7–10. Native side stays a custom component (no platform primitive renders \"N equal-width dashes\" out of the box)."
+    }
   },
   "overview": {
     "inContextNote": "Stepper - Dash sits above multi-step flows to tell the user where they are — KYC wizards, onboarding carousels, checkout funnels. The dashed format reads as \"position in a sequence\" rather than \"percent done\".",

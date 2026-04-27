@@ -17,7 +17,12 @@ export const datePickerGroup: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Date Picker"
+    "navGroup": "Date Picker",
+    "verdict": {
+      "kind": "consolidate",
+      "title": "Consolidate into native pickers — don't redraw",
+      "text": "Both iOS (<code>DatePicker(.graphical)</code>) and Material 3 (<code>DatePicker</code>/<code>DatePickerDialog</code>) render the calendar surface with full locale, keyboard, and a11y support built in. The DS should ship a tokenized wrapper, not a from-scratch Figma redraw. Current component has raster chevrons (C6), no cell state coverage (C5), day-of-week layer names (C1), misleading <code>Type</code> axis (C2), a fake drawn scrollbar (C4), and asymmetric Month navigation (C4)."
+    }
   },
   "overview": {
     "inContextNote": "The group appears immediately below the Date Picker trigger when it enters State=Active. The three Type variants swap when the user taps the header (Date → Year → Month).",

@@ -17,7 +17,12 @@ export const carouselDiscountCard: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Carousel"
+    "navGroup": "Carousel",
+    "verdict": {
+      "kind": "consolidate",
+      "title": "Consolidate — fold into Carousel Card with <code>variant=discount</code>",
+      "text": "Same 140-wide frame, same banner + text block composition, same skeleton axis. The only net-new capabilities are (a) a trailing-corner violator tag and (b) a two-line label slot with a peso-value line below. Both belong as optional slots on a unified <code>Carousel Card</code> rather than a separate component. Today's 3 variants collapse into <code>Carousel Card</code> props: <code>variant: default | with-icon | discount</code>, <code>violator?: string</code>, <code>isLoading: bool</code>."
+    }
   },
   "overview": {
     "inContextNote": "Discount Card appears in horizontally-scrolling voucher rails — GDeals, Voucher Pocket, \"For You\" promotions. Violator tag calls out freshness (New, Ending Soon, Limited).",

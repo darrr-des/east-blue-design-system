@@ -17,7 +17,12 @@ export const chatField: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Chat"
+    "navGroup": "Chat",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure as a composed pattern",
+      "text": "Chat Field wraps an Input Field instance with two icon buttons and exposes only a single <code>active</code> boolean. That schema drops Error, Disabled, and <code>isFilled</code> coverage that the inner Input Field already carries, and the leading/trailing glyphs ship as rasters. Rename to <strong>Chat Composer</strong> (or <strong>Message Composer</strong>), expose the field as a nested instance with its full state matrix, and replace both 32×32 icon slots with Icon Button instances so native can map 1:1 to <code>HStack { Button + TextField + Button }</code>."
+    }
   },
   "overview": {
     "inContextNote": "Canonical contexts: chat threads, customer-support conversations, peer-to-peer messaging, and comment composers docked to the bottom of a scroll view.",

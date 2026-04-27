@@ -17,7 +17,12 @@ export const textArea: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Form Elements"
+    "navGroup": "Form Elements",
+    "verdict": {
+      "kind": "consolidate",
+      "title": "Consolidate into Input Field",
+      "text": "Text Area duplicates Input Field's State × isFilled schema with identical tokens (renamed under <code>main/text-area/*</code>). SwiftUI exposes multi-line via <code>axis: .vertical</code> on <code>TextField</code>; Compose exposes it via <code>singleLine=false</code>. Fold into Input Field with a <code>multiline</code> / <code>lineLimit</code> prop so the DS maps 1:1 to the native primitive."
+    }
   },
   "overview": {
     "inContextNote": "Typical mobile contexts: feedback forms, message composers, notes, support request descriptions.",

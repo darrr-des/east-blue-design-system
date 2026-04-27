@@ -17,7 +17,12 @@ export const uploadFile: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Form Elements"
+    "navGroup": "Form Elements",
+    "verdict": {
+      "kind": "fix",
+      "title": "Property + token cleanup needed",
+      "text": "Fix the <code>boder</code> → <code>border</code> token typo (library-wide). Normalize <code>hasLabel</code> to <code>true/false</code>. Split <code>state=\"Uploaded with thumbnail\"</code> into <code>state=uploaded</code> + <code>hasThumbnail: Bool</code>. Rename <code>\"Upload error\"</code> → <code>error</code> (remove space). Adopt a Figma Slot for the thumbnail image. Add <code>disabled</code> state."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. Upload File appears in forms requiring document proof (KYC, insurance claims, verification).",

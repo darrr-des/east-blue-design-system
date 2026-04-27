@@ -17,7 +17,12 @@ export const actionList: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Action List"
+    "navGroup": "Action List",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Collapse 3 siblings into one slot-driven row",
+      "text": "The three components differ by <em>presence</em> — a description line, a trailing counter — not by role. Replace with one <code>List</code> component with <code>description?: String</code>, <code>trailing: .cta | .counter | .chevron | .none</code>, plus a named <code>leading</code> slot for the icon. Align label typography across the family (currently Semibold 16 Neutral vs. Bold 18 Brand). Add a Pressed state — these rows are primary nav targets. Reconcile with <a href=\"/components/list-item\">List Item</a> (display-only body rows) and clarify when to use which."
+    }
   },
   "overview": {
     "inContextNote": "Action-list rows stack inside Settings / Profile / Help menus. A typical screen mixes variants with/without description and with/without trailing counter.",

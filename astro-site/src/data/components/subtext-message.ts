@@ -16,7 +16,12 @@ export const subtextMessage: ComponentData = {
         "kind": "rework",
         "label": "Requires Rework"
       }
-    ]
+    ],
+    "verdict": {
+      "kind": "restructure",
+      "title": "Restructure before native handoff",
+      "text": "Asymmetric anatomy (Primary has no icon, Success/Error hardcode icons), misnamed <code>leadingLabel</code> boolean, generic <code>shape_full</code> icon layers, no disabled state. Decide: keep as standalone primitive or fold into form-field <code>supportingText</code> slot."
+    }
   },
   "overview": {
     "inContextNote": "Appears directly beneath form fields — Input, Labeled, Select, Recipient, Dropdown — to communicate helper hints, success confirmation, or validation errors.",

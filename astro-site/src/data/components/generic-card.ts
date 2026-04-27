@@ -17,7 +17,12 @@ export const genericCard: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Card"
+    "navGroup": "Card",
+    "verdict": {
+      "kind": "fix",
+      "title": "Fix — collapse iconSize, swap placeholders to slots, ship the pressed state",
+      "text": "Rename <code>iconSize</code> to semantic values (XL / L / M / S). Replace the icon placeholder with a swappable Avatar / Icon slot via instance swap. Replace the raster chevron with a vector. Add a pressed state — this is clearly a tappable row but only Default + skeleton are modeled today."
+    }
   },
   "overview": {
     "inContextNote": "Generic Card stacks vertically into a scrolling list — product catalogs, service menus, transaction history detail screens. Icon size tightens as the density of the list increases.",

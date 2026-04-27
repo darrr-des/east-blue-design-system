@@ -18,7 +18,12 @@ export const voucherAsset: ComponentData = {
       }
     ],
     "navGroup": "Voucher",
-    "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <path d=\"M4 10a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4v-3Z\" fill=\"#E6E1EF\"/>\n      <rect x=\"18\" y=\"11\" width=\"9\" height=\"5\" rx=\"1\" fill=\"#1972F9\"/>\n      <text x=\"22.5\" y=\"14.7\" text-anchor=\"middle\" fill=\"white\" font-size=\"3.2\" font-weight=\"700\" font-family=\"system-ui\">35%</text>\n    </svg>"
+    "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <path d=\"M4 10a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4v-3Z\" fill=\"#E6E1EF\"/>\n      <rect x=\"18\" y=\"11\" width=\"9\" height=\"5\" rx=\"1\" fill=\"#1972F9\"/>\n      <text x=\"22.5\" y=\"14.7\" text-anchor=\"middle\" fill=\"white\" font-size=\"3.2\" font-weight=\"700\" font-family=\"system-ui\">35%</text>\n    </svg>",
+    "verdict": {
+      "kind": "fix",
+      "title": "Collapse use-case variants into an image Slot",
+      "text": "Use case is illustration content — it does not belong as a Figma variant axis. A new category launch should not require a new DS variant. Retire <code>type=midfi|hifi</code> (authoring fidelity, not product concern) and <code>use case</code> (content, not variant). Ship a single <code>Voucher Image Frame</code> with <code>size: small | large</code> + <code>orientation: vertical | horizontal</code>, plus an image Slot and a <code>discount</code> string. Category artwork lives in a separate asset library, instance-swapped into the Slot."
+    }
   },
   "overview": {
     "traits": [

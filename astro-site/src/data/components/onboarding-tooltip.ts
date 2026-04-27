@@ -17,7 +17,12 @@ export const onboardingTooltip: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Tooltip"
+    "navGroup": "Tooltip",
+    "verdict": {
+      "kind": "restructure",
+      "title": "Fold into the unified Tooltip; \"Onboarding -\" prefix is misleading (no walkthrough content)",
+      "text": "This component, <a href=\"#\">Tooltip V2</a>, and <a href=\"#\">Tooltip Blurred and Transparent</a> model the same primitive with slightly different shapes. Merge into one <code>Tooltip</code> with <code>placement: .top | .right | .bottom | .left</code> (the only axis this sibling ships), <code>appearance: .default | .onboarding | .translucent</code>, <code>hasDismiss</code>, and an optional content/CTA body. Replace the 4 raster pointers with one vector and the raw close image with an <code>icon/close</code> instance. Once merged, rename the sibling that truly supports walkthroughs (with step indicator + Next/Skip) to carry the <code>.onboarding</code> appearance — or drop the name entirely."
+    }
   },
   "overview": {
     "inContextNote": "A dismissible tip anchored to a feature element — commonly rendered during first-time user education, feature discovery, and coach-mark flows.",

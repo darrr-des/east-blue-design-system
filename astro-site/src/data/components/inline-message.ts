@@ -16,7 +16,12 @@ export const inlineMessage: ComponentData = {
         "kind": "refine",
         "label": "Needs Refinement"
       }
-    ]
+    ],
+    "verdict": {
+      "kind": "fix",
+      "title": "Asset bundling + token + slot cleanup",
+      "text": "3D illustrations + Lottie animation require bundling as native assets. Replace the alpha-composited <code>bg-subtle</code> token with a solid color. Expose the body-content section as a Figma Slot so consumers can override the List with their own content (transaction breakdowns, shared-with lists, etc.)."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. Inline Message is the primary surface for transaction confirmations and error recovery flows.",

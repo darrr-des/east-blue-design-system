@@ -17,7 +17,12 @@ export const actionListDescription: ComponentData = {
         "label": "Requires Rework"
       }
     ],
-    "navGroup": "Action List"
+    "navGroup": "Action List",
+    "verdict": {
+      "kind": "consolidate",
+      "title": "Merge into base List via a <code>description</code> slot",
+      "text": "This component duplicates the entire base <strong>List</strong> anatomy just to render a 12/14 description line under the label. Native platforms already expose this as one parameter — SwiftUI composes primary + secondary labels in a <code>VStack</code>, Material 3's <code>ListItem</code> has <code>supportingContent</code>. Collapse all three siblings (<em>List</em>, <em>with Description</em>, <em>with Counter</em>) into one Action List component with optional <code>description</code> and <code>trailing</code> slots. This also closes the Density-coverage gap (base List has Compact + Expanded; this variant does not)."
+    }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Description rows appear in settings lists, notification preferences, and profile menus where each row needs a subtitle explaining the action.",

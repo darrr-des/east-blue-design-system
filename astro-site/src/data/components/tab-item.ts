@@ -17,7 +17,12 @@ export const tabItem: ComponentData = {
         "label": "Needs Refinement"
       }
     ],
-    "navGroup": "Tabs"
+    "navGroup": "Tabs",
+    "verdict": {
+      "kind": "fix",
+      "title": "Prop and asset cleanup needed",
+      "text": "Rename <code>isActive?</code> → <code>selected</code> (true/false). Unify the leading-icon slot across orientations. Replace the hardcoded counter (and its raw hex colors) with an instance of the canonical <strong>Badge</strong>. Replace the placeholder circle with a swappable Icon slot. <span class=\"tag-open tag-c2\">C2</span> <span class=\"tag-open tag-c3\">C3</span> <span class=\"tag-open tag-c6\">C6</span>"
+    }
   },
   "overview": {
     "inContextNote": "Tab Items appear inside the Tabs container. See the Tabs in-context preview for the full screen layout.",
