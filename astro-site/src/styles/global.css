@@ -2100,6 +2100,18 @@ input.demo-panel-input.demo-panel-select,
   color: var(--muted);
   opacity: 0.7;
 }
+/* Read-only readout pill — for computed/derived values shown to the right
+   of a label (e.g. Footer's alignment / description, etc.). */
+.demo-panel-readout {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
 .demo-bool-toggle {
   position: relative;
   width: 36px;
@@ -5870,3 +5882,275 @@ body.rail-nav #rail-nav-host .nav-group-list {
 [data-theme="dark"] .sidebar-user-logout:hover {
   background: rgba(255, 255, 255, 0.06);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   COMPONENT PREVIEW BLOCKS — Footer
+   Used inside live-preview demos for the Footer component.
+═══════════════════════════════════════════════════════════════════════ */
+.eb-preview-footer {
+  width: 100%;
+  max-width: 360px;
+  background: #FFFFFF;
+  padding: 16px 20px;
+  border-top: 1px solid #E5EBF4;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(2, 14, 34, 0.04);
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+  color: #3C4A5C;
+}
+.eb-preview-footer[data-variant="3"],
+.eb-preview-footer[data-variant="4"],
+.eb-preview-footer[data-variant="7"] { text-align: center; }
+
+.eb-preview-footer__row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.eb-preview-footer[data-variant="2"] .eb-preview-footer__row,
+.eb-preview-footer[data-variant="5"] .eb-preview-footer__row {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.eb-preview-footer__powered-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.eb-preview-footer__label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #6780A9;
+}
+.eb-preview-footer__logo {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+}
+.eb-preview-footer__logo svg { height: 18px; width: auto; }
+.eb-preview-footer__logo--fuse svg text { fill: #F15B2E; }
+
+.eb-preview-footer__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.eb-preview-footer__desc {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #6780A9;
+  margin: 0;
+}
+.eb-preview-footer__desc--spaced { margin-top: 8px; }
+
+.eb-preview-footer__link {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #005CE5;
+  text-decoration: none;
+  margin-top: 4px;
+}
+.eb-preview-footer__link:hover { text-decoration: underline; }
+
+.eb-preview-footer__partner-logos {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.eb-preview-footer__partner-logos--grouped {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.eb-preview-footer__partner-logo {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+}
+.eb-preview-footer__partner-logo svg,
+.eb-preview-footer__partner-logo img { max-height: 24px; width: auto; }
+
+.eb-preview-footer__separator {
+  width: 1px;
+  height: 16px;
+  background: #C2CFE5;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   COMPONENT PREVIEW BLOCKS — Toast With Button
+═══════════════════════════════════════════════════════════════════════ */
+.eb-preview-toastwb {
+  width: 100%;
+  max-width: 343px;
+  border-radius: 8px;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+  box-shadow: 0 4px 12px rgba(2, 14, 34, 0.12);
+}
+.eb-preview-toastwb--default {
+  background: #0A2757;
+  color: #FFFFFF;
+}
+.eb-preview-toastwb--light {
+  background: #FFFFFF;
+  color: #0A2757;
+  border: 1px solid #E5EBF4;
+}
+.eb-preview-toastwb__container {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  min-height: 48px;
+}
+.eb-preview-toastwb--has-desc .eb-preview-toastwb__container {
+  align-items: flex-start;
+}
+.eb-preview-toastwb__text-container {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 4px;
+}
+.eb-preview-toastwb__label {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  margin: 0;
+  letter-spacing: 0.25px;
+}
+.eb-preview-toastwb__desc {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  margin: 0;
+  letter-spacing: 0.25px;
+  opacity: 0.85;
+}
+.eb-preview-toastwb--default .eb-preview-toastwb__desc { color: #C2CFE5; }
+.eb-preview-toastwb--light   .eb-preview-toastwb__desc { color: #6780A9; opacity: 1; }
+
+.eb-preview-toastwb__action-slot {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+.eb-preview-toastwb__action {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+.eb-preview-toastwb__action--white { color: #FFFFFF; }
+.eb-preview-toastwb--light .eb-preview-toastwb__action { color: #005CE5; }
+
+/* Alias — same look as .demo-panel-readout */
+.demo-panel-value {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+/* ─── Banner: chevron icon ─────────────────────────────────────────────── */
+.eb-preview-bnr__chev {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: inherit;
+  opacity: 0.8;
+}
+.eb-preview-bnr__chev svg { width: 16px; height: 16px; }
+
+/* ─── Carousel Card: variant modifier (visual no-op, marker only) ──────── */
+.eb-preview-ccard--default { /* default state — no overrides needed */ }
+
+/* ─── Inline Text component preview ─────────────────────────────────────── */
+.eb-preview-itx {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+}
+.eb-preview-itx__label {
+  font-size: 14px;
+  font-weight: 400;
+  color: #6780A9;
+  flex-shrink: 0;
+}
+.eb-preview-itx__value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0A2757;
+  text-align: right;
+  word-break: break-word;
+}
+
+/* ─── Stepper components ────────────────────────────────────────────────── */
+.eb-preview-stepper-bullet,
+.eb-preview-stepper-circular,
+.eb-preview-stepper-dash {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+}
+
+.eb-preview-stepper-bullet-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #C2CFE5;
+  flex-shrink: 0;
+}
+.eb-preview-stepper-bullet-dot.active { background: #005CE5; }
+
+.eb-preview-stepper-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #C2CFE5;
+  background: #FFFFFF;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6780A9;
+}
+.eb-preview-stepper-circle.active {
+  border-color: #005CE5;
+  background: #005CE5;
+  color: #FFFFFF;
+}
+.eb-preview-stepper-circle.complete {
+  border-color: #005CE5;
+  background: #005CE5;
+  color: #FFFFFF;
+}
+
+.eb-preview-stepper-dash__slot {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: #E5EBF4;
+  overflow: hidden;
+}
+.eb-preview-stepper-dash__slot.active { background: #005CE5; }
