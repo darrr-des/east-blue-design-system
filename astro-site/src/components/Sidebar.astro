@@ -43,7 +43,6 @@ while (si < standalone.length || gi < orderedGroups.length) {
 
 const isOverview   = pathname === '/report';
 const isComponents = pathname === '/components' || pathname.startsWith('/components/');
-const isGuide      = pathname === '/eb-ds-assessment-guide';
 ---
 <aside class="sidebar">
   <a class="sidebar-brand" href="/">
@@ -121,6 +120,5 @@ const isGuide      = pathname === '/eb-ds-assessment-guide';
       )}
     </div>
 
-    <a class={`nav-item${isGuide ? ' active' : ''}`} href="/eb-ds-assessment-guide">Assessment Guide</a>
   </nav>
 </aside>
