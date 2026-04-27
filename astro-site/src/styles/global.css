@@ -359,12 +359,16 @@ a.sidebar-brand {
   transform: rotate(-90deg);
 }
 .nav-section-list {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-section-list-inner {
   overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.2s ease;
+  min-height: 0;
 }
 .nav-section-list.open {
-  max-height: none;
+  grid-template-rows: 1fr;
 }
 
 /* ── Nav items ───────────────────────────────────────────────────────── */
