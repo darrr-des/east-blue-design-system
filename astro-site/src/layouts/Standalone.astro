@@ -1,0 +1,21 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  bodyClass?: string;
+}
+const { title, bodyClass = 'standalone' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+  </head>
+  <body class={bodyClass}>
+    <slot />
+    <script src="/scripts/assessment.js" is:inline></script>
+  </body>
+</html>

@@ -1,5 +1,5 @@
 ---
-import Base from '../layouts/Base.astro';
+import Standalone from '../layouts/Standalone.astro';
 import { componentManifest } from '../data/components/_index';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -20,7 +20,7 @@ for (const slug of componentManifest.map((c) => c.slug)) {
 }
 const componentCount = componentManifest.length;
 ---
-<Base title="East Blue — Design System Assessment">
+<Standalone title="East Blue — Design System Assessment">
   <div class="home-shell">
     <div class="home-content">
       <header class="home-hero">
@@ -58,7 +58,7 @@ const componentCount = componentManifest.length;
       <section class="home-resources">
         <div class="home-resources-label">Resources</div>
 
-        <a class="home-resource-card" href="/components">
+        <a class="home-resource-card" href="/report">
           <div class="home-resource-icon home-resource-icon-blue">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
               <rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.6" />
@@ -74,7 +74,7 @@ const componentCount = componentManifest.length;
           </svg>
         </a>
 
-        <a class="home-resource-card" href="/guide">
+        <a class="home-resource-card" href="/eb-ds-assessment-guide">
           <div class="home-resource-icon home-resource-icon-green">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
               <path d="M5 4h14v16H7a2 2 0 0 1-2-2V4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
@@ -97,4 +97,4 @@ const componentCount = componentManifest.length;
       </footer>
     </div>
   </div>
-</Base>
+</Standalone>

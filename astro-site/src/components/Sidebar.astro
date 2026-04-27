@@ -41,9 +41,9 @@ while (si < standalone.length || gi < orderedGroups.length) {
   }
 }
 
-const isOverview   = pathname === '/overview';
+const isOverview   = pathname === '/report';
 const isComponents = pathname === '/components' || pathname.startsWith('/components/');
-const isGuide      = pathname === '/guide';
+const isGuide      = pathname === '/eb-ds-assessment-guide';
 ---
 <aside class="sidebar">
   <a class="sidebar-brand" href="/">
@@ -68,7 +68,7 @@ const isGuide      = pathname === '/guide';
 
   <nav class="sidebar-nav" id="comp-list">
     {/* Top-level nav */}
-    <a class={`nav-item${isOverview ? ' active' : ''}`} href="/overview">Overview</a>
+    <a class={`nav-item${isOverview ? ' active' : ''}`} href="/report">Overview</a>
 
     <a class={`nav-item nav-item-toggleable${isComponents ? ' active open' : ''}`} href="/components">
       <span>Components</span>
@@ -121,6 +121,6 @@ const isGuide      = pathname === '/guide';
       )}
     </div>
 
-    <a class={`nav-item${isGuide ? ' active' : ''}`} href="/guide">Assessment Guide</a>
+    <a class={`nav-item${isGuide ? ' active' : ''}`} href="/eb-ds-assessment-guide">Assessment Guide</a>
   </nav>
 </aside>
