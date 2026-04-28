@@ -5,7 +5,7 @@ export default defineConfig({
   publicDir: './public',
   outDir: './dist',
   build: {
-    format: 'file',
+    format: 'directory',
   },
   devToolbar: {
     enabled: false,
