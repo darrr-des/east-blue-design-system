@@ -1,7 +1,9 @@
 ---
 import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
-import AuthGate from '../components/AuthGate.astro';
+// TEMP: client-side auth gate stashed for password-protect handover.
+// Re-enable by uncommenting the import below + the <AuthGate /> tag in <body>.
+// import AuthGate from '../components/AuthGate.astro';
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
@@ -20,7 +22,8 @@ const { title, bodyClass = '', activeSlug } = Astro.props;
     <ClientRouter />
   </head>
   <body class={bodyClass}>
-    <AuthGate />
+    {/* TEMP: AuthGate stashed for password-protect handover. Re-enable by uncommenting. */}
+    {/* <AuthGate /> */}
     <Sidebar activeSlug={activeSlug} transition:persist />
     <main class="main" transition:animate="fade">
       <slot />

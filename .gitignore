@@ -29,3 +29,8 @@ overview-preview.html
 # Asset dirs used only by the local-only preview HTMLs above
 assets/components-preview/
 assets/overview-preview/
+
+# Component sandbox / playground (local iteration only — never pushed)
+astro-site/src/pages/sandbox/
+astro-site/src/components/SidebarV2.astro
+astro-site/public/_dev/
