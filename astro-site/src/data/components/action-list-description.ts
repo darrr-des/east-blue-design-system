@@ -153,6 +153,7 @@ export const actionListDescription: ComponentData = {
         "title": "State=Default",
         "node": "18577:14605",
         "description": "Active row. Leading icon + label + description + optional CTA + chevron.",
+        "previewHtml": "<div style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:18px;font-weight:600;letter-spacing:0.25px;color:#0A2757;\">Label</div><div style=\"font-family:'Proxima Soft',system-ui;font-size:12px;line-height:16px;font-weight:600;letter-spacing:0.4px;color:#6780A9;\">Description</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#005CE5;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -268,6 +269,7 @@ export const actionListDescription: ComponentData = {
         "title": "State=Disabled",
         "node": "18577:14617",
         "description": "Non-interactive. Label + description recolor to <code>#c2cfe5</code>; CTA + chevron use <code>#9bc5fd</code>.",
+        "previewHtml": "<div style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#E5EBF4;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:18px;font-weight:600;letter-spacing:0.25px;color:#C2CFE5;\">Label</div><div style=\"font-family:'Proxima Soft',system-ui;font-size:12px;line-height:16px;font-weight:600;letter-spacing:0.4px;color:#C2CFE5;\">Description</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#9BC5FD;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#9BC5FD\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -373,6 +375,7 @@ export const actionListDescription: ComponentData = {
         "title": "State=Loading",
         "node": "18577:14629",
         "description": "Skeleton. Two shimmer lines replace text; trailing is a 53px shimmer block.",
+        "previewHtml": "<div style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#EEF2F9;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0;\"><div style=\"height:14px;width:140px;border-radius:4px;background:#EEF2F9;\"></div><div style=\"height:10px;width:90px;border-radius:4px;background:#EEF2F9;\"></div></div><div style=\"width:53px;height:14px;border-radius:7px;background:#EEF2F9;flex-shrink:0;\"></div></div></div>",
         "sections": [
           {
             "label": "Properties",

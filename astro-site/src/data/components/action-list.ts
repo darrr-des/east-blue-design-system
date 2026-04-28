@@ -191,6 +191,7 @@ export const actionList: ComponentData = {
         "title": "List — icon + label + CTA + chevron",
         "node": "18577:14545",
         "description": "Baseline row. 6 variants (State × Density). Label in Neutral Dark Semibold 16. Trailing CTA text + 24 px chevron icon. 360 × 48 (compact) / 360 × 56 (expanded).",
+        "previewHtml": "<div style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:16px;font-weight:600;letter-spacing:0.25px;color:#0A2757;\">Label</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#005CE5;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -306,6 +307,7 @@ export const actionList: ComponentData = {
         "title": "List - with Counter — icon + label + counter + chevron",
         "node": "18577:14637",
         "description": "Adds a trailing <a href=\"#\" onclick=\"showPanelById('counter');return false;\">Counter</a> pill. 6 variants (Density × State). Card-like container with <code>radius-2</code> (6 px) corners and <code>Depth/D0</code> drop-shadow — differs from the base's flat row. Label switches to Bold 18 Brand Blue. 360 × 56 / 360 × 64.",
+        "previewHtml": "<div style=\"width:360px;\"><div style=\"display:flex;align-items:center;gap:12px;padding:12px;background:#FFFFFF;border-radius:6px;box-shadow:0 1px 4px rgba(10,39,87,0.08), 0 0 0 1px rgba(10,39,87,0.04);\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:18px;line-height:20px;font-weight:700;letter-spacing:0.25px;color:#005CE5;\">Label</div></div><span style=\"display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 8px;border-radius:99px;background:#005CE5;color:#FFFFFF;font-family:'Proxima Soft',system-ui;font-size:13px;font-weight:700;line-height:1;flex-shrink:0;\">3</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -421,6 +423,7 @@ export const actionList: ComponentData = {
         "title": "List - with Description — icon + label + description + CTA + chevron",
         "node": "18577:14604",
         "description": "Adds a secondary description line under the label. 3 variants (State only — no Density axis). Label matches the base (Semibold 16 Neutral). Description uses Semibold 12 / tracking-wider / <code>main/action-list/color/default/description</code> (<code>#6780A9</code>). 360 × 60.",
+        "previewHtml": "<div style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:18px;font-weight:600;letter-spacing:0.25px;color:#0A2757;\">Label</div><div style=\"font-family:'Proxima Soft',system-ui;font-size:12px;line-height:16px;font-weight:600;letter-spacing:0.4px;color:#6780A9;\">Description</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#005CE5;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
         "sections": [
           {
             "label": "Properties",
