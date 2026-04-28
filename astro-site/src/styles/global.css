@@ -331,7 +331,7 @@ a.sidebar-brand {
   border: none;
   cursor: pointer;
   text-align: left;
-  border-radius: 6px;
+  border-radius: 999px;
   transition: background 0.08s ease, color 0.08s ease;
 }
 .nav-section-toggle:hover {
@@ -387,7 +387,7 @@ a.sidebar-brand {
   background: transparent;
   width: 100%;
   text-align: left;
-  border-radius: 6px;
+  border-radius: 999px;
   transition: background 0.08s ease, color 0.08s ease;
   line-height: 1.4;
   margin-bottom: 1px;
@@ -417,7 +417,7 @@ a.sidebar-brand {
 .nav-item-row {
   display: flex;
   align-items: stretch;
-  border-radius: 6px;
+  border-radius: 999px;
   margin-bottom: 1px;
   transition: background 0.08s ease, color 0.08s ease;
 }
@@ -445,7 +445,7 @@ a.sidebar-brand {
 .nav-item-row > .nav-item {
   flex: 1;
   margin: 0;
-  border-radius: 6px 0 0 6px;
+  border-radius: 999px 0 0 999px;
   background: transparent !important;
 }
 .nav-item-row > .nav-item:hover { background: transparent; }
@@ -460,7 +460,7 @@ a.sidebar-brand {
   border: none;
   cursor: pointer;
   color: inherit;
-  border-radius: 0 6px 6px 0;
+  border-radius: 0 999px 999px 0;
 }
 .nav-item-chevron-btn:hover { background: transparent; }
 .nav-item-chevron-btn .nav-section-chevron {
@@ -5015,6 +5015,340 @@ pre.code-snippet .prp { color: #0369A1; }
   100% { transform: translateX(100%); }
 }
 
+/* ═════════════════════════════════════════════════════════════════════
+   FLOATING RAIL NAV — PROTOTYPE
+   Activated by body.rail-nav. Hides .sidebar and shows a single floating
+   white card: 48px icon rail + 192px list panel (240px total), 16px inset
+   from viewport edges, soft shadow, rounded 9px. Canvas #F6F9FD.
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* Hidden until the prototype is enabled */
+.rail-shell { display: none; }
+
+/* Floating toggle pill — bottom-right of viewport, always visible */
+.glass-toggle-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 200;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: #fff;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+.glass-toggle-float:hover { color: var(--text); transform: translateY(-1px); }
+[data-theme="dark"] .glass-toggle-float {
+  background: #1e293b;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--text-2);
+}
+[data-theme="dark"] .glass-toggle-float:hover { color: var(--text); }
+body.rail-nav .glass-toggle-float {
+  background: #0A1628;
+  border-color: #0A1628;
+  color: #fff;
+}
+
+/* ── When rail mode is ON ─────────────────────────────────────────── */
+body.rail-nav .sidebar { display: none !important; }
+body.rail-nav .rail-shell { display: flex; }
+
+body.rail-nav {
+  background: #F7F9FD;
+}
+[data-theme="dark"] body.rail-nav {
+  background: #0A1220;
+}
+
+/* Main content shifts right of the shell; blue-tinted transparent bg */
+body.rail-nav .main {
+  margin-left: calc(16px + 328px + 16px);
+  padding-top: 16px;
+  padding-right: 16px;
+  background: transparent;
+}
+
+/* ── The floating shell: blue-tinted card (no pure white) ───────── */
+.rail-shell {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  bottom: 16px;
+  width: 328px;
+  flex-direction: row;
+  background: #F6F9FD;
+  border-radius: 12px;
+  box-shadow: 0 0 4px rgba(2, 14, 34, 0.06), 0 1px 3px rgba(2, 14, 34, 0.04);
+  overflow: hidden;
+  z-index: 100;
+}
+[data-theme="dark"] .rail-shell {
+  background: #121a28;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* ── Icon rail (72px, Material-style with stacked icon + label) ──── */
+.rail-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80px;
+  padding: 16px 0 20px;
+  flex-shrink: 0;
+  border-right: 1px solid rgba(0, 86, 214, 0.08);
+}
+[data-theme="dark"] .rail-col { border-right-color: rgba(255, 255, 255, 0.06); }
+
+.rail-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #DCE8FB;
+  color: #0056D6;
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: background 0.12s ease;
+}
+.rail-brand:hover { background: #C9DAF7; }
+[data-theme="dark"] .rail-brand { background: rgba(255, 255, 255, 0.08); }
+.rail-brand svg { width: 18px; height: 18px; }
+
+.rail-icons {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  flex: 1;
+  width: 100%;
+  padding: 0 4px;
+}
+
+/* Material rail button = stacked icon + label, active pill behind icon only */
+.rail-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 4px 8px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.rail-btn:hover { background: rgba(0, 86, 214, 0.06); }
+.rail-btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 32px;
+  border-radius: 999px;
+  color: inherit;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.rail-btn svg { width: 22px; height: 22px; }
+.rail-btn.active .rail-btn-icon {
+  background: #E3EDFE;
+  color: #0056D6;
+}
+.rail-btn.active { color: var(--text); }
+.rail-btn-label {
+  font-size: 12px;
+  color: var(--text-2);
+}
+.rail-btn.active .rail-btn-label { color: var(--text); font-weight: 600; }
+[data-theme="dark"] .rail-btn:hover { background: rgba(255, 255, 255, 0.04); }
+[data-theme="dark"] .rail-btn.active .rail-btn-icon {
+  background: rgba(74, 140, 249, 0.2);
+  color: #6B9AEF;
+}
+
+.rail-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-top: 14px;
+  margin-top: 6px;
+  border-top: 1px solid rgba(0, 86, 214, 0.08);
+  width: 40px;
+}
+[data-theme="dark"] .rail-footer { border-top-color: rgba(255, 255, 255, 0.06); }
+
+/* ── List panel (248px) ───────────────────────────────────────────── */
+.rail-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+.rail-view { display: none; flex-direction: column; gap: 0; }
+.rail-view.active { display: flex; }
+
+/* .rail-item (the Overview/Icons/Styles root items) — Material-style pill.
+   We DO NOT touch .nav-comp or .nav-group-toggle — they keep the live
+   sidebar styling so the cloned list looks identical to the source. */
+.rail-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.rail-item:hover { background: rgba(0, 86, 214, 0.06); }
+.rail-item.active {
+  background: #DCE8FB;
+  color: #0056D6;
+  font-weight: 500;
+}
+[data-theme="dark"] .rail-item:hover { background: rgba(255, 255, 255, 0.05); }
+[data-theme="dark"] .rail-item.active {
+  background: rgba(74, 140, 249, 0.2);
+  color: #6B9AEF;
+}
+
+.rail-item-chevron {
+  margin-left: auto;
+  opacity: 0.4;
+  transition: transform 0.18s ease;
+}
+.rail-item.open > .rail-item-chevron { transform: rotate(0deg); }
+.rail-item:not(.open) > .rail-item-chevron { transform: rotate(-90deg); }
+
+.rail-group-list {
+  display: none;
+  flex-direction: column;
+  gap: 0;
+  padding-left: 0;
+}
+.rail-group-list.open { display: flex; }
+
+/* Search */
+.rail-search-input {
+  width: 100%;
+  margin: 2px 0 10px;
+  padding: 9px 14px;
+  background: rgba(0, 86, 214, 0.06);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.rail-search-input::placeholder { color: var(--muted); }
+.rail-search-input:focus {
+  background: #DCE8FB;
+  border-color: rgba(0, 86, 214, 0.4);
+}
+[data-theme="dark"] .rail-search-input {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+[data-theme="dark"] .rail-search-input:focus {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(107, 154, 239, 0.5);
+}
+
+.rail-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 10px 10px 4px;
+}
+
+/* Under-construction state */
+.rail-construction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 40px 16px;
+  text-align: center;
+  color: var(--muted);
+  background: rgba(0, 86, 214, 0.04);
+  border: 1px dashed rgba(0, 86, 214, 0.15);
+  border-radius: 8px;
+  margin: 8px 4px;
+}
+.rail-construction-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+.rail-construction-desc {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+[data-theme="dark"] .rail-construction {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Components view: the "Components" root is just another rail-item at the top */
+.rail-view-components .rail-item-root {
+  font-weight: 600;
+}
+
+/* .nav-comp / .nav-group-toggle keep the live sidebar styling — DO NOT OVERRIDE.
+   Only tweak font-size per user spec and drop the hairline on nested groups. */
+body.rail-nav .rail-panel .nav-comp-name {
+  font-size: 16px;
+}
+body.rail-nav #rail-nav-host .nav-group-list {
+  border-left: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* Mobile fallback — keep old sidebar, ignore rail */
+@media (max-width: 840px) {
+  body.rail-nav .rail-shell { display: none; }
+  body.rail-nav .sidebar { display: flex !important; }
+  body.rail-nav .main { margin-left: 0; padding-top: 0; padding-right: 0; }
+}
+
 /* (POC override removed — real sidebar now wired in src/layouts/Base.astro) */
 
 /* TOC scroll target offset — leave room for the sticky comp-tabs bar
@@ -5471,7 +5805,7 @@ pre.code-snippet .prp { color: #0369A1; }
   border: none;
   cursor: pointer;
   text-align: left;
-  border-radius: 6px;
+  border-radius: 999px;
   transition: background 0.08s ease, color 0.08s ease;
 }
 .nav-family-toggle:hover {
@@ -5831,470 +6165,3 @@ pre.code-snippet .prp { color: #0369A1; }
   overflow: hidden;
 }
 .eb-preview-stepper-dash__slot.active { background: #005CE5; }
-
-
-/* ── Home page Resources card (Assessment Guide CTA) ────────────────── */
-.resource-card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 18px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  text-decoration: none;
-  color: inherit;
-  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
-}
-.resource-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 92, 229, 0.08);
-}
-.resource-card-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 11px;
-  background: var(--rail-active-bg);
-  color: var(--rail-active-fg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.resource-card-body { flex: 1; min-width: 0; }
-.resource-card-title {
-  font-family: 'HeyMeow Rnd', system-ui, sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 4px;
-  letter-spacing: -0.01em;
-}
-.resource-card-desc {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.5;
-}
-.resource-card-chevron {
-  flex-shrink: 0;
-  color: var(--muted);
-  opacity: 0.5;
-  transition: transform 0.15s ease, opacity 0.15s ease;
-}
-.resource-card:hover .resource-card-chevron {
-  opacity: 1;
-  transform: translateX(2px);
-  color: var(--accent);
-}
-
-/* ── Coming Soon page ────────────────────────────────────────────────── */
-.coming-soon-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 60vh;
-}
-.coming-soon-card {
-  text-align: center;
-  max-width: 480px;
-  padding: 48px;
-}
-.coming-soon-icon {
-  width: 72px;
-  height: 72px;
-  border-radius: 18px;
-  background: var(--rail-active-bg);
-  color: var(--rail-active-fg);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-.coming-soon-title {
-  font-family: 'HeyMeow Rnd', system-ui, sans-serif;
-  font-size: 26px;
-  font-weight: 600;
-  color: var(--text);
-  margin: 0 0 12px;
-  letter-spacing: -0.02em;
-}
-.coming-soon-desc {
-  font-size: 15px;
-  color: var(--muted);
-  line-height: 1.6;
-  margin: 0 0 24px;
-}
-.coming-soon-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 16px;
-  background: var(--rail-active-bg);
-  color: var(--rail-active-fg);
-  text-decoration: none;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 500;
-  transition: background 0.15s ease;
-}
-.coming-soon-back:hover { background: #D2E5FF; }
-
-/* ═══════════════════════════════════════════════════════════════════════
-   SIDEBAR (Figma 19074:37133)
-   Variables mirror the Figma tokens 1:1. No custom hexes outside this block.
-═══════════════════════════════════════════════════════════════════════ */
-
-:root {
-  --sb-rail-w-full:         220px;   /* Figma: Yes/Default/Default = 220 */
-  --sb-rail-w-collapsed:    60px;    /* Figma: No/* variants  = 60 */
-  --sb-panel-w:             204px;   /* Figma: Components active total 264 - 60 */
-  --sb-bg:                  #F6F9FD; /* page canvas behind the rail */
-  --sb-panel-bg:            #FFFFFF; /* bg/color-bg-main */
-
-  /* Tokens (exact Figma values — see get_variable_defs node 19074:37133) */
-  --tk-text-primary:        #005CE5;
-  --tk-text-weak:           #445C85;
-  --tk-text-weaker:         #6780A9;
-  --tk-bg-info-weakest:     #E5F1FF;
-  --tk-bg-info-weaker:      #D2E5FF;
-  --tk-border-weak:         #E5EBF4;
-  --tk-border-primary:      #005CE5;
-}
-
-[data-theme="dark"] {
-  --sb-bg:                  #0E0E0F;
-  --sb-panel-bg:            #161617;
-  --tk-text-primary:        #6FA9FF;
-  --tk-text-weak:           #B7C2D6;
-  --tk-text-weaker:         #8EA0BD;
-  --tk-bg-info-weakest:     rgba(111, 169, 255, 0.12);
-  --tk-bg-info-weaker:      rgba(111, 169, 255, 0.18);
-  --tk-border-weak:         #2A2A2C;
-}
-
-/* ── Outer shell: fixed on the left edge, full viewport height ───────── */
-.sb {
-  position: fixed;
-  inset: 0 auto 0 0;
-  height: 100vh;
-  z-index: 100;
-  display: flex;
-  align-items: stretch;
-  font-family: 'HeyMeow Rnd', system-ui, sans-serif;
-}
-
-/* ── Rail ───────────────────────────────────────────────────────────── */
-.sb-rail {
-  width: var(--sb-rail-w-full);
-  background: var(--sb-bg);
-  display: flex;
-  flex-direction: column;
-  padding: 16px 12px;
-  transition: width 0.18s cubic-bezier(0.4, 0, 0.2, 1), padding 0.18s ease;
-  overflow: hidden;
-}
-.sb--collapsed .sb-rail,
-.sb--manual-collapsed .sb-rail {
-  width: var(--sb-rail-w-collapsed);
-  padding: 16px 8px;
-}
-
-/* Header — brand + collapse-toggle */
-.sb-rail-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 8px 28px;
-  min-height: 36px;
-}
-.sb-brand {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  flex: 1;
-  min-width: 0;
-}
-.sb-brand-text {
-  font-family: 'HeyMeow Rnd', system-ui, sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--tk-text-primary);
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-  line-height: 1;
-}
-.sb-brand-version {
-  display: inline-flex;
-  align-items: center;
-  font-family: 'Fira Code', 'SF Mono', ui-monospace, monospace;
-  font-size: 10px;
-  font-weight: 500;
-  color: var(--tk-text-weak);
-  background: var(--tk-bg-info-weaker);
-  padding: 2px 6px;
-  border-radius: 6px;
-  white-space: nowrap;
-  line-height: 16px;
-}
-
-.sb-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: var(--tk-text-weaker);
-  border-radius: 6px;
-  flex-shrink: 0;
-}
-.sb-toggle:hover {
-  color: var(--tk-text-primary);
-  background: var(--tk-bg-info-weakest);
-}
-.sb--collapsed .sb-toggle { color: var(--tk-text-weaker); }
-.sb--collapsed .sb-rail-header,
-.sb--manual-collapsed .sb-rail-header { padding: 8px; justify-content: center; }
-.sb--collapsed .sb-brand,
-.sb--manual-collapsed .sb-brand { display: none; }
-
-/* ── Nav items ─────────────────────────────────────────────────────── */
-.sb-nav {
-  display: flex;
-  flex-direction: column;
-}
-
-.sb-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px;
-  height: 36px;
-  border-radius: 10px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  color: var(--tk-text-weaker);
-  font-family: 'HeyMeow Rnd', system-ui, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  text-align: left;
-  width: 100%;
-  white-space: nowrap;
-  transition: background 0.12s ease, color 0.12s ease;
-  line-height: 20px;
-}
-.sb-item:hover {
-  background: var(--tk-bg-info-weakest);
-  color: var(--tk-text-primary);
-}
-.sb-item:hover .sb-icon { color: var(--tk-text-primary); }
-.sb-item--active {
-  background: var(--tk-bg-info-weakest);
-  color: var(--tk-text-primary);
-  font-weight: 600;
-}
-.sb-item--active .sb-icon { color: var(--tk-text-primary); }
-
-.sb-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  color: var(--tk-text-weaker);
-}
-
-/* Collapsed rail: items become 36×36 pills, label is hidden */
-.sb--collapsed .sb-item,
-.sb--manual-collapsed .sb-item {
-  width: 36px;
-  height: 36px;
-  padding: 8px;
-  justify-content: center;
-  border-radius: 999px;
-  margin: 0 auto;
-}
-.sb--collapsed .sb-label,
-.sb--manual-collapsed .sb-label {
-  position: absolute;
-  width: 1px; height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* ── Footer (dark-mode toggle, pinned to bottom) ─────────────────────── */
-.sb-rail-footer {
-  margin-top: auto;
-  padding-top: 12px;
-}
-
-/* ── Components panel ────────────────────────────────────────────────── */
-.sb > .sb-panel {
-  display: block;
-  width: var(--sb-panel-w);
-  background: var(--sb-panel-bg);
-  border-left: 1px solid var(--tk-border-weak);
-  overflow-y: auto;
-  scrollbar-gutter: stable;
-  animation: none;
-}
-.sb-panel::-webkit-scrollbar { width: 0; }
-.sb-panel-list {
-  display: flex;
-  flex-direction: column;
-  padding: 8px;
-  gap: 2px;
-}
-
-.sb-panel-header {
-  display: flex;
-  align-items: center;
-  height: 40px;
-  padding: 12px 16px;
-  border-radius: 10px;
-  background: var(--tk-bg-info-weakest);
-  color: var(--tk-text-primary);
-  font-family: 'HeyMeow Rnd', system-ui, sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  margin-bottom: 6px;
-  letter-spacing: -0.005em;
-}
-
-.sb-panel-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 40px;
-  padding: 12px 16px;
-  border-radius: 999px;            /* full pill — Figma rounded-[999px] */
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  color: var(--tk-text-weaker);
-  font-family: 'HeyMeow Rnd', system-ui, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  width: 100%;
-  text-align: left;
-  list-style: none;
-  transition: background 0.12s ease, color 0.12s ease;
-  line-height: 20.8px;             /* matches Figma leading-[20.8px] */
-}
-.sb-panel-item:hover {
-  background: var(--tk-bg-info-weakest);
-  color: var(--tk-text-primary);
-}
-.sb-panel-item--active {
-  background: var(--tk-bg-info-weakest);
-  color: var(--tk-text-primary);
-  font-weight: 600;
-}
-
-.sb-panel-label {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.sb-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  opacity: 0.85;
-  margin-right: 4px;
-}
-.sb-dot--red    { background: #DC2626; }
-.sb-dot--orange { background: #D97706; }
-
-.sb-panel-chevron {
-  flex-shrink: 0;
-  opacity: 0.5;
-  transition: transform 0.18s ease, opacity 0.18s ease;
-  color: currentColor;
-}
-.sb-panel-item:hover .sb-panel-chevron { opacity: 0.8; }
-
-/* Family group (using <details>/<summary> for native expand/collapse) */
-.sb-panel-group { margin: 0; padding: 0; }
-.sb-panel-group summary { cursor: pointer; }
-.sb-panel-group summary::-webkit-details-marker { display: none; }
-.sb-panel-group[open] > summary > .sb-panel-chevron { transform: rotate(90deg); }
-.sb-panel-group-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 2px 0 4px;
-}
-.sb-panel-item--child {
-  padding-left: 28px;              /* extra indent for nested children */
-}
-
-/* ═══════════════════════════════════════════════════════════════════════
-   FLOATING LAYOUT — page canvas with the main column as a white card,
-   the rail blending into the canvas. Mirrors Figma 19074:38201.
-═══════════════════════════════════════════════════════════════════════ */
-
-:root {
-  --sb-pad:                 16px;   /* outer padding of the floating shell */
-}
-
-body {
-  /* The canvas behind the sidebar — same color as the rail so the rail
-     blends in and the main card 'floats'. */
-  background: var(--sb-bg) !important;
-}
-[data-theme="dark"] body { background: var(--sb-bg) !important; }
-
-/* Sidebar shell sits inside the canvas with floating padding around it */
-.sb {
-  inset: var(--sb-pad) auto var(--sb-pad) var(--sb-pad);
-  height: calc(100vh - var(--sb-pad) * 2);
-  align-items: stretch;
-}
-
-/* Main column = white floating card */
-.main {
-  margin: var(--sb-pad) var(--sb-pad) var(--sb-pad)
-          calc(var(--sb-rail-w-full) + var(--sb-pad) * 2);
-  background: var(--sb-panel-bg);
-  border-radius: 16px;
-  border: 1px solid var(--tk-border-weak);
-  min-height: calc(100vh - var(--sb-pad) * 2);
-  overflow: hidden;
-  transition: margin-left 0.18s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.sb--has-panel ~ .main {
-  margin-left: calc(var(--sb-rail-w-collapsed) + var(--sb-panel-w) + var(--sb-pad) * 2);
-}
-.sb--manual-collapsed ~ .main {
-  margin-left: calc(var(--sb-rail-w-collapsed) + var(--sb-pad) * 2);
-}
-
-/* The components panel becomes a separate floating card too */
-.sb > .sb-panel {
-  background: var(--sb-panel-bg);
-  border: 1px solid var(--tk-border-weak);
-  border-radius: 16px;
-  margin-left: var(--sb-pad);
-  height: 100%;
-}
-
-/* Defensive — kill any old .sidebar markup if it exists */
-.sidebar:not(.sb) { display: none; }

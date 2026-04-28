@@ -1,7 +1,5 @@
 ---
 import { componentManifest } from '../data/components/_index';
-import fs from 'node:fs';
-import path from 'node:path';
 
 interface Props {
   activeSlug?: string;
@@ -9,40 +7,27 @@ interface Props {
 const { activeSlug } = Astro.props;
 const pathname = Astro.url.pathname;
 
-// Route flags
-const isOverview   = pathname === '/';
-const isComponents = pathname === '/components' || pathname.startsWith('/components/');
-const isSearch     = pathname === '/search';
-const isIcons      = pathname === '/icons';
-const isStyles     = pathname === '/styles';
+type Item = (typeof componentManifest)[number];
 
-// Components panel shows on /components/* (matches Figma "Type=Components" variant)
-const showPanel    = isComponents;
+// Map each component's badges to a single status-dot color.
+// Red:    structural/blocking — rework, restructure, consolidate, remove, product-layer
+// Orange: minor — fix, refine
+// None:   keep, ready, na, or no badges
+function statusFromBadges(badges?: { kind: string }[]): 'rework' | 'fix' | null {
+  if (!badges || badges.length === 0) return null;
+  const kinds = new Set(badges.map((b) => b.kind));
+  if (kinds.has('rework') || kinds.has('restructure') || kinds.has('consolidate') || kinds.has('remove') || kinds.has('product-layer')) {
+    return 'rework';
+  }
+  if (kinds.has('fix') || kinds.has('refine')) {
+    return 'fix';
+  }
+  return null;
+}
+const groups = new Map<string, Item[]>();
+const standalone: Item[] = [];
 
-// On /components/* the rail is force-collapsed (Figma shows 60px rail + 204px panel = 264px total)
-const railCollapsed = isComponents;
-
-// ── Build component rows for the panel ───────────────────────────────
-type ManifestItem = (typeof componentManifest)[number];
-const DATA_DIR = path.resolve(process.cwd(), 'src/data/components');
-type WithBadges = ManifestItem & { badges: { kind: string }[] };
-
-const enriched: WithBadges[] = componentManifest.map((m) => {
-  let badges: { kind: string }[] = [];
-  try {
-    const raw = fs.readFileSync(path.join(DATA_DIR, m.slug + '.ts'), 'utf8');
-    const match = raw.match(/= ({[\s\S]*});\s*$/);
-    if (match) {
-      const data = new Function('return ' + match[1])();
-      badges = data?.meta?.badges || [];
-    }
-  } catch {}
-  return { ...m, badges };
-});
-
-const groups = new Map<string, WithBadges[]>();
-const standalone: WithBadges[] = [];
-for (const item of enriched) {
+for (const item of componentManifest) {
   if (item.navGroup) {
     if (!groups.has(item.navGroup)) groups.set(item.navGroup, []);
     groups.get(item.navGroup)!.push(item);
@@ -50,16 +35,17 @@ for (const item of enriched) {
     standalone.push(item);
   }
 }
+
 standalone.sort((a, b) => a.name.localeCompare(b.name));
 const orderedGroups = [...groups.entries()]
   .map(([k, v]) => [k, [...v].sort((a, b) => a.name.localeCompare(b.name))] as const)
   .sort((a, b) => a[0].localeCompare(b[0]));
 
-type Row =
-  | { kind: 'item'; item: WithBadges }
-  | { kind: 'group'; name: string; items: WithBadges[] };
+// Weave standalone items + group headers alphabetically
+type Row = { kind: 'item'; item: Item } | { kind: 'group'; name: string; items: Item[] };
 const rows: Row[] = [];
-let si = 0, gi = 0;
+let si = 0;
+let gi = 0;
 while (si < standalone.length || gi < orderedGroups.length) {
   const sName = standalone[si]?.name;
   const gName = orderedGroups[gi]?.[0];
@@ -71,187 +57,120 @@ while (si < standalone.length || gi < orderedGroups.length) {
   }
 }
 
-// Dot color logic — per user spec:
-//   restructure / rework / consolidate / remove / product-layer  → red
-//   fix / refine                                                 → orange
-//   keep / ready / na / empty                                    → no dot
-// Family GROUPS never get a dot — only standalone components or items inside an opened group.
-const RED = new Set(['restructure', 'rework', 'consolidate', 'remove', 'product-layer']);
-const ORANGE = new Set(['fix', 'refine']);
-function dotFor(badges: { kind: string }[]): 'red' | 'orange' | null {
-  const kinds = badges.map((b) => b.kind);
-  if (kinds.some((k) => RED.has(k))) return 'red';
-  if (kinds.some((k) => ORANGE.has(k))) return 'orange';
-  return null;
-}
+const isOverview        = pathname === '/';
+const isComponentsGrid  = pathname === '/components';                          // on the grid page itself → highlight active
+const componentsOpen    = isComponentsGrid || pathname.startsWith('/components/'); // expand the list whenever inside Components
+const isGuide           = pathname === '/eb-ds-assessment-guide';
 ---
-<aside class={`sb${showPanel ? ' sb--has-panel' : ''}${railCollapsed ? ' sb--collapsed' : ''}`} data-route={pathname}>
-  {/* ────────  Rail (left)  ──────── */}
-  <div class="sb-rail">
-    {/* Header: brand + collapse-toggle on the right */}
-    <div class="sb-rail-header">
-      <a class="sb-brand" href="/" aria-label="East Blue home">
-        <span class="sb-brand-text">East Blue</span>
-        <span class="sb-brand-version">v0.1.0</span>
+<aside class="sidebar">
+  <a class="sidebar-brand" href="/">
+    <div class="sidebar-brand-row">
+      <div class="sidebar-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="1" y="1" width="5" height="5" rx="1" fill="#fff" />
+          <rect x="9" y="1" width="5" height="5" rx="1" fill="#fff" opacity=".75" />
+          <rect x="1" y="9" width="5" height="5" rx="1" fill="#fff" opacity=".75" />
+          <rect x="9" y="9" width="5" height="5" rx="1" fill="#fff" opacity=".45" />
+        </svg>
+      </div>
+      <div class="sidebar-brand-text">
+        <div class="sidebar-brand-title-row">
+          <span class="sidebar-wordmark">East Blue</span>
+          <span class="sidebar-version">v0.1.0</span>
+        </div>
+        <span class="sidebar-brand-sub">Component Assessment</span>
+      </div>
+    </div>
+  </a>
+
+  <nav class="sidebar-nav" id="comp-list">
+    {/* Top-level nav */}
+    <a class={`nav-item${isOverview ? ' active' : ''}`} href="/">Overview</a>
+
+    <div class={`nav-item-row${isComponentsGrid ? ' active' : ''}${componentsOpen ? ' open' : ''}`}>
+      <a
+        class={`nav-item nav-item-toggleable${isComponentsGrid ? ' active' : ''}`}
+        href="/components"
+        onclick="toggleComponentsSection(event, false)"
+      >
+        <span>Components</span>
       </a>
-      <button class="sb-toggle" type="button" onclick="window.__sbToggle && window.__sbToggle()" aria-label="Toggle sidebar">
-        {/* Lucide: PanelLeft */}
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect width="18" height="18" x="3" y="3" rx="2"/>
-          <path d="M9 3v18"/>
+      <button class="nav-item-chevron-btn" onclick="toggleComponentsSection(event, true)" aria-label="Toggle components list">
+        <svg class="nav-section-chevron" width="12" height="12" viewBox="0 0 16 16" fill="none">
+          <path d="M5 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </button>
     </div>
-
-    {/* Nav */}
-    <nav class="sb-nav" aria-label="Primary">
-      <a class={`sb-item${isSearch ? ' sb-item--active' : ''}`} href="/search" aria-label="Search">
-        <span class="sb-icon">
-          {/* Lucide: Search */}
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m21 21-4.34-4.34"/>
-            <circle cx="11" cy="11" r="8"/>
-          </svg>
-        </span>
-        <span class="sb-label">Search</span>
-      </a>
-
-      <a class={`sb-item${isOverview ? ' sb-item--active' : ''}`} href="/" aria-label="Overview">
-        <span class="sb-icon">
-          {/* Lucide: Atom */}
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="1"/>
-            <path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z"/>
-            <path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z"/>
-          </svg>
-        </span>
-        <span class="sb-label">Overview</span>
-      </a>
-
-      <a class={`sb-item${isComponents ? ' sb-item--active' : ''}`} href="/components" aria-label="Components">
-        <span class="sb-icon">
-          {/* Lucide: Component */}
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5.5 8.5 9 12l-3.5 3.5L2 12l3.5-3.5Z"/>
-            <path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z"/>
-            <path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z"/>
-            <path d="m12 15 3.5 3.5L12 22l-3.5-3.5L12 15Z"/>
-          </svg>
-        </span>
-        <span class="sb-label">Components</span>
-      </a>
-
-      <a class={`sb-item${isIcons ? ' sb-item--active' : ''}`} href="/icons" aria-label="Icons">
-        <span class="sb-icon">
-          {/* Lucide: Origami */}
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 12V4a1 1 0 0 1 1-1h6.297a1 1 0 0 1 .651 1.759l-4.696 4.025"/>
-            <path d="m12 21-7.414-7.414A2 2 0 0 1 4 12.172V6.415a1.002 1.002 0 0 1 1.707-.707L20 20.009"/>
-            <path d="m12.214 3.381 8.414 14.966a1 1 0 0 1-.167 1.199l-1.168 1.163a1 1 0 0 1-.706.291H6.351a1 1 0 0 1-.625-.219L3.25 18.8a1 1 0 0 1 .631-1.781l4.165.027"/>
-          </svg>
-        </span>
-        <span class="sb-label">Icons</span>
-      </a>
-
-      <a class={`sb-item${isStyles ? ' sb-item--active' : ''}`} href="/styles" aria-label="Styles">
-        <span class="sb-icon">
-          {/* Lucide: SwatchBook */}
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M11 17a4 4 0 0 1-8 0V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2Z"/>
-            <path d="M16.7 13H19a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H7.5"/>
-            <path d="m17 14 6.4-6.4a2 2 0 0 0 0-2.8L20.6 2a2 2 0 0 0-2.8 0L11 8.7"/>
-            <path d="M7 17h.01"/>
-          </svg>
-        </span>
-        <span class="sb-label">Styles</span>
-      </a>
-    </nav>
-
-    {/* Footer: dark mode toggle */}
-    <div class="sb-rail-footer">
-      <button class="sb-item" type="button" onclick="toggleTheme && toggleTheme(document.documentElement.dataset.theme !== 'dark')" aria-label="Toggle dark mode">
-        <span class="sb-icon">
-          {/* Lucide: Moon */}
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/>
-          </svg>
-        </span>
-        <span class="sb-label">Dark mode</span>
-      </button>
-    </div>
-  </div>
-
-  {/* ────────  Components panel (right)  ──────── */}
-  {showPanel && (
-    <div class="sb-panel">
-      <div class="sb-panel-list">
-        <a class="sb-panel-header" href="/components">
-          <span>Components</span>
-        </a>
-
+    <div class={`nav-section-list nav-components-list${componentsOpen ? ' open' : ''}`}>
+      <div class="nav-section-list-inner">
         {rows.map((row) =>
           row.kind === 'item' ? (
             <a
-              class={`sb-panel-item${activeSlug === row.item.slug ? ' sb-panel-item--active' : ''}`}
+              class={`nav-comp${activeSlug === row.item.slug ? ' active' : ''}`}
               href={`/components/${row.item.slug}`}
             >
-              <span class="sb-panel-label">{row.item.name}</span>
-              {(() => {
-                const d = dotFor(row.item.badges);
-                return d ? <span class={`sb-dot sb-dot--${d}`} aria-hidden="true"></span> : null;
-              })()}
+              {row.item.navIconSvg && (
+                <div class="nav-comp-icon" set:html={row.item.navIconSvg} />
+              )}
+              <div class="nav-comp-body">
+                <div class="nav-comp-name">{row.item.name}</div>
+              </div>
+              {statusFromBadges(row.item.badges) && (
+                <span class={`nav-comp-status ${statusFromBadges(row.item.badges)}`} aria-hidden="true" />
+              )}
             </a>
           ) : (
-            <details class={`sb-panel-group${row.items.some((i) => i.slug === activeSlug) ? ' sb-panel-group--has-active' : ''}`} open={row.items.some((i) => i.slug === activeSlug)}>
-              <summary class="sb-panel-item sb-panel-item--group">
-                <span class="sb-panel-label">{row.name}</span>
-                {/* No dot on family group toggles — only on individual items */}
-                <svg class="sb-panel-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6"/>
+            <>
+              <button
+                class={`nav-section-toggle nav-family-toggle${row.items.some((i) => i.slug === activeSlug) ? ' open' : ''}`}
+                onclick="toggleNavSection(this)"
+              >
+                <span>{row.name}</span>
+                <svg class="nav-section-chevron" width="12" height="12" viewBox="0 0 16 16" fill="none">
+                  <path d="M5 6l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
-              </summary>
-              <div class="sb-panel-group-list">
-                {row.items.map((item) => (
-                  <a
-                    class={`sb-panel-item sb-panel-item--child${activeSlug === item.slug ? ' sb-panel-item--active' : ''}`}
-                    href={`/components/${item.slug}`}
-                  >
-                    <span class="sb-panel-label">{item.name}</span>
-                    {(() => {
-                      const d = dotFor(item.badges);
-                      return d ? <span class={`sb-dot sb-dot--${d}`} aria-hidden="true"></span> : null;
-                    })()}
-                  </a>
-                ))}
+              </button>
+              <div class={`nav-section-list${row.items.some((i) => i.slug === activeSlug) ? ' open' : ''}`}>
+                <div class="nav-section-list-inner">
+                  {row.items.map((item) => (
+                    <a
+                      class={`nav-comp${activeSlug === item.slug ? ' active' : ''}`}
+                      href={`/components/${item.slug}`}
+                    >
+                      {item.navIconSvg && (
+                        <div class="nav-comp-icon" set:html={item.navIconSvg} />
+                      )}
+                      <div class="nav-comp-body">
+                        <div class="nav-comp-name">{item.name}</div>
+                      </div>
+                      {statusFromBadges(item.badges) && (
+                        <span class={`nav-comp-status ${statusFromBadges(item.badges)}`} aria-hidden="true" />
+                      )}
+                    </a>
+                  ))}
+                </div>
               </div>
-            </details>
+            </>
           )
         )}
       </div>
     </div>
-  )}
-</aside>
 
-{/* Manual collapse-toggle wiring */}
-<script is:inline>
-  (function () {
-    function readState() {
-      try { return localStorage.getItem('sb_manual_collapsed') === '1'; } catch { return false; }
-    }
-    function apply(state) {
-      var sb = document.querySelector('.sb');
-      if (!sb) return;
-      // The on-/components/* state always force-collapses the rail; the
-      // manual toggle only affects routes where the rail is otherwise full.
-      if (sb.classList.contains('sb--has-panel')) return;
-      sb.classList.toggle('sb--manual-collapsed', state);
-    }
-    window.__sbToggle = function () {
-      var next = !readState();
-      try { localStorage.setItem('sb_manual_collapsed', next ? '1' : '0'); } catch {}
-      apply(next);
-    };
-    apply(readState());
-    document.addEventListener('astro:page-load', function () { apply(readState()); });
-  })();
-</script>
+    <a class={`nav-item${isGuide ? ' active' : ''}`} href="/eb-ds-assessment-guide">Assessment Guide</a>
+  </nav>
+
+  <!-- User info + logout (populated by AuthGate via window.__ebUser) -->
+  <div class="sidebar-user" id="sidebar-user" style="display:none;">
+    <img class="sidebar-user-avatar" id="sidebar-user-avatar" alt="" />
+    <div class="sidebar-user-text">
+      <div class="sidebar-user-name" id="sidebar-user-name"></div>
+      <div class="sidebar-user-email" id="sidebar-user-email"></div>
+    </div>
+    <button class="sidebar-user-logout" onclick="window.__ebSignOut && window.__ebSignOut()" title="Sign out" aria-label="Sign out">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <path d="M6 3H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        <path d="M9 5l3 3-3 3M12 8H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+  </div>
+</aside>

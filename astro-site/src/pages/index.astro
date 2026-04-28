@@ -107,13 +107,23 @@ const verdicts = [
         <h2>Trait Ratings</h2>
         <p class="section-desc">Per-trait scores for each component (Reusable, Self-contained, Consistent, Composable).</p>
 
-        <div class="legend-grid">
-          {traits.map((t) => (
-            <div class="legend-row">
-              <span class={`trait-rating ${t.cls}`}>{t.rating}</span>
-              <span class="legend-body">{t.body}</span>
-            </div>
-          ))}
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="col-md">Rating</th>
+                <th>Meaning</th>
+              </tr>
+            </thead>
+            <tbody>
+              {traits.map((t) => (
+                <tr>
+                  <td><span class={`trait-rating ${t.cls}`}>{t.rating}</span></td>
+                  <td>{t.body}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -121,13 +131,23 @@ const verdicts = [
         <h2>DS Verdicts</h2>
         <p class="section-desc">Overall DS Health outcome from all 4 traits.</p>
 
-        <div class="legend-grid">
-          {verdicts.map((v) => (
-            <div class="legend-row">
-              <span class={`badge ${v.cls}`}>{v.name}</span>
-              <span class="legend-body">{v.body}</span>
-            </div>
-          ))}
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="col-md">Verdict</th>
+                <th>Meaning</th>
+              </tr>
+            </thead>
+            <tbody>
+              {verdicts.map((v) => (
+                <tr>
+                  <td><span class={`badge ${v.cls}`}>{v.name}</span></td>
+                  <td>{v.body}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -135,22 +155,22 @@ const verdicts = [
         <h2>Resources</h2>
         <p class="section-desc">Deeper reading on the methodology and how to use it.</p>
 
-        <a class="resource-card" href="/eb-ds-assessment-guide">
-          <div class="resource-card-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 4h14v16H7a2 2 0 0 1-2-2V4z" />
-              <path d="M5 18a2 2 0 0 1 2-2h12" />
-              <path d="M9 8h6" />
-            </svg>
-          </div>
-          <div class="resource-card-body">
-            <div class="resource-card-title">Assessment Guide</div>
-            <div class="resource-card-desc">Quick-reference summary of open issues, patterns, and component status.</div>
-          </div>
-          <svg class="resource-card-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </a>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="col-md">Resource</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="/eb-ds-assessment-guide"><strong>Assessment Guide</strong></a></td>
+                <td>Quick-reference summary of open issues, patterns, and component status.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
     </div>
   </div>
