@@ -19,3 +19,5 @@ jobs:
           script: |
             cd /mnt/volume_sgp1_01/east-blue
             git pull origin main
+            cd astro-site
+            npm run build
