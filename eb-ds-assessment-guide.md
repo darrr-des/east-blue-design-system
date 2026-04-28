@@ -46,12 +46,15 @@ Each component is scored on 4 traits. These measure whether the component belong
 
 Each trait gets one of four ratings. These describe **how well the trait is met**, not the component's overall health.
 
-| Rating | CSS Class | Color | When to use |
-|---|---|---|---|
-| **Pass** | `pass` | Green | Fully met. No issues — the trait is solid and ready for native handoff. |
-| **Partial** | `partial` | Blue | Mostly met with minor gaps. The component is functional but has specific limitations that should be addressed (e.g. missing icon slots, but text variants work fine). |
-| **Warn** | `warn` | Orange | Significant concerns that limit reuse or block reliable native handoff (e.g. naming inconsistencies, raster assets where vectors are expected, hardcoded values). |
-| **Fail** | `fail` | Red | Broken. The trait is fundamentally unmet — blocks DS inclusion or native implementation entirely (e.g. flattened icons that can't be tinted, no separable layers). |
+<table>
+<thead><tr><th>Rating</th><th>CSS Class</th><th>When to use</th></tr></thead>
+<tbody>
+<tr><td><span class="badge badge-pass">Pass</span></td><td><code>pass</code></td><td>Fully met. No issues — the trait is solid and ready for native handoff.</td></tr>
+<tr><td><span class="badge badge-partial">Partial</span></td><td><code>partial</code></td><td>Mostly met with minor gaps. The component is functional but has specific limitations that should be addressed (e.g. missing icon slots, but text variants work fine).</td></tr>
+<tr><td><span class="badge badge-warn">Warn</span></td><td><code>warn</code></td><td>Significant concerns that limit reuse or block reliable native handoff (e.g. naming inconsistencies, raster assets where vectors are expected, hardcoded values).</td></tr>
+<tr><td><span class="badge badge-fail">Fail</span></td><td><code>fail</code></td><td>Broken. The trait is fundamentally unmet — blocks DS inclusion or native implementation entirely (e.g. flattened icons that can't be tinted, no separable layers).</td></tr>
+</tbody>
+</table>
 
 ### How Trait Ratings differ from Verdicts
 
@@ -65,14 +68,17 @@ Each trait gets one of four ratings. These describe **how well the trait is met*
 
 The overall DS Health verdict is based on the combination of all 4 trait ratings.
 
-| Verdict | Meaning | When to assign |
-|---|---|---|
-| **Keep** | Ship as-is. | All 4 traits pass. |
-| **Fix** | Belongs in DS but has specific issues to resolve. | Mostly pass/partial with a few warn traits. |
-| **Restructure** | Needs significant property or architectural changes. | Multiple warn/fail traits indicating structural problems. |
-| **Consolidate** | Merge into another component. | Overlaps with an existing component. |
-| **Product Layer** | Too feature-specific for core DS. | Tied to a single screen or product flow. |
-| **Remove** | Redundant, deprecated, or not a DS concern. | No longer needed or never belonged. |
+<table>
+<thead><tr><th>Verdict</th><th>Meaning</th><th>When to assign</th></tr></thead>
+<tbody>
+<tr><td><span class="badge badge-keep">Keep</span></td><td>Ship as-is.</td><td>All 4 traits pass.</td></tr>
+<tr><td><span class="badge badge-fix">Fix</span></td><td>Belongs in DS but has specific issues to resolve.</td><td>Mostly pass/partial with a few warn traits.</td></tr>
+<tr><td><span class="badge badge-restructure">Restructure</span></td><td>Needs significant property or architectural changes.</td><td>Multiple warn/fail traits indicating structural problems.</td></tr>
+<tr><td><span class="badge badge-consolidate">Consolidate</span></td><td>Merge into another component.</td><td>Overlaps with an existing component.</td></tr>
+<tr><td><span class="badge badge-product-layer">Product Layer</span></td><td>Too feature-specific for core DS.</td><td>Tied to a single screen or product flow.</td></tr>
+<tr><td><span class="badge badge-remove">Remove</span></td><td>Redundant, deprecated, or not a DS concern.</td><td>No longer needed or never belonged.</td></tr>
+</tbody>
+</table>
 
 ---
 
@@ -96,25 +102,31 @@ The overall native status is set by the **worst-scoring criterion**. One unresol
 
 The overall native readiness of a component based on all 7 criteria.
 
-| Status | Badge Class | Meaning |
-|---|---|---|
-| **Ready** | `badge-ready` | Linkable as-is. Clean structure, maps well to native. |
-| **Needs Refinement** | `badge-refine` | Minor issues to resolve before linking. |
-| **Requires Rework** | `badge-rework` | Needs redesign before native translation. |
-| **Not Applicable** | `badge-na` | Web-only or removed — skip native assessment. |
-| **Fix** | `badge-fix` | Resolved via Figma. Residual items may remain. |
+<table>
+<thead><tr><th>Status</th><th>Badge Class</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><span class="badge badge-ready">Ready</span></td><td><code>badge-ready</code></td><td>Linkable as-is. Clean structure, maps well to native.</td></tr>
+<tr><td><span class="badge badge-refine">Needs Refinement</span></td><td><code>badge-refine</code></td><td>Minor issues to resolve before linking.</td></tr>
+<tr><td><span class="badge badge-rework">Requires Rework</span></td><td><code>badge-rework</code></td><td>Needs redesign before native translation.</td></tr>
+<tr><td><span class="badge badge-na">Not Applicable</span></td><td><code>badge-na</code></td><td>Web-only or removed — skip native assessment.</td></tr>
+<tr><td><span class="badge badge-fix">Fix</span></td><td><code>badge-fix</code></td><td>Resolved via Figma. Residual items may remain.</td></tr>
+</tbody>
+</table>
 
 ---
 
 ## Combined Status
 
-| DS Health | Native Status | Meaning |
-|---|---|---|
-| Keep | Ready | Ship it. |
-| Keep / Fix | Needs Refinement | Minor fixes, assign to DS team. |
-| Fix / Restructure | Requires Rework | Significant work before handoff. |
-| Product Layer | Not Applicable | Move to product library. |
-| Remove / Consolidate | Not Applicable | Skip native assessment. |
+<table>
+<thead><tr><th>DS Health</th><th>Native Status</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><span class="badge badge-keep">Keep</span></td><td><span class="badge badge-ready">Ready</span></td><td>Ship it.</td></tr>
+<tr><td><span class="badge badge-fix">Keep / Fix</span></td><td><span class="badge badge-refine">Needs Refinement</span></td><td>Minor fixes, assign to DS team.</td></tr>
+<tr><td><span class="badge badge-restructure">Fix / Restructure</span></td><td><span class="badge badge-rework">Requires Rework</span></td><td>Significant work before handoff.</td></tr>
+<tr><td><span class="badge badge-product-layer">Product Layer</span></td><td><span class="badge badge-na">Not Applicable</span></td><td>Move to product library.</td></tr>
+<tr><td><span class="badge badge-remove">Remove / Consolidate</span></td><td><span class="badge badge-na">Not Applicable</span></td><td>Skip native assessment.</td></tr>
+</tbody>
+</table>
 
 ---
 

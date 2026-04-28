@@ -229,6 +229,10 @@
   function buildToc() {
     var nav = document.querySelector('.page-toc-nav');
     if (!nav) return;
+    // Static TOCs (e.g. /eb-ds-assessment-guide) populate .page-toc-nav at
+    // build time and don't have tabbed content. If the page has no
+    // .comp-tab-content elements at all, leave the static markup alone.
+    if (!document.querySelector('.comp-tab-content')) return;
     var activeTab = document.querySelector('.comp-tab-content.active');
     if (!activeTab) {
       nav.innerHTML = '';
@@ -331,12 +335,25 @@
   function initPage() {
     initPills();
     buildToc();
+    // Always init scrollspy — covers static TOCs (e.g. /eb-ds-assessment-guide)
+    // where buildToc() bails because the page has no .comp-tab-content.
+    // initScrollSpy() is itself a no-op if there are no .page-toc-link
+    // elements with valid data-toc-target attributes.
+    initScrollSpy();
     syncSidebarActive();
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(initPills);
   }
 
   // Astro fires this on initial load AND after every transition swap.
   document.addEventListener('astro:page-load', initPage);
+  // Fallback for cases where astro:page-load doesn't reach us (script
+  // loaded after the event fired, or pages without ClientRouter): also
+  // run on DOMContentLoaded / immediately if DOM is already parsed.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPage);
+  } else {
+    initPage();
+  }
 
   // Fallback for non-transition contexts (e.g. direct hits, no ClientRouter)
   if (document.readyState === 'loading') {

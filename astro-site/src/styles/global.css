@@ -927,8 +927,16 @@ td code, td .mono-inline {
 .badge-keep           { background: #DCFCE7; color: #166534; }
 .badge-product-layer  { background: #F3E8FF; color: #6B21A8; }
 .badge-remove         { background: #F3F4F7; color: #525766; }
+.badge-pass           { background: #E6F4ED; color: #1A7A4A; }
+.badge-partial        { background: #EEF3FB; color: #1448A3; }
+.badge-warn           { background: #FEF3C7; color: #92400E; }
+.badge-fail           { background: #FEE2E2; color: #B91C1C; }
 [data-theme="dark"] .badge-consolidate  { background: #2B1A0B; color: #FDBA74; }
 [data-theme="dark"] .badge-restructure  { background: #3A1818; color: #FCA5A5; }
+[data-theme="dark"] .badge-pass         { background: #0F2B1F; color: #6EE7A7; }
+[data-theme="dark"] .badge-partial      { background: #0F1E3D; color: #93B5FF; }
+[data-theme="dark"] .badge-warn         { background: #2B1F0B; color: #FCD34D; }
+[data-theme="dark"] .badge-fail         { background: #3A1818; color: #FCA5A5; }
 
 /* ── Status symbols ──────────────────────────────────────────────────── */
 .check { color: var(--ready-fg); font-weight: 700; }
