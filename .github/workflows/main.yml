@@ -17,6 +17,9 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22443
           script: |
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
             cd /mnt/volume_sgp1_01/east-blue
             git pull origin main
             cd astro-site
