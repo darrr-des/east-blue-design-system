@@ -94,6 +94,83 @@ function _itmUpdate() {
 // Legacy alias — captured HTML uses this name on its onchange handlers
 function updateInlineMessageDemo() { _itmUpdate(); }
 
+/* ── Spec card state ──────────────────────────────────────────────── */
+var _specCards = {
+  success: { variant: 'success', hasBody: 'true', hasRef: 'true' },
+  loading: { variant: 'loading', hasBody: 'true', hasRef: 'true' },
+  error:   { variant: 'error',   hasBody: 'true', hasRef: 'true' }
+};
+window._specCards = _specCards;
+
+var _intentLabel = { success: 'Success', loading: 'Loading', error: 'Error' };
+
+/* ── Code snippet builders ────────────────────────────────────────── */
+function buildSwiftSnippet(type, card) {
+  var v = (card && card.variant) || type || 'success';
+  var lines = [];
+  lines.push('EBInlineMessage("Add your label here")');
+  lines.push('    .ebDescription("Add your description here.")');
+  lines.push('    .ebIntent(.' + v + ')');
+  if (card && card.hasRef !== 'false') lines.push('    .ebReferenceNumber("1234567890")');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var v = (card && card.variant) || type || 'success';
+  var label = _intentLabel[v] || 'Success';
+  var lines = [];
+  lines.push('EBInlineMessage(');
+  lines.push('    title = "Add your label here",');
+  lines.push('    description = "Add your description here.",');
+  lines.push('    intent = EBMessageIntent.' + label + ',');
+  if (card && card.hasRef !== 'false') lines.push('    referenceNumber = "1234567890",');
+  var last = lines[lines.length - 1];
+  if (last.charAt(last.length - 1) === ',') lines[lines.length - 1] = last.slice(0, -1);
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+/* ── Spec card update ─────────────────────────────────────────────── */
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview */
+  var el = document.getElementById('itm-spec-' + cardStyle);
+  if (el) {
+    el.innerHTML = _itmRender({
+      type: card.variant,
+      hasBodyContent: card.hasBody === 'true',
+      hasReferenceNumber: card.hasRef === 'true'
+    });
+  }
+
+  /* Update properties text */
+  var spVariant = document.querySelector('[data-sp="' + cardStyle + '-variant"]');
+  if (spVariant) spVariant.textContent = _intentLabel[card.variant] || 'Success';
+
+  /* Update DEV code */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
 function _itmInit() {
   var ctx = document.getElementById('itm-context-preview');
   if (ctx) ctx.innerHTML =
@@ -103,6 +180,10 @@ function _itmInit() {
       _itmRender({ type: 'error', hasBodyContent: false, hasReferenceNumber: false }) +
     '</div>';
   _itmUpdate();
+
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'variant', _specCards[k].variant);
+  });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _itmInit);

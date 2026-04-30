@@ -165,6 +165,67 @@ var _specCards = {
   outline: { style: 'outline', appearance: 'default', size: 'large', state: 'default', iconPlacement: 'none' },
   text:    { style: 'text',    appearance: 'default', size: 'large', state: 'default', iconPlacement: 'none' }
 };
+/* Expose for shared utilities — `switchCodeTab` reads this when the
+   user clicks SwiftUI / Compose so it can rebuild the snippet for
+   the current state. */
+window._specCards = _specCards;
+
+/* ── Code snippet builders (called by updateSpecCard + switchCodeTab) ── */
+function buildSwiftSnippet(type, card) {
+  var sizeMap = { large: '.large', medium: '.regular', small: '.small', compact: '.compact', xsmall: '.mini' };
+  var szLabel = sizeMap[card.size] || '.large';
+  var appLabel = card.appearance || 'default';
+  var placement = card.iconPlacement || 'none';
+  var styleMap = { filled: '.filled', outline: '.outlined', text: '.textLink' };
+  var lines = [];
+  if (placement === 'iconOnly') {
+    lines.push('EBButton(icon: Image(systemName: "heart"), accessibilityLabel: "Label")');
+  } else if (placement === 'leading') {
+    lines.push('EBButton("Label", leadingIcon: Image(systemName: "heart"))');
+  } else if (placement === 'trailing') {
+    lines.push('EBButton("Label", trailingIcon: Image(systemName: "heart"))');
+  } else {
+    lines.push('EBButton("Label")');
+  }
+  lines.push('    .ebAppearance(' + (styleMap[type] || '.filled') + ')');
+  lines.push('    .controlSize(' + szLabel + ')');
+  if (appLabel === 'destructive') lines.push('    .ebColorScheme(.destructive)');
+  else if (appLabel === 'white')  lines.push('    .ebColorScheme(.white)');
+  else if (appLabel === 'subtle') lines.push('    .ebColorScheme(.subtle)');
+  if (card.state === 'disabled')  lines.push('    .disabled(true)');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var sizeMap = { large: 'Large', medium: 'Medium', small: 'Small', compact: 'Compact', xsmall: 'XSmall' };
+  var szLabel = sizeMap[card.size] || 'Large';
+  var appLabel = card.appearance || 'default';
+  var placement = card.iconPlacement || 'none';
+  var comp = type === 'outline' ? 'EBOutlinedButton' : type === 'text' ? 'EBTextButton' : 'EBButton';
+  var lines = [];
+  lines.push(comp + '(');
+  lines.push('    onClick = { /* action */ },');
+  lines.push('    size = EBButtonSize.' + szLabel + ',');
+  if (placement === 'leading')      lines.push('    leadingIcon = { Icon(Icons.Filled.Favorite, null) },');
+  else if (placement === 'trailing') lines.push('    trailingIcon = { Icon(Icons.Filled.Favorite, null) },');
+  else if (placement === 'iconOnly') lines.push('    contentDescription = "Label",');
+  if (appLabel === 'destructive') lines.push('    colors = EBButtonDefaults.destructiveColors(),');
+  else if (appLabel === 'white')  lines.push('    colors = EBButtonDefaults.whiteColors(),');
+  else if (appLabel === 'subtle') lines.push('    colors = EBButtonDefaults.subtleColors(),');
+  if (card.state === 'disabled')  lines.push('    enabled = false,');
+  var last = lines[lines.length - 1];
+  if (last.charAt(last.length - 1) === ',') lines[lines.length - 1] = last.slice(0, -1);
+  lines.push(') {');
+  if (placement === 'iconOnly') lines.push('    Icon(Icons.Filled.Favorite, null)');
+  else                          lines.push('    Text("Label")');
+  lines.push('}');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
 
 /* Size data for spec card layout/typography (v4.1) */
 var _specSizeData = {
@@ -316,15 +377,20 @@ function updateSpecCard(cardStyle, prop, value) {
     typoEl.innerHTML = th;
   }
 
-  /* Update DEV code if visible */
+  /* Update DEV code — always, even if DEV view is hidden, so the
+     code is correct the moment the user toggles to DEV mode. No
+     scramble animation; just textContent + highlightSyntax. */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-  if (devView && devView.style.display !== 'none') {
+  if (devView) {
     var activeTab = devView.querySelector('.spec-code-tab.active');
     var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('code');
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
     if (codeEl) {
-      codeEl.setAttribute('data-final', getSnippet(cardStyle, lang, card));
-      scrambleCode(cardStyle);
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
     }
   }
 }

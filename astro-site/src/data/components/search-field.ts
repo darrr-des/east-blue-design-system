@@ -1,4 +1,23 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — toggles between Default and Filled. Wired to a
+// future per-card update handler in `public/scripts/demos/search-field.js`.
+const searchFieldDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'filled', label: 'Filled' },
+        ],
+      },
+    ],
+  },
+];
 
 export const searchField: ComponentData = {
   "meta": {
@@ -182,121 +201,52 @@ export const searchField: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "srf-spec-default",
+        "demoKey": "srf-default",
+        "demoControls": searchFieldDemoControls,
         "title": "Default",
         "node": "50:78118",
         "description": "Empty state. Placeholder label at 50% opacity (#90A8D0), leading search glyph at 80% opacity.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Default",
-                "mono": false
-              }
+              { "key": "Variant", "value": "Default" },
+              { "key": "State",   "value": "Default", "prop": "state" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "input-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "input-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "input-field/default/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "input-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg",          "value": "#FFFFFF", "token": "input-field/default/bg" },
+              { "key": "Border",      "value": "#D7E0EF", "token": "input-field/default/border" },
+              { "key": "Text",        "value": "#0A2757", "token": "input-field/default/text" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
+              { "key": "Field height",  "value": "48px", "mono": true },
+              { "key": "Padding H",     "value": "12px", "mono": true },
+              { "key": "Padding V",     "value": "14px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
+              { "key": "Border",        "value": "1px solid", "mono": true },
+              { "key": "Icon size",     "value": "20 × 20", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Value font",  "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
             ]
           }
         ],
@@ -306,118 +256,48 @@ export const searchField: ComponentData = {
       },
       {
         "cardKey": "srf-spec-filled",
+        "demoKey": "srf-filled",
+        "demoControls": searchFieldDemoControls,
         "title": "Filled",
         "node": "50:78126",
         "description": "State shown when a query has been entered. Text uses #0A2757 at full opacity.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Filled",
-                "mono": false
-              }
+              { "key": "Variant", "value": "Filled" },
+              { "key": "State",   "value": "Filled", "prop": "state" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "input-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "input-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "input-field/default/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "input-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg",          "value": "#FFFFFF", "token": "input-field/default/bg" },
+              { "key": "Border",      "value": "#D7E0EF", "token": "input-field/default/border" },
+              { "key": "Text",        "value": "#0A2757", "token": "input-field/default/text" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
+              { "key": "Field height",  "value": "48px", "mono": true },
+              { "key": "Padding H",     "value": "12px", "mono": true },
+              { "key": "Padding V",     "value": "14px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
+              { "key": "Border",        "value": "1px solid", "mono": true },
+              { "key": "Icon size",     "value": "20 × 20", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Value font",  "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
             ]
           }
         ],

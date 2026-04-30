@@ -120,7 +120,16 @@ var _bdSpecCards = {
   'dashboard':   { state: 'Primary', level: 'Heavy', type: 'Dashboard' }
 };
 
+/* Expose for shared utilities — `switchCodeTab` reads this when the
+   user clicks SwiftUI / Compose so it can rebuild the snippet. */
+var _specCards = _bdSpecCards;
+window._specCards = _specCards;
+
 function updateBadgeSpecCard(cardType, prop, value) {
+  return updateSpecCard(cardType, prop, value);
+}
+
+function updateSpecCard(cardType, prop, value) {
   var card = _bdSpecCards[cardType];
   if (!card) return;
   card[prop] = value;
@@ -128,40 +137,43 @@ function updateBadgeSpecCard(cardType, prop, value) {
   /* Clamp level for Primary/Brand */
   if (_bdHeavyOnly[card.state] && card.level !== 'Heavy') {
     card.level = 'Heavy';
-    var levelSel = document.getElementById('bd-spec-' + cardType + '-level');
-    if (levelSel) levelSel.value = 'Heavy';
   }
 
-  /* Update SVG preview */
+  /* Update preview span — id `bd-spec-${cardType}-preview` lives inside
+     SpecCard's previewHtml (kept as legacy id) */
   var previewEl = document.getElementById('bd-spec-' + cardType + '-preview');
   if (previewEl) previewEl.innerHTML = _bdBuildHtml(card.state, card.level, card.type);
 
-  /* Update property labels */
-  var spState = document.querySelector('[data-sp="bd-' + cardType + '-state"]');
+  /* Update Properties readouts — data-sp="${demoKey}-${prop}" */
+  var spState = document.querySelector('[data-sp="' + cardType + '-state"]');
   if (spState) spState.textContent = card.state;
-  var spLevel = document.querySelector('[data-sp="bd-' + cardType + '-level"]');
+  var spLevel = document.querySelector('[data-sp="' + cardType + '-level"]');
   if (spLevel) spLevel.textContent = card.level;
 
-  /* Update colors section */
-  var colorsEl = document.getElementById('bd-spec-' + cardType + '-colors');
+  /* Update Colors section — id `spec-${demoKey}-colors` */
+  var colorsEl = document.getElementById('spec-' + cardType + '-colors');
   if (colorsEl) {
     var c = _bdGetColors(card.state, card.level);
     var tokenBase = 'main/badge/' + (_bdTokenNames[card.state] || 'primary') + '/' + card.level.toLowerCase();
+    var labelBorder = (c.label === '#FFFFFF') ? 'border:1px solid #E5EBF4' : '';
     var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
-    h += '<div class="spec-prop"><span class="spec-prop-key">Background</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + c.bg + '"></span> ' + c.bg + '<span class="spec-token-name">' + tokenBase + '/background</span></span></div>';
-    var labelBorder = (c.label === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
-    h += '<div class="spec-prop"><span class="spec-prop-key">Label</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + c.label + ';' + labelBorder + '"></span> ' + c.label + '<span class="spec-token-name">' + tokenBase + '/label</span></span></div>';
+    h += '<div class="spec-prop has-token"><span class="spec-prop-key">Background</span>'
+       + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + c.bg + '"></span> ' + c.bg + '</span>'
+       + '<span class="spec-token-name">' + tokenBase + '/background</span></div>';
+    h += '<div class="spec-prop has-token"><span class="spec-prop-key">Label</span>'
+       + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + c.label + ';' + labelBorder + '"></span> ' + c.label + '</span>'
+       + '<span class="spec-token-name">' + tokenBase + '/label</span></div>';
     h += '</div>';
     colorsEl.innerHTML = h;
   }
 
-  /* Update layout section */
-  var layoutEl = document.getElementById('bd-spec-' + cardType + '-layout');
+  /* Update Layout section — id `spec-${demoKey}-layout` */
+  var layoutEl = document.getElementById('spec-' + cardType + '-layout');
   if (layoutEl) {
     var t = _bdTypes[card.type] || _bdTypes.Default;
     var radiusLabel;
     if (card.type === 'Default') radiusLabel = '99px (pill)';
-    else if (card.type === 'Voucher') radiusLabel = '0/0/4px/0 (bottom-right only)';
+    else if (card.type === 'Voucher') radiusLabel = '0/0/4px/0 (BR only)';
     else radiusLabel = '4px';
 
     var lh = '<div class="spec-detail-label">Layout</div><div class="spec-props">';
@@ -173,8 +185,8 @@ function updateBadgeSpecCard(cardType, prop, value) {
     layoutEl.innerHTML = lh;
   }
 
-  /* Update typography section */
-  var typoEl = document.getElementById('bd-spec-' + cardType + '-typo');
+  /* Update Typography section — id `spec-${demoKey}-typo` */
+  var typoEl = document.getElementById('spec-' + cardType + '-typo');
   if (typoEl) {
     var isDash = (card.type === 'Dashboard');
     var th = '<div class="spec-detail-label">Typography</div><div class="spec-props">';
@@ -187,17 +199,18 @@ function updateBadgeSpecCard(cardType, prop, value) {
     typoEl.innerHTML = th;
   }
 
-  /* Update DEV code snippet */
-  var codeEl = document.getElementById('bd-code-' + cardType);
-  if (codeEl) {
-    var activeTab = codeEl.closest('.spec-card-code');
-    if (activeTab) {
-      var activeLangBtn = activeTab.querySelector('.spec-code-tab.active');
-      var lang = (activeLangBtn && activeLangBtn.textContent.indexOf('COMPOSE') !== -1) ? 'compose' : 'swift';
-      var raw = _getBadgeSnippet(cardType, lang);
-      codeEl.setAttribute('data-final', raw);
-      codeEl.textContent = raw;
-      if (typeof highlightSyntax === 'function') highlightSyntax(codeEl);
+  /* Update DEV code — locate via `[data-code-content="${demoKey}"]` */
+  var devView = document.querySelector('[data-view="' + cardType + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardType + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardType, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
     }
   }
 }
@@ -219,6 +232,17 @@ function _getBadgeSnippet(cardType, lang) {
     return lines;
   }
 }
+
+function buildSwiftSnippet(type, card) {
+  return _getBadgeSnippet(type, 'swift');
+}
+function buildComposeSnippet(type, card) {
+  return _getBadgeSnippet(type, 'compose');
+}
+function getSnippet(type, lang, card) {
+  return _getBadgeSnippet(type, lang);
+}
+window.getSnippet = getSnippet;
 
 function switchBadgeCodeTab(tabBtn, lang, cardType) {
   var parent = tabBtn.parentElement;

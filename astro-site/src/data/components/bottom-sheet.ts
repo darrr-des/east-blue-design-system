@@ -1,4 +1,51 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(demoKey, prop, value)`
+// in `public/scripts/demos/bottom-sheet.js`.
+const bottomSheetDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Alignment',
+        prop: 'align',
+        defaultValue: 'left',
+        options: [
+          { value: 'left', label: 'Left Align' },
+          { value: 'center', label: 'Center Align' },
+        ],
+      },
+      {
+        label: 'Preamble',
+        prop: 'preamble',
+        defaultValue: 'yes',
+        options: [
+          { value: 'yes', label: 'Yes' },
+          { value: 'no', label: 'No' },
+        ],
+      },
+      {
+        label: 'Description',
+        prop: 'desc',
+        defaultValue: 'yes',
+        options: [
+          { value: 'yes', label: 'Yes' },
+          { value: 'no', label: 'No' },
+        ],
+      },
+      {
+        label: 'CTA',
+        prop: 'cta',
+        defaultValue: '2',
+        options: [
+          { value: '2', label: 'Primary + Tertiary' },
+          { value: '1', label: 'Primary Only' },
+          { value: '0', label: 'None' },
+        ],
+      },
+    ],
+  },
+];
 
 export const bottomSheet: ComponentData = {
   "meta": {
@@ -268,282 +315,80 @@ export const bottomSheet: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Variants",
     "specCards": [
       {
         "cardKey": "left-align",
+        "demoKey": "left-align",
+        "demoControls": bottomSheetDemoControls,
         "title": "Left Align",
         "node": "12522:12860",
         "description": "Header aligned to the leading edge. Ships with an optional leading icon placeholder, preamble + title stack, a trailing close X, then the decorative body slots and 2 hard-baked CTAs.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"bottom-sheet-spec-preview-left\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"bottom-sheet-spec-preview-left-align\"></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Name",
-                "value": "Bottom Drawer",
-                "mono": true
-              },
-              {
-                "key": "alignment",
-                "value": "Left Align",
-                "mono": true
-              },
-              {
-                "key": "iconPlaceholder",
-                "value": "boolean (default true)",
-                "mono": true
-              },
-              {
-                "key": "preamble",
-                "value": "boolean (default true)",
-                "mono": true
-              },
-              {
-                "key": "header",
-                "value": "string \"Title here of the header...\"",
-                "mono": true
-              },
-              {
-                "key": "description",
-                "value": "boolean (default true)",
-                "mono": true
-              },
-              {
-                "key": "showSlot1..4",
-                "value": "booleans — decorative only",
-                "mono": true
-              },
-              {
-                "key": "primaryAction",
-                "value": "boolean (default true)",
-                "mono": true
-              },
-              {
-                "key": "secondaryAction",
-                "value": "boolean (default true)",
-                "mono": true
-              },
-              {
-                "key": "Close X",
-                "value": "Hardcoded — raster PNG",
-                "mono": false
-              }
+              { "key": "Name",            "value": "Bottom Drawer",                            "mono": true },
+              { "key": "Alignment",       "value": "Left Align",                               "mono": true, "prop": "align" },
+              { "key": "Preamble",        "value": "yes",                                      "mono": true, "prop": "preamble" },
+              { "key": "Description",     "value": "yes",                                      "mono": true, "prop": "desc" },
+              { "key": "CTA",             "value": "Primary + Tertiary",                       "mono": true, "prop": "cta" },
+              { "key": "iconPlaceholder", "value": "boolean (default true)",                   "mono": true },
+              { "key": "Header",          "value": "string \"Title here of the header...\"",   "mono": true },
+              { "key": "showSlot1..4",    "value": "booleans — decorative only",               "mono": true },
+              { "key": "Close X",         "value": "Hardcoded — raster PNG" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "bottom-header/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Preamble",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Preamble token",
-                "value": "bottom-header/color/preamble",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "bottom-header/color/header",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "bottom-header/color/description",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "bottom-header/color/icon-close",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label token",
-                "value": "button/primary/brand/enabled/label",
-                "mono": true
-              },
-              {
-                "key": "Tertiary CTA",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Tertiary CTA token",
-                "value": "button/tertiary/brand/enabled/label",
-                "mono": true
-              }
+              { "key": "Surface",           "value": "#FFFFFF", "token": "bottom-header/color/bg" },
+              { "key": "Preamble",          "value": "#90A8D0", "token": "bottom-header/color/preamble" },
+              { "key": "Header",            "value": "#0A2757", "token": "bottom-header/color/header" },
+              { "key": "Description",      "value": "#445C85",  "token": "bottom-header/color/description" },
+              { "key": "Close icon",       "value": "#6780A9",  "token": "bottom-header/color/icon-close" },
+              { "key": "Primary CTA bg",   "value": "#005CE5",  "token": "button/primary/brand/enabled/bg" },
+              { "key": "Primary CTA label","value": "#FFFFFF",  "token": "button/primary/brand/enabled/label" },
+              { "key": "Tertiary CTA",     "value": "#005CE5",  "token": "button/tertiary/brand/enabled/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "360",
-                "mono": true
-              },
-              {
-                "key": "Height (default)",
-                "value": "324",
-                "mono": true
-              },
-              {
-                "key": "Corner radius (top)",
-                "value": "8",
-                "mono": true
-              },
-              {
-                "key": "Corner radius (bottom)",
-                "value": "0",
-                "mono": true
-              },
-              {
-                "key": "Header padding",
-                "value": "pt 24 · pb 8 · pl 24 · pr 48",
-                "mono": true
-              },
-              {
-                "key": "Header gap (icon ↔ title)",
-                "value": "8",
-                "mono": true
-              },
-              {
-                "key": "Preamble ↔ title gap",
-                "value": "6",
-                "mono": true
-              },
-              {
-                "key": "Content padding",
-                "value": "24 sides · 32 bottom",
-                "mono": true
-              },
-              {
-                "key": "Description pb",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "CTA group padding",
-                "value": "px 24 · pb 36",
-                "mono": true
-              },
-              {
-                "key": "CTA gap",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "Primary button radius",
-                "value": "99 (pill)",
-                "mono": true
-              },
-              {
-                "key": "Close icon size",
-                "value": "24 · top 24 · right 24",
-                "mono": true
-              }
+              { "key": "Width",                  "value": "360",                            "mono": true },
+              { "key": "Height (default)",       "value": "324",                            "mono": true },
+              { "key": "Corner radius (top)",    "value": "8",                              "mono": true },
+              { "key": "Corner radius (bottom)", "value": "0",                              "mono": true },
+              { "key": "Header padding",         "value": "pt 24 · pb 8 · pl 24 · pr 48",   "mono": true },
+              { "key": "Header gap (icon ↔ title)", "value": "8",                          "mono": true },
+              { "key": "Preamble ↔ title gap",   "value": "6",                              "mono": true },
+              { "key": "Content padding",        "value": "24 sides · 32 bottom",           "mono": true },
+              { "key": "Description pb",         "value": "12",                             "mono": true },
+              { "key": "CTA group padding",      "value": "px 24 · pb 36",                  "mono": true },
+              { "key": "CTA gap",                "value": "12",                             "mono": true },
+              { "key": "Primary button radius",  "value": "99 (pill)",                      "mono": true },
+              { "key": "Close icon size",        "value": "24 · top 24 · right 24",         "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Preamble style",
-                "value": "Primary/Label/Small",
-                "mono": true
-              },
-              {
-                "key": "Preamble font",
-                "value": "Proxima Soft · Bold · 14 / 14",
-                "mono": true
-              },
-              {
-                "key": "Preamble tracking",
-                "value": "0.25",
-                "mono": true
-              },
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Section",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft · Bold · 22 / 26",
-                "mono": true
-              },
-              {
-                "key": "Title tracking",
-                "value": "0",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Default/Base",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda · Medium · 14 / 20",
-                "mono": true
-              },
-              {
-                "key": "CTA label style",
-                "value": "Primary/Label/Large",
-                "mono": true
-              },
-              {
-                "key": "CTA font",
-                "value": "Proxima Soft · Bold · 18 / 18",
-                "mono": true
-              },
-              {
-                "key": "Header alignment",
-                "value": "left",
-                "mono": true
-              }
+              { "key": "Preamble style",    "value": "Primary/Label/Small",          "mono": true },
+              { "key": "Preamble font",     "value": "Proxima Soft · Bold · 14 / 14","mono": true },
+              { "key": "Preamble tracking", "value": "0.25",                         "mono": true },
+              { "key": "Title style",       "value": "Primary/Headlines/Section",    "mono": true },
+              { "key": "Title font",        "value": "Proxima Soft · Bold · 22 / 26","mono": true },
+              { "key": "Title tracking",    "value": "0",                            "mono": true },
+              { "key": "Description style", "value": "Secondary/Default/Base",       "mono": true },
+              { "key": "Description font",  "value": "BarkAda · Medium · 14 / 20",   "mono": true },
+              { "key": "CTA label style",   "value": "Primary/Label/Large",          "mono": true },
+              { "key": "CTA font",          "value": "Proxima Soft · Bold · 18 / 18","mono": true },
+              { "key": "Header alignment",  "value": "left",                         "mono": true }
             ]
           }
         ],
@@ -552,264 +397,73 @@ export const bottomSheet: ComponentData = {
       },
       {
         "cardKey": "center-align",
+        "demoKey": "center-align",
+        "demoControls": bottomSheetDemoControls,
         "title": "Center Align",
         "node": "12817:43834",
         "description": "Header centered. Silently drops the leading icon + trailing close X and adds an above-title <code>headerSlot</code> used for progress bars / steppers. Same body placeholders and hard-baked CTAs as Left Align.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"bottom-sheet-spec-preview-center\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"bottom-sheet-spec-preview-center-align\"></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Name",
-                "value": "Bottom Drawer",
-                "mono": true
-              },
-              {
-                "key": "alignment",
-                "value": "Center Align",
-                "mono": true
-              },
-              {
-                "key": "headerSlot",
-                "value": "boolean (default true) — above-title",
-                "mono": true
-              },
-              {
-                "key": "preamble",
-                "value": "boolean (default true)",
-                "mono": true
-              },
-              {
-                "key": "header",
-                "value": "string \"Title here of the header...\"",
-                "mono": true
-              },
-              {
-                "key": "description",
-                "value": "boolean (default true)",
-                "mono": true
-              },
-              {
-                "key": "Leading icon",
-                "value": "Not present in Center Align",
-                "mono": false
-              },
-              {
-                "key": "Close X",
-                "value": "Not present in Center Align",
-                "mono": false
-              },
-              {
-                "key": "primaryAction",
-                "value": "boolean (default true)",
-                "mono": true
-              },
-              {
-                "key": "secondaryAction",
-                "value": "boolean (default true)",
-                "mono": true
-              }
+              { "key": "Name",         "value": "Bottom Drawer",                                         "mono": true },
+              { "key": "Alignment",    "value": "Center Align",                                          "mono": true, "prop": "align" },
+              { "key": "Preamble",     "value": "yes",                                                   "mono": true, "prop": "preamble" },
+              { "key": "Description",  "value": "yes",                                                   "mono": true, "prop": "desc" },
+              { "key": "CTA",          "value": "Primary + Tertiary",                                    "mono": true, "prop": "cta" },
+              { "key": "headerSlot",   "value": "boolean (default true) — above-title",                  "mono": true },
+              { "key": "Header",       "value": "string \"Title here of the header...\"",                "mono": true },
+              { "key": "Leading icon", "value": "Not present in Center Align" },
+              { "key": "Close X",      "value": "Not present in Center Align" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "bottom-header/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Preamble",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Preamble token",
-                "value": "bottom-header/color/preamble",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "bottom-header/color/header",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "bottom-header/color/description",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "bottom-header/color/icon-close",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label token",
-                "value": "button/primary/brand/enabled/label",
-                "mono": true
-              },
-              {
-                "key": "Tertiary CTA",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Tertiary CTA token",
-                "value": "button/tertiary/brand/enabled/label",
-                "mono": true
-              }
+              { "key": "Surface",            "value": "#FFFFFF", "token": "bottom-header/color/bg" },
+              { "key": "Preamble",           "value": "#90A8D0", "token": "bottom-header/color/preamble" },
+              { "key": "Header",             "value": "#0A2757", "token": "bottom-header/color/header" },
+              { "key": "Description",        "value": "#445C85", "token": "bottom-header/color/description" },
+              { "key": "Close icon",         "value": "#6780A9", "token": "bottom-header/color/icon-close" },
+              { "key": "Primary CTA bg",     "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
+              { "key": "Primary CTA label",  "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
+              { "key": "Tertiary CTA",       "value": "#005CE5", "token": "button/tertiary/brand/enabled/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "360",
-                "mono": true
-              },
-              {
-                "key": "Height (default)",
-                "value": "330",
-                "mono": true
-              },
-              {
-                "key": "Corner radius (top)",
-                "value": "8",
-                "mono": true
-              },
-              {
-                "key": "Header padding",
-                "value": "pt 24 · pb 8 · px 24",
-                "mono": true
-              },
-              {
-                "key": "Header gap (slot ↔ title)",
-                "value": "16",
-                "mono": true
-              },
-              {
-                "key": "Preamble ↔ title gap",
-                "value": "6",
-                "mono": true
-              },
-              {
-                "key": "Header slot height",
-                "value": "~16 (progress bar / stepper)",
-                "mono": true
-              },
-              {
-                "key": "Content padding",
-                "value": "24 sides · 32 bottom",
-                "mono": true
-              },
-              {
-                "key": "Description pb",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "CTA group padding",
-                "value": "px 24 · pb 36",
-                "mono": true
-              },
-              {
-                "key": "CTA gap",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "Primary button radius",
-                "value": "99 (pill)",
-                "mono": true
-              }
+              { "key": "Width",                  "value": "360",                              "mono": true },
+              { "key": "Height (default)",       "value": "330",                              "mono": true },
+              { "key": "Corner radius (top)",    "value": "8",                                "mono": true },
+              { "key": "Header padding",         "value": "pt 24 · pb 8 · px 24",             "mono": true },
+              { "key": "Header gap (slot ↔ title)","value": "16",                            "mono": true },
+              { "key": "Preamble ↔ title gap",   "value": "6",                                "mono": true },
+              { "key": "Header slot height",     "value": "~16 (progress bar / stepper)",     "mono": true },
+              { "key": "Content padding",        "value": "24 sides · 32 bottom",             "mono": true },
+              { "key": "Description pb",         "value": "12",                               "mono": true },
+              { "key": "CTA group padding",      "value": "px 24 · pb 36",                    "mono": true },
+              { "key": "CTA gap",                "value": "12",                               "mono": true },
+              { "key": "Primary button radius",  "value": "99 (pill)",                        "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Preamble style",
-                "value": "Primary/Label/Small",
-                "mono": true
-              },
-              {
-                "key": "Preamble font",
-                "value": "Proxima Soft · Bold · 14 / 14",
-                "mono": true
-              },
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Section",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft · Bold · 22 / 26",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Default/Base",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda · Medium · 14 / 20",
-                "mono": true
-              },
-              {
-                "key": "CTA label style",
-                "value": "Primary/Label/Large",
-                "mono": true
-              },
-              {
-                "key": "CTA font",
-                "value": "Proxima Soft · Bold · 18 / 18",
-                "mono": true
-              },
-              {
-                "key": "Header alignment",
-                "value": "center",
-                "mono": true
-              }
+              { "key": "Preamble style",    "value": "Primary/Label/Small",          "mono": true },
+              { "key": "Preamble font",     "value": "Proxima Soft · Bold · 14 / 14","mono": true },
+              { "key": "Title style",       "value": "Primary/Headlines/Section",    "mono": true },
+              { "key": "Title font",        "value": "Proxima Soft · Bold · 22 / 26","mono": true },
+              { "key": "Description style", "value": "Secondary/Default/Base",       "mono": true },
+              { "key": "Description font",  "value": "BarkAda · Medium · 14 / 20",   "mono": true },
+              { "key": "CTA label style",   "value": "Primary/Label/Large",          "mono": true },
+              { "key": "CTA font",          "value": "Proxima Soft · Bold · 18 / 18","mono": true },
+              { "key": "Header alignment",  "value": "center",                       "mono": true }
             ]
           }
         ],

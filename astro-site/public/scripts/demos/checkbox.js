@@ -12,6 +12,11 @@ var _cbSpecCards = {
   checked:   { size: 'medium', state: 'Default' }
 };
 
+/* Expose for shared utilities — `switchCodeTab` reads this when the
+   user clicks SwiftUI / Compose so it can rebuild the snippet. */
+var _specCards = _cbSpecCards;
+window._specCards = _specCards;
+
 var _cbPxMap = { small: 16, medium: 20, large: 24 };
 var _cbLabelMap = { small: 'Small', medium: 'Medium', large: 'Large' };
 var _cbSwiftSize = { small: '.mini', medium: '.regular', large: '.large' };
@@ -96,6 +101,10 @@ function updateCheckboxDemo() {
 }
 
 function updateCheckboxSpecCard(cardType, prop, value) {
+  return updateSpecCard(cardType, prop, value);
+}
+
+function updateSpecCard(cardType, prop, value) {
   var card = _cbSpecCards[cardType];
   if (!card) return;
   card[prop] = value;
@@ -103,81 +112,87 @@ function updateCheckboxSpecCard(cardType, prop, value) {
   var st = card.state || 'Default';
   var px = _cbPxMap[card.size] || 20;
 
-  /* Preview SVG */
-  var previewEl = document.getElementById('cb-' + (cardType === 'checked' ? 'chk' : 'unc') + '-preview');
+  /* Preview SVG — id `spec-${demoKey}-preview` */
+  var previewEl = document.getElementById('spec-' + cardType + '-preview');
   if (previewEl) previewEl.innerHTML = _cbBuildSvg(sel, st, px);
 
-  /* Properties */
-  var propsEl = document.getElementById('cb-spec-' + cardType + '-props');
-  if (propsEl) {
-    propsEl.innerHTML = '<div class="spec-detail-label">Properties</div><div class="spec-props">'
-      + '<div class="spec-prop"><span class="spec-prop-key">isSelected</span><span class="spec-prop-val">' + sel + '</span></div>'
-      + '<div class="spec-prop"><span class="spec-prop-key">State</span><span class="spec-prop-val">' + st + '</span></div>'
-      + '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val">' + _cbLabelMap[card.size] + '</span></div>'
-      + '</div>';
-  }
+  /* Properties readouts — data-sp="${demoKey}-${prop}" */
+  var spState = document.querySelector('[data-sp="' + cardType + '-state"]');
+  if (spState) spState.textContent = st;
+  var spSize = document.querySelector('[data-sp="' + cardType + '-size"]');
+  if (spSize) spSize.textContent = _cbLabelMap[card.size];
 
-  /* Colors */
-  var colorsEl = document.getElementById('cb-spec-' + cardType + '-colors');
+  /* Colors section — id `spec-${demoKey}-colors` */
+  var colorsEl = document.getElementById('spec-' + cardType + '-colors');
   if (colorsEl) {
     var sc = _cbStateColors[st] || _cbStateColors.Default;
     var rows = [];
     if (sel === 'true') {
-      rows.push(['Container bg', sc.chk.fill]);
-      rows.push(['Checkmark', '#FFFFFF']);
+      rows.push(['Container bg', sc.chk.fill, 'main/checkbox/color/' + st.toLowerCase() + '/selected/bg']);
+      rows.push(['Checkmark',    '#FFFFFF',    'main/checkbox/color/' + st.toLowerCase() + '/selected/check']);
     } else {
-      if (sc.unc.fill !== 'none') rows.push(['Container bg', sc.unc.fill]);
-      rows.push(['Border', sc.unc.stroke]);
+      if (sc.unc.fill !== 'none') rows.push(['Container bg', sc.unc.fill, 'main/checkbox/color/' + st.toLowerCase() + '/unselected/bg']);
+      rows.push(['Border', sc.unc.stroke, 'main/checkbox/color/' + st.toLowerCase() + '/unselected/border']);
     }
-    if (sc.opacity) rows.push(['Opacity', (sc.opacity * 100) + '%']);
+    if (sc.opacity) rows.push(['Opacity', (sc.opacity * 100) + '%', '']);
     var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
     rows.forEach(function(r) {
-      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
-      var isPercent = r[1].indexOf('%') !== -1;
+      var isPercent = String(r[1]).indexOf('%') !== -1;
+      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E5EBF4' : '';
+      var hasToken = r[2] && !isPercent;
+      var tokenHtml = hasToken ? '<span class="spec-token-name">' + r[2] + '</span>' : '';
       if (isPercent) {
         h += '<div class="spec-prop"><span class="spec-prop-key">' + r[0] + '</span><span class="spec-prop-val mono">' + r[1] + '</span></div>';
       } else {
-        h += '<div class="spec-prop"><span class="spec-prop-key">' + r[0] + '</span>'
-          + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span></div>';
+        h += '<div class="spec-prop' + (hasToken ? ' has-token' : '') + '"><span class="spec-prop-key">' + r[0] + '</span>'
+          + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span>'
+          + tokenHtml + '</div>';
       }
     });
     h += '</div>';
     colorsEl.innerHTML = h;
   }
 
-  /* Layout */
-  var layoutEl = document.getElementById('cb-spec-' + cardType + '-layout');
+  /* Layout section — id `spec-${demoKey}-layout` */
+  var layoutEl = document.getElementById('spec-' + cardType + '-layout');
   if (layoutEl) {
     var borderNote = (sel === 'true') ? 'None (filled)' : '2px';
     layoutEl.innerHTML = '<div class="spec-detail-label">Layout</div><div class="spec-props">'
-      + '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">' + px + ' x ' + px + 'px</span></div>'
-      + '<div class="spec-prop"><span class="spec-prop-key">Corner radius</span><span class="spec-prop-val mono">4px</span></div>'
+      + '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">' + px + ' × ' + px + 'px</span></div>'
+      + '<div class="spec-prop"><span class="spec-prop-key">Corner radius</span><span class="spec-prop-val mono">4px (radius-1)</span></div>'
       + '<div class="spec-prop"><span class="spec-prop-key">Border width</span><span class="spec-prop-val mono">' + borderNote + '</span></div>'
+      + '<div class="spec-prop"><span class="spec-prop-key">Hit target</span><span class="spec-prop-val mono">44 × 44 (mobile)</span></div>'
       + '</div>';
   }
 
-  /* Typography */
-  var typoEl = document.getElementById('cb-spec-' + cardType + '-typo');
-  if (typoEl) {
-    typoEl.innerHTML = '<div class="spec-detail-label">Typography</div><div class="spec-props">'
-      + '<div class="spec-prop"><span class="spec-prop-key muted">No text layer</span></div>'
-      + '</div>';
-  }
+  /* Typography — left static (icon-only control) */
 
-  /* DEV code */
-  var codeEl = document.getElementById('cb-code-' + cardType);
-  if (codeEl) {
-    var devView = codeEl.closest('[data-view]');
-    if (devView) {
-      var activeTab = devView.querySelector('.spec-code-tab.active');
-      var lang = (activeTab && activeTab.textContent.indexOf('COMPOSE') !== -1) ? 'compose' : 'swift';
-      var raw = _getCheckboxSnippet(cardType, lang, card.size, st);
-      codeEl.setAttribute('data-final', raw);
-      codeEl.textContent = raw;
-      if (typeof highlightSyntax === 'function') highlightSyntax(codeEl);
+  /* DEV code — locate via `[data-code-content="${demoKey}"]` */
+  var devView = document.querySelector('[data-view="' + cardType + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardType + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardType, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
     }
   }
 }
+
+function buildSwiftSnippet(type, card) {
+  return _getCheckboxSnippet(type, 'swift', card.size, card.state);
+}
+function buildComposeSnippet(type, card) {
+  return _getCheckboxSnippet(type, 'compose', card.size, card.state);
+}
+function getSnippet(type, lang, card) {
+  return _getCheckboxSnippet(type, lang, card.size, card.state);
+}
+window.getSnippet = getSnippet;
 
 function _getCheckboxSnippet(cardType, lang, size, state) {
   var sw = _cbSwiftSize[size] || '.regular';

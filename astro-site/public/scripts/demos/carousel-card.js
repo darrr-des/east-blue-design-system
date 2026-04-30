@@ -68,6 +68,74 @@ function _ccardUpdate() {
   });
 }
 
+/* ── Spec card state — drives per-card preview + DEV snippets ──────── */
+var _specCards = {
+  'default':         { type: 'default' },
+  'with-icon':       { type: 'with-icon' },
+  'skeleton-loader': { type: 'skeleton' }
+};
+window._specCards = _specCards;
+
+/* Mapping demoKey → existing preview-body element id */
+var _ccardPreviewIds = {
+  'default':         'ccard-spec-1',
+  'with-icon':       'ccard-spec-2',
+  'skeleton-loader': 'ccard-spec-3'
+};
+
+function buildSwiftSnippet(cardKey, card) {
+  var t = card.type || 'default';
+  if (t === 'skeleton') return 'EBCarouselCard(isLoading: true)';
+  if (t === 'with-icon') {
+    return 'EBCarouselCard(\n    title: "Title",\n    description: "Description",\n    icon: Image(systemName: "star.fill")\n)';
+  }
+  return 'EBCarouselCard(\n    title: "Title",\n    description: "Description"\n)';
+}
+
+function buildComposeSnippet(cardKey, card) {
+  var t = card.type || 'default';
+  if (t === 'skeleton') return 'EBCarouselCard(\n    isLoading = true\n)';
+  if (t === 'with-icon') {
+    return 'EBCarouselCard(\n    title = "Title",\n    description = "Description",\n    icon = { Icon(Icons.Filled.Star, null) }\n)';
+  }
+  return 'EBCarouselCard(\n    title = "Title",\n    description = "Description"\n)';
+}
+
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview SVG/HTML */
+  var previewId = _ccardPreviewIds[cardStyle];
+  var previewEl = previewId ? document.getElementById(previewId) : null;
+  if (previewEl) previewEl.innerHTML = _ccardRender({ type: card.type });
+
+  /* Update Properties readouts */
+  var spType = document.querySelector('[data-sp="' + cardStyle + '-type"]');
+  if (spType) spType.textContent = card.type;
+
+  /* Update DEV code */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
 function _ccardInit() {
   var ctx = document.getElementById('ccard-context-preview');
   if (ctx) ctx.innerHTML = _ccardContextMarkup();
@@ -81,7 +149,13 @@ function _ccardInit() {
 
   var s3 = document.getElementById('ccard-spec-3');
   if (s3) s3.innerHTML = _ccardRender({type:'skeleton'});
+
+  /* Re-render DEV snippets via shared updater */
+  Object.keys(_specCards).forEach(function(k){ updateSpecCard(k, 'type', _specCards[k].type); });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _ccardInit);
 else _ccardInit();
+
+/* Re-init after Astro view-transition swaps */
+document.addEventListener('astro:page-load', _ccardInit);

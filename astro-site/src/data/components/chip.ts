@@ -1,4 +1,44 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/chip.js`.
+const chipDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Style',
+        prop: 'style',
+        defaultValue: 'filled',
+        options: [
+          { value: 'filled', label: 'Filled' },
+          { value: 'light', label: 'Light' },
+          { value: 'outline', label: 'Outline' },
+        ],
+      },
+      {
+        label: 'Leading',
+        prop: 'leading',
+        defaultValue: 'none',
+        options: [
+          { value: 'none', label: 'None' },
+          { value: 'avatar', label: 'Avatar' },
+          { value: 'icon', label: 'Icon' },
+        ],
+      },
+      {
+        label: 'Trailing',
+        prop: 'trailing',
+        defaultValue: 'none',
+        options: [
+          { value: 'none', label: 'None' },
+          { value: 'close', label: 'Close' },
+          { value: 'chevron', label: 'Chevron' },
+        ],
+      },
+    ],
+  },
+];
 
 export const chip: ComponentData = {
   "meta": {
@@ -156,9 +196,12 @@ export const chip: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "chip-spec-filled",
+        "demoKey": "filled",
+        "demoControls": chipDemoControls,
         "title": "Filled",
         "node": "18336:22244",
         "description": "Brand blue fill with white label. Represents an active/applied filter.",
@@ -166,132 +209,43 @@ export const chip: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Filled",
-                "mono": false
-              },
-              {
-                "key": "Leading",
-                "value": "avatar",
-                "mono": false
-              },
-              {
-                "key": "Trailing",
-                "value": "close",
-                "mono": false
-              }
+              { "key": "Style", "value": "Filled", "prop": "style" },
+              { "key": "Leading", "value": "avatar", "prop": "leading" },
+              { "key": "Trailing", "value": "close", "prop": "trailing" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Background",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#F6F9FDB8",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "main/filter/color/primary/bg",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "main/filter/color/primary/label",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "main/filter/color/primary/icon",
-                "mono": true
-              }
+              { "key": "Background", "value": "#005CE5", "token": "main/filter/color/primary/bg" },
+              { "key": "Label", "value": "#FFFFFF", "token": "main/filter/color/primary/label" },
+              { "key": "Icon", "value": "#F6F9FDB8", "token": "main/filter/color/primary/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Height",
-                "value": "32px",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "radius/radius-pill (99px)",
-                "mono": true
-              },
-              {
-                "key": "Padding L (with leading)",
-                "value": "4px",
-                "mono": true
-              },
-              {
-                "key": "Padding R (with trailing)",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Leading avatar",
-                "value": "24 × 24",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "16 × 16",
-                "mono": true
-              },
-              {
-                "key": "Gap icon → label",
-                "value": "4px (space/space-4)",
-                "mono": true
-              },
-              {
-                "key": "Gap label → close",
-                "value": "8px (space/space-8)",
-                "mono": true
-              }
+              { "key": "Height", "value": "32px", "mono": true },
+              { "key": "Corner radius", "value": "99px (pill)", "mono": true },
+              { "key": "Padding L", "value": "4px", "mono": true },
+              { "key": "Padding R", "value": "14px", "mono": true },
+              { "key": "Leading avatar", "value": "24 × 24", "mono": true },
+              { "key": "Close icon", "value": "16 × 16", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Text style",
-                "value": "Primary/Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Size",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Line height",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Tracking",
-                "value": "+0.25px",
-                "mono": true
-              }
+              { "key": "Text style", "value": "Primary/Label/Base", "mono": true },
+              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
+              { "key": "Size", "value": "16px", "mono": true },
+              { "key": "Line-height", "value": "16px", "mono": true },
+              { "key": "Tracking", "value": "0.25px", "mono": true }
             ]
           }
         ],
@@ -300,6 +254,8 @@ export const chip: ComponentData = {
       },
       {
         "cardKey": "chip-spec-light",
+        "demoKey": "light",
+        "demoControls": chipDemoControls,
         "title": "Light",
         "node": "18336:22257",
         "description": "Light gray fill with gray label. Used for inactive filters, tags, or dropdown trigger base.",
@@ -307,112 +263,40 @@ export const chip: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Light",
-                "mono": false
-              },
-              {
-                "key": "Leading",
-                "value": "none",
-                "mono": false
-              },
-              {
-                "key": "Trailing",
-                "value": "none",
-                "mono": false
-              }
+              { "key": "Style", "value": "Light", "prop": "style" },
+              { "key": "Leading", "value": "none", "prop": "leading" },
+              { "key": "Trailing", "value": "none", "prop": "trailing" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Background",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#7E96BE",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "main/filter/color/secondary/bg",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "main/filter/color/secondary/label",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "main/filter/color/secondary/icon",
-                "mono": true
-              }
+              { "key": "Background", "value": "#EEF2F9", "token": "main/filter/color/secondary/bg" },
+              { "key": "Label", "value": "#6780A9", "token": "main/filter/color/secondary/label" },
+              { "key": "Icon", "value": "#7E96BE", "token": "main/filter/color/secondary/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Height",
-                "value": "32px",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "radius/radius-pill (99px)",
-                "mono": true
-              },
-              {
-                "key": "Padding horizontal",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Leading avatar",
-                "value": "24 × 24",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "16 × 16",
-                "mono": true
-              }
+              { "key": "Height", "value": "32px", "mono": true },
+              { "key": "Corner radius", "value": "99px (pill)", "mono": true },
+              { "key": "Padding horizontal", "value": "14px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Text style",
-                "value": "Primary/Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Size / line-height",
-                "value": "16 / 16px",
-                "mono": true
-              },
-              {
-                "key": "Tracking",
-                "value": "+0.25px",
-                "mono": true
-              }
+              { "key": "Text style", "value": "Primary/Label/Base", "mono": true },
+              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
+              { "key": "Size", "value": "16px", "mono": true },
+              { "key": "Line-height", "value": "16px", "mono": true },
+              { "key": "Tracking", "value": "0.25px", "mono": true }
             ]
           }
         ],
@@ -421,6 +305,8 @@ export const chip: ComponentData = {
       },
       {
         "cardKey": "chip-spec-outline",
+        "demoKey": "outline",
+        "demoControls": chipDemoControls,
         "title": "Outline",
         "node": "18336:22270",
         "description": "White fill with 2px gray border and gray label. Alternative inactive style for light surfaces.",
@@ -428,102 +314,41 @@ export const chip: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Outline",
-                "mono": false
-              },
-              {
-                "key": "Leading",
-                "value": "none",
-                "mono": false
-              },
-              {
-                "key": "Trailing",
-                "value": "none",
-                "mono": false
-              }
+              { "key": "Style", "value": "Outline", "prop": "style" },
+              { "key": "Leading", "value": "none", "prop": "leading" },
+              { "key": "Trailing", "value": "none", "prop": "trailing" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Background",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "main/filter/color/tertiary/border",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "main/filter/color/tertiary/label",
-                "mono": true
-              }
+              { "key": "Background", "value": "#FFFFFF", "token": "surface/default" },
+              { "key": "Border", "value": "#D7E0EF", "token": "main/filter/color/tertiary/border" },
+              { "key": "Label", "value": "#6780A9", "token": "main/filter/color/tertiary/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Height",
-                "value": "32px",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "radius/radius-pill (99px)",
-                "mono": true
-              },
-              {
-                "key": "Border width",
-                "value": "2px",
-                "mono": true
-              },
-              {
-                "key": "Padding horizontal",
-                "value": "14px",
-                "mono": true
-              }
+              { "key": "Height", "value": "32px", "mono": true },
+              { "key": "Corner radius", "value": "99px (pill)", "mono": true },
+              { "key": "Border width", "value": "2px", "mono": true },
+              { "key": "Padding horizontal", "value": "14px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Text style",
-                "value": "Primary/Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Size / line-height",
-                "value": "16 / 16px",
-                "mono": true
-              },
-              {
-                "key": "Tracking",
-                "value": "+0.25px",
-                "mono": true
-              }
+              { "key": "Text style", "value": "Primary/Label/Base", "mono": true },
+              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
+              { "key": "Size", "value": "16px", "mono": true },
+              { "key": "Line-height", "value": "16px", "mono": true },
+              { "key": "Tracking", "value": "0.25px", "mono": true }
             ]
           }
         ],
@@ -532,6 +357,8 @@ export const chip: ComponentData = {
       },
       {
         "cardKey": "chip-spec-dropdown",
+        "demoKey": "dropdown",
+        "demoControls": chipDemoControls,
         "title": "Dropdown",
         "node": "18336:22284",
         "description": "Light style with a trailing chevron. Used as a pill-styled dropdown trigger. Selected value shown in blue <code>label-link</code>.",
@@ -539,112 +366,43 @@ export const chip: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Light",
-                "mono": false
-              },
-              {
-                "key": "Trailing",
-                "value": "chevron",
-                "mono": false
-              },
-              {
-                "key": "Selected value",
-                "value": "true",
-                "mono": false
-              }
+              { "key": "Style", "value": "Light", "prop": "style" },
+              { "key": "Leading", "value": "none", "prop": "leading" },
+              { "key": "Trailing", "value": "chevron", "prop": "trailing" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Background",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Selected value",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Chevron",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "main/filter/color/secondary/label-link",
-                "mono": true
-              },
-              {
-                "key": "Chevron token",
-                "value": "main/filter/color/secondary/chevron",
-                "mono": true
-              }
+              { "key": "Background", "value": "#EEF2F9", "token": "main/filter/color/secondary/bg" },
+              { "key": "Label", "value": "#6780A9", "token": "main/filter/color/secondary/label" },
+              { "key": "Selected value", "value": "#005CE5", "token": "main/filter/color/secondary/label-link" },
+              { "key": "Chevron", "value": "#005CE5", "token": "main/filter/color/secondary/chevron" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Height",
-                "value": "32px",
-                "mono": true
-              },
-              {
-                "key": "Padding left",
-                "value": "16px (space/space-16)",
-                "mono": true
-              },
-              {
-                "key": "Padding right",
-                "value": "12px (space/space-12)",
-                "mono": true
-              },
-              {
-                "key": "Chevron size",
-                "value": "24 × 24",
-                "mono": true
-              },
-              {
-                "key": "Gap label → value",
-                "value": "8px (space/space-8)",
-                "mono": true
-              }
+              { "key": "Height", "value": "32px", "mono": true },
+              { "key": "Corner radius", "value": "99px (pill)", "mono": true },
+              { "key": "Padding left", "value": "16px", "mono": true },
+              { "key": "Padding right", "value": "12px", "mono": true },
+              { "key": "Chevron size", "value": "24 × 24", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Text style",
-                "value": "Primary/Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Size / line-height",
-                "value": "16 / 16px",
-                "mono": true
-              },
-              {
-                "key": "Tracking",
-                "value": "+0.25px",
-                "mono": true
-              }
+              { "key": "Text style", "value": "Primary/Label/Base", "mono": true },
+              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
+              { "key": "Size", "value": "16px", "mono": true },
+              { "key": "Line-height", "value": "16px", "mono": true },
+              { "key": "Tracking", "value": "0.25px", "mono": true }
             ]
           }
         ],

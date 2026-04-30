@@ -19,11 +19,20 @@ var _adsSizes = {
   'hero-md':     { w: 336, h: 174, family: 'hero',   aspect: '336×174', captionAllowed: true  }
 };
 
+var _adsLayoutMap = {
+  'banner-sm':   { aspect: '32:5',     radius: 'radius/radius-1 (4px)',  pad: '0 (ad fills surface)' },
+  'banner-lg':   { aspect: '16:5',     radius: 'radius/radius-1 (4px)',  pad: '0 (ad fills surface)' },
+  'banner-mrec': { aspect: '6:5',      radius: 'radius/radius-1 (4px)',  pad: '0 (ad fills surface)' },
+  'promo-sm':    { aspect: '4:3',      radius: 'radius/radius-2 (8px)',  pad: '8 horizontal, 6 vertical' },
+  'promo-md':    { aspect: '3:2',      radius: 'radius/radius-2 (8px)',  pad: '8 horizontal, 6 vertical' },
+  'hero-sm':     { aspect: '17:10',    radius: 'radius/radius-3 (12px)', pad: '12 horizontal, 8 vertical' },
+  'hero-md':     { aspect: '15:8',     radius: 'radius/radius-3 (12px)', pad: '12 horizontal, 8 vertical' }
+};
+
 function _adsEscape(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-/* Scale so previews fit the demo frame without exceeding ~340px wide or ~250 tall */
 function _adsScale(w, h) {
   var maxW = 340, maxH = 250;
   var s = Math.min(maxW / w, maxH / h, 1);
@@ -99,37 +108,210 @@ function _adsUpdate() {
   });
 }
 
+/* ── Spec card state (per-card, drives previews + DEV code) ──────── */
+var _specCards = {
+  banner: { size: 'banner-sm', loading: 'false' },
+  promo:  { size: 'promo-md',  loading: 'false' },
+  hero:   { size: 'hero-md',   loading: 'false' }
+};
+window._specCards = _specCards;
+
+function _adsCaptionFor(family) {
+  if (family === 'promo') return 'Earn up to 5% on savings';
+  if (family === 'hero')  return 'Weekend deals are here';
+  return '';
+}
+
+function _adsColorRowsFor(card, family) {
+  if (family === 'banner') {
+    return [
+      ['Surface',          '#FFFFFF', 'ad-space/color/surface'],
+      ['Loading skeleton', '#EEF2F9', 'ad-space/color/loading-skeleton'],
+      ['"Ad" marker',      '#6780A9', 'text/color-text-subtle']
+    ];
+  }
+  if (family === 'promo') {
+    return [
+      ['Surface',           '#FFFFFF', 'ad-space/color/surface'],
+      ['Caption',           '#2340A9', 'ad-space/color/caption'],
+      ['Image placeholder', '#E6E1EF', 'ad-space/color/loading-skeleton']
+    ];
+  }
+  return [
+    ['Surface',           '#FFFFFF', 'ad-space/color/surface'],
+    ['Caption (overlay)', '#FFFFFF', 'ad-space/color/caption-overlay'],
+    ['Caption scrim',     '#040506', 'overlay/scrim-bottom'],
+    ['Image placeholder', '#E6E1EF', 'ad-space/color/loading-skeleton']
+  ];
+}
+
+/* ── Code snippet builders ──────────────────────────────────────── */
+function _adsSizeEnumSwift(size) {
+  var map = {
+    'banner-sm':'.bannerSm','banner-lg':'.bannerLg','banner-mrec':'.bannerMrec',
+    'promo-sm':'.promoSm','promo-md':'.promoMd',
+    'hero-sm':'.heroSm','hero-md':'.heroMd'
+  };
+  return map[size] || '.bannerSm';
+}
+function _adsSizeEnumCompose(size) {
+  var map = {
+    'banner-sm':'BannerSm','banner-lg':'BannerLg','banner-mrec':'BannerMrec',
+    'promo-sm':'PromoSm','promo-md':'PromoMd',
+    'hero-sm':'HeroSm','hero-md':'HeroMd'
+  };
+  return map[size] || 'BannerSm';
+}
+
+function buildSwiftSnippet(type, card) {
+  var family = (_adsSizes[card.size] || {}).family || type;
+  var sizeEnum = _adsSizeEnumSwift(card.size);
+  var loading = card.loading === 'true';
+  var lines = [];
+  if (family === 'banner') {
+    lines.push('EBAdSpace(size: ' + sizeEnum + (loading ? ', isLoading: true' : '') + ') {');
+    lines.push('    GADBannerView(adSize: .banner)');
+    lines.push('}');
+  } else if (family === 'promo') {
+    lines.push('EBAdSpace(');
+    lines.push('    size: ' + sizeEnum + ',');
+    lines.push('    caption: "Earn rewards every day"' + (loading ? ',' : ''));
+    if (loading) lines.push('    isLoading: true');
+    lines.push(') {');
+    lines.push('    AsyncImage(url: imageURL)');
+    lines.push('}');
+  } else {
+    lines.push('EBAdSpace(');
+    lines.push('    size: ' + sizeEnum + ',');
+    lines.push('    caption: "Featured offer"' + (loading ? ',' : ''));
+    if (loading) lines.push('    isLoading: true');
+    lines.push(') {');
+    lines.push('    AsyncImage(url: imageURL)');
+    lines.push('}');
+  }
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var family = (_adsSizes[card.size] || {}).family || type;
+  var sizeEnum = _adsSizeEnumCompose(card.size);
+  var loading = card.loading === 'true';
+  var lines = [];
+  lines.push('EBAdSpace(');
+  lines.push('    size = AdSpaceSize.' + sizeEnum + ',');
+  if (family !== 'banner') {
+    var cap = family === 'promo' ? 'Earn rewards every day' : 'Featured offer';
+    lines.push('    caption = "' + cap + '",');
+  }
+  if (loading) lines.push('    isLoading = true,');
+  /* Trim trailing comma */
+  var last = lines[lines.length - 1];
+  if (last.charAt(last.length - 1) === ',') lines[lines.length - 1] = last.slice(0, -1);
+  lines.push(') {');
+  if (family === 'banner') {
+    lines.push('    AndroidView(factory = { ctx -> AdView(ctx) })');
+  } else {
+    lines.push('    AsyncImage(model = imageUrl, contentDescription = null)');
+  }
+  lines.push('}');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+  var family = cardStyle;
+
+  /* Update preview wrapper #ads-spec-{key} */
+  var preview = document.getElementById('ads-spec-' + cardStyle);
+  if (preview) {
+    var loading = card.loading === 'true';
+    var caption = loading ? '' : _adsCaptionFor(family);
+    preview.innerHTML = _adsRender({
+      size: card.size,
+      loading: loading,
+      caption: caption
+    });
+  }
+
+  /* Update Properties readout */
+  var spSize = document.querySelector('[data-sp="' + cardStyle + '-size"]');
+  if (spSize) spSize.textContent = card.size;
+  var spLoading = document.querySelector('[data-sp="' + cardStyle + '-loading"]');
+  if (spLoading) spLoading.textContent = card.loading;
+
+  /* Update Colors section */
+  var colorsEl = document.getElementById('spec-' + cardStyle + '-colors');
+  if (colorsEl) {
+    var rows = _adsColorRowsFor(card, family);
+    var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
+    rows.forEach(function(r) {
+      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
+      var tokenHtml = r[2] ? '<span class="spec-token-name">' + r[2] + '</span>' : '';
+      h += '<div class="spec-prop has-token"><span class="spec-prop-key">' + r[0] + '</span>'
+         + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span>'
+         + tokenHtml + '</div>';
+    });
+    h += '</div>';
+    colorsEl.innerHTML = h;
+  }
+
+  /* Update Layout section */
+  var layoutEl = document.getElementById('spec-' + cardStyle + '-layout');
+  if (layoutEl) {
+    var L = _adsLayoutMap[card.size] || _adsLayoutMap['banner-sm'];
+    var sz = _adsSizes[card.size] || _adsSizes['banner-sm'];
+    var lh = '<div class="spec-detail-label">Layout</div><div class="spec-props">';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Dimensions</span><span class="spec-prop-val mono">' + sz.w + ' × ' + sz.h + '</span></div>';
+    if (family !== 'banner') lh += '<div class="spec-prop"><span class="spec-prop-key">Image aspect</span><span class="spec-prop-val mono">' + L.aspect + '</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Corner radius</span><span class="spec-prop-val mono">' + L.radius + '</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">' + (family === 'banner' ? 'Padding' : 'Caption padding') + '</span><span class="spec-prop-val mono">' + L.pad + '</span></div>';
+    lh += '</div>';
+    layoutEl.innerHTML = lh;
+  }
+
+  /* Update DEV code — always */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
+function _adsInitSpecCards() {
+  Object.keys(_specCards).forEach(function(k) {
+    updateSpecCard(k, 'size', _specCards[k].size);
+  });
+}
+
 function _adsInit() {
   var ctx = document.getElementById('ads-context-preview');
   if (ctx) ctx.innerHTML = _adsContextMarkup();
   _adsUpdate();
-
-  var sb = document.getElementById('ads-spec-banner');
-  if (sb) sb.innerHTML =
-    '<div class="eb-preview-stack eb-preview-stack--col eb-preview-stack--gap-sm">' +
-      _adsRender({size:'banner-sm'}) +
-      _adsRender({size:'banner-lg'}) +
-      _adsRender({size:'banner-mrec'}) +
-    '</div>';
-
-  var sp = document.getElementById('ads-spec-promo');
-  if (sp) sp.innerHTML =
-    '<div class="eb-preview-stack eb-preview-stack--row eb-preview-stack--gap-sm">' +
-      _adsRender({size:'promo-sm', caption:'Send free'}) +
-      _adsRender({size:'promo-md', caption:'Earn up to 5% on savings'}) +
-    '</div>';
-
-  var sh = document.getElementById('ads-spec-hero');
-  if (sh) sh.innerHTML =
-    '<div class="eb-preview-stack eb-preview-stack--col eb-preview-stack--gap-sm">' +
-      _adsRender({size:'hero-sm', caption:'Featured offer'}) +
-      _adsRender({size:'hero-md', caption:'Weekend deals are here'}) +
-    '</div>';
+  _adsInitSpecCards();
 }
 
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _adsInit);
-else _adsInit();
+(function () {
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _adsInit);
+  else _adsInit();
+  document.addEventListener('astro:page-load', _adsInit);
+})();
 
+/* ── Legacy aliases ────────────────────────────────────────────── */
 function toggleAdSpaceSpecMode(cardKey, toggleEl) {
   var labels = toggleEl.querySelectorAll('.spec-mode-label');
   var isDes = labels[0].classList.contains('active');

@@ -1,4 +1,23 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+const tabsDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Active tab',
+        prop: 'active',
+        defaultValue: '0',
+        options: [
+          { value: '0', label: 'Tab 1' },
+          { value: '1', label: 'Tab 2' },
+          { value: '2', label: 'Tab 3' },
+          { value: '3', label: 'Tab 4' },
+        ],
+      },
+    ],
+  },
+];
 
 export const tabs: ComponentData = {
   "meta": {
@@ -134,324 +153,166 @@ export const tabs: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Variants",
     "specCards": [
       {
         "cardKey": "tabs-spec-4",
+        "demoKey": "tabs-4",
+        "demoControls": tabsDemoControls,
         "title": "4 tabs — default",
         "node": "18482:33250",
         "description": "4 Tab Items in an equal-width flex row. 248px total width.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "4 tabs — default",
-                "mono": false
-              }
+              { "key": "Tab count",  "value": "4" },
+              { "key": "Active tab", "value": "Tab 1", "prop": "active" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Active label",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active label token",
-                "value": "tab/color/active/label",
-                "mono": true
-              },
-              {
-                "key": "Active border",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active border token",
-                "value": "tab/color/active/border",
-                "mono": true
-              },
-              {
-                "key": "Inactive label",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Inactive label token",
-                "value": "tab/color/inactive/label",
-                "mono": true
-              },
-              {
-                "key": "Inactive border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Inactive border token",
-                "value": "tab/color/inactive/border",
-                "mono": true
-              }
+              { "key": "Active label",    "value": "#005CE5", "token": "tab/color/active/label" },
+              { "key": "Active border",   "value": "#005CE5", "token": "tab/color/active/border" },
+              { "key": "Inactive label",  "value": "#6780A9", "token": "tab/color/inactive/label" },
+              { "key": "Inactive border", "value": "#E5EBF4", "token": "tab/color/inactive/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Tab height",
-                "value": "44px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Gap",
-                "value": "24px",
-                "mono": true
-              },
-              {
-                "key": "Indicator height",
-                "value": "3px (Depth/D4 shadow on container)",
-                "mono": true
-              }
+              { "key": "Tab height",       "value": "44px",  "mono": true },
+              { "key": "Padding H",        "value": "16px",  "mono": true },
+              { "key": "Gap",              "value": "24px",  "mono": true },
+              { "key": "Indicator height", "value": "3px",   "mono": true },
+              { "key": "Total width",      "value": "248px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Tab label style",
-                "value": "Primary/Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Tab font",
-                "value": "Proxima Soft Bold · 16 / 16 · +0.25",
-                "mono": true
-              }
+              { "key": "Text Style",  "value": "Primary/Label/Base", "mono": true },
+              { "key": "Font",        "value": "Proxima Soft Bold", "mono": true },
+              { "key": "Size",        "value": "16px", "mono": true },
+              { "key": "Tracking",    "value": "0.25px", "mono": true },
+              { "key": "Line-height", "value": "16px", "mono": true }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$current<span class=\"syn-punc\">)</span> {\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.two</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
         "compose": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selectedIndex <span class=\"syn-eq\">=</span> index<span class=\"syn-punc\">, </span>onTabChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "previewHtml": "<svg width=\"248\" height=\"84\" viewBox=\"0 0 248 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"248\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"31\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"31\" y=\"60\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"11\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"62\" height=\"2\" fill=\"#005CE5\"></rect><circle cx=\"93\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"93\" y=\"60\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"62\" y=\"82\" width=\"62\" height=\"2\" fill=\"#E5EBF4\"></rect><circle cx=\"155\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"155\" y=\"60\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"124\" y=\"82\" width=\"62\" height=\"2\" fill=\"#E5EBF4\"></rect><circle cx=\"217\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"217\" y=\"60\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"186\" y=\"82\" width=\"62\" height=\"2\" fill=\"#E5EBF4\"></rect></svg>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tabs-preview-tabs-4\"></div>"
       },
       {
         "cardKey": "tabs-spec-3",
+        "demoKey": "tabs-3",
+        "demoControls": tabsDemoControls,
         "title": "3 tabs",
         "node": "18482:33255",
         "description": "3 Tab Items in an equal-width flex row. 186px total width.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "3 tabs",
-                "mono": false
-              }
+              { "key": "Tab count",  "value": "3" },
+              { "key": "Active tab", "value": "Tab 1", "prop": "active" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Active label",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active label token",
-                "value": "tab/color/active/label",
-                "mono": true
-              },
-              {
-                "key": "Active border",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active border token",
-                "value": "tab/color/active/border",
-                "mono": true
-              },
-              {
-                "key": "Inactive label",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Inactive label token",
-                "value": "tab/color/inactive/label",
-                "mono": true
-              },
-              {
-                "key": "Inactive border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Inactive border token",
-                "value": "tab/color/inactive/border",
-                "mono": true
-              }
+              { "key": "Active label",    "value": "#005CE5", "token": "tab/color/active/label" },
+              { "key": "Active border",   "value": "#005CE5", "token": "tab/color/active/border" },
+              { "key": "Inactive label",  "value": "#6780A9", "token": "tab/color/inactive/label" },
+              { "key": "Inactive border", "value": "#E5EBF4", "token": "tab/color/inactive/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Tab height",
-                "value": "44px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Gap",
-                "value": "24px",
-                "mono": true
-              },
-              {
-                "key": "Indicator height",
-                "value": "3px (Depth/D4 shadow on container)",
-                "mono": true
-              }
+              { "key": "Tab height",       "value": "44px",  "mono": true },
+              { "key": "Padding H",        "value": "16px",  "mono": true },
+              { "key": "Gap",              "value": "24px",  "mono": true },
+              { "key": "Indicator height", "value": "3px",   "mono": true },
+              { "key": "Total width",      "value": "186px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Tab label style",
-                "value": "Primary/Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Tab font",
-                "value": "Proxima Soft Bold · 16 / 16 · +0.25",
-                "mono": true
-              }
+              { "key": "Text Style",  "value": "Primary/Label/Base", "mono": true },
+              { "key": "Font",        "value": "Proxima Soft Bold", "mono": true },
+              { "key": "Size",        "value": "16px", "mono": true },
+              { "key": "Tracking",    "value": "0.25px", "mono": true },
+              { "key": "Line-height", "value": "16px", "mono": true }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$current<span class=\"syn-punc\">)</span> {\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.two</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
         "compose": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selectedIndex <span class=\"syn-eq\">=</span> index<span class=\"syn-punc\">, </span>onTabChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "previewHtml": "<svg width=\"186\" height=\"84\" viewBox=\"0 0 186 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"186\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"31\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"31\" y=\"60\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"11\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"62\" height=\"2\" fill=\"#005CE5\"></rect><circle cx=\"93\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"93\" y=\"60\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"62\" y=\"82\" width=\"62\" height=\"2\" fill=\"#E5EBF4\"></rect><circle cx=\"155\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"155\" y=\"60\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"124\" y=\"82\" width=\"62\" height=\"2\" fill=\"#E5EBF4\"></rect></svg>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tabs-preview-tabs-3\"></div>"
       },
       {
         "cardKey": "tabs-spec-2",
+        "demoKey": "tabs-2",
+        "demoControls": tabsDemoControls,
         "title": "2 tabs",
         "node": "18482:33259",
         "description": "2 Tab Items in an equal-width flex row. 124px total width.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "2 tabs",
-                "mono": false
-              }
+              { "key": "Tab count",  "value": "2" },
+              { "key": "Active tab", "value": "Tab 1", "prop": "active" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Active label",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active label token",
-                "value": "tab/color/active/label",
-                "mono": true
-              },
-              {
-                "key": "Active border",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active border token",
-                "value": "tab/color/active/border",
-                "mono": true
-              },
-              {
-                "key": "Inactive label",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Inactive label token",
-                "value": "tab/color/inactive/label",
-                "mono": true
-              },
-              {
-                "key": "Inactive border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Inactive border token",
-                "value": "tab/color/inactive/border",
-                "mono": true
-              }
+              { "key": "Active label",    "value": "#005CE5", "token": "tab/color/active/label" },
+              { "key": "Active border",   "value": "#005CE5", "token": "tab/color/active/border" },
+              { "key": "Inactive label",  "value": "#6780A9", "token": "tab/color/inactive/label" },
+              { "key": "Inactive border", "value": "#E5EBF4", "token": "tab/color/inactive/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Tab height",
-                "value": "44px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Gap",
-                "value": "24px",
-                "mono": true
-              },
-              {
-                "key": "Indicator height",
-                "value": "3px (Depth/D4 shadow on container)",
-                "mono": true
-              }
+              { "key": "Tab height",       "value": "44px",  "mono": true },
+              { "key": "Padding H",        "value": "16px",  "mono": true },
+              { "key": "Gap",              "value": "24px",  "mono": true },
+              { "key": "Indicator height", "value": "3px",   "mono": true },
+              { "key": "Total width",      "value": "124px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Tab label style",
-                "value": "Primary/Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Tab font",
-                "value": "Proxima Soft Bold · 16 / 16 · +0.25",
-                "mono": true
-              }
+              { "key": "Text Style",  "value": "Primary/Label/Base", "mono": true },
+              { "key": "Font",        "value": "Proxima Soft Bold", "mono": true },
+              { "key": "Size",        "value": "16px", "mono": true },
+              { "key": "Tracking",    "value": "0.25px", "mono": true },
+              { "key": "Line-height", "value": "16px", "mono": true }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$current<span class=\"syn-punc\">)</span> {\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.two</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
         "compose": "<span class=\"syn-type\">EBTabs</span><span class=\"syn-punc\">(</span>selectedIndex <span class=\"syn-eq\">=</span> index<span class=\"syn-punc\">, </span>onTabChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 1\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tab 2\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "previewHtml": "<svg width=\"124\" height=\"84\" viewBox=\"0 0 124 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"124\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"31\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"31\" y=\"60\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"11\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"62\" height=\"2\" fill=\"#005CE5\"></rect><circle cx=\"93\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"93\" y=\"60\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"62\" y=\"82\" width=\"62\" height=\"2\" fill=\"#E5EBF4\"></rect></svg>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"tabs-preview-tabs-2\"></div>"
       }
     ],
     "colorsTables": [

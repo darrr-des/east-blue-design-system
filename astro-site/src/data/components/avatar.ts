@@ -1,4 +1,28 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/avatar.js`.
+const avatarDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Size',
+        prop: 'size',
+        defaultValue: '64',
+        options: [
+          { value: '20', label: '20px' },
+          { value: '24', label: '24px' },
+          { value: '32', label: '32px' },
+          { value: '40', label: '40px' },
+          { value: '48', label: '48px' },
+          { value: '64', label: '64px' },
+          { value: '90', label: '90px' },
+        ],
+      },
+    ],
+  },
+];
 
 export const avatar: ComponentData = {
   "meta": {
@@ -112,9 +136,12 @@ export const avatar: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Types",
     "specCards": [
       {
         "cardKey": "ava-spec-dark",
+        "demoKey": "dark",
+        "demoControls": avatarDemoControls,
         "title": "Dark Initials",
         "node": "17143:4531",
         "description": "Blue circle with white initials text. Branded avatar used as default when no photo is available.",
@@ -122,82 +149,38 @@ export const avatar: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "Dark Initials",
-                "mono": false
-              },
-              {
-                "key": "Text",
-                "value": "first + last initials",
-                "mono": false
-              }
+              { "key": "Type", "value": "Dark Initials" },
+              { "key": "Size", "value": "64px", "prop": "size" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "avatar/brand/bg",
-                "mono": true
-              },
-              {
-                "key": "Initials",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Initials token",
-                "value": "avatar/brand/intials",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "avatar/brand/border",
-                "mono": true
-              }
+              { "key": "Background", "value": "#005CE5", "token": "main/avatar/brand/bg" },
+              { "key": "Initials", "value": "#FFFFFF", "token": "main/avatar/brand/initials" },
+              { "key": "Border", "value": "#E5EBF4", "token": "main/avatar/brand/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Sizes",
-                "value": "20 / 24 / 32 / 40 / 48 / 64 / 90",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "50% (circle)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1.5px solid",
-                "mono": true
-              }
+              { "key": "Size", "value": "64 × 64px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-round", "mono": true },
+              { "key": "Border width", "value": "2px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Tiny / Fine / Multi-line / Block / Section / Region / Spotlight",
-                "value": "responsive per avatar size",
-                "mono": true
-              }
+              { "key": "Text style", "value": "Primary/Headlines/Region", "mono": true },
+              { "key": "Font", "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Size", "value": "31px", "mono": true },
+              { "key": "Line-height", "value": "35px", "mono": true }
             ]
           }
         ],
@@ -206,6 +189,8 @@ export const avatar: ComponentData = {
       },
       {
         "cardKey": "ava-spec-light",
+        "demoKey": "light",
+        "demoControls": avatarDemoControls,
         "title": "Light Initials",
         "node": "17143:4535",
         "description": "Light circle with blue initials text. Neutral variant for non-branded contexts.",
@@ -213,82 +198,38 @@ export const avatar: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "Light Initials",
-                "mono": false
-              },
-              {
-                "key": "Text",
-                "value": "first + last initials",
-                "mono": false
-              }
+              { "key": "Type", "value": "Light Initials" },
+              { "key": "Size", "value": "64px", "prop": "size" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "avatar/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Initials",
-                "value": "#2340A9",
-                "mono": true
-              },
-              {
-                "key": "Initials token",
-                "value": "avatar/default/initials",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "avatar/default/border",
-                "mono": true
-              }
+              { "key": "Background", "value": "#F6F9FD", "token": "main/avatar/default/bg" },
+              { "key": "Initials", "value": "#2340A9", "token": "main/avatar/default/initials" },
+              { "key": "Border", "value": "#E5EBF4", "token": "main/avatar/default/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Sizes",
-                "value": "20 / 24 / 32 / 40 / 48 / 64 / 90",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "50% (circle)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1.5px solid",
-                "mono": true
-              }
+              { "key": "Size", "value": "64 × 64px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-round", "mono": true },
+              { "key": "Border width", "value": "2px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Style",
-                "value": "responsive per avatar size",
-                "mono": true
-              }
+              { "key": "Text style", "value": "Primary/Headlines/Region", "mono": true },
+              { "key": "Font", "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Size", "value": "31px", "mono": true },
+              { "key": "Line-height", "value": "35px", "mono": true }
             ]
           }
         ],
@@ -297,6 +238,8 @@ export const avatar: ComponentData = {
       },
       {
         "cardKey": "ava-spec-image",
+        "demoKey": "image",
+        "demoControls": avatarDemoControls,
         "title": "Image",
         "node": "17143:4546",
         "description": "User profile photo in a circle clip. Falls back to placeholder when image fails to load.",
@@ -304,77 +247,35 @@ export const avatar: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "Image",
-                "mono": false
-              },
-              {
-                "key": "Source",
-                "value": "user profile image",
-                "mono": false
-              }
+              { "key": "Type", "value": "Image" },
+              { "key": "Size", "value": "64px", "prop": "size" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Placeholder bg",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Placeholder bg token",
-                "value": "avatar/placeholder/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "avatar/placeholder/border",
-                "mono": true
-              }
+              { "key": "Placeholder bg", "value": "#C2CFE5", "token": "main/avatar/placeholder/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "main/avatar/placeholder/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Sizes",
-                "value": "20 / 24 / 32 / 40 / 48 / 64 / 90",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "50% (circle)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1.5px solid",
-                "mono": true
-              },
-              {
-                "key": "Image fit",
-                "value": "cover",
-                "mono": true
-              }
+              { "key": "Size", "value": "64 × 64px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-round", "mono": true },
+              { "key": "Border width", "value": "2px", "mono": true },
+              { "key": "Image fit", "value": "cover", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "N/A",
-                "value": "image-only avatar",
-                "mono": true
-              }
+              { "key": "—", "value": "image-only avatar" }
             ]
           }
         ],

@@ -1,4 +1,40 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+const inlineMessageDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Variant',
+        prop: 'variant',
+        defaultValue: 'success',
+        options: [
+          { value: 'success', label: 'Success' },
+          { value: 'loading', label: 'Loading' },
+          { value: 'error', label: 'Error' },
+        ],
+      },
+      {
+        label: 'Body content',
+        prop: 'hasBody',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'Show' },
+          { value: 'false', label: 'Hide' },
+        ],
+      },
+      {
+        label: 'Reference no.',
+        prop: 'hasRef',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'Show' },
+          { value: 'false', label: 'Hide' },
+        ],
+      },
+    ],
+  },
+];
 
 export const inlineMessage: ComponentData = {
   "meta": {
@@ -137,151 +173,57 @@ export const inlineMessage: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Variants",
     "specCards": [
       {
         "cardKey": "success",
+        "demoKey": "success",
+        "demoControls": inlineMessageDemoControls,
         "title": "Success",
         "node": "27:168911",
         "description": "Blue palette. 106px 3D check illustration. Used for completed actions and positive outcomes.",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"itm-spec-success\"></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Success",
-                "mono": false
-              },
-              {
-                "key": "Intent",
-                "value": "Success",
-                "mono": false
-              }
+              { "key": "Variant", "value": "Success", "prop": "variant" },
+              { "key": "Intent",  "value": "Success" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "inline-message/color/success/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "inline-message/color/success/border",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "inline-message/color/success/label-header",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "inline-message/color/success/label-title",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "inline-message/color/success/label-description",
-                "mono": true
-              },
-              {
-                "key": "Reference label",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Reference label token",
-                "value": "inline-message/color/success/label-reference",
-                "mono": true
-              }
+              { "key": "Surface",         "value": "#FFFFFF", "token": "inline-message/color/success/bg" },
+              { "key": "Border",          "value": "#E5EBF4", "token": "inline-message/color/success/border" },
+              { "key": "Header",          "value": "#0A2757", "token": "inline-message/color/success/label-header" },
+              { "key": "Title",           "value": "#005CE5", "token": "inline-message/color/success/label-title" },
+              { "key": "Description",    "value": "#445C85", "token": "inline-message/color/success/label-description" },
+              { "key": "Reference label", "value": "#90A8D0", "token": "inline-message/color/success/label-reference" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Card width",
-                "value": "360px",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "24 horizontal · 24 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-4 (12px)",
-                "mono": true
-              },
-              {
-                "key": "Shadow",
-                "value": "Depth/D4",
-                "mono": true
-              },
-              {
-                "key": "Illustration",
-                "value": "106 × 106",
-                "mono": true
-              }
+              { "key": "Card width",    "value": "360px", "mono": true },
+              { "key": "Padding",       "value": "24 horizontal · 24 vertical", "mono": true },
+              { "key": "Border radius", "value": "12px",  "mono": true },
+              { "key": "Shadow",        "value": "Depth/D4", "mono": true },
+              { "key": "Illustration",  "value": "106 × 106", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Section",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft Bold · 22 / 26",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Default/Base",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Medium · 14 / 20",
-                "mono": true
-              },
-              {
-                "key": "Reference no.",
-                "value": "Primary/Label/Light/Base · Proxima Soft Semibold",
-                "mono": true
-              }
+              { "key": "Title style",       "value": "Primary/Headlines/Section", "mono": true },
+              { "key": "Title font",        "value": "Proxima Soft Bold · 22 / 26", "mono": true },
+              { "key": "Description style", "value": "Secondary/Default/Base", "mono": true },
+              { "key": "Description font",  "value": "BarkAda Medium · 14 / 20", "mono": true },
+              { "key": "Reference no.",     "value": "Primary/Label/Light/Base · Proxima Soft Semibold", "mono": true }
             ]
           }
         ],
@@ -290,148 +232,53 @@ export const inlineMessage: ComponentData = {
       },
       {
         "cardKey": "loading",
+        "demoKey": "loading",
+        "demoControls": inlineMessageDemoControls,
         "title": "Loading",
         "node": "27:168980",
         "description": "Lottie spinner animation. Processing / waiting state.",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"itm-spec-loading\"></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Loading",
-                "mono": false
-              },
-              {
-                "key": "Intent",
-                "value": "Loading",
-                "mono": false
-              }
+              { "key": "Variant", "value": "Loading", "prop": "variant" },
+              { "key": "Intent",  "value": "Loading" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "inline-message/color/loading/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "inline-message/color/loading/border",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "inline-message/color/loading/label-header",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#CA970C",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "inline-message/color/loading/label-title",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "inline-message/color/loading/label-description",
-                "mono": true
-              },
-              {
-                "key": "Reference label",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Reference label token",
-                "value": "inline-message/color/loading/label-reference",
-                "mono": true
-              }
+              { "key": "Surface",         "value": "#FFFFFF", "token": "inline-message/color/loading/bg" },
+              { "key": "Border",          "value": "#E5EBF4", "token": "inline-message/color/loading/border" },
+              { "key": "Header",          "value": "#0A2757", "token": "inline-message/color/loading/label-header" },
+              { "key": "Title",           "value": "#CA970C", "token": "inline-message/color/loading/label-title" },
+              { "key": "Description",    "value": "#445C85", "token": "inline-message/color/loading/label-description" },
+              { "key": "Reference label", "value": "#90A8D0", "token": "inline-message/color/loading/label-reference" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Card width",
-                "value": "360px",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "24 horizontal · 24 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-4 (12px)",
-                "mono": true
-              },
-              {
-                "key": "Shadow",
-                "value": "Depth/D4",
-                "mono": true
-              },
-              {
-                "key": "Illustration",
-                "value": "106 × 106",
-                "mono": true
-              }
+              { "key": "Card width",    "value": "360px", "mono": true },
+              { "key": "Padding",       "value": "24 horizontal · 24 vertical", "mono": true },
+              { "key": "Border radius", "value": "12px",  "mono": true },
+              { "key": "Shadow",        "value": "Depth/D4", "mono": true },
+              { "key": "Illustration",  "value": "106 × 106", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Section",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft Bold · 22 / 26",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Default/Base",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Medium · 14 / 20",
-                "mono": true
-              },
-              {
-                "key": "Reference no.",
-                "value": "Primary/Label/Light/Base · Proxima Soft Semibold",
-                "mono": true
-              }
+              { "key": "Title style",       "value": "Primary/Headlines/Section", "mono": true },
+              { "key": "Title font",        "value": "Proxima Soft Bold · 22 / 26", "mono": true },
+              { "key": "Description style", "value": "Secondary/Default/Base", "mono": true },
+              { "key": "Description font",  "value": "BarkAda Medium · 14 / 20", "mono": true },
+              { "key": "Reference no.",     "value": "Primary/Label/Light/Base · Proxima Soft Semibold", "mono": true }
             ]
           }
         ],
@@ -440,148 +287,53 @@ export const inlineMessage: ComponentData = {
       },
       {
         "cardKey": "error",
+        "demoKey": "error",
+        "demoControls": inlineMessageDemoControls,
         "title": "Error",
         "node": "27:169049",
         "description": "Red palette. Failure illustration. Used for blocked or rejected outcomes.",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"itm-spec-error\"></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Error",
-                "mono": false
-              },
-              {
-                "key": "Intent",
-                "value": "Error",
-                "mono": false
-              }
+              { "key": "Variant", "value": "Error", "prop": "variant" },
+              { "key": "Intent",  "value": "Error" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "inline-message/color/error/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "inline-message/color/error/border",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "inline-message/color/error/label-header",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "inline-message/color/error/label-title",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "inline-message/color/error/label-description",
-                "mono": true
-              },
-              {
-                "key": "Reference label",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Reference label token",
-                "value": "inline-message/color/error/label-reference",
-                "mono": true
-              }
+              { "key": "Surface",         "value": "#FFFFFF", "token": "inline-message/color/error/bg" },
+              { "key": "Border",          "value": "#E5EBF4", "token": "inline-message/color/error/border" },
+              { "key": "Header",          "value": "#0A2757", "token": "inline-message/color/error/label-header" },
+              { "key": "Title",           "value": "#D61B2C", "token": "inline-message/color/error/label-title" },
+              { "key": "Description",    "value": "#445C85", "token": "inline-message/color/error/label-description" },
+              { "key": "Reference label", "value": "#90A8D0", "token": "inline-message/color/error/label-reference" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Card width",
-                "value": "360px",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "24 horizontal · 24 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-4 (12px)",
-                "mono": true
-              },
-              {
-                "key": "Shadow",
-                "value": "Depth/D4",
-                "mono": true
-              },
-              {
-                "key": "Illustration",
-                "value": "106 × 106",
-                "mono": true
-              }
+              { "key": "Card width",    "value": "360px", "mono": true },
+              { "key": "Padding",       "value": "24 horizontal · 24 vertical", "mono": true },
+              { "key": "Border radius", "value": "12px",  "mono": true },
+              { "key": "Shadow",        "value": "Depth/D4", "mono": true },
+              { "key": "Illustration",  "value": "106 × 106", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Section",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft Bold · 22 / 26",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Default/Base",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Medium · 14 / 20",
-                "mono": true
-              },
-              {
-                "key": "Reference no.",
-                "value": "Primary/Label/Light/Base · Proxima Soft Semibold",
-                "mono": true
-              }
+              { "key": "Title style",       "value": "Primary/Headlines/Section", "mono": true },
+              { "key": "Title font",        "value": "Proxima Soft Bold · 22 / 26", "mono": true },
+              { "key": "Description style", "value": "Secondary/Default/Base", "mono": true },
+              { "key": "Description font",  "value": "BarkAda Medium · 14 / 20", "mono": true },
+              { "key": "Reference no.",     "value": "Primary/Label/Light/Base · Proxima Soft Semibold", "mono": true }
             ]
           }
         ],

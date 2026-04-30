@@ -158,101 +158,48 @@ export const dropdownItemGroup: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Variants",
     "specCards": [
       {
         "cardKey": "dig-spec-default",
+        "demoKey": "default",
         "title": "Default",
         "node": "6383:3446",
         "description": "Rounded card surface containing a vertical stack of Dropdown Items. 6px corner radius, white background, 12px-blur drop shadow at 6px offset.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Item count",
-                "value": "8 (fixed)",
-                "mono": false
-              }
+              { "key": "Variant",    "value": "Default" },
+              { "key": "Item count", "value": "8 (fixed)" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "bg/color-bg-main",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "border/color-border-weak",
-                "mono": true
-              },
-              {
-                "key": "Shadow",
-                "value": "depth 6/12",
-                "mono": true
-              },
-              {
-                "key": "Shadow token",
-                "value": "app/shadow/shadow",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF",       "token": "bg/color-bg-main" },
+              { "key": "Border",  "value": "#E5EBF4",       "token": "border/color-border-weak" },
+              { "key": "Shadow",  "value": "depth 6/12", "mono": true, "token": "app/shadow/shadow" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "328px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "8 vertical",
-                "mono": true
-              },
-              {
-                "key": "Item count",
-                "value": "up to 8",
-                "mono": true
-              }
+              { "key": "Width",         "value": "328px",  "mono": true },
+              { "key": "Border radius", "value": "6px",    "mono": true },
+              { "key": "Padding",       "value": "8 vertical", "mono": true },
+              { "key": "Item count",    "value": "up to 8", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Item style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Item font",
-                "value": "Proxima Soft Semibold · 14 / 14",
-                "mono": true
-              }
+              { "key": "Item style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Item font",  "value": "Proxima Soft Semibold · 14 / 14", "mono": true }
             ]
           }
         ],

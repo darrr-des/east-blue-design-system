@@ -76,6 +76,11 @@ var _avatarSpecCards = {
   image: { type: 'image',          size: '64' }
 };
 
+/* Expose for shared utilities — `switchCodeTab` reads this when the
+   user clicks SwiftUI / Compose so it can rebuild the snippet. */
+var _specCards = _avatarSpecCards;
+window._specCards = _specCards;
+
 var _avatarSpecColors = {
   dark:  [['Circle bg','#005CE5','main/avatar/brand/bg'],['Circle border','#E5EBF4','main/avatar/brand/border'],['Initials text','#FFFFFF','main/avatar/brand/initials']],
   light: [['Circle bg','#F6F9FD','main/avatar/default/bg'],['Circle border','#E5EBF4','main/avatar/default/border'],['Initials text','#2340A9','main/avatar/default/initials']],
@@ -83,58 +88,64 @@ var _avatarSpecColors = {
 };
 
 function updateAvatarSpecCard(cardType, prop, value) {
+  return updateSpecCard(cardType, prop, value);
+}
+
+function updateSpecCard(cardType, prop, value) {
   var card = _avatarSpecCards[cardType];
   if (!card) return;
   card[prop] = value;
   var sz = card.size;
 
-  /* Update SVG preview */
+  /* Update SVG preview — locate by id `ava-spec-${cardType}-svg` */
   var svgEl = document.getElementById('ava-spec-' + cardType + '-svg');
   if (svgEl) {
-    svgEl.outerHTML = _buildAvatarSvg(card.type, sz);
-    /* Re-assign ID */
-    var parent = document.querySelector('#ava-spec-' + cardType + ' .spec-card-preview');
+    var newHtml = _buildAvatarSvg(card.type, sz);
+    var parent = svgEl.parentNode;
+    svgEl.outerHTML = newHtml;
     if (parent) {
-      var newSvg = parent.querySelector('svg');
-      if (newSvg) newSvg.id = 'ava-spec-' + cardType + '-svg';
+      var fresh = parent.querySelector('svg');
+      if (fresh) fresh.id = 'ava-spec-' + cardType + '-svg';
     }
   }
 
-  /* Update size label */
-  var spSize = document.querySelector('[data-sp="ava-' + cardType + '-size"]');
+  /* Update Size readout — data-sp="${demoKey}-size" */
+  var spSize = document.querySelector('[data-sp="' + cardType + '-size"]');
   if (spSize) spSize.textContent = sz + 'px';
 
-  /* Update colors section */
-  var colorsEl = document.getElementById('ava-spec-' + cardType + '-colors');
+  /* Update Colors section — id `spec-${demoKey}-colors` */
+  var colorsEl = document.getElementById('spec-' + cardType + '-colors');
   if (colorsEl) {
     var rows = _avatarSpecColors[cardType];
     var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
     rows.forEach(function(r) {
-      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
-      h += '<div class="spec-prop"><span class="spec-prop-key">' + r[0] + '</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '<span class="spec-token-name">' + r[2] + '</span></span></div>';
+      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E5EBF4' : '';
+      h += '<div class="spec-prop has-token"><span class="spec-prop-key">' + r[0] + '</span>'
+         + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span>'
+         + '<span class="spec-token-name">' + r[2] + '</span></div>';
     });
     h += '</div>';
     colorsEl.innerHTML = h;
   }
 
-  /* Update layout section */
-  var layoutEl = document.getElementById('ava-spec-' + cardType + '-layout');
+  /* Update Layout section — id `spec-${demoKey}-layout` */
+  var layoutEl = document.getElementById('spec-' + cardType + '-layout');
   if (layoutEl) {
     var lh = '<div class="spec-detail-label">Layout</div><div class="spec-props">';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">' + sz + ' x ' + sz + 'px</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Border-radius</span><span class="spec-prop-val mono">radius/radius-round (99999)</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Border-width</span><span class="spec-prop-val mono">' + _avatarBorderWidth[sz] + '</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding</span><span class="spec-prop-val mono">0px</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">' + sz + ' × ' + sz + 'px</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Border radius</span><span class="spec-prop-val mono">radius/radius-round</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Border width</span><span class="spec-prop-val mono">' + _avatarBorderWidth[sz] + '</span></div>';
+    if (cardType === 'image') lh += '<div class="spec-prop"><span class="spec-prop-key">Image fit</span><span class="spec-prop-val mono">cover</span></div>';
     lh += '</div>';
     layoutEl.innerHTML = lh;
   }
 
-  /* Update typography section (only for initials types) */
-  var typoEl = document.getElementById('ava-spec-' + cardType + '-typo');
+  /* Update Typography section — id `spec-${demoKey}-typo` (initials only) */
+  var typoEl = document.getElementById('spec-' + cardType + '-typo');
   if (typoEl && cardType !== 'image') {
     var typo = _avatarTypography[sz];
     var th = '<div class="spec-detail-label">Typography</div><div class="spec-props">';
-    th += '<div class="spec-prop"><span class="spec-prop-key">Text Style</span><span class="spec-prop-val mono">' + typo.textStyle + '</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Text style</span><span class="spec-prop-val mono">' + typo.textStyle + '</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">HeyMeow Rnd Bold</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">' + typo.fontSize + '</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Line-height</span><span class="spec-prop-val mono">' + typo.lineHeight + '</span></div>';
@@ -143,14 +154,19 @@ function updateAvatarSpecCard(cardType, prop, value) {
     typoEl.innerHTML = th;
   }
 
-  /* Update DEV code snippet */
-  var codeEl = document.getElementById('ava-code-' + cardType);
-  if (codeEl) {
-    var activeTab = codeEl.closest('.spec-card-code');
-    if (activeTab) {
-      var activeLangBtn = activeTab.querySelector('.spec-code-tab.active');
-      var lang = (activeLangBtn && activeLangBtn.textContent.indexOf('COMPOSE') !== -1) ? 'compose' : 'swift';
-      codeEl.textContent = _getAvatarSnippet(cardType, lang, sz);
+  /* Update DEV code — locate via `[data-code-content="${demoKey}"]`. Always
+     run, even when DEV view is hidden. Use highlightSyntax. */
+  var devView = document.querySelector('[data-view="' + cardType + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardType + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardType, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
     }
   }
 }
@@ -177,6 +193,17 @@ function _getAvatarSnippet(cardType, lang, size) {
     return 'EBAvatar(\n    imageUrl = profileUrl,\n    type = AvatarType.Image,\n    size = AvatarSize.' + sn.compose + '\n)';
   }
 }
+
+function buildSwiftSnippet(type, card) {
+  return _getAvatarSnippet(type, 'swift', card.size);
+}
+function buildComposeSnippet(type, card) {
+  return _getAvatarSnippet(type, 'compose', card.size);
+}
+function getSnippet(type, lang, card) {
+  return _getAvatarSnippet(type, lang, card.size);
+}
+window.getSnippet = getSnippet;
 
 function switchAvatarCodeTab(tabBtn, lang, cardType) {
   var parent = tabBtn.parentElement;

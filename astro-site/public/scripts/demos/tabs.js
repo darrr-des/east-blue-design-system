@@ -36,15 +36,92 @@ function updateTabsDemo() {
   if (el) el.innerHTML = _tabsBuildSvg(c, a);
 }
 
+/* ── Spec card state ──────────────────────────────────────────────── */
+var _specCards = {
+  'tabs-4': { count: 4, active: 0 },
+  'tabs-3': { count: 3, active: 0 },
+  'tabs-2': { count: 2, active: 0 }
+};
+window._specCards = _specCards;
+
+var _tabLabels = ['Tab 1', 'Tab 2', 'Tab 3', 'Tab 4'];
+
+/* ── Code snippet builders ────────────────────────────────────────── */
+function buildSwiftSnippet(type, card) {
+  var cnt = (card && card.count) || 4;
+  var act = (card && card.active) || 0;
+  var lines = [];
+  lines.push('EBTabs(selection: $current) {');
+  for (var i = 0; i < cnt; i++) {
+    lines.push('    EBTabItem("' + _tabLabels[i] + '", value: .' + ['one','two','three','four'][i] + ')');
+  }
+  lines.push('}');
+  if (act > 0) lines.push('// .selectedIndex = ' + act);
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var cnt = (card && card.count) || 4;
+  var act = (card && card.active) || 0;
+  var lines = [];
+  lines.push('EBTabs(selectedIndex = ' + act + ', onTabChange = { }) {');
+  for (var i = 0; i < cnt; i++) {
+    lines.push('    EBTabItem(label = "' + _tabLabels[i] + '")');
+  }
+  lines.push('}');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+/* ── Spec card update ─────────────────────────────────────────────── */
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  if (prop === 'active') {
+    var idx = parseInt(value, 10);
+    if (isNaN(idx)) idx = 0;
+    if (idx >= card.count) idx = 0;
+    card.active = idx;
+  } else {
+    card[prop] = value;
+  }
+
+  /* Update preview */
+  var el = document.getElementById('tabs-preview-' + cardStyle);
+  if (el) el.innerHTML = _tabsBuildSvg(card.count, card.active);
+
+  /* Update properties text */
+  var spActive = document.querySelector('[data-sp="' + cardStyle + '-active"]');
+  if (spActive) spActive.textContent = _tabLabels[card.active] || 'Tab 1';
+
+  /* Update DEV code */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
 function _tabsInitSpecCards() {
-  [[4, 'tabs-preview-4'], [3, 'tabs-preview-3'], [2, 'tabs-preview-2']].forEach(function(pair) {
-    var el = document.getElementById(pair[1]);
-    if (el) el.innerHTML = _tabsBuildSvg(pair[0], 0);
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'active', _specCards[k].active);
   });
 }
 
 function _tabsInit() {
-  updateTabsDemo();
+  if (document.getElementById('tabs-demo-preview')) updateTabsDemo();
   _tabsInitSpecCards();
 }
 
@@ -53,3 +130,4 @@ if (document.readyState === 'loading') {
 } else {
   _tabsInit();
 }
+document.addEventListener('astro:page-load', _tabsInit);

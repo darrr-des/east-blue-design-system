@@ -1,4 +1,38 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/badge.js`.
+const badgeDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'Primary',
+        options: [
+          { value: 'Primary', label: 'Primary' },
+          { value: 'Brand', label: 'Brand' },
+          { value: 'Info', label: 'Info' },
+          { value: 'Success', label: 'Success' },
+          { value: 'Warning', label: 'Warning' },
+          { value: 'Danger', label: 'Danger' },
+          { value: 'Disabled', label: 'Disabled' },
+        ],
+      },
+      {
+        label: 'Level',
+        prop: 'level',
+        defaultValue: 'Heavy',
+        options: [
+          { value: 'Heavy', label: 'Heavy' },
+          { value: 'Medium', label: 'Medium' },
+          { value: 'Light', label: 'Light' },
+        ],
+      },
+    ],
+  },
+];
 
 export const badge: ComponentData = {
   "meta": {
@@ -91,111 +125,52 @@ export const badge: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Types",
     "specCards": [
       {
         "cardKey": "bd-spec-default",
+        "demoKey": "default",
+        "demoControls": badgeDemoControls,
         "title": "Default",
         "node": "18482:28972",
         "description": "Pill-shaped badge with full border-radius (99px). Standard status indicator for general use.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "State",
-                "value": "Information / Positive / Notice / Negative / Muted / Brand / Primary",
-                "mono": false
-              },
-              {
-                "key": "Level",
-                "value": "Light / Medium / Heavy",
-                "mono": false
-              }
+              { "key": "Type", "value": "Default" },
+              { "key": "State", "value": "Primary", "prop": "state" },
+              { "key": "Level", "value": "Heavy", "prop": "level" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Information light bg",
-                "value": "#E5F1FF",
-                "mono": true
-              },
-              {
-                "key": "Information light bg token",
-                "value": "badge/information/light/background",
-                "mono": true
-              },
-              {
-                "key": "Information light label",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Information light label token",
-                "value": "badge/information/light/label",
-                "mono": true
-              },
-              {
-                "key": "Positive heavy bg",
-                "value": "#12AF80",
-                "mono": true
-              },
-              {
-                "key": "Positive heavy bg token",
-                "value": "badge/positive/heavy/background",
-                "mono": true
-              },
-              {
-                "key": "Negative heavy bg",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Negative heavy bg token",
-                "value": "badge/negative/heavy/background",
-                "mono": true
-              }
+              { "key": "Background", "value": "#005CE5", "token": "main/badge/primary/heavy/background" },
+              { "key": "Label", "value": "#FFFFFF", "token": "main/badge/primary/heavy/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Padding",
-                "value": "4 vertical · 8 horizontal",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-pill (99px)",
-                "mono": true
-              },
-              {
-                "key": "Min height",
-                "value": "20px",
-                "mono": true
-              }
+              { "key": "Padding H", "value": "8px", "mono": true },
+              { "key": "Padding V", "value": "2px (top) / 4px (bottom)", "mono": true },
+              { "key": "Corner radius", "value": "99px (pill)", "mono": true },
+              { "key": "Min height", "value": "20px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Fine",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Bold · 12 / 12 · +0.5",
-                "mono": true
-              }
+              { "key": "Text Style", "value": "Primary/Label/Fine", "mono": true },
+              { "key": "Font", "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Size", "value": "12px", "mono": true },
+              { "key": "Tracking", "value": "0.5px", "mono": true },
+              { "key": "Line-height", "value": "12px", "mono": true }
             ]
           }
         ],
@@ -205,98 +180,48 @@ export const badge: ComponentData = {
       },
       {
         "cardKey": "bd-spec-voucher",
+        "demoKey": "voucher",
+        "demoControls": badgeDemoControls,
         "title": "Voucher",
         "node": "18482:28972",
         "description": "Badge with bottom-right radius only (4px). Used on voucher cards and promotional items. Fixed 18px height.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "Voucher",
-                "mono": false
-              },
-              {
-                "key": "State",
-                "value": "Information / Positive / Notice / Negative / Muted / Brand / Primary",
-                "mono": false
-              },
-              {
-                "key": "Level",
-                "value": "Light / Medium / Heavy",
-                "mono": false
-              }
+              { "key": "Type", "value": "Voucher" },
+              { "key": "State", "value": "Primary", "prop": "state" },
+              { "key": "Level", "value": "Heavy", "prop": "level" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Voucher bg",
-                "value": "#072592",
-                "mono": true
-              },
-              {
-                "key": "Voucher bg token",
-                "value": "badge/information/heavy/background",
-                "mono": true
-              },
-              {
-                "key": "Voucher label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Voucher label token",
-                "value": "badge/information/heavy/label",
-                "mono": true
-              },
-              {
-                "key": "Voucher border",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Voucher border token",
-                "value": "badge/information/heavy/border",
-                "mono": true
-              }
+              { "key": "Background", "value": "#005CE5", "token": "main/badge/primary/heavy/background" },
+              { "key": "Label", "value": "#FFFFFF", "token": "main/badge/primary/heavy/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Padding",
-                "value": "4 vertical · 8 horizontal",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-1 (4px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              }
+              { "key": "Height", "value": "18px (fixed)", "mono": true },
+              { "key": "Padding H", "value": "8px", "mono": true },
+              { "key": "Padding V", "value": "2px (top) / 4px (bottom)", "mono": true },
+              { "key": "Corner radius", "value": "0/0/4px/0 (BR only)", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Fine",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Bold · 12 / 12 · +0.5",
-                "mono": true
-              }
+              { "key": "Text Style", "value": "Primary/Label/Fine", "mono": true },
+              { "key": "Font", "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Size", "value": "12px", "mono": true },
+              { "key": "Tracking", "value": "0.5px", "mono": true },
+              { "key": "Line-height", "value": "12px", "mono": true }
             ]
           }
         ],
@@ -306,128 +231,48 @@ export const badge: ComponentData = {
       },
       {
         "cardKey": "bd-spec-transaction",
+        "demoKey": "transaction",
+        "demoControls": badgeDemoControls,
         "title": "Transaction",
         "node": "18482:28972",
         "description": "Rounded rectangle badge (4px radius). Used in transaction lists and history screens. Compact padding.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "Transaction",
-                "mono": false
-              },
-              {
-                "key": "State",
-                "value": "Information / Positive / Notice / Negative / Muted / Brand / Primary",
-                "mono": false
-              },
-              {
-                "key": "Level",
-                "value": "Light / Medium / Heavy",
-                "mono": false
-              }
+              { "key": "Type", "value": "Transaction" },
+              { "key": "State", "value": "Primary", "prop": "state" },
+              { "key": "Level", "value": "Heavy", "prop": "level" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Pending bg",
-                "value": "#FFF9EB",
-                "mono": true
-              },
-              {
-                "key": "Pending bg token",
-                "value": "badge/notice/light/background",
-                "mono": true
-              },
-              {
-                "key": "Pending label",
-                "value": "#966F0B",
-                "mono": true
-              },
-              {
-                "key": "Pending label token",
-                "value": "badge/notice/light/label",
-                "mono": true
-              },
-              {
-                "key": "Success bg",
-                "value": "#E7F8F0",
-                "mono": true
-              },
-              {
-                "key": "Success bg token",
-                "value": "badge/positive/light/background",
-                "mono": true
-              },
-              {
-                "key": "Success label",
-                "value": "#048570",
-                "mono": true
-              },
-              {
-                "key": "Success label token",
-                "value": "badge/positive/light/label",
-                "mono": true
-              },
-              {
-                "key": "Failed bg",
-                "value": "#F8E6E6",
-                "mono": true
-              },
-              {
-                "key": "Failed bg token",
-                "value": "badge/negative/light/background",
-                "mono": true
-              },
-              {
-                "key": "Failed label",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Failed label token",
-                "value": "badge/negative/light/label",
-                "mono": true
-              }
+              { "key": "Background", "value": "#005CE5", "token": "main/badge/primary/heavy/background" },
+              { "key": "Label", "value": "#FFFFFF", "token": "main/badge/primary/heavy/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Padding",
-                "value": "4 vertical · 8 horizontal",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-pill (99px)",
-                "mono": true
-              },
-              {
-                "key": "Min height",
-                "value": "20px",
-                "mono": true
-              }
+              { "key": "Padding H", "value": "4px", "mono": true },
+              { "key": "Padding V", "value": "1px (top) / 3px (bottom)", "mono": true },
+              { "key": "Corner radius", "value": "4px", "mono": true },
+              { "key": "Min height", "value": "20px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Fine",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Bold · 12 / 12 · +0.5",
-                "mono": true
-              }
+              { "key": "Text Style", "value": "Primary/Label/Fine", "mono": true },
+              { "key": "Font", "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Size", "value": "12px", "mono": true },
+              { "key": "Tracking", "value": "0.5px", "mono": true },
+              { "key": "Line-height", "value": "12px", "mono": true }
             ]
           }
         ],
@@ -437,88 +282,48 @@ export const badge: ComponentData = {
       },
       {
         "cardKey": "bd-spec-dashboard",
+        "demoKey": "dashboard",
+        "demoControls": badgeDemoControls,
         "title": "Dashboard",
         "node": "18482:28972",
         "description": "Compact rounded rectangle badge (4px radius) with smaller typography (10px). Used in dashboard widgets and summary cards.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "Dashboard",
-                "mono": false
-              },
-              {
-                "key": "State",
-                "value": "Information / Positive / Notice / Negative / Muted / Brand / Primary",
-                "mono": false
-              },
-              {
-                "key": "Level",
-                "value": "Light / Medium / Heavy",
-                "mono": false
-              }
+              { "key": "Type", "value": "Dashboard" },
+              { "key": "State", "value": "Primary", "prop": "state" },
+              { "key": "Level", "value": "Heavy", "prop": "level" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "New bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "New bg token",
-                "value": "badge/primary/heavy/background",
-                "mono": true
-              },
-              {
-                "key": "New label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "New label token",
-                "value": "badge/primary/heavy/label",
-                "mono": true
-              }
+              { "key": "Background", "value": "#005CE5", "token": "main/badge/primary/heavy/background" },
+              { "key": "Label", "value": "#FFFFFF", "token": "main/badge/primary/heavy/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Padding",
-                "value": "2 vertical · 6 horizontal",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-pill",
-                "mono": true
-              },
-              {
-                "key": "Min height",
-                "value": "16px",
-                "mono": true
-              }
+              { "key": "Padding H", "value": "4px", "mono": true },
+              { "key": "Padding V", "value": "1px", "mono": true },
+              { "key": "Corner radius", "value": "4px", "mono": true },
+              { "key": "Min height", "value": "16px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Fine",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Bold · 12 / 12 · +0.5",
-                "mono": true
-              }
+              { "key": "Text Style", "value": "Primary/Label/Tiny", "mono": true },
+              { "key": "Font", "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Size", "value": "10px", "mono": true },
+              { "key": "Tracking", "value": "0.25px", "mono": true },
+              { "key": "Line-height", "value": "10px", "mono": true }
             ]
           }
         ],

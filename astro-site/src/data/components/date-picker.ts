@@ -1,4 +1,39 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+const datePickerDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'state',
+        prop: 'state',
+        defaultValue: 'Default',
+        options: [
+          { value: 'Default', label: 'Default' },
+          { value: 'Active', label: 'Active' },
+        ],
+      },
+      {
+        label: 'isFilled',
+        prop: 'filled',
+        defaultValue: 'false',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+      {
+        label: 'isDisabled',
+        prop: 'disabled',
+        defaultValue: 'No',
+        options: [
+          { value: 'No', label: 'No' },
+          { value: 'Yes', label: 'Yes' },
+        ],
+      },
+    ],
+  },
+];
 
 export const datePicker: ComponentData = {
   "meta": {
@@ -212,141 +247,55 @@ export const datePicker: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Variants",
     "specCards": [
       {
         "cardKey": "dp-spec-default-empty",
+        "demoKey": "dp-default-empty",
+        "demoControls": datePickerDemoControls,
         "title": "Default — Empty",
         "node": "12879:49784",
         "description": "Idle trigger with gray border and placeholder text. Calendar glyph visible on the right.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "filled",
-                "value": "false",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Empty placeholder",
-                "mono": false
-              }
+              { "key": "state", "value": "Default", "prop": "state" },
+              { "key": "filled", "value": "false", "prop": "filled" },
+              { "key": "isDisabled", "value": "No", "prop": "disabled" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Field bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Field bg token",
-                "value": "selected-field/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Field border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Field border token",
-                "value": "selected-field/color/default/border",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "selected-field/color/default/placeholder",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "selected-field/color/default/value",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "selected-field/color/default/icon",
-                "mono": true
-              }
+              { "key": "Field bg", "value": "#FFFFFF", "token": "selected-field/color/default/bg" },
+              { "key": "Field border", "value": "#D7E0EF", "token": "selected-field/color/default/border" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/color/default/placeholder" },
+              { "key": "Value", "value": "#0A2757", "token": "selected-field/color/default/value" },
+              { "key": "Icon", "value": "#005CE5", "token": "selected-field/color/default/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
+              { "key": "Field height", "value": "48px", "mono": true },
+              { "key": "Padding H", "value": "12px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
+              { "key": "Border", "value": "1px solid", "mono": true },
+              { "key": "Icon size", "value": "20 × 20", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Label style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Label font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true },
+              { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Value font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
             ]
           }
         ],
@@ -356,138 +305,51 @@ export const datePicker: ComponentData = {
       },
       {
         "cardKey": "dp-spec-default-filled",
+        "demoKey": "dp-default-filled",
+        "demoControls": datePickerDemoControls,
         "title": "Default — Filled",
         "node": "12890:42872",
         "description": "Trigger showing a selected date. Gray border, filled text color #0A2757.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "filled",
-                "value": "true",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Selected date",
-                "mono": false
-              }
+              { "key": "state", "value": "Default", "prop": "state" },
+              { "key": "filled", "value": "true", "prop": "filled" },
+              { "key": "isDisabled", "value": "No", "prop": "disabled" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Field bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Field bg token",
-                "value": "selected-field/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Field border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Field border token",
-                "value": "selected-field/color/default/border",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "selected-field/color/default/placeholder",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "selected-field/color/default/value",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "selected-field/color/default/icon",
-                "mono": true
-              }
+              { "key": "Field bg", "value": "#FFFFFF", "token": "selected-field/color/default/bg" },
+              { "key": "Field border", "value": "#D7E0EF", "token": "selected-field/color/default/border" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/color/default/placeholder" },
+              { "key": "Value", "value": "#0A2757", "token": "selected-field/color/default/value" },
+              { "key": "Icon", "value": "#005CE5", "token": "selected-field/color/default/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
+              { "key": "Field height", "value": "48px", "mono": true },
+              { "key": "Padding H", "value": "12px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
+              { "key": "Border", "value": "1px solid", "mono": true },
+              { "key": "Icon size", "value": "20 × 20", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Label style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Label font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true },
+              { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Value font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
             ]
           }
         ],
@@ -497,138 +359,51 @@ export const datePicker: ComponentData = {
       },
       {
         "cardKey": "dp-spec-active-empty",
+        "demoKey": "dp-active-empty",
+        "demoControls": datePickerDemoControls,
         "title": "Active — Empty",
         "node": "12879:49827",
         "description": "Trigger focused with 2px blue border. Inline calendar panel attached below showing month header, weekday row, and date grid.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Active",
-                "mono": false
-              },
-              {
-                "key": "filled",
-                "value": "false",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Picker open · empty",
-                "mono": false
-              }
+              { "key": "state", "value": "Active", "prop": "state" },
+              { "key": "filled", "value": "false", "prop": "filled" },
+              { "key": "isDisabled", "value": "No", "prop": "disabled" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Field bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Field bg token",
-                "value": "selected-field/color/active/bg",
-                "mono": true
-              },
-              {
-                "key": "Field border",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Field border token",
-                "value": "selected-field/color/active/border",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "selected-field/color/active/placeholder",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "selected-field/color/active/value",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "selected-field/color/active/icon",
-                "mono": true
-              }
+              { "key": "Field bg", "value": "#FFFFFF", "token": "selected-field/color/active/bg" },
+              { "key": "Field border", "value": "#005CE5", "token": "selected-field/color/active/border" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/color/active/placeholder" },
+              { "key": "Value", "value": "#0A2757", "token": "selected-field/color/active/value" },
+              { "key": "Icon", "value": "#005CE5", "token": "selected-field/color/active/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
+              { "key": "Field height", "value": "48px", "mono": true },
+              { "key": "Padding H", "value": "12px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
+              { "key": "Border", "value": "2px solid", "mono": true },
+              { "key": "Icon size", "value": "20 × 20", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Label style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Label font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true },
+              { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Value font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
             ]
           }
         ],
@@ -638,138 +413,51 @@ export const datePicker: ComponentData = {
       },
       {
         "cardKey": "dp-spec-active-filled",
+        "demoKey": "dp-active-filled",
+        "demoControls": datePickerDemoControls,
         "title": "Active — Filled",
         "node": "13342:9932",
         "description": "Trigger focused with 2px blue border and filled value. Calendar visible with the selected day highlighted in the grid.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Active",
-                "mono": false
-              },
-              {
-                "key": "filled",
-                "value": "true",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Picker open · with value",
-                "mono": false
-              }
+              { "key": "state", "value": "Active", "prop": "state" },
+              { "key": "filled", "value": "true", "prop": "filled" },
+              { "key": "isDisabled", "value": "No", "prop": "disabled" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Field bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Field bg token",
-                "value": "selected-field/color/active/bg",
-                "mono": true
-              },
-              {
-                "key": "Field border",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Field border token",
-                "value": "selected-field/color/active/border",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "selected-field/color/active/placeholder",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "selected-field/color/active/value",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "selected-field/color/active/icon",
-                "mono": true
-              }
+              { "key": "Field bg", "value": "#FFFFFF", "token": "selected-field/color/active/bg" },
+              { "key": "Field border", "value": "#005CE5", "token": "selected-field/color/active/border" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/color/active/placeholder" },
+              { "key": "Value", "value": "#0A2757", "token": "selected-field/color/active/value" },
+              { "key": "Icon", "value": "#005CE5", "token": "selected-field/color/active/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
+              { "key": "Field height", "value": "48px", "mono": true },
+              { "key": "Padding H", "value": "12px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
+              { "key": "Border", "value": "2px solid", "mono": true },
+              { "key": "Icon size", "value": "20 × 20", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Label style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Label font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true },
+              { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Value font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
             ]
           }
         ],
@@ -779,128 +467,50 @@ export const datePicker: ComponentData = {
       },
       {
         "cardKey": "dp-spec-disabled",
+        "demoKey": "dp-disabled",
+        "demoControls": datePickerDemoControls,
         "title": "Disabled",
         "node": "13342:10148",
         "description": "Non-interactive. Gray #EEF2F9 bg, no border, value dims to #90A8D0. Calendar glyph dims. Only isFilled=true is defined in Disabled.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Disabled",
-                "mono": false
-              },
-              {
-                "key": "filled",
-                "value": "false",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Disabled",
-                "mono": false
-              }
+              { "key": "state", "value": "Default", "prop": "state" },
+              { "key": "filled", "value": "false", "prop": "filled" },
+              { "key": "isDisabled", "value": "Yes", "prop": "disabled" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Field bg",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Field bg token",
-                "value": "selected-field/color/disabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Field border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Field border token",
-                "value": "selected-field/color/default/border",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "selected-field/color/disabled/value",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#9BC5FD",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "selected-field/color/disabled/icon",
-                "mono": true
-              }
+              { "key": "Field bg", "value": "#EEF2F9", "token": "selected-field/color/disabled/bg" },
+              { "key": "Field border", "value": "#D7E0EF", "token": "selected-field/color/default/border" },
+              { "key": "Value", "value": "#90A8D0", "token": "selected-field/color/disabled/value" },
+              { "key": "Icon", "value": "#9BC5FD", "token": "selected-field/color/disabled/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
+              { "key": "Field height", "value": "48px", "mono": true },
+              { "key": "Padding H", "value": "12px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
+              { "key": "Border", "value": "none", "mono": true },
+              { "key": "Icon size", "value": "20 × 20", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Label style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Label font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true },
+              { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Value font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
             ]
           }
         ],

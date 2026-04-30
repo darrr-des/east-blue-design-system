@@ -1,4 +1,22 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+const carouselCardDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Type',
+        prop: 'type',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'default' },
+          { value: 'with-icon', label: 'with icon' },
+          { value: 'skeleton', label: 'skeleton loader' },
+        ],
+      },
+    ],
+  },
+];
 
 export const carouselCard: ComponentData = {
   "meta": {
@@ -178,9 +196,12 @@ export const carouselCard: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Types",
     "specCards": [
       {
         "cardKey": "default",
+        "demoKey": "default",
+        "demoControls": carouselCardDemoControls,
         "title": "Default",
         "node": "23:121312",
         "description": "Banner image + title + 2-line description. The banner ships a placeholder PNG dimmed by a purple multiply layer — replace both with your real media.",
@@ -188,162 +209,44 @@ export const carouselCard: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Aspect",
-                "value": "3:2 hero image",
-                "mono": false
-              },
-              {
-                "key": "Pagination",
-                "value": "dots",
-                "mono": false
-              }
+              { "key": "Type", "value": "default", "prop": "type" },
+              { "key": "Aspect", "value": "3:2 hero image" },
+              { "key": "Pagination", "value": "dots" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Heading",
-                "value": "#2340A9",
-                "mono": true
-              },
-              {
-                "key": "Heading token",
-                "value": "carousel/color/label-header",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "carousel/color/description",
-                "mono": true
-              },
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "bg/color-bg-main",
-                "mono": true
-              },
-              {
-                "key": "Active dot",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active dot token",
-                "value": "bg/color-bg-primary",
-                "mono": true
-              },
-              {
-                "key": "Inactive dot",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Inactive dot token",
-                "value": "bg/color-bg-strong",
-                "mono": true
-              }
+              { "key": "Heading", "value": "#2340A9", "token": "carousel/color/label-header" },
+              { "key": "Description", "value": "#6780A9", "token": "carousel/color/description" },
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" },
+              { "key": "Active dot", "value": "#005CE5", "token": "bg/color-bg-primary" },
+              { "key": "Inactive dot", "value": "#EEF2F9", "token": "bg/color-bg-strong" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Card width",
-                "value": "140",
-                "mono": true
-              },
-              {
-                "key": "Banner size",
-                "value": "140 × 140",
-                "mono": true
-              },
-              {
-                "key": "Banner radius",
-                "value": "4 (radius/radius-1)",
-                "mono": true
-              },
-              {
-                "key": "Gap (banner ↔ content)",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "Title → description gap",
-                "value": "4",
-                "mono": true
-              },
-              {
-                "key": "Total height",
-                "value": "215",
-                "mono": true
-              }
+              { "key": "Card width", "value": "140px", "mono": true },
+              { "key": "Banner size", "value": "140 × 140px", "mono": true },
+              { "key": "Banner radius", "value": "radius/radius-1 (4px)", "mono": true },
+              { "key": "Banner gap", "value": "12px", "mono": true },
+              { "key": "Title → desc gap", "value": "4px", "mono": true },
+              { "key": "Total height", "value": "215px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Block",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft Bold · 18 / 23 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Caption",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 12 / 18 · 0",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Composed sub-components",
-            "rows": [
-              {
-                "key": "Banner (today)",
-                "value": "Hardcoded raster",
-                "mono": false
-              },
-              {
-                "key": "Banner (proposed)",
-                "value": "Image slot",
-                "mono": false
-              },
-              {
-                "key": "Dimmer (today)",
-                "value": "Purple multiply layer",
-                "mono": false
-              },
-              {
-                "key": "Dimmer (proposed)",
-                "value": "Optional tint token",
-                "mono": false
-              }
+              { "key": "Title style", "value": "Primary/Headlines/Block", "mono": true },
+              { "key": "Title font", "value": "Proxima Soft Bold · 18 / 23 · +0.25", "mono": true },
+              { "key": "Description style", "value": "Secondary/Bold/Caption", "mono": true },
+              { "key": "Description font", "value": "BarkAda Semibold · 12 / 18 · 0", "mono": true }
             ]
           }
         ],
@@ -352,6 +255,8 @@ export const carouselCard: ComponentData = {
       },
       {
         "cardKey": "with-icon",
+        "demoKey": "with-icon",
+        "demoControls": carouselCardDemoControls,
         "title": "With icon",
         "node": "23:121322",
         "description": "Default layout + a bottom-left icon badge on the banner. A gradient shadow along the lower third improves icon contrast against bright imagery.",
@@ -359,117 +264,42 @@ export const carouselCard: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Has icon",
-                "value": "Yes",
-                "mono": true
-              },
-              {
-                "key": "Has description",
-                "value": "Yes",
-                "mono": true
-              }
+              { "key": "Type", "value": "with-icon", "prop": "type" },
+              { "key": "Has icon", "value": "Yes" },
+              { "key": "Has description", "value": "Yes" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/card/bg",
-                "mono": true
-              },
-              {
-                "key": "Icon container bg",
-                "value": "#E8F1FF",
-                "mono": true
-              },
-              {
-                "key": "Icon container bg token",
-                "value": "main/card/icon/bg",
-                "mono": true
-              },
-              {
-                "key": "Title color",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title color token",
-                "value": "main/card/title",
-                "mono": true
-              },
-              {
-                "key": "Description color",
-                "value": "#3C4A5C",
-                "mono": true
-              },
-              {
-                "key": "Description color token",
-                "value": "main/card/description",
-                "mono": true
-              }
+              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/card/bg" },
+              { "key": "Icon container bg", "value": "#E8F1FF", "token": "main/card/icon/bg" },
+              { "key": "Title", "value": "#0A2757", "token": "main/card/title" },
+              { "key": "Description", "value": "#3C4A5C", "token": "main/card/description" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "280",
-                "mono": true
-              },
-              {
-                "key": "Min height",
-                "value": "160",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "20",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "16",
-                "mono": true
-              },
-              {
-                "key": "Icon container",
-                "value": "48 × 48",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "24 × 24",
-                "mono": true
-              },
-              {
-                "key": "Gap",
-                "value": "12",
-                "mono": true
-              }
+              { "key": "Width", "value": "280px", "mono": true },
+              { "key": "Min height", "value": "160px", "mono": true },
+              { "key": "Padding", "value": "20px", "mono": true },
+              { "key": "Corner radius", "value": "16px", "mono": true },
+              { "key": "Icon container", "value": "48 × 48px", "mono": true },
+              { "key": "Icon size", "value": "24 × 24px", "mono": true },
+              { "key": "Gap", "value": "12px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Title style",
-                "value": "Heading/Small",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Body/Small",
-                "mono": true
-              }
+              { "key": "Title style", "value": "Heading/Small", "mono": true },
+              { "key": "Description style", "value": "Body/Small", "mono": true }
             ]
           }
         ],
@@ -478,6 +308,8 @@ export const carouselCard: ComponentData = {
       },
       {
         "cardKey": "skeleton-loader",
+        "demoKey": "skeleton-loader",
+        "demoControls": carouselCardDemoControls,
         "title": "Skeleton loader",
         "node": "23:121334",
         "description": "Loading placeholder: banner becomes a flat light-gray block; title and description become bar placeholders. Card total height drops to 212 (vs 215 default) due to the 16 top gap in the content block.",
@@ -485,87 +317,38 @@ export const carouselCard: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "State",
-                "value": "Loading",
-                "mono": true
-              },
-              {
-                "key": "Has content",
-                "value": "No",
-                "mono": true
-              }
+              { "key": "Type", "value": "skeleton", "prop": "type" },
+              { "key": "State", "value": "Loading" },
+              { "key": "Has content", "value": "No" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Skeleton bg",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Skeleton bg token",
-                "value": "main/skeleton/bg",
-                "mono": true
-              },
-              {
-                "key": "Surface bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/card/bg",
-                "mono": true
-              }
+              { "key": "Skeleton bg", "value": "#EEF2F9", "token": "main/skeleton/bg" },
+              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/card/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "280",
-                "mono": true
-              },
-              {
-                "key": "Min height",
-                "value": "160",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "20",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "16",
-                "mono": true
-              },
-              {
-                "key": "Bar 1 size",
-                "value": "120 × 12",
-                "mono": true
-              },
-              {
-                "key": "Bar 2 size",
-                "value": "180 × 8",
-                "mono": true
-              }
+              { "key": "Width", "value": "280px", "mono": true },
+              { "key": "Min height", "value": "160px", "mono": true },
+              { "key": "Padding", "value": "20px", "mono": true },
+              { "key": "Corner radius", "value": "16px", "mono": true },
+              { "key": "Bar 1 size", "value": "120 × 12px", "mono": true },
+              { "key": "Bar 2 size", "value": "180 × 8px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "N/A",
-                "value": "No text in skeleton state",
-                "mono": false
-              }
+              { "key": "—", "value": "No text in skeleton state" }
             ]
           }
         ],

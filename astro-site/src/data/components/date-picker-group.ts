@@ -1,4 +1,22 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+const datePickerGroupDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Type',
+        prop: 'type',
+        defaultValue: 'Date',
+        options: [
+          { value: 'Date', label: 'Date' },
+          { value: 'Year', label: 'Year' },
+          { value: 'Month', label: 'Month' },
+        ],
+      },
+    ],
+  },
+];
 
 export const datePickerGroup: ComponentData = {
   "meta": {
@@ -245,181 +263,59 @@ export const datePickerGroup: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Variants",
     "specCards": [
       {
         "cardKey": "dpg-spec-date",
+        "demoKey": "dpg-date",
+        "demoControls": datePickerGroupDemoControls,
         "title": "Type = Date",
         "node": "12879:49310",
         "description": "Day grid. Header shows \"Month / Year\" with Prev/Next chevrons. Weekday row (Su/M/T/W/Th/F/Sa) followed by 6 rows of 7 day cells. Today shown with 1.5px blue ring; prev/next-month days dimmed.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "Day",
-                "mono": false
-              },
-              {
-                "key": "Cell size",
-                "value": "32×32",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Day-picker grid",
-                "mono": false
-              }
+              { "key": "Type", "value": "Date", "prop": "type" },
+              { "key": "Cell size", "value": "32×32" },
+              { "key": "Variant", "value": "Day-picker grid" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "date-picker/month-header/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "date-picker/month-header/color/border",
-                "mono": true
-              },
-              {
-                "key": "Header label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header label token",
-                "value": "date-picker/month-header/color/label",
-                "mono": true
-              },
-              {
-                "key": "Header icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Header icon token",
-                "value": "date-picker/month-header/color/icon",
-                "mono": true
-              },
-              {
-                "key": "Week-day label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Week-day label token",
-                "value": "date-picker/week-header/color/label",
-                "mono": true
-              },
-              {
-                "key": "Day cell label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Day cell label token",
-                "value": "date-picker/day/color/unselected/label",
-                "mono": true
-              },
-              {
-                "key": "Day cell bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Day cell bg token",
-                "value": "date-picker/day/color/unselected/bg",
-                "mono": true
-              },
-              {
-                "key": "Selected accent",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Selected accent token",
-                "value": "border/color-border-primary",
-                "mono": true
-              },
-              {
-                "key": "Disabled label",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Disabled label token",
-                "value": "text/color-text-disabled",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "date-picker/month-header/color/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "date-picker/month-header/color/border" },
+              { "key": "Header label", "value": "#0A2757", "token": "date-picker/month-header/color/label" },
+              { "key": "Header icon", "value": "#005CE5", "token": "date-picker/month-header/color/icon" },
+              { "key": "Week-day label", "value": "#0A2757", "token": "date-picker/week-header/color/label" },
+              { "key": "Day cell label", "value": "#0A2757", "token": "date-picker/day/color/unselected/label" },
+              { "key": "Day cell bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" },
+              { "key": "Selected accent", "value": "#005CE5", "token": "border/color-border-primary" },
+              { "key": "Disabled label", "value": "#C2CFE5", "token": "text/color-text-disabled" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Surface width",
-                "value": "328px",
-                "mono": true
-              },
-              {
-                "key": "Cell size",
-                "value": "32 × 32 (day) / 100 × 32 (month/year)",
-                "mono": true
-              },
-              {
-                "key": "Header height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-3 (8px)",
-                "mono": true
-              },
-              {
-                "key": "Shadow",
-                "value": "app/shadow/shadow (depth 6/12)",
-                "mono": true
-              }
+              { "key": "Surface width", "value": "328px", "mono": true },
+              { "key": "Cell size", "value": "32 × 32 (day)", "mono": true },
+              { "key": "Header height", "value": "48px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-3 (8px)", "mono": true },
+              { "key": "Shadow", "value": "app/shadow/shadow (depth 6/12)", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Header style",
-                "value": "Primary/Label/Large",
-                "mono": true
-              },
-              {
-                "key": "Header font",
-                "value": "Proxima Soft Bold · 18 / 18 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Cell style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Cell font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Header style", "value": "Primary/Label/Large", "mono": true },
+              { "key": "Header font", "value": "Proxima Soft Bold · 18 / 18 · +0.25", "mono": true },
+              { "key": "Cell style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Cell font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
             ]
           }
         ],
@@ -429,178 +325,53 @@ export const datePickerGroup: ComponentData = {
       },
       {
         "cardKey": "dpg-spec-year",
+        "demoKey": "dpg-year",
+        "demoControls": datePickerGroupDemoControls,
         "title": "Type = Year",
         "node": "18431:2825",
         "description": "Year grid. Header shows \"Year\". 3-col grid with overflow-clip and a drawn <code>Scrollbar</code> decoration at the right. Selected year shown with 1px blue ring and blue label.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "Year",
-                "mono": false
-              },
-              {
-                "key": "Cell size",
-                "value": "100×32",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Year-picker grid",
-                "mono": false
-              }
+              { "key": "Type", "value": "Year", "prop": "type" },
+              { "key": "Cell size", "value": "100×32" },
+              { "key": "Variant", "value": "Year-picker grid" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "date-picker/month-header/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "date-picker/month-header/color/border",
-                "mono": true
-              },
-              {
-                "key": "Header label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header label token",
-                "value": "date-picker/month-header/color/label",
-                "mono": true
-              },
-              {
-                "key": "Header icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Header icon token",
-                "value": "date-picker/month-header/color/icon",
-                "mono": true
-              },
-              {
-                "key": "Week-day label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Week-day label token",
-                "value": "date-picker/week-header/color/label",
-                "mono": true
-              },
-              {
-                "key": "Day cell label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Day cell label token",
-                "value": "date-picker/day/color/unselected/label",
-                "mono": true
-              },
-              {
-                "key": "Day cell bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Day cell bg token",
-                "value": "date-picker/day/color/unselected/bg",
-                "mono": true
-              },
-              {
-                "key": "Selected accent",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Selected accent token",
-                "value": "border/color-border-primary",
-                "mono": true
-              },
-              {
-                "key": "Disabled label",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Disabled label token",
-                "value": "text/color-text-disabled",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "date-picker/month-header/color/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "date-picker/month-header/color/border" },
+              { "key": "Header label", "value": "#0A2757", "token": "date-picker/month-header/color/label" },
+              { "key": "Header icon", "value": "#005CE5", "token": "date-picker/month-header/color/icon" },
+              { "key": "Cell label", "value": "#0A2757", "token": "date-picker/day/color/unselected/label" },
+              { "key": "Cell bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" },
+              { "key": "Selected accent", "value": "#005CE5", "token": "border/color-border-primary" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Surface width",
-                "value": "328px",
-                "mono": true
-              },
-              {
-                "key": "Cell size",
-                "value": "32 × 32 (day) / 100 × 32 (month/year)",
-                "mono": true
-              },
-              {
-                "key": "Header height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-3 (8px)",
-                "mono": true
-              },
-              {
-                "key": "Shadow",
-                "value": "app/shadow/shadow (depth 6/12)",
-                "mono": true
-              }
+              { "key": "Surface width", "value": "328px", "mono": true },
+              { "key": "Cell size", "value": "100 × 32 (year)", "mono": true },
+              { "key": "Header height", "value": "48px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-3 (8px)", "mono": true },
+              { "key": "Shadow", "value": "app/shadow/shadow (depth 6/12)", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Header style",
-                "value": "Primary/Label/Large",
-                "mono": true
-              },
-              {
-                "key": "Header font",
-                "value": "Proxima Soft Bold · 18 / 18 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Cell style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Cell font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Header style", "value": "Primary/Label/Large", "mono": true },
+              { "key": "Header font", "value": "Proxima Soft Bold · 18 / 18 · +0.25", "mono": true },
+              { "key": "Cell style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Cell font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
             ]
           }
         ],
@@ -610,178 +381,53 @@ export const datePickerGroup: ComponentData = {
       },
       {
         "cardKey": "dpg-spec-month",
+        "demoKey": "dpg-month",
+        "demoControls": datePickerGroupDemoControls,
         "title": "Type = Month",
         "node": "18431:2826",
         "description": "Month grid. Header shows \"Year\" with only a Next chevron (Prev is missing — asymmetric with Date and Year). 3-col × 4-row grid of 12 months. Selected month shown with 1px blue ring.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "Month",
-                "mono": false
-              },
-              {
-                "key": "Cell size",
-                "value": "100×32",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Month-picker grid",
-                "mono": false
-              }
+              { "key": "Type", "value": "Month", "prop": "type" },
+              { "key": "Cell size", "value": "100×32" },
+              { "key": "Variant", "value": "Month-picker grid" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "date-picker/month-header/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "date-picker/month-header/color/border",
-                "mono": true
-              },
-              {
-                "key": "Header label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header label token",
-                "value": "date-picker/month-header/color/label",
-                "mono": true
-              },
-              {
-                "key": "Header icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Header icon token",
-                "value": "date-picker/month-header/color/icon",
-                "mono": true
-              },
-              {
-                "key": "Week-day label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Week-day label token",
-                "value": "date-picker/week-header/color/label",
-                "mono": true
-              },
-              {
-                "key": "Day cell label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Day cell label token",
-                "value": "date-picker/day/color/unselected/label",
-                "mono": true
-              },
-              {
-                "key": "Day cell bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Day cell bg token",
-                "value": "date-picker/day/color/unselected/bg",
-                "mono": true
-              },
-              {
-                "key": "Selected accent",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Selected accent token",
-                "value": "border/color-border-primary",
-                "mono": true
-              },
-              {
-                "key": "Disabled label",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Disabled label token",
-                "value": "text/color-text-disabled",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "date-picker/month-header/color/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "date-picker/month-header/color/border" },
+              { "key": "Header label", "value": "#0A2757", "token": "date-picker/month-header/color/label" },
+              { "key": "Header icon", "value": "#005CE5", "token": "date-picker/month-header/color/icon" },
+              { "key": "Cell label", "value": "#0A2757", "token": "date-picker/day/color/unselected/label" },
+              { "key": "Cell bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" },
+              { "key": "Selected accent", "value": "#005CE5", "token": "border/color-border-primary" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Surface width",
-                "value": "328px",
-                "mono": true
-              },
-              {
-                "key": "Cell size",
-                "value": "32 × 32 (day) / 100 × 32 (month/year)",
-                "mono": true
-              },
-              {
-                "key": "Header height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-3 (8px)",
-                "mono": true
-              },
-              {
-                "key": "Shadow",
-                "value": "app/shadow/shadow (depth 6/12)",
-                "mono": true
-              }
+              { "key": "Surface width", "value": "328px", "mono": true },
+              { "key": "Cell size", "value": "100 × 32 (month)", "mono": true },
+              { "key": "Header height", "value": "48px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-3 (8px)", "mono": true },
+              { "key": "Shadow", "value": "app/shadow/shadow (depth 6/12)", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Header style",
-                "value": "Primary/Label/Large",
-                "mono": true
-              },
-              {
-                "key": "Header font",
-                "value": "Proxima Soft Bold · 18 / 18 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Cell style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Cell font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Header style", "value": "Primary/Label/Large", "mono": true },
+              { "key": "Header font", "value": "Proxima Soft Bold · 18 / 18 · +0.25", "mono": true },
+              { "key": "Cell style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Cell font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
             ]
           }
         ],

@@ -1,4 +1,22 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+const carouselDiscountCardDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Type',
+        prop: 'type',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'default' },
+          { value: 'with-violator', label: 'with violator' },
+          { value: 'skeleton', label: 'skeleton loader' },
+        ],
+      },
+    ],
+  },
+];
 
 export const carouselDiscountCard: ComponentData = {
   "meta": {
@@ -190,9 +208,12 @@ export const carouselDiscountCard: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Types",
     "specCards": [
       {
         "cardKey": "default",
+        "demoKey": "default",
+        "demoControls": carouselDiscountCardDemoControls,
         "title": "Default",
         "node": "18543:2762",
         "description": "Voucher card with perforated banner image, two-line label, and peso-value line.",
@@ -200,177 +221,44 @@ export const carouselDiscountCard: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Discount card",
-                "mono": false
-              },
-              {
-                "key": "Layout",
-                "value": "image-left + label-right",
-                "mono": false
-              }
+              { "key": "Type", "value": "default", "prop": "type" },
+              { "key": "Variant", "value": "Discount card" },
+              { "key": "Layout", "value": "image-left + label-right" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "carousel/color/label",
-                "mono": true
-              },
-              {
-                "key": "Discount",
-                "value": "#2340A9",
-                "mono": true
-              },
-              {
-                "key": "Discount token",
-                "value": "carousel/color/value",
-                "mono": true
-              },
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "bg/color-bg-main",
-                "mono": true
-              },
-              {
-                "key": "Inverse text",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Inverse text token",
-                "value": "text/color-text-inverse",
-                "mono": true
-              },
-              {
-                "key": "Active dot",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active dot token",
-                "value": "bg/color-bg-primary",
-                "mono": true
-              }
+              { "key": "Label", "value": "#0A2757", "token": "carousel/color/label" },
+              { "key": "Discount", "value": "#2340A9", "token": "carousel/color/value" },
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" },
+              { "key": "Inverse text", "value": "#FFFFFF", "token": "text/color-text-inverse" },
+              { "key": "Active dot", "value": "#005CE5", "token": "bg/color-bg-primary" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Width × Height",
-                "value": "140 × 223.48",
-                "mono": true
-              },
-              {
-                "key": "Banner size",
-                "value": "140 × 152",
-                "mono": true
-              },
-              {
-                "key": "Content padding",
-                "value": "6.87 10.305 10.305 10.305",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "4",
-                "mono": true
-              },
-              {
-                "key": "Drop shadow",
-                "value": "0 1 3 0 rgba(232,238,242,.79)",
-                "mono": true
-              },
-              {
-                "key": "Perforate edge",
-                "value": "bottom 43.8 · raster PNG",
-                "mono": true
-              }
+              { "key": "Width × Height", "value": "140 × 223.48px", "mono": true },
+              { "key": "Banner size", "value": "140 × 152px", "mono": true },
+              { "key": "Content padding", "value": "6.87 / 10.305px", "mono": true },
+              { "key": "Corner radius", "value": "4px", "mono": true },
+              { "key": "Drop shadow", "value": "0 1 3 0 rgba(232,238,242,.79)", "mono": true },
+              { "key": "Perforate edge", "value": "bottom 43.8 · raster PNG", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label",
-                "value": "Primary/Multi-line Label/Small",
-                "mono": true
-              },
-              {
-                "key": "Proxima Soft Bold · 14 / 16 · +0.25",
-                "value": "Proxima Soft Bold · 14 / 16 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "Primary/Label/Fine",
-                "mono": true
-              },
-              {
-                "key": "Proxima Soft Bold · 12 / 12 · +0.5",
-                "value": "Proxima Soft Bold · 12 / 12 · +0.5",
-                "mono": true
-              },
-              {
-                "key": "Violator",
-                "value": "Primary/Label/Fine",
-                "mono": true
-              },
-              {
-                "key": "Proxima Soft Bold · 12 / 12 · +0.5",
-                "value": "Proxima Soft Bold · 12 / 12 · +0.5",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Composed sub-components",
-            "rows": [
-              {
-                "key": "Banner (today)",
-                "value": "Raster PNG with mask intersect",
-                "mono": false
-              },
-              {
-                "key": "Banner (proposed)",
-                "value": "Image slot (AsyncImage)",
-                "mono": false
-              },
-              {
-                "key": "Violator (today)",
-                "value": "Hardcoded \"New\" text",
-                "mono": false
-              },
-              {
-                "key": "Violator (proposed)",
-                "value": "Badge instance slot",
-                "mono": false
-              },
-              {
-                "key": "Perforate (today)",
-                "value": "Raster PNG edge",
-                "mono": false
-              },
-              {
-                "key": "Perforate (proposed)",
-                "value": "Vector overlay",
-                "mono": false
-              }
+              { "key": "Label style", "value": "Primary/Multi-line Label/Small", "mono": true },
+              { "key": "Label font", "value": "Proxima Soft Bold · 14 / 16 · +0.25", "mono": true },
+              { "key": "Value style", "value": "Primary/Label/Fine", "mono": true },
+              { "key": "Value font", "value": "Proxima Soft Bold · 12 / 12 · +0.5", "mono": true }
             ]
           }
         ],
@@ -379,6 +267,8 @@ export const carouselDiscountCard: ComponentData = {
       },
       {
         "cardKey": "with-violator",
+        "demoKey": "with-violator",
+        "demoControls": carouselDiscountCardDemoControls,
         "title": "With violator",
         "node": "18543:2770",
         "description": "Adds a blue violator tag anchored to the banner's top-right corner. Text is hardcoded \"New\" today — should be a parameterized slot.",
@@ -386,117 +276,42 @@ export const carouselDiscountCard: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Has violator",
-                "value": "Yes",
-                "mono": true
-              },
-              {
-                "key": "Discount label",
-                "value": "50% OFF",
-                "mono": true
-              }
+              { "key": "Type", "value": "with-violator", "prop": "type" },
+              { "key": "Has violator", "value": "Yes" },
+              { "key": "Discount label", "value": "50% OFF" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/discount-card/bg",
-                "mono": true
-              },
-              {
-                "key": "Violator bg",
-                "value": "#D81E1E",
-                "mono": true
-              },
-              {
-                "key": "Violator bg token",
-                "value": "main/discount-card/violator/bg",
-                "mono": true
-              },
-              {
-                "key": "Violator label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Violator label token",
-                "value": "main/discount-card/violator/label",
-                "mono": true
-              },
-              {
-                "key": "Title color",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title color token",
-                "value": "main/discount-card/title",
-                "mono": true
-              }
+              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/discount-card/bg" },
+              { "key": "Violator bg", "value": "#D81E1E", "token": "main/discount-card/violator/bg" },
+              { "key": "Violator label", "value": "#FFFFFF", "token": "main/discount-card/violator/label" },
+              { "key": "Title", "value": "#0A2757", "token": "main/discount-card/title" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "180",
-                "mono": true
-              },
-              {
-                "key": "Height",
-                "value": "220",
-                "mono": true
-              },
-              {
-                "key": "Image area",
-                "value": "180 × 110",
-                "mono": true
-              },
-              {
-                "key": "Body padding",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "Violator height",
-                "value": "20",
-                "mono": true
-              },
-              {
-                "key": "Violator padding (h)",
-                "value": "8",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "12",
-                "mono": true
-              }
+              { "key": "Width", "value": "180px", "mono": true },
+              { "key": "Height", "value": "220px", "mono": true },
+              { "key": "Image area", "value": "180 × 110px", "mono": true },
+              { "key": "Body padding", "value": "12px", "mono": true },
+              { "key": "Violator height", "value": "20px", "mono": true },
+              { "key": "Violator padding (H)", "value": "8px", "mono": true },
+              { "key": "Corner radius", "value": "12px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Violator style",
-                "value": "Caption/Bold",
-                "mono": true
-              },
-              {
-                "key": "Title style",
-                "value": "Body/Medium · Bold",
-                "mono": true
-              }
+              { "key": "Violator style", "value": "Caption/Bold", "mono": true },
+              { "key": "Title style", "value": "Body/Medium · Bold", "mono": true }
             ]
           }
         ],
@@ -505,6 +320,8 @@ export const carouselDiscountCard: ComponentData = {
       },
       {
         "cardKey": "skeleton-loader",
+        "demoKey": "skeleton-loader",
+        "demoControls": carouselDiscountCardDemoControls,
         "title": "Skeleton loader",
         "node": "18543:2782",
         "description": "Loading pattern: flat banner fill, rounded title rectangle, shorter amount rectangle. Centered column (differs from the left-aligned default).",
@@ -512,82 +329,37 @@ export const carouselDiscountCard: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "State",
-                "value": "Loading",
-                "mono": true
-              },
-              {
-                "key": "Has content",
-                "value": "No",
-                "mono": true
-              }
+              { "key": "Type", "value": "skeleton", "prop": "type" },
+              { "key": "State", "value": "Loading" },
+              { "key": "Has content", "value": "No" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Skeleton bg",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Skeleton bg token",
-                "value": "main/skeleton/bg",
-                "mono": true
-              },
-              {
-                "key": "Surface bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/discount-card/bg",
-                "mono": true
-              }
+              { "key": "Skeleton bg", "value": "#EEF2F9", "token": "main/skeleton/bg" },
+              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/discount-card/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "180",
-                "mono": true
-              },
-              {
-                "key": "Height",
-                "value": "220",
-                "mono": true
-              },
-              {
-                "key": "Image placeholder",
-                "value": "180 × 110",
-                "mono": true
-              },
-              {
-                "key": "Title bar",
-                "value": "120 × 12",
-                "mono": true
-              },
-              {
-                "key": "Subtitle bar",
-                "value": "80 × 8",
-                "mono": true
-              }
+              { "key": "Width", "value": "180px", "mono": true },
+              { "key": "Height", "value": "220px", "mono": true },
+              { "key": "Image placeholder", "value": "180 × 110px", "mono": true },
+              { "key": "Title bar", "value": "120 × 12px", "mono": true },
+              { "key": "Subtitle bar", "value": "80 × 8px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "N/A",
-                "value": "No text in skeleton state",
-                "mono": false
-              }
+              { "key": "—", "value": "No text in skeleton state" }
             ]
           }
         ],

@@ -115,17 +115,100 @@ function _gcardUpdate() {
   });
 }
 
+/* ── Spec card state ──────────────────────────────────────────────── */
+var _specCards = {
+  'default':  { iconSize: '64', state: 'default',  hasSubtitle: 'yes', hasBadge: 'yes', hasChevron: 'yes' },
+  'skeleton': { iconSize: '64', state: 'skeleton', hasSubtitle: 'yes', hasBadge: 'yes', hasChevron: 'yes' }
+};
+window._specCards = _specCards;
+
+/* ── Code snippet builders ────────────────────────────────────────── */
+function buildSwiftSnippet(type, card) {
+  var sz = (card && card.iconSize) || '64';
+  var st = (card && card.state) || 'default';
+  if (st === 'skeleton') {
+    return 'EBGenericCard(isLoading: true)\n    .ebIconSize(' + sz + ')';
+  }
+  var lines = [];
+  lines.push('EBGenericCard("Heading Goes Here")');
+  lines.push('    .ebDescription("Description goes here")');
+  lines.push('    .ebIcon(Image(systemName: "star.fill"))');
+  lines.push('    .ebIconSize(' + sz + ')');
+  if (card && card.hasSubtitle === 'yes') lines.push('    .ebBlurb("Blurb", tag: "Tag")');
+  if (card && card.hasBadge === 'yes')    lines.push('    .ebBadge("Label")');
+  if (card && card.hasChevron === 'no')   lines.push('    .ebShowChevron(false)');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var sz = (card && card.iconSize) || '64';
+  var st = (card && card.state) || 'default';
+  if (st === 'skeleton') {
+    return 'EBGenericCard(\n    isLoading = true,\n    iconSize = EBIconSize.Size' + sz + '\n)';
+  }
+  var lines = [];
+  lines.push('EBGenericCard(');
+  lines.push('    title = "Heading Goes Here",');
+  lines.push('    description = "Description goes here",');
+  lines.push('    leadingIcon = { Icon(Icons.Filled.Star, null) },');
+  lines.push('    iconSize = EBIconSize.Size' + sz + ',');
+  if (card && card.hasSubtitle === 'yes') lines.push('    blurb = "Blurb",');
+  if (card && card.hasBadge === 'yes')    lines.push('    badge = "Label",');
+  if (card && card.hasChevron === 'no')   lines.push('    showChevron = false,');
+  var last = lines[lines.length - 1];
+  if (last.charAt(last.length - 1) === ',') lines[lines.length - 1] = last.slice(0, -1);
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+/* ── Spec card update ─────────────────────────────────────────────── */
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview */
+  var el = document.getElementById('gcard-spec-' + cardStyle);
+  if (el) el.innerHTML = _gcardRender(card);
+
+  /* Update properties text */
+  var propMap = ['iconSize', 'state'];
+  propMap.forEach(function (p) {
+    var sp = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
+    if (sp) sp.textContent = p === 'state' ? (card[p].charAt(0).toUpperCase() + card[p].slice(1)) : card[p];
+  });
+
+  /* Update DEV code */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
 function _gcardInit() {
   var ctx = document.getElementById('gcard-context-preview');
   if (ctx) ctx.innerHTML = _gcardContextMarkup();
-  _gcardUpdate();
+  if (document.getElementById('gcard-demo-preview')) _gcardUpdate();
 
-  var s1 = document.getElementById('gcard-spec-1');
-  if (s1) s1.innerHTML = _gcardRender({iconSize:'64', state:'default', hasSubtitle:'yes', hasBlurb:'yes', hasTag:'yes', has2desc:'yes', hasBadge:'yes', hasChevron:'yes'});
-
-  var s2 = document.getElementById('gcard-spec-2');
-  if (s2) s2.innerHTML = _gcardRender({iconSize:'64', state:'skeleton'});
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'state', _specCards[k].state);
+  });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _gcardInit);
 else _gcardInit();
+document.addEventListener('astro:page-load', _gcardInit);

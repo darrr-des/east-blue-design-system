@@ -1,4 +1,26 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/alert.js`.
+const alertDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Type',
+        prop: 'type',
+        defaultValue: 'information',
+        options: [
+          { value: 'neutral', label: 'Neutral' },
+          { value: 'information', label: 'Information' },
+          { value: 'warning', label: 'Warning' },
+          { value: 'error', label: 'Error' },
+          { value: 'success', label: 'Success' },
+        ],
+      },
+    ],
+  },
+];
 
 export const alert: ComponentData = {
   "meta": {
@@ -176,9 +198,12 @@ export const alert: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "alert-spec-banner",
+        "demoKey": "banner",
+        "demoControls": alertDemoControls,
         "title": "Banner",
         "node": "18444:2087",
         "description": "Flat inline banner. 360 wide, 12 × 16 padding, 4px radius, soft shadow. Optional left icon, right icon, and description.",
@@ -186,277 +211,42 @@ export const alert: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Banner",
-                "mono": false
-              },
-              {
-                "key": "Type",
-                "value": "Information",
-                "mono": false
-              },
-              {
-                "key": "Full Width",
-                "value": "true",
-                "mono": false
-              },
-              {
-                "key": "Left Icon",
-                "value": "false",
-                "mono": false
-              },
-              {
-                "key": "Right Icon",
-                "value": "true",
-                "mono": false
-              },
-              {
-                "key": "Description",
-                "value": "true",
-                "mono": false
-              }
+              { "key": "Style", "value": "Banner" },
+              { "key": "Type", "value": "Information", "prop": "type" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Default bg",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Default bg token",
-                "value": "alert/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Default title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Default title token",
-                "value": "alert/color/default/label-title",
-                "mono": true
-              },
-              {
-                "key": "Default desc",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Default desc token",
-                "value": "alert/color/default/description",
-                "mono": true
-              },
-              {
-                "key": "Info bg",
-                "value": "#E5F1FF",
-                "mono": true
-              },
-              {
-                "key": "Info bg token",
-                "value": "alert/color/info/bg",
-                "mono": true
-              },
-              {
-                "key": "Info border",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Info border token",
-                "value": "alert/color/info/border",
-                "mono": true
-              },
-              {
-                "key": "Info title",
-                "value": "#072592",
-                "mono": true
-              },
-              {
-                "key": "Info title token",
-                "value": "alert/color/info/label-title",
-                "mono": true
-              },
-              {
-                "key": "Info icon",
-                "value": "#2340A9",
-                "mono": true
-              },
-              {
-                "key": "Info icon token",
-                "value": "alert/color/info/icon",
-                "mono": true
-              },
-              {
-                "key": "Warning bg",
-                "value": "#FFF9EB",
-                "mono": true
-              },
-              {
-                "key": "Warning bg token",
-                "value": "alert/color/warning/bg",
-                "mono": true
-              },
-              {
-                "key": "Warning border",
-                "value": "#EBB30A",
-                "mono": true
-              },
-              {
-                "key": "Warning border token",
-                "value": "alert/color/warning/border",
-                "mono": true
-              },
-              {
-                "key": "Warning text",
-                "value": "#966F0B",
-                "mono": true
-              },
-              {
-                "key": "Warning text token",
-                "value": "alert/color/warning/icon",
-                "mono": true
-              },
-              {
-                "key": "Error bg",
-                "value": "#F8E6E6",
-                "mono": true
-              },
-              {
-                "key": "Error bg token",
-                "value": "alert/color/error/bg",
-                "mono": true
-              },
-              {
-                "key": "Error border",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Error border token",
-                "value": "alert/color/error/border",
-                "mono": true
-              },
-              {
-                "key": "Error text",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Error text token",
-                "value": "alert/color/error/label-title",
-                "mono": true
-              },
-              {
-                "key": "Success bg",
-                "value": "#E7F8F0",
-                "mono": true
-              },
-              {
-                "key": "Success bg token",
-                "value": "alert/color/success/bg",
-                "mono": true
-              },
-              {
-                "key": "Success border",
-                "value": "#27C990",
-                "mono": true
-              },
-              {
-                "key": "Success border token",
-                "value": "alert/color/success/border",
-                "mono": true
-              },
-              {
-                "key": "Success text",
-                "value": "#035E50",
-                "mono": true
-              },
-              {
-                "key": "Success text token",
-                "value": "alert/color/success/label-title",
-                "mono": true
-              }
+              { "key": "Background", "value": "#E5F1FF", "token": "alert/color/info/bg" },
+              { "key": "Title", "value": "#072592", "token": "alert/color/info/label-title" },
+              { "key": "Description", "value": "#072592", "token": "alert/color/info/description" },
+              { "key": "Icon / accent", "value": "#2340A9", "token": "alert/color/info/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "360px",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "12 × 16",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "radius/radius-1 (4px)",
-                "mono": true
-              },
-              {
-                "key": "Shadow",
-                "value": "0 1 3 #E8EEF2 @ 79%",
-                "mono": true
-              },
-              {
-                "key": "Gap (icon ↔ content)",
-                "value": "8px (space/space-8)",
-                "mono": true
-              },
-              {
-                "key": "Left icon",
-                "value": "24 × 24 placeholder",
-                "mono": true
-              },
-              {
-                "key": "Right icon",
-                "value": "24 × 24",
-                "mono": true
-              }
+              { "key": "Width", "value": "360px", "mono": true },
+              { "key": "Padding", "value": "12 × 16", "mono": true },
+              { "key": "Corner radius", "value": "4px (radius-1)", "mono": true },
+              { "key": "Gap (icon ↔ content)", "value": "8px", "mono": true },
+              { "key": "Right icon", "value": "24 × 24", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Multi-line Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Title size",
-                "value": "16 / 20 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Caption",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold",
-                "mono": true
-              },
-              {
-                "key": "Description size",
-                "value": "12 / 18",
-                "mono": true
-              }
+              { "key": "Title style", "value": "Primary/Multi-line Label/Base", "mono": true },
+              { "key": "Title font", "value": "Proxima Soft Bold", "mono": true },
+              { "key": "Title size", "value": "16 / 20", "mono": true },
+              { "key": "Description font", "value": "BarkAda Semibold", "mono": true },
+              { "key": "Description size", "value": "12 / 18", "mono": true }
             ]
           }
         ],
@@ -465,6 +255,8 @@ export const alert: ComponentData = {
       },
       {
         "cardKey": "alert-spec-card",
+        "demoKey": "card",
+        "demoControls": alertDemoControls,
         "title": "Accent Card",
         "node": "18444:2019",
         "description": "Card with a 6px left-border accent. Always ships a right icon + Learn More action + description. Title is larger (18 / 23) than the banner.",
@@ -472,162 +264,43 @@ export const alert: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Accent Card",
-                "mono": false
-              },
-              {
-                "key": "Type",
-                "value": "Information",
-                "mono": false
-              },
-              {
-                "key": "Full Width",
-                "value": "false",
-                "mono": false
-              },
-              {
-                "key": "Right Icon",
-                "value": "true (always)",
-                "mono": false
-              },
-              {
-                "key": "Description",
-                "value": "true (always)",
-                "mono": false
-              },
-              {
-                "key": "Action",
-                "value": "Learn More (drawn)",
-                "mono": false
-              }
+              { "key": "Style", "value": "Accent Card" },
+              { "key": "Type", "value": "Information", "prop": "type" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "surface/default",
-                "mono": true
-              },
-              {
-                "key": "Border accent",
-                "value": "matches intent (info/warning/error/success)",
-                "mono": true
-              },
-              {
-                "key": "Border accent token",
-                "value": "alert/color/{intent}/border",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "alert/color/default/label-title",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "alert/color/default/description",
-                "mono": true
-              },
-              {
-                "key": "Action link",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Action link token",
-                "value": "alert/color/info/label-link",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "surface/default" },
+              { "key": "Border accent", "value": "#2340A9", "token": "alert/color/info/icon" },
+              { "key": "Title", "value": "#072592", "token": "alert/color/info/label-title" },
+              { "key": "Description", "value": "#072592", "token": "alert/color/info/description" },
+              { "key": "Action link", "value": "#005CE5", "token": "alert/color/info/label-link" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "328px",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "16 × 16",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Left border accent",
-                "value": "6px solid (type color)",
-                "mono": true
-              },
-              {
-                "key": "Shadow",
-                "value": "Depth/D1",
-                "mono": true
-              },
-              {
-                "key": "Gap (title ↔ desc)",
-                "value": "4px",
-                "mono": true
-              },
-              {
-                "key": "Action gap",
-                "value": "8px (content ↔ link)",
-                "mono": true
-              }
+              { "key": "Width", "value": "328px", "mono": true },
+              { "key": "Padding", "value": "16 × 16", "mono": true },
+              { "key": "Corner radius", "value": "6px (radius-2)", "mono": true },
+              { "key": "Left accent", "value": "6px solid", "mono": true },
+              { "key": "Gap (title ↔ desc)", "value": "4px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Block",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Title size",
-                "value": "18 / 23 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "BarkAda Semibold · 12 / 18",
-                "mono": true
-              },
-              {
-                "key": "Action label",
-                "value": "Proxima Soft Bold · 14 / 20",
-                "mono": true
-              }
+              { "key": "Title style", "value": "Primary/Headlines/Block", "mono": true },
+              { "key": "Title font", "value": "Proxima Soft Bold", "mono": true },
+              { "key": "Title size", "value": "18 / 23", "mono": true },
+              { "key": "Description", "value": "BarkAda Semibold · 12 / 18", "mono": true },
+              { "key": "Action label", "value": "Proxima Soft Bold · 14 / 20", "mono": true }
             ]
           }
         ],

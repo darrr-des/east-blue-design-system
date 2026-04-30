@@ -1,4 +1,50 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(demoKey, prop, value)`
+// in `public/scripts/demos/callout.js`.
+const calloutDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Type',
+        prop: 'type',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'information', label: 'Information' },
+        ],
+      },
+      {
+        label: 'Label',
+        prop: 'label',
+        defaultValue: 'yes',
+        options: [
+          { value: 'yes', label: 'Yes' },
+          { value: 'no', label: 'No' },
+        ],
+      },
+      {
+        label: 'Label Size',
+        prop: 'labelSize',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'small', label: 'Small' },
+        ],
+      },
+      {
+        label: 'Description',
+        prop: 'description',
+        defaultValue: 'yes',
+        options: [
+          { value: 'yes', label: 'Yes' },
+          { value: 'no', label: 'No' },
+        ],
+      },
+    ],
+  },
+];
 
 export const callout: ComponentData = {
   "meta": {
@@ -204,611 +250,266 @@ export const callout: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Variants",
     "specCards": [
       {
         "cardKey": "cal-spec-default-both",
+        "demoKey": "default-both",
+        "demoControls": calloutDemoControls,
         "title": "Default · Label (default) + Description",
         "node": "23:179902",
         "description": "The anchor variant: neutral bg, default-size label (16px Primary/Label/Base), description below. Use for ambient guidance that doesn't carry a severity cue.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Default · Label (default) + Description",
-                "mono": false
-              },
-              {
-                "key": "Intent",
-                "value": "Default",
-                "mono": false
-              }
+              { "key": "Type",        "value": "Default", "prop": "type" },
+              { "key": "Label",       "value": "yes",     "prop": "label" },
+              { "key": "Label size",  "value": "Default", "prop": "labelSize" },
+              { "key": "Description", "value": "yes",     "prop": "description" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "contextual-help/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "contextual-help/color/default/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "contextual-help/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "contextual-help/color/default/description",
-                "mono": true
-              }
+              { "key": "Surface",     "value": "#F6F9FD", "token": "contextual-help/color/default/bg" },
+              { "key": "Border",      "value": "#E5EBF4", "token": "contextual-help/color/default/border" },
+              { "key": "Label",       "value": "#445C85", "token": "contextual-help/color/default/label" },
+              { "key": "Description", "value": "#6780A9", "token": "contextual-help/color/default/description" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Padding",
-                "value": "12 horizontal · 12 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Gap (icon ↔ content)",
-                "value": "8px",
-                "mono": true
-              }
+              { "key": "Padding",              "value": "12 horizontal · 12 vertical","mono": true },
+              { "key": "Border radius",        "value": "radius/radius-2 (6px)",      "mono": true },
+              { "key": "Border",               "value": "1px solid",                  "mono": true },
+              { "key": "Gap (icon ↔ content)", "value": "8px",                        "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Fine / Primary/Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Base",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 14 / 20",
-                "mono": true
-              }
+              { "key": "Label style",       "value": "Primary/Label/Base",        "mono": true },
+              { "key": "Label font",        "value": "Proxima Soft Bold",         "mono": true },
+              { "key": "Description style", "value": "Secondary/Bold/Base",       "mono": true },
+              { "key": "Description font",  "value": "BarkAda Semibold · 14 / 20","mono": true }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>description<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Body copy\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIntent</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Body copy\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCalloutIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"336\" height=\"122\" viewBox=\"0 0 336 122\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"335\" height=\"121\" rx=\"5.5\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\"></rect><text x=\"12\" y=\"24\" font-family=\"Proxima Soft, Proxima Nova, system-ui, sans-serif\" font-size=\"16\" font-weight=\"700\" fill=\"#445C85\" letter-spacing=\"0.25\">Add title here</text><text x=\"12\" y=\"45\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">This is the first sentence. This is the second sentence. This is the third</text><text x=\"12\" y=\"65\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence. This is the fourth sentence. This is the fifth</text><text x=\"12\" y=\"85\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence.</text></svg>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"cal-spec-default-both-preview\"><svg width=\"336\" height=\"122\" viewBox=\"0 0 336 122\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"335\" height=\"121\" rx=\"5.5\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\"></rect><text x=\"12\" y=\"24\" font-family=\"Proxima Soft, Proxima Nova, system-ui, sans-serif\" font-size=\"16\" font-weight=\"700\" fill=\"#445C85\" letter-spacing=\"0.25\">Add title here</text><text x=\"12\" y=\"45\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">This is the first sentence. This is the second sentence. This is the third</text><text x=\"12\" y=\"65\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence. This is the fourth sentence. This is the fifth</text><text x=\"12\" y=\"85\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence.</text></svg></div>"
       },
       {
         "cardKey": "cal-spec-info-both",
+        "demoKey": "info-both",
+        "demoControls": calloutDemoControls,
         "title": "Information · Label (default) + Description",
         "node": "23:179905",
         "description": "Information intent: light blue bg, deeper-blue label. Use when the callout carries helpful context that the user should notice.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Information · Label (default) + Description",
-                "mono": false
-              },
-              {
-                "key": "Intent",
-                "value": "Info",
-                "mono": false
-              }
+              { "key": "Type",        "value": "Information", "prop": "type" },
+              { "key": "Label",       "value": "yes",         "prop": "label" },
+              { "key": "Label size",  "value": "Default",     "prop": "labelSize" },
+              { "key": "Description", "value": "yes",         "prop": "description" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#E5F1FF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "contextual-help/color/info/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D2E5FF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "contextual-help/color/info/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#072592",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "contextual-help/color/info/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "contextual-help/color/info/description",
-                "mono": true
-              }
+              { "key": "Surface",     "value": "#E5F1FF", "token": "contextual-help/color/info/bg" },
+              { "key": "Border",      "value": "#D2E5FF", "token": "contextual-help/color/info/border" },
+              { "key": "Label",       "value": "#072592", "token": "contextual-help/color/info/label" },
+              { "key": "Description", "value": "#6780A9", "token": "contextual-help/color/info/description" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Padding",
-                "value": "12 horizontal · 12 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Gap (icon ↔ content)",
-                "value": "8px",
-                "mono": true
-              }
+              { "key": "Padding",              "value": "12 horizontal · 12 vertical","mono": true },
+              { "key": "Border radius",        "value": "radius/radius-2 (6px)",      "mono": true },
+              { "key": "Border",               "value": "1px solid",                  "mono": true },
+              { "key": "Gap (icon ↔ content)", "value": "8px",                        "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Fine / Primary/Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Base",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 14 / 20",
-                "mono": true
-              }
+              { "key": "Label style",       "value": "Primary/Label/Base",        "mono": true },
+              { "key": "Label font",        "value": "Proxima Soft Bold",         "mono": true },
+              { "key": "Description style", "value": "Secondary/Bold/Base",       "mono": true },
+              { "key": "Description font",  "value": "BarkAda Semibold · 14 / 20","mono": true }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>description<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Body copy\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIntent</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.info</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Body copy\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCalloutIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Info</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"336\" height=\"122\" viewBox=\"0 0 336 122\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"335\" height=\"121\" rx=\"5.5\" fill=\"#E5F1FF\" stroke=\"#D2E5FF\"></rect><text x=\"12\" y=\"24\" font-family=\"Proxima Soft, Proxima Nova, system-ui, sans-serif\" font-size=\"16\" font-weight=\"700\" fill=\"#072592\" letter-spacing=\"0.25\">Add title here</text><text x=\"12\" y=\"45\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">This is the first sentence. This is the second sentence. This is the third</text><text x=\"12\" y=\"65\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence. This is the fourth sentence. This is the fifth</text><text x=\"12\" y=\"85\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence.</text></svg>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"cal-spec-info-both-preview\"><svg width=\"336\" height=\"122\" viewBox=\"0 0 336 122\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"335\" height=\"121\" rx=\"5.5\" fill=\"#E5F1FF\" stroke=\"#D2E5FF\"></rect><text x=\"12\" y=\"24\" font-family=\"Proxima Soft, Proxima Nova, system-ui, sans-serif\" font-size=\"16\" font-weight=\"700\" fill=\"#072592\" letter-spacing=\"0.25\">Add title here</text><text x=\"12\" y=\"45\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">This is the first sentence. This is the second sentence. This is the third</text><text x=\"12\" y=\"65\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence. This is the fourth sentence. This is the fifth</text><text x=\"12\" y=\"85\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence.</text></svg></div>"
       },
       {
         "cardKey": "cal-spec-default-small",
+        "demoKey": "default-small",
+        "demoControls": calloutDemoControls,
         "title": "Default · Label (small) + Description",
         "node": "23:179896",
         "description": "Small label (12px Primary/Label/Fine, uppercase-style tracking) with description. Use when the callout shares vertical real estate with dense form layouts.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Default · Label (small) + Description",
-                "mono": false
-              },
-              {
-                "key": "Intent",
-                "value": "Default",
-                "mono": false
-              }
+              { "key": "Type",        "value": "Default", "prop": "type" },
+              { "key": "Label",       "value": "yes",     "prop": "label" },
+              { "key": "Label size",  "value": "Small",   "prop": "labelSize" },
+              { "key": "Description", "value": "yes",     "prop": "description" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "contextual-help/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "contextual-help/color/default/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "contextual-help/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "contextual-help/color/default/description",
-                "mono": true
-              }
+              { "key": "Surface",     "value": "#F6F9FD", "token": "contextual-help/color/default/bg" },
+              { "key": "Border",      "value": "#E5EBF4", "token": "contextual-help/color/default/border" },
+              { "key": "Label",       "value": "#445C85", "token": "contextual-help/color/default/label" },
+              { "key": "Description", "value": "#6780A9", "token": "contextual-help/color/default/description" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Padding",
-                "value": "12 horizontal · 12 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Gap (icon ↔ content)",
-                "value": "8px",
-                "mono": true
-              }
+              { "key": "Padding",              "value": "12 horizontal · 12 vertical","mono": true },
+              { "key": "Border radius",        "value": "radius/radius-2 (6px)",      "mono": true },
+              { "key": "Border",               "value": "1px solid",                  "mono": true },
+              { "key": "Gap (icon ↔ content)", "value": "8px",                        "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Fine / Primary/Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Base",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 14 / 20",
-                "mono": true
-              }
+              { "key": "Label style",       "value": "Primary/Label/Fine",        "mono": true },
+              { "key": "Label font",        "value": "Proxima Soft Bold · 12/12 · +0.5","mono": true },
+              { "key": "Description style", "value": "Secondary/Bold/Base",       "mono": true },
+              { "key": "Description font",  "value": "BarkAda Semibold · 14 / 20","mono": true }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>description<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Body copy\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIntent</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Body copy\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCalloutIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"336\" height=\"118\" viewBox=\"0 0 336 118\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"335\" height=\"117\" rx=\"5.5\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\"></rect><text x=\"12\" y=\"21\" font-family=\"Proxima Soft, Proxima Nova, system-ui, sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#445C85\" letter-spacing=\"0.5\">Add title here</text><text x=\"12\" y=\"41\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">This is the first sentence. This is the second sentence. This is the third</text><text x=\"12\" y=\"61\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence. This is the fourth sentence. This is the fifth</text><text x=\"12\" y=\"81\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence.</text></svg>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"cal-spec-default-small-preview\"><svg width=\"336\" height=\"118\" viewBox=\"0 0 336 118\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"335\" height=\"117\" rx=\"5.5\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\"></rect><text x=\"12\" y=\"21\" font-family=\"Proxima Soft, Proxima Nova, system-ui, sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#445C85\" letter-spacing=\"0.5\">Add title here</text><text x=\"12\" y=\"41\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">This is the first sentence. This is the second sentence. This is the third</text><text x=\"12\" y=\"61\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence. This is the fourth sentence. This is the fifth</text><text x=\"12\" y=\"81\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence.</text></svg></div>"
       },
       {
         "cardKey": "cal-spec-default-desc",
+        "demoKey": "default-desc",
+        "demoControls": calloutDemoControls,
         "title": "Default · Description only",
         "node": "23:179908",
         "description": "No label, description-only. Compact guidance where a heading is redundant with the surrounding UI.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Default · Description only",
-                "mono": false
-              },
-              {
-                "key": "Intent",
-                "value": "Default",
-                "mono": false
-              }
+              { "key": "Type",        "value": "Default", "prop": "type" },
+              { "key": "Label",       "value": "no",      "prop": "label" },
+              { "key": "Label size",  "value": "—",       "prop": "labelSize" },
+              { "key": "Description", "value": "yes",     "prop": "description" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "contextual-help/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "contextual-help/color/default/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "contextual-help/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "contextual-help/color/default/description",
-                "mono": true
-              }
+              { "key": "Surface",     "value": "#F6F9FD", "token": "contextual-help/color/default/bg" },
+              { "key": "Border",      "value": "#E5EBF4", "token": "contextual-help/color/default/border" },
+              { "key": "Description", "value": "#6780A9", "token": "contextual-help/color/default/description" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Padding",
-                "value": "12 horizontal · 12 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Gap (icon ↔ content)",
-                "value": "8px",
-                "mono": true
-              }
+              { "key": "Padding",              "value": "12 horizontal · 12 vertical","mono": true },
+              { "key": "Border radius",        "value": "radius/radius-2 (6px)",      "mono": true },
+              { "key": "Border",               "value": "1px solid",                  "mono": true },
+              { "key": "Gap (icon ↔ content)", "value": "8px",                        "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Fine / Primary/Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Base",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 14 / 20",
-                "mono": true
-              }
+              { "key": "Description style", "value": "Secondary/Bold/Base",       "mono": true },
+              { "key": "Description font",  "value": "BarkAda Semibold · 14 / 20","mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>description<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Body copy\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIntent</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Body copy\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCalloutIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"336\" height=\"104\" viewBox=\"0 0 336 104\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"335\" height=\"103\" rx=\"5.5\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\"></rect><text x=\"12\" y=\"27\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">This is the first sentence. This is the second sentence. This is the third</text><text x=\"12\" y=\"47\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence. This is the fourth sentence. This is the fifth</text><text x=\"12\" y=\"67\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence.</text></svg>"
+        "swift": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span>description<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Body copy\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIntent</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Body copy\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCalloutIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"cal-spec-default-desc-preview\"><svg width=\"336\" height=\"104\" viewBox=\"0 0 336 104\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"335\" height=\"103\" rx=\"5.5\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\"></rect><text x=\"12\" y=\"27\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">This is the first sentence. This is the second sentence. This is the third</text><text x=\"12\" y=\"47\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence. This is the fourth sentence. This is the fifth</text><text x=\"12\" y=\"67\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">sentence.</text></svg></div>"
       },
       {
         "cardKey": "cal-spec-default-label",
+        "demoKey": "default-label",
+        "demoControls": calloutDemoControls,
         "title": "Default · Label only",
         "node": "23:179912",
         "description": "Label-only, no description. A one-line inline note with no body text. Collapsing to a single enum row would make this just \"labelSize=default, description=false\".",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Default · Label only",
-                "mono": false
-              },
-              {
-                "key": "Intent",
-                "value": "Default",
-                "mono": false
-              }
+              { "key": "Type",        "value": "Default", "prop": "type" },
+              { "key": "Label",       "value": "yes",     "prop": "label" },
+              { "key": "Label size",  "value": "Default", "prop": "labelSize" },
+              { "key": "Description", "value": "no",      "prop": "description" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "contextual-help/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "contextual-help/color/default/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "contextual-help/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "contextual-help/color/default/description",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#F6F9FD", "token": "contextual-help/color/default/bg" },
+              { "key": "Border",  "value": "#E5EBF4", "token": "contextual-help/color/default/border" },
+              { "key": "Label",   "value": "#445C85", "token": "contextual-help/color/default/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Padding",
-                "value": "12 horizontal · 12 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Gap (icon ↔ content)",
-                "value": "8px",
-                "mono": true
-              }
+              { "key": "Padding",              "value": "12 horizontal · 12 vertical","mono": true },
+              { "key": "Border radius",        "value": "radius/radius-2 (6px)",      "mono": true },
+              { "key": "Border",               "value": "1px solid",                  "mono": true },
+              { "key": "Gap (icon ↔ content)", "value": "8px",                        "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Fine / Primary/Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Base",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 14 / 20",
-                "mono": true
-              }
+              { "key": "Label style", "value": "Primary/Label/Base", "mono": true },
+              { "key": "Label font",  "value": "Proxima Soft Bold",  "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>description<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Body copy\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIntent</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Body copy\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCalloutIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"336\" height=\"40\" viewBox=\"0 0 336 40\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"335\" height=\"39\" rx=\"5.5\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\"></rect><text x=\"12\" y=\"24\" font-family=\"Proxima Soft, Proxima Nova, system-ui, sans-serif\" font-size=\"16\" font-weight=\"700\" fill=\"#445C85\" letter-spacing=\"0.25\">Add title here</text></svg>"
+        "swift": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIntent</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBCallout</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCalloutIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"cal-spec-default-label-preview\"><svg width=\"336\" height=\"40\" viewBox=\"0 0 336 40\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"335\" height=\"39\" rx=\"5.5\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\"></rect><text x=\"12\" y=\"24\" font-family=\"Proxima Soft, Proxima Nova, system-ui, sans-serif\" font-size=\"16\" font-weight=\"700\" fill=\"#445C85\" letter-spacing=\"0.25\">Add title here</text></svg></div>"
       }
     ],
     "colorsTables": [

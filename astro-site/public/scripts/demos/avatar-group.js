@@ -1,5 +1,5 @@
-/* Auto-extracted from assessment-src/components/avatar-group.html.
- * Powers the live-preview dropdowns/toggles for the avatar-group component page.
+/* Avatar Group — live preview + spec cards.
+ * Wired to the Astro SpecCard demo-panel (`updateSpecCard(demoKey, prop, value)`).
  * Re-extract via: node astro-site/scripts/extract-demos.mjs avatar-group
  */
 /* ── Avatar Group Component JS ────────────────────────────────────── */
@@ -50,20 +50,87 @@ function _avgBuildSvg(count) {
   return s;
 }
 
+/* ── Live preview (Overview tab) ─────────────────────────────────── */
 function updateAvatarGroupDemo() {
-  var raw = document.getElementById('avg-demo-count').value;
+  var raw = document.getElementById('avg-demo-count');
+  var rawVal = raw ? raw.value : 'pair';
   var layoutMap = { pair: 2, trio: 3, quad: 4, overflow: 5 };
-  var count = layoutMap[raw] || 2;
+  var count = layoutMap[rawVal] || 2;
   _avgDemo.count = count;
   var el = document.getElementById('avg-demo-preview');
   if (el) el.innerHTML = _avgBuildSvg(count);
 }
 
+/* ── Spec cards (Style tab) ──────────────────────────────────────── */
+var _avgSpecCards = {
+  pair:     { layout: 'pair' },
+  trio:     { layout: 'trio' },
+  quad:     { layout: 'quad' },
+  overflow: { layout: 'overflow' }
+};
+var _specCards = _avgSpecCards;
+window._specCards = _specCards;
+
+var _avgLayoutCount = { pair: 2, trio: 3, quad: 4, overflow: 5 };
+
+function buildSwiftSnippet(cardKey, card) {
+  if (card.layout === 'overflow') {
+    return 'EBAvatarGroup(avatars: members, overflowFrom: 3)\n// Shows 3 avatars + "+N" badge when members.count > 3';
+  }
+  return 'EBAvatarGroup(avatars: members)\n// Layout=' + card.layout + ' (' + _avgLayoutCount[card.layout] + ' avatars)';
+}
+
+function buildComposeSnippet(cardKey, card) {
+  if (card.layout === 'overflow') {
+    return 'EBAvatarGroup(\n    avatars = members,\n    overflowFrom = 3\n)';
+  }
+  return 'EBAvatarGroup(\n    avatars = members,\n    layout = EBAvatarGroupLayout.' + card.layout.charAt(0).toUpperCase() + card.layout.slice(1) + '\n)';
+}
+
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _avgSpecCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+  var count = _avgLayoutCount[card.layout] || 2;
+
+  /* Update preview SVG — locate by id `avg-spec-{cardStyle}-preview` */
+  var previewEl = document.getElementById('avg-spec-' + cardStyle + '-preview');
+  if (previewEl) {
+    previewEl.innerHTML = _avgBuildSvg(count);
+  }
+
+  /* Update Properties readouts — `[data-sp="{cardStyle}-{prop}"]` */
+  var spLayout = document.querySelector('[data-sp="' + cardStyle + '-layout"]');
+  if (spLayout) {
+    var labelMap = { pair: 'Pair', trio: 'Trio', quad: 'Quad', overflow: 'Overflow' };
+    var span = spLayout.querySelector('.spec-prop-hex') || spLayout;
+    span.textContent = labelMap[card.layout] || card.layout;
+  }
+
+  /* DEV code update — `[data-code-content="{cardStyle}"]` */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
 function _avgInitSpecCards() {
-  [2, 3, 4, 5].forEach(function(n) {
-    var key = n === 5 ? '5plus' : n;
-    var el = document.getElementById('avg-preview-' + key);
-    if (el) el.innerHTML = _avgBuildSvg(n);
+  Object.keys(_avgSpecCards).forEach(function(key) {
+    updateSpecCard(key, 'layout', _avgSpecCards[key].layout);
   });
 }
 
@@ -77,23 +144,12 @@ if (document.readyState === 'loading') {
 } else {
   _avgInit();
 }
+document.addEventListener('astro:page-load', _avgInit);
 
+/* Legacy aliases — keep older entry points wired during the cascade. */
 function toggleAvgSpecMode(cardKey, toggleEl) {
-  var labels = toggleEl.querySelectorAll('.spec-mode-label');
-  var isDes = labels[0].classList.contains('active');
-  labels[0].classList.toggle('active', !isDes);
-  labels[1].classList.toggle('active', isDes);
-  var desEl = document.querySelector('[data-view="' + cardKey + '-des"]');
-  var devEl = document.querySelector('[data-view="' + cardKey + '-dev"]');
-  if (desEl) desEl.style.display = isDes ? 'none' : '';
-  if (devEl) devEl.style.display = isDes ? '' : 'none';
+  if (typeof window.toggleSpecMode === 'function') return window.toggleSpecMode(cardKey, toggleEl);
 }
 function switchAvgCodeTab(tabBtn, lang, cardKey) {
-  var block = tabBtn.closest('.spec-card-code');
-  if (!block) return;
-  block.querySelectorAll('.spec-code-tab').forEach(function(t){ t.classList.remove('active'); });
-  tabBtn.classList.add('active');
-  block.querySelectorAll('.spec-code-block').forEach(function(pre){
-    pre.style.display = pre.getAttribute('data-lang') === lang ? '' : 'none';
-  });
+  if (typeof window.switchCodeTab === 'function') return window.switchCodeTab(tabBtn, lang, cardKey);
 }

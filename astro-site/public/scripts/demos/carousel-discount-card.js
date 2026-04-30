@@ -71,6 +71,74 @@ function _cdcardUpdate() {
   });
 }
 
+/* ── Spec card state — drives per-card preview + DEV snippets ──────── */
+var _specCards = {
+  'default':         { type: 'default' },
+  'with-violator':   { type: 'with-violator' },
+  'skeleton-loader': { type: 'skeleton' }
+};
+window._specCards = _specCards;
+
+/* Mapping demoKey → existing preview-body element id */
+var _cdcardPreviewIds = {
+  'default':         'cdcard-spec-1',
+  'with-violator':   'cdcard-spec-2',
+  'skeleton-loader': 'cdcard-spec-3'
+};
+
+function buildSwiftSnippet(cardKey, card) {
+  var t = card.type || 'default';
+  if (t === 'skeleton') return 'EBDiscountCard(isLoading: true)';
+  if (t === 'with-violator') {
+    return 'EBDiscountCard(\n    label: "Add label here",\n    value: "PHP 200.00",\n    violator: "New"\n)';
+  }
+  return 'EBDiscountCard(\n    label: "Add label here",\n    value: "PHP 200.00"\n)';
+}
+
+function buildComposeSnippet(cardKey, card) {
+  var t = card.type || 'default';
+  if (t === 'skeleton') return 'EBDiscountCard(\n    isLoading = true\n)';
+  if (t === 'with-violator') {
+    return 'EBDiscountCard(\n    label = "Add label here",\n    value = "PHP 200.00",\n    violator = "New"\n)';
+  }
+  return 'EBDiscountCard(\n    label = "Add label here",\n    value = "PHP 200.00"\n)';
+}
+
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview HTML */
+  var previewId = _cdcardPreviewIds[cardStyle];
+  var previewEl = previewId ? document.getElementById(previewId) : null;
+  if (previewEl) previewEl.innerHTML = _cdcardRender({ type: card.type });
+
+  /* Update Properties readouts */
+  var spType = document.querySelector('[data-sp="' + cardStyle + '-type"]');
+  if (spType) spType.textContent = card.type;
+
+  /* Update DEV code */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
 function _cdcardInit() {
   var ctx = document.getElementById('cdcard-context-preview');
   if (ctx) ctx.innerHTML = _cdcardContextMarkup();
@@ -84,7 +152,13 @@ function _cdcardInit() {
 
   var s3 = document.getElementById('cdcard-spec-3');
   if (s3) s3.innerHTML = _cdcardRender({type:'skeleton'});
+
+  /* Re-render DEV snippets via shared updater */
+  Object.keys(_specCards).forEach(function(k){ updateSpecCard(k, 'type', _specCards[k].type); });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _cdcardInit);
 else _cdcardInit();
+
+/* Re-init after Astro view-transition swaps */
+document.addEventListener('astro:page-load', _cdcardInit);

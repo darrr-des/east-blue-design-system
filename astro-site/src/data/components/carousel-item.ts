@@ -1,4 +1,49 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+const carouselItemDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Mode',
+        prop: 'mode',
+        defaultValue: 'light',
+        options: [
+          { value: 'light', label: 'Light Text' },
+          { value: 'dark', label: 'Dark Text' },
+        ],
+      },
+      {
+        label: 'Type',
+        prop: 'type',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'icon', label: 'with Icon' },
+          { value: 'headline', label: 'Headline Only' },
+        ],
+      },
+      {
+        label: 'hasPreamble',
+        prop: 'hasPreamble',
+        defaultValue: 'no',
+        options: [
+          { value: 'no', label: 'no' },
+          { value: 'yes', label: 'yes' },
+        ],
+      },
+      {
+        label: 'hasTextLink',
+        prop: 'hasTextLink',
+        defaultValue: 'yes',
+        options: [
+          { value: 'yes', label: 'yes' },
+          { value: 'no', label: 'no' },
+        ],
+      },
+    ],
+  },
+];
 
 export const carouselItem: ComponentData = {
   "meta": {
@@ -206,9 +251,12 @@ export const carouselItem: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Variants",
     "specCards": [
       {
         "cardKey": "default-·-light-text-·-hastextlink=yes",
+        "demoKey": "cit-default",
+        "demoControls": carouselItemDemoControls,
         "title": "Default · Light Text · hasTextLink=yes",
         "node": "18543:2807",
         "description": "The most common variant — heading + description + button link, inverse text over a dark background image. Used on promotional carousels when the photo has dark tones.",
@@ -216,107 +264,41 @@ export const carouselItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Default · Light Text · hasTextLink=yes",
-                "mono": false
-              },
-              {
-                "key": "hasTextLink",
-                "value": "configurable",
-                "mono": false
-              }
+              { "key": "Mode", "value": "Light Text", "prop": "mode" },
+              { "key": "Type", "value": "Default", "prop": "type" },
+              { "key": "hasPreamble", "value": "no", "prop": "hasPreamble" },
+              { "key": "hasTextLink", "value": "yes", "prop": "hasTextLink" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Heading",
-                "value": "#2340A9",
-                "mono": true
-              },
-              {
-                "key": "Heading token",
-                "value": "carousel/color/label-header",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "carousel/color/description",
-                "mono": true
-              },
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "bg/color-bg-main",
-                "mono": true
-              },
-              {
-                "key": "Active dot",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active dot token",
-                "value": "bg/color-bg-primary",
-                "mono": true
-              }
+              { "key": "Heading", "value": "#2340A9", "token": "carousel/color/label-header" },
+              { "key": "Description", "value": "#6780A9", "token": "carousel/color/description" },
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" },
+              { "key": "Active dot", "value": "#005CE5", "token": "bg/color-bg-primary" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Item width",
-                "value": "328px (carousel-controlled)",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "16 horizontal · 16 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-1 (4px)",
-                "mono": true
-              }
+              { "key": "Item width", "value": "328px (carousel-controlled)", "mono": true },
+              { "key": "Padding", "value": "16 horizontal · 16 vertical", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-1 (4px)", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Heading style",
-                "value": "Primary/Headlines/Block",
-                "mono": true
-              },
-              {
-                "key": "Heading font",
-                "value": "Proxima Soft Bold · 18 / 23",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Caption",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 12 / 18",
-                "mono": true
-              }
+              { "key": "Heading style", "value": "Primary/Headlines/Block", "mono": true },
+              { "key": "Heading font", "value": "Proxima Soft Bold · 18 / 23", "mono": true },
+              { "key": "Description style", "value": "Secondary/Bold/Caption", "mono": true },
+              { "key": "Description font", "value": "BarkAda Semibold · 12 / 18", "mono": true }
             ]
           }
         ],
@@ -325,6 +307,8 @@ export const carouselItem: ComponentData = {
       },
       {
         "cardKey": "headline-only-·-has-preamble-·-has-textlink",
+        "demoKey": "cit-headline",
+        "demoControls": carouselItemDemoControls,
         "title": "Headline Only · has Preamble · has TextLink",
         "node": "18543:2839",
         "description": "Preamble + headline only — no description line. Use when the headline itself is the full message. Name is misleading: the variant actually requires Preamble + Heading + Button, with description hidden.",
@@ -332,112 +316,46 @@ export const carouselItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Headline Only · has Preamble · has TextLink",
-                "mono": false
-              },
-              {
-                "key": "hasTextLink",
-                "value": "configurable",
-                "mono": false
-              }
+              { "key": "Mode", "value": "Light Text", "prop": "mode" },
+              { "key": "Type", "value": "Headline Only", "prop": "type" },
+              { "key": "hasPreamble", "value": "yes", "prop": "hasPreamble" },
+              { "key": "hasTextLink", "value": "yes", "prop": "hasTextLink" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Heading",
-                "value": "#2340A9",
-                "mono": true
-              },
-              {
-                "key": "Heading token",
-                "value": "carousel/color/label-header",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "carousel/color/description",
-                "mono": true
-              },
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "bg/color-bg-main",
-                "mono": true
-              },
-              {
-                "key": "Active dot",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active dot token",
-                "value": "bg/color-bg-primary",
-                "mono": true
-              }
+              { "key": "Heading", "value": "#2340A9", "token": "carousel/color/label-header" },
+              { "key": "Description", "value": "#6780A9", "token": "carousel/color/description" },
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" },
+              { "key": "Active dot", "value": "#005CE5", "token": "bg/color-bg-primary" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Item width",
-                "value": "328px (carousel-controlled)",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "16 horizontal · 16 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-1 (4px)",
-                "mono": true
-              }
+              { "key": "Item width", "value": "328px (carousel-controlled)", "mono": true },
+              { "key": "Padding", "value": "16 horizontal · 16 vertical", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-1 (4px)", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Heading style",
-                "value": "Primary/Headlines/Block",
-                "mono": true
-              },
-              {
-                "key": "Heading font",
-                "value": "Proxima Soft Bold · 18 / 23",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Caption",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 12 / 18",
-                "mono": true
-              }
+              { "key": "Heading style", "value": "Primary/Headlines/Block", "mono": true },
+              { "key": "Heading font", "value": "Proxima Soft Bold · 18 / 23", "mono": true },
+              { "key": "Description style", "value": "Secondary/Bold/Caption", "mono": true },
+              { "key": "Description font", "value": "BarkAda Semibold · 12 / 18", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">, </span>description<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span>\n    heading <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description\"</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">, </span>preamble<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Preamble\"</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span>\n    heading <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    preamble <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Preamble\"</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "colorsTables": []

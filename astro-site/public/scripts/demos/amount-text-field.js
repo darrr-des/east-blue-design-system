@@ -29,26 +29,20 @@ function _amtBuildSvg(size, state, label) {
     y += 40;
   }
 
-  /* Amount row (centered) + underline */
   if (size === 'Large') {
     s += '<text x="' + (W/2) + '" y="' + (y + 50) + '" text-anchor="middle" font-family="Proxima Soft, system-ui" font-size="53" font-weight="600" fill="' + c.amount + '">' + c.value + '</text>';
     y += 70;
   } else {
-    /* Peso glyph + amount, horizontally centered as a group */
     var amountText = c.value;
-    var pesoText = 'P';
-    /* approximate group centering */
     var groupCx = W/2;
     s += '<text x="' + (groupCx - 56) + '" y="' + (y + 36) + '" font-family="Proxima Soft, system-ui" font-size="32" font-weight="700" fill="' + c.peso + '">₱</text>';
     s += '<text x="' + (groupCx - 30) + '" y="' + (y + 36) + '" font-family="Proxima Soft, system-ui" font-size="35" font-weight="700" fill="' + c.amount + '">' + amountText + '</text>';
     y += 50;
   }
 
-  /* Underline */
   s += '<line x1="24" y1="' + y + '" x2="' + (W - 24) + '" y2="' + y + '" stroke="' + c.border + '" stroke-width="1"/>';
   y += 20;
 
-  /* Subtext */
   s += '<text x="' + (W/2) + '" y="' + (y + 10) + '" text-anchor="middle" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + c.subtext + '" letter-spacing="0.25">' + subtextCopy + '</text>';
 
   s += '</svg>';
@@ -60,18 +54,138 @@ function updateAmountFieldDemo() {
   if (el) el.innerHTML = _amtBuildSvg(_amtDemo.size, _amtDemo.state, _amtDemo.label);
 }
 
+/* ── Spec card state (per-card, drives previews + DEV code) ──────── */
+/* demoKey → state (size derives from key prefix). */
+var _specCards = {
+  'large-filled':    { size: 'Large',   state: 'Filled',  label: 'yes' },
+  'large-default':   { size: 'Large',   state: 'Default', label: 'yes' },
+  'large-error':     { size: 'Large',   state: 'Error',   label: 'yes' },
+  'default-filled':  { size: 'Default', state: 'Filled',  label: 'yes' },
+  'default-default': { size: 'Default', state: 'Default', label: 'yes' },
+  'default-error':   { size: 'Default', state: 'Error',   label: 'yes' }
+};
+window._specCards = _specCards;
+
+function _amtColorRowsFor(card) {
+  var c = _amtColors[card.state] || _amtColors.Default;
+  var stateKey = card.state.toLowerCase();
+  var rows = [
+    ['Border (underline)', c.border, 'amount-text-field/' + stateKey + '/border'],
+    ['Label',              c.label,  'amount-text-field/' + stateKey + '/label'],
+    ['Amount',             c.amount, 'amount-text-field/' + stateKey + '/label-amount']
+  ];
+  if (card.size === 'Default') {
+    rows.push(['Peso glyph', c.peso, 'amount-text-field/' + stateKey + '/icon-currency']);
+  }
+  rows.push(['Subtext', c.subtext, 'amount-text-field/' + stateKey + '/subtext']);
+  return rows;
+}
+
+/* ── Code snippet builders ──────────────────────────────────────── */
+function buildSwiftSnippet(type, card) {
+  var sizeMap = { Large: '.large', Default: '.default' };
+  var sz = sizeMap[card.size] || '.default';
+  var lines = [];
+  if (card.state === 'Error') {
+    lines.push('EBAmountTextField(');
+    lines.push('    value: $amount,');
+    lines.push('    label: "Amount",');
+    lines.push('    subtext: "Enter a valid amount"');
+    lines.push(')');
+    lines.push('.ebAmountSize(' + sz + ')');
+    lines.push('.ebAmountState(.error)');
+  } else {
+    lines.push('EBAmountTextField(');
+    lines.push('    value: $amount,');
+    lines.push('    label: "Amount"');
+    lines.push(')');
+    lines.push('.ebAmountSize(' + sz + ')');
+  }
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var sizeMap = { Large: 'Large', Default: 'Default' };
+  var sz = sizeMap[card.size] || 'Default';
+  var lines = [];
+  lines.push('EBAmountTextField(');
+  lines.push('    value = amount,');
+  lines.push('    onValueChange = { amount = it },');
+  lines.push('    label = "Amount",');
+  if (card.state === 'Error') {
+    lines.push('    subtext = "Enter a valid amount",');
+    lines.push('    size = EBAmountSize.' + sz + ',');
+    lines.push('    state = EBAmountState.Error');
+  } else {
+    lines.push('    size = EBAmountSize.' + sz);
+  }
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview wrapper #amt-{cardStyle}-preview */
+  var preview = document.getElementById('amt-' + cardStyle + '-preview');
+  if (preview) {
+    preview.innerHTML = _amtBuildSvg(card.size, card.state, card.label);
+  }
+
+  /* Update Properties text */
+  var spState = document.querySelector('[data-sp="' + cardStyle + '-state"]');
+  var spLabel = document.querySelector('[data-sp="' + cardStyle + '-label"]');
+  if (spState) spState.textContent = card.state;
+  if (spLabel) spLabel.textContent = card.label;
+
+  /* Update Colors section */
+  var colorsEl = document.getElementById('spec-' + cardStyle + '-colors');
+  if (colorsEl) {
+    var rows = _amtColorRowsFor(card);
+    var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
+    rows.forEach(function(r) {
+      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
+      var tokenHtml = r[2] ? '<span class="spec-token-name">' + r[2] + '</span>' : '';
+      h += '<div class="spec-prop has-token"><span class="spec-prop-key">' + r[0] + '</span>'
+         + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span>'
+         + tokenHtml + '</div>';
+    });
+    h += '</div>';
+    colorsEl.innerHTML = h;
+  }
+
+  /* Update DEV code — always */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
+/* Legacy alias */
 function updateAmountFieldSpecCard(id, size, state, label) {
-  var el = document.getElementById('amt-' + id + '-preview');
-  if (el) el.innerHTML = _amtBuildSvg(size, state, label);
+  return updateSpecCard(id, 'state', state);
 }
 
 function _amtInitSpecCards() {
-  updateAmountFieldSpecCard('large-filled',    'Large',   'Filled',  'yes');
-  updateAmountFieldSpecCard('large-default',   'Large',   'Default', 'yes');
-  updateAmountFieldSpecCard('large-error',     'Large',   'Error',   'yes');
-  updateAmountFieldSpecCard('default-filled',  'Default', 'Filled',  'yes');
-  updateAmountFieldSpecCard('default-default', 'Default', 'Default', 'yes');
-  updateAmountFieldSpecCard('default-error',   'Default', 'Error',   'yes');
+  Object.keys(_specCards).forEach(function(k) {
+    updateSpecCard(k, 'state', _specCards[k].state);
+  });
 }
 
 function _amtInit() {
@@ -79,12 +193,13 @@ function _amtInit() {
   _amtInitSpecCards();
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', _amtInit);
-} else {
-  _amtInit();
-}
+(function () {
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _amtInit);
+  else _amtInit();
+  document.addEventListener('astro:page-load', _amtInit);
+})();
 
+/* ── Legacy aliases ────────────────────────────────────────────── */
 function toggleAmtSpecMode(cardKey, toggleEl) {
   var labels = toggleEl.querySelectorAll('.spec-mode-label');
   var isDes = labels[0].classList.contains('active');

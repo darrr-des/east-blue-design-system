@@ -1,4 +1,66 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+const genericCardDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'iconSize',
+        prop: 'iconSize',
+        defaultValue: '64',
+        options: [
+          { value: '64', label: '64' },
+          { value: '52', label: '52' },
+          { value: '46', label: '46' },
+          { value: '40', label: '40' },
+          { value: '32', label: '32' },
+          { value: '24', label: '24' },
+        ],
+      },
+      {
+        label: 'state',
+        prop: 'state',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'skeleton', label: 'Skeleton' },
+        ],
+      },
+    ],
+  },
+  {
+    heading: 'Slots',
+    rows: [
+      {
+        label: 'hasSubtitle',
+        prop: 'hasSubtitle',
+        defaultValue: 'yes',
+        options: [
+          { value: 'yes', label: 'Yes' },
+          { value: 'no', label: 'No' },
+        ],
+      },
+      {
+        label: 'hasBadge',
+        prop: 'hasBadge',
+        defaultValue: 'yes',
+        options: [
+          { value: 'yes', label: 'Yes' },
+          { value: 'no', label: 'No' },
+        ],
+      },
+      {
+        label: 'hasChevron',
+        prop: 'hasChevron',
+        defaultValue: 'yes',
+        options: [
+          { value: 'yes', label: 'Yes' },
+          { value: 'no', label: 'No' },
+        ],
+      },
+    ],
+  },
+];
 
 export const genericCard: ComponentData = {
   "meta": {
@@ -156,197 +218,63 @@ export const genericCard: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Variants",
     "specCards": [
       {
         "cardKey": "default-—-iconsize=64",
+        "demoKey": "default",
+        "demoControls": genericCardDemoControls,
         "title": "Default — iconSize=64",
         "node": "18482:35807",
         "description": "Full-featured row: icon + blurb with tag, heading, 2 description lines, bottom badge, chevron.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"gcard-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"gcard-spec-default\"></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "IconSize",
-                "value": "64px",
-                "mono": false
-              },
-              {
-                "key": "Layout",
-                "value": "icon-leading + content-right",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Default",
-                "mono": false
-              }
+              { "key": "iconSize", "value": "64",      "prop": "iconSize" },
+              { "key": "state",    "value": "Default", "prop": "state" },
+              { "key": "Layout",   "value": "icon-leading + content-right" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "card-list/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "card-list/color/border",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "card-list/color/label-header",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "card-list/color/description",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "card-list/color/label",
-                "mono": true
-              },
-              {
-                "key": "Blurb",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Blurb token",
-                "value": "card-list/color/label-blurb",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "card-list/color/icon",
-                "mono": true
-              },
-              {
-                "key": "Badge bg",
-                "value": "#E5F1FF",
-                "mono": true
-              },
-              {
-                "key": "Badge bg token",
-                "value": "badge/information/light/background",
-                "mono": true
-              },
-              {
-                "key": "Badge label",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Badge label token",
-                "value": "badge/information/light/label",
-                "mono": true
-              }
+              { "key": "Surface",     "value": "#FFFFFF", "token": "card-list/color/bg" },
+              { "key": "Border",      "value": "#E5EBF4", "token": "card-list/color/border" },
+              { "key": "Title",       "value": "#0A2757", "token": "card-list/color/label-header" },
+              { "key": "Description", "value": "#445C85", "token": "card-list/color/description" },
+              { "key": "Label",       "value": "#90A8D0", "token": "card-list/color/label" },
+              { "key": "Blurb",       "value": "#005CE5", "token": "card-list/color/label-blurb" },
+              { "key": "Icon",        "value": "#005CE5", "token": "card-list/color/icon" },
+              { "key": "Badge bg",    "value": "#E5F1FF", "token": "badge/information/light/background" },
+              { "key": "Badge label", "value": "#005CE5", "token": "badge/information/light/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Width × Height",
-                "value": "360 × 146",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "16 24 16 12",
-                "mono": true
-              },
-              {
-                "key": "Gap (icon ↔ content)",
-                "value": "24",
-                "mono": true
-              },
-              {
-                "key": "Gap (content ↔ chevron)",
-                "value": "24",
-                "mono": true
-              },
-              {
-                "key": "Bottom border",
-                "value": "1 px",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "64 × 64",
-                "mono": true
-              },
-              {
-                "key": "Chevron size",
-                "value": "32 × 32",
-                "mono": true
-              }
+              { "key": "Width × Height",         "value": "360 × 146", "mono": true },
+              { "key": "Padding",                "value": "16 24 16 12", "mono": true },
+              { "key": "Gap (icon ↔ content)",   "value": "24px", "mono": true },
+              { "key": "Gap (content ↔ chevron)","value": "24px", "mono": true },
+              { "key": "Bottom border",          "value": "1px", "mono": true },
+              { "key": "Icon size",              "value": "64 × 64", "mono": true },
+              { "key": "Chevron size",           "value": "32 × 32", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Heading",
-                "value": "HeyMeow Rnd Bold · 18 / 23 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Blurb",
-                "value": "HeyMeow Rnd Bold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "BarkAda Semibold · 12 / 18 · +0",
-                "mono": true
-              },
-              {
-                "key": "Tag label",
-                "value": "HeyMeow Rnd Bold · 12 / 12 · +0.5",
-                "mono": true
-              },
-              {
-                "key": "Badge label",
-                "value": "HeyMeow Rnd Bold · 12 / 12 · +0.5",
-                "mono": true
-              }
+              { "key": "Heading",     "value": "HeyMeow Rnd Bold · 18 / 23 · +0.25", "mono": true },
+              { "key": "Blurb",       "value": "HeyMeow Rnd Bold · 14 / 14 · +0.25", "mono": true },
+              { "key": "Description", "value": "BarkAda Semibold · 12 / 18 · +0", "mono": true },
+              { "key": "Tag label",   "value": "HeyMeow Rnd Bold · 12 / 12 · +0.5", "mono": true },
+              { "key": "Badge label", "value": "HeyMeow Rnd Bold · 12 / 12 · +0.5", "mono": true }
             ]
           },
           {
@@ -380,94 +308,46 @@ export const genericCard: ComponentData = {
       },
       {
         "cardKey": "skeleton-—-loading-state",
+        "demoKey": "skeleton",
+        "demoControls": genericCardDemoControls,
         "title": "Skeleton — loading state",
         "node": "18482:35832",
         "description": "The loading pattern for the card. Every content slot becomes a rounded rectangle placeholder in neutral gray. Use while awaiting data.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"gcard-spec-2\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"gcard-spec-skeleton\"></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "State",
-                "value": "Loading",
-                "mono": true
-              },
-              {
-                "key": "Has content",
-                "value": "No",
-                "mono": true
-              }
+              { "key": "iconSize", "value": "64",       "prop": "iconSize" },
+              { "key": "state",    "value": "Skeleton", "prop": "state" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Skeleton bg",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Skeleton bg token",
-                "value": "main/skeleton/bg",
-                "mono": true
-              },
-              {
-                "key": "Surface bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/card/bg",
-                "mono": true
-              }
+              { "key": "Skeleton bg", "value": "#EEF2F9", "token": "main/skeleton/bg" },
+              { "key": "Surface bg",  "value": "#FFFFFF", "token": "main/card/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Min height",
-                "value": "88",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "16",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "Icon placeholder",
-                "value": "64 × 64",
-                "mono": true
-              },
-              {
-                "key": "Bar 1 size",
-                "value": "120 × 14",
-                "mono": true
-              },
-              {
-                "key": "Bar 2 size",
-                "value": "180 × 10",
-                "mono": true
-              }
+              { "key": "Min height",       "value": "88px",   "mono": true },
+              { "key": "Padding",          "value": "16px",   "mono": true },
+              { "key": "Corner radius",    "value": "12px",   "mono": true },
+              { "key": "Icon placeholder", "value": "64 × 64", "mono": true },
+              { "key": "Bar 1 size",       "value": "120 × 14", "mono": true },
+              { "key": "Bar 2 size",       "value": "180 × 10", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "N/A",
-                "value": "No text in skeleton state",
-                "mono": false
-              }
+              { "key": "N/A", "value": "No text in skeleton state" }
             ]
           }
         ],

@@ -1,4 +1,30 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+const toggleDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'isActive',
+        prop: 'isActive',
+        defaultValue: 'No',
+        options: [
+          { value: 'No', label: 'No' },
+          { value: 'Yes', label: 'Yes' },
+        ],
+      },
+      {
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'Default',
+        options: [
+          { value: 'Default', label: 'Default' },
+          { value: 'Disabled', label: 'Disabled' },
+        ],
+      },
+    ],
+  },
+];
 
 export const toggle: ComponentData = {
   "meta": {
@@ -152,137 +178,48 @@ export const toggle: ComponentData = {
     ]
   },
   "style": {
+    "heading": "States",
     "specCards": [
       {
         "cardKey": "default-·-off",
+        "demoKey": "default-off",
+        "demoControls": toggleDemoControls,
         "title": "Default · Off",
         "node": "18482:36509",
         "description": "The \"off\" resting state. Gray track, white knob pinned left.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-default-off\"></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "State",
-                "value": "Default",
-                "mono": true
-              },
-              {
-                "key": "isActive",
-                "value": "No",
-                "mono": true
-              }
+              { "key": "State",    "value": "Default", "prop": "state" },
+              { "key": "isActive", "value": "No",      "prop": "isActive" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Inactive track",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Inactive track token",
-                "value": "toggle/color/default/inactive/bg-track",
-                "mono": true
-              },
-              {
-                "key": "Inactive indicator",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Inactive indicator token",
-                "value": "toggle/color/default/inactive/bg-indicator",
-                "mono": true
-              },
-              {
-                "key": "Active track",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active track token",
-                "value": "toggle/color/default/active/bg-track",
-                "mono": true
-              },
-              {
-                "key": "Active indicator",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Active indicator token",
-                "value": "toggle/color/default/active/bg-indicator",
-                "mono": true
-              },
-              {
-                "key": "Disabled inactive track",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Disabled inactive track token",
-                "value": "toggle/color/disabled/inactive/bg-track",
-                "mono": true
-              },
-              {
-                "key": "Disabled active track",
-                "value": "#9BC5FD",
-                "mono": true
-              },
-              {
-                "key": "Disabled active track token",
-                "value": "toggle/color/disabled/active/bg-track",
-                "mono": true
-              },
-              {
-                "key": "Disabled indicator",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Disabled indicator token",
-                "value": "toggle/color/disabled/inactive/bg-indicator",
-                "mono": true
-              }
+              { "key": "Track",     "value": "#C2CFE5", "token": "toggle/color/default/inactive/bg-track" },
+              { "key": "Indicator", "value": "#FFFFFF", "token": "toggle/color/default/inactive/bg-indicator" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Track size",
-                "value": "48 × 24",
-                "mono": true
-              },
-              {
-                "key": "Knob size",
-                "value": "20 × 20",
-                "mono": true
-              },
-              {
-                "key": "Knob inset",
-                "value": "2",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "12 (pill)",
-                "mono": true
-              }
+              { "key": "Track size",    "value": "48 × 24", "mono": true },
+              { "key": "Knob size",     "value": "20 × 20", "mono": true },
+              { "key": "Knob inset",    "value": "2px",     "mono": true },
+              { "key": "Corner radius", "value": "12px (pill)", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "N/A",
-                "value": "No text",
-                "mono": false
-              }
+              { "key": "N/A", "value": "No text" }
             ]
           }
         ],
@@ -291,84 +228,44 @@ export const toggle: ComponentData = {
       },
       {
         "cardKey": "default-·-on",
+        "demoKey": "default-on",
+        "demoControls": toggleDemoControls,
         "title": "Default · On",
         "node": "18482:36512",
         "description": "The \"on\" resting state. Brand-blue track, knob pinned right.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-2\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-default-on\"></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "State",
-                "value": "Default",
-                "mono": true
-              },
-              {
-                "key": "isActive",
-                "value": "Yes",
-                "mono": true
-              }
+              { "key": "State",    "value": "Default", "prop": "state" },
+              { "key": "isActive", "value": "Yes",     "prop": "isActive" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Active track",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active track token",
-                "value": "toggle/color/default/active/bg-track",
-                "mono": true
-              },
-              {
-                "key": "Active indicator",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Active indicator token",
-                "value": "toggle/color/default/active/bg-indicator",
-                "mono": true
-              }
+              { "key": "Track",     "value": "#005CE5", "token": "toggle/color/default/active/bg-track" },
+              { "key": "Indicator", "value": "#FFFFFF", "token": "toggle/color/default/active/bg-indicator" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Track size",
-                "value": "48 × 24",
-                "mono": true
-              },
-              {
-                "key": "Knob size",
-                "value": "20 × 20",
-                "mono": true
-              },
-              {
-                "key": "Knob inset",
-                "value": "2",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "12 (pill)",
-                "mono": true
-              }
+              { "key": "Track size",    "value": "48 × 24", "mono": true },
+              { "key": "Knob size",     "value": "20 × 20", "mono": true },
+              { "key": "Knob inset",    "value": "2px",     "mono": true },
+              { "key": "Corner radius", "value": "12px (pill)", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "N/A",
-                "value": "No text",
-                "mono": false
-              }
+              { "key": "N/A", "value": "No text" }
             ]
           }
         ],
@@ -377,84 +274,44 @@ export const toggle: ComponentData = {
       },
       {
         "cardKey": "disabled-·-off",
+        "demoKey": "disabled-off",
+        "demoControls": toggleDemoControls,
         "title": "Disabled · Off",
         "node": "18482:36515",
         "description": "Disabled off state. Muted gray track; interaction blocked.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-3\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-disabled-off\"></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "State",
-                "value": "Disabled",
-                "mono": true
-              },
-              {
-                "key": "isActive",
-                "value": "No",
-                "mono": true
-              }
+              { "key": "State",    "value": "Disabled", "prop": "state" },
+              { "key": "isActive", "value": "No",       "prop": "isActive" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Disabled inactive track",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Disabled inactive track token",
-                "value": "toggle/color/disabled/inactive/bg-track",
-                "mono": true
-              },
-              {
-                "key": "Disabled indicator",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Disabled indicator token",
-                "value": "toggle/color/disabled/inactive/bg-indicator",
-                "mono": true
-              }
+              { "key": "Track",     "value": "#EEF2F9", "token": "toggle/color/disabled/inactive/bg-track" },
+              { "key": "Indicator", "value": "#F6F9FD", "token": "toggle/color/disabled/inactive/bg-indicator" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Track size",
-                "value": "48 × 24",
-                "mono": true
-              },
-              {
-                "key": "Knob size",
-                "value": "20 × 20",
-                "mono": true
-              },
-              {
-                "key": "Knob inset",
-                "value": "2",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "12 (pill)",
-                "mono": true
-              }
+              { "key": "Track size",    "value": "48 × 24", "mono": true },
+              { "key": "Knob size",     "value": "20 × 20", "mono": true },
+              { "key": "Knob inset",    "value": "2px",     "mono": true },
+              { "key": "Corner radius", "value": "12px (pill)", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "N/A",
-                "value": "No text",
-                "mono": false
-              }
+              { "key": "N/A", "value": "No text" }
             ]
           }
         ],
@@ -463,84 +320,44 @@ export const toggle: ComponentData = {
       },
       {
         "cardKey": "disabled-·-on",
+        "demoKey": "disabled-on",
+        "demoControls": toggleDemoControls,
         "title": "Disabled · On",
         "node": "18482:36518",
         "description": "Disabled on state. Muted brand-blue track; interaction blocked.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-4\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-disabled-on\"></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "State",
-                "value": "Disabled",
-                "mono": true
-              },
-              {
-                "key": "isActive",
-                "value": "Yes",
-                "mono": true
-              }
+              { "key": "State",    "value": "Disabled", "prop": "state" },
+              { "key": "isActive", "value": "Yes",      "prop": "isActive" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Disabled active track",
-                "value": "#9BC5FD",
-                "mono": true
-              },
-              {
-                "key": "Disabled active track token",
-                "value": "toggle/color/disabled/active/bg-track",
-                "mono": true
-              },
-              {
-                "key": "Disabled indicator",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Disabled indicator token",
-                "value": "toggle/color/disabled/inactive/bg-indicator",
-                "mono": true
-              }
+              { "key": "Track",     "value": "#9BC5FD", "token": "toggle/color/disabled/active/bg-track" },
+              { "key": "Indicator", "value": "#F6F9FD", "token": "toggle/color/disabled/inactive/bg-indicator" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Track size",
-                "value": "48 × 24",
-                "mono": true
-              },
-              {
-                "key": "Knob size",
-                "value": "20 × 20",
-                "mono": true
-              },
-              {
-                "key": "Knob inset",
-                "value": "2",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "12 (pill)",
-                "mono": true
-              }
+              { "key": "Track size",    "value": "48 × 24", "mono": true },
+              { "key": "Knob size",     "value": "20 × 20", "mono": true },
+              { "key": "Knob inset",    "value": "2px",     "mono": true },
+              { "key": "Corner radius", "value": "12px (pill)", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "N/A",
-                "value": "No text",
-                "mono": false
-              }
+              { "key": "N/A", "value": "No text" }
             ]
           }
         ],

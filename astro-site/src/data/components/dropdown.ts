@@ -1,4 +1,32 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+const dropdownDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Variant',
+        prop: 'variant',
+        defaultValue: 'Text',
+        options: [
+          { value: 'Text', label: 'Text' },
+          { value: 'Error', label: 'Error' },
+          { value: 'Amount', label: 'Amount' },
+          { value: 'Mobile', label: 'Mobile' },
+        ],
+      },
+      {
+        label: 'Type',
+        prop: 'type',
+        defaultValue: 'Collapsed',
+        options: [
+          { value: 'Collapsed', label: 'Collapsed' },
+          { value: 'Expanded', label: 'Expanded' },
+        ],
+      },
+    ],
+  },
+];
 
 export const dropdown: ComponentData = {
   "meta": {
@@ -159,520 +187,228 @@ export const dropdown: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Variants",
     "specCards": [
       {
         "cardKey": "dd-spec-text",
+        "demoKey": "text",
+        "demoControls": dropdownDemoControls,
         "title": "Text",
         "node": "18482:31966",
         "description": "Default text dropdown. Label header, select trigger with placeholder text and chevron, optional subtext. Used for general-purpose list selection.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Text",
-                "mono": false
-              }
+              { "key": "Variant", "value": "Text", "prop": "variant" },
+              { "key": "Type",    "value": "Collapsed", "prop": "type" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "selected-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "selected-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "selected-field/default/value",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "selected-field/default/icon",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "selected-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg",          "value": "#FFFFFF", "token": "selected-field/default/bg" },
+              { "key": "Border",      "value": "#D7E0EF", "token": "selected-field/default/border" },
+              { "key": "Value",       "value": "#0A2757", "token": "selected-field/default/value" },
+              { "key": "Icon",        "value": "#005CE5", "token": "selected-field/default/icon" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
+              { "key": "Field height", "value": "48px",  "mono": true },
+              { "key": "Padding H",    "value": "12px",  "mono": true },
+              { "key": "Padding V",    "value": "14px",  "mono": true },
+              { "key": "Border radius","value": "6px",   "mono": true },
+              { "key": "Border",       "value": "1px solid", "mono": true },
+              { "key": "Icon size",    "value": "20 × 20", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Text Style",   "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Font",         "value": "Proxima Soft Semibold", "mono": true },
+              { "key": "Size",         "value": "14px", "mono": true },
+              { "key": "Tracking",     "value": "0.25px", "mono": true },
+              { "key": "Line-height",  "value": "14px", "mono": true }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">, </span>options<span class=\"syn-punc\">: </span>items<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    options <span class=\"syn-eq\">=</span> items<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"68\" viewBox=\"0 0 366 68\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><defs><filter id=\"ddShadow\" x=\"-4\" y=\"64\" width=\"374\" height=\"410\" filterUnits=\"userSpaceOnUse\"><feDropShadow dx=\"0\" dy=\"6\" stdDeviation=\"6\" flood-color=\"#020E22\" flood-opacity=\"0.16\"></feDropShadow></filter></defs><text x=\"2\" y=\"12\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"white\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"48\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" fill=\"#90A8D0\">Select option</text><path d=\"M339 42l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"dd-text-preview\"></div>"
       },
       {
         "cardKey": "dd-spec-error",
+        "demoKey": "error",
+        "demoControls": dropdownDemoControls,
         "title": "Error",
         "node": "18482:31955",
         "description": "Error state dropdown with red border. Collapsed uses weak border (#F4C7C9), expanded uses strong border (#D61B2C). Subtext turns red for error messaging.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Error",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Error",
-                "mono": false
-              }
+              { "key": "Variant", "value": "Error", "prop": "variant" },
+              { "key": "Type",    "value": "Collapsed", "prop": "type" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "selected-field/error/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "selected-field/error/border",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "selected-field/error/value",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "selected-field/error/icon",
-                "mono": true
-              }
+              { "key": "Bg",     "value": "#FFFFFF", "token": "selected-field/error/bg" },
+              { "key": "Border", "value": "#F4C7C9", "token": "selected-field/error/border" },
+              { "key": "Value",  "value": "#0A2757", "token": "selected-field/error/value" },
+              { "key": "Icon",   "value": "#005CE5", "token": "selected-field/error/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
+              { "key": "Field height", "value": "48px",  "mono": true },
+              { "key": "Padding H",    "value": "12px",  "mono": true },
+              { "key": "Padding V",    "value": "14px",  "mono": true },
+              { "key": "Border radius","value": "6px",   "mono": true },
+              { "key": "Border",       "value": "2px solid", "mono": true },
+              { "key": "Icon size",    "value": "20 × 20", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Text Style",  "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Font",        "value": "Proxima Soft Semibold", "mono": true },
+              { "key": "Size",        "value": "14px", "mono": true },
+              { "key": "Tracking",    "value": "0.25px", "mono": true },
+              { "key": "Line-height", "value": "14px", "mono": true }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">, </span>options<span class=\"syn-punc\">: </span>items<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    options <span class=\"syn-eq\">=</span> items<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Error</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"68\" viewBox=\"0 0 366 68\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><defs><filter id=\"ddShadow\" x=\"-4\" y=\"64\" width=\"374\" height=\"410\" filterUnits=\"userSpaceOnUse\"><feDropShadow dx=\"0\" dy=\"6\" stdDeviation=\"6\" flood-color=\"#020E22\" flood-opacity=\"0.16\"></feDropShadow></filter></defs><text x=\"2\" y=\"12\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"white\" stroke=\"#F4C7C9\" stroke-width=\"2\"></rect><text x=\"12\" y=\"48\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" fill=\"#90A8D0\">Select option</text><path d=\"M339 42l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"dd-error-preview\"></div>"
       },
       {
         "cardKey": "dd-spec-amount",
+        "demoKey": "amount",
+        "demoControls": dropdownDemoControls,
         "title": "Amount",
         "node": "18482:31944",
         "description": "Amount selection with peso sign prefix. Same trigger structure as Text but with a currency indicator for monetary value selection.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Amount",
-                "mono": false
-              }
+              { "key": "Variant", "value": "Amount", "prop": "variant" },
+              { "key": "Type",    "value": "Collapsed", "prop": "type" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "selected-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "selected-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "selected-field/default/value",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "selected-field/default/icon",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "selected-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg",          "value": "#FFFFFF", "token": "selected-field/default/bg" },
+              { "key": "Border",      "value": "#D7E0EF", "token": "selected-field/default/border" },
+              { "key": "Value",       "value": "#0A2757", "token": "selected-field/default/value" },
+              { "key": "Icon",        "value": "#005CE5", "token": "selected-field/default/icon" },
+              { "key": "Peso sign",   "value": "#183462", "token": "selected-field/default/icon-currency" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
+              { "key": "Field height",   "value": "48px",  "mono": true },
+              { "key": "Padding H",      "value": "12px",  "mono": true },
+              { "key": "Padding V",      "value": "14px",  "mono": true },
+              { "key": "Border radius",  "value": "6px",   "mono": true },
+              { "key": "Border",         "value": "1px solid", "mono": true },
+              { "key": "Icon size",      "value": "20 × 20", "mono": true },
+              { "key": "Peso sign size", "value": "15 × 15", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Text Style",  "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Font",        "value": "Proxima Soft Semibold", "mono": true },
+              { "key": "Size",        "value": "14px", "mono": true },
+              { "key": "Tracking",    "value": "0.25px", "mono": true },
+              { "key": "Line-height", "value": "14px", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">, </span>options<span class=\"syn-punc\">: </span>items<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    options <span class=\"syn-eq\">=</span> items<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"68\" viewBox=\"0 0 366 68\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><defs><filter id=\"ddShadow\" x=\"-4\" y=\"64\" width=\"374\" height=\"410\" filterUnits=\"userSpaceOnUse\"><feDropShadow dx=\"0\" dy=\"6\" stdDeviation=\"6\" flood-color=\"#020E22\" flood-opacity=\"0.16\"></feDropShadow></filter></defs><text x=\"2\" y=\"12\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"white\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"48\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#183462\" dominant-baseline=\"central\">₱</text><text x=\"30\" y=\"48\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" fill=\"#90A8D0\">Select option</text><path d=\"M339 42l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+        "swift": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">, </span>options<span class=\"syn-punc\">: </span>items<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.amount</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    options <span class=\"syn-eq\">=</span> items<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDropdownStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Amount</span>\n<span class=\"syn-punc\">)</span>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"dd-amount-preview\"></div>"
       },
       {
         "cardKey": "dd-spec-mobile",
+        "demoKey": "mobile",
+        "demoControls": dropdownDemoControls,
         "title": "Mobile",
         "node": "18482:31911",
         "description": "Country code dropdown with phone number input. Bundles a label row (with info icon), a select field for country code, and a Labeled Field for phone number entry. Product-specific to GCash mobile number flows.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Mobile",
-                "mono": false
-              }
+              { "key": "Variant", "value": "Mobile", "prop": "variant" },
+              { "key": "Type",    "value": "Collapsed", "prop": "type" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "selected-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "selected-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "selected-field/default/value",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "selected-field/default/icon",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "selected-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg",          "value": "#FFFFFF", "token": "selected-field/default/bg" },
+              { "key": "Border",      "value": "#D7E0EF", "token": "selected-field/default/border" },
+              { "key": "Value",       "value": "#0A2757", "token": "selected-field/default/value" },
+              { "key": "Icon",        "value": "#005CE5", "token": "selected-field/default/icon" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
+              { "key": "Field height", "value": "48px",  "mono": true },
+              { "key": "Padding H",    "value": "12px",  "mono": true },
+              { "key": "Padding V",    "value": "14px",  "mono": true },
+              { "key": "Border radius","value": "6px",   "mono": true },
+              { "key": "Border",       "value": "1px solid", "mono": true },
+              { "key": "Icon size",    "value": "20 × 20", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Text Style",  "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Font",        "value": "Proxima Soft Semibold", "mono": true },
+              { "key": "Size",        "value": "14px", "mono": true },
+              { "key": "Tracking",    "value": "0.25px", "mono": true },
+              { "key": "Line-height", "value": "14px", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">, </span>options<span class=\"syn-punc\">: </span>items<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    options <span class=\"syn-eq\">=</span> items<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"118\" viewBox=\"0 0 366 118\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"2\" y=\"12\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><circle cx=\"52\" cy=\"8\" r=\"8\" stroke=\"#0A2757\" stroke-width=\"1\" fill=\"none\" opacity=\".4\"></circle><text x=\"49\" y=\"12\" font-family=\"system-ui\" font-size=\"10\" fill=\"#0A2757\" opacity=\".4\">i</text><rect x=\"0.5\" y=\"22.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"white\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"48\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" fill=\"#90A8D0\">Select option</text><path d=\"M339 42l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><rect x=\"0.5\" y=\"76.5\" width=\"365\" height=\"37\" rx=\"5.5\" fill=\"white\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"98\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">+63</text><text x=\"52\" y=\"98\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" fill=\"#90A8D0\">XXX XXX XXXX</text></svg>"
+        "swift": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">, </span>options<span class=\"syn-punc\">: </span>items<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.mobile</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    options <span class=\"syn-eq\">=</span> items<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDropdownStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Mobile</span>\n<span class=\"syn-punc\">)</span>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"dd-mobile-preview\"></div>"
       }
     ],
     "colorsTables": [

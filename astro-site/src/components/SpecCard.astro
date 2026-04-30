@@ -17,22 +17,43 @@ interface SpecRow {
   key: string;
   value: string;
   mono?: boolean;
+  token?: string;
+  swatch?: boolean;
+  prop?: string;
 }
 interface SpecSection {
   label: string;
   rows: SpecRow[];
+  slug?: string;
+}
+interface DemoControlOption {
+  value: string;
+  label: string;
+}
+interface DemoControlRow {
+  label: string;
+  prop: string;
+  options: DemoControlOption[];
+  defaultValue?: string;
+}
+interface DemoControlSection {
+  heading: string;
+  rows: DemoControlRow[];
 }
 interface Props {
   cardKey: string;
+  demoKey?: string;
   title: string;
   node: string;
   description: string;
   previewHtml?: string;
+  demoControls?: DemoControlSection[];
   sections: SpecSection[];
   swift: string;
   compose: string;
 }
-const { cardKey, title, node, description, previewHtml, sections, swift, compose } = Astro.props;
+const { cardKey, demoKey, title, node, description, previewHtml, demoControls, sections, swift, compose } = Astro.props;
+const updateKey = demoKey || cardKey;
 ---
 <div class="spec-card" id={`spec-card-${cardKey}`}>
   <div class="spec-card-header">
@@ -47,7 +68,7 @@ const { cardKey, title, node, description, previewHtml, sections, swift, compose
         </svg>
         <span>{node}</span>
       </button>
-      <div class="spec-mode-toggle" onclick={`toggleSpecMode('${cardKey}', this)`}>
+      <div class="spec-mode-toggle" onclick={`toggleSpecMode('${updateKey}', this)`}>
         <span class="spec-mode-label active">DES</span>
         <span class="spec-mode-label">DEV</span>
       </div>
@@ -55,36 +76,86 @@ const { cardKey, title, node, description, previewHtml, sections, swift, compose
     <p class="spec-card-desc">{description}</p>
   </div>
 
-  {previewHtml && (
+  {previewHtml && demoControls && demoControls.length > 0 ? (
+    <div class="demo-layout">
+      <div class="spec-card-preview" set:html={previewHtml} />
+      <div class="demo-figma-panel">
+        {demoControls.map((section) => (
+          <div class="demo-panel-section">
+            <div class="demo-panel-heading">{section.heading}</div>
+            {section.rows.map((row) => (
+              <div class="demo-panel-row">
+                <span class="demo-panel-label">{row.label}</span>
+                <select
+                  class="demo-panel-select"
+                  onchange={`updateSpecCard('${updateKey}', '${row.prop}', this.value)`}
+                >
+                  {row.options.map((opt) => (
+                    <option value={opt.value} selected={row.defaultValue === opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  ) : previewHtml ? (
     <div class="spec-card-preview-row">
       <div class="spec-preview-frame">
         <div class="spec-preview-body" set:html={previewHtml} />
       </div>
     </div>
-  )}
+  ) : null}
 
-  <div class="spec-card-detail spec-view-des" data-view={`${cardKey}-des`}>
-    {sections.map((section) => (
-      <div class="spec-detail-section">
-        <div class="spec-detail-label">{section.label}</div>
-        <div class="spec-props">
-          {section.rows.map((row) => (
-            <div class="spec-prop">
-              <span class="spec-prop-key">{row.key}</span>
-              <span class={`spec-prop-val${row.mono ? ' mono' : ''}`} set:html={row.value} />
-            </div>
-          ))}
+  <div class="spec-card-detail spec-view-des" data-view={`${updateKey}-des`}>
+    {sections.map((section) => {
+      const sectionSlug = section.slug || section.label.toLowerCase();
+      const sectionId = `spec-${updateKey}-${sectionSlug}`;
+      return (
+        <div class="spec-detail-section" id={sectionId}>
+          <div class="spec-detail-label">{section.label}</div>
+          <div class="spec-props">
+            {section.rows.map((row) => {
+              const isHex = typeof row.value === 'string' && row.value.trim().startsWith('#');
+              const showSwatch = row.swatch ?? isHex;
+              const dataSp = row.prop ? `${updateKey}-${row.prop}` : undefined;
+              return (
+                <div class={`spec-prop${row.token ? ' has-token' : ''}`}>
+                  <span class="spec-prop-key">{row.key}</span>
+                  <span
+                    class={`spec-prop-val${row.mono ? ' mono' : ''}`}
+                    data-sp={dataSp}
+                  >
+                    {showSwatch && (
+                      <span class="spec-swatch" style={`background:${row.value}`} aria-hidden="true"></span>
+                    )}
+                    <span class="spec-prop-hex" set:html={row.value} />
+                  </span>
+                  {row.token && (
+                    <span class="spec-token-name">{row.token}</span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
-    ))}
+      );
+    })}
   </div>
 
-  <div class="spec-card-detail spec-card-code" data-view={`${cardKey}-dev`} style="display:none">
+  <div class="spec-card-detail spec-card-code" data-view={`${updateKey}-dev`} style="display:none">
     <div class="spec-code-tabs">
-      <button class="spec-code-tab active" onclick="switchCodeTab(this, 'swift')">SWIFTUI</button>
-      <button class="spec-code-tab" onclick="switchCodeTab(this, 'compose')">COMPOSE</button>
+      <button class="spec-code-tab active" onclick={`switchCodeTab(this, 'swift', '${updateKey}')`}>SWIFTUI</button>
+      <button class="spec-code-tab" onclick={`switchCodeTab(this, 'compose', '${updateKey}')`}>COMPOSE</button>
     </div>
-    <pre class="spec-code-block" data-lang="swift"><code set:html={swift} /></pre>
-    <pre class="spec-code-block" data-lang="compose" style="display:none"><code set:html={compose} /></pre>
+    {/* Single <code> block — initial content is the SwiftUI HTML from
+        the data file (gives us a syntax-highlighted SSR fallback when
+        JS is off). On JS load, the per-component demo script's
+        `updateSpecCard()` swaps `data-final` to plaintext and the
+        shared `highlightSyntax()` re-applies highlighting. */}
+    <pre class="spec-code-block"><code data-code-content={updateKey} data-lang="swift" set:html={swift} /></pre>
   </div>
 </div>

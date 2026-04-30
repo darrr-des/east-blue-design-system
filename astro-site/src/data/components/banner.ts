@@ -1,4 +1,60 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(demoKey, prop, value)`
+// in `public/scripts/demos/banner.js`.
+const bannerDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Property',
+        prop: 'property',
+        defaultValue: 'container',
+        options: [
+          { value: 'container', label: 'Within A Container' },
+          { value: 'full', label: 'Full Width' },
+        ],
+      },
+      {
+        label: 'Position',
+        prop: 'position',
+        defaultValue: 'left',
+        options: [
+          { value: 'left', label: 'Left' },
+          { value: 'right', label: 'Right' },
+        ],
+      },
+      {
+        label: 'With Preamble',
+        prop: 'hasPreamble',
+        defaultValue: 'no',
+        options: [
+          { value: 'yes', label: 'Yes' },
+          { value: 'no', label: 'No' },
+        ],
+      },
+      {
+        label: 'With Icon',
+        prop: 'hasIcon',
+        defaultValue: 'no',
+        options: [
+          { value: 'no', label: 'No' },
+          { value: 'yes', label: 'Yes' },
+        ],
+      },
+      {
+        label: 'Action',
+        prop: 'action',
+        defaultValue: 'button',
+        options: [
+          { value: 'button', label: 'Button' },
+          { value: 'link', label: 'Link' },
+          { value: 'none', label: 'None' },
+        ],
+      },
+    ],
+  },
+];
 
 export const banner: ComponentData = {
   "meta": {
@@ -223,167 +279,65 @@ export const banner: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Variants",
     "specCards": [
       {
         "cardKey": "bnr-spec-card-1",
+        "demoKey": "container-pre",
+        "demoControls": bannerDemoControls,
         "title": "Within A Container · with preamble",
         "node": "756:82655",
         "description": "The most content-rich variant — preamble + heading + description + button link, with the image on the right and the content column left-aligned. Wraps in a rounded card with 12px outer padding.",
-        "previewHtml": "<div class=\"eb-preview eb-preview-bnr eb-preview-bnr--container eb-preview-bnr--img-right\"><div class=\"eb-preview-bnr__card\"><div class=\"eb-preview-bnr__content\"><div class=\"eb-preview-bnr__preamble\">Preamble</div><div class=\"eb-preview-bnr__heading\">Heading</div><div class=\"eb-preview-bnr__desc\">Add description here.</div><div class=\"eb-preview-bnr__link\"><span>Button</span><svg class=\"eb-preview-bnr__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" width=\"16\" height=\"16\"><path d=\"M9 6l6 6-6 6\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div><div class=\"eb-preview-bnr__asset\"><div class=\"eb-preview-bnr__asset-disk\"></div><div class=\"eb-preview-bnr__asset-chip\">Replace me</div></div></div></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"bnr-spec-container-pre-preview\"><div class=\"eb-preview eb-preview-bnr eb-preview-bnr--container eb-preview-bnr--img-right\"><div class=\"eb-preview-bnr__card\"><div class=\"eb-preview-bnr__content\"><div class=\"eb-preview-bnr__preamble\">Preamble</div><div class=\"eb-preview-bnr__heading\">Heading</div><div class=\"eb-preview-bnr__desc\">Add description here.</div><div class=\"eb-preview-bnr__link\"><span>Button</span><svg class=\"eb-preview-bnr__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" width=\"16\" height=\"16\"><path d=\"M9 6l6 6-6 6\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div><div class=\"eb-preview-bnr__asset\"><div class=\"eb-preview-bnr__asset-disk\"></div><div class=\"eb-preview-bnr__asset-chip\">Replace me</div></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Property",
-                "value": "Within A Container",
-                "mono": false
-              },
-              {
-                "key": "position",
-                "value": "left",
-                "mono": false
-              },
-              {
-                "key": "with preamble",
-                "value": "yes",
-                "mono": false
-              },
-              {
-                "key": "with button",
-                "value": "yes",
-                "mono": false
-              },
-              {
-                "key": "with icon",
-                "value": "no",
-                "mono": false
-              }
+              { "key": "Property",      "value": "Within A Container", "prop": "property" },
+              { "key": "Position",      "value": "left",               "prop": "position" },
+              { "key": "With preamble", "value": "yes",                "prop": "hasPreamble" },
+              { "key": "With icon",     "value": "no",                 "prop": "hasIcon" },
+              { "key": "Action",        "value": "button",             "prop": "action" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Card bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Card bg token",
-                "value": "banner/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Preamble",
-                "value": "#072592 (60%)",
-                "mono": true
-              },
-              {
-                "key": "Heading",
-                "value": "#072592",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Action label",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Chevron tint",
-                "value": "#005CE5",
-                "mono": true
-              }
+              { "key": "Card bg",      "value": "#FFFFFF",      "token": "banner/color/bg" },
+              { "key": "Preamble",     "value": "#072592",      "token": "banner/color/preamble" },
+              { "key": "Heading",      "value": "#072592",      "token": "banner/color/heading" },
+              { "key": "Description",  "value": "#6780A9",      "token": "banner/color/description" },
+              { "key": "Action label", "value": "#005CE5",      "token": "banner/color/action" },
+              { "key": "Chevron tint", "value": "#005CE5",      "token": "banner/color/chevron" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Outer frame",
-                "value": "360 &#215; 155 (hug)",
-                "mono": true
-              },
-              {
-                "key": "Outer padding",
-                "value": "12 (space/space-12)",
-                "mono": true
-              },
-              {
-                "key": "Inner card padding",
-                "value": "16",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "radius/radius-3 (8px)",
-                "mono": true
-              },
-              {
-                "key": "Content column",
-                "value": "216 (pl=120 for image)",
-                "mono": true
-              },
-              {
-                "key": "Content gap",
-                "value": "2 lines &#183; 16 before button",
-                "mono": true
-              },
-              {
-                "key": "Image area",
-                "value": "360 &#215; 152 absolute",
-                "mono": true
-              },
-              {
-                "key": "Chevron",
-                "value": "24 &#215; 24",
-                "mono": true
-              }
+              { "key": "Outer frame",        "value": "360 &#215; 155 (hug)",            "mono": true },
+              { "key": "Outer padding",      "value": "12 (space/space-12)",             "mono": true },
+              { "key": "Inner card padding", "value": "16",                              "mono": true },
+              { "key": "Corner radius",      "value": "radius/radius-3 (8px)",           "mono": true },
+              { "key": "Content column",    "value": "216 (pl=120 for image)",           "mono": true },
+              { "key": "Content gap",       "value": "2 lines &#183; 16 before button",  "mono": true },
+              { "key": "Image area",        "value": "360 &#215; 152 absolute",          "mono": true },
+              { "key": "Chevron",           "value": "24 &#215; 24",                     "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Preamble style",
-                "value": "Primary/Label/Fine",
-                "mono": true
-              },
-              {
-                "key": "Preamble font",
-                "value": "Proxima Soft Bold &#183; 12/12 &#183; +0.5",
-                "mono": true
-              },
-              {
-                "key": "Heading style",
-                "value": "Primary/Headlines/Block",
-                "mono": true
-              },
-              {
-                "key": "Heading font",
-                "value": "Proxima Soft Bold &#183; 18/23 &#183; +0.25",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Caption",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold &#183; 12/18",
-                "mono": true
-              },
-              {
-                "key": "Action label",
-                "value": "Secondary/Heavy/Base &#183; 14/20",
-                "mono": true
-              }
+              { "key": "Preamble style",    "value": "Primary/Label/Fine",                          "mono": true },
+              { "key": "Preamble font",     "value": "Proxima Soft Bold &#183; 12/12 &#183; +0.5",  "mono": true },
+              { "key": "Heading style",     "value": "Primary/Headlines/Block",                     "mono": true },
+              { "key": "Heading font",      "value": "Proxima Soft Bold &#183; 18/23 &#183; +0.25", "mono": true },
+              { "key": "Description style", "value": "Secondary/Bold/Caption",                      "mono": true },
+              { "key": "Description font",  "value": "BarkAda Semibold &#183; 12/18",               "mono": true },
+              { "key": "Action label",      "value": "Secondary/Heavy/Base &#183; 14/20",           "mono": true }
             ]
           }
         ],
@@ -392,114 +346,53 @@ export const banner: ComponentData = {
       },
       {
         "cardKey": "bnr-spec-card-2",
+        "demoKey": "full-button",
+        "demoControls": bannerDemoControls,
         "title": "Full Width · with button",
         "node": "756:82667",
         "description": "Edge-to-edge variant — no outer padding, no corner radius. The banner's own 16px padding sits directly against the screen edges. Used when the banner is the hero element of the section.",
-        "previewHtml": "<div class=\"eb-preview eb-preview-bnr eb-preview-bnr--full eb-preview-bnr--img-right\"><div class=\"eb-preview-bnr__card\"><div class=\"eb-preview-bnr__content\"><div class=\"eb-preview-bnr__heading\">Heading</div><div class=\"eb-preview-bnr__desc\">Add description here.</div><div class=\"eb-preview-bnr__link\"><span>Button</span><svg class=\"eb-preview-bnr__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" width=\"16\" height=\"16\"><path d=\"M9 6l6 6-6 6\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div><div class=\"eb-preview-bnr__asset\"><div class=\"eb-preview-bnr__asset-disk\"></div><div class=\"eb-preview-bnr__asset-chip\">Replace me</div></div></div></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"bnr-spec-full-button-preview\"><div class=\"eb-preview eb-preview-bnr eb-preview-bnr--full eb-preview-bnr--img-right\"><div class=\"eb-preview-bnr__card\"><div class=\"eb-preview-bnr__content\"><div class=\"eb-preview-bnr__heading\">Heading</div><div class=\"eb-preview-bnr__desc\">Add description here.</div><div class=\"eb-preview-bnr__link\"><span>Button</span><svg class=\"eb-preview-bnr__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" width=\"16\" height=\"16\"><path d=\"M9 6l6 6-6 6\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div><div class=\"eb-preview-bnr__asset\"><div class=\"eb-preview-bnr__asset-disk\"></div><div class=\"eb-preview-bnr__asset-chip\">Replace me</div></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Property",
-                "value": "Full Width",
-                "mono": false
-              },
-              {
-                "key": "position",
-                "value": "right",
-                "mono": false
-              },
-              {
-                "key": "with preamble",
-                "value": "no",
-                "mono": false
-              },
-              {
-                "key": "with button",
-                "value": "yes",
-                "mono": false
-              }
+              { "key": "Property",      "value": "Full Width", "prop": "property" },
+              { "key": "Position",      "value": "right",      "prop": "position" },
+              { "key": "With preamble", "value": "no",         "prop": "hasPreamble" },
+              { "key": "With icon",     "value": "no",         "prop": "hasIcon" },
+              { "key": "Action",        "value": "button",     "prop": "action" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Card bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Heading",
-                "value": "#072592",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Action label",
-                "value": "#005CE5",
-                "mono": true
-              }
+              { "key": "Card bg",      "value": "#FFFFFF", "token": "banner/color/bg" },
+              { "key": "Heading",      "value": "#072592", "token": "banner/color/heading" },
+              { "key": "Description",  "value": "#6780A9", "token": "banner/color/description" },
+              { "key": "Action label", "value": "#005CE5", "token": "banner/color/action" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Width × Height",
-                "value": "360 &#215; 119 (hug)",
-                "mono": true
-              },
-              {
-                "key": "Outer padding",
-                "value": "0 (full-width)",
-                "mono": true
-              },
-              {
-                "key": "Inner padding",
-                "value": "16",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "0",
-                "mono": true
-              },
-              {
-                "key": "Content column",
-                "value": "184",
-                "mono": true
-              },
-              {
-                "key": "Image area",
-                "value": "360 &#215; 152 absolute",
-                "mono": true
-              }
+              { "key": "Width × Height", "value": "360 &#215; 119 (hug)",      "mono": true },
+              { "key": "Outer padding",  "value": "0 (full-width)",            "mono": true },
+              { "key": "Inner padding",  "value": "16",                        "mono": true },
+              { "key": "Corner radius",  "value": "0",                         "mono": true },
+              { "key": "Content column", "value": "184",                       "mono": true },
+              { "key": "Image area",     "value": "360 &#215; 152 absolute",   "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Heading style",
-                "value": "Primary/Headlines/Block",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Caption",
-                "mono": true
-              },
-              {
-                "key": "Action label",
-                "value": "Secondary/Heavy/Base",
-                "mono": true
-              }
+              { "key": "Heading style",     "value": "Primary/Headlines/Block",  "mono": true },
+              { "key": "Description style", "value": "Secondary/Bold/Caption",   "mono": true },
+              { "key": "Action label",      "value": "Secondary/Heavy/Base",     "mono": true }
             ]
           }
         ],
@@ -508,99 +401,50 @@ export const banner: ComponentData = {
       },
       {
         "cardKey": "bnr-spec-card-3",
+        "demoKey": "container-icon",
+        "demoControls": bannerDemoControls,
         "title": "Within A Container · icon · no action",
         "node": "756:82657",
         "description": "Icon-led variant — replaces the image with a drawn grey circle placeholder. No action CTA. Used when the banner is informational rather than promotional.",
-        "previewHtml": "<div class=\"eb-preview eb-preview-bnr eb-preview-bnr--container eb-preview-bnr--img-left\"><div class=\"eb-preview-bnr__card\"><div class=\"eb-preview-bnr__asset eb-preview-bnr__asset--icon\"><div class=\"eb-preview-bnr__icon-dot\"></div></div><div class=\"eb-preview-bnr__content\"><div class=\"eb-preview-bnr__heading\">Heading</div><div class=\"eb-preview-bnr__desc\">This is a description for this banner. This is a description for this banner.</div></div></div></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"bnr-spec-container-icon-preview\"><div class=\"eb-preview eb-preview-bnr eb-preview-bnr--container eb-preview-bnr--img-left\"><div class=\"eb-preview-bnr__card\"><div class=\"eb-preview-bnr__asset eb-preview-bnr__asset--icon\"><div class=\"eb-preview-bnr__icon-dot\"></div></div><div class=\"eb-preview-bnr__content\"><div class=\"eb-preview-bnr__heading\">Heading</div><div class=\"eb-preview-bnr__desc\">This is a description for this banner. This is a description for this banner.</div></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Property",
-                "value": "Within A Container",
-                "mono": false
-              },
-              {
-                "key": "position",
-                "value": "left",
-                "mono": false
-              },
-              {
-                "key": "with icon",
-                "value": "yes",
-                "mono": false
-              },
-              {
-                "key": "with button",
-                "value": "no",
-                "mono": false
-              }
+              { "key": "Property",      "value": "Within A Container", "prop": "property" },
+              { "key": "Position",      "value": "left",               "prop": "position" },
+              { "key": "With preamble", "value": "no",                 "prop": "hasPreamble" },
+              { "key": "With icon",     "value": "yes",                "prop": "hasIcon" },
+              { "key": "Action",        "value": "none",               "prop": "action" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Card bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Icon placeholder",
-                "value": "#C2C6CF",
-                "mono": true
-              },
-              {
-                "key": "Heading",
-                "value": "#072592",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              }
+              { "key": "Card bg",          "value": "#FFFFFF", "token": "banner/color/bg" },
+              { "key": "Icon placeholder", "value": "#C2C6CF", "token": "banner/color/icon-placeholder" },
+              { "key": "Heading",          "value": "#072592", "token": "banner/color/heading" },
+              { "key": "Description",      "value": "#6780A9", "token": "banner/color/description" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Outer frame",
-                "value": "360 &#215; 176 (hug)",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "19.7 &#215; 19.7 circle",
-                "mono": true
-              },
-              {
-                "key": "Content column",
-                "value": "240 (pl=119)",
-                "mono": true
-              },
-              {
-                "key": "Gap",
-                "value": "4 between icon and heading",
-                "mono": true
-              }
+              { "key": "Outer frame",    "value": "360 &#215; 176 (hug)",      "mono": true },
+              { "key": "Icon",           "value": "19.7 &#215; 19.7 circle",   "mono": true },
+              { "key": "Content column", "value": "240 (pl=119)",              "mono": true },
+              { "key": "Gap",            "value": "4 between icon and heading","mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Heading style",
-                "value": "Primary/Headlines/Block",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Caption",
-                "mono": true
-              }
+              { "key": "Heading style",     "value": "Primary/Headlines/Block",  "mono": true },
+              { "key": "Description style", "value": "Secondary/Bold/Caption",   "mono": true }
             ]
           }
         ],

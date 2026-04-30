@@ -129,14 +129,60 @@
   };
 
   // ── SwiftUI / Compose code tab switch ────────────────────────────────
-  window.switchCodeTab = function (tabBtn, lang) {
+  // Two call signatures:
+  //   switchCodeTab(btn, 'swift')              — legacy two-pre layout
+  //   switchCodeTab(btn, 'swift', 'filled')    — single-code block;
+  //     re-runs `getSnippet(cardStyle, lang, _specCards[cardStyle])`
+  //     and `highlightSyntax()` so the visible language updates live.
+  window.switchCodeTab = function (tabBtn, lang, cardStyle) {
     var block = tabBtn.closest('.spec-card-code');
     if (!block) return;
     block.querySelectorAll('.spec-code-tab').forEach(function (t) { t.classList.remove('active'); });
     tabBtn.classList.add('active');
+
+    if (cardStyle && typeof window.getSnippet === 'function') {
+      var codeEl = block.querySelector('[data-code-content="' + cardStyle + '"]');
+      var card = window._specCards && window._specCards[cardStyle];
+      if (codeEl && card) {
+        var code = window.getSnippet(cardStyle, lang, card);
+        codeEl.setAttribute('data-final', code);
+        codeEl.setAttribute('data-lang', lang);
+        codeEl.textContent = code;
+        if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+      }
+      return;
+    }
+
+    // Legacy two-pre fallback
     block.querySelectorAll('.spec-code-block').forEach(function (pre) {
       pre.style.display = pre.getAttribute('data-lang') === lang ? '' : 'none';
     });
+  };
+
+  // ── Lightweight syntax highlighter for spec-card code blocks ────────
+  // Reads `data-final` (plaintext code) or `textContent`, applies
+  // span wrappers via regex, and writes innerHTML. Same set of token
+  // classes (.syn-cmt, .syn-str, .syn-kw, .syn-val, .syn-type,
+  // .syn-param, .syn-dot, .syn-punc) that already exist in global.css.
+  window.highlightSyntax = function (el) {
+    if (!el) return;
+    var code = el.getAttribute('data-final') || el.textContent || '';
+    var html = code
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/(\/\/[^\n]*)/g, '\x00CMT_S$1\x00CMT_E')
+      .replace(/("(?:[^"\\]|\\.)*")/g, '\x00STR_S$1\x00STR_E');
+    html = html
+      .replace(/\x00CMT_S([\s\S]*?)\x00CMT_E/g, '<span class="syn-cmt">$1</span>')
+      .replace(/\x00STR_S([\s\S]*?)\x00STR_E/g, '<span class="syn-str">$1</span>')
+      .replace(/\b(fun|val|var|let|struct|static|object|import|return|if|else)\b/g, '<span class="syn-kw">$1</span>')
+      .replace(/\b(true|false|null|nil)\b/g, '<span class="syn-val">$1</span>')
+      .replace(/\b(\d+(?:\.\w+)?)\b/g, '<span class="syn-val">$1</span>')
+      .replace(/\b(EBButton|EBOutlinedButton|EBTextButton|EBButtonSize|EBButtonDefaults|EBAppearance|Image|Icon|Icons|Text|Row|HStack|VStack|Modifier|RoundedRectangle|RoundedCornerShape|Color|Arrangement|Alignment|Dp|CGFloat)\b/g, '<span class="syn-type">$1</span>')
+      .replace(/\b(Constants|Variables)\b/g, '<span class="syn-type">$1</span>')
+      .replace(/\b(alignment|spacing|horizontalArrangement|verticalAlignment|modifier|color|shape|width|start|top|maxWidth|onClick|leadingIcon|trailingIcon|colors|enabled|size|appearance|contentDescription)\b(?=\s*[=:])/g, '<span class="syn-param">$1</span>')
+      .replace(/(\.\w+)/g, '<span class="syn-dot">$1</span>')
+      .replace(/([{}()\[\]])/g, '<span class="syn-punc">$1</span>');
+    el.innerHTML = html;
   };
 
   // ── Copy snippet / node id ───────────────────────────────────────────

@@ -103,16 +103,134 @@ function updateDropdownDemo() {
   if (el) el.innerHTML = _ddBuildSvg(_ddDemo.variant, _ddDemo.type);
 }
 
-function updateDropdownSpecCard(variant, type) {
-  var el = document.getElementById('dd-' + variant.toLowerCase() + '-preview');
-  if (el) el.innerHTML = _ddBuildSvg(variant.charAt(0).toUpperCase() + variant.slice(1), type);
+/* ── Spec card state ──────────────────────────────────────────────── */
+var _specCards = {
+  text:   { variant: 'Text',   type: 'Collapsed' },
+  error:  { variant: 'Error',  type: 'Collapsed' },
+  amount: { variant: 'Amount', type: 'Collapsed' },
+  mobile: { variant: 'Mobile', type: 'Collapsed' }
+};
+window._specCards = _specCards;
+
+/* ── Code snippet builders ────────────────────────────────────────── */
+function buildSwiftSnippet(type, card) {
+  var v = (card && card.variant) || 'Text';
+  var t = (card && card.type) || 'Collapsed';
+  var lines = [];
+  lines.push('EBDropdown(selection: $selected, options: items)');
+  if (v === 'Error')  lines.push('    .ebState(.error)');
+  else if (v === 'Amount') lines.push('    .ebStyle(.amount)');
+  else if (v === 'Mobile') lines.push('    .ebStyle(.mobile)');
+  else lines.push('    .ebState(.default)');
+  if (t === 'Expanded') lines.push('    .ebExpanded(true)');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var v = (card && card.variant) || 'Text';
+  var t = (card && card.type) || 'Collapsed';
+  var lines = [];
+  lines.push('EBDropdown(');
+  lines.push('    selected = selected,');
+  lines.push('    options = items,');
+  lines.push('    onSelectionChange = { },');
+  if (v === 'Error')  lines.push('    state = EBFieldState.Error,');
+  else if (v === 'Amount') lines.push('    style = EBDropdownStyle.Amount,');
+  else if (v === 'Mobile') lines.push('    style = EBDropdownStyle.Mobile,');
+  else lines.push('    state = EBFieldState.Default,');
+  if (t === 'Expanded') lines.push('    expanded = true,');
+  var last = lines[lines.length - 1];
+  if (last.charAt(last.length - 1) === ',') lines[lines.length - 1] = last.slice(0, -1);
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+/* ── Spec card update ─────────────────────────────────────────────── */
+function _ddRenderColors(variant, type) {
+  var key = variant.toLowerCase();
+  var isExpanded = type === 'Expanded';
+  var entries;
+  if (key === 'error') {
+    entries = [
+      ['Bg',     '#FFFFFF', 'selected-field/error/bg'],
+      ['Border', isExpanded ? '#D61B2C' : '#F4C7C9', 'selected-field/error/border'],
+      ['Value',  '#0A2757', 'selected-field/error/value'],
+      ['Icon',   '#005CE5', 'selected-field/error/icon']
+    ];
+  } else if (key === 'amount') {
+    entries = [
+      ['Bg',          '#FFFFFF', 'selected-field/default/bg'],
+      ['Border',      isExpanded ? '#005CE5' : '#D7E0EF', 'selected-field/default/border'],
+      ['Value',       '#0A2757', 'selected-field/default/value'],
+      ['Icon',        '#005CE5', 'selected-field/default/icon'],
+      ['Peso sign',   '#183462', 'selected-field/default/icon-currency'],
+      ['Placeholder', '#90A8D0', 'selected-field/default/placeholder']
+    ];
+  } else {
+    entries = [
+      ['Bg',          '#FFFFFF', 'selected-field/default/bg'],
+      ['Border',      isExpanded ? '#005CE5' : '#D7E0EF', 'selected-field/default/border'],
+      ['Value',       '#0A2757', 'selected-field/default/value'],
+      ['Icon',        '#005CE5', 'selected-field/default/icon'],
+      ['Placeholder', '#90A8D0', 'selected-field/default/placeholder']
+    ];
+  }
+  var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
+  entries.forEach(function (r) {
+    var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
+    h += '<div class="spec-prop has-token"><span class="spec-prop-key">' + r[0] + '</span>' +
+         '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span>' +
+         '<span class="spec-prop-hex">' + r[1] + '</span></span>' +
+         '<span class="spec-token-name">' + r[2] + '</span></div>';
+  });
+  h += '</div>';
+  return h;
+}
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview */
+  var el = document.getElementById('dd-' + cardStyle + '-preview');
+  if (el) el.innerHTML = _ddBuildSvg(card.variant, card.type);
+
+  /* Update properties text */
+  var spVariant = document.querySelector('[data-sp="' + cardStyle + '-variant"]');
+  var spType    = document.querySelector('[data-sp="' + cardStyle + '-type"]');
+  if (spVariant) spVariant.textContent = card.variant;
+  if (spType)    spType.textContent    = card.type;
+
+  /* Update colors section */
+  var colorsEl = document.getElementById('spec-' + cardStyle + '-colors');
+  if (colorsEl) colorsEl.innerHTML = _ddRenderColors(card.variant, card.type);
+
+  /* Update DEV code */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
 }
 
 function _ddInitSpecCards() {
-  updateDropdownSpecCard('text', 'Collapsed');
-  updateDropdownSpecCard('error', 'Collapsed');
-  updateDropdownSpecCard('amount', 'Collapsed');
-  updateDropdownSpecCard('mobile', 'Collapsed');
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'variant', _specCards[k].variant);
+  });
 }
 
 function _ddInit() {
@@ -125,3 +243,4 @@ if (document.readyState === 'loading') {
 } else {
   _ddInit();
 }
+document.addEventListener('astro:page-load', _ddInit);

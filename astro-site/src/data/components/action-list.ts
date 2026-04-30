@@ -1,4 +1,33 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/action-list.js`.
+const actionListDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'default',
+        options: [
+          { value: 'default',  label: 'Default' },
+          { value: 'disabled', label: 'Disabled' },
+          { value: 'loading',  label: 'Loading' },
+        ],
+      },
+      {
+        label: 'Density',
+        prop: 'density',
+        defaultValue: 'compact',
+        options: [
+          { value: 'compact',  label: 'Compact' },
+          { value: 'expanded', label: 'Expanded' },
+        ],
+      },
+    ],
+  },
+];
 
 export const actionList: ComponentData = {
   "meta": {
@@ -185,117 +214,55 @@ export const actionList: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Variants",
     "specCards": [
       {
         "cardKey": "list-—-icon-+-label-+-cta-+-chevron",
+        "demoKey": "base",
+        "demoControls": actionListDemoControls,
         "title": "List — icon + label + CTA + chevron",
         "node": "18577:14545",
         "description": "Baseline row. 6 variants (State × Density). Label in Neutral Dark Semibold 16. Trailing CTA text + 24 px chevron icon. 360 × 48 (compact) / 360 × 56 (expanded).",
-        "previewHtml": "<div style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:16px;font-weight:600;letter-spacing:0.25px;color:#0A2757;\">Label</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#005CE5;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
+        "previewHtml": "<div id=\"lit-spec-base\" style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:16px;font-weight:600;letter-spacing:0.25px;color:#0A2757;\">Label</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#005CE5;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "List — icon + label + CTA + chevron",
-                "mono": false
-              }
+              { "key": "Variant", "value": "List — icon + label + CTA + chevron" },
+              { "key": "State",   "value": "Default", "prop": "state" },
+              { "key": "Density", "value": "Compact", "prop": "density" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "action-list/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "action-list/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Link",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Link token",
-                "value": "action-list/color/default/label-link",
-                "mono": true
-              },
-              {
-                "key": "Chevron",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Chevron token",
-                "value": "action-list/color/default/chevron",
-                "mono": true
-              }
+              { "key": "Bg",      "value": "#FFFFFF", "token": "action-list/color/default/bg" },
+              { "key": "Label",   "value": "#0A2757", "token": "action-list/color/default/label" },
+              { "key": "Link",    "value": "#005CE5", "token": "action-list/color/default/label-link" },
+              { "key": "Chevron", "value": "#005CE5", "token": "action-list/color/default/chevron" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Row height",
-                "value": "48 / 56px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Chevron size",
-                "value": "24 × 24",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "full row",
-                "mono": true
-              }
+              { "key": "Row height",   "value": "48px",   "mono": true },
+              { "key": "Padding H",    "value": "12px",   "mono": true },
+              { "key": "Padding V",    "value": "8px",    "mono": true },
+              { "key": "Chevron size", "value": "24 × 24", "mono": true },
+              { "key": "Hit target",   "value": "full row", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 16 / 16 · +0.25",
-                "mono": true
-              }
+              { "key": "Label style", "value": "Primary/Label/Light/Base", "mono": true },
+              { "key": "Font",        "value": "Proxima Soft Semibold",    "mono": true },
+              { "key": "Size",        "value": "16px / 16px",              "mono": true },
+              { "key": "Tracking",    "value": "+0.25",                    "mono": true }
             ]
           }
         ],
@@ -304,114 +271,51 @@ export const actionList: ComponentData = {
       },
       {
         "cardKey": "list---with-counter-—-icon-+-label-+-counter-+-chevron",
+        "demoKey": "counter",
+        "demoControls": actionListDemoControls,
         "title": "List - with Counter — icon + label + counter + chevron",
         "node": "18577:14637",
         "description": "Adds a trailing <a href=\"#\" onclick=\"showPanelById('counter');return false;\">Counter</a> pill. 6 variants (Density × State). Card-like container with <code>radius-2</code> (6 px) corners and <code>Depth/D0</code> drop-shadow — differs from the base's flat row. Label switches to Bold 18 Brand Blue. 360 × 56 / 360 × 64.",
-        "previewHtml": "<div style=\"width:360px;\"><div style=\"display:flex;align-items:center;gap:12px;padding:12px;background:#FFFFFF;border-radius:6px;box-shadow:0 1px 4px rgba(10,39,87,0.08), 0 0 0 1px rgba(10,39,87,0.04);\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:18px;line-height:20px;font-weight:700;letter-spacing:0.25px;color:#005CE5;\">Label</div></div><span style=\"display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 8px;border-radius:99px;background:#005CE5;color:#FFFFFF;font-family:'Proxima Soft',system-ui;font-size:13px;font-weight:700;line-height:1;flex-shrink:0;\">3</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
+        "previewHtml": "<div id=\"lit-spec-counter\" style=\"width:360px;\"><div style=\"display:flex;align-items:center;gap:12px;padding:12px;background:#FFFFFF;border-radius:6px;box-shadow:0 1px 4px rgba(10,39,87,0.08), 0 0 0 1px rgba(10,39,87,0.04);\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:18px;line-height:20px;font-weight:700;letter-spacing:0.25px;color:#005CE5;\">Label</div></div><span style=\"display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 8px;border-radius:99px;background:#005CE5;color:#FFFFFF;font-family:'Proxima Soft',system-ui;font-size:13px;font-weight:700;line-height:1;flex-shrink:0;\">3</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "List - with Counter — icon + label + counter + chevron",
-                "mono": false
-              }
+              { "key": "Variant", "value": "List - with Counter — icon + label + counter + chevron" },
+              { "key": "State",   "value": "Default", "prop": "state" },
+              { "key": "Density", "value": "Compact", "prop": "density" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "action-list/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "action-list/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Link",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Link token",
-                "value": "action-list/color/default/label-link",
-                "mono": true
-              },
-              {
-                "key": "Chevron",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Chevron token",
-                "value": "action-list/color/default/chevron",
-                "mono": true
-              }
+              { "key": "Bg",      "value": "#FFFFFF", "token": "action-list/color/default/bg" },
+              { "key": "Label",   "value": "#005CE5", "token": "action-list/color/default/label-brand" },
+              { "key": "Counter", "value": "#005CE5", "token": "counter/color/filled/bg" },
+              { "key": "Chevron", "value": "#005CE5", "token": "action-list/color/default/chevron" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Row height",
-                "value": "48 / 56px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Chevron size",
-                "value": "24 × 24",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "full row",
-                "mono": true
-              }
+              { "key": "Row height",   "value": "56px",   "mono": true },
+              { "key": "Padding H",    "value": "12px",   "mono": true },
+              { "key": "Padding V",    "value": "12px",   "mono": true },
+              { "key": "Chevron size", "value": "24 × 24", "mono": true },
+              { "key": "Hit target",   "value": "full row", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 16 / 16 · +0.25",
-                "mono": true
-              }
+              { "key": "Label style", "value": "Primary/Label/Light/Large", "mono": true },
+              { "key": "Font",        "value": "Proxima Soft Bold",         "mono": true },
+              { "key": "Size",        "value": "18px / 20px",               "mono": true },
+              { "key": "Tracking",    "value": "+0.25",                     "mono": true }
             ]
           }
         ],
@@ -420,114 +324,51 @@ export const actionList: ComponentData = {
       },
       {
         "cardKey": "list---with-description-—-icon-+-label-+-description-+-cta-+-chevron",
+        "demoKey": "description",
+        "demoControls": actionListDemoControls,
         "title": "List - with Description — icon + label + description + CTA + chevron",
         "node": "18577:14604",
         "description": "Adds a secondary description line under the label. 3 variants (State only — no Density axis). Label matches the base (Semibold 16 Neutral). Description uses Semibold 12 / tracking-wider / <code>main/action-list/color/default/description</code> (<code>#6780A9</code>). 360 × 60.",
-        "previewHtml": "<div style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:18px;font-weight:600;letter-spacing:0.25px;color:#0A2757;\">Label</div><div style=\"font-family:'Proxima Soft',system-ui;font-size:12px;line-height:16px;font-weight:600;letter-spacing:0.4px;color:#6780A9;\">Description</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#005CE5;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
+        "previewHtml": "<div id=\"lit-spec-description\" style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:18px;font-weight:600;letter-spacing:0.25px;color:#0A2757;\">Label</div><div style=\"font-family:'Proxima Soft',system-ui;font-size:12px;line-height:16px;font-weight:600;letter-spacing:0.4px;color:#6780A9;\">Description</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#005CE5;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "List - with Description — icon + label + description + CTA + chevron",
-                "mono": false
-              }
+              { "key": "Variant", "value": "List - with Description — icon + label + description + CTA + chevron" },
+              { "key": "State",   "value": "Default", "prop": "state" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "action-list/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "action-list/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Link",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Link token",
-                "value": "action-list/color/default/label-link",
-                "mono": true
-              },
-              {
-                "key": "Chevron",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Chevron token",
-                "value": "action-list/color/default/chevron",
-                "mono": true
-              }
+              { "key": "Bg",          "value": "#FFFFFF", "token": "action-list/color/default/bg" },
+              { "key": "Label",       "value": "#0A2757", "token": "action-list/color/default/label" },
+              { "key": "Description", "value": "#6780A9", "token": "action-list/color/default/description" },
+              { "key": "Link",        "value": "#005CE5", "token": "action-list/color/default/label-link" },
+              { "key": "Chevron",     "value": "#005CE5", "token": "action-list/color/default/chevron" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Row height",
-                "value": "48 / 56px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Chevron size",
-                "value": "24 × 24",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "full row",
-                "mono": true
-              }
+              { "key": "Row height",   "value": "60px",   "mono": true },
+              { "key": "Padding H",    "value": "12px",   "mono": true },
+              { "key": "Padding V",    "value": "8px",    "mono": true },
+              { "key": "Chevron size", "value": "24 × 24", "mono": true },
+              { "key": "Hit target",   "value": "full row", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 16 / 16 · +0.25",
-                "mono": true
-              }
+              { "key": "Label style",        "value": "Primary/Label/Light/Base",  "mono": true },
+              { "key": "Label font",         "value": "Proxima Soft Semibold · 16 / 18 · +0.25", "mono": true },
+              { "key": "Description style",  "value": "Secondary/Bold/Caption",     "mono": true },
+              { "key": "Description font",   "value": "Proxima Soft Semibold · 12 / 16 · +0.4",  "mono": true }
             ]
           }
         ],

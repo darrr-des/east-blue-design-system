@@ -1,4 +1,64 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — same across all 3 button styles. Wired to
+// the legacy `updateSpecCard(cardStyle, prop, value)` function in
+// `public/scripts/demos/button.js`.
+const buttonDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'pressed', label: 'Pressed' },
+          { value: 'disabled', label: 'Disabled' },
+        ],
+      },
+      {
+        label: 'Size',
+        prop: 'size',
+        defaultValue: 'large',
+        options: [
+          { value: 'large', label: 'Large' },
+          { value: 'medium', label: 'Medium' },
+          { value: 'small', label: 'Small' },
+          { value: 'compact', label: 'Compact' },
+          { value: 'xsmall', label: 'XSmall' },
+        ],
+      },
+      {
+        label: 'Icon Placement',
+        prop: 'iconPlacement',
+        defaultValue: 'none',
+        options: [
+          { value: 'none', label: 'None' },
+          { value: 'leading', label: 'Leading' },
+          { value: 'trailing', label: 'Trailing' },
+          { value: 'iconOnly', label: 'Icon Only' },
+        ],
+      },
+    ],
+  },
+  {
+    heading: 'Mode',
+    rows: [
+      {
+        label: 'Appearance',
+        prop: 'appearance',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'destructive', label: 'Destructive' },
+          { value: 'white', label: 'White' },
+          { value: 'subtle', label: 'Subtle' },
+        ],
+      },
+    ],
+  },
+];
 
 export const button: ComponentData = {
   "meta": {
@@ -165,9 +225,12 @@ export const button: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "btn-spec-filled",
+        "demoKey": "filled",
+        "demoControls": buttonDemoControls,
         "title": "Filled",
         "node": "17104:184843",
         "description": "Solid background with contrasting label. Primary action style. Colors change via Appearance variable mode.",
@@ -175,117 +238,42 @@ export const button: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Filled",
-                "mono": false
-              },
-              {
-                "key": "Size",
-                "value": "Large / Medium / Small / Compact / XSmall",
-                "mono": false
-              },
-              {
-                "key": "State",
-                "value": "Default / Pressed / Disabled / Loading",
-                "mono": false
-              },
-              {
-                "key": "Appearance",
-                "value": "Default / Destructive / White / Subtle",
-                "mono": false
-              }
+              { "key": "Style",      "value": "Filled" },
+              { "key": "Appearance", "value": "Default", "prop": "appearance" },
+              { "key": "State",      "value": "Default", "prop": "state" },
+              { "key": "Size",       "value": "Large",   "prop": "size" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Default bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Default bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Default label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Default label token",
-                "value": "button/primary/brand/enabled/label",
-                "mono": true
-              },
-              {
-                "key": "Pressed bg",
-                "value": "#2340A9",
-                "mono": true
-              },
-              {
-                "key": "Pressed bg token",
-                "value": "button/primary/brand/pressed/bg",
-                "mono": true
-              },
-              {
-                "key": "Disabled bg",
-                "value": "#9BC5FD",
-                "mono": true
-              },
-              {
-                "key": "Disabled bg token",
-                "value": "button/primary/brand/disabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Destructive bg",
-                "value": "#D81E1E",
-                "mono": true
-              },
-              {
-                "key": "Destructive bg token",
-                "value": "button/primary/destructive/enabled/bg",
-                "mono": true
-              }
+              { "key": "Default bg",     "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
+              { "key": "Default label",  "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
+              { "key": "Pressed bg",     "value": "#2340A9", "token": "button/primary/brand/pressed/bg" },
+              { "key": "Disabled bg",    "value": "#9BC5FD", "token": "button/primary/brand/disabled/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Sizes",
-                "value": "Large 50 / Medium 48 / Small 36 / Compact 28 / XSmall 24",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "10–20px (size-dependent)",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-pill (99px)",
-                "mono": true
-              }
+              { "key": "Height",    "value": "50px",  "mono": true },
+              { "key": "Padding H", "value": "20px",  "mono": true },
+              { "key": "Padding V", "value": "12px",  "mono": true },
+              { "key": "Radius",    "value": "99px",  "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Primary/Label/Large / Base / Small / Fine",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Bold · 18 / 16 / 14 / 12",
-                "mono": true
-              }
+              { "key": "Font",       "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Text Style", "value": "Primary/Label/Large", "mono": true },
+              { "key": "Size",       "value": "18px", "mono": true },
+              { "key": "Tracking",   "value": "0.25px", "mono": true }
             ]
           }
         ],
@@ -294,6 +282,8 @@ export const button: ComponentData = {
       },
       {
         "cardKey": "btn-spec-outline",
+        "demoKey": "outline",
+        "demoControls": buttonDemoControls,
         "title": "Outline",
         "node": "17104:184852",
         "description": "Transparent background with border and accent-colored label. Secondary action style.",
@@ -301,112 +291,43 @@ export const button: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Outline",
-                "mono": false
-              },
-              {
-                "key": "Size",
-                "value": "5 sizes",
-                "mono": false
-              },
-              {
-                "key": "State",
-                "value": "4 states",
-                "mono": false
-              },
-              {
-                "key": "Appearance",
-                "value": "4 appearances",
-                "mono": false
-              }
+              { "key": "Style",      "value": "Outline" },
+              { "key": "Appearance", "value": "Default", "prop": "appearance" },
+              { "key": "State",      "value": "Default", "prop": "state" },
+              { "key": "Size",       "value": "Large",   "prop": "size" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Default border",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Default border token",
-                "value": "button/secondary/brand/enabled/border",
-                "mono": true
-              },
-              {
-                "key": "Default label",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Default label token",
-                "value": "button/secondary/brand/enabled/label",
-                "mono": true
-              },
-              {
-                "key": "Pressed border",
-                "value": "#2340A9",
-                "mono": true
-              },
-              {
-                "key": "Pressed border token",
-                "value": "button/secondary/brand/pressed/border",
-                "mono": true
-              },
-              {
-                "key": "Disabled border",
-                "value": "#9BC5FD",
-                "mono": true
-              },
-              {
-                "key": "Disabled border token",
-                "value": "button/secondary/brand/disabled/border",
-                "mono": true
-              }
+              { "key": "Default border",  "value": "#005CE5", "token": "button/secondary/brand/enabled/border" },
+              { "key": "Default label",   "value": "#005CE5", "token": "button/secondary/brand/enabled/label" },
+              { "key": "Pressed border",  "value": "#2340A9", "token": "button/secondary/brand/pressed/border" },
+              { "key": "Disabled border", "value": "#9BC5FD", "token": "button/secondary/brand/disabled/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Sizes",
-                "value": "Large 50 / Medium 48 / Small 36 / Compact 28 / XSmall 24",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "10–20px (size-dependent)",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-pill (99px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "2px solid",
-                "mono": true
-              }
+              { "key": "Height",    "value": "50px",  "mono": true },
+              { "key": "Padding H", "value": "20px",  "mono": true },
+              { "key": "Padding V", "value": "12px",  "mono": true },
+              { "key": "Border",    "value": "1.5px solid", "mono": true },
+              { "key": "Radius",    "value": "99px",  "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Primary/Label/Large / Base / Small / Fine",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Bold · 18 / 16 / 14 / 12",
-                "mono": true
-              }
+              { "key": "Font",       "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Text Style", "value": "Primary/Label/Large", "mono": true },
+              { "key": "Size",       "value": "18px", "mono": true },
+              { "key": "Tracking",   "value": "0.25px", "mono": true }
             ]
           }
         ],
@@ -415,6 +336,8 @@ export const button: ComponentData = {
       },
       {
         "cardKey": "btn-spec-text",
+        "demoKey": "text",
+        "demoControls": buttonDemoControls,
         "title": "Text",
         "node": "17104:184855",
         "description": "No background or border. Label only. Tertiary action style.",
@@ -423,95 +346,40 @@ export const button: ComponentData = {
           {
             "label": "Properties",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Text",
-                "mono": false
-              },
-              {
-                "key": "Size",
-                "value": "5 sizes",
-                "mono": false
-              },
-              {
-                "key": "State",
-                "value": "4 states",
-                "mono": false
-              },
-              {
-                "key": "Appearance",
-                "value": "4 appearances",
-                "mono": false
-              }
-            ]
+              { "key": "Style",      "value": "Text" },
+              { "key": "Appearance", "value": "Default", "prop": "appearance" },
+              { "key": "State",      "value": "Default", "prop": "state" },
+              { "key": "Size",       "value": "Large",   "prop": "size" }
+            ],
+            "slug": "props"
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Default label",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Default label token",
-                "value": "button/tertiary/brand/enabled/label",
-                "mono": true
-              },
-              {
-                "key": "Pressed label",
-                "value": "#2340A9",
-                "mono": true
-              },
-              {
-                "key": "Pressed label token",
-                "value": "button/tertiary/brand/pressed/label",
-                "mono": true
-              },
-              {
-                "key": "Disabled label",
-                "value": "#9BC5FD",
-                "mono": true
-              },
-              {
-                "key": "Disabled label token",
-                "value": "button/tertiary/brand/disabled/label",
-                "mono": true
-              }
+              { "key": "Default label",  "value": "#005CE5", "token": "button/tertiary/brand/enabled/label" },
+              { "key": "Pressed label",  "value": "#2340A9", "token": "button/tertiary/brand/pressed/label" },
+              { "key": "Disabled label", "value": "#9BC5FD", "token": "button/tertiary/brand/disabled/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Padding H",
-                "value": "0–8px (label only)",
-                "mono": true
-              },
-              {
-                "key": "No border, no fill",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "meets 44pt min",
-                "mono": true
-              }
+              { "key": "Height",    "value": "50px", "mono": true },
+              { "key": "Padding H", "value": "8px",  "mono": true },
+              { "key": "Padding V", "value": "12px", "mono": true },
+              { "key": "Radius",    "value": "99px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Primary/Label/Large / Base / Small / Fine",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Bold · 18 / 16 / 14 / 12",
-                "mono": true
-              }
+              { "key": "Font",       "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Text Style", "value": "Primary/Label/Large", "mono": true },
+              { "key": "Size",       "value": "18px", "mono": true },
+              { "key": "Tracking",   "value": "0.25px", "mono": true }
             ]
           }
         ],

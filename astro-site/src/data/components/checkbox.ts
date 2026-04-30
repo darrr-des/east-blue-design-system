@@ -1,4 +1,36 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/checkbox.js`.
+const checkboxDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'Default',
+        options: [
+          { value: 'Default', label: 'Default' },
+          { value: 'Pressed', label: 'Pressed' },
+          { value: 'Focused', label: 'Focused' },
+          { value: 'Disabled', label: 'Disabled' },
+          { value: 'Error', label: 'Error' },
+        ],
+      },
+      {
+        label: 'Size',
+        prop: 'size',
+        defaultValue: 'medium',
+        options: [
+          { value: 'small', label: 'Small' },
+          { value: 'medium', label: 'Medium' },
+          { value: 'large', label: 'Large' },
+        ],
+      },
+    ],
+  },
+];
 
 export const checkbox: ComponentData = {
   "meta": {
@@ -126,228 +158,100 @@ export const checkbox: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Variants",
     "specCards": [
       {
         "cardKey": "cb-spec-unchecked",
+        "demoKey": "unchecked",
+        "demoControls": checkboxDemoControls,
         "title": "Unchecked",
         "node": "17143:2471",
         "description": "Empty container with border stroke. Represents a deselected option.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Selected",
-                "value": "true",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Unchecked",
-                "mono": false
-              }
+              { "key": "isSelected", "value": "false" },
+              { "key": "State", "value": "Default", "prop": "state" },
+              { "key": "Size", "value": "Medium", "prop": "size" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Border (unselected)",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border (unselected) token",
-                "value": "checkbox/color/default/unselected/border",
-                "mono": true
-              },
-              {
-                "key": "Selected fill",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Selected fill token",
-                "value": "checkbox/color/default/selected/bg",
-                "mono": true
-              },
-              {
-                "key": "Selected check",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Selected check token",
-                "value": "checkbox/color/default/selected/check",
-                "mono": true
-              },
-              {
-                "key": "Disabled border",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Disabled border token",
-                "value": "text/color-text-disabled",
-                "mono": true
-              }
+              { "key": "Border", "value": "#D7E0EF", "token": "main/checkbox/color/default/unselected/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Box size",
-                "value": "20 × 20",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-1 (4px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1.5px solid",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "44 × 44 (mobile)",
-                "mono": true
-              }
+              { "key": "Size", "value": "20 × 20px", "mono": true },
+              { "key": "Corner radius", "value": "4px (radius-1)", "mono": true },
+              { "key": "Border width", "value": "2px", "mono": true },
+              { "key": "Hit target", "value": "44 × 44 (mobile)", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Inline label",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14",
-                "mono": true
-              }
+              { "key": "—", "value": "icon-only control" }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>isSelected<span class=\"syn-punc\">: </span>$checked<span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    checked <span class=\"syn-eq\">=</span> checked<span class=\"syn-punc\">,</span>\n    onCheckedChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\"><rect x=\"1\" y=\"1\" width=\"18\" height=\"18\" rx=\"3\" stroke=\"#D7E0EF\" stroke-width=\"2\"></rect></svg>"
+        "previewHtml": "<div id=\"spec-unchecked-preview\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\"><rect x=\"1\" y=\"1\" width=\"18\" height=\"18\" rx=\"3\" stroke=\"#D7E0EF\" stroke-width=\"2\"></rect></svg></div>"
       },
       {
         "cardKey": "cb-spec-checked",
+        "demoKey": "checked",
+        "demoControls": checkboxDemoControls,
         "title": "Checked",
         "node": "17143:2473",
         "description": "Filled container with white checkmark. Represents a selected option. Checkmark is rendered via a separable <code>icon-check</code> child layer.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Selected",
-                "value": "true",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Checked",
-                "mono": false
-              }
+              { "key": "isSelected", "value": "true" },
+              { "key": "State", "value": "Default", "prop": "state" },
+              { "key": "Size", "value": "Medium", "prop": "size" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Border (unselected)",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border (unselected) token",
-                "value": "checkbox/color/default/unselected/border",
-                "mono": true
-              },
-              {
-                "key": "Selected fill",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Selected fill token",
-                "value": "checkbox/color/default/selected/bg",
-                "mono": true
-              },
-              {
-                "key": "Selected check",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Selected check token",
-                "value": "checkbox/color/default/selected/check",
-                "mono": true
-              },
-              {
-                "key": "Disabled border",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Disabled border token",
-                "value": "text/color-text-disabled",
-                "mono": true
-              }
+              { "key": "Container bg", "value": "#1972F9", "token": "main/checkbox/color/default/selected/bg" },
+              { "key": "Checkmark", "value": "#FFFFFF", "token": "main/checkbox/color/default/selected/check" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Box size",
-                "value": "20 × 20",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-1 (4px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1.5px solid",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "44 × 44 (mobile)",
-                "mono": true
-              }
+              { "key": "Size", "value": "20 × 20px", "mono": true },
+              { "key": "Corner radius", "value": "4px (radius-1)", "mono": true },
+              { "key": "Border width", "value": "None (filled)", "mono": true },
+              { "key": "Hit target", "value": "44 × 44 (mobile)", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Inline label",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14",
-                "mono": true
-              }
+              { "key": "—", "value": "icon-only control" }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>isSelected<span class=\"syn-punc\">: </span>$checked<span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBCheckbox</span><span class=\"syn-punc\">(</span>\n    checked <span class=\"syn-eq\">=</span> checked<span class=\"syn-punc\">,</span>\n    onCheckedChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\"><rect width=\"20\" height=\"20\" rx=\"4\" fill=\"#1972F9\"></rect><path d=\"M6 10L9 13L15 7\" stroke=\"white\" stroke-width=\"2.3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+        "previewHtml": "<div id=\"spec-checked-preview\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\"><rect width=\"20\" height=\"20\" rx=\"4\" fill=\"#1972F9\"></rect><path d=\"M6 10L9 13L15 7\" stroke=\"white\" stroke-width=\"2.3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div>"
       }
     ],
     "colorsTables": [

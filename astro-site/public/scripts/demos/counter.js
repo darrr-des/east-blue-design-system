@@ -106,20 +106,114 @@ function _counterUpdate() {
   });
 }
 
+/* ── Spec card state (Button-style) ──────────────────────────────── */
+var _specCards = {
+  'empty-limit':  { state: 'empty',  withLimit: 'yes', count: '0',  limit: '10' },
+  'filled-limit': { state: 'filled', withLimit: 'yes', count: '10', limit: '10' },
+  'single':       { state: 'auto',   withLimit: 'no',  count: '5',  limit: '10' }
+};
+window._specCards = _specCards;
+
+function buildSwiftSnippet(type, card) {
+  var hasLimit = card.withLimit === 'yes';
+  var lines = [];
+  if (hasLimit) {
+    lines.push('EBCounter(');
+    lines.push('    count: ' + card.count + ',');
+    lines.push('    limit: ' + card.limit);
+    lines.push(')');
+  } else {
+    lines.push('EBCounter(count: ' + card.count + ')');
+    lines.push('    .ebMaxDisplay(99)');
+  }
+  if (card.state === 'empty') lines.push('    .ebState(.empty)');
+  else if (card.state === 'filled') lines.push('    .ebState(.filled)');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var hasLimit = card.withLimit === 'yes';
+  var lines = ['EBCounter('];
+  lines.push('    count = ' + card.count + ',');
+  if (hasLimit) lines.push('    limit = ' + card.limit + ',');
+  else          lines.push('    maxDisplay = 99,');
+  if (card.state === 'empty')      lines.push('    state = EBCounterState.Empty');
+  else if (card.state === 'filled') lines.push('    state = EBCounterState.Filled');
+  else                              lines.push('    // state derived from count');
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview pill */
+  var previewEl = document.getElementById('counter-spec-' + cardStyle);
+  if (previewEl) {
+    previewEl.innerHTML = _counterRender({
+      count: card.count,
+      limit: card.limit,
+      maxDisplay: '99',
+      withLimit: card.withLimit,
+      state: card.state
+    });
+  }
+
+  /* Update properties text */
+  ['state', 'withLimit', 'example'].forEach(function(p) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
+    if (!el) return;
+    var span = el.querySelector('.spec-prop-hex') || el;
+    if (p === 'state') {
+      span.textContent = card.state.charAt(0).toUpperCase() + card.state.slice(1);
+    } else if (p === 'withLimit') {
+      span.textContent = card.withLimit;
+    } else if (p === 'example') {
+      var hasLimit = card.withLimit === 'yes';
+      span.textContent = hasLimit ? (card.count + ' / ' + card.limit) : card.count;
+    }
+  });
+
+  /* DEV code update */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
+function initSpecCards() {
+  Object.keys(_specCards).forEach(function(k) {
+    updateSpecCard(k, 'state', _specCards[k].state);
+  });
+}
+
 function _counterInit() {
   var ctx = document.getElementById('counter-context-preview');
   if (ctx) ctx.innerHTML = _counterContextMarkup();
   _counterUpdate();
+  initSpecCards();
 
-  // Spec 1 — empty slash
+  /* Legacy id support — keep older spec previews wired if they still exist */
   var s1 = document.getElementById('counter-spec-1');
   if (s1) s1.innerHTML = _counterRender({count:'0', limit:'10', withLimit:'yes', state:'empty'});
-
-  // Spec 2 — filled slash
   var s2 = document.getElementById('counter-spec-2');
   if (s2) s2.innerHTML = _counterRender({count:'10', limit:'10', withLimit:'yes', state:'filled'});
-
-  // Spec 3 — empty + filled single-integer side by side
   var s3 = document.getElementById('counter-spec-3');
   if (s3) s3.innerHTML = '<div style="display:inline-flex;gap:12px;align-items:center;">' +
     _counterRender({count:'0', withLimit:'no', state:'empty'}) +
@@ -130,3 +224,4 @@ function _counterInit() {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _counterInit);
 else _counterInit();
+document.addEventListener('astro:page-load', _counterInit);

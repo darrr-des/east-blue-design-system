@@ -1,4 +1,24 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — toggles between Inactive (active=no) and Active
+// (active=yes). Wired to a future per-card update handler in
+// `public/scripts/demos/chat-field.js`.
+const chatFieldDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Active',
+        prop: 'active',
+        defaultValue: 'no',
+        options: [
+          { value: 'no', label: 'no' },
+          { value: 'yes', label: 'yes' },
+        ],
+      },
+    ],
+  },
+];
 
 export const chatField: ComponentData = {
   "meta": {
@@ -172,126 +192,53 @@ export const chatField: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "cf-spec-default",
+        "demoKey": "cf-default",
+        "demoControls": chatFieldDemoControls,
         "title": "Inactive (active=no)",
         "node": "23:145916",
         "description": "Idle composer. Inner field renders with 1px #D7E0EF border and placeholder \"Say hi!\" in #90A8D0.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Inactive (active=no)",
-                "mono": false
-              },
-              {
-                "key": "State",
-                "value": "Default",
-                "mono": false
-              }
+              { "key": "Variant", "value": "Inactive (active=no)" },
+              { "key": "Active",  "value": "no", "prop": "active" },
+              { "key": "State",   "value": "Default" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "chat-field/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Border (default)",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border (default) token",
-                "value": "input-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Border (active)",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Border (active) token",
-                "value": "input-field/active/border",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "input-field/default/placeholder",
-                "mono": true
-              },
-              {
-                "key": "Send icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Send icon token",
-                "value": "chat-field/color/icon",
-                "mono": true
-              }
+              { "key": "Surface",          "value": "#FFFFFF", "token": "chat-field/color/bg" },
+              { "key": "Border (default)", "value": "#D7E0EF", "token": "input-field/default/border" },
+              { "key": "Border (active)",  "value": "#005CE5", "token": "input-field/active/border" },
+              { "key": "Placeholder",      "value": "#90A8D0", "token": "input-field/default/placeholder" },
+              { "key": "Send icon",        "value": "#005CE5", "token": "chat-field/color/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px (auto-grow)",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Send button",
-                "value": "40 × 40",
-                "mono": true
-              }
+              { "key": "Field height",  "value": "48px (auto-grow)", "mono": true },
+              { "key": "Padding H",     "value": "12px", "mono": true },
+              { "key": "Padding V",     "value": "14px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
+              { "key": "Send button",   "value": "40 × 40", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Input style",
-                "value": "Primary/Multi-line Label/Light/Base",
-                "mono": true
-              },
-              {
-                "key": "Input font",
-                "value": "Proxima Soft Semibold · 16 / 20 · +0.25",
-                "mono": true
-              }
+              { "key": "Input style", "value": "Primary/Multi-line Label/Light/Base", "mono": true },
+              { "key": "Input font",  "value": "Proxima Soft Semibold · 16 / 20 · +0.25", "mono": true }
             ]
           }
         ],
@@ -301,123 +248,49 @@ export const chatField: ComponentData = {
       },
       {
         "cardKey": "cf-spec-active",
+        "demoKey": "cf-active",
+        "demoControls": chatFieldDemoControls,
         "title": "Active (active=yes)",
         "node": "23:145922",
         "description": "Focused composer. Inner field switches to a 2px #005CE5 border and text color flips to #0A2757 (filled tone).",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Active (active=yes)",
-                "mono": false
-              },
-              {
-                "key": "State",
-                "value": "Active",
-                "mono": false
-              }
+              { "key": "Variant", "value": "Active (active=yes)" },
+              { "key": "Active",  "value": "yes", "prop": "active" },
+              { "key": "State",   "value": "Active" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "chat-field/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Border (default)",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border (default) token",
-                "value": "input-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Border (active)",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Border (active) token",
-                "value": "input-field/active/border",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "input-field/default/placeholder",
-                "mono": true
-              },
-              {
-                "key": "Send icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Send icon token",
-                "value": "chat-field/color/icon",
-                "mono": true
-              }
+              { "key": "Surface",          "value": "#FFFFFF", "token": "chat-field/color/bg" },
+              { "key": "Border (default)", "value": "#D7E0EF", "token": "input-field/default/border" },
+              { "key": "Border (active)",  "value": "#005CE5", "token": "input-field/active/border" },
+              { "key": "Placeholder",      "value": "#90A8D0", "token": "input-field/default/placeholder" },
+              { "key": "Send icon",        "value": "#005CE5", "token": "chat-field/color/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px (auto-grow)",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Send button",
-                "value": "40 × 40",
-                "mono": true
-              }
+              { "key": "Field height",  "value": "48px (auto-grow)", "mono": true },
+              { "key": "Padding H",     "value": "12px", "mono": true },
+              { "key": "Padding V",     "value": "14px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
+              { "key": "Send button",   "value": "40 × 40", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Input style",
-                "value": "Primary/Multi-line Label/Light/Base",
-                "mono": true
-              },
-              {
-                "key": "Input font",
-                "value": "Proxima Soft Semibold · 16 / 20 · +0.25",
-                "mono": true
-              }
+              { "key": "Input style", "value": "Primary/Multi-line Label/Light/Base", "mono": true },
+              { "key": "Input font",  "value": "Proxima Soft Semibold · 16 / 20 · +0.25", "mono": true }
             ]
           }
         ],

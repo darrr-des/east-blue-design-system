@@ -104,101 +104,48 @@ export const listItemAsset: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "all-markers",
+        "demoKey": "lia-all",
         "title": "All markers",
         "node": "",
         "description": "Row of all 9 markers at actual size. Left to right: check, check-positive, pending, pending-notice, bullet, hollow, square, numbered, custom (slot).",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "All markers",
-                "mono": false
-              },
-              {
-                "key": "Asset slot",
-                "value": "Image / Icon / Avatar",
-                "mono": false
-              }
+              { "key": "Variant",    "value": "All markers" },
+              { "key": "Asset slot", "value": "Image / Icon / Avatar" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Icon",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "list-item/color/default/icon-item",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "list-item/color/default/description",
-                "mono": true
-              },
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "bg/color-bg-main",
-                "mono": true
-              }
+              { "key": "Icon",        "value": "#90A8D0", "token": "list-item/color/default/icon-item" },
+              { "key": "Description", "value": "#445C85", "token": "list-item/color/default/description" },
+              { "key": "Surface",     "value": "#FFFFFF", "token": "bg/color-bg-main" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Row height",
-                "value": "64px",
-                "mono": true
-              },
-              {
-                "key": "Asset size",
-                "value": "40 × 40",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Gap (asset ↔ label)",
-                "value": "12px",
-                "mono": true
-              }
+              { "key": "Row height",          "value": "64px", "mono": true },
+              { "key": "Asset size",          "value": "40 × 40", "mono": true },
+              { "key": "Padding H",           "value": "16px", "mono": true },
+              { "key": "Gap (asset ↔ label)", "value": "12px", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Base",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 14 / 20",
-                "mono": true
-              }
+              { "key": "Description style", "value": "Secondary/Bold/Base", "mono": true },
+              { "key": "Description font",  "value": "BarkAda Semibold · 14 / 20", "mono": true }
             ]
           }
         ],

@@ -178,6 +178,58 @@ var _alertSpec = {
   card:   { type: 'information' }
 };
 
+/* Expose for shared utilities — `switchCodeTab` reads this when the
+   user clicks SwiftUI / Compose so it can rebuild the snippet. */
+var _specCards = _alertSpec;
+window._specCards = _specCards;
+
+/* ── Code snippet builders ───────────────────────────────────────── */
+function buildSwiftSnippet(type, card) {
+  var t = card.type || 'information';
+  var lines = [];
+  if (type === 'banner') {
+    lines.push('EBAlert(');
+    lines.push('    type: .' + t + ',');
+    lines.push('    title: "This is for the title.",');
+    lines.push('    description: "This is the description."');
+    lines.push(')');
+    lines.push('.ebStyle(.banner)');
+  } else {
+    lines.push('EBAlert(');
+    lines.push('    type: .' + t + ',');
+    lines.push('    title: "This is for the title.",');
+    lines.push('    description: "This is the description."');
+    lines.push(') {');
+    lines.push('    EBTextButton("Learn More") { /* action */ }');
+    lines.push('}');
+    lines.push('.ebStyle(.card)');
+  }
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var t = (card.type || 'information');
+  var tCap = t.charAt(0).toUpperCase() + t.slice(1);
+  var styleCap = type === 'banner' ? 'Banner' : 'Card';
+  var lines = [];
+  lines.push('EBAlert(');
+  lines.push('    type = EBAlertType.' + tCap + ',');
+  lines.push('    style = EBAlertStyle.' + styleCap + ',');
+  lines.push('    title = "This is for the title.",');
+  lines.push('    description = "This is the description."');
+  if (type === 'card') {
+    lines[lines.length - 1] += ',';
+    lines.push('    action = { EBTextButton("Learn More", onClick = { }) }');
+  }
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
 function _alertBuildBannerPreview(state) {
   var c = _alertTypeColors[state.type] || _alertTypeColors.information;
   var html = '<div style="display:inline-flex;align-items:flex-start;gap:8px;padding:12px 16px;width:360px;box-sizing:border-box;background:' + c.bg + ';border-radius:4px;box-shadow:0 1px 3px rgba(232,238,242,0.79);font-family:\'Proxima Soft\', system-ui, sans-serif;">';
@@ -241,18 +293,70 @@ function _renderAlertSpecCard(card) {
 }
 
 function updateAlertSpecCard(card, prop, val) {
+  return updateSpecCard(card, prop, val);
+}
+
+function updateSpecCard(card, prop, val) {
   var state = _alertSpec[card];
   if (!state) return;
   state[prop] = val;
-  // Update readout
-  var readout = document.querySelector('[data-sp="alert-' + card + '-' + prop + '"]');
+
+  // Update Properties readout (data-sp matches `${demoKey}-${prop}`)
+  var readout = document.querySelector('[data-sp="' + card + '-' + prop + '"]');
   if (readout) {
-    var display = val;
-    if (typeof val === 'boolean') display = String(val);
-    else if (typeof val === 'string') display = val.charAt(0).toUpperCase() + val.slice(1);
+    var display = (typeof val === 'string') ? val.charAt(0).toUpperCase() + val.slice(1) : String(val);
     readout.textContent = display;
   }
+
+  // Re-render preview
   _renderAlertSpecCard(card);
+
+  // Update Colors section (id `spec-${card}-colors`)
+  var c = _alertTypeColors[state.type] || _alertTypeColors.information;
+  var colorsEl = document.getElementById('spec-' + card + '-colors');
+  if (colorsEl) {
+    var rows;
+    if (card === 'banner') {
+      rows = [
+        ['Background',     c.bg,    c.bgToken],
+        ['Title',          c.title, c.titleToken],
+        ['Description',    c.desc,  c.descToken],
+        ['Icon / accent',  c.icon,  c.iconToken]
+      ];
+    } else {
+      rows = [
+        ['Surface',        '#FFFFFF', 'surface/default'],
+        ['Border accent',  c.icon,    c.iconToken],
+        ['Title',          c.title,   c.titleToken],
+        ['Description',    c.desc,    c.descToken],
+        ['Action link',    '#005CE5', 'alert/color/info/label-link']
+      ];
+    }
+    var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
+    rows.forEach(function(r) {
+      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E5EBF4' : '';
+      h += '<div class="spec-prop has-token"><span class="spec-prop-key">' + r[0] + '</span>'
+         + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span>'
+         + '<span class="spec-token-name">' + r[2] + '</span></div>';
+    });
+    h += '</div>';
+    colorsEl.innerHTML = h;
+  }
+
+  // DEV code update (always — even when DEV view hidden)
+  var devView = document.querySelector('[data-view="' + card + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + card + '"]');
+    if (codeEl) {
+      var code = getSnippet(card, lang, state);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
 }
 
 function toggleAlertSpecMode(cardKey, toggleEl) {
@@ -277,9 +381,10 @@ function switchAlertCodeTab(tabBtn, lang, cardKey) {
 }
 
 function _alertInitSpecCards() {
-  _renderAlertSpecCard('banner');
-  _renderAlertSpecCard('card');
+  updateSpecCard('banner', 'type', _alertSpec.banner.type);
+  updateSpecCard('card', 'type', _alertSpec.card.type);
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _alertInitSpecCards);
 else _alertInitSpecCards();
+document.addEventListener('astro:page-load', _alertInitSpecCards);

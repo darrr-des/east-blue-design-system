@@ -1,4 +1,24 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/action-list-description.js`.
+const actionListDescriptionDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'Default',
+        options: [
+          { value: 'Default',  label: 'Default' },
+          { value: 'Disabled', label: 'Disabled' },
+          { value: 'Loading',  label: 'Loading' },
+        ],
+      },
+    ],
+  },
+];
 
 export const actionListDescription: ComponentData = {
   "meta": {
@@ -147,117 +167,55 @@ export const actionListDescription: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Variants",
     "specCards": [
       {
         "cardKey": "state=default",
+        "demoKey": "default",
+        "demoControls": actionListDescriptionDemoControls,
         "title": "State=Default",
         "node": "18577:14605",
         "description": "Active row. Leading icon + label + description + optional CTA + chevron.",
-        "previewHtml": "<div style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:18px;font-weight:600;letter-spacing:0.25px;color:#0A2757;\">Label</div><div style=\"font-family:'Proxima Soft',system-ui;font-size:12px;line-height:16px;font-weight:600;letter-spacing:0.4px;color:#6780A9;\">Description</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#005CE5;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
+        "previewHtml": "<div id=\"litd-spec-default\" style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:18px;font-weight:600;letter-spacing:0.25px;color:#0A2757;\">Label</div><div style=\"font-family:'Proxima Soft',system-ui;font-size:12px;line-height:16px;font-weight:600;letter-spacing:0.4px;color:#6780A9;\">Description</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#005CE5;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "State=Default",
-                "mono": false
-              }
+              { "key": "Variant", "value": "State=Default" },
+              { "key": "State",   "value": "Default", "prop": "state" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "action-list/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "action-list/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Link",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Link token",
-                "value": "action-list/color/default/label-link",
-                "mono": true
-              },
-              {
-                "key": "Chevron",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Chevron token",
-                "value": "action-list/color/default/chevron",
-                "mono": true
-              }
+              { "key": "Bg",          "value": "#FFFFFF", "token": "action-list/color/default/bg" },
+              { "key": "Label",       "value": "#0A2757", "token": "action-list/color/default/label" },
+              { "key": "Description", "value": "#6780A9", "token": "action-list/color/default/description" },
+              { "key": "Link",        "value": "#005CE5", "token": "action-list/color/default/label-link" },
+              { "key": "Chevron",     "value": "#005CE5", "token": "action-list/color/default/chevron" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Row height",
-                "value": "48 / 56px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Chevron size",
-                "value": "24 × 24",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "full row",
-                "mono": true
-              }
+              { "key": "Row height",   "value": "60px",   "mono": true },
+              { "key": "Padding H",    "value": "12px",   "mono": true },
+              { "key": "Padding V",    "value": "12px",   "mono": true },
+              { "key": "Chevron size", "value": "24 × 24", "mono": true },
+              { "key": "Hit target",   "value": "full row", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 16 / 16 · +0.25",
-                "mono": true
-              }
+              { "key": "Label style",       "value": "Primary/Label/Light/Base", "mono": true },
+              { "key": "Label font",        "value": "Proxima Soft Semibold · 16 / 16 · +0.25", "mono": true },
+              { "key": "Description style", "value": "Primary/Multi-line Label/Light/Fine", "mono": true },
+              { "key": "Description font",  "value": "Proxima Soft Semibold · 12 / 14 · +0.5", "mono": true }
             ]
           }
         ],
@@ -266,104 +224,51 @@ export const actionListDescription: ComponentData = {
       },
       {
         "cardKey": "state=disabled",
+        "demoKey": "disabled",
+        "demoControls": actionListDescriptionDemoControls,
         "title": "State=Disabled",
         "node": "18577:14617",
         "description": "Non-interactive. Label + description recolor to <code>#c2cfe5</code>; CTA + chevron use <code>#9bc5fd</code>.",
-        "previewHtml": "<div style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#E5EBF4;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:18px;font-weight:600;letter-spacing:0.25px;color:#C2CFE5;\">Label</div><div style=\"font-family:'Proxima Soft',system-ui;font-size:12px;line-height:16px;font-weight:600;letter-spacing:0.4px;color:#C2CFE5;\">Description</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#9BC5FD;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#9BC5FD\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
+        "previewHtml": "<div id=\"litd-spec-disabled\" style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#E5EBF4;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:18px;font-weight:600;letter-spacing:0.25px;color:#C2CFE5;\">Label</div><div style=\"font-family:'Proxima Soft',system-ui;font-size:12px;line-height:16px;font-weight:600;letter-spacing:0.4px;color:#C2CFE5;\">Description</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#9BC5FD;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#9BC5FD\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Disabled",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "State=Disabled",
-                "mono": false
-              }
+              { "key": "Variant", "value": "State=Disabled" },
+              { "key": "State",   "value": "Disabled", "prop": "state" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "action-list/color/disabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "action-list/color/disabled/label",
-                "mono": true
-              },
-              {
-                "key": "Chevron",
-                "value": "#9BC5FD",
-                "mono": true
-              },
-              {
-                "key": "Chevron token",
-                "value": "action-list/color/disabled/chevron",
-                "mono": true
-              }
+              { "key": "Bg",          "value": "#FFFFFF", "token": "action-list/color/disabled/bg" },
+              { "key": "Label",       "value": "#C2CFE5", "token": "action-list/color/disabled/label" },
+              { "key": "Description", "value": "#C2CFE5", "token": "action-list/color/disabled/description" },
+              { "key": "Link",        "value": "#9BC5FD", "token": "action-list/color/disabled/label-link" },
+              { "key": "Chevron",     "value": "#9BC5FD", "token": "action-list/color/disabled/chevron" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Row height",
-                "value": "48 / 56px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Chevron size",
-                "value": "24 × 24",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "full row",
-                "mono": true
-              }
+              { "key": "Row height",   "value": "60px",   "mono": true },
+              { "key": "Padding H",    "value": "12px",   "mono": true },
+              { "key": "Padding V",    "value": "12px",   "mono": true },
+              { "key": "Chevron size", "value": "24 × 24", "mono": true },
+              { "key": "Hit target",   "value": "full row", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 16 / 16 · +0.25",
-                "mono": true
-              }
+              { "key": "Label style",       "value": "Primary/Label/Light/Base", "mono": true },
+              { "key": "Label font",        "value": "Proxima Soft Semibold · 16 / 16 · +0.25", "mono": true },
+              { "key": "Description style", "value": "Primary/Multi-line Label/Light/Fine", "mono": true },
+              { "key": "Description font",  "value": "Proxima Soft Semibold · 12 / 14 · +0.5", "mono": true }
             ]
           }
         ],
@@ -372,94 +277,46 @@ export const actionListDescription: ComponentData = {
       },
       {
         "cardKey": "state=loading",
+        "demoKey": "loading",
+        "demoControls": actionListDescriptionDemoControls,
         "title": "State=Loading",
         "node": "18577:14629",
         "description": "Skeleton. Two shimmer lines replace text; trailing is a 53px shimmer block.",
-        "previewHtml": "<div style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#EEF2F9;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0;\"><div style=\"height:14px;width:140px;border-radius:4px;background:#EEF2F9;\"></div><div style=\"height:10px;width:90px;border-radius:4px;background:#EEF2F9;\"></div></div><div style=\"width:53px;height:14px;border-radius:7px;background:#EEF2F9;flex-shrink:0;\"></div></div></div>",
+        "previewHtml": "<div id=\"litd-spec-loading\" style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#EEF2F9;flex-shrink:0;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0;\"><div style=\"height:14px;width:140px;border-radius:4px;background:#EEF2F9;\"></div><div style=\"height:10px;width:90px;border-radius:4px;background:#EEF2F9;\"></div></div><div style=\"width:53px;height:14px;border-radius:7px;background:#EEF2F9;flex-shrink:0;\"></div></div></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Loading",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "State=Loading",
-                "mono": false
-              }
+              { "key": "Variant", "value": "State=Loading" },
+              { "key": "State",   "value": "Loading", "prop": "state" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "action-list/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Skeleton",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Skeleton token",
-                "value": "bg/color-bg-strong",
-                "mono": true
-              }
+              { "key": "Bg",       "value": "#FFFFFF", "token": "action-list/color/default/bg" },
+              { "key": "Skeleton", "value": "#EEF2F9", "token": "bg/color-bg-strong" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Row height",
-                "value": "48 / 56px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Chevron size",
-                "value": "24 × 24",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "full row",
-                "mono": true
-              }
+              { "key": "Row height",   "value": "60px",   "mono": true },
+              { "key": "Padding H",    "value": "12px",   "mono": true },
+              { "key": "Padding V",    "value": "14px",   "mono": true },
+              { "key": "Chevron size", "value": "24 × 24", "mono": true },
+              { "key": "Hit target",   "value": "full row", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 16 / 16 · +0.25",
-                "mono": true
-              }
+              { "key": "Label style", "value": "Primary/Label/Light/Base", "mono": true },
+              { "key": "Label font",  "value": "Proxima Soft Semibold · 16 / 16 · +0.25", "mono": true }
             ]
           }
         ],

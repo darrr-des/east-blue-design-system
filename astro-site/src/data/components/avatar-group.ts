@@ -1,4 +1,25 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(demoKey, prop, value)`
+// in `public/scripts/demos/avatar-group.js`.
+const avatarGroupDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Layout',
+        prop: 'layout',
+        defaultValue: 'pair',
+        options: [
+          { value: 'pair', label: 'Pair (2 avatars)' },
+          { value: 'trio', label: 'Trio (3 avatars)' },
+          { value: 'quad', label: 'Quad (4 avatars)' },
+          { value: 'overflow', label: 'Overflow (3 + N)' },
+        ],
+      },
+    ],
+  },
+];
 
 export const avatarGroup: ComponentData = {
   "meta": {
@@ -122,25 +143,31 @@ export const avatarGroup: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Layouts",
     "specCards": [
       {
         "cardKey": "avg-spec-2",
+        "demoKey": "pair",
+        "demoControls": avatarGroupDemoControls,
         "title": "Pair — 2 avatars",
         "node": "18276:4555",
         "description": "Two avatars placed diagonally. Top-left uses dark-initials (brand), bottom-right uses initials-light (default).",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
                 "value": "Pair",
-                "mono": false
+                "mono": false,
+                "prop": "layout"
               },
               {
                 "key": "Avatar count",
                 "value": "2",
-                "mono": false
+                "mono": false,
+                "prop": "count"
               },
               {
                 "key": "Container",
@@ -151,46 +178,43 @@ export const avatarGroup: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
               {
                 "key": "Brand bg",
                 "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Brand token",
-                "value": "avatar/brand/bg",
-                "mono": true
+                "mono": true,
+                "token": "avatar/brand/bg"
               },
               {
                 "key": "Brand initials",
                 "value": "#FFFFFF",
-                "mono": true
+                "mono": true,
+                "token": "avatar/brand/initials"
               },
               {
                 "key": "Default bg",
                 "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Default token",
-                "value": "avatar/default/bg",
-                "mono": true
+                "mono": true,
+                "token": "avatar/default/bg"
               },
               {
                 "key": "Default initials",
                 "value": "#2340A9",
-                "mono": true
+                "mono": true,
+                "token": "avatar/default/initials"
               },
               {
                 "key": "Border (all)",
                 "value": "#E5EBF4",
-                "mono": true
+                "mono": true,
+                "token": "avatar/border"
               }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Container",
@@ -221,6 +245,7 @@ export const avatarGroup: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Initials style",
@@ -242,380 +267,168 @@ export const avatarGroup: ComponentData = {
         ],
         "swift": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>avatars<span class=\"syn-punc\">:</span> members<span class=\"syn-punc\">)</span>\n<span class=\"syn-cmt\">// Renders Pair (2 avatars) automatically when members.count == 2</span></code>",
         "compose": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>avatars <span class=\"syn-eq\">=</span> members<span class=\"syn-punc\">)</span>\n<span class=\"syn-cmt\">// Renders Pair (2 avatars) automatically when members.size == 2</span></code>",
-        "previewHtml": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">DM</text><circle cx=\"28\" cy=\"28\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"28\" y=\"31\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">LM</text></svg>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"avg-spec-pair-preview\"><svg width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">DM</text><circle cx=\"28\" cy=\"28\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"28\" y=\"31\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">LM</text></svg></div>"
       },
       {
         "cardKey": "avg-spec-3",
+        "demoKey": "trio",
+        "demoControls": avatarGroupDemoControls,
         "title": "Trio — 3 avatars",
         "node": "18276:4558",
         "description": "Three avatars in a triangular arrangement. Two on top (dark + dark), one default at bottom.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Trio",
-                "mono": false
-              },
-              {
-                "key": "Avatar count",
-                "value": "3",
-                "mono": false
-              },
-              {
-                "key": "Container",
-                "value": "48 &#215; 48",
-                "mono": false
-              }
+              { "key": "Variant",      "value": "Trio", "prop": "layout" },
+              { "key": "Avatar count", "value": "3" },
+              { "key": "Container",    "value": "48 &#215; 48" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Brand bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Brand token",
-                "value": "avatar/brand/bg",
-                "mono": true
-              },
-              {
-                "key": "Brand initials",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Default bg",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Default token",
-                "value": "avatar/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Default initials",
-                "value": "#2340A9",
-                "mono": true
-              },
-              {
-                "key": "Border (all)",
-                "value": "#E5EBF4",
-                "mono": true
-              }
+              { "key": "Brand bg",         "value": "#005CE5", "token": "avatar/brand/bg" },
+              { "key": "Brand initials",   "value": "#FFFFFF", "token": "avatar/brand/initials" },
+              { "key": "Default bg",       "value": "#F6F9FD", "token": "avatar/default/bg" },
+              { "key": "Default initials", "value": "#2340A9", "token": "avatar/default/initials" },
+              { "key": "Border (all)",     "value": "#E5EBF4", "token": "avatar/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Container",
-                "value": "48 &#215; 48",
-                "mono": true
-              },
-              {
-                "key": "Inner avatar",
-                "value": "24 &#215; 24",
-                "mono": true
-              },
-              {
-                "key": "Inner radius",
-                "value": "12px (circle)",
-                "mono": true
-              },
-              {
-                "key": "Inner border",
-                "value": "1.5px solid",
-                "mono": true
-              },
-              {
-                "key": "Overlap offset",
-                "value": "12px horizontal, 24px vertical",
-                "mono": true
-              }
+              { "key": "Container",      "value": "48 &#215; 48",                    "mono": true },
+              { "key": "Inner avatar",   "value": "24 &#215; 24",                    "mono": true },
+              { "key": "Inner radius",   "value": "12px (circle)",                   "mono": true },
+              { "key": "Inner border",   "value": "1.5px solid",                     "mono": true },
+              { "key": "Overlap offset", "value": "12px horizontal, 24px vertical",  "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Initials style",
-                "value": "Primary/Label/Bold/Small",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Size/lh",
-                "value": "10px / 12px",
-                "mono": true
-              }
+              { "key": "Initials style", "value": "Primary/Label/Bold/Small", "mono": true },
+              { "key": "Font",           "value": "Proxima Soft Bold",        "mono": true },
+              { "key": "Size/lh",        "value": "10px / 12px",              "mono": true }
             ]
           }
         ],
         "swift": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>avatars<span class=\"syn-punc\">:</span> members<span class=\"syn-punc\">)</span>\n<span class=\"syn-cmt\">// Renders Trio (3 avatars) automatically when members.count == 3</span></code>",
         "compose": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>avatars <span class=\"syn-eq\">=</span> members<span class=\"syn-punc\">)</span>\n<span class=\"syn-cmt\">// Renders Trio (3 avatars) automatically when members.size == 3</span></code>",
-        "previewHtml": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"24\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"24\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">DM</text><circle cx=\"12\" cy=\"36\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"39\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">LM</text><circle cx=\"36\" cy=\"36\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"36\" y=\"39\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">AB</text></svg>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"avg-spec-trio-preview\"><svg width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"24\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"24\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">DM</text><circle cx=\"12\" cy=\"36\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"39\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">LM</text><circle cx=\"36\" cy=\"36\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"36\" y=\"39\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">AB</text></svg></div>"
       },
       {
         "cardKey": "avg-spec-4",
+        "demoKey": "quad",
+        "demoControls": avatarGroupDemoControls,
         "title": "Quad — 4 avatars",
         "node": "18276:4562",
         "description": "Four avatars in a 2×2 grid. Top row: brand + brand. Bottom row: default + default.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Quad",
-                "mono": false
-              },
-              {
-                "key": "Avatar count",
-                "value": "4",
-                "mono": false
-              },
-              {
-                "key": "Container",
-                "value": "48 &#215; 48",
-                "mono": false
-              }
+              { "key": "Variant",      "value": "Quad", "prop": "layout" },
+              { "key": "Avatar count", "value": "4" },
+              { "key": "Container",    "value": "48 &#215; 48" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Brand bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Brand token",
-                "value": "avatar/brand/bg",
-                "mono": true
-              },
-              {
-                "key": "Brand initials",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Default bg",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Default token",
-                "value": "avatar/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Default initials",
-                "value": "#2340A9",
-                "mono": true
-              },
-              {
-                "key": "Border (all)",
-                "value": "#E5EBF4",
-                "mono": true
-              }
+              { "key": "Brand bg",         "value": "#005CE5", "token": "avatar/brand/bg" },
+              { "key": "Brand initials",   "value": "#FFFFFF", "token": "avatar/brand/initials" },
+              { "key": "Default bg",       "value": "#F6F9FD", "token": "avatar/default/bg" },
+              { "key": "Default initials", "value": "#2340A9", "token": "avatar/default/initials" },
+              { "key": "Border (all)",     "value": "#E5EBF4", "token": "avatar/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Container",
-                "value": "48 &#215; 48",
-                "mono": true
-              },
-              {
-                "key": "Inner avatar",
-                "value": "24 &#215; 24",
-                "mono": true
-              },
-              {
-                "key": "Inner radius",
-                "value": "12px (circle)",
-                "mono": true
-              },
-              {
-                "key": "Inner border",
-                "value": "1.5px solid",
-                "mono": true
-              },
-              {
-                "key": "Overlap offset",
-                "value": "24px grid step",
-                "mono": true
-              }
+              { "key": "Container",      "value": "48 &#215; 48",      "mono": true },
+              { "key": "Inner avatar",   "value": "24 &#215; 24",      "mono": true },
+              { "key": "Inner radius",   "value": "12px (circle)",     "mono": true },
+              { "key": "Inner border",   "value": "1.5px solid",       "mono": true },
+              { "key": "Overlap offset", "value": "24px grid step",    "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Initials style",
-                "value": "Primary/Label/Bold/Small",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Size/lh",
-                "value": "10px / 12px",
-                "mono": true
-              }
+              { "key": "Initials style", "value": "Primary/Label/Bold/Small", "mono": true },
+              { "key": "Font",           "value": "Proxima Soft Bold",        "mono": true },
+              { "key": "Size/lh",        "value": "10px / 12px",              "mono": true }
             ]
           }
         ],
         "swift": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>avatars<span class=\"syn-punc\">:</span> members<span class=\"syn-punc\">)</span>\n<span class=\"syn-cmt\">// Renders Quad (4 avatars) automatically when members.count == 4</span></code>",
         "compose": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>avatars <span class=\"syn-eq\">=</span> members<span class=\"syn-punc\">)</span>\n<span class=\"syn-cmt\">// Renders Quad (4 avatars) automatically when members.size == 4</span></code>",
-        "previewHtml": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">DM</text><circle cx=\"36\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"36\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">LM</text><circle cx=\"12\" cy=\"36\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"39\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">AB</text><circle cx=\"36\" cy=\"36\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"36\" y=\"39\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">CD</text></svg>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"avg-spec-quad-preview\"><svg width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">DM</text><circle cx=\"36\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"36\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">LM</text><circle cx=\"12\" cy=\"36\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"39\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">AB</text><circle cx=\"36\" cy=\"36\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"36\" y=\"39\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">CD</text></svg></div>"
       },
       {
         "cardKey": "avg-spec-5plus",
+        "demoKey": "overflow",
+        "demoControls": avatarGroupDemoControls,
         "title": "Overflow — 3 + \"+N\" badge",
         "node": "18276:4585",
         "description": "Overflow variant — 3 avatars plus a \"+N\" badge in the bottom-right position. Use when group has 5 or more members. The \"+N\" uses the default/light avatar style with overridable text content.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "Overflow",
-                "mono": false
-              },
-              {
-                "key": "Avatar count",
-                "value": "3 + \"+N\"",
-                "mono": false
-              },
-              {
-                "key": "Badge",
-                "value": "\"+N\" (overridable text)",
-                "mono": false
-              },
-              {
-                "key": "Badge style",
-                "value": "default/light avatar",
-                "mono": false
-              },
-              {
-                "key": "Container",
-                "value": "48 &#215; 48",
-                "mono": false
-              }
+              { "key": "Variant",      "value": "Overflow", "prop": "layout" },
+              { "key": "Avatar count", "value": "3 + \"+N\"" },
+              { "key": "Badge",        "value": "\"+N\" (overridable text)" },
+              { "key": "Badge style",  "value": "default/light avatar" },
+              { "key": "Container",    "value": "48 &#215; 48" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Brand bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Brand token",
-                "value": "avatar/brand/bg",
-                "mono": true
-              },
-              {
-                "key": "Brand initials",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Default bg",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Default token",
-                "value": "avatar/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Default initials",
-                "value": "#2340A9",
-                "mono": true
-              },
-              {
-                "key": "Border (all)",
-                "value": "#E5EBF4",
-                "mono": true
-              }
+              { "key": "Brand bg",         "value": "#005CE5", "token": "avatar/brand/bg" },
+              { "key": "Brand initials",   "value": "#FFFFFF", "token": "avatar/brand/initials" },
+              { "key": "Default bg",       "value": "#F6F9FD", "token": "avatar/default/bg" },
+              { "key": "Default initials", "value": "#2340A9", "token": "avatar/default/initials" },
+              { "key": "Border (all)",     "value": "#E5EBF4", "token": "avatar/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Container",
-                "value": "48 &#215; 48",
-                "mono": true
-              },
-              {
-                "key": "Inner avatar",
-                "value": "24 &#215; 24",
-                "mono": true
-              },
-              {
-                "key": "Inner radius",
-                "value": "12px (circle)",
-                "mono": true
-              },
-              {
-                "key": "Inner border",
-                "value": "1.5px solid",
-                "mono": true
-              },
-              {
-                "key": "Overlap offset",
-                "value": "24px grid step · badge in bottom-right",
-                "mono": true
-              }
+              { "key": "Container",      "value": "48 &#215; 48",                             "mono": true },
+              { "key": "Inner avatar",   "value": "24 &#215; 24",                             "mono": true },
+              { "key": "Inner radius",   "value": "12px (circle)",                            "mono": true },
+              { "key": "Inner border",   "value": "1.5px solid",                              "mono": true },
+              { "key": "Overlap offset", "value": "24px grid step · badge in bottom-right",   "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Initials style",
-                "value": "Primary/Label/Bold/Small",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Size/lh",
-                "value": "10px / 12px",
-                "mono": true
-              }
+              { "key": "Initials style", "value": "Primary/Label/Bold/Small", "mono": true },
+              { "key": "Font",           "value": "Proxima Soft Bold",        "mono": true },
+              { "key": "Size/lh",        "value": "10px / 12px",              "mono": true }
             ]
           }
         ],
         "swift": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>avatars<span class=\"syn-punc\">:</span> members<span class=\"syn-punc\">,</span> overflowFrom<span class=\"syn-punc\">:</span> <span class=\"syn-num\">3</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-cmt\">// Shows first 3 avatars + \"+N\" badge when members.count &gt; 4</span></code>",
         "compose": "<code><span class=\"syn-type\">EBAvatarGroup</span><span class=\"syn-punc\">(</span>\n    avatars <span class=\"syn-eq\">=</span> members<span class=\"syn-punc\">,</span>\n    overflowFrom <span class=\"syn-eq\">=</span> <span class=\"syn-num\">3</span>\n<span class=\"syn-punc\">)</span></code>",
-        "previewHtml": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">DM</text><circle cx=\"36\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"36\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">LM</text><circle cx=\"12\" cy=\"36\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"39\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">AB</text><circle cx=\"36\" cy=\"36\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"36\" y=\"39\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">+5</text></svg>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"avg-spec-overflow-preview\"><svg width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">DM</text><circle cx=\"36\" cy=\"12\" r=\"11\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"36\" y=\"15\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">LM</text><circle cx=\"12\" cy=\"36\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"12\" y=\"39\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">AB</text><circle cx=\"36\" cy=\"36\" r=\"11\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></circle><text x=\"36\" y=\"39\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"8\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">+5</text></svg></div>"
       }
     ],
     "colorsTables": [

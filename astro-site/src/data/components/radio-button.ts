@@ -130,111 +130,49 @@ export const radioButton: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "all-states-—-large-+-small",
+        "demoKey": "rb-all",
         "title": "All states — large + small",
         "node": "",
         "description": "Left column: large (20 × 20). Right column: small (16 × 16). Top to bottom: unselected, selected (filled), selected (checkmark), disabled, error, error-selected.",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Variant",
-                "value": "All states — large + small",
-                "mono": false
-              },
-              {
-                "key": "Selected",
-                "value": "true/false (boolean)",
-                "mono": false
-              }
+              { "key": "Variant",  "value": "All states — large + small" },
+              { "key": "Selected", "value": "true/false (boolean)" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Border (unselected)",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border (unselected) token",
-                "value": "radio-button/color/default/unselected/border",
-                "mono": true
-              },
-              {
-                "key": "Selected fill",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Selected fill token",
-                "value": "radio-button/color/default/selected/bg",
-                "mono": true
-              },
-              {
-                "key": "Selected dot",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Selected dot token",
-                "value": "radio-button/color/default/selected/dot",
-                "mono": true
-              },
-              {
-                "key": "Error border",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Error border token",
-                "value": "radio-button/color/error/unselected/border",
-                "mono": true
-              }
+              { "key": "Border (unselected)", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border" },
+              { "key": "Selected fill",       "value": "#005CE5", "token": "radio-button/color/default/selected/bg" },
+              { "key": "Selected dot",        "value": "#FFFFFF", "token": "radio-button/color/default/selected/dot" },
+              { "key": "Error border",        "value": "#D61B2C", "token": "radio-button/color/error/unselected/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Outer ring",
-                "value": "20 × 20",
-                "mono": true
-              },
-              {
-                "key": "Inner dot",
-                "value": "10 × 10 (when selected)",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "50% (circle)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1.5px solid",
-                "mono": true
-              }
+              { "key": "Outer ring",    "value": "20 × 20", "mono": true },
+              { "key": "Inner dot",     "value": "10 × 10 (when selected)", "mono": true },
+              { "key": "Border radius", "value": "50% (circle)", "mono": true },
+              { "key": "Border",        "value": "1.5px solid", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Inline label",
-                "value": "Primary/Multi-line Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 16",
-                "mono": true
-              }
+              { "key": "Inline label", "value": "Primary/Multi-line Label/Light/Small", "mono": true },
+              { "key": "Label font",   "value": "Proxima Soft Semibold · 14 / 16", "mono": true }
             ]
           }
         ],

@@ -1,4 +1,43 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — applies to both Collapsed and Expanded cards.
+// Wired to the legacy `updateAccSpecCard(cardType, prop, value)` function
+// in `public/scripts/demos/accordion.js`.
+const accordionDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'pressed', label: 'Pressed' },
+          { value: 'disabled', label: 'Disabled' },
+        ],
+      },
+      {
+        label: 'leadingIcon',
+        prop: 'leadingIcon',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+      {
+        label: 'description',
+        prop: 'description',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
+        ],
+      },
+    ],
+  },
+];
 
 export const accordion: ComponentData = {
   "meta": {
@@ -123,9 +162,12 @@ export const accordion: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "acc-spec-collapsed",
+        "demoKey": "acc-collapsed",
+        "demoControls": accordionDemoControls,
         "title": "Collapsed",
         "node": "16870:9289",
         "description": "Header row only — 56px fixed height. Trailing chevron points down. Tap anywhere in the row to expand.",
@@ -133,192 +175,54 @@ export const accordion: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "Collapsed",
-                "mono": false
-              },
-              {
-                "key": "State",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "leadingIcon",
-                "value": "true",
-                "mono": false
-              },
-              {
-                "key": "description",
-                "value": "false",
-                "mono": false
-              }
+              { "key": "Type",        "value": "Collapsed" },
+              { "key": "State",       "value": "Default", "prop": "state" },
+              { "key": "leadingIcon", "value": "true",    "prop": "leadingIcon" },
+              { "key": "description", "value": "false",   "prop": "description" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "accordion/color/collapsed/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "accordion/color/collapsed/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "accordion/color/collapsed/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "accordion/color/collapsed/description",
-                "mono": true
-              },
-              {
-                "key": "Chevron",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Chevron token",
-                "value": "accordion/color/collapsed/icon-chevron",
-                "mono": true
-              },
-              {
-                "key": "Disabled label",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Disabled label token",
-                "value": "text/color-text-disabled",
-                "mono": true
-              }
+              { "key": "Surface",        "value": "#FFFFFF", "token": "accordion/color/collapsed/bg" },
+              { "key": "Border",         "value": "#E5EBF4", "token": "accordion/color/collapsed/border" },
+              { "key": "Label",          "value": "#0A2757", "token": "accordion/color/collapsed/label" },
+              { "key": "Description",   "value": "#90A8D0", "token": "accordion/color/collapsed/description" },
+              { "key": "Chevron",        "value": "#005CE5", "token": "accordion/color/collapsed/icon-chevron" },
+              { "key": "Disabled label", "value": "#C2CFE5", "token": "text/color-text-disabled" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "396px (fill)",
-                "mono": true
-              },
-              {
-                "key": "Header height",
-                "value": "56px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "4px",
-                "mono": true
-              },
-              {
-                "key": "Leading icon",
-                "value": "32×32px",
-                "mono": true
-              },
-              {
-                "key": "Trailing icon",
-                "value": "32×32px",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "0 (rectangular)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid #E5EBF4",
-                "mono": true
-              }
+              { "key": "Width",         "value": "396px (fill)", "mono": true },
+              { "key": "Header height", "value": "56px", "mono": true },
+              { "key": "Padding H",     "value": "16px", "mono": true },
+              { "key": "Padding V",     "value": "4px", "mono": true },
+              { "key": "Leading icon",  "value": "32×32px", "mono": true },
+              { "key": "Trailing icon", "value": "32×32px", "mono": true },
+              { "key": "Corner radius", "value": "0 (rectangular)", "mono": true },
+              { "key": "Border",        "value": "1px solid #E5EBF4", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Text Style",
-                "value": "Primary/Multi-line Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "HeyMeow Rnd Bold",
-                "mono": true
-              },
-              {
-                "key": "Label size",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Label tracking",
-                "value": "0.25px",
-                "mono": true
-              },
-              {
-                "key": "Label line-height",
-                "value": "20px",
-                "mono": true
-              },
-              {
-                "key": "Text Style",
-                "value": "Secondary/Bold/Base",
-                "mono": true
-              },
-              {
-                "key": "Desc font",
-                "value": "BarkAda SemiBold",
-                "mono": true
-              },
-              {
-                "key": "Desc size",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Desc tracking",
-                "value": "0",
-                "mono": true
-              },
-              {
-                "key": "Desc line-height",
-                "value": "20px",
-                "mono": true
-              }
+              { "key": "Label style",       "value": "Primary/Multi-line Label/Base", "mono": true },
+              { "key": "Label font",        "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Label size",        "value": "16px", "mono": true },
+              { "key": "Label tracking",    "value": "0.25px", "mono": true },
+              { "key": "Label line-height", "value": "20px", "mono": true },
+              { "key": "Desc style",        "value": "Secondary/Bold/Base", "mono": true },
+              { "key": "Desc font",         "value": "BarkAda SemiBold", "mono": true },
+              { "key": "Desc size",         "value": "14px", "mono": true },
+              { "key": "Desc tracking",     "value": "0", "mono": true },
+              { "key": "Desc line-height",  "value": "20px", "mono": true }
             ]
           }
         ],
@@ -327,6 +231,8 @@ export const accordion: ComponentData = {
       },
       {
         "cardKey": "acc-spec-expanded",
+        "demoKey": "acc-expanded",
+        "demoControls": accordionDemoControls,
         "title": "Expanded",
         "node": "16870:9298",
         "description": "Header row (56px) + content-body panel (56px SLOT) = 112px total height. Trailing chevron points up. Content-body background uses <code>surface/content</code> token.",
@@ -334,207 +240,57 @@ export const accordion: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "Expanded",
-                "mono": false
-              },
-              {
-                "key": "State",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "leadingIcon",
-                "value": "true",
-                "mono": false
-              },
-              {
-                "key": "description",
-                "value": "false",
-                "mono": false
-              }
+              { "key": "Type",        "value": "Expanded" },
+              { "key": "State",       "value": "Default", "prop": "state" },
+              { "key": "leadingIcon", "value": "true",    "prop": "leadingIcon" },
+              { "key": "description", "value": "false",   "prop": "description" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "accordion/color/expanded/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "accordion/color/expanded/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "accordion/color/expanded/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "accordion/color/expanded/description",
-                "mono": true
-              },
-              {
-                "key": "Chevron",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Chevron token",
-                "value": "accordion/color/expanded/icon-chevron",
-                "mono": true
-              },
-              {
-                "key": "Body bg",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Body bg token",
-                "value": "bg/color-bg",
-                "mono": true
-              }
+              { "key": "Surface",     "value": "#FFFFFF", "token": "accordion/color/expanded/bg" },
+              { "key": "Border",      "value": "#E5EBF4", "token": "accordion/color/expanded/border" },
+              { "key": "Label",       "value": "#0A2757", "token": "accordion/color/expanded/label" },
+              { "key": "Description", "value": "#90A8D0", "token": "accordion/color/expanded/description" },
+              { "key": "Chevron",     "value": "#005CE5", "token": "accordion/color/expanded/icon-chevron" },
+              { "key": "Body bg",     "value": "#F6F9FD", "token": "bg/color-bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "396px (fill)",
-                "mono": true
-              },
-              {
-                "key": "Header height",
-                "value": "56px",
-                "mono": true
-              },
-              {
-                "key": "Content-body height",
-                "value": "56px (SLOT)",
-                "mono": true
-              },
-              {
-                "key": "Total height",
-                "value": "112px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "4px",
-                "mono": true
-              },
-              {
-                "key": "Leading icon",
-                "value": "32×32px",
-                "mono": true
-              },
-              {
-                "key": "Trailing icon",
-                "value": "32×32px",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "0 (rectangular)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid #E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Divider",
-                "value": "1px solid #E5EBF4 (header/body)",
-                "mono": true
-              }
+              { "key": "Width",               "value": "396px (fill)", "mono": true },
+              { "key": "Header height",       "value": "56px", "mono": true },
+              { "key": "Content-body height", "value": "56px (SLOT)", "mono": true },
+              { "key": "Total height",        "value": "112px", "mono": true },
+              { "key": "Padding H",           "value": "16px", "mono": true },
+              { "key": "Padding V",           "value": "4px", "mono": true },
+              { "key": "Leading icon",        "value": "32×32px", "mono": true },
+              { "key": "Trailing icon",       "value": "32×32px", "mono": true },
+              { "key": "Corner radius",       "value": "0 (rectangular)", "mono": true },
+              { "key": "Border",              "value": "1px solid #E5EBF4", "mono": true },
+              { "key": "Divider",             "value": "1px solid #E5EBF4 (header/body)", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Text Style",
-                "value": "Primary/Multi-line Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "HeyMeow Rnd Bold",
-                "mono": true
-              },
-              {
-                "key": "Label size",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Label tracking",
-                "value": "0.25px",
-                "mono": true
-              },
-              {
-                "key": "Label line-height",
-                "value": "20px",
-                "mono": true
-              },
-              {
-                "key": "Text Style",
-                "value": "Secondary/Bold/Base",
-                "mono": true
-              },
-              {
-                "key": "Desc font",
-                "value": "BarkAda SemiBold",
-                "mono": true
-              },
-              {
-                "key": "Desc size",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Desc tracking",
-                "value": "0",
-                "mono": true
-              },
-              {
-                "key": "Desc line-height",
-                "value": "20px",
-                "mono": true
-              }
+              { "key": "Label style",       "value": "Primary/Multi-line Label/Base", "mono": true },
+              { "key": "Label font",        "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Label size",        "value": "16px", "mono": true },
+              { "key": "Label tracking",    "value": "0.25px", "mono": true },
+              { "key": "Label line-height", "value": "20px", "mono": true },
+              { "key": "Desc style",        "value": "Secondary/Bold/Base", "mono": true },
+              { "key": "Desc font",         "value": "BarkAda SemiBold", "mono": true },
+              { "key": "Desc size",         "value": "14px", "mono": true },
+              { "key": "Desc tracking",     "value": "0", "mono": true },
+              { "key": "Desc line-height",  "value": "20px", "mono": true }
             ]
           }
         ],

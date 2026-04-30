@@ -47,7 +47,6 @@ function _dpgDateGrid() {
     [22, 23, 24, 25, 26, 27, 28],
     [29, 30, 31, 'x', 'x', 'x', 'x']  /* 'x' = next-month dimmed */
   ];
-  var todayIdx = { row: 0, col: 4 }; /* day 5 is Today */
   for (var r = 0; r < days.length; r++) {
     s += '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:0;width:100%;margin-bottom:' + (r === days.length - 1 ? '0' : '8px') + ';">';
     for (var c = 0; c < 7; c++) {
@@ -61,9 +60,6 @@ function _dpgDateGrid() {
         label = String(nextIdx); color = '#C2CFE5'; border = 'none';
       } else {
         label = String(v); color = '#0A2757'; border = 'none';
-        if (r === todayIdx.row + 1 && c === todayIdx.col) {
-          /* Today ring: adjust since row 0 is weekday-aligned */
-        }
       }
       /* Apply Today ring on day 5 */
       if (v === 5) { color = '#005CE5'; border = '1.5px solid #005CE5'; }
@@ -135,14 +131,77 @@ function _dpgBuildPanel(type) {
 function updateDatePickerGroupDemo() {
   var demo = document.getElementById('dpg-demo-preview');
   if (demo) demo.innerHTML = _dpgBuildPanel(_dpgDemo.type);
-  var spec;
-  spec = document.getElementById('dpg-date-preview');  if (spec) spec.innerHTML = _dpgBuildPanel('Date');
-  spec = document.getElementById('dpg-year-preview');  if (spec) spec.innerHTML = _dpgBuildPanel('Year');
-  spec = document.getElementById('dpg-month-preview'); if (spec) spec.innerHTML = _dpgBuildPanel('Month');
+}
+
+/* ── Spec card state — drives per-card preview + DEV snippets ──────── */
+var _specCards = {
+  'dpg-date':  { type: 'Date' },
+  'dpg-year':  { type: 'Year' },
+  'dpg-month': { type: 'Month' }
+};
+window._specCards = _specCards;
+
+/* Mapping demoKey → cardKey (used to find spec-card root in DOM) */
+var _dpgCardKeys = {
+  'dpg-date':  'dpg-spec-date',
+  'dpg-year':  'dpg-spec-year',
+  'dpg-month': 'dpg-spec-month'
+};
+
+function buildSwiftSnippet(cardKey, card) {
+  var view = (card.type || 'Date').toLowerCase();
+  return 'EBDatePickerGroup($selectedDate)\n    .ebView(.' + view + ')';
+}
+
+function buildComposeSnippet(cardKey, card) {
+  var view = card.type || 'Date';
+  return 'EBDatePickerGroup(\n    date = selectedDate,\n    view = EBPickerView.' + view + '\n)';
+}
+
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview HTML — locate the .spec-card-preview inside the spec card root */
+  var rootKey = _dpgCardKeys[cardStyle];
+  if (rootKey) {
+    var rootEl = document.getElementById('spec-card-' + rootKey);
+    if (rootEl) {
+      var previewEl = rootEl.querySelector('.spec-card-preview');
+      if (previewEl) previewEl.innerHTML = _dpgBuildPanel(card.type);
+    }
+  }
+
+  /* Update Properties readouts */
+  var spType = document.querySelector('[data-sp="' + cardStyle + '-type"]');
+  if (spType) spType.textContent = card.type;
+
+  /* Update DEV code */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
 }
 
 function _dpgInit() {
   updateDatePickerGroupDemo();
+  /* Re-render spec previews + DEV snippets via shared updater */
+  Object.keys(_specCards).forEach(function(k){ updateSpecCard(k, 'type', _specCards[k].type); });
 }
 
 if (document.readyState === 'loading') {
@@ -150,3 +209,6 @@ if (document.readyState === 'loading') {
 } else {
   _dpgInit();
 }
+
+/* Re-init after Astro view-transition swaps */
+document.addEventListener('astro:page-load', _dpgInit);

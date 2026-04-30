@@ -1,4 +1,85 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/ad-space.js`.
+const adSpaceBannerControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Size',
+        prop: 'size',
+        defaultValue: 'banner-sm',
+        options: [
+          { value: 'banner-sm',   label: 'banner-sm · 320×50' },
+          { value: 'banner-lg',   label: 'banner-lg · 320×100' },
+          { value: 'banner-mrec', label: 'banner-mrec · 300×250' },
+        ],
+      },
+      {
+        label: 'isLoading',
+        prop: 'loading',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true',  label: 'true' },
+        ],
+      },
+    ],
+  },
+];
+
+const adSpacePromoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Size',
+        prop: 'size',
+        defaultValue: 'promo-md',
+        options: [
+          { value: 'promo-sm', label: 'promo-sm · 131×126' },
+          { value: 'promo-md', label: 'promo-md · 224×200' },
+        ],
+      },
+      {
+        label: 'isLoading',
+        prop: 'loading',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true',  label: 'true' },
+        ],
+      },
+    ],
+  },
+];
+
+const adSpaceHeroControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Size',
+        prop: 'size',
+        defaultValue: 'hero-md',
+        options: [
+          { value: 'hero-sm', label: 'hero-sm · 296×174' },
+          { value: 'hero-md', label: 'hero-md · 336×174' },
+        ],
+      },
+      {
+        label: 'isLoading',
+        prop: 'loading',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true',  label: 'true' },
+        ],
+      },
+    ],
+  },
+];
 
 export const adSpace: ComponentData = {
   "meta": {
@@ -148,364 +229,162 @@ export const adSpace: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Size families",
     "specCards": [
       {
         "cardKey": "ads-spec-card-banner",
+        "demoKey": "banner",
+        "demoControls": adSpaceBannerControls,
         "title": "Banner family",
         "node": "18563:9789",
         "description": "IAB-standard banner sizes driven by AdMob. The DS provides a fixed-dimension surface; the ad SDK renders the creative in the content slot.",
-        "previewHtml": "<div class=\"eb-preview-stack eb-preview-stack--col eb-preview-stack--gap-sm\"><div class=\"eb-preview-adspace eb-preview-adspace--banner eb-preview-adspace--banner-sm\" style=\"width:320px;height:50px;\"><div class=\"eb-preview-adspace__banner-fill\"><span class=\"eb-preview-adspace__banner-label\">Ad</span><span class=\"eb-preview-adspace__banner-dim\">320×50</span></div></div><div class=\"eb-preview-adspace eb-preview-adspace--banner eb-preview-adspace--banner-lg\" style=\"width:320px;height:100px;\"><div class=\"eb-preview-adspace__banner-fill\"><span class=\"eb-preview-adspace__banner-label\">Ad</span><span class=\"eb-preview-adspace__banner-dim\">320×100</span></div></div><div class=\"eb-preview-adspace eb-preview-adspace--banner eb-preview-adspace--banner-mrec\" style=\"width:300px;height:250px;\"><div class=\"eb-preview-adspace__banner-fill\"><span class=\"eb-preview-adspace__banner-label\">Ad</span><span class=\"eb-preview-adspace__banner-dim\">300×250</span></div></div></div>",
+        "previewHtml": "<div id=\"ads-spec-banner\"><div class=\"eb-preview-adspace eb-preview-adspace--banner eb-preview-adspace--banner-sm\" style=\"width:320px;height:50px;\"><div class=\"eb-preview-adspace__banner-fill\"><span class=\"eb-preview-adspace__banner-label\">Ad</span><span class=\"eb-preview-adspace__banner-dim\">320×50</span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Size family",
-                "value": "banner",
-                "mono": false
-              },
-              {
-                "key": "Values",
-                "value": "banner-sm / banner-lg / banner-mrec",
-                "mono": false
-              },
-              {
-                "key": "Content slot",
-                "value": "AdMob view",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "rows": [
-              {
-                "key": "banner-sm",
-                "value": "320 &#215; 50",
-                "mono": true
-              },
-              {
-                "key": "banner-lg",
-                "value": "320 &#215; 100",
-                "mono": true
-              },
-              {
-                "key": "banner-mrec",
-                "value": "300 &#215; 250",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "radius/radius-1 (4px)",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "0 (ad fills surface)",
-                "mono": true
-              }
+              { "key": "Size family",   "value": "banner" },
+              { "key": "Size",          "value": "banner-sm", "prop": "size" },
+              { "key": "isLoading",     "value": "false", "prop": "loading" },
+              { "key": "Content slot",  "value": "AdMob view" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "ad-space/color/surface",
-                "mono": true
-              },
-              {
-                "key": "Loading skeleton",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Skeleton token",
-                "value": "ad-space/color/loading-skeleton",
-                "mono": true
-              },
-              {
-                "key": "\"Ad\" marker",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Marker token",
-                "value": "text/color-text-subtle",
-                "mono": true
-              }
+              { "key": "Surface",          "value": "#FFFFFF", "token": "ad-space/color/surface" },
+              { "key": "Loading skeleton", "value": "#EEF2F9", "token": "ad-space/color/loading-skeleton" },
+              { "key": "\"Ad\" marker",      "value": "#6780A9", "token": "text/color-text-subtle" }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Dimensions",     "value": "320 × 50", "mono": true },
+              { "key": "Corner radius",  "value": "radius/radius-1 (4px)", "mono": true },
+              { "key": "Padding",        "value": "0 (ad fills surface)", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "\"Ad\" marker style",
-                "value": "Secondary/Bold/Caption",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "BarkAda Semibold &#183; 10 / 14 &#183; +0.25",
-                "mono": true
-              }
+              { "key": "\"Ad\" marker style", "value": "Secondary/Bold/Caption", "mono": true },
+              { "key": "Font",              "value": "BarkAda Semibold · 10 / 14 · +0.25", "mono": true }
             ]
           }
         ],
-        "swift": "<code><span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>size<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.bannerSm</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">GADBannerView</span><span class=\"syn-punc\">(</span>adSize<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.banner</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span></code>",
-        "compose": "<code><span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">BannerSm</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">AndroidView</span><span class=\"syn-punc\">(</span>factory <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> ctx <span class=\"syn-eq\">-&gt;</span> <span class=\"syn-type\">AdView</span><span class=\"syn-punc\">(</span>ctx<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">})</span>\n<span class=\"syn-punc\">}</span></code>"
+        "swift": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>size<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.bannerSm</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">GADBannerView</span><span class=\"syn-punc\">(</span>adSize<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.banner</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">BannerSm</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">AndroidView</span><span class=\"syn-punc\">(</span>factory <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> ctx <span class=\"syn-eq\">-&gt;</span> <span class=\"syn-type\">AdView</span><span class=\"syn-punc\">(</span>ctx<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">})</span>\n<span class=\"syn-punc\">}</span>"
       },
       {
         "cardKey": "ads-spec-card-promo",
+        "demoKey": "promo",
+        "demoControls": adSpacePromoControls,
         "title": "Promo family",
         "node": "18563:9917",
         "description": "Product-owned dashboard tiles. Image fills the upper portion; an optional caption sits beneath.",
-        "previewHtml": "<div class=\"eb-preview-stack eb-preview-stack--row eb-preview-stack--gap-sm\"><div class=\"eb-preview-adspace eb-preview-adspace--promo eb-preview-adspace--promo-sm\" style=\"width:131px;height:126px;\"><div class=\"eb-preview-adspace__image\"><span class=\"eb-preview-adspace__image-label\">Replace me · 131×126</span></div><div class=\"eb-preview-adspace__caption eb-preview-adspace__caption--below\">Send free</div></div><div class=\"eb-preview-adspace eb-preview-adspace--promo eb-preview-adspace--promo-md\" style=\"width:224px;height:200px;\"><div class=\"eb-preview-adspace__image\"><span class=\"eb-preview-adspace__image-label\">Replace me · 224×200</span></div><div class=\"eb-preview-adspace__caption eb-preview-adspace__caption--below\">Earn up to 5% on savings</div></div></div>",
+        "previewHtml": "<div id=\"ads-spec-promo\"><div class=\"eb-preview-adspace eb-preview-adspace--promo eb-preview-adspace--promo-md\" style=\"width:224px;height:200px;\"><div class=\"eb-preview-adspace__image\"><span class=\"eb-preview-adspace__image-label\">Replace me · 224×200</span></div><div class=\"eb-preview-adspace__caption eb-preview-adspace__caption--below\">Earn up to 5% on savings</div></div></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Size family",
-                "value": "promo",
-                "mono": false
-              },
-              {
-                "key": "Values",
-                "value": "promo-sm / promo-md",
-                "mono": false
-              },
-              {
-                "key": "Content slot",
-                "value": "Image or illustration",
-                "mono": false
-              },
-              {
-                "key": "Caption prop",
-                "value": "caption: String?",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "rows": [
-              {
-                "key": "promo-sm",
-                "value": "131 &#215; 126",
-                "mono": true
-              },
-              {
-                "key": "promo-md",
-                "value": "224 &#215; 200",
-                "mono": true
-              },
-              {
-                "key": "Image aspect (sm)",
-                "value": "4:3",
-                "mono": true
-              },
-              {
-                "key": "Image aspect (md)",
-                "value": "3:2",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "radius/radius-2 (8px)",
-                "mono": true
-              },
-              {
-                "key": "Caption padding",
-                "value": "8 horizontal, 6 vertical",
-                "mono": true
-              }
+              { "key": "Size family",   "value": "promo" },
+              { "key": "Size",          "value": "promo-md", "prop": "size" },
+              { "key": "isLoading",     "value": "false",    "prop": "loading" },
+              { "key": "Content slot",  "value": "Image or illustration" },
+              { "key": "Caption prop",  "value": "caption: String?" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Caption",
-                "value": "#2340A9",
-                "mono": true
-              },
-              {
-                "key": "Caption token",
-                "value": "ad-space/color/caption",
-                "mono": true
-              },
-              {
-                "key": "Image placeholder",
-                "value": "#E6E1EF",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "ad-space/color/loading-skeleton",
-                "mono": true
-              }
+              { "key": "Surface",           "value": "#FFFFFF", "token": "ad-space/color/surface" },
+              { "key": "Caption",           "value": "#2340A9", "token": "ad-space/color/caption" },
+              { "key": "Image placeholder", "value": "#E6E1EF", "token": "ad-space/color/loading-skeleton" }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Dimensions",      "value": "224 × 200", "mono": true },
+              { "key": "Image aspect",    "value": "3:2",       "mono": true },
+              { "key": "Corner radius",   "value": "radius/radius-2 (8px)", "mono": true },
+              { "key": "Caption padding", "value": "8 horizontal, 6 vertical", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Caption style",
-                "value": "Secondary/Bold/Caption",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "BarkAda Semibold &#183; 12 / 16",
-                "mono": true
-              },
-              {
-                "key": "Max lines",
-                "value": "1 (sm) &#183; 2 (md)",
-                "mono": true
-              }
+              { "key": "Caption style", "value": "Secondary/Bold/Caption", "mono": true },
+              { "key": "Font",          "value": "BarkAda Semibold · 12 / 16", "mono": true },
+              { "key": "Max lines",     "value": "1 (sm) · 2 (md)", "mono": true }
             ]
           }
         ],
-        "swift": "<code><span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n    size<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.promoMd</span><span class=\"syn-punc\">,</span>\n    caption<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Earn rewards every day\"</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> imageURL<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span></code>",
-        "compose": "<code><span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PromoMd</span><span class=\"syn-punc\">,</span>\n    caption <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Earn rewards every day\"</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> imageUrl<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span></code>"
+        "swift": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n    size<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.promoMd</span><span class=\"syn-punc\">,</span>\n    caption<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Earn rewards every day\"</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> imageURL<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PromoMd</span><span class=\"syn-punc\">,</span>\n    caption <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Earn rewards every day\"</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> imageUrl<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       },
       {
         "cardKey": "ads-spec-card-hero",
+        "demoKey": "hero",
+        "demoControls": adSpaceHeroControls,
         "title": "Hero family",
         "node": "18563:9808",
         "description": "Full-width hero banners for home and category surfaces. <code>hero-md</code> is the canonical item inside a DS Carousel for multi-ad rails.",
-        "previewHtml": "<div class=\"eb-preview-stack eb-preview-stack--col eb-preview-stack--gap-sm\"><div class=\"eb-preview-adspace eb-preview-adspace--hero eb-preview-adspace--hero-sm\" style=\"width:296px;height:174px;\"><div class=\"eb-preview-adspace__image eb-preview-adspace__image--full\"><span class=\"eb-preview-adspace__image-label\">Replace me · 296×174</span></div><div class=\"eb-preview-adspace__caption eb-preview-adspace__caption--overlay\">Featured offer</div></div><div class=\"eb-preview-adspace eb-preview-adspace--hero eb-preview-adspace--hero-md\" style=\"width:336px;height:174px;\"><div class=\"eb-preview-adspace__image eb-preview-adspace__image--full\"><span class=\"eb-preview-adspace__image-label\">Replace me · 336×174</span></div><div class=\"eb-preview-adspace__caption eb-preview-adspace__caption--overlay\">Weekend deals are here</div></div></div>",
+        "previewHtml": "<div id=\"ads-spec-hero\"><div class=\"eb-preview-adspace eb-preview-adspace--hero eb-preview-adspace--hero-md\" style=\"width:336px;height:174px;\"><div class=\"eb-preview-adspace__image eb-preview-adspace__image--full\"><span class=\"eb-preview-adspace__image-label\">Replace me · 336×174</span></div><div class=\"eb-preview-adspace__caption eb-preview-adspace__caption--overlay\">Weekend deals are here</div></div></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
-              {
-                "key": "Size family",
-                "value": "hero",
-                "mono": false
-              },
-              {
-                "key": "Values",
-                "value": "hero-sm / hero-md",
-                "mono": false
-              },
-              {
-                "key": "Content slot",
-                "value": "Image or illustration",
-                "mono": false
-              },
-              {
-                "key": "Carousel",
-                "value": "DS Carousel for multi-ad rails",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "rows": [
-              {
-                "key": "hero-sm",
-                "value": "296 &#215; 174",
-                "mono": true
-              },
-              {
-                "key": "hero-md",
-                "value": "336 &#215; 174",
-                "mono": true
-              },
-              {
-                "key": "Image aspect (sm)",
-                "value": "17:10",
-                "mono": true
-              },
-              {
-                "key": "Image aspect (md)",
-                "value": "15:8",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "radius/radius-3 (12px)",
-                "mono": true
-              },
-              {
-                "key": "Caption padding",
-                "value": "12 horizontal, 8 vertical",
-                "mono": true
-              }
+              { "key": "Size family",  "value": "hero" },
+              { "key": "Size",         "value": "hero-md",  "prop": "size" },
+              { "key": "isLoading",    "value": "false",    "prop": "loading" },
+              { "key": "Content slot", "value": "Image or illustration" },
+              { "key": "Carousel",     "value": "DS Carousel for multi-ad rails" }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Caption (overlay)",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Caption scrim",
-                "value": "#040506 (0 &#8594; 40%)",
-                "mono": true
-              },
-              {
-                "key": "Scrim token",
-                "value": "overlay/scrim-bottom",
-                "mono": true
-              },
-              {
-                "key": "Image placeholder",
-                "value": "#E6E1EF",
-                "mono": true
-              }
+              { "key": "Surface",           "value": "#FFFFFF", "token": "ad-space/color/surface" },
+              { "key": "Caption (overlay)", "value": "#FFFFFF", "token": "ad-space/color/caption-overlay" },
+              { "key": "Caption scrim",     "value": "#040506", "token": "overlay/scrim-bottom" },
+              { "key": "Image placeholder", "value": "#E6E1EF", "token": "ad-space/color/loading-skeleton" }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Dimensions",      "value": "336 × 174", "mono": true },
+              { "key": "Image aspect",    "value": "15:8",       "mono": true },
+              { "key": "Corner radius",   "value": "radius/radius-3 (12px)", "mono": true },
+              { "key": "Caption padding", "value": "12 horizontal, 8 vertical", "mono": true }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
-              {
-                "key": "Caption style",
-                "value": "Primary/Headlines/Block",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Bold &#183; 16 / 20 &#183; +0.25",
-                "mono": true
-              },
-              {
-                "key": "Max lines",
-                "value": "2",
-                "mono": true
-              },
-              {
-                "key": "Position",
-                "value": "Overlay on lower third",
-                "mono": true
-              }
+              { "key": "Caption style", "value": "Primary/Headlines/Block", "mono": true },
+              { "key": "Font",          "value": "Proxima Soft Bold · 16 / 20 · +0.25", "mono": true },
+              { "key": "Max lines",     "value": "2", "mono": true },
+              { "key": "Position",      "value": "Overlay on lower third", "mono": true }
             ]
           }
         ],
-        "swift": "<code><span class=\"syn-type\">Carousel</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>ads<span class=\"syn-punc\">) {</span> ad <span class=\"syn-kw\">in</span>\n        <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>size<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.heroMd</span><span class=\"syn-punc\">,</span> caption<span class=\"syn-punc\">:</span> ad.caption<span class=\"syn-punc\">) {</span>\n            <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> ad.image<span class=\"syn-punc\">)</span>\n        <span class=\"syn-punc\">}</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span></code>",
-        "compose": "<code><span class=\"syn-type\">EBCarousel</span><span class=\"syn-punc\">(</span>items <span class=\"syn-eq\">=</span> ads<span class=\"syn-punc\">) {</span> ad <span class=\"syn-eq\">-&gt;</span>\n    <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n        size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">HeroMd</span><span class=\"syn-punc\">,</span>\n        caption <span class=\"syn-eq\">=</span> ad.caption\n    <span class=\"syn-punc\">) {</span>\n        <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad.image<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span></code>"
+        "swift": "<span class=\"syn-type\">Carousel</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>ads<span class=\"syn-punc\">) {</span> ad <span class=\"syn-kw\">in</span>\n        <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>size<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.heroMd</span><span class=\"syn-punc\">,</span> caption<span class=\"syn-punc\">:</span> ad.caption<span class=\"syn-punc\">) {</span>\n            <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> ad.image<span class=\"syn-punc\">)</span>\n        <span class=\"syn-punc\">}</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBCarousel</span><span class=\"syn-punc\">(</span>items <span class=\"syn-eq\">=</span> ads<span class=\"syn-punc\">) {</span> ad <span class=\"syn-eq\">-&gt;</span>\n    <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n        size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">HeroMd</span><span class=\"syn-punc\">,</span>\n        caption <span class=\"syn-eq\">=</span> ad.caption\n    <span class=\"syn-punc\">) {</span>\n        <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad.image<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
     "colorsTables": []

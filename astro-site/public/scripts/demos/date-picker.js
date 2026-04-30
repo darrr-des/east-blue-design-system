@@ -63,7 +63,6 @@ function _dpBuildSvg(state, filled, disabled) {
     var startRow = py + 92;
     var rowH = 40;
     var todayIdx = 4; /* Thursday of row 0 */
-    var selectedIdx = isFilled ? 4 : -1; /* highlight 5 if filled */
     var dates = [
       [1, 2, 3, 4, 5, 6, 7],
       [8, 9, 10, 11, 12, 13, 14],
@@ -97,25 +96,102 @@ function updateDatePickerDemo() {
   if (el) el.innerHTML = _dpBuildSvg(_dpDemo.state, _dpDemo.filled, _dpDemo.disabled);
 }
 
+/* ── Spec card state — drives per-card preview + DEV snippets ──────── */
+var _specCards = {
+  'dp-default-empty':  { state: 'Default', filled: 'false', disabled: 'No' },
+  'dp-default-filled': { state: 'Default', filled: 'true',  disabled: 'No' },
+  'dp-active-empty':   { state: 'Active',  filled: 'false', disabled: 'No' },
+  'dp-active-filled':  { state: 'Active',  filled: 'true',  disabled: 'No' },
+  'dp-disabled':       { state: 'Default', filled: 'false', disabled: 'Yes' }
+};
+window._specCards = _specCards;
+
+/* Mapping demoKey → cardKey (used to find spec-card root in DOM) */
+var _dpCardKeys = {
+  'dp-default-empty':  'dp-spec-default-empty',
+  'dp-default-filled': 'dp-spec-default-filled',
+  'dp-active-empty':   'dp-spec-active-empty',
+  'dp-active-filled':  'dp-spec-active-filled',
+  'dp-disabled':       'dp-spec-disabled'
+};
+
+function buildSwiftSnippet(cardKey, card) {
+  if (card.disabled === 'Yes') {
+    return 'EBDatePicker($selectedDate)\n    .disabled(true)';
+  }
+  var lines = ['EBDatePicker($selectedDate'];
+  if (card.filled !== 'true') lines[0] += ', placeholder: "Select a date"';
+  lines[0] += ')';
+  if (card.state === 'Active') lines.push('    .ebFocused(true)');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(cardKey, card) {
+  var lines = ['EBDatePicker('];
+  lines.push('    date = selectedDate,');
+  lines.push('    onDateChange = { },');
+  if (card.filled !== 'true' && card.disabled !== 'Yes') lines.push('    placeholder = "Select a date",');
+  if (card.state === 'Active') lines.push('    focused = true,');
+  if (card.disabled === 'Yes') lines.push('    enabled = false,');
+  /* Strip trailing comma */
+  var last = lines[lines.length - 1];
+  if (last.charAt(last.length - 1) === ',') lines[lines.length - 1] = last.slice(0, -1);
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview SVG — locate the .spec-card-preview inside the spec card root */
+  var rootKey = _dpCardKeys[cardStyle];
+  if (rootKey) {
+    var rootEl = document.getElementById('spec-card-' + rootKey);
+    if (rootEl) {
+      var previewEl = rootEl.querySelector('.spec-card-preview');
+      if (previewEl) previewEl.innerHTML = _dpBuildSvg(card.state, card.filled, card.disabled);
+    }
+  }
+
+  /* Update Properties readouts */
+  ['state', 'filled', 'disabled'].forEach(function(p) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
+    if (el) el.textContent = card[p];
+  });
+
+  /* Update DEV code */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
+/* Legacy alias — preserve old function name in case other code uses it */
 function updateDatePickerSpecCard(key) {
-  var el = document.getElementById('dp-' + key + '-preview');
-  if (!el) return;
-  var cfg = {
-    'default-empty':  { state: 'Default', filled: 'false', disabled: 'No' },
-    'default-filled': { state: 'Default', filled: 'true',  disabled: 'No' },
-    'active-empty':   { state: 'Active',  filled: 'false', disabled: 'No' },
-    'active-filled':  { state: 'Active',  filled: 'true',  disabled: 'No' },
-    'disabled':       { state: 'Default', filled: 'true',  disabled: 'Yes' }
-  }[key];
-  if (cfg) el.innerHTML = _dpBuildSvg(cfg.state, cfg.filled, cfg.disabled);
+  /* Legacy: triggered by old onclick handlers */
+  var demoKey = 'dp-' + key;
+  var card = _specCards[demoKey];
+  if (card) updateSpecCard(demoKey, 'state', card.state);
 }
 
 function _dpInitSpecCards() {
-  updateDatePickerSpecCard('default-empty');
-  updateDatePickerSpecCard('default-filled');
-  updateDatePickerSpecCard('active-empty');
-  updateDatePickerSpecCard('active-filled');
-  updateDatePickerSpecCard('disabled');
+  Object.keys(_specCards).forEach(function(k){ updateSpecCard(k, 'state', _specCards[k].state); });
 }
 
 function _dpInit() {
@@ -128,3 +204,6 @@ if (document.readyState === 'loading') {
 } else {
   _dpInit();
 }
+
+/* Re-init after Astro view-transition swaps */
+document.addEventListener('astro:page-load', _dpInit);

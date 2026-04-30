@@ -1,12 +1,7 @@
-/* Auto-extracted from assessment-src/components/bottom-sheet.html.
- * Powers the live-preview dropdowns/toggles for the bottom-sheet component page.
+/* Bottom Sheet — live preview + spec cards.
+ * Wired to the Astro SpecCard demo-panel (`updateSpecCard(demoKey, prop, value)`).
  * Re-extract via: node astro-site/scripts/extract-demos.mjs bottom-sheet
  */
-/* ── Bottom Sheet JS ──────────────────────────────────────────────── */
-/* Renders miniature phone-like previews of the Bottom Sheet using
-   inline HTML. Shows the current Figma schema (alignment, CTAs)
-   plus proposed-but-not-in-Figma controls (detent, drag handle,
-   scrim, content shape) so the user can visualise the restructure. */
 
 function _bottomSheetCardMarkup(opts) {
   var align   = opts.align || 'left';
@@ -40,8 +35,6 @@ function _bottomSheetCardMarkup(opts) {
       '</div>';
   }
 
-  // Content region — currently decorative, but we preview the proposed
-  // slot compositions so the user can imagine the restructure.
   var contentBlock = '';
   var alignCenter = (align === 'center');
   if (content === 'text') {
@@ -94,22 +87,17 @@ function _bottomSheetStageMarkup(opts) {
   var scrim  = opts.scrim !== 'no';
   var detent = opts.detent || 'medium';
   var card   = _bottomSheetCardMarkup(opts);
-
-  // Determine sheet vertical position based on detent.
   var sheetOffset = (detent === 'large') ? '32px' : '110px';
 
   return (
     '<div style="position:relative;width:280px;height:360px;margin:0 auto;background:#F6F9FD;border-radius:18px;overflow:hidden;border:1px solid #E5EBF4;">' +
-      // Fake app content behind
       '<div style="padding:14px;">' +
         '<div style="width:60%;height:8px;background:#D9E2EC;border-radius:3px;margin-bottom:10px;"></div>' +
         '<div style="width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;"></div>' +
         '<div style="width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;"></div>' +
         '<div style="width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;"></div>' +
       '</div>' +
-      // Scrim
       (scrim ? '<div style="position:absolute;inset:0;background:#020E22;opacity:0.56;"></div>' : '') +
-      // Bottom sheet anchored to bottom
       '<div style="position:absolute;left:50%;transform:translateX(-50%);bottom:0;top:' + sheetOffset + ';display:flex;align-items:flex-start;justify-content:center;">' +
         card +
       '</div>' +
@@ -117,99 +105,135 @@ function _bottomSheetStageMarkup(opts) {
   );
 }
 
+/* ── Live preview (Overview tab) ─────────────────────────────────── */
 function _bottomSheetUpdate() {
-  var align    = document.getElementById('bottom-sheet-ctrl-align');
-  var preamble = document.getElementById('bottom-sheet-ctrl-preamble');
-  var descEl   = document.getElementById('bottom-sheet-ctrl-desc');
-  var ctaEl    = document.getElementById('bottom-sheet-ctrl-cta');
-  var detentEl = document.getElementById('bottom-sheet-ctrl-detent');
-  var handleEl = document.getElementById('bottom-sheet-ctrl-handle');
-  var scrimEl  = document.getElementById('bottom-sheet-ctrl-scrim');
-  var contEl   = document.getElementById('bottom-sheet-ctrl-content');
-  var preview  = document.getElementById('bottom-sheet-demo-preview');
+  var get = function(id, fb) { var el = document.getElementById(id); return el ? el.value : fb; };
+  var preview = document.getElementById('bottom-sheet-demo-preview');
   if (!preview) return;
   preview.innerHTML = _bottomSheetStageMarkup({
-    align:    align    ? align.value    : 'left',
-    preamble: preamble ? preamble.value : 'yes',
-    desc:     descEl   ? descEl.value   : 'yes',
-    cta:      ctaEl    ? ctaEl.value    : '2',
-    detent:   detentEl ? detentEl.value : 'medium',
-    handle:   handleEl ? handleEl.value : 'yes',
-    scrim:    scrimEl  ? scrimEl.value  : 'yes',
-    content:  contEl   ? contEl.value   : 'text'
+    align:    get('bottom-sheet-ctrl-align', 'left'),
+    preamble: get('bottom-sheet-ctrl-preamble', 'yes'),
+    desc:     get('bottom-sheet-ctrl-desc', 'yes'),
+    cta:      get('bottom-sheet-ctrl-cta', '2'),
+    detent:   get('bottom-sheet-ctrl-detent', 'medium'),
+    handle:   get('bottom-sheet-ctrl-handle', 'yes'),
+    scrim:    get('bottom-sheet-ctrl-scrim', 'yes'),
+    content:  get('bottom-sheet-ctrl-content', 'text')
   });
 }
 
-function _bottomSheetSpecMode(card, mode) {
-  var panel = document.querySelector('#panel-bottom-sheet');
-  if (!panel) return;
-  // Scope toggle buttons to the clicked spec card
-  var cardIds = { left: 'bottom-sheet-spec-preview-left', center: 'bottom-sheet-spec-preview-center' };
-  var previewId = cardIds[card];
-  if (!previewId) return;
-  var previewEl = document.getElementById(previewId);
-  if (!previewEl) return;
+/* ── Spec cards (Style tab) ──────────────────────────────────────── */
+var _bsSpecCards = {
+  'left-align':   { align: 'left',   preamble: 'yes', desc: 'yes', cta: '2' },
+  'center-align': { align: 'center', preamble: 'yes', desc: 'yes', cta: '2' }
+};
+var _specCards = _bsSpecCards;
+window._specCards = _specCards;
 
-  // Find the two mode-toggle buttons for this card and toggle active state
-  var cardEl = previewEl.closest('.spec-card');
-  if (cardEl) {
-    var btns = cardEl.querySelectorAll('.mode-toggle-btn');
-    btns.forEach(function(b) { b.classList.remove('active'); });
-    var sel = cardEl.querySelector('.mode-toggle-btn[onclick*="\'' + mode + '\'"]');
-    if (sel) sel.classList.add('active');
+function buildSwiftSnippet(cardKey, card) {
+  var lines = ['EBBottomSheet("Header")'];
+  if (card.preamble === 'yes') lines.push('    .ebPreamble("Preamble")');
+  if (card.desc === 'yes')     lines.push('    .ebDescription("Description body")');
+  lines.push('    .ebAlignment(.' + (card.align === 'center' ? 'center' : 'leading') + ')');
+  if (card.cta === '2') {
+    lines.push('    .ebPrimaryAction("Continue") { }');
+    lines.push('    .ebSecondaryAction("Cancel") { }');
+  } else if (card.cta === '1') {
+    lines.push('    .ebPrimaryAction("Continue") { }');
   }
+  return lines.join('\n');
+}
 
-  if (mode === 'dev') {
-    var rows = '';
-    if (card === 'left') {
-      rows =
-        '<div class="dev-spec-row"><span class="dev-spec-key">name</span><span class="dev-spec-val">Bottom Drawer</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">node</span><span class="dev-spec-val">12522:12860</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">alignment</span><span class="dev-spec-val">Left Align</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">size</span><span class="dev-spec-val">360 × 324</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">radius (top)</span><span class="dev-spec-val">8</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">surface.bg</span><span class="dev-spec-val">main/bottom-header/color/bg · #FFFFFF</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">preamble.color</span><span class="dev-spec-val">main/bottom-header/color/preamble · #90A8D0</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">header.color</span><span class="dev-spec-val">main/bottom-header/color/header · #0A2757</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">description.color</span><span class="dev-spec-val">main/bottom-header/color/description · #445C85</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">icon-close.color</span><span class="dev-spec-val">main/bottom-header/color/icon-close · #6780A9</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">icon-close.asset</span><span class="dev-spec-val">raster PNG (Figma CDN) — should be vector</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">cta.primary.bg</span><span class="dev-spec-val">main/button/primary/brand/enabled/bg · #005CE5</span></div>';
-    } else {
-      rows =
-        '<div class="dev-spec-row"><span class="dev-spec-key">name</span><span class="dev-spec-val">Bottom Drawer</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">node</span><span class="dev-spec-val">12817:43834</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">alignment</span><span class="dev-spec-val">Center Align</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">size</span><span class="dev-spec-val">360 × 330</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">radius (top)</span><span class="dev-spec-val">8</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">surface.bg</span><span class="dev-spec-val">main/bottom-header/color/bg · #FFFFFF</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">header-slot</span><span class="dev-spec-val">above-title · ~16 px tall</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">preamble.color</span><span class="dev-spec-val">main/bottom-header/color/preamble · #90A8D0</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">header.color</span><span class="dev-spec-val">main/bottom-header/color/header · #0A2757</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">description.color</span><span class="dev-spec-val">main/bottom-header/color/description · #445C85</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">icon-close</span><span class="dev-spec-val">not present (asymmetry vs Left Align)</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">cta.primary.bg</span><span class="dev-spec-val">main/button/primary/brand/enabled/bg · #005CE5</span></div>';
-    }
-    previewEl.innerHTML = '<div class="dev-spec-block">' + rows + '</div>';
-  } else {
+function buildComposeSnippet(cardKey, card) {
+  var lines = ['EBBottomSheet('];
+  lines.push('    header = "Header",');
+  if (card.preamble === 'yes') lines.push('    preamble = "Preamble",');
+  if (card.desc === 'yes')     lines.push('    description = "Description body",');
+  lines.push('    alignment = EBSheetAlignment.' + (card.align === 'center' ? 'Center' : 'Leading') + ',');
+  if (card.cta === '2') {
+    lines.push('    primaryAction = EBSheetAction("Continue") { },');
+    lines.push('    secondaryAction = EBSheetAction("Cancel") { }');
+  } else if (card.cta === '1') {
+    lines.push('    primaryAction = EBSheetAction("Continue") { }');
+  }
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _bsSpecCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview — `bottom-sheet-spec-preview-{cardStyle}` */
+  var previewEl = document.getElementById('bottom-sheet-spec-preview-' + cardStyle);
+  if (previewEl) {
     previewEl.innerHTML = _bottomSheetCardMarkup({
-      align:    (card === 'center' ? 'center' : 'left'),
-      preamble: 'yes',
-      desc:     'yes',
-      cta:      '2',
-      handle:   'no',  // Figma component has no handle; DES view reflects the current state
-      content:  'text'
+      align: card.align, preamble: card.preamble, desc: card.desc,
+      cta: card.cta, handle: 'no', content: 'text'
     });
   }
+
+  /* Update Properties readouts — `[data-sp="{cardStyle}-{prop}"]` */
+  var labelMap = {
+    align:    { left: 'Left Align', center: 'Center Align' },
+    preamble: { yes: 'yes', no: 'no' },
+    desc:     { yes: 'yes', no: 'no' },
+    cta:      { '2': 'Primary + Tertiary', '1': 'Primary Only', '0': 'None' }
+  };
+  Object.keys(card).forEach(function(k) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + k + '"]');
+    if (!el) return;
+    var span = el.querySelector('.spec-prop-hex') || el;
+    span.textContent = (labelMap[k] && labelMap[k][card[k]]) || card[k];
+  });
+
+  /* DEV code update */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
+function _bsInitSpecCards() {
+  Object.keys(_bsSpecCards).forEach(function(key) {
+    updateSpecCard(key, 'align', _bsSpecCards[key].align);
+  });
 }
 
 function _bottomSheetInit() {
   var ctx = document.getElementById('bottom-sheet-context-preview');
   if (ctx) ctx.innerHTML = _bottomSheetStageMarkup({align:'left', preamble:'yes', desc:'yes', cta:'2', detent:'medium', handle:'yes', scrim:'yes', content:'list'});
   _bottomSheetUpdate();
-  _bottomSheetSpecMode('left', 'des');
-  _bottomSheetSpecMode('center', 'des');
+  _bsInitSpecCards();
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _bottomSheetInit);
 else _bottomSheetInit();
+document.addEventListener('astro:page-load', _bottomSheetInit);
+
+/* Legacy alias — kept so the older inline onclick on Overview-tab card
+   doesn't error if any markup still references `_bottomSheetSpecMode`. */
+function _bottomSheetSpecMode(card, mode) {
+  if (typeof window.toggleSpecMode === 'function') {
+    var el = document.querySelector('[data-view="' + card + '-' + (mode === 'dev' ? 'des' : 'dev') + '"]');
+    if (el) {
+      var toggle = el.parentElement.querySelector('.spec-mode-toggle');
+      if (toggle) window.toggleSpecMode(card, toggle);
+    }
+  }
+}

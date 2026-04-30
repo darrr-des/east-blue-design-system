@@ -1,4 +1,56 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(demoKey, prop, value)`
+// in `public/scripts/demos/counter.js`.
+const counterDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'auto',
+        options: [
+          { value: 'auto', label: 'Auto (from count)' },
+          { value: 'filled', label: 'Filled' },
+          { value: 'empty', label: 'Empty' },
+        ],
+      },
+      {
+        label: 'With Limit',
+        prop: 'withLimit',
+        defaultValue: 'no',
+        options: [
+          { value: 'no', label: 'No (single integer)' },
+          { value: 'yes', label: 'Yes (slash format)' },
+        ],
+      },
+      {
+        label: 'Count',
+        prop: 'count',
+        defaultValue: '5',
+        options: [
+          { value: '0', label: '0' },
+          { value: '5', label: '5' },
+          { value: '10', label: '10' },
+          { value: '99', label: '99' },
+          { value: '247', label: '247' },
+        ],
+      },
+      {
+        label: 'Limit',
+        prop: 'limit',
+        defaultValue: '10',
+        options: [
+          { value: '5', label: '5' },
+          { value: '10', label: '10' },
+          { value: '50', label: '50' },
+          { value: '100', label: '100' },
+        ],
+      },
+    ],
+  },
+];
 
 export const counter: ComponentData = {
   "meta": {
@@ -161,81 +213,74 @@ export const counter: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Variants",
     "specCards": [
       {
         "cardKey": "empty-—-with-limit",
+        "demoKey": "empty-limit",
+        "demoControls": counterDemoControls,
         "title": "Empty — with limit",
         "node": "18482:71322",
         "description": "Slash format showing zero progress against a limit (\"0 / 10\"). Muted label on neutral bg. Used when no slots are filled yet.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-empty-limit\"></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
                 "value": "empty",
-                "mono": true
+                "mono": true,
+                "prop": "state"
               },
               {
                 "key": "with limit",
                 "value": "yes",
-                "mono": true
+                "mono": true,
+                "prop": "withLimit"
               },
               {
                 "key": "Example text",
                 "value": "0 / 10",
-                "mono": true
+                "mono": true,
+                "prop": "example"
               }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
               {
                 "key": "Empty bg",
                 "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Empty bg token",
-                "value": "counter/color/empty/bg",
-                "mono": true
+                "mono": true,
+                "token": "counter/color/empty/bg"
               },
               {
                 "key": "Empty label",
                 "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Empty label token",
-                "value": "counter/color/empty/label",
-                "mono": true
+                "mono": true,
+                "token": "counter/color/empty/label"
               },
               {
                 "key": "Filled bg",
                 "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Filled bg token",
-                "value": "counter/color/filled/bg",
-                "mono": true
+                "mono": true,
+                "token": "counter/color/filled/bg"
               },
               {
                 "key": "Filled label",
                 "value": "#072592",
-                "mono": true
-              },
-              {
-                "key": "Filled label token",
-                "value": "counter/color/filled/label",
-                "mono": true
+                "mono": true,
+                "token": "counter/color/filled/label"
               }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Height",
@@ -261,6 +306,7 @@ export const counter: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",
@@ -295,68 +341,64 @@ export const counter: ComponentData = {
       },
       {
         "cardKey": "filled-—-with-limit",
+        "demoKey": "filled-limit",
+        "demoControls": counterDemoControls,
         "title": "Filled — with limit",
         "node": "18482:71324",
         "description": "Slash format with a filled count (\"10 / 10\"). Brand-blue label on neutral bg. Used when capacity is at or approaching the limit.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-2\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-filled-limit\"></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "State",
                 "value": "Filled",
-                "mono": true
+                "mono": true,
+                "prop": "state"
               },
               {
                 "key": "Has limit",
                 "value": "Yes",
-                "mono": true
+                "mono": true,
+                "prop": "withLimit"
               },
               {
                 "key": "Char count",
                 "value": "120 / 200",
-                "mono": true
+                "mono": true,
+                "prop": "example"
               }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
               {
                 "key": "Counter color",
                 "value": "#3C4A5C",
-                "mono": true
-              },
-              {
-                "key": "Counter color token",
-                "value": "main/counter/label",
-                "mono": true
+                "mono": true,
+                "token": "main/counter/label"
               },
               {
                 "key": "Limit color",
                 "value": "#3C4A5C",
-                "mono": true
-              },
-              {
-                "key": "Limit color token",
-                "value": "main/counter/label",
-                "mono": true
+                "mono": true,
+                "token": "main/counter/label"
               },
               {
                 "key": "Separator color",
                 "value": "#3C4A5C",
-                "mono": true
-              },
-              {
-                "key": "Separator color token",
-                "value": "main/counter/label",
-                "mono": true
+                "mono": true,
+                "token": "main/counter/label"
               }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding (top)",
@@ -377,6 +419,7 @@ export const counter: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",
@@ -406,78 +449,70 @@ export const counter: ComponentData = {
       },
       {
         "cardKey": "single-integer-nodes-18482:71326,-18482:71328",
+        "demoKey": "single",
+        "demoControls": counterDemoControls,
         "title": "Single integer nodes 18482:71326, 18482:71328",
         "node": "18482:71326",
         "description": "Standalone count — notifications, unread messages, pending items. Hugs tightly around the digit (24 × 24 for single digit, grows for 2+ digits). Empty state shown muted; filled state shown in brand-blue. Pairs with overflow handling (\"99+\") once <code>count</code> is parameterized.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-3\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-single\"></div>",
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "with limit",
                 "value": "no",
-                "mono": true
+                "mono": true,
+                "prop": "withLimit"
               },
               {
                 "key": "state",
                 "value": "empty | filled",
-                "mono": true
+                "mono": true,
+                "prop": "state"
               },
               {
                 "key": "Example text",
                 "value": "0",
-                "mono": true
+                "mono": true,
+                "prop": "example"
               }
             ]
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
               {
                 "key": "Empty bg",
                 "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Empty bg token",
-                "value": "counter/color/empty/bg",
-                "mono": true
+                "mono": true,
+                "token": "counter/color/empty/bg"
               },
               {
                 "key": "Empty label",
                 "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Empty label token",
-                "value": "counter/color/empty/label",
-                "mono": true
+                "mono": true,
+                "token": "counter/color/empty/label"
               },
               {
                 "key": "Filled bg",
                 "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Filled bg token",
-                "value": "counter/color/filled/bg",
-                "mono": true
+                "mono": true,
+                "token": "counter/color/filled/bg"
               },
               {
                 "key": "Filled label",
                 "value": "#072592",
-                "mono": true
-              },
-              {
-                "key": "Filled label token",
-                "value": "counter/color/filled/label",
-                "mono": true
+                "mono": true,
+                "token": "counter/color/filled/label"
               }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Min-width",
@@ -498,6 +533,7 @@ export const counter: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
