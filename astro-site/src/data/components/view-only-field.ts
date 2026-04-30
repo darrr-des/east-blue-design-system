@@ -158,6 +158,7 @@ export const viewOnlyField: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "vof-spec-default",
@@ -167,6 +168,7 @@ export const viewOnlyField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -182,61 +184,18 @@ export const viewOnlyField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "labeled-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "labeled-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "labeled-field/default/label",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "labeled-field/default/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "labeled-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/default/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border" },
+              { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label" },
+              { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -272,6 +231,7 @@ export const viewOnlyField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -308,6 +268,7 @@ export const viewOnlyField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -323,61 +284,18 @@ export const viewOnlyField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "labeled-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "labeled-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "labeled-field/default/label",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "labeled-field/default/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "labeled-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/default/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border" },
+              { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label" },
+              { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -413,6 +331,7 @@ export const viewOnlyField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -449,6 +368,7 @@ export const viewOnlyField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -464,61 +384,18 @@ export const viewOnlyField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "labeled-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "labeled-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "labeled-field/default/label",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "labeled-field/default/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "labeled-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/default/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border" },
+              { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label" },
+              { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -554,6 +431,7 @@ export const viewOnlyField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -590,6 +468,7 @@ export const viewOnlyField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -605,61 +484,18 @@ export const viewOnlyField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "labeled-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "labeled-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "labeled-field/default/label",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "labeled-field/default/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "labeled-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/default/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border" },
+              { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label" },
+              { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -695,6 +531,7 @@ export const viewOnlyField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",

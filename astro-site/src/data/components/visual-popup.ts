@@ -138,6 +138,7 @@ export const visualPopup: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "vp-spec-default",
@@ -147,6 +148,7 @@ export const visualPopup: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -162,71 +164,19 @@ export const visualPopup: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "modal-popup/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "modal-popup/color/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "modal-popup/color/label-primary",
-                "mono": true
-              },
-              {
-                "key": "Preamble",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Preamble token",
-                "value": "modal-popup/color/label-preamble",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "modal-popup/color/icon-close",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "modal-popup/color/bg" },
+              { "key": "Title", "value": "#0A2757", "token": "modal-popup/color/label" },
+              { "key": "Description", "value": "#6780A9", "token": "modal-popup/color/label-primary" },
+              { "key": "Preamble", "value": "#90A8D0", "token": "modal-popup/color/label-preamble" },
+              { "key": "Close icon", "value": "#6780A9", "token": "modal-popup/color/icon-close" },
+              { "key": "Primary CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -252,6 +202,7 @@ export const visualPopup: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",
@@ -278,6 +229,7 @@ export const visualPopup: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -293,71 +245,19 @@ export const visualPopup: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "modal-popup/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "modal-popup/color/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "modal-popup/color/label-primary",
-                "mono": true
-              },
-              {
-                "key": "Preamble",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Preamble token",
-                "value": "modal-popup/color/label-preamble",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "modal-popup/color/icon-close",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "modal-popup/color/bg" },
+              { "key": "Title", "value": "#0A2757", "token": "modal-popup/color/label" },
+              { "key": "Description", "value": "#6780A9", "token": "modal-popup/color/label-primary" },
+              { "key": "Preamble", "value": "#90A8D0", "token": "modal-popup/color/label-preamble" },
+              { "key": "Close icon", "value": "#6780A9", "token": "modal-popup/color/icon-close" },
+              { "key": "Primary CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -383,6 +283,7 @@ export const visualPopup: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",
@@ -409,6 +310,7 @@ export const visualPopup: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -424,71 +326,19 @@ export const visualPopup: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "modal-popup/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "modal-popup/color/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "modal-popup/color/label-primary",
-                "mono": true
-              },
-              {
-                "key": "Preamble",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Preamble token",
-                "value": "modal-popup/color/label-preamble",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "modal-popup/color/icon-close",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "modal-popup/color/bg" },
+              { "key": "Title", "value": "#0A2757", "token": "modal-popup/color/label" },
+              { "key": "Description", "value": "#6780A9", "token": "modal-popup/color/label-primary" },
+              { "key": "Preamble", "value": "#90A8D0", "token": "modal-popup/color/label-preamble" },
+              { "key": "Close icon", "value": "#6780A9", "token": "modal-popup/color/icon-close" },
+              { "key": "Primary CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -514,6 +364,7 @@ export const visualPopup: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",

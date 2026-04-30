@@ -130,6 +130,7 @@ export const headerCentered: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "dark-/-brand-surface",
@@ -140,6 +141,7 @@ export const headerCentered: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "type",
@@ -155,61 +157,18 @@ export const headerCentered: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Brand bg",
-                "value": "#1972F9",
-                "mono": true
-              },
-              {
-                "key": "Brand bg token",
-                "value": "header/color/brand/bg",
-                "mono": true
-              },
-              {
-                "key": "Brand title",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Brand title token",
-                "value": "header/color/brand/label-header",
-                "mono": true
-              },
-              {
-                "key": "Brand preamble",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Brand preamble token",
-                "value": "header/color/brand/label-preamble",
-                "mono": true
-              },
-              {
-                "key": "Brand label",
-                "value": "#F6F9FDB8 (72% alpha)",
-                "mono": true
-              },
-              {
-                "key": "Brand label token",
-                "value": "header/color/brand/label",
-                "mono": true
-              },
-              {
-                "key": "Brand border",
-                "value": "#F6F9FD3D (24% alpha)",
-                "mono": true
-              },
-              {
-                "key": "Brand border token",
-                "value": "header/color/brand/border",
-                "mono": true
-              }
+              { "key": "Brand bg", "value": "#1972F9", "token": "header/color/brand/bg" },
+              { "key": "Brand title", "value": "#FFFFFF", "token": "header/color/brand/label-header" },
+              { "key": "Brand preamble", "value": "#FFFFFF", "token": "header/color/brand/label-preamble" },
+              { "key": "Brand label", "value": "#F6F9FDB8 (72% alpha)", "token": "header/color/brand/label" },
+              { "key": "Brand border", "value": "#F6F9FD3D (24% alpha)", "token": "header/color/brand/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -235,6 +194,7 @@ export const headerCentered: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title",
@@ -266,6 +226,7 @@ export const headerCentered: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Surface",
@@ -286,41 +247,16 @@ export const headerCentered: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/header/light/bg",
-                "mono": true
-              },
-              {
-                "key": "Title color",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title color token",
-                "value": "main/header/light/title",
-                "mono": true
-              },
-              {
-                "key": "Icon color",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Icon color token",
-                "value": "main/header/light/icon",
-                "mono": true
-              }
+              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/header/light/bg" },
+              { "key": "Title color", "value": "#0A2757", "token": "main/header/light/title" },
+              { "key": "Icon color", "value": "#0A2757", "token": "main/header/light/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Height",
@@ -346,6 +282,7 @@ export const headerCentered: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",

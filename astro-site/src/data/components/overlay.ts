@@ -142,6 +142,7 @@ export const overlay: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "default-·-strong",
@@ -152,6 +153,7 @@ export const overlay: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Name",
@@ -177,21 +179,14 @@ export const overlay: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Scrim",
-                "value": "#020E228F (56% alpha)",
-                "mono": true
-              },
-              {
-                "key": "Scrim token",
-                "value": "bg/color-bg-overlay-strong",
-                "mono": true
-              }
+              { "key": "Scrim", "value": "#020E228F (56% alpha)", "token": "bg/color-bg-overlay-strong" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width (sticker sheet)",
@@ -227,6 +222,7 @@ export const overlay: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "N/A",

@@ -136,6 +136,7 @@ export const tableTransaction: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "header-row-—-36-/-62px-tall",
@@ -145,6 +146,7 @@ export const tableTransaction: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Row type",
@@ -160,71 +162,19 @@ export const tableTransaction: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "table/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Subtle row bg",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Subtle row bg token",
-                "value": "table/color/bg-subtle",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "table/color/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "table/color/label",
-                "mono": true
-              },
-              {
-                "key": "Preamble",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Preamble token",
-                "value": "table/color/label-preamble",
-                "mono": true
-              },
-              {
-                "key": "Currency icon",
-                "value": "#183462",
-                "mono": true
-              },
-              {
-                "key": "Currency icon token",
-                "value": "table/color/icon-currency-secondary",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "table/color/bg" },
+              { "key": "Subtle row bg", "value": "#F6F9FD", "token": "table/color/bg-subtle" },
+              { "key": "Border", "value": "#E5EBF4", "token": "table/color/border" },
+              { "key": "Label", "value": "#0A2757", "token": "table/color/label" },
+              { "key": "Preamble", "value": "#6780A9", "token": "table/color/label-preamble" },
+              { "key": "Currency icon", "value": "#183462", "token": "table/color/icon-currency-secondary" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Header height",
@@ -245,6 +195,7 @@ export const tableTransaction: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Preamble style",
@@ -280,6 +231,7 @@ export const tableTransaction: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Row type",
@@ -295,71 +247,19 @@ export const tableTransaction: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "table/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Subtle row bg",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Subtle row bg token",
-                "value": "table/color/bg-subtle",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "table/color/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "table/color/label",
-                "mono": true
-              },
-              {
-                "key": "Preamble",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Preamble token",
-                "value": "table/color/label-preamble",
-                "mono": true
-              },
-              {
-                "key": "Currency icon",
-                "value": "#183462",
-                "mono": true
-              },
-              {
-                "key": "Currency icon token",
-                "value": "table/color/icon-currency-secondary",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "table/color/bg" },
+              { "key": "Subtle row bg", "value": "#F6F9FD", "token": "table/color/bg-subtle" },
+              { "key": "Border", "value": "#E5EBF4", "token": "table/color/border" },
+              { "key": "Label", "value": "#0A2757", "token": "table/color/label" },
+              { "key": "Preamble", "value": "#6780A9", "token": "table/color/label-preamble" },
+              { "key": "Currency icon", "value": "#183462", "token": "table/color/icon-currency-secondary" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -380,6 +280,7 @@ export const tableTransaction: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Preamble style",

@@ -247,6 +247,7 @@ export const datePickerItem: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "dpi-spec-default",
@@ -256,6 +257,7 @@ export const datePickerItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -276,31 +278,15 @@ export const datePickerItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "date-picker/day/color/unselected/label",
-                "mono": true
-              },
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "date-picker/day/color/unselected/bg",
-                "mono": true
-              }
+              { "key": "Label", "value": "#0A2757", "token": "date-picker/day/color/unselected/label" },
+              { "key": "Bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Cell size",
@@ -321,6 +307,7 @@ export const datePickerItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",
@@ -352,6 +339,7 @@ export const datePickerItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -372,41 +360,16 @@ export const datePickerItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "text/color-text-primary",
-                "mono": true
-              },
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "date-picker/day/color/unselected/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "border/color-border-primary",
-                "mono": true
-              }
+              { "key": "Label", "value": "#005CE5", "token": "text/color-text-primary" },
+              { "key": "Bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" },
+              { "key": "Border", "value": "#005CE5", "token": "border/color-border-primary" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Cell size",
@@ -427,6 +390,7 @@ export const datePickerItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",
@@ -458,6 +422,7 @@ export const datePickerItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -478,31 +443,15 @@ export const datePickerItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "date-picker/day/color/selected/label",
-                "mono": true
-              },
-              {
-                "key": "Bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "date-picker/day/color/selected/bg",
-                "mono": true
-              }
+              { "key": "Label", "value": "#FFFFFF", "token": "date-picker/day/color/selected/label" },
+              { "key": "Bg", "value": "#005CE5", "token": "date-picker/day/color/selected/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Cell size",
@@ -523,6 +472,7 @@ export const datePickerItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",
@@ -554,6 +504,7 @@ export const datePickerItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -574,31 +525,15 @@ export const datePickerItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "date-picker/day/color/unselected/label",
-                "mono": true
-              },
-              {
-                "key": "Range bg",
-                "value": "#E5F1FF",
-                "mono": true
-              },
-              {
-                "key": "Range bg token",
-                "value": "bg/color-bg-info-weakest",
-                "mono": true
-              }
+              { "key": "Label", "value": "#0A2757", "token": "date-picker/day/color/unselected/label" },
+              { "key": "Range bg", "value": "#E5F1FF", "token": "bg/color-bg-info-weakest" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Cell size",
@@ -619,6 +554,7 @@ export const datePickerItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",
@@ -650,6 +586,7 @@ export const datePickerItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -670,31 +607,15 @@ export const datePickerItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "text/color-text-disabled",
-                "mono": true
-              },
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "date-picker/day/color/unselected/bg",
-                "mono": true
-              }
+              { "key": "Label", "value": "#C2CFE5", "token": "text/color-text-disabled" },
+              { "key": "Bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Cell size",
@@ -715,6 +636,7 @@ export const datePickerItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",
@@ -746,6 +668,7 @@ export const datePickerItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -766,31 +689,15 @@ export const datePickerItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "text/color-text-disabled",
-                "mono": true
-              },
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "date-picker/day/color/unselected/bg",
-                "mono": true
-              }
+              { "key": "Label", "value": "#C2CFE5", "token": "text/color-text-disabled" },
+              { "key": "Bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Cell size",
@@ -811,6 +718,7 @@ export const datePickerItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",
@@ -842,6 +750,7 @@ export const datePickerItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -862,31 +771,15 @@ export const datePickerItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#9BC5FD",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "text/color-text-primary-disabled",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#9BC5FD",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "border/color-border-primary-disabled",
-                "mono": true
-              }
+              { "key": "Label", "value": "#9BC5FD", "token": "text/color-text-primary-disabled" },
+              { "key": "Border", "value": "#9BC5FD", "token": "border/color-border-primary-disabled" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Cell size",
@@ -907,6 +800,7 @@ export const datePickerItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",

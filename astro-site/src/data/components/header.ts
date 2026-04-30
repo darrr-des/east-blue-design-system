@@ -156,6 +156,7 @@ export const header: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "title-only-(baseline)",
@@ -166,6 +167,7 @@ export const header: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "preamble",
@@ -186,71 +188,19 @@ export const header: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "header/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "header/color/default/label-header",
-                "mono": true
-              },
-              {
-                "key": "Preamble",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Preamble token",
-                "value": "header/color/default/label-preamble",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "header/color/default/description",
-                "mono": true
-              },
-              {
-                "key": "Link",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Link token",
-                "value": "header/color/default/label-link",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "header/color/default/icon",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "header/color/default/bg" },
+              { "key": "Title", "value": "#0A2757", "token": "header/color/default/label-header" },
+              { "key": "Preamble", "value": "#005CE5", "token": "header/color/default/label-preamble" },
+              { "key": "Description", "value": "#6780A9", "token": "header/color/default/description" },
+              { "key": "Link", "value": "#005CE5", "token": "header/color/default/label-link" },
+              { "key": "Icon", "value": "#005CE5", "token": "header/color/default/icon" }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",
@@ -266,6 +216,7 @@ export const header: ComponentData = {
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -302,6 +253,7 @@ export const header: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "preamble",
@@ -322,61 +274,18 @@ export const header: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "header/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Preamble",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Preamble token",
-                "value": "header/color/default/label-preamble",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "header/color/default/label-header",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "header/color/default/description",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "header/color/default/icon",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "header/color/default/bg" },
+              { "key": "Preamble", "value": "#005CE5", "token": "header/color/default/label-preamble" },
+              { "key": "Title", "value": "#0A2757", "token": "header/color/default/label-header" },
+              { "key": "Description", "value": "#6780A9", "token": "header/color/default/description" },
+              { "key": "Icon", "value": "#005CE5", "token": "header/color/default/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding",
@@ -402,6 +311,7 @@ export const header: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Preamble",
@@ -433,6 +343,7 @@ export const header: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -443,51 +354,17 @@ export const header: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "header/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "header/color/default/label-header",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "header/color/default/description",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "header/color/default/border",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "header/color/default/bg" },
+              { "key": "Title", "value": "#0A2757", "token": "header/color/default/label-header" },
+              { "key": "Description", "value": "#6780A9", "token": "header/color/default/description" },
+              { "key": "Border", "value": "#E5EBF4", "token": "header/color/default/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding H",
@@ -513,6 +390,7 @@ export const header: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",
@@ -539,6 +417,7 @@ export const header: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -549,51 +428,17 @@ export const header: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "header/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "header/color/default/label-header",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "header/color/default/description",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "header/color/default/border",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "header/color/default/bg" },
+              { "key": "Title", "value": "#0A2757", "token": "header/color/default/label-header" },
+              { "key": "Description", "value": "#6780A9", "token": "header/color/default/description" },
+              { "key": "Border", "value": "#E5EBF4", "token": "header/color/default/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding H",
@@ -619,6 +464,7 @@ export const header: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",
@@ -645,6 +491,7 @@ export const header: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -655,51 +502,17 @@ export const header: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "header/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "header/color/default/label-header",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "header/color/default/description",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "header/color/default/border",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "header/color/default/bg" },
+              { "key": "Title", "value": "#0A2757", "token": "header/color/default/label-header" },
+              { "key": "Description", "value": "#6780A9", "token": "header/color/default/description" },
+              { "key": "Border", "value": "#E5EBF4", "token": "header/color/default/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding H",
@@ -725,6 +538,7 @@ export const header: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",

@@ -205,6 +205,7 @@ export const toastWithButton: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "default-—-with-description",
@@ -215,6 +216,7 @@ export const toastWithButton: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -235,101 +237,22 @@ export const toastWithButton: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Default bg",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Default bg token",
-                "value": "toast/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Default label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Default label token",
-                "value": "toast/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Default desc",
-                "value": "#F6F9FDCC (80% alpha)",
-                "mono": true
-              },
-              {
-                "key": "Default desc token",
-                "value": "toast/color/default/description",
-                "mono": true
-              },
-              {
-                "key": "Default border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Default border token",
-                "value": "toast/color/default/border",
-                "mono": true
-              },
-              {
-                "key": "Light bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Light bg token",
-                "value": "toast/color/light/bg",
-                "mono": true
-              },
-              {
-                "key": "Light label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Light label token",
-                "value": "toast/color/light/label",
-                "mono": true
-              },
-              {
-                "key": "Light desc",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Light desc token",
-                "value": "toast/color/light/description",
-                "mono": true
-              },
-              {
-                "key": "Button label",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Button label token",
-                "value": "comp/button v1/default/label",
-                "mono": true
-              },
-              {
-                "key": "Button bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Button bg token",
-                "value": "comp/button v1/default/background-primary",
-                "mono": true
-              }
+              { "key": "Default bg", "value": "#0A2757", "token": "toast/color/default/bg" },
+              { "key": "Default label", "value": "#FFFFFF", "token": "toast/color/default/label" },
+              { "key": "Default desc", "value": "#F6F9FDCC (80% alpha)", "token": "toast/color/default/description" },
+              { "key": "Default border", "value": "#E5EBF4", "token": "toast/color/default/border" },
+              { "key": "Light bg", "value": "#FFFFFF", "token": "toast/color/light/bg" },
+              { "key": "Light label", "value": "#0A2757", "token": "toast/color/light/label" },
+              { "key": "Light desc", "value": "#445C85", "token": "toast/color/light/description" },
+              { "key": "Button label", "value": "#005CE5", "token": "comp/button v1/default/label" },
+              { "key": "Button bg", "value": "#FFFFFF", "token": "comp/button v1/default/background-primary" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -390,6 +313,7 @@ export const toastWithButton: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -451,6 +375,7 @@ export const toastWithButton: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Theme",
@@ -466,51 +391,17 @@ export const toastWithButton: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/toast/light/bg",
-                "mono": true
-              },
-              {
-                "key": "Label color",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label color token",
-                "value": "main/toast/light/label",
-                "mono": true
-              },
-              {
-                "key": "Description color",
-                "value": "#3C4A5C",
-                "mono": true
-              },
-              {
-                "key": "Description color token",
-                "value": "main/toast/light/description",
-                "mono": true
-              },
-              {
-                "key": "Action color",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Action color token",
-                "value": "main/toast/light/action",
-                "mono": true
-              }
+              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/toast/light/bg" },
+              { "key": "Label color", "value": "#0A2757", "token": "main/toast/light/label" },
+              { "key": "Description color", "value": "#3C4A5C", "token": "main/toast/light/description" },
+              { "key": "Action color", "value": "#005CE5", "token": "main/toast/light/action" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -546,6 +437,7 @@ export const toastWithButton: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",
@@ -577,6 +469,7 @@ export const toastWithButton: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Theme",
@@ -592,41 +485,16 @@ export const toastWithButton: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface bg",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/toast/dark/bg",
-                "mono": true
-              },
-              {
-                "key": "Label color",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Label color token",
-                "value": "main/toast/dark/label",
-                "mono": true
-              },
-              {
-                "key": "Action color",
-                "value": "#9BC5FD",
-                "mono": true
-              },
-              {
-                "key": "Action color token",
-                "value": "main/toast/dark/action",
-                "mono": true
-              }
+              { "key": "Surface bg", "value": "#0A2757", "token": "main/toast/dark/bg" },
+              { "key": "Label color", "value": "#FFFFFF", "token": "main/toast/dark/label" },
+              { "key": "Action color", "value": "#9BC5FD", "token": "main/toast/dark/action" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -662,6 +530,7 @@ export const toastWithButton: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",
@@ -688,6 +557,7 @@ export const toastWithButton: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -708,61 +578,18 @@ export const toastWithButton: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Light bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Light bg token",
-                "value": "toast/color/light/bg",
-                "mono": true
-              },
-              {
-                "key": "Light label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Light label token",
-                "value": "toast/color/light/label",
-                "mono": true
-              },
-              {
-                "key": "Light border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Light border token",
-                "value": "toast/color/light/border",
-                "mono": true
-              },
-              {
-                "key": "Button label",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Button label token",
-                "value": "comp/button v1/default/label",
-                "mono": true
-              },
-              {
-                "key": "Button bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Button bg token",
-                "value": "comp/button v1/default/background-primary",
-                "mono": true
-              }
+              { "key": "Light bg", "value": "#FFFFFF", "token": "toast/color/light/bg" },
+              { "key": "Light label", "value": "#0A2757", "token": "toast/color/light/label" },
+              { "key": "Light border", "value": "#E5EBF4", "token": "toast/color/light/border" },
+              { "key": "Button label", "value": "#005CE5", "token": "comp/button v1/default/label" },
+              { "key": "Button bg", "value": "#FFFFFF", "token": "comp/button v1/default/background-primary" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding",
@@ -783,6 +610,7 @@ export const toastWithButton: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",

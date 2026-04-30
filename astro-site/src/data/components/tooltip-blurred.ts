@@ -206,6 +206,7 @@ export const tooltipBlurred: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "pointer=top-—-pointer-anchored-above-surface",
@@ -215,6 +216,7 @@ export const tooltipBlurred: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "pointer",
@@ -230,41 +232,16 @@ export const tooltipBlurred: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#0A2757 (80% via blur)",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/secondary/bg",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/secondary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#F6F9FDCC (80% alpha)",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/secondary/description",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#0A2757 (80% via blur)", "token": "nudge/color/secondary/bg" },
+              { "key": "Header", "value": "#FFFFFF", "token": "nudge/color/secondary/label" },
+              { "key": "Description", "value": "#F6F9FDCC (80% alpha)", "token": "nudge/color/secondary/description" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -300,6 +277,7 @@ export const tooltipBlurred: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",
@@ -335,6 +313,7 @@ export const tooltipBlurred: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "pointer",
@@ -350,41 +329,16 @@ export const tooltipBlurred: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#0A2757 (80% via blur)",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/secondary/bg",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/secondary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#F6F9FDCC (80% alpha)",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/secondary/description",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#0A2757 (80% via blur)", "token": "nudge/color/secondary/bg" },
+              { "key": "Header", "value": "#FFFFFF", "token": "nudge/color/secondary/label" },
+              { "key": "Description", "value": "#F6F9FDCC (80% alpha)", "token": "nudge/color/secondary/description" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -420,6 +374,7 @@ export const tooltipBlurred: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",
@@ -455,6 +410,7 @@ export const tooltipBlurred: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "pointer",
@@ -470,41 +426,16 @@ export const tooltipBlurred: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#0A2757 (80% via blur)",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/secondary/bg",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/secondary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#F6F9FDCC (80% alpha)",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/secondary/description",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#0A2757 (80% via blur)", "token": "nudge/color/secondary/bg" },
+              { "key": "Header", "value": "#FFFFFF", "token": "nudge/color/secondary/label" },
+              { "key": "Description", "value": "#F6F9FDCC (80% alpha)", "token": "nudge/color/secondary/description" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -540,6 +471,7 @@ export const tooltipBlurred: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",
@@ -575,6 +507,7 @@ export const tooltipBlurred: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "pointer",
@@ -590,41 +523,16 @@ export const tooltipBlurred: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#0A2757 (80% via blur)",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/secondary/bg",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/secondary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#F6F9FDCC (80% alpha)",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/secondary/description",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#0A2757 (80% via blur)", "token": "nudge/color/secondary/bg" },
+              { "key": "Header", "value": "#FFFFFF", "token": "nudge/color/secondary/label" },
+              { "key": "Description", "value": "#F6F9FDCC (80% alpha)", "token": "nudge/color/secondary/description" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -660,6 +568,7 @@ export const tooltipBlurred: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",

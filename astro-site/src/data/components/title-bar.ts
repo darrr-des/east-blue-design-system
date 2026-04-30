@@ -110,6 +110,7 @@ export const titleBar: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "tb-spec-standard",
@@ -119,6 +120,7 @@ export const titleBar: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -129,71 +131,19 @@ export const titleBar: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#1972F9",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "title-bar/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "title-bar/color/label-title",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "title-bar/color/label-header",
-                "mono": true
-              },
-              {
-                "key": "URL chip",
-                "value": "#F6F9FDCC (80% alpha)",
-                "mono": true
-              },
-              {
-                "key": "URL chip token",
-                "value": "title-bar/color/label-url",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "title-bar/color/icon",
-                "mono": true
-              },
-              {
-                "key": "CTA label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "CTA label token",
-                "value": "title-bar/color/label-cta",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#1972F9", "token": "title-bar/color/bg" },
+              { "key": "Title", "value": "#FFFFFF", "token": "title-bar/color/label-title" },
+              { "key": "Header", "value": "#FFFFFF", "token": "title-bar/color/label-header" },
+              { "key": "URL chip", "value": "#F6F9FDCC (80% alpha)", "token": "title-bar/color/label-url" },
+              { "key": "Icon", "value": "#FFFFFF", "token": "title-bar/color/icon" },
+              { "key": "CTA label", "value": "#FFFFFF", "token": "title-bar/color/label-cta" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Bar height",
@@ -219,6 +169,7 @@ export const titleBar: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",
@@ -255,6 +206,7 @@ export const titleBar: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -265,71 +217,19 @@ export const titleBar: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#1972F9",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "title-bar/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "title-bar/color/label-title",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "title-bar/color/label-header",
-                "mono": true
-              },
-              {
-                "key": "URL chip",
-                "value": "#F6F9FDCC (80% alpha)",
-                "mono": true
-              },
-              {
-                "key": "URL chip token",
-                "value": "title-bar/color/label-url",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "title-bar/color/icon",
-                "mono": true
-              },
-              {
-                "key": "CTA label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "CTA label token",
-                "value": "title-bar/color/label-cta",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#1972F9", "token": "title-bar/color/bg" },
+              { "key": "Title", "value": "#FFFFFF", "token": "title-bar/color/label-title" },
+              { "key": "Header", "value": "#FFFFFF", "token": "title-bar/color/label-header" },
+              { "key": "URL chip", "value": "#F6F9FDCC (80% alpha)", "token": "title-bar/color/label-url" },
+              { "key": "Icon", "value": "#FFFFFF", "token": "title-bar/color/icon" },
+              { "key": "CTA label", "value": "#FFFFFF", "token": "title-bar/color/label-cta" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Bar height",
@@ -355,6 +255,7 @@ export const titleBar: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",

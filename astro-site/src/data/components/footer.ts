@@ -183,6 +183,7 @@ export const footer: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "variant-1-·-powered-by-+-disclaimer-+-help-link-(left)",
@@ -193,6 +194,7 @@ export const footer: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "description",
@@ -228,51 +230,17 @@ export const footer: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "footer/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "footer/color/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "footer/color/description",
-                "mono": true
-              },
-              {
-                "key": "Link",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Link token",
-                "value": "footer/color/label-link",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "footer/color/bg" },
+              { "key": "Label", "value": "#90A8D0", "token": "footer/color/label" },
+              { "key": "Description", "value": "#6780A9", "token": "footer/color/description" },
+              { "key": "Link", "value": "#005CE5", "token": "footer/color/label-link" }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "\"Powered by\"",
@@ -293,6 +261,7 @@ export const footer: ComponentData = {
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -329,6 +298,7 @@ export const footer: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "description",
@@ -359,41 +329,16 @@ export const footer: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "footer/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "footer/color/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "footer/color/description",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "footer/color/bg" },
+              { "key": "Label", "value": "#90A8D0", "token": "footer/color/label" },
+              { "key": "Description", "value": "#6780A9", "token": "footer/color/description" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding",
@@ -409,6 +354,7 @@ export const footer: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -445,6 +391,7 @@ export const footer: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -455,51 +402,17 @@ export const footer: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "footer/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "footer/color/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "footer/color/description",
-                "mono": true
-              },
-              {
-                "key": "Link",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Link token",
-                "value": "footer/color/label-link",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "footer/color/bg" },
+              { "key": "Label", "value": "#90A8D0", "token": "footer/color/label" },
+              { "key": "Description", "value": "#6780A9", "token": "footer/color/description" },
+              { "key": "Link", "value": "#005CE5", "token": "footer/color/label-link" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding H",
@@ -520,6 +433,7 @@ export const footer: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -556,6 +470,7 @@ export const footer: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -566,51 +481,17 @@ export const footer: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "footer/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "footer/color/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "footer/color/description",
-                "mono": true
-              },
-              {
-                "key": "Link",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Link token",
-                "value": "footer/color/label-link",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "footer/color/bg" },
+              { "key": "Label", "value": "#90A8D0", "token": "footer/color/label" },
+              { "key": "Description", "value": "#6780A9", "token": "footer/color/description" },
+              { "key": "Link", "value": "#005CE5", "token": "footer/color/label-link" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding H",
@@ -631,6 +512,7 @@ export const footer: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -667,6 +549,7 @@ export const footer: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -677,51 +560,17 @@ export const footer: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "footer/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "footer/color/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "footer/color/description",
-                "mono": true
-              },
-              {
-                "key": "Link",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Link token",
-                "value": "footer/color/label-link",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "footer/color/bg" },
+              { "key": "Label", "value": "#90A8D0", "token": "footer/color/label" },
+              { "key": "Description", "value": "#6780A9", "token": "footer/color/description" },
+              { "key": "Link", "value": "#005CE5", "token": "footer/color/label-link" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding H",
@@ -742,6 +591,7 @@ export const footer: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -778,6 +628,7 @@ export const footer: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -788,51 +639,17 @@ export const footer: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "footer/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "footer/color/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "footer/color/description",
-                "mono": true
-              },
-              {
-                "key": "Link",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Link token",
-                "value": "footer/color/label-link",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "footer/color/bg" },
+              { "key": "Label", "value": "#90A8D0", "token": "footer/color/label" },
+              { "key": "Description", "value": "#6780A9", "token": "footer/color/description" },
+              { "key": "Link", "value": "#005CE5", "token": "footer/color/label-link" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding H",
@@ -853,6 +670,7 @@ export const footer: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -889,6 +707,7 @@ export const footer: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -909,51 +728,17 @@ export const footer: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "footer/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "footer/color/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "footer/color/description",
-                "mono": true
-              },
-              {
-                "key": "Link",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Link token",
-                "value": "footer/color/label-link",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "footer/color/bg" },
+              { "key": "Label", "value": "#90A8D0", "token": "footer/color/label" },
+              { "key": "Description", "value": "#6780A9", "token": "footer/color/description" },
+              { "key": "Link", "value": "#005CE5", "token": "footer/color/label-link" }
             ]
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "\"In partnership with\"",
@@ -964,6 +749,7 @@ export const footer: ComponentData = {
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding",

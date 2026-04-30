@@ -179,6 +179,7 @@ export const tabItem: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "ti-spec-vs",
@@ -188,6 +189,7 @@ export const tabItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -203,31 +205,15 @@ export const tabItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "tab/color/inactive/label",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "tab/color/inactive/border",
-                "mono": true
-              }
+              { "key": "Label", "value": "#6780A9", "token": "tab/color/inactive/label" },
+              { "key": "Border", "value": "#E5EBF4", "token": "tab/color/inactive/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Tab height",
@@ -248,6 +234,7 @@ export const tabItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -274,6 +261,7 @@ export const tabItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -289,31 +277,15 @@ export const tabItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "tab/color/inactive/label",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "tab/color/inactive/border",
-                "mono": true
-              }
+              { "key": "Label", "value": "#6780A9", "token": "tab/color/inactive/label" },
+              { "key": "Border", "value": "#E5EBF4", "token": "tab/color/inactive/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Tab height",
@@ -334,6 +306,7 @@ export const tabItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -360,6 +333,7 @@ export const tabItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -375,31 +349,15 @@ export const tabItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "tab/color/inactive/label",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "tab/color/inactive/border",
-                "mono": true
-              }
+              { "key": "Label", "value": "#6780A9", "token": "tab/color/inactive/label" },
+              { "key": "Border", "value": "#E5EBF4", "token": "tab/color/inactive/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Tab height",
@@ -420,6 +378,7 @@ export const tabItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -446,6 +405,7 @@ export const tabItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -461,31 +421,15 @@ export const tabItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "tab/color/inactive/label",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "tab/color/inactive/border",
-                "mono": true
-              }
+              { "key": "Label", "value": "#6780A9", "token": "tab/color/inactive/label" },
+              { "key": "Border", "value": "#E5EBF4", "token": "tab/color/inactive/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Tab height",
@@ -506,6 +450,7 @@ export const tabItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",

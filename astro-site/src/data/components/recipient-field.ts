@@ -120,6 +120,7 @@ export const recipientField: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "rf-spec-default",
@@ -129,6 +130,7 @@ export const recipientField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -144,51 +146,17 @@ export const recipientField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "input-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "input-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "input-field/default/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "input-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/default/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border" },
+              { "key": "Text", "value": "#0A2757", "token": "input-field/default/text" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -224,6 +192,7 @@ export const recipientField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Value style",
@@ -250,6 +219,7 @@ export const recipientField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -265,51 +235,17 @@ export const recipientField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "input-field/active/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "input-field/active/border",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "input-field/active/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "input-field/active/placeholder",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/active/bg" },
+              { "key": "Border", "value": "#005CE5", "token": "input-field/active/border" },
+              { "key": "Text", "value": "#0A2757", "token": "input-field/active/text" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/active/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -345,6 +281,7 @@ export const recipientField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Value style",
@@ -371,6 +308,7 @@ export const recipientField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -386,51 +324,17 @@ export const recipientField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "input-field/error/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "input-field/error/border",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "input-field/error/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "input-field/error/placeholder",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/error/bg" },
+              { "key": "Border", "value": "#D61B2C", "token": "input-field/error/border" },
+              { "key": "Text", "value": "#0A2757", "token": "input-field/error/text" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/error/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -466,6 +370,7 @@ export const recipientField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Value style",
@@ -492,6 +397,7 @@ export const recipientField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -507,41 +413,16 @@ export const recipientField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "input-field/disabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "input-field/disabled/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "input-field/disabled/placeholder",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#EEF2F9", "token": "input-field/disabled/bg" },
+              { "key": "Text", "value": "#90A8D0", "token": "input-field/disabled/text" },
+              { "key": "Placeholder", "value": "#C2CFE5", "token": "input-field/disabled/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -577,6 +458,7 @@ export const recipientField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Value style",

@@ -192,6 +192,7 @@ export const stepperBullet: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "stepper---bullet-canonical-node-27:48287-(5-steps)-·-sibling-frames-27:48235-(3-steps),-27:48254-(4-steps)",
@@ -202,6 +203,7 @@ export const stepperBullet: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Step counts",
@@ -222,27 +224,10 @@ export const stepperBullet: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Active dot",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active dot token",
-                "value": "stepper/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Inactive dot",
-                "value": "#D2E5FF",
-                "mono": true
-              },
-              {
-                "key": "Inactive dot token",
-                "value": "stepper/color/bg-track",
-                "mono": true
-              }
+              { "key": "Active dot", "value": "#005CE5", "token": "stepper/color/bg" },
+              { "key": "Inactive dot", "value": "#D2E5FF", "token": "stepper/color/bg-track" }
             ]
           },
           {
@@ -292,6 +277,7 @@ export const stepperBullet: ComponentData = {
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Dot size",
@@ -332,6 +318,7 @@ export const stepperBullet: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "No text layers. Bullet stepper has no numbers or labels.",

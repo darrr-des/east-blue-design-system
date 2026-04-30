@@ -165,6 +165,7 @@ export const genericTransactionCard: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "default-—-label-+-badge-+-date-+-amount",
@@ -175,6 +176,7 @@ export const genericTransactionCard: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -190,91 +192,21 @@ export const genericTransactionCard: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "card-list/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "card-list/color/border",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "card-list/color/label-header",
-                "mono": true
-              },
-              {
-                "key": "Amount",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Amount token",
-                "value": "card-list/color/label-amount",
-                "mono": true
-              },
-              {
-                "key": "Metadata",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Metadata token",
-                "value": "card-list/color/label-metadata",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "card-list/color/icon",
-                "mono": true
-              },
-              {
-                "key": "Badge bg",
-                "value": "#E5F1FF",
-                "mono": true
-              },
-              {
-                "key": "Badge bg token",
-                "value": "badge/information/light/background",
-                "mono": true
-              },
-              {
-                "key": "Badge label",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Badge label token",
-                "value": "badge/information/light/label",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "card-list/color/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "card-list/color/border" },
+              { "key": "Title", "value": "#0A2757", "token": "card-list/color/label-header" },
+              { "key": "Amount", "value": "#0A2757", "token": "card-list/color/label-amount" },
+              { "key": "Metadata", "value": "#6780A9", "token": "card-list/color/label-metadata" },
+              { "key": "Icon", "value": "#005CE5", "token": "card-list/color/icon" },
+              { "key": "Badge bg", "value": "#E5F1FF", "token": "badge/information/light/background" },
+              { "key": "Badge label", "value": "#005CE5", "token": "badge/information/light/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -305,6 +237,7 @@ export const genericTransactionCard: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label (title)",
@@ -361,6 +294,7 @@ export const genericTransactionCard: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Leading slot",
@@ -381,51 +315,17 @@ export const genericTransactionCard: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/transaction-card/bg",
-                "mono": true
-              },
-              {
-                "key": "Title color",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title color token",
-                "value": "main/transaction-card/title",
-                "mono": true
-              },
-              {
-                "key": "Date color",
-                "value": "#3C4A5C",
-                "mono": true
-              },
-              {
-                "key": "Date color token",
-                "value": "main/transaction-card/date",
-                "mono": true
-              },
-              {
-                "key": "Amount color",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Amount color token",
-                "value": "main/transaction-card/amount",
-                "mono": true
-              }
+              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/transaction-card/bg" },
+              { "key": "Title color", "value": "#0A2757", "token": "main/transaction-card/title" },
+              { "key": "Date color", "value": "#3C4A5C", "token": "main/transaction-card/date" },
+              { "key": "Amount color", "value": "#0A2757", "token": "main/transaction-card/amount" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Min height",
@@ -456,6 +356,7 @@ export const genericTransactionCard: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",
@@ -487,6 +388,7 @@ export const genericTransactionCard: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Leading slot",
@@ -507,41 +409,16 @@ export const genericTransactionCard: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/transaction-card/bg",
-                "mono": true
-              },
-              {
-                "key": "Title color",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title color token",
-                "value": "main/transaction-card/title",
-                "mono": true
-              },
-              {
-                "key": "Date color",
-                "value": "#3C4A5C",
-                "mono": true
-              },
-              {
-                "key": "Date color token",
-                "value": "main/transaction-card/date",
-                "mono": true
-              }
+              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/transaction-card/bg" },
+              { "key": "Title color", "value": "#0A2757", "token": "main/transaction-card/title" },
+              { "key": "Date color", "value": "#3C4A5C", "token": "main/transaction-card/date" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Min height",
@@ -572,6 +449,7 @@ export const genericTransactionCard: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",

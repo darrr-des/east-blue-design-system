@@ -269,6 +269,7 @@ export const voucherCardHorizontal: ComponentData = {
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"vch-demo-preview\"><div style=\"display:flex;flex-direction:column;gap:14px;align-items:center;\"><div style=\"display:flex;flex-direction:column;gap:6px;align-items:center;\"><div style=\"width:336px;height:111px;display:flex;background:#FFFFFF;border-radius:6px;overflow:hidden;box-shadow:0 0 4px rgba(2,14,34,0.06);font-family:'Proxima Soft',system-ui;\"><div style=\"flex:1;padding:12px;display:flex;flex-direction:column;justify-content:space-between;min-width:0;\"><div style=\"display:flex;flex-direction:column;gap:4px;\"><div style=\"color:#0A2757;font-size:16px;font-weight:700;line-height:20px;letter-spacing:0.25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;\">Buy Load Globe Go90</div><div style=\"display:flex;gap:4px;align-items:center;\"><div style=\"color:#2340A9;font-size:14px;font-weight:700;letter-spacing:0.25px;\">PHP 50.00</div><div style=\"color:#90A8D0;font-size:14px;font-weight:600;text-decoration:line-through;letter-spacing:0.25px;\">PHP 90.00</div></div></div><div style=\"color:#445C85;font-size:10px;font-family:'BarkAda',system-ui;font-weight:600;line-height:15px;\">Validity: Dec 25 2022 - Jan 5 2023</div></div><div style=\"position:relative;width:96px;height:111px;background:#005CE5;overflow:hidden;\"><div style=\"position:absolute;left:0;top:0;bottom:0;width:1px;border-left:1px dashed rgba(255,255,255,0.9);\"></div><div style=\"position:absolute;left:calc(50% - 22px);top:calc(50% - 22px);width:44px;height:44px;border:3px solid #FFFFFF;border-right-color:transparent;border-radius:50%;opacity:1;\"></div><div style=\"position:absolute;left:calc(50% - 5px);top:calc(50% - 5px);width:10px;height:10px;background:#FFFFFF;border-radius:50%;opacity:1;\"></div><div style=\"position:absolute;right:0;top:0;bottom:0;width:28px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(255,255,255,0.6);\"><div style=\"transform:rotate(-90deg);color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;white-space:nowrap;\">GET VOUCHER</div></div><div style=\"position:absolute;top:8px;left:0;background:#2340A9;color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;padding:4px 8px 2px 8px;border-top-right-radius:4px;border-bottom-right-radius:4px;line-height:10px;\">Limited</div></div></div><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">state=limited</div></div><div style=\"display:flex;flex-direction:column;gap:6px;align-items:center;\"><div style=\"width:336px;height:111px;display:flex;background:#FFFFFF;border-radius:6px;overflow:hidden;box-shadow:0 0 4px rgba(2,14,34,0.06);font-family:'Proxima Soft',system-ui;\"><div style=\"flex:1;padding:12px;display:flex;flex-direction:column;justify-content:space-between;min-width:0;\"><div style=\"display:flex;flex-direction:column;gap:4px;\"><div style=\"color:#0A2757;font-size:16px;font-weight:700;line-height:20px;letter-spacing:0.25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;\">Buy Load Globe Go90</div><div style=\"display:flex;gap:4px;align-items:center;\"><div style=\"color:#2340A9;font-size:14px;font-weight:700;letter-spacing:0.25px;\">PHP 50.00</div><div style=\"color:#90A8D0;font-size:14px;font-weight:600;text-decoration:line-through;letter-spacing:0.25px;\">PHP 90.00</div></div></div><div style=\"color:#445C85;font-size:10px;font-family:'BarkAda',system-ui;font-weight:600;line-height:15px;\">Validity: Dec 25 2022 - Jan 5 2023</div></div><div style=\"position:relative;width:96px;height:111px;background:#005CE5;overflow:hidden;\"><div style=\"position:absolute;left:0;top:0;bottom:0;width:1px;border-left:1px dashed rgba(255,255,255,0.9);\"></div><div style=\"position:absolute;left:calc(50% - 22px);top:calc(50% - 22px);width:44px;height:44px;border:3px solid #FFFFFF;border-right-color:transparent;border-radius:50%;opacity:1;\"></div><div style=\"position:absolute;left:calc(50% - 5px);top:calc(50% - 5px);width:10px;height:10px;background:#FFFFFF;border-radius:50%;opacity:1;\"></div><div style=\"position:absolute;right:0;top:0;bottom:0;width:28px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(255,255,255,0.6);\"><div style=\"transform:rotate(-90deg);color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;white-space:nowrap;\">GET VOUCHER</div></div><div style=\"position:absolute;top:8px;left:0;background:#D61B2C;color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;padding:4px 8px 2px 8px;border-top-right-radius:4px;border-bottom-right-radius:4px;line-height:10px;\">Expiring</div></div></div><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">state=expiring</div></div><div style=\"display:flex;flex-direction:column;gap:6px;align-items:center;\"><div style=\"width:336px;height:111px;display:flex;background:#FFFFFF;border-radius:6px;overflow:hidden;box-shadow:0 0 4px rgba(2,14,34,0.06);font-family:'Proxima Soft',system-ui;\"><div style=\"flex:1;padding:12px;display:flex;flex-direction:column;justify-content:space-between;min-width:0;\"><div style=\"display:flex;flex-direction:column;gap:4px;\"><div style=\"color:#445C85;font-size:16px;font-weight:700;line-height:20px;letter-spacing:0.25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;\">Buy Load Globe Go90</div><div style=\"display:flex;gap:4px;align-items:center;\"><div style=\"color:#6780A9;font-size:14px;font-weight:700;letter-spacing:0.25px;\">PHP 50.00</div><div style=\"color:#90A8D0;font-size:14px;font-weight:600;text-decoration:line-through;letter-spacing:0.25px;\">PHP 90.00</div></div></div><div style=\"color:#6780A9;font-size:10px;font-family:'BarkAda',system-ui;font-weight:600;line-height:15px;\">Validity: Dec 25 2022 - Jan 5 2023</div></div><div style=\"position:relative;width:96px;height:111px;background:#8A96AF;overflow:hidden;\"><div style=\"position:absolute;left:0;top:0;bottom:0;width:1px;border-left:1px dashed rgba(255,255,255,0.9);\"></div><div style=\"position:absolute;left:calc(50% - 22px);top:calc(50% - 22px);width:44px;height:44px;border:3px solid #FFFFFF;border-right-color:transparent;border-radius:50%;opacity:0.55;\"></div><div style=\"position:absolute;left:calc(50% - 5px);top:calc(50% - 5px);width:10px;height:10px;background:#FFFFFF;border-radius:50%;opacity:0.55;\"></div><div style=\"position:absolute;right:0;top:0;bottom:0;width:28px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(255,255,255,0.6);\"><div style=\"transform:rotate(-90deg);color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;white-space:nowrap;\">GET VOUCHER</div></div><div style=\"position:absolute;top:8px;left:0;background:#C2C5CA;color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;padding:4px 8px 2px 8px;border-top-right-radius:4px;border-bottom-right-radius:4px;line-height:10px;\">Used</div></div></div><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">state=used</div></div><div style=\"display:flex;flex-direction:column;gap:6px;align-items:center;\"><div style=\"width:336px;height:111px;display:flex;background:#FFFFFF;border-radius:6px;overflow:hidden;box-shadow:0 0 4px rgba(2,14,34,0.06);font-family:'Proxima Soft',system-ui;\"><div style=\"flex:1;padding:12px;display:flex;flex-direction:column;justify-content:space-between;min-width:0;\"><div style=\"display:flex;flex-direction:column;gap:4px;\"><div style=\"color:#445C85;font-size:16px;font-weight:700;line-height:20px;letter-spacing:0.25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;\">Buy Load Globe Go90</div><div style=\"display:flex;gap:4px;align-items:center;\"><div style=\"color:#6780A9;font-size:14px;font-weight:700;letter-spacing:0.25px;\">PHP 50.00</div><div style=\"color:#90A8D0;font-size:14px;font-weight:600;text-decoration:line-through;letter-spacing:0.25px;\">PHP 90.00</div></div></div><div style=\"color:#6780A9;font-size:10px;font-family:'BarkAda',system-ui;font-weight:600;line-height:15px;\">Validity: Dec 25 2022 - Jan 5 2023</div></div><div style=\"position:relative;width:96px;height:111px;background:#8A96AF;overflow:hidden;\"><div style=\"position:absolute;left:0;top:0;bottom:0;width:1px;border-left:1px dashed rgba(255,255,255,0.9);\"></div><div style=\"position:absolute;left:calc(50% - 22px);top:calc(50% - 22px);width:44px;height:44px;border:3px solid #FFFFFF;border-right-color:transparent;border-radius:50%;opacity:0.55;\"></div><div style=\"position:absolute;left:calc(50% - 5px);top:calc(50% - 5px);width:10px;height:10px;background:#FFFFFF;border-radius:50%;opacity:0.55;\"></div><div style=\"position:absolute;right:0;top:0;bottom:0;width:28px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(255,255,255,0.6);\"><div style=\"transform:rotate(-90deg);color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;white-space:nowrap;\">GET VOUCHER</div></div><div style=\"position:absolute;top:8px;left:0;background:#C2C5CA;color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;padding:4px 8px 2px 8px;border-top-right-radius:4px;border-bottom-right-radius:4px;line-height:10px;\">Expired</div></div></div><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">state=expired</div></div></div></div></div>"
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "default",
@@ -279,6 +280,7 @@ export const voucherCardHorizontal: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Status",
@@ -299,47 +301,12 @@ export const voucherCardHorizontal: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/vouchers/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Title color",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title color token",
-                "value": "main/vouchers/color/default/label-title",
-                "mono": true
-              },
-              {
-                "key": "Amount color",
-                "value": "#2340A9",
-                "mono": true
-              },
-              {
-                "key": "Amount color token",
-                "value": "main/vouchers/color/label-amount-horizontal",
-                "mono": true
-              },
-              {
-                "key": "Original amount color",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Original amount color token",
-                "value": "main/vouchers/color/default/label-amount-original",
-                "mono": true
-              },
+              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/vouchers/color/default/bg" },
+              { "key": "Title color", "value": "#0A2757", "token": "main/vouchers/color/default/label-title" },
+              { "key": "Amount color", "value": "#2340A9", "token": "main/vouchers/color/label-amount-horizontal" },
+              { "key": "Original amount color", "value": "#90A8D0", "token": "main/vouchers/color/default/label-amount-original" },
               {
                 "key": "Shadow color",
                 "value": "#020E220F (~6%)",
@@ -354,6 +321,7 @@ export const voucherCardHorizontal: ComponentData = {
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -394,6 +362,7 @@ export const voucherCardHorizontal: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",
@@ -440,6 +409,7 @@ export const voucherCardHorizontal: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Status",
@@ -460,17 +430,9 @@ export const voucherCardHorizontal: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/vouchers/color/expired/bg",
-                "mono": true
-              },
+              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/vouchers/color/expired/bg" },
               {
                 "key": "Title color (expired)",
                 "value": "#445C85",
@@ -491,40 +453,14 @@ export const voucherCardHorizontal: ComponentData = {
                 "value": "main/vouchers/color/expired/label-amount",
                 "mono": true
               },
-              {
-                "key": "Original amount color",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Original amount color token",
-                "value": "main/vouchers/color/expired/label-amount-original",
-                "mono": true
-              },
-              {
-                "key": "Metadata color",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Metadata color token",
-                "value": "main/vouchers/color/expired/label-metadata",
-                "mono": true
-              },
-              {
-                "key": "Image overlay",
-                "value": "#020E223D (24% opacity)",
-                "mono": true
-              },
-              {
-                "key": "Image overlay token",
-                "value": "bg/color-bg-overlay-weak",
-                "mono": true
-              }
+              { "key": "Original amount color", "value": "#90A8D0", "token": "main/vouchers/color/expired/label-amount-original" },
+              { "key": "Metadata color", "value": "#6780A9", "token": "main/vouchers/color/expired/label-metadata" },
+              { "key": "Image overlay", "value": "#020E223D (24% opacity)", "token": "bg/color-bg-overlay-weak" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -560,6 +496,7 @@ export const voucherCardHorizontal: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",
@@ -591,6 +528,7 @@ export const voucherCardHorizontal: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Status",
@@ -611,41 +549,16 @@ export const voucherCardHorizontal: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/vouchers/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Title color",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title color token",
-                "value": "main/vouchers/color/default/label-title",
-                "mono": true
-              },
-              {
-                "key": "Amount color",
-                "value": "#2340A9",
-                "mono": true
-              },
-              {
-                "key": "Amount color token",
-                "value": "main/vouchers/color/label-amount-horizontal",
-                "mono": true
-              }
+              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/vouchers/color/default/bg" },
+              { "key": "Title color", "value": "#0A2757", "token": "main/vouchers/color/default/label-title" },
+              { "key": "Amount color", "value": "#2340A9", "token": "main/vouchers/color/label-amount-horizontal" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -681,6 +594,7 @@ export const voucherCardHorizontal: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",

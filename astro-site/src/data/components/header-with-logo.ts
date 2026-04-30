@@ -131,6 +131,7 @@ export const headerWithLogo: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "dark-logo-variant",
@@ -141,6 +142,7 @@ export const headerWithLogo: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "logo",
@@ -151,51 +153,17 @@ export const headerWithLogo: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "header/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "header/color/default/label-header",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "header/color/default/description",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "header/color/default/border",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "header/color/default/bg" },
+              { "key": "Title", "value": "#0A2757", "token": "header/color/default/label-header" },
+              { "key": "Description", "value": "#6780A9", "token": "header/color/default/description" },
+              { "key": "Border", "value": "#E5EBF4", "token": "header/color/default/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -221,6 +189,7 @@ export const headerWithLogo: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "N/A",
@@ -242,6 +211,7 @@ export const headerWithLogo: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Surface",
@@ -257,41 +227,16 @@ export const headerWithLogo: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/header/light/bg",
-                "mono": true
-              },
-              {
-                "key": "Logo color",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Logo color token",
-                "value": "main/header/logo/brand",
-                "mono": true
-              },
-              {
-                "key": "Icon color",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Icon color token",
-                "value": "main/header/light/icon",
-                "mono": true
-              }
+              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/header/light/bg" },
+              { "key": "Logo color", "value": "#005CE5", "token": "main/header/logo/brand" },
+              { "key": "Icon color", "value": "#0A2757", "token": "main/header/light/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Height",
@@ -317,6 +262,7 @@ export const headerWithLogo: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "N/A",

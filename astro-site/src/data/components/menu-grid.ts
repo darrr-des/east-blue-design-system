@@ -118,6 +118,7 @@ export const menuGrid: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "mg-spec-2x4",
@@ -127,6 +128,7 @@ export const menuGrid: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -142,51 +144,17 @@ export const menuGrid: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Active icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active icon token",
-                "value": "dashboard/service-item/color/active/icon",
-                "mono": true
-              },
-              {
-                "key": "Active label",
-                "value": "#072592",
-                "mono": true
-              },
-              {
-                "key": "Active label token",
-                "value": "dashboard/service-item/color/active/label",
-                "mono": true
-              },
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "bg/color-bg-main",
-                "mono": true
-              },
-              {
-                "key": "Divider",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Divider token",
-                "value": "border/color-border-weak",
-                "mono": true
-              }
+              { "key": "Active icon", "value": "#005CE5", "token": "dashboard/service-item/color/active/icon" },
+              { "key": "Active label", "value": "#072592", "token": "dashboard/service-item/color/active/label" },
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" },
+              { "key": "Divider", "value": "#E5EBF4", "token": "border/color-border-weak" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Tile size",
@@ -212,6 +180,7 @@ export const menuGrid: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -238,6 +207,7 @@ export const menuGrid: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -253,51 +223,17 @@ export const menuGrid: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Active icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active icon token",
-                "value": "dashboard/service-item/color/active/icon",
-                "mono": true
-              },
-              {
-                "key": "Active label",
-                "value": "#072592",
-                "mono": true
-              },
-              {
-                "key": "Active label token",
-                "value": "dashboard/service-item/color/active/label",
-                "mono": true
-              },
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "bg/color-bg-main",
-                "mono": true
-              },
-              {
-                "key": "Divider",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Divider token",
-                "value": "border/color-border-weak",
-                "mono": true
-              }
+              { "key": "Active icon", "value": "#005CE5", "token": "dashboard/service-item/color/active/icon" },
+              { "key": "Active label", "value": "#072592", "token": "dashboard/service-item/color/active/label" },
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" },
+              { "key": "Divider", "value": "#E5EBF4", "token": "border/color-border-weak" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Tile size",
@@ -323,6 +259,7 @@ export const menuGrid: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -349,6 +286,7 @@ export const menuGrid: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -364,51 +302,17 @@ export const menuGrid: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Active icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active icon token",
-                "value": "dashboard/service-item/color/active/icon",
-                "mono": true
-              },
-              {
-                "key": "Active label",
-                "value": "#072592",
-                "mono": true
-              },
-              {
-                "key": "Active label token",
-                "value": "dashboard/service-item/color/active/label",
-                "mono": true
-              },
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "bg/color-bg-main",
-                "mono": true
-              },
-              {
-                "key": "Divider",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Divider token",
-                "value": "border/color-border-weak",
-                "mono": true
-              }
+              { "key": "Active icon", "value": "#005CE5", "token": "dashboard/service-item/color/active/icon" },
+              { "key": "Active label", "value": "#072592", "token": "dashboard/service-item/color/active/label" },
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" },
+              { "key": "Divider", "value": "#E5EBF4", "token": "border/color-border-weak" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Tile size",
@@ -434,6 +338,7 @@ export const menuGrid: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",

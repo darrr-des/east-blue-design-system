@@ -146,6 +146,7 @@ export const emptyState: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "white",
@@ -155,6 +156,7 @@ export const emptyState: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -170,61 +172,18 @@ export const emptyState: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "empty-state/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "empty-state/color/default/label-title",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "empty-state/color/default/description",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "empty-state/color/default/placeholder",
-                "mono": true
-              },
-              {
-                "key": "CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "empty-state/color/default/bg" },
+              { "key": "Title", "value": "#0A2757", "token": "empty-state/color/default/label-title" },
+              { "key": "Description", "value": "#6780A9", "token": "empty-state/color/default/description" },
+              { "key": "Placeholder", "value": "#EEF2F9", "token": "empty-state/color/default/placeholder" },
+              { "key": "CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -250,6 +209,7 @@ export const emptyState: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",
@@ -285,6 +245,7 @@ export const emptyState: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -300,61 +261,18 @@ export const emptyState: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "empty-state/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "empty-state/color/default/label-title",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "empty-state/color/default/description",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "empty-state/color/default/placeholder",
-                "mono": true
-              },
-              {
-                "key": "CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "empty-state/color/default/bg" },
+              { "key": "Title", "value": "#0A2757", "token": "empty-state/color/default/label-title" },
+              { "key": "Description", "value": "#6780A9", "token": "empty-state/color/default/description" },
+              { "key": "Placeholder", "value": "#EEF2F9", "token": "empty-state/color/default/placeholder" },
+              { "key": "CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -380,6 +298,7 @@ export const emptyState: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",

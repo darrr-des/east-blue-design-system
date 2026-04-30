@@ -175,6 +175,7 @@ export const stepperDash: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "stepper---dash-component-set-18649:5223-·-variants-18649:5224…18649:5323",
@@ -185,6 +186,7 @@ export const stepperDash: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Step count",
@@ -205,27 +207,10 @@ export const stepperDash: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Filled dash",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Filled dash token",
-                "value": "stepper/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Empty dash",
-                "value": "#D2E5FF",
-                "mono": true
-              },
-              {
-                "key": "Empty dash token",
-                "value": "stepper/color/bg-track",
-                "mono": true
-              }
+              { "key": "Filled dash", "value": "#005CE5", "token": "stepper/color/bg" },
+              { "key": "Empty dash", "value": "#D2E5FF", "token": "stepper/color/bg-track" }
             ]
           },
           {
@@ -275,6 +260,7 @@ export const stepperDash: ComponentData = {
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Outer frame",
@@ -315,6 +301,7 @@ export const stepperDash: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "No text",

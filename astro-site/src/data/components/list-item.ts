@@ -97,6 +97,7 @@ export const listItem: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "level-1-—-no-indent",
@@ -106,6 +107,7 @@ export const listItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -121,41 +123,16 @@ export const listItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Icon",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "list-item/color/default/icon-item",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "list-item/color/default/description",
-                "mono": true
-              },
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "bg/color-bg-main",
-                "mono": true
-              }
+              { "key": "Icon", "value": "#90A8D0", "token": "list-item/color/default/icon-item" },
+              { "key": "Description", "value": "#445C85", "token": "list-item/color/default/description" },
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -181,6 +158,7 @@ export const listItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Description style",
@@ -206,6 +184,7 @@ export const listItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -221,41 +200,16 @@ export const listItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Icon",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "list-item/color/default/icon-item",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "list-item/color/default/description",
-                "mono": true
-              },
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "bg/color-bg-main",
-                "mono": true
-              }
+              { "key": "Icon", "value": "#90A8D0", "token": "list-item/color/default/icon-item" },
+              { "key": "Description", "value": "#445C85", "token": "list-item/color/default/description" },
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -281,6 +235,7 @@ export const listItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Description style",
@@ -306,6 +261,7 @@ export const listItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -321,41 +277,16 @@ export const listItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Icon",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "list-item/color/default/icon-item",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "list-item/color/default/description",
-                "mono": true
-              },
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "bg/color-bg-main",
-                "mono": true
-              }
+              { "key": "Icon", "value": "#90A8D0", "token": "list-item/color/default/icon-item" },
+              { "key": "Description", "value": "#445C85", "token": "list-item/color/default/description" },
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -381,6 +312,7 @@ export const listItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Description style",

@@ -192,6 +192,7 @@ export const stepperCircular: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "stepper---circular-canonical-node-27:47768-(10-steps)-·-sibling-frames-27:47819…27:48036",
@@ -202,6 +203,7 @@ export const stepperCircular: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Step counts",
@@ -222,37 +224,11 @@ export const stepperCircular: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Active label",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active label token",
-                "value": "stepper/color/label",
-                "mono": true
-              },
-              {
-                "key": "Active arc",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active arc token",
-                "value": "stepper/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Inactive arc",
-                "value": "#D2E5FF",
-                "mono": true
-              },
-              {
-                "key": "Inactive arc token",
-                "value": "stepper/color/bg-track",
-                "mono": true
-              }
+              { "key": "Active label", "value": "#005CE5", "token": "stepper/color/label" },
+              { "key": "Active arc", "value": "#005CE5", "token": "stepper/color/bg" },
+              { "key": "Inactive arc", "value": "#D2E5FF", "token": "stepper/color/bg-track" }
             ]
           },
           {
@@ -302,6 +278,7 @@ export const stepperCircular: ComponentData = {
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Step circle size",
@@ -337,6 +314,7 @@ export const stepperCircular: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "DS style",

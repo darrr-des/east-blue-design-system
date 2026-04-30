@@ -193,6 +193,7 @@ export const onboardingTooltip: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "pointer=top-—-target-element-above",
@@ -202,6 +203,7 @@ export const onboardingTooltip: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "pointer",
@@ -232,61 +234,18 @@ export const onboardingTooltip: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/primary/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "nudge/color/primary/border",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/primary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/primary/description",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "nudge/color/primary/icon-close",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
+              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
+              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
+              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -327,6 +286,7 @@ export const onboardingTooltip: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",
@@ -362,6 +322,7 @@ export const onboardingTooltip: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "pointer",
@@ -392,61 +353,18 @@ export const onboardingTooltip: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/primary/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "nudge/color/primary/border",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/primary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/primary/description",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "nudge/color/primary/icon-close",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
+              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
+              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
+              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -487,6 +405,7 @@ export const onboardingTooltip: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",
@@ -522,6 +441,7 @@ export const onboardingTooltip: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "pointer",
@@ -552,61 +472,18 @@ export const onboardingTooltip: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/primary/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "nudge/color/primary/border",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/primary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/primary/description",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "nudge/color/primary/icon-close",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
+              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
+              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
+              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -647,6 +524,7 @@ export const onboardingTooltip: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",
@@ -682,6 +560,7 @@ export const onboardingTooltip: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "pointer",
@@ -712,61 +591,18 @@ export const onboardingTooltip: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/primary/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "nudge/color/primary/border",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/primary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/primary/description",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "nudge/color/primary/icon-close",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
+              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
+              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
+              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -807,6 +643,7 @@ export const onboardingTooltip: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",

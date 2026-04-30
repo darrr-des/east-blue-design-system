@@ -164,6 +164,7 @@ export const subtextMessage: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "stm-spec-primary",
@@ -173,6 +174,7 @@ export const subtextMessage: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -188,21 +190,14 @@ export const subtextMessage: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "subtext-message/primary/label",
-                "mono": true
-              }
+              { "key": "Label", "value": "#6780A9", "token": "subtext-message/primary/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding",
@@ -223,6 +218,7 @@ export const subtextMessage: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -249,6 +245,7 @@ export const subtextMessage: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -264,31 +261,15 @@ export const subtextMessage: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#048570",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "subtext-message/success/label",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#12AF80",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "subtext-message/success/icon",
-                "mono": true
-              }
+              { "key": "Label", "value": "#048570", "token": "subtext-message/success/label" },
+              { "key": "Icon", "value": "#12AF80", "token": "subtext-message/success/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding",
@@ -309,6 +290,7 @@ export const subtextMessage: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -335,6 +317,7 @@ export const subtextMessage: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -350,31 +333,15 @@ export const subtextMessage: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "subtext-message/error/label",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "subtext-message/error/icon",
-                "mono": true
-              }
+              { "key": "Label", "value": "#D61B2C", "token": "subtext-message/error/label" },
+              { "key": "Icon", "value": "#D61B2C", "token": "subtext-message/error/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding",
@@ -395,6 +362,7 @@ export const subtextMessage: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",

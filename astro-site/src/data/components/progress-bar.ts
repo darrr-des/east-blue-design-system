@@ -181,6 +181,7 @@ export const progressBar: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "determinate-nodes-27:64947-through-27:64985",
@@ -191,6 +192,7 @@ export const progressBar: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Mode",
@@ -211,27 +213,10 @@ export const progressBar: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Track",
-                "value": "#D2E5FF",
-                "mono": true
-              },
-              {
-                "key": "Track token",
-                "value": "progress-bar/color/border-track",
-                "mono": true
-              },
-              {
-                "key": "Fill",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Fill token",
-                "value": "progress-bar/color/border",
-                "mono": true
-              }
+              { "key": "Track", "value": "#D2E5FF", "token": "progress-bar/color/border-track" },
+              { "key": "Fill", "value": "#005CE5", "token": "progress-bar/color/border" }
             ]
           },
           {
@@ -261,6 +246,7 @@ export const progressBar: ComponentData = {
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Total width",
@@ -291,6 +277,7 @@ export const progressBar: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "No text",

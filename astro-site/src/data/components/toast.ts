@@ -202,6 +202,7 @@ export const toast: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "default-/-dark-—-with-icon,-large-label",
@@ -212,6 +213,7 @@ export const toast: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -237,101 +239,22 @@ export const toast: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Default bg",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Default bg token",
-                "value": "toast/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Default label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Default label token",
-                "value": "toast/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Default icon",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Default icon token",
-                "value": "toast/color/default/icon",
-                "mono": true
-              },
-              {
-                "key": "Default border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Default border token",
-                "value": "toast/color/default/border",
-                "mono": true
-              },
-              {
-                "key": "Light bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Light bg token",
-                "value": "toast/color/light/bg",
-                "mono": true
-              },
-              {
-                "key": "Light label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Light label token",
-                "value": "toast/color/light/label",
-                "mono": true
-              },
-              {
-                "key": "Light icon",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Light icon token",
-                "value": "toast/color/light/icon",
-                "mono": true
-              },
-              {
-                "key": "Destructive bg",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Destructive bg token",
-                "value": "toast/color/destructive/bg",
-                "mono": true
-              },
-              {
-                "key": "Destructive label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Destructive label token",
-                "value": "toast/color/destructive/label",
-                "mono": true
-              }
+              { "key": "Default bg", "value": "#0A2757", "token": "toast/color/default/bg" },
+              { "key": "Default label", "value": "#FFFFFF", "token": "toast/color/default/label" },
+              { "key": "Default icon", "value": "#FFFFFF", "token": "toast/color/default/icon" },
+              { "key": "Default border", "value": "#E5EBF4", "token": "toast/color/default/border" },
+              { "key": "Light bg", "value": "#FFFFFF", "token": "toast/color/light/bg" },
+              { "key": "Light label", "value": "#0A2757", "token": "toast/color/light/label" },
+              { "key": "Light icon", "value": "#0A2757", "token": "toast/color/light/icon" },
+              { "key": "Destructive bg", "value": "#D61B2C", "token": "toast/color/destructive/bg" },
+              { "key": "Destructive label", "value": "#FFFFFF", "token": "toast/color/destructive/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -392,6 +315,7 @@ export const toast: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style (large)",
@@ -433,6 +357,7 @@ export const toast: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -458,41 +383,16 @@ export const toast: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface bg",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/toast/error/bg",
-                "mono": true
-              },
-              {
-                "key": "Icon tint",
-                "value": "#FF6B6B",
-                "mono": true
-              },
-              {
-                "key": "Icon tint token",
-                "value": "main/toast/error/icon",
-                "mono": true
-              },
-              {
-                "key": "Label color",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Label color token",
-                "value": "main/toast/error/label",
-                "mono": true
-              }
+              { "key": "Surface bg", "value": "#0A2757", "token": "main/toast/error/bg" },
+              { "key": "Icon tint", "value": "#FF6B6B", "token": "main/toast/error/icon" },
+              { "key": "Label color", "value": "#FFFFFF", "token": "main/toast/error/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -533,6 +433,7 @@ export const toast: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",
@@ -569,6 +470,7 @@ export const toast: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -594,41 +496,16 @@ export const toast: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface bg",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Surface bg token",
-                "value": "main/toast/pending/bg",
-                "mono": true
-              },
-              {
-                "key": "Icon tint",
-                "value": "#FFC857",
-                "mono": true
-              },
-              {
-                "key": "Icon tint token",
-                "value": "main/toast/pending/icon",
-                "mono": true
-              },
-              {
-                "key": "Label color",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Label color token",
-                "value": "main/toast/pending/label",
-                "mono": true
-              }
+              { "key": "Surface bg", "value": "#0A2757", "token": "main/toast/pending/bg" },
+              { "key": "Icon tint", "value": "#FFC857", "token": "main/toast/pending/icon" },
+              { "key": "Label color", "value": "#FFFFFF", "token": "main/toast/pending/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -669,6 +546,7 @@ export const toast: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",
@@ -705,6 +583,7 @@ export const toast: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -730,71 +609,19 @@ export const toast: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Default bg",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Default bg token",
-                "value": "toast/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Default label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Default label token",
-                "value": "toast/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Default border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Default border token",
-                "value": "toast/color/default/border",
-                "mono": true
-              },
-              {
-                "key": "Light bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Light bg token",
-                "value": "toast/color/light/bg",
-                "mono": true
-              },
-              {
-                "key": "Light label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Light label token",
-                "value": "toast/color/light/label",
-                "mono": true
-              },
-              {
-                "key": "Destructive bg",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Destructive bg token",
-                "value": "toast/color/destructive/bg",
-                "mono": true
-              }
+              { "key": "Default bg", "value": "#0A2757", "token": "toast/color/default/bg" },
+              { "key": "Default label", "value": "#FFFFFF", "token": "toast/color/default/label" },
+              { "key": "Default border", "value": "#E5EBF4", "token": "toast/color/default/border" },
+              { "key": "Light bg", "value": "#FFFFFF", "token": "toast/color/light/bg" },
+              { "key": "Light label", "value": "#0A2757", "token": "toast/color/light/label" },
+              { "key": "Destructive bg", "value": "#D61B2C", "token": "toast/color/destructive/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Padding",
@@ -820,6 +647,7 @@ export const toast: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",

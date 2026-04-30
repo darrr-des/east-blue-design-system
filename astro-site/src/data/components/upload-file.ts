@@ -187,6 +187,7 @@ export const uploadFile: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "default-—-empty-state",
@@ -196,6 +197,7 @@ export const uploadFile: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -211,51 +213,17 @@ export const uploadFile: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "input-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "input-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "input-field/default/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "input-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/default/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border" },
+              { "key": "Text", "value": "#0A2757", "token": "input-field/default/text" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -281,6 +249,7 @@ export const uploadFile: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -306,6 +275,7 @@ export const uploadFile: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -321,51 +291,17 @@ export const uploadFile: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "input-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "input-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "input-field/default/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "input-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/default/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border" },
+              { "key": "Text", "value": "#0A2757", "token": "input-field/default/text" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -391,6 +327,7 @@ export const uploadFile: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -416,6 +353,7 @@ export const uploadFile: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -431,51 +369,17 @@ export const uploadFile: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "input-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "input-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "input-field/default/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "input-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/default/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border" },
+              { "key": "Text", "value": "#0A2757", "token": "input-field/default/text" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -501,6 +405,7 @@ export const uploadFile: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -526,6 +431,7 @@ export const uploadFile: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -541,51 +447,17 @@ export const uploadFile: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "input-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "input-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "input-field/default/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "input-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/default/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border" },
+              { "key": "Text", "value": "#0A2757", "token": "input-field/default/text" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -611,6 +483,7 @@ export const uploadFile: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -636,6 +509,7 @@ export const uploadFile: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -651,51 +525,17 @@ export const uploadFile: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "input-field/error/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "input-field/error/border",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "input-field/error/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "input-field/error/placeholder",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/error/bg" },
+              { "key": "Border", "value": "#D61B2C", "token": "input-field/error/border" },
+              { "key": "Text", "value": "#0A2757", "token": "input-field/error/text" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/error/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -721,6 +561,7 @@ export const uploadFile: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",

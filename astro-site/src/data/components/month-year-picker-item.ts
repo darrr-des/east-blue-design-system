@@ -228,6 +228,7 @@ export const monthYearPickerItem: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "mypi-spec-default",
@@ -237,6 +238,7 @@ export const monthYearPickerItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -252,31 +254,15 @@ export const monthYearPickerItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "date-picker/day/color/unselected/label",
-                "mono": true
-              },
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "date-picker/day/color/unselected/bg",
-                "mono": true
-              }
+              { "key": "Label", "value": "#0A2757", "token": "date-picker/day/color/unselected/label" },
+              { "key": "Bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Cell size",
@@ -297,6 +283,7 @@ export const monthYearPickerItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",
@@ -328,6 +315,7 @@ export const monthYearPickerItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -343,41 +331,16 @@ export const monthYearPickerItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "text/color-text-primary",
-                "mono": true
-              },
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "date-picker/day/color/unselected/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "border/color-border-primary",
-                "mono": true
-              }
+              { "key": "Label", "value": "#005CE5", "token": "text/color-text-primary" },
+              { "key": "Bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" },
+              { "key": "Border", "value": "#005CE5", "token": "border/color-border-primary" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Cell size",
@@ -398,6 +361,7 @@ export const monthYearPickerItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",
@@ -429,6 +393,7 @@ export const monthYearPickerItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Type",
@@ -444,31 +409,15 @@ export const monthYearPickerItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "date-picker/day/color/selected/label",
-                "mono": true
-              },
-              {
-                "key": "Bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "date-picker/day/color/selected/bg",
-                "mono": true
-              }
+              { "key": "Label", "value": "#FFFFFF", "token": "date-picker/day/color/selected/label" },
+              { "key": "Bg", "value": "#005CE5", "token": "date-picker/day/color/selected/bg" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Cell size",
@@ -489,6 +438,7 @@ export const monthYearPickerItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Style",

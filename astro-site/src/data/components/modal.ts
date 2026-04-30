@@ -215,6 +215,7 @@ export const modal: ComponentData = {
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"10\" width=\"100\" height=\"60\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <rect x=\"20\" y=\"22\" width=\"56\" height=\"3\" rx=\"1.5\" fill=\"currentColor\" opacity=\".15\"></rect>\n          <rect x=\"20\" y=\"30\" width=\"34\" height=\"3\" rx=\"1.5\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <rect x=\"20\" y=\"38\" width=\"48\" height=\"3\" rx=\"1.5\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <circle cx=\"86\" cy=\"32\" r=\"3\" fill=\"#CA970C\" opacity=\".7\"></circle>\n          <circle cx=\"86\" cy=\"44\" r=\"3\" fill=\"#D61B2C\" opacity=\".7\"></circle>\n        </svg>\n      </div>"
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "default",
@@ -225,6 +226,7 @@ export const modal: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Name",
@@ -260,17 +262,9 @@ export const modal: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "modal-popup/color/bg",
-                "mono": true
-              },
+              { "key": "Surface", "value": "#FFFFFF", "token": "modal-popup/color/bg" },
               {
                 "key": "Subtle surface",
                 "value": "#F6F9FD",
@@ -281,26 +275,8 @@ export const modal: ComponentData = {
                 "value": "modal-popup/color/bg-subtle",
                 "mono": true
               },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "modal-popup/color/border",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "modal-popup/color/label",
-                "mono": true
-              },
+              { "key": "Border", "value": "#E5EBF4", "token": "modal-popup/color/border" },
+              { "key": "Title", "value": "#0A2757", "token": "modal-popup/color/label" },
               {
                 "key": "Description",
                 "value": "#6780A9",
@@ -350,6 +326,7 @@ export const modal: ComponentData = {
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -395,6 +372,7 @@ export const modal: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",
@@ -446,6 +424,7 @@ export const modal: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "type",
@@ -476,17 +455,9 @@ export const modal: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "modal-popup/color/bg",
-                "mono": true
-              },
+              { "key": "Surface", "value": "#FFFFFF", "token": "modal-popup/color/bg" },
               {
                 "key": "Subtle surface",
                 "value": "#F6F9FD",
@@ -497,26 +468,8 @@ export const modal: ComponentData = {
                 "value": "modal-popup/color/bg-subtle",
                 "mono": true
               },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "modal-popup/color/border",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "modal-popup/color/label",
-                "mono": true
-              },
+              { "key": "Border", "value": "#E5EBF4", "token": "modal-popup/color/border" },
+              { "key": "Title", "value": "#0A2757", "token": "modal-popup/color/label" },
               {
                 "key": "Description",
                 "value": "#6780A9",
@@ -566,6 +519,7 @@ export const modal: ComponentData = {
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -611,6 +565,7 @@ export const modal: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",
@@ -652,6 +607,7 @@ export const modal: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "type",
@@ -682,17 +638,9 @@ export const modal: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "modal-popup/color/bg",
-                "mono": true
-              },
+              { "key": "Surface", "value": "#FFFFFF", "token": "modal-popup/color/bg" },
               {
                 "key": "Subtle surface",
                 "value": "#F6F9FD",
@@ -703,26 +651,8 @@ export const modal: ComponentData = {
                 "value": "modal-popup/color/bg-subtle",
                 "mono": true
               },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "modal-popup/color/border",
-                "mono": true
-              },
-              {
-                "key": "Title",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Title token",
-                "value": "modal-popup/color/label",
-                "mono": true
-              },
+              { "key": "Border", "value": "#E5EBF4", "token": "modal-popup/color/border" },
+              { "key": "Title", "value": "#0A2757", "token": "modal-popup/color/label" },
               {
                 "key": "Description",
                 "value": "#6780A9",
@@ -772,6 +702,7 @@ export const modal: ComponentData = {
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -822,6 +753,7 @@ export const modal: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Title style",

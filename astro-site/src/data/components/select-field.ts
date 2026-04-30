@@ -125,6 +125,7 @@ export const selectField: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "sf-spec-default",
@@ -134,6 +135,7 @@ export const selectField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -149,61 +151,18 @@ export const selectField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "selected-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "selected-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "selected-field/default/value",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "selected-field/default/icon",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "selected-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "selected-field/default/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "selected-field/default/border" },
+              { "key": "Value", "value": "#0A2757", "token": "selected-field/default/value" },
+              { "key": "Icon", "value": "#005CE5", "token": "selected-field/default/icon" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -239,6 +198,7 @@ export const selectField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Value style",
@@ -265,6 +225,7 @@ export const selectField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -280,51 +241,17 @@ export const selectField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "selected-field/active/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "selected-field/active/border",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "selected-field/active/value",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "selected-field/active/icon",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "selected-field/active/bg" },
+              { "key": "Border", "value": "#005CE5", "token": "selected-field/active/border" },
+              { "key": "Value", "value": "#0A2757", "token": "selected-field/active/value" },
+              { "key": "Icon", "value": "#005CE5", "token": "selected-field/active/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -360,6 +287,7 @@ export const selectField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Value style",
@@ -386,6 +314,7 @@ export const selectField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -401,51 +330,17 @@ export const selectField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "selected-field/error/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "selected-field/error/border",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "selected-field/error/value",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "selected-field/error/icon",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "selected-field/error/bg" },
+              { "key": "Border", "value": "#D61B2C", "token": "selected-field/error/border" },
+              { "key": "Value", "value": "#0A2757", "token": "selected-field/error/value" },
+              { "key": "Icon", "value": "#005CE5", "token": "selected-field/error/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -481,6 +376,7 @@ export const selectField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Value style",
@@ -507,6 +403,7 @@ export const selectField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -522,41 +419,16 @@ export const selectField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "selected-field/disabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "selected-field/disabled/value",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#9BC5FD",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "selected-field/disabled/icon",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#EEF2F9", "token": "selected-field/disabled/bg" },
+              { "key": "Value", "value": "#90A8D0", "token": "selected-field/disabled/value" },
+              { "key": "Icon", "value": "#9BC5FD", "token": "selected-field/disabled/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -592,6 +464,7 @@ export const selectField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Value style",

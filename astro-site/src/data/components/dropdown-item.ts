@@ -177,6 +177,7 @@ export const dropdownItem: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "ddi-spec-text",
@@ -186,6 +187,7 @@ export const dropdownItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -201,51 +203,17 @@ export const dropdownItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "dropdown-item/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "dropdown-item/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "dropdown-item/color/default/border",
-                "mono": true
-              },
-              {
-                "key": "Disabled label",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Disabled label token",
-                "value": "text/color-text-disabled",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg" },
+              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label" },
+              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" },
+              { "key": "Disabled label", "value": "#C2CFE5", "token": "text/color-text-disabled" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -271,6 +239,7 @@ export const dropdownItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -297,6 +266,7 @@ export const dropdownItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -312,51 +282,17 @@ export const dropdownItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "dropdown-item/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "dropdown-item/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "dropdown-item/color/default/border",
-                "mono": true
-              },
-              {
-                "key": "Disabled label",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Disabled label token",
-                "value": "text/color-text-disabled",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg" },
+              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label" },
+              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" },
+              { "key": "Disabled label", "value": "#C2CFE5", "token": "text/color-text-disabled" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -382,6 +318,7 @@ export const dropdownItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -408,6 +345,7 @@ export const dropdownItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -423,51 +361,17 @@ export const dropdownItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "dropdown-item/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "dropdown-item/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "dropdown-item/color/default/border",
-                "mono": true
-              },
-              {
-                "key": "Disabled label",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Disabled label token",
-                "value": "text/color-text-disabled",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg" },
+              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label" },
+              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" },
+              { "key": "Disabled label", "value": "#C2CFE5", "token": "text/color-text-disabled" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -493,6 +397,7 @@ export const dropdownItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -519,6 +424,7 @@ export const dropdownItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -534,51 +440,17 @@ export const dropdownItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "dropdown-item/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "dropdown-item/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "dropdown-item/color/default/border",
-                "mono": true
-              },
-              {
-                "key": "Disabled label",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Disabled label token",
-                "value": "text/color-text-disabled",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg" },
+              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label" },
+              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" },
+              { "key": "Disabled label", "value": "#C2CFE5", "token": "text/color-text-disabled" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -604,6 +476,7 @@ export const dropdownItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -630,6 +503,7 @@ export const dropdownItem: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -645,51 +519,17 @@ export const dropdownItem: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "dropdown-item/color/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "dropdown-item/color/default/label",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "dropdown-item/color/default/border",
-                "mono": true
-              },
-              {
-                "key": "Disabled label",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Disabled label token",
-                "value": "text/color-text-disabled",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg" },
+              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label" },
+              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" },
+              { "key": "Disabled label", "value": "#C2CFE5", "token": "text/color-text-disabled" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -715,6 +555,7 @@ export const dropdownItem: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",

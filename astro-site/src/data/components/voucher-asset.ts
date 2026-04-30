@@ -172,6 +172,7 @@ export const voucherAsset: ComponentData = {
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"va-demo-preview\"><div style=\"display:flex;flex-direction:column;gap:14px;\"><div style=\"display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;\"><div style=\"display:flex;flex-direction:column;gap:8px;align-items:center;\"><svg width=\"110\" height=\"68\" viewBox=\"0 0 110 68\" style=\"display:block\"><defs><clipPath id=\"va-clip-110-68\"><path d=\"M8 0 H102 Q110 0 110 8 V28 A6 6 0 0 0 110 40 V60 Q110 68 102 68 H8 Q0 68 0 60 V40 A6 6 0 0 0 0 28 V8 Q0 0 8 0 Z\"></path></clipPath></defs><g clip-path=\"url(#va-clip-110-68)\"><rect width=\"110\" height=\"68\" fill=\"#D6D3DC\"></rect><text x=\"55\" y=\"26\" text-anchor=\"middle\" fill=\"#445C85\" font-size=\"11\" font-weight=\"700\" font-family=\"system-ui\">Placeholder</text></g><line x1=\"8\" y1=\"34\" x2=\"102\" y2=\"34\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(58,24)\"><path d=\"M0 0 H52 V20 H0 Q-0 20 -0 16 V4 Q0 0 0 0 Z\" fill=\"#1972F9\"></path><rect x=\"0\" y=\"0\" width=\"52\" height=\"20\" rx=\"0\" fill=\"#1972F9\"></rect><path d=\"M4 0 H52 V20 H4 Q0 20 0 16 V4 Q0 0 4 0 Z\" fill=\"#1972F9\"></path><text x=\"26\" y=\"14\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"11\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><svg width=\"110\" height=\"104\" viewBox=\"0 0 110 104\" style=\"display:block\"><defs><clipPath id=\"va-clip-110-104\"><path d=\"M8 0 H102 Q110 0 110 8 V46 A6 6 0 0 0 110 58 V96 Q110 104 102 104 H8 Q0 104 0 96 V58 A6 6 0 0 0 0 46 V8 Q0 0 8 0 Z\"></path></clipPath></defs><g clip-path=\"url(#va-clip-110-104)\"><rect width=\"110\" height=\"104\" fill=\"#D6D3DC\"></rect><text x=\"55\" y=\"44\" text-anchor=\"middle\" fill=\"#445C85\" font-size=\"11\" font-weight=\"700\" font-family=\"system-ui\">Placeholder</text></g><line x1=\"8\" y1=\"52\" x2=\"102\" y2=\"52\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(58,42)\"><path d=\"M0 0 H52 V20 H0 Q-0 20 -0 16 V4 Q0 0 0 0 Z\" fill=\"#1972F9\"></path><rect x=\"0\" y=\"0\" width=\"52\" height=\"20\" rx=\"0\" fill=\"#1972F9\"></rect><path d=\"M4 0 H52 V20 H4 Q0 20 0 16 V4 Q0 0 4 0 Z\" fill=\"#1972F9\"></path><text x=\"26\" y=\"14\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"11\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">placeholder</div></div><div style=\"display:flex;flex-direction:column;gap:8px;align-items:center;\"><svg width=\"110\" height=\"68\" viewBox=\"0 0 110 68\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-68-Restaurant\"><path d=\"M8 0 H102 Q110 0 110 8 V28 A6 6 0 0 0 110 40 V60 Q110 68 102 68 H8 Q0 68 0 60 V40 A6 6 0 0 0 0 28 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Restaurant\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#D63A2F\"></stop><stop offset=\"1\" stop-color=\"#8C1A15\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-68-Restaurant)\"><rect width=\"110\" height=\"68\" fill=\"url(#vag-Restaurant)\"></rect><text x=\"55\" y=\"20\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Restaurant</text></g><line x1=\"8\" y1=\"34\" x2=\"102\" y2=\"34\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,25)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><svg width=\"110\" height=\"104\" viewBox=\"0 0 110 104\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-104-Restaurant\"><path d=\"M8 0 H102 Q110 0 110 8 V46 A6 6 0 0 0 110 58 V96 Q110 104 102 104 H8 Q0 104 0 96 V58 A6 6 0 0 0 0 46 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Restaurant\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#D63A2F\"></stop><stop offset=\"1\" stop-color=\"#8C1A15\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-104-Restaurant)\"><rect width=\"110\" height=\"104\" fill=\"url(#vag-Restaurant)\"></rect><text x=\"55\" y=\"38\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Restaurant</text></g><line x1=\"8\" y1=\"52\" x2=\"102\" y2=\"52\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,43)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">restaurant</div></div><div style=\"display:flex;flex-direction:column;gap:8px;align-items:center;\"><svg width=\"110\" height=\"68\" viewBox=\"0 0 110 68\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-68-Vacation\"><path d=\"M8 0 H102 Q110 0 110 8 V28 A6 6 0 0 0 110 40 V60 Q110 68 102 68 H8 Q0 68 0 60 V40 A6 6 0 0 0 0 28 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Vacation\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#2CA6C8\"></stop><stop offset=\"1\" stop-color=\"#0F5D75\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-68-Vacation)\"><rect width=\"110\" height=\"68\" fill=\"url(#vag-Vacation)\"></rect><text x=\"55\" y=\"20\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Vacation</text></g><line x1=\"8\" y1=\"34\" x2=\"102\" y2=\"34\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,25)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><svg width=\"110\" height=\"104\" viewBox=\"0 0 110 104\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-104-Vacation\"><path d=\"M8 0 H102 Q110 0 110 8 V46 A6 6 0 0 0 110 58 V96 Q110 104 102 104 H8 Q0 104 0 96 V58 A6 6 0 0 0 0 46 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Vacation\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#2CA6C8\"></stop><stop offset=\"1\" stop-color=\"#0F5D75\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-104-Vacation)\"><rect width=\"110\" height=\"104\" fill=\"url(#vag-Vacation)\"></rect><text x=\"55\" y=\"38\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Vacation</text></g><line x1=\"8\" y1=\"52\" x2=\"102\" y2=\"52\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,43)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">vacation</div></div><div style=\"display:flex;flex-direction:column;gap:8px;align-items:center;\"><svg width=\"110\" height=\"68\" viewBox=\"0 0 110 68\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-68-Beverage\"><path d=\"M8 0 H102 Q110 0 110 8 V28 A6 6 0 0 0 110 40 V60 Q110 68 102 68 H8 Q0 68 0 60 V40 A6 6 0 0 0 0 28 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Beverage\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#D4A373\"></stop><stop offset=\"1\" stop-color=\"#7A4C24\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-68-Beverage)\"><rect width=\"110\" height=\"68\" fill=\"url(#vag-Beverage)\"></rect><text x=\"55\" y=\"20\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Beverage</text></g><line x1=\"8\" y1=\"34\" x2=\"102\" y2=\"34\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,25)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><svg width=\"110\" height=\"104\" viewBox=\"0 0 110 104\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-104-Beverage\"><path d=\"M8 0 H102 Q110 0 110 8 V46 A6 6 0 0 0 110 58 V96 Q110 104 102 104 H8 Q0 104 0 96 V58 A6 6 0 0 0 0 46 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Beverage\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#D4A373\"></stop><stop offset=\"1\" stop-color=\"#7A4C24\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-104-Beverage)\"><rect width=\"110\" height=\"104\" fill=\"url(#vag-Beverage)\"></rect><text x=\"55\" y=\"38\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Beverage</text></g><line x1=\"8\" y1=\"52\" x2=\"102\" y2=\"52\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,43)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">beverage</div></div><div style=\"display:flex;flex-direction:column;gap:8px;align-items:center;\"><svg width=\"110\" height=\"68\" viewBox=\"0 0 110 68\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-68-Snack\"><path d=\"M8 0 H102 Q110 0 110 8 V28 A6 6 0 0 0 110 40 V60 Q110 68 102 68 H8 Q0 68 0 60 V40 A6 6 0 0 0 0 28 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Snack\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#B87333\"></stop><stop offset=\"1\" stop-color=\"#6B3D15\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-68-Snack)\"><rect width=\"110\" height=\"68\" fill=\"url(#vag-Snack)\"></rect><text x=\"55\" y=\"20\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Snack</text></g><line x1=\"8\" y1=\"34\" x2=\"102\" y2=\"34\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,25)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><svg width=\"110\" height=\"104\" viewBox=\"0 0 110 104\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-104-Snack\"><path d=\"M8 0 H102 Q110 0 110 8 V46 A6 6 0 0 0 110 58 V96 Q110 104 102 104 H8 Q0 104 0 96 V58 A6 6 0 0 0 0 46 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Snack\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#B87333\"></stop><stop offset=\"1\" stop-color=\"#6B3D15\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-104-Snack)\"><rect width=\"110\" height=\"104\" fill=\"url(#vag-Snack)\"></rect><text x=\"55\" y=\"38\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Snack</text></g><line x1=\"8\" y1=\"52\" x2=\"102\" y2=\"52\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,43)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">snack</div></div><div style=\"display:flex;flex-direction:column;gap:8px;align-items:center;\"><svg width=\"110\" height=\"68\" viewBox=\"0 0 110 68\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-68-Fashion\"><path d=\"M8 0 H102 Q110 0 110 8 V28 A6 6 0 0 0 110 40 V60 Q110 68 102 68 H8 Q0 68 0 60 V40 A6 6 0 0 0 0 28 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Fashion\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#9AA0A6\"></stop><stop offset=\"1\" stop-color=\"#4A4F55\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-68-Fashion)\"><rect width=\"110\" height=\"68\" fill=\"url(#vag-Fashion)\"></rect><text x=\"55\" y=\"20\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Fashion</text></g><line x1=\"8\" y1=\"34\" x2=\"102\" y2=\"34\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,25)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><svg width=\"110\" height=\"104\" viewBox=\"0 0 110 104\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-104-Fashion\"><path d=\"M8 0 H102 Q110 0 110 8 V46 A6 6 0 0 0 110 58 V96 Q110 104 102 104 H8 Q0 104 0 96 V58 A6 6 0 0 0 0 46 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Fashion\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#9AA0A6\"></stop><stop offset=\"1\" stop-color=\"#4A4F55\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-104-Fashion)\"><rect width=\"110\" height=\"104\" fill=\"url(#vag-Fashion)\"></rect><text x=\"55\" y=\"38\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Fashion</text></g><line x1=\"8\" y1=\"52\" x2=\"102\" y2=\"52\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,43)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">fashion</div></div><div style=\"display:flex;flex-direction:column;gap:8px;align-items:center;\"><svg width=\"110\" height=\"68\" viewBox=\"0 0 110 68\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-68-Party\"><path d=\"M8 0 H102 Q110 0 110 8 V28 A6 6 0 0 0 110 40 V60 Q110 68 102 68 H8 Q0 68 0 60 V40 A6 6 0 0 0 0 28 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Party\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#5D3A9E\"></stop><stop offset=\"1\" stop-color=\"#2A1B4F\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-68-Party)\"><rect width=\"110\" height=\"68\" fill=\"url(#vag-Party)\"></rect><text x=\"55\" y=\"20\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Party</text></g><line x1=\"8\" y1=\"34\" x2=\"102\" y2=\"34\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,25)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><svg width=\"110\" height=\"104\" viewBox=\"0 0 110 104\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-104-Party\"><path d=\"M8 0 H102 Q110 0 110 8 V46 A6 6 0 0 0 110 58 V96 Q110 104 102 104 H8 Q0 104 0 96 V58 A6 6 0 0 0 0 46 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Party\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#5D3A9E\"></stop><stop offset=\"1\" stop-color=\"#2A1B4F\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-104-Party)\"><rect width=\"110\" height=\"104\" fill=\"url(#vag-Party)\"></rect><text x=\"55\" y=\"38\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Party</text></g><line x1=\"8\" y1=\"52\" x2=\"102\" y2=\"52\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,43)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">party</div></div><div style=\"display:flex;flex-direction:column;gap:8px;align-items:center;\"><svg width=\"110\" height=\"68\" viewBox=\"0 0 110 68\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-68-Meal\"><path d=\"M8 0 H102 Q110 0 110 8 V28 A6 6 0 0 0 110 40 V60 Q110 68 102 68 H8 Q0 68 0 60 V40 A6 6 0 0 0 0 28 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Meal\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#6B8E23\"></stop><stop offset=\"1\" stop-color=\"#365010\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-68-Meal)\"><rect width=\"110\" height=\"68\" fill=\"url(#vag-Meal)\"></rect><text x=\"55\" y=\"20\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Meal</text></g><line x1=\"8\" y1=\"34\" x2=\"102\" y2=\"34\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,25)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><svg width=\"110\" height=\"104\" viewBox=\"0 0 110 104\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-104-Meal\"><path d=\"M8 0 H102 Q110 0 110 8 V46 A6 6 0 0 0 110 58 V96 Q110 104 102 104 H8 Q0 104 0 96 V58 A6 6 0 0 0 0 46 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Meal\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#6B8E23\"></stop><stop offset=\"1\" stop-color=\"#365010\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-104-Meal)\"><rect width=\"110\" height=\"104\" fill=\"url(#vag-Meal)\"></rect><text x=\"55\" y=\"38\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Meal</text></g><line x1=\"8\" y1=\"52\" x2=\"102\" y2=\"52\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,43)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">meal</div></div><div style=\"display:flex;flex-direction:column;gap:8px;align-items:center;\"><svg width=\"110\" height=\"68\" viewBox=\"0 0 110 68\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-68-Games\"><path d=\"M8 0 H102 Q110 0 110 8 V28 A6 6 0 0 0 110 40 V60 Q110 68 102 68 H8 Q0 68 0 60 V40 A6 6 0 0 0 0 28 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Games\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#1E3A5F\"></stop><stop offset=\"1\" stop-color=\"#0B1A33\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-68-Games)\"><rect width=\"110\" height=\"68\" fill=\"url(#vag-Games)\"></rect><text x=\"55\" y=\"20\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Games</text></g><line x1=\"8\" y1=\"34\" x2=\"102\" y2=\"34\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,25)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><svg width=\"110\" height=\"104\" viewBox=\"0 0 110 104\" style=\"display:block\"><defs><clipPath id=\"va-pc-110-104-Games\"><path d=\"M8 0 H102 Q110 0 110 8 V46 A6 6 0 0 0 110 58 V96 Q110 104 102 104 H8 Q0 104 0 96 V58 A6 6 0 0 0 0 46 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Games\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#1E3A5F\"></stop><stop offset=\"1\" stop-color=\"#0B1A33\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-110-104-Games)\"><rect width=\"110\" height=\"104\" fill=\"url(#vag-Games)\"></rect><text x=\"55\" y=\"38\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Games</text></g><line x1=\"8\" y1=\"52\" x2=\"102\" y2=\"52\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(62,43)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">games</div></div></div><div style=\"display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;\"><div style=\"display:flex;flex-direction:column;gap:6px;align-items:center;\"><svg width=\"226\" height=\"96\" viewBox=\"0 0 226 96\" style=\"display:block\"><defs><clipPath id=\"va-clip-226-96\"><path d=\"M8 0 H218 Q226 0 226 8 V42 A6 6 0 0 0 226 54 V88 Q226 96 218 96 H8 Q0 96 0 88 V54 A6 6 0 0 0 0 42 V8 Q0 0 8 0 Z\"></path></clipPath></defs><g clip-path=\"url(#va-clip-226-96)\"><rect width=\"226\" height=\"96\" fill=\"#D6D3DC\"></rect><text x=\"113\" y=\"40\" text-anchor=\"middle\" fill=\"#445C85\" font-size=\"11\" font-weight=\"700\" font-family=\"system-ui\">Placeholder Image</text></g><line x1=\"8\" y1=\"48\" x2=\"218\" y2=\"48\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(174,38)\"><path d=\"M0 0 H52 V20 H0 Q-0 20 -0 16 V4 Q0 0 0 0 Z\" fill=\"#1972F9\"></path><rect x=\"0\" y=\"0\" width=\"52\" height=\"20\" rx=\"0\" fill=\"#1972F9\"></rect><path d=\"M4 0 H52 V20 H4 Q0 20 0 16 V4 Q0 0 4 0 Z\" fill=\"#1972F9\"></path><text x=\"26\" y=\"14\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"11\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">default · horizontal</div></div><div style=\"display:flex;flex-direction:column;gap:6px;align-items:center;\"><svg width=\"226\" height=\"96\" viewBox=\"0 0 226 96\" style=\"display:block\"><defs><clipPath id=\"va-pc-226-96-Food\"><path d=\"M8 0 H218 Q226 0 226 8 V42 A6 6 0 0 0 226 54 V88 Q226 96 218 96 H8 Q0 96 0 88 V54 A6 6 0 0 0 0 42 V8 Q0 0 8 0 Z\"></path></clipPath><linearGradient id=\"vag-Food\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#3A2418\"></stop><stop offset=\"1\" stop-color=\"#1A0F0A\"></stop></linearGradient></defs><g clip-path=\"url(#va-pc-226-96-Food)\"><rect width=\"226\" height=\"96\" fill=\"url(#vag-Food)\"></rect><text x=\"113\" y=\"34\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.9)\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">Food</text></g><line x1=\"8\" y1=\"48\" x2=\"218\" y2=\"48\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(178,39)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"18\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"13\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">food · horizontal</div></div></div></div></div></div>"
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "default-with-discount",
@@ -182,6 +183,7 @@ export const voucherAsset: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Status",
@@ -202,31 +204,15 @@ export const voucherAsset: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Badge bg",
-                "value": "#1972F9",
-                "mono": true
-              },
-              {
-                "key": "Badge bg token",
-                "value": "main/badge/brand/heavy/background",
-                "mono": true
-              },
-              {
-                "key": "Badge label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Badge label token",
-                "value": "main/badge/brand/heavy/label",
-                "mono": true
-              }
+              { "key": "Badge bg", "value": "#1972F9", "token": "main/badge/brand/heavy/background" },
+              { "key": "Badge label", "value": "#FFFFFF", "token": "main/badge/brand/heavy/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -267,6 +253,7 @@ export const voucherAsset: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Badge style",
@@ -313,6 +300,7 @@ export const voucherAsset: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Status",
@@ -333,21 +321,14 @@ export const voucherAsset: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "Image only",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "image fill (no token)",
-                "mono": true
-              }
+              { "key": "Surface", "value": "Image only", "token": "image fill (no token)" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -373,6 +354,7 @@ export const voucherAsset: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "N/A",
@@ -394,6 +376,7 @@ export const voucherAsset: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Status",
@@ -414,41 +397,16 @@ export const voucherAsset: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Overlay bg",
-                "value": "#020E223D (24% opacity)",
-                "mono": true
-              },
-              {
-                "key": "Overlay bg token",
-                "value": "bg/color-bg-overlay-weak",
-                "mono": true
-              },
-              {
-                "key": "Badge bg (muted)",
-                "value": "#C2C5CA",
-                "mono": true
-              },
-              {
-                "key": "Badge bg (muted) token",
-                "value": "main/badge/muted/light/background",
-                "mono": true
-              },
-              {
-                "key": "Badge label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Badge label token",
-                "value": "main/badge/muted/light/label",
-                "mono": true
-              }
+              { "key": "Overlay bg", "value": "#020E223D (24% opacity)", "token": "bg/color-bg-overlay-weak" },
+              { "key": "Badge bg (muted)", "value": "#C2C5CA", "token": "main/badge/muted/light/background" },
+              { "key": "Badge label", "value": "#FFFFFF", "token": "main/badge/muted/light/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -484,6 +442,7 @@ export const voucherAsset: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Badge style",

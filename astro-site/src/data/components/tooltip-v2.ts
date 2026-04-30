@@ -218,6 +218,7 @@ export const tooltipV2: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "cta=one-·-icon=yes-·-description-·-header-—-the-hero-variant",
@@ -227,6 +228,7 @@ export const tooltipV2: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "cta",
@@ -257,91 +259,21 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/primary/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "nudge/color/primary/border",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/primary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/primary/description",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "nudge/color/primary/icon-close",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label token",
-                "value": "button/primary/brand/enabled/label",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA token",
-                "value": "button/secondary/brand/enabled/border",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
+              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
+              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
+              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" },
+              { "key": "Primary CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
+              { "key": "Primary CTA label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
+              { "key": "Secondary CTA", "value": "#005CE5", "token": "button/secondary/brand/enabled/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -377,6 +309,7 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",
@@ -422,6 +355,7 @@ export const tooltipV2: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "cta",
@@ -452,91 +386,21 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/primary/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "nudge/color/primary/border",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/primary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/primary/description",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "nudge/color/primary/icon-close",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label token",
-                "value": "button/primary/brand/enabled/label",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA token",
-                "value": "button/secondary/brand/enabled/border",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
+              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
+              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
+              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" },
+              { "key": "Primary CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
+              { "key": "Primary CTA label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
+              { "key": "Secondary CTA", "value": "#005CE5", "token": "button/secondary/brand/enabled/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -572,6 +436,7 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",
@@ -617,6 +482,7 @@ export const tooltipV2: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "cta",
@@ -647,91 +513,21 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/primary/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "nudge/color/primary/border",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/primary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/primary/description",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "nudge/color/primary/icon-close",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label token",
-                "value": "button/primary/brand/enabled/label",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA token",
-                "value": "button/secondary/brand/enabled/border",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
+              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
+              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
+              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" },
+              { "key": "Primary CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
+              { "key": "Primary CTA label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
+              { "key": "Secondary CTA", "value": "#005CE5", "token": "button/secondary/brand/enabled/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -767,6 +563,7 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",
@@ -812,6 +609,7 @@ export const tooltipV2: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "cta",
@@ -842,91 +640,21 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/primary/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "nudge/color/primary/border",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/primary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/primary/description",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "nudge/color/primary/icon-close",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label token",
-                "value": "button/primary/brand/enabled/label",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA token",
-                "value": "button/secondary/brand/enabled/border",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
+              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
+              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
+              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" },
+              { "key": "Primary CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
+              { "key": "Primary CTA label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
+              { "key": "Secondary CTA", "value": "#005CE5", "token": "button/secondary/brand/enabled/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -962,6 +690,7 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",
@@ -1007,6 +736,7 @@ export const tooltipV2: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "cta",
@@ -1037,91 +767,21 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/primary/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "nudge/color/primary/border",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/primary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/primary/description",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "nudge/color/primary/icon-close",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label token",
-                "value": "button/primary/brand/enabled/label",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA token",
-                "value": "button/secondary/brand/enabled/border",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
+              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
+              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
+              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" },
+              { "key": "Primary CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
+              { "key": "Primary CTA label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
+              { "key": "Secondary CTA", "value": "#005CE5", "token": "button/secondary/brand/enabled/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -1157,6 +817,7 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",
@@ -1202,6 +863,7 @@ export const tooltipV2: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "cta",
@@ -1232,91 +894,21 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/primary/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "nudge/color/primary/border",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/primary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/primary/description",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "nudge/color/primary/icon-close",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label token",
-                "value": "button/primary/brand/enabled/label",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA token",
-                "value": "button/secondary/brand/enabled/border",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
+              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
+              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
+              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" },
+              { "key": "Primary CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
+              { "key": "Primary CTA label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
+              { "key": "Secondary CTA", "value": "#005CE5", "token": "button/secondary/brand/enabled/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -1352,6 +944,7 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",
@@ -1397,6 +990,7 @@ export const tooltipV2: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "cta",
@@ -1427,91 +1021,21 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/primary/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "nudge/color/primary/border",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/primary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/primary/description",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "nudge/color/primary/icon-close",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label token",
-                "value": "button/primary/brand/enabled/label",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA token",
-                "value": "button/secondary/brand/enabled/border",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
+              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
+              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
+              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" },
+              { "key": "Primary CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
+              { "key": "Primary CTA label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
+              { "key": "Secondary CTA", "value": "#005CE5", "token": "button/secondary/brand/enabled/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -1547,6 +1071,7 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",
@@ -1592,6 +1117,7 @@ export const tooltipV2: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "cta",
@@ -1622,91 +1148,21 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "nudge/color/primary/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "nudge/color/primary/border",
-                "mono": true
-              },
-              {
-                "key": "Header",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Header token",
-                "value": "nudge/color/primary/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "nudge/color/primary/description",
-                "mono": true
-              },
-              {
-                "key": "Close icon",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Close icon token",
-                "value": "nudge/color/primary/icon-close",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label token",
-                "value": "button/primary/brand/enabled/label",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA token",
-                "value": "button/secondary/brand/enabled/border",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
+              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
+              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
+              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" },
+              { "key": "Primary CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
+              { "key": "Primary CTA label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
+              { "key": "Secondary CTA", "value": "#005CE5", "token": "button/secondary/brand/enabled/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -1742,6 +1198,7 @@ export const tooltipV2: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",

@@ -141,6 +141,7 @@ export const tableScheduling: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "type-=-no-display-amount-—-50.5px-tall",
@@ -150,6 +151,7 @@ export const tableScheduling: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "type",
@@ -165,61 +167,18 @@ export const tableScheduling: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "table/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "table/color/label",
-                "mono": true
-              },
-              {
-                "key": "Amount",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Amount token",
-                "value": "table/color/label-amount",
-                "mono": true
-              },
-              {
-                "key": "Preamble",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Preamble token",
-                "value": "table/color/label-preamble",
-                "mono": true
-              },
-              {
-                "key": "Currency icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Currency icon token",
-                "value": "table/color/icon-currency-primary",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "table/color/bg" },
+              { "key": "Label", "value": "#0A2757", "token": "table/color/label" },
+              { "key": "Amount", "value": "#005CE5", "token": "table/color/label-amount" },
+              { "key": "Preamble", "value": "#6780A9", "token": "table/color/label-preamble" },
+              { "key": "Currency icon", "value": "#005CE5", "token": "table/color/icon-currency-primary" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -235,6 +194,7 @@ export const tableScheduling: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Preamble style",
@@ -270,6 +230,7 @@ export const tableScheduling: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "type",
@@ -285,61 +246,18 @@ export const tableScheduling: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "table/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "table/color/label",
-                "mono": true
-              },
-              {
-                "key": "Amount",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Amount token",
-                "value": "table/color/label-amount",
-                "mono": true
-              },
-              {
-                "key": "Preamble",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Preamble token",
-                "value": "table/color/label-preamble",
-                "mono": true
-              },
-              {
-                "key": "Currency icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Currency icon token",
-                "value": "table/color/icon-currency-primary",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "table/color/bg" },
+              { "key": "Label", "value": "#0A2757", "token": "table/color/label" },
+              { "key": "Amount", "value": "#005CE5", "token": "table/color/label-amount" },
+              { "key": "Preamble", "value": "#6780A9", "token": "table/color/label-preamble" },
+              { "key": "Currency icon", "value": "#005CE5", "token": "table/color/icon-currency-primary" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -355,6 +273,7 @@ export const tableScheduling: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Preamble style",
@@ -390,6 +309,7 @@ export const tableScheduling: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "type",
@@ -405,61 +325,18 @@ export const tableScheduling: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "table/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "table/color/label",
-                "mono": true
-              },
-              {
-                "key": "Amount",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Amount token",
-                "value": "table/color/label-amount",
-                "mono": true
-              },
-              {
-                "key": "Preamble",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Preamble token",
-                "value": "table/color/label-preamble",
-                "mono": true
-              },
-              {
-                "key": "Currency icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Currency icon token",
-                "value": "table/color/icon-currency-primary",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "table/color/bg" },
+              { "key": "Label", "value": "#0A2757", "token": "table/color/label" },
+              { "key": "Amount", "value": "#005CE5", "token": "table/color/label-amount" },
+              { "key": "Preamble", "value": "#6780A9", "token": "table/color/label-preamble" },
+              { "key": "Currency icon", "value": "#005CE5", "token": "table/color/icon-currency-primary" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -475,6 +352,7 @@ export const tableScheduling: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Preamble style",

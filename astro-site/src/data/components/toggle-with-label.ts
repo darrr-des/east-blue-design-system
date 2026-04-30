@@ -151,6 +151,7 @@ export const toggleWithLabel: ComponentData = {
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"toggle-with-label-demo-preview\"><div class=\"eb-preview eb-preview-setting-row\"><div class=\"eb-preview-setting-row__labels\"><div class=\"eb-preview-setting-row__label\"><span>Push notifications</span></div><div class=\"eb-preview-setting-row__desc\">Get alerts when money moves</div></div><span class=\"eb-preview eb-preview-toggle eb-preview-toggle--medium eb-preview-toggle--on eb-preview-toggle--interactive\" role=\"switch\" aria-checked=\"true\" tabindex=\"0\" onclick=\"event.stopPropagation();_twlFlip();\" onkeydown=\"if(event.key===' '||event.key==='Enter'){event.preventDefault();_twlFlip();}\"><span class=\"eb-preview-toggle__knob\"></span></span></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">label</span><input type=\"text\" id=\"toggle-with-label-ctrl-label\" class=\"demo-panel-select demo-panel-input\" value=\"Push notifications\" oninput=\"_toggleWithLabelUpdate()\" placeholder=\"Label text\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><input type=\"text\" id=\"toggle-with-label-ctrl-desc\" class=\"demo-panel-select demo-panel-input\" value=\"Get alerts when money moves\" oninput=\"_toggleWithLabelUpdate()\" placeholder=\"Optional — leave empty to hide\"></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties (proposed)</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isSelected</span><select id=\"toggle-with-label-ctrl-selected\" class=\"demo-panel-select\" onchange=\"_toggleWithLabelUpdate()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">state</span><select id=\"toggle-with-label-ctrl-state\" class=\"demo-panel-select\" onchange=\"_toggleWithLabelUpdate()\"><option value=\"default\" selected=\"\">default</option><option value=\"disabled\">disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">placement</span><select id=\"toggle-with-label-ctrl-placement\" class=\"demo-panel-select\" onchange=\"_toggleWithLabelUpdate()\"><option value=\"trailing\" selected=\"\">trailing</option><option value=\"leading\">leading</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">required</span><select id=\"toggle-with-label-ctrl-required\" class=\"demo-panel-select\" onchange=\"_toggleWithLabelUpdate()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">helper</span><select id=\"toggle-with-label-ctrl-helper\" class=\"demo-panel-select\" onchange=\"_toggleWithLabelUpdate()\"><option value=\"none\" selected=\"\">none</option><option value=\"helper\">helper</option><option value=\"error\">error</option></select></div></div></div></div>"
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "today-—-single-frame",
@@ -161,6 +162,7 @@ export const toggleWithLabel: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "None",
@@ -171,41 +173,16 @@ export const toggleWithLabel: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Active track",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active track token",
-                "value": "toggle/color/default/active/bg-track",
-                "mono": true
-              },
-              {
-                "key": "Active indicator",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Active indicator token",
-                "value": "toggle/color/default/active/bg-indicator",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "text/color-text-weak",
-                "mono": true
-              }
+              { "key": "Active track", "value": "#005CE5", "token": "toggle/color/default/active/bg-track" },
+              { "key": "Active indicator", "value": "#FFFFFF", "token": "toggle/color/default/active/bg-indicator" },
+              { "key": "Label", "value": "#445C85", "token": "text/color-text-weak" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -226,6 +203,7 @@ export const toggleWithLabel: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -252,6 +230,7 @@ export const toggleWithLabel: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Placement",
@@ -272,41 +251,16 @@ export const toggleWithLabel: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label color",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label color token",
-                "value": "main/toggle-with-label/label",
-                "mono": true
-              },
-              {
-                "key": "Active track",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active track token",
-                "value": "toggle/color/default/active/bg-track",
-                "mono": true
-              },
-              {
-                "key": "Indicator",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Indicator token",
-                "value": "toggle/color/default/active/bg-indicator",
-                "mono": true
-              }
+              { "key": "Label color", "value": "#0A2757", "token": "main/toggle-with-label/label" },
+              { "key": "Active track", "value": "#005CE5", "token": "toggle/color/default/active/bg-track" },
+              { "key": "Indicator", "value": "#FFFFFF", "token": "toggle/color/default/active/bg-indicator" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -332,6 +286,7 @@ export const toggleWithLabel: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -368,6 +323,7 @@ export const toggleWithLabel: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -378,51 +334,17 @@ export const toggleWithLabel: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Inactive track",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Inactive track token",
-                "value": "toggle/color/default/inactive/bg-track",
-                "mono": true
-              },
-              {
-                "key": "Active track",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Active track token",
-                "value": "toggle/color/default/active/bg-track",
-                "mono": true
-              },
-              {
-                "key": "Indicator",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Indicator token",
-                "value": "toggle/color/default/active/bg-indicator",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "text/color-text-weak",
-                "mono": true
-              }
+              { "key": "Inactive track", "value": "#C2CFE5", "token": "toggle/color/default/inactive/bg-track" },
+              { "key": "Active track", "value": "#005CE5", "token": "toggle/color/default/active/bg-track" },
+              { "key": "Indicator", "value": "#FFFFFF", "token": "toggle/color/default/active/bg-indicator" },
+              { "key": "Label", "value": "#445C85", "token": "text/color-text-weak" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Track size",
@@ -448,6 +370,7 @@ export const toggleWithLabel: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",

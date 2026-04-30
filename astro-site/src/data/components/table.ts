@@ -136,6 +136,7 @@ export const table: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "header-row-—-37-/-65px-tall",
@@ -145,6 +146,7 @@ export const table: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Row type",
@@ -160,61 +162,18 @@ export const table: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "table/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Subtle row bg",
-                "value": "#D7D8DA",
-                "mono": true
-              },
-              {
-                "key": "Subtle row bg token",
-                "value": "table/color/bg-subtle",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#828591",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "table/color/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A0A0B",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "table/color/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "table/color/description",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "table/color/bg" },
+              { "key": "Subtle row bg", "value": "#D7D8DA", "token": "table/color/bg-subtle" },
+              { "key": "Border", "value": "#828591", "token": "table/color/border" },
+              { "key": "Label", "value": "#0A0A0B", "token": "table/color/label" },
+              { "key": "Description", "value": "#6780A9", "token": "table/color/description" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Header height",
@@ -235,6 +194,7 @@ export const table: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",
@@ -270,6 +230,7 @@ export const table: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Row type",
@@ -285,61 +246,18 @@ export const table: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Surface",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Surface token",
-                "value": "table/color/bg",
-                "mono": true
-              },
-              {
-                "key": "Subtle row bg",
-                "value": "#D7D8DA",
-                "mono": true
-              },
-              {
-                "key": "Subtle row bg token",
-                "value": "table/color/bg-subtle",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#828591",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "table/color/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A0A0B",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "table/color/label",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "table/color/description",
-                "mono": true
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "table/color/bg" },
+              { "key": "Subtle row bg", "value": "#D7D8DA", "token": "table/color/bg-subtle" },
+              { "key": "Border", "value": "#828591", "token": "table/color/border" },
+              { "key": "Label", "value": "#0A0A0B", "token": "table/color/label" },
+              { "key": "Description", "value": "#6780A9", "token": "table/color/description" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -360,6 +278,7 @@ export const table: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Header style",

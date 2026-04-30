@@ -115,6 +115,7 @@ export const radioButtonWithLabel: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "default",
@@ -124,6 +125,7 @@ export const radioButtonWithLabel: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -139,51 +141,17 @@ export const radioButtonWithLabel: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Border (unselected)",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border (unselected) token",
-                "value": "radio-button/color/default/unselected/border",
-                "mono": true
-              },
-              {
-                "key": "Selected fill",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Selected fill token",
-                "value": "radio-button/color/default/selected/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "radio-button/color/default/unselected/text",
-                "mono": true
-              },
-              {
-                "key": "Error border",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Error border token",
-                "value": "radio-button/color/error/unselected/border",
-                "mono": true
-              }
+              { "key": "Border (unselected)", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border" },
+              { "key": "Selected fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg" },
+              { "key": "Label", "value": "#445C85", "token": "radio-button/color/default/unselected/text" },
+              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Outer ring",
@@ -209,6 +177,7 @@ export const radioButtonWithLabel: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -234,6 +203,7 @@ export const radioButtonWithLabel: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -249,51 +219,17 @@ export const radioButtonWithLabel: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Border (unselected)",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border (unselected) token",
-                "value": "radio-button/color/default/unselected/border",
-                "mono": true
-              },
-              {
-                "key": "Selected fill",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Selected fill token",
-                "value": "radio-button/color/default/selected/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "radio-button/color/default/unselected/text",
-                "mono": true
-              },
-              {
-                "key": "Error border",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Error border token",
-                "value": "radio-button/color/error/unselected/border",
-                "mono": true
-              }
+              { "key": "Border (unselected)", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border" },
+              { "key": "Selected fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg" },
+              { "key": "Label", "value": "#445C85", "token": "radio-button/color/default/unselected/text" },
+              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Outer ring",
@@ -319,6 +255,7 @@ export const radioButtonWithLabel: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -344,6 +281,7 @@ export const radioButtonWithLabel: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -359,51 +297,17 @@ export const radioButtonWithLabel: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Border (unselected)",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border (unselected) token",
-                "value": "radio-button/color/default/unselected/border",
-                "mono": true
-              },
-              {
-                "key": "Selected fill",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Selected fill token",
-                "value": "radio-button/color/default/selected/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "radio-button/color/default/unselected/text",
-                "mono": true
-              },
-              {
-                "key": "Error border",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Error border token",
-                "value": "radio-button/color/error/unselected/border",
-                "mono": true
-              }
+              { "key": "Border (unselected)", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border" },
+              { "key": "Selected fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg" },
+              { "key": "Label", "value": "#445C85", "token": "radio-button/color/default/unselected/text" },
+              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Outer ring",
@@ -429,6 +333,7 @@ export const radioButtonWithLabel: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -454,6 +359,7 @@ export const radioButtonWithLabel: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Variant",
@@ -469,51 +375,17 @@ export const radioButtonWithLabel: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Border (unselected)",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border (unselected) token",
-                "value": "radio-button/color/default/unselected/border",
-                "mono": true
-              },
-              {
-                "key": "Selected fill",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Selected fill token",
-                "value": "radio-button/color/default/selected/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "radio-button/color/default/unselected/text",
-                "mono": true
-              },
-              {
-                "key": "Error border",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Error border token",
-                "value": "radio-button/color/error/unselected/border",
-                "mono": true
-              }
+              { "key": "Border (unselected)", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border" },
+              { "key": "Selected fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg" },
+              { "key": "Label", "value": "#445C85", "token": "radio-button/color/default/unselected/text" },
+              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Outer ring",
@@ -539,6 +411,7 @@ export const radioButtonWithLabel: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",

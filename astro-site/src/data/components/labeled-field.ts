@@ -123,6 +123,7 @@ export const labeledField: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "lf-spec-default",
@@ -132,6 +133,7 @@ export const labeledField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -147,61 +149,18 @@ export const labeledField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "labeled-field/default/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D7E0EF",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "labeled-field/default/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "labeled-field/default/label",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "labeled-field/default/text",
-                "mono": true
-              },
-              {
-                "key": "Placeholder",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Placeholder token",
-                "value": "labeled-field/default/placeholder",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/default/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border" },
+              { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label" },
+              { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text" },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -237,6 +196,7 @@ export const labeledField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -273,6 +233,7 @@ export const labeledField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -288,51 +249,17 @@ export const labeledField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "labeled-field/active/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "labeled-field/active/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "labeled-field/active/label",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "labeled-field/active/text",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/active/bg" },
+              { "key": "Border", "value": "#005CE5", "token": "labeled-field/active/border" },
+              { "key": "Label", "value": "#0A2757", "token": "labeled-field/active/label" },
+              { "key": "Text", "value": "#0A2757", "token": "labeled-field/active/text" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -368,6 +295,7 @@ export const labeledField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -404,6 +332,7 @@ export const labeledField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -419,51 +348,17 @@ export const labeledField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "labeled-field/error/bg",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "#D61B2C",
-                "mono": true
-              },
-              {
-                "key": "Border token",
-                "value": "labeled-field/error/border",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "labeled-field/error/label",
-                "mono": true
-              },
-              {
-                "key": "Text",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Text token",
-                "value": "labeled-field/error/text",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/error/bg" },
+              { "key": "Border", "value": "#D61B2C", "token": "labeled-field/error/border" },
+              { "key": "Label", "value": "#0A2757", "token": "labeled-field/error/label" },
+              { "key": "Text", "value": "#0A2757", "token": "labeled-field/error/text" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -499,6 +394,7 @@ export const labeledField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -535,6 +431,7 @@ export const labeledField: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "state",
@@ -550,41 +447,16 @@ export const labeledField: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Bg",
-                "value": "#EEF2F9",
-                "mono": true
-              },
-              {
-                "key": "Bg token",
-                "value": "labeled-field/disabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Label",
-                "value": "#90A8D0",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "labeled-field/disabled/label",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "#C2CFE5",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "labeled-field/disabled/value",
-                "mono": true
-              }
+              { "key": "Bg", "value": "#EEF2F9", "token": "labeled-field/disabled/bg" },
+              { "key": "Label", "value": "#90A8D0", "token": "labeled-field/disabled/label" },
+              { "key": "Value", "value": "#C2CFE5", "token": "labeled-field/disabled/value" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Field height",
@@ -620,6 +492,7 @@ export const labeledField: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",

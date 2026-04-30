@@ -182,6 +182,7 @@ export const inlineText: ComponentData = {
     ]
   },
   "style": {
+    "heading": "Styles",
     "specCards": [
       {
         "cardKey": "default-—-label-+-value",
@@ -192,6 +193,7 @@ export const inlineText: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "type",
@@ -212,61 +214,18 @@ export const inlineText: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Label token",
-                "value": "inline-text/color/label",
-                "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Value token",
-                "value": "inline-text/color/label-value",
-                "mono": true
-              },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Description token",
-                "value": "inline-text/color/description",
-                "mono": true
-              },
-              {
-                "key": "Link",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Link token",
-                "value": "inline-text/color/label-link",
-                "mono": true
-              },
-              {
-                "key": "Icon",
-                "value": "#445C85",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "inline-text/color/icon",
-                "mono": true
-              }
+              { "key": "Label", "value": "#0A2757", "token": "inline-text/color/label" },
+              { "key": "Value", "value": "#445C85", "token": "inline-text/color/label-value" },
+              { "key": "Description", "value": "#6780A9", "token": "inline-text/color/description" },
+              { "key": "Link", "value": "#005CE5", "token": "inline-text/color/label-link" },
+              { "key": "Icon", "value": "#445C85", "token": "inline-text/color/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Width",
@@ -292,6 +251,7 @@ export const inlineText: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -328,6 +288,7 @@ export const inlineText: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Has clipboard",
@@ -343,41 +304,16 @@ export const inlineText: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label color",
-                "value": "#3C4A5C",
-                "mono": true
-              },
-              {
-                "key": "Label color token",
-                "value": "main/inline-text/label",
-                "mono": true
-              },
-              {
-                "key": "Value color",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Value color token",
-                "value": "main/inline-text/value",
-                "mono": true
-              },
-              {
-                "key": "Icon color",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon color token",
-                "value": "main/inline-text/icon",
-                "mono": true
-              }
+              { "key": "Label color", "value": "#3C4A5C", "token": "main/inline-text/label" },
+              { "key": "Value color", "value": "#0A2757", "token": "main/inline-text/value" },
+              { "key": "Icon color", "value": "#005CE5", "token": "main/inline-text/icon" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -403,6 +339,7 @@ export const inlineText: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -429,6 +366,7 @@ export const inlineText: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Trailing slot",
@@ -444,41 +382,16 @@ export const inlineText: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label color",
-                "value": "#3C4A5C",
-                "mono": true
-              },
-              {
-                "key": "Label color token",
-                "value": "main/inline-text/label",
-                "mono": true
-              },
-              {
-                "key": "Badge bg",
-                "value": "#E8F1FF",
-                "mono": true
-              },
-              {
-                "key": "Badge bg token",
-                "value": "main/badge/brand/bg",
-                "mono": true
-              },
-              {
-                "key": "Badge label",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Badge label token",
-                "value": "main/badge/brand/label",
-                "mono": true
-              }
+              { "key": "Label color", "value": "#3C4A5C", "token": "main/inline-text/label" },
+              { "key": "Badge bg", "value": "#E8F1FF", "token": "main/badge/brand/bg" },
+              { "key": "Badge label", "value": "#005CE5", "token": "main/badge/brand/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -504,6 +417,7 @@ export const inlineText: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -530,6 +444,7 @@ export const inlineText: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Has description",
@@ -545,41 +460,16 @@ export const inlineText: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label color",
-                "value": "#3C4A5C",
-                "mono": true
-              },
-              {
-                "key": "Label color token",
-                "value": "main/inline-text/label",
-                "mono": true
-              },
-              {
-                "key": "Value color",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Value color token",
-                "value": "main/inline-text/value",
-                "mono": true
-              },
-              {
-                "key": "Description color",
-                "value": "#3C4A5C",
-                "mono": true
-              },
-              {
-                "key": "Description color token",
-                "value": "main/inline-text/description",
-                "mono": true
-              }
+              { "key": "Label color", "value": "#3C4A5C", "token": "main/inline-text/label" },
+              { "key": "Value color", "value": "#0A2757", "token": "main/inline-text/value" },
+              { "key": "Description color", "value": "#3C4A5C", "token": "main/inline-text/description" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -605,6 +495,7 @@ export const inlineText: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
@@ -636,6 +527,7 @@ export const inlineText: ComponentData = {
         "sections": [
           {
             "label": "Properties",
+            "slug": "props",
             "rows": [
               {
                 "key": "Trailing slot",
@@ -651,41 +543,16 @@ export const inlineText: ComponentData = {
           },
           {
             "label": "Colors",
+            "slug": "colors",
             "rows": [
-              {
-                "key": "Label color",
-                "value": "#3C4A5C",
-                "mono": true
-              },
-              {
-                "key": "Label color token",
-                "value": "main/inline-text/label",
-                "mono": true
-              },
-              {
-                "key": "Value color",
-                "value": "#0A2757",
-                "mono": true
-              },
-              {
-                "key": "Value color token",
-                "value": "main/inline-text/value",
-                "mono": true
-              },
-              {
-                "key": "Link color",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Link color token",
-                "value": "main/text-link/label",
-                "mono": true
-              }
+              { "key": "Label color", "value": "#3C4A5C", "token": "main/inline-text/label" },
+              { "key": "Value color", "value": "#0A2757", "token": "main/inline-text/value" },
+              { "key": "Link color", "value": "#005CE5", "token": "main/text-link/label" }
             ]
           },
           {
             "label": "Layout",
+            "slug": "layout",
             "rows": [
               {
                 "key": "Row height",
@@ -706,6 +573,7 @@ export const inlineText: ComponentData = {
           },
           {
             "label": "Typography",
+            "slug": "typo",
             "rows": [
               {
                 "key": "Label style",
