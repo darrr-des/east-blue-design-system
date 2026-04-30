@@ -1,4 +1,32 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/header-centered.js`.
+const headerCenteredDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'type',
+        prop: 'type',
+        defaultValue: 'dark',
+        options: [
+          { value: 'dark', label: 'dark' },
+          { value: 'light', label: 'light' },
+        ],
+      },
+      {
+        label: 'description',
+        prop: 'desc',
+        defaultValue: 'yes',
+        options: [
+          { value: 'yes', label: 'yes' },
+          { value: 'no', label: 'no' },
+        ],
+      },
+    ],
+  },
+];
 
 export const headerCentered: ComponentData = {
   "meta": {
@@ -134,6 +162,8 @@ export const headerCentered: ComponentData = {
     "specCards": [
       {
         "cardKey": "dark-/-brand-surface",
+        "demoKey": "hc-dark",
+        "demoControls": headerCenteredDemoControls,
         "title": "Dark / brand surface",
         "node": "18430:2859",
         "description": "White title on brand-blue surface. The \"hero\" variant — used for primary feature banners.",
@@ -146,12 +176,14 @@ export const headerCentered: ComponentData = {
               {
                 "key": "type",
                 "value": "dark",
-                "mono": true
+                "mono": true,
+                "prop": "type"
               },
               {
                 "key": "description",
                 "value": "yes",
-                "mono": true
+                "mono": true,
+                "prop": "desc"
               }
             ]
           },
@@ -219,6 +251,8 @@ export const headerCentered: ComponentData = {
       },
       {
         "cardKey": "light-/-default-surface",
+        "demoKey": "hc-light",
+        "demoControls": headerCenteredDemoControls,
         "title": "Light / default surface",
         "node": "18430:2865",
         "description": "Dark title on default surface. Used for modal sheet titles and subdued banners.",
@@ -229,19 +263,16 @@ export const headerCentered: ComponentData = {
             "slug": "props",
             "rows": [
               {
-                "key": "Surface",
-                "value": "Light",
-                "mono": true
+                "key": "type",
+                "value": "light",
+                "mono": true,
+                "prop": "type"
               },
               {
-                "key": "Title alignment",
-                "value": "Center",
-                "mono": true
-              },
-              {
-                "key": "Has back",
-                "value": "Yes",
-                "mono": true
+                "key": "description",
+                "value": "yes",
+                "mono": true,
+                "prop": "desc"
               }
             ]
           },

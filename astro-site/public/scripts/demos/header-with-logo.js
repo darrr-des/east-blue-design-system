@@ -39,15 +39,87 @@ function _headerWithLogoUpdate() {
   preview.innerHTML = _headerWithLogoRender({theme: theme ? theme.value : 'light'});
 }
 
+/* ── Spec Cards ──────────────────────────────────────────────────── */
+var _headerWithLogoSpecCards = {
+  'hwl-dark':  { theme: 'dark' },
+  'hwl-light': { theme: 'light' }
+};
+
+/* Map demoKey → existing previewHtml container id from data file. */
+var _headerWithLogoPreviewIds = {
+  'hwl-dark':  'header-with-logo-spec-1',
+  'hwl-light': 'header-with-logo-spec-2'
+};
+
+/* Expose for shared utilities. */
+var _specCards = _headerWithLogoSpecCards;
+window._specCards = _specCards;
+
+function buildSwiftSnippet(type, card) {
+  return getSnippet(type, 'swift', card);
+}
+function buildComposeSnippet(type, card) {
+  return getSnippet(type, 'compose', card);
+}
+function getSnippet(type, lang, card) {
+  var appearance = card.theme === 'light' ? '.light' : '.dark';
+  var appearanceCompose = card.theme === 'light' ? 'Light' : 'Dark';
+  if (lang === 'swift') {
+    return 'EBHeader(\n    logo: Image("gcash-logo"),\n    appearance: ' + appearance + '\n)';
+  } else {
+    return 'EBHeader(\n    logo = R.drawable.gcash_logo,\n    appearance = EBHeaderAppearance.' + appearanceCompose + '\n)';
+  }
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _headerWithLogoSpecCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview — locate via mapped id. */
+  var previewId = _headerWithLogoPreviewIds[cardStyle];
+  if (previewId) {
+    var previewEl = document.getElementById(previewId);
+    if (previewEl) previewEl.innerHTML = _headerWithLogoRender(card);
+  }
+
+  /* Update DES property readouts via [data-sp="${cardStyle}-${prop}"]. */
+  var spTheme = document.querySelector('[data-sp="' + cardStyle + '-theme"]');
+  if (spTheme) spTheme.textContent = card.theme;
+
+  /* Update DEV code — `[data-code-content="${cardStyle}"]`. */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
 function _headerWithLogoInit() {
   var ctx = document.getElementById('header-with-logo-context-preview');
   if (ctx) ctx.innerHTML = _headerWithLogoContextMarkup();
   _headerWithLogoUpdate();
-  var s1 = document.getElementById('header-with-logo-spec-1');
-  if (s1) s1.innerHTML = _headerWithLogoRender({theme:'dark'});
-  var s2 = document.getElementById('header-with-logo-spec-2');
-  if (s2) s2.innerHTML = _headerWithLogoRender({theme:'light'});
+  /* Initial spec card render. */
+  updateSpecCard('hwl-dark',  'theme', 'dark');
+  updateSpecCard('hwl-light', 'theme', 'light');
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _headerWithLogoInit);
 else _headerWithLogoInit();
+
+/* ── Re-init after Astro view-transition swaps ─────────────── */
+(function(){
+  function reinit(){
+    if (typeof _headerWithLogoInit === 'function') _headerWithLogoInit();
+  }
+  document.addEventListener('astro:page-load', reinit);
+})();

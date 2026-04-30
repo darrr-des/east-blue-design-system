@@ -1,4 +1,23 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/header-transaction.js`.
+const headerTransactionDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'email',
+        prop: 'email',
+        defaultValue: 'no',
+        options: [
+          { value: 'no', label: 'no' },
+          { value: 'yes', label: 'yes' },
+        ],
+      },
+    ],
+  },
+];
 
 export const headerTransaction: ComponentData = {
   "meta": {
@@ -148,6 +167,8 @@ export const headerTransaction: ComponentData = {
     "specCards": [
       {
         "cardKey": "no-email",
+        "demoKey": "ht-no",
+        "demoControls": headerTransactionDemoControls,
         "title": "No email",
         "node": "18430:2906",
         "description": "The minimal variant — avatar + title + divider + description. Used when the profile/transaction has no extra metadata to show.",
@@ -160,7 +181,8 @@ export const headerTransaction: ComponentData = {
               {
                 "key": "email",
                 "value": "no",
-                "mono": true
+                "mono": true,
+                "prop": "email"
               }
             ]
           },
@@ -227,6 +249,8 @@ export const headerTransaction: ComponentData = {
       },
       {
         "cardKey": "with-email-row",
+        "demoKey": "ht-yes",
+        "demoControls": headerTransactionDemoControls,
         "title": "With email row",
         "node": "18430:2898",
         "description": "Adds an inline <code>email: value</code> row between the divider and the description. Used on recipient profile cards.",
@@ -237,14 +261,10 @@ export const headerTransaction: ComponentData = {
             "slug": "props",
             "rows": [
               {
-                "key": "Has email",
-                "value": "Yes",
-                "mono": true
-              },
-              {
-                "key": "Surface",
-                "value": "Dark",
-                "mono": true
+                "key": "email",
+                "value": "yes",
+                "mono": true,
+                "prop": "email"
               }
             ]
           },

@@ -1,4 +1,23 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/header-with-logo.js`.
+const headerWithLogoDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'logo',
+        prop: 'theme',
+        defaultValue: 'light',
+        options: [
+          { value: 'light', label: 'light' },
+          { value: 'dark', label: 'dark' },
+        ],
+      },
+    ],
+  },
+];
 
 export const headerWithLogo: ComponentData = {
   "meta": {
@@ -135,6 +154,8 @@ export const headerWithLogo: ComponentData = {
     "specCards": [
       {
         "cardKey": "dark-logo-variant",
+        "demoKey": "hwl-dark",
+        "demoControls": headerWithLogoDemoControls,
         "title": "Dark logo variant",
         "node": "18430:2876",
         "description": "Dark GCash mark on brand surface. Used where extra contrast is needed or on lighter brand tints.",
@@ -147,7 +168,8 @@ export const headerWithLogo: ComponentData = {
               {
                 "key": "logo",
                 "value": "dark",
-                "mono": true
+                "mono": true,
+                "prop": "theme"
               }
             ]
           },
@@ -204,6 +226,8 @@ export const headerWithLogo: ComponentData = {
       },
       {
         "cardKey": "light-logo-variant",
+        "demoKey": "hwl-light",
+        "demoControls": headerWithLogoDemoControls,
         "title": "Light logo variant",
         "node": "18430:2887",
         "description": "Light GCash mark on brand surface. The default variant for most branded screens.",
@@ -214,14 +238,10 @@ export const headerWithLogo: ComponentData = {
             "slug": "props",
             "rows": [
               {
-                "key": "Surface",
-                "value": "Light",
-                "mono": true
-              },
-              {
-                "key": "Logo color",
-                "value": "Brand",
-                "mono": true
+                "key": "logo",
+                "value": "light",
+                "mono": true,
+                "prop": "theme"
               }
             ]
           },
