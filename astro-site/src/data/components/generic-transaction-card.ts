@@ -1,4 +1,26 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/generic-transaction-card.js`.
+const genericTransactionCardDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Type',
+        prop: 'type',
+        options: [
+          { value: 'default', label: 'default' },
+          { value: 'more-information', label: 'more information' },
+          { value: 'with-avatar', label: 'with avatar' },
+          { value: 'no-amount', label: 'no amount' },
+          { value: 'skeleton', label: 'skeleton loader' },
+        ],
+      },
+    ],
+  },
+];
 
 export const genericTransactionCard: ComponentData = {
   "meta": {
@@ -169,15 +191,23 @@ export const genericTransactionCard: ComponentData = {
     "specCards": [
       {
         "cardKey": "default-—-label-+-badge-+-date-+-amount",
+        "demoKey": "default",
+        "demoControls": genericTransactionCardDemoControls,
         "title": "Default — label + badge + date + amount",
         "node": "18482:35754",
         "description": "The baseline transaction row. Leading label, mid-row badge + date metadata, trailing amount. 78 px tall.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"gtx-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"gtx-spec-1\"><div class=\"eb-preview eb-preview-gtx\"><div class=\"eb-preview-gtx__content\"><p class=\"eb-preview-gtx__label\">Label</p><div class=\"eb-preview-gtx__meta-row\"><span class=\"eb-preview-gtx__badge\">Label</span><span class=\"eb-preview-gtx__meta\">Date XX, XXXX, Time (AM,PM)</span></div></div><div class=\"eb-preview-gtx__trailing\"><span class=\"eb-preview-gtx__amount\">PHP XX.XX</span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
+              {
+                "key": "Type",
+                "value": "default",
+                "prop": "type",
+                "mono": true
+              },
               {
                 "key": "Variant",
                 "value": "Label + badge + date + amount",
@@ -241,12 +271,12 @@ export const genericTransactionCard: ComponentData = {
             "rows": [
               {
                 "key": "Label (title)",
-                "value": "HeyMeow Rnd Semibold · 18 / 18 · +0.25",
+                "value": "Proxima Soft Semibold · 18 / 18 · +0.25",
                 "mono": true
               },
               {
                 "key": "Amount",
-                "value": "HeyMeow Rnd Semibold · 18 / 18 · +0.25",
+                "value": "Proxima Soft Semibold · 18 / 18 · +0.25",
                 "mono": true
               },
               {
@@ -256,7 +286,7 @@ export const genericTransactionCard: ComponentData = {
               },
               {
                 "key": "Badge label",
-                "value": "HeyMeow Rnd Bold · 12 / 12 · +0.5",
+                "value": "Proxima Soft Bold · 12 / 12 · +0.5",
                 "mono": true
               }
             ]
@@ -287,15 +317,23 @@ export const genericTransactionCard: ComponentData = {
       },
       {
         "cardKey": "with-avatar",
+        "demoKey": "with-avatar",
+        "demoControls": genericTransactionCardDemoControls,
         "title": "With avatar",
         "node": "18482:35776",
         "description": "Adds a 32 × 32 Avatar at the leading edge (instance-swapped from the Avatar component). Used for person-to-person transactions.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"gtx-spec-2\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"gtx-spec-2\"><div class=\"eb-preview eb-preview-gtx\"><span class=\"eb-preview-gtx__avatar\">G</span><div class=\"eb-preview-gtx__content\"><p class=\"eb-preview-gtx__label\">Label</p><div class=\"eb-preview-gtx__meta-row\"><span class=\"eb-preview-gtx__badge\">Label</span><span class=\"eb-preview-gtx__meta\">Date XX, XXXX, Time (AM,PM)</span></div></div><div class=\"eb-preview-gtx__trailing\"><span class=\"eb-preview-gtx__amount\">XXX.XX</span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
+              {
+                "key": "Type",
+                "value": "with-avatar",
+                "prop": "type",
+                "mono": true
+              },
               {
                 "key": "Leading slot",
                 "value": "Avatar",
@@ -381,15 +419,23 @@ export const genericTransactionCard: ComponentData = {
       },
       {
         "cardKey": "no-amount",
+        "demoKey": "no-amount",
+        "demoControls": genericTransactionCardDemoControls,
         "title": "No amount",
         "node": "18482:35789",
         "description": "Used for non-monetary confirmations (KYC acknowledgments, voucher redemptions). Swaps amount for a trailing badge and the date row for a reference number.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"gtx-spec-3\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"gtx-spec-3\"><div class=\"eb-preview eb-preview-gtx\"><div class=\"eb-preview-gtx__content\"><p class=\"eb-preview-gtx__label\">Label</p><p class=\"eb-preview-gtx__reference\">Reference No: GC123456789876543</p></div><div class=\"eb-preview-gtx__trailing\"><span class=\"eb-preview-gtx__badge\">Label</span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
+              {
+                "key": "Type",
+                "value": "no-amount",
+                "prop": "type",
+                "mono": true
+              },
               {
                 "key": "Leading slot",
                 "value": "Icon",
@@ -468,7 +514,43 @@ export const genericTransactionCard: ComponentData = {
         "compose": "<span class=\"syn-type\">EBTransactionCard</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Profile updated\"</span><span class=\"syn-punc\">,</span>\n    date <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Yesterday, 9:01 AM\"</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — Default
+      buildStatelessColorsTable({
+        title: 'Default — Colors',
+        description: 'List-style transaction row with leading icon, title, amount, and a metadata strip.',
+        rows: [
+          { role: 'Surface',     token: 'card-list/color/bg',                 value: '#FFFFFF' },
+          { role: 'Border',      token: 'card-list/color/border',             value: '#E5EBF4' },
+          { role: 'Title',       token: 'card-list/color/label-header',       value: '#0A2757' },
+          { role: 'Amount',      token: 'card-list/color/label-amount',       value: '#0A2757' },
+          { role: 'Metadata',    token: 'card-list/color/label-metadata',     value: '#6780A9' },
+          { role: 'Icon',        token: 'card-list/color/icon',               value: '#005CE5' },
+          { role: 'Badge bg',    token: 'badge/information/light/background', value: '#E5F1FF' },
+          { role: 'Badge label', token: 'badge/information/light/label',      value: '#005CE5' },
+        ],
+      }),
+      // Card 2 — With avatar
+      buildStatelessColorsTable({
+        title: 'With Avatar — Colors',
+        description: 'Same transaction palette as Default; Avatar component replaces the leading icon.',
+        rows: [
+          { role: 'Surface',     token: 'main/transaction-card/bg',     value: '#FFFFFF' },
+          { role: 'Title',       token: 'main/transaction-card/title',  value: '#0A2757' },
+          { role: 'Date',        token: 'main/transaction-card/date',   value: '#3C4A5C' },
+          { role: 'Amount',      token: 'main/transaction-card/amount', value: '#0A2757' },
+        ],
+      }),
+      // Card 3 — Skeleton
+      buildStatelessColorsTable({
+        title: 'Skeleton — Colors',
+        description: 'Loading state — every content slot is a rounded grey rectangle on the card surface.',
+        rows: [
+          { role: 'Skeleton bg', token: 'main/skeleton/bg', value: '#EEF2F9' },
+          { role: 'Surface bg',  token: 'main/card/bg',     value: '#FFFFFF' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

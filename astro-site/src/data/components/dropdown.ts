@@ -55,7 +55,7 @@ export const dropdown: ComponentData = {
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"64\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <text x=\"20\" y=\"22\" font-size=\"6\" fill=\"currentColor\" opacity=\".15\" font-family=\"system-ui\">Select Option</text>\n          <rect x=\"20\" y=\"28\" width=\"80\" height=\"12\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".15\"></rect>\n          <rect x=\"24\" y=\"32\" width=\"35\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <path d=\"M94 32l2 2.5 2-2.5\" stroke=\"currentColor\" stroke-width=\".8\" stroke-linecap=\"round\" opacity=\".12\"></path>\n          <rect x=\"20\" y=\"42\" width=\"80\" height=\"8\" rx=\"2\" fill=\"currentColor\" opacity=\".05\"></rect>\n          <rect x=\"20\" y=\"50\" width=\"80\" height=\"8\" rx=\"2\" fill=\"currentColor\" opacity=\".05\"></rect>\n          <rect x=\"20\" y=\"58\" width=\"80\" height=\"8\" rx=\"2\" fill=\"currentColor\" opacity=\".05\"></rect>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"dd-demo-preview\"><svg width=\"366\" height=\"68\" viewBox=\"0 0 366 68\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><defs><filter id=\"ddShadow\" x=\"-4\" y=\"64\" width=\"374\" height=\"410\" filterUnits=\"userSpaceOnUse\"><feDropShadow dx=\"0\" dy=\"6\" stdDeviation=\"6\" flood-color=\"#020E22\" flood-opacity=\"0.16\"></feDropShadow></filter></defs><text x=\"2\" y=\"12\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"white\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"48\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" fill=\"#90A8D0\">Select option</text><path d=\"M339 42l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">variant</span><select class=\"demo-panel-select\" onchange=\"_ddDemo.variant=this.value;updateDropdownDemo()\"><option value=\"Text\">Text</option><option value=\"Error\">Error</option><option value=\"Amount\">Amount</option><option value=\"Mobile\">Mobile</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select class=\"demo-panel-select\" onchange=\"_ddDemo.type=this.value;updateDropdownDemo()\"><option value=\"Collapsed\">Collapsed</option><option value=\"Expanded\">Expanded</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"dd-demo-preview\"><svg width=\"366\" height=\"68\" viewBox=\"0 0 366 68\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><defs><filter id=\"ddShadow\" x=\"-4\" y=\"64\" width=\"374\" height=\"410\" filterUnits=\"userSpaceOnUse\"><feDropShadow dx=\"0\" dy=\"6\" stdDeviation=\"6\" flood-color=\"#020E22\" flood-opacity=\"0.16\"></feDropShadow></filter></defs><text x=\"2\" y=\"12\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"white\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"48\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\">Select option</text><path d=\"M339 42l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">variant</span><select class=\"demo-panel-select\" onchange=\"_ddDemo.variant=this.value;updateDropdownDemo()\"><option value=\"Text\">Text</option><option value=\"Error\">Error</option><option value=\"Amount\">Amount</option><option value=\"Mobile\">Mobile</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select class=\"demo-panel-select\" onchange=\"_ddDemo.type=this.value;updateDropdownDemo()\"><option value=\"Collapsed\">Collapsed</option><option value=\"Expanded\">Expanded</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -210,7 +210,13 @@ export const dropdown: ComponentData = {
             "slug": "colors",
             "rows": [
               { "key": "Bg",          "value": "#FFFFFF", "token": "selected-field/default/bg" },
-              { "key": "Border",      "value": "#D7E0EF", "token": "selected-field/default/border" },
+              { "key": "Border", "value": "#D7E0EF", "token": "selected-field/default/border",
+                "variants": {
+                  "type:Expanded": { "value": "#005CE5" },
+                  "variant:Error": { "value": "#F4C7C9", "token": "selected-field/error/border" },
+                  "variant:Error|type:Expanded": { "value": "#D61B2C", "token": "selected-field/error/border" }
+                }
+              },
               { "key": "Value",       "value": "#0A2757", "token": "selected-field/default/value" },
               { "key": "Icon",        "value": "#005CE5", "token": "selected-field/default/icon" },
               { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/default/placeholder" }
@@ -224,7 +230,12 @@ export const dropdown: ComponentData = {
               { "key": "Padding H",    "value": "12px",  "mono": true },
               { "key": "Padding V",    "value": "14px",  "mono": true },
               { "key": "Border radius","value": "6px",   "mono": true },
-              { "key": "Border",       "value": "1px solid", "mono": true },
+              { "key": "Border", "value": "1px solid", "mono": true,
+                "variants": {
+                  "type:Expanded": { "value": "2px solid" },
+                  "variant:Error": { "value": "2px solid" }
+                }
+              },
               { "key": "Icon size",    "value": "20 × 20", "mono": true }
             ]
           },
@@ -242,7 +253,7 @@ export const dropdown: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">, </span>options<span class=\"syn-punc\">: </span>items<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    options <span class=\"syn-eq\">=</span> items<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"dd-text-preview\"></div>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"dd-text-preview\"><svg width=\"366\" height=\"68\" viewBox=\"0 0 366 68\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><defs><filter id=\"ddShadow\" x=\"-4\" y=\"64\" width=\"374\" height=\"410\" filterUnits=\"userSpaceOnUse\"><feDropShadow dx=\"0\" dy=\"6\" stdDeviation=\"6\" flood-color=\"#020E22\" flood-opacity=\"0.16\"></feDropShadow></filter></defs><text x=\"2\" y=\"12\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"white\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"48\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\">Select option</text><path d=\"M339 42l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div>"
       },
       {
         "cardKey": "dd-spec-error",
@@ -265,7 +276,17 @@ export const dropdown: ComponentData = {
             "slug": "colors",
             "rows": [
               { "key": "Bg",     "value": "#FFFFFF", "token": "selected-field/error/bg" },
-              { "key": "Border", "value": "#F4C7C9", "token": "selected-field/error/border" },
+              { "key": "Border", "value": "#F4C7C9", "token": "selected-field/error/border",
+                "variants": {
+                  "type:Expanded": { "value": "#D61B2C" },
+                  "variant:Text":   { "value": "#D7E0EF", "token": "selected-field/default/border" },
+                  "variant:Amount": { "value": "#D7E0EF", "token": "selected-field/default/border" },
+                  "variant:Mobile": { "value": "#D7E0EF", "token": "selected-field/default/border" },
+                  "variant:Text|type:Expanded":   { "value": "#005CE5", "token": "selected-field/default/border" },
+                  "variant:Amount|type:Expanded": { "value": "#005CE5", "token": "selected-field/default/border" },
+                  "variant:Mobile|type:Expanded": { "value": "#005CE5", "token": "selected-field/default/border" }
+                }
+              },
               { "key": "Value",  "value": "#0A2757", "token": "selected-field/error/value" },
               { "key": "Icon",   "value": "#005CE5", "token": "selected-field/error/icon" }
             ]
@@ -296,7 +317,7 @@ export const dropdown: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">, </span>options<span class=\"syn-punc\">: </span>items<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    options <span class=\"syn-eq\">=</span> items<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Error</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"dd-error-preview\"></div>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"dd-error-preview\"><svg width=\"366\" height=\"68\" viewBox=\"0 0 366 68\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><defs><filter id=\"ddShadow\" x=\"-4\" y=\"64\" width=\"374\" height=\"410\" filterUnits=\"userSpaceOnUse\"><feDropShadow dx=\"0\" dy=\"6\" stdDeviation=\"6\" flood-color=\"#020E22\" flood-opacity=\"0.16\"></feDropShadow></filter></defs><text x=\"2\" y=\"12\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"white\" stroke=\"#F4C7C9\" stroke-width=\"2\"></rect><text x=\"12\" y=\"48\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\">Select option</text><path d=\"M339 42l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div>"
       },
       {
         "cardKey": "dd-spec-amount",
@@ -319,7 +340,13 @@ export const dropdown: ComponentData = {
             "slug": "colors",
             "rows": [
               { "key": "Bg",          "value": "#FFFFFF", "token": "selected-field/default/bg" },
-              { "key": "Border",      "value": "#D7E0EF", "token": "selected-field/default/border" },
+              { "key": "Border", "value": "#D7E0EF", "token": "selected-field/default/border",
+                "variants": {
+                  "type:Expanded": { "value": "#005CE5" },
+                  "variant:Error": { "value": "#F4C7C9", "token": "selected-field/error/border" },
+                  "variant:Error|type:Expanded": { "value": "#D61B2C", "token": "selected-field/error/border" }
+                }
+              },
               { "key": "Value",       "value": "#0A2757", "token": "selected-field/default/value" },
               { "key": "Icon",        "value": "#005CE5", "token": "selected-field/default/icon" },
               { "key": "Peso sign",   "value": "#183462", "token": "selected-field/default/icon-currency" },
@@ -334,7 +361,12 @@ export const dropdown: ComponentData = {
               { "key": "Padding H",      "value": "12px",  "mono": true },
               { "key": "Padding V",      "value": "14px",  "mono": true },
               { "key": "Border radius",  "value": "6px",   "mono": true },
-              { "key": "Border",         "value": "1px solid", "mono": true },
+              { "key": "Border", "value": "1px solid", "mono": true,
+                "variants": {
+                  "type:Expanded": { "value": "2px solid" },
+                  "variant:Error": { "value": "2px solid" }
+                }
+              },
               { "key": "Icon size",      "value": "20 × 20", "mono": true },
               { "key": "Peso sign size", "value": "15 × 15", "mono": true }
             ]
@@ -353,7 +385,7 @@ export const dropdown: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">, </span>options<span class=\"syn-punc\">: </span>items<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.amount</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    options <span class=\"syn-eq\">=</span> items<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDropdownStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Amount</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"dd-amount-preview\"></div>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"dd-amount-preview\"><svg width=\"366\" height=\"68\" viewBox=\"0 0 366 68\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><defs><filter id=\"ddShadow\" x=\"-4\" y=\"64\" width=\"374\" height=\"410\" filterUnits=\"userSpaceOnUse\"><feDropShadow dx=\"0\" dy=\"6\" stdDeviation=\"6\" flood-color=\"#020E22\" flood-opacity=\"0.16\"></feDropShadow></filter></defs><text x=\"2\" y=\"12\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"white\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"49\" font-family=\"Proxima Soft, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#183462\">₱</text><text x=\"28\" y=\"49\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\">Select option</text><path d=\"M339 42l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div>"
       },
       {
         "cardKey": "dd-spec-mobile",
@@ -376,7 +408,13 @@ export const dropdown: ComponentData = {
             "slug": "colors",
             "rows": [
               { "key": "Bg",          "value": "#FFFFFF", "token": "selected-field/default/bg" },
-              { "key": "Border",      "value": "#D7E0EF", "token": "selected-field/default/border" },
+              { "key": "Border", "value": "#D7E0EF", "token": "selected-field/default/border",
+                "variants": {
+                  "type:Expanded": { "value": "#005CE5" },
+                  "variant:Error": { "value": "#F4C7C9", "token": "selected-field/error/border" },
+                  "variant:Error|type:Expanded": { "value": "#D61B2C", "token": "selected-field/error/border" }
+                }
+              },
               { "key": "Value",       "value": "#0A2757", "token": "selected-field/default/value" },
               { "key": "Icon",        "value": "#005CE5", "token": "selected-field/default/icon" },
               { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/default/placeholder" }
@@ -390,7 +428,12 @@ export const dropdown: ComponentData = {
               { "key": "Padding H",    "value": "12px",  "mono": true },
               { "key": "Padding V",    "value": "14px",  "mono": true },
               { "key": "Border radius","value": "6px",   "mono": true },
-              { "key": "Border",       "value": "1px solid", "mono": true },
+              { "key": "Border", "value": "1px solid", "mono": true,
+                "variants": {
+                  "type:Expanded": { "value": "2px solid" },
+                  "variant:Error": { "value": "2px solid" }
+                }
+              },
               { "key": "Icon size",    "value": "20 × 20", "mono": true }
             ]
           },
@@ -408,7 +451,7 @@ export const dropdown: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">, </span>options<span class=\"syn-punc\">: </span>items<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.mobile</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    options <span class=\"syn-eq\">=</span> items<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDropdownStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Mobile</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"dd-mobile-preview\"></div>"
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"dd-mobile-preview\"><svg width=\"366\" height=\"118\" viewBox=\"0 0 366 118\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"2\" y=\"12\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><circle cx=\"52\" cy=\"8\" r=\"8\" stroke=\"#0A2757\" stroke-width=\"1\" fill=\"none\" opacity=\".4\"></circle><text x=\"49\" y=\"12\" font-family=\"system-ui\" font-size=\"10\" fill=\"#0A2757\" opacity=\".4\">i</text><rect x=\"0.5\" y=\"22.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"white\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"48\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\">Select option</text><path d=\"M339 42l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><rect x=\"0.5\" y=\"76.5\" width=\"365\" height=\"37\" rx=\"5.5\" fill=\"white\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"98\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">+63</text><text x=\"52\" y=\"98\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\">XXX XXX XXXX</text></svg></div>"
       }
     ],
     "colorsTables": [
@@ -598,7 +641,7 @@ export const dropdown: ComponentData = {
             "role": "Header label",
             "token": "Primary/Label/Light/Small",
             "values": [
-              "HeyMeow Rnd Semibold",
+              "Proxima Soft Semibold",
               "14px",
               "0.25px",
               "14px"
@@ -608,7 +651,7 @@ export const dropdown: ComponentData = {
             "role": "Trigger placeholder",
             "token": "Primary/Label/Light/Small",
             "values": [
-              "HeyMeow Rnd Semibold",
+              "Proxima Soft Semibold",
               "14px",
               "0.25px",
               "14px"
@@ -618,7 +661,7 @@ export const dropdown: ComponentData = {
             "role": "Dropdown item",
             "token": "Primary/Label/Light/Large",
             "values": [
-              "HeyMeow Rnd Semibold",
+              "Proxima Soft Semibold",
               "18px",
               "0.25px",
               "18px"

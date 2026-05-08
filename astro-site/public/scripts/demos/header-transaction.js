@@ -6,7 +6,7 @@
 /* Pixel-accurate replica of node 18430:2897.
    Surface: #1972F9 brand, 360 × 191/220. Padding 24 all.
    Avatar: 32×32 #C2CFE5 pill.
-   Title:  HeyMeow Rnd Bold 22/26 white.
+   Title:  Proxima Soft Bold 22/26 white.
    Separator: 1px 24%-white.
    Meta: key 72%-white, value white, 14/20 BarkAda Semibold.
    Description: BarkAda Semibold 12/18 72%-white.                    */

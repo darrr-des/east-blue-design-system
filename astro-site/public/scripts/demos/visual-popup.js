@@ -36,7 +36,8 @@ function _vpImagePlaceholder(x, y, w, h, r, topOnly) {
   return s;
 }
 
-function _vpBuildSvg(type) {
+function _vpBuildSvg(type, ctaLabel) {
+  ctaLabel = ctaLabel || 'Okay';
   var w, h;
   if (type === '2cta') { w = 200; h = 270; }
   else if (type === 'version2') { w = 200; h = 250; }
@@ -48,39 +49,39 @@ function _vpBuildSvg(type) {
     // Version 2: light-gray container only (white outer has zero padding so it's not visible)
     s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" rx="6" fill="#F6F9FD"/>';
     // Preamble
-    s += '<text x="20" y="26" fill="#90A8D0" font-size="6" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">PREAMBLE</text>';
+    s += '<text x="20" y="26" fill="#90A8D0" font-size="6" font-weight="700" font-family="\'Proxima Soft\', system-ui">PREAMBLE</text>';
     // Close icon
     s += '<g transform="translate(' + (w - 28) + ', 18) " stroke="#6780A9" stroke-width="1.4" stroke-linecap="round"><line x1="0" y1="0" x2="8" y2="8"/><line x1="8" y1="0" x2="0" y2="8"/></g>';
     // Title
-    s += '<text x="20" y="42" fill="#0A2757" font-size="11" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Put the title here</text>';
+    s += '<text x="20" y="42" fill="#0A2757" font-size="11" font-weight="700" font-family="\'Proxima Soft\', system-ui">Put the title here</text>';
     // Description
-    s += '<text x="20" y="56" fill="#6780A9" font-size="7" font-family="\'BarkAda\', system-ui">Add description here.</text>';
-    s += '<text x="20" y="66" fill="#6780A9" font-size="7" font-family="\'BarkAda\', system-ui">Add description here.</text>';
+    s += '<text x="20" y="56" fill="#6780A9" font-size="7" font-weight="500" font-family="\'BarkAda\', system-ui">Add description here.</text>';
+    s += '<text x="20" y="66" fill="#6780A9" font-size="7" font-weight="500" font-family="\'BarkAda\', system-ui">Add description here.</text>';
     // Hero image placeholder
     s += _vpImagePlaceholder(20, 78, w - 40, 100, 6);
     // CTA
     s += '<rect x="20" y="' + (h - 36) + '" width="' + (w - 40) + '" height="22" rx="11" fill="#005CE5"/>';
-    s += '<text x="' + (w / 2) + '" y="' + (h - 21) + '" text-anchor="middle" fill="#FFFFFF" font-size="9" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Okay</text>';
+    s += '<text x="' + (w / 2) + '" y="' + (h - 21) + '" text-anchor="middle" fill="#FFFFFF" font-size="9" font-weight="700" font-family="\'Proxima Soft\', system-ui">' + ctaLabel + '</text>';
   } else {
     // Default / 2 CTA: hero on top
     s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" rx="4" fill="#FFFFFF" stroke="#E5EBF4" stroke-width="0.8"/>';
     // Hero placeholder (top corners rounded only)
     s += _vpImagePlaceholder(0, 0, w, 100, 4, true);
     // Title
-    s += '<text x="' + (w / 2) + '" y="128" text-anchor="middle" fill="#0A2757" font-size="12" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Put the title here</text>';
+    s += '<text x="' + (w / 2) + '" y="128" text-anchor="middle" fill="#0A2757" font-size="12" font-weight="700" font-family="\'Proxima Soft\', system-ui">Put the title here</text>';
     // Description
-    s += '<text x="' + (w / 2) + '" y="146" text-anchor="middle" fill="#6780A9" font-size="8" font-family="\'BarkAda\', system-ui">Add description here.</text>';
-    s += '<text x="' + (w / 2) + '" y="158" text-anchor="middle" fill="#6780A9" font-size="8" font-family="\'BarkAda\', system-ui">Add description here.</text>';
+    s += '<text x="' + (w / 2) + '" y="146" text-anchor="middle" fill="#6780A9" font-size="8" font-weight="500" font-family="\'BarkAda\', system-ui">Add description here.</text>';
+    s += '<text x="' + (w / 2) + '" y="158" text-anchor="middle" fill="#6780A9" font-size="8" font-weight="500" font-family="\'BarkAda\', system-ui">Add description here.</text>';
     // CTA(s)
     if (type === '2cta') {
       // Outline primary + text tertiary
       s += '<rect x="20" y="180" width="' + (w - 40) + '" height="24" rx="12" fill="#FFFFFF" stroke="#005CE5" stroke-width="2"/>';
-      s += '<text x="' + (w / 2) + '" y="196" text-anchor="middle" fill="#005CE5" font-size="9" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Label</text>';
-      s += '<text x="' + (w / 2) + '" y="232" text-anchor="middle" fill="#005CE5" font-size="9" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Label</text>';
+      s += '<text x="' + (w / 2) + '" y="196" text-anchor="middle" fill="#005CE5" font-size="9" font-weight="700" font-family="\'Proxima Soft\', system-ui">' + ctaLabel + '</text>';
+      s += '<text x="' + (w / 2) + '" y="232" text-anchor="middle" fill="#005CE5" font-size="9" font-weight="700" font-family="\'Proxima Soft\', system-ui">Cancel</text>';
     } else {
       // Single primary
       s += '<rect x="20" y="190" width="' + (w - 40) + '" height="26" rx="13" fill="#005CE5"/>';
-      s += '<text x="' + (w / 2) + '" y="207" text-anchor="middle" fill="#FFFFFF" font-size="10" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Okay</text>';
+      s += '<text x="' + (w / 2) + '" y="207" text-anchor="middle" fill="#FFFFFF" font-size="10" font-weight="700" font-family="\'Proxima Soft\', system-ui">' + ctaLabel + '</text>';
     }
   }
 
@@ -92,13 +93,76 @@ function updateVisualPopupDemo() {
   var t = document.getElementById('vp-demo-type').value;
   _vpDemo.type = t;
   var el = document.getElementById('vp-demo-preview');
-  if (el) el.innerHTML = _vpBuildSvg(t);
+  if (el) el.innerHTML = _vpBuildSvg(t, 'Okay');
 }
 
+/* ── Visual Popup Spec Cards ──────────────────────────────────────── */
+var _vpSpecCards = {
+  'default':  { type: 'default',  cta: 'Okay' },
+  '2cta':     { type: '2cta',     cta: 'Okay' },
+  'version2': { type: 'version2', cta: 'Okay' }
+};
+
+/* Expose for shared utilities — `switchCodeTab` reads this. */
+var _specCards = _vpSpecCards;
+window._specCards = _specCards;
+
+function buildSwiftSnippet(type, card) {
+  var kind;
+  if (type === 'default')  kind = '.singleCTA';
+  else if (type === '2cta') kind = '.dualCTA';
+  else                      kind = '.dismissible';
+  return 'EBVisualPopup(\n    title: "Put the title here",\n    description: "Add description here.",\n    heroImage: Image("illustration"),\n    primary: EBButton("' + card.cta + '") { /* dismiss */ }\n)\n.ebKind(' + kind + ')';
+}
+
+function buildComposeSnippet(type, card) {
+  var kind;
+  if (type === 'default')  kind = 'EBVisualPopupKind.SingleCTA';
+  else if (type === '2cta') kind = 'EBVisualPopupKind.DualCTA';
+  else                      kind = 'EBVisualPopupKind.Dismissible';
+  return 'EBVisualPopup(\n    kind = ' + kind + ',\n    title = "Put the title here",\n    description = "Add description here.",\n    heroImage = painterResource(R.drawable.illustration),\n    primary = { EBButton("' + card.cta + '", onClick = { /* dismiss */ }) }\n)';
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _vpSpecCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update SVG preview — locate by id `vp-preview-${cardStyle}` */
+  var previewEl = document.getElementById('vp-preview-' + cardStyle);
+  if (previewEl) previewEl.innerHTML = _vpBuildSvg(card.type, card.cta);
+
+  /* Update Properties readouts via [data-sp="${cardStyle}-${prop}"] */
+  var spEl = document.querySelector('[data-sp="' + cardStyle + '-' + prop + '"]');
+  if (spEl) spEl.textContent = value;
+
+  /* Update DEV code — locate via [data-code-content="${cardStyle}"]. */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+window.updateSpecCard = updateSpecCard;
+
 function _vpInitSpecCards() {
-  ['default', '2cta', 'version2'].forEach(function(t) {
-    var el = document.getElementById('vp-preview-' + t);
-    if (el) el.innerHTML = _vpBuildSvg(t);
+  Object.keys(_vpSpecCards).forEach(function(key) {
+    var card = _vpSpecCards[key];
+    var el = document.getElementById('vp-preview-' + key);
+    if (el) el.innerHTML = _vpBuildSvg(card.type, card.cta);
   });
 }
 
@@ -112,3 +176,8 @@ if (document.readyState === 'loading') {
 } else {
   _vpInit();
 }
+
+/* ── Re-init after Astro view-transition swaps ─────────────── */
+(function(){
+  document.addEventListener('astro:page-load', _vpInit);
+})();

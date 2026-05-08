@@ -1,4 +1,35 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/overlay.js`.
+const overlayDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Surface',
+        prop: 'surface',
+        defaultValue: 'sheet',
+        options: [
+          { value: 'none', label: 'none' },
+          { value: 'sheet', label: 'sheet' },
+          { value: 'dialog', label: 'dialog' },
+        ],
+      },
+      {
+        label: 'Background',
+        prop: 'bg',
+        defaultValue: 'light',
+        options: [
+          { value: 'light', label: 'light' },
+          { value: 'dark', label: 'dark' },
+          { value: 'image', label: 'image' },
+        ],
+      },
+    ],
+  },
+];
 
 export const overlay: ComponentData = {
   "meta": {
@@ -146,10 +177,12 @@ export const overlay: ComponentData = {
     "specCards": [
       {
         "cardKey": "default-·-strong",
+        "demoKey": "strong",
+        "demoControls": overlayDemoControls,
         "title": "Default · Strong",
         "node": "47:329691",
         "description": "The only current variant — a flat translucent fill at 56% opacity of the overlay color. Drop it behind any sheet, dialog, or drawer.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"overlay-spec-preview\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"overlay-spec-preview\"><div class=\"eb-preview-overlay-stage\"><div class=\"eb-preview-overlay-stage__content\"><div class=\"eb-preview-overlay-stage__content-title eb-preview\">Activity</div><div class=\"eb-preview-overlay-stage__card\"></div><div class=\"eb-preview-overlay-stage__card\"></div><div class=\"eb-preview-overlay-stage__card\"></div><div class=\"eb-preview-overlay-stage__card\"></div></div><div class=\"eb-preview-overlay-stage__dim\"></div><div class=\"eb-preview-overlay-stage__sheet eb-preview\"><div class=\"eb-preview-overlay-stage__handle\"></div><p class=\"eb-preview-overlay-stage__sheet-title\">Send Money</p><p class=\"eb-preview-overlay-stage__sheet-body\">Choose a recipient from your contacts or enter a mobile number.</p><div class=\"eb-preview-overlay-stage__sheet-btn\">Continue</div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -174,6 +207,18 @@ export const overlay: ComponentData = {
                 "key": "Inner layer",
                 "value": "dim",
                 "mono": true
+              },
+              {
+                "key": "Surface above",
+                "value": "sheet",
+                "mono": true,
+                "prop": "surface"
+              },
+              {
+                "key": "Background tone",
+                "value": "light",
+                "mono": true,
+                "prop": "bg"
               }
             ]
           },
@@ -236,7 +281,15 @@ export const overlay: ComponentData = {
         "compose": "<span class=\"syn-type\">EBOverlay</span><span class=\"syn-punc\">(</span>\n    visible <span class=\"syn-eq\">=</span> showSheet<span class=\"syn-punc\">,</span>\n    onDismiss <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    strength <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBOverlayStrength</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Strong</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-cmt\">// content shown above the scrim</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      buildStatelessColorsTable({
+        title: 'Scrim — Colors',
+        description: 'Single-purpose dimming layer placed under modal/sheet surfaces.',
+        rows: [
+          { role: 'Scrim', token: 'bg/color-bg-overlay-strong', value: '#020E22 @ 56%' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

@@ -56,7 +56,7 @@ export const actionListCounter: ComponentData = {
   "overview": {
     "inContextNote": "Used where a row needs to surface a pending count alongside the action — inbox folders, notification categories, or settings entries with outstanding items.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"240\" height=\"140\" viewBox=\"0 0 240 140\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <rect x=\"20\" y=\"8\" width=\"200\" height=\"124\" rx=\"12\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <text x=\"120\" y=\"24\" text-anchor=\"middle\" fill=\"currentColor\" font-size=\"9\" font-weight=\"700\" font-family=\"system-ui\" opacity=\".7\">Inbox</text>\n          \n          <rect x=\"32\" y=\"36\" width=\"176\" height=\"24\" rx=\"5\" fill=\"#FFF\" stroke=\"#E8EEF2\" stroke-width=\"1\"></rect>\n          <circle cx=\"44\" cy=\"48\" r=\"6\" fill=\"#C2C6CF\"></circle>\n          <text x=\"56\" y=\"51\" fill=\"#005CE5\" font-size=\"8\" font-weight=\"700\" font-family=\"system-ui\">Notifications</text>\n          <path d=\"M172 45 176 48 172 51\" stroke=\"#005CE5\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path>\n          <rect x=\"182\" y=\"42\" width=\"18\" height=\"12\" rx=\"6\" fill=\"#EEF2F9\"></rect>\n          <text x=\"191\" y=\"51\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"7\" font-weight=\"700\" font-family=\"system-ui\">5</text>\n          \n          <rect x=\"32\" y=\"68\" width=\"176\" height=\"24\" rx=\"5\" fill=\"#FFF\" stroke=\"#E8EEF2\" stroke-width=\"1\"></rect>\n          <circle cx=\"44\" cy=\"80\" r=\"6\" fill=\"#C2C6CF\"></circle>\n          <text x=\"56\" y=\"83\" fill=\"#005CE5\" font-size=\"8\" font-weight=\"700\" font-family=\"system-ui\">Promos</text>\n          <path d=\"M172 77 176 80 172 83\" stroke=\"#005CE5\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path>\n          <rect x=\"182\" y=\"74\" width=\"18\" height=\"12\" rx=\"6\" fill=\"#EEF2F9\"></rect>\n          <text x=\"191\" y=\"83\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"7\" font-weight=\"700\" font-family=\"system-ui\">2</text>\n          \n          <rect x=\"32\" y=\"100\" width=\"176\" height=\"24\" rx=\"5\" fill=\"#FFF\" stroke=\"#E8EEF2\" stroke-width=\"1\"></rect>\n          <circle cx=\"44\" cy=\"112\" r=\"6\" fill=\"#C2C6CF\"></circle>\n          <text x=\"56\" y=\"115\" fill=\"#C2CFE5\" font-size=\"8\" font-weight=\"700\" font-family=\"system-ui\">Archive</text>\n          <path d=\"M172 109 176 112 172 115\" stroke=\"#9BC5FD\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path>\n          <rect x=\"182\" y=\"106\" width=\"18\" height=\"12\" rx=\"6\" fill=\"#EEF2F9\"></rect>\n          <text x=\"191\" y=\"115\" text-anchor=\"middle\" fill=\"#C2CFE5\" font-size=\"7\" font-weight=\"700\" font-family=\"system-ui\">0</text>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"litc-demo-preview\"><div style=\"display:flex;align-items:center;gap:12px;width:360px;height:56px;padding:11px 12px;background:#FFF;border-radius:6px;box-shadow:0 1px 3px 0 #E8EEF2C9;box-sizing:border-box;\"><div style=\"width:32px;height:32px;border-radius:999px;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1;min-width:0;color:#005CE5;font-family:'BarkAda',system-ui;font-weight:700;font-size:18px;line-height:18px;letter-spacing:0.25px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;\">Notifications</div><div style=\"display:flex;align-items:center;gap:8px;flex-shrink:0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M6 4l4 4-4 4\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path></svg><span style=\"display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 8px;border-radius:999px;background:#EEF2F9;color:#072592;font-family:'HeyMeow Rnd',system-ui;font-weight:700;font-size:14px;line-height:14px;letter-spacing:0.25px;\">5</span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Density</span><select class=\"demo-panel-select\" id=\"litc-demo-density\" onchange=\"updateLitcDemo()\"><option value=\"Compact\" selected=\"\">Compact</option><option value=\"Expanded\">Expanded</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" id=\"litc-demo-state\" onchange=\"updateLitcDemo()\"><option value=\"Default\" selected=\"\">Default</option><option value=\"Disabled\">Disabled</option><option value=\"Loading\">Loading</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">label</span><input type=\"text\" class=\"demo-panel-select demo-panel-input\" id=\"litc-demo-label\" value=\"Notifications\" oninput=\"updateLitcDemo()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">count</span><input type=\"text\" class=\"demo-panel-select demo-panel-input\" id=\"litc-demo-count\" value=\"5\" oninput=\"updateLitcDemo()\"></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"litc-demo-preview\"><div style=\"display:flex;align-items:center;gap:12px;width:360px;height:56px;padding:11px 12px;background:#FFF;border-radius:6px;box-shadow:0 1px 3px 0 #E8EEF2C9;box-sizing:border-box;\"><div style=\"width:32px;height:32px;border-radius:999px;background:#C2C6CF;flex-shrink:0;\"></div><div style=\"flex:1;min-width:0;color:#005CE5;font-family:'Proxima Soft',system-ui;font-weight:700;font-size:18px;line-height:20px;letter-spacing:0.25px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;\">Notifications</div><span style=\"display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 8px;border-radius:999px;background:#EEF2F9;color:#072592;font-family:'Proxima Soft',system-ui;font-weight:700;font-size:14px;line-height:14px;letter-spacing:0.25px;flex-shrink:0;\">5</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\" aria-hidden=\"true\"><path d=\"M10 6l6 6-6 6\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path></svg></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Density</span><select class=\"demo-panel-select\" id=\"litc-demo-density\" onchange=\"updateLitcDemo()\"><option value=\"Compact\" selected=\"\">Compact</option><option value=\"Expanded\">Expanded</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" id=\"litc-demo-state\" onchange=\"updateLitcDemo()\"><option value=\"Default\" selected=\"\">Default</option><option value=\"Disabled\">Disabled</option><option value=\"Loading\">Loading</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">label</span><input type=\"text\" class=\"demo-panel-select demo-panel-input\" id=\"litc-demo-label\" value=\"Notifications\" oninput=\"updateLitcDemo()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">count</span><input type=\"text\" class=\"demo-panel-select demo-panel-input\" id=\"litc-demo-count\" value=\"5\" oninput=\"updateLitcDemo()\"></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -220,9 +220,13 @@ export const actionListCounter: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Row height",   "value": "56px",   "mono": true },
+              { "key": "Row height", "value": "56px", "mono": true,
+                "variants": { "density:Expanded": { "value": "64px" } }
+              },
               { "key": "Padding H",    "value": "12px",   "mono": true },
-              { "key": "Padding V",    "value": "11px",   "mono": true },
+              { "key": "Padding V", "value": "11px", "mono": true,
+                "variants": { "density:Expanded": { "value": "15px" } }
+              },
               { "key": "Corner radius","value": "6px",    "mono": true },
               { "key": "Chevron size", "value": "24 × 24", "mono": true }
             ]
@@ -272,9 +276,13 @@ export const actionListCounter: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Row height",   "value": "64px",   "mono": true },
+              { "key": "Row height", "value": "64px", "mono": true,
+                "variants": { "density:Compact": { "value": "56px" } }
+              },
               { "key": "Padding H",    "value": "12px",   "mono": true },
-              { "key": "Padding V",    "value": "15px",   "mono": true },
+              { "key": "Padding V", "value": "15px", "mono": true,
+                "variants": { "density:Compact": { "value": "11px" } }
+              },
               { "key": "Corner radius","value": "6px",    "mono": true },
               { "key": "Chevron size", "value": "24 × 24", "mono": true }
             ]
@@ -324,9 +332,13 @@ export const actionListCounter: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Row height",   "value": "56px",   "mono": true },
+              { "key": "Row height", "value": "56px", "mono": true,
+                "variants": { "density:Expanded": { "value": "64px" } }
+              },
               { "key": "Padding H",    "value": "12px",   "mono": true },
-              { "key": "Padding V",    "value": "11px",   "mono": true },
+              { "key": "Padding V", "value": "11px", "mono": true,
+                "variants": { "density:Expanded": { "value": "15px" } }
+              },
               { "key": "Corner radius","value": "6px",    "mono": true },
               { "key": "Chevron size", "value": "24 × 24", "mono": true }
             ]
@@ -376,9 +388,13 @@ export const actionListCounter: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Row height",   "value": "64px",   "mono": true },
+              { "key": "Row height", "value": "64px", "mono": true,
+                "variants": { "density:Compact": { "value": "56px" } }
+              },
               { "key": "Padding H",    "value": "12px",   "mono": true },
-              { "key": "Padding V",    "value": "15px",   "mono": true },
+              { "key": "Padding V", "value": "15px", "mono": true,
+                "variants": { "density:Compact": { "value": "11px" } }
+              },
               { "key": "Corner radius","value": "6px",    "mono": true },
               { "key": "Chevron size", "value": "24 × 24", "mono": true }
             ]
@@ -426,9 +442,13 @@ export const actionListCounter: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Row height",   "value": "56px",   "mono": true },
+              { "key": "Row height", "value": "56px", "mono": true,
+                "variants": { "density:Expanded": { "value": "64px" } }
+              },
               { "key": "Padding H",    "value": "12px",   "mono": true },
-              { "key": "Padding V",    "value": "11px",   "mono": true },
+              { "key": "Padding V", "value": "11px", "mono": true,
+                "variants": { "density:Expanded": { "value": "16px" } }
+              },
               { "key": "Corner radius","value": "6px",    "mono": true },
               { "key": "Chevron size", "value": "24 × 24", "mono": true }
             ]
@@ -476,9 +496,13 @@ export const actionListCounter: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Row height",   "value": "64px",   "mono": true },
+              { "key": "Row height", "value": "64px", "mono": true,
+                "variants": { "density:Compact": { "value": "56px" } }
+              },
               { "key": "Padding H",    "value": "12px",   "mono": true },
-              { "key": "Padding V",    "value": "16px",   "mono": true },
+              { "key": "Padding V", "value": "16px", "mono": true,
+                "variants": { "density:Compact": { "value": "11px" } }
+              },
               { "key": "Corner radius","value": "6px",    "mono": true },
               { "key": "Chevron size", "value": "24 × 24", "mono": true }
             ]

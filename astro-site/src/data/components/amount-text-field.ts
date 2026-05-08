@@ -225,14 +225,14 @@ export const amountTextField: ComponentData = {
             ]
           },
           {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Border (underline)", "value": "#445C85", "token": "amount-text-field/filled/border" },
-              { "key": "Label",              "value": "#0A2757", "token": "amount-text-field/filled/label" },
-              { "key": "Amount",             "value": "#0A2757", "token": "amount-text-field/filled/label-amount" },
-              { "key": "Subtext",            "value": "#0A2757", "token": "amount-text-field/filled/subtext" }
-            ]
+            label: 'Colors',
+            slug: 'colors',
+            rows: [
+              { key: 'Border (underline)', value: '#445C85', token: 'amount-text-field/filled/border',       variants: { 'state:Default': { value: '#ADBDDC', token: 'amount-text-field/default/border' }, 'state:Filled': { value: '#445C85', token: 'amount-text-field/filled/border' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/border' } } },
+              { key: 'Label',              value: '#0A2757', token: 'amount-text-field/filled/label',        variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/label' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label' }, 'state:Error': { value: '#0A2757', token: 'amount-text-field/error/label' } } },
+              { key: 'Amount',             value: '#0A2757', token: 'amount-text-field/filled/label-amount', variants: { 'state:Default': { value: '#90A8D0', token: 'amount-text-field/default/label-amount' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label-amount' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/label-amount' } } },
+              { key: 'Subtext',            value: '#0A2757', token: 'amount-text-field/filled/subtext',      variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/subtext' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/subtext' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/subtext' } } },
+            ],
           },
           {
             "label": "Layout",
@@ -284,10 +284,10 @@ export const amountTextField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Border (underline)", "value": "#ADBDDC", "token": "amount-text-field/default/border" },
-              { "key": "Label",              "value": "#0A2757", "token": "amount-text-field/default/label" },
-              { "key": "Amount",             "value": "#90A8D0", "token": "amount-text-field/default/label-amount" },
-              { "key": "Subtext",            "value": "#0A2757", "token": "amount-text-field/default/subtext" }
+              { key: 'Border (underline)', value: '#ADBDDC', token: 'amount-text-field/default/border',       variants: { 'state:Default': { value: '#ADBDDC', token: 'amount-text-field/default/border' }, 'state:Filled': { value: '#445C85', token: 'amount-text-field/filled/border' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/border' } } },
+              { key: 'Label',              value: '#0A2757', token: 'amount-text-field/default/label',        variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/label' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label' }, 'state:Error': { value: '#0A2757', token: 'amount-text-field/error/label' } } },
+              { key: 'Amount',             value: '#90A8D0', token: 'amount-text-field/default/label-amount', variants: { 'state:Default': { value: '#90A8D0', token: 'amount-text-field/default/label-amount' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label-amount' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/label-amount' } } },
+              { key: 'Subtext',            value: '#0A2757', token: 'amount-text-field/default/subtext',      variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/subtext' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/subtext' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/subtext' } } },
             ]
           },
           {
@@ -340,10 +340,10 @@ export const amountTextField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Border (underline)", "value": "#D61B2C", "token": "amount-text-field/error/border" },
-              { "key": "Label",              "value": "#0A2757", "token": "amount-text-field/error/label" },
-              { "key": "Amount",             "value": "#D61B2C", "token": "amount-text-field/error/label-amount" },
-              { "key": "Subtext",            "value": "#D61B2C", "token": "amount-text-field/error/subtext" }
+              { key: 'Border (underline)', value: '#D61B2C', token: 'amount-text-field/error/border',       variants: { 'state:Default': { value: '#ADBDDC', token: 'amount-text-field/default/border' }, 'state:Filled': { value: '#445C85', token: 'amount-text-field/filled/border' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/border' } } },
+              { key: 'Label',              value: '#0A2757', token: 'amount-text-field/error/label',        variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/label' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label' }, 'state:Error': { value: '#0A2757', token: 'amount-text-field/error/label' } } },
+              { key: 'Amount',             value: '#D61B2C', token: 'amount-text-field/error/label-amount', variants: { 'state:Default': { value: '#90A8D0', token: 'amount-text-field/default/label-amount' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label-amount' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/label-amount' } } },
+              { key: 'Subtext',            value: '#D61B2C', token: 'amount-text-field/error/subtext',      variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/subtext' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/subtext' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/subtext' } } },
             ]
           },
           {
@@ -396,11 +396,11 @@ export const amountTextField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Border (underline)", "value": "#445C85", "token": "amount-text-field/filled/border" },
-              { "key": "Label",              "value": "#0A2757", "token": "amount-text-field/filled/label" },
-              { "key": "Amount",             "value": "#0A2757", "token": "amount-text-field/filled/label-amount" },
-              { "key": "Peso glyph",         "value": "#0A2757", "token": "amount-text-field/filled/icon-currency" },
-              { "key": "Subtext",            "value": "#0A2757", "token": "amount-text-field/filled/subtext" }
+              { key: 'Border (underline)', value: '#445C85', token: 'amount-text-field/filled/border',        variants: { 'state:Default': { value: '#ADBDDC', token: 'amount-text-field/default/border' }, 'state:Filled': { value: '#445C85', token: 'amount-text-field/filled/border' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/border' } } },
+              { key: 'Label',              value: '#0A2757', token: 'amount-text-field/filled/label',         variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/label' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label' }, 'state:Error': { value: '#0A2757', token: 'amount-text-field/error/label' } } },
+              { key: 'Amount',             value: '#0A2757', token: 'amount-text-field/filled/label-amount',  variants: { 'state:Default': { value: '#90A8D0', token: 'amount-text-field/default/label-amount' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label-amount' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/label-amount' } } },
+              { key: 'Peso glyph',         value: '#0A2757', token: 'amount-text-field/filled/icon-currency', variants: { 'state:Default': { value: '#D7E0EF', token: 'amount-text-field/default/icon-currency' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/icon-currency' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/icon-currency' } } },
+              { key: 'Subtext',            value: '#0A2757', token: 'amount-text-field/filled/subtext',       variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/subtext' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/subtext' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/subtext' } } },
             ]
           },
           {
@@ -453,11 +453,11 @@ export const amountTextField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Border (underline)", "value": "#ADBDDC", "token": "amount-text-field/default/border" },
-              { "key": "Label",              "value": "#0A2757", "token": "amount-text-field/default/label" },
-              { "key": "Amount",             "value": "#90A8D0", "token": "amount-text-field/default/label-amount" },
-              { "key": "Peso glyph",         "value": "#D7E0EF", "token": "amount-text-field/default/icon-currency" },
-              { "key": "Subtext",            "value": "#0A2757", "token": "amount-text-field/default/subtext" }
+              { key: 'Border (underline)', value: '#ADBDDC', token: 'amount-text-field/default/border',        variants: { 'state:Default': { value: '#ADBDDC', token: 'amount-text-field/default/border' }, 'state:Filled': { value: '#445C85', token: 'amount-text-field/filled/border' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/border' } } },
+              { key: 'Label',              value: '#0A2757', token: 'amount-text-field/default/label',         variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/label' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label' }, 'state:Error': { value: '#0A2757', token: 'amount-text-field/error/label' } } },
+              { key: 'Amount',             value: '#90A8D0', token: 'amount-text-field/default/label-amount',  variants: { 'state:Default': { value: '#90A8D0', token: 'amount-text-field/default/label-amount' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label-amount' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/label-amount' } } },
+              { key: 'Peso glyph',         value: '#D7E0EF', token: 'amount-text-field/default/icon-currency', variants: { 'state:Default': { value: '#D7E0EF', token: 'amount-text-field/default/icon-currency' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/icon-currency' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/icon-currency' } } },
+              { key: 'Subtext',            value: '#0A2757', token: 'amount-text-field/default/subtext',       variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/subtext' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/subtext' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/subtext' } } },
             ]
           },
           {
@@ -510,11 +510,11 @@ export const amountTextField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Border (underline)", "value": "#D61B2C", "token": "amount-text-field/error/border" },
-              { "key": "Label",              "value": "#0A2757", "token": "amount-text-field/error/label" },
-              { "key": "Amount",             "value": "#D61B2C", "token": "amount-text-field/error/label-amount" },
-              { "key": "Peso glyph",         "value": "#D61B2C", "token": "amount-text-field/error/icon-currency" },
-              { "key": "Subtext",            "value": "#D61B2C", "token": "amount-text-field/error/subtext" }
+              { key: 'Border (underline)', value: '#D61B2C', token: 'amount-text-field/error/border',        variants: { 'state:Default': { value: '#ADBDDC', token: 'amount-text-field/default/border' }, 'state:Filled': { value: '#445C85', token: 'amount-text-field/filled/border' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/border' } } },
+              { key: 'Label',              value: '#0A2757', token: 'amount-text-field/error/label',         variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/label' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label' }, 'state:Error': { value: '#0A2757', token: 'amount-text-field/error/label' } } },
+              { key: 'Amount',             value: '#D61B2C', token: 'amount-text-field/error/label-amount',  variants: { 'state:Default': { value: '#90A8D0', token: 'amount-text-field/default/label-amount' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label-amount' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/label-amount' } } },
+              { key: 'Peso glyph',         value: '#D61B2C', token: 'amount-text-field/error/icon-currency', variants: { 'state:Default': { value: '#D7E0EF', token: 'amount-text-field/default/icon-currency' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/icon-currency' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/icon-currency' } } },
+              { key: 'Subtext',            value: '#D61B2C', token: 'amount-text-field/error/subtext',       variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/subtext' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/subtext' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/subtext' } } },
             ]
           },
           {

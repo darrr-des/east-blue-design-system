@@ -29,7 +29,14 @@ for (const f of files) {
   const m = raw.match(/= ({[\s\S]*});\s*$/);
   if (!m) continue;
   let data;
-  try { data = (new Function('return ' + m[1]))(); } catch { continue; }
+  try {
+    /* Eval the export object inside a `with` Proxy so any external identifier
+       (e.g. `accordionDemoControls`) resolves to `[]` instead of throwing.
+       This lets us parse files that reference helper consts declared above
+       the export. */
+    const proxyEnv = new Proxy({}, { get: () => [], has: () => true });
+    data = (new Function('proxy', `with (proxy) { return ${m[1]}; }`))(proxyEnv);
+  } catch { continue; }
   const cards = data.style?.specCards || [];
 
   let fullCnt = 0;

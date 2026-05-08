@@ -12,6 +12,27 @@
   'use strict';
 
   // ── Sidebar user info + logout (driven by AuthGate's eb:auth-ready) ──
+  function _initialsFor(nameOrEmail) {
+    var s = String(nameOrEmail || '').trim();
+    if (!s) return '?';
+    if (s.indexOf('@') > -1) s = s.split('@')[0].replace(/[._-]+/g, ' ');
+    var parts = s.split(/\s+/).filter(Boolean);
+    if (parts.length === 0) return '?';
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
+  function _initialsAvatar(nameOrEmail) {
+    var initials = _initialsFor(nameOrEmail);
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">' +
+        '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
+          '<stop offset="0%" stop-color="#005CE5"/><stop offset="100%" stop-color="#2340A9"/>' +
+        '</linearGradient></defs>' +
+        '<circle cx="20" cy="20" r="20" fill="url(#g)"/>' +
+        '<text x="20" y="26" font-family="-apple-system,system-ui,sans-serif" font-size="15" font-weight="600" fill="white" text-anchor="middle">' + initials + '</text>' +
+      '</svg>'
+    );
+  }
   function paintSidebarUser(user) {
     if (!user) return;
     var box = document.getElementById('sidebar-user');
@@ -21,14 +42,35 @@
     if (!box || !nameEl || !emailEl || !avatarEl) return;
     nameEl.textContent = user.name || user.email || 'Signed in';
     emailEl.textContent = user.email || '';
-    if (user.picture) {
-      avatarEl.src = user.picture;
-      avatarEl.style.display = 'block';
-    } else {
-      avatarEl.style.display = 'none';
-    }
+    var fallback = _initialsAvatar(user.name || user.email);
+    avatarEl.onerror = function () {
+      avatarEl.onerror = null;
+      avatarEl.src = fallback;
+    };
+    avatarEl.src = user.picture || fallback;
+    avatarEl.style.display = 'block';
     box.style.display = 'flex';
   }
+  /* Fake user fallback — populates the sidebar profile pill while the
+     auth backend is incomplete. Real /auth/me data from AuthGate
+     overrides this whenever the backend ships and returns a session. */
+  if (!window.__ebUser) {
+    var fakeAvatar = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">' +
+        '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
+          '<stop offset="0%" stop-color="#005CE5"/><stop offset="100%" stop-color="#2340A9"/>' +
+        '</linearGradient></defs>' +
+        '<circle cx="20" cy="20" r="20" fill="url(#g)"/>' +
+        '<text x="20" y="26" font-family="-apple-system,system-ui,sans-serif" font-size="15" font-weight="600" fill="white" text-anchor="middle">FD</text>' +
+      '</svg>'
+    );
+    window.__ebUser = {
+      name: 'Frost Designers',
+      email: 'designers@frostdesigngroup.com',
+      picture: fakeAvatar,
+    };
+  }
+
   // Paint immediately if AuthGate already cached it on window.__ebUser
   if (window.__ebUser) paintSidebarUser(window.__ebUser);
   // Paint when AuthGate finishes its check
@@ -48,12 +90,78 @@
     window.location.href = '/login';
   };
 
+  /* Family open/close state — persist to localStorage so user-opened
+     sections survive navigation (the server-render only opens the family
+     containing the active item, so without persistence any other open
+     family gets closed on every navigation). */
+  var SIDEBAR_OPEN_KEY = 'eb-sidebar-open-sections';
+  function loadOpenFamilies() {
+    try { return JSON.parse(localStorage.getItem(SIDEBAR_OPEN_KEY) || '{}'); }
+    catch (e) { return {}; }
+  }
+  function saveOpenFamilies(map) {
+    try { localStorage.setItem(SIDEBAR_OPEN_KEY, JSON.stringify(map)); } catch (e) {}
+  }
+  function familyKey(btn) {
+    return (btn && btn.textContent || '').trim();
+  }
+
+  /* Drift fix — preserve sidebar scrollTop across view-transition swaps
+     and stop the browser's focus auto-scroll. The browser input chain is
+     pointerdown → focus → click; capturing on pointerdown grabs the true
+     pre-click scrollTop, focusin re-pins it before the auto-scroll lands,
+     after-swap restores it before paint on the new page. */
+  var SIDEBAR_SCROLL_KEY = 'eb-sidebar-scroll';
+  function snapshotNav(e) {
+    var nav = document.querySelector('.sidebar-nav');
+    if (!nav) return;
+    var link = e.target && e.target.closest && e.target.closest('.sidebar-nav a, .sidebar-nav button');
+    if (!link) return;
+    nav.classList.add('nav-no-anim');
+    try { sessionStorage.setItem(SIDEBAR_SCROLL_KEY, String(nav.scrollTop)); } catch (e2) {}
+  }
+  document.addEventListener('pointerdown', snapshotNav, true);
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    snapshotNav(e);
+  }, true);
+  /* Cancel the focus auto-scroll: re-pin scrollTop the moment a sidebar
+     link receives focus. */
+  document.addEventListener('focusin', function (e) {
+    var nav = document.querySelector('.sidebar-nav');
+    if (!nav) return;
+    if (!e.target.closest || !e.target.closest('.sidebar-nav a, .sidebar-nav button')) return;
+    try {
+      var stored = sessionStorage.getItem(SIDEBAR_SCROLL_KEY);
+      if (stored !== null) nav.scrollTop = parseInt(stored, 10) || 0;
+    } catch (e2) {}
+  }, true);
+  /* Restore scroll the moment the new DOM is in place — before paint —
+     so the user never sees the nav at scrollTop=0. */
+  document.addEventListener('astro:after-swap', function () {
+    var nav = document.querySelector('.sidebar-nav');
+    if (!nav) return;
+    nav.classList.add('nav-no-anim');
+    try {
+      var stored = sessionStorage.getItem(SIDEBAR_SCROLL_KEY);
+      if (stored !== null) nav.scrollTop = parseInt(stored, 10) || 0;
+    } catch (e) {}
+  });
+
   // ── Sidebar nav section toggle ───────────────────────────────────────
   window.toggleNavSection = function (btn) {
     var list = btn.nextElementSibling;
     if (!list) return;
     var open = list.classList.toggle('open');
     btn.classList.toggle('open', open);
+    /* Remember the user's choice. */
+    var map = loadOpenFamilies();
+    var key = familyKey(btn);
+    if (key) {
+      if (open) map[key] = true;
+      else delete map[key];
+      saveOpenFamilies(map);
+    }
   };
 
   // ── Components top-level expand/collapse ────────────────────────────
@@ -91,30 +199,164 @@
   function syncSidebarActive() {
     var nav = document.querySelector('.sidebar-nav');
     if (!nav) return;
+    /* Suppress all sidebar transitions while we sync state. Without this,
+       any .open class change replays the section-list grid expand on
+       every navigation. Two RAFs lets the class settle, then we re-enable
+       transitions for user-initiated toggles. */
+    nav.classList.add('nav-no-anim');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { nav.classList.remove('nav-no-anim'); });
+    });
     var path = window.location.pathname.replace(/\/$/, '');
     nav.querySelectorAll('.nav-comp').forEach(function (a) {
       var href = (a.getAttribute('href') || '').replace(/\/$/, '');
       a.classList.toggle('active', href === path);
     });
-    // Auto-open the section containing the now-active item
-    nav.querySelectorAll('.nav-section-list').forEach(function (list) {
-      var hasActive = list.querySelector('.nav-comp.active');
+    /* Restore each family's open state from two sources:
+         1. Section contains the active item → open AND remember.
+         2. User previously toggled it open (localStorage) → open.
+       Without (2), navigating to a different family would silently
+       close any user-expanded sections — the bug we just hit. */
+    var openMap = loadOpenFamilies();
+    var dirty = false;
+    nav.querySelectorAll('.nav-family-toggle + .nav-section-list').forEach(function (list) {
       var btn = list.previousElementSibling;
-      if (hasActive) {
+      var key = familyKey(btn);
+      var hasActive = !!list.querySelector('.nav-comp.active');
+      var userOpened = key && openMap[key];
+      if (hasActive || userOpened) {
         list.classList.add('open');
         if (btn) btn.classList.add('open');
+        if (hasActive && key && !openMap[key]) {
+          openMap[key] = true;
+          dirty = true;
+        }
       }
     });
-    // If the active item is offscreen, scroll it into view (no smooth — instant)
+    if (dirty) saveOpenFamilies(openMap);
+    /* If a click captured a scroll position, restore it (consumes the
+       sessionStorage key). Otherwise — direct URL load — bring the
+       active item into view minimally. */
+    var restored = false;
+    try {
+      var stored = sessionStorage.getItem(SIDEBAR_SCROLL_KEY);
+      if (stored !== null) {
+        nav.scrollTop = parseInt(stored, 10) || 0;
+        sessionStorage.removeItem(SIDEBAR_SCROLL_KEY);
+        restored = true;
+      }
+    } catch (e) {}
+    if (restored) return;
     var active = nav.querySelector('.nav-comp.active');
     if (active) {
       var navRect = nav.getBoundingClientRect();
       var activeRect = active.getBoundingClientRect();
-      if (activeRect.top < navRect.top || activeRect.bottom > navRect.bottom) {
-        active.scrollIntoView({ block: 'center' });
+      var fullyVisible = activeRect.top >= navRect.top && activeRect.bottom <= navRect.bottom;
+      if (!fullyVisible) {
+        active.scrollIntoView({ block: 'nearest', inline: 'nearest' });
       }
     }
   }
+
+  /* ── Plan A: dynamic spec-detail rows ────────────────────────────────
+     Each `[data-row-variants]` element is an in-card spec row that can
+     re-render when the user changes a demo control. The data attribute
+     holds a JSON map of `prop:value` keys to row overrides:
+       { "cta:1": { value: "212px" }, "cta:2-vertical": { value: "270px" } }
+     We track per-card state in window._specCards (already maintained
+     by every component's demo script) and patch all rows that match.
+
+     Compound keys (e.g. `type:default|cta:1`) are supported — we try
+     multi-prop matches first, then single-prop fallback. */
+  function _patchSpecCardRows(cardKey) {
+    var card = window._specCards && window._specCards[cardKey];
+    if (!card) return;
+    var rows = document.querySelectorAll(
+      '[data-row-card="' + cardKey + '"][data-row-variants]'
+    );
+    rows.forEach(function (cell) {
+      var json = cell.getAttribute('data-row-variants');
+      var variants;
+      try { variants = JSON.parse(json); } catch (e) { return; }
+      if (!variants) return;
+      /* Try compound match (all props joined) first, then each single
+         prop:value, then fall through to defaults. */
+      /* Match strategy: a variant key like "state:Primary|level:Heavy"
+         applies whenever EVERY pair in the key matches the card's
+         current state. The card may have additional props (e.g. `type`)
+         that don't appear in the key — those are ignored. The most
+         specific match (most pairs) wins, so partial keys can coexist
+         with full ones in the same variants map. */
+      var matched = null;
+      var matchedSpecificity = -1;
+      Object.keys(variants).forEach(function (variantKey) {
+        var pairs = variantKey.split('|');
+        for (var i = 0; i < pairs.length; i++) {
+          var idx = pairs[i].indexOf(':');
+          if (idx < 0) return;
+          var prop = pairs[i].slice(0, idx);
+          var val = pairs[i].slice(idx + 1);
+          if (card[prop] !== val) return;
+        }
+        if (pairs.length > matchedSpecificity) {
+          matched = variants[variantKey];
+          matchedSpecificity = pairs.length;
+        }
+      });
+      if (!matched) {
+        /* Restore defaults from data-row-default-* attributes. */
+        var def = cell.getAttribute('data-row-default');
+        if (def !== null) {
+          var hex = cell.querySelector('.spec-prop-hex');
+          if (hex) hex.textContent = def;
+          var swatch = cell.querySelector('.spec-swatch');
+          if (swatch) swatch.style.background = def;
+        }
+        return;
+      }
+      /* Cache the default once so we can revert later. */
+      if (!cell.hasAttribute('data-row-default')) {
+        var hexEl = cell.querySelector('.spec-prop-hex');
+        if (hexEl) cell.setAttribute('data-row-default', hexEl.textContent || '');
+      }
+      var hex2 = cell.querySelector('.spec-prop-hex');
+      if (hex2 && typeof matched.value !== 'undefined') {
+        hex2.textContent = matched.value;
+      }
+      var swatch2 = cell.querySelector('.spec-swatch');
+      if (swatch2 && typeof matched.value === 'string' && matched.value.trim().charAt(0) === '#') {
+        swatch2.style.background = matched.value;
+      }
+    });
+  }
+  window._patchSpecCardRows = _patchSpecCardRows;
+
+  /* Wrap window.updateSpecCard so every component's demo script
+     automatically triggers our row patcher in addition to its own
+     re-render logic. */
+  function _wrapUpdateSpecCard() {
+    var existing = window.updateSpecCard;
+    if (!existing || existing.__ebPatched) return;
+    var wrapper = function (cardKey, prop, value) {
+      var result = existing.call(this, cardKey, prop, value);
+      try { _patchSpecCardRows(cardKey); } catch (e) {}
+      return result;
+    };
+    wrapper.__ebPatched = true;
+    window.updateSpecCard = wrapper;
+  }
+  /* The per-component demo script defines window.updateSpecCard AFTER
+     this script loads. Wrap on each Astro page-load to catch it. */
+  document.addEventListener('astro:page-load', function () {
+    /* Defer one frame so the per-component script has executed. */
+    requestAnimationFrame(function () {
+      _wrapUpdateSpecCard();
+      /* Initial patch — apply variants based on default state. */
+      if (window._specCards) {
+        Object.keys(window._specCards).forEach(_patchSpecCardRows);
+      }
+    });
+  });
 
   // ── DES / DEV toggle ─────────────────────────────────────────────────
   window.toggleSpecMode = function (cardKey, toggleEl) {

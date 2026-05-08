@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
 
 // Per-card demo controls — wired to `updateSpecCard(demoKey, prop, value)`
 // in `public/scripts/demos/counter.js`.
@@ -222,7 +223,7 @@ export const counter: ComponentData = {
         "title": "Empty — with limit",
         "node": "18482:71322",
         "description": "Slash format showing zero progress against a limit (\"0 / 10\"). Muted label on neutral bg. Used when no slots are filled yet.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-empty-limit\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-empty-limit\"><span class=\"eb-preview eb-preview-counter eb-preview-counter--empty\">0 / 10</span></div>",
         "sections": [
           {
             "label": "Properties",
@@ -315,7 +316,7 @@ export const counter: ComponentData = {
               },
               {
                 "key": "Font",
-                "value": "HeyMeow Rnd Bold",
+                "value": "Proxima Soft Bold",
                 "mono": true
               },
               {
@@ -346,7 +347,7 @@ export const counter: ComponentData = {
         "title": "Filled — with limit",
         "node": "18482:71324",
         "description": "Slash format with a filled count (\"10 / 10\"). Brand-blue label on neutral bg. Used when capacity is at or approaching the limit.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-filled-limit\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-filled-limit\"><span class=\"eb-preview eb-preview-counter eb-preview-counter--filled\">10 / 10</span></div>",
         "sections": [
           {
             "label": "Properties",
@@ -454,7 +455,7 @@ export const counter: ComponentData = {
         "title": "Single integer nodes 18482:71326, 18482:71328",
         "node": "18482:71326",
         "description": "Standalone count — notifications, unread messages, pending items. Hugs tightly around the digit (24 × 24 for single digit, grows for 2+ digits). Empty state shown muted; filled state shown in brand-blue. Pairs with overflow handling (\"99+\") once <code>count</code> is parameterized.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-single\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-single\"><span class=\"eb-preview eb-preview-counter eb-preview-counter--filled\">5</span></div>",
         "sections": [
           {
             "label": "Properties",
@@ -552,7 +553,35 @@ export const counter: ComponentData = {
         "compose": "<span class=\"syn-type\">EBCounter</span><span class=\"syn-punc\">(</span>\n    count <span class=\"syn-eq\">=</span> 5<span class=\"syn-punc\">,</span>\n    showLimit <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — Empty / zero state
+      buildStatelessColorsTable({
+        title: 'Empty — Colors',
+        description: 'Counter at zero — neutral grey chip with muted label.',
+        rows: [
+          { role: 'Background', token: 'counter/color/empty/bg',    value: '#EEF2F9' },
+          { role: 'Label',      token: 'counter/color/empty/label', value: '#3C4A5C' },
+        ],
+      }),
+      // Card 2 — Filled / numeric value
+      buildStatelessColorsTable({
+        title: 'Filled — Colors',
+        description: 'Counter showing a numeric value on the same surface.',
+        rows: [
+          { role: 'Label',      token: 'main/counter/label',        value: '#3C4A5C' },
+          { role: 'Background', token: 'counter/color/empty/bg',    value: '#EEF2F9' },
+        ],
+      }),
+      // Card 3 — Active / accented
+      buildStatelessColorsTable({
+        title: 'Active — Colors',
+        description: 'Active counter highlight (e.g. unread or pending).',
+        rows: [
+          { role: 'Background', token: 'counter/color/active/bg',    value: '#EEF2F9' },
+          { role: 'Label',      token: 'counter/color/active/label', value: '#005CE5' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

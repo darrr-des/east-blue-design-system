@@ -78,7 +78,7 @@ const updateKey = demoKey || cardKey;
 
   {previewHtml && demoControls && demoControls.length > 0 ? (
     <div class="demo-layout">
-      <div class="spec-card-preview" set:html={previewHtml} />
+      <div class="spec-card-preview eb-preview-scope" set:html={previewHtml} />
       <div class="demo-figma-panel">
         {demoControls.map((section) => (
           <div class="demo-panel-section">
@@ -122,21 +122,30 @@ const updateKey = demoKey || cardKey;
               const isHex = typeof row.value === 'string' && row.value.trim().startsWith('#');
               const showSwatch = row.swatch ?? isHex;
               const dataSp = row.prop ? `${updateKey}-${row.prop}` : undefined;
+              /* Serialize variants map for client-side patching. The shared
+                 assessment.js listens for spec-card control changes and uses
+                 this attribute to swap the row's value/token. */
+              const variantsJson = row.variants && Object.keys(row.variants).length > 0
+                ? JSON.stringify(row.variants)
+                : undefined;
               return (
                 <div class={`spec-prop${row.token ? ' has-token' : ''}`}>
                   <span class="spec-prop-key">{row.key}</span>
                   <span
                     class={`spec-prop-val${row.mono ? ' mono' : ''}`}
                     data-sp={dataSp}
+                    data-row-card={variantsJson ? updateKey : undefined}
+                    data-row-variants={variantsJson}
                   >
                     {showSwatch && (
                       <span class="spec-swatch" style={`background:${row.value}`} aria-hidden="true"></span>
                     )}
                     <span class="spec-prop-hex" set:html={row.value} />
                   </span>
-                  {row.token && (
-                    <span class="spec-token-name">{row.token}</span>
-                  )}
+                  {/* Token path is documented in the standalone
+                      `colorsTables` block below the spec cards — no
+                      need to repeat it here. The `row.token` data
+                      stays in case we want to surface it later. */}
                 </div>
               );
             })}

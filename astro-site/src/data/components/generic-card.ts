@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
 
 const genericCardDemoControls: DemoControlSection[] = [
   {
@@ -227,7 +228,7 @@ export const genericCard: ComponentData = {
         "title": "Default — iconSize=64",
         "node": "18482:35807",
         "description": "Full-featured row: icon + blurb with tag, heading, 2 description lines, bottom badge, chevron.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"gcard-spec-default\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"gcard-spec-default\"><div class=\"eb-preview eb-preview-gcard\"><div class=\"eb-preview-gcard__icon eb-preview-gcard__icon--64\"></div><div class=\"eb-preview-gcard__content\"><div class=\"eb-preview-gcard__subtitle\"><span class=\"eb-preview-gcard__blurb\">Blurb</span><span class=\"eb-preview-gcard__tag\">Tag</span></div><p class=\"eb-preview-gcard__heading\">Heading Goes Here</p><p class=\"eb-preview-gcard__desc-line eb-preview-gcard__desc-line--first\"><span class=\"eb-preview-gcard__desc-label\">Label:</span><span class=\"eb-preview-gcard__desc-value\">Description goes here</span></p><p class=\"eb-preview-gcard__desc-line\"><span class=\"eb-preview-gcard__desc-label\">Label:</span><span class=\"eb-preview-gcard__desc-value\">Description goes here</span></p><span class=\"eb-preview-gcard__badge\">Label</span></div><div class=\"eb-preview-gcard__chevron-wrap\"><svg class=\"eb-preview-gcard__chevron\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 6l6 6-6 6\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -270,11 +271,11 @@ export const genericCard: ComponentData = {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Heading",     "value": "HeyMeow Rnd Bold · 18 / 23 · +0.25", "mono": true },
-              { "key": "Blurb",       "value": "HeyMeow Rnd Bold · 14 / 14 · +0.25", "mono": true },
+              { "key": "Heading",     "value": "Proxima Soft Bold · 18 / 23 · +0.25", "mono": true },
+              { "key": "Blurb",       "value": "Proxima Soft Bold · 14 / 14 · +0.25", "mono": true },
               { "key": "Description", "value": "BarkAda Semibold · 12 / 18 · +0", "mono": true },
-              { "key": "Tag label",   "value": "HeyMeow Rnd Bold · 12 / 12 · +0.5", "mono": true },
-              { "key": "Badge label", "value": "HeyMeow Rnd Bold · 12 / 12 · +0.5", "mono": true }
+              { "key": "Tag label",   "value": "Proxima Soft Bold · 12 / 12 · +0.5", "mono": true },
+              { "key": "Badge label", "value": "Proxima Soft Bold · 12 / 12 · +0.5", "mono": true }
             ]
           },
           {
@@ -313,7 +314,7 @@ export const genericCard: ComponentData = {
         "title": "Skeleton — loading state",
         "node": "18482:35832",
         "description": "The loading pattern for the card. Every content slot becomes a rounded rectangle placeholder in neutral gray. Use while awaiting data.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"gcard-spec-skeleton\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"gcard-spec-skeleton\"><div class=\"eb-preview eb-preview-gcard eb-preview-gcard--skeleton\"><div class=\"eb-preview-gcard__icon eb-preview-gcard__icon--64\"></div><div class=\"eb-preview-gcard__content\"><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--tag\"></div><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--heading\"></div><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--desc\"></div><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--desc2\"></div><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--badge\"></div></div><div class=\"eb-preview-gcard__sk eb-preview-gcard__sk--chevron\"></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -355,7 +356,33 @@ export const genericCard: ComponentData = {
         "compose": "<span class=\"syn-type\">EBGenericCard</span><span class=\"syn-punc\">(</span>\n    isLoading <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — Default with leading icon
+      buildStatelessColorsTable({
+        title: 'Default — Colors',
+        description: 'Tappable list-style card with leading icon, heading, description, optional blurb + tag.',
+        rows: [
+          { role: 'Surface',     token: 'card-list/color/bg',                  value: '#FFFFFF' },
+          { role: 'Border',      token: 'card-list/color/border',              value: '#E5EBF4' },
+          { role: 'Title',       token: 'card-list/color/label-header',        value: '#0A2757' },
+          { role: 'Description', token: 'card-list/color/description',         value: '#445C85' },
+          { role: 'Label',       token: 'card-list/color/label',               value: '#90A8D0' },
+          { role: 'Blurb',       token: 'card-list/color/label-blurb',         value: '#005CE5' },
+          { role: 'Icon',        token: 'card-list/color/icon',                value: '#005CE5' },
+          { role: 'Badge bg',    token: 'badge/information/light/background',  value: '#E5F1FF' },
+          { role: 'Badge label', token: 'badge/information/light/label',       value: '#005CE5' },
+        ],
+      }),
+      // Card 2 — Skeleton loading state
+      buildStatelessColorsTable({
+        title: 'Skeleton — Colors',
+        description: 'Loading state — every content slot is a rounded rectangle in neutral grey on the card surface.',
+        rows: [
+          { role: 'Skeleton bg', token: 'main/skeleton/bg', value: '#EEF2F9' },
+          { role: 'Surface bg',  token: 'main/card/bg',     value: '#FFFFFF' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

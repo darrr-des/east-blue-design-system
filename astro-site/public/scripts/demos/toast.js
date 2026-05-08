@@ -97,7 +97,6 @@ function _toastUpdate() {
   var theme      = document.getElementById('toast-ctrl-theme');
   var withIcon   = document.getElementById('toast-ctrl-withicon');
   var largeLabel = document.getElementById('toast-ctrl-largelabel');
-  var message    = document.getElementById('toast-ctrl-message');
   var preview    = document.getElementById('toast-demo-preview');
   if (!preview) return;
   preview.innerHTML = _toastRender({
@@ -105,27 +104,134 @@ function _toastUpdate() {
     theme:      theme ? theme.value : 'dark',
     withIcon:   withIcon ? withIcon.value : 'yes',
     largeLabel: largeLabel ? largeLabel.value : 'yes',
-    message:    message ? message.value : 'Add the popup message here'
+    message:    'Add the popup message here'
   });
 }
+
+/* ── Toast Spec Cards (canonical wiring) ─────────────────────────── */
+var _specCards = {
+  dark:    { type: 'default', theme: 'dark',    withIcon: 'yes', largeLabel: 'yes' },
+  error:   { type: 'error',   theme: 'default', withIcon: 'yes', largeLabel: 'yes' },
+  pending: { type: 'pending', theme: 'dark',    withIcon: 'yes', largeLabel: 'yes' },
+  compact: { type: 'default', theme: 'dark',    withIcon: 'no',  largeLabel: 'no'  }
+};
+window._specCards = _specCards;
 
 function _toastInit() {
   var ctx = document.getElementById('toast-context-preview');
   if (ctx) ctx.innerHTML = _toastContextMarkup();
   _toastUpdate();
 
-  var s1 = document.getElementById('toast-spec-1');
-  if (s1) s1.innerHTML = _toastRender({ type:'default', theme:'dark', withIcon:'yes', largeLabel:'yes', message:'Add the popup message here' });
-
-  var s2 = document.getElementById('toast-spec-2');
-  if (s2) s2.innerHTML = _toastRender({ type:'error', theme:'default', withIcon:'yes', largeLabel:'yes', message:'Add the popup message here' });
-
-  var s3 = document.getElementById('toast-spec-3');
-  if (s3) s3.innerHTML = _toastRender({ type:'pending', theme:'dark', withIcon:'yes', largeLabel:'yes', message:'Add the popup message here' });
-
-  var s4 = document.getElementById('toast-spec-4');
-  if (s4) s4.innerHTML = _toastRender({ type:'default', theme:'dark', withIcon:'no', largeLabel:'no', message:'Add the popup message here' });
+  /* Render spec card previews from `_specCards` so they pick up edits
+     made via the per-card demo controls. */
+  Object.keys(_specCards).forEach(function (k) {
+    _toastRenderSpec(k);
+  });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _toastInit);
 else _toastInit();
+
+/* Map demoKey → preview container id (the existing previewHtml uses
+   the toast-spec-N pattern). */
+var _toastSpecPreviewId = {
+  dark:    'toast-spec-1',
+  error:   'toast-spec-2',
+  pending: 'toast-spec-3',
+  compact: 'toast-spec-4'
+};
+
+function _toastRenderSpec(cardKey) {
+  var card = _specCards[cardKey];
+  if (!card) return;
+  var host = document.getElementById(_toastSpecPreviewId[cardKey]);
+  if (!host) return;
+  host.innerHTML = _toastRender({
+    type:       card.type,
+    theme:      card.theme,
+    withIcon:   card.withIcon,
+    largeLabel: card.largeLabel,
+    message:    'Add the popup message here'
+  });
+}
+
+function buildSwiftSnippet(type, card) {
+  var lines = [];
+  var msg = type === 'error' ? 'Something went wrong'
+          : type === 'pending' ? 'Processing your request…'
+          : type === 'compact' ? 'Notice'
+          : 'Action successful';
+  lines.push('EBToast("' + msg + '")');
+  if (card.type === 'error')        lines.push('    .ebAppearance(.destructive)');
+  else if (card.type === 'pending') lines.push('    .ebAppearance(.pending)');
+  else                              lines.push('    .ebAppearance(.neutral)');
+  if (card.theme === 'light')       lines.push('    .ebTheme(.light)');
+  else if (card.theme === 'dark')   lines.push('    .ebTheme(.dark)');
+  if (card.largeLabel === 'no')     lines.push('    .controlSize(.small)');
+  if (card.withIcon === 'no')       lines.push('    .ebLeadingIcon(nil)');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var msg = type === 'error' ? 'Something went wrong'
+          : type === 'pending' ? 'Processing your request…'
+          : type === 'compact' ? 'Notice'
+          : 'Action successful';
+  var appearance = card.type === 'error' ? 'Destructive'
+                 : card.type === 'pending' ? 'Pending' : 'Neutral';
+  var theme = card.theme === 'light' ? 'Light' : 'Dark';
+  var size = card.largeLabel === 'no' ? 'Small' : 'Base';
+  var lines = [];
+  lines.push('EBToast(');
+  lines.push('    message = "' + msg + '",');
+  lines.push('    appearance = EBToastAppearance.' + appearance + ',');
+  lines.push('    theme = EBToastTheme.' + theme + ',');
+  lines.push('    size = EBToastSize.' + size + (card.withIcon === 'no' ? '' : ',') );
+  if (card.withIcon !== 'no') lines.push('    leadingIcon = { Icon(Icons.Filled.Check, null) }');
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Re-render preview SVG/markup */
+  _toastRenderSpec(cardStyle);
+
+  /* Update properties text via [data-sp="{cardStyle}-{prop}"] */
+  var spEl = document.querySelector('[data-sp="' + cardStyle + '-' + prop + '"]');
+  if (spEl) spEl.textContent = value;
+
+  /* Sync all four prop readouts (some other prop may have been edited
+     before — keep all prop cells in sync with the card state). */
+  ['type','theme','withIcon','largeLabel'].forEach(function (p) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
+    if (el) el.textContent = card[p];
+  });
+
+  /* Update DEV code — locate via [data-code-content="{cardStyle}"]. */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+window.updateSpecCard = updateSpecCard;
+
+/* ── Re-init after Astro view-transition swaps ─────────────── */
+document.addEventListener('astro:page-load', _toastInit);

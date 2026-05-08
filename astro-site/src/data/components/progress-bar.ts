@@ -1,4 +1,41 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/progress-bar.js`.
+const progressBarDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'determinate',
+        options: [
+          { value: 'determinate', label: 'determinate' },
+          { value: 'indeterminate', label: 'indeterminate' },
+          { value: 'success', label: 'success' },
+          { value: 'error', label: 'error' },
+        ],
+      },
+      {
+        label: 'Progress',
+        prop: 'progress',
+        defaultValue: '60',
+        options: [
+          { value: '0', label: '0%' },
+          { value: '15', label: '15%' },
+          { value: '30', label: '30%' },
+          { value: '45', label: '45%' },
+          { value: '60', label: '60%' },
+          { value: '75', label: '75%' },
+          { value: '90', label: '90%' },
+          { value: '100', label: '100%' },
+        ],
+      },
+    ],
+  },
+];
 
 export const progressBar: ComponentData = {
   "meta": {
@@ -185,10 +222,12 @@ export const progressBar: ComponentData = {
     "specCards": [
       {
         "cardKey": "determinate-nodes-27:64947-through-27:64985",
+        "demoKey": "determinate",
+        "demoControls": progressBarDemoControls,
         "title": "Determinate nodes 27:64947 through 27:64985",
         "node": "27:64947",
         "description": "Linear fill with a light-blue track and a brand-blue fill. The 11 Figma variants step through <code>percentage = 0, 10, 20, …, 100</code> — each variant swaps a pre-sized raster pair. The target implementation renders a single component with a continuous <code>progress</code> value.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"progress-bar-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"progress-bar-spec-1\"><div class=\"eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-xs\" style=\"padding:12px 0;\"><div class=\"eb-preview eb-preview-progress-bar\" role=\"progressbar\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:280px;\"><span class=\"eb-preview-progress-bar__track\"></span><span class=\"eb-preview-progress-bar__fill\" style=\"width:60.0%;background:#005CE5;\"></span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -197,7 +236,14 @@ export const progressBar: ComponentData = {
               {
                 "key": "Mode",
                 "value": "determinate",
-                "mono": false
+                "mono": false,
+                "prop": "state"
+              },
+              {
+                "key": "Progress",
+                "value": "60%",
+                "mono": false,
+                "prop": "progress"
               },
               {
                 "key": "Range",
@@ -301,7 +347,16 @@ export const progressBar: ComponentData = {
         "compose": "<span class=\"syn-type\">EBProgressBar</span><span class=\"syn-punc\">(</span>progress <span class=\"syn-eq\">=</span> 0.6f<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      buildStatelessColorsTable({
+        title: 'Track + Fill — Colors',
+        description: 'Two-zone bar: a static track and an animated fill segment driven by the percentage variant.',
+        rows: [
+          { role: 'Track', token: 'progress-bar/color/border-track', value: '#D2E5FF' },
+          { role: 'Fill',  token: 'progress-bar/color/border',       value: '#005CE5' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

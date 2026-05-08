@@ -17,30 +17,9 @@ window._specCards = _specCards;
 
 var _chipDemo = { style: 'filled', leading: 'avatar', trailing: 'close' };
 
-/* Color mapping by style (for dynamic Colors section refresh) */
-var _chipStyleColors = {
-  filled: {
-    rows: [
-      ['Background', '#005CE5',  'main/filter/color/primary/bg'],
-      ['Label',      '#FFFFFF',  'main/filter/color/primary/label'],
-      ['Icon',       '#F6F9FDB8','main/filter/color/primary/icon']
-    ]
-  },
-  light: {
-    rows: [
-      ['Background', '#EEF2F9',  'main/filter/color/secondary/bg'],
-      ['Label',      '#6780A9',  'main/filter/color/secondary/label'],
-      ['Icon',       '#7E96BE',  'main/filter/color/secondary/icon']
-    ]
-  },
-  outline: {
-    rows: [
-      ['Background', '#FFFFFF',  'surface/default'],
-      ['Border',     '#D7E0EF',  'main/filter/color/tertiary/border'],
-      ['Label',      '#6780A9',  'main/filter/color/tertiary/label']
-    ]
-  }
-};
+/* Spec-card Colors section is server-rendered from chip.ts; Plan A's
+   `_patchSpecCardRows` (assessment.js) handles per-style updates when a
+   row declares `variants`. Demo no longer rebuilds it. */
 
 function _chipBuildHtml(opts) {
   var style = opts.style || 'filled';
@@ -60,10 +39,10 @@ function _chipBuildHtml(opts) {
   }
   valueColor = '#005CE5';
 
-  var padL = isDropdown ? '16px' : (leading !== 'none' ? '4px' : '14px');
-  var padR = isDropdown ? '12px' : '14px';
+  var padL = isDropdown ? '16px' : (leading !== 'none' ? '6px' : '16px');
+  var padR = isDropdown ? '14px' : '16px';
 
-  var html = '<div style="display:inline-flex;align-items:center;height:32px;padding:0 ' + padR + ' 0 ' + padL + ';background:' + bg + ';border:' + border + ';border-radius:99px;box-sizing:border-box;font-family:\'Proxima Soft\', system-ui, sans-serif;font-weight:700;font-size:16px;line-height:16px;letter-spacing:0.25px;">';
+  var html = '<div style="display:inline-flex;align-items:center;height:36px;padding:0 ' + padR + ' 0 ' + padL + ';background:' + bg + ';border:' + border + ';border-radius:99px;box-sizing:border-box;font-family:\'Proxima Soft\', system-ui, sans-serif;font-weight:700;font-size:16px;line-height:16px;letter-spacing:0.25px;">';
 
   // Leading
   if (leading === 'avatar') {
@@ -123,24 +102,9 @@ function updateSpecCard(card, prop, val) {
     target.innerHTML = _chipBuildHtml(Object.assign({ label: labels[card] }, state));
   }
 
-  // Colors section refresh — id `spec-${demoKey}-colors`
-  var colorsEl = document.getElementById('spec-' + card + '-colors');
-  if (colorsEl) {
-    var colorRows = (_chipStyleColors[state.style] || _chipStyleColors.filled).rows.slice();
-    if (card === 'dropdown') {
-      colorRows.push(['Selected value', '#005CE5', 'main/filter/color/secondary/label-link']);
-      colorRows.push(['Chevron',        '#005CE5', 'main/filter/color/secondary/chevron']);
-    }
-    var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
-    colorRows.forEach(function(r) {
-      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E5EBF4' : '';
-      h += '<div class="spec-prop has-token"><span class="spec-prop-key">' + r[0] + '</span>'
-         + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span>'
-         + '<span class="spec-token-name">' + r[2] + '</span></div>';
-    });
-    h += '</div>';
-    colorsEl.innerHTML = h;
-  }
+  // Colors section is now server-rendered from chip.ts (SSR source of
+  // truth). Plan A's `_patchSpecCardRows` patches per-style values when
+  // a row declares `variants` in the data file.
 
   // DEV code — `[data-code-content="${demoKey}"]`. Always update.
   var devView = document.querySelector('[data-view="' + card + '-dev"]');

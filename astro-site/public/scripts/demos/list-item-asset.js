@@ -25,9 +25,9 @@ function _liaBuildMarker(variant, scale) {
     case 'square':
       v += '<rect x="5.5" y="5.5" width="5" height="5" rx="1" fill="#90A8D0"/>'; break;
     case 'numbered':
-      v += '<rect x="0" y="2" width="16" height="12" rx="6" fill="#EEF2F9"/><text x="8" y="11" text-anchor="middle" fill="#90A8D0" font-size="9" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">1.</text>'; break;
+      v += '<rect x="0" y="2" width="16" height="12" rx="6" fill="#EEF2F9"/><text x="8" y="11" text-anchor="middle" fill="#90A8D0" font-size="9" font-weight="700" font-family="\'Proxima Soft\', system-ui">1.</text>'; break;
     case 'custom':
-      v += '<rect x="1" y="1" width="14" height="14" rx="2" fill="none" stroke="#ADBDDC" stroke-width="1" stroke-dasharray="2 2"/><text x="8" y="11" text-anchor="middle" fill="#90A8D0" font-size="6" font-family="\'HeyMeow Rnd\', system-ui">slot</text>'; break;
+      v += '<rect x="1" y="1" width="14" height="14" rx="2" fill="none" stroke="#ADBDDC" stroke-width="1" stroke-dasharray="2 2"/><text x="8" y="11" text-anchor="middle" fill="#90A8D0" font-size="6" font-family="\'Proxima Soft\', system-ui">slot</text>'; break;
   }
   v += '</svg>';
   return v;
@@ -59,3 +59,62 @@ function _liaInit() {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _liaInit);
 else _liaInit();
+
+/* ── Canonical wiring (matches avatar.js shape) ────────────────────── */
+/* Static showcase — no per-card state. Expose stubs so the shared
+   `switchCodeTab(_, lang, cardStyle)` and any future dropdown bindings
+   don't error. */
+var _specCards = {
+  'lia-all': { variant: 'check' }
+};
+window._specCards = _specCards;
+
+function buildSwiftSnippet(cardStyle, card) {
+  var lines = [];
+  lines.push('EBListItem("Item label") {');
+  lines.push('    Image("asset")');
+  lines.push('}');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(cardStyle, card) {
+  var lines = [];
+  lines.push('EBListItem(');
+  lines.push('    label = "Item label",');
+  lines.push('    leadingAsset = { Image(painterResource(R.drawable.asset), null) }');
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(cardStyle, lang, card) {
+  return lang === 'swift'
+    ? buildSwiftSnippet(cardStyle, card)
+    : buildComposeSnippet(cardStyle, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+  var el = document.getElementById('spec-' + cardStyle + '-preview');
+  if (el && typeof _liaBuildMarker === 'function') {
+    el.innerHTML = _liaBuildMarker(card.variant, 1);
+  }
+}
+window.updateSpecCard = updateSpecCard;
+
+function _liaInitSpecCard() {
+  var card = _specCards['lia-all'];
+  if (!card) return;
+  var el = document.getElementById('spec-lia-all-preview');
+  if (el && typeof _liaBuildMarker === 'function') {
+    el.innerHTML = _liaBuildMarker(card.variant, 1);
+  }
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _liaInitSpecCard);
+} else {
+  _liaInitSpecCard();
+}
+document.addEventListener('astro:page-load', _liaInitSpecCard);

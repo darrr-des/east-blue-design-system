@@ -47,7 +47,7 @@ export const avatar: ComponentData = {
   "overview": {
     "inContextNote": "How the avatar appears in a real product screen — Contacts list with Favorites row (brand fill + default fill avatars in circular display).",
     "inContextHtml": "<img class=\"ctx-img\" src=\"/assets/previews/avatar-in-context.png\" alt=\"Avatar component shown in the GCash Contacts screen with a Favorites row of circular initials avatars (JF, JD, D, C, ZD)\" >",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ava-demo-preview\"><svg id=\"ava-demo-svg\" width=\"64\" height=\"64\" viewBox=\"0 0 64 64\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"32\" cy=\"32\" r=\"30\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"2\"></circle><text x=\"32\" y=\"38\" text-anchor=\"middle\" fill=\"white\" font-size=\"22\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">DM</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select class=\"demo-panel-select\" id=\"ava-demo-type\" onchange=\"updateAvatarDemo()\"><option value=\"dark-initials\" selected=\"\">dark-initials</option><option value=\"initials-light\">initials-light</option><option value=\"image\">image</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Size</span><select class=\"demo-panel-select\" id=\"ava-demo-size\" onchange=\"updateAvatarDemo()\"><option value=\"20\">20px</option><option value=\"24\">24px</option><option value=\"32\">32px</option><option value=\"40\">40px</option><option value=\"48\">48px</option><option value=\"64\" selected=\"\">64px</option><option value=\"90\">90px</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ava-demo-preview\"><svg id=\"ava-demo-svg\" width=\"64\" height=\"64\" viewBox=\"0 0 64 64\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"32\" cy=\"32\" r=\"30\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"2\"></circle><text x=\"32\" y=\"38\" text-anchor=\"middle\" fill=\"white\" font-size=\"22\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">DM</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select class=\"demo-panel-select\" id=\"ava-demo-type\" onchange=\"updateAvatarDemo()\"><option value=\"dark-initials\" selected=\"\">dark-initials</option><option value=\"initials-light\">initials-light</option><option value=\"image\">image</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Size</span><select class=\"demo-panel-select\" id=\"ava-demo-size\" onchange=\"updateAvatarDemo()\"><option value=\"20\">20px</option><option value=\"24\">24px</option><option value=\"32\">32px</option><option value=\"40\">40px</option><option value=\"48\">48px</option><option value=\"64\" selected=\"\">64px</option><option value=\"90\">90px</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -145,7 +145,7 @@ export const avatar: ComponentData = {
         "title": "Dark Initials",
         "node": "17143:4531",
         "description": "Blue circle with white initials text. Branded avatar used as default when no photo is available.",
-        "previewHtml": "<svg width=\"64\" height=\"64\" viewBox=\"0 0 64 64\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" id=\"ava-spec-dark-svg\"><circle cx=\"32\" cy=\"32\" r=\"30\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"2\"></circle><text x=\"32\" y=\"42.85\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"31\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">DM</text></svg>",
+        "previewHtml": "<svg width=\"64\" height=\"64\" viewBox=\"0 0 64 64\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" id=\"ava-spec-dark-svg\"><circle cx=\"32\" cy=\"32\" r=\"30\" fill=\"#005CE5\" stroke=\"#E5EBF4\" stroke-width=\"2\"></circle><text x=\"32\" y=\"42.85\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"31\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">DM</text></svg>",
         "sections": [
           {
             "label": "Properties",
@@ -178,7 +178,7 @@ export const avatar: ComponentData = {
             "slug": "typo",
             "rows": [
               { "key": "Text style", "value": "Primary/Headlines/Region", "mono": true },
-              { "key": "Font", "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
               { "key": "Size", "value": "31px", "mono": true },
               { "key": "Line-height", "value": "35px", "mono": true }
             ]
@@ -194,7 +194,7 @@ export const avatar: ComponentData = {
         "title": "Light Initials",
         "node": "17143:4535",
         "description": "Light circle with blue initials text. Neutral variant for non-branded contexts.",
-        "previewHtml": "<svg width=\"64\" height=\"64\" viewBox=\"0 0 64 64\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" id=\"ava-spec-light-svg\"><circle cx=\"32\" cy=\"32\" r=\"30\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"2\"></circle><text x=\"32\" y=\"42.85\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"31\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui, sans-serif\">LM</text></svg>",
+        "previewHtml": "<svg width=\"64\" height=\"64\" viewBox=\"0 0 64 64\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" id=\"ava-spec-light-svg\"><circle cx=\"32\" cy=\"32\" r=\"30\" fill=\"#F6F9FD\" stroke=\"#E5EBF4\" stroke-width=\"2\"></circle><text x=\"32\" y=\"42.85\" text-anchor=\"middle\" fill=\"#2340A9\" font-size=\"31\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui, sans-serif\">LM</text></svg>",
         "sections": [
           {
             "label": "Properties",
@@ -227,7 +227,7 @@ export const avatar: ComponentData = {
             "slug": "typo",
             "rows": [
               { "key": "Text style", "value": "Primary/Headlines/Region", "mono": true },
-              { "key": "Font", "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
               { "key": "Size", "value": "31px", "mono": true },
               { "key": "Line-height", "value": "35px", "mono": true }
             ]

@@ -7,26 +7,25 @@ function _digBuildSvg() {
   var w = 366;
   var rowH = 50;
   var rows = 8;
-  var totalH = rowH * rows + 8; /* padding for shadow */
-  var shadowOffsetY = 6;
+  var totalH = rowH * rows;
   var bg = '#FFFFFF';
   var divider = '#E5EBF4';
   var labelColor = '#0A2757';
-  var s = '<svg width="' + w + '" height="' + totalH + '" viewBox="0 0 ' + w + ' ' + totalH + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
-  s += '<defs><filter id="digShadow" x="-8" y="-4" width="' + (w + 16) + '" height="' + (totalH + 16) + '" filterUnits="userSpaceOnUse"><feDropShadow dx="0" dy="' + shadowOffsetY + '" stdDeviation="6" flood-color="#020E22" flood-opacity="0.16"/></filter></defs>';
-  /* card */
-  s += '<rect x="2" y="2" width="' + (w - 4) + '" height="' + (rowH * rows) + '" rx="6" fill="' + bg + '" filter="url(#digShadow)"/>';
+  /* Card wrapper with subtle CSS box-shadow (matches date-picker-group pattern). */
+  var wrap = '<div style="display:inline-block;border-radius:6px;box-shadow:0 6px 12px -8px rgba(2,14,34,.16);background:#FFFFFF;">';
+  var s = '<svg width="' + w + '" height="' + totalH + '" viewBox="0 0 ' + w + ' ' + totalH + '" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:6px;">';
+  s += '<rect x="0.5" y="0.5" width="' + (w - 1) + '" height="' + (totalH - 1) + '" rx="5.5" fill="' + bg + '" stroke="' + divider + '" stroke-width="1"/>';
   /* rows */
   for (var i = 0; i < rows; i++) {
-    var y = 2 + (i * rowH);
-    s += '<text x="14" y="' + (y + 30) + '" font-family="Proxima Soft, system-ui" font-size="18" font-weight="600" fill="' + labelColor + '">Dropdown Item</text>';
-    /* divider below every row (mirrors Figma — includes the problematic last-row border) */
-    if (i < rows) {
-      s += '<line x1="2" y1="' + (y + rowH) + '" x2="' + (w - 2) + '" y2="' + (y + rowH) + '" stroke="' + divider + '" stroke-width="1"/>';
+    var y = i * rowH;
+    s += '<text x="14" y="' + (y + 30) + '" font-family="\'Proxima Soft\', system-ui" font-size="18" font-weight="600" fill="' + labelColor + '">Dropdown Item</text>';
+    /* divider between rows (skip below last row) */
+    if (i < rows - 1) {
+      s += '<line x1="0" y1="' + (y + rowH) + '" x2="' + w + '" y2="' + (y + rowH) + '" stroke="' + divider + '" stroke-width="1"/>';
     }
   }
   s += '</svg>';
-  return s;
+  return wrap + s + '</div>';
 }
 
 function updateDropdownItemGroupDemo() {

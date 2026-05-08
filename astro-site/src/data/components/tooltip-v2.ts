@@ -1,4 +1,68 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/tooltip-v2.js`.
+const tooltipV2DemoControls: DemoControlSection[] = [
+  {
+    heading: 'Content',
+    rows: [
+      {
+        label: 'Header',
+        prop: 'header',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'shown' },
+          { value: 'false', label: 'hidden' },
+        ],
+      },
+      {
+        label: 'Description',
+        prop: 'description',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'shown' },
+          { value: 'false', label: 'hidden' },
+        ],
+      },
+      {
+        label: 'Icon',
+        prop: 'icon',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'hidden' },
+          { value: 'true', label: 'shown' },
+        ],
+      },
+      {
+        label: 'CTA',
+        prop: 'cta',
+        defaultValue: 'one',
+        options: [
+          { value: 'none', label: 'none' },
+          { value: 'one', label: 'one' },
+          { value: 'two', label: 'two' },
+        ],
+      },
+    ],
+  },
+  {
+    heading: 'Placement',
+    rows: [
+      {
+        label: 'Pointer',
+        prop: 'pointer',
+        defaultValue: 'bottom',
+        options: [
+          { value: 'top', label: 'top' },
+          { value: 'right', label: 'right' },
+          { value: 'bottom', label: 'bottom' },
+          { value: 'left', label: 'left' },
+          { value: 'none', label: 'none' },
+        ],
+      },
+    ],
+  },
+];
 
 export const tooltipV2: ComponentData = {
   "meta": {
@@ -222,6 +286,9 @@ export const tooltipV2: ComponentData = {
     "specCards": [
       {
         "cardKey": "cta=one-·-icon=yes-·-description-·-header-—-the-hero-variant",
+        "demoKey": "tt2-hero",
+        "demoControls": tooltipV2DemoControls,
+        "previewHtml": "<div id=\"tt2-preview-tt2-hero\"></div>",
         "title": "CTA=one · Icon=yes · Description · Header — the hero variant",
         "node": "70:14907",
         "description": "Full-shape onboarding variant. Leading icon placeholder + header + description + primary CTA + close. 359 × 181.",
@@ -233,22 +300,26 @@ export const tooltipV2: ComponentData = {
               {
                 "key": "cta",
                 "value": "one",
-                "mono": false
+                "mono": false,
+                "prop": "cta"
               },
               {
                 "key": "icon",
                 "value": "yes",
-                "mono": false
+                "mono": false,
+                "prop": "icon"
               },
               {
                 "key": "description",
                 "value": "true",
-                "mono": false
+                "mono": false,
+                "prop": "description"
               },
               {
                 "key": "header",
                 "value": "true",
-                "mono": false
+                "mono": false,
+                "prop": "header"
               },
               {
                 "key": "Variant",
@@ -349,6 +420,9 @@ export const tooltipV2: ComponentData = {
       },
       {
         "cardKey": "cta=one-·-description-·-header-—-tip-with-action",
+        "demoKey": "tt2-text-cta",
+        "demoControls": tooltipV2DemoControls,
+        "previewHtml": "<div id=\"tt2-preview-tt2-text-cta\"></div>",
         "title": "CTA=one · Description · Header — tip with action",
         "node": "7977:12260",
         "description": "Text-only tip with a primary CTA. No leading icon. 359 × 155. Inherits different outer padding (<code>px-16 py-12</code>) than the hero variant (<code>p-16</code>).",
@@ -360,22 +434,26 @@ export const tooltipV2: ComponentData = {
               {
                 "key": "cta",
                 "value": "one",
-                "mono": false
+                "mono": false,
+                "prop": "cta"
               },
               {
                 "key": "icon",
                 "value": "no",
-                "mono": false
+                "mono": false,
+                "prop": "icon"
               },
               {
                 "key": "description",
                 "value": "true",
-                "mono": false
+                "mono": false,
+                "prop": "description"
               },
               {
                 "key": "header",
                 "value": "true",
-                "mono": false
+                "mono": false,
+                "prop": "header"
               },
               {
                 "key": "Variant",
@@ -476,6 +554,9 @@ export const tooltipV2: ComponentData = {
       },
       {
         "cardKey": "cta=none-·-icon=yes-·-description-·-header-—-icon-+-explanatory-text",
+        "demoKey": "tt2-icon-dismiss",
+        "demoControls": tooltipV2DemoControls,
+        "previewHtml": "<div id=\"tt2-preview-tt2-icon-dismiss\"></div>",
         "title": "CTA=none · Icon=yes · Description · Header — icon + explanatory text",
         "node": "70:14903",
         "description": "Dismissible explanatory tooltip with an icon. 359 × 137.",
@@ -487,22 +568,26 @@ export const tooltipV2: ComponentData = {
               {
                 "key": "cta",
                 "value": "none",
-                "mono": false
+                "mono": false,
+                "prop": "cta"
               },
               {
                 "key": "icon",
                 "value": "yes",
-                "mono": false
+                "mono": false,
+                "prop": "icon"
               },
               {
                 "key": "description",
                 "value": "true",
-                "mono": false
+                "mono": false,
+                "prop": "description"
               },
               {
                 "key": "header",
                 "value": "true",
-                "mono": false
+                "mono": false,
+                "prop": "header"
               },
               {
                 "key": "Variant",
@@ -603,6 +688,9 @@ export const tooltipV2: ComponentData = {
       },
       {
         "cardKey": "cta=none-·-description-·-header-—-plain-tip-card",
+        "demoKey": "tt2-text",
+        "demoControls": tooltipV2DemoControls,
+        "previewHtml": "<div id=\"tt2-preview-tt2-text\"></div>",
         "title": "CTA=none · Description · Header — plain tip card",
         "node": "70:14902",
         "description": "Plain text tip with header + description + close. 359 × 119.",
@@ -614,22 +702,26 @@ export const tooltipV2: ComponentData = {
               {
                 "key": "cta",
                 "value": "none",
-                "mono": false
+                "mono": false,
+                "prop": "cta"
               },
               {
                 "key": "icon",
                 "value": "no",
-                "mono": false
+                "mono": false,
+                "prop": "icon"
               },
               {
                 "key": "description",
                 "value": "true",
-                "mono": false
+                "mono": false,
+                "prop": "description"
               },
               {
                 "key": "header",
                 "value": "true",
-                "mono": false
+                "mono": false,
+                "prop": "header"
               },
               {
                 "key": "Variant",
@@ -730,6 +822,9 @@ export const tooltipV2: ComponentData = {
       },
       {
         "cardKey": "cta=none-·-header-only-—-pointer/label",
+        "demoKey": "tt2-header-only",
+        "demoControls": tooltipV2DemoControls,
+        "previewHtml": "<div id=\"tt2-preview-tt2-header-only\"></div>",
         "title": "CTA=none · Header only — pointer/label",
         "node": "70:14900",
         "description": "Single-line title pointer — used to label or point at a UI element. 359 × 79.",
@@ -741,22 +836,26 @@ export const tooltipV2: ComponentData = {
               {
                 "key": "cta",
                 "value": "none",
-                "mono": false
+                "mono": false,
+                "prop": "cta"
               },
               {
                 "key": "icon",
                 "value": "no",
-                "mono": false
+                "mono": false,
+                "prop": "icon"
               },
               {
                 "key": "description",
                 "value": "false",
-                "mono": false
+                "mono": false,
+                "prop": "description"
               },
               {
                 "key": "header",
                 "value": "true",
-                "mono": false
+                "mono": false,
+                "prop": "header"
               },
               {
                 "key": "Variant",
@@ -857,6 +956,9 @@ export const tooltipV2: ComponentData = {
       },
       {
         "cardKey": "cta=none-·-description-only-—-concise-explanation",
+        "demoKey": "tt2-desc-only",
+        "demoControls": tooltipV2DemoControls,
+        "previewHtml": "<div id=\"tt2-preview-tt2-desc-only\"></div>",
         "title": "CTA=none · Description only — concise explanation",
         "node": "70:14901",
         "description": "Description-only tooltip — short explanatory body, no title. 359 × 92.",
@@ -868,22 +970,26 @@ export const tooltipV2: ComponentData = {
               {
                 "key": "cta",
                 "value": "none",
-                "mono": false
+                "mono": false,
+                "prop": "cta"
               },
               {
                 "key": "icon",
                 "value": "no",
-                "mono": false
+                "mono": false,
+                "prop": "icon"
               },
               {
                 "key": "description",
                 "value": "true",
-                "mono": false
+                "mono": false,
+                "prop": "description"
               },
               {
                 "key": "header",
                 "value": "false",
-                "mono": false
+                "mono": false,
+                "prop": "header"
               },
               {
                 "key": "Variant",
@@ -984,6 +1090,9 @@ export const tooltipV2: ComponentData = {
       },
       {
         "cardKey": "cta=two-·-description-—-back-+-next-walkthrough",
+        "demoKey": "tt2-two-cta",
+        "demoControls": tooltipV2DemoControls,
+        "previewHtml": "<div id=\"tt2-preview-tt2-two-cta\"></div>",
         "title": "CTA=two · Description — back + next walkthrough",
         "node": "70:14905",
         "description": "Two-CTA walkthrough step: outline \"Back\" + filled \"Next\". 359 × 136.",
@@ -995,22 +1104,26 @@ export const tooltipV2: ComponentData = {
               {
                 "key": "cta",
                 "value": "two (back + next)",
-                "mono": false
+                "mono": false,
+                "prop": "cta"
               },
               {
                 "key": "icon",
                 "value": "no",
-                "mono": false
+                "mono": false,
+                "prop": "icon"
               },
               {
                 "key": "description",
                 "value": "true",
-                "mono": false
+                "mono": false,
+                "prop": "description"
               },
               {
                 "key": "header",
                 "value": "false",
-                "mono": false
+                "mono": false,
+                "prop": "header"
               },
               {
                 "key": "Variant",
@@ -1111,6 +1224,9 @@ export const tooltipV2: ComponentData = {
       },
       {
         "cardKey": "cta=one-·-description-·-no-header-—-tip-→-single-cta",
+        "demoKey": "tt2-cta-no-header",
+        "demoControls": tooltipV2DemoControls,
+        "previewHtml": "<div id=\"tt2-preview-tt2-cta-no-header\"></div>",
         "title": "CTA=one · Description · no Header — tip → single CTA",
         "node": "70:14906",
         "description": "Body + single CTA, no header. 359 × 136. Uses <code>px-12 / py-6</code> CTA padding — different from the two variants above.",
@@ -1122,22 +1238,26 @@ export const tooltipV2: ComponentData = {
               {
                 "key": "cta",
                 "value": "one",
-                "mono": false
+                "mono": false,
+                "prop": "cta"
               },
               {
                 "key": "icon",
                 "value": "no",
-                "mono": false
+                "mono": false,
+                "prop": "icon"
               },
               {
                 "key": "description",
                 "value": "true",
-                "mono": false
+                "mono": false,
+                "prop": "description"
               },
               {
                 "key": "header",
                 "value": "false",
-                "mono": false
+                "mono": false,
+                "prop": "header"
               },
               {
                 "key": "Variant",

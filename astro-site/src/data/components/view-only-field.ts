@@ -1,4 +1,41 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/view-only-field.js`.
+const viewOnlyFieldDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Size',
+        prop: 'size',
+        defaultValue: 'Default',
+        options: [
+          { value: 'Default', label: 'Default' },
+          { value: 'Large', label: 'Large' },
+        ],
+      },
+      {
+        label: 'hasCheckmark',
+        prop: 'checkmark',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
+        ],
+      },
+      {
+        label: 'hasDescription',
+        prop: 'description',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+    ],
+  },
+];
 
 export const viewOnlyField: ComponentData = {
   "meta": {
@@ -27,7 +64,7 @@ export const viewOnlyField: ComponentData = {
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"64\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <text x=\"20\" y=\"20\" font-size=\"5\" fill=\"currentColor\" opacity=\".15\" font-family=\"system-ui\">Account Details</text>\n          <rect x=\"20\" y=\"26\" width=\"18\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".15\"></rect>\n          <rect x=\"20\" y=\"31\" width=\"38\" height=\"3\" rx=\"1\" fill=\"currentColor\" opacity=\".3\"></rect>\n          <rect x=\"20\" y=\"40\" width=\"18\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".15\"></rect>\n          <rect x=\"20\" y=\"45\" width=\"28\" height=\"3\" rx=\"1\" fill=\"currentColor\" opacity=\".3\"></rect>\n          <rect x=\"85\" y=\"44\" width=\"15\" height=\"5\" rx=\"2.5\" fill=\"#005CE5\" opacity=\".2\"></rect>\n          <rect x=\"20\" y=\"55\" width=\"18\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".15\"></rect>\n          <rect x=\"20\" y=\"60\" width=\"42\" height=\"3\" rx=\"1\" fill=\"currentColor\" opacity=\".3\"></rect>\n          <path d=\"M95 58l2 2 4-4\" stroke=\"#005CE5\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" opacity=\".3\"></path>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"vof-demo-preview\"><svg width=\"360\" height=\"75\" viewBox=\"0 0 360 75\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"0\" y=\"13\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">Label</text><text x=\"0\" y=\"37\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Text</text><text x=\"0\" y=\"55\" font-family=\"BarkAda, system-ui\" font-size=\"10\" font-weight=\"600\" fill=\"#6780A9\">Message content</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">variant</span><select class=\"demo-panel-select\" onchange=\"_vofDemo.variant=this.value;updateViewOnlyFieldDemo()\"><option value=\"Default\" selected=\"\">Default</option><option value=\"with Badge\">with Badge</option><option value=\"with Text Link\">with Text Link</option><option value=\"with Icon\">with Icon</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Size</span><select class=\"demo-panel-select\" onchange=\"_vofDemo.size=this.value;updateViewOnlyFieldDemo()\"><option value=\"Default\" selected=\"\">Default</option><option value=\"Large\">Large</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasCheckmark</span><select class=\"demo-panel-select\" onchange=\"_vofDemo.checkmark=this.value;updateViewOnlyFieldDemo()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasDescription</span><select class=\"demo-panel-select\" onchange=\"_vofDemo.description=this.value;updateViewOnlyFieldDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"vof-demo-preview\"><svg width=\"360\" height=\"75\" viewBox=\"0 0 360 75\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"0\" y=\"13\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">Label</text><text x=\"0\" y=\"37\" font-family=\"Proxima Soft, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Text</text><text x=\"0\" y=\"55\" font-family=\"BarkAda, system-ui\" font-size=\"10\" font-weight=\"600\" fill=\"#6780A9\">Message content</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">variant</span><select class=\"demo-panel-select\" onchange=\"_vofDemo.variant=this.value;updateViewOnlyFieldDemo()\"><option value=\"Default\" selected=\"\">Default</option><option value=\"with Badge\">with Badge</option><option value=\"with Text Link\">with Text Link</option><option value=\"with Icon\">with Icon</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Size</span><select class=\"demo-panel-select\" onchange=\"_vofDemo.size=this.value;updateViewOnlyFieldDemo()\"><option value=\"Default\" selected=\"\">Default</option><option value=\"Large\">Large</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasCheckmark</span><select class=\"demo-panel-select\" onchange=\"_vofDemo.checkmark=this.value;updateViewOnlyFieldDemo()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasDescription</span><select class=\"demo-panel-select\" onchange=\"_vofDemo.description=this.value;updateViewOnlyFieldDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -162,6 +199,8 @@ export const viewOnlyField: ComponentData = {
     "specCards": [
       {
         "cardKey": "vof-spec-default",
+        "demoKey": "default",
+        "demoControls": viewOnlyFieldDemoControls,
         "title": "Default",
         "node": "18403:4521",
         "description": "Label + value only. Used for plain read-only information display.",
@@ -179,6 +218,24 @@ export const viewOnlyField: ComponentData = {
                 "key": "Variant",
                 "value": "Default",
                 "mono": false
+              },
+              {
+                "key": "Size",
+                "value": "Default",
+                "prop": "size",
+                "mono": false
+              },
+              {
+                "key": "hasCheckmark",
+                "value": "false",
+                "prop": "checkmark",
+                "mono": false
+              },
+              {
+                "key": "hasDescription",
+                "value": "true",
+                "prop": "description",
+                "mono": false
               }
             ]
           },
@@ -258,10 +315,12 @@ export const viewOnlyField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"•••• 1234\"</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"•••• 1234\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"360\" height=\"75\" viewBox=\"0 0 360 75\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"0\" y=\"13\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">Label</text><text x=\"0\" y=\"37\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Text</text><text x=\"0\" y=\"55\" font-family=\"BarkAda, system-ui\" font-size=\"10\" font-weight=\"600\" fill=\"#6780A9\">Message content</text></svg>"
+        "previewHtml": "<div id=\"vof-preview-default\"></div>"
       },
       {
         "cardKey": "vof-spec-badge",
+        "demoKey": "badge",
+        "demoControls": viewOnlyFieldDemoControls,
         "title": "with Badge",
         "node": "18403:4533",
         "description": "Label + value + Badge instance in the trailing slot. Uses Badge component (layout=overflow or similar) for status indicators.",
@@ -279,6 +338,24 @@ export const viewOnlyField: ComponentData = {
                 "key": "Variant",
                 "value": "with Badge",
                 "mono": false
+              },
+              {
+                "key": "Size",
+                "value": "Default",
+                "prop": "size",
+                "mono": false
+              },
+              {
+                "key": "hasCheckmark",
+                "value": "false",
+                "prop": "checkmark",
+                "mono": false
+              },
+              {
+                "key": "hasDescription",
+                "value": "true",
+                "prop": "description",
+                "mono": false
               }
             ]
           },
@@ -358,10 +435,12 @@ export const viewOnlyField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"•••• 1234\"</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"•••• 1234\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"360\" height=\"75\" viewBox=\"0 0 360 75\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"0\" y=\"13\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">Label</text><text x=\"0\" y=\"37\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Text</text><rect x=\"300\" y=\"25\" width=\"54\" height=\"16\" rx=\"8\" fill=\"#E5F1FF\"></rect><text x=\"327\" y=\"36\" text-anchor=\"middle\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"11\" font-weight=\"700\" fill=\"#005CE5\">Change</text><text x=\"0\" y=\"55\" font-family=\"BarkAda, system-ui\" font-size=\"10\" font-weight=\"600\" fill=\"#6780A9\">Message content</text></svg>"
+        "previewHtml": "<div id=\"vof-preview-badge\"></div>"
       },
       {
         "cardKey": "vof-spec-textlink",
+        "demoKey": "textlink",
+        "demoControls": viewOnlyFieldDemoControls,
         "title": "with Text Link",
         "node": "18403:4547",
         "description": "Label + value + contextual text link (e.g. \"What is this?\"). Used for helper/learn-more navigation.",
@@ -379,6 +458,24 @@ export const viewOnlyField: ComponentData = {
                 "key": "Variant",
                 "value": "with Text Link",
                 "mono": false
+              },
+              {
+                "key": "Size",
+                "value": "Default",
+                "prop": "size",
+                "mono": false
+              },
+              {
+                "key": "hasCheckmark",
+                "value": "false",
+                "prop": "checkmark",
+                "mono": false
+              },
+              {
+                "key": "hasDescription",
+                "value": "true",
+                "prop": "description",
+                "mono": false
               }
             ]
           },
@@ -458,10 +555,12 @@ export const viewOnlyField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"•••• 1234\"</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"•••• 1234\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"360\" height=\"75\" viewBox=\"0 0 360 75\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"0\" y=\"13\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">Label</text><text x=\"0\" y=\"37\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Text</text><text x=\"360\" y=\"10\" text-anchor=\"end\" font-family=\"BarkAda, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#005CE5\">What is this?</text><text x=\"0\" y=\"55\" font-family=\"BarkAda, system-ui\" font-size=\"10\" font-weight=\"600\" fill=\"#6780A9\">Message content</text></svg>"
+        "previewHtml": "<div id=\"vof-preview-textlink\"></div>"
       },
       {
         "cardKey": "vof-spec-icon",
+        "demoKey": "icon",
+        "demoControls": viewOnlyFieldDemoControls,
         "title": "with Icon",
         "node": "18403:4561",
         "description": "Label + value + 24×24 icon (typically Edit pencil) in the trailing slot. Icon typically navigates to an editable state.",
@@ -479,6 +578,24 @@ export const viewOnlyField: ComponentData = {
                 "key": "Variant",
                 "value": "with Icon",
                 "mono": false
+              },
+              {
+                "key": "Size",
+                "value": "Default",
+                "prop": "size",
+                "mono": false
+              },
+              {
+                "key": "hasCheckmark",
+                "value": "false",
+                "prop": "checkmark",
+                "mono": false
+              },
+              {
+                "key": "hasDescription",
+                "value": "true",
+                "prop": "description",
+                "mono": false
               }
             ]
           },
@@ -558,7 +675,7 @@ export const viewOnlyField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"•••• 1234\"</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"•••• 1234\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"360\" height=\"75\" viewBox=\"0 0 360 75\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"0\" y=\"13\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\">Label</text><text x=\"0\" y=\"37\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Text</text><g transform=\"translate(340, 8)\" stroke=\"#005CE5\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"><path d=\"M12 20h9\"></path><path d=\"M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z\"></path></g><text x=\"0\" y=\"55\" font-family=\"BarkAda, system-ui\" font-size=\"10\" font-weight=\"600\" fill=\"#6780A9\">Message content</text></svg>"
+        "previewHtml": "<div id=\"vof-preview-icon\"></div>"
       }
     ],
     "colorsTables": [

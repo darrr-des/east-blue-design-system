@@ -234,7 +234,7 @@ export const button: ComponentData = {
         "title": "Filled",
         "node": "17104:184843",
         "description": "Solid background with contrasting label. Primary action style. Colors change via Appearance variable mode.",
-        "previewHtml": "<button class=\"demo-btn demo-btn-primary\" id=\"spec-filled-btn\" style=\"display:inline-flex;align-items:center;gap:8px;\"><svg id=\"spec-filled-leading\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg><span>Label</span><svg id=\"spec-filled-trailing\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg></button>",
+        "previewHtml": "<button class=\"demo-btn demo-btn-primary\" id=\"spec-filled-btn\" style=\"display:inline-flex;align-items:center;gap:8px;\"><svg id=\"spec-filled-leading\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg><span>Button</span><svg id=\"spec-filled-trailing\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg></button>",
         "sections": [
           {
             "label": "Properties",
@@ -250,29 +250,88 @@ export const button: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Default bg",     "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
-              { "key": "Default label",  "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
-              { "key": "Pressed bg",     "value": "#2340A9", "token": "button/primary/brand/pressed/bg" },
-              { "key": "Disabled bg",    "value": "#9BC5FD", "token": "button/primary/brand/disabled/bg" }
+              { "key": "Default bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg",
+                "variants": {
+                  "appearance:destructive": { "value": "#D81E1E", "token": "button/primary/destructive/enabled/bg" },
+                  "appearance:white":       { "value": "#FFFFFF", "token": "button/primary/white/enabled/bg" },
+                  "appearance:subtle":      { "value": "#E5F1FF", "token": "button/primary/subtle/enabled/bg" }
+                }
+              },
+              { "key": "Default label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label",
+                "variants": {
+                  "appearance:destructive": { "value": "#FFFFFF", "token": "button/primary/destructive/enabled/label" },
+                  "appearance:white":       { "value": "#005CE5", "token": "button/primary/white/enabled/label" },
+                  "appearance:subtle":      { "value": "#005CE5", "token": "button/primary/subtle/enabled/label" }
+                }
+              },
+              { "key": "Pressed bg", "value": "#2340A9", "token": "button/primary/brand/pressed/bg",
+                "variants": {
+                  "appearance:destructive": { "value": "#B01818", "token": "button/primary/destructive/pressed/bg" },
+                  "appearance:white":       { "value": "#EEF2F9", "token": "button/primary/white/pressed/bg" },
+                  "appearance:subtle":      { "value": "#D2E5FF", "token": "button/primary/subtle/pressed/bg" }
+                }
+              },
+              { "key": "Disabled bg", "value": "#9BC5FD", "token": "button/primary/brand/disabled/bg",
+                "variants": {
+                  "appearance:destructive": { "value": "#F5A3A3", "token": "button/primary/destructive/disabled/bg" },
+                  "appearance:white":       { "value": "#F5F7FA", "token": "button/primary/white/disabled/bg" },
+                  "appearance:subtle":      { "value": "#EEF5FF", "token": "button/primary/subtle/disabled/bg" }
+                }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Height",    "value": "50px",  "mono": true },
-              { "key": "Padding H", "value": "20px",  "mono": true },
-              { "key": "Padding V", "value": "12px",  "mono": true },
-              { "key": "Radius",    "value": "99px",  "mono": true }
+              { "key": "Height", "value": "50px", "mono": true,
+                "variants": {
+                  "size:medium":  { "value": "48px" },
+                  "size:small":   { "value": "36px" },
+                  "size:compact": { "value": "28px" },
+                  "size:xsmall":  { "value": "24px" }
+                }
+              },
+              { "key": "Padding H", "value": "20px", "mono": true,
+                "variants": {
+                  "size:medium":  { "value": "16px" },
+                  "size:small":   { "value": "12px" },
+                  "size:compact": { "value": "12px" },
+                  "size:xsmall":  { "value": "10px" }
+                }
+              },
+              { "key": "Padding V", "value": "16px", "mono": true,
+                "variants": {
+                  "size:medium":  { "value": "12px" },
+                  "size:small":   { "value": "8px" },
+                  "size:compact": { "value": "5px" },
+                  "size:xsmall":  { "value": "4px" }
+                }
+              },
+              { "key": "Radius", "value": "99px", "mono": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Font",       "value": "HeyMeow Rnd Bold", "mono": true },
-              { "key": "Text Style", "value": "Primary/Label/Large", "mono": true },
-              { "key": "Size",       "value": "18px", "mono": true },
+              { "key": "Font",       "value": "Proxima Soft Bold", "mono": true },
+              { "key": "Text Style", "value": "Primary/Label/Large", "mono": true,
+                "variants": {
+                  "size:medium":  { "value": "Primary/Label/Base" },
+                  "size:small":   { "value": "Primary/Label/Base" },
+                  "size:compact": { "value": "Primary/Label/Small" },
+                  "size:xsmall":  { "value": "Primary/Label/Fine" }
+                }
+              },
+              { "key": "Size", "value": "18px", "mono": true,
+                "variants": {
+                  "size:medium":  { "value": "16px" },
+                  "size:small":   { "value": "16px" },
+                  "size:compact": { "value": "14px" },
+                  "size:xsmall":  { "value": "12px" }
+                }
+              },
               { "key": "Tracking",   "value": "0.25px", "mono": true }
             ]
           }
@@ -287,7 +346,7 @@ export const button: ComponentData = {
         "title": "Outline",
         "node": "17104:184852",
         "description": "Transparent background with border and accent-colored label. Secondary action style.",
-        "previewHtml": "<button class=\"demo-btn demo-btn-outlined\" id=\"spec-outline-btn\" style=\"display:inline-flex;align-items:center;gap:8px;\"><svg id=\"spec-outline-leading\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg><span>Label</span><svg id=\"spec-outline-trailing\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg></button>",
+        "previewHtml": "<button class=\"demo-btn demo-btn-outlined\" id=\"spec-outline-btn\" style=\"display:inline-flex;align-items:center;gap:8px;\"><svg id=\"spec-outline-leading\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg><span>Button</span><svg id=\"spec-outline-trailing\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg></button>",
         "sections": [
           {
             "label": "Properties",
@@ -303,19 +362,56 @@ export const button: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Default border",  "value": "#005CE5", "token": "button/secondary/brand/enabled/border" },
-              { "key": "Default label",   "value": "#005CE5", "token": "button/secondary/brand/enabled/label" },
-              { "key": "Pressed border",  "value": "#2340A9", "token": "button/secondary/brand/pressed/border" },
-              { "key": "Disabled border", "value": "#9BC5FD", "token": "button/secondary/brand/disabled/border" }
+              { "key": "Default border", "value": "#005CE5", "token": "button/secondary/brand/enabled/border",
+                "variants": {
+                  "appearance:destructive": { "value": "#D81E1E", "token": "button/secondary/destructive/enabled/border" }
+                }
+              },
+              { "key": "Default label", "value": "#005CE5", "token": "button/secondary/brand/enabled/label",
+                "variants": {
+                  "appearance:destructive": { "value": "#D81E1E", "token": "button/secondary/destructive/enabled/label" }
+                }
+              },
+              { "key": "Pressed border", "value": "#2340A9", "token": "button/secondary/brand/pressed/border",
+                "variants": {
+                  "appearance:destructive": { "value": "#B01818", "token": "button/secondary/destructive/pressed/border" }
+                }
+              },
+              { "key": "Disabled border", "value": "#9BC5FD", "token": "button/secondary/brand/disabled/border",
+                "variants": {
+                  "appearance:destructive": { "value": "#F5A3A3", "token": "button/secondary/destructive/disabled/border" }
+                }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Height",    "value": "50px",  "mono": true },
-              { "key": "Padding H", "value": "20px",  "mono": true },
-              { "key": "Padding V", "value": "12px",  "mono": true },
+              { "key": "Height", "value": "50px", "mono": true,
+                "variants": {
+                  "size:medium":  { "value": "48px" },
+                  "size:small":   { "value": "36px" },
+                  "size:compact": { "value": "28px" },
+                  "size:xsmall":  { "value": "24px" }
+                }
+              },
+              { "key": "Padding H", "value": "20px", "mono": true,
+                "variants": {
+                  "size:medium":  { "value": "16px" },
+                  "size:small":   { "value": "12px" },
+                  "size:compact": { "value": "12px" },
+                  "size:xsmall":  { "value": "10px" }
+                }
+              },
+              { "key": "Padding V", "value": "16px", "mono": true,
+                "variants": {
+                  "size:medium":  { "value": "12px" },
+                  "size:small":   { "value": "8px" },
+                  "size:compact": { "value": "5px" },
+                  "size:xsmall":  { "value": "4px" }
+                }
+              },
               { "key": "Border",    "value": "1.5px solid", "mono": true },
               { "key": "Radius",    "value": "99px",  "mono": true }
             ]
@@ -324,9 +420,23 @@ export const button: ComponentData = {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Font",       "value": "HeyMeow Rnd Bold", "mono": true },
-              { "key": "Text Style", "value": "Primary/Label/Large", "mono": true },
-              { "key": "Size",       "value": "18px", "mono": true },
+              { "key": "Font",       "value": "Proxima Soft Bold", "mono": true },
+              { "key": "Text Style", "value": "Primary/Label/Large", "mono": true,
+                "variants": {
+                  "size:medium":  { "value": "Primary/Label/Base" },
+                  "size:small":   { "value": "Primary/Label/Base" },
+                  "size:compact": { "value": "Primary/Label/Small" },
+                  "size:xsmall":  { "value": "Primary/Label/Fine" }
+                }
+              },
+              { "key": "Size", "value": "18px", "mono": true,
+                "variants": {
+                  "size:medium":  { "value": "16px" },
+                  "size:small":   { "value": "16px" },
+                  "size:compact": { "value": "14px" },
+                  "size:xsmall":  { "value": "12px" }
+                }
+              },
               { "key": "Tracking",   "value": "0.25px", "mono": true }
             ]
           }
@@ -341,7 +451,7 @@ export const button: ComponentData = {
         "title": "Text",
         "node": "17104:184855",
         "description": "No background or border. Label only. Tertiary action style.",
-        "previewHtml": "<button class=\"demo-btn\" style=\"background:transparent;color:#005CE5;border:none;padding:14px 24px;border-radius:99px;font-weight:700;display:inline-flex;align-items:center;gap:8px;\" id=\"spec-text-btn\"><svg id=\"spec-text-leading\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg><span>Label</span><svg id=\"spec-text-trailing\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg></button>",
+        "previewHtml": "<button class=\"demo-btn\" style=\"background:transparent;color:#005CE5;border:none;padding:14px 24px;border-radius:99px;font-weight:700;display:inline-flex;align-items:center;gap:8px;\" id=\"spec-text-btn\"><svg id=\"spec-text-leading\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg><span>Button</span><svg id=\"spec-text-trailing\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"display:none;flex-shrink:0;\"><path d=\"M4.26087 12.306C2.57971 10.6347 2.57971 7.92488 4.26087 6.25352C5.94203 4.58216 8.66772 4.58216 10.3489 6.25352L12 7.89503L13.6511 6.25355C15.3323 4.58219 18.058 4.58219 19.7391 6.25355C21.4203 7.92491 21.4203 10.6347 19.7391 12.3061L13.3883 18.6003C12.607 19.3747 11.3471 19.3727 10.5682 18.596L4.26087 12.306Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"></path></svg></button>",
         "sections": [
           {
             "label": "Properties",
@@ -357,18 +467,51 @@ export const button: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Default label",  "value": "#005CE5", "token": "button/tertiary/brand/enabled/label" },
-              { "key": "Pressed label",  "value": "#2340A9", "token": "button/tertiary/brand/pressed/label" },
-              { "key": "Disabled label", "value": "#9BC5FD", "token": "button/tertiary/brand/disabled/label" }
+              { "key": "Default label", "value": "#005CE5", "token": "button/tertiary/brand/enabled/label",
+                "variants": {
+                  "appearance:destructive": { "value": "#D81E1E", "token": "button/tertiary/destructive/enabled/label" }
+                }
+              },
+              { "key": "Pressed label", "value": "#2340A9", "token": "button/tertiary/brand/pressed/label",
+                "variants": {
+                  "appearance:destructive": { "value": "#B01818", "token": "button/tertiary/destructive/pressed/label" }
+                }
+              },
+              { "key": "Disabled label", "value": "#9BC5FD", "token": "button/tertiary/brand/disabled/label",
+                "variants": {
+                  "appearance:destructive": { "value": "#F5A3A3", "token": "button/tertiary/destructive/disabled/label" }
+                }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Height",    "value": "50px", "mono": true },
-              { "key": "Padding H", "value": "8px",  "mono": true },
-              { "key": "Padding V", "value": "12px", "mono": true },
+              { "key": "Height", "value": "50px", "mono": true,
+                "variants": {
+                  "size:medium":  { "value": "48px" },
+                  "size:small":   { "value": "36px" },
+                  "size:compact": { "value": "28px" },
+                  "size:xsmall":  { "value": "24px" }
+                }
+              },
+              { "key": "Padding H", "value": "20px", "mono": true,
+                "variants": {
+                  "size:medium":  { "value": "16px" },
+                  "size:small":   { "value": "12px" },
+                  "size:compact": { "value": "12px" },
+                  "size:xsmall":  { "value": "10px" }
+                }
+              },
+              { "key": "Padding V", "value": "16px", "mono": true,
+                "variants": {
+                  "size:medium":  { "value": "12px" },
+                  "size:small":   { "value": "8px" },
+                  "size:compact": { "value": "5px" },
+                  "size:xsmall":  { "value": "4px" }
+                }
+              },
               { "key": "Radius",    "value": "99px", "mono": true }
             ]
           },
@@ -376,9 +519,23 @@ export const button: ComponentData = {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Font",       "value": "HeyMeow Rnd Bold", "mono": true },
-              { "key": "Text Style", "value": "Primary/Label/Large", "mono": true },
-              { "key": "Size",       "value": "18px", "mono": true },
+              { "key": "Font",       "value": "Proxima Soft Bold", "mono": true },
+              { "key": "Text Style", "value": "Primary/Label/Large", "mono": true,
+                "variants": {
+                  "size:medium":  { "value": "Primary/Label/Base" },
+                  "size:small":   { "value": "Primary/Label/Base" },
+                  "size:compact": { "value": "Primary/Label/Small" },
+                  "size:xsmall":  { "value": "Primary/Label/Fine" }
+                }
+              },
+              { "key": "Size", "value": "18px", "mono": true,
+                "variants": {
+                  "size:medium":  { "value": "16px" },
+                  "size:small":   { "value": "16px" },
+                  "size:compact": { "value": "14px" },
+                  "size:xsmall":  { "value": "12px" }
+                }
+              },
               { "key": "Tracking",   "value": "0.25px", "mono": true }
             ]
           }

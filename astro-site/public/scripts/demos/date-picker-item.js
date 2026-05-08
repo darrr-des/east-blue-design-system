@@ -79,23 +79,104 @@ function _dpiFramedCell(type, state) {
 function updateDatePickerItemDemo() {
   var demo = document.getElementById('dpi-demo-preview');
   if (demo) demo.innerHTML = _dpiFramedCell(_dpiDemo.type, _dpiDemo.state);
-  var specs = [
-    { id: 'dpi-default-preview',           type: 'Default',        state: 'Enabled'  },
-    { id: 'dpi-today-preview',             type: 'Today',          state: 'Enabled'  },
-    { id: 'dpi-selected-preview',          type: 'Selected',       state: 'Enabled'  },
-    { id: 'dpi-range-preview',             type: 'Range (Middle)', state: 'Enabled'  },
-    { id: 'dpi-prevnext-preview',          type: 'Prev/Next',      state: 'Enabled'  },
-    { id: 'dpi-default-disabled-preview',  type: 'Default',        state: 'Disabled' },
-    { id: 'dpi-today-disabled-preview',    type: 'Today',          state: 'Disabled' }
-  ];
-  specs.forEach(function(s) {
-    var el = document.getElementById(s.id);
-    if (el) el.innerHTML = _dpiFramedCell(s.type, s.state);
+}
+
+/* ── Spec card state (per-card, drives previews + DEV code) ──────── */
+var _specCards = {
+  'default':          { type: 'Default',        state: 'Enabled'  },
+  'today':            { type: 'Today',          state: 'Enabled'  },
+  'selected':         { type: 'Selected',       state: 'Enabled'  },
+  'range':            { type: 'Range (Middle)', state: 'Enabled'  },
+  'prevnext':         { type: 'Prev/Next',      state: 'Enabled'  },
+  'default-disabled': { type: 'Default',        state: 'Disabled' },
+  'today-disabled':   { type: 'Today',          state: 'Disabled' }
+};
+window._specCards = _specCards;
+
+/* ── Code snippet builders (called by updateSpecCard + switchCodeTab) ── */
+function _dpiSwiftStateDot(type) {
+  if (type === 'Today')          return '.today';
+  if (type === 'Selected')       return '.selected';
+  if (type === 'Range (Middle)') return '.inRange';
+  if (type === 'Prev/Next')      return '.adjacent';
+  return '.default';
+}
+
+function _dpiComposeStateName(type) {
+  if (type === 'Today')          return 'Today';
+  if (type === 'Selected')       return 'Selected';
+  if (type === 'Range (Middle)') return 'InRange';
+  if (type === 'Prev/Next')      return 'Adjacent';
+  return 'Default';
+}
+
+function buildSwiftSnippet(type, card) {
+  var lines = [];
+  lines.push('EBDayCell(date)');
+  lines.push('    .ebState(' + _dpiSwiftStateDot(card.type) + ')');
+  if (card.state === 'Disabled') {
+    lines.push('    .disabled(true)');
+  }
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var lines = [];
+  lines.push('EBDayCell(');
+  lines.push('    date = date,');
+  if (card.state === 'Disabled') {
+    lines.push('    state = EBDayState.' + _dpiComposeStateName(card.type) + ',');
+    lines.push('    enabled = false');
+  } else {
+    lines.push('    state = EBDayState.' + _dpiComposeStateName(card.type));
+  }
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+/* ── updateSpecCard — canonical signature ───────────────────────────── */
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update Properties text — data-sp="${cardStyle}-${prop}" */
+  var spType = document.querySelector('[data-sp="' + cardStyle + '-type"]');
+  if (spType) spType.textContent = card.type;
+  var spState = document.querySelector('[data-sp="' + cardStyle + '-state"]');
+  if (spState) spState.textContent = (card.state === 'Disabled' ? 'true' : 'false');
+
+  /* Update DEV code — always */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+window.updateSpecCard = updateSpecCard;
+
+function _dpiInitSpecCards() {
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'type', _specCards[k].type);
   });
 }
 
 function _dpiInit() {
   updateDatePickerItemDemo();
+  _dpiInitSpecCards();
 }
 
 if (document.readyState === 'loading') {
@@ -103,3 +184,4 @@ if (document.readyState === 'loading') {
 } else {
   _dpiInit();
 }
+document.addEventListener('astro:page-load', _dpiInit);

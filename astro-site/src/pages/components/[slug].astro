@@ -97,7 +97,7 @@ const hasChangelog = data.changelog.length > 0;
               {data.overview.livePreviewHtml && (
                 <>
                   <div class="sub-heading" id={`${data.meta.slug}-preview`}>Live Preview</div>
-                  <div class="demo-panel" set:html={data.overview.livePreviewHtml} />
+                  <div class="demo-panel eb-preview-scope" set:html={data.overview.livePreviewHtml} />
                 </>
               )}
               {data.overview.traits.length > 0 && (

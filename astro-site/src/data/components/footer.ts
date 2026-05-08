@@ -1,4 +1,55 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/footer.js`.
+const footerDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Variant',
+        prop: 'variant',
+        options: [
+          { value: '1', label: '1 · Powered-by + disclaimer + link' },
+          { value: '2', label: '2 · Acknowledgement + GCash×Partner' },
+          { value: '3', label: '3 · Help-center link (center)' },
+          { value: '4', label: '4 · GCash×Partner only (center)' },
+          { value: '5', label: '5 · Link + GCash×Partner' },
+          { value: '6', label: '6 · Powered-by Bayad + link' },
+          { value: '7', label: '7 · In partnership with' },
+        ],
+      },
+      {
+        label: 'Alignment',
+        prop: 'alignment',
+        options: [
+          { value: 'left', label: 'left' },
+          { value: 'center', label: 'center' },
+        ],
+      },
+      {
+        label: 'Description',
+        prop: 'description',
+        options: [
+          { value: 'none', label: 'none' },
+          { value: 'default', label: 'default' },
+          { value: 'with-link', label: 'with link' },
+        ],
+      },
+      {
+        label: 'Partner Logos',
+        prop: 'partnerLogos',
+        options: [
+          { value: 'none', label: 'none' },
+          { value: 'gcash-x', label: 'GCash × partner' },
+          { value: 'grouped', label: 'grouped' },
+          { value: 'powered-by', label: 'powered-by row' },
+        ],
+      },
+    ],
+  },
+];
 
 export const footer: ComponentData = {
   "meta": {
@@ -187,43 +238,39 @@ export const footer: ComponentData = {
     "specCards": [
       {
         "cardKey": "variant-1-·-powered-by-+-disclaimer-+-help-link-(left)",
+        "demoKey": "v1",
+        "demoControls": footerDemoControls,
         "title": "Variant 1 · Powered-by + disclaimer + help link (left)",
         "node": "21:215191",
         "description": "Left-aligned column: \"Powered by\" label, Fuse logo, dense regulatory disclaimer, help-center link. Used at the end of GLoan flows.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"footer-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"footer-spec-1\"><div class=\"eb-preview eb-preview-footer\" data-variant=\"1\"><div class=\"eb-preview-footer__row\"><div class=\"eb-preview-footer__powered-col\"><span class=\"eb-preview-footer__label\">Powered by</span><span class=\"eb-preview-footer__logo eb-preview-footer__logo--fuse\"><svg viewBox=\"0 0 72 18\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"0\" y=\"14\" font-family=\"Inter, Arial, sans-serif\" font-weight=\"800\" font-size=\"14\" fill=\"#F15B2E\">FUSE</text><rect x=\"38\" y=\"4\" width=\"10\" height=\"10\" transform=\"rotate(45 43 9)\" fill=\"#F15B2E\"></rect></svg></span></div><div class=\"eb-preview-footer__body\"><p class=\"eb-preview-footer__desc\">Fuse Lending, Inc. SEC Reg. No. CS201617622,</p><p class=\"eb-preview-footer__desc\">Cert. of Authority to Operate Lending Company, (CA) No. 1897</p><p class=\"eb-preview-footer__desc eb-preview-footer__desc--spaced\">Learn about the Product Information &amp; Support:</p><a class=\"eb-preview-footer__link\" href=\"#\" onclick=\"return false;\">GLoan on Help Center</a></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
+                "key": "Variant",
+                "value": "1",
+                "prop": "variant",
+                "mono": true
+              },
+              {
                 "key": "description",
                 "value": "none",
-                "mono": true
-              },
-              {
-                "key": "label",
-                "value": "no",
-                "mono": true
-              },
-              {
-                "key": "gcash x partner",
-                "value": "no",
+                "prop": "description",
                 "mono": true
               },
               {
                 "key": "alignment",
                 "value": "left",
+                "prop": "alignment",
                 "mono": true
               },
               {
-                "key": "with partner",
-                "value": "yes",
-                "mono": true
-              },
-              {
-                "key": "grouped logos",
-                "value": "no",
+                "key": "partner logos",
+                "value": "powered-by",
+                "prop": "partnerLogos",
                 "mono": true
               }
             ]
@@ -291,38 +338,39 @@ export const footer: ComponentData = {
       },
       {
         "cardKey": "variant-2-·-acknowledgement-disclaimer-+-gcash×partner-(left)",
+        "demoKey": "v2",
+        "demoControls": footerDemoControls,
         "title": "Variant 2 · Acknowledgement disclaimer + GCash×Partner (left)",
         "node": "21:215193",
         "description": "Acknowledgement text above a GCash × CIMB logo pair. Used to confirm credit disclosure.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"footer-spec-2\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"footer-spec-2\"><div class=\"eb-preview eb-preview-footer\" data-variant=\"2\"><p class=\"eb-preview-footer__desc\">I acknowledge receipt of this statement prior to the consummation of the credit transaction by availing of this loan.</p><div class=\"eb-preview-footer__logos eb-preview-footer__logos--left\"><span class=\"eb-preview-footer__logo eb-preview-footer__logo--gcash\"><svg viewBox=\"0 0 97 32\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"16\" r=\"9\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"3\"></circle><path d=\"M12 16h7\" stroke=\"#005CE5\" stroke-width=\"3\" stroke-linecap=\"round\"></path><text x=\"26\" y=\"22\" font-family=\"Inter, Arial, sans-serif\" font-weight=\"700\" font-size=\"16\" fill=\"#0A2757\">GCash</text></svg></span><span class=\"eb-preview-footer__logo eb-preview-footer__logo--cimb\"><svg viewBox=\"0 0 88 17\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"2\" width=\"42\" height=\"13\" fill=\"#A6192E\"></rect><text x=\"4\" y=\"12\" font-family=\"Inter, Arial, sans-serif\" font-weight=\"800\" font-size=\"10\" fill=\"#FFFFFF\">CIMB</text><text x=\"46\" y=\"12\" font-family=\"Inter, Arial, sans-serif\" font-weight=\"800\" font-size=\"10\" fill=\"#0A2757\">BANK</text></svg></span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "description",
-                "value": "default",
+                "key": "Variant",
+                "value": "2",
+                "prop": "variant",
                 "mono": true
               },
               {
-                "key": "gcash x partner",
-                "value": "yes",
+                "key": "description",
+                "value": "default",
+                "prop": "description",
                 "mono": true
               },
               {
                 "key": "alignment",
                 "value": "left",
+                "prop": "alignment",
                 "mono": true
               },
               {
-                "key": "with partner",
-                "value": "no",
-                "mono": true
-              },
-              {
-                "key": "grouped logos",
-                "value": "no",
+                "key": "partner logos",
+                "value": "gcash-x",
+                "prop": "partnerLogos",
                 "mono": true
               }
             ]
@@ -384,10 +432,12 @@ export const footer: ComponentData = {
       },
       {
         "cardKey": "variant-3-·-help-center-link-(center)",
+        "demoKey": "v3",
+        "demoControls": footerDemoControls,
         "title": "Variant 3 · Help Center link (center)",
         "node": "21:215195",
         "description": "Two centered lines: preamble + help-center link. Used at the foot of GSave.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"footer-spec-3\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"footer-spec-3\"><div class=\"eb-preview eb-preview-footer eb-preview-footer--center\" data-variant=\"3\"><p class=\"eb-preview-footer__desc\">Get information and product support.</p><a class=\"eb-preview-footer__link\" href=\"#\" onclick=\"return false;\">Find GSave in the Help Center</a></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -395,8 +445,27 @@ export const footer: ComponentData = {
             "rows": [
               {
                 "key": "Variant",
-                "value": "Variant 3 · Help Center link (center)",
-                "mono": false
+                "value": "3",
+                "prop": "variant",
+                "mono": true
+              },
+              {
+                "key": "description",
+                "value": "with-link",
+                "prop": "description",
+                "mono": true
+              },
+              {
+                "key": "alignment",
+                "value": "center",
+                "prop": "alignment",
+                "mono": true
+              },
+              {
+                "key": "partner logos",
+                "value": "none",
+                "prop": "partnerLogos",
+                "mono": true
               }
             ]
           },
@@ -463,10 +532,12 @@ export const footer: ComponentData = {
       },
       {
         "cardKey": "variant-4-·-gcash-×-partner-logos-only-(center)",
+        "demoKey": "v4",
+        "demoControls": footerDemoControls,
         "title": "Variant 4 · GCash × Partner logos only (center)",
         "node": "21:215197",
         "description": "Minimal centered variant — GCash + partner logo pair, no text. Disclosure compliance only.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"footer-spec-4\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"footer-spec-4\"><div class=\"eb-preview eb-preview-footer eb-preview-footer--center\" data-variant=\"4\"><div class=\"eb-preview-footer__logos eb-preview-footer__logos--center\"><span class=\"eb-preview-footer__logo eb-preview-footer__logo--gcash\"><svg viewBox=\"0 0 97 32\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"16\" r=\"9\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"3\"></circle><path d=\"M12 16h7\" stroke=\"#005CE5\" stroke-width=\"3\" stroke-linecap=\"round\"></path><text x=\"26\" y=\"22\" font-family=\"Inter, Arial, sans-serif\" font-weight=\"700\" font-size=\"16\" fill=\"#0A2757\">GCash</text></svg></span><span class=\"eb-preview-footer__logo eb-preview-footer__logo--cimb\"><svg viewBox=\"0 0 88 17\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"2\" width=\"42\" height=\"13\" fill=\"#A6192E\"></rect><text x=\"4\" y=\"12\" font-family=\"Inter, Arial, sans-serif\" font-weight=\"800\" font-size=\"10\" fill=\"#FFFFFF\">CIMB</text><text x=\"46\" y=\"12\" font-family=\"Inter, Arial, sans-serif\" font-weight=\"800\" font-size=\"10\" fill=\"#0A2757\">BANK</text></svg></span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -474,8 +545,27 @@ export const footer: ComponentData = {
             "rows": [
               {
                 "key": "Variant",
-                "value": "Variant 4 · GCash × Partner logos only (center)",
-                "mono": false
+                "value": "4",
+                "prop": "variant",
+                "mono": true
+              },
+              {
+                "key": "description",
+                "value": "none",
+                "prop": "description",
+                "mono": true
+              },
+              {
+                "key": "alignment",
+                "value": "center",
+                "prop": "alignment",
+                "mono": true
+              },
+              {
+                "key": "partner logos",
+                "value": "gcash-x",
+                "prop": "partnerLogos",
+                "mono": true
               }
             ]
           },
@@ -542,10 +632,12 @@ export const footer: ComponentData = {
       },
       {
         "cardKey": "variant-5-·-link-+-gcash-×-partner-(left)",
+        "demoKey": "v5",
+        "demoControls": footerDemoControls,
         "title": "Variant 5 · Link + GCash × Partner (left)",
         "node": "21:215199",
         "description": "Left-aligned: help-center link on top, GCash × CIMB pair below. Used at the foot of GCredit.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"footer-spec-5\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"footer-spec-5\"><div class=\"eb-preview eb-preview-footer\" data-variant=\"5\"><p class=\"eb-preview-footer__desc\">Learn about the Product Information &amp; Support:</p><a class=\"eb-preview-footer__link\" href=\"#\" onclick=\"return false;\">GCredit on Help Center</a><div class=\"eb-preview-footer__logos eb-preview-footer__logos--left\"><span class=\"eb-preview-footer__logo eb-preview-footer__logo--gcash\"><svg viewBox=\"0 0 97 32\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"16\" r=\"9\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"3\"></circle><path d=\"M12 16h7\" stroke=\"#005CE5\" stroke-width=\"3\" stroke-linecap=\"round\"></path><text x=\"26\" y=\"22\" font-family=\"Inter, Arial, sans-serif\" font-weight=\"700\" font-size=\"16\" fill=\"#0A2757\">GCash</text></svg></span><span class=\"eb-preview-footer__logo eb-preview-footer__logo--cimb\"><svg viewBox=\"0 0 88 17\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"2\" width=\"42\" height=\"13\" fill=\"#A6192E\"></rect><text x=\"4\" y=\"12\" font-family=\"Inter, Arial, sans-serif\" font-weight=\"800\" font-size=\"10\" fill=\"#FFFFFF\">CIMB</text><text x=\"46\" y=\"12\" font-family=\"Inter, Arial, sans-serif\" font-weight=\"800\" font-size=\"10\" fill=\"#0A2757\">BANK</text></svg></span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -553,8 +645,27 @@ export const footer: ComponentData = {
             "rows": [
               {
                 "key": "Variant",
-                "value": "Variant 5 · Link + GCash × Partner (left)",
-                "mono": false
+                "value": "5",
+                "prop": "variant",
+                "mono": true
+              },
+              {
+                "key": "description",
+                "value": "with-link",
+                "prop": "description",
+                "mono": true
+              },
+              {
+                "key": "alignment",
+                "value": "left",
+                "prop": "alignment",
+                "mono": true
+              },
+              {
+                "key": "partner logos",
+                "value": "gcash-x",
+                "prop": "partnerLogos",
+                "mono": true
               }
             ]
           },
@@ -621,10 +732,12 @@ export const footer: ComponentData = {
       },
       {
         "cardKey": "variant-6-·-powered-by-row-+-link-(left)",
+        "demoKey": "v6",
+        "demoControls": footerDemoControls,
         "title": "Variant 6 · Powered-by row + link (left)",
         "node": "21:215201",
         "description": "\"Powered by Bayad Partners\" row on top, help-center link underneath.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"footer-spec-6\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"footer-spec-6\"><div class=\"eb-preview eb-preview-footer\" data-variant=\"6\"><div class=\"eb-preview-footer__powered-row\"><span class=\"eb-preview-footer__label\">Powered by</span><span class=\"eb-preview-footer__logo eb-preview-footer__logo--bayad\"><svg viewBox=\"0 0 59 16\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"7\" cy=\"8\" r=\"5\" fill=\"#E4002B\"></circle><text x=\"14\" y=\"12\" font-family=\"Inter, Arial, sans-serif\" font-weight=\"800\" font-size=\"10\" fill=\"#0A2757\">Bayad</text></svg></span></div><p class=\"eb-preview-footer__desc\">Learn about the Product Information &amp; Support:</p><a class=\"eb-preview-footer__link\" href=\"#\" onclick=\"return false;\">GCredit on Help Center</a></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -632,8 +745,27 @@ export const footer: ComponentData = {
             "rows": [
               {
                 "key": "Variant",
-                "value": "Variant 6 · Powered-by row + link (left)",
-                "mono": false
+                "value": "6",
+                "prop": "variant",
+                "mono": true
+              },
+              {
+                "key": "description",
+                "value": "with-link",
+                "prop": "description",
+                "mono": true
+              },
+              {
+                "key": "alignment",
+                "value": "left",
+                "prop": "alignment",
+                "mono": true
+              },
+              {
+                "key": "partner logos",
+                "value": "powered-by",
+                "prop": "partnerLogos",
+                "mono": true
               }
             ]
           },
@@ -700,10 +832,12 @@ export const footer: ComponentData = {
       },
       {
         "cardKey": "variant-7-·-\"in-partnership-with\"-·-grouped-logos-(center)",
+        "demoKey": "v7",
+        "demoControls": footerDemoControls,
         "title": "Variant 7 · \"In partnership with\" · grouped logos (center)",
         "node": "21:215203",
         "description": "Tiny header label above a centered GCash + PDAX logo pair. Used in crypto/partnership flows.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"footer-spec-7\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"footer-spec-7\"><div class=\"eb-preview eb-preview-footer eb-preview-footer--center\" data-variant=\"7\"><p class=\"eb-preview-footer__tiny\">In partnership with</p><div class=\"eb-preview-footer__logos eb-preview-footer__logos--center\"><span class=\"eb-preview-footer__logo eb-preview-footer__logo--gcash\"><svg viewBox=\"0 0 97 32\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"16\" r=\"9\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"3\"></circle><path d=\"M12 16h7\" stroke=\"#005CE5\" stroke-width=\"3\" stroke-linecap=\"round\"></path><text x=\"26\" y=\"22\" font-family=\"Inter, Arial, sans-serif\" font-weight=\"700\" font-size=\"16\" fill=\"#0A2757\">GCash</text></svg></span><span class=\"eb-preview-footer__logo eb-preview-footer__logo--pdax\"><svg viewBox=\"0 0 97 29\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M6 4 L18 14 L6 24 Z\" fill=\"#00A859\"></path><text x=\"26\" y=\"20\" font-family=\"Inter, Arial, sans-serif\" font-weight=\"800\" font-size=\"16\" fill=\"#0A2757\">PDAX</text></svg></span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -711,18 +845,27 @@ export const footer: ComponentData = {
             "rows": [
               {
                 "key": "Variant",
-                "value": "In partnership with",
-                "mono": false
+                "value": "7",
+                "prop": "variant",
+                "mono": true
               },
               {
-                "key": "Logos",
-                "value": "grouped",
-                "mono": false
+                "key": "description",
+                "value": "none",
+                "prop": "description",
+                "mono": true
               },
               {
-                "key": "Alignment",
+                "key": "alignment",
                 "value": "center",
-                "mono": false
+                "prop": "alignment",
+                "mono": true
+              },
+              {
+                "key": "partner logos",
+                "value": "grouped",
+                "prop": "partnerLogos",
+                "mono": true
               }
             ]
           },
@@ -768,7 +911,21 @@ export const footer: ComponentData = {
         "compose": "<span class=\"syn-type\">EBFooter</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"In partnership with\"</span><span class=\"syn-punc\">,</span>\n    partnerLogos <span class=\"syn-eq\">=</span> logos<span class=\"syn-punc\">,</span>\n    alignment <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFooterAlignment</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Center</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: (() => {
+      // All seven footer cards share the same palette; only structural roles differ.
+      const rows = [
+        { role: 'Surface',     token: 'footer/color/bg',          value: '#FFFFFF' },
+        { role: 'Label',       token: 'footer/color/label',       value: '#90A8D0' },
+        { role: 'Description', token: 'footer/color/description', value: '#6780A9' },
+        { role: 'Link',        token: 'footer/color/label-link',  value: '#005CE5' },
+      ];
+      const variants = [1, 2, 3, 4, 5, 6, 7];
+      return variants.map((i) => buildStatelessColorsTable({
+        title: `Variant ${i} — Colors`,
+        description: 'Footer chrome palette: white surface with muted helper labels and an accent link.',
+        rows,
+      }));
+    })(),
   },
   "code": {
     "installation": {

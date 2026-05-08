@@ -49,11 +49,75 @@ function updateTableDemo() {
   if (el) el.innerHTML = _tableBuildRow(_tableDemo.type, _tableDemo.cols, effectiveIcon);
 }
 
+/* ── Table Spec Cards ───────────────────────────────────────────── */
+var _specCards = {
+  header:  { type: 'header',  cols: '4', icon: 'no' },
+  content: { type: 'content', cols: '4', icon: 'no' }
+};
+window._specCards = _specCards;
+
+function buildSwiftSnippet(type, card) {
+  if (card.type === 'header') {
+    return 'EBTableRow(\n    role: .header,\n    label: "Header",\n    columns: Array(repeating: "Column", count: ' + card.cols + ')\n)';
+  }
+  return 'EBTableRow(\n    role: .content,\n    label: "Label",\n    columns: Array(repeating: "Value", count: ' + card.cols + ')\n)';
+}
+
+function buildComposeSnippet(type, card) {
+  if (card.type === 'header') {
+    return 'EBTableRow(\n    role = EBTableRowRole.Header,\n    label = "Header",\n    columns = List(' + card.cols + ') { "Column" }\n)';
+  }
+  return 'EBTableRow(\n    role = EBTableRowRole.Content,\n    label = "Label",\n    columns = List(' + card.cols + ') { "Value" }\n)';
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update Properties row text — data-sp="${cardStyle}-${prop}" */
+  var spEl = document.querySelector('[data-sp="' + cardStyle + '-' + prop + '"]');
+  if (spEl) {
+    var hexEl = spEl.querySelector('.spec-prop-hex');
+    if (hexEl) hexEl.textContent = value;
+    else spEl.textContent = value;
+  }
+
+  /* Update preview SVG inside this card's spec-card-preview */
+  var cardKey = cardStyle === 'header'
+    ? 'header-row-—-37-/-65px-tall'
+    : 'content-row-—-56px-tall';
+  var fullCardEl = document.getElementById('spec-card-' + cardKey);
+  if (fullCardEl) {
+    var preview = fullCardEl.querySelector('.spec-card-preview');
+    if (preview) preview.innerHTML = _tableBuildRow(card.type, card.cols, card.icon);
+  }
+
+  /* Update DEV code — `[data-code-content="${cardStyle}"]` */
+  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
+  if (codeEl) {
+    var lang = codeEl.getAttribute('data-lang') || 'swift';
+    var raw = getSnippet(cardStyle, lang, card);
+    codeEl.setAttribute('data-final', raw);
+    codeEl.textContent = raw;
+    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+  }
+}
+
 function _tableInitSpecCards() {
   var h = document.getElementById('table-preview-header');
   if (h) h.innerHTML = _tableBuildRow('header', 4, 'no');
   var c = document.getElementById('table-preview-content');
   if (c) c.innerHTML = _tableBuildRow('content', 4, 'no');
+  /* Initialize each spec card so DEV code reflects current state */
+  ['header', 'content'].forEach(function(k) {
+    updateSpecCard(k, 'cols', _specCards[k].cols);
+  });
 }
 
 function _tableInit() {
@@ -63,3 +127,5 @@ function _tableInit() {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tableInit);
 else _tableInit();
+
+document.addEventListener('astro:page-load', _tableInit);

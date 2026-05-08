@@ -1,4 +1,41 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/empty-state.js`.
+const emptyStateDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'hasIcon',
+        prop: 'icon',
+        defaultValue: 'true',
+        options: [
+          { value: 'true',  label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+      {
+        label: 'hasAsset',
+        prop: 'asset',
+        defaultValue: 'true',
+        options: [
+          { value: 'true',  label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+      {
+        label: 'hasButton',
+        prop: 'button',
+        defaultValue: 'true',
+        options: [
+          { value: 'true',  label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+    ],
+  },
+];
 
 export const emptyState: ComponentData = {
   "meta": {
@@ -26,7 +63,7 @@ export const emptyState: ComponentData = {
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. Empty State fills a surface where content would normally sit — empty transaction lists, no search results, first-run tabs.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"200\" height=\"140\" viewBox=\"0 0 200 140\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"128\" rx=\"10\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          \n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"20\" rx=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <rect x=\"34\" y=\"16\" width=\"132\" height=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <text x=\"100\" y=\"19\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Transactions</text>\n          \n          <circle cx=\"100\" cy=\"54\" r=\"10\" fill=\"#C2C6CF\"></circle>\n          <rect x=\"60\" y=\"72\" width=\"80\" height=\"20\" rx=\"3\" fill=\"#EEF2F9\"></rect>\n          <text x=\"100\" y=\"102\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"8\" font-weight=\"700\" font-family=\"\\'Proxima Soft\\', system-ui\">No transactions yet</text>\n          <text x=\"100\" y=\"112\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"6\" font-family=\"\\'BarkAda\\', system-ui\">Your transactions will show here.</text>\n          <rect x=\"72\" y=\"118\" width=\"56\" height=\"10\" rx=\"5\" fill=\"#005CE5\"></rect>\n          <text x=\"100\" y=\"126\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">Cash In</text>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"es-demo-preview\"><svg width=\"300\" height=\"468\" viewBox=\"0 0 300 468\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"468\" rx=\"4\" fill=\"#FFFFFF\"></rect><text x=\"24\" y=\"34\" fill=\"#0A2757\" font-size=\"14\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Header</text><text x=\"24\" y=\"50\" fill=\"#6780A9\" font-size=\"11\" font-family=\"'BarkAda', system-ui\">Description goes here</text><circle cx=\"150\" cy=\"98\" r=\"20\" fill=\"#C2C6CF\"></circle><rect x=\"0\" y=\"146\" width=\"300\" height=\"170\" fill=\"#EEF2F9\"></rect><text x=\"150\" y=\"346\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"16\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Header</text><text x=\"150\" y=\"366\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-family=\"'BarkAda', system-ui\">Description goes here</text><rect x=\"80\" y=\"406\" width=\"140\" height=\"34\" rx=\"17\" fill=\"#005CE5\"></rect><text x=\"150\" y=\"428\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"13\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Current properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">color</span><select class=\"demo-panel-select\" id=\"es-demo-color\" onchange=\"updateEmptyStateDemo()\"><option value=\"white\" selected=\"\">white</option><option value=\"grey-blue\">grey blue</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasIcon</span><select class=\"demo-panel-select\" id=\"es-demo-icon\" onchange=\"updateEmptyStateDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasAsset</span><select class=\"demo-panel-select\" id=\"es-demo-asset\" onchange=\"updateEmptyStateDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasButton</span><select class=\"demo-panel-select\" id=\"es-demo-button\" onchange=\"updateEmptyStateDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"es-demo-preview\"><svg width=\"300\" height=\"468\" viewBox=\"0 0 300 468\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"468\" rx=\"4\" fill=\"#FFFFFF\"></rect><text x=\"24\" y=\"34\" fill=\"#0A2757\" font-size=\"14\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Header</text><text x=\"24\" y=\"50\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"600\" font-family=\"'BarkAda', system-ui\">Description goes here</text><circle cx=\"150\" cy=\"98\" r=\"20\" fill=\"#C2C6CF\"></circle><rect x=\"0\" y=\"146\" width=\"300\" height=\"170\" fill=\"#EEF2F9\"></rect><text x=\"150\" y=\"346\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"16\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Header</text><text x=\"150\" y=\"366\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"11\" font-weight=\"600\" font-family=\"'BarkAda', system-ui\">Description goes here</text><rect x=\"80\" y=\"406\" width=\"140\" height=\"34\" rx=\"17\" fill=\"#005CE5\"></rect><text x=\"150\" y=\"428\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"13\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Current properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">color</span><select class=\"demo-panel-select\" id=\"es-demo-color\" onchange=\"updateEmptyStateDemo()\"><option value=\"white\" selected=\"\">white</option><option value=\"grey-blue\">grey blue</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasIcon</span><select class=\"demo-panel-select\" id=\"es-demo-icon\" onchange=\"updateEmptyStateDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasAsset</span><select class=\"demo-panel-select\" id=\"es-demo-asset\" onchange=\"updateEmptyStateDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasButton</span><select class=\"demo-panel-select\" id=\"es-demo-button\" onchange=\"updateEmptyStateDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -150,6 +187,8 @@ export const emptyState: ComponentData = {
     "specCards": [
       {
         "cardKey": "white",
+        "demoKey": "white",
+        "demoControls": emptyStateDemoControls,
         "title": "White",
         "node": "27:169326",
         "description": "White background — use when the surface behind is dark or tinted. Asset placeholder uses <code>#EEF2F9</code>.",
@@ -235,10 +274,13 @@ export const emptyState: ComponentData = {
           }
         ],
         "swift": "<span class=\"syn-type\">EBEmptyState</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Nothing here yet\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Try a different filter\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBEmptyState</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Nothing here yet\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Try a different filter\"</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBEmptyStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<span class=\"syn-type\">EBEmptyState</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Nothing here yet\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Try a different filter\"</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBEmptyStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
+        "previewHtml": "<div id=\"es-spec-white-host\"></div>"
       },
       {
         "cardKey": "grey-blue",
+        "demoKey": "grey-blue",
+        "demoControls": emptyStateDemoControls,
         "title": "Grey Blue",
         "node": "27:169339",
         "description": "Light blue-grey background (<code>#F6F9FD</code>) — use when the surface behind is white. Asset placeholder uses <code>#D7E0EF</code>.",
@@ -324,7 +366,8 @@ export const emptyState: ComponentData = {
           }
         ],
         "swift": "<span class=\"syn-type\">EBEmptyState</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Nothing here yet\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Try a different filter\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBEmptyState</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Nothing here yet\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Try a different filter\"</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBEmptyStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<span class=\"syn-type\">EBEmptyState</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Nothing here yet\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Try a different filter\"</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBEmptyStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
+        "previewHtml": "<div id=\"es-spec-grey-blue-host\"></div>"
       }
     ],
     "colorsTables": [

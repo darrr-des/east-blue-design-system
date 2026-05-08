@@ -56,7 +56,7 @@ function _buildAvatarSvg(type, sizePx) {
     svg += '<ellipse cx="' + half + '" cy="' + (p * 0.75) + '" rx="' + bodyRx + '" ry="' + bodyRy + '" fill="#9BABC4" opacity=".4"/>';
   } else if (c.initials) {
     var textY = half + s.fontSize * 0.35;
-    svg += '<text x="' + half + '" y="' + textY + '" text-anchor="middle" fill="' + c.text + '" font-size="' + s.fontSize + '" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui, sans-serif">' + c.initials + '</text>';
+    svg += '<text x="' + half + '" y="' + textY + '" text-anchor="middle" fill="' + c.text + '" font-size="' + s.fontSize + '" font-weight="700" font-family="\'Proxima Soft\', system-ui, sans-serif">' + c.initials + '</text>';
   }
   svg += '</svg>';
   return svg;
@@ -81,11 +81,11 @@ var _avatarSpecCards = {
 var _specCards = _avatarSpecCards;
 window._specCards = _specCards;
 
-var _avatarSpecColors = {
-  dark:  [['Circle bg','#005CE5','main/avatar/brand/bg'],['Circle border','#E5EBF4','main/avatar/brand/border'],['Initials text','#FFFFFF','main/avatar/brand/initials']],
-  light: [['Circle bg','#F6F9FD','main/avatar/default/bg'],['Circle border','#E5EBF4','main/avatar/default/border'],['Initials text','#2340A9','main/avatar/default/initials']],
-  image: [['Placeholder bg','#C2CFE5','main/avatar/placeholder/bg'],['Placeholder border','#E5EBF4','main/avatar/placeholder/border']]
-};
+/* Spec-card Colors section is server-rendered from avatar.ts;
+   Plan A's `_patchSpecCardRows` (assessment.js) handles per-card-type
+   updates when a row declares `variants`. Demo no longer rebuilds Colors.
+   Layout + Typography rebuilds remain (size-keyed dynamic data not yet
+   migrated to `variants`). */
 
 function updateAvatarSpecCard(cardType, prop, value) {
   return updateSpecCard(cardType, prop, value);
@@ -113,20 +113,8 @@ function updateSpecCard(cardType, prop, value) {
   var spSize = document.querySelector('[data-sp="' + cardType + '-size"]');
   if (spSize) spSize.textContent = sz + 'px';
 
-  /* Update Colors section — id `spec-${demoKey}-colors` */
-  var colorsEl = document.getElementById('spec-' + cardType + '-colors');
-  if (colorsEl) {
-    var rows = _avatarSpecColors[cardType];
-    var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
-    rows.forEach(function(r) {
-      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E5EBF4' : '';
-      h += '<div class="spec-prop has-token"><span class="spec-prop-key">' + r[0] + '</span>'
-         + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span>'
-         + '<span class="spec-token-name">' + r[2] + '</span></div>';
-    });
-    h += '</div>';
-    colorsEl.innerHTML = h;
-  }
+  /* Colors section is server-rendered from avatar.ts; Plan A patches
+     per-card-type variants. Demo no longer rebuilds it. */
 
   /* Update Layout section — id `spec-${demoKey}-layout` */
   var layoutEl = document.getElementById('spec-' + cardType + '-layout');
@@ -146,7 +134,7 @@ function updateSpecCard(cardType, prop, value) {
     var typo = _avatarTypography[sz];
     var th = '<div class="spec-detail-label">Typography</div><div class="spec-props">';
     th += '<div class="spec-prop"><span class="spec-prop-key">Text style</span><span class="spec-prop-val mono">' + typo.textStyle + '</span></div>';
-    th += '<div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">HeyMeow Rnd Bold</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">Proxima Soft Bold</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">' + typo.fontSize + '</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Line-height</span><span class="spec-prop-val mono">' + typo.lineHeight + '</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Tracking</span><span class="spec-prop-val mono">' + typo.tracking + '</span></div>';

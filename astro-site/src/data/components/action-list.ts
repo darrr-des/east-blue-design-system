@@ -56,7 +56,7 @@ export const actionList: ComponentData = {
   "overview": {
     "inContextNote": "Action-list rows stack inside Settings / Profile / Help menus. A typical screen mixes variants with/without description and with/without trailing counter.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"200\" height=\"120\" viewBox=\"0 0 200 120\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"108\" rx=\"10\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"20\" rx=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <rect x=\"34\" y=\"16\" width=\"132\" height=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <text x=\"100\" y=\"19\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Settings</text>\n          \n          <circle cx=\"44\" cy=\"38\" r=\"3\" fill=\"#C2C6CF\"></circle>\n          <rect x=\"50\" y=\"35\" width=\"40\" height=\"5\" rx=\"1\" fill=\"#0A2757\"></rect>\n          <text x=\"146\" y=\"40\" fill=\"#005CE5\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">View</text>\n          <path d=\"M158 37l2 2-2 2\" stroke=\"#005CE5\" stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path>\n          \n          <circle cx=\"44\" cy=\"54\" r=\"3\" fill=\"#C2C6CF\"></circle>\n          <rect x=\"50\" y=\"51\" width=\"52\" height=\"5\" rx=\"1\" fill=\"#005CE5\" opacity=\".9\"></rect>\n          <rect x=\"146\" y=\"50\" width=\"10\" height=\"7\" rx=\"3.5\" fill=\"#EEF2F9\"></rect>\n          <text x=\"151\" y=\"56\" text-anchor=\"middle\" fill=\"#072592\" font-size=\"4.5\" font-weight=\"700\" font-family=\"system-ui\">3</text>\n          \n          <circle cx=\"44\" cy=\"70\" r=\"3\" fill=\"#C2C6CF\"></circle>\n          <rect x=\"50\" y=\"67\" width=\"36\" height=\"5\" rx=\"1\" fill=\"#0A2757\"></rect>\n          <rect x=\"50\" y=\"74\" width=\"60\" height=\"3\" rx=\"1\" fill=\"#6780A9\"></rect>\n          <path d=\"M158 69l2 2-2 2\" stroke=\"#0A2757\" stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path>\n          \n          <rect x=\"40\" y=\"90\" width=\"8\" height=\"8\" rx=\"4\" fill=\"#EEF2F9\"></rect>\n          <rect x=\"52\" y=\"91\" width=\"80\" height=\"5\" rx=\"1\" fill=\"#EEF2F9\"></rect>\n          <rect x=\"146\" y=\"91\" width=\"14\" height=\"5\" rx=\"1\" fill=\"#EEF2F9\"></rect>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"lit-demo-preview\"><div style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;opacity:1;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:16px;font-weight:600;letter-spacing:0.25px;color:#0A2757;\">Label</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#005CE5;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#0A2757\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Shape</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">variant</span><select class=\"demo-panel-select\" id=\"lit-ctrl-variant\" onchange=\"updateLitDemo()\"><option value=\"base\" selected=\"\">base (List)</option><option value=\"counter\">with Counter</option><option value=\"description\">with Description</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">state</span><select class=\"demo-panel-select\" id=\"lit-ctrl-state\" onchange=\"updateLitDemo()\"><option value=\"default\" selected=\"\">Default</option><option value=\"disabled\">Disabled</option><option value=\"loading\">Loading</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">density</span><select class=\"demo-panel-select\" id=\"lit-ctrl-density\" onchange=\"updateLitDemo()\"><option value=\"compact\" selected=\"\">Compact</option><option value=\"expanded\">Expanded</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">label</span><input type=\"text\" id=\"lit-ctrl-label\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"updateLitDemo()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><input type=\"text\" id=\"lit-ctrl-desc\" class=\"demo-panel-select demo-panel-input\" value=\"description\" oninput=\"updateLitDemo()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">counter</span><input type=\"text\" id=\"lit-ctrl-counter\" class=\"demo-panel-select demo-panel-input\" value=\"3\" oninput=\"updateLitDemo()\"></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"lit-demo-preview\"><div style=\"width:360px;background:#FFFFFF;\"><div style=\"display:flex;align-items:center;gap:12px;padding:8px 12px;\"><div style=\"width:32px;height:32px;border-radius:50%;background:#C2C6CF;flex-shrink:0;opacity:1;\"></div><div style=\"flex:1 0 0;display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0;\"><div style=\"font-family:'Proxima Soft',system-ui;font-size:16px;line-height:16px;font-weight:600;letter-spacing:0.25px;color:#0A2757;\">Label</div></div><span style=\"font-family:'Proxima Soft',system-ui;font-size:16px;font-weight:600;letter-spacing:0.25px;color:#005CE5;flex-shrink:0;\">CTA</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M10 6l6 6-6 6\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Shape</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">variant</span><select class=\"demo-panel-select\" id=\"lit-ctrl-variant\" onchange=\"updateLitDemo()\"><option value=\"base\" selected=\"\">base (List)</option><option value=\"counter\">with Counter</option><option value=\"description\">with Description</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">state</span><select class=\"demo-panel-select\" id=\"lit-ctrl-state\" onchange=\"updateLitDemo()\"><option value=\"default\" selected=\"\">Default</option><option value=\"disabled\">Disabled</option><option value=\"loading\">Loading</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">density</span><select class=\"demo-panel-select\" id=\"lit-ctrl-density\" onchange=\"updateLitDemo()\"><option value=\"compact\" selected=\"\">Compact</option><option value=\"expanded\">Expanded</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">label</span><input type=\"text\" id=\"lit-ctrl-label\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"updateLitDemo()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><input type=\"text\" id=\"lit-ctrl-desc\" class=\"demo-panel-select demo-panel-input\" value=\"description\" oninput=\"updateLitDemo()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">counter</span><input type=\"text\" id=\"lit-ctrl-counter\" class=\"demo-panel-select demo-panel-input\" value=\"3\" oninput=\"updateLitDemo()\"></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -239,30 +239,46 @@ export const actionList: ComponentData = {
             "slug": "colors",
             "rows": [
               { "key": "Bg",      "value": "#FFFFFF", "token": "action-list/color/default/bg" },
-              { "key": "Label",   "value": "#0A2757", "token": "action-list/color/default/label" },
-              { "key": "Link",    "value": "#005CE5", "token": "action-list/color/default/label-link" },
-              { "key": "Chevron", "value": "#005CE5", "token": "action-list/color/default/chevron" }
+              { "key": "Label", "value": "#0A2757", "token": "action-list/color/default/label",
+                "variants": {
+                  "state:disabled": { "value": "#C2CFE5", "token": "action-list/color/disabled/label" }
+                }
+              },
+              { "key": "Link", "value": "#005CE5", "token": "action-list/color/default/label-link",
+                "variants": {
+                  "state:disabled": { "value": "#9BC5FD", "token": "action-list/color/disabled/label-link" }
+                }
+              },
+              { "key": "Chevron", "value": "#005CE5", "token": "action-list/color/default/chevron",
+                "variants": {
+                  "state:disabled": { "value": "#9BC5FD", "token": "action-list/color/disabled/chevron" }
+                }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Row height",   "value": "48px",   "mono": true },
-              { "key": "Padding H",    "value": "12px",   "mono": true },
-              { "key": "Padding V",    "value": "8px",    "mono": true },
-              { "key": "Chevron size", "value": "24 × 24", "mono": true },
-              { "key": "Hit target",   "value": "full row", "mono": true }
+              { "key": "Height", "value": "48px", "mono": true,
+                "variants": {
+                  "density:expanded": { "value": "56px" }
+                }
+              },
+              { "key": "Padding", "value": "8px 12px", "mono": true,
+                "variants": {
+                  "density:expanded": { "value": "12px 12px" }
+                }
+              }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Label style", "value": "Primary/Label/Light/Base", "mono": true },
-              { "key": "Font",        "value": "Proxima Soft Semibold",    "mono": true },
-              { "key": "Size",        "value": "16px / 16px",              "mono": true },
-              { "key": "Tracking",    "value": "+0.25",                    "mono": true }
+              { "key": "Font",     "value": "Proxima Soft Semibold", "mono": true },
+              { "key": "Size",     "value": "16px / 16px",           "mono": true },
+              { "key": "Tracking", "value": "+0.25",                 "mono": true }
             ]
           }
         ],
@@ -292,30 +308,46 @@ export const actionList: ComponentData = {
             "slug": "colors",
             "rows": [
               { "key": "Bg",      "value": "#FFFFFF", "token": "action-list/color/default/bg" },
-              { "key": "Label",   "value": "#005CE5", "token": "action-list/color/default/label-brand" },
-              { "key": "Counter", "value": "#005CE5", "token": "counter/color/filled/bg" },
-              { "key": "Chevron", "value": "#005CE5", "token": "action-list/color/default/chevron" }
+              { "key": "Label", "value": "#005CE5", "token": "action-list/color/default/label-brand",
+                "variants": {
+                  "state:disabled": { "value": "#C2CFE5", "token": "action-list/color/disabled/label" }
+                }
+              },
+              { "key": "Counter", "value": "#005CE5", "token": "counter/color/filled/bg",
+                "variants": {
+                  "state:disabled": { "value": "#E5EBF4", "token": "counter/color/empty/bg" }
+                }
+              },
+              { "key": "Chevron", "value": "#005CE5", "token": "action-list/color/default/chevron",
+                "variants": {
+                  "state:disabled": { "value": "#9BC5FD", "token": "action-list/color/disabled/chevron" }
+                }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Row height",   "value": "56px",   "mono": true },
-              { "key": "Padding H",    "value": "12px",   "mono": true },
-              { "key": "Padding V",    "value": "12px",   "mono": true },
-              { "key": "Chevron size", "value": "24 × 24", "mono": true },
-              { "key": "Hit target",   "value": "full row", "mono": true }
+              { "key": "Height", "value": "56px", "mono": true,
+                "variants": {
+                  "density:expanded": { "value": "64px" }
+                }
+              },
+              { "key": "Padding", "value": "11px 12px", "mono": true,
+                "variants": {
+                  "density:expanded": { "value": "15px 12px" }
+                }
+              }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Label style", "value": "Primary/Label/Light/Large", "mono": true },
-              { "key": "Font",        "value": "Proxima Soft Bold",         "mono": true },
-              { "key": "Size",        "value": "18px / 20px",               "mono": true },
-              { "key": "Tracking",    "value": "+0.25",                     "mono": true }
+              { "key": "Font",     "value": "Proxima Soft Bold", "mono": true },
+              { "key": "Size",     "value": "18px / 20px",       "mono": true },
+              { "key": "Tracking", "value": "+0.25",             "mono": true }
             ]
           }
         ],
@@ -344,31 +376,46 @@ export const actionList: ComponentData = {
             "slug": "colors",
             "rows": [
               { "key": "Bg",          "value": "#FFFFFF", "token": "action-list/color/default/bg" },
-              { "key": "Label",       "value": "#0A2757", "token": "action-list/color/default/label" },
-              { "key": "Description", "value": "#6780A9", "token": "action-list/color/default/description" },
-              { "key": "Link",        "value": "#005CE5", "token": "action-list/color/default/label-link" },
-              { "key": "Chevron",     "value": "#005CE5", "token": "action-list/color/default/chevron" }
+              { "key": "Label", "value": "#0A2757", "token": "action-list/color/default/label",
+                "variants": {
+                  "state:disabled": { "value": "#C2CFE5", "token": "action-list/color/disabled/label" }
+                }
+              },
+              { "key": "Description", "value": "#6780A9", "token": "action-list/color/default/description",
+                "variants": {
+                  "state:disabled": { "value": "#C2CFE5", "token": "action-list/color/disabled/description" }
+                }
+              },
+              { "key": "Link", "value": "#005CE5", "token": "action-list/color/default/label-link",
+                "variants": {
+                  "state:disabled": { "value": "#9BC5FD", "token": "action-list/color/disabled/label-link" }
+                }
+              },
+              { "key": "Chevron", "value": "#005CE5", "token": "action-list/color/default/chevron",
+                "variants": {
+                  "state:disabled": { "value": "#9BC5FD", "token": "action-list/color/disabled/chevron" }
+                }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Row height",   "value": "60px",   "mono": true },
-              { "key": "Padding H",    "value": "12px",   "mono": true },
-              { "key": "Padding V",    "value": "8px",    "mono": true },
-              { "key": "Chevron size", "value": "24 × 24", "mono": true },
-              { "key": "Hit target",   "value": "full row", "mono": true }
+              { "key": "Height",  "value": "60px",      "mono": true },
+              { "key": "Padding", "value": "8px 12px", "mono": true,
+                "variants": {
+                  "density:expanded": { "value": "12px 12px" }
+                }
+              }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Label style",        "value": "Primary/Label/Light/Base",  "mono": true },
-              { "key": "Label font",         "value": "Proxima Soft Semibold · 16 / 18 · +0.25", "mono": true },
-              { "key": "Description style",  "value": "Secondary/Bold/Caption",     "mono": true },
-              { "key": "Description font",   "value": "Proxima Soft Semibold · 12 / 16 · +0.4",  "mono": true }
+              { "key": "Label font",       "value": "Proxima Soft Semibold · 16 / 18 · +0.25", "mono": true },
+              { "key": "Description font", "value": "Proxima Soft Semibold · 12 / 16 · +0.4",  "mono": true }
             ]
           }
         ],

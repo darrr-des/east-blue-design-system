@@ -515,6 +515,40 @@ The Button component is the baseline. Every component's Style tab spec cards mus
 - Show all relevant dimensions.
 - Include: height, width (if not fill), padding H/V, corner radius, border, icon sizes, slot dimensions.
 
+### Dynamic rows (Plan A — `SpecRow.variants`)
+
+Properties / Colors / Layout / Typography rows can react to the demo controls without component-specific JS. Use this when a row's value depends on the current demo selection.
+
+**Schema** (full JSDoc at `src/data/types.ts:SpecRow.variants`):
+
+```ts
+{
+  key: 'Height',
+  value: '212',           // shown by default
+  mono: true,
+  variants: {
+    'cta:2-vertical': { value: '270' },   // only when cta=2-vertical
+    // 'appearance:destructive|state:pressed': { value: '#A41818', token: '...' },
+  },
+}
+```
+
+Key shape:
+- Single prop: `"<prop>:<value>"` — e.g. `"cta:2-vertical"`
+- Compound (joined with `|`): `"<p1>:<v1>|<p2>:<v2>"` — compound matched first, falls back to each single-prop key
+- Values must match the demo-control option `value` exactly (lowercase: `"default"`, not `"Default"`)
+
+What can be overridden: `value` · `token` · `mono` · `swatch`. Top-level row fields are the fallback when no variant matches.
+
+**Wiring** (already shipped, lives in shared code):
+- Renderer (`SpecCard.astro`) emits `data-row-card` + `data-row-variants` for any row with `variants`.
+- Patcher (`assessment.js → _patchSpecCardRows`) wraps every component's `window.updateSpecCard()` and applies overrides on each control change.
+- Per-card state lives on `window._specCards[<cardKey>]` (already maintained by every component's demo script).
+
+**Caveat — legacy demos (18 components):** `button`, `accordion`, `dropdown`, `action-list*`, `badge`, `checkbox`, `chip`, `menu-grid`, `list-item`, `amount-text-field`, `alert`, `ad-space`, `avatar`, plus a few others rebuild their Colors / Layout / Typography sections via `innerHTML =` in their own `updateSpecCard`. Adding `variants` to those data files is **inert** until the demo JS is migrated to leave the schema-rendered HTML alone. Tracked as a follow-up.
+
+**Working pilot:** `modal.ts` Card 1 (Default), Layout section's `Height` row collapses three static rows (`Height (cta=1)` / `(cta=2-h)` / `(cta=2-v)`) into one dynamic row with `cta:2-vertical → 270`.
+
 ---
 
 ## Variants Inventory Conventions

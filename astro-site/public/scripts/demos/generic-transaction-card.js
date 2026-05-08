@@ -103,6 +103,89 @@ function _gtxUpdate() {
   });
 }
 
+/* ── Generic Transaction Card Spec Cards (cascaded pattern) ──────── */
+var _gtxSpecCards = {
+  'default':     { type: 'default' },
+  'with-avatar': { type: 'with-avatar' },
+  'no-amount':   { type: 'no-amount' }
+};
+
+var _specCards = _gtxSpecCards;
+window._specCards = _specCards;
+
+function _getGtxSnippet(cardKey, lang, card) {
+  var t = (card && card.type) || cardKey;
+  if (lang === 'swift') {
+    if (t === 'with-avatar') return 'EBTransactionCard(\n    title: "Juan Dela Cruz",\n    date: "Today, 3:24 PM",\n    amount: "PHP 500.00",\n    leading: .avatar("JD")\n)';
+    if (t === 'no-amount')   return 'EBTransactionCard(\n    title: "Profile updated",\n    metadata: "Reference No: GC123456789876543",\n    trailing: .badge(EBBadge("Approved"))\n)';
+    if (t === 'more-information') return 'EBTransactionCard(\n    title: "Globe Postpaid",\n    date: "Apr 12, 2026, 9:15 AM",\n    amount: "PHP 999.00",\n    trailing: .menu { /* show actions */ }\n)';
+    if (t === 'skeleton')    return 'EBTransactionCard(loading: true)';
+    return 'EBTransactionCard(\n    title: "Globe Postpaid",\n    badge: EBBadge("Paid", intent: .information),\n    date: "Apr 12, 2026, 9:15 AM",\n    amount: "PHP 999.00"\n)';
+  }
+  if (t === 'with-avatar') return 'EBTransactionCard(\n    title = "Juan Dela Cruz",\n    date = "Today, 3:24 PM",\n    amount = "PHP 500.00",\n    leading = { EBAvatar(initials = "JD") }\n)';
+  if (t === 'no-amount')   return 'EBTransactionCard(\n    title = "Profile updated",\n    metadata = "Reference No: GC123456789876543",\n    trailing = EBRowTrailing.Badge(EBBadge("Approved"))\n)';
+  if (t === 'more-information') return 'EBTransactionCard(\n    title = "Globe Postpaid",\n    date = "Apr 12, 2026, 9:15 AM",\n    amount = "PHP 999.00",\n    trailing = EBRowTrailing.Menu { /* show actions */ }\n)';
+  if (t === 'skeleton')    return 'EBTransactionCard(loading = true)';
+  return 'EBTransactionCard(\n    title = "Globe Postpaid",\n    badge = EBBadge("Paid", EBBadgeIntent.Information),\n    date = "Apr 12, 2026, 9:15 AM",\n    amount = "PHP 999.00"\n)';
+}
+
+function buildSwiftSnippet(type, card)   { return _getGtxSnippet(type, 'swift', card); }
+function buildComposeSnippet(type, card) { return _getGtxSnippet(type, 'compose', card); }
+function getSnippet(type, lang, card)    { return _getGtxSnippet(type, lang, card); }
+window.getSnippet = getSnippet;
+
+function _gtxSpecRender(card) {
+  // Use sensible per-type defaults so the preview looks complete
+  var t = card.type || 'default';
+  if (t === 'with-avatar') return _gtxRender({type:t, label:'Juan Dela Cruz', badge:'Sent', date:'Apr 14, 2026, 10:24 AM', amount:'PHP 1,500.00', initials:'JD'});
+  if (t === 'no-amount')   return _gtxRender({type:t, label:'KYC Verification', ref:'Reference No: GC987654321012345', badge:'Approved'});
+  if (t === 'more-information') return _gtxRender({type:t, label:'Globe Postpaid', date:'Apr 12, 2026, 9:15 AM', amount:'PHP 999.00'});
+  if (t === 'skeleton')    return _gtxRender({type:t});
+  return _gtxRender({type:t, label:'Globe Postpaid', badge:'Paid', date:'Apr 12, 2026, 9:15 AM', amount:'PHP 999.00'});
+}
+
+function updateSpecCard(cardKey, prop, value) {
+  var card = _gtxSpecCards[cardKey];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview body */
+  var card$ = document.getElementById('spec-card-' + _gtxCardKeyFor(cardKey));
+  if (card$) {
+    var preview = card$.querySelector('.spec-card-preview, .spec-preview-body, .spec-preview-frame');
+    if (preview) preview.innerHTML = _gtxSpecRender(card);
+  }
+
+  /* Update Type readout — data-sp="<demoKey>-type" */
+  var spType = document.querySelector('[data-sp="' + cardKey + '-type"]');
+  if (spType) spType.textContent = card.type;
+
+  /* Update DEV code */
+  var devView = document.querySelector('[data-view="' + cardKey + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardKey + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardKey, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
+/* Map a demoKey to the spec card's full cardKey via the inner preview id. */
+function _gtxCardKeyFor(demoKey) {
+  var idMap = { 'default': 'gtx-spec-1', 'with-avatar': 'gtx-spec-2', 'no-amount': 'gtx-spec-3' };
+  var inner = document.getElementById(idMap[demoKey]);
+  if (!inner) return null;
+  var card$ = inner.closest('.spec-card');
+  if (!card$) return null;
+  return (card$.id || '').replace(/^spec-card-/, '');
+}
+
 function _gtxInit() {
   var ctx = document.getElementById('gtx-context-preview');
   if (ctx) ctx.innerHTML = _gtxContextMarkup();
@@ -116,7 +199,26 @@ function _gtxInit() {
 
   var s3 = document.getElementById('gtx-spec-3');
   if (s3) s3.innerHTML = _gtxRender({type:'no-amount', label:'Label', ref:'Reference No: GC123456789876543', badge:'Label'});
+
+  /* Sync each per-card type dropdown to the card's default type. */
+  ['default', 'with-avatar', 'no-amount'].forEach(function(k) {
+    var ck = _gtxCardKeyFor(k);
+    if (!ck) return;
+    var card$ = document.getElementById('spec-card-' + ck);
+    if (!card$) return;
+    var sel = card$.querySelector('.demo-figma-panel select');
+    if (!sel) return;
+    var t = (_gtxSpecCards[k] || {}).type || k;
+    for (var i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].value === t) { sel.selectedIndex = i; break; }
+    }
+  });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _gtxInit);
 else _gtxInit();
+
+(function(){
+  function reinit(){ if (typeof _gtxInit === 'function') _gtxInit(); }
+  document.addEventListener('astro:page-load', reinit);
+})();

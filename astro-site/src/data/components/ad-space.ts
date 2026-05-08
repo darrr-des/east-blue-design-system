@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/ad-space.js`.
@@ -263,7 +264,12 @@ export const adSpace: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Dimensions",     "value": "320 × 50", "mono": true },
+              { "key": "Dimensions", "value": "320 × 50", "mono": true,
+                "variants": {
+                  "size:banner-lg":   { "value": "320 × 100" },
+                  "size:banner-mrec": { "value": "300 × 250" }
+                }
+              },
               { "key": "Corner radius",  "value": "radius/radius-1 (4px)", "mono": true },
               { "key": "Padding",        "value": "0 (ad fills surface)", "mono": true }
             ]
@@ -313,8 +319,10 @@ export const adSpace: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Dimensions",      "value": "224 × 200", "mono": true },
-              { "key": "Image aspect",    "value": "3:2",       "mono": true },
+              { "key": "Dimensions", "value": "224 × 200", "mono": true,
+                "variants": { "size:promo-sm": { "value": "131 × 126" } } },
+              { "key": "Image aspect", "value": "3:2", "mono": true,
+                "variants": { "size:promo-sm": { "value": "4:3" } } },
               { "key": "Corner radius",   "value": "radius/radius-2 (8px)", "mono": true },
               { "key": "Caption padding", "value": "8 horizontal, 6 vertical", "mono": true }
             ]
@@ -366,8 +374,10 @@ export const adSpace: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Dimensions",      "value": "336 × 174", "mono": true },
-              { "key": "Image aspect",    "value": "15:8",       "mono": true },
+              { "key": "Dimensions", "value": "336 × 174", "mono": true,
+                "variants": { "size:hero-sm": { "value": "296 × 174" } } },
+              { "key": "Image aspect", "value": "15:8", "mono": true,
+                "variants": { "size:hero-sm": { "value": "17:10" } } },
               { "key": "Corner radius",   "value": "radius/radius-3 (12px)", "mono": true },
               { "key": "Caption padding", "value": "12 horizontal, 8 vertical", "mono": true }
             ]
@@ -387,7 +397,38 @@ export const adSpace: ComponentData = {
         "compose": "<span class=\"syn-type\">EBCarousel</span><span class=\"syn-punc\">(</span>items <span class=\"syn-eq\">=</span> ads<span class=\"syn-punc\">) {</span> ad <span class=\"syn-eq\">-&gt;</span>\n    <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n        size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">HeroMd</span><span class=\"syn-punc\">,</span>\n        caption <span class=\"syn-eq\">=</span> ad.caption\n    <span class=\"syn-punc\">) {</span>\n        <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad.image<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // All three cards (banner, promo, hero) share the same surface palette.
+      // The actual ad creative is supplied by the publisher and lives outside
+      // the design system's color contract.
+      buildStatelessColorsTable({
+        title: 'Banner — Colors',
+        description: 'Surface tile that hosts the ad creative. Skeleton + label colors are the only DS-owned tokens.',
+        rows: [
+          { role: 'Surface',          token: 'ad-space/color/surface',          value: '#FFFFFF' },
+          { role: 'Loading skeleton', token: 'ad-space/color/loading-skeleton', value: '#EEF2F9' },
+          { role: '"Ad" marker',      token: 'text/color-text-subtle',          value: '#6780A9' },
+        ],
+      }),
+      buildStatelessColorsTable({
+        title: 'Promo — Colors',
+        description: 'Same DS-owned palette as the Banner; promo creative fills the surface.',
+        rows: [
+          { role: 'Surface',          token: 'ad-space/color/surface',          value: '#FFFFFF' },
+          { role: 'Loading skeleton', token: 'ad-space/color/loading-skeleton', value: '#EEF2F9' },
+          { role: '"Ad" marker',      token: 'text/color-text-subtle',          value: '#6780A9' },
+        ],
+      }),
+      buildStatelessColorsTable({
+        title: 'Hero — Colors',
+        description: 'Same DS-owned palette as the Banner; hero creative fills the larger surface.',
+        rows: [
+          { role: 'Surface',          token: 'ad-space/color/surface',          value: '#FFFFFF' },
+          { role: 'Loading skeleton', token: 'ad-space/color/loading-skeleton', value: '#EEF2F9' },
+          { role: '"Ad" marker',      token: 'text/color-text-subtle',          value: '#6780A9' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

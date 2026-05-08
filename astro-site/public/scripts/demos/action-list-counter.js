@@ -18,7 +18,7 @@ function _litcChevronSvg(color) {
 function _litcCounter(state, count) {
   var labelColor = state === 'empty' ? '#C2CFE5' : '#072592';
   var bg = '#EEF2F9';
-  return '<span style="display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 8px;border-radius:999px;background:' + bg + ';color:' + labelColor + ';font-family:\'HeyMeow Rnd\',system-ui;font-weight:700;font-size:14px;line-height:14px;letter-spacing:0.25px;flex-shrink:0;">' + _litcEscape(count) + '</span>';
+  return '<span style="display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 8px;border-radius:999px;background:' + bg + ';color:' + labelColor + ';font-family:\'Proxima Soft\',system-ui;font-weight:700;font-size:14px;line-height:14px;letter-spacing:0.25px;flex-shrink:0;">' + _litcEscape(count) + '</span>';
 }
 
 function _litcRow(density, state, label, count) {
@@ -76,38 +76,6 @@ var _specCards = {
   el:   { density: 'Expanded', state: 'Loading'  }
 };
 window._specCards = _specCards;
-
-function _litcLayoutFor(card) {
-  var compact = card.density !== 'Expanded';
-  var rowH = compact ? '56px' : '64px';
-  var padV;
-  if (card.state === 'Loading') padV = compact ? '11px' : '16px';
-  else padV = compact ? '11px' : '15px';
-  return { rowH: rowH, padH: '12px', padV: padV };
-}
-
-function _litcColorRowsFor(card) {
-  if (card.state === 'Loading') {
-    return [
-      ['Bg',       '#FFFFFF', 'action-list/color/default/bg'],
-      ['Skeleton', '#EEF2F9', 'bg/color-bg-strong']
-    ];
-  }
-  if (card.state === 'Disabled') {
-    return [
-      ['Bg',      '#FFFFFF', 'action-list/color/disabled/bg'],
-      ['Label',   '#C2CFE5', 'action-list/color/disabled/label'],
-      ['Counter', '#E5EBF4', 'counter/color/empty/bg'],
-      ['Chevron', '#9BC5FD', 'action-list/color/disabled/chevron']
-    ];
-  }
-  return [
-    ['Bg',      '#FFFFFF', 'action-list/color/default/bg'],
-    ['Label',   '#005CE5', 'action-list/color/default/label-brand'],
-    ['Counter', '#EEF2F9', 'counter/color/filled/bg'],
-    ['Chevron', '#005CE5', 'action-list/color/default/chevron']
-  ];
-}
 
 /* ── Code snippet builders ──────────────────────────────────────── */
 function buildSwiftSnippet(type, card) {
@@ -171,35 +139,10 @@ function updateSpecCard(cardStyle, prop, value) {
   if (spState)   spState.textContent   = _litcTitleCase(card.state);
   if (spDensity) spDensity.textContent = _litcTitleCase(card.density);
 
-  /* Update Colors section */
-  var colorsEl = document.getElementById('spec-' + cardStyle + '-colors');
-  if (colorsEl) {
-    var rows = _litcColorRowsFor(card);
-    var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
-    rows.forEach(function(r) {
-      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
-      var tokenHtml = r[2] ? '<span class="spec-token-name">' + r[2] + '</span>' : '';
-      h += '<div class="spec-prop has-token"><span class="spec-prop-key">' + r[0] + '</span>'
-         + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span>'
-         + tokenHtml + '</div>';
-    });
-    h += '</div>';
-    colorsEl.innerHTML = h;
-  }
-
-  /* Update Layout section */
-  var layoutEl = document.getElementById('spec-' + cardStyle + '-layout');
-  if (layoutEl) {
-    var L = _litcLayoutFor(card);
-    var lh = '<div class="spec-detail-label">Layout</div><div class="spec-props">';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Row height</span><span class="spec-prop-val mono">' + L.rowH + '</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding H</span><span class="spec-prop-val mono">' + L.padH + '</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding V</span><span class="spec-prop-val mono">' + L.padV + '</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Corner radius</span><span class="spec-prop-val mono">6px</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Chevron size</span><span class="spec-prop-val mono">24 × 24</span></div>';
-    lh += '</div>';
-    layoutEl.innerHTML = lh;
-  }
+  /* Colors + Layout sections are server-rendered from action-list-counter.ts.
+     Each card already represents a fixed (density, state) combo, so cross-card
+     control flipping is redundant — the user navigates to the matching card
+     instead. Plan A `variants` not added for this reason. */
 
   /* Update DEV code — always */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');

@@ -62,7 +62,7 @@ function _applyDemo() {
   el.style.height       = sz.height;
   el.style.boxSizing    = 'border-box';
   el.style.borderRadius = '99px';
-  el.style.fontFamily   = "'HeyMeow Rnd', sans-serif";
+  el.style.fontFamily   = "'Proxima Soft', sans-serif";
   el.style.fontWeight   = '700';
   el.style.cursor       = (_demo.state === 'disabled' || _demo.state === 'loading') ? 'not-allowed' : 'pointer';
   el.style.opacity      = '1';
@@ -227,37 +227,6 @@ function getSnippet(type, lang, card) {
 }
 window.getSnippet = getSnippet;
 
-/* Size data for spec card layout/typography (v4.1) */
-var _specSizeData = {
-  large:   { height: 50, paddingH: 20, paddingV: 16, fontSize: 18, textStyle: 'Primary/Label/Large' },
-  medium:  { height: 48, paddingH: 16, paddingV: 12, fontSize: 16, textStyle: 'Primary/Label/Base' },
-  small:   { height: 36, paddingH: 12, paddingV: 8,  fontSize: 16, textStyle: 'Primary/Label/Base' },
-  compact: { height: 28, paddingH: 12, paddingV: 5,  fontSize: 14, textStyle: 'Primary/Label/Small' },
-  xsmall:  { height: 24, paddingH: 10, paddingV: 4,  fontSize: 12, textStyle: 'Primary/Label/Fine' }
-};
-
-/* Color data for spec card detail sections (v4.1 Mode-driven tokens) */
-var _specColorData = {
-  filled: {
-    default:     { label: 'Colors — Default',     rows: [['Default bg','#005CE5','appearance/container/fill'],['Pressed bg','#2340A9','appearance/container/fill-pressed'],['Disabled bg','#9BC5FD','appearance/container/fill-disabled'],['Label','#FFFFFF','appearance/label/color']] },
-    destructive: { label: 'Colors — Destructive', rows: [['Default bg','#D81E1E','appearance/container/fill'],['Pressed bg','#B01818','appearance/container/fill-pressed'],['Disabled bg','#F5A3A3','appearance/container/fill-disabled'],['Label','#FFFFFF','appearance/label/color']] },
-    white:       { label: 'Colors — White',       rows: [['Default bg','#FFFFFF','appearance/container/fill'],['Pressed bg','#EEF2F9','appearance/container/fill-pressed'],['Disabled bg','#F5F7FA','appearance/container/fill-disabled'],['Label','#005CE5','appearance/label/color']] },
-    subtle:      { label: 'Colors — Subtle',      rows: [['Default bg','#E5F1FF','appearance/container/fill'],['Pressed bg','#D2E5FF','appearance/container/fill-pressed'],['Disabled bg','#EEF5FF','appearance/container/fill-disabled'],['Label','#005CE5','appearance/label/color']] }
-  },
-  outline: {
-    default:     { label: 'Colors — Default',     rows: [['Default border','#005CE5','appearance/stroke/color'],['Pressed border','#2340A9','appearance/stroke/color-pressed'],['Disabled border','#9BC5FD','appearance/stroke/color-disabled'],['Label','#005CE5','appearance/label/on-surface/color']] },
-    destructive: { label: 'Colors — Destructive', rows: [['Default border','#D81E1E','appearance/stroke/color'],['Pressed border','#B01818','appearance/stroke/color-pressed'],['Disabled border','#F5A3A3','appearance/stroke/color-disabled'],['Label','#D81E1E','appearance/label/on-surface/color']] },
-    white:       { label: 'Colors — White',       rows: [['Default border','#005CE5','appearance/stroke/color'],['Pressed border','#2340A9','appearance/stroke/color-pressed'],['Disabled border','#9BC5FD','appearance/stroke/color-disabled'],['Label','#005CE5','appearance/label/on-surface/color']] },
-    subtle:      { label: 'Colors — Subtle',      rows: [['Default border','#005CE5','appearance/stroke/color'],['Pressed border','#2340A9','appearance/stroke/color-pressed'],['Disabled border','#9BC5FD','appearance/stroke/color-disabled'],['Label','#005CE5','appearance/label/on-surface/color']] }
-  },
-  text: {
-    default:     { label: 'Colors — Default',     rows: [['Default label','#005CE5','appearance/label/on-surface/color'],['Pressed label','#2340A9','appearance/label/on-surface/color-pressed'],['Disabled label','#9BC5FD','appearance/label/on-surface/color-disabled']] },
-    destructive: { label: 'Colors — Destructive', rows: [['Default label','#D81E1E','appearance/label/on-surface/color'],['Pressed label','#B01818','appearance/label/on-surface/color-pressed'],['Disabled label','#F5A3A3','appearance/label/on-surface/color-disabled']] },
-    white:       { label: 'Colors — White',       rows: [['Default label','#005CE5','appearance/label/on-surface/color'],['Pressed label','#2340A9','appearance/label/on-surface/color-pressed'],['Disabled label','#9BC5FD','appearance/label/on-surface/color-disabled']] },
-    subtle:      { label: 'Colors — Subtle',      rows: [['Default label','#005CE5','appearance/label/on-surface/color'],['Pressed label','#2340A9','appearance/label/on-surface/color-pressed'],['Disabled label','#9BC5FD','appearance/label/on-surface/color-disabled']] }
-  }
-};
-
 function updateSpecCard(cardStyle, prop, value) {
   var card = _specCards[cardStyle];
   if (!card) return;
@@ -279,14 +248,14 @@ function updateSpecCard(cardStyle, prop, value) {
     el.style.height       = sz.height;
     el.style.boxSizing    = 'border-box';
     el.style.borderRadius = '99px';
-    el.style.fontFamily   = "'HeyMeow Rnd', sans-serif";
+    el.style.fontFamily   = "'Proxima Soft', sans-serif";
     el.style.fontWeight   = '700';
     el.style.cursor       = (card.state === 'disabled' || card.state === 'loading') ? 'not-allowed' : 'pointer';
     el.style.opacity      = '1';
 
     /* Loading label swap for spec cards */
     var specLabel = el.querySelector('span');
-    if (specLabel) specLabel.textContent = card.state === 'loading' ? '●  ●  ●' : 'Label';
+    if (specLabel) specLabel.textContent = card.state === 'loading' ? '●  ●  ●' : 'Button';
     var preview = el.closest('.spec-card-preview');
     if (preview) preview.classList.toggle('demo-preview-dark', card.appearance === 'white');
 
@@ -334,48 +303,9 @@ function updateSpecCard(cardStyle, prop, value) {
   if (spState) spState.textContent = card.state.charAt(0).toUpperCase() + card.state.slice(1);
   if (spSize) spSize.textContent = card.size === 'xsmall' ? 'XSmall' : card.size.charAt(0).toUpperCase() + card.size.slice(1);
 
-  /* Update colors section */
-  var colorsEl = document.getElementById('spec-' + cardStyle + '-colors');
-  if (colorsEl) {
-    var colorData = _specColorData[cardStyle] && _specColorData[cardStyle][card.appearance];
-    if (colorData) {
-      var h = '<div class="spec-detail-label">' + colorData.label + '</div><div class="spec-props">';
-      colorData.rows.forEach(function(r) {
-        var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
-        var tokenHtml = r[2] ? '<span class="spec-token-name">' + r[2] + '</span>' : '';
-        h += '<div class="spec-prop"><span class="spec-prop-key">' + r[0] + '</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + tokenHtml + '</span></div>';
-      });
-      h += '</div>';
-      colorsEl.innerHTML = h;
-    }
-  }
-
-  /* Update layout section */
-  var layoutEl = document.getElementById('spec-' + cardStyle + '-layout');
-  if (layoutEl) {
-    var sizeData = _specSizeData[card.size];
-    var lh = '<div class="spec-detail-label">Layout</div><div class="spec-props">';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Height</span><span class="spec-prop-val mono">' + sizeData.height + 'px</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding H</span><span class="spec-prop-val mono">' + sizeData.paddingH + 'px</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding V</span><span class="spec-prop-val mono">' + sizeData.paddingV + 'px</span></div>';
-    if (cardStyle === 'outline') lh += '<div class="spec-prop"><span class="spec-prop-key">Border</span><span class="spec-prop-val mono">1.5px solid</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Radius</span><span class="spec-prop-val mono">99px</span></div>';
-    lh += '</div>';
-    layoutEl.innerHTML = lh;
-  }
-
-  /* Update typography section */
-  var typoEl = document.getElementById('spec-' + cardStyle + '-typo');
-  if (typoEl) {
-    var sizeData = _specSizeData[card.size];
-    var th = '<div class="spec-detail-label">Typography</div><div class="spec-props">';
-    th += '<div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">HeyMeow Rnd Bold</span></div>';
-    th += '<div class="spec-prop"><span class="spec-prop-key">Text Style</span><span class="spec-prop-val mono">' + sizeData.textStyle + '</span></div>';
-    th += '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">' + sizeData.fontSize + 'px</span></div>';
-    th += '<div class="spec-prop"><span class="spec-prop-key">Tracking</span><span class="spec-prop-val mono">0.25px</span></div>';
-    th += '</div>';
-    typoEl.innerHTML = th;
-  }
+  /* Colors / Layout / Typography sections are server-rendered from
+     button.ts; Plan A's `_patchSpecCardRows` handles
+     appearance- and size-keyed overrides. */
 
   /* Update DEV code — always, even if DEV view is hidden, so the
      code is correct the moment the user toggles to DEV mode. No

@@ -1,4 +1,48 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/tooltip-blurred.js`.
+const tooltipBlurredDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Content',
+    rows: [
+      {
+        label: 'Header',
+        prop: 'header',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'shown' },
+          { value: 'false', label: 'hidden' },
+        ],
+      },
+      {
+        label: 'Description',
+        prop: 'description',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'shown' },
+          { value: 'false', label: 'hidden' },
+        ],
+      },
+    ],
+  },
+  {
+    heading: 'Placement',
+    rows: [
+      {
+        label: 'Pointer',
+        prop: 'pointer',
+        defaultValue: 'top',
+        options: [
+          { value: 'top', label: 'top' },
+          { value: 'right', label: 'right' },
+          { value: 'bottom', label: 'bottom' },
+          { value: 'left', label: 'left' },
+        ],
+      },
+    ],
+  },
+];
 
 export const tooltipBlurred: ComponentData = {
   "meta": {
@@ -210,9 +254,12 @@ export const tooltipBlurred: ComponentData = {
     "specCards": [
       {
         "cardKey": "pointer=top-—-pointer-anchored-above-surface",
+        "demoKey": "tbt-top",
+        "demoControls": tooltipBlurredDemoControls,
         "title": "pointer=top — pointer anchored above surface",
         "node": "49:335345",
         "description": "Pointer above the surface — anchors a target element below. 336 × 89.",
+        "previewHtml": "<div id=\"tbt-preview-tbt-top\"></div>",
         "sections": [
           {
             "label": "Properties",
@@ -221,7 +268,8 @@ export const tooltipBlurred: ComponentData = {
               {
                 "key": "pointer",
                 "value": "top",
-                "mono": false
+                "mono": false,
+                "prop": "pointer"
               },
               {
                 "key": "Variant",
@@ -307,9 +355,12 @@ export const tooltipBlurred: ComponentData = {
       },
       {
         "cardKey": "pointer=right-—-pointer-on-right-edge",
+        "demoKey": "tbt-right",
+        "demoControls": tooltipBlurredDemoControls,
         "title": "pointer=right — pointer on right edge",
         "node": "49:335347",
         "description": "Pointer on the right — anchors a target element to the right of the surface. 348 × 77.",
+        "previewHtml": "<div id=\"tbt-preview-tbt-right\"></div>",
         "sections": [
           {
             "label": "Properties",
@@ -318,7 +369,8 @@ export const tooltipBlurred: ComponentData = {
               {
                 "key": "pointer",
                 "value": "right",
-                "mono": false
+                "mono": false,
+                "prop": "pointer"
               },
               {
                 "key": "Variant",
@@ -404,9 +456,12 @@ export const tooltipBlurred: ComponentData = {
       },
       {
         "cardKey": "pointer=bottom-—-pointer-below-surface",
+        "demoKey": "tbt-bottom",
+        "demoControls": tooltipBlurredDemoControls,
         "title": "pointer=bottom — pointer below surface",
         "node": "49:335348",
         "description": "Pointer below the surface — anchors a target element above. 336 × 89.",
+        "previewHtml": "<div id=\"tbt-preview-tbt-bottom\"></div>",
         "sections": [
           {
             "label": "Properties",
@@ -415,7 +470,8 @@ export const tooltipBlurred: ComponentData = {
               {
                 "key": "pointer",
                 "value": "bottom",
-                "mono": false
+                "mono": false,
+                "prop": "pointer"
               },
               {
                 "key": "Variant",
@@ -501,9 +557,12 @@ export const tooltipBlurred: ComponentData = {
       },
       {
         "cardKey": "pointer=left-—-pointer-on-left-edge",
+        "demoKey": "tbt-left",
+        "demoControls": tooltipBlurredDemoControls,
         "title": "pointer=left — pointer on left edge",
         "node": "49:335346",
         "description": "Pointer on the left — anchors a target element to the left of the surface. 348 × 77.",
+        "previewHtml": "<div id=\"tbt-preview-tbt-left\"></div>",
         "sections": [
           {
             "label": "Properties",
@@ -512,7 +571,8 @@ export const tooltipBlurred: ComponentData = {
               {
                 "key": "pointer",
                 "value": "left",
-                "mono": false
+                "mono": false,
+                "prop": "pointer"
               },
               {
                 "key": "Variant",

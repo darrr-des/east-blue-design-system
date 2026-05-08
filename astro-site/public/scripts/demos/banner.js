@@ -77,10 +77,10 @@ function _bnrUpdate() {
     hasPreamble: get('bnr-ctrl-preamble-flag', 'no'),
     hasIcon:     get('bnr-ctrl-icon-flag', 'no'),
     action:      get('bnr-ctrl-action-flag', 'button'),
-    preamble:    get('bnr-ctrl-preamble', 'Preamble'),
-    heading:     get('bnr-ctrl-heading', 'Heading'),
-    desc:        get('bnr-ctrl-desc', 'Add description here.'),
-    actionLabel: get('bnr-ctrl-action', 'Button')
+    preamble:    'Preamble',
+    heading:     'Heading',
+    desc:        'Add description here.',
+    actionLabel: 'Button'
   });
 }
 

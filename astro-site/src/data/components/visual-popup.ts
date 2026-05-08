@@ -1,4 +1,24 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/visual-popup.js`.
+const visualPopupDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'CTA label',
+        prop: 'cta',
+        defaultValue: 'Okay',
+        options: [
+          { value: 'Okay', label: 'Okay' },
+          { value: 'Got it', label: 'Got it' },
+          { value: 'Continue', label: 'Continue' },
+        ],
+      },
+    ],
+  },
+];
 
 export const visualPopup: ComponentData = {
   "meta": {
@@ -26,7 +46,7 @@ export const visualPopup: ComponentData = {
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. Visual Popup overlays the app surface to confirm critical actions or onboard users to a new feature.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"180\" height=\"120\" viewBox=\"0 0 180 120\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          \n          <rect x=\"34\" y=\"6\" width=\"112\" height=\"108\" rx=\"10\" fill=\"#0A2757\" opacity=\".18\"></rect>\n          <rect x=\"34\" y=\"6\" width=\"112\" height=\"108\" rx=\"10\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          \n          <rect x=\"50\" y=\"22\" width=\"80\" height=\"80\" rx=\"4\" fill=\"#FFFFFF\"></rect>\n          \n          <rect x=\"50\" y=\"22\" width=\"80\" height=\"34\" rx=\"4\" fill=\"#005CE5\" opacity=\".25\"></rect>\n          <text x=\"90\" y=\"42\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\" opacity=\".6\">Hero image</text>\n          \n          <rect x=\"58\" y=\"62\" width=\"64\" height=\"3\" rx=\"1.5\" fill=\"#0A2757\" opacity=\".85\"></rect>\n          \n          <rect x=\"62\" y=\"69\" width=\"56\" height=\"2\" rx=\"1\" fill=\"#6780A9\"></rect>\n          <rect x=\"68\" y=\"73\" width=\"44\" height=\"2\" rx=\"1\" fill=\"#6780A9\"></rect>\n          \n          <rect x=\"58\" y=\"84\" width=\"64\" height=\"10\" rx=\"5\" fill=\"#005CE5\"></rect>\n          <text x=\"90\" y=\"91\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"4.5\" font-weight=\"700\" font-family=\"system-ui\">Okay</text>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"vp-demo-preview\"><svg width=\"200\" height=\"240\" viewBox=\"0 0 200 240\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"200\" height=\"240\" rx=\"4\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"0.8\"></rect><defs><linearGradient id=\"vpph-541341453\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#EAF2FE\"></stop><stop offset=\"100%\" stop-color=\"#C9DCF8\"></stop></linearGradient></defs><path d=\"M0 100 L0 4 Q0 0 4 0 L196 0 Q200 0 200 4 L200 100 Z\" fill=\"url(#vpph-541341453)\"></path><rect x=\"82\" y=\"36.5\" width=\"36\" height=\"27\" rx=\"3.2399999999999998\" fill=\"none\" stroke=\"#6B8FC8\" stroke-width=\"1.4\" opacity=\".75\"></rect><circle cx=\"93.7\" cy=\"45.5\" r=\"3.96\" fill=\"#6B8FC8\" opacity=\".75\"></circle><path d=\"M84.7 60.8 L97.3 48.199999999999996 L104.5 56.3 L110.8 50 L115.3 60.8 Z\" fill=\"#6B8FC8\" opacity=\".75\"></path><text x=\"100\" y=\"128\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"12\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Put the title here</text><text x=\"100\" y=\"146\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"8\" font-family=\"'BarkAda', system-ui\">Add description here.</text><text x=\"100\" y=\"158\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"8\" font-family=\"'BarkAda', system-ui\">Add description here.</text><rect x=\"20\" y=\"190\" width=\"160\" height=\"26\" rx=\"13\" fill=\"#005CE5\"></rect><text x=\"100\" y=\"207\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Okay</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select class=\"demo-panel-select\" id=\"vp-demo-type\" onchange=\"updateVisualPopupDemo()\"><option value=\"default\" selected=\"\">Default</option><option value=\"2cta\">2 CTA</option><option value=\"version2\">Version 2</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"vp-demo-preview\"><svg width=\"200\" height=\"240\" viewBox=\"0 0 200 240\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"200\" height=\"240\" rx=\"4\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"0.8\"></rect><defs><linearGradient id=\"vpph-337330137\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#EAF2FE\"></stop><stop offset=\"100%\" stop-color=\"#C9DCF8\"></stop></linearGradient></defs><path d=\"M0 100 L0 4 Q0 0 4 0 L196 0 Q200 0 200 4 L200 100 Z\" fill=\"url(#vpph-337330137)\"></path><rect x=\"82\" y=\"36.5\" width=\"36\" height=\"27\" rx=\"3.2399999999999998\" fill=\"none\" stroke=\"#6B8FC8\" stroke-width=\"1.4\" opacity=\".75\"></rect><circle cx=\"93.7\" cy=\"45.5\" r=\"3.96\" fill=\"#6B8FC8\" opacity=\".75\"></circle><path d=\"M84.7 60.8 L97.3 48.199999999999996 L104.5 56.3 L110.8 50 L115.3 60.8 Z\" fill=\"#6B8FC8\" opacity=\".75\"></path><text x=\"100\" y=\"128\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"12\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Put the title here</text><text x=\"100\" y=\"146\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"8\" font-weight=\"500\" font-family=\"'BarkAda', system-ui\">Add description here.</text><text x=\"100\" y=\"158\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"8\" font-weight=\"500\" font-family=\"'BarkAda', system-ui\">Add description here.</text><rect x=\"20\" y=\"190\" width=\"160\" height=\"26\" rx=\"13\" fill=\"#005CE5\"></rect><text x=\"100\" y=\"207\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Okay</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select class=\"demo-panel-select\" id=\"vp-demo-type\" onchange=\"updateVisualPopupDemo()\"><option value=\"default\" selected=\"\">Default</option><option value=\"2cta\">2 CTA</option><option value=\"version2\">Version 2</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -142,6 +162,8 @@ export const visualPopup: ComponentData = {
     "specCards": [
       {
         "cardKey": "vp-spec-default",
+        "demoKey": "default",
+        "demoControls": visualPopupDemoControls,
         "title": "Default — single primary CTA",
         "node": "18477:23789",
         "description": "Hero image (320 × 180, 16:9) + title + 2-line description + single primary CTA. Use for informational modals or single-action confirms (\"Okay\").",
@@ -159,6 +181,12 @@ export const visualPopup: ComponentData = {
                 "key": "Style",
                 "value": "Centered illustration popup",
                 "mono": false
+              },
+              {
+                "key": "CTA label",
+                "value": "Okay",
+                "prop": "cta",
+                "mono": false
               }
             ]
           },
@@ -219,10 +247,12 @@ export const visualPopup: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIllustration</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"illustration\"</span><span class=\"syn-punc\">))</span>\n    .<span class=\"syn-fn\">ebPrimaryAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Got it\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">,</span>\n    illustration <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>painterResource(R.drawable.illus)<span class=\"syn-punc\">, null) }</span><span class=\"syn-punc\">,</span>\n    primaryAction <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBPopupAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Got it\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"200\" height=\"240\" viewBox=\"0 0 200 240\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"200\" height=\"240\" rx=\"4\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"0.8\"></rect><defs><linearGradient id=\"vpph-561979128\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#EAF2FE\"></stop><stop offset=\"100%\" stop-color=\"#C9DCF8\"></stop></linearGradient></defs><path d=\"M0 100 L0 4 Q0 0 4 0 L196 0 Q200 0 200 4 L200 100 Z\" fill=\"url(#vpph-561979128)\"></path><rect x=\"82\" y=\"36.5\" width=\"36\" height=\"27\" rx=\"3.2399999999999998\" fill=\"none\" stroke=\"#6B8FC8\" stroke-width=\"1.4\" opacity=\".75\"></rect><circle cx=\"93.7\" cy=\"45.5\" r=\"3.96\" fill=\"#6B8FC8\" opacity=\".75\"></circle><path d=\"M84.7 60.8 L97.3 48.199999999999996 L104.5 56.3 L110.8 50 L115.3 60.8 Z\" fill=\"#6B8FC8\" opacity=\".75\"></path><text x=\"100\" y=\"128\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"12\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Put the title here</text><text x=\"100\" y=\"146\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"8\" font-family=\"'BarkAda', system-ui\">Add description here.</text><text x=\"100\" y=\"158\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"8\" font-family=\"'BarkAda', system-ui\">Add description here.</text><rect x=\"20\" y=\"190\" width=\"160\" height=\"26\" rx=\"13\" fill=\"#005CE5\"></rect><text x=\"100\" y=\"207\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"10\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Okay</text></svg>"
+        "previewHtml": "<div id=\"vp-preview-default\"></div>"
       },
       {
         "cardKey": "vp-spec-2cta",
+        "demoKey": "2cta",
+        "demoControls": visualPopupDemoControls,
         "title": "2 CTA — primary outline + tertiary text",
         "node": "18477:23797",
         "description": "Same hero + title + description as Default, then a secondary outline button on top of a tertiary text button. Use for confirm/cancel pairs.",
@@ -240,6 +270,12 @@ export const visualPopup: ComponentData = {
                 "key": "Style",
                 "value": "Centered illustration popup",
                 "mono": false
+              },
+              {
+                "key": "CTA label",
+                "value": "Okay",
+                "prop": "cta",
+                "mono": false
               }
             ]
           },
@@ -300,10 +336,12 @@ export const visualPopup: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIllustration</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"illustration\"</span><span class=\"syn-punc\">))</span>\n    .<span class=\"syn-fn\">ebPrimaryAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Got it\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">,</span>\n    illustration <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>painterResource(R.drawable.illus)<span class=\"syn-punc\">, null) }</span><span class=\"syn-punc\">,</span>\n    primaryAction <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBPopupAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Got it\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"200\" height=\"270\" viewBox=\"0 0 200 270\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"200\" height=\"270\" rx=\"4\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"0.8\"></rect><defs><linearGradient id=\"vpph-239981133\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#EAF2FE\"></stop><stop offset=\"100%\" stop-color=\"#C9DCF8\"></stop></linearGradient></defs><path d=\"M0 100 L0 4 Q0 0 4 0 L196 0 Q200 0 200 4 L200 100 Z\" fill=\"url(#vpph-239981133)\"></path><rect x=\"82\" y=\"36.5\" width=\"36\" height=\"27\" rx=\"3.2399999999999998\" fill=\"none\" stroke=\"#6B8FC8\" stroke-width=\"1.4\" opacity=\".75\"></rect><circle cx=\"93.7\" cy=\"45.5\" r=\"3.96\" fill=\"#6B8FC8\" opacity=\".75\"></circle><path d=\"M84.7 60.8 L97.3 48.199999999999996 L104.5 56.3 L110.8 50 L115.3 60.8 Z\" fill=\"#6B8FC8\" opacity=\".75\"></path><text x=\"100\" y=\"128\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"12\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Put the title here</text><text x=\"100\" y=\"146\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"8\" font-family=\"'BarkAda', system-ui\">Add description here.</text><text x=\"100\" y=\"158\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"8\" font-family=\"'BarkAda', system-ui\">Add description here.</text><rect x=\"20\" y=\"180\" width=\"160\" height=\"24\" rx=\"12\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"2\"></rect><text x=\"100\" y=\"196\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"9\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><text x=\"100\" y=\"232\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"9\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text></svg>"
+        "previewHtml": "<div id=\"vp-preview-2cta\"></div>"
       },
       {
         "cardKey": "vp-spec-version2",
+        "demoKey": "version2",
+        "demoControls": visualPopupDemoControls,
         "title": "Version 2 — preamble + close icon, content-first",
         "node": "18477:23806",
         "description": "Onboarding/tutorial layout. The popup itself is a single light-gray (<code>bg/color-bg</code>) container — preamble label, title with close icon, description, a 280×180 hero image with 10px radius, then primary CTA. (The outer white frame has zero padding, so only the gray container is visible.)",
@@ -321,6 +359,12 @@ export const visualPopup: ComponentData = {
                 "key": "Style",
                 "value": "Centered illustration popup",
                 "mono": false
+              },
+              {
+                "key": "CTA label",
+                "value": "Okay",
+                "prop": "cta",
+                "mono": false
               }
             ]
           },
@@ -381,7 +425,7 @@ export const visualPopup: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIllustration</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"illustration\"</span><span class=\"syn-punc\">))</span>\n    .<span class=\"syn-fn\">ebPrimaryAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Got it\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBVisualPopup</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">,</span>\n    illustration <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>painterResource(R.drawable.illus)<span class=\"syn-punc\">, null) }</span><span class=\"syn-punc\">,</span>\n    primaryAction <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBPopupAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Got it\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"200\" height=\"250\" viewBox=\"0 0 200 250\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"200\" height=\"250\" rx=\"6\" fill=\"#F6F9FD\"></rect><text x=\"20\" y=\"26\" fill=\"#90A8D0\" font-size=\"6\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">PREAMBLE</text><g transform=\"translate(172, 18) \" stroke=\"#6780A9\" stroke-width=\"1.4\" stroke-linecap=\"round\"><line x1=\"0\" y1=\"0\" x2=\"8\" y2=\"8\"></line><line x1=\"8\" y1=\"0\" x2=\"0\" y2=\"8\"></line></g><text x=\"20\" y=\"42\" fill=\"#0A2757\" font-size=\"11\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Put the title here</text><text x=\"20\" y=\"56\" fill=\"#6780A9\" font-size=\"7\" font-family=\"'BarkAda', system-ui\">Add description here.</text><text x=\"20\" y=\"66\" fill=\"#6780A9\" font-size=\"7\" font-family=\"'BarkAda', system-ui\">Add description here.</text><defs><linearGradient id=\"vpph-631797677\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#EAF2FE\"></stop><stop offset=\"100%\" stop-color=\"#C9DCF8\"></stop></linearGradient></defs><rect x=\"20\" y=\"78\" width=\"160\" height=\"100\" rx=\"6\" fill=\"url(#vpph-631797677)\"></rect><rect x=\"82\" y=\"114.5\" width=\"36\" height=\"27\" rx=\"3.2399999999999998\" fill=\"none\" stroke=\"#6B8FC8\" stroke-width=\"1.4\" opacity=\".75\"></rect><circle cx=\"93.7\" cy=\"123.5\" r=\"3.96\" fill=\"#6B8FC8\" opacity=\".75\"></circle><path d=\"M84.7 138.8 L97.3 126.20000000000002 L104.5 134.3 L110.8 128 L115.3 138.8 Z\" fill=\"#6B8FC8\" opacity=\".75\"></path><rect x=\"20\" y=\"214\" width=\"160\" height=\"22\" rx=\"11\" fill=\"#005CE5\"></rect><text x=\"100\" y=\"229\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"9\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Okay</text></svg>"
+        "previewHtml": "<div id=\"vp-preview-version2\"></div>"
       }
     ],
     "colorsTables": [
@@ -531,7 +575,7 @@ export const visualPopup: ComponentData = {
             "role": "Title",
             "token": "Primary/Headlines/Section",
             "values": [
-              "HeyMeow Rnd Bold · 22 / 26"
+              "Proxima Soft Bold · 22 / 26"
             ]
           },
           {
@@ -545,14 +589,14 @@ export const visualPopup: ComponentData = {
             "role": "Preamble (V2)",
             "token": "Primary/Label/Tiny",
             "values": [
-              "HeyMeow Rnd Bold · 10 / 10 · +0.25"
+              "Proxima Soft Bold · 10 / 10 · +0.25"
             ]
           },
           {
             "role": "CTA label",
             "token": "Primary/Label/Large",
             "values": [
-              "HeyMeow Rnd Bold · 18 / 18 · +0.25"
+              "Proxima Soft Bold · 18 / 18 · +0.25"
             ]
           }
         ]

@@ -22,7 +22,7 @@ function _itmDownloadIcon() {
 }
 
 function _itmListItem() {
-  return '<div style="display:flex;gap:8px;align-items:flex-start;padding:2px 0;">' +
+  return '<div style="display:flex;gap:8px;align-items:center;padding:2px 0;">' +
     _itmCheckIcon() +
     '<span style="flex:1;font-family:\'BarkAda\',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;">Content</span>' +
   '</div>';
@@ -32,10 +32,10 @@ function _itmSection(items) {
   var rows = [];
   for (var i = 0; i < (items || 3); i++) rows.push(_itmListItem());
   return '<div style="background:#FFFFFF;border:1px solid #E5EBF4;box-shadow:0 1px 1.5px rgba(232,238,242,0.79);">' +
-    '<div style="border-bottom:1px solid #E5EBF4;padding:12px 20px 12px 36px;">' +
+    '<div style="border-bottom:1px solid #E5EBF4;padding:12px 20px 12px 24px;">' +
       '<p style="margin:0;font-family:\'Proxima Soft\',sans-serif;font-weight:700;font-size:16px;line-height:20px;color:#0A2757;letter-spacing:0.25px;">Header</p>' +
     '</div>' +
-    '<div style="background:rgba(246,249,253,0.24);padding:12px 48px;">' + rows.join('') + '</div>' +
+    '<div style="background:rgba(246,249,253,0.24);padding:12px 24px;">' + rows.join('') + '</div>' +
   '</div>';
 }
 

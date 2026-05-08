@@ -1,4 +1,41 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/radio-button-with-label.js`.
+const radioButtonWithLabelDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'size',
+        prop: 'size',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'default' },
+          { value: 'large', label: 'large' },
+        ],
+      },
+      {
+        label: 'isError',
+        prop: 'isError',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
+        ],
+      },
+      {
+        label: 'selected',
+        prop: 'selected',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
+        ],
+      },
+    ],
+  },
+];
 
 export const radioButtonWithLabel: ComponentData = {
   "meta": {
@@ -27,7 +64,7 @@ export const radioButtonWithLabel: ComponentData = {
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. Radio Button with Label appears in form questions and preference settings, stacked vertically as a group.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"200\" height=\"120\" viewBox=\"0 0 200 120\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"108\" rx=\"10\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          \n          <rect x=\"42\" y=\"20\" width=\"98\" height=\"6\" rx=\"1\" fill=\"#0A2757\" opacity=\".65\"></rect>\n          <rect x=\"42\" y=\"30\" width=\"70\" height=\"4\" rx=\"1\" fill=\"#6780A9\"></rect>\n          \n          <circle cx=\"50\" cy=\"50\" r=\"6\" fill=\"#005CE5\"></circle>\n          <circle cx=\"50\" cy=\"50\" r=\"2\" fill=\"#FFF\"></circle>\n          <rect x=\"62\" y=\"47\" width=\"60\" height=\"6\" rx=\"1\" fill=\"#445C85\" opacity=\".7\"></rect>\n          \n          <circle cx=\"50\" cy=\"68\" r=\"6\" fill=\"none\" stroke=\"#D7E0EF\" stroke-width=\"2\"></circle>\n          <rect x=\"62\" y=\"65\" width=\"72\" height=\"6\" rx=\"1\" fill=\"#445C85\" opacity=\".55\"></rect>\n          \n          <circle cx=\"50\" cy=\"86\" r=\"6\" fill=\"none\" stroke=\"#D7E0EF\" stroke-width=\"2\"></circle>\n          <rect x=\"62\" y=\"83\" width=\"56\" height=\"6\" rx=\"1\" fill=\"#445C85\" opacity=\".55\"></rect>\n          \n          <rect x=\"42\" y=\"100\" width=\"116\" height=\"12\" rx=\"6\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <text x=\"100\" y=\"109\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"5.5\" font-weight=\"700\" font-family=\"system-ui\">Continue</text>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"rbl-demo-preview\"><div style=\"display:inline-flex;gap:12px;align-items:flex-start;padding:4px 0;\"><div style=\"padding-top:4px;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"none\" stroke=\"#D7E0EF\" stroke-width=\"2\"></circle></svg></div><div style=\"color:#445C85;font-family:'HeyMeow Rnd', system-ui;font-weight:600;font-size:14px;line-height:16px;letter-spacing:0.25px;\">Label</div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Proposed API</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">size</span><select class=\"demo-panel-select\" id=\"rbl-demo-size\" onchange=\"updateRBLDemo()\"><option value=\"default\" selected=\"\">default</option><option value=\"large\">large</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isError</span><select class=\"demo-panel-select\" id=\"rbl-demo-error\" onchange=\"updateRBLDemo()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">selected</span><select class=\"demo-panel-select\" id=\"rbl-demo-selected\" onchange=\"updateRBLDemo()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"rbl-demo-preview\"><div style=\"display:inline-flex;gap:12px;align-items:center;padding:4px 0;\"><div style=\"display:flex;align-items:center;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"none\" stroke=\"#D7E0EF\" stroke-width=\"2\"></circle></svg></div><div style=\"color:#445C85;font-family:'Proxima Soft', system-ui;font-weight:600;font-size:14px;line-height:16px;letter-spacing:0.25px;\">Label</div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Proposed API</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">size</span><select class=\"demo-panel-select\" id=\"rbl-demo-size\" onchange=\"updateRBLDemo()\"><option value=\"default\" selected=\"\">default</option><option value=\"large\">large</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isError</span><select class=\"demo-panel-select\" id=\"rbl-demo-error\" onchange=\"updateRBLDemo()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">selected</span><select class=\"demo-panel-select\" id=\"rbl-demo-selected\" onchange=\"updateRBLDemo()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -119,9 +156,12 @@ export const radioButtonWithLabel: ComponentData = {
     "specCards": [
       {
         "cardKey": "default",
+        "demoKey": "default",
+        "demoControls": radioButtonWithLabelDemoControls,
         "title": "Default",
         "node": "18482:35674",
         "description": "Small radio + 14 / 16 label. Default unselected state.",
+        "previewHtml": "<div id=\"rbl-spec-default-preview\" style=\"display:flex;align-items:flex-start;justify-content:center;padding:24px;background:#F4F6FA;border-radius:8px;min-height:80px;\"><div style=\"display:inline-flex;gap:12px;align-items:center;padding:4px 0;\"><div style=\"display:flex;align-items:center;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"none\" stroke=\"#D7E0EF\" stroke-width=\"2\"></circle></svg></div><div style=\"color:#445C85;font-family:'Proxima Soft', system-ui;font-weight:600;font-size:14px;line-height:16px;letter-spacing:0.25px;\">Label</div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -130,12 +170,14 @@ export const radioButtonWithLabel: ComponentData = {
               {
                 "key": "Variant",
                 "value": "Default",
-                "mono": false
+                "mono": false,
+                "prop": "size"
               },
               {
                 "key": "State",
                 "value": "Default",
-                "mono": false
+                "mono": false,
+                "prop": "isError"
               }
             ]
           },
@@ -197,9 +239,12 @@ export const radioButtonWithLabel: ComponentData = {
       },
       {
         "cardKey": "large",
+        "demoKey": "large",
+        "demoControls": radioButtonWithLabelDemoControls,
         "title": "Large",
         "node": "18482:35686",
-        "description": "16 / 20 label (HeyMeow Rnd Semibold). Still uses the 16 × 16 radio — should be 20 × 20.",
+        "description": "16 / 20 label (Proxima Soft Semibold). Still uses the 16 × 16 radio — should be 20 × 20.",
+        "previewHtml": "<div id=\"rbl-spec-large-preview\" style=\"display:flex;align-items:flex-start;justify-content:center;padding:24px;background:#F4F6FA;border-radius:8px;min-height:80px;\"><div style=\"display:inline-flex;gap:12px;align-items:center;padding:4px 0;\"><div style=\"display:flex;align-items:center;\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"10\" cy=\"10\" r=\"9\" fill=\"none\" stroke=\"#D7E0EF\" stroke-width=\"2\"></circle></svg></div><div style=\"color:#445C85;font-family:'Proxima Soft', system-ui;font-weight:600;font-size:16px;line-height:20px;letter-spacing:0.25px;\">Label</div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -208,12 +253,14 @@ export const radioButtonWithLabel: ComponentData = {
               {
                 "key": "Variant",
                 "value": "Large",
-                "mono": false
+                "mono": false,
+                "prop": "size"
               },
               {
                 "key": "State",
                 "value": "Default",
-                "mono": false
+                "mono": false,
+                "prop": "isError"
               }
             ]
           },
@@ -275,9 +322,12 @@ export const radioButtonWithLabel: ComponentData = {
       },
       {
         "cardKey": "default-—-error",
+        "demoKey": "default-error",
+        "demoControls": radioButtonWithLabelDemoControls,
         "title": "Default — error",
         "node": "18482:35680",
         "description": "Default size with red radio border. Label text color unchanged.",
+        "previewHtml": "<div id=\"rbl-spec-default-error-preview\" style=\"display:flex;align-items:flex-start;justify-content:center;padding:24px;background:#F4F6FA;border-radius:8px;min-height:80px;\"><div style=\"display:inline-flex;gap:12px;align-items:center;padding:4px 0;\"><div style=\"display:flex;align-items:center;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"none\" stroke=\"#D61B2C\" stroke-width=\"2\"></circle></svg></div><div style=\"color:#445C85;font-family:'Proxima Soft', system-ui;font-weight:600;font-size:14px;line-height:16px;letter-spacing:0.25px;\">Label</div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -286,12 +336,14 @@ export const radioButtonWithLabel: ComponentData = {
               {
                 "key": "Variant",
                 "value": "Default — error",
-                "mono": false
+                "mono": false,
+                "prop": "size"
               },
               {
                 "key": "State",
                 "value": "Error",
-                "mono": false
+                "mono": false,
+                "prop": "isError"
               }
             ]
           },
@@ -353,9 +405,12 @@ export const radioButtonWithLabel: ComponentData = {
       },
       {
         "cardKey": "large-—-error",
+        "demoKey": "large-error",
+        "demoControls": radioButtonWithLabelDemoControls,
         "title": "Large — error",
         "node": "18482:35692",
         "description": "Large size with red radio border.",
+        "previewHtml": "<div id=\"rbl-spec-large-error-preview\" style=\"display:flex;align-items:flex-start;justify-content:center;padding:24px;background:#F4F6FA;border-radius:8px;min-height:80px;\"><div style=\"display:inline-flex;gap:12px;align-items:center;padding:4px 0;\"><div style=\"display:flex;align-items:center;\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"10\" cy=\"10\" r=\"9\" fill=\"none\" stroke=\"#D61B2C\" stroke-width=\"2\"></circle></svg></div><div style=\"color:#445C85;font-family:'Proxima Soft', system-ui;font-weight:600;font-size:16px;line-height:20px;letter-spacing:0.25px;\">Label</div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -364,12 +419,14 @@ export const radioButtonWithLabel: ComponentData = {
               {
                 "key": "Variant",
                 "value": "Large — error",
-                "mono": false
+                "mono": false,
+                "prop": "size"
               },
               {
                 "key": "State",
                 "value": "Error",
-                "mono": false
+                "mono": false,
+                "prop": "isError"
               }
             ]
           },
@@ -441,14 +498,14 @@ export const radioButtonWithLabel: ComponentData = {
             "role": "default",
             "token": "Primary/Multi-line Label/Light/Small",
             "values": [
-              "HeyMeow Rnd Semibold · 14 / 16 · +0.25"
+              "Proxima Soft Semibold · 14 / 16 · +0.25"
             ]
           },
           {
             "role": "large",
             "token": "Primary/Multi-line Label/Light/Base",
             "values": [
-              "HeyMeow Rnd Semibold · 16 / 20 · +0.25"
+              "Proxima Soft Semibold · 16 / 20 · +0.25"
             ]
           }
         ]

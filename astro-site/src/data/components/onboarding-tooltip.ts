@@ -1,4 +1,52 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/onboarding-tooltip.js`.
+const onboardingTooltipDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'pointer',
+        prop: 'pointer',
+        defaultValue: 'top',
+        options: [
+          { value: 'top', label: 'top' },
+          { value: 'right', label: 'right' },
+          { value: 'bottom', label: 'bottom' },
+          { value: 'left', label: 'left' },
+        ],
+      },
+      {
+        label: 'header',
+        prop: 'header',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+      {
+        label: 'description',
+        prop: 'description',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+      {
+        label: 'close',
+        prop: 'close',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+    ],
+  },
+];
 
 export const onboardingTooltip: ComponentData = {
   "meta": {
@@ -197,9 +245,12 @@ export const onboardingTooltip: ComponentData = {
     "specCards": [
       {
         "cardKey": "pointer=top-—-target-element-above",
+        "demoKey": "top",
+        "demoControls": onboardingTooltipDemoControls,
         "title": "pointer=top — target element above",
         "node": "51:17065",
         "description": "Pointer triangle above the bubble, surface below. 336 × 90 (pointer adds 12 px on top). Used when the tip describes an element positioned above the tooltip in the flow.",
+        "previewHtml": "<div id=\"ont-spec-top-preview\" style=\"display:flex;justify-content:center;align-items:center;width:100%;padding:40px 12px;\"><div style=\"position:relative;width:336px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:6px;padding:16px;box-sizing:border-box;box-shadow:0 0 4px rgba(2,14,34,0.06);\"><div style=\"position:absolute;width:0;height:0;left:50%;top:-8px;transform:translateX(-50%);border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:8px solid #FFFFFF;filter:drop-shadow(0 -1px 0 #E5EBF4);\"></div><div style=\"display:flex;align-items:center;gap:24px;width:100%;\"><div style=\"flex:1 0 0;min-width:0;font-family:'Proxima Soft',system-ui;font-size:18px;line-height:23px;font-weight:700;letter-spacing:0.25px;color:#0A2757;\">Header</div><div style=\"flex-shrink:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center;\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\"><path d=\"M1 1l10 10M11 1L1 11\" stroke=\"#0A2757\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div></div><div style=\"font-family:'BarkAda','Proxima Soft',system-ui;font-size:12px;line-height:18px;font-weight:600;color:#6780A9;margin-top:4px;\">Description goes here</div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -208,7 +259,8 @@ export const onboardingTooltip: ComponentData = {
               {
                 "key": "pointer",
                 "value": "top",
-                "mono": false
+                "mono": false,
+                "prop": "pointer"
               },
               {
                 "key": "Target",
@@ -216,19 +268,22 @@ export const onboardingTooltip: ComponentData = {
                 "mono": false
               },
               {
-                "key": "Header",
+                "key": "header",
                 "value": "true",
-                "mono": false
+                "mono": true,
+                "prop": "header"
               },
               {
-                "key": "Description",
+                "key": "description",
                 "value": "true",
-                "mono": false
+                "mono": true,
+                "prop": "description"
               },
               {
-                "key": "Close icon",
+                "key": "close",
                 "value": "true",
-                "mono": false
+                "mono": true,
+                "prop": "close"
               }
             ]
           },
@@ -316,9 +371,12 @@ export const onboardingTooltip: ComponentData = {
       },
       {
         "cardKey": "pointer=bottom-—-target-element-below",
+        "demoKey": "bottom",
+        "demoControls": onboardingTooltipDemoControls,
         "title": "pointer=bottom — target element below",
         "node": "51:17063",
         "description": "Pointer triangle below the bubble. 336 × 89. Most common placement for tips anchored to an icon in a toolbar or nav bar.",
+        "previewHtml": "<div id=\"ont-spec-bottom-preview\" style=\"display:flex;justify-content:center;align-items:center;width:100%;padding:40px 12px;\"><div style=\"position:relative;width:336px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:6px;padding:16px;box-sizing:border-box;box-shadow:0 0 4px rgba(2,14,34,0.06);\"><div style=\"position:absolute;width:0;height:0;left:50%;bottom:-8px;transform:translateX(-50%);border-left:8px solid transparent;border-right:8px solid transparent;border-top:8px solid #FFFFFF;filter:drop-shadow(0 1px 0 #E5EBF4);\"></div><div style=\"display:flex;align-items:center;gap:24px;width:100%;\"><div style=\"flex:1 0 0;min-width:0;font-family:'Proxima Soft',system-ui;font-size:18px;line-height:23px;font-weight:700;letter-spacing:0.25px;color:#0A2757;\">Header</div><div style=\"flex-shrink:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center;\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\"><path d=\"M1 1l10 10M11 1L1 11\" stroke=\"#0A2757\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div></div><div style=\"font-family:'BarkAda','Proxima Soft',system-ui;font-size:12px;line-height:18px;font-weight:600;color:#6780A9;margin-top:4px;\">Description goes here</div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -327,7 +385,8 @@ export const onboardingTooltip: ComponentData = {
               {
                 "key": "pointer",
                 "value": "bottom",
-                "mono": false
+                "mono": false,
+                "prop": "pointer"
               },
               {
                 "key": "Target",
@@ -335,19 +394,22 @@ export const onboardingTooltip: ComponentData = {
                 "mono": false
               },
               {
-                "key": "Header",
+                "key": "header",
                 "value": "true",
-                "mono": false
+                "mono": true,
+                "prop": "header"
               },
               {
-                "key": "Description",
+                "key": "description",
                 "value": "true",
-                "mono": false
+                "mono": true,
+                "prop": "description"
               },
               {
-                "key": "Close icon",
+                "key": "close",
                 "value": "true",
-                "mono": false
+                "mono": true,
+                "prop": "close"
               }
             ]
           },
@@ -435,9 +497,12 @@ export const onboardingTooltip: ComponentData = {
       },
       {
         "cardKey": "pointer=left-—-target-element-to-the-left",
+        "demoKey": "left",
+        "demoControls": onboardingTooltipDemoControls,
         "title": "pointer=left — target element to the left",
         "node": "51:17062",
         "description": "Pointer triangle on the left edge. 348 × 78 (pointer adds 12 px on the left). Used for tips describing a leading-edge control.",
+        "previewHtml": "<div id=\"ont-spec-left-preview\" style=\"display:flex;justify-content:center;align-items:center;width:100%;padding:40px 12px;\"><div style=\"position:relative;width:336px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:6px;padding:16px;box-sizing:border-box;box-shadow:0 0 4px rgba(2,14,34,0.06);\"><div style=\"position:absolute;width:0;height:0;top:50%;left:-8px;transform:translateY(-50%);border-top:8px solid transparent;border-bottom:8px solid transparent;border-right:8px solid #FFFFFF;filter:drop-shadow(-1px 0 0 #E5EBF4);\"></div><div style=\"display:flex;align-items:center;gap:24px;width:100%;\"><div style=\"flex:1 0 0;min-width:0;font-family:'Proxima Soft',system-ui;font-size:18px;line-height:23px;font-weight:700;letter-spacing:0.25px;color:#0A2757;\">Header</div><div style=\"flex-shrink:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center;\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\"><path d=\"M1 1l10 10M11 1L1 11\" stroke=\"#0A2757\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div></div><div style=\"font-family:'BarkAda','Proxima Soft',system-ui;font-size:12px;line-height:18px;font-weight:600;color:#6780A9;margin-top:4px;\">Description goes here</div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -446,7 +511,8 @@ export const onboardingTooltip: ComponentData = {
               {
                 "key": "pointer",
                 "value": "left",
-                "mono": false
+                "mono": false,
+                "prop": "pointer"
               },
               {
                 "key": "Target",
@@ -454,19 +520,22 @@ export const onboardingTooltip: ComponentData = {
                 "mono": false
               },
               {
-                "key": "Header",
+                "key": "header",
                 "value": "true",
-                "mono": false
+                "mono": true,
+                "prop": "header"
               },
               {
-                "key": "Description",
+                "key": "description",
                 "value": "true",
-                "mono": false
+                "mono": true,
+                "prop": "description"
               },
               {
-                "key": "Close icon",
+                "key": "close",
                 "value": "true",
-                "mono": false
+                "mono": true,
+                "prop": "close"
               }
             ]
           },
@@ -554,9 +623,12 @@ export const onboardingTooltip: ComponentData = {
       },
       {
         "cardKey": "pointer=right-—-target-element-to-the-right",
+        "demoKey": "right",
+        "demoControls": onboardingTooltipDemoControls,
         "title": "pointer=right — target element to the right",
         "node": "51:17064",
         "description": "Pointer triangle on the right edge. 348 × 78 (pointer adds 12 px on the right). Used for tips describing a trailing-edge control.",
+        "previewHtml": "<div id=\"ont-spec-right-preview\" style=\"display:flex;justify-content:center;align-items:center;width:100%;padding:40px 12px;\"><div style=\"position:relative;width:336px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:6px;padding:16px;box-sizing:border-box;box-shadow:0 0 4px rgba(2,14,34,0.06);\"><div style=\"position:absolute;width:0;height:0;top:50%;right:-8px;transform:translateY(-50%);border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:8px solid #FFFFFF;filter:drop-shadow(1px 0 0 #E5EBF4);\"></div><div style=\"display:flex;align-items:center;gap:24px;width:100%;\"><div style=\"flex:1 0 0;min-width:0;font-family:'Proxima Soft',system-ui;font-size:18px;line-height:23px;font-weight:700;letter-spacing:0.25px;color:#0A2757;\">Header</div><div style=\"flex-shrink:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center;\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\"><path d=\"M1 1l10 10M11 1L1 11\" stroke=\"#0A2757\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div></div><div style=\"font-family:'BarkAda','Proxima Soft',system-ui;font-size:12px;line-height:18px;font-weight:600;color:#6780A9;margin-top:4px;\">Description goes here</div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -565,7 +637,8 @@ export const onboardingTooltip: ComponentData = {
               {
                 "key": "pointer",
                 "value": "right",
-                "mono": false
+                "mono": false,
+                "prop": "pointer"
               },
               {
                 "key": "Target",
@@ -573,19 +646,22 @@ export const onboardingTooltip: ComponentData = {
                 "mono": false
               },
               {
-                "key": "Header",
+                "key": "header",
                 "value": "true",
-                "mono": false
+                "mono": true,
+                "prop": "header"
               },
               {
-                "key": "Description",
+                "key": "description",
                 "value": "true",
-                "mono": false
+                "mono": true,
+                "prop": "description"
               },
               {
-                "key": "Close icon",
+                "key": "close",
                 "value": "true",
-                "mono": false
+                "mono": true,
+                "prop": "close"
               }
             ]
           },

@@ -34,11 +34,11 @@ function _stmBuildSvg(variant, size, leadingLabel, trailingIcon) {
     x += 16 + 4;
   }
   var textY = (height / 2) + (fontSize / 3);
-  s += '<text x="' + x + '" y="' + textY + '" font-family="HeyMeow Rnd, system-ui, sans-serif" font-size="' + fontSize + '" font-weight="600" fill="' + c.label + '" letter-spacing="0">' + message + '</text>';
+  s += '<text x="' + x + '" y="' + textY + '" font-family="BarkAda, system-ui, sans-serif" font-size="' + fontSize + '" font-weight="600" fill="' + c.label + '" letter-spacing="0">' + message + '</text>';
   if (hasLabel) {
     var labelX = width - 40;
     var labelColor = (variant === 'Success') ? '#048570' : (variant === 'Error') ? '#D61B2C' : '#6780A9';
-    s += '<text x="' + labelX + '" y="' + textY + '" font-family="HeyMeow Rnd, system-ui, sans-serif" font-size="' + fontSize + '" font-weight="600" fill="' + labelColor + '" letter-spacing="0">Label</text>';
+    s += '<text x="' + labelX + '" y="' + textY + '" font-family="BarkAda, system-ui, sans-serif" font-size="' + fontSize + '" font-weight="600" fill="' + labelColor + '" letter-spacing="0">Label</text>';
   }
   s += '</svg>';
   return s;
@@ -49,26 +49,85 @@ function updateSubtextMessageDemo() {
   if (el) el.innerHTML = _stmBuildSvg(_stmDemo.variant, _stmDemo.size, _stmDemo.leadingLabel, _stmDemo.trailingIcon);
 }
 
-var _stmSpecState = {
-  primary: { size: 'Small' },
-  success: { size: 'Small' },
-  error:   { size: 'Small' }
+/* ── Subtext Message Spec Cards ───────────────────────────────────── */
+var _stmSpecCards = {
+  primary: { variant: 'Primary', size: 'Small', leadingLabel: 'false', trailingIcon: 'false' },
+  success: { variant: 'Success', size: 'Small', leadingLabel: 'false', trailingIcon: 'true' },
+  error:   { variant: 'Error',   size: 'Small', leadingLabel: 'false', trailingIcon: 'true' }
 };
 
-function updateSubtextMessageSpecCard(variantKey, prop, value) {
-  if (_stmSpecState[variantKey]) _stmSpecState[variantKey][prop] = value;
-  var el = document.getElementById('stm-' + variantKey + '-preview');
-  if (!el) return;
-  var variantName = variantKey.charAt(0).toUpperCase() + variantKey.slice(1);
-  var leadingLabel = 'false';
-  var trailingIcon = (variantKey === 'primary') ? 'false' : 'true';
-  el.innerHTML = _stmBuildSvg(variantName, _stmSpecState[variantKey].size, leadingLabel, trailingIcon);
+/* Expose for shared utilities — `switchCodeTab` reads this when the
+   user clicks SwiftUI / Compose so it can rebuild the snippet. */
+var _specCards = _stmSpecCards;
+window._specCards = _specCards;
+
+function buildSwiftSnippet(type, card) {
+  var intentMap = { Primary: '.primary', Success: '.success', Error: '.error' };
+  var sizeMap = { Base: '.regular', Small: '.small' };
+  var intent = intentMap[card.variant] || '.primary';
+  var sz = sizeMap[card.size] || '.small';
+  var lines = [];
+  lines.push('EBSubtextMessage("Helper text")');
+  lines.push('    .ebIntent(' + intent + ')');
+  lines.push('    .controlSize(' + sz + ')');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var intentMap = { Primary: 'Primary', Success: 'Success', Error: 'Error' };
+  var sizeMap = { Base: 'Base', Small: 'Small' };
+  var intent = intentMap[card.variant] || 'Primary';
+  var sz = sizeMap[card.size] || 'Small';
+  var lines = [];
+  lines.push('EBSubtextMessage(');
+  lines.push('    label = "Helper text",');
+  lines.push('    intent = EBSubtextIntent.' + intent + ',');
+  lines.push('    size = EBSubtextSize.' + sz);
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _stmSpecCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview SVG — find the <svg> inside the card's preview pane */
+  var cardEl = document.getElementById('spec-card-stm-spec-' + cardStyle);
+  if (cardEl) {
+    var preview = cardEl.querySelector('.spec-card-preview');
+    if (preview) preview.innerHTML = _stmBuildSvg(card.variant, card.size, card.leadingLabel, card.trailingIcon);
+  }
+
+  /* Update Properties readouts — data-sp="${cardStyle}-${prop}" */
+  var spEl = document.querySelector('[data-sp="' + cardStyle + '-' + prop + '"]');
+  if (spEl) spEl.textContent = value;
+
+  /* Update DEV code — locate via [data-code-content="${cardStyle}"] */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
 }
 
 function _stmInitSpecCards() {
-  updateSubtextMessageSpecCard('primary', 'size', 'Small');
-  updateSubtextMessageSpecCard('success', 'size', 'Small');
-  updateSubtextMessageSpecCard('error', 'size', 'Small');
+  Object.keys(_stmSpecCards).forEach(function (k) {
+    updateSpecCard(k, 'size', _stmSpecCards[k].size);
+  });
 }
 
 function _stmInit() {
@@ -81,3 +140,6 @@ if (document.readyState === 'loading') {
 } else {
   _stmInit();
 }
+
+/* ── Re-init after Astro view-transition swaps ─────────────── */
+document.addEventListener('astro:page-load', _stmInit);

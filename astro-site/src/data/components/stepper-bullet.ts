@@ -1,4 +1,47 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/stepper-bullet.js`.
+const stepperBulletDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Steps',
+        prop: 'steps',
+        defaultValue: '4',
+        options: [
+          { value: '3', label: '3' },
+          { value: '4', label: '4' },
+          { value: '5', label: '5' },
+          { value: '6', label: '6' },
+          { value: '7', label: '7' },
+          { value: '8', label: '8' },
+          { value: '9', label: '9' },
+          { value: '10', label: '10' },
+        ],
+      },
+      {
+        label: 'Current',
+        prop: 'current',
+        defaultValue: '2',
+        options: [
+          { value: '1', label: '1' },
+          { value: '2', label: '2' },
+          { value: '3', label: '3' },
+          { value: '4', label: '4' },
+          { value: '5', label: '5' },
+          { value: '6', label: '6' },
+          { value: '7', label: '7' },
+          { value: '8', label: '8' },
+          { value: '9', label: '9' },
+          { value: '10', label: '10' },
+        ],
+      },
+    ],
+  },
+];
 
 export const stepperBullet: ComponentData = {
   "meta": {
@@ -196,17 +239,31 @@ export const stepperBullet: ComponentData = {
     "specCards": [
       {
         "cardKey": "stepper---bullet-canonical-node-27:48287-(5-steps)-·-sibling-frames-27:48235-(3-steps),-27:48254-(4-steps)",
+        "demoKey": "bullet",
+        "demoControls": stepperBulletDemoControls,
         "title": "Stepper - Bullet canonical node 27:48287 (5 Steps) · sibling frames 27:48235 (3 Steps), 27:48254 (4 Steps)",
         "node": "27:48287",
         "description": "Horizontal row of N 8×8 dots with one dot filled in brand blue to indicate the current step. 3 hardcoded sibling frames today; target is one component with a <code>steps</code> prop.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"stepper-bullet-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"stepper-bullet-spec-1\"><div class=\"eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm\" style=\"padding:12px 0;\"><div style=\"font:500 13px system-ui;color:#3C4A5C;margin-bottom:4px;\">4 steps, current = 2</div><div class=\"eb-preview eb-preview-stepper-bullet\" style=\"display:inline-flex;align-items:center;gap:8px;padding:4px 0;\"><span class=\"eb-preview-stepper-bullet-dot\" style=\"display:inline-block;width:8px;height:8px;border-radius:50%;background:#005CE5;\"></span><span class=\"eb-preview-stepper-bullet-dot\" style=\"display:inline-block;width:8px;height:8px;border-radius:50%;background:#005CE5;\"></span><span class=\"eb-preview-stepper-bullet-dot\" style=\"display:inline-block;width:8px;height:8px;border-radius:50%;background:#D2E5FF;\"></span><span class=\"eb-preview-stepper-bullet-dot\" style=\"display:inline-block;width:8px;height:8px;border-radius:50%;background:#D2E5FF;\"></span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Step counts",
+                "key": "Steps",
+                "value": "4",
+                "mono": false,
+                "prop": "steps"
+              },
+              {
+                "key": "Current",
+                "value": "2",
+                "mono": false,
+                "prop": "current"
+              },
+              {
+                "key": "Step counts (today)",
                 "value": "3 / 4 / 5",
                 "mono": false
               },
@@ -337,7 +394,16 @@ export const stepperBullet: ComponentData = {
         "compose": "<span class=\"syn-type\">EBStepper</span><span class=\"syn-punc\">(</span>\n    currentStep <span class=\"syn-eq\">=</span> 2<span class=\"syn-punc\">,</span>\n    totalSteps <span class=\"syn-eq\">=</span> 5<span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBStepperStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Bullet</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      buildStatelessColorsTable({
+        title: 'Stepper Bullet — Colors',
+        description: 'Dot-style step indicator. Active dots are brand-blue; inactive dots are pale-blue.',
+        rows: [
+          { role: 'Active dot',   token: 'stepper/color/bg',        value: '#005CE5' },
+          { role: 'Inactive dot', token: 'stepper/color/bg-track',  value: '#D2E5FF' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

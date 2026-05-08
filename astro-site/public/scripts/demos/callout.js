@@ -13,46 +13,41 @@ function _calBuildSvg(label, labelSize, description, type) {
   var c = _calColors[type] || _calColors['default'];
   var showLabel = (label === 'yes') && (labelSize === 'small' || labelSize === 'default');
   var showDesc  = (description === 'yes');
-  var labelFontSize = (labelSize === 'small') ? 12 : 16;
-  var labelLineHeight = (labelSize === 'small') ? 12 : 16;
-  var descFontSize = 14;
-  var descLineHeight = 20;
-  var descLineCount = 4;
-  var padH = 12;
-  var padV = 12;
-  var gap = 2;
-  var width = 336;
-  var contentH = 0;
-  if (showLabel) contentH += labelLineHeight;
-  if (showLabel && showDesc) contentH += gap;
-  if (showDesc) contentH += descLineHeight * descLineCount;
-  if (!showLabel && !showDesc) contentH = labelLineHeight;
-  var height = contentH + (padV * 2);
-  var s = '<svg width="' + width + '" height="' + height + '" viewBox="0 0 ' + width + ' ' + height + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
-  s += '<rect x="0.5" y="0.5" width="' + (width - 1) + '" height="' + (height - 1) + '" rx="5.5" fill="' + c.bg + '" stroke="' + c.border + '"/>';
-  var y = padV + labelLineHeight * 0.75;
+  var titleSize = (labelSize === 'small') ? 12 : 16;
+  var titleTracking = (labelSize === 'small') ? 0.5 : 0.25;
+
+  var s = '<div style="' +
+    'box-sizing:border-box;' +
+    'width:336px;' +
+    'padding:12px;' +
+    'background:' + c.bg + ';' +
+    'border:1px solid ' + c.border + ';' +
+    'border-radius:6px;' +
+    'font-family:\'Proxima Soft\', system-ui, sans-serif;' +
+    '">';
+
   if (showLabel) {
-    var tracking = (labelSize === 'small') ? 0.5 : 0.25;
-    s += '<text x="' + padH + '" y="' + y + '" font-family="Proxima Soft, Proxima Nova, system-ui, sans-serif" font-size="' + labelFontSize + '" font-weight="700" fill="' + c.label + '" letter-spacing="' + tracking + '">Add title here</text>';
-    y += (labelLineHeight - labelLineHeight * 0.75) + gap;
+    s += '<div style="' +
+      'font-weight:700;' +
+      'font-size:' + titleSize + 'px;' +
+      'line-height:' + titleSize + 'px;' +
+      'letter-spacing:' + titleTracking + 'px;' +
+      'color:' + c.label + ';' +
+      (showDesc ? 'margin-bottom:2px;' : '') +
+      '">Add title here</div>';
   }
+
   if (showDesc) {
-    if (showLabel) {
-      y += descLineHeight * 0.75;
-    } else {
-      y = padV + descLineHeight * 0.75;
-    }
-    var lines = [
-      'This is the first sentence. This is the second sentence. This is the third',
-      'sentence. This is the fourth sentence. This is the fifth',
-      'sentence.'
-    ];
-    for (var i = 0; i < lines.length; i++) {
-      s += '<text x="' + padH + '" y="' + y + '" font-family="BarkAda, system-ui, sans-serif" font-size="' + descFontSize + '" font-weight="600" fill="' + c.description + '">' + lines[i] + '</text>';
-      y += descLineHeight;
-    }
+    s += '<div style="' +
+      'font-weight:600;' +
+      'font-size:14px;' +
+      'line-height:20px;' +
+      'letter-spacing:0;' +
+      'color:' + c.description + ';' +
+      '">This is the first sentence. This is the second sentence. This is the third sentence. This is the fourth sentence. This is the fifth sentence.</div>';
   }
-  s += '</svg>';
+
+  s += '</div>';
   return s;
 }
 

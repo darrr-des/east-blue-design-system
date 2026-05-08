@@ -1,4 +1,33 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+import { buildMultiModeColorsTable, buildStatelessColorsTable } from './_helpers';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/toast-with-button.js`.
+const toastWithButtonDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Type',
+        prop: 'type',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'default' },
+          { value: 'light', label: 'light' },
+        ],
+      },
+      {
+        label: 'Description',
+        prop: 'description',
+        defaultValue: 'yes',
+        options: [
+          { value: 'yes', label: 'yes' },
+          { value: 'no', label: 'no' },
+        ],
+      },
+    ],
+  },
+];
 
 export const toastWithButton: ComponentData = {
   "meta": {
@@ -26,7 +55,7 @@ export const toastWithButton: ComponentData = {
   },
   "overview": {
     "inContextNote": "The actionable toast appears after reversible operations — \"Transfer sent · Undo\", \"Message failed · Retry\", \"Photo uploaded · View\". The action button sits right-aligned, tappable without dismissing the toast. Auto-dismiss is suppressed while an action is present.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"toast-with-button-demo-preview\"><div class=\"eb-preview eb-preview-toastwb eb-preview-toastwb--default eb-preview-toastwb--has-desc\"><div class=\"eb-preview-toastwb__container\"><div class=\"eb-preview-toastwb__text-container\"><p class=\"eb-preview-toastwb__label\">Add label here</p><p class=\"eb-preview-toastwb__desc\">Add description here.</p></div><div class=\"eb-preview-toastwb__action-slot\"><div class=\"eb-preview-toastwb__action eb-preview-toastwb__action--white\">Label</div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">label</span><input type=\"text\" id=\"toast-with-button-ctrl-label\" class=\"demo-panel-select demo-panel-input\" value=\"Add label here\" oninput=\"_toastWithButtonUpdate()\" placeholder=\"Toast label\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><input type=\"text\" id=\"toast-with-button-ctrl-desc\" class=\"demo-panel-select demo-panel-input\" value=\"Add description here.\" oninput=\"_toastWithButtonUpdate()\" placeholder=\"Supporting text\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">action</span><input type=\"text\" id=\"toast-with-button-ctrl-action\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"_toastWithButtonUpdate()\" placeholder=\"Action label\"></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select id=\"toast-with-button-ctrl-type\" class=\"demo-panel-select\" onchange=\"_toastWithButtonUpdate()\"><option value=\"default\" selected=\"\">default</option><option value=\"light\">light</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Description</span><select id=\"toast-with-button-ctrl-description\" class=\"demo-panel-select\" onchange=\"_toastWithButtonUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"toast-with-button-demo-preview\"><div class=\"eb-preview eb-preview-toastwb eb-preview-toastwb--default eb-preview-toastwb--has-desc\"><div class=\"eb-preview-toastwb__container\"><div class=\"eb-preview-toastwb__text-container\"><p class=\"eb-preview-toastwb__label\">Add label here</p><p class=\"eb-preview-toastwb__desc\">Add description here.</p></div><div class=\"eb-preview-toastwb__action-slot\"><div class=\"eb-preview-toastwb__action eb-preview-toastwb__action--white\">Label</div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select id=\"toast-with-button-ctrl-type\" class=\"demo-panel-select\" onchange=\"_toastWithButtonUpdate()\"><option value=\"default\" selected=\"\">default</option><option value=\"light\">light</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Description</span><select id=\"toast-with-button-ctrl-description\" class=\"demo-panel-select\" onchange=\"_toastWithButtonUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -209,10 +238,12 @@ export const toastWithButton: ComponentData = {
     "specCards": [
       {
         "cardKey": "default-—-with-description",
+        "demoKey": "darkdesc",
+        "demoControls": toastWithButtonDemoControls,
         "title": "Default — with description",
         "node": "813:31117",
         "description": "The two-line dark toast. Label (14 px bold) above supporting text (10 px BarkAda Medium, 80% white), action button right-aligned and bottom-aligned. Used for reversible success moments that need more context — \"Transfer sent · to Juan Dela Cruz\".",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-with-button-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-with-button-spec-1\"><div class=\"eb-preview eb-preview-toastwb eb-preview-toastwb--default eb-preview-toastwb--has-desc\"><div class=\"eb-preview-toastwb__container\"><div class=\"eb-preview-toastwb__text-container\"><p class=\"eb-preview-toastwb__label\">Add label here</p><p class=\"eb-preview-toastwb__desc\">Add description here.</p></div><div class=\"eb-preview-toastwb__action-slot\"><div class=\"eb-preview-toastwb__action eb-preview-toastwb__action--white\">Label</div></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -221,12 +252,14 @@ export const toastWithButton: ComponentData = {
               {
                 "key": "Type",
                 "value": "default",
-                "mono": true
+                "mono": true,
+                "prop": "type"
               },
               {
                 "key": "Description",
                 "value": "yes",
-                "mono": true
+                "mono": true,
+                "prop": "description"
               },
               {
                 "key": "Action",
@@ -368,24 +401,28 @@ export const toastWithButton: ComponentData = {
       },
       {
         "cardKey": "light-—-with-description",
+        "demoKey": "lightdesc",
+        "demoControls": toastWithButtonDemoControls,
         "title": "Light — with description",
         "node": "27:53213",
         "description": "Same two-line layout, inverted surface. White bg, navy label, slate supporting text, blue-on-white action button. Used on dark backgrounds or when the surrounding screen is already high-contrast.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-with-button-spec-2\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-with-button-spec-2\"><div class=\"eb-preview eb-preview-toastwb eb-preview-toastwb--light eb-preview-toastwb--has-desc\"><div class=\"eb-preview-toastwb__container\"><div class=\"eb-preview-toastwb__text-container\"><p class=\"eb-preview-toastwb__label\">Add label here</p><p class=\"eb-preview-toastwb__desc\">Add description here.</p></div><div class=\"eb-preview-toastwb__action-slot\"><div class=\"eb-preview-toastwb__action eb-preview-toastwb__action--blue\">Label</div></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Theme",
-                "value": "Light",
-                "mono": true
+                "key": "Type",
+                "value": "light",
+                "mono": true,
+                "prop": "type"
               },
               {
-                "key": "Has description",
-                "value": "Yes",
-                "mono": true
+                "key": "Description",
+                "value": "yes",
+                "mono": true,
+                "prop": "description"
               }
             ]
           },
@@ -462,24 +499,28 @@ export const toastWithButton: ComponentData = {
       },
       {
         "cardKey": "default-—-no-description",
+        "demoKey": "darknodesc",
+        "demoControls": toastWithButtonDemoControls,
         "title": "Default — no description",
         "node": "813:31125",
         "description": "The compact single-line toast with action. 8 px vertical padding, label only. Used for short reversible actions — \"Copied · Undo\".",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-with-button-spec-3\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-with-button-spec-3\"><div class=\"eb-preview eb-preview-toastwb eb-preview-toastwb--default eb-preview-toastwb--no-desc\"><div class=\"eb-preview-toastwb__container\"><div class=\"eb-preview-toastwb__text-container\"><p class=\"eb-preview-toastwb__label\">Add label here</p></div><div class=\"eb-preview-toastwb__action-slot\"><div class=\"eb-preview-toastwb__action eb-preview-toastwb__action--white\">Label</div></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Theme",
-                "value": "Dark",
-                "mono": true
+                "key": "Type",
+                "value": "default",
+                "mono": true,
+                "prop": "type"
               },
               {
-                "key": "Has description",
-                "value": "No",
-                "mono": true
+                "key": "Description",
+                "value": "no",
+                "mono": true,
+                "prop": "description"
               }
             ]
           },
@@ -550,10 +591,12 @@ export const toastWithButton: ComponentData = {
       },
       {
         "cardKey": "light-—-no-description",
+        "demoKey": "lightnodesc",
+        "demoControls": toastWithButtonDemoControls,
         "title": "Light — no description",
         "node": "27:53225",
         "description": "The compact light-surface toast. Single-line label, blue action button, white bg.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-with-button-spec-4\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-with-button-spec-4\"><div class=\"eb-preview eb-preview-toastwb eb-preview-toastwb--light eb-preview-toastwb--no-desc\"><div class=\"eb-preview-toastwb__container\"><div class=\"eb-preview-toastwb__text-container\"><p class=\"eb-preview-toastwb__label\">Add label here</p></div><div class=\"eb-preview-toastwb__action-slot\"><div class=\"eb-preview-toastwb__action eb-preview-toastwb__action--blue\">Label</div></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -562,12 +605,14 @@ export const toastWithButton: ComponentData = {
               {
                 "key": "Type",
                 "value": "light",
-                "mono": true
+                "mono": true,
+                "prop": "type"
               },
               {
                 "key": "Description",
                 "value": "no",
-                "mono": true
+                "mono": true,
+                "prop": "description"
               },
               {
                 "key": "Root element",
@@ -634,7 +679,54 @@ export const toastWithButton: ComponentData = {
         "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    message <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Saved\"</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Light</span><span class=\"syn-punc\">,</span>\n    action <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"View\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — Default with action button (theme=dark)
+      buildMultiModeColorsTable({
+        title: 'Default — Colors by Theme',
+        description: 'Default toast with a trailing action button. Theme axis flips surface + label between Dark and Light.',
+        modes: ['Theme · Dark', 'Theme · Light'],
+        rows: [
+          { role: 'Surface bg',  token: 'toast/color/{theme}/bg',          values: ['#0A2757', '#FFFFFF'] },
+          { role: 'Border',      token: 'toast/color/{theme}/border',      values: ['#E5EBF4', '#E5EBF4'] },
+          { role: 'Label',       token: 'toast/color/{theme}/label',       values: ['#FFFFFF', '#0A2757'] },
+          { role: 'Description', token: 'toast/color/{theme}/description', values: ['#F6F9FD @ 80%', '#445C85'] },
+          { role: 'Action label', token: 'toast/color/{theme}/action',     values: ['#9BC5FD', '#005CE5'] },
+        ],
+      }),
+      // Card 2 — Light surface card with button
+      buildStatelessColorsTable({
+        title: 'Light — Colors',
+        description: 'Light toast variant with brand-blue trailing action.',
+        rows: [
+          { role: 'Surface bg',  token: 'main/toast/light/bg',          value: '#FFFFFF' },
+          { role: 'Label',       token: 'main/toast/light/label',       value: '#0A2757' },
+          { role: 'Description', token: 'main/toast/light/description', value: '#3C4A5C' },
+          { role: 'Action label', token: 'main/toast/light/action',     value: '#005CE5' },
+        ],
+      }),
+      // Card 3 — Pending with progress
+      buildMultiModeColorsTable({
+        title: 'Pending — Colors by Theme',
+        description: 'In-progress toast — same theme palette as Default.',
+        modes: ['Theme · Dark', 'Theme · Light'],
+        rows: [
+          { role: 'Surface bg', token: 'toast/color/pending/{theme}/bg',      values: ['#0A2757', '#FFFFFF'] },
+          { role: 'Label',      token: 'toast/color/pending/{theme}/label',   values: ['#FFFFFF', '#0A2757'] },
+          { role: 'Spinner',    token: 'toast/color/pending/{theme}/spinner', values: ['#FFFFFF', '#0A2757'] },
+        ],
+      }),
+      // Card 4 — Error
+      buildStatelessColorsTable({
+        title: 'Error — Colors',
+        description: 'Critical error toast with white text on red.',
+        rows: [
+          { role: 'Surface bg', token: 'main/toast/error/bg',     value: '#D61B2C' },
+          { role: 'Border',     token: 'main/toast/error/border', value: '#F4C7C9' },
+          { role: 'Label',      token: 'main/toast/error/label',  value: '#FFFFFF' },
+          { role: 'Action',     token: 'main/toast/error/action', value: '#FFFFFF' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

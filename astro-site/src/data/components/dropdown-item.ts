@@ -1,4 +1,35 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/dropdown-item.js`.
+const dropdownItemDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'type',
+        prop: 'type',
+        defaultValue: 'text',
+        options: [
+          { value: 'text',          label: 'text' },
+          { value: 'text with tag', label: 'text with tag' },
+          { value: 'amount',        label: 'amount' },
+          { value: 'country',       label: 'country' },
+          { value: 'disabeld',      label: 'disabeld' },
+        ],
+      },
+      {
+        label: 'selected',
+        prop: 'selected',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true',  label: 'true' },
+        ],
+      },
+    ],
+  },
+];
 
 export const dropdownItem: ComponentData = {
   "meta": {
@@ -181,6 +212,8 @@ export const dropdownItem: ComponentData = {
     "specCards": [
       {
         "cardKey": "ddi-spec-text",
+        "demoKey": "text",
+        "demoControls": dropdownItemDemoControls,
         "title": "Text",
         "node": "23:199456",
         "description": "Plain text row. Default content type used by Dropdown. Label switches from neutral #0A2757 (default) to brand #005CE5 (selected).",
@@ -192,12 +225,14 @@ export const dropdownItem: ComponentData = {
               {
                 "key": "state",
                 "value": "Default",
-                "mono": false
+                "mono": false,
+                "prop": "selected"
               },
               {
                 "key": "Variant",
                 "value": "Text",
-                "mono": false
+                "mono": false,
+                "prop": "type"
               }
             ]
           },
@@ -248,7 +283,7 @@ export const dropdownItem: ComponentData = {
               },
               {
                 "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14",
+                "value": "Proxima Soft Semibold · 18 / 18",
                 "mono": true
               }
             ]
@@ -260,6 +295,8 @@ export const dropdownItem: ComponentData = {
       },
       {
         "cardKey": "ddi-spec-tag",
+        "demoKey": "tag",
+        "demoControls": dropdownItemDemoControls,
         "title": "Text with tag",
         "node": "883:29328",
         "description": "Row with a trailing Badge instance (Negative/Heavy variant in stock). Used when an option needs an inline status label.",
@@ -271,12 +308,14 @@ export const dropdownItem: ComponentData = {
               {
                 "key": "state",
                 "value": "Default",
-                "mono": false
+                "mono": false,
+                "prop": "selected"
               },
               {
                 "key": "Variant",
                 "value": "Text with tag",
-                "mono": false
+                "mono": false,
+                "prop": "type"
               }
             ]
           },
@@ -327,7 +366,7 @@ export const dropdownItem: ComponentData = {
               },
               {
                 "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14",
+                "value": "Proxima Soft Semibold · 18 / 18",
                 "mono": true
               }
             ]
@@ -339,6 +378,8 @@ export const dropdownItem: ComponentData = {
       },
       {
         "cardKey": "ddi-spec-amount",
+        "demoKey": "amount",
+        "demoControls": dropdownItemDemoControls,
         "title": "Amount",
         "node": "23:199458",
         "description": "Peso sign (vector, Proxima-sized) + amount text. Icon currency token flips to brand on selected.",
@@ -350,12 +391,14 @@ export const dropdownItem: ComponentData = {
               {
                 "key": "state",
                 "value": "Default",
-                "mono": false
+                "mono": false,
+                "prop": "selected"
               },
               {
                 "key": "Variant",
                 "value": "Amount",
-                "mono": false
+                "mono": false,
+                "prop": "type"
               }
             ]
           },
@@ -406,7 +449,7 @@ export const dropdownItem: ComponentData = {
               },
               {
                 "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14",
+                "value": "Proxima Soft Semibold · 18 / 18",
                 "mono": true
               }
             ]
@@ -418,6 +461,8 @@ export const dropdownItem: ComponentData = {
       },
       {
         "cardKey": "ddi-spec-country",
+        "demoKey": "country",
+        "demoControls": dropdownItemDemoControls,
         "title": "Country",
         "node": "23:199472",
         "description": "Leading flag (25 × 16, 2px radius) + country name and dial code. <strong>Flag is a raster PNG</strong>, not a vector instance — open issue (C6).",
@@ -429,12 +474,14 @@ export const dropdownItem: ComponentData = {
               {
                 "key": "state",
                 "value": "Default",
-                "mono": false
+                "mono": false,
+                "prop": "selected"
               },
               {
                 "key": "Variant",
                 "value": "Country",
-                "mono": false
+                "mono": false,
+                "prop": "type"
               }
             ]
           },
@@ -485,7 +532,7 @@ export const dropdownItem: ComponentData = {
               },
               {
                 "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14",
+                "value": "Proxima Soft Semibold · 18 / 18",
                 "mono": true
               }
             ]
@@ -497,6 +544,8 @@ export const dropdownItem: ComponentData = {
       },
       {
         "cardKey": "ddi-spec-disabled",
+        "demoKey": "disabled",
+        "demoControls": dropdownItemDemoControls,
         "title": "Disabeld Typo",
         "node": "883:30386",
         "description": "Soft fill row with muted label. Currently only exists at <code>selected=false</code>. <strong>Enum value is misspelled (<code>disabeld</code>)</strong> — open issue (C2).",
@@ -508,12 +557,14 @@ export const dropdownItem: ComponentData = {
               {
                 "key": "state",
                 "value": "Disabled",
-                "mono": false
+                "mono": false,
+                "prop": "selected"
               },
               {
                 "key": "Variant",
                 "value": "Disabeld Typo",
-                "mono": false
+                "mono": false,
+                "prop": "type"
               }
             ]
           },
@@ -564,7 +615,7 @@ export const dropdownItem: ComponentData = {
               },
               {
                 "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14",
+                "value": "Proxima Soft Semibold · 18 / 18",
                 "mono": true
               }
             ]

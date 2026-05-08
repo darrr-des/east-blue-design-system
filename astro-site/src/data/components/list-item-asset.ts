@@ -111,7 +111,31 @@ export const listItemAsset: ComponentData = {
         "demoKey": "lia-all",
         "title": "All markers",
         "node": "",
-        "description": "Row of all 9 markers at actual size. Left to right: check, check-positive, pending, pending-notice, bullet, hollow, square, numbered, custom (slot).",
+        "description": "Pick a marker variant to preview. The 9 marker types are: check · check-positive · pending · pending-notice · bullet · hollow · square · numbered · custom (slot).",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"spec-lia-all-preview\"></div>",
+        demoControls: [
+          {
+            heading: 'Properties',
+            rows: [
+              {
+                label: 'marker',
+                prop: 'variant',
+                defaultValue: 'check',
+                options: [
+                  { value: 'check', label: 'check' },
+                  { value: 'check-positive', label: 'check-positive' },
+                  { value: 'pending', label: 'pending' },
+                  { value: 'pending-notice', label: 'pending-notice' },
+                  { value: 'bullet', label: 'bullet' },
+                  { value: 'hollow', label: 'hollow' },
+                  { value: 'square', label: 'square' },
+                  { value: 'numbered', label: 'numbered' },
+                  { value: 'custom', label: 'custom (slot)' },
+                ],
+              },
+            ],
+          },
+        ],
         "sections": [
           {
             "label": "Properties",
@@ -287,14 +311,14 @@ export const listItemAsset: ComponentData = {
             "role": "numbered (pill)",
             "token": "Primary/Label/Fine",
             "values": [
-              "HeyMeow Rnd Bold · 12 / 12 · +0.5"
+              "Proxima Soft Bold · 12 / 12 · +0.5"
             ]
           },
           {
             "role": "Ordered / Normal (legacy)",
             "token": "Primary/Label/Light/Small",
             "values": [
-              "HeyMeow Rnd Semibold · 14 / 14 · +0.25"
+              "Proxima Soft Semibold · 14 / 14 · +0.25"
             ]
           }
         ]

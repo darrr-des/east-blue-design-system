@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/header-with-logo.js`.
@@ -159,7 +160,7 @@ export const headerWithLogo: ComponentData = {
         "title": "Dark logo variant",
         "node": "18430:2876",
         "description": "Dark GCash mark on brand surface. Used where extra contrast is needed or on lighter brand tints.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-with-logo-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-with-logo-spec-1\"><div class=\"eb-preview eb-preview-header-logo\"><div class=\"eb-preview-header-logo__mark eb-preview-header-logo__mark--dark\"><svg class=\"eb-preview-header-logo__glyph\" viewBox=\"0 0 28 28\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"14\" cy=\"14\" r=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"></circle><path d=\"M14 6 A8 8 0 1 1 8.5 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"></path><circle cx=\"19\" cy=\"9\" r=\"1.5\" fill=\"currentColor\"></circle></svg><span>GCash</span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -231,7 +232,7 @@ export const headerWithLogo: ComponentData = {
         "title": "Light logo variant",
         "node": "18430:2887",
         "description": "Light GCash mark on brand surface. The default variant for most branded screens.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-with-logo-spec-2\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-with-logo-spec-2\"><div class=\"eb-preview eb-preview-header-logo\"><div class=\"eb-preview-header-logo__mark eb-preview-header-logo__mark--light\"><svg class=\"eb-preview-header-logo__glyph\" viewBox=\"0 0 28 28\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"14\" cy=\"14\" r=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"></circle><path d=\"M14 6 A8 8 0 1 1 8.5 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"></path><circle cx=\"19\" cy=\"9\" r=\"1.5\" fill=\"currentColor\"></circle></svg><span>GCash</span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -296,7 +297,28 @@ export const headerWithLogo: ComponentData = {
         "compose": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span>\n    logo <span class=\"syn-eq\">=</span> <span class=\"syn-type\">R</span><span class=\"syn-punc\">.</span>drawable<span class=\"syn-punc\">.</span>gcash_logo<span class=\"syn-punc\">,</span>\n    appearance <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBHeaderAppearance</span><span class=\"syn-punc\">.</span>Light\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — Dark logo variant
+      buildStatelessColorsTable({
+        title: 'Dark Logo — Colors',
+        description: 'GCash logo placed inside a dark logo container — used on light surfaces.',
+        rows: [
+          { role: 'Surface bg',     token: 'main/header-with-logo/light/bg',           value: '#FFFFFF' },
+          { role: 'Logo container', token: 'main/header-with-logo/dark/logo-bg',       value: '#0A2757' },
+          { role: 'Logo mark',      token: 'main/header-with-logo/dark/logo-mark',     value: '#FFFFFF' },
+        ],
+      }),
+      // Card 2 — Light logo variant
+      buildStatelessColorsTable({
+        title: 'Light Logo — Colors',
+        description: 'GCash logo placed inside a light logo container — used on brand-blue surfaces.',
+        rows: [
+          { role: 'Surface bg',     token: 'main/header-with-logo/dark/bg',            value: '#1972F9' },
+          { role: 'Logo container', token: 'main/header-with-logo/light/logo-bg',      value: '#FFFFFF' },
+          { role: 'Logo mark',      token: 'main/header-with-logo/light/logo-mark',    value: '#1972F9' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

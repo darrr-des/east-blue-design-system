@@ -134,26 +134,124 @@ function _toggleWithLabelUpdate() {
   });
 }
 
+/* ── Toggle - With Label Spec Cards (canonical wiring) ────────── */
+var _specCards = {
+  today:    { placement: 'trailing', selected: 'true',  state: 'default', label: 'Label',                desc: '' },
+  trailing: { placement: 'trailing', selected: 'true',  state: 'default', label: 'Push notifications',   desc: 'yes' },
+  leading:  { placement: 'leading',  selected: 'false', state: 'default', label: 'Remember me',          desc: ''   }
+};
+window._specCards = _specCards;
+
+var _twlSpecPreviewId = {
+  today:    'toggle-with-label-spec-today',
+  trailing: 'toggle-with-label-spec-trailing',
+  leading:  'toggle-with-label-spec-leading'
+};
+
+function _twlRenderSpec(cardKey) {
+  var card = _specCards[cardKey];
+  if (!card) return;
+  var host = document.getElementById(_twlSpecPreviewId[cardKey]);
+  if (!host) return;
+  if (cardKey === 'today') {
+    host.innerHTML =
+      '<div class="eb-preview eb-preview-setting-row">' +
+        '<div class="eb-preview-setting-row__labels">' +
+          '<div class="eb-preview-setting-row__label">' + card.label + '</div>' +
+        '</div>' +
+        _twlToggle(card.selected, card.state, false) +
+      '</div>';
+  } else {
+    host.innerHTML = _twlRender({
+      label:       card.label,
+      desc:        card.desc,
+      placement:   card.placement,
+      selected:    card.selected,
+      state:       card.state,
+      interactive: false
+    });
+  }
+}
+
+function buildSwiftSnippet(type, card) {
+  var apiName = (type === 'today') ? 'EBToggle' : 'EBToggleRow';
+  if (apiName === 'EBToggle') {
+    return 'EBToggle(isOn: $enabled, label: "' + card.label + '")';
+  }
+  var lines = [];
+  lines.push('EBToggleRow(');
+  lines.push('    label: "' + card.label + '",');
+  lines.push('    isOn: $enabled,');
+  lines.push('    placement: .' + card.placement);
+  if (card.state === 'disabled') lines.push(') .disabled(true)');
+  else                            lines.push(')');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var apiName = (type === 'today') ? 'EBToggle' : 'EBToggleRow';
+  var lines = [];
+  lines.push(apiName + '(');
+  lines.push('    label = "' + card.label + '",');
+  lines.push('    checked = ' + card.selected + ',');
+  lines.push('    onCheckedChange = { /* update */ }' + (apiName === 'EBToggleRow' ? ',' : ''));
+  if (apiName === 'EBToggleRow') {
+    var place = card.placement === 'leading' ? 'Leading' : 'Trailing';
+    lines.push('    placement = EBTogglePlacement.' + place + (card.state === 'disabled' ? ',' : ''));
+    if (card.state === 'disabled') lines.push('    enabled = false');
+  }
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Re-render preview */
+  _twlRenderSpec(cardStyle);
+
+  /* Sync prop readouts */
+  ['placement','selected','state'].forEach(function (p) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
+    if (el) el.textContent = card[p];
+  });
+
+  /* Update DEV code */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+window.updateSpecCard = updateSpecCard;
+
 function _twlInit() {
   var ctx = document.getElementById('toggle-with-label-context-preview');
   if (ctx) ctx.innerHTML = _twlContextMarkup();
   _toggleWithLabelUpdate();
 
-  var today = document.getElementById('toggle-with-label-spec-today');
-  if (today) today.innerHTML =
-    '<div class="eb-preview eb-preview-setting-row">' +
-      '<div class="eb-preview-setting-row__labels">' +
-        '<div class="eb-preview-setting-row__label">Label</div>' +
-      '</div>' +
-      _twlToggle('true','default', false) +
-    '</div>';
-
-  var trailing = document.getElementById('toggle-with-label-spec-trailing');
-  if (trailing) trailing.innerHTML = _twlRender({label:'Push notifications', desc:'yes', placement:'trailing', selected:'true', interactive:false});
-
-  var leading = document.getElementById('toggle-with-label-spec-leading');
-  if (leading) leading.innerHTML = _twlRender({label:'Remember me', desc:'', placement:'leading', selected:'false', interactive:false});
+  Object.keys(_specCards).forEach(function (k) {
+    _twlRenderSpec(k);
+  });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _twlInit);
 else _twlInit();
+
+/* ── Re-init after Astro view-transition swaps ─────────────── */
+document.addEventListener('astro:page-load', _twlInit);

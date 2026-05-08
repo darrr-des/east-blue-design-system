@@ -75,16 +75,93 @@ function updateTbtDemo() {
   });
 }
 
+/* ── Spec card model — canonical _specCards / getSnippet / updateSpecCard ── */
+var _specCards = {
+  'tbt-top':    { pointer: 'top',    header: 'true', description: 'true' },
+  'tbt-right':  { pointer: 'right',  header: 'true', description: 'true' },
+  'tbt-bottom': { pointer: 'bottom', header: 'true', description: 'true' },
+  'tbt-left':   { pointer: 'left',   header: 'true', description: 'true' }
+};
+window._specCards = _specCards;
+
+function buildSwiftSnippet(type, card) {
+  var pointerMap = { top: '.top', right: '.right', bottom: '.bottom', left: '.left' };
+  var ptr = pointerMap[card.pointer] || '.top';
+  var lines = [];
+  lines.push('EBBlurredTooltip("Header")');
+  if (card.description !== 'false') {
+    lines.push('    .ebDescription("Tip on photo")');
+  }
+  lines.push('    .ebPointer(' + ptr + ')');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var pointerMap = { top: 'Top', right: 'Right', bottom: 'Bottom', left: 'Left' };
+  var ptr = pointerMap[card.pointer] || 'Top';
+  var lines = [];
+  lines.push('EBBlurredTooltip(');
+  if (card.header !== 'false') {
+    lines.push('    title = "Header",');
+  }
+  if (card.description !== 'false') {
+    lines.push('    description = "Tip on photo",');
+  }
+  lines.push('    pointer = EBPointer.' + ptr);
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview — `<div id="tbt-preview-${demoKey}">` inside .spec-card-preview */
+  var previewWrap = document.getElementById('tbt-preview-' + cardStyle);
+  if (previewWrap) {
+    previewWrap.innerHTML = _tbtRender({
+      header:      card.header !== 'false',
+      description: card.description !== 'false',
+      pointer:     card.pointer,
+      scene:       'photo'
+    });
+  }
+
+  /* Update Properties text — [data-sp="${cardStyle}-${prop}"] */
+  var spPointer = document.querySelector('[data-sp="' + cardStyle + '-pointer"]');
+  if (spPointer) spPointer.textContent = card.pointer;
+
+  /* Layout section is server-rendered from tooltip-blurred.ts (all
+     values are static, no axis-keyed variation). Demo no longer
+     rebuilds it. */
+
+  /* Update DEV code — locate via `[data-code-content="${cardStyle}"]`. Always
+     run, even when DEV view is hidden. textContent + highlightSyntax. */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
 function _tbtInitSpecCards() {
-  var map = [
-    ['tbt-preview-top',    {header:true, description:true, pointer:'top',    scene:'photo'}],
-    ['tbt-preview-right',  {header:true, description:true, pointer:'right',  scene:'photo'}],
-    ['tbt-preview-bottom', {header:true, description:true, pointer:'bottom', scene:'photo'}],
-    ['tbt-preview-left',   {header:true, description:true, pointer:'left',   scene:'photo'}]
-  ];
-  map.forEach(function (pair) {
-    var el = document.getElementById(pair[0]);
-    if (el) el.innerHTML = _tbtRender(pair[1]);
+  Object.keys(_specCards).forEach(function (key) {
+    var card = _specCards[key];
+    updateSpecCard(key, 'pointer', card.pointer);
   });
 }
 
@@ -95,3 +172,6 @@ function _tbtInit() {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tbtInit);
 else _tbtInit();
+
+/* Re-init after Astro view-transition swaps */
+document.addEventListener('astro:page-load', _tbtInit);

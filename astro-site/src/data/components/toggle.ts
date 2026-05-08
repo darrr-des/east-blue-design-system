@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
 
 const toggleDemoControls: DemoControlSection[] = [
   {
@@ -187,7 +188,7 @@ export const toggle: ComponentData = {
         "title": "Default · Off",
         "node": "18482:36509",
         "description": "The \"off\" resting state. Gray track, white knob pinned left.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-default-off\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-default-off\"><span class=\"eb-preview eb-preview-toggle eb-preview-toggle--medium eb-preview-toggle--off\" role=\"switch\" aria-checked=\"false\" tabindex=\"0\"><span class=\"eb-preview-toggle__knob\"></span></span></div>",
         "sections": [
           {
             "label": "Properties",
@@ -198,12 +199,32 @@ export const toggle: ComponentData = {
             ]
           },
           {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Track",     "value": "#C2CFE5", "token": "toggle/color/default/inactive/bg-track" },
-              { "key": "Indicator", "value": "#FFFFFF", "token": "toggle/color/default/inactive/bg-indicator" }
-            ]
+            label: 'Colors',
+            slug: 'colors',
+            rows: [
+              {
+                key: 'Track',
+                value: '#C2CFE5',
+                token: 'toggle/color/default/inactive/bg-track',
+                variants: {
+                  'state:Default|isActive:No':   { value: '#C2CFE5', token: 'toggle/color/default/inactive/bg-track' },
+                  'state:Default|isActive:Yes':  { value: '#005CE5', token: 'toggle/color/default/active/bg-track' },
+                  'state:Disabled|isActive:No':  { value: '#EEF2F9', token: 'toggle/color/disabled/inactive/bg-track' },
+                  'state:Disabled|isActive:Yes': { value: '#9BC5FD', token: 'toggle/color/disabled/active/bg-track' },
+                },
+              },
+              {
+                key: 'Indicator',
+                value: '#FFFFFF',
+                token: 'toggle/color/default/inactive/bg-indicator',
+                variants: {
+                  'state:Default|isActive:No':   { value: '#FFFFFF', token: 'toggle/color/default/inactive/bg-indicator' },
+                  'state:Default|isActive:Yes':  { value: '#FFFFFF', token: 'toggle/color/default/active/bg-indicator' },
+                  'state:Disabled|isActive:No':  { value: '#F6F9FD', token: 'toggle/color/disabled/inactive/bg-indicator' },
+                  'state:Disabled|isActive:Yes': { value: '#F6F9FD', token: 'toggle/color/disabled/inactive/bg-indicator' },
+                },
+              },
+            ],
           },
           {
             "label": "Layout",
@@ -233,7 +254,7 @@ export const toggle: ComponentData = {
         "title": "Default · On",
         "node": "18482:36512",
         "description": "The \"on\" resting state. Brand-blue track, knob pinned right.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-default-on\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-default-on\"><span class=\"eb-preview eb-preview-toggle eb-preview-toggle--medium eb-preview-toggle--on\" role=\"switch\" aria-checked=\"true\" tabindex=\"0\"><span class=\"eb-preview-toggle__knob\"></span></span></div>",
         "sections": [
           {
             "label": "Properties",
@@ -244,12 +265,32 @@ export const toggle: ComponentData = {
             ]
           },
           {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Track",     "value": "#005CE5", "token": "toggle/color/default/active/bg-track" },
-              { "key": "Indicator", "value": "#FFFFFF", "token": "toggle/color/default/active/bg-indicator" }
-            ]
+            label: 'Colors',
+            slug: 'colors',
+            rows: [
+              {
+                key: 'Track',
+                value: '#005CE5',
+                token: 'toggle/color/default/active/bg-track',
+                variants: {
+                  'state:Default|isActive:No':   { value: '#C2CFE5', token: 'toggle/color/default/inactive/bg-track' },
+                  'state:Default|isActive:Yes':  { value: '#005CE5', token: 'toggle/color/default/active/bg-track' },
+                  'state:Disabled|isActive:No':  { value: '#EEF2F9', token: 'toggle/color/disabled/inactive/bg-track' },
+                  'state:Disabled|isActive:Yes': { value: '#9BC5FD', token: 'toggle/color/disabled/active/bg-track' },
+                },
+              },
+              {
+                key: 'Indicator',
+                value: '#FFFFFF',
+                token: 'toggle/color/default/active/bg-indicator',
+                variants: {
+                  'state:Default|isActive:No':   { value: '#FFFFFF', token: 'toggle/color/default/inactive/bg-indicator' },
+                  'state:Default|isActive:Yes':  { value: '#FFFFFF', token: 'toggle/color/default/active/bg-indicator' },
+                  'state:Disabled|isActive:No':  { value: '#F6F9FD', token: 'toggle/color/disabled/inactive/bg-indicator' },
+                  'state:Disabled|isActive:Yes': { value: '#F6F9FD', token: 'toggle/color/disabled/inactive/bg-indicator' },
+                },
+              },
+            ],
           },
           {
             "label": "Layout",
@@ -279,7 +320,7 @@ export const toggle: ComponentData = {
         "title": "Disabled · Off",
         "node": "18482:36515",
         "description": "Disabled off state. Muted gray track; interaction blocked.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-disabled-off\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-disabled-off\"><span class=\"eb-preview eb-preview-toggle eb-preview-toggle--medium eb-preview-toggle--off eb-preview-toggle--disabled\" role=\"switch\" aria-checked=\"false\" tabindex=\"-1\" aria-disabled=\"true\"><span class=\"eb-preview-toggle__knob\"></span></span></div>",
         "sections": [
           {
             "label": "Properties",
@@ -290,12 +331,32 @@ export const toggle: ComponentData = {
             ]
           },
           {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Track",     "value": "#EEF2F9", "token": "toggle/color/disabled/inactive/bg-track" },
-              { "key": "Indicator", "value": "#F6F9FD", "token": "toggle/color/disabled/inactive/bg-indicator" }
-            ]
+            label: 'Colors',
+            slug: 'colors',
+            rows: [
+              {
+                key: 'Track',
+                value: '#EEF2F9',
+                token: 'toggle/color/disabled/inactive/bg-track',
+                variants: {
+                  'state:Default|isActive:No':   { value: '#C2CFE5', token: 'toggle/color/default/inactive/bg-track' },
+                  'state:Default|isActive:Yes':  { value: '#005CE5', token: 'toggle/color/default/active/bg-track' },
+                  'state:Disabled|isActive:No':  { value: '#EEF2F9', token: 'toggle/color/disabled/inactive/bg-track' },
+                  'state:Disabled|isActive:Yes': { value: '#9BC5FD', token: 'toggle/color/disabled/active/bg-track' },
+                },
+              },
+              {
+                key: 'Indicator',
+                value: '#F6F9FD',
+                token: 'toggle/color/disabled/inactive/bg-indicator',
+                variants: {
+                  'state:Default|isActive:No':   { value: '#FFFFFF', token: 'toggle/color/default/inactive/bg-indicator' },
+                  'state:Default|isActive:Yes':  { value: '#FFFFFF', token: 'toggle/color/default/active/bg-indicator' },
+                  'state:Disabled|isActive:No':  { value: '#F6F9FD', token: 'toggle/color/disabled/inactive/bg-indicator' },
+                  'state:Disabled|isActive:Yes': { value: '#F6F9FD', token: 'toggle/color/disabled/inactive/bg-indicator' },
+                },
+              },
+            ],
           },
           {
             "label": "Layout",
@@ -325,7 +386,7 @@ export const toggle: ComponentData = {
         "title": "Disabled · On",
         "node": "18482:36518",
         "description": "Disabled on state. Muted brand-blue track; interaction blocked.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-disabled-on\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-spec-disabled-on\"><span class=\"eb-preview eb-preview-toggle eb-preview-toggle--medium eb-preview-toggle--on eb-preview-toggle--disabled\" role=\"switch\" aria-checked=\"true\" tabindex=\"-1\" aria-disabled=\"true\"><span class=\"eb-preview-toggle__knob\"></span></span></div>",
         "sections": [
           {
             "label": "Properties",
@@ -336,12 +397,32 @@ export const toggle: ComponentData = {
             ]
           },
           {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Track",     "value": "#9BC5FD", "token": "toggle/color/disabled/active/bg-track" },
-              { "key": "Indicator", "value": "#F6F9FD", "token": "toggle/color/disabled/inactive/bg-indicator" }
-            ]
+            label: 'Colors',
+            slug: 'colors',
+            rows: [
+              {
+                key: 'Track',
+                value: '#9BC5FD',
+                token: 'toggle/color/disabled/active/bg-track',
+                variants: {
+                  'state:Default|isActive:No':   { value: '#C2CFE5', token: 'toggle/color/default/inactive/bg-track' },
+                  'state:Default|isActive:Yes':  { value: '#005CE5', token: 'toggle/color/default/active/bg-track' },
+                  'state:Disabled|isActive:No':  { value: '#EEF2F9', token: 'toggle/color/disabled/inactive/bg-track' },
+                  'state:Disabled|isActive:Yes': { value: '#9BC5FD', token: 'toggle/color/disabled/active/bg-track' },
+                },
+              },
+              {
+                key: 'Indicator',
+                value: '#F6F9FD',
+                token: 'toggle/color/disabled/inactive/bg-indicator',
+                variants: {
+                  'state:Default|isActive:No':   { value: '#FFFFFF', token: 'toggle/color/default/inactive/bg-indicator' },
+                  'state:Default|isActive:Yes':  { value: '#FFFFFF', token: 'toggle/color/default/active/bg-indicator' },
+                  'state:Disabled|isActive:No':  { value: '#F6F9FD', token: 'toggle/color/disabled/inactive/bg-indicator' },
+                  'state:Disabled|isActive:Yes': { value: '#F6F9FD', token: 'toggle/color/disabled/inactive/bg-indicator' },
+                },
+              },
+            ],
           },
           {
             "label": "Layout",
@@ -365,7 +446,44 @@ export const toggle: ComponentData = {
         "compose": "<span class=\"syn-type\">EBToggle</span><span class=\"syn-punc\">(</span>\n    checked <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span><span class=\"syn-punc\">,</span>\n    onCheckedChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    enabled <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — Inactive
+      buildStatelessColorsTable({
+        title: 'Inactive — Colors',
+        description: 'Off / unchecked state.',
+        rows: [
+          { role: 'Track',     token: 'toggle/color/default/inactive/bg-track',     value: '#C2CFE5' },
+          { role: 'Indicator', token: 'toggle/color/default/inactive/bg-indicator', value: '#FFFFFF' },
+        ],
+      }),
+      // Card 2 — Active
+      buildStatelessColorsTable({
+        title: 'Active — Colors',
+        description: 'On / checked state.',
+        rows: [
+          { role: 'Track',     token: 'toggle/color/default/active/bg-track',     value: '#005CE5' },
+          { role: 'Indicator', token: 'toggle/color/default/active/bg-indicator', value: '#FFFFFF' },
+        ],
+      }),
+      // Card 3 — Disabled inactive
+      buildStatelessColorsTable({
+        title: 'Disabled Inactive — Colors',
+        description: 'Disabled toggle in the off position — desaturated track.',
+        rows: [
+          { role: 'Track',     token: 'toggle/color/disabled/inactive/bg-track',     value: '#E5EBF4' },
+          { role: 'Indicator', token: 'toggle/color/disabled/inactive/bg-indicator', value: '#F6F9FD' },
+        ],
+      }),
+      // Card 4 — Disabled active
+      buildStatelessColorsTable({
+        title: 'Disabled Active — Colors',
+        description: 'Disabled toggle in the on position — muted brand fill.',
+        rows: [
+          { role: 'Track',     token: 'toggle/color/disabled/active/bg-track',     value: '#9BC5FD' },
+          { role: 'Indicator', token: 'toggle/color/disabled/active/bg-indicator', value: '#F6F9FD' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

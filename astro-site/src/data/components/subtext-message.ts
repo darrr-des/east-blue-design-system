@@ -1,4 +1,23 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/subtext-message.js`.
+const subtextMessageDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Size',
+        prop: 'size',
+        defaultValue: 'Small',
+        options: [
+          { value: 'Base', label: 'Base' },
+          { value: 'Small', label: 'Small' },
+        ],
+      },
+    ],
+  },
+];
 
 export const subtextMessage: ComponentData = {
   "meta": {
@@ -26,7 +45,7 @@ export const subtextMessage: ComponentData = {
   "overview": {
     "inContextNote": "Appears directly beneath form fields — Input, Labeled, Select, Recipient, Dropdown — to communicate helper hints, success confirmation, or validation errors.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"160\" height=\"100\" viewBox=\"0 0 160 100\" fill=\"none\">\n          <rect x=\"12\" y=\"14\" width=\"136\" height=\"28\" rx=\"5\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".25\"></rect>\n          <rect x=\"22\" y=\"24\" width=\"54\" height=\"3\" rx=\"1\" fill=\"currentColor\" opacity=\".18\"></rect>\n          <circle cx=\"22\" cy=\"54\" r=\"5\" stroke=\"#D61B2C\" stroke-width=\"1.2\"></circle>\n          <path d=\"M19.8 54l1.5 1.5 2.9-2.9\" stroke=\"#D61B2C\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path>\n          <rect x=\"34\" y=\"51\" width=\"90\" height=\"3\" rx=\"1\" fill=\"#D61B2C\" opacity=\".75\"></rect>\n          <rect x=\"34\" y=\"57\" width=\"62\" height=\"2.2\" rx=\"1\" fill=\"#D61B2C\" opacity=\".5\"></rect>\n          <rect x=\"12\" y=\"76\" width=\"136\" height=\"14\" rx=\"3\" fill=\"currentColor\" opacity=\".08\"></rect>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"stm-demo-preview\"><svg width=\"260\" height=\"23\" viewBox=\"0 0 260 23\" fill=\"none\"><text x=\"2\" y=\"14.833333333333334\" font-family=\"HeyMeow Rnd, system-ui, sans-serif\" font-size=\"10\" font-weight=\"600\" fill=\"#6780A9\" letter-spacing=\"0\">Message content</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Variant</span><select class=\"demo-panel-select\" onchange=\"_stmDemo.variant=this.value;updateSubtextMessageDemo()\"><option value=\"Primary\">Primary</option><option value=\"Success\">Success</option><option value=\"Error\">Error</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Size</span><select class=\"demo-panel-select\" onchange=\"_stmDemo.size=this.value;updateSubtextMessageDemo()\"><option value=\"Base\">Base</option><option value=\"Small\" selected=\"\">Small</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">leadingLabel</span><select class=\"demo-panel-select\" onchange=\"_stmDemo.leadingLabel=this.value;updateSubtextMessageDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">trailingIcon</span><select class=\"demo-panel-select\" onchange=\"_stmDemo.trailingIcon=this.value;updateSubtextMessageDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"stm-demo-preview\"><svg width=\"260\" height=\"23\" viewBox=\"0 0 260 23\" fill=\"none\"><text x=\"2\" y=\"14.833333333333334\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"10\" font-weight=\"600\" fill=\"#6780A9\" letter-spacing=\"0\">Message content</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Variant</span><select class=\"demo-panel-select\" onchange=\"_stmDemo.variant=this.value;updateSubtextMessageDemo()\"><option value=\"Primary\">Primary</option><option value=\"Success\">Success</option><option value=\"Error\">Error</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Size</span><select class=\"demo-panel-select\" onchange=\"_stmDemo.size=this.value;updateSubtextMessageDemo()\"><option value=\"Base\">Base</option><option value=\"Small\" selected=\"\">Small</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">leadingLabel</span><select class=\"demo-panel-select\" onchange=\"_stmDemo.leadingLabel=this.value;updateSubtextMessageDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">trailingIcon</span><select class=\"demo-panel-select\" onchange=\"_stmDemo.trailingIcon=this.value;updateSubtextMessageDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -168,6 +187,8 @@ export const subtextMessage: ComponentData = {
     "specCards": [
       {
         "cardKey": "stm-spec-primary",
+        "demoKey": "primary",
+        "demoControls": subtextMessageDemoControls,
         "title": "Primary (helper)",
         "node": "11855:8764",
         "description": "Neutral helper text. No icon. Used for hints, formatting examples, or ambient guidance under a field.",
@@ -182,9 +203,10 @@ export const subtextMessage: ComponentData = {
                 "mono": false
               },
               {
-                "key": "Intent",
-                "value": "Primary",
-                "mono": false
+                "key": "Size",
+                "value": "Small",
+                "mono": false,
+                "prop": "size"
               }
             ]
           },
@@ -235,10 +257,12 @@ export const subtextMessage: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBSubtextMessage</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Helper text\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIntent</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.primary</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBSubtextMessage</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Helper text\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSubtextIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Primary</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"260\" height=\"23\" viewBox=\"0 0 260 23\" fill=\"none\"><text x=\"2\" y=\"14.833333333333334\" font-family=\"HeyMeow Rnd, system-ui, sans-serif\" font-size=\"10\" font-weight=\"600\" fill=\"#6780A9\" letter-spacing=\"0\">Message content</text></svg>"
+        "previewHtml": "<svg width=\"260\" height=\"23\" viewBox=\"0 0 260 23\" fill=\"none\"><text x=\"2\" y=\"14.833333333333334\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"10\" font-weight=\"600\" fill=\"#6780A9\" letter-spacing=\"0\">Message content</text></svg>"
       },
       {
         "cardKey": "stm-spec-success",
+        "demoKey": "success",
+        "demoControls": subtextMessageDemoControls,
         "title": "Success",
         "node": "11855:8770",
         "description": "Valid input confirmation. Green text with filled circular checkmark.",
@@ -253,9 +277,10 @@ export const subtextMessage: ComponentData = {
                 "mono": false
               },
               {
-                "key": "Intent",
-                "value": "Success",
-                "mono": false
+                "key": "Size",
+                "value": "Small",
+                "mono": false,
+                "prop": "size"
               }
             ]
           },
@@ -307,10 +332,12 @@ export const subtextMessage: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBSubtextMessage</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Helper text\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIntent</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.success</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBSubtextMessage</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Helper text\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSubtextIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Success</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"260\" height=\"23\" viewBox=\"0 0 260 23\" fill=\"none\"><g transform=\"translate(2,3.5)\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#12AF80\"></circle><path d=\"M5 8.3l2.1 2.1L11.2 6\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path></g><text x=\"22\" y=\"14.833333333333334\" font-family=\"HeyMeow Rnd, system-ui, sans-serif\" font-size=\"10\" font-weight=\"600\" fill=\"#048570\" letter-spacing=\"0\">Valid message content</text></svg>"
+        "previewHtml": "<svg width=\"260\" height=\"23\" viewBox=\"0 0 260 23\" fill=\"none\"><g transform=\"translate(2,3.5)\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#12AF80\"></circle><path d=\"M5 8.3l2.1 2.1L11.2 6\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path></g><text x=\"22\" y=\"14.833333333333334\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"10\" font-weight=\"600\" fill=\"#048570\" letter-spacing=\"0\">Valid message content</text></svg>"
       },
       {
         "cardKey": "stm-spec-error",
+        "demoKey": "error",
+        "demoControls": subtextMessageDemoControls,
         "title": "Error",
         "node": "11855:8782",
         "description": "Validation error. Red text with filled circular close icon.",
@@ -325,9 +352,10 @@ export const subtextMessage: ComponentData = {
                 "mono": false
               },
               {
-                "key": "Intent",
-                "value": "Error",
-                "mono": false
+                "key": "Size",
+                "value": "Small",
+                "mono": false,
+                "prop": "size"
               }
             ]
           },
@@ -379,7 +407,7 @@ export const subtextMessage: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBSubtextMessage</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Helper text\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIntent</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBSubtextMessage</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Helper text\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSubtextIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Error</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"260\" height=\"23\" viewBox=\"0 0 260 23\" fill=\"none\"><g transform=\"translate(2,3.5)\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#D61B2C\"></circle><path d=\"M5.5 5.5l5 5M10.5 5.5l-5 5\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></g><text x=\"22\" y=\"14.833333333333334\" font-family=\"HeyMeow Rnd, system-ui, sans-serif\" font-size=\"10\" font-weight=\"600\" fill=\"#D61B2C\" letter-spacing=\"0\">Invalid message content</text></svg>"
+        "previewHtml": "<svg width=\"260\" height=\"23\" viewBox=\"0 0 260 23\" fill=\"none\"><g transform=\"translate(2,3.5)\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#D61B2C\"></circle><path d=\"M5.5 5.5l5 5M10.5 5.5l-5 5\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></g><text x=\"22\" y=\"14.833333333333334\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"10\" font-weight=\"600\" fill=\"#D61B2C\" letter-spacing=\"0\">Invalid message content</text></svg>"
       }
     ],
     "colorsTables": [

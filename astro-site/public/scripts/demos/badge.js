@@ -83,7 +83,7 @@ function _bdBuildHtml(state, level, type) {
   var style = 'display:inline-block;';
   style += 'background:' + c.bg + ';';
   style += 'color:' + c.label + ';';
-  style += 'font-family:HeyMeow Rnd,system-ui,sans-serif;';
+  style += 'font-family:Proxima Soft,system-ui,sans-serif;';
   style += 'font-weight:700;';
   style += 'font-size:' + fs + 'px;';
   style += 'line-height:' + fs + 'px;';
@@ -150,22 +150,9 @@ function updateSpecCard(cardType, prop, value) {
   var spLevel = document.querySelector('[data-sp="' + cardType + '-level"]');
   if (spLevel) spLevel.textContent = card.level;
 
-  /* Update Colors section — id `spec-${demoKey}-colors` */
-  var colorsEl = document.getElementById('spec-' + cardType + '-colors');
-  if (colorsEl) {
-    var c = _bdGetColors(card.state, card.level);
-    var tokenBase = 'main/badge/' + (_bdTokenNames[card.state] || 'primary') + '/' + card.level.toLowerCase();
-    var labelBorder = (c.label === '#FFFFFF') ? 'border:1px solid #E5EBF4' : '';
-    var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
-    h += '<div class="spec-prop has-token"><span class="spec-prop-key">Background</span>'
-       + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + c.bg + '"></span> ' + c.bg + '</span>'
-       + '<span class="spec-token-name">' + tokenBase + '/background</span></div>';
-    h += '<div class="spec-prop has-token"><span class="spec-prop-key">Label</span>'
-       + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + c.label + ';' + labelBorder + '"></span> ' + c.label + '</span>'
-       + '<span class="spec-token-name">' + tokenBase + '/label</span></div>';
-    h += '</div>';
-    colorsEl.innerHTML = h;
-  }
+  /* Colors section is server-rendered from badge.ts; Plan A's
+     `_patchSpecCardRows` handles state×level overrides. Demo no longer
+     rebuilds it. */
 
   /* Update Layout section — id `spec-${demoKey}-layout` */
   var layoutEl = document.getElementById('spec-' + cardType + '-layout');
@@ -191,7 +178,7 @@ function updateSpecCard(cardType, prop, value) {
     var isDash = (card.type === 'Dashboard');
     var th = '<div class="spec-detail-label">Typography</div><div class="spec-props">';
     th += '<div class="spec-prop"><span class="spec-prop-key">Text Style</span><span class="spec-prop-val mono">' + (isDash ? 'Primary/Label/Tiny' : 'Primary/Label/Fine') + '</span></div>';
-    th += '<div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">HeyMeow Rnd Bold</span></div>';
+    th += '<div class="spec-prop"><span class="spec-prop-key">Font</span><span class="spec-prop-val mono">Proxima Soft Bold</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">' + (isDash ? '10px' : '12px') + '</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Tracking</span><span class="spec-prop-val mono">' + (isDash ? '0.25px' : '0.5px') + '</span></div>';
     th += '<div class="spec-prop"><span class="spec-prop-key">Line-height</span><span class="spec-prop-val mono">' + (isDash ? '10px' : '12px') + '</span></div>';

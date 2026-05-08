@@ -1,4 +1,24 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/table.js`.
+const tableDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Columns',
+        prop: 'cols',
+        defaultValue: '4',
+        options: [
+          { value: '2', label: '2' },
+          { value: '3', label: '3' },
+          { value: '4', label: '4' },
+        ],
+      },
+    ],
+  },
+];
 
 export const table: ComponentData = {
   "meta": {
@@ -140,6 +160,8 @@ export const table: ComponentData = {
     "specCards": [
       {
         "cardKey": "header-row-—-37-/-65px-tall",
+        "demoKey": "header",
+        "demoControls": tableDemoControls,
         "title": "Header row — 37 / 65px tall",
         "node": "47:323224",
         "description": "Subtle-bg row with bottom border. Primary-bold label on the left, semibold columns on the right. <code>icon=yes</code> grows height from 37 to 65px and adds a 24px placeholder circle above each column.",
@@ -151,6 +173,12 @@ export const table: ComponentData = {
               {
                 "key": "Row type",
                 "value": "Header",
+                "mono": false
+              },
+              {
+                "key": "Columns",
+                "value": "4",
+                "prop": "cols",
                 "mono": false
               },
               {
@@ -220,10 +248,13 @@ export const table: ComponentData = {
           }
         ],
         "swift": "<span class=\"syn-type\">EBTable.Header</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">, </span>description<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Section description\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTableHeader</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Section description\"</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<span class=\"syn-type\">EBTableHeader</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Section description\"</span>\n<span class=\"syn-punc\">)</span>",
+        "previewHtml": "<div id=\"table-preview-header\"></div>"
       },
       {
         "cardKey": "content-row-—-56px-tall",
+        "demoKey": "content",
+        "demoControls": tableDemoControls,
         "title": "Content row — 56px tall",
         "node": "47:325869",
         "description": "White bg. Bold 12px label on the left, 10px BarkAda Semibold description columns on the right (1, 2, or 3 of them).",
@@ -235,6 +266,12 @@ export const table: ComponentData = {
               {
                 "key": "Row type",
                 "value": "Content",
+                "mono": false
+              },
+              {
+                "key": "Columns",
+                "value": "4",
+                "prop": "cols",
                 "mono": false
               },
               {
@@ -297,14 +334,15 @@ export const table: ComponentData = {
               },
               {
                 "key": "Body font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
+                "value": "Proxima Soft Bold · 12 / 12 · +0.5",
                 "mono": true
               }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBTable.Row</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Value\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTableRow</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Value\"</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<span class=\"syn-type\">EBTableRow</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Value\"</span>\n<span class=\"syn-punc\">)</span>",
+        "previewHtml": "<div id=\"table-preview-content\"></div>"
       }
     ],
     "colorsTables": [

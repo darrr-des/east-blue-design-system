@@ -1,4 +1,32 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/text-area.js`.
+const textAreaDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'isFilled',
+        prop: 'filled',
+        defaultValue: 'no',
+        options: [
+          { value: 'no', label: 'no' },
+          { value: 'yes', label: 'yes' },
+        ],
+      },
+      {
+        label: 'isExpandable',
+        prop: 'expandable',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+    ],
+  },
+];
 
 export const textArea: ComponentData = {
   "meta": {
@@ -27,7 +55,7 @@ export const textArea: ComponentData = {
   "overview": {
     "inContextNote": "Typical mobile contexts: feedback forms, message composers, notes, support request descriptions.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"64\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <rect x=\"20\" y=\"16\" width=\"80\" height=\"10\" rx=\"2\" fill=\"currentColor\" opacity=\".08\"></rect>\n          <rect x=\"20\" y=\"30\" width=\"80\" height=\"32\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".2\"></rect>\n          <rect x=\"24\" y=\"35\" width=\"60\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <rect x=\"24\" y=\"41\" width=\"55\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <rect x=\"24\" y=\"47\" width=\"40\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <rect x=\"20\" y=\"66\" width=\"80\" height=\"6\" rx=\"3\" fill=\"currentColor\" opacity=\".08\"></rect>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ta-demo-preview\"><svg width=\"328\" height=\"46\" viewBox=\"0 0 328 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 44L322 36M318 44L322 40\" stroke=\"#D7E0EF\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">state</span><select class=\"demo-panel-select\" onchange=\"_taDemo.state=this.value;updateTextAreaDemo()\"><option value=\"default\">default</option><option value=\"active\">active</option><option value=\"error\">error</option><option value=\"disabled\">disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select class=\"demo-panel-select\" onchange=\"_taDemo.filled=this.value;updateTextAreaDemo()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isExpandable</span><select class=\"demo-panel-select\" onchange=\"_taDemo.expandable=this.value;updateTextAreaDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ta-demo-preview\"><svg width=\"328\" height=\"62\" viewBox=\"0 0 328 62\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"61\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 56L322 48M318 56L322 52\" stroke=\"#90A8D0\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">state</span><select class=\"demo-panel-select\" onchange=\"_taDemo.state=this.value;updateTextAreaDemo()\"><option value=\"default\">default</option><option value=\"active\">active</option><option value=\"error\">error</option><option value=\"disabled\">disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select class=\"demo-panel-select\" onchange=\"_taDemo.filled=this.value;updateTextAreaDemo()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isExpandable</span><select class=\"demo-panel-select\" onchange=\"_taDemo.expandable=this.value;updateTextAreaDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -177,6 +205,8 @@ export const textArea: ComponentData = {
     "specCards": [
       {
         "cardKey": "ta-spec-default",
+        "demoKey": "default",
+        "demoControls": textAreaDemoControls,
         "title": "Default",
         "node": "3070:21242",
         "description": "Idle state with gray border. Resize-handle glyph sits in the bottom-right regardless of fill.",
@@ -191,9 +221,16 @@ export const textArea: ComponentData = {
                 "mono": false
               },
               {
-                "key": "Variant",
-                "value": "Default",
-                "mono": false
+                "key": "isFilled",
+                "value": "no",
+                "mono": false,
+                "prop": "filled"
+              },
+              {
+                "key": "isExpandable",
+                "value": "true",
+                "mono": false,
+                "prop": "expandable"
               }
             ]
           },
@@ -262,10 +299,12 @@ export const textArea: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$note<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebMinLines</span><span class=\"syn-punc\">(</span>5<span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> note<span class=\"syn-punc\">,</span>\n    minLines <span class=\"syn-eq\">=</span> 5<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"328\" height=\"46\" viewBox=\"0 0 328 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 44L322 36M318 44L322 40\" stroke=\"#D7E0EF\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg>"
+        "previewHtml": "<div id=\"spec-default-preview\"><svg width=\"328\" height=\"62\" viewBox=\"0 0 328 62\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"61\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 56L322 48M318 56L322 52\" stroke=\"#90A8D0\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg></div>"
       },
       {
         "cardKey": "ta-spec-active",
+        "demoKey": "active",
+        "demoControls": textAreaDemoControls,
         "title": "Active (Focused)",
         "node": "3070:21243",
         "description": "Focused state with 2px blue border. Rename target: <code>focused</code>.",
@@ -280,9 +319,16 @@ export const textArea: ComponentData = {
                 "mono": false
               },
               {
-                "key": "Variant",
-                "value": "Active (Focused)",
-                "mono": false
+                "key": "isFilled",
+                "value": "no",
+                "mono": false,
+                "prop": "filled"
+              },
+              {
+                "key": "isExpandable",
+                "value": "true",
+                "mono": false,
+                "prop": "expandable"
               }
             ]
           },
@@ -351,10 +397,12 @@ export const textArea: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$note<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.active</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebMinLines</span><span class=\"syn-punc\">(</span>5<span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> note<span class=\"syn-punc\">,</span>\n    minLines <span class=\"syn-eq\">=</span> 5<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Active</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"328\" height=\"46\" viewBox=\"0 0 328 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"2\"></rect><text x=\"12\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 44L322 36M318 44L322 40\" stroke=\"#D7E0EF\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg>"
+        "previewHtml": "<div id=\"spec-active-preview\"><svg width=\"328\" height=\"62\" viewBox=\"0 0 328 62\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"61\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"2\"></rect><text x=\"12\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 56L322 48M318 56L322 52\" stroke=\"#90A8D0\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg></div>"
       },
       {
         "cardKey": "ta-spec-error",
+        "demoKey": "error",
+        "demoControls": textAreaDemoControls,
         "title": "Error",
         "node": "3070:21244",
         "description": "Validation error state with 2px red border. No inline error-message slot — copy is the consumer's responsibility.",
@@ -369,9 +417,16 @@ export const textArea: ComponentData = {
                 "mono": false
               },
               {
-                "key": "Variant",
-                "value": "Error",
-                "mono": false
+                "key": "isFilled",
+                "value": "no",
+                "mono": false,
+                "prop": "filled"
+              },
+              {
+                "key": "isExpandable",
+                "value": "true",
+                "mono": false,
+                "prop": "expandable"
               }
             ]
           },
@@ -440,10 +495,12 @@ export const textArea: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$note<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebMinLines</span><span class=\"syn-punc\">(</span>5<span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> note<span class=\"syn-punc\">,</span>\n    minLines <span class=\"syn-eq\">=</span> 5<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Error</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"328\" height=\"46\" viewBox=\"0 0 328 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D61B2C\" stroke-width=\"2\"></rect><text x=\"12\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 44L322 36M318 44L322 40\" stroke=\"#D7E0EF\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg>"
+        "previewHtml": "<div id=\"spec-error-preview\"><svg width=\"328\" height=\"62\" viewBox=\"0 0 328 62\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"61\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D61B2C\" stroke-width=\"2\"></rect><text x=\"12\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 56L322 48M318 56L322 52\" stroke=\"#90A8D0\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg></div>"
       },
       {
         "cardKey": "ta-spec-disabled",
+        "demoKey": "disabled",
+        "demoControls": textAreaDemoControls,
         "title": "Disabled",
         "node": "3070:21241",
         "description": "Non-interactive state with gray fill and muted text. Border hidden.",
@@ -458,9 +515,16 @@ export const textArea: ComponentData = {
                 "mono": false
               },
               {
-                "key": "Variant",
-                "value": "Disabled",
-                "mono": false
+                "key": "isFilled",
+                "value": "no",
+                "mono": false,
+                "prop": "filled"
+              },
+              {
+                "key": "isExpandable",
+                "value": "true",
+                "mono": false,
+                "prop": "expandable"
               }
             ]
           },
@@ -528,7 +592,7 @@ export const textArea: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$note<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.disabled</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebMinLines</span><span class=\"syn-punc\">(</span>5<span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> note<span class=\"syn-punc\">,</span>\n    minLines <span class=\"syn-eq\">=</span> 5<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Disabled</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"328\" height=\"46\" viewBox=\"0 0 328 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"45\" rx=\"5.5\" fill=\"#EEF2F9\"></rect><text x=\"12\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 44L322 36M318 44L322 40\" stroke=\"#D7E0EF\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg>"
+        "previewHtml": "<div id=\"spec-disabled-preview\"><svg width=\"328\" height=\"62\" viewBox=\"0 0 328 62\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"61\" rx=\"5.5\" fill=\"#EEF2F9\"></rect><text x=\"12\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 56L322 48M318 56L322 52\" stroke=\"#C2CFE5\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg></div>"
       }
     ],
     "colorsTables": [

@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/header-centered.js`.
@@ -167,7 +168,7 @@ export const headerCentered: ComponentData = {
         "title": "Dark / brand surface",
         "node": "18430:2859",
         "description": "White title on brand-blue surface. The \"hero\" variant — used for primary feature banners.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-centered-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-centered-spec-1\"><div class=\"eb-preview eb-preview-header-centered eb-preview-header-centered--dark\"><p class=\"eb-preview-header-centered__title\">Label</p><p class=\"eb-preview-header-centered__sublabel\"><span class=\"eb-preview-header-centered__sublabel-key\">Label:</span><span class=\"eb-preview-header-centered__sublabel-value\">&nbsp;Add Content</span></p></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -230,12 +231,12 @@ export const headerCentered: ComponentData = {
             "rows": [
               {
                 "key": "Title",
-                "value": "Heading/L · BarkAda 18/24",
+                "value": "Heading/L · Proxima Soft Bold 22",
                 "mono": true
               },
               {
                 "key": "Description",
-                "value": "Body/S · 12/16",
+                "value": "Body/S · BarkAda Semibold 14",
                 "mono": true
               },
               {
@@ -256,7 +257,7 @@ export const headerCentered: ComponentData = {
         "title": "Light / default surface",
         "node": "18430:2865",
         "description": "Dark title on default surface. Used for modal sheet titles and subdued banners.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-centered-spec-2\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-centered-spec-2\"><div class=\"eb-preview eb-preview-header-centered eb-preview-header-centered--light\"><p class=\"eb-preview-header-centered__title\">Label</p><p class=\"eb-preview-header-centered__sublabel\"><span class=\"eb-preview-header-centered__sublabel-key\">Label:</span><span class=\"eb-preview-header-centered__sublabel-value\">&nbsp;Add Content</span></p></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -342,7 +343,30 @@ export const headerCentered: ComponentData = {
         "compose": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Account\"</span><span class=\"syn-punc\">,</span>\n    appearance <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBHeaderAppearance</span><span class=\"syn-punc\">.</span>Light<span class=\"syn-punc\">,</span>\n    centered <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — Dark / brand surface
+      buildStatelessColorsTable({
+        title: 'Dark — Colors',
+        description: 'Brand-blue centered header used at the top of branded screens.',
+        rows: [
+          { role: 'Surface bg',  token: 'main/header-centered/dark/bg',     value: '#1972F9' },
+          { role: 'Border',      token: 'main/header-centered/dark/border', value: '#F6F9FD @ 24%' },
+          { role: 'Heading',     token: 'main/header-centered/dark/heading', value: '#FFFFFF' },
+          { role: 'Description', token: 'main/header-centered/dark/description', value: '#FFFFFF @ 80%' },
+        ],
+      }),
+      // Card 2 — Light / default surface
+      buildStatelessColorsTable({
+        title: 'Light — Colors',
+        description: 'White centered header used on neutral surfaces.',
+        rows: [
+          { role: 'Surface bg',  token: 'main/header-centered/light/bg',     value: '#FFFFFF' },
+          { role: 'Border',      token: 'main/header-centered/light/border', value: '#E5EBF4' },
+          { role: 'Heading',     token: 'text/primary/headline/section',     value: '#0A2757' },
+          { role: 'Description', token: 'text/primary/body/secondary',       value: '#6780A9' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

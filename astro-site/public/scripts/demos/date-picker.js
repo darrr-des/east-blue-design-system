@@ -30,14 +30,15 @@ function _dpBuildSvg(state, filled, disabled) {
   /* trigger field */
   var strokeAttr = borderColor === 'none' ? '' : ' stroke="' + borderColor + '" stroke-width="' + borderWidth + '"';
   s += '<rect x="0.5" y="22.5" width="' + (w - 1) + '" height="45" rx="5.5" fill="' + bg + '"' + strokeAttr + '/>';
-  s += '<text x="12" y="50" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + textColor + '">' + text + '</text>';
+  s += '<text x="12" y="45" dominant-baseline="central" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + textColor + '">' + text + '</text>';
 
   /* calendar glyph — simple vector placeholder (matches the raster source visually) */
+  /* field center y = 45; icon rect height 20 → y = 35 so center at 45 */
   var gx = w - 36;
-  s += '<rect x="' + (gx + 4) + '" y="31" width="20" height="20" rx="3" stroke="' + iconColor + '" stroke-width="1.6" fill="none"/>';
-  s += '<line x1="' + (gx + 4) + '" y1="37" x2="' + (gx + 24) + '" y2="37" stroke="' + iconColor + '" stroke-width="1.6"/>';
-  s += '<line x1="' + (gx + 9) + '" y1="28" x2="' + (gx + 9) + '" y2="32" stroke="' + iconColor + '" stroke-width="1.6" stroke-linecap="round"/>';
-  s += '<line x1="' + (gx + 19) + '" y1="28" x2="' + (gx + 19) + '" y2="32" stroke="' + iconColor + '" stroke-width="1.6" stroke-linecap="round"/>';
+  s += '<rect x="' + (gx + 4) + '" y="35" width="20" height="20" rx="3" stroke="' + iconColor + '" stroke-width="1.6" fill="none"/>';
+  s += '<line x1="' + (gx + 4) + '" y1="41" x2="' + (gx + 24) + '" y2="41" stroke="' + iconColor + '" stroke-width="1.6"/>';
+  s += '<line x1="' + (gx + 9) + '" y1="32" x2="' + (gx + 9) + '" y2="36" stroke="' + iconColor + '" stroke-width="1.6" stroke-linecap="round"/>';
+  s += '<line x1="' + (gx + 19) + '" y1="32" x2="' + (gx + 19) + '" y2="36" stroke="' + iconColor + '" stroke-width="1.6" stroke-linecap="round"/>';
 
   if (isActive) {
     /* calendar panel */

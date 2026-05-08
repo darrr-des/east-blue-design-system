@@ -60,7 +60,8 @@ while (si < standalone.length || gi < orderedGroups.length) {
 const isOverview        = pathname === '/';
 const isComponentsGrid  = pathname === '/components';                          // on the grid page itself → highlight active
 const componentsOpen    = isComponentsGrid || pathname.startsWith('/components/'); // expand the list whenever inside Components
-const isGuide           = pathname === '/eb-ds-assessment-guide';
+const isIcons           = pathname === '/icons';
+const isStyles          = pathname === '/styles';
 ---
 <aside class="sidebar">
   <a class="sidebar-brand" href="/">
@@ -84,6 +85,20 @@ const isGuide           = pathname === '/eb-ds-assessment-guide';
   </a>
 
   <nav class="sidebar-nav" id="comp-list">
+    {/* Search trigger — first row inside the nav. Opens SearchModal. */}
+    <button
+      class="sidebar-search"
+      type="button"
+      data-action="open-search"
+      aria-label="Open search"
+    >
+      <svg class="sidebar-search-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.5" />
+        <path d="M10.5 10.5L13 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+      </svg>
+      <span class="sidebar-search-label">Search…</span>
+    </button>
+
     {/* Top-level nav */}
     <a class={`nav-item${isOverview ? ' active' : ''}`} href="/">Overview</a>
 
@@ -156,12 +171,13 @@ const isGuide           = pathname === '/eb-ds-assessment-guide';
       </div>
     </div>
 
-    <a class={`nav-item${isGuide ? ' active' : ''}`} href="/eb-ds-assessment-guide">Assessment Guide</a>
+    <a class={`nav-item${isIcons ? ' active' : ''}`} href="/icons">Icons</a>
+    <a class={`nav-item${isStyles ? ' active' : ''}`} href="/styles">Styles</a>
   </nav>
 
   <!-- User info + logout (populated by AuthGate via window.__ebUser) -->
   <div class="sidebar-user" id="sidebar-user" style="display:none;">
-    <img class="sidebar-user-avatar" id="sidebar-user-avatar" alt="" />
+    <img class="sidebar-user-avatar" id="sidebar-user-avatar" alt="" referrerpolicy="no-referrer" />
     <div class="sidebar-user-text">
       <div class="sidebar-user-name" id="sidebar-user-name"></div>
       <div class="sidebar-user-email" id="sidebar-user-email"></div>

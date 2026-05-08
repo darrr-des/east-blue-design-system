@@ -22,7 +22,7 @@ function _tableSchedBuildRow(type) {
   // date-amount row
   s += '<div style="display:flex; align-items:center; width:100%;">';
   s += '<div style="width:108px; ' + dateFont + '">MMM DD, YYYY</div>';
-  s += '<div style="flex:1 0 0; display:flex; align-items:center; justify-content:flex-end; gap:2px;">';
+  s += '<div style="flex:1 0 0; display:flex; align-items:center; justify-content:flex-start; gap:2px;">';
   s += '<span style="' + amountFont + '">₱</span>';
   s += '<span style="' + amountFont + '">X,XXX.XX</span>';
   s += '</div>';
@@ -65,13 +65,84 @@ function updateTableSchedulingDemo() {
   if (el) el.innerHTML = _tableSchedBuildRow(_tableSchedDemo.type);
 }
 
+/* ── Table-Scheduling Spec Cards ──────────────────────────────── */
+var _specCards = {
+  no:   { type: 'no' },
+  two:  { type: '2' },
+  four: { type: '4' }
+};
+window._specCards = _specCards;
+
+var _typeLabels = {
+  'no': 'no display amount',
+  '2':  '2 amounts display',
+  '4':  '4 amounts display'
+};
+
+var _typeEnumSwift = { 'no': '.noAmount', '2': '.twoAmounts', '4': '.fourAmounts' };
+var _typeEnumCompose = { 'no': 'EBScheduleType.NoAmount', '2': 'EBScheduleType.TwoAmounts', '4': 'EBScheduleType.FourAmounts' };
+
+function buildSwiftSnippet(type, card) {
+  return 'EBSchedulingTable.Row(item, type: ' + (_typeEnumSwift[card.type] || '.noAmount') + ')';
+}
+
+function buildComposeSnippet(type, card) {
+  return 'EBSchedulingTableRow(\n    item = item,\n    type = ' + (_typeEnumCompose[card.type] || 'EBScheduleType.NoAmount') + '\n)';
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update Properties row text — data-sp="${cardStyle}-${prop}" */
+  var spEl = document.querySelector('[data-sp="' + cardStyle + '-' + prop + '"]');
+  if (spEl) {
+    var hexEl = spEl.querySelector('.spec-prop-hex');
+    var displayValue = (prop === 'type') ? (_typeLabels[value] || value) : value;
+    if (hexEl) hexEl.textContent = displayValue;
+    else spEl.textContent = displayValue;
+  }
+
+  /* Update preview inside this card's spec-card-preview */
+  var cardKeyMap = {
+    no:   'type-=-no-display-amount-—-50.5px-tall',
+    two:  'type-=-2-amounts-display-—-89.5px-tall',
+    four: 'type-=-4-amounts-display-—-132.5px-tall'
+  };
+  var fullCardEl = document.getElementById('spec-card-' + cardKeyMap[cardStyle]);
+  if (fullCardEl) {
+    var preview = fullCardEl.querySelector('.spec-card-preview');
+    if (preview) preview.innerHTML = _tableSchedBuildRow(card.type);
+  }
+
+  /* Update DEV code — `[data-code-content="${cardStyle}"]` */
+  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
+  if (codeEl) {
+    var lang = codeEl.getAttribute('data-lang') || 'swift';
+    var raw = getSnippet(cardStyle, lang, card);
+    codeEl.setAttribute('data-final', raw);
+    codeEl.textContent = raw;
+    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+  }
+}
+
 function _tableSchedInitSpecCards() {
   var n = document.getElementById('table-scheduling-preview-no');
   if (n) n.innerHTML = _tableSchedBuildRow('no');
-  var t2 = document.getElementById('table-scheduling-preview-2');
+  var t2 = document.getElementById('table-scheduling-preview-two');
   if (t2) t2.innerHTML = _tableSchedBuildRow('2');
-  var t4 = document.getElementById('table-scheduling-preview-4');
+  var t4 = document.getElementById('table-scheduling-preview-four');
   if (t4) t4.innerHTML = _tableSchedBuildRow('4');
+  /* Initialize each spec card so DEV code reflects current state */
+  ['no', 'two', 'four'].forEach(function(k) {
+    updateSpecCard(k, 'type', _specCards[k].type);
+  });
 }
 
 function _tableSchedInit() {
@@ -81,3 +152,5 @@ function _tableSchedInit() {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tableSchedInit);
 else _tableSchedInit();
+
+document.addEventListener('astro:page-load', _tableSchedInit);

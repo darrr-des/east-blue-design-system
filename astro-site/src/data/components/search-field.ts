@@ -246,7 +246,7 @@ export const searchField: ComponentData = {
             "slug": "typo",
             "rows": [
               { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Value font",  "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
+              { "key": "Value font",  "value": "BarkAda Semibold · 14 / 14 · +0.25", "mono": true }
             ]
           }
         ],
@@ -297,7 +297,7 @@ export const searchField: ComponentData = {
             "slug": "typo",
             "rows": [
               { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Value font",  "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
+              { "key": "Value font",  "value": "BarkAda Semibold · 14 / 14 · +0.25", "mono": true }
             ]
           }
         ],

@@ -1,4 +1,51 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/recipient-field.js`.
+const recipientFieldDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'state',
+        prop: 'state',
+        options: [
+          { value: 'Default', label: 'Default' },
+          { value: 'Active', label: 'Active' },
+          { value: 'Error', label: 'Error' },
+          { value: 'Disabled', label: 'Disabled' },
+        ],
+      },
+      {
+        label: 'isFilled',
+        prop: 'filled',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
+        ],
+      },
+      {
+        label: 'showLabel',
+        prop: 'showLabel',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+      {
+        label: 'trailingIcons',
+        prop: 'trailingIcons',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+    ],
+  },
+];
 
 export const recipientField: ComponentData = {
   "meta": {
@@ -27,7 +74,7 @@ export const recipientField: ComponentData = {
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"5\" width=\"100\" height=\"70\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <text x=\"28\" y=\"18\" font-size=\"6\" fill=\"currentColor\" opacity=\".3\" font-family=\"system-ui\">Send Money</text>\n          <rect x=\"18\" y=\"24\" width=\"84\" height=\"24\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".2\"></rect>\n          <rect x=\"24\" y=\"29\" width=\"22\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".12\"></rect>\n          <rect x=\"24\" y=\"35\" width=\"35\" height=\"3\" rx=\"1\" fill=\"currentColor\" opacity=\".15\"></rect>\n          <circle cx=\"86\" cy=\"36\" r=\"4\" fill=\"currentColor\" opacity=\".08\"></circle>\n          <circle cx=\"96\" cy=\"36\" r=\"4\" fill=\"currentColor\" opacity=\".08\"></circle>\n          <rect x=\"18\" y=\"54\" width=\"84\" height=\"12\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".12\"></rect>\n          <rect x=\"24\" y=\"59\" width=\"40\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"rf-demo-preview\"><svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"22\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"298\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"332\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" onchange=\"_rfDemo.state=this.value;updateRecipientFieldDemo()\"><option value=\"Default\">Default</option><option value=\"Active\">Active</option><option value=\"Error\">Error</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select class=\"demo-panel-select\" onchange=\"_rfDemo.filled=this.value;updateRecipientFieldDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"rf-demo-preview\"><svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"22\" font-family=\"Proxima Soft, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"288\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"322\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" onchange=\"_rfDemo.state=this.value;updateRecipientFieldDemo()\"><option value=\"Default\">Default</option><option value=\"Active\">Active</option><option value=\"Error\">Error</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select class=\"demo-panel-select\" onchange=\"_rfDemo.filled=this.value;updateRecipientFieldDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -124,6 +171,8 @@ export const recipientField: ComponentData = {
     "specCards": [
       {
         "cardKey": "rf-spec-default",
+        "demoKey": "default",
+        "demoControls": recipientFieldDemoControls,
         "title": "Default",
         "node": "17758:3868",
         "description": "Idle state with gray border. Two-line layout: small label above, value/placeholder below. Two trailing icon placeholders.",
@@ -135,12 +184,26 @@ export const recipientField: ComponentData = {
               {
                 "key": "state",
                 "value": "Default",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
-                "key": "Variant",
-                "value": "Default",
-                "mono": false
+                "key": "isFilled",
+                "value": "false",
+                "mono": false,
+                "prop": "filled"
+              },
+              {
+                "key": "showLabel",
+                "value": "true",
+                "mono": false,
+                "prop": "showLabel"
+              },
+              {
+                "key": "trailingIcons",
+                "value": "true",
+                "mono": false,
+                "prop": "trailingIcons"
               }
             ]
           },
@@ -209,10 +272,12 @@ export const recipientField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>recipient<span class=\"syn-punc\">: </span>selectedRecipient<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    recipient <span class=\"syn-eq\">=</span> selectedRecipient<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"22\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"298\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"332\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg>"
+        "previewHtml": "<svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"22\" font-family=\"Proxima Soft, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"288\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"322\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg>"
       },
       {
         "cardKey": "rf-spec-active",
+        "demoKey": "active",
+        "demoControls": recipientFieldDemoControls,
         "title": "Active (Focused)",
         "node": "17758:3882",
         "description": "Focused state with blue border indicating active input.",
@@ -224,12 +289,26 @@ export const recipientField: ComponentData = {
               {
                 "key": "state",
                 "value": "Active",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
-                "key": "Variant",
-                "value": "Active (Focused)",
-                "mono": false
+                "key": "isFilled",
+                "value": "false",
+                "mono": false,
+                "prop": "filled"
+              },
+              {
+                "key": "showLabel",
+                "value": "true",
+                "mono": false,
+                "prop": "showLabel"
+              },
+              {
+                "key": "trailingIcons",
+                "value": "true",
+                "mono": false,
+                "prop": "trailingIcons"
               }
             ]
           },
@@ -298,10 +377,12 @@ export const recipientField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>recipient<span class=\"syn-punc\">: </span>selectedRecipient<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.active</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    recipient <span class=\"syn-eq\">=</span> selectedRecipient<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Active</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"22\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"298\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"332\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg>"
+        "previewHtml": "<svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"22\" font-family=\"Proxima Soft, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"288\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"322\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg>"
       },
       {
         "cardKey": "rf-spec-error",
+        "demoKey": "error",
+        "demoControls": recipientFieldDemoControls,
         "title": "Error",
         "node": "17758:3896",
         "description": "Validation error state with red border.",
@@ -313,12 +394,26 @@ export const recipientField: ComponentData = {
               {
                 "key": "state",
                 "value": "Error",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
-                "key": "Variant",
-                "value": "Error",
-                "mono": false
+                "key": "isFilled",
+                "value": "false",
+                "mono": false,
+                "prop": "filled"
+              },
+              {
+                "key": "showLabel",
+                "value": "true",
+                "mono": false,
+                "prop": "showLabel"
+              },
+              {
+                "key": "trailingIcons",
+                "value": "true",
+                "mono": false,
+                "prop": "trailingIcons"
               }
             ]
           },
@@ -387,10 +482,12 @@ export const recipientField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>recipient<span class=\"syn-punc\">: </span>selectedRecipient<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    recipient <span class=\"syn-eq\">=</span> selectedRecipient<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Error</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D61B2C\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"22\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"298\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"332\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg>"
+        "previewHtml": "<svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D61B2C\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"22\" font-family=\"Proxima Soft, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"288\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"322\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg>"
       },
       {
         "cardKey": "rf-spec-disabled",
+        "demoKey": "disabled",
+        "demoControls": recipientFieldDemoControls,
         "title": "Disabled",
         "node": "17758:3910",
         "description": "Non-interactive state with gray background and hidden border. Muted label and text colors.",
@@ -402,12 +499,26 @@ export const recipientField: ComponentData = {
               {
                 "key": "state",
                 "value": "Disabled",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
-                "key": "Variant",
-                "value": "Disabled",
-                "mono": false
+                "key": "isFilled",
+                "value": "false",
+                "mono": false,
+                "prop": "filled"
+              },
+              {
+                "key": "showLabel",
+                "value": "true",
+                "mono": false,
+                "prop": "showLabel"
+              },
+              {
+                "key": "trailingIcons",
+                "value": "true",
+                "mono": false,
+                "prop": "trailingIcons"
               }
             ]
           },
@@ -475,7 +586,7 @@ export const recipientField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>recipient<span class=\"syn-punc\">: </span>selectedRecipient<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.disabled</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBRecipientField</span><span class=\"syn-punc\">(</span>\n    recipient <span class=\"syn-eq\">=</span> selectedRecipient<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Disabled</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#EEF2F9\"></rect><text x=\"12\" y=\"22\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"298\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"332\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg>"
+        "previewHtml": "<svg width=\"366\" height=\"56\" viewBox=\"0 0 366 56\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"55\" rx=\"5.5\" fill=\"#EEF2F9\"></rect><text x=\"12\" y=\"22\" font-family=\"Proxima Soft, system-ui\" font-size=\"12\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.5\">Mobile Number</text><text x=\"12\" y=\"40\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\" letter-spacing=\"0.25\">Enter number or name</text><rect x=\"288\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect><rect x=\"322\" y=\"12\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2C6CF\" opacity=\".35\"></rect></svg>"
       }
     ],
     "colorsTables": [

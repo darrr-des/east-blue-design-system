@@ -8,8 +8,17 @@
     "migrate": "node scripts/migrate.mjs",
     "_comment_migrate": "DESTRUCTIVE — overwrites src/data/components/*.ts from assessment-src/. Only run if you intentionally want to regenerate from legacy HTML.",
     "audit": "node scripts/audit.mjs",
+    "lint:previews": "node scripts/audit/preview-structure-lint.mjs",
+    "lint:colors": "node scripts/audit/colors-table-coverage.mjs",
+    "lint": "npm run lint:previews && npm run lint:colors",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test:visual": "playwright test",
+    "test:visual:update": "playwright test --update-snapshots",
+    "test:visual:report": "playwright show-report tests/.playwright-report",
+    "baselines:refresh": "node scripts/export-figma-baselines.mjs",
+    "sync-previews": "node scripts/sync-previews.mjs",
+    "review": "node scripts/build-visual-review.mjs"
   },
   "dependencies": {
     "astro": "^5.0.0",
@@ -17,6 +26,9 @@
     "node-html-parser": "^7.1.0"
   },
   "devDependencies": {
-    "playwright": "^1.59.1"
+    "@playwright/test": "^1.59.1",
+    "pixelmatch": "^7.2.0",
+    "playwright": "^1.59.1",
+    "pngjs": "^7.0.0"
   }
 }

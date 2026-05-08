@@ -113,20 +113,120 @@ function updateTt2Demo() {
   });
 }
 
+/* ── Spec card model — canonical _specCards / getSnippet / updateSpecCard ── */
+var _specCards = {
+  'tt2-hero':          { header: 'true',  description: 'true',  icon: 'true',  cta: 'one',  pointer: 'bottom' },
+  'tt2-text-cta':      { header: 'true',  description: 'true',  icon: 'false', cta: 'one',  pointer: 'left' },
+  'tt2-icon-dismiss':  { header: 'true',  description: 'true',  icon: 'true',  cta: 'none', pointer: 'right' },
+  'tt2-text':          { header: 'true',  description: 'true',  icon: 'false', cta: 'none', pointer: 'bottom' },
+  'tt2-header-only':   { header: 'true',  description: 'false', icon: 'false', cta: 'none', pointer: 'bottom' },
+  'tt2-desc-only':     { header: 'false', description: 'true',  icon: 'false', cta: 'none', pointer: 'bottom' },
+  'tt2-two-cta':       { header: 'false', description: 'true',  icon: 'false', cta: 'two',  pointer: 'top' },
+  'tt2-cta-no-header': { header: 'false', description: 'true',  icon: 'false', cta: 'one',  pointer: 'bottom' }
+};
+window._specCards = _specCards;
+
+function buildSwiftSnippet(type, card) {
+  var pointerMap = { top: '.top', right: '.right', bottom: '.bottom', left: '.left', none: '.none' };
+  var ptr = pointerMap[card.pointer] || '.bottom';
+  var hasHeader = card.header !== 'false';
+  var hasDesc = card.description !== 'false';
+  var lines = [];
+  var openLine = 'EBTooltip(';
+  if (hasHeader) openLine += '"Heading"';
+  else if (hasDesc) openLine += '"", description: "Helpful tip"';
+  openLine += ')';
+  lines.push(openLine);
+  if (hasHeader && hasDesc) lines.push('    .ebDescription("Helpful tip")');
+  if (card.icon === 'true') lines.push('    .ebLeadingIcon(Image(systemName: "info.circle"))');
+  lines.push('    .ebPlacement(' + ptr + ')');
+  if (card.cta === 'two') {
+    lines.push('    .ebSecondaryAction("Back", action: { })');
+    lines.push('    .ebPrimaryAction("Next", action: { })');
+  } else if (card.cta === 'one') {
+    lines.push('    .ebPrimaryAction("Got it", action: { })');
+  }
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var pointerMap = { top: 'Top', right: 'Right', bottom: 'Bottom', left: 'Left', none: 'None' };
+  var ptr = pointerMap[card.pointer] || 'Bottom';
+  var hasHeader = card.header !== 'false';
+  var hasDesc = card.description !== 'false';
+  var lines = [];
+  lines.push('EBTooltip(');
+  if (hasHeader) lines.push('    title = "Heading",');
+  if (hasDesc) lines.push('    description = "Helpful tip",');
+  if (card.icon === 'true') lines.push('    leadingIcon = { Icon(Icons.Filled.Info, null) },');
+  lines.push('    placement = EBTooltipPlacement.' + ptr + ',');
+  if (card.cta === 'two') {
+    lines.push('    secondaryAction = EBTooltipAction("Back") { },');
+    lines.push('    primaryAction = EBTooltipAction("Next") { }');
+  } else if (card.cta === 'one') {
+    lines.push('    primaryAction = EBTooltipAction("Got it") { }');
+  } else {
+    /* drop trailing comma on last meaningful line */
+    var last = lines[lines.length - 1];
+    if (last.charAt(last.length - 1) === ',') lines[lines.length - 1] = last.slice(0, -1);
+  }
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview — `<div id="tt2-preview-${demoKey}">` inside .spec-card-preview */
+  var previewWrap = document.getElementById('tt2-preview-' + cardStyle);
+  if (previewWrap) {
+    previewWrap.innerHTML = _tt2Render({
+      header:      card.header !== 'false',
+      description: card.description !== 'false',
+      icon:        card.icon === 'true',
+      cta:         card.cta,
+      pointer:     card.pointer
+    });
+  }
+
+  /* Update Properties text — [data-sp="${cardStyle}-${prop}"] */
+  ['cta', 'icon', 'description', 'header', 'pointer'].forEach(function (p) {
+    var sp = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
+    if (sp) {
+      var v = card[p];
+      if (p === 'icon') v = v === 'true' ? 'yes' : 'no';
+      sp.textContent = v;
+    }
+  });
+
+  /* Update DEV code — locate via `[data-code-content="${cardStyle}"]`. Always
+     run, even when DEV view is hidden. textContent + highlightSyntax. */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
 function _tt2InitSpecCards() {
-  var map = [
-    ['tt2-preview-hero',          {header:true, description:true, icon:true,  cta:'one',  pointer:'bottom'}],
-    ['tt2-preview-text-cta',      {header:true, description:true, icon:false, cta:'one',  pointer:'left'}],
-    ['tt2-preview-icon-dismiss',  {header:true, description:true, icon:true,  cta:'none', pointer:'right'}],
-    ['tt2-preview-text',          {header:true, description:true, icon:false, cta:'none', pointer:'bottom'}],
-    ['tt2-preview-header-only',   {header:true, description:false,icon:false, cta:'none', pointer:'bottom'}],
-    ['tt2-preview-desc-only',     {header:false,description:true, icon:false, cta:'none', pointer:'bottom'}],
-    ['tt2-preview-two-cta',       {header:false,description:true, icon:false, cta:'two',  pointer:'top'}],
-    ['tt2-preview-cta-no-header', {header:false,description:true, icon:false, cta:'one',  pointer:'bottom'}]
-  ];
-  map.forEach(function (pair) {
-    var el = document.getElementById(pair[0]);
-    if (el) el.innerHTML = _tt2Render(pair[1]);
+  Object.keys(_specCards).forEach(function (key) {
+    var card = _specCards[key];
+    updateSpecCard(key, 'pointer', card.pointer);
   });
 }
 
@@ -137,3 +237,6 @@ function _tt2Init() {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tt2Init);
 else _tt2Init();
+
+/* Re-init after Astro view-transition swaps */
+document.addEventListener('astro:page-load', _tt2Init);

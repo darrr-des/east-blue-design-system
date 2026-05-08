@@ -56,7 +56,7 @@ export const badge: ComponentData = {
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"64\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          \n          <rect x=\"18\" y=\"16\" width=\"84\" height=\"14\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"0.8\" opacity=\".1\"></rect>\n          <rect x=\"22\" y=\"20\" width=\"30\" height=\"3\" rx=\"1.5\" fill=\"currentColor\" opacity=\".12\"></rect>\n          <rect x=\"72\" y=\"19\" width=\"22\" height=\"8\" rx=\"4\" fill=\"#12AF80\" opacity=\".5\"></rect>\n          \n          <rect x=\"18\" y=\"34\" width=\"84\" height=\"14\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"0.8\" opacity=\".1\"></rect>\n          <rect x=\"22\" y=\"38\" width=\"36\" height=\"3\" rx=\"1.5\" fill=\"currentColor\" opacity=\".12\"></rect>\n          <rect x=\"72\" y=\"37\" width=\"22\" height=\"8\" rx=\"4\" fill=\"#CA970C\" opacity=\".5\"></rect>\n          \n          <rect x=\"18\" y=\"52\" width=\"84\" height=\"14\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"0.8\" opacity=\".1\"></rect>\n          <rect x=\"22\" y=\"56\" width=\"28\" height=\"3\" rx=\"1.5\" fill=\"currentColor\" opacity=\".12\"></rect>\n          <rect x=\"72\" y=\"55\" width=\"22\" height=\"8\" rx=\"4\" fill=\"#D61B2C\" opacity=\".5\"></rect>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"bd-demo-preview\"><span style=\"display:inline-block;background:#005CE5;color:#FFFFFF;font-family:HeyMeow Rnd,system-ui,sans-serif;font-weight:700;font-size:12px;line-height:12px;letter-spacing:0.5px;padding:4px 8px 2px;border-radius:99px;text-align:center;white-space:nowrap;\">Label</span></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" id=\"bd-demo-state\" onchange=\"updateBadgeDemo()\"><option value=\"Primary\" selected=\"\">Primary</option><option value=\"Brand\">Brand</option><option value=\"Info\">Info</option><option value=\"Success\">Success</option><option value=\"Warning\">Warning</option><option value=\"Danger\">Danger</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Level</span><select class=\"demo-panel-select\" id=\"bd-demo-level\" onchange=\"updateBadgeDemo()\"><option value=\"Heavy\" selected=\"\">Heavy</option><option value=\"Medium\">Medium</option><option value=\"Light\">Light</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select class=\"demo-panel-select\" id=\"bd-demo-type\" onchange=\"updateBadgeDemo()\"><option value=\"Default\" selected=\"\">Default</option><option value=\"Voucher\">Voucher</option><option value=\"Transaction\">Transaction</option><option value=\"Dashboard\">Dashboard</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"bd-demo-preview\"><span style=\"display:inline-block;background:#005CE5;color:#FFFFFF;font-family:Proxima Soft,system-ui,sans-serif;font-weight:700;font-size:12px;line-height:12px;letter-spacing:0.5px;padding:4px 8px 2px;border-radius:99px;text-align:center;white-space:nowrap;\">Label</span></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" id=\"bd-demo-state\" onchange=\"updateBadgeDemo()\"><option value=\"Primary\" selected=\"\">Primary</option><option value=\"Brand\">Brand</option><option value=\"Info\">Info</option><option value=\"Success\">Success</option><option value=\"Warning\">Warning</option><option value=\"Danger\">Danger</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Level</span><select class=\"demo-panel-select\" id=\"bd-demo-level\" onchange=\"updateBadgeDemo()\"><option value=\"Heavy\" selected=\"\">Heavy</option><option value=\"Medium\">Medium</option><option value=\"Light\">Light</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select class=\"demo-panel-select\" id=\"bd-demo-type\" onchange=\"updateBadgeDemo()\"><option value=\"Default\" selected=\"\">Default</option><option value=\"Voucher\">Voucher</option><option value=\"Transaction\">Transaction</option><option value=\"Dashboard\">Dashboard</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -145,12 +145,66 @@ export const badge: ComponentData = {
             ]
           },
           {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Background", "value": "#005CE5", "token": "main/badge/primary/heavy/background" },
-              { "key": "Label", "value": "#FFFFFF", "token": "main/badge/primary/heavy/label" }
-            ]
+            label: 'Colors',
+            slug: 'colors',
+            rows: [
+              {
+                key: 'Background',
+                value: '#005CE5',
+                token: 'main/badge/primary/heavy/background',
+                variants: {
+                  'state:Primary|level:Heavy':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
+                  'state:Primary|level:Medium':  { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
+                  'state:Primary|level:Light':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
+                  'state:Brand|level:Heavy':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
+                  'state:Brand|level:Medium':    { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
+                  'state:Brand|level:Light':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
+                  'state:Info|level:Heavy':      { value: '#2340A9', token: 'main/badge/information/heavy/background' },
+                  'state:Info|level:Medium':     { value: '#D2E5FF', token: 'main/badge/information/medium/background' },
+                  'state:Info|level:Light':      { value: '#E5F1FF', token: 'main/badge/information/light/background' },
+                  'state:Success|level:Heavy':   { value: '#12AF80', token: 'main/badge/positive/heavy/background' },
+                  'state:Success|level:Medium':  { value: '#CAF2E0', token: 'main/badge/positive/medium/background' },
+                  'state:Success|level:Light':   { value: '#E7F8F0', token: 'main/badge/positive/light/background' },
+                  'state:Warning|level:Heavy':   { value: '#CA970C', token: 'main/badge/notice/heavy/background' },
+                  'state:Warning|level:Medium':  { value: '#F7D96E', token: 'main/badge/notice/medium/background' },
+                  'state:Warning|level:Light':   { value: '#FCF0CA', token: 'main/badge/notice/light/background' },
+                  'state:Danger|level:Heavy':    { value: '#D61B2C', token: 'main/badge/negative/heavy/background' },
+                  'state:Danger|level:Medium':   { value: '#F4C7C9', token: 'main/badge/negative/medium/background' },
+                  'state:Danger|level:Light':    { value: '#F8E6E6', token: 'main/badge/negative/light/background' },
+                  'state:Disabled|level:Heavy':  { value: '#717883', token: 'main/badge/muted/heavy/background' },
+                  'state:Disabled|level:Medium': { value: '#9A9FA7', token: 'main/badge/muted/medium/background' },
+                  'state:Disabled|level:Light':  { value: '#C2C5CA', token: 'main/badge/muted/light/background' },
+                },
+              },
+              {
+                key: 'Label',
+                value: '#FFFFFF',
+                token: 'main/badge/primary/heavy/label',
+                variants: {
+                  'state:Primary|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
+                  'state:Primary|level:Medium':  { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
+                  'state:Primary|level:Light':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
+                  'state:Brand|level:Heavy':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
+                  'state:Brand|level:Medium':    { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
+                  'state:Brand|level:Light':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
+                  'state:Info|level:Heavy':      { value: '#FFFFFF', token: 'main/badge/information/heavy/label' },
+                  'state:Info|level:Medium':     { value: '#005CE5', token: 'main/badge/information/medium/label' },
+                  'state:Info|level:Light':      { value: '#005CE5', token: 'main/badge/information/light/label' },
+                  'state:Success|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/positive/heavy/label' },
+                  'state:Success|level:Medium':  { value: '#048570', token: 'main/badge/positive/medium/label' },
+                  'state:Success|level:Light':   { value: '#048570', token: 'main/badge/positive/light/label' },
+                  'state:Warning|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/notice/heavy/label' },
+                  'state:Warning|level:Medium':  { value: '#966F0B', token: 'main/badge/notice/medium/label' },
+                  'state:Warning|level:Light':   { value: '#966F0B', token: 'main/badge/notice/light/label' },
+                  'state:Danger|level:Heavy':    { value: '#FFFFFF', token: 'main/badge/negative/heavy/label' },
+                  'state:Danger|level:Medium':   { value: '#8D0710', token: 'main/badge/negative/medium/label' },
+                  'state:Danger|level:Light':    { value: '#B50707', token: 'main/badge/negative/light/label' },
+                  'state:Disabled|level:Heavy':  { value: '#FFFFFF', token: 'main/badge/muted/heavy/label' },
+                  'state:Disabled|level:Medium': { value: '#FFFFFF', token: 'main/badge/muted/medium/label' },
+                  'state:Disabled|level:Light':  { value: '#FFFFFF', token: 'main/badge/muted/light/label' },
+                },
+              },
+            ],
           },
           {
             "label": "Layout",
@@ -167,7 +221,7 @@ export const badge: ComponentData = {
             "slug": "typo",
             "rows": [
               { "key": "Text Style", "value": "Primary/Label/Fine", "mono": true },
-              { "key": "Font", "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
               { "key": "Size", "value": "12px", "mono": true },
               { "key": "Tracking", "value": "0.5px", "mono": true },
               { "key": "Line-height", "value": "12px", "mono": true }
@@ -176,7 +230,7 @@ export const badge: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>intent<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.information</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBadgeIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Information</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<span style=\"display:inline-block;background:#005CE5;color:#FFFFFF;font-family:HeyMeow Rnd,system-ui,sans-serif;font-weight:700;font-size:12px;line-height:12px;letter-spacing:0.5px;padding:4px 8px 2px;border-radius:99px;text-align:center;white-space:nowrap;\">Label</span>"
+        "previewHtml": "<span style=\"display:inline-block;background:#005CE5;color:#FFFFFF;font-family:Proxima Soft,system-ui,sans-serif;font-weight:700;font-size:12px;line-height:12px;letter-spacing:0.5px;padding:4px 8px 2px;border-radius:99px;text-align:center;white-space:nowrap;\">Label</span>"
       },
       {
         "cardKey": "bd-spec-voucher",
@@ -196,12 +250,66 @@ export const badge: ComponentData = {
             ]
           },
           {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Background", "value": "#005CE5", "token": "main/badge/primary/heavy/background" },
-              { "key": "Label", "value": "#FFFFFF", "token": "main/badge/primary/heavy/label" }
-            ]
+            label: 'Colors',
+            slug: 'colors',
+            rows: [
+              {
+                key: 'Background',
+                value: '#005CE5',
+                token: 'main/badge/primary/heavy/background',
+                variants: {
+                  'state:Primary|level:Heavy':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
+                  'state:Primary|level:Medium':  { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
+                  'state:Primary|level:Light':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
+                  'state:Brand|level:Heavy':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
+                  'state:Brand|level:Medium':    { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
+                  'state:Brand|level:Light':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
+                  'state:Info|level:Heavy':      { value: '#2340A9', token: 'main/badge/information/heavy/background' },
+                  'state:Info|level:Medium':     { value: '#D2E5FF', token: 'main/badge/information/medium/background' },
+                  'state:Info|level:Light':      { value: '#E5F1FF', token: 'main/badge/information/light/background' },
+                  'state:Success|level:Heavy':   { value: '#12AF80', token: 'main/badge/positive/heavy/background' },
+                  'state:Success|level:Medium':  { value: '#CAF2E0', token: 'main/badge/positive/medium/background' },
+                  'state:Success|level:Light':   { value: '#E7F8F0', token: 'main/badge/positive/light/background' },
+                  'state:Warning|level:Heavy':   { value: '#CA970C', token: 'main/badge/notice/heavy/background' },
+                  'state:Warning|level:Medium':  { value: '#F7D96E', token: 'main/badge/notice/medium/background' },
+                  'state:Warning|level:Light':   { value: '#FCF0CA', token: 'main/badge/notice/light/background' },
+                  'state:Danger|level:Heavy':    { value: '#D61B2C', token: 'main/badge/negative/heavy/background' },
+                  'state:Danger|level:Medium':   { value: '#F4C7C9', token: 'main/badge/negative/medium/background' },
+                  'state:Danger|level:Light':    { value: '#F8E6E6', token: 'main/badge/negative/light/background' },
+                  'state:Disabled|level:Heavy':  { value: '#717883', token: 'main/badge/muted/heavy/background' },
+                  'state:Disabled|level:Medium': { value: '#9A9FA7', token: 'main/badge/muted/medium/background' },
+                  'state:Disabled|level:Light':  { value: '#C2C5CA', token: 'main/badge/muted/light/background' },
+                },
+              },
+              {
+                key: 'Label',
+                value: '#FFFFFF',
+                token: 'main/badge/primary/heavy/label',
+                variants: {
+                  'state:Primary|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
+                  'state:Primary|level:Medium':  { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
+                  'state:Primary|level:Light':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
+                  'state:Brand|level:Heavy':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
+                  'state:Brand|level:Medium':    { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
+                  'state:Brand|level:Light':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
+                  'state:Info|level:Heavy':      { value: '#FFFFFF', token: 'main/badge/information/heavy/label' },
+                  'state:Info|level:Medium':     { value: '#005CE5', token: 'main/badge/information/medium/label' },
+                  'state:Info|level:Light':      { value: '#005CE5', token: 'main/badge/information/light/label' },
+                  'state:Success|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/positive/heavy/label' },
+                  'state:Success|level:Medium':  { value: '#048570', token: 'main/badge/positive/medium/label' },
+                  'state:Success|level:Light':   { value: '#048570', token: 'main/badge/positive/light/label' },
+                  'state:Warning|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/notice/heavy/label' },
+                  'state:Warning|level:Medium':  { value: '#966F0B', token: 'main/badge/notice/medium/label' },
+                  'state:Warning|level:Light':   { value: '#966F0B', token: 'main/badge/notice/light/label' },
+                  'state:Danger|level:Heavy':    { value: '#FFFFFF', token: 'main/badge/negative/heavy/label' },
+                  'state:Danger|level:Medium':   { value: '#8D0710', token: 'main/badge/negative/medium/label' },
+                  'state:Danger|level:Light':    { value: '#B50707', token: 'main/badge/negative/light/label' },
+                  'state:Disabled|level:Heavy':  { value: '#FFFFFF', token: 'main/badge/muted/heavy/label' },
+                  'state:Disabled|level:Medium': { value: '#FFFFFF', token: 'main/badge/muted/medium/label' },
+                  'state:Disabled|level:Light':  { value: '#FFFFFF', token: 'main/badge/muted/light/label' },
+                },
+              },
+            ],
           },
           {
             "label": "Layout",
@@ -218,7 +326,7 @@ export const badge: ComponentData = {
             "slug": "typo",
             "rows": [
               { "key": "Text Style", "value": "Primary/Label/Fine", "mono": true },
-              { "key": "Font", "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
               { "key": "Size", "value": "12px", "mono": true },
               { "key": "Tracking", "value": "0.5px", "mono": true },
               { "key": "Line-height", "value": "12px", "mono": true }
@@ -227,7 +335,7 @@ export const badge: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Voucher label\"</span><span class=\"syn-punc\">, </span>type<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.voucher</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Voucher label\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBadgeType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Voucher</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<span style=\"display:inline-block;background:#005CE5;color:#FFFFFF;font-family:HeyMeow Rnd,system-ui,sans-serif;font-weight:700;font-size:12px;line-height:12px;letter-spacing:0.5px;padding:4px 8px 2px;border-radius:0 0 4px 0;text-align:center;white-space:nowrap;height:18px;box-sizing:border-box;\">Label</span>"
+        "previewHtml": "<span style=\"display:inline-block;background:#005CE5;color:#FFFFFF;font-family:Proxima Soft,system-ui,sans-serif;font-weight:700;font-size:12px;line-height:12px;letter-spacing:0.5px;padding:4px 8px 2px;border-radius:0 0 4px 0;text-align:center;white-space:nowrap;height:18px;box-sizing:border-box;\">Label</span>"
       },
       {
         "cardKey": "bd-spec-transaction",
@@ -247,12 +355,66 @@ export const badge: ComponentData = {
             ]
           },
           {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Background", "value": "#005CE5", "token": "main/badge/primary/heavy/background" },
-              { "key": "Label", "value": "#FFFFFF", "token": "main/badge/primary/heavy/label" }
-            ]
+            label: 'Colors',
+            slug: 'colors',
+            rows: [
+              {
+                key: 'Background',
+                value: '#005CE5',
+                token: 'main/badge/primary/heavy/background',
+                variants: {
+                  'state:Primary|level:Heavy':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
+                  'state:Primary|level:Medium':  { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
+                  'state:Primary|level:Light':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
+                  'state:Brand|level:Heavy':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
+                  'state:Brand|level:Medium':    { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
+                  'state:Brand|level:Light':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
+                  'state:Info|level:Heavy':      { value: '#2340A9', token: 'main/badge/information/heavy/background' },
+                  'state:Info|level:Medium':     { value: '#D2E5FF', token: 'main/badge/information/medium/background' },
+                  'state:Info|level:Light':      { value: '#E5F1FF', token: 'main/badge/information/light/background' },
+                  'state:Success|level:Heavy':   { value: '#12AF80', token: 'main/badge/positive/heavy/background' },
+                  'state:Success|level:Medium':  { value: '#CAF2E0', token: 'main/badge/positive/medium/background' },
+                  'state:Success|level:Light':   { value: '#E7F8F0', token: 'main/badge/positive/light/background' },
+                  'state:Warning|level:Heavy':   { value: '#CA970C', token: 'main/badge/notice/heavy/background' },
+                  'state:Warning|level:Medium':  { value: '#F7D96E', token: 'main/badge/notice/medium/background' },
+                  'state:Warning|level:Light':   { value: '#FCF0CA', token: 'main/badge/notice/light/background' },
+                  'state:Danger|level:Heavy':    { value: '#D61B2C', token: 'main/badge/negative/heavy/background' },
+                  'state:Danger|level:Medium':   { value: '#F4C7C9', token: 'main/badge/negative/medium/background' },
+                  'state:Danger|level:Light':    { value: '#F8E6E6', token: 'main/badge/negative/light/background' },
+                  'state:Disabled|level:Heavy':  { value: '#717883', token: 'main/badge/muted/heavy/background' },
+                  'state:Disabled|level:Medium': { value: '#9A9FA7', token: 'main/badge/muted/medium/background' },
+                  'state:Disabled|level:Light':  { value: '#C2C5CA', token: 'main/badge/muted/light/background' },
+                },
+              },
+              {
+                key: 'Label',
+                value: '#FFFFFF',
+                token: 'main/badge/primary/heavy/label',
+                variants: {
+                  'state:Primary|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
+                  'state:Primary|level:Medium':  { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
+                  'state:Primary|level:Light':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
+                  'state:Brand|level:Heavy':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
+                  'state:Brand|level:Medium':    { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
+                  'state:Brand|level:Light':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
+                  'state:Info|level:Heavy':      { value: '#FFFFFF', token: 'main/badge/information/heavy/label' },
+                  'state:Info|level:Medium':     { value: '#005CE5', token: 'main/badge/information/medium/label' },
+                  'state:Info|level:Light':      { value: '#005CE5', token: 'main/badge/information/light/label' },
+                  'state:Success|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/positive/heavy/label' },
+                  'state:Success|level:Medium':  { value: '#048570', token: 'main/badge/positive/medium/label' },
+                  'state:Success|level:Light':   { value: '#048570', token: 'main/badge/positive/light/label' },
+                  'state:Warning|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/notice/heavy/label' },
+                  'state:Warning|level:Medium':  { value: '#966F0B', token: 'main/badge/notice/medium/label' },
+                  'state:Warning|level:Light':   { value: '#966F0B', token: 'main/badge/notice/light/label' },
+                  'state:Danger|level:Heavy':    { value: '#FFFFFF', token: 'main/badge/negative/heavy/label' },
+                  'state:Danger|level:Medium':   { value: '#8D0710', token: 'main/badge/negative/medium/label' },
+                  'state:Danger|level:Light':    { value: '#B50707', token: 'main/badge/negative/light/label' },
+                  'state:Disabled|level:Heavy':  { value: '#FFFFFF', token: 'main/badge/muted/heavy/label' },
+                  'state:Disabled|level:Medium': { value: '#FFFFFF', token: 'main/badge/muted/medium/label' },
+                  'state:Disabled|level:Light':  { value: '#FFFFFF', token: 'main/badge/muted/light/label' },
+                },
+              },
+            ],
           },
           {
             "label": "Layout",
@@ -269,7 +431,7 @@ export const badge: ComponentData = {
             "slug": "typo",
             "rows": [
               { "key": "Text Style", "value": "Primary/Label/Fine", "mono": true },
-              { "key": "Font", "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
               { "key": "Size", "value": "12px", "mono": true },
               { "key": "Tracking", "value": "0.5px", "mono": true },
               { "key": "Line-height", "value": "12px", "mono": true }
@@ -278,7 +440,7 @@ export const badge: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Pending\"</span><span class=\"syn-punc\">, </span>intent<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.notice</span><span class=\"syn-punc\">, </span>type<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.transaction</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Pending\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBadgeIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Notice</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBadgeType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Transaction</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<span style=\"display:inline-block;background:#005CE5;color:#FFFFFF;font-family:HeyMeow Rnd,system-ui,sans-serif;font-weight:700;font-size:12px;line-height:12px;letter-spacing:0.5px;padding:3px 4px 1px;border-radius:4px;text-align:center;white-space:nowrap;\">Label</span>"
+        "previewHtml": "<span style=\"display:inline-block;background:#005CE5;color:#FFFFFF;font-family:Proxima Soft,system-ui,sans-serif;font-weight:700;font-size:12px;line-height:12px;letter-spacing:0.5px;padding:3px 4px 1px;border-radius:4px;text-align:center;white-space:nowrap;\">Label</span>"
       },
       {
         "cardKey": "bd-spec-dashboard",
@@ -298,12 +460,66 @@ export const badge: ComponentData = {
             ]
           },
           {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Background", "value": "#005CE5", "token": "main/badge/primary/heavy/background" },
-              { "key": "Label", "value": "#FFFFFF", "token": "main/badge/primary/heavy/label" }
-            ]
+            label: 'Colors',
+            slug: 'colors',
+            rows: [
+              {
+                key: 'Background',
+                value: '#005CE5',
+                token: 'main/badge/primary/heavy/background',
+                variants: {
+                  'state:Primary|level:Heavy':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
+                  'state:Primary|level:Medium':  { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
+                  'state:Primary|level:Light':   { value: '#005CE5', token: 'main/badge/primary/heavy/background' },
+                  'state:Brand|level:Heavy':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
+                  'state:Brand|level:Medium':    { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
+                  'state:Brand|level:Light':     { value: '#1972F9', token: 'main/badge/brand/heavy/background' },
+                  'state:Info|level:Heavy':      { value: '#2340A9', token: 'main/badge/information/heavy/background' },
+                  'state:Info|level:Medium':     { value: '#D2E5FF', token: 'main/badge/information/medium/background' },
+                  'state:Info|level:Light':      { value: '#E5F1FF', token: 'main/badge/information/light/background' },
+                  'state:Success|level:Heavy':   { value: '#12AF80', token: 'main/badge/positive/heavy/background' },
+                  'state:Success|level:Medium':  { value: '#CAF2E0', token: 'main/badge/positive/medium/background' },
+                  'state:Success|level:Light':   { value: '#E7F8F0', token: 'main/badge/positive/light/background' },
+                  'state:Warning|level:Heavy':   { value: '#CA970C', token: 'main/badge/notice/heavy/background' },
+                  'state:Warning|level:Medium':  { value: '#F7D96E', token: 'main/badge/notice/medium/background' },
+                  'state:Warning|level:Light':   { value: '#FCF0CA', token: 'main/badge/notice/light/background' },
+                  'state:Danger|level:Heavy':    { value: '#D61B2C', token: 'main/badge/negative/heavy/background' },
+                  'state:Danger|level:Medium':   { value: '#F4C7C9', token: 'main/badge/negative/medium/background' },
+                  'state:Danger|level:Light':    { value: '#F8E6E6', token: 'main/badge/negative/light/background' },
+                  'state:Disabled|level:Heavy':  { value: '#717883', token: 'main/badge/muted/heavy/background' },
+                  'state:Disabled|level:Medium': { value: '#9A9FA7', token: 'main/badge/muted/medium/background' },
+                  'state:Disabled|level:Light':  { value: '#C2C5CA', token: 'main/badge/muted/light/background' },
+                },
+              },
+              {
+                key: 'Label',
+                value: '#FFFFFF',
+                token: 'main/badge/primary/heavy/label',
+                variants: {
+                  'state:Primary|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
+                  'state:Primary|level:Medium':  { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
+                  'state:Primary|level:Light':   { value: '#FFFFFF', token: 'main/badge/primary/heavy/label' },
+                  'state:Brand|level:Heavy':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
+                  'state:Brand|level:Medium':    { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
+                  'state:Brand|level:Light':     { value: '#FFFFFF', token: 'main/badge/brand/heavy/label' },
+                  'state:Info|level:Heavy':      { value: '#FFFFFF', token: 'main/badge/information/heavy/label' },
+                  'state:Info|level:Medium':     { value: '#005CE5', token: 'main/badge/information/medium/label' },
+                  'state:Info|level:Light':      { value: '#005CE5', token: 'main/badge/information/light/label' },
+                  'state:Success|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/positive/heavy/label' },
+                  'state:Success|level:Medium':  { value: '#048570', token: 'main/badge/positive/medium/label' },
+                  'state:Success|level:Light':   { value: '#048570', token: 'main/badge/positive/light/label' },
+                  'state:Warning|level:Heavy':   { value: '#FFFFFF', token: 'main/badge/notice/heavy/label' },
+                  'state:Warning|level:Medium':  { value: '#966F0B', token: 'main/badge/notice/medium/label' },
+                  'state:Warning|level:Light':   { value: '#966F0B', token: 'main/badge/notice/light/label' },
+                  'state:Danger|level:Heavy':    { value: '#FFFFFF', token: 'main/badge/negative/heavy/label' },
+                  'state:Danger|level:Medium':   { value: '#8D0710', token: 'main/badge/negative/medium/label' },
+                  'state:Danger|level:Light':    { value: '#B50707', token: 'main/badge/negative/light/label' },
+                  'state:Disabled|level:Heavy':  { value: '#FFFFFF', token: 'main/badge/muted/heavy/label' },
+                  'state:Disabled|level:Medium': { value: '#FFFFFF', token: 'main/badge/muted/medium/label' },
+                  'state:Disabled|level:Light':  { value: '#FFFFFF', token: 'main/badge/muted/light/label' },
+                },
+              },
+            ],
           },
           {
             "label": "Layout",
@@ -320,7 +536,7 @@ export const badge: ComponentData = {
             "slug": "typo",
             "rows": [
               { "key": "Text Style", "value": "Primary/Label/Tiny", "mono": true },
-              { "key": "Font", "value": "HeyMeow Rnd Bold", "mono": true },
+              { "key": "Font", "value": "Proxima Soft Bold", "mono": true },
               { "key": "Size", "value": "10px", "mono": true },
               { "key": "Tracking", "value": "0.25px", "mono": true },
               { "key": "Line-height", "value": "10px", "mono": true }
@@ -329,7 +545,7 @@ export const badge: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"New\"</span><span class=\"syn-punc\">, </span>type<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.dashboard</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBBadge</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"New\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBadgeType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Dashboard</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<span style=\"display:inline-block;background:#005CE5;color:#FFFFFF;font-family:HeyMeow Rnd,system-ui,sans-serif;font-weight:700;font-size:10px;line-height:10px;letter-spacing:0.25px;padding:1px 4px 1px;border-radius:4px;text-align:center;white-space:nowrap;\">Label</span>"
+        "previewHtml": "<span style=\"display:inline-block;background:#005CE5;color:#FFFFFF;font-family:Proxima Soft,system-ui,sans-serif;font-weight:700;font-size:10px;line-height:10px;letter-spacing:0.25px;padding:1px 4px 1px;border-radius:4px;text-align:center;white-space:nowrap;\">Label</span>"
       }
     ],
     "colorsTables": [
@@ -709,7 +925,7 @@ export const badge: ComponentData = {
             "role": "Default / Voucher / Transaction",
             "token": "Primary/Label/Fine",
             "values": [
-              "HeyMeow Rnd Bold",
+              "Proxima Soft Bold",
               "12px",
               "0.5px",
               "12px"
@@ -719,7 +935,7 @@ export const badge: ComponentData = {
             "role": "Dashboard",
             "token": "Primary/Label/Tiny",
             "values": [
-              "HeyMeow Rnd Bold",
+              "Proxima Soft Bold",
               "10px",
               "0.25px",
               "10px"

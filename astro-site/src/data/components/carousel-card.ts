@@ -1,22 +1,5 @@
-import type { ComponentData, DemoControlSection } from '../types';
-
-const carouselCardDemoControls: DemoControlSection[] = [
-  {
-    heading: 'Properties',
-    rows: [
-      {
-        label: 'Type',
-        prop: 'type',
-        defaultValue: 'default',
-        options: [
-          { value: 'default', label: 'default' },
-          { value: 'with-icon', label: 'with icon' },
-          { value: 'skeleton', label: 'skeleton loader' },
-        ],
-      },
-    ],
-  },
-];
+import type { ComponentData } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
 
 export const carouselCard: ComponentData = {
   "meta": {
@@ -201,11 +184,11 @@ export const carouselCard: ComponentData = {
       {
         "cardKey": "default",
         "demoKey": "default",
-        "demoControls": carouselCardDemoControls,
+        "demoControls": [],
         "title": "Default",
         "node": "23:121312",
         "description": "Banner image + title + 2-line description. The banner ships a placeholder PNG dimmed by a purple multiply layer — replace both with your real media.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"ccard-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"ccard-spec-1\"><div class=\"eb-preview eb-preview-ccard eb-preview-ccard--default\"><div class=\"eb-preview-ccard__banner\"><div class=\"eb-preview-ccard__banner-img\"></div><div class=\"eb-preview-ccard__banner-dimmer\"></div></div><div class=\"eb-preview-ccard__content\"><p class=\"eb-preview-ccard__title\">Title</p><p class=\"eb-preview-ccard__desc\">Description here.<br>Description here.</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -256,11 +239,11 @@ export const carouselCard: ComponentData = {
       {
         "cardKey": "with-icon",
         "demoKey": "with-icon",
-        "demoControls": carouselCardDemoControls,
+        "demoControls": [],
         "title": "With icon",
         "node": "23:121322",
         "description": "Default layout + a bottom-left icon badge on the banner. A gradient shadow along the lower third improves icon contrast against bright imagery.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"ccard-spec-2\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"ccard-spec-2\"><div class=\"eb-preview eb-preview-ccard eb-preview-ccard--with-icon\"><div class=\"eb-preview-ccard__banner\"><div class=\"eb-preview-ccard__banner-img\"></div><div class=\"eb-preview-ccard__banner-dimmer\"></div><div class=\"eb-preview-ccard__banner-shadow\"></div><div class=\"eb-preview-ccard__banner-icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" width=\"16\" height=\"16\"><circle cx=\"12\" cy=\"12\" r=\"10\" fill=\"#C2C6CF\"></circle></svg></div></div><div class=\"eb-preview-ccard__content\"><p class=\"eb-preview-ccard__title\">Title</p><p class=\"eb-preview-ccard__desc\">Description here.<br>Description here.</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -309,11 +292,11 @@ export const carouselCard: ComponentData = {
       {
         "cardKey": "skeleton-loader",
         "demoKey": "skeleton-loader",
-        "demoControls": carouselCardDemoControls,
+        "demoControls": [],
         "title": "Skeleton loader",
         "node": "23:121334",
         "description": "Loading placeholder: banner becomes a flat light-gray block; title and description become bar placeholders. Card total height drops to 212 (vs 215 default) due to the 16 top gap in the content block.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"ccard-spec-3\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"ccard-spec-3\"><div class=\"eb-preview eb-preview-ccard eb-preview-ccard--skeleton\"><div class=\"eb-preview-ccard__banner eb-preview-ccard__banner--skeleton\"></div><div class=\"eb-preview-ccard__content eb-preview-ccard__content--skeleton\"><div class=\"eb-preview-ccard__sk eb-preview-ccard__sk--title\"></div><div class=\"eb-preview-ccard__sk eb-preview-ccard__sk--desc\"></div><div class=\"eb-preview-ccard__sk eb-preview-ccard__sk--desc2\"></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -356,7 +339,40 @@ export const carouselCard: ComponentData = {
         "compose": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    isLoading <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — Default carousel slide
+      buildStatelessColorsTable({
+        title: 'Default — Colors',
+        description: 'Promotional carousel card with heading, description, and pagination dots.',
+        rows: [
+          { role: 'Surface',      token: 'bg/color-bg-main',           value: '#FFFFFF' },
+          { role: 'Heading',      token: 'carousel/color/label-header', value: '#2340A9' },
+          { role: 'Description',  token: 'carousel/color/description', value: '#6780A9' },
+          { role: 'Active dot',   token: 'bg/color-bg-primary',        value: '#005CE5' },
+          { role: 'Inactive dot', token: 'bg/color-bg-strong',         value: '#EEF2F9' },
+        ],
+      }),
+      // Card 2 — Icon-led card
+      buildStatelessColorsTable({
+        title: 'With Icon — Colors',
+        description: 'Icon-led carousel card with a tinted icon container and stacked title/description.',
+        rows: [
+          { role: 'Surface bg',         token: 'main/card/bg',          value: '#FFFFFF' },
+          { role: 'Icon container bg',  token: 'main/card/icon/bg',     value: '#E8F1FF' },
+          { role: 'Title',              token: 'main/card/title',       value: '#0A2757' },
+          { role: 'Description',        token: 'main/card/description', value: '#3C4A5C' },
+        ],
+      }),
+      // Card 3 — Skeleton
+      buildStatelessColorsTable({
+        title: 'Skeleton — Colors',
+        description: 'Loading state — content slots become rounded grey rectangles on the card surface.',
+        rows: [
+          { role: 'Skeleton bg', token: 'main/skeleton/bg', value: '#EEF2F9' },
+          { role: 'Surface bg',  token: 'main/card/bg',     value: '#FFFFFF' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

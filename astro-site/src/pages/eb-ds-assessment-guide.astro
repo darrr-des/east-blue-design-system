@@ -64,6 +64,16 @@ const guideHtml = extractMainBody(raw);
   <div class="panel active guide-page">
     <div class="panel-layout">
       <div class="content-wrap">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+          <a class="back-btn" href="/">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Overview
+          </a>
+          <span class="guide-breadcrumb-sep" aria-hidden="true">›</span>
+          <span class="guide-breadcrumb-current">Assessment Guide</span>
+        </nav>
         <div class="guide-content" set:html={guideHtml} />
       </div>
       <aside class="page-toc" aria-label="On this page">

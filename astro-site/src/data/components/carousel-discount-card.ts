@@ -1,22 +1,5 @@
-import type { ComponentData, DemoControlSection } from '../types';
-
-const carouselDiscountCardDemoControls: DemoControlSection[] = [
-  {
-    heading: 'Properties',
-    rows: [
-      {
-        label: 'Type',
-        prop: 'type',
-        defaultValue: 'default',
-        options: [
-          { value: 'default', label: 'default' },
-          { value: 'with-violator', label: 'with violator' },
-          { value: 'skeleton', label: 'skeleton loader' },
-        ],
-      },
-    ],
-  },
-];
+import type { ComponentData } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
 
 export const carouselDiscountCard: ComponentData = {
   "meta": {
@@ -213,11 +196,11 @@ export const carouselDiscountCard: ComponentData = {
       {
         "cardKey": "default",
         "demoKey": "default",
-        "demoControls": carouselDiscountCardDemoControls,
+        "demoControls": [],
         "title": "Default",
         "node": "18543:2762",
         "description": "Voucher card with perforated banner image, two-line label, and peso-value line.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"cdcard-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"cdcard-spec-1\"><div class=\"eb-preview eb-preview-cdcard\"><div class=\"eb-preview-cdcard__banner\"><div class=\"eb-preview-cdcard__banner-img\"></div><svg class=\"eb-preview-cdcard__perforate\" viewBox=\"0 0 120 4\" preserveAspectRatio=\"none\" aria-hidden=\"true\"><path d=\"M0,2 C2,4 4,4 6,2 C8,0 10,0 12,2 C14,4 16,4 18,2 C20,0 22,0 24,2 C26,4 28,4 30,2 C32,0 34,0 36,2 C38,4 40,4 42,2 C44,0 46,0 48,2 C50,4 52,4 54,2 C56,0 58,0 60,2 C62,4 64,4 66,2 C68,0 70,0 72,2 C74,4 76,4 78,2 C80,0 82,0 84,2 C86,4 88,4 90,2 C92,0 94,0 96,2 C98,4 100,4 102,2 C104,0 106,0 108,2 C110,4 112,4 114,2 C116,0 118,0 120,2 L120,4 L0,4 Z\" fill=\"#FFFFFF\"></path></svg></div><div class=\"eb-preview-cdcard__content\"><p class=\"eb-preview-cdcard__label\">Add label here<br>Add label here</p><p class=\"eb-preview-cdcard__value\">PHP 200.00</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -268,11 +251,11 @@ export const carouselDiscountCard: ComponentData = {
       {
         "cardKey": "with-violator",
         "demoKey": "with-violator",
-        "demoControls": carouselDiscountCardDemoControls,
+        "demoControls": [],
         "title": "With violator",
         "node": "18543:2770",
         "description": "Adds a blue violator tag anchored to the banner's top-right corner. Text is hardcoded \"New\" today — should be a parameterized slot.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"cdcard-spec-2\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"cdcard-spec-2\"><div class=\"eb-preview eb-preview-cdcard\"><div class=\"eb-preview-cdcard__banner\"><div class=\"eb-preview-cdcard__banner-img\"></div><svg class=\"eb-preview-cdcard__perforate\" viewBox=\"0 0 120 4\" preserveAspectRatio=\"none\" aria-hidden=\"true\"><path d=\"M0,2 C2,4 4,4 6,2 C8,0 10,0 12,2 C14,4 16,4 18,2 C20,0 22,0 24,2 C26,4 28,4 30,2 C32,0 34,0 36,2 C38,4 40,4 42,2 C44,0 46,0 48,2 C50,4 52,4 54,2 C56,0 58,0 60,2 C62,4 64,4 66,2 C68,0 70,0 72,2 C74,4 76,4 78,2 C80,0 82,0 84,2 C86,4 88,4 90,2 C92,0 94,0 96,2 C98,4 100,4 102,2 C104,0 106,0 108,2 C110,4 112,4 114,2 C116,0 118,0 120,2 L120,4 L0,4 Z\" fill=\"#FFFFFF\"></path></svg><span class=\"eb-preview-cdcard__violator\">New</span></div><div class=\"eb-preview-cdcard__content\"><p class=\"eb-preview-cdcard__label\">Add label here<br>Add label here</p><p class=\"eb-preview-cdcard__value\">PHP 200.00</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -321,11 +304,11 @@ export const carouselDiscountCard: ComponentData = {
       {
         "cardKey": "skeleton-loader",
         "demoKey": "skeleton-loader",
-        "demoControls": carouselDiscountCardDemoControls,
+        "demoControls": [],
         "title": "Skeleton loader",
         "node": "18543:2782",
         "description": "Loading pattern: flat banner fill, rounded title rectangle, shorter amount rectangle. Centered column (differs from the left-aligned default).",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"cdcard-spec-3\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"cdcard-spec-3\"><div class=\"eb-preview eb-preview-cdcard eb-preview-cdcard--skeleton\"><div class=\"eb-preview-cdcard__sk-banner\"></div><div class=\"eb-preview-cdcard__sk-content\"><div class=\"eb-preview-cdcard__sk eb-preview-cdcard__sk--title\"></div><div class=\"eb-preview-cdcard__sk eb-preview-cdcard__sk--amount\"></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -367,7 +350,40 @@ export const carouselDiscountCard: ComponentData = {
         "compose": "<span class=\"syn-type\">EBDiscountCard</span><span class=\"syn-punc\">(</span>\n    isLoading <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — Default
+      buildStatelessColorsTable({
+        title: 'Default — Colors',
+        description: 'Discount carousel card with label + brand-blue value pair on a white surface.',
+        rows: [
+          { role: 'Label',        token: 'carousel/color/label',        value: '#0A2757' },
+          { role: 'Discount',     token: 'carousel/color/value',        value: '#2340A9' },
+          { role: 'Surface',      token: 'bg/color-bg-main',            value: '#FFFFFF' },
+          { role: 'Inverse text', token: 'text/color-text-inverse',     value: '#FFFFFF' },
+          { role: 'Active dot',   token: 'bg/color-bg-primary',         value: '#005CE5' },
+        ],
+      }),
+      // Card 2 — With violator
+      buildStatelessColorsTable({
+        title: 'With Violator — Colors',
+        description: 'Same default surface as Card 1, plus a red violator chip overlaying the image area.',
+        rows: [
+          { role: 'Surface bg',     token: 'main/discount-card/bg',              value: '#FFFFFF' },
+          { role: 'Violator bg',    token: 'main/discount-card/violator/bg',     value: '#D81E1E' },
+          { role: 'Violator label', token: 'main/discount-card/violator/label',  value: '#FFFFFF' },
+          { role: 'Title',          token: 'main/discount-card/title',           value: '#0A2757' },
+        ],
+      }),
+      // Card 3 — Skeleton
+      buildStatelessColorsTable({
+        title: 'Skeleton — Colors',
+        description: 'Loading state — every content slot becomes a rounded grey rectangle.',
+        rows: [
+          { role: 'Skeleton bg', token: 'main/skeleton/bg',     value: '#EEF2F9' },
+          { role: 'Surface bg',  token: 'main/discount-card/bg', value: '#FFFFFF' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

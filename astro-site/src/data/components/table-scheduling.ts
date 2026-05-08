@@ -1,4 +1,24 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/table-scheduling.js`.
+const tableSchedulingDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'type',
+        prop: 'type',
+        defaultValue: 'no',
+        options: [
+          { value: 'no', label: 'no display amount' },
+          { value: '2', label: '2 amounts display' },
+          { value: '4', label: '4 amounts display' },
+        ],
+      },
+    ],
+  },
+];
 
 export const tableScheduling: ComponentData = {
   "meta": {
@@ -27,7 +47,7 @@ export const tableScheduling: ComponentData = {
   "overview": {
     "inContextNote": "Scheduled payments screen (auto-debit, installment plans, standing orders): a list of upcoming payment rows stamped with a date, the total debit amount, and — where relevant — a breakdown of principal / interest / fee components.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"220\" height=\"150\" viewBox=\"0 0 220 150\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <rect x=\"40\" y=\"6\" width=\"140\" height=\"138\" rx=\"10\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".2\"></rect>\n          <rect x=\"40\" y=\"6\" width=\"140\" height=\"18\" rx=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <rect x=\"40\" y=\"14\" width=\"140\" height=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <text x=\"110\" y=\"18\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"7\" font-weight=\"700\" font-family=\"system-ui\">Payment Schedule</text>\n          \n          <text x=\"48\" y=\"38\" fill=\"#0A2757\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">MAY 10, 2026</text>\n          <text x=\"165\" y=\"38\" text-anchor=\"end\" fill=\"#005CE5\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">₱1,250.00</text>\n          <text x=\"86\" y=\"48\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\">Principal</text>\n          <text x=\"86\" y=\"55\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">PHP 1,100</text>\n          <text x=\"140\" y=\"48\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\">Interest</text>\n          <text x=\"140\" y=\"55\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">PHP 150</text>\n          <line x1=\"44\" y1=\"62\" x2=\"176\" y2=\"62\" stroke=\"#E5EBF4\"></line>\n          \n          <text x=\"48\" y=\"74\" fill=\"#0A2757\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">JUN 10, 2026</text>\n          <text x=\"165\" y=\"74\" text-anchor=\"end\" fill=\"#005CE5\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">₱1,250.00</text>\n          <text x=\"86\" y=\"84\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\">Principal</text>\n          <text x=\"86\" y=\"91\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">PHP 1,110</text>\n          <text x=\"140\" y=\"84\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\">Interest</text>\n          <text x=\"140\" y=\"91\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">PHP 140</text>\n          <line x1=\"44\" y1=\"98\" x2=\"176\" y2=\"98\" stroke=\"#E5EBF4\"></line>\n          \n          <text x=\"48\" y=\"110\" fill=\"#0A2757\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">JUL 10, 2026</text>\n          <text x=\"165\" y=\"110\" text-anchor=\"end\" fill=\"#005CE5\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">₱1,250.00</text>\n          <line x1=\"44\" y1=\"116\" x2=\"176\" y2=\"116\" stroke=\"#E5EBF4\"></line>\n          <rect x=\"56\" y=\"124\" width=\"108\" height=\"14\" rx=\"7\" fill=\"#005CE5\"></rect>\n          <text x=\"110\" y=\"134\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Manage Schedule</text>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"table-scheduling-demo-preview\"><div style=\"width:360px; background:#FFFFFF; border-bottom:1px solid #E5EBF4; padding:16px 24px; box-sizing:border-box; display:flex; flex-direction:column; gap:8px;\"><div style=\"display:flex; align-items:center; width:100%;\"><div style=\"width:108px; font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:12px; letter-spacing:0.5px; color:#0A2757;\">MMM DD, YYYY</div><div style=\"flex:1 0 0; display:flex; align-items:center; justify-content:flex-end; gap:2px;\"><span style=\"font-family:'Proxima Soft', system-ui; font-weight:700; font-size:14px; line-height:14px; letter-spacing:0.25px; color:#005CE5;\">₱</span><span style=\"font-family:'Proxima Soft', system-ui; font-weight:700; font-size:14px; line-height:14px; letter-spacing:0.25px; color:#005CE5;\">X,XXX.XX</span></div></div><div style=\"display:flex; flex-direction:column; gap:12px; width:100%;\"><div style=\"display:flex; align-items:flex-start; width:100%;\"><div style=\"width:111px; font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:14px; letter-spacing:0.5px; color:#6780A9;\">Label</div><div style=\"flex:1 0 0; display:flex; gap:8px;\"><div style=\"flex:1 0 0; display:flex; flex-direction:column; gap:4px;\"><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:14px; letter-spacing:0.5px; color:#6780A9;\">Label</div><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:12px; letter-spacing:0.5px; color:#0A2757;\">PHP X,XXX.XX</div></div><div style=\"flex:1 0 0; display:flex; flex-direction:column; gap:4px;\"><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:14px; letter-spacing:0.5px; color:#6780A9;\">Label</div><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:12px; letter-spacing:0.5px; color:#0A2757;\">PHP X,XXX.XX</div></div></div></div><div style=\"display:flex; align-items:flex-start; width:100%;\"><div style=\"width:111px;\"></div><div style=\"flex:1 0 0; display:flex; gap:8px;\"><div style=\"flex:1 0 0; display:flex; flex-direction:column; gap:4px;\"><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:14px; letter-spacing:0.5px; color:#6780A9;\">Label</div><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:12px; letter-spacing:0.5px; color:#0A2757;\">PHP X,XXX.XX</div></div><div style=\"flex:1 0 0; display:flex; flex-direction:column; gap:4px;\"><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:14px; letter-spacing:0.5px; color:#6780A9;\">Label</div><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:12px; letter-spacing:0.5px; color:#0A2757;\">PHP X,XXX.XX</div></div></div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select class=\"demo-panel-select\" id=\"table-scheduling-demo-type\" onchange=\"updateTableSchedulingDemo()\"><option value=\"no\">no display amount</option><option value=\"2\">2 amounts display</option><option value=\"4\" selected=\"\">4 amounts display</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"table-scheduling-demo-preview\"><div style=\"width:360px; background:#FFFFFF; border-bottom:1px solid #E5EBF4; padding:16px 24px; box-sizing:border-box; display:flex; flex-direction:column; gap:8px;\"><div style=\"display:flex; align-items:center; width:100%;\"><div style=\"width:108px; font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:12px; letter-spacing:0.5px; color:#0A2757;\">MMM DD, YYYY</div><div style=\"flex:1 0 0; display:flex; align-items:center; justify-content:flex-start; gap:2px;\"><span style=\"font-family:'Proxima Soft', system-ui; font-weight:700; font-size:14px; line-height:14px; letter-spacing:0.25px; color:#005CE5;\">₱</span><span style=\"font-family:'Proxima Soft', system-ui; font-weight:700; font-size:14px; line-height:14px; letter-spacing:0.25px; color:#005CE5;\">X,XXX.XX</span></div></div><div style=\"display:flex; flex-direction:column; gap:12px; width:100%;\"><div style=\"display:flex; align-items:flex-start; width:100%;\"><div style=\"width:111px; font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:14px; letter-spacing:0.5px; color:#6780A9;\">Label</div><div style=\"flex:1 0 0; display:flex; gap:8px;\"><div style=\"flex:1 0 0; display:flex; flex-direction:column; gap:4px;\"><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:14px; letter-spacing:0.5px; color:#6780A9;\">Label</div><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:12px; letter-spacing:0.5px; color:#0A2757;\">PHP X,XXX.XX</div></div><div style=\"flex:1 0 0; display:flex; flex-direction:column; gap:4px;\"><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:14px; letter-spacing:0.5px; color:#6780A9;\">Label</div><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:12px; letter-spacing:0.5px; color:#0A2757;\">PHP X,XXX.XX</div></div></div></div><div style=\"display:flex; align-items:flex-start; width:100%;\"><div style=\"width:111px;\"></div><div style=\"flex:1 0 0; display:flex; gap:8px;\"><div style=\"flex:1 0 0; display:flex; flex-direction:column; gap:4px;\"><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:14px; letter-spacing:0.5px; color:#6780A9;\">Label</div><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:12px; letter-spacing:0.5px; color:#0A2757;\">PHP X,XXX.XX</div></div><div style=\"flex:1 0 0; display:flex; flex-direction:column; gap:4px;\"><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:14px; letter-spacing:0.5px; color:#6780A9;\">Label</div><div style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:12px; letter-spacing:0.5px; color:#0A2757;\">PHP X,XXX.XX</div></div></div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select class=\"demo-panel-select\" id=\"table-scheduling-demo-type\" onchange=\"updateTableSchedulingDemo()\"><option value=\"no\">no display amount</option><option value=\"2\">2 amounts display</option><option value=\"4\" selected=\"\">4 amounts display</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -145,6 +165,8 @@ export const tableScheduling: ComponentData = {
     "specCards": [
       {
         "cardKey": "type-=-no-display-amount-—-50.5px-tall",
+        "demoKey": "no",
+        "demoControls": tableSchedulingDemoControls,
         "title": "type = no display amount — 50.5px tall",
         "node": "47:324362",
         "description": "Minimum variant. A single date-amount row: a 108px left-aligned date label (<code>MMM DD, YYYY</code>) and a right-aligned peso-prefixed primary amount. No detail rows.",
@@ -156,6 +178,7 @@ export const tableScheduling: ComponentData = {
               {
                 "key": "type",
                 "value": "no display amount",
+                "prop": "type",
                 "mono": false
               },
               {
@@ -220,10 +243,13 @@ export const tableScheduling: ComponentData = {
           }
         ],
         "swift": "<span class=\"syn-type\">EBSchedulingTable.Row</span><span class=\"syn-punc\">(</span>item<span class=\"syn-punc\">, </span>type<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.noAmount</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSchedulingTableRow</span><span class=\"syn-punc\">(</span>\n    item <span class=\"syn-eq\">=</span> item<span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBScheduleType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.NoAmount</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<span class=\"syn-type\">EBSchedulingTableRow</span><span class=\"syn-punc\">(</span>\n    item <span class=\"syn-eq\">=</span> item<span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBScheduleType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.NoAmount</span>\n<span class=\"syn-punc\">)</span>",
+        "previewHtml": "<div id=\"table-scheduling-preview-no\"></div>"
       },
       {
         "cardKey": "type-=-2-amounts-display-—-89.5px-tall",
+        "demoKey": "two",
+        "demoControls": tableSchedulingDemoControls,
         "title": "type = 2 amounts display — 89.5px tall",
         "node": "47:324363",
         "description": "Date-amount row + one detail row. Details row carries a 111px \"row-item\" leading label and two equal-width cells in the remaining space, each a <code>Label</code> / <code>PHP X,XXX.XX</code> pair.",
@@ -235,6 +261,7 @@ export const tableScheduling: ComponentData = {
               {
                 "key": "type",
                 "value": "2 amounts display",
+                "prop": "type",
                 "mono": false
               },
               {
@@ -299,10 +326,13 @@ export const tableScheduling: ComponentData = {
           }
         ],
         "swift": "<span class=\"syn-type\">EBSchedulingTable.Row</span><span class=\"syn-punc\">(</span>item<span class=\"syn-punc\">, </span>type<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.twoAmounts</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSchedulingTableRow</span><span class=\"syn-punc\">(</span>\n    item <span class=\"syn-eq\">=</span> item<span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBScheduleType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.TwoAmounts</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<span class=\"syn-type\">EBSchedulingTableRow</span><span class=\"syn-punc\">(</span>\n    item <span class=\"syn-eq\">=</span> item<span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBScheduleType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.TwoAmounts</span>\n<span class=\"syn-punc\">)</span>",
+        "previewHtml": "<div id=\"table-scheduling-preview-two\"></div>"
       },
       {
         "cardKey": "type-=-4-amounts-display-—-132.5px-tall",
+        "demoKey": "four",
+        "demoControls": tableSchedulingDemoControls,
         "title": "type = 4 amounts display — 132.5px tall",
         "node": "47:324364",
         "description": "Date-amount row + two detail rows (4 cells total). Second detail row shares the same 111px gutter and two label/value cells as the first, with 12px gap between detail rows.",
@@ -314,6 +344,7 @@ export const tableScheduling: ComponentData = {
               {
                 "key": "type",
                 "value": "4 amounts display",
+                "prop": "type",
                 "mono": false
               },
               {
@@ -378,7 +409,8 @@ export const tableScheduling: ComponentData = {
           }
         ],
         "swift": "<span class=\"syn-type\">EBSchedulingTable.Row</span><span class=\"syn-punc\">(</span>item<span class=\"syn-punc\">, </span>type<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.fourAmounts</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSchedulingTableRow</span><span class=\"syn-punc\">(</span>\n    item <span class=\"syn-eq\">=</span> item<span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBScheduleType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.FourAmounts</span>\n<span class=\"syn-punc\">)</span>"
+        "compose": "<span class=\"syn-type\">EBSchedulingTableRow</span><span class=\"syn-punc\">(</span>\n    item <span class=\"syn-eq\">=</span> item<span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBScheduleType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.FourAmounts</span>\n<span class=\"syn-punc\">)</span>",
+        "previewHtml": "<div id=\"table-scheduling-preview-four\"></div>"
       }
     ],
     "colorsTables": [

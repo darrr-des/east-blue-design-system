@@ -137,7 +137,45 @@ export const radioButton: ComponentData = {
         "demoKey": "rb-all",
         "title": "All states — large + small",
         "node": "",
-        "description": "Left column: large (20 × 20). Right column: small (16 × 16). Top to bottom: unselected, selected (filled), selected (checkmark), disabled, error, error-selected.",
+        "description": "Pick a state, size, and style to preview. The same matrix would otherwise be 12 static cells; here it's controlled.",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"spec-rb-all-preview\"><svg width=\"40\" height=\"40\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"10\" cy=\"10\" r=\"9\" fill=\"none\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"/></svg></div>",
+        demoControls: [
+          {
+            heading: 'Properties',
+            rows: [
+              {
+                label: 'selected',
+                prop: 'selected',
+                defaultValue: 'unselected',
+                options: [
+                  { value: 'unselected', label: 'unselected' },
+                  { value: 'selected', label: 'selected' },
+                  { value: 'disabled', label: 'disabled' },
+                  { value: 'error', label: 'error' },
+                ],
+              },
+              {
+                label: 'size',
+                prop: 'size',
+                defaultValue: 'large',
+                options: [
+                  { value: 'large', label: 'large' },
+                  { value: 'small', label: 'small' },
+                ],
+              },
+              {
+                label: 'style',
+                prop: 'style',
+                defaultValue: 'default',
+                options: [
+                  { value: 'default', label: 'default' },
+                  { value: 'filled', label: 'filled' },
+                  { value: 'checkmark', label: 'checkmark' },
+                ],
+              },
+            ],
+          },
+        ],
         "sections": [
           {
             "label": "Properties",

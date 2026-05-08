@@ -40,7 +40,7 @@ function _bottomSheetCardMarkup(opts) {
   if (content === 'text') {
     contentBlock =
       '<div style="padding:0 18px 20px;' + (alignCenter ? 'text-align:center;' : '') + '">' +
-        (desc ? '<div style="font-family:\'BarkAda\',serif;font-style:italic;font-size:11px;color:#445C85;line-height:1.5;">This area is designated for descriptions...</div>' : '') +
+        (desc ? '<div style="font-family:\'BarkAda\',serif;font-weight:500;font-size:11px;color:#445C85;line-height:1.5;">This area is designated for descriptions...</div>' : '') +
       '</div>';
   } else if (content === 'list') {
     contentBlock =

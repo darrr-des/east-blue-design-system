@@ -1,4 +1,52 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/upload-file.js`.
+const uploadFileDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'state',
+        prop: 'state',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'uploading', label: 'Uploading' },
+          { value: 'uploaded', label: 'Uploaded' },
+          { value: 'thumbnail', label: 'Uploaded with thumbnail' },
+          { value: 'error', label: 'Upload error' },
+        ],
+      },
+      {
+        label: 'hasLabel',
+        prop: 'hasLabel',
+        defaultValue: 'no',
+        options: [
+          { value: 'no', label: 'no' },
+          { value: 'yes', label: 'yes' },
+        ],
+      },
+      {
+        label: 'hasThumbnail',
+        prop: 'hasThumbnail',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
+        ],
+      },
+      {
+        label: 'disabled',
+        prop: 'disabled',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
+        ],
+      },
+    ],
+  },
+];
 
 export const uploadFile: ComponentData = {
   "meta": {
@@ -27,7 +75,7 @@ export const uploadFile: ComponentData = {
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns. Upload File appears in forms requiring document proof (KYC, insurance claims, verification).",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"200\" height=\"140\" viewBox=\"0 0 200 140\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"128\" rx=\"10\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"20\" rx=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <rect x=\"34\" y=\"16\" width=\"132\" height=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <text x=\"100\" y=\"19\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Upload Docs</text>\n          \n          <rect x=\"42\" y=\"36\" width=\"40\" height=\"4\" rx=\"1\" fill=\"#0A2757\" opacity=\".8\"></rect>\n          <rect x=\"42\" y=\"44\" width=\"116\" height=\"22\" rx=\"3\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></rect>\n          <path d=\"M50 52v2a1.4 1.4 0 002.8 0v-3a2 2 0 00-4 0v3\" stroke=\"#6780A9\" stroke-width=\"0.9\" fill=\"none\" stroke-linecap=\"round\"></path>\n          <text x=\"62\" y=\"58\" fill=\"#005CE5\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Attach file / photo</text>\n          \n          <rect x=\"42\" y=\"72\" width=\"60\" height=\"4\" rx=\"1\" fill=\"#0A2757\" opacity=\".8\"></rect>\n          <rect x=\"42\" y=\"80\" width=\"116\" height=\"22\" rx=\"3\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"1.5\"></rect>\n          <path d=\"M50 88v2a1.4 1.4 0 002.8 0v-3a2 2 0 00-4 0v3\" stroke=\"#6780A9\" stroke-width=\"0.9\" fill=\"none\" stroke-linecap=\"round\"></path>\n          <text x=\"62\" y=\"94\" fill=\"#005CE5\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">ID_proof.jpg</text>\n          <path d=\"M148 88l3 3 3-3\" stroke=\"#6780A9\" stroke-width=\"1\" fill=\"none\" stroke-linecap=\"round\"></path>\n          \n          <rect x=\"42\" y=\"112\" width=\"116\" height=\"14\" rx=\"7\" fill=\"#005CE5\"></rect>\n          <text x=\"100\" y=\"122\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Submit</text>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"uf-demo-preview\"><svg width=\"304\" height=\"98\" viewBox=\"0 0 304 98\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1\" y=\"1\" width=\"302\" height=\"70\" rx=\"6\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"2\"></rect><path d=\"M22 34 v6 a4 4 0 008 0 v-8 a6 6 0 00-12 0 v8\" stroke=\"#6780A9\" stroke-width=\"1.4\" fill=\"none\" stroke-linecap=\"round\"></path><text x=\"38\" y=\"42\" fill=\"#005CE5\" font-size=\"18\" font-weight=\"600\" font-family=\"'HeyMeow Rnd', system-ui\">Attach file / photo</text><text x=\"2\" y=\"88\" fill=\"#6780A9\" font-size=\"12\" font-weight=\"600\" font-family=\"'BarkAda', system-ui\">Accepted format: JPEG, PNG, or PDF, Up to 3 MB</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">state</span><select class=\"demo-panel-select\" id=\"uf-demo-state\" onchange=\"updateUploadFileDemo()\"><option value=\"default\" selected=\"\">Default</option><option value=\"uploading\">Uploading</option><option value=\"uploaded\">Uploaded</option><option value=\"error\">Upload error</option><option value=\"thumbnail\">Uploaded with thumbnail</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasLabel</span><select class=\"demo-panel-select\" id=\"uf-demo-label\" onchange=\"updateUploadFileDemo()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"uf-demo-preview\"><svg width=\"304\" height=\"98\" viewBox=\"0 0 304 98\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"1\" y=\"1\" width=\"302\" height=\"70\" rx=\"6\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"2\"></rect><path d=\"M22 34 v6 a4 4 0 008 0 v-8 a6 6 0 00-12 0 v8\" stroke=\"#6780A9\" stroke-width=\"1.4\" fill=\"none\" stroke-linecap=\"round\"></path><text x=\"38\" y=\"42\" fill=\"#005CE5\" font-size=\"18\" font-weight=\"600\" font-family=\"'Proxima Soft', system-ui\">Attach file / photo</text><text x=\"2\" y=\"88\" fill=\"#6780A9\" font-size=\"12\" font-weight=\"600\" font-family=\"'BarkAda', system-ui\">Accepted format: JPEG, PNG, or PDF, Up to 3 MB</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">state</span><select class=\"demo-panel-select\" id=\"uf-demo-state\" onchange=\"updateUploadFileDemo()\"><option value=\"default\" selected=\"\">Default</option><option value=\"uploading\">Uploading</option><option value=\"uploaded\">Uploaded</option><option value=\"error\">Upload error</option><option value=\"thumbnail\">Uploaded with thumbnail</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasLabel</span><select class=\"demo-panel-select\" id=\"uf-demo-label\" onchange=\"updateUploadFileDemo()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -191,9 +239,12 @@ export const uploadFile: ComponentData = {
     "specCards": [
       {
         "cardKey": "default-—-empty-state",
+        "demoKey": "default",
+        "demoControls": uploadFileDemoControls,
         "title": "Default — empty state",
         "node": "18482:35065",
         "description": "Empty state with paperclip + \"Attach file / photo\" placeholder text. 2px border, white bg. Subtext below lists accepted formats.",
+        "previewHtml": "<div id=\"uf-preview-default\"></div>",
         "sections": [
           {
             "label": "Properties",
@@ -202,12 +253,31 @@ export const uploadFile: ComponentData = {
               {
                 "key": "state",
                 "value": "Default",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
                 "key": "Variant",
                 "value": "Default — empty state",
                 "mono": false
+              },
+              {
+                "key": "hasLabel",
+                "value": "no",
+                "prop": "hasLabel",
+                "mono": false
+              },
+              {
+                "key": "hasThumbnail",
+                "value": "false",
+                "prop": "hasThumbnail",
+                "mono": true
+              },
+              {
+                "key": "disabled",
+                "value": "false",
+                "prop": "disabled",
+                "mono": true
               }
             ]
           },
@@ -269,9 +339,12 @@ export const uploadFile: ComponentData = {
       },
       {
         "cardKey": "uploading-—-lottie-progress",
+        "demoKey": "uploading",
+        "demoControls": uploadFileDemoControls,
         "title": "Uploading — Lottie progress",
         "node": "18482:35084",
         "description": "Shows file name + 5px-tall Lottie progress bar + percentage. Height grows to 91px to accommodate the progress row.",
+        "previewHtml": "<div id=\"uf-preview-uploading\"></div>",
         "sections": [
           {
             "label": "Properties",
@@ -279,13 +352,32 @@ export const uploadFile: ComponentData = {
             "rows": [
               {
                 "key": "state",
-                "value": "Default",
-                "mono": false
+                "value": "Uploading",
+                "mono": false,
+                "prop": "state"
               },
               {
                 "key": "Variant",
                 "value": "Uploading — Lottie progress",
                 "mono": false
+              },
+              {
+                "key": "hasLabel",
+                "value": "no",
+                "prop": "hasLabel",
+                "mono": false
+              },
+              {
+                "key": "hasThumbnail",
+                "value": "false",
+                "prop": "hasThumbnail",
+                "mono": true
+              },
+              {
+                "key": "disabled",
+                "value": "false",
+                "prop": "disabled",
+                "mono": true
               }
             ]
           },
@@ -347,9 +439,12 @@ export const uploadFile: ComponentData = {
       },
       {
         "cardKey": "uploaded-—-file-name-+-trash",
+        "demoKey": "uploaded",
+        "demoControls": uploadFileDemoControls,
         "title": "Uploaded — file name + trash",
         "node": "18482:35119",
         "description": "File name (<code>GCash_File.png</code>) + trailing trash icon for removal.",
+        "previewHtml": "<div id=\"uf-preview-uploaded\"></div>",
         "sections": [
           {
             "label": "Properties",
@@ -357,13 +452,32 @@ export const uploadFile: ComponentData = {
             "rows": [
               {
                 "key": "state",
-                "value": "Default",
-                "mono": false
+                "value": "Uploaded",
+                "mono": false,
+                "prop": "state"
               },
               {
                 "key": "Variant",
                 "value": "Uploaded — file name + trash",
                 "mono": false
+              },
+              {
+                "key": "hasLabel",
+                "value": "no",
+                "prop": "hasLabel",
+                "mono": false
+              },
+              {
+                "key": "hasThumbnail",
+                "value": "false",
+                "prop": "hasThumbnail",
+                "mono": true
+              },
+              {
+                "key": "disabled",
+                "value": "false",
+                "prop": "disabled",
+                "mono": true
               }
             ]
           },
@@ -425,9 +539,12 @@ export const uploadFile: ComponentData = {
       },
       {
         "cardKey": "uploaded-with-thumbnail-—-preview-+-name",
+        "demoKey": "thumbnail",
+        "demoControls": uploadFileDemoControls,
         "title": "Uploaded with thumbnail — preview + name",
         "node": "18482:35163",
         "description": "52×52 thumbnail preview + truncated file name (<code>New_GCash_Fi….jpeg</code>) + trash. Recommended to split into <code>state=uploaded</code> + <code>hasThumbnail: true</code>.",
+        "previewHtml": "<div id=\"uf-preview-thumbnail\"></div>",
         "sections": [
           {
             "label": "Properties",
@@ -435,13 +552,32 @@ export const uploadFile: ComponentData = {
             "rows": [
               {
                 "key": "state",
-                "value": "Default",
-                "mono": false
+                "value": "Uploaded with thumbnail",
+                "mono": false,
+                "prop": "state"
               },
               {
                 "key": "Variant",
                 "value": "Uploaded with thumbnail — preview + name",
                 "mono": false
+              },
+              {
+                "key": "hasLabel",
+                "value": "no",
+                "prop": "hasLabel",
+                "mono": false
+              },
+              {
+                "key": "hasThumbnail",
+                "value": "true",
+                "prop": "hasThumbnail",
+                "mono": true
+              },
+              {
+                "key": "disabled",
+                "value": "false",
+                "prop": "disabled",
+                "mono": true
               }
             ]
           },
@@ -503,9 +639,12 @@ export const uploadFile: ComponentData = {
       },
       {
         "cardKey": "upload-error-—-red-border-+-error-subtext",
+        "demoKey": "error",
+        "demoControls": uploadFileDemoControls,
         "title": "Upload error — red border + error subtext",
         "node": "18482:35142",
         "description": "Red 2px border + red error subtext (\"Maximum file size: 20MB\").",
+        "previewHtml": "<div id=\"uf-preview-error\"></div>",
         "sections": [
           {
             "label": "Properties",
@@ -514,12 +653,31 @@ export const uploadFile: ComponentData = {
               {
                 "key": "state",
                 "value": "Error",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
                 "key": "Variant",
                 "value": "Upload error — red border + error subtext",
                 "mono": false
+              },
+              {
+                "key": "hasLabel",
+                "value": "no",
+                "prop": "hasLabel",
+                "mono": false
+              },
+              {
+                "key": "hasThumbnail",
+                "value": "false",
+                "prop": "hasThumbnail",
+                "mono": true
+              },
+              {
+                "key": "disabled",
+                "value": "false",
+                "prop": "disabled",
+                "mono": true
               }
             ]
           },
@@ -833,14 +991,14 @@ export const uploadFile: ComponentData = {
             "role": "Label",
             "token": "Primary/Label/Light/Small",
             "values": [
-              "HeyMeow Rnd Semibold · 14 / 14 · +0.25"
+              "Proxima Soft Semibold · 14 / 14 · +0.25"
             ]
           },
           {
             "role": "File name / placeholder",
             "token": "Primary/Label/Light/Large",
             "values": [
-              "HeyMeow Rnd Semibold · 18 / 18 · +0.25"
+              "Proxima Soft Semibold · 18 / 18 · +0.25"
             ]
           },
           {

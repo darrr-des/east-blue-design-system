@@ -64,3 +64,66 @@ if (document.readyState === 'loading') {
 } else {
   _cfInit();
 }
+
+/* ── Canonical wiring (matches avatar.js shape) ────────────────────── */
+/* Per-card state — keyed by the data file's `demoKey` values
+   (`cf-default`, `cf-active`). Each card tracks its own `active` flag. */
+var _specCards = {
+  'cf-default': { active: 'no' },
+  'cf-active':  { active: 'yes' }
+};
+window._specCards = _specCards;
+
+function buildSwiftSnippet(cardStyle, card) {
+  var isActive = card && card.active === 'yes';
+  var lines = [];
+  lines.push('EBChatField(value: $message, onSend: { sendMessage() })');
+  if (isActive) lines.push('    .focused($isFocused)');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(cardStyle, card) {
+  var isActive = card && card.active === 'yes';
+  var lines = [];
+  lines.push('EBChatField(');
+  lines.push('    value = message,');
+  lines.push('    onValueChange = { message = it },');
+  if (isActive) lines.push('    isFocused = true,');
+  lines.push('    onSend = { sendMessage() }');
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(cardStyle, lang, card) {
+  return lang === 'swift'
+    ? buildSwiftSnippet(cardStyle, card)
+    : buildComposeSnippet(cardStyle, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update SVG preview — preview elements use ids `cf-default-preview`
+     and `cf-active-preview` (set by `_cfInitSpecCards`).  When `active`
+     changes we re-render the SVG with the new state. */
+  var previewEl = document.getElementById(cardStyle + '-preview');
+  if (previewEl) previewEl.innerHTML = _cfBuildSvg(card.active);
+
+  /* Property-text cells — `[data-sp="${cardStyle}-${prop}"]`. */
+  var spActive = document.querySelector('[data-sp="' + cardStyle + '-active"]');
+  if (spActive) spActive.textContent = card.active;
+
+  /* DEV code — `[data-code-content="${cardStyle}"]`. */
+  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
+  if (codeEl) {
+    var lang = codeEl.getAttribute('data-lang') || 'swift';
+    var code = getSnippet(cardStyle, lang, card);
+    codeEl.setAttribute('data-final', code);
+    codeEl.textContent = code;
+    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+  }
+}
+window.updateSpecCard = updateSpecCard;

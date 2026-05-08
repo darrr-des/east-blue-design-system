@@ -60,31 +60,6 @@ var _specCards = {
 };
 window._specCards = _specCards;
 
-function _litdColorRowsFor(card) {
-  if (card.state === 'Loading') {
-    return [
-      ['Bg',       '#FFFFFF', 'action-list/color/default/bg'],
-      ['Skeleton', '#EEF2F9', 'bg/color-bg-strong']
-    ];
-  }
-  if (card.state === 'Disabled') {
-    return [
-      ['Bg',          '#FFFFFF', 'action-list/color/disabled/bg'],
-      ['Label',       '#C2CFE5', 'action-list/color/disabled/label'],
-      ['Description', '#C2CFE5', 'action-list/color/disabled/description'],
-      ['Link',        '#9BC5FD', 'action-list/color/disabled/label-link'],
-      ['Chevron',     '#9BC5FD', 'action-list/color/disabled/chevron']
-    ];
-  }
-  return [
-    ['Bg',          '#FFFFFF', 'action-list/color/default/bg'],
-    ['Label',       '#0A2757', 'action-list/color/default/label'],
-    ['Description', '#6780A9', 'action-list/color/default/description'],
-    ['Link',        '#005CE5', 'action-list/color/default/label-link'],
-    ['Chevron',     '#005CE5', 'action-list/color/default/chevron']
-  ];
-}
-
 /* ── Code snippet builders ──────────────────────────────────────── */
 function buildSwiftSnippet(type, card) {
   var stateMap = { Default: '.default', Disabled: '.disabled', Loading: '.loading' };
@@ -143,21 +118,9 @@ function updateSpecCard(cardStyle, prop, value) {
   var spState = document.querySelector('[data-sp="' + cardStyle + '-state"]');
   if (spState) spState.textContent = _litdTitleCase(card.state);
 
-  /* Update Colors section */
-  var colorsEl = document.getElementById('spec-' + cardStyle + '-colors');
-  if (colorsEl) {
-    var rows = _litdColorRowsFor(card);
-    var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
-    rows.forEach(function(r) {
-      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
-      var tokenHtml = r[2] ? '<span class="spec-token-name">' + r[2] + '</span>' : '';
-      h += '<div class="spec-prop has-token"><span class="spec-prop-key">' + r[0] + '</span>'
-         + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span>'
-         + tokenHtml + '</div>';
-    });
-    h += '</div>';
-    colorsEl.innerHTML = h;
-  }
+  /* Colors section is server-rendered from action-list-description.ts.
+     Each card represents a fixed state, so cross-card flipping is redundant —
+     the user navigates to the matching card instead. */
 
   /* Update DEV code — always */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');

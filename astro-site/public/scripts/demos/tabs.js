@@ -18,7 +18,7 @@ function _tabsBuildSvg(count, active) {
     // Icon circle
     s += '<circle cx="' + (x + tabW / 2) + '" cy="28" r="16" fill="#C2C6CF"/>';
     // Label
-    s += '<text x="' + (x + tabW / 2) + '" y="60" text-anchor="middle" fill="' + (isActive ? '#005CE5' : '#6780A9') + '" font-size="11" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui">Label</text>';
+    s += '<text x="' + (x + tabW / 2) + '" y="60" text-anchor="middle" fill="' + (isActive ? '#005CE5' : '#6780A9') + '" font-size="11" font-weight="700" font-family="\'Proxima Soft\', system-ui">Label</text>';
     // Bottom border
     s += '<rect x="' + x + '" y="' + (h - 2) + '" width="' + tabW + '" height="2" fill="' + (isActive ? '#005CE5' : '#E5EBF4') + '"/>';
   }

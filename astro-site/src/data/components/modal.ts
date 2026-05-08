@@ -1,4 +1,37 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/modal.js`.
+const modalDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Type',
+        prop: 'type',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'default' },
+          { value: 'with-icon', label: 'with icon' },
+          { value: 'transaction-v1', label: 'transaction_v1' },
+          { value: 'transaction-v2', label: 'transaction_v2' },
+        ],
+      },
+      {
+        label: 'CTA',
+        prop: 'cta',
+        defaultValue: '1',
+        options: [
+          { value: '1', label: '1' },
+          { value: '1-vertical', label: '1 - vertical' },
+          { value: '2-horizontal', label: '2 - horizontal' },
+          { value: '2-vertical', label: '2 - vertical' },
+        ],
+      },
+    ],
+  },
+];
 
 export const modal: ComponentData = {
   "meta": {
@@ -25,7 +58,7 @@ export const modal: ComponentData = {
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"modal-demo-preview\"><div style=\"position:relative;width:280px;height:360px;margin:0 auto;background:#F6F9FD;border-radius:18px;overflow:hidden;border:1px solid #E5EBF4;\"><div style=\"padding:14px;\"><div style=\"width:60%;height:8px;background:#D9E2EC;border-radius:3px;margin-bottom:10px;\"></div><div style=\"width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;\"></div><div style=\"width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;\"></div><div style=\"width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;\"></div></div><div style=\"position:absolute;inset:0;background:#020E22;opacity:0.56;\"></div><div style=\"position:absolute;inset:0;display:flex;align-items:center;justify-content:center;\"><div style=\"background:#fff;border-radius:6px;padding:20px 18px;box-shadow:0 0 4px rgba(232,238,242,0.79);width:220px;text-align:center;\"><div style=\"font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:14px;color:#0A2757;margin-bottom:8px;\">Put the title here</div><div style=\"font-size:11px;color:#6780A9;line-height:1.45;\">Add description here.<br>Add description here.</div><div style=\"height:28px;background:#005CE5;border-radius:99px;margin-top:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;\">Label</div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select id=\"modal-ctrl-type\" class=\"demo-panel-select\" onchange=\"_modalUpdate()\"><option value=\"default\">default</option><option value=\"with-icon\">with icon</option><option value=\"transaction-v1\">transaction_v1</option><option value=\"transaction-v2\">transaction_v2</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">cta</span><select id=\"modal-ctrl-cta\" class=\"demo-panel-select\" onchange=\"_modalUpdate()\"><option value=\"1\">1</option><option value=\"1-vertical\">1 - vertical</option><option value=\"2-horizontal\">2 - horizontal</option><option value=\"2-vertical\">2 - vertical</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">scrim</span><select id=\"modal-ctrl-scrim\" class=\"demo-panel-select\" onchange=\"_modalUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"modal-demo-preview\"><div style=\"position:relative;width:280px;height:360px;margin:0 auto;background:#F6F9FD;border-radius:18px;overflow:hidden;border:1px solid #E5EBF4;\"><div style=\"padding:14px;\"><div style=\"width:60%;height:8px;background:#D9E2EC;border-radius:3px;margin-bottom:10px;\"></div><div style=\"width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;\"></div><div style=\"width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;\"></div><div style=\"width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;\"></div></div><div style=\"position:absolute;inset:0;background:#020E22;opacity:0.56;\"></div><div style=\"position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;\"><div style=\"background:#fff;border-radius:6px;padding:20px 18px;box-shadow:0 0 4px rgba(232,238,242,0.79);width:220px;text-align:center;\"><div style=\"font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:14px;color:#0A2757;margin-bottom:8px;\">Put the title here</div><div style=\"font-family:'BarkAda', system-ui, sans-serif;font-weight:500;font-size:11px;color:#6780A9;line-height:1.45;\">Add description here.<br>Add description here.</div><div style=\"height:28px;background:#005CE5;border-radius:99px;margin-top:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;\">Label</div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select id=\"modal-ctrl-type\" class=\"demo-panel-select\" onchange=\"_modalUpdate()\"><option value=\"default\">default</option><option value=\"with-icon\">with icon</option><option value=\"transaction-v1\">transaction_v1</option><option value=\"transaction-v2\">transaction_v2</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">cta</span><select id=\"modal-ctrl-cta\" class=\"demo-panel-select\" onchange=\"_modalUpdate()\"><option value=\"1\">1</option><option value=\"1-vertical\">1 - vertical</option><option value=\"2-horizontal\">2 - horizontal</option><option value=\"2-vertical\">2 - vertical</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">scrim</span><select id=\"modal-ctrl-scrim\" class=\"demo-panel-select\" onchange=\"_modalUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -219,10 +252,12 @@ export const modal: ComponentData = {
     "specCards": [
       {
         "cardKey": "default",
+        "demoKey": "default",
+        "demoControls": modalDemoControls,
         "title": "Default",
         "node": "18507:71792",
         "description": "The general-purpose dialog. Title + description + single CTA on a white card. Use for confirmations, errors, and neutral informational prompts.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"modal-spec-preview-default\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"modal-spec-preview-default\"><div style=\"background:#fff;border-radius:6px;padding:20px 18px;box-shadow:0 0 4px rgba(232,238,242,0.79);width:220px;text-align:center;\"><div style=\"font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:14px;color:#0A2757;margin-bottom:8px;\">Put the title here</div><div style=\"font-family:'BarkAda', system-ui, sans-serif;font-weight:500;font-size:11px;color:#6780A9;line-height:1.45;\">Add description here.<br>Add description here.</div><div style=\"height:28px;background:#005CE5;border-radius:99px;margin-top:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;\">Label</div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -236,11 +271,13 @@ export const modal: ComponentData = {
               {
                 "key": "type",
                 "value": "default",
+                "prop": "type",
                 "mono": true
               },
               {
                 "key": "cta",
                 "value": "1",
+                "prop": "cta",
                 "mono": true
               },
               {
@@ -252,11 +289,6 @@ export const modal: ComponentData = {
                 "key": "Description slot",
                 "value": "Text · Secondary/Default/Base",
                 "mono": false
-              },
-              {
-                "key": "CTA slot",
-                "value": "Button instance(s)",
-                "mono": false
               }
             ]
           },
@@ -264,64 +296,15 @@ export const modal: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "modal-popup/color/bg" },
-              {
-                "key": "Subtle surface",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Subtle token",
-                "value": "modal-popup/color/bg-subtle",
-                "mono": true
-              },
-              { "key": "Border", "value": "#E5EBF4", "token": "modal-popup/color/border" },
-              { "key": "Title", "value": "#0A2757", "token": "modal-popup/color/label" },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Desc token",
-                "value": "modal-popup/color/label-primary",
-                "mono": true
-              },
-              {
-                "key": "Accent icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "modal-popup/color/icon-copy",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA",
-                "value": "#005CE5 (border + label)",
-                "mono": true
-              },
-              {
-                "key": "Secondary token",
-                "value": "button/secondary/brand/enabled/border",
-                "mono": true
-              }
+              { "key": "Surface",           "value": "#FFFFFF", "token": "modal-popup/color/bg" },
+              { "key": "Subtle surface",    "value": "#F6F9FD", "token": "modal-popup/color/bg-subtle" },
+              { "key": "Border",            "value": "#E5EBF4", "token": "modal-popup/color/border" },
+              { "key": "Title",             "value": "#0A2757", "token": "modal-popup/color/label" },
+              { "key": "Description",       "value": "#6780A9", "token": "modal-popup/color/label-primary" },
+              { "key": "Accent icon",       "value": "#005CE5", "token": "modal-popup/color/icon-copy" },
+              { "key": "Primary CTA bg",    "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
+              { "key": "Primary CTA label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
+              { "key": "Secondary CTA",     "value": "#005CE5", "token": "button/secondary/brand/enabled/border" }
             ]
           },
           {
@@ -334,19 +317,15 @@ export const modal: ComponentData = {
                 "mono": true
               },
               {
-                "key": "Height (cta=1)",
-                "value": "212",
-                "mono": true
-              },
-              {
-                "key": "Height (cta=2-h)",
-                "value": "212",
-                "mono": true
-              },
-              {
-                "key": "Height (cta=2-v)",
-                "value": "270",
-                "mono": true
+                key: 'Height',
+                value: '212',
+                mono: true,
+                variants: {
+                  'cta:1': { value: '212' },
+                  'cta:1-vertical': { value: '212' },
+                  'cta:2-horizontal': { value: '212' },
+                  'cta:2-vertical': { value: '270' },
+                },
               },
               {
                 "key": "Padding",
@@ -417,10 +396,12 @@ export const modal: ComponentData = {
       },
       {
         "cardKey": "with-icon-node-18507:71773-/-18507:71783",
+        "demoKey": "icon",
+        "demoControls": modalDemoControls,
         "title": "With Icon node 18507:71773 / 18507:71783",
         "node": "18507:71773",
         "description": "Dialog that leads with a 92×92 icon to set tone — success, warning, or info. CTAs stack vertically (1 or 2).",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"modal-spec-preview-icon\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"modal-spec-preview-icon\"><div style=\"background:#fff;border-radius:6px;padding:20px 18px;box-shadow:0 0 4px rgba(232,238,242,0.79);width:220px;text-align:center;\"><div style=\"width:64px;height:64px;border-radius:50%;background:#C2C6CF;margin:0 auto 12px;\"></div><div style=\"font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:14px;color:#0A2757;margin-bottom:8px;\">Put the title here</div><div style=\"font-family:'BarkAda', system-ui, sans-serif;font-weight:500;font-size:11px;color:#6780A9;line-height:1.45;\">Add description here.<br>Add description here.</div><div style=\"display:flex;flex-direction:column;gap:6px;margin-top:14px;\"><div style=\"height:28px;background:#005CE5;border-radius:99px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;\">Label</div><div style=\"height:28px;border:2px solid #005CE5;border-radius:99px;display:flex;align-items:center;justify-content:center;color:#005CE5;font-size:11px;font-weight:700;\">Label</div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -429,11 +410,13 @@ export const modal: ComponentData = {
               {
                 "key": "type",
                 "value": "with icon",
+                "prop": "type",
                 "mono": true
               },
               {
                 "key": "cta",
                 "value": "1 - vertical",
+                "prop": "cta",
                 "mono": true
               },
               {
@@ -457,64 +440,15 @@ export const modal: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "modal-popup/color/bg" },
-              {
-                "key": "Subtle surface",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Subtle token",
-                "value": "modal-popup/color/bg-subtle",
-                "mono": true
-              },
-              { "key": "Border", "value": "#E5EBF4", "token": "modal-popup/color/border" },
-              { "key": "Title", "value": "#0A2757", "token": "modal-popup/color/label" },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Desc token",
-                "value": "modal-popup/color/label-primary",
-                "mono": true
-              },
-              {
-                "key": "Accent icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "modal-popup/color/icon-copy",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA",
-                "value": "#005CE5 (border + label)",
-                "mono": true
-              },
-              {
-                "key": "Secondary token",
-                "value": "button/secondary/brand/enabled/border",
-                "mono": true
-              }
+              { "key": "Surface",           "value": "#FFFFFF", "token": "modal-popup/color/bg" },
+              { "key": "Subtle surface",    "value": "#F6F9FD", "token": "modal-popup/color/bg-subtle" },
+              { "key": "Border",            "value": "#E5EBF4", "token": "modal-popup/color/border" },
+              { "key": "Title",             "value": "#0A2757", "token": "modal-popup/color/label" },
+              { "key": "Description",       "value": "#6780A9", "token": "modal-popup/color/label-primary" },
+              { "key": "Accent icon",       "value": "#005CE5", "token": "modal-popup/color/icon-copy" },
+              { "key": "Primary CTA bg",    "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
+              { "key": "Primary CTA label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
+              { "key": "Secondary CTA",     "value": "#005CE5", "token": "button/secondary/brand/enabled/border" }
             ]
           },
           {
@@ -600,10 +534,12 @@ export const modal: ComponentData = {
       },
       {
         "cardKey": "transaction-(v1-·-v2)-node-18507:71706-/-18507:71732",
+        "demoKey": "txn",
+        "demoControls": modalDemoControls,
         "title": "Transaction (v1 · v2) node 18507:71706 / 18507:71732",
         "node": "18507:71706",
         "description": "Receipt-style dialog used for order, transfer, and subscription summaries. <code>v1</code> stacks label + value per row; <code>v2</code> is horizontal. Both include a reference-number row with copy-to-clipboard. <strong>Recommended for extraction into its own <code>TransactionReceipt</code> component.</strong>",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"modal-spec-preview-txn\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"modal-spec-preview-txn\"><div style=\"background:#F6F9FD;border-radius:6px;box-shadow:0 0 4px rgba(232,238,242,0.79);width:220px;overflow:hidden;\"><div style=\"background:#fff;padding:14px;border-bottom:1px solid #E5EBF4;\"><div style=\"font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:13px;color:#0A2757;margin-bottom:10px;\">Put the title here</div><div style=\"font-size:10px;color:#0A2757;font-weight:600;line-height:1.45;margin-bottom:6px;\">First line of text goes here<br>Second line of text goes here</div><div style=\"display:flex;justify-content:space-between;padding:4px 0;font-size:10px;\"><span style=\"color:#6780A9;\">Label</span><span style=\"color:#0A2757;font-weight:600;\">Put content here</span></div><div style=\"display:flex;justify-content:space-between;padding:4px 0;font-size:10px;\"><span style=\"color:#6780A9;\">Label</span><span style=\"color:#0A2757;font-weight:600;\">Put content here</span></div><div style=\"display:flex;justify-content:space-between;padding:4px 0;font-size:10px;\"><span style=\"color:#6780A9;\">Label</span><span style=\"color:#0A2757;font-weight:600;\">Put content here</span></div></div><div style=\"background:#F6F9FD;padding:8px 14px;display:flex;justify-content:space-between;align-items:center;font-size:10px;\"><span style=\"color:#6780A9;\">Reference Number</span><span style=\"display:flex;align-items:center;gap:6px;\"><span style=\"color:#0A2757;font-weight:600;\">165A25912345</span><svg width=\"10\" height=\"10\" viewBox=\"0 0 24 24\" fill=\"none\"><rect x=\"8\" y=\"8\" width=\"12\" height=\"12\" rx=\"2\" stroke=\"#005CE5\" stroke-width=\"2\"></rect><path d=\"M4 16V5a1 1 0 0 1 1-1h11\" stroke=\"#005CE5\" stroke-width=\"2\"></path></svg></span></div><div style=\"background:#F6F9FD;padding:6px 14px 14px;\"><div style=\"height:26px;background:#005CE5;border-radius:99px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;\">Label</div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -612,11 +548,13 @@ export const modal: ComponentData = {
               {
                 "key": "type",
                 "value": "transaction_v1",
+                "prop": "type",
                 "mono": true
               },
               {
                 "key": "cta",
                 "value": "1",
+                "prop": "cta",
                 "mono": true
               },
               {
@@ -640,64 +578,15 @@ export const modal: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "modal-popup/color/bg" },
-              {
-                "key": "Subtle surface",
-                "value": "#F6F9FD",
-                "mono": true
-              },
-              {
-                "key": "Subtle token",
-                "value": "modal-popup/color/bg-subtle",
-                "mono": true
-              },
-              { "key": "Border", "value": "#E5EBF4", "token": "modal-popup/color/border" },
-              { "key": "Title", "value": "#0A2757", "token": "modal-popup/color/label" },
-              {
-                "key": "Description",
-                "value": "#6780A9",
-                "mono": true
-              },
-              {
-                "key": "Desc token",
-                "value": "modal-popup/color/label-primary",
-                "mono": true
-              },
-              {
-                "key": "Accent icon",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "Icon token",
-                "value": "modal-popup/color/icon-copy",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA bg",
-                "value": "#005CE5",
-                "mono": true
-              },
-              {
-                "key": "CTA bg token",
-                "value": "button/primary/brand/enabled/bg",
-                "mono": true
-              },
-              {
-                "key": "Primary CTA label",
-                "value": "#FFFFFF",
-                "mono": true
-              },
-              {
-                "key": "Secondary CTA",
-                "value": "#005CE5 (border + label)",
-                "mono": true
-              },
-              {
-                "key": "Secondary token",
-                "value": "button/secondary/brand/enabled/border",
-                "mono": true
-              }
+              { "key": "Surface",           "value": "#FFFFFF", "token": "modal-popup/color/bg" },
+              { "key": "Subtle surface",    "value": "#F6F9FD", "token": "modal-popup/color/bg-subtle" },
+              { "key": "Border",            "value": "#E5EBF4", "token": "modal-popup/color/border" },
+              { "key": "Title",             "value": "#0A2757", "token": "modal-popup/color/label" },
+              { "key": "Description",       "value": "#6780A9", "token": "modal-popup/color/label-primary" },
+              { "key": "Accent icon",       "value": "#005CE5", "token": "modal-popup/color/icon-copy" },
+              { "key": "Primary CTA bg",    "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
+              { "key": "Primary CTA label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
+              { "key": "Secondary CTA",     "value": "#005CE5", "token": "button/secondary/brand/enabled/border" }
             ]
           },
           {
@@ -792,7 +681,43 @@ export const modal: ComponentData = {
         "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBModalStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Transaction</span><span class=\"syn-punc\">,</span>\n    rows <span class=\"syn-eq\">=</span> transactionDetails<span class=\"syn-punc\">,</span>\n    referenceNumber <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"165A25912345\"</span><span class=\"syn-punc\">,</span>\n    primaryAction <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBModalAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — Default (white card · single CTA)
+      buildStatelessColorsTable({
+        title: 'Default — Colors',
+        description: 'White surface card with title, description, and primary CTA over a dimmed scrim.',
+        rows: [
+          { role: 'Surface bg',     token: 'main/modal/surface',          value: '#FFFFFF' },
+          { role: 'Title label',    token: 'text/primary/headline',       value: '#0A2757' },
+          { role: 'Description',    token: 'text/primary/body/secondary', value: '#6780A9' },
+          { role: 'Scrim (overlay)', token: 'main/overlay/scrim',         value: '#020E22 @ 56%' },
+        ],
+      }),
+      // Card 2 — With Icon
+      buildStatelessColorsTable({
+        title: 'With Icon — Colors',
+        description: 'White surface with a leading status icon. Icon color inherits from the placed Icon instance (no own token).',
+        rows: [
+          { role: 'Surface bg',     token: 'main/modal/surface',          value: '#FFFFFF' },
+          { role: 'Title label',    token: 'text/primary/headline',       value: '#0A2757' },
+          { role: 'Description',    token: 'text/primary/body/secondary', value: '#6780A9' },
+          { role: 'Scrim (overlay)', token: 'main/overlay/scrim',         value: '#020E22 @ 56%' },
+        ],
+      }),
+      // Card 3 — Transaction (v1 · v2)
+      buildStatelessColorsTable({
+        title: 'Transaction — Colors',
+        description: 'Two-zone surface: a white content card sits on top of a light-blue receipt-offset shelf that holds the reference number row.',
+        rows: [
+          { role: 'Outer surface bg',    token: 'main/modal/transaction/shelf',    value: '#F6F9FD' },
+          { role: 'Inner content bg',    token: 'main/modal/transaction/content',  value: '#FFFFFF' },
+          { role: 'Inner content border', token: 'main/modal/transaction/border',  value: '#E5EBF4' },
+          { role: 'Title label',         token: 'text/primary/headline',           value: '#0A2757' },
+          { role: 'Description',         token: 'text/primary/body/secondary',     value: '#6780A9' },
+          { role: 'Scrim (overlay)',     token: 'main/overlay/scrim',              value: '#020E22 @ 56%' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

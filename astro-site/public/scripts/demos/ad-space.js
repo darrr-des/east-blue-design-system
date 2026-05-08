@@ -19,16 +19,6 @@ var _adsSizes = {
   'hero-md':     { w: 336, h: 174, family: 'hero',   aspect: '336×174', captionAllowed: true  }
 };
 
-var _adsLayoutMap = {
-  'banner-sm':   { aspect: '32:5',     radius: 'radius/radius-1 (4px)',  pad: '0 (ad fills surface)' },
-  'banner-lg':   { aspect: '16:5',     radius: 'radius/radius-1 (4px)',  pad: '0 (ad fills surface)' },
-  'banner-mrec': { aspect: '6:5',      radius: 'radius/radius-1 (4px)',  pad: '0 (ad fills surface)' },
-  'promo-sm':    { aspect: '4:3',      radius: 'radius/radius-2 (8px)',  pad: '8 horizontal, 6 vertical' },
-  'promo-md':    { aspect: '3:2',      radius: 'radius/radius-2 (8px)',  pad: '8 horizontal, 6 vertical' },
-  'hero-sm':     { aspect: '17:10',    radius: 'radius/radius-3 (12px)', pad: '12 horizontal, 8 vertical' },
-  'hero-md':     { aspect: '15:8',     radius: 'radius/radius-3 (12px)', pad: '12 horizontal, 8 vertical' }
-};
-
 function _adsEscape(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
@@ -120,29 +110,6 @@ function _adsCaptionFor(family) {
   if (family === 'promo') return 'Earn up to 5% on savings';
   if (family === 'hero')  return 'Weekend deals are here';
   return '';
-}
-
-function _adsColorRowsFor(card, family) {
-  if (family === 'banner') {
-    return [
-      ['Surface',          '#FFFFFF', 'ad-space/color/surface'],
-      ['Loading skeleton', '#EEF2F9', 'ad-space/color/loading-skeleton'],
-      ['"Ad" marker',      '#6780A9', 'text/color-text-subtle']
-    ];
-  }
-  if (family === 'promo') {
-    return [
-      ['Surface',           '#FFFFFF', 'ad-space/color/surface'],
-      ['Caption',           '#2340A9', 'ad-space/color/caption'],
-      ['Image placeholder', '#E6E1EF', 'ad-space/color/loading-skeleton']
-    ];
-  }
-  return [
-    ['Surface',           '#FFFFFF', 'ad-space/color/surface'],
-    ['Caption (overlay)', '#FFFFFF', 'ad-space/color/caption-overlay'],
-    ['Caption scrim',     '#040506', 'overlay/scrim-bottom'],
-    ['Image placeholder', '#E6E1EF', 'ad-space/color/loading-skeleton']
-  ];
 }
 
 /* ── Code snippet builders ──────────────────────────────────────── */
@@ -246,35 +213,8 @@ function updateSpecCard(cardStyle, prop, value) {
   var spLoading = document.querySelector('[data-sp="' + cardStyle + '-loading"]');
   if (spLoading) spLoading.textContent = card.loading;
 
-  /* Update Colors section */
-  var colorsEl = document.getElementById('spec-' + cardStyle + '-colors');
-  if (colorsEl) {
-    var rows = _adsColorRowsFor(card, family);
-    var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
-    rows.forEach(function(r) {
-      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
-      var tokenHtml = r[2] ? '<span class="spec-token-name">' + r[2] + '</span>' : '';
-      h += '<div class="spec-prop has-token"><span class="spec-prop-key">' + r[0] + '</span>'
-         + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span>'
-         + tokenHtml + '</div>';
-    });
-    h += '</div>';
-    colorsEl.innerHTML = h;
-  }
-
-  /* Update Layout section */
-  var layoutEl = document.getElementById('spec-' + cardStyle + '-layout');
-  if (layoutEl) {
-    var L = _adsLayoutMap[card.size] || _adsLayoutMap['banner-sm'];
-    var sz = _adsSizes[card.size] || _adsSizes['banner-sm'];
-    var lh = '<div class="spec-detail-label">Layout</div><div class="spec-props">';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Dimensions</span><span class="spec-prop-val mono">' + sz.w + ' × ' + sz.h + '</span></div>';
-    if (family !== 'banner') lh += '<div class="spec-prop"><span class="spec-prop-key">Image aspect</span><span class="spec-prop-val mono">' + L.aspect + '</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Corner radius</span><span class="spec-prop-val mono">' + L.radius + '</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">' + (family === 'banner' ? 'Padding' : 'Caption padding') + '</span><span class="spec-prop-val mono">' + L.pad + '</span></div>';
-    lh += '</div>';
-    layoutEl.innerHTML = lh;
-  }
+  /* Colors + Layout sections are server-rendered from ad-space.ts;
+     Plan A's `_patchSpecCardRows` handles size-keyed Layout overrides. */
 
   /* Update DEV code — always */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');

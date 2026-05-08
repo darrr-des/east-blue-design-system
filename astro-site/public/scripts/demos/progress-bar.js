@@ -79,6 +79,78 @@ function _progressBarUpdate() {
   preview.innerHTML = _progressBarRender({progress: progress, state: state, width: 280});
 }
 
+/* ── Progress Bar Spec Cards (canonical) ─────────────────────────── */
+var _progressBarSpecCards = {
+  determinate: { state: 'determinate', progress: '60' }
+};
+var _specCards = _progressBarSpecCards;
+window._specCards = _specCards;
+
+function buildSwiftSnippet(type, card) {
+  return getSnippet(type, 'swift', card);
+}
+function buildComposeSnippet(type, card) {
+  return getSnippet(type, 'compose', card);
+}
+function getSnippet(type, lang, card) {
+  var pct = parseInt(card && card.progress ? card.progress : '60', 10);
+  if (isNaN(pct)) pct = 60;
+  var f = (pct / 100).toFixed(2);
+  var state = (card && card.state) || 'determinate';
+
+  if (lang === 'swift') {
+    if (state === 'indeterminate') return 'EBProgressBar()\n    .ebState(.indeterminate)';
+    if (state === 'success')       return 'EBProgressBar(value: ' + f + ')\n    .ebState(.success)';
+    if (state === 'error')         return 'EBProgressBar(value: ' + f + ')\n    .ebState(.error)';
+    return 'EBProgressBar(value: ' + f + ')';
+  }
+  if (state === 'indeterminate') return 'EBProgressBar(\n    state = EBProgressBarState.Indeterminate\n)';
+  if (state === 'success')       return 'EBProgressBar(\n    progress = ' + f + 'f,\n    state = EBProgressBarState.Success\n)';
+  if (state === 'error')         return 'EBProgressBar(\n    progress = ' + f + 'f,\n    state = EBProgressBarState.Error\n)';
+  return 'EBProgressBar(\n    progress = ' + f + 'f\n)';
+}
+window.getSnippet = getSnippet;
+
+function _progressBarRenderSpec(card) {
+  var raw = parseInt(card.progress, 10);
+  if (isNaN(raw)) raw = 60;
+  return _progressBarRender({progress: raw / 100, state: card.state || 'determinate', width: 280});
+}
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _progressBarSpecCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update the spec preview canvas */
+  var s1 = document.getElementById('progress-bar-spec-1');
+  if (s1) {
+    s1.innerHTML = '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-xs" style="padding:12px 0;">' +
+      _progressBarRenderSpec(card) +
+    '</div>';
+  }
+
+  /* Update Properties row text via [data-sp="<cardStyle>-<prop>"] */
+  var spVal = document.querySelector('[data-sp="' + cardStyle + '-' + prop + '"]');
+  if (spVal) {
+    var hexEl = spVal.querySelector('.spec-prop-hex');
+    var display = (prop === 'progress') ? value + '%' : value;
+    if (hexEl) hexEl.textContent = display;
+    else spVal.textContent = display;
+  }
+
+  /* Update DEV code via [data-code-content="<cardStyle>"]. Always run. */
+  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
+  if (codeEl) {
+    var lang = codeEl.getAttribute('data-lang') || 'swift';
+    var code = getSnippet(cardStyle, lang, card);
+    codeEl.setAttribute('data-final', code);
+    codeEl.textContent = code;
+    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+  }
+}
+window.updateSpecCard = updateSpecCard;
+
 function _progressBarInit() {
   var ctx = document.getElementById('progress-bar-context-preview');
   if (ctx) ctx.innerHTML = _progressBarContextMarkup();
@@ -87,13 +159,17 @@ function _progressBarInit() {
   var s1 = document.getElementById('progress-bar-spec-1');
   if (s1) {
     s1.innerHTML = '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-xs" style="padding:12px 0;">' +
-      _progressBarRender({progress: 0.00, width: 280}) +
-      _progressBarRender({progress: 0.30, width: 280}) +
-      _progressBarRender({progress: 0.60, width: 280}) +
-      _progressBarRender({progress: 1.00, width: 280}) +
+      _progressBarRenderSpec(_progressBarSpecCards.determinate) +
     '</div>';
   }
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _progressBarInit);
 else _progressBarInit();
+
+(function(){
+  function reinit(){
+    if (typeof _progressBarInit === 'function') _progressBarInit();
+  }
+  document.addEventListener('astro:page-load', reinit);
+})();

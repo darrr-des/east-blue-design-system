@@ -83,29 +83,8 @@ var _specCards = {
 };
 window._specCards = _specCards;
 
-/* ── Spec colors per state/isActive ───────────────────────────────── */
-function _toggleColorRows(card) {
-  var st = card.state.toLowerCase();
-  var on = card.isActive === 'Yes';
-  if (st === 'disabled') {
-    if (on) return [
-      ['Track',     '#9BC5FD', 'toggle/color/disabled/active/bg-track'],
-      ['Indicator', '#F6F9FD', 'toggle/color/disabled/inactive/bg-indicator']
-    ];
-    return [
-      ['Track',     '#EEF2F9', 'toggle/color/disabled/inactive/bg-track'],
-      ['Indicator', '#F6F9FD', 'toggle/color/disabled/inactive/bg-indicator']
-    ];
-  }
-  if (on) return [
-    ['Track',     '#005CE5', 'toggle/color/default/active/bg-track'],
-    ['Indicator', '#FFFFFF', 'toggle/color/default/active/bg-indicator']
-  ];
-  return [
-    ['Track',     '#C2CFE5', 'toggle/color/default/inactive/bg-track'],
-    ['Indicator', '#FFFFFF', 'toggle/color/default/inactive/bg-indicator']
-  ];
-}
+/* Spec Colors per state/isActive — moved into toggle.ts `variants`
+   on the Track and Indicator rows (Plan A). */
 
 /* ── Code snippet builders ────────────────────────────────────────── */
 function buildSwiftSnippet(type, card) {
@@ -159,21 +138,9 @@ function updateSpecCard(cardStyle, prop, value) {
   if (spState)    spState.textContent    = card.state;
   if (spIsActive) spIsActive.textContent = card.isActive;
 
-  /* Update colors section */
-  var colorsEl = document.getElementById('spec-' + cardStyle + '-colors');
-  if (colorsEl) {
-    var rows = _toggleColorRows(card);
-    var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
-    rows.forEach(function (r) {
-      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
-      h += '<div class="spec-prop has-token"><span class="spec-prop-key">' + r[0] + '</span>' +
-           '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span>' +
-           '<span class="spec-prop-hex">' + r[1] + '</span></span>' +
-           '<span class="spec-token-name">' + r[2] + '</span></div>';
-    });
-    h += '</div>';
-    colorsEl.innerHTML = h;
-  }
+  /* Colors section is server-rendered from toggle.ts; Plan A's
+     `_patchSpecCardRows` handles state×isActive overrides. Demo no
+     longer rebuilds it. */
 
   /* Update DEV code */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');

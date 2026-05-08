@@ -3,7 +3,7 @@
  * Re-extract via: node astro-site/scripts/extract-demos.mjs table-transaction
  */
 /* ── Table - Transaction JS ─────────────────────────────────────── */
-var _tableTxnDemo = { type: 'header', cols: 3, icon: 'no' };
+var _tableTxnDemo = { type: 'header', cols: '3', icon: 'no' };
 
 function _tableTxnBuildRow(type, cols, icon) {
   var W = 360;
@@ -55,17 +55,89 @@ function updateTableTransactionDemo() {
   if (el) el.innerHTML = _tableTxnBuildRow(_tableTxnDemo.type, _tableTxnDemo.cols, effectiveIcon);
 }
 
-function _tableTxnInitSpecCards() {
-  var h = document.getElementById('table-transaction-preview-header');
-  if (h) h.innerHTML = _tableTxnBuildRow('header', 3, 'no');
-  var c = document.getElementById('table-transaction-preview-content');
-  if (c) c.innerHTML = _tableTxnBuildRow('content', 3, 'no');
+/* ── Spec Cards (canonical) ──────────────────────────────────────── */
+var _specCards = {
+  header:  { type: 'header',  cols: '3', icon: 'no' },
+  content: { type: 'content', cols: '3', icon: 'no' }
+};
+window._specCards = _specCards;
+
+function buildSwiftSnippet(type, card) {
+  if (type === 'header') {
+    var label = card.icon === 'yes'
+      ? 'EBTransactionTable.Header("Section", icon: Image(systemName: "square"))'
+      : 'EBTransactionTable.Header("Section")';
+    return label + '\n    .ebColumns(' + card.cols + ')';
+  }
+  return 'EBTransactionTable.Row(transaction: item)\n    .ebColumns(' + card.cols + ')';
+}
+
+function buildComposeSnippet(type, card) {
+  if (type === 'header') {
+    var iconLine = card.icon === 'yes' ? '\n    icon = { Icon(Icons.Default.Square, null) },' : '';
+    return 'EBTransactionTableHeader(\n    title = "Section",' + iconLine + '\n    columns = ' + card.cols + '\n)';
+  }
+  return 'EBTransactionTableRow(\n    transaction = item,\n    columns = ' + card.cols + '\n)';
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Content rows always have icon=no */
+  var effectiveIcon = card.type === 'content' ? 'no' : card.icon;
+
+  /* Update preview — find the inner div in the SpecCard preview block */
+  var previewRoot = document.getElementById('spec-' + cardStyle + '-preview');
+  if (previewRoot) {
+    previewRoot.innerHTML = _tableTxnBuildRow(card.type, card.cols, effectiveIcon);
+  }
+
+  /* Update Properties readouts */
+  var spCols = document.querySelector('[data-sp="' + cardStyle + '-cols"]');
+  if (spCols) spCols.textContent = card.cols;
+  var spIcon = document.querySelector('[data-sp="' + cardStyle + '-icon"]');
+  if (spIcon) spIcon.textContent = card.type === 'content' ? '—' : card.icon;
+  var spHeight = document.querySelector('[data-sp="' + cardStyle + '-height"]');
+  if (spHeight) {
+    if (card.type === 'header') spHeight.textContent = card.icon === 'yes' ? '62px' : '36px';
+    else spHeight.textContent = '72.5px';
+  }
+
+  /* Update DEV code — locate via `[data-code-content="${demoKey}"]`. */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
 }
 
 function _tableTxnInit() {
-  updateTableTransactionDemo();
-  _tableTxnInitSpecCards();
+  if (document.getElementById('table-transaction-demo-preview')) {
+    updateTableTransactionDemo();
+  }
+  /* Initialize spec card previews */
+  Object.keys(_specCards).forEach(function(k) {
+    updateSpecCard(k, 'cols', _specCards[k].cols);
+  });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tableTxnInit);
 else _tableTxnInit();
+
+/* Re-init after Astro view-transition swaps */
+document.addEventListener('astro:page-load', _tableTxnInit);

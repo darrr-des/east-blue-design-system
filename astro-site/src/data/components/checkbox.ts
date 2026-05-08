@@ -152,7 +152,7 @@ export const checkbox: ComponentData = {
     "recommendations": [
       {
         "headline": "<code>CheckboxItem</code> compound component created.",
-        "body": "Composes Checkbox + Label (<code>HeyMeow Rnd Bold</code>) + Description (<code>BarkAda Medium</code>). 4 variants: <code>isSelected</code> (true/false) × <code>Size</code> (Small 14px label / Medium 18px label). Node: <code>17734:161220</code>. <span class=\"tag-fixed\">Created</span>",
+        "body": "Composes Checkbox + Label (<code>Proxima Soft Bold</code>) + Description (<code>BarkAda Medium</code>). 4 variants: <code>isSelected</code> (true/false) × <code>Size</code> (Small 14px label / Medium 18px label). Node: <code>17734:161220</code>. <span class=\"tag-fixed\">Created</span>",
         "tag": "Docs"
       }
     ]
@@ -181,14 +181,26 @@ export const checkbox: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Border", "value": "#D7E0EF", "token": "main/checkbox/color/default/unselected/border" }
+              { "key": "Border", "value": "#D7E0EF", "token": "main/checkbox/color/default/unselected/border",
+                "variants": {
+                  "state:Pressed":  { "value": "#1972F9", "token": "main/checkbox/color/pressed/unselected/border" },
+                  "state:Focused":  { "value": "#1972F9", "token": "main/checkbox/color/focused/unselected/border" },
+                  "state:Disabled": { "value": "#D7E0EF", "token": "main/checkbox/color/disabled/unselected/border" },
+                  "state:Error":    { "value": "#D81E1E", "token": "main/checkbox/color/error/unselected/border" }
+                }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Size", "value": "20 × 20px", "mono": true },
+              { "key": "Size", "value": "20 × 20px", "mono": true,
+                "variants": {
+                  "size:small": { "value": "16 × 16px" },
+                  "size:large": { "value": "24 × 24px" }
+                }
+              },
               { "key": "Corner radius", "value": "4px (radius-1)", "mono": true },
               { "key": "Border width", "value": "2px", "mono": true },
               { "key": "Hit target", "value": "44 × 44 (mobile)", "mono": true }
@@ -227,7 +239,14 @@ export const checkbox: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Container bg", "value": "#1972F9", "token": "main/checkbox/color/default/selected/bg" },
+              { "key": "Container bg", "value": "#1972F9", "token": "main/checkbox/color/default/selected/bg",
+                "variants": {
+                  "state:Pressed":  { "value": "#0F57C8", "token": "main/checkbox/color/pressed/selected/bg" },
+                  "state:Focused":  { "value": "#1972F9", "token": "main/checkbox/color/focused/selected/bg" },
+                  "state:Disabled": { "value": "#9BC5FD", "token": "main/checkbox/color/disabled/selected/bg" },
+                  "state:Error":    { "value": "#D81E1E", "token": "main/checkbox/color/error/selected/bg" }
+                }
+              },
               { "key": "Checkmark", "value": "#FFFFFF", "token": "main/checkbox/color/default/selected/check" }
             ]
           },
@@ -235,7 +254,12 @@ export const checkbox: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Size", "value": "20 × 20px", "mono": true },
+              { "key": "Size", "value": "20 × 20px", "mono": true,
+                "variants": {
+                  "size:small": { "value": "16 × 16px" },
+                  "size:large": { "value": "24 × 24px" }
+                }
+              },
               { "key": "Corner radius", "value": "4px (radius-1)", "mono": true },
               { "key": "Border width", "value": "None (filled)", "mono": true },
               { "key": "Hit target", "value": "44 × 44 (mobile)", "mono": true }
@@ -598,7 +622,7 @@ export const checkbox: ComponentData = {
       "header": "Compound Component + Cleanup · node 17734:161220",
       "rows": [
         {
-          "body": "<strong>CheckboxItem compound component created</strong> — 4 variants: isSelected (true/false) × Size (Small/Medium). Each contains a real Checkbox instance + Label (<code>HeyMeow Rnd Bold</code>, 14px/18px) + Description (<code>BarkAda Medium</code>, 12px). Wraps atomic Checkbox with label pairing for accessible form use.\n          <span class=\"tag-fixed\">Created</span>",
+          "body": "<strong>CheckboxItem compound component created</strong> — 4 variants: isSelected (true/false) × Size (Small/Medium). Each contains a real Checkbox instance + Label (<code>Proxima Soft Bold</code>, 14px/18px) + Description (<code>BarkAda Medium</code>, 12px). Wraps atomic Checkbox with label pairing for accessible form use.\n          <span class=\"tag-fixed\">Created</span>",
           "delta": {
             "kind": "resolved",
             "label": "New Component"

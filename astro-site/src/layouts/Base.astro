@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
+import SearchModal from '../components/SearchModal.astro';
 import AuthGate from '../components/AuthGate.astro';
 import { ClientRouter } from 'astro:transitions';
 
@@ -25,6 +26,7 @@ const { title, bodyClass = '', activeSlug } = Astro.props;
     <main class="main" transition:animate="fade">
       <slot />
     </main>
+    <SearchModal />
     <script src="/scripts/assessment.js" is:inline></script>
   </body>
 </html>

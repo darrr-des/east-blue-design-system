@@ -86,3 +86,66 @@ function _rbInit() {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _rbInit);
 else _rbInit();
+
+/* ── Canonical wiring (matches avatar.js shape) ────────────────────── */
+/* Static showcase — no per-card state. Expose stubs so any dropdown
+   bindings or `switchCodeTab` calls don't error. */
+var _specCards = {
+  'rb-all': { selected: 'unselected', size: 'large', style: 'default' }
+};
+window._specCards = _specCards;
+
+function buildSwiftSnippet(cardStyle, card) {
+  var lines = [];
+  lines.push('EBRadioButton(isSelected: $isSelected)');
+  lines.push('    .controlSize(.regular)');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(cardStyle, card) {
+  var lines = [];
+  lines.push('EBRadioButton(');
+  lines.push('    selected = isSelected,');
+  lines.push('    onClick = { isSelected = !isSelected },');
+  lines.push('    size = EBRadioSize.Large');
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(cardStyle, lang, card) {
+  return lang === 'swift'
+    ? buildSwiftSnippet(cardStyle, card)
+    : buildComposeSnippet(cardStyle, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+  /* Re-render the spec-card preview SVG using the same builder used
+     by the Overview live preview. Doubled scale so the spec card has
+     a visible focal point even at small box sizes. */
+  var el = document.getElementById('spec-' + cardStyle + '-preview');
+  if (el && typeof _rbBuildSvg === 'function') {
+    el.innerHTML = _rbBuildSvg(card, 1);
+  }
+}
+window.updateSpecCard = updateSpecCard;
+
+/* Initial paint — make sure the spec card matches its default control
+   values on first load (and every Astro view-transition swap). */
+function _rbInitSpecCard() {
+  var card = _specCards['rb-all'];
+  if (!card) return;
+  var el = document.getElementById('spec-rb-all-preview');
+  if (el && typeof _rbBuildSvg === 'function') {
+    el.innerHTML = _rbBuildSvg(card, 1);
+  }
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _rbInitSpecCard);
+} else {
+  _rbInitSpecCard();
+}
+document.addEventListener('astro:page-load', _rbInitSpecCard);

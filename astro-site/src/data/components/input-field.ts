@@ -1,4 +1,51 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(cardStyle, prop, value)`
+// in `public/scripts/demos/input-field.js`.
+const inputFieldDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'state',
+        prop: 'state',
+        options: [
+          { value: 'Default', label: 'Default' },
+          { value: 'Active', label: 'Active' },
+          { value: 'Error', label: 'Error' },
+          { value: 'Disabled', label: 'Disabled' },
+        ],
+      },
+      {
+        label: 'isFilled',
+        prop: 'filled',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
+        ],
+      },
+      {
+        label: 'leadingIcon',
+        prop: 'leadingIcon',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
+        ],
+      },
+      {
+        label: 'trailingIcon',
+        prop: 'trailingIcon',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
+        ],
+      },
+    ],
+  },
+];
 
 export const inputField: ComponentData = {
   "meta": {
@@ -27,7 +74,7 @@ export const inputField: ComponentData = {
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"64\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <rect x=\"20\" y=\"20\" width=\"80\" height=\"14\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".15\"></rect>\n          <rect x=\"24\" y=\"25\" width=\"30\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <rect x=\"20\" y=\"42\" width=\"80\" height=\"14\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".15\"></rect>\n          <rect x=\"24\" y=\"47\" width=\"45\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <rect x=\"20\" y=\"62\" width=\"80\" height=\"8\" rx=\"4\" fill=\"currentColor\" opacity=\".08\"></rect>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"inf-demo-preview\"><svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"27\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" onchange=\"_infDemo.state=this.value;updateInputFieldDemo()\"><option value=\"Default\">Default</option><option value=\"Active\">Active</option><option value=\"Error\">Error</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select class=\"demo-panel-select\" onchange=\"_infDemo.filled=this.value;updateInputFieldDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"inf-demo-preview\"><svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" onchange=\"_infDemo.state=this.value;updateInputFieldDemo()\"><option value=\"Default\">Default</option><option value=\"Active\">Active</option><option value=\"Error\">Error</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select class=\"demo-panel-select\" onchange=\"_infDemo.filled=this.value;updateInputFieldDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -121,6 +168,8 @@ export const inputField: ComponentData = {
     "specCards": [
       {
         "cardKey": "inf-spec-default",
+        "demoKey": "default",
+        "demoControls": inputFieldDemoControls,
         "title": "Default",
         "node": "17758:3688",
         "description": "Idle state with gray border. Text color depends on whether the field has a value.",
@@ -132,12 +181,26 @@ export const inputField: ComponentData = {
               {
                 "key": "state",
                 "value": "Default",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
-                "key": "Variant",
-                "value": "Default",
-                "mono": false
+                "key": "isFilled",
+                "value": "false",
+                "mono": true,
+                "prop": "filled"
+              },
+              {
+                "key": "leadingIcon",
+                "value": "false",
+                "mono": true,
+                "prop": "leadingIcon"
+              },
+              {
+                "key": "trailingIcon",
+                "value": "false",
+                "mono": true,
+                "prop": "trailingIcon"
               }
             ]
           },
@@ -206,10 +269,12 @@ export const inputField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBInputField</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBInputField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"27\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text></svg>"
+        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text></svg>"
       },
       {
         "cardKey": "inf-spec-active",
+        "demoKey": "active",
+        "demoControls": inputFieldDemoControls,
         "title": "Active (Focused)",
         "node": "17758:3694",
         "description": "Focused state with blue border indicating active input.",
@@ -221,12 +286,26 @@ export const inputField: ComponentData = {
               {
                 "key": "state",
                 "value": "Active",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
-                "key": "Variant",
-                "value": "Active (Focused)",
-                "mono": false
+                "key": "isFilled",
+                "value": "false",
+                "mono": true,
+                "prop": "filled"
+              },
+              {
+                "key": "leadingIcon",
+                "value": "false",
+                "mono": true,
+                "prop": "leadingIcon"
+              },
+              {
+                "key": "trailingIcon",
+                "value": "false",
+                "mono": true,
+                "prop": "trailingIcon"
               }
             ]
           },
@@ -295,10 +374,12 @@ export const inputField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBInputField</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.active</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBInputField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Active</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"27\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text></svg>"
+        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text></svg>"
       },
       {
         "cardKey": "inf-spec-error",
+        "demoKey": "error",
+        "demoControls": inputFieldDemoControls,
         "title": "Error",
         "node": "17758:3700",
         "description": "Validation error state with red border.",
@@ -310,12 +391,26 @@ export const inputField: ComponentData = {
               {
                 "key": "state",
                 "value": "Error",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
-                "key": "Variant",
-                "value": "Error",
-                "mono": false
+                "key": "isFilled",
+                "value": "false",
+                "mono": true,
+                "prop": "filled"
+              },
+              {
+                "key": "leadingIcon",
+                "value": "false",
+                "mono": true,
+                "prop": "leadingIcon"
+              },
+              {
+                "key": "trailingIcon",
+                "value": "false",
+                "mono": true,
+                "prop": "trailingIcon"
               }
             ]
           },
@@ -384,10 +479,12 @@ export const inputField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBInputField</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBInputField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Error</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D61B2C\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"27\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text></svg>"
+        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D61B2C\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text></svg>"
       },
       {
         "cardKey": "inf-spec-disabled",
+        "demoKey": "disabled",
+        "demoControls": inputFieldDemoControls,
         "title": "Disabled",
         "node": "17758:3706",
         "description": "Non-interactive state with gray background and hidden border.",
@@ -399,12 +496,26 @@ export const inputField: ComponentData = {
               {
                 "key": "state",
                 "value": "Disabled",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
-                "key": "Variant",
-                "value": "Disabled",
-                "mono": false
+                "key": "isFilled",
+                "value": "false",
+                "mono": true,
+                "prop": "filled"
+              },
+              {
+                "key": "leadingIcon",
+                "value": "false",
+                "mono": true,
+                "prop": "leadingIcon"
+              },
+              {
+                "key": "trailingIcon",
+                "value": "false",
+                "mono": true,
+                "prop": "trailingIcon"
               }
             ]
           },
@@ -472,7 +583,7 @@ export const inputField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBInputField</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.disabled</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBInputField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Disabled</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#EEF2F9\"></rect><text x=\"12\" y=\"27\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\" letter-spacing=\"0.25\">Placeholder</text></svg>"
+        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#EEF2F9\"></rect><text x=\"12\" y=\"27\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\" letter-spacing=\"0.25\">Placeholder</text></svg>"
       }
     ],
     "colorsTables": [

@@ -56,37 +56,117 @@ function _toastWBContextMarkup() {
 function _toastWithButtonUpdate() {
   var type    = document.getElementById('toast-with-button-ctrl-type');
   var desc    = document.getElementById('toast-with-button-ctrl-description');
-  var label   = document.getElementById('toast-with-button-ctrl-label');
-  var descTxt = document.getElementById('toast-with-button-ctrl-desc');
-  var action  = document.getElementById('toast-with-button-ctrl-action');
   var preview = document.getElementById('toast-with-button-demo-preview');
   if (!preview) return;
   preview.innerHTML = _toastWBRender({
     type:        type ? type.value : 'default',
     description: desc ? desc.value : 'yes',
-    label:       label ? label.value : 'Add label here',
-    desc:        descTxt ? descTxt.value : 'Add description here.',
-    action:      action ? action.value : 'Label'
+    label:       'Add label here',
+    desc:        'Add description here.',
+    action:      'Label'
   });
 }
+
+/* ── Toast - With Button Spec Cards (canonical wiring) ────────── */
+var _specCards = {
+  darkdesc:    { type: 'default', description: 'yes' },
+  lightdesc:   { type: 'light',   description: 'yes' },
+  darknodesc:  { type: 'default', description: 'no'  },
+  lightnodesc: { type: 'light',   description: 'no'  }
+};
+window._specCards = _specCards;
+
+var _toastWBSpecPreviewId = {
+  darkdesc:    'toast-with-button-spec-1',
+  lightdesc:   'toast-with-button-spec-2',
+  darknodesc:  'toast-with-button-spec-3',
+  lightnodesc: 'toast-with-button-spec-4'
+};
+
+function _toastWBRenderSpec(cardKey) {
+  var card = _specCards[cardKey];
+  if (!card) return;
+  var host = document.getElementById(_toastWBSpecPreviewId[cardKey]);
+  if (!host) return;
+  host.innerHTML = _toastWBRender({
+    type:        card.type,
+    description: card.description,
+    label:       'Add label here',
+    desc:        'Add description here.',
+    action:      'Label'
+  });
+}
+
+function buildSwiftSnippet(type, card) {
+  var lines = [];
+  lines.push('EBToast("Removed from favorites")');
+  if (card.type === 'light') lines.push('    .ebTheme(.light)');
+  else                       lines.push('    .ebTheme(.dark)');
+  if (card.description === 'yes') lines.push('    .ebSupportingText("Tap undo to revert")');
+  lines.push('    .ebAction("Undo", action: { })');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var theme = card.type === 'light' ? 'Light' : 'Dark';
+  var lines = [];
+  lines.push('EBToast(');
+  lines.push('    message = "Removed from favorites",');
+  if (card.description === 'yes') lines.push('    supportingText = "Tap undo to revert",');
+  lines.push('    theme = EBToastTheme.' + theme + ',');
+  lines.push('    action = EBToastAction("Undo") { }');
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Re-render preview */
+  _toastWBRenderSpec(cardStyle);
+
+  /* Sync prop readouts */
+  ['type','description'].forEach(function (p) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
+    if (el) el.textContent = card[p];
+  });
+
+  /* Update DEV code */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+window.updateSpecCard = updateSpecCard;
 
 function _toastWithButtonInit() {
   var ctx = document.getElementById('toast-with-button-context-preview');
   if (ctx) ctx.innerHTML = _toastWBContextMarkup();
   _toastWithButtonUpdate();
 
-  var s1 = document.getElementById('toast-with-button-spec-1');
-  if (s1) s1.innerHTML = _toastWBRender({ type:'default', description:'yes', label:'Add label here', desc:'Add description here.', action:'Label' });
-
-  var s2 = document.getElementById('toast-with-button-spec-2');
-  if (s2) s2.innerHTML = _toastWBRender({ type:'light', description:'yes', label:'Add label here', desc:'Add description here.', action:'Label' });
-
-  var s3 = document.getElementById('toast-with-button-spec-3');
-  if (s3) s3.innerHTML = _toastWBRender({ type:'default', description:'no', label:'Add label here', action:'Label' });
-
-  var s4 = document.getElementById('toast-with-button-spec-4');
-  if (s4) s4.innerHTML = _toastWBRender({ type:'light', description:'no', label:'Add label here', action:'Label' });
+  Object.keys(_specCards).forEach(function (k) {
+    _toastWBRenderSpec(k);
+  });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _toastWithButtonInit);
 else _toastWithButtonInit();
+
+/* ── Re-init after Astro view-transition swaps ─────────────── */
+document.addEventListener('astro:page-load', _toastWithButtonInit);

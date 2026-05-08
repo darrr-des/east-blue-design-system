@@ -62,3 +62,64 @@ if (document.readyState === 'loading') {
 } else {
   _srfInit();
 }
+
+/* ── Canonical wiring (matches avatar.js shape) ────────────────────── */
+/* Per-card state — keyed by the data file's `demoKey` values
+   (`srf-default`, `srf-filled`). */
+var _specCards = {
+  'srf-default': { state: 'default' },
+  'srf-filled':  { state: 'filled' }
+};
+window._specCards = _specCards;
+
+function buildSwiftSnippet(cardStyle, card) {
+  var lines = [];
+  lines.push('EBSearchField(placeholder: "Search", text: $query)');
+  lines.push('    .ebState(.' + (card.state || 'default') + ')');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(cardStyle, card) {
+  var stateName = (card.state || 'default');
+  stateName = stateName.charAt(0).toUpperCase() + stateName.slice(1);
+  var lines = [];
+  lines.push('EBSearchField(');
+  lines.push('    placeholder = "Search",');
+  lines.push('    query = query,');
+  lines.push('    onQueryChange = { },');
+  lines.push('    state = EBFieldState.' + stateName);
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(cardStyle, lang, card) {
+  return lang === 'swift'
+    ? buildSwiftSnippet(cardStyle, card)
+    : buildComposeSnippet(cardStyle, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update SVG preview — `srf-default-preview`, `srf-filled-preview`. */
+  var previewEl = document.getElementById(cardStyle + '-preview');
+  if (previewEl) previewEl.innerHTML = _srfBuildSvg(card.state);
+
+  /* Property-text cell. */
+  var spState = document.querySelector('[data-sp="' + cardStyle + '-state"]');
+  if (spState) spState.textContent = card.state.charAt(0).toUpperCase() + card.state.slice(1);
+
+  /* DEV code. */
+  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
+  if (codeEl) {
+    var lang = codeEl.getAttribute('data-lang') || 'swift';
+    var code = getSnippet(cardStyle, lang, card);
+    codeEl.setAttribute('data-final', code);
+    codeEl.textContent = code;
+    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+  }
+}
+window.updateSpecCard = updateSpecCard;

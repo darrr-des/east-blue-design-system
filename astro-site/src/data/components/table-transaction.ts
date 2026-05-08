@@ -1,4 +1,32 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/table-transaction.js`.
+const tableTransactionDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'No. of columns',
+        prop: 'cols',
+        defaultValue: '3',
+        options: [
+          { value: '2', label: '2' },
+          { value: '3', label: '3' },
+        ],
+      },
+      {
+        label: 'Icon (header only)',
+        prop: 'icon',
+        defaultValue: 'no',
+        options: [
+          { value: 'no', label: 'no' },
+          { value: 'yes', label: 'yes' },
+        ],
+      },
+    ],
+  },
+];
 
 export const tableTransaction: ComponentData = {
   "meta": {
@@ -140,9 +168,12 @@ export const tableTransaction: ComponentData = {
     "specCards": [
       {
         "cardKey": "header-row-—-36-/-62px-tall",
+        "demoKey": "header",
+        "demoControls": tableTransactionDemoControls,
         "title": "Header row — 36 / 62px tall",
         "node": "47:324703",
         "description": "Subtle-bg row with bottom border. Repeats a 10px Proxima Soft Semibold \"Column Label\" N times across equal-width flex columns. <code>icon=yes</code> grows height from 36 to 62px and stacks a 24px placeholder circle above each label.",
+        "previewHtml": "<div id=\"spec-header-preview\"></div>",
         "sections": [
           {
             "label": "Properties",
@@ -154,9 +185,22 @@ export const tableTransaction: ComponentData = {
                 "mono": false
               },
               {
+                "key": "No. of columns",
+                "value": "3",
+                "mono": false,
+                "prop": "cols"
+              },
+              {
+                "key": "Icon",
+                "value": "no",
+                "mono": false,
+                "prop": "icon"
+              },
+              {
                 "key": "Height",
-                "value": "36 / 62px",
-                "mono": false
+                "value": "36px",
+                "mono": false,
+                "prop": "height"
               }
             ]
           },
@@ -225,9 +269,12 @@ export const tableTransaction: ComponentData = {
       },
       {
         "cardKey": "content-row-—-72.5px-tall",
+        "demoKey": "content",
+        "demoControls": tableTransactionDemoControls,
         "title": "Content row — 72.5px tall",
         "node": "47:324708",
         "description": "White bg, bottom border. Two-line layout: a 14px preamble label on top, then N equal-width amount cells below. Each amount cell renders a 15px peso-sign raster + a 14px Proxima Soft Bold numeric value (<code>X,XXX.XX</code>).",
+        "previewHtml": "<div id=\"spec-content-preview\"></div>",
         "sections": [
           {
             "label": "Properties",
@@ -237,6 +284,12 @@ export const tableTransaction: ComponentData = {
                 "key": "Row type",
                 "value": "Content",
                 "mono": false
+              },
+              {
+                "key": "No. of columns",
+                "value": "3",
+                "mono": false,
+                "prop": "cols"
               },
               {
                 "key": "Height",

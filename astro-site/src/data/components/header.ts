@@ -1,4 +1,51 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/header.js`.
+const headerDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'preamble',
+        prop: 'preamble',
+        options: [
+          { value: 'no', label: 'no' },
+          { value: 'yes', label: 'yes' },
+        ],
+      },
+      {
+        label: 'description',
+        prop: 'description',
+        options: [
+          { value: 'no', label: 'no' },
+          { value: 'yes', label: 'yes' },
+        ],
+      },
+      {
+        label: 'leading',
+        prop: 'leading',
+        options: [
+          { value: 'none', label: 'none' },
+          { value: 'icon', label: 'icon' },
+          { value: 'illustration', label: 'illustration' },
+        ],
+      },
+      {
+        label: 'trailing',
+        prop: 'trailing',
+        options: [
+          { value: 'none', label: 'none' },
+          { value: 'illustration', label: 'illustration' },
+          { value: 'link', label: 'link' },
+          { value: 'edit', label: 'edit' },
+          { value: 'counter', label: 'counter' },
+        ],
+      },
+    ],
+  },
+];
 
 export const header: ComponentData = {
   "meta": {
@@ -160,10 +207,12 @@ export const header: ComponentData = {
     "specCards": [
       {
         "cardKey": "title-only-(baseline)",
+        "demoKey": "title-only",
+        "demoControls": headerDemoControls,
         "title": "Title only (baseline)",
         "node": "18430:2932",
         "description": "The simplest variant — a bare title. This is the baseline the other 15 variants layer slots onto.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-spec-1\"><div class=\"eb-preview eb-preview-header\"><div class=\"eb-preview-header__content\"><p class=\"eb-preview-header__title\">Heading</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -172,16 +221,25 @@ export const header: ComponentData = {
               {
                 "key": "preamble",
                 "value": "no",
+                "prop": "preamble",
                 "mono": true
               },
               {
                 "key": "description",
                 "value": "no",
+                "prop": "description",
                 "mono": true
               },
               {
-                "key": "all media/action slots",
-                "value": "no",
+                "key": "leading",
+                "value": "none",
+                "prop": "leading",
+                "mono": true
+              },
+              {
+                "key": "trailing",
+                "value": "none",
+                "prop": "trailing",
                 "mono": true
               }
             ]
@@ -246,10 +304,12 @@ export const header: ComponentData = {
       },
       {
         "cardKey": "full-stack-(preamble-+-title-+-description)",
+        "demoKey": "full-stack",
+        "demoControls": headerDemoControls,
         "title": "Full stack (preamble + title + description)",
         "node": "18430:2920",
         "description": "All three text slots filled. This is the canonical \"announce a section\" pattern.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-spec-2\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-spec-2\"><div class=\"eb-preview eb-preview-header\"><div class=\"eb-preview-header__content\"><p class=\"eb-preview-header__preamble\">Preamble</p><p class=\"eb-preview-header__title\">Heading</p><p class=\"eb-preview-header__desc\">Description goes here</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -258,16 +318,25 @@ export const header: ComponentData = {
               {
                 "key": "preamble",
                 "value": "yes",
+                "prop": "preamble",
                 "mono": true
               },
               {
                 "key": "description",
                 "value": "yes",
+                "prop": "description",
                 "mono": true
               },
               {
-                "key": "media/actions",
-                "value": "no",
+                "key": "leading",
+                "value": "none",
+                "prop": "leading",
+                "mono": true
+              },
+              {
+                "key": "trailing",
+                "value": "none",
+                "prop": "trailing",
                 "mono": true
               }
             ]
@@ -336,19 +405,40 @@ export const header: ComponentData = {
       },
       {
         "cardKey": "title-+-trailing-link",
+        "demoKey": "trailing-link",
+        "demoControls": headerDemoControls,
         "title": "Title + trailing link",
         "node": "18430:2984",
         "description": "Title on the left, \"View All\" link on the right. Common list-section pattern.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-spec-3\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-spec-3\"><div class=\"eb-preview eb-preview-header eb-preview-header--center\"><div class=\"eb-preview-header__content\"><p class=\"eb-preview-header__title\">Heading</p></div><span class=\"eb-preview-header__trailing\"><span class=\"eb-preview-header__link\">View All</span></span></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Variant",
-                "value": "Title + trailing link",
-                "mono": false
+                "key": "preamble",
+                "value": "no",
+                "prop": "preamble",
+                "mono": true
+              },
+              {
+                "key": "description",
+                "value": "no",
+                "prop": "description",
+                "mono": true
+              },
+              {
+                "key": "leading",
+                "value": "none",
+                "prop": "leading",
+                "mono": true
+              },
+              {
+                "key": "trailing",
+                "value": "link",
+                "prop": "trailing",
+                "mono": true
               }
             ]
           },
@@ -410,19 +500,40 @@ export const header: ComponentData = {
       },
       {
         "cardKey": "title-+-trailing-edit",
+        "demoKey": "trailing-edit",
+        "demoControls": headerDemoControls,
         "title": "Title + trailing edit",
         "node": "18430:2989",
         "description": "Title left, pencil icon + \"Edit details\" link right. Used on profile/settings sections.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-spec-4\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-spec-4\"><div class=\"eb-preview eb-preview-header eb-preview-header--center\"><div class=\"eb-preview-header__content\"><p class=\"eb-preview-header__title\">Heading</p></div><span class=\"eb-preview-header__trailing\"><svg class=\"eb-preview-header__edit-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 20h9\"></path><path d=\"M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z\"></path></svg><span class=\"eb-preview-header__link\">Edit details</span></span></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Variant",
-                "value": "Title + trailing edit",
-                "mono": false
+                "key": "preamble",
+                "value": "no",
+                "prop": "preamble",
+                "mono": true
+              },
+              {
+                "key": "description",
+                "value": "no",
+                "prop": "description",
+                "mono": true
+              },
+              {
+                "key": "leading",
+                "value": "none",
+                "prop": "leading",
+                "mono": true
+              },
+              {
+                "key": "trailing",
+                "value": "edit",
+                "prop": "trailing",
+                "mono": true
               }
             ]
           },
@@ -484,19 +595,40 @@ export const header: ComponentData = {
       },
       {
         "cardKey": "title-+-trailing-counter",
+        "demoKey": "trailing-counter",
+        "demoControls": headerDemoControls,
         "title": "Title + trailing counter",
         "node": "18430:2996",
         "description": "Title left, numeric counter pill right. Used on inbox/notifications.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-spec-5\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-spec-5\"><div class=\"eb-preview eb-preview-header eb-preview-header--center\"><div class=\"eb-preview-header__content\"><p class=\"eb-preview-header__title\">Heading</p></div><span class=\"eb-preview-header__counter\">0</span></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Variant",
-                "value": "Title + trailing counter",
-                "mono": false
+                "key": "preamble",
+                "value": "no",
+                "prop": "preamble",
+                "mono": true
+              },
+              {
+                "key": "description",
+                "value": "no",
+                "prop": "description",
+                "mono": true
+              },
+              {
+                "key": "leading",
+                "value": "none",
+                "prop": "leading",
+                "mono": true
+              },
+              {
+                "key": "trailing",
+                "value": "counter",
+                "prop": "trailing",
+                "mono": true
               }
             ]
           },
@@ -557,7 +689,60 @@ export const header: ComponentData = {
         "compose": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span>title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Page title\"</span><span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — Title only (baseline)
+      buildStatelessColorsTable({
+        title: 'Title — Colors',
+        description: 'Baseline header: just the heading on a white surface. Card stroke is invisible by default.',
+        rows: [
+          { role: 'Surface bg', token: 'main/header/surface',           value: '#FFFFFF' },
+          { role: 'Heading',    token: 'text/primary/headline/section', value: '#0A2757' },
+        ],
+      }),
+      // Card 2 — Full stack (preamble + heading + description)
+      buildStatelessColorsTable({
+        title: 'Full Stack — Colors',
+        description: 'Tier-three layout with eyebrow preamble, heading, and supporting description.',
+        rows: [
+          { role: 'Surface bg', token: 'main/header/surface',           value: '#FFFFFF' },
+          { role: 'Preamble',   token: 'text/accent/eyebrow',           value: '#005CE5' },
+          { role: 'Heading',    token: 'text/primary/headline/section', value: '#0A2757' },
+          { role: 'Description', token: 'text/primary/body/secondary',  value: '#6780A9' },
+        ],
+      }),
+      // Card 3 — Title + trailing link
+      buildStatelessColorsTable({
+        title: 'Title + Link — Colors',
+        description: 'Heading followed by a trailing hyperlink (e.g. "See all").',
+        rows: [
+          { role: 'Surface bg', token: 'main/header/surface',           value: '#FFFFFF' },
+          { role: 'Heading',    token: 'text/primary/headline/section', value: '#0A2757' },
+          { role: 'Link label', token: 'text/accent/link',              value: '#005CE5' },
+        ],
+      }),
+      // Card 4 — Title + trailing edit
+      buildStatelessColorsTable({
+        title: 'Title + Edit — Colors',
+        description: 'Heading followed by an edit affordance (icon + hyperlink label).',
+        rows: [
+          { role: 'Surface bg', token: 'main/header/surface',           value: '#FFFFFF' },
+          { role: 'Heading',    token: 'text/primary/headline/section', value: '#0A2757' },
+          { role: 'Edit icon',  token: 'icon/accent',                   value: '#005CE5' },
+          { role: 'Edit label', token: 'text/accent/link',              value: '#005CE5' },
+        ],
+      }),
+      // Card 5 — Title + trailing counter
+      buildStatelessColorsTable({
+        title: 'Title + Counter — Colors',
+        description: 'Heading followed by a count chip (e.g. unread badge, item total).',
+        rows: [
+          { role: 'Surface bg',     token: 'main/header/surface',           value: '#FFFFFF' },
+          { role: 'Heading',        token: 'text/primary/headline/section', value: '#0A2757' },
+          { role: 'Counter chip bg', token: 'main/counter/surface',         value: '#EEF2F9' },
+          { role: 'Counter value',  token: 'text/primary/body/secondary',   value: '#6780A9' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

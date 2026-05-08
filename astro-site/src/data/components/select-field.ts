@@ -1,4 +1,51 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/select-field.js`.
+const selectFieldDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'state',
+        prop: 'state',
+        options: [
+          { value: 'Default', label: 'Default' },
+          { value: 'Active', label: 'Active' },
+          { value: 'Error', label: 'Error' },
+          { value: 'Disabled', label: 'Disabled' },
+        ],
+      },
+      {
+        label: 'isFilled',
+        prop: 'filled',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
+        ],
+      },
+      {
+        label: 'leadingCurrency',
+        prop: 'leadingCurrency',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+      {
+        label: 'trailingFlag',
+        prop: 'trailingFlag',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+    ],
+  },
+];
 
 export const selectField: ComponentData = {
   "meta": {
@@ -27,7 +74,7 @@ export const selectField: ComponentData = {
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"64\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <text x=\"20\" y=\"22\" font-size=\"6\" fill=\"currentColor\" opacity=\".15\" font-family=\"system-ui\">Send Money</text>\n          <rect x=\"20\" y=\"28\" width=\"80\" height=\"14\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".15\"></rect>\n          <text x=\"24\" y=\"37\" font-size=\"4\" fill=\"currentColor\" opacity=\".1\" font-family=\"system-ui\">₱ Amount</text>\n          <rect x=\"82\" y=\"32\" width=\"8\" height=\"5\" rx=\"1\" fill=\"currentColor\" opacity=\".08\"></rect>\n          <path d=\"M94 33l2 2.5 2-2.5\" stroke=\"currentColor\" stroke-width=\".8\" stroke-linecap=\"round\" opacity=\".12\"></path>\n          <rect x=\"20\" y=\"50\" width=\"80\" height=\"14\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".15\"></rect>\n          <rect x=\"24\" y=\"55\" width=\"45\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <rect x=\"20\" y=\"68\" width=\"80\" height=\"8\" rx=\"4\" fill=\"currentColor\" opacity=\".08\"></rect>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"sf-demo-preview\"><svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"23\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#183462\" dominant-baseline=\"central\">₱</text><text x=\"36\" y=\"20\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">#label</text><text x=\"36\" y=\"36\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" fill=\"#90A8D0\">#value</text><rect x=\"298\" y=\"15\" width=\"25\" height=\"16\" rx=\"2\" fill=\"#0038A8\" opacity=\"1\"></rect><rect x=\"298\" y=\"20.3\" width=\"25\" height=\"5.4\" fill=\"#CE1126\" opacity=\"1\"></rect><rect x=\"298\" y=\"25.7\" width=\"25\" height=\"5.3\" rx=\"0 0 2 2\" fill=\"#FCD116\" opacity=\"1\"></rect><path d=\"M342 20l5 5 5-5\" stroke=\"#183462\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" onchange=\"_sfDemo.state=this.value;updateSelectFieldDemo()\"><option value=\"Default\">Default</option><option value=\"Active\">Active</option><option value=\"Error\">Error</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select class=\"demo-panel-select\" onchange=\"_sfDemo.filled=this.value;updateSelectFieldDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"sf-demo-preview\"><svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"23\" font-family=\"Proxima Soft, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#183462\" dominant-baseline=\"central\">₱</text><text x=\"36\" y=\"20\" font-family=\"Proxima Soft, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Label</text><text x=\"36\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" fill=\"#90A8D0\">Value</text><rect x=\"298\" y=\"15\" width=\"25\" height=\"8\" fill=\"#0038A8\" opacity=\"1\"></rect><rect x=\"298\" y=\"23\" width=\"25\" height=\"8\" fill=\"#CE1126\" opacity=\"1\"></rect><polygon points=\"298,15 298,31 308.5,23\" fill=\"#FFFFFF\" opacity=\"1\"></polygon><path d=\"M342 20l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" onchange=\"_sfDemo.state=this.value;updateSelectFieldDemo()\"><option value=\"Default\">Default</option><option value=\"Active\">Active</option><option value=\"Error\">Error</option><option value=\"Disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select class=\"demo-panel-select\" onchange=\"_sfDemo.filled=this.value;updateSelectFieldDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -129,6 +176,8 @@ export const selectField: ComponentData = {
     "specCards": [
       {
         "cardKey": "sf-spec-default",
+        "demoKey": "default",
+        "demoControls": selectFieldDemoControls,
         "title": "Default",
         "node": "17758:3787",
         "description": "Idle state with gray border. Peso sign in dark navy, flag visible, chevron down affordance.",
@@ -140,12 +189,26 @@ export const selectField: ComponentData = {
               {
                 "key": "state",
                 "value": "Default",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
-                "key": "Variant",
-                "value": "Default",
-                "mono": false
+                "key": "isFilled",
+                "value": "false",
+                "mono": false,
+                "prop": "filled"
+              },
+              {
+                "key": "leadingCurrency",
+                "value": "true",
+                "mono": false,
+                "prop": "leadingCurrency"
+              },
+              {
+                "key": "trailingFlag",
+                "value": "true",
+                "mono": false,
+                "prop": "trailingFlag"
               }
             ]
           },
@@ -215,10 +278,12 @@ export const selectField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"23\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#183462\" dominant-baseline=\"central\">₱</text><text x=\"36\" y=\"20\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">#label</text><text x=\"36\" y=\"36\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" fill=\"#90A8D0\">#value</text><rect x=\"298\" y=\"15\" width=\"25\" height=\"16\" rx=\"2\" fill=\"#0038A8\" opacity=\"1\"></rect><rect x=\"298\" y=\"20.3\" width=\"25\" height=\"5.4\" fill=\"#CE1126\" opacity=\"1\"></rect><rect x=\"298\" y=\"25.7\" width=\"25\" height=\"5.3\" rx=\"0 0 2 2\" fill=\"#FCD116\" opacity=\"1\"></rect><path d=\"M342 20l5 5 5-5\" stroke=\"#183462\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"23\" font-family=\"Proxima Soft, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#183462\" dominant-baseline=\"central\">₱</text><text x=\"36\" y=\"20\" font-family=\"Proxima Soft, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Label</text><text x=\"36\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" fill=\"#90A8D0\">Value</text><rect x=\"298\" y=\"15\" width=\"25\" height=\"8\" fill=\"#0038A8\"></rect><rect x=\"298\" y=\"23\" width=\"25\" height=\"8\" fill=\"#CE1126\"></rect><polygon points=\"298,15 298,31 308.5,23\" fill=\"#FFFFFF\"></polygon><path d=\"M342 20l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
       },
       {
         "cardKey": "sf-spec-active",
+        "demoKey": "active",
+        "demoControls": selectFieldDemoControls,
         "title": "Active (Focused)",
         "node": "17758:3807",
         "description": "Focused state with blue border indicating active selection.",
@@ -230,12 +295,26 @@ export const selectField: ComponentData = {
               {
                 "key": "state",
                 "value": "Active",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
-                "key": "Variant",
-                "value": "Active (Focused)",
-                "mono": false
+                "key": "isFilled",
+                "value": "false",
+                "mono": false,
+                "prop": "filled"
+              },
+              {
+                "key": "leadingCurrency",
+                "value": "true",
+                "mono": false,
+                "prop": "leadingCurrency"
+              },
+              {
+                "key": "trailingFlag",
+                "value": "true",
+                "mono": false,
+                "prop": "trailingFlag"
               }
             ]
           },
@@ -304,10 +383,12 @@ export const selectField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.active</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Active</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"23\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#183462\" dominant-baseline=\"central\">₱</text><text x=\"36\" y=\"20\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">#label</text><text x=\"36\" y=\"36\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" fill=\"#90A8D0\">#value</text><rect x=\"298\" y=\"15\" width=\"25\" height=\"16\" rx=\"2\" fill=\"#0038A8\" opacity=\"1\"></rect><rect x=\"298\" y=\"20.3\" width=\"25\" height=\"5.4\" fill=\"#CE1126\" opacity=\"1\"></rect><rect x=\"298\" y=\"25.7\" width=\"25\" height=\"5.3\" rx=\"0 0 2 2\" fill=\"#FCD116\" opacity=\"1\"></rect><path d=\"M342 20l5 5 5-5\" stroke=\"#183462\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"23\" font-family=\"Proxima Soft, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#183462\" dominant-baseline=\"central\">₱</text><text x=\"36\" y=\"20\" font-family=\"Proxima Soft, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Label</text><text x=\"36\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" fill=\"#90A8D0\">Value</text><rect x=\"298\" y=\"15\" width=\"25\" height=\"8\" fill=\"#0038A8\"></rect><rect x=\"298\" y=\"23\" width=\"25\" height=\"8\" fill=\"#CE1126\"></rect><polygon points=\"298,15 298,31 308.5,23\" fill=\"#FFFFFF\"></polygon><path d=\"M342 20l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
       },
       {
         "cardKey": "sf-spec-error",
+        "demoKey": "error",
+        "demoControls": selectFieldDemoControls,
         "title": "Error",
         "node": "17758:3827",
         "description": "Validation error state with red border.",
@@ -319,12 +400,26 @@ export const selectField: ComponentData = {
               {
                 "key": "state",
                 "value": "Error",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
-                "key": "Variant",
-                "value": "Error",
-                "mono": false
+                "key": "isFilled",
+                "value": "false",
+                "mono": false,
+                "prop": "filled"
+              },
+              {
+                "key": "leadingCurrency",
+                "value": "true",
+                "mono": false,
+                "prop": "leadingCurrency"
+              },
+              {
+                "key": "trailingFlag",
+                "value": "true",
+                "mono": false,
+                "prop": "trailingFlag"
               }
             ]
           },
@@ -393,10 +488,12 @@ export const selectField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Error</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D61B2C\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"23\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#183462\" dominant-baseline=\"central\">₱</text><text x=\"36\" y=\"20\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">#label</text><text x=\"36\" y=\"36\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" fill=\"#90A8D0\">#value</text><rect x=\"298\" y=\"15\" width=\"25\" height=\"16\" rx=\"2\" fill=\"#0038A8\" opacity=\"1\"></rect><rect x=\"298\" y=\"20.3\" width=\"25\" height=\"5.4\" fill=\"#CE1126\" opacity=\"1\"></rect><rect x=\"298\" y=\"25.7\" width=\"25\" height=\"5.3\" rx=\"0 0 2 2\" fill=\"#FCD116\" opacity=\"1\"></rect><path d=\"M342 20l5 5 5-5\" stroke=\"#183462\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D61B2C\" stroke-width=\"1.5\"></rect><text x=\"12\" y=\"23\" font-family=\"Proxima Soft, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#183462\" dominant-baseline=\"central\">₱</text><text x=\"36\" y=\"20\" font-family=\"Proxima Soft, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Label</text><text x=\"36\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" fill=\"#90A8D0\">Value</text><rect x=\"298\" y=\"15\" width=\"25\" height=\"8\" fill=\"#0038A8\"></rect><rect x=\"298\" y=\"23\" width=\"25\" height=\"8\" fill=\"#CE1126\"></rect><polygon points=\"298,15 298,31 308.5,23\" fill=\"#FFFFFF\"></polygon><path d=\"M342 20l5 5 5-5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
       },
       {
         "cardKey": "sf-spec-disabled",
+        "demoKey": "disabled",
+        "demoControls": selectFieldDemoControls,
         "title": "Disabled",
         "node": "17758:3847",
         "description": "Non-interactive state with gray background, hidden border, and muted peso sign.",
@@ -408,12 +505,26 @@ export const selectField: ComponentData = {
               {
                 "key": "state",
                 "value": "Disabled",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
-                "key": "Variant",
-                "value": "Disabled",
-                "mono": false
+                "key": "isFilled",
+                "value": "false",
+                "mono": false,
+                "prop": "filled"
+              },
+              {
+                "key": "leadingCurrency",
+                "value": "true",
+                "mono": false,
+                "prop": "leadingCurrency"
+              },
+              {
+                "key": "trailingFlag",
+                "value": "true",
+                "mono": false,
+                "prop": "trailingFlag"
               }
             ]
           },
@@ -481,7 +592,7 @@ export const selectField: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.disabled</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBSelectField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Choose option\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    onSelectionChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Disabled</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#EEF2F9\"></rect><text x=\"12\" y=\"23\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#7E96BE\" dominant-baseline=\"central\">₱</text><text x=\"36\" y=\"20\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">#label</text><text x=\"36\" y=\"36\" font-family=\"HeyMeow Rnd, system-ui\" font-size=\"14\" fill=\"#C2CFE5\">#value</text><rect x=\"298\" y=\"15\" width=\"25\" height=\"16\" rx=\"2\" fill=\"#0038A8\" opacity=\"0.5\"></rect><rect x=\"298\" y=\"20.3\" width=\"25\" height=\"5.4\" fill=\"#CE1126\" opacity=\"0.5\"></rect><rect x=\"298\" y=\"25.7\" width=\"25\" height=\"5.3\" rx=\"0 0 2 2\" fill=\"#FCD116\" opacity=\"0.5\"></rect><path d=\"M342 20l5 5 5-5\" stroke=\"#7E96BE\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
+        "previewHtml": "<svg width=\"366\" height=\"46\" viewBox=\"0 0 366 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"45\" rx=\"5.5\" fill=\"#EEF2F9\"></rect><text x=\"12\" y=\"23\" font-family=\"Proxima Soft, system-ui\" font-size=\"15\" font-weight=\"700\" fill=\"#7E96BE\" dominant-baseline=\"central\">₱</text><text x=\"36\" y=\"20\" font-family=\"Proxima Soft, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\">Label</text><text x=\"36\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" fill=\"#C2CFE5\">Value</text><rect x=\"298\" y=\"15\" width=\"25\" height=\"8\" fill=\"#0038A8\" opacity=\"0.5\"></rect><rect x=\"298\" y=\"23\" width=\"25\" height=\"8\" fill=\"#CE1126\" opacity=\"0.5\"></rect><polygon points=\"298,15 298,31 308.5,23\" fill=\"#FFFFFF\" opacity=\"0.5\"></polygon><path d=\"M342 20l5 5 5-5\" stroke=\"#7E96BE\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>"
       }
     ],
     "colorsTables": [
@@ -600,10 +711,10 @@ export const selectField: ComponentData = {
         ],
         "rows": [
           {
-            "role": "#label",
+            "role": "Label",
             "token": "Font",
             "values": [
-              "HeyMeow Rnd Semibold"
+              "Proxima Soft Semibold"
             ]
           },
           {
@@ -612,10 +723,10 @@ export const selectField: ComponentData = {
             "values": []
           },
           {
-            "role": "#value",
+            "role": "Value",
             "token": "Font",
             "values": [
-              "HeyMeow Rnd"
+              "Proxima Soft"
             ]
           },
           {

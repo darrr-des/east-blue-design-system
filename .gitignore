@@ -35,3 +35,14 @@ astro-site/src/pages/sandbox/
 astro-site/src/components/SidebarV2.astro
 astro-site/src/components/ComponentCardV2.astro
 astro-site/public/_dev/
+
+# Visual regression — runtime artifacts (generated, not tracked)
+astro-site/tests/.diff/
+astro-site/tests/.playwright-output/
+astro-site/tests/.playwright-report/
+astro-site/tests/.review/
+astro-site/test-results/
+test-results/
+
+# Skill lock file — local Claude Code state, not project state
+skills-lock.json

@@ -9,8 +9,8 @@ function _rblBuildRadio(opts) {
   var isLarge = opts.size === 'large';
   var box = isLarge ? 20 : 16;
   var cx = box / 2;
-  var selected = opts.selected === 'true';
-  var error = opts.error === 'true';
+  var selected = opts.selected === 'true' || opts.selected === true;
+  var error = opts.error === 'true' || opts.isError === 'true' || opts.isError === true || opts.error === true;
 
   var ringColor, fillColor;
   if (error && selected) { ringColor = '#D61B2C'; fillColor = '#D61B2C'; }
@@ -30,9 +30,9 @@ function _rblBuildRow(opts) {
   var fontSize = isLarge ? 16 : 14;
   var lineHeight = isLarge ? 20 : 16;
   var labelColor = '#445C85';
-  var s = '<div style="display:inline-flex;gap:12px;align-items:flex-start;padding:4px 0;">';
-  s += '<div style="padding-top:' + (isLarge ? 2 : 4) + 'px;">' + _rblBuildRadio(opts) + '</div>';
-  s += '<div style="color:' + labelColor + ';font-family:\'HeyMeow Rnd\', system-ui;font-weight:600;font-size:' + fontSize + 'px;line-height:' + lineHeight + 'px;letter-spacing:0.25px;">Label</div>';
+  var s = '<div style="display:inline-flex;gap:12px;align-items:center;padding:4px 0;">';
+  s += '<div style="display:flex;align-items:center;">' + _rblBuildRadio(opts) + '</div>';
+  s += '<div style="color:' + labelColor + ';font-family:\'Proxima Soft\', system-ui;font-weight:600;font-size:' + fontSize + 'px;line-height:' + lineHeight + 'px;letter-spacing:0.25px;">Label</div>';
   s += '</div>';
   return s;
 }
@@ -45,23 +45,82 @@ function updateRBLDemo() {
   if (el) el.innerHTML = _rblBuildRow(_rblDemo);
 }
 
-function _rblInitSpecCards() {
-  var cards = [
-    ['rbl-preview-default', { size: 'default', error: 'false', selected: 'false' }],
-    ['rbl-preview-large', { size: 'large', error: 'false', selected: 'false' }],
-    ['rbl-preview-default-error', { size: 'default', error: 'true', selected: 'false' }],
-    ['rbl-preview-large-error', { size: 'large', error: 'true', selected: 'false' }]
-  ];
-  cards.forEach(function(c) {
-    var el = document.getElementById(c[0]);
-    if (el) el.innerHTML = _rblBuildRow(c[1]);
-  });
+/* ── Spec cards ─────────────────────────────────────────────────────── */
+var _specCards = {
+  'default':       { size: 'default', isError: 'false', selected: 'false' },
+  'large':         { size: 'large',   isError: 'false', selected: 'false' },
+  'default-error': { size: 'default', isError: 'true',  selected: 'false' },
+  'large-error':   { size: 'large',   isError: 'true',  selected: 'false' }
+};
+window._specCards = _specCards;
+
+function buildSwiftSnippet(type, card) {
+  var size = card.size === 'large' ? '.large' : '.regular';
+  var err = (card.isError === 'true' || card.isError === true) ? '.ebError(true)' : '.ebError(false)';
+  var sel = (card.selected === 'true' || card.selected === true) ? 'true' : 'false';
+  return 'EBRadioButtonWithLabel("Option label", selected: ' + sel + ')\n    .controlSize(' + size + ')\n    ' + err;
 }
+function buildComposeSnippet(type, card) {
+  var size = card.size === 'large' ? 'EBRadioSize.Large' : 'EBRadioSize.Default';
+  var err = (card.isError === 'true' || card.isError === true) ? 'true' : 'false';
+  var sel = (card.selected === 'true' || card.selected === true) ? 'true' : 'false';
+  return 'EBRadioButtonWithLabel(\n    label = "Option label",\n    selected = ' + sel + ',\n    onCheckedChange = { },\n    size = ' + size + ',\n    isError = ' + err + '\n)';
+}
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview — replace inner content of `rbl-spec-${cardStyle}-preview` */
+  var previewEl = document.getElementById('rbl-spec-' + cardStyle + '-preview');
+  if (previewEl) {
+    /* Map `isError` → `error` for renderer compatibility */
+    var renderOpts = {
+      size: card.size,
+      error: card.isError,
+      selected: card.selected
+    };
+    previewEl.innerHTML = _rblBuildRow(renderOpts);
+  }
+
+  /* Update Properties text — data-sp="${cardStyle}-${prop}" */
+  var spEl = document.querySelector('[data-sp="' + cardStyle + '-' + prop + '"]');
+  if (spEl) {
+    var hex = spEl.querySelector('.spec-prop-hex');
+    if (hex) hex.textContent = value;
+    else spEl.textContent = value;
+  }
+
+  /* Update DEV code — locate via `[data-code-content="${cardStyle}"]`. */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+window.updateSpecCard = updateSpecCard;
 
 function _rblInit() {
   updateRBLDemo();
-  _rblInitSpecCards();
+  Object.keys(_specCards).forEach(function(k) {
+    updateSpecCard(k, 'size', _specCards[k].size);
+  });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _rblInit);
 else _rblInit();
+
+document.addEventListener('astro:page-load', _rblInit);

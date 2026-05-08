@@ -59,16 +59,16 @@ function _hvCard(opts) {
     s += '<div style="color:#0A2757;font-size:16px;font-weight:700;font-family:\'Proxima Soft\',system-ui;line-height:20px;letter-spacing:0.25px;">Grab Food</div>';
   }
   if (desc) {
-    s += '<div style="color:#445C85;font-size:12px;font-family:\'BarkAda\',system-ui;line-height:18px;">This is the description of the voucher.</div>';
+    s += '<div style="color:#445C85;font-size:12px;font-weight:500;font-family:\'BarkAda\',system-ui;line-height:18px;">This is the description of the voucher.</div>';
   }
   if (amount) {
     s += '<div style="display:flex;gap:6px;align-items:center;">';
     s += '<div style="color:#005CE5;font-size:14px;font-weight:700;font-family:\'Proxima Soft\',system-ui;letter-spacing:0.25px;">PHP 100.00</div>';
-    s += '<div style="color:#90A8D0;font-size:12px;font-family:\'BarkAda\',system-ui;text-decoration:line-through;">PHP 150.00</div>';
+    s += '<div style="color:#90A8D0;font-size:12px;font-weight:700;font-family:\'Proxima Soft\',system-ui;text-decoration:line-through;">PHP 150.00</div>';
     s += '</div>';
   }
   if (validity) {
-    s += '<div style="color:#6780A9;font-size:8px;font-family:\'BarkAda\',system-ui;letter-spacing:0;">Validity: Dec 25 2022 - Jan 5 2023</div>';
+    s += '<div style="color:#6780A9;font-size:8px;font-weight:500;font-family:\'BarkAda\',system-ui;letter-spacing:0;">Validity: Dec 25 2022 - Jan 5 2023</div>';
   }
   s += '</div>';
   s += '</div>';

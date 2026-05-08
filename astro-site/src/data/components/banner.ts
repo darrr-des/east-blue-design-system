@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
 
 // Per-card demo controls — wired to `updateSpecCard(demoKey, prop, value)`
 // in `public/scripts/demos/banner.js`.
@@ -82,7 +83,7 @@ export const banner: ComponentData = {
   },
   "overview": {
     "inContextNote": "Banner is used in-flow as a promotional callout — typically between sections on a Home or Dashboard screen. \"Within A Container\" leaves horizontal padding on either side so the banner sits as a card; \"Full Width\" bleeds edge-to-edge. The image or icon sits on the opposite side of the text per the position axis.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"bnr-demo-preview\"><div class=\"eb-preview eb-preview-bnr eb-preview-bnr--container eb-preview-bnr--img-left\"><div class=\"eb-preview-bnr__card\"><div class=\"eb-preview-bnr__asset\"><div class=\"eb-preview-bnr__asset-disk\"></div><div class=\"eb-preview-bnr__asset-chip\">Replace me</div></div><div class=\"eb-preview-bnr__content\"><div class=\"eb-preview-bnr__heading\">Heading</div><div class=\"eb-preview-bnr__desc\">Add description here.</div><div class=\"eb-preview-bnr__link\"><span>Button</span><svg class=\"eb-preview-bnr__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" width=\"16\" height=\"16\"><path d=\"M9 6l6 6-6 6\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">preamble</span><input type=\"text\" id=\"bnr-ctrl-preamble\" class=\"demo-panel-select demo-panel-input\" value=\"Preamble\" oninput=\"_bnrUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">heading</span><input type=\"text\" id=\"bnr-ctrl-heading\" class=\"demo-panel-select demo-panel-input\" value=\"Heading\" oninput=\"_bnrUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><input type=\"text\" id=\"bnr-ctrl-desc\" class=\"demo-panel-select demo-panel-input\" value=\"Add description here.\" oninput=\"_bnrUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">action label</span><input type=\"text\" id=\"bnr-ctrl-action\" class=\"demo-panel-select demo-panel-input\" value=\"Button\" oninput=\"_bnrUpdate()\"></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Property</span><select id=\"bnr-ctrl-property\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"container\" selected=\"\">Within A Container</option><option value=\"full\">Full Width</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">position</span><select id=\"bnr-ctrl-position\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"left\" selected=\"\">left</option><option value=\"right\">right</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">with preamble</span><select id=\"bnr-ctrl-preamble-flag\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">with icon</span><select id=\"bnr-ctrl-icon-flag\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">action</span><select id=\"bnr-ctrl-action-flag\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"button\" selected=\"\">with button</option><option value=\"link\">with link</option><option value=\"none\">none</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"bnr-demo-preview\"><div class=\"eb-preview eb-preview-bnr eb-preview-bnr--container eb-preview-bnr--img-left\"><div class=\"eb-preview-bnr__card\"><div class=\"eb-preview-bnr__asset\"><div class=\"eb-preview-bnr__asset-disk\"></div><div class=\"eb-preview-bnr__asset-chip\">Replace me</div></div><div class=\"eb-preview-bnr__content\"><div class=\"eb-preview-bnr__heading\">Heading</div><div class=\"eb-preview-bnr__desc\">Add description here.</div><div class=\"eb-preview-bnr__link\"><span>Button</span><svg class=\"eb-preview-bnr__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" width=\"16\" height=\"16\"><path d=\"M9 6l6 6-6 6\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Property</span><select id=\"bnr-ctrl-property\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"container\" selected=\"\">Within A Container</option><option value=\"full\">Full Width</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">position</span><select id=\"bnr-ctrl-position\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"left\" selected=\"\">left</option><option value=\"right\">right</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">with preamble</span><select id=\"bnr-ctrl-preamble-flag\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">with icon</span><select id=\"bnr-ctrl-icon-flag\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">action</span><select id=\"bnr-ctrl-action-flag\" class=\"demo-panel-select\" onchange=\"_bnrUpdate()\"><option value=\"button\" selected=\"\">with button</option><option value=\"link\">with link</option><option value=\"none\">none</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -288,7 +289,7 @@ export const banner: ComponentData = {
         "title": "Within A Container · with preamble",
         "node": "756:82655",
         "description": "The most content-rich variant — preamble + heading + description + button link, with the image on the right and the content column left-aligned. Wraps in a rounded card with 12px outer padding.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"bnr-spec-container-pre-preview\"><div class=\"eb-preview eb-preview-bnr eb-preview-bnr--container eb-preview-bnr--img-right\"><div class=\"eb-preview-bnr__card\"><div class=\"eb-preview-bnr__content\"><div class=\"eb-preview-bnr__preamble\">Preamble</div><div class=\"eb-preview-bnr__heading\">Heading</div><div class=\"eb-preview-bnr__desc\">Add description here.</div><div class=\"eb-preview-bnr__link\"><span>Button</span><svg class=\"eb-preview-bnr__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" width=\"16\" height=\"16\"><path d=\"M9 6l6 6-6 6\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div><div class=\"eb-preview-bnr__asset\"><div class=\"eb-preview-bnr__asset-disk\"></div><div class=\"eb-preview-bnr__asset-chip\">Replace me</div></div></div></div></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"bnr-spec-container-pre-preview\"><div class=\"eb-preview eb-preview-bnr eb-preview-bnr--container eb-preview-bnr--img-left\"><div class=\"eb-preview-bnr__card\"><div class=\"eb-preview-bnr__asset\"><div class=\"eb-preview-bnr__asset-disk\"></div><div class=\"eb-preview-bnr__asset-chip\">Replace me</div></div><div class=\"eb-preview-bnr__content\"><div class=\"eb-preview-bnr__preamble\">Preamble</div><div class=\"eb-preview-bnr__heading\">Heading</div><div class=\"eb-preview-bnr__desc\">Add description here.</div><div class=\"eb-preview-bnr__link\"><span>Button</span><svg class=\"eb-preview-bnr__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" width=\"16\" height=\"16\"><path d=\"M9 6l6 6-6 6\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -406,7 +407,7 @@ export const banner: ComponentData = {
         "title": "Within A Container · icon · no action",
         "node": "756:82657",
         "description": "Icon-led variant — replaces the image with a drawn grey circle placeholder. No action CTA. Used when the banner is informational rather than promotional.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"bnr-spec-container-icon-preview\"><div class=\"eb-preview eb-preview-bnr eb-preview-bnr--container eb-preview-bnr--img-left\"><div class=\"eb-preview-bnr__card\"><div class=\"eb-preview-bnr__asset eb-preview-bnr__asset--icon\"><div class=\"eb-preview-bnr__icon-dot\"></div></div><div class=\"eb-preview-bnr__content\"><div class=\"eb-preview-bnr__heading\">Heading</div><div class=\"eb-preview-bnr__desc\">This is a description for this banner. This is a description for this banner.</div></div></div></div></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"bnr-spec-container-icon-preview\"><div class=\"eb-preview eb-preview-bnr eb-preview-bnr--container eb-preview-bnr--img-left\"><div class=\"eb-preview-bnr__card\"><div class=\"eb-preview-bnr__asset eb-preview-bnr__asset--icon\"><div class=\"eb-preview-bnr__icon-dot\"></div></div><div class=\"eb-preview-bnr__content\"><div class=\"eb-preview-bnr__heading\">Heading</div><div class=\"eb-preview-bnr__desc\">Add description here.</div></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -452,7 +453,46 @@ export const banner: ComponentData = {
         "compose": "<code><span class=\"syn-type\">EBBanner</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Service update\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Maintenance window tonight at 11 PM\"</span><span class=\"syn-punc\">,</span>\n    layout <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBannerLayout</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Container</span><span class=\"syn-punc\">,</span>\n    leadingAsset <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Info</span><span class=\"syn-punc\">,</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">)</span></code>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — Within-container · with preamble
+      buildStatelessColorsTable({
+        title: 'Within Container — Colors',
+        description: 'Banner that nests inside a parent surface. Card bg is transparent; only typography roles carry color tokens.',
+        rows: [
+          { role: 'Card bg',      token: 'banner/color/bg',          value: 'transparent' },
+          { role: 'Preamble',     token: 'banner/color/preamble',    value: '#072592' },
+          { role: 'Heading',      token: 'banner/color/heading',     value: '#072592' },
+          { role: 'Description',  token: 'banner/color/description', value: '#6780A9' },
+          { role: 'Action label', token: 'banner/color/action',      value: '#005CE5' },
+          { role: 'Chevron tint', token: 'banner/color/chevron',     value: '#005CE5' },
+        ],
+      }),
+      // Card 2 — Full-width · with button
+      buildStatelessColorsTable({
+        title: 'Full Width — Colors',
+        description: 'Edge-to-edge banner with a white surface and an optional faint border tint.',
+        rows: [
+          { role: 'Card bg',      token: 'banner/color/bg',          value: '#FFFFFF' },
+          { role: 'Border',       token: 'banner/color/border',      value: '#DFECFF' },
+          { role: 'Heading',      token: 'banner/color/heading',     value: '#072592' },
+          { role: 'Description',  token: 'banner/color/description', value: '#6780A9' },
+          { role: 'Action label', token: 'banner/color/action',      value: '#005CE5' },
+          { role: 'Chevron tint', token: 'banner/color/chevron',     value: '#005CE5' },
+        ],
+      }),
+      // Card 3 — Within-container · with icon
+      buildStatelessColorsTable({
+        title: 'With Icon — Colors',
+        description: 'Same nested-card palette as Card 1, with a leading icon role replacing the preamble.',
+        rows: [
+          { role: 'Card bg',      token: 'banner/color/bg',          value: 'transparent' },
+          { role: 'Icon tint',    token: 'banner/color/icon',        value: '#005CE5' },
+          { role: 'Heading',      token: 'banner/color/heading',     value: '#072592' },
+          { role: 'Description',  token: 'banner/color/description', value: '#6780A9' },
+          { role: 'Action label', token: 'banner/color/action',      value: '#005CE5' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

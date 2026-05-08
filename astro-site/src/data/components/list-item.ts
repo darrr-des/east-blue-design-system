@@ -1,4 +1,38 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/list-item.js`.
+const listItemDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Level',
+        prop: 'level',
+        defaultValue: '1',
+        options: [
+          { value: '1', label: '1' },
+          { value: '2', label: '2' },
+          { value: '3', label: '3' },
+        ],
+      },
+      {
+        label: 'Asset',
+        prop: 'asset',
+        defaultValue: 'bullet',
+        options: [
+          { value: 'bullet', label: 'bullet' },
+          { value: 'check', label: 'check' },
+          { value: 'check-positive', label: 'check-positive' },
+          { value: 'pending', label: 'pending' },
+          { value: 'pending-notice', label: 'pending-notice' },
+          { value: 'numbered', label: 'numbered' },
+          { value: 'custom', label: 'custom' },
+        ],
+      },
+    ],
+  },
+];
 
 export const listItem: ComponentData = {
   "meta": {
@@ -101,17 +135,27 @@ export const listItem: ComponentData = {
     "specCards": [
       {
         "cardKey": "level-1-—-no-indent",
+        "demoKey": "level1",
+        "demoControls": listItemDemoControls,
         "title": "Level 1 — no indent",
         "node": "18482:34430",
         "description": "Base row. Asset + 270px body. No indent.",
+        "previewHtml": "<div id=\"li-spec-level1-preview\" class=\"li-spec-preview\"></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Variant",
-                "value": "Level 1 — no indent",
+                "key": "Level",
+                "value": "1",
+                "prop": "level",
+                "mono": false
+              },
+              {
+                "key": "Asset",
+                "value": "bullet",
+                "prop": "asset",
                 "mono": false
               },
               {
@@ -131,30 +175,24 @@ export const listItem: ComponentData = {
             ]
           },
           {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
+            label: 'Layout',
+            slug: 'layout',
+            rows: [
+              { key: 'Row height', value: '48 / 56px', mono: true },
               {
-                "key": "Row height",
-                "value": "48 / 56px",
-                "mono": true
+                key: 'Indent',
+                value: '0px',
+                mono: true,
+                variants: {
+                  'level:1': { value: '0px' },
+                  'level:2': { value: '16px' },
+                  'level:3': { value: '32px' },
+                },
               },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "24 × 24",
-                "mono": true
-              }
-            ]
+              { key: 'Padding H', value: '16px', mono: true },
+              { key: 'Padding V', value: '12px', mono: true },
+              { key: 'Icon size', value: '24 × 24', mono: true },
+            ],
           },
           {
             "label": "Typography",
@@ -178,17 +216,27 @@ export const listItem: ComponentData = {
       },
       {
         "cardKey": "level-2-—-16px-indent",
+        "demoKey": "level2",
+        "demoControls": listItemDemoControls,
         "title": "Level 2 — 16px indent",
         "node": "18482:34433",
         "description": "Indented 16px. Body fills remaining width of the 294px container.",
+        "previewHtml": "<div id=\"li-spec-level2-preview\" class=\"li-spec-preview\"></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Variant",
-                "value": "Level 2 — 16px indent",
+                "key": "Level",
+                "value": "2",
+                "prop": "level",
+                "mono": false
+              },
+              {
+                "key": "Asset",
+                "value": "bullet",
+                "prop": "asset",
                 "mono": false
               },
               {
@@ -208,30 +256,24 @@ export const listItem: ComponentData = {
             ]
           },
           {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
+            label: 'Layout',
+            slug: 'layout',
+            rows: [
+              { key: 'Row height', value: '48 / 56px', mono: true },
               {
-                "key": "Row height",
-                "value": "48 / 56px",
-                "mono": true
+                key: 'Indent',
+                value: '0px',
+                mono: true,
+                variants: {
+                  'level:1': { value: '0px' },
+                  'level:2': { value: '16px' },
+                  'level:3': { value: '32px' },
+                },
               },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "24 × 24",
-                "mono": true
-              }
-            ]
+              { key: 'Padding H', value: '16px', mono: true },
+              { key: 'Padding V', value: '12px', mono: true },
+              { key: 'Icon size', value: '24 × 24', mono: true },
+            ],
           },
           {
             "label": "Typography",
@@ -255,17 +297,27 @@ export const listItem: ComponentData = {
       },
       {
         "cardKey": "level-3-—-32px-indent",
+        "demoKey": "level3",
+        "demoControls": listItemDemoControls,
         "title": "Level 3 — 32px indent",
         "node": "18482:34436",
         "description": "Indented 32px. Deepest supported level.",
+        "previewHtml": "<div id=\"li-spec-level3-preview\" class=\"li-spec-preview\"></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Variant",
-                "value": "Level 3 — 32px indent",
+                "key": "Level",
+                "value": "3",
+                "prop": "level",
+                "mono": false
+              },
+              {
+                "key": "Asset",
+                "value": "bullet",
+                "prop": "asset",
                 "mono": false
               },
               {
@@ -285,30 +337,24 @@ export const listItem: ComponentData = {
             ]
           },
           {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
+            label: 'Layout',
+            slug: 'layout',
+            rows: [
+              { key: 'Row height', value: '48 / 56px', mono: true },
               {
-                "key": "Row height",
-                "value": "48 / 56px",
-                "mono": true
+                key: 'Indent',
+                value: '0px',
+                mono: true,
+                variants: {
+                  'level:1': { value: '0px' },
+                  'level:2': { value: '16px' },
+                  'level:3': { value: '32px' },
+                },
               },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "24 × 24",
-                "mono": true
-              }
-            ]
+              { key: 'Padding H', value: '16px', mono: true },
+              { key: 'Padding V', value: '12px', mono: true },
+              { key: 'Icon size', value: '24 × 24', mono: true },
+            ],
           },
           {
             "label": "Typography",

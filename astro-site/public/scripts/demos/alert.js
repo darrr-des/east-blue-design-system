@@ -264,32 +264,16 @@ function _alertBuildCardPreview(state) {
   return html;
 }
 
-function _alertBuildColorProps(card) {
-  var c = _alertTypeColors[card.type] || _alertTypeColors.information;
-  var _sw = function(hex){ return '<span class="spec-swatch" style="background:'+hex+';'+ (hex.indexOf('FF') !== -1 ? 'border:1px solid #E5EBF4' : '') +'"></span> '; };
-  var html = '';
-  html += '<div class="spec-prop"><span class="spec-prop-key">Background</span><span class="spec-prop-val mono">' + _sw(c.bg) + c.bg + '</span></div>';
-  html += '<div class="spec-prop"><span class="spec-prop-key">Title</span><span class="spec-prop-val mono">' + _sw(c.title) + c.title + '</span></div>';
-  html += '<div class="spec-prop"><span class="spec-prop-key">Description</span><span class="spec-prop-val mono">' + _sw(c.desc) + c.desc + ' @ 80%</span></div>';
-  html += '<div class="spec-prop"><span class="spec-prop-key">Icon / accent</span><span class="spec-prop-val mono">' + _sw(c.icon) + c.icon + '</span></div>';
-  html += '<div class="spec-prop"><span class="spec-prop-key">Bg token</span><span class="spec-prop-val mono">' + c.bgToken + '</span></div>';
-  html += '<div class="spec-prop"><span class="spec-prop-key">Title token</span><span class="spec-prop-val mono">' + c.titleToken + '</span></div>';
-  html += '<div class="spec-prop"><span class="spec-prop-key">Description token</span><span class="spec-prop-val mono">' + c.descToken + '</span></div>';
-  html += '<div class="spec-prop"><span class="spec-prop-key">Icon token</span><span class="spec-prop-val mono">' + c.iconToken + '</span></div>';
-  return html;
-}
-
 function _renderAlertSpecCard(card) {
   var state = _alertSpec[card];
   if (!state) return;
-  // Update preview
+  // Update preview only — Colors section is server-rendered from
+  // alert.ts; Plan A's `_patchSpecCardRows` patches per-type values
+  // when a row declares `variants` in the data file.
   var preview = document.getElementById('spec-alert-' + card + '-preview');
   if (preview) {
     preview.innerHTML = card === 'banner' ? _alertBuildBannerPreview(state) : _alertBuildCardPreview(state);
   }
-  // Update colors section
-  var colorsEl = document.getElementById('spec-alert-' + card + '-colors');
-  if (colorsEl) colorsEl.innerHTML = _alertBuildColorProps(state);
 }
 
 function updateAlertSpecCard(card, prop, val) {
@@ -311,37 +295,9 @@ function updateSpecCard(card, prop, val) {
   // Re-render preview
   _renderAlertSpecCard(card);
 
-  // Update Colors section (id `spec-${card}-colors`)
-  var c = _alertTypeColors[state.type] || _alertTypeColors.information;
-  var colorsEl = document.getElementById('spec-' + card + '-colors');
-  if (colorsEl) {
-    var rows;
-    if (card === 'banner') {
-      rows = [
-        ['Background',     c.bg,    c.bgToken],
-        ['Title',          c.title, c.titleToken],
-        ['Description',    c.desc,  c.descToken],
-        ['Icon / accent',  c.icon,  c.iconToken]
-      ];
-    } else {
-      rows = [
-        ['Surface',        '#FFFFFF', 'surface/default'],
-        ['Border accent',  c.icon,    c.iconToken],
-        ['Title',          c.title,   c.titleToken],
-        ['Description',    c.desc,    c.descToken],
-        ['Action link',    '#005CE5', 'alert/color/info/label-link']
-      ];
-    }
-    var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
-    rows.forEach(function(r) {
-      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E5EBF4' : '';
-      h += '<div class="spec-prop has-token"><span class="spec-prop-key">' + r[0] + '</span>'
-         + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span>'
-         + '<span class="spec-token-name">' + r[2] + '</span></div>';
-    });
-    h += '</div>';
-    colorsEl.innerHTML = h;
-  }
+  // Colors section is server-rendered from alert.ts; Plan A's
+  // `_patchSpecCardRows` (assessment.js) handles per-type updates when
+  // a row declares `variants`. Demo no longer rebuilds it.
 
   // DEV code update (always — even when DEV view hidden)
   var devView = document.querySelector('[data-view="' + card + '-dev"]');

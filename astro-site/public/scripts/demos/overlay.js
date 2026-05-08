@@ -65,26 +65,63 @@ function _overlayUpdate() {
   });
 }
 
-function _overlaySpecMode(mode) {
-  var btns = document.querySelectorAll('#panel-overlay .mode-toggle-btn');
-  btns.forEach(function(b) { b.classList.remove('active'); });
-  var sel = document.querySelector('#panel-overlay .mode-toggle-btn[onclick*="\'' + mode + '\'"]');
-  if (sel) sel.classList.add('active');
-  var el = document.getElementById('overlay-spec-preview');
-  if (!el) return;
-  if (mode === 'dev') {
-    el.innerHTML =
-      '<div class="dev-spec-block">' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">name</span><span class="dev-spec-val">Overlay</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">node</span><span class="dev-spec-val">47:329691</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">dim.fill</span><span class="dev-spec-val">bg/color-bg-overlay-strong · #020E228F</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">dim.size</span><span class="dev-spec-val">Fill × Fill (recommended)</span></div>' +
-        '<div class="dev-spec-row"><span class="dev-spec-key">radius</span><span class="dev-spec-val">0</span></div>' +
-      '</div>';
-  } else {
-    el.innerHTML = _overlayStageMarkup({bg:'light', surface:'sheet', dim:true});
+/* ── Overlay Spec Cards (canonical) ──────────────────────────────── */
+var _overlaySpecCards = {
+  strong: { surface: 'sheet', bg: 'light' }
+};
+var _specCards = _overlaySpecCards;
+window._specCards = _specCards;
+
+var slug = 'overlay';
+
+function buildSwiftSnippet(type, card) {
+  return getSnippet(type, 'swift', card);
+}
+function buildComposeSnippet(type, card) {
+  return getSnippet(type, 'compose', card);
+}
+function getSnippet(type, lang, card) {
+  if (lang === 'swift') {
+    return 'EBOverlay(isPresented: $showSheet)\n    .ebStrength(.strong) {\n    // content shown above the scrim\n}';
+  }
+  return 'EBOverlay(\n    visible = showSheet,\n    onDismiss = { },\n    strength = EBOverlayStrength.Strong\n) {\n    // content shown above the scrim\n}';
+}
+window.getSnippet = getSnippet;
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _overlaySpecCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update the stage preview inside the spec card */
+  var specPreview = document.getElementById('overlay-spec-preview');
+  if (specPreview) {
+    specPreview.innerHTML = _overlayStageMarkup({
+      bg: card.bg || 'light',
+      surface: card.surface || 'sheet',
+      dim: true
+    });
+  }
+
+  /* Update Properties row text via [data-sp="<cardStyle>-<prop>"] */
+  var spVal = document.querySelector('[data-sp="' + cardStyle + '-' + prop + '"]');
+  if (spVal) {
+    var hexEl = spVal.querySelector('.spec-prop-hex');
+    if (hexEl) hexEl.textContent = value;
+    else spVal.textContent = value;
+  }
+
+  /* Update DEV code via [data-code-content="<cardStyle>"]. Always run. */
+  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
+  if (codeEl) {
+    var lang = codeEl.getAttribute('data-lang') || 'swift';
+    var code = getSnippet(cardStyle, lang, card);
+    codeEl.setAttribute('data-final', code);
+    codeEl.textContent = code;
+    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
   }
 }
+window.updateSpecCard = updateSpecCard;
 
 function _overlayInit() {
   var ctx = document.getElementById('overlay-context-preview');
@@ -96,3 +133,10 @@ function _overlayInit() {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _overlayInit);
 else _overlayInit();
+
+(function(){
+  function reinit(){
+    if (typeof _overlayInit === 'function') _overlayInit();
+  }
+  document.addEventListener('astro:page-load', reinit);
+})();

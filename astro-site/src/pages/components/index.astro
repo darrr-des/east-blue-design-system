@@ -1,146 +1,585 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { componentManifest } from '../../data/components/_index';
-import fs from 'node:fs';
-import path from 'node:path';
+import { componentMap, componentManifest } from '../../data/components/_index';
 
-// Load full component data for descriptions, badges, navIcon
-const DATA_DIR = path.resolve(process.cwd(), 'src/data/components');
 type CompCard = {
   slug: string;
   name: string;
   description: string;
   navGroup?: string;
-  navIconSvg?: string;
   badges: { kind: string; label: string }[];
 };
 
 const cards: CompCard[] = [];
 let openTotal = 0;
 let resolvedTotal = 0;
-
 for (const item of componentManifest) {
-  try {
-    const raw = fs.readFileSync(path.join(DATA_DIR, item.slug + '.ts'), 'utf8');
-    const m = raw.match(/= ({[\s\S]*});\s*$/);
-    if (!m) continue;
-    const data = new Function('return ' + m[1])();
-    cards.push({
-      slug: item.slug,
-      name: data.meta?.name || item.slug,
-      description: data.meta?.description || '',
-      navGroup: data.meta?.navGroup,
-      navIconSvg: data.meta?.navIconSvg,
-      badges: data.meta?.badges || [],
-    });
-    openTotal += (data.overview?.open || []).length;
-    resolvedTotal += (data.overview?.resolved || []).length;
-  } catch {}
+  const data = componentMap[item.slug];
+  if (!data) continue;
+  cards.push({
+    slug: item.slug,
+    name: data.meta?.name || item.slug,
+    description: data.meta?.description || '',
+    navGroup: data.meta?.navGroup,
+    badges: data.meta?.badges || [],
+  });
+  openTotal += (data.overview?.open || []).length;
+  resolvedTotal += (data.overview?.resolved || []).length;
 }
 
-// Group by family
-type Group = { name: string; items: CompCard[] };
-const groupMap = new Map<string, CompCard[]>();
-const standalone: CompCard[] = [];
-for (const c of cards) {
-  if (c.navGroup) {
-    if (!groupMap.has(c.navGroup)) groupMap.set(c.navGroup, []);
-    groupMap.get(c.navGroup)!.push(c);
-  } else {
-    standalone.push(c);
-  }
-}
-standalone.sort((a, b) => a.name.localeCompare(b.name));
-const groups: Group[] = [...groupMap.entries()]
-  .map(([name, items]) => ({ name, items: [...items].sort((a, b) => a.name.localeCompare(b.name)) }))
-  .sort((a, b) => a.name.localeCompare(b.name));
+// Alphabetical
+const cardsAlpha = [...cards].sort((a, b) => a.name.localeCompare(b.name));
 
-// Weave standalone items + group sections alphabetically
-type Row = { kind: 'item'; item: CompCard } | { kind: 'group'; group: Group };
-const rows: Row[] = [];
-let si = 0, gi = 0;
-while (si < standalone.length || gi < groups.length) {
-  const sName = standalone[si]?.name;
-  const gName = groups[gi]?.name;
-  if (sName && (!gName || sName.localeCompare(gName) < 0)) {
-    rows.push({ kind: 'item', item: standalone[si++] });
-  } else if (gName) {
-    rows.push({ kind: 'group', group: groups[gi++] });
-  }
+// Categorical mapping — same buckets as the sandbox prototype.
+const CATEGORY_FOR: Record<string, string> = {
+  'button': 'Actions', 'chip': 'Actions', 'Action List': 'Actions',
+  'checkbox': 'Inputs & Forms', 'Radio': 'Inputs & Forms', 'Toggle': 'Inputs & Forms',
+  'Dropdown': 'Inputs & Forms', 'Form Elements': 'Inputs & Forms',
+  'Date Picker': 'Inputs & Forms', 'Chat': 'Inputs & Forms',
+  'alert': 'Feedback & Status', 'badge': 'Feedback & Status',
+  'counter': 'Feedback & Status', 'progress-bar': 'Feedback & Status',
+  'inline-text': 'Feedback & Status', 'inline-message': 'Feedback & Status',
+  'subtext-message': 'Feedback & Status', 'callout': 'Feedback & Status',
+  'empty-state': 'Feedback & Status', 'Toast': 'Feedback & Status',
+  'accordion': 'Containers & Surfaces', 'modal': 'Containers & Surfaces',
+  'overlay': 'Containers & Surfaces', 'bottom-sheet': 'Containers & Surfaces',
+  'visual-popup': 'Containers & Surfaces', 'Card': 'Containers & Surfaces',
+  'Tooltip': 'Containers & Surfaces',
+  'title-bar': 'Navigation', 'Header': 'Navigation', 'Tabs': 'Navigation',
+  'Stepper': 'Navigation',
+  'menu-grid': 'Data Display', 'Avatar': 'Data Display',
+  'Carousel': 'Data Display', 'List': 'Data Display', 'Table': 'Data Display',
+  'ad-space': 'Promotions', 'Voucher': 'Promotions',
+};
+const CATEGORY_ORDER = [
+  'Actions', 'Inputs & Forms', 'Feedback & Status', 'Containers & Surfaces',
+  'Navigation', 'Data Display', 'Promotions',
+];
+function categoryOf(c: CompCard): string | undefined {
+  if (c.navGroup && CATEGORY_FOR[c.navGroup]) return CATEGORY_FOR[c.navGroup];
+  return CATEGORY_FOR[c.slug];
+}
+const categorized: Record<string, CompCard[]> = Object.fromEntries(
+  CATEGORY_ORDER.map((name) => [name, [] as CompCard[]])
+);
+const otherBucket: CompCard[] = [];
+for (const c of cardsAlpha) {
+  const cat = categoryOf(c);
+  if (cat && categorized[cat]) categorized[cat].push(c);
+  else otherBucket.push(c);
 }
 
 const totalCount = cards.length;
 
-const badgeCls = (kind: string) => {
-  const map: Record<string, string> = {
-    keep: 'badge-keep', fix: 'badge-fix', restructure: 'badge-restructure',
-    consolidate: 'badge-consolidate', 'product-layer': 'badge-product-layer', remove: 'badge-remove',
-    ready: 'badge-ready', refine: 'badge-refine', rework: 'badge-rework', na: 'badge-na',
-  };
-  return `badge ${map[kind] || ''}`;
-};
+const VERDICT_KINDS = new Set(['keep', 'fix', 'restructure', 'consolidate', 'product-layer', 'remove']);
+function verdictBadge(badges: { kind: string; label: string }[]) {
+  const b = badges.find((x) => VERDICT_KINDS.has(x.kind));
+  return b || badges[0];
+}
+function verdictTone(kind?: string): string {
+  if (!kind) return 'neutral';
+  if (kind === 'keep' || kind === 'ready') return 'positive';
+  if (kind === 'fix' || kind === 'refine') return 'warning';
+  if (kind === 'restructure' || kind === 'rework' || kind === 'remove') return 'negative';
+  if (kind === 'consolidate' || kind === 'product-layer') return 'info';
+  return 'neutral';
+}
 ---
+
 <Base title="Components · East Blue">
-  <div class="page">
-    <div class="page-content components-content">
-      <a class="page-back" href="/">
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-          <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-        Home
-      </a>
+  <div class="cmp-page" data-mode="alphabetical">
+    <div class="cmp-page-inner">
 
-      <header class="page-header">
-        <h1 class="components-title">Components <span class="components-count">{totalCount}</span></h1>
-        <p>{totalCount} components in East Blue Design System.</p>
-        <div class="components-meta">
-          <span class="components-meta-stat"><span class="components-meta-dot stat-amber"></span>{openTotal} open issues</span>
-          <span class="components-meta-stat"><span class="components-meta-dot stat-green"></span>{resolvedTotal} resolved</span>
-        </div>
-      </header>
-
-      {rows.map((row) =>
-        row.kind === 'item' ? (
-          <div class="comp-grid comp-grid-single">
-            <a class="summary-card" href={`/components/${row.item.slug}`}>
-              {row.item.navIconSvg && (
-                <div class="summary-card-preview" set:html={row.item.navIconSvg} />
-              )}
-              <div class="summary-card-body">
-                <div class="summary-card-header">
-                  <span class="summary-card-name">{row.item.name}</span>
-                  {row.item.badges[0] && (
-                    <span class={badgeCls(row.item.badges[0].kind)}>{row.item.badges[0].label}</span>
-                  )}
-                </div>
-                <p class="summary-card-desc">{row.item.description}</p>
-              </div>
-            </a>
+      <section class="cmp-banner" aria-labelledby="cmp-title">
+        <div class="cmp-banner-bg" aria-hidden="true"></div>
+        <div class="cmp-banner-text">
+          <h1 id="cmp-title" class="cmp-banner-title">Components</h1>
+          <p class="cmp-banner-desc">
+            The core UI primitives of East Blue. Each one is scored for
+            design-system health (structure, naming, tokens) and native
+            mobile readiness for SwiftUI and Jetpack Compose handoff.
+          </p>
+          <div class="cmp-banner-meta">
+            <span class="cmp-banner-stat">
+              <span class="cmp-banner-num">{totalCount}</span>
+              <span class="cmp-banner-stat-label">components</span>
+            </span>
+            <span class="cmp-banner-divider" aria-hidden="true"></span>
+            <span class="cmp-banner-stat">
+              <span class="cmp-dot stat-amber" aria-hidden="true"></span>
+              <span>{openTotal} open</span>
+            </span>
+            <span class="cmp-banner-stat">
+              <span class="cmp-dot stat-green" aria-hidden="true"></span>
+              <span>{resolvedTotal} resolved</span>
+            </span>
           </div>
-        ) : (
-          <>
-            <h2 class="components-group-name">{row.group.name}</h2>
-            <div class="comp-grid">
-              {row.group.items.map((item) => (
-                <a class="summary-card" href={`/components/${item.slug}`}>
-                  {item.navIconSvg && (
-                    <div class="summary-card-preview" set:html={item.navIconSvg} />
-                  )}
-                  <div class="summary-card-body">
-                    <div class="summary-card-header">
-                      <span class="summary-card-name">{item.name}</span>
-                      {item.badges[0] && (
-                        <span class={badgeCls(item.badges[0].kind)}>{item.badges[0].label}</span>
+        </div>
+      </section>
+
+      {/* Alphabetical view */}
+      <div class="cmp-view cmp-view--alpha">
+        <div class="cmp-grid">
+          {cardsAlpha.map((c) => {
+            const v = verdictBadge(c.badges);
+            return (
+              <a class="cmp-card" href={`/components/${c.slug}`}>
+                <div class="cmp-card-image" aria-hidden="true"></div>
+                {v && (
+                  <span class={`cmp-card-badge cmp-card-badge--${verdictTone(v.kind)}`}>{v.label}</span>
+                )}
+                <div class="cmp-card-body">
+                  <h3 class="cmp-card-title">{c.name}</h3>
+                  <p class="cmp-card-desc">{c.description}</p>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Categorical view */}
+      <div class="cmp-view cmp-view--cat">
+        {CATEGORY_ORDER.map((cat) => {
+          const list = categorized[cat] || [];
+          return list.length === 0 ? null : (
+            <section class="cmp-cat">
+              <h2 class="cmp-cat-name">{cat}</h2>
+              <div class="cmp-grid">
+                {list.map((c) => {
+                  const v = verdictBadge(c.badges);
+                  return (
+                    <a class="cmp-card" href={`/components/${c.slug}`}>
+                      <div class="cmp-card-image" aria-hidden="true"></div>
+                      {v && (
+                        <span class={`cmp-card-badge cmp-card-badge--${verdictTone(v.kind)}`}>{v.label}</span>
                       )}
+                      <div class="cmp-card-body">
+                        <h3 class="cmp-card-title">{c.name}</h3>
+                        <p class="cmp-card-desc">{c.description}</p>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })}
+        {otherBucket.length > 0 && (
+          <section class="cmp-cat">
+            <h2 class="cmp-cat-name">Other</h2>
+            <div class="cmp-grid">
+              {otherBucket.map((c) => {
+                const v = verdictBadge(c.badges);
+                return (
+                  <a class="cmp-card" href={`/components/${c.slug}`}>
+                    <div class="cmp-card-image" aria-hidden="true"></div>
+                    {v && (
+                      <span class={`cmp-card-badge cmp-card-badge--${verdictTone(v.kind)}`}>{v.label}</span>
+                    )}
+                    <div class="cmp-card-body">
+                      <h3 class="cmp-card-title">{c.name}</h3>
+                      <p class="cmp-card-desc">{c.description}</p>
                     </div>
-                    <p class="summary-card-desc">{item.description}</p>
-                  </div>
-                </a>
-              ))}
+                  </a>
+                );
+              })}
             </div>
-          </>
-        )
-      )}
+          </section>
+        )}
+      </div>
+
+    </div>
+
+    {/* Floating view-mode toggle */}
+    <div class="cmp-toggle-wrap" role="presentation">
+      <div class="cmp-toggle" role="tablist" aria-label="View mode">
+        <button
+          type="button"
+          class="cmp-toggle-btn is-active"
+          role="tab"
+          aria-selected="true"
+          data-mode="alphabetical"
+        >Alphabetical</button>
+        <button
+          type="button"
+          class="cmp-toggle-btn"
+          role="tab"
+          aria-selected="false"
+          data-mode="categorical"
+        >Categorical</button>
+      </div>
     </div>
   </div>
+
+  <script is:inline>
+    /* Runs on initial load AND every Astro view-transition swap. Without
+       the astro:page-load hook, navigating TO /components from another
+       page leaves the pill at its default width:0 / left:3px. */
+    function ebInitCmpToggle() {
+      const page = document.querySelector('.cmp-page');
+      const toggle = document.querySelector('.cmp-toggle');
+      const buttons = document.querySelectorAll('.cmp-toggle-btn');
+      if (!page || !toggle || !buttons.length) return;
+      if (toggle.dataset.ebInit === '1') return;
+      toggle.dataset.ebInit = '1';
+
+      function placePill(btn, animate) {
+        if (!animate) toggle.classList.add('no-pill-transition');
+        toggle.style.setProperty('--pill-left', btn.offsetLeft + 'px');
+        toggle.style.setProperty('--pill-width', btn.offsetWidth + 'px');
+        if (!animate) {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => toggle.classList.remove('no-pill-transition'));
+          });
+        }
+      }
+
+      const initial = toggle.querySelector('.cmp-toggle-btn.is-active') || buttons[0];
+      requestAnimationFrame(() => placePill(initial, false));
+
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const mode = btn.getAttribute('data-mode');
+          if (!mode) return;
+          page.setAttribute('data-mode', mode);
+          buttons.forEach((b) => {
+            const active = b.getAttribute('data-mode') === mode;
+            b.classList.toggle('is-active', active);
+            b.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          placePill(btn, true);
+        });
+      });
+
+      let resizeRaf = 0;
+      window.addEventListener('resize', () => {
+        cancelAnimationFrame(resizeRaf);
+        resizeRaf = requestAnimationFrame(() => {
+          const active = toggle.querySelector('.cmp-toggle-btn.is-active');
+          if (active) placePill(active, false);
+        });
+      });
+    }
+    /* Run now (covers direct URL hits) and on every Astro page-load
+       (covers in-app navigation via the sidebar). */
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', ebInitCmpToggle);
+    } else {
+      ebInitCmpToggle();
+    }
+    document.addEventListener('astro:page-load', ebInitCmpToggle);
+  </script>
+
+  <style>
+    /* ──────────────────────────────────────────────────────────────
+       Page shell — sits inside .main (already has margin-left for the
+       sidebar). cmp-page provides the bottom padding for the floating
+       toggle and acts as the data-mode selector root.
+       ────────────────────────────────────────────────────────────── */
+    .cmp-page {
+      position: relative;
+      min-height: calc(100vh - 0px);
+      padding: 32px 32px 144px;
+      box-sizing: border-box;
+    }
+    .cmp-page-inner {
+      max-width: 1264px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* ── Banner ──────────────────────────────────────────────────── */
+    .cmp-banner {
+      position: relative;
+      min-height: 280px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 48px;
+      box-sizing: border-box;
+    }
+    .cmp-banner-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(60% 90% at 90% 0%, rgba(100, 106, 120, 0.08), transparent 70%),
+        radial-gradient(50% 80% at 100% 100%, rgba(0, 92, 229, 0.06), transparent 70%);
+      pointer-events: none;
+    }
+    .cmp-banner-text {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .cmp-banner-title {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 64px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .cmp-banner-desc {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--muted);
+      max-width: 560px;
+    }
+    .cmp-banner-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 4px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .cmp-banner-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cmp-banner-num {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--text);
+    }
+    .cmp-banner-stat-label { font-weight: 500; }
+    .cmp-banner-divider {
+      width: 1px;
+      height: 14px;
+      background: var(--border);
+    }
+    .cmp-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    .cmp-dot.stat-amber { background: #D97706; }
+    .cmp-dot.stat-green { background: #12AF80; }
+
+    /* ── View visibility ────────────────────────────────────────── */
+    .cmp-view { display: none; }
+    .cmp-page[data-mode="alphabetical"] .cmp-view--alpha { display: block; }
+    .cmp-page[data-mode="categorical"]  .cmp-view--cat   { display: block; }
+    .cmp-view--cat   { padding-top: 24px; }
+    .cmp-view--alpha { padding-top: 24px; }
+
+    /* ── Card grid ──────────────────────────────────────────────── */
+    .cmp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    /* ── Categorical sections ───────────────────────────────────── */
+    .cmp-cat + .cmp-cat { margin-top: 56px; }
+    .cmp-cat-name {
+      margin: 0 0 16px;
+      padding-left: 8px;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 32px;
+      line-height: 1.1;
+      letter-spacing: -0.015em;
+      color: var(--text);
+    }
+
+    /* ──────────────────────────────────────────────────────────────
+       Card — same anatomy as the sandbox ComponentCardV2, but with
+       the live site's neutral grey + subtle-blue palette.
+       ────────────────────────────────────────────────────────────── */
+    .cmp-card {
+      --card-bg:        var(--surface);
+      --card-bg-hover:  var(--bg);
+      --card-image-bg:  rgba(100, 106, 120, 0.06);
+      --card-radius:    16px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      transition: background 280ms cubic-bezier(0.4, 0, 0.2, 1),
+                  border-color 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .cmp-card:hover {
+        background: var(--card-bg-hover);
+        border-color: rgba(100, 106, 120, 0.18);
+      }
+    }
+    .cmp-card:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .cmp-card-image {
+      width: 100%;
+      height: 200px;
+      flex-shrink: 0;
+      background: var(--card-image-bg);
+      border-radius: 12px 12px 0 0;
+      position: relative;
+    }
+    .cmp-card-badge {
+      position: absolute;
+      left: 24px;
+      top: 160px;
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+      color: #ffffff;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .cmp-card-badge--positive { background: #12AF80; }
+    .cmp-card-badge--warning  { background: #D97706; }
+    .cmp-card-badge--negative { background: #DC2626; }
+    .cmp-card-badge--info     { background: #3C4A5C; }
+    .cmp-card-badge--neutral  { background: #6780A9; }
+    .cmp-card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 18px 22px 22px;
+    }
+    .cmp-card-title {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cmp-card-desc {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ──────────────────────────────────────────────────────────────
+       Floating view-mode toggle — same pattern as sandbox, palette
+       swapped for neutral grey + accent.
+       ────────────────────────────────────────────────────────────── */
+    .cmp-toggle-wrap {
+      position: fixed;
+      bottom: 24px;
+      left: var(--sidebar-w);
+      right: 0;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 30;
+    }
+    .cmp-toggle {
+      --pill-left:  3px;
+      --pill-width: 0px;
+
+      position: relative;
+      pointer-events: auto;
+      display: flex;
+      gap: 2px;
+      align-items: stretch;
+      height: 48px;
+      padding: 4px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12),
+                  0 0 0 1px rgba(15, 23, 42, 0.02);
+      width: 320px;
+      box-sizing: border-box;
+      isolation: isolate;
+    }
+    .cmp-toggle::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: var(--pill-left);
+      width: var(--pill-width);
+      height: calc(100% - 8px);
+      background: var(--accent);
+      border-radius: 999px;
+      transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                  width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 0;
+    }
+    .cmp-toggle.no-pill-transition::before { transition: none; }
+    .cmp-toggle-btn {
+      position: relative;
+      z-index: 1;
+      flex: 1 0 0;
+      min-width: 120px;
+      height: 40px;
+      padding: 0 24px;
+      border: 0;
+      background: transparent;
+      border-radius: 999px;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 1;
+      color: var(--muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .cmp-toggle-btn:hover { color: var(--text); }
+    .cmp-toggle-btn.is-active {
+      color: #fff;
+      font-weight: 600;
+    }
+    .cmp-toggle-btn.is-active:hover { color: #fff; }
+    .cmp-toggle-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* ── Reduced layouts ────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .cmp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px) {
+      .cmp-page { padding: 16px 16px 144px; }
+      .cmp-toggle-wrap { left: 0; }
+      .cmp-grid { grid-template-columns: 1fr; }
+      .cmp-banner { padding: 32px; min-height: 220px; }
+      .cmp-banner-title { font-size: 44px; }
+      .cmp-banner-desc { font-size: 14px; }
+    }
+  </style>
 </Base>

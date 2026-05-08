@@ -1,4 +1,76 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/tab-item.js`.
+const tabItemVerticalControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'selected',
+        prop: 'selected',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+      {
+        label: 'hasRedDot',
+        prop: 'redDot',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
+        ],
+      },
+    ],
+  },
+];
+
+const tabItemHorizontalControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'selected',
+        prop: 'selected',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+      {
+        label: 'hasLeadingIcon',
+        prop: 'leadingIcon',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+      {
+        label: 'hasCounter',
+        prop: 'counter',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+      {
+        label: 'hasRedDot',
+        prop: 'redDot',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
+        ],
+      },
+    ],
+  },
+];
 
 export const tabItem: ComponentData = {
   "meta": {
@@ -26,7 +98,7 @@ export const tabItem: ComponentData = {
   },
   "overview": {
     "inContextNote": "Tab Items appear inside the Tabs container. See the Tabs in-context preview for the full screen layout.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ti-demo-preview\"><svg width=\"72\" height=\"84\" viewBox=\"0 0 72 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"72\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"36\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"36\" y=\"62\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"12\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"72\" height=\"2\" fill=\"#005CE5\"></rect></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isActive?</span><select class=\"demo-panel-select\" id=\"ti-demo-active\" onchange=\"updateTabItemDemo()\"><option value=\"yes\" selected=\"\">Yes</option><option value=\"no\">No</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">orientation</span><select class=\"demo-panel-select\" id=\"ti-demo-orient\" onchange=\"updateTabItemDemo()\"><option value=\"vertical\" selected=\"\">vertical</option><option value=\"horizontal\">horizontal</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">size</span><select class=\"demo-panel-select\" id=\"ti-demo-size\" onchange=\"updateTabItemDemo()\"><option value=\"small\" selected=\"\">small</option><option value=\"large\">large</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasLeadingIcon</span><select class=\"demo-panel-select\" id=\"ti-demo-leadicon\" onchange=\"updateTabItemDemo()\"><option value=\"no\" selected=\"\">No</option><option value=\"yes\">Yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasCounter</span><select class=\"demo-panel-select\" id=\"ti-demo-counter\" onchange=\"updateTabItemDemo()\"><option value=\"no\" selected=\"\">No</option><option value=\"yes\">Yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasRedDot</span><select class=\"demo-panel-select\" id=\"ti-demo-dot\" onchange=\"updateTabItemDemo()\"><option value=\"no\" selected=\"\">No</option><option value=\"yes\">Yes</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ti-demo-preview\"><svg width=\"72\" height=\"84\" viewBox=\"0 0 72 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"72\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"36\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"36\" y=\"62\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"12\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"72\" height=\"2\" fill=\"#005CE5\"></rect></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isActive?</span><select class=\"demo-panel-select\" id=\"ti-demo-active\" onchange=\"updateTabItemDemo()\"><option value=\"yes\" selected=\"\">Yes</option><option value=\"no\">No</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">orientation</span><select class=\"demo-panel-select\" id=\"ti-demo-orient\" onchange=\"updateTabItemDemo()\"><option value=\"vertical\" selected=\"\">vertical</option><option value=\"horizontal\">horizontal</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">size</span><select class=\"demo-panel-select\" id=\"ti-demo-size\" onchange=\"updateTabItemDemo()\"><option value=\"small\" selected=\"\">small</option><option value=\"large\">large</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasLeadingIcon</span><select class=\"demo-panel-select\" id=\"ti-demo-leadicon\" onchange=\"updateTabItemDemo()\"><option value=\"no\" selected=\"\">No</option><option value=\"yes\">Yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasCounter</span><select class=\"demo-panel-select\" id=\"ti-demo-counter\" onchange=\"updateTabItemDemo()\"><option value=\"no\" selected=\"\">No</option><option value=\"yes\">Yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasRedDot</span><select class=\"demo-panel-select\" id=\"ti-demo-dot\" onchange=\"updateTabItemDemo()\"><option value=\"no\" selected=\"\">No</option><option value=\"yes\">Yes</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -183,6 +255,8 @@ export const tabItem: ComponentData = {
     "specCards": [
       {
         "cardKey": "ti-spec-vs",
+        "demoKey": "vs",
+        "demoControls": tabItemVerticalControls,
         "title": "Vertical · small — 360px screen",
         "node": "18482:33263",
         "description": "Icon above label. 32px icon, 16/16 label (Primary/Label/Base). Active + inactive shown side-by-side.",
@@ -198,18 +272,41 @@ export const tabItem: ComponentData = {
               },
               {
                 "key": "State",
-                "value": "Inactive",
+                "value": "Active",
+                "prop": "selected",
+                "mono": false
+              },
+              {
+                "key": "Red dot",
+                "value": "false",
+                "prop": "redDot",
                 "mono": false
               }
             ]
           },
           {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Label", "value": "#6780A9", "token": "tab/color/inactive/label" },
-              { "key": "Border", "value": "#E5EBF4", "token": "tab/color/inactive/border" }
-            ]
+            label: 'Colors',
+            slug: 'colors',
+            rows: [
+              {
+                key: 'Label',
+                value: '#6780A9',
+                token: 'tab/color/inactive/label',
+                variants: {
+                  'selected:true':  { value: '#005CE5', token: 'tab/color/active/label' },
+                  'selected:false': { value: '#6780A9', token: 'tab/color/inactive/label' },
+                },
+              },
+              {
+                key: 'Border',
+                value: '#E5EBF4',
+                token: 'tab/color/inactive/border',
+                variants: {
+                  'selected:true':  { value: '#005CE5', token: 'tab/color/active/border' },
+                  'selected:false': { value: '#E5EBF4', token: 'tab/color/inactive/border' },
+                },
+              },
+            ],
           },
           {
             "label": "Layout",
@@ -251,10 +348,12 @@ export const tabItem: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebActive</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">false</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;\"><svg width=\"72\" height=\"84\" viewBox=\"0 0 72 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"72\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"36\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"36\" y=\"62\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"12\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"72\" height=\"2\" fill=\"#005CE5\"></rect></svg><svg width=\"72\" height=\"84\" viewBox=\"0 0 72 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"72\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"36\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"36\" y=\"62\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"12\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"72\" height=\"2\" fill=\"#E5EBF4\"></rect></svg></div>"
+        "previewHtml": "<div style=\"display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;\"><svg width=\"72\" height=\"84\" viewBox=\"0 0 72 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"72\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"36\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"36\" y=\"62\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"12\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"72\" height=\"2\" fill=\"#005CE5\"></rect></svg><svg width=\"72\" height=\"84\" viewBox=\"0 0 72 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"72\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"36\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"36\" y=\"62\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"12\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"72\" height=\"2\" fill=\"#E5EBF4\"></rect></svg></div>"
       },
       {
         "cardKey": "ti-spec-vl",
+        "demoKey": "vl",
+        "demoControls": tabItemVerticalControls,
         "title": "Vertical · large — 414px screen",
         "node": "18482:33277",
         "description": "Icon above label. 32px icon, 18/18 label (Primary/Label/Large). Optimized for 414px screens.",
@@ -270,18 +369,41 @@ export const tabItem: ComponentData = {
               },
               {
                 "key": "State",
-                "value": "Inactive",
+                "value": "Active",
+                "prop": "selected",
+                "mono": false
+              },
+              {
+                "key": "Red dot",
+                "value": "false",
+                "prop": "redDot",
                 "mono": false
               }
             ]
           },
           {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Label", "value": "#6780A9", "token": "tab/color/inactive/label" },
-              { "key": "Border", "value": "#E5EBF4", "token": "tab/color/inactive/border" }
-            ]
+            label: 'Colors',
+            slug: 'colors',
+            rows: [
+              {
+                key: 'Label',
+                value: '#6780A9',
+                token: 'tab/color/inactive/label',
+                variants: {
+                  'selected:true':  { value: '#005CE5', token: 'tab/color/active/label' },
+                  'selected:false': { value: '#6780A9', token: 'tab/color/inactive/label' },
+                },
+              },
+              {
+                key: 'Border',
+                value: '#E5EBF4',
+                token: 'tab/color/inactive/border',
+                variants: {
+                  'selected:true':  { value: '#005CE5', token: 'tab/color/active/border' },
+                  'selected:false': { value: '#E5EBF4', token: 'tab/color/inactive/border' },
+                },
+              },
+            ],
           },
           {
             "label": "Layout",
@@ -323,10 +445,12 @@ export const tabItem: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebActive</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">false</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;\"><svg width=\"72\" height=\"84\" viewBox=\"0 0 72 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"72\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"36\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"36\" y=\"62\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"14\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"72\" height=\"2\" fill=\"#005CE5\"></rect></svg><svg width=\"72\" height=\"84\" viewBox=\"0 0 72 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"72\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"36\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"36\" y=\"62\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"14\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"72\" height=\"2\" fill=\"#E5EBF4\"></rect></svg></div>"
+        "previewHtml": "<div style=\"display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;\"><svg width=\"72\" height=\"84\" viewBox=\"0 0 72 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"72\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"36\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"36\" y=\"62\" text-anchor=\"middle\" fill=\"#005CE5\" font-size=\"14\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"72\" height=\"2\" fill=\"#005CE5\"></rect></svg><svg width=\"72\" height=\"84\" viewBox=\"0 0 72 84\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"72\" height=\"84\" fill=\"#FFFFFF\"></rect><circle cx=\"36\" cy=\"28\" r=\"16\" fill=\"#C2C6CF\"></circle><text x=\"36\" y=\"62\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"14\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"0\" y=\"82\" width=\"72\" height=\"2\" fill=\"#E5EBF4\"></rect></svg></div>"
       },
       {
         "cardKey": "ti-spec-hs",
+        "demoKey": "hs",
+        "demoControls": tabItemHorizontalControls,
         "title": "Horizontal · small — label only + optional slots",
         "node": "18482:33291",
         "description": "Label-first row. Optional leading icon (24px) and trailing counter (18px pill). Red dot anchored to top-right.",
@@ -342,18 +466,53 @@ export const tabItem: ComponentData = {
               },
               {
                 "key": "State",
-                "value": "Inactive",
+                "value": "Active",
+                "prop": "selected",
+                "mono": false
+              },
+              {
+                "key": "Leading icon",
+                "value": "true",
+                "prop": "leadingIcon",
+                "mono": false
+              },
+              {
+                "key": "Counter",
+                "value": "true",
+                "prop": "counter",
+                "mono": false
+              },
+              {
+                "key": "Red dot",
+                "value": "false",
+                "prop": "redDot",
                 "mono": false
               }
             ]
           },
           {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Label", "value": "#6780A9", "token": "tab/color/inactive/label" },
-              { "key": "Border", "value": "#E5EBF4", "token": "tab/color/inactive/border" }
-            ]
+            label: 'Colors',
+            slug: 'colors',
+            rows: [
+              {
+                key: 'Label',
+                value: '#6780A9',
+                token: 'tab/color/inactive/label',
+                variants: {
+                  'selected:true':  { value: '#005CE5', token: 'tab/color/active/label' },
+                  'selected:false': { value: '#6780A9', token: 'tab/color/inactive/label' },
+                },
+              },
+              {
+                key: 'Border',
+                value: '#E5EBF4',
+                token: 'tab/color/inactive/border',
+                variants: {
+                  'selected:true':  { value: '#005CE5', token: 'tab/color/active/border' },
+                  'selected:false': { value: '#E5EBF4', token: 'tab/color/inactive/border' },
+                },
+              },
+            ],
           },
           {
             "label": "Layout",
@@ -395,10 +554,12 @@ export const tabItem: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebActive</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">false</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;\"><svg width=\"120\" height=\"48\" viewBox=\"0 0 120 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"48\" fill=\"#FFFFFF\"></rect><circle cx=\"22\" cy=\"24\" r=\"10\" fill=\"#B3B3B3\"></circle><text x=\"36\" y=\"29\" fill=\"#005CE5\" font-size=\"12\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"74\" y=\"15\" width=\"22\" height=\"18\" rx=\"9\" fill=\"#ECF1FA\"></rect><text x=\"85\" y=\"28\" text-anchor=\"middle\" fill=\"#0F3390\" font-size=\"10\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">0</text><rect x=\"0\" y=\"46\" width=\"120\" height=\"2\" fill=\"#005CE5\"></rect></svg><svg width=\"120\" height=\"48\" viewBox=\"0 0 120 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"48\" fill=\"#FFFFFF\"></rect><circle cx=\"22\" cy=\"24\" r=\"10\" fill=\"#B3B3B3\"></circle><text x=\"36\" y=\"29\" fill=\"#6780A9\" font-size=\"12\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"74\" y=\"15\" width=\"22\" height=\"18\" rx=\"9\" fill=\"#ECF1FA\"></rect><text x=\"85\" y=\"28\" text-anchor=\"middle\" fill=\"#0F3390\" font-size=\"10\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">0</text><rect x=\"0\" y=\"46\" width=\"120\" height=\"2\" fill=\"#E5EBF4\"></rect></svg></div>"
+        "previewHtml": "<div style=\"display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;\"><svg width=\"120\" height=\"48\" viewBox=\"0 0 120 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"48\" fill=\"#FFFFFF\"></rect><circle cx=\"22\" cy=\"24\" r=\"10\" fill=\"#B3B3B3\"></circle><text x=\"36\" y=\"29\" fill=\"#005CE5\" font-size=\"12\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"74\" y=\"15\" width=\"22\" height=\"18\" rx=\"9\" fill=\"#ECF1FA\"></rect><text x=\"85\" y=\"28\" text-anchor=\"middle\" fill=\"#0F3390\" font-size=\"10\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">0</text><rect x=\"0\" y=\"46\" width=\"120\" height=\"2\" fill=\"#005CE5\"></rect></svg><svg width=\"120\" height=\"48\" viewBox=\"0 0 120 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"120\" height=\"48\" fill=\"#FFFFFF\"></rect><circle cx=\"22\" cy=\"24\" r=\"10\" fill=\"#B3B3B3\"></circle><text x=\"36\" y=\"29\" fill=\"#6780A9\" font-size=\"12\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"74\" y=\"15\" width=\"22\" height=\"18\" rx=\"9\" fill=\"#ECF1FA\"></rect><text x=\"85\" y=\"28\" text-anchor=\"middle\" fill=\"#0F3390\" font-size=\"10\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">0</text><rect x=\"0\" y=\"46\" width=\"120\" height=\"2\" fill=\"#E5EBF4\"></rect></svg></div>"
       },
       {
         "cardKey": "ti-spec-hl",
+        "demoKey": "hl",
+        "demoControls": tabItemHorizontalControls,
         "title": "Horizontal · large",
         "node": "18482:33309",
         "description": "Same anatomy as horizontal small but with 18/18 label and 112px cell width.",
@@ -414,18 +575,53 @@ export const tabItem: ComponentData = {
               },
               {
                 "key": "State",
-                "value": "Inactive",
+                "value": "Active",
+                "prop": "selected",
+                "mono": false
+              },
+              {
+                "key": "Leading icon",
+                "value": "true",
+                "prop": "leadingIcon",
+                "mono": false
+              },
+              {
+                "key": "Counter",
+                "value": "true",
+                "prop": "counter",
+                "mono": false
+              },
+              {
+                "key": "Red dot",
+                "value": "false",
+                "prop": "redDot",
                 "mono": false
               }
             ]
           },
           {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Label", "value": "#6780A9", "token": "tab/color/inactive/label" },
-              { "key": "Border", "value": "#E5EBF4", "token": "tab/color/inactive/border" }
-            ]
+            label: 'Colors',
+            slug: 'colors',
+            rows: [
+              {
+                key: 'Label',
+                value: '#6780A9',
+                token: 'tab/color/inactive/label',
+                variants: {
+                  'selected:true':  { value: '#005CE5', token: 'tab/color/active/label' },
+                  'selected:false': { value: '#6780A9', token: 'tab/color/inactive/label' },
+                },
+              },
+              {
+                key: 'Border',
+                value: '#E5EBF4',
+                token: 'tab/color/inactive/border',
+                variants: {
+                  'selected:true':  { value: '#005CE5', token: 'tab/color/active/border' },
+                  'selected:false': { value: '#E5EBF4', token: 'tab/color/inactive/border' },
+                },
+              },
+            ],
           },
           {
             "label": "Layout",
@@ -467,7 +663,7 @@ export const tabItem: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.one</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebActive</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">false</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBTabItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;\"><svg width=\"130\" height=\"48\" viewBox=\"0 0 130 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"130\" height=\"48\" fill=\"#FFFFFF\"></rect><circle cx=\"22\" cy=\"24\" r=\"10\" fill=\"#B3B3B3\"></circle><text x=\"36\" y=\"29\" fill=\"#005CE5\" font-size=\"14\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"74\" y=\"15\" width=\"22\" height=\"18\" rx=\"9\" fill=\"#ECF1FA\"></rect><text x=\"85\" y=\"28\" text-anchor=\"middle\" fill=\"#0F3390\" font-size=\"10\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">0</text><rect x=\"0\" y=\"46\" width=\"130\" height=\"2\" fill=\"#005CE5\"></rect></svg><svg width=\"130\" height=\"48\" viewBox=\"0 0 130 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"130\" height=\"48\" fill=\"#FFFFFF\"></rect><circle cx=\"22\" cy=\"24\" r=\"10\" fill=\"#B3B3B3\"></circle><text x=\"36\" y=\"29\" fill=\"#6780A9\" font-size=\"14\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">Label</text><rect x=\"74\" y=\"15\" width=\"22\" height=\"18\" rx=\"9\" fill=\"#ECF1FA\"></rect><text x=\"85\" y=\"28\" text-anchor=\"middle\" fill=\"#0F3390\" font-size=\"10\" font-weight=\"700\" font-family=\"'HeyMeow Rnd', system-ui\">0</text><rect x=\"0\" y=\"46\" width=\"130\" height=\"2\" fill=\"#E5EBF4\"></rect></svg></div>"
+        "previewHtml": "<div style=\"display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;\"><svg width=\"130\" height=\"48\" viewBox=\"0 0 130 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"130\" height=\"48\" fill=\"#FFFFFF\"></rect><circle cx=\"22\" cy=\"24\" r=\"10\" fill=\"#B3B3B3\"></circle><text x=\"36\" y=\"29\" fill=\"#005CE5\" font-size=\"14\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"74\" y=\"15\" width=\"22\" height=\"18\" rx=\"9\" fill=\"#ECF1FA\"></rect><text x=\"85\" y=\"28\" text-anchor=\"middle\" fill=\"#0F3390\" font-size=\"10\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">0</text><rect x=\"0\" y=\"46\" width=\"130\" height=\"2\" fill=\"#005CE5\"></rect></svg><svg width=\"130\" height=\"48\" viewBox=\"0 0 130 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"130\" height=\"48\" fill=\"#FFFFFF\"></rect><circle cx=\"22\" cy=\"24\" r=\"10\" fill=\"#B3B3B3\"></circle><text x=\"36\" y=\"29\" fill=\"#6780A9\" font-size=\"14\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">Label</text><rect x=\"74\" y=\"15\" width=\"22\" height=\"18\" rx=\"9\" fill=\"#ECF1FA\"></rect><text x=\"85\" y=\"28\" text-anchor=\"middle\" fill=\"#0F3390\" font-size=\"10\" font-weight=\"700\" font-family=\"'Proxima Soft', system-ui\">0</text><rect x=\"0\" y=\"46\" width=\"130\" height=\"2\" fill=\"#E5EBF4\"></rect></svg></div>"
       }
     ],
     "colorsTables": [
@@ -596,21 +792,21 @@ export const tabItem: ComponentData = {
             "role": "Small",
             "token": "Primary/Label/Base",
             "values": [
-              "HeyMeow Rnd Bold · 16 / 16 · +0.25"
+              "Proxima Soft Bold · 16 / 16 · +0.25"
             ]
           },
           {
             "role": "Large",
             "token": "Primary/Label/Large",
             "values": [
-              "HeyMeow Rnd Bold · 18 / 18 · +0.25"
+              "Proxima Soft Bold · 18 / 18 · +0.25"
             ]
           },
           {
             "role": "Counter",
             "token": "— (hardcoded)",
             "values": [
-              "HeyMeow Rnd Bold · 12 / 12 · +0.5"
+              "Proxima Soft Bold · 12 / 12 · +0.5"
             ]
           }
         ]

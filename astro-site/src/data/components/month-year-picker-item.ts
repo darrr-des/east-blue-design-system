@@ -1,4 +1,24 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/month-year-picker-item.js`.
+const monthYearPickerItemDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Type',
+        prop: 'type',
+        defaultValue: 'Default',
+        options: [
+          { value: 'Default', label: 'Default' },
+          { value: 'Today', label: 'Today' },
+          { value: 'Selected', label: 'Selected' },
+        ],
+      },
+    ],
+  },
+];
 
 export const monthYearPickerItem: ComponentData = {
   "meta": {
@@ -232,6 +252,8 @@ export const monthYearPickerItem: ComponentData = {
     "specCards": [
       {
         "cardKey": "mypi-spec-default",
+        "demoKey": "default",
+        "demoControls": monthYearPickerItemDemoControls,
         "title": "Default",
         "node": "18414:5851",
         "description": "The base month/year cell. Plain label on white, no ring or fill.",
@@ -243,7 +265,8 @@ export const monthYearPickerItem: ComponentData = {
               {
                 "key": "Type",
                 "value": "Default",
-                "mono": false
+                "mono": false,
+                "prop": "type"
               },
               {
                 "key": "Variant",
@@ -305,10 +328,12 @@ export const monthYearPickerItem: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBMonthYearCell</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBMonthYearCell</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCellState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"box-sizing:border-box;width:100px;height:32px;background:#FFFFFF;border:none;border-radius:8px;padding:10px 12px 8px;display:flex;align-items:center;justify-content:center;gap:4px;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">March</div></div></div>"
+        "previewHtml": "<div id=\"mypi-spec-default-preview\" style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"box-sizing:border-box;width:100px;height:32px;background:#FFFFFF;border:none;border-radius:8px;padding:10px 12px 8px;display:flex;align-items:center;justify-content:center;gap:4px;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">March</div></div></div>"
       },
       {
         "cardKey": "mypi-spec-today",
+        "demoKey": "today",
+        "demoControls": monthYearPickerItemDemoControls,
         "title": "Today",
         "node": "18414:5852",
         "description": "Today marker. 1px blue border, blue label. Note: thinner than the day cell's 1.5px ring.",
@@ -320,7 +345,8 @@ export const monthYearPickerItem: ComponentData = {
               {
                 "key": "Type",
                 "value": "Today",
-                "mono": false
+                "mono": false,
+                "prop": "type"
               },
               {
                 "key": "Variant",
@@ -383,10 +409,12 @@ export const monthYearPickerItem: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBMonthYearCell</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.today</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBMonthYearCell</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCellState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Today</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"box-sizing:border-box;width:100px;height:32px;background:#FFFFFF;border:1px solid #005CE5;border-radius:8px;padding:10px 12px 8px;display:flex;align-items:center;justify-content:center;gap:4px;color:#005CE5;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">March</div></div></div>"
+        "previewHtml": "<div id=\"mypi-spec-today-preview\" style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"box-sizing:border-box;width:100px;height:32px;background:#FFFFFF;border:1px solid #005CE5;border-radius:8px;padding:10px 12px 8px;display:flex;align-items:center;justify-content:center;gap:4px;color:#005CE5;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">March</div></div></div>"
       },
       {
         "cardKey": "mypi-spec-selected",
+        "demoKey": "selected",
+        "demoControls": monthYearPickerItemDemoControls,
         "title": "Selected",
         "node": "18414:5853",
         "description": "Currently-selected month or year. Solid blue fill, white bold label. No Disabled form.",
@@ -398,7 +426,8 @@ export const monthYearPickerItem: ComponentData = {
               {
                 "key": "Type",
                 "value": "Selected",
-                "mono": false
+                "mono": false,
+                "prop": "type"
               },
               {
                 "key": "Variant",
@@ -460,7 +489,7 @@ export const monthYearPickerItem: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBMonthYearCell</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.selected</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBMonthYearCell</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCellState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Selected</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"box-sizing:border-box;width:100px;height:32px;background:#005CE5;border:none;border-radius:8px;padding:10px 12px 8px;display:flex;align-items:center;justify-content:center;gap:4px;color:#FFFFFF;font-weight:700;font-size:14px;line-height:14px;letter-spacing:.25px;\">March</div></div></div>"
+        "previewHtml": "<div id=\"mypi-spec-selected-preview\" style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"box-sizing:border-box;width:100px;height:32px;background:#005CE5;border:none;border-radius:8px;padding:10px 12px 8px;display:flex;align-items:center;justify-content:center;gap:4px;color:#FFFFFF;font-weight:700;font-size:14px;line-height:14px;letter-spacing:.25px;\">March</div></div></div>"
       }
     ],
     "colorsTables": [

@@ -83,6 +83,92 @@ function _stepperDashUpdate() {
   preview.innerHTML = _stepperDashRender({current: current, total: total, width: 268});
 }
 
+/* ── Spec card state (per-card, drives previews + DEV code) ──────── */
+var _specCards = {
+  'main': { current: '2', total: '4', status: 'default' }
+};
+window._specCards = _specCards;
+
+/* ── Code snippet builders (called by updateSpecCard + switchCodeTab) ── */
+function _stepperDashStatusSwift(card) {
+  if (card.status === 'success') return '.success';
+  if (card.status === 'error')   return '.error';
+  return '.default';
+}
+
+function _stepperDashStatusCompose(card) {
+  if (card.status === 'success') return 'Success';
+  if (card.status === 'error')   return 'Error';
+  return 'Default';
+}
+
+function buildSwiftSnippet(type, card) {
+  var lines = [];
+  lines.push('EBStepperDash(');
+  lines.push('    current: ' + card.current + ',');
+  lines.push('    total: ' + card.total);
+  lines.push(')');
+  if (card.status && card.status !== 'default') {
+    lines.push('    .ebStatus(' + _stepperDashStatusSwift(card) + ')');
+  }
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var lines = [];
+  lines.push('EBStepperDash(');
+  lines.push('    current = ' + card.current + ',');
+  lines.push('    total = ' + card.total + ',');
+  lines.push('    status = EBStepperStatus.' + _stepperDashStatusCompose(card));
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+/* ── updateSpecCard — canonical signature ───────────────────────────── */
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  var current = parseInt(card.current, 10);
+  var total   = parseInt(card.total, 10);
+  if (isNaN(total) || total < 2) total = 2;
+  if (total > 10) total = 10;
+  if (isNaN(current) || current < 1) current = 1;
+  if (current > total) { current = total; card.current = String(current); }
+
+  /* Re-render the spec preview into its host slot */
+  var host = document.getElementById('stepper-dash-spec-1');
+  if (host) host.innerHTML = _stepperDashRender({current: current, total: total, status: card.status, width: 268});
+
+  /* Update DEV code — always */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+window.updateSpecCard = updateSpecCard;
+
+function _stepperDashInitSpecCards() {
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'current', _specCards[k].current);
+  });
+}
+
 function _stepperDashInit() {
   _stepperDashSlotStyles();
 
@@ -90,19 +176,9 @@ function _stepperDashInit() {
   if (ctx) ctx.innerHTML = _stepperDashContextMarkup();
 
   _stepperDashUpdate();
-
-  var s1 = document.getElementById('stepper-dash-spec-1');
-  if (s1) {
-    s1.innerHTML = '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-xs" style="padding:12px 0;">' +
-      _stepperDashRender({current: 1, total: 4, width: 268}) +
-      _stepperDashRender({current: 2, total: 4, width: 268}) +
-      _stepperDashRender({current: 3, total: 4, width: 268}) +
-      _stepperDashRender({current: 4, total: 4, width: 268}) +
-      _stepperDashRender({current: 6, total: 6, status: 'success', width: 268}) +
-      _stepperDashRender({current: 3, total: 5, status: 'error',   width: 268}) +
-    '</div>';
-  }
+  _stepperDashInitSpecCards();
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _stepperDashInit);
 else _stepperDashInit();
+document.addEventListener('astro:page-load', _stepperDashInit);

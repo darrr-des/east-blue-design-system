@@ -5,10 +5,10 @@
 /* ── Header (Section Header) JS ─────────────────────────────────── */
 /* Pixel-accurate replica of node 18430:2919.
    Specs: 360px wide, 24×16 padding, #FFFFFF bg, no border.
-   Preamble: HeyMeow Rnd Bold 14/14 #005CE5, tracking 0.25
-   Title:    HeyMeow Rnd Bold 22/26 #0A2757
+   Preamble: Proxima Soft Bold 14/14 #005CE5, tracking 0.25
+   Title:    Proxima Soft Bold 22/26 #0A2757
    Desc:     BarkAda Semibold 12/18 #6780A9
-   Link:     HeyMeow Rnd Bold 16/16 #005CE5
+   Link:     Proxima Soft Bold 16/16 #005CE5
    Counter:  24×24 pill, #EEF2F9 bg, #072592 label                   */
 
 var EB_HEADER_EDIT_SVG =
@@ -78,6 +78,108 @@ function _headerUpdate() {
 
 function _headerSpecMode(mode, cardNum) { /* reserved for DES/DEV toggle */ }
 
+/* ── Header Spec Cards (cascaded pattern) ──────────────────────── */
+var _headerSpecCards = {
+  'title-only':       { preamble: 'no',  description: 'no',  leading: 'none', trailing: 'none' },
+  'full-stack':       { preamble: 'yes', description: 'yes', leading: 'none', trailing: 'none' },
+  'trailing-link':    { preamble: 'no',  description: 'no',  leading: 'none', trailing: 'link' },
+  'trailing-edit':    { preamble: 'no',  description: 'no',  leading: 'none', trailing: 'edit' },
+  'trailing-counter': { preamble: 'no',  description: 'no',  leading: 'none', trailing: 'counter' }
+};
+
+var _specCards = _headerSpecCards;
+window._specCards = _specCards;
+
+function _getHeaderSnippet(cardKey, lang, card) {
+  var c = card || _headerSpecCards[cardKey] || {};
+  var hasPreamble = c.preamble === 'yes';
+  var hasDesc     = c.description === 'yes';
+  var leading     = c.leading || 'none';
+  var trailing    = c.trailing || 'none';
+
+  if (lang === 'swift') {
+    var s = 'EBHeader("Page title")';
+    if (hasPreamble) s += '\n    .ebPreamble("PREAMBLE")';
+    if (hasDesc)     s += '\n    .ebDescription("Description body copy")';
+    if (leading === 'icon')         s += '\n    .ebLeadingMedia(.icon(Image(systemName: "chart.bar")))';
+    else if (leading === 'illustration') s += '\n    .ebLeadingMedia(.illustration(Image("section")))';
+    if (trailing === 'link')        s += '\n    .ebTrailing(.link("View All"))';
+    else if (trailing === 'edit')   s += '\n    .ebTrailing(.edit("Edit details"))';
+    else if (trailing === 'counter')s += '\n    .ebTrailing(.counter(0))';
+    else if (trailing === 'illustration') s += '\n    .ebTrailing(.illustration(Image("trail")))';
+    return s;
+  }
+  var lines = ['EBHeader('];
+  lines.push('    title = "Page title"' + (hasPreamble || hasDesc || leading !== 'none' || trailing !== 'none' ? ',' : ''));
+  if (hasPreamble) lines.push('    preamble = "PREAMBLE"' + ((hasDesc || leading !== 'none' || trailing !== 'none') ? ',' : ''));
+  if (hasDesc)     lines.push('    description = "Description body copy"' + ((leading !== 'none' || trailing !== 'none') ? ',' : ''));
+  if (leading === 'icon')         lines.push('    leadingMedia = EBLeadingMedia.Icon(Icons.Default.BarChart)' + (trailing !== 'none' ? ',' : ''));
+  else if (leading === 'illustration') lines.push('    leadingMedia = EBLeadingMedia.Illustration(painterResource(R.drawable.section))' + (trailing !== 'none' ? ',' : ''));
+  if (trailing === 'link')        lines.push('    trailing = EBHeaderTrailing.Link("View All")');
+  else if (trailing === 'edit')   lines.push('    trailing = EBHeaderTrailing.Edit("Edit details")');
+  else if (trailing === 'counter')lines.push('    trailing = EBHeaderTrailing.Counter(0)');
+  else if (trailing === 'illustration') lines.push('    trailing = EBHeaderTrailing.Illustration(painterResource(R.drawable.trail))');
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function buildSwiftSnippet(type, card)   { return _getHeaderSnippet(type, 'swift', card); }
+function buildComposeSnippet(type, card) { return _getHeaderSnippet(type, 'compose', card); }
+function getSnippet(type, lang, card)    { return _getHeaderSnippet(type, lang, card); }
+window.getSnippet = getSnippet;
+
+/* Map a demoKey to its underlying spec-card cardKey via the inner preview id. */
+var _headerDemoKeyToSpecId = {
+  'title-only':       'header-spec-1',
+  'full-stack':       'header-spec-2',
+  'trailing-link':    'header-spec-3',
+  'trailing-edit':    'header-spec-4',
+  'trailing-counter': 'header-spec-5'
+};
+
+function _headerCardKeyFor(demoKey) {
+  var inner = document.getElementById(_headerDemoKeyToSpecId[demoKey]);
+  if (!inner) return null;
+  var card$ = inner.closest('.spec-card');
+  if (!card$) return null;
+  return (card$.id || '').replace(/^spec-card-/, '');
+}
+
+function updateSpecCard(cardKey, prop, value) {
+  var card = _headerSpecCards[cardKey];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview body */
+  var ck = _headerCardKeyFor(cardKey);
+  var card$ = ck ? document.getElementById('spec-card-' + ck) : null;
+  if (card$) {
+    var preview = card$.querySelector('.spec-card-preview, .spec-preview-body, .spec-preview-frame');
+    if (preview) preview.innerHTML = _headerRenderVariant(card);
+  }
+
+  /* Update Properties readouts — data-sp="<demoKey>-<prop>" */
+  ['preamble', 'description', 'leading', 'trailing'].forEach(function(p) {
+    var spEl = document.querySelector('[data-sp="' + cardKey + '-' + p + '"]');
+    if (spEl) spEl.textContent = card[p];
+  });
+
+  /* Update DEV code */
+  var devView = document.querySelector('[data-view="' + cardKey + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardKey + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardKey, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+
 function _headerInit() {
   var ctx = document.getElementById('header-context-preview');
   if (ctx) ctx.innerHTML = _headerContextMarkup();
@@ -93,7 +195,33 @@ function _headerInit() {
     var el = document.getElementById(c.id);
     if (el) el.innerHTML = _headerRenderVariant(c.opts);
   });
+
+  /* Sync each spec card's per-prop dropdowns to the card's defaults. */
+  Object.keys(_headerSpecCards).forEach(function(k) {
+    var ck = _headerCardKeyFor(k);
+    if (!ck) return;
+    var card$ = document.getElementById('spec-card-' + ck);
+    if (!card$) return;
+    var card = _headerSpecCards[k];
+    var selects = card$.querySelectorAll('.demo-figma-panel .demo-panel-row');
+    selects.forEach(function(row) {
+      var label = row.querySelector('.demo-panel-label');
+      var sel   = row.querySelector('select');
+      if (!label || !sel) return;
+      var prop = label.textContent.trim();
+      var v = card[prop];
+      if (v == null) return;
+      for (var i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value === v) { sel.selectedIndex = i; break; }
+      }
+    });
+  });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _headerInit);
 else _headerInit();
+
+(function(){
+  function reinit(){ if (typeof _headerInit === 'function') _headerInit(); }
+  document.addEventListener('astro:page-load', reinit);
+})();

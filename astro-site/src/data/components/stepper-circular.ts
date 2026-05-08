@@ -1,4 +1,48 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/stepper-circular.js`.
+const stepperCircularDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties (proposed)',
+    rows: [
+      {
+        label: 'steps',
+        prop: 'steps',
+        defaultValue: '4',
+        options: [
+          { value: '2', label: '2' },
+          { value: '3', label: '3' },
+          { value: '4', label: '4' },
+          { value: '5', label: '5' },
+          { value: '6', label: '6' },
+          { value: '7', label: '7' },
+          { value: '8', label: '8' },
+          { value: '9', label: '9' },
+          { value: '10', label: '10' },
+        ],
+      },
+      {
+        label: 'current',
+        prop: 'current',
+        defaultValue: '2',
+        options: [
+          { value: '1', label: '1' },
+          { value: '2', label: '2' },
+          { value: '3', label: '3' },
+          { value: '4', label: '4' },
+          { value: '5', label: '5' },
+          { value: '6', label: '6' },
+          { value: '7', label: '7' },
+          { value: '8', label: '8' },
+          { value: '9', label: '9' },
+          { value: '10', label: '10' },
+        ],
+      },
+    ],
+  },
+];
 
 export const stepperCircular: ComponentData = {
   "meta": {
@@ -27,7 +71,7 @@ export const stepperCircular: ComponentData = {
   },
   "overview": {
     "inContextNote": "Stepper - Circular appears at the top of multi-step flows (onboarding, KYC, form wizards) to show position and total count. Consumers pair it with a screen title and step-specific content.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"stepper-circular-demo-preview\"><div class=\"eb-preview eb-preview-stepper-circular\" style=\"display:flex;align-items:center;gap:20px;padding:12px 0;flex-wrap:wrap;justify-content:center;\"><div class=\"eb-preview-stepper-circle\" style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-dasharray=\"125.66370614359172 0\" stroke-dashoffset=\"31.41592653589793\" transform=\"rotate(-90 22.5 22.5)\"></circle></svg><span style=\"position:relative;font:700 16px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">1</span></div><div class=\"eb-preview-stepper-circle\" style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-dasharray=\"62.83185307179586 62.83185307179586\" stroke-dashoffset=\"31.41592653589793\" transform=\"rotate(-90 22.5 22.5)\"></circle></svg><span style=\"position:relative;font:700 16px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">2</span></div><div class=\"eb-preview-stepper-circle\" style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle></svg><span style=\"position:relative;font:700 16px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">3</span></div><div class=\"eb-preview-stepper-circle\" style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle></svg><span style=\"position:relative;font:700 16px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">4</span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content (proposed)</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">steps</span><select id=\"stepper-circular-ctrl-steps\" class=\"demo-panel-select\" onchange=\"_stepperCircularUpdate()\"><option value=\"2\">2</option><option value=\"3\">3</option><option value=\"4\" selected=\"\">4</option><option value=\"5\">5</option><option value=\"6\">6</option><option value=\"7\">7</option><option value=\"8\">8</option><option value=\"9\">9</option><option value=\"10\">10</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">current</span><input type=\"range\" id=\"stepper-circular-ctrl-current\" class=\"demo-panel-select demo-panel-input\" min=\"1\" max=\"4\" step=\"1\" value=\"2\" oninput=\"_stepperCircularUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">value</span><span class=\"demo-panel-value\" id=\"stepper-circular-ctrl-value\">2 of 4</span></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"stepper-circular-demo-preview\"><div class=\"eb-preview eb-preview-stepper-circular\" style=\"display:flex;align-items:center;gap:20px;padding:12px 0;flex-wrap:wrap;justify-content:center;\"><div style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-dasharray=\"125.66370614359172 0\" stroke-dashoffset=\"31.41592653589793\" transform=\"rotate(-90 22.5 22.5)\"></circle></svg><span style=\"position:relative;font:700 18px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">1</span></div><div style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-dasharray=\"62.83185307179586 62.83185307179586\" stroke-dashoffset=\"31.41592653589793\" transform=\"rotate(-90 22.5 22.5)\"></circle></svg><span style=\"position:relative;font:700 18px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">2</span></div><div style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle></svg><span style=\"position:relative;font:700 18px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">3</span></div><div style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle></svg><span style=\"position:relative;font:700 18px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">4</span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content (proposed)</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">steps</span><select id=\"stepper-circular-ctrl-steps\" class=\"demo-panel-select\" onchange=\"_stepperCircularUpdate()\"><option value=\"2\">2</option><option value=\"3\">3</option><option value=\"4\" selected=\"\">4</option><option value=\"5\">5</option><option value=\"6\">6</option><option value=\"7\">7</option><option value=\"8\">8</option><option value=\"9\">9</option><option value=\"10\">10</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">current</span><input type=\"range\" id=\"stepper-circular-ctrl-current\" class=\"demo-panel-select demo-panel-input\" min=\"1\" max=\"4\" step=\"1\" value=\"2\" oninput=\"_stepperCircularUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">value</span><span class=\"demo-panel-value\" id=\"stepper-circular-ctrl-value\">2 of 4</span></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -196,10 +240,12 @@ export const stepperCircular: ComponentData = {
     "specCards": [
       {
         "cardKey": "stepper---circular-canonical-node-27:47768-(10-steps)-·-sibling-frames-27:47819…27:48036",
+        "demoKey": "main",
+        "demoControls": stepperCircularDemoControls,
         "title": "Stepper - Circular canonical node 27:47768 (10 Steps) · sibling frames 27:47819…27:48036",
         "node": "27:47768",
         "description": "Row of N 45×45 numbered circles, each with a ring that indicates position through the flow. 9 hardcoded sibling frames today; target is one component with a <code>steps</code> prop.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"stepper-circular-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"stepper-circular-spec-1\"><div class=\"eb-preview eb-preview-stepper-circular\" style=\"display:flex;align-items:center;gap:20px;padding:12px 0;flex-wrap:wrap;justify-content:center;\"><div style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-dasharray=\"125.66370614359172 0\" stroke-dashoffset=\"31.41592653589793\" transform=\"rotate(-90 22.5 22.5)\"></circle></svg><span style=\"position:relative;font:700 18px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">1</span></div><div style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-dasharray=\"62.83185307179586 62.83185307179586\" stroke-dashoffset=\"31.41592653589793\" transform=\"rotate(-90 22.5 22.5)\"></circle></svg><span style=\"position:relative;font:700 18px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">2</span></div><div style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle></svg><span style=\"position:relative;font:700 18px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">3</span></div><div style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle></svg><span style=\"position:relative;font:700 18px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">4</span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -353,7 +399,17 @@ export const stepperCircular: ComponentData = {
         "compose": "<span class=\"syn-type\">EBStepper</span><span class=\"syn-punc\">(</span>\n    currentStep <span class=\"syn-eq\">=</span> 4<span class=\"syn-punc\">,</span>\n    totalSteps <span class=\"syn-eq\">=</span> 10<span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBStepperStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Circular</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      buildStatelessColorsTable({
+        title: 'Stepper Circular — Colors',
+        description: 'Circular ring progress indicator with a numeric step label inside.',
+        rows: [
+          { role: 'Active label', token: 'stepper/color/label',    value: '#005CE5' },
+          { role: 'Active arc',   token: 'stepper/color/bg',       value: '#005CE5' },
+          { role: 'Inactive arc', token: 'stepper/color/bg-track', value: '#D2E5FF' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

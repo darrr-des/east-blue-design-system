@@ -1,4 +1,50 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
+
+// Per-card demo controls — wired to `updateSpecCard(cardStyle, prop, value)`
+// in `public/scripts/demos/inline-text.js`. Inline Text is content-driven,
+// so the controls swap between a few label presets to demonstrate the row,
+// plus the trailing-slot type and an aspirational state axis (the Pressed
+// recommendation in Open Issues — all cards ship as Default today).
+const inlineTextDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Type',
+        prop: 'type',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'with-clipboard', label: 'with Clipboard' },
+          { value: 'with-badge', label: 'with Badge' },
+          { value: 'with-description', label: 'with Description' },
+          { value: 'with-text-link', label: 'with Text Link' },
+        ],
+      },
+      {
+        label: 'Label',
+        prop: 'label',
+        defaultValue: 'Amount',
+        options: [
+          { value: 'Amount', label: 'Amount' },
+          { value: 'Reference No', label: 'Reference No' },
+          { value: 'Voucher', label: 'Voucher' },
+          { value: 'Service fee', label: 'Service fee' },
+          { value: 'Promo code', label: 'Promo code' },
+        ],
+      },
+      {
+        label: 'State',
+        prop: 'state',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'pressed', label: 'Pressed' },
+          { value: 'disabled', label: 'Disabled' },
+        ],
+      },
+    ],
+  },
+];
 
 export const inlineText: ComponentData = {
   "meta": {
@@ -25,7 +71,7 @@ export const inlineText: ComponentData = {
   },
   "overview": {
     "inContextNote": "Inline Text is a composition primitive. You'll find stacks of it inside Generic Transaction Card's detail modal, Send Money confirmation screens, receipt summaries, and fee-breakdown list items. Rarely used standalone.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"itx-demo-preview\"><div class=\"eb-preview-itx\"><p class=\"eb-preview-itx__label\">Amount</p><p class=\"eb-preview-itx__value\">PHP 1,500.00</p></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">label</span><input type=\"text\" id=\"itx-ctrl-label\" class=\"demo-panel-select demo-panel-input\" value=\"Amount\" oninput=\"_itxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">value</span><input type=\"text\" id=\"itx-ctrl-value\" class=\"demo-panel-select demo-panel-input\" value=\"PHP 1,500.00\" oninput=\"_itxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><input type=\"text\" id=\"itx-ctrl-desc\" class=\"demo-panel-select demo-panel-input\" value=\"Description goes here\" oninput=\"_itxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">cta</span><input type=\"text\" id=\"itx-ctrl-cta\" class=\"demo-panel-select demo-panel-input\" value=\"CTA\" oninput=\"_itxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">badge</span><input type=\"text\" id=\"itx-ctrl-badge\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"_itxUpdate()\"></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select id=\"itx-ctrl-type\" class=\"demo-panel-select\" onchange=\"_itxUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"with-clipboard\">with Clipboard</option><option value=\"with-badge\">with Badge</option><option value=\"with-description\">with Description</option><option value=\"with-text-link\">with Text Link</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"itx-demo-preview\"><div style=\"display:flex;align-items:center;justify-content:space-between;gap:12px;width:320px;font-family:'Proxima Soft',sans-serif;opacity:1;\"><p style=\"font-weight:600;font-size:16px;color:#0A2757;margin:0;line-height:20px;\">Amount</p><p style=\"font-weight:600;font-size:16px;color:#445C85;margin:0;line-height:20px;\">PHP 1,500.00</p></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">label</span><input type=\"text\" id=\"itx-ctrl-label\" class=\"demo-panel-select demo-panel-input\" value=\"Amount\" oninput=\"_itxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">value</span><input type=\"text\" id=\"itx-ctrl-value\" class=\"demo-panel-select demo-panel-input\" value=\"PHP 1,500.00\" oninput=\"_itxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><input type=\"text\" id=\"itx-ctrl-desc\" class=\"demo-panel-select demo-panel-input\" value=\"Description goes here\" oninput=\"_itxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">cta</span><input type=\"text\" id=\"itx-ctrl-cta\" class=\"demo-panel-select demo-panel-input\" value=\"CTA\" oninput=\"_itxUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">badge</span><input type=\"text\" id=\"itx-ctrl-badge\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"_itxUpdate()\"></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select id=\"itx-ctrl-type\" class=\"demo-panel-select\" onchange=\"_itxUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"with-clipboard\">with Clipboard</option><option value=\"with-badge\">with Badge</option><option value=\"with-description\">with Description</option><option value=\"with-text-link\">with Text Link</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -186,10 +232,12 @@ export const inlineText: ComponentData = {
     "specCards": [
       {
         "cardKey": "default-—-label-+-value",
+        "demoKey": "default",
+        "demoControls": inlineTextDemoControls,
         "title": "Default — label + value",
         "node": "21:138493",
         "description": "The baseline row. Leading label, trailing value, 25 px tall, full-width auto-layout.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"itx-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"itx-spec-default\"><div style=\"display:flex;align-items:center;justify-content:space-between;gap:12px;width:320px;font-family:'Proxima Soft',sans-serif;opacity:1;\"><p style=\"font-weight:600;font-size:16px;color:#0A2757;margin:0;line-height:20px;\">Amount</p><p style=\"font-weight:600;font-size:16px;color:#445C85;margin:0;line-height:20px;\">PHP 1,500.00</p></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -197,13 +245,21 @@ export const inlineText: ComponentData = {
             "rows": [
               {
                 "key": "type",
-                "value": "Default",
-                "mono": true
+                "value": "default",
+                "mono": true,
+                "prop": "type"
               },
               {
                 "key": "label",
-                "value": "\"Label\"",
-                "mono": true
+                "value": "Amount",
+                "mono": true,
+                "prop": "label"
+              },
+              {
+                "key": "state",
+                "value": "default",
+                "mono": true,
+                "prop": "state"
               },
               {
                 "key": "value",
@@ -281,19 +337,34 @@ export const inlineText: ComponentData = {
       },
       {
         "cardKey": "with-clipboard-—-value-+-copy-icon",
+        "demoKey": "clipboard",
+        "demoControls": inlineTextDemoControls,
         "title": "With Clipboard — value + copy icon",
         "node": "21:138497",
         "description": "Adds a 24 × 24 copy icon to the right of the value. Tapping the icon copies the value to clipboard. Icon uses <code>inline-text/icon</code> token.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"itx-spec-2\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"itx-spec-clipboard\"><div style=\"display:flex;align-items:center;justify-content:space-between;gap:12px;width:320px;font-family:'Proxima Soft',sans-serif;opacity:1;\"><p style=\"font-weight:600;font-size:16px;color:#0A2757;margin:0;line-height:20px;\">Reference No</p><span style=\"display:inline-flex;align-items:center;gap:8px;color:#445C85;font-weight:600;font-size:16px;line-height:20px;\"><span>GC123456789</span><span style=\"display:inline-flex;color:#445C85;\" aria-hidden=\"true\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\" ry=\"2\"></rect><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"></path></svg></span></span></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Has clipboard",
-                "value": "Yes",
-                "mono": true
+                "key": "type",
+                "value": "with-clipboard",
+                "mono": true,
+                "prop": "type"
+              },
+              {
+                "key": "label",
+                "value": "Reference No",
+                "mono": true,
+                "prop": "label"
+              },
+              {
+                "key": "state",
+                "value": "default",
+                "mono": true,
+                "prop": "state"
               },
               {
                 "key": "Layout",
@@ -359,19 +430,34 @@ export const inlineText: ComponentData = {
       },
       {
         "cardKey": "with-badge-—-label-+-trailing-badge",
+        "demoKey": "badge",
+        "demoControls": inlineTextDemoControls,
         "title": "With Badge — label + trailing badge",
         "node": "21:138503",
         "description": "Replaces the value cell with a Badge pill. Used on voucher / discount rows. Today the badge is drawn inline (information/light hardcoded) rather than instance-swapped from the Badge component.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"itx-spec-3\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"itx-spec-badge\"><div style=\"display:flex;align-items:center;justify-content:space-between;gap:12px;width:320px;font-family:'Proxima Soft',sans-serif;opacity:1;\"><p style=\"font-weight:600;font-size:16px;color:#0A2757;margin:0;line-height:20px;\">Voucher</p><span style=\"display:inline-flex;align-items:center;background:#E5F1FF;color:#005CE5;font-weight:700;font-size:12px;letter-spacing:0.5px;padding:4px 10px;border-radius:99px;\">Applied</span></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Trailing slot",
-                "value": "Badge",
-                "mono": true
+                "key": "type",
+                "value": "with-badge",
+                "mono": true,
+                "prop": "type"
+              },
+              {
+                "key": "label",
+                "value": "Voucher",
+                "mono": true,
+                "prop": "label"
+              },
+              {
+                "key": "state",
+                "value": "default",
+                "mono": true,
+                "prop": "state"
               },
               {
                 "key": "Badge style",
@@ -437,19 +523,34 @@ export const inlineText: ComponentData = {
       },
       {
         "cardKey": "with-description",
+        "demoKey": "description",
+        "demoControls": inlineTextDemoControls,
         "title": "With Description",
         "node": "21:138506",
         "description": "Adds a second row below the label/value with a description caption. Description uses BarkAda Semibold 12/18.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"itx-spec-4\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"itx-spec-description\"><div style=\"display:flex;align-items:center;justify-content:space-between;gap:12px;width:320px;font-family:'Proxima Soft',sans-serif;opacity:1;align-items:flex-start;\"><div style=\"display:flex;flex-direction:column;align-items:flex-start;\"><p style=\"font-weight:600;font-size:16px;color:#0A2757;margin:0;line-height:20px;\">Service fee</p><p style=\"font-family:'BarkAda',sans-serif;font-weight:600;font-size:12px;color:#6780A9;margin:2px 0 0;line-height:18px;\">Includes ₱10 service fee</p></div><div style=\"display:flex;flex-direction:column;align-items:flex-end;\"><p style=\"font-weight:600;font-size:16px;color:#445C85;margin:0;line-height:20px;\">PHP 10.00</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Has description",
-                "value": "Yes",
-                "mono": true
+                "key": "type",
+                "value": "with-description",
+                "mono": true,
+                "prop": "type"
+              },
+              {
+                "key": "label",
+                "value": "Service fee",
+                "mono": true,
+                "prop": "label"
+              },
+              {
+                "key": "state",
+                "value": "default",
+                "mono": true,
+                "prop": "state"
               },
               {
                 "key": "Layout",
@@ -520,19 +621,34 @@ export const inlineText: ComponentData = {
       },
       {
         "cardKey": "with-text-link",
+        "demoKey": "link",
+        "demoControls": inlineTextDemoControls,
         "title": "With Text Link",
         "node": "21:138512",
         "description": "Adds a trailing link (CTA) to the description row. Link uses <code>inline-text/label-link</code> token.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"itx-spec-5\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"itx-spec-link\"><div style=\"display:flex;align-items:center;justify-content:space-between;gap:12px;width:320px;font-family:'Proxima Soft',sans-serif;opacity:1;align-items:flex-start;\"><div style=\"display:flex;flex-direction:column;align-items:flex-start;\"><p style=\"font-weight:600;font-size:16px;color:#0A2757;margin:0;line-height:20px;\">Promo code</p><p style=\"font-family:'BarkAda',sans-serif;font-weight:600;font-size:12px;color:#6780A9;margin:2px 0 0;line-height:18px;\">Saved PHP 50.00</p></div><div style=\"display:flex;flex-direction:column;align-items:flex-end;\"><p style=\"font-weight:600;font-size:16px;color:#445C85;margin:0;line-height:20px;\">GC50OFF</p><p style=\"font-weight:600;font-size:12px;color:#005CE5;margin:2px 0 0;line-height:18px;letter-spacing:0.5px;\">Change</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Trailing slot",
-                "value": "TextLink",
-                "mono": true
+                "key": "type",
+                "value": "with-text-link",
+                "mono": true,
+                "prop": "type"
+              },
+              {
+                "key": "label",
+                "value": "Promo code",
+                "mono": true,
+                "prop": "label"
+              },
+              {
+                "key": "state",
+                "value": "default",
+                "mono": true,
+                "prop": "state"
               },
               {
                 "key": "Link label",
@@ -597,7 +713,21 @@ export const inlineText: ComponentData = {
         "compose": "<span class=\"syn-type\">EBInlineText</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Order #1234\"</span><span class=\"syn-punc\">,</span>\n    trailing <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">EBTextLink</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"View details\"</span><span class=\"syn-punc\">) { } }</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: (() => {
+      const rows = [
+        { role: 'Label',       token: 'inline-text/color/label',       value: '#0A2757' },
+        { role: 'Value',       token: 'inline-text/color/label-value', value: '#445C85' },
+        { role: 'Description', token: 'inline-text/color/description', value: '#6780A9' },
+        { role: 'Link',        token: 'inline-text/color/label-link',  value: '#005CE5' },
+        { role: 'Icon',        token: 'inline-text/color/icon',        value: '#445C85' },
+      ];
+      const variants = [1, 2, 3, 4, 5];
+      return variants.map((i) => buildStatelessColorsTable({
+        title: `Variant ${i} — Colors`,
+        description: 'Label · value pairs used inline within paragraphs and cards.',
+        rows,
+      }));
+    })(),
   },
   "code": {
     "installation": {

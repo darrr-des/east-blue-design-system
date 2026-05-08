@@ -1,4 +1,35 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/date-picker-item.js`.
+const datePickerItemDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Type',
+        prop: 'type',
+        defaultValue: 'Default',
+        options: [
+          { value: 'Default',        label: 'Default' },
+          { value: 'Today',          label: 'Today' },
+          { value: 'Selected',       label: 'Selected' },
+          { value: 'Range (Middle)', label: 'Range (Middle)' },
+          { value: 'Prev/Next',      label: 'Prev/Next' },
+        ],
+      },
+      {
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'Enabled',
+        options: [
+          { value: 'Enabled',  label: 'Enabled' },
+          { value: 'Disabled', label: 'Disabled' },
+        ],
+      },
+    ],
+  },
+];
 
 export const datePickerItem: ComponentData = {
   "meta": {
@@ -251,6 +282,8 @@ export const datePickerItem: ComponentData = {
     "specCards": [
       {
         "cardKey": "dpi-spec-default",
+        "demoKey": "default",
+        "demoControls": datePickerItemDemoControls,
         "title": "Default · Enabled",
         "node": "12874:42181",
         "description": "The base day cell. Plain label on white, no ring or fill.",
@@ -262,12 +295,14 @@ export const datePickerItem: ComponentData = {
               {
                 "key": "Type",
                 "value": "Default",
-                "mono": false
+                "mono": false,
+                "prop": "type"
               },
               {
                 "key": "Disabled",
                 "value": "false",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
                 "key": "Variant",
@@ -333,6 +368,8 @@ export const datePickerItem: ComponentData = {
       },
       {
         "cardKey": "dpi-spec-today",
+        "demoKey": "today",
+        "demoControls": datePickerItemDemoControls,
         "title": "Today · Enabled",
         "node": "13944:5633",
         "description": "Today marker. 1.5px blue ring, blue label.",
@@ -344,12 +381,14 @@ export const datePickerItem: ComponentData = {
               {
                 "key": "Type",
                 "value": "Today",
-                "mono": false
+                "mono": false,
+                "prop": "type"
               },
               {
                 "key": "Disabled",
                 "value": "false",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
                 "key": "Variant",
@@ -416,6 +455,8 @@ export const datePickerItem: ComponentData = {
       },
       {
         "cardKey": "dpi-spec-selected",
+        "demoKey": "selected",
+        "demoControls": datePickerItemDemoControls,
         "title": "Selected · Enabled",
         "node": "12874:42183",
         "description": "Currently-selected date. Solid blue fill, white bold label. No Disabled form.",
@@ -427,12 +468,14 @@ export const datePickerItem: ComponentData = {
               {
                 "key": "Type",
                 "value": "Selected",
-                "mono": false
+                "mono": false,
+                "prop": "type"
               },
               {
                 "key": "Disabled",
                 "value": "false",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
                 "key": "Variant",
@@ -498,6 +541,8 @@ export const datePickerItem: ComponentData = {
       },
       {
         "cardKey": "dpi-spec-range",
+        "demoKey": "range",
+        "demoControls": datePickerItemDemoControls,
         "title": "Range (Middle) · Enabled",
         "node": "13944:5637",
         "description": "A cell inside a selected date range. <code>bg/color-bg-info-weakest</code> fill, bold blue label. Ships with <code>extraLeft</code>/<code>extraRight</code> booleans that spill the strip into adjacent cells.",
@@ -509,12 +554,14 @@ export const datePickerItem: ComponentData = {
               {
                 "key": "Type",
                 "value": "In range",
-                "mono": false
+                "mono": false,
+                "prop": "type"
               },
               {
                 "key": "Disabled",
                 "value": "false",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
                 "key": "Variant",
@@ -580,6 +627,8 @@ export const datePickerItem: ComponentData = {
       },
       {
         "cardKey": "dpi-spec-prevnext",
+        "demoKey": "prevnext",
+        "demoControls": datePickerItemDemoControls,
         "title": "Prev/Next · Enabled",
         "node": "13944:5653",
         "description": "A day from the adjacent month spilling into the current month's grid. Dimmed label, no ring, no fill.",
@@ -591,12 +640,14 @@ export const datePickerItem: ComponentData = {
               {
                 "key": "Type",
                 "value": "Prev/Next month",
-                "mono": false
+                "mono": false,
+                "prop": "type"
               },
               {
                 "key": "Disabled",
                 "value": "false",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
                 "key": "Variant",
@@ -662,6 +713,8 @@ export const datePickerItem: ComponentData = {
       },
       {
         "cardKey": "dpi-spec-default-disabled",
+        "demoKey": "default-disabled",
+        "demoControls": datePickerItemDemoControls,
         "title": "Default · Disabled",
         "node": "13948:3888",
         "description": "Disabled day. Label dims to <code>text/color-text-disabled</code> (<code>#C2CFE5</code>).",
@@ -673,12 +726,14 @@ export const datePickerItem: ComponentData = {
               {
                 "key": "Type",
                 "value": "Default",
-                "mono": false
+                "mono": false,
+                "prop": "type"
               },
               {
                 "key": "Disabled",
                 "value": "true",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
                 "key": "Variant",
@@ -744,6 +799,8 @@ export const datePickerItem: ComponentData = {
       },
       {
         "cardKey": "dpi-spec-today-disabled",
+        "demoKey": "today-disabled",
+        "demoControls": datePickerItemDemoControls,
         "title": "Today · Disabled",
         "node": "13948:3891",
         "description": "Today on a disabled day. Ring and label both use <code>border/color-border-primary-disabled</code> / <code>text/color-text-primary-disabled</code> (<code>#9BC5FD</code>).",
@@ -755,12 +812,14 @@ export const datePickerItem: ComponentData = {
               {
                 "key": "Type",
                 "value": "Today",
-                "mono": false
+                "mono": false,
+                "prop": "type"
               },
               {
                 "key": "Disabled",
                 "value": "true",
-                "mono": false
+                "mono": false,
+                "prop": "state"
               },
               {
                 "key": "Variant",

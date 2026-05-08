@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/header-transaction.js`.
@@ -172,7 +173,7 @@ export const headerTransaction: ComponentData = {
         "title": "No email",
         "node": "18430:2906",
         "description": "The minimal variant — avatar + title + divider + description. Used when the profile/transaction has no extra metadata to show.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-transaction-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-transaction-spec-1\"><div class=\"eb-preview eb-preview-header-tx\"><div class=\"eb-preview-header-tx__avatar\" aria-hidden=\"true\"></div><p class=\"eb-preview-header-tx__title\">Add Label Here</p><div class=\"eb-preview-header-tx__separator\"></div><p class=\"eb-preview-header-tx__desc\">Add description here.<br>Add description here.</p></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -233,12 +234,12 @@ export const headerTransaction: ComponentData = {
             "rows": [
               {
                 "key": "Title",
-                "value": "Heading/L · BarkAda 20/26",
+                "value": "Heading/L · Proxima Soft Bold 22/26",
                 "mono": true
               },
               {
                 "key": "Description",
-                "value": "Body/S · 13/18",
+                "value": "Body/S · BarkAda Semibold 12/18",
                 "mono": true
               }
             ]
@@ -254,7 +255,7 @@ export const headerTransaction: ComponentData = {
         "title": "With email row",
         "node": "18430:2898",
         "description": "Adds an inline <code>email: value</code> row between the divider and the description. Used on recipient profile cards.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-transaction-spec-2\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-transaction-spec-2\"><div class=\"eb-preview eb-preview-header-tx\"><div class=\"eb-preview-header-tx__avatar\" aria-hidden=\"true\"></div><p class=\"eb-preview-header-tx__title\">Add Label Here</p><div class=\"eb-preview-header-tx__separator\"></div><p class=\"eb-preview-header-tx__meta\"><span class=\"eb-preview-header-tx__meta-key\">email:</span><span class=\"eb-preview-header-tx__meta-value\">email@gmail.com</span></p><p class=\"eb-preview-header-tx__desc\">Add description here.<br>Add description here.</p></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -330,7 +331,32 @@ export const headerTransaction: ComponentData = {
         "compose": "<span class=\"syn-type\">EBTransactionHeader</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Send to bank\"</span><span class=\"syn-punc\">,</span>\n    email <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"user@example.com\"</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — No email row
+      buildStatelessColorsTable({
+        title: 'No Email — Colors',
+        description: 'Transaction-screen header on brand surface, with avatar + title + description split by a divider.',
+        rows: [
+          { role: 'Surface bg',  token: 'main/header-transaction/bg',          value: '#1972F9' },
+          { role: 'Title',       token: 'main/header-transaction/title',       value: '#FFFFFF' },
+          { role: 'Description', token: 'main/header-transaction/description', value: '#FFFFFF @ 80%' },
+          { role: 'Divider',     token: 'main/header-transaction/divider',     value: '#FFFFFF @ 24%' },
+        ],
+      }),
+      // Card 2 — With email row
+      buildStatelessColorsTable({
+        title: 'With Email — Colors',
+        description: 'Same brand surface as Card 1 plus a sender-details cluster (name + email) above the description.',
+        rows: [
+          { role: 'Surface bg',   token: 'main/header-transaction/bg',          value: '#1972F9' },
+          { role: 'Title',        token: 'main/header-transaction/title',       value: '#FFFFFF' },
+          { role: 'Sender label', token: 'main/header-transaction/sender',     value: '#FFFFFF' },
+          { role: 'Sender email', token: 'main/header-transaction/email',      value: '#FFFFFF @ 80%' },
+          { role: 'Description',  token: 'main/header-transaction/description', value: '#FFFFFF @ 80%' },
+          { role: 'Divider',      token: 'main/header-transaction/divider',     value: '#FFFFFF @ 24%' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

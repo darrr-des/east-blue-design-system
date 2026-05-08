@@ -57,23 +57,100 @@ function _stepperBulletUpdate() {
   }
 }
 
+/* ── Stepper Bullet Spec Cards (canonical) ───────────────────────── */
+var _stepperBulletSpecCards = {
+  bullet: { steps: '4', current: '2' }
+};
+var _specCards = _stepperBulletSpecCards;
+window._specCards = _specCards;
+
+function buildSwiftSnippet(type, card) {
+  return getSnippet(type, 'swift', card);
+}
+function buildComposeSnippet(type, card) {
+  return getSnippet(type, 'compose', card);
+}
+function getSnippet(type, lang, card) {
+  var steps = parseInt(card && card.steps ? card.steps : '4', 10);
+  var current = parseInt(card && card.current ? card.current : '2', 10);
+  if (isNaN(steps)) steps = 4;
+  if (isNaN(current)) current = 2;
+  if (current > steps) current = steps;
+
+  if (lang === 'swift') {
+    return 'EBStepper(currentStep: ' + current + ')\n    .ebTotalSteps(' + steps + ')\n    .ebStyle(.bullet)';
+  }
+  return 'EBStepper(\n    currentStep = ' + current + ',\n    totalSteps = ' + steps + ',\n    style = EBStepperStyle.Bullet\n)';
+}
+window.getSnippet = getSnippet;
+
+function _stepperBulletRenderSpec(card) {
+  var steps = parseInt(card.steps, 10);
+  var current = parseInt(card.current, 10);
+  if (isNaN(steps)) steps = 4;
+  if (isNaN(current)) current = 1;
+  if (current > steps) current = steps;
+  if (current < 1) current = 1;
+  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm" style="padding:12px 0;">' +
+    '<div style="font:500 13px system-ui;color:#3C4A5C;margin-bottom:4px;">' + steps + ' steps, current = ' + current + '</div>' +
+    _stepperBulletRender(current, steps) +
+  '</div>';
+}
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _stepperBulletSpecCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Clamp current ≤ steps */
+  if (prop === 'steps') {
+    var s = parseInt(value, 10);
+    var c = parseInt(card.current, 10);
+    if (!isNaN(s) && !isNaN(c) && c > s) card.current = String(s);
+  }
+
+  /* Update the spec preview */
+  var s1 = document.getElementById('stepper-bullet-spec-1');
+  if (s1) s1.innerHTML = _stepperBulletRenderSpec(card);
+
+  /* Update Properties row text via [data-sp="<cardStyle>-<prop>"] */
+  ['steps', 'current'].forEach(function(p) {
+    var spVal = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
+    if (spVal) {
+      var hexEl = spVal.querySelector('.spec-prop-hex');
+      var v = card[p];
+      if (hexEl) hexEl.textContent = v;
+      else spVal.textContent = v;
+    }
+  });
+
+  /* Update DEV code via [data-code-content="<cardStyle>"]. Always run. */
+  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
+  if (codeEl) {
+    var lang = codeEl.getAttribute('data-lang') || 'swift';
+    var code = getSnippet(cardStyle, lang, card);
+    codeEl.setAttribute('data-final', code);
+    codeEl.textContent = code;
+    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+  }
+}
+window.updateSpecCard = updateSpecCard;
+
 function _stepperBulletInit() {
   var ctx = document.getElementById('stepper-bullet-context-preview');
   if (ctx) ctx.innerHTML = _stepperBulletContextMarkup();
   _stepperBulletUpdate();
 
   var s1 = document.getElementById('stepper-bullet-spec-1');
-  if (s1) {
-    s1.innerHTML = '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm" style="padding:12px 0;">' +
-      '<div style="font:500 13px system-ui;color:#3C4A5C;margin-bottom:4px;">3 steps, current = 1</div>' +
-      _stepperBulletRender(1, 3) +
-      '<div style="font:500 13px system-ui;color:#3C4A5C;margin:16px 0 4px;">4 steps, current = 2</div>' +
-      _stepperBulletRender(2, 4) +
-      '<div style="font:500 13px system-ui;color:#3C4A5C;margin:16px 0 4px;">5 steps, current = 5 (last)</div>' +
-      _stepperBulletRender(5, 5) +
-    '</div>';
-  }
+  if (s1) s1.innerHTML = _stepperBulletRenderSpec(_stepperBulletSpecCards.bullet);
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _stepperBulletInit);
 else _stepperBulletInit();
+
+(function(){
+  function reinit(){
+    if (typeof _stepperBulletInit === 'function') _stepperBulletInit();
+  }
+  document.addEventListener('astro:page-load', reinit);
+})();

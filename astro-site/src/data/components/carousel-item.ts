@@ -1,49 +1,5 @@
-import type { ComponentData, DemoControlSection } from '../types';
-
-const carouselItemDemoControls: DemoControlSection[] = [
-  {
-    heading: 'Properties',
-    rows: [
-      {
-        label: 'Mode',
-        prop: 'mode',
-        defaultValue: 'light',
-        options: [
-          { value: 'light', label: 'Light Text' },
-          { value: 'dark', label: 'Dark Text' },
-        ],
-      },
-      {
-        label: 'Type',
-        prop: 'type',
-        defaultValue: 'default',
-        options: [
-          { value: 'default', label: 'Default' },
-          { value: 'icon', label: 'with Icon' },
-          { value: 'headline', label: 'Headline Only' },
-        ],
-      },
-      {
-        label: 'hasPreamble',
-        prop: 'hasPreamble',
-        defaultValue: 'no',
-        options: [
-          { value: 'no', label: 'no' },
-          { value: 'yes', label: 'yes' },
-        ],
-      },
-      {
-        label: 'hasTextLink',
-        prop: 'hasTextLink',
-        defaultValue: 'yes',
-        options: [
-          { value: 'yes', label: 'yes' },
-          { value: 'no', label: 'no' },
-        ],
-      },
-    ],
-  },
-];
+import type { ComponentData } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
 
 export const carouselItem: ComponentData = {
   "meta": {
@@ -256,11 +212,11 @@ export const carouselItem: ComponentData = {
       {
         "cardKey": "default-·-light-text-·-hastextlink=yes",
         "demoKey": "cit-default",
-        "demoControls": carouselItemDemoControls,
+        "demoControls": [],
         "title": "Default · Light Text · hasTextLink=yes",
         "node": "18543:2807",
         "description": "The most common variant — heading + description + button link, inverse text over a dark background image. Used on promotional carousels when the photo has dark tones.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"cit-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"cit-spec-1\"><div class=\"eb-preview eb-preview-cit eb-preview-cit--bg-dark\"><div class=\"eb-preview-cit__hero\"></div><div class=\"eb-preview-cit__content\"><div class=\"eb-preview-cit__heading\" style=\"color:#FFFFFF\">Heading</div><div class=\"eb-preview-cit__desc\" style=\"color:#FFFFFF\">This is a description for this banner.</div><div class=\"eb-preview-cit__link\" style=\"color:#FFFFFF\"><span>Button</span><svg class=\"eb-preview-cit__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 6l6 6-6 6\" stroke=\"#FFFFFF\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -308,11 +264,11 @@ export const carouselItem: ComponentData = {
       {
         "cardKey": "headline-only-·-has-preamble-·-has-textlink",
         "demoKey": "cit-headline",
-        "demoControls": carouselItemDemoControls,
+        "demoControls": [],
         "title": "Headline Only · has Preamble · has TextLink",
         "node": "18543:2839",
         "description": "Preamble + headline only — no description line. Use when the headline itself is the full message. Name is misleading: the variant actually requires Preamble + Heading + Button, with description hidden.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"cit-spec-2\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"cit-spec-2\"><div class=\"eb-preview eb-preview-cit eb-preview-cit--bg-dark\"><div class=\"eb-preview-cit__hero\"></div><div class=\"eb-preview-cit__content\"><div class=\"eb-preview-cit__preamble\" style=\"color:rgba(246,249,253,0.8)\">Preamble</div><div class=\"eb-preview-cit__heading\" style=\"color:#FFFFFF\">Heading</div><div class=\"eb-preview-cit__link\" style=\"color:#FFFFFF\"><span>Button</span><svg class=\"eb-preview-cit__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 6l6 6-6 6\" stroke=\"#FFFFFF\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -358,7 +314,30 @@ export const carouselItem: ComponentData = {
         "compose": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span>\n    heading <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    preamble <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Preamble\"</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — Default item
+      buildStatelessColorsTable({
+        title: 'Default — Colors',
+        description: 'Single carousel slide with heading and description on a white surface.',
+        rows: [
+          { role: 'Heading',     token: 'carousel/color/label-header', value: '#2340A9' },
+          { role: 'Description', token: 'carousel/color/description',  value: '#6780A9' },
+          { role: 'Surface',     token: 'bg/color-bg-main',            value: '#FFFFFF' },
+          { role: 'Active dot',  token: 'bg/color-bg-primary',         value: '#005CE5' },
+        ],
+      }),
+      // Card 2 — same colors, structural variant
+      buildStatelessColorsTable({
+        title: 'Variant — Colors',
+        description: 'Same palette as Card 1 — variant differs in slot composition, not color.',
+        rows: [
+          { role: 'Heading',     token: 'carousel/color/label-header', value: '#2340A9' },
+          { role: 'Description', token: 'carousel/color/description',  value: '#6780A9' },
+          { role: 'Surface',     token: 'bg/color-bg-main',            value: '#FFFFFF' },
+          { role: 'Active dot',  token: 'bg/color-bg-primary',         value: '#005CE5' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

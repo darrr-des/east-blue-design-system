@@ -122,50 +122,8 @@ function updateSpecCard(cardType, prop, value) {
   var spSize = document.querySelector('[data-sp="' + cardType + '-size"]');
   if (spSize) spSize.textContent = _cbLabelMap[card.size];
 
-  /* Colors section — id `spec-${demoKey}-colors` */
-  var colorsEl = document.getElementById('spec-' + cardType + '-colors');
-  if (colorsEl) {
-    var sc = _cbStateColors[st] || _cbStateColors.Default;
-    var rows = [];
-    if (sel === 'true') {
-      rows.push(['Container bg', sc.chk.fill, 'main/checkbox/color/' + st.toLowerCase() + '/selected/bg']);
-      rows.push(['Checkmark',    '#FFFFFF',    'main/checkbox/color/' + st.toLowerCase() + '/selected/check']);
-    } else {
-      if (sc.unc.fill !== 'none') rows.push(['Container bg', sc.unc.fill, 'main/checkbox/color/' + st.toLowerCase() + '/unselected/bg']);
-      rows.push(['Border', sc.unc.stroke, 'main/checkbox/color/' + st.toLowerCase() + '/unselected/border']);
-    }
-    if (sc.opacity) rows.push(['Opacity', (sc.opacity * 100) + '%', '']);
-    var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
-    rows.forEach(function(r) {
-      var isPercent = String(r[1]).indexOf('%') !== -1;
-      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E5EBF4' : '';
-      var hasToken = r[2] && !isPercent;
-      var tokenHtml = hasToken ? '<span class="spec-token-name">' + r[2] + '</span>' : '';
-      if (isPercent) {
-        h += '<div class="spec-prop"><span class="spec-prop-key">' + r[0] + '</span><span class="spec-prop-val mono">' + r[1] + '</span></div>';
-      } else {
-        h += '<div class="spec-prop' + (hasToken ? ' has-token' : '') + '"><span class="spec-prop-key">' + r[0] + '</span>'
-          + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span>'
-          + tokenHtml + '</div>';
-      }
-    });
-    h += '</div>';
-    colorsEl.innerHTML = h;
-  }
-
-  /* Layout section — id `spec-${demoKey}-layout` */
-  var layoutEl = document.getElementById('spec-' + cardType + '-layout');
-  if (layoutEl) {
-    var borderNote = (sel === 'true') ? 'None (filled)' : '2px';
-    layoutEl.innerHTML = '<div class="spec-detail-label">Layout</div><div class="spec-props">'
-      + '<div class="spec-prop"><span class="spec-prop-key">Size</span><span class="spec-prop-val mono">' + px + ' × ' + px + 'px</span></div>'
-      + '<div class="spec-prop"><span class="spec-prop-key">Corner radius</span><span class="spec-prop-val mono">4px (radius-1)</span></div>'
-      + '<div class="spec-prop"><span class="spec-prop-key">Border width</span><span class="spec-prop-val mono">' + borderNote + '</span></div>'
-      + '<div class="spec-prop"><span class="spec-prop-key">Hit target</span><span class="spec-prop-val mono">44 × 44 (mobile)</span></div>'
-      + '</div>';
-  }
-
-  /* Typography — left static (icon-only control) */
+  /* Colors + Layout sections are server-rendered from checkbox.ts;
+     Plan A's `_patchSpecCardRows` handles state- and size-keyed overrides. */
 
   /* DEV code — locate via `[data-code-content="${demoKey}"]` */
   var devView = document.querySelector('[data-view="' + cardType + '-dev"]');

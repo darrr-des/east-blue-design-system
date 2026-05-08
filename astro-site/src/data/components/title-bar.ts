@@ -1,4 +1,50 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/title-bar.js`.
+const titleBarDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Leading icon',
+        prop: 'leadingIcon',
+        defaultValue: 'yes',
+        options: [
+          { value: 'no', label: 'no' },
+          { value: 'yes', label: 'yes' },
+        ],
+      },
+      {
+        label: 'Trailing icon',
+        prop: 'trailingIcon',
+        defaultValue: 'no',
+        options: [
+          { value: 'no', label: 'no' },
+          { value: 'yes', label: 'yes' },
+        ],
+      },
+      {
+        label: 'Leading control',
+        prop: 'leadingControl',
+        defaultValue: 'no',
+        options: [
+          { value: 'no', label: 'no' },
+          { value: 'yes', label: 'yes' },
+        ],
+      },
+      {
+        label: 'Subtext',
+        prop: 'subtext',
+        defaultValue: 'no',
+        options: [
+          { value: 'no', label: 'no' },
+          { value: 'yes', label: 'yes' },
+        ],
+      },
+    ],
+  },
+];
 
 export const titleBar: ComponentData = {
   "meta": {
@@ -22,7 +68,7 @@ export const titleBar: ComponentData = {
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"64\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          \n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"18\" rx=\"4\" fill=\"#1972F9\" opacity=\".6\"></rect>\n          <path d=\"M18 17l3-3 3 3\" stroke=\"#FFF\" stroke-width=\"1\" stroke-linecap=\"round\" transform=\"rotate(180 21 16)\"></path>\n          <text x=\"60\" y=\"19\" text-anchor=\"middle\" fill=\"white\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\">Send Money</text>\n          \n          <rect x=\"18\" y=\"32\" width=\"84\" height=\"10\" rx=\"2\" stroke=\"currentColor\" stroke-width=\"0.8\" opacity=\".1\"></rect>\n          <rect x=\"22\" y=\"35\" width=\"40\" height=\"3\" rx=\"1.5\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <rect x=\"18\" y=\"48\" width=\"84\" height=\"10\" rx=\"2\" stroke=\"currentColor\" stroke-width=\"0.8\" opacity=\".1\"></rect>\n          <rect x=\"22\" y=\"51\" width=\"50\" height=\"3\" rx=\"1.5\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <rect x=\"18\" y=\"64\" width=\"84\" height=\"6\" rx=\"3\" fill=\"currentColor\" opacity=\".08\"></rect>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"tb-demo-preview\"><div style=\"width:360px;max-width:100%;background:#1972F9;border-radius:4px;overflow:hidden;font-family:HeyMeow Rnd,system-ui,sans-serif;color:#FFF;\"><div style=\"height:44px;display:flex;align-items:flex-end;padding:0 20px 8px;justify-content:space-between;font-size:12px;font-weight:600;\"><span>9:41</span><span style=\"display:flex;gap:4px;align-items:center;\"><svg width=\"16\" height=\"12\" viewBox=\"0 0 16 12\"><rect x=\"0\" y=\"8\" width=\"3\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"4\" y=\"5\" width=\"3\" height=\"7\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"8\" y=\"2\" width=\"3\" height=\"10\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"12\" y=\"0\" width=\"3\" height=\"12\" rx=\"0.5\" fill=\"#FFF\"></rect></svg><svg width=\"14\" height=\"12\" viewBox=\"0 0 14 12\"><path d=\"M7 10.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z\" fill=\"#FFF\" transform=\"translate(0,-2)\"></path><path d=\"M3.5 7.5C4.8 6.2 5.9 5.5 7 5.5s2.2.7 3.5 2\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path><path d=\"M1 4.5C3 2.5 5 1.5 7 1.5s4 1 6 3\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path></svg><svg width=\"22\" height=\"12\" viewBox=\"0 0 22 12\"><rect x=\"0\" y=\"1\" width=\"19\" height=\"10\" rx=\"2\" stroke=\"#FFF\" stroke-width=\"1\" fill=\"none\"></rect><rect x=\"2\" y=\"3\" width=\"15\" height=\"6\" rx=\"1\" fill=\"#FFF\"></rect><rect x=\"20\" y=\"4\" width=\"2\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect></svg></span></div><div style=\"display:flex;align-items:center;padding:12px 20px;position:relative;min-height:16px;\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;margin-right:12px;\"><path d=\"M15 18l-6-6 6-6\" stroke=\"#FFF\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><div style=\"flex:1;text-align:center;\"><div style=\"font-size:16px;font-weight:600;letter-spacing:0.25px;line-height:16px;\">Title</div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">leading icon</span><select class=\"demo-panel-select\" id=\"tb-demo-leadingIcon\" onchange=\"updateTitleBarDemo()\"><option value=\"no\">no</option><option value=\"yes\" selected=\"\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">trailing icon</span><select class=\"demo-panel-select\" id=\"tb-demo-trailingIcon\" onchange=\"updateTitleBarDemo()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">leading control</span><select class=\"demo-panel-select\" id=\"tb-demo-leadingControl\" onchange=\"updateTitleBarDemo()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">subtext</span><select class=\"demo-panel-select\" id=\"tb-demo-subtext\" onchange=\"updateTitleBarDemo()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">title block</span><select class=\"demo-panel-select\" id=\"tb-demo-titleBlock\" onchange=\"updateTitleBarDemo()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"tb-demo-preview\"><div style=\"width:360px;max-width:100%;background:#1972F9;border-radius:4px;overflow:hidden;font-family:Proxima Soft,system-ui,sans-serif;color:#FFF;\"><div style=\"height:44px;display:flex;align-items:flex-end;padding:0 20px 8px;justify-content:space-between;font-size:12px;font-weight:600;\"><span>9:41</span><span style=\"display:flex;gap:4px;align-items:center;\"><svg width=\"16\" height=\"12\" viewBox=\"0 0 16 12\"><rect x=\"0\" y=\"8\" width=\"3\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"4\" y=\"5\" width=\"3\" height=\"7\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"8\" y=\"2\" width=\"3\" height=\"10\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"12\" y=\"0\" width=\"3\" height=\"12\" rx=\"0.5\" fill=\"#FFF\"></rect></svg><svg width=\"14\" height=\"12\" viewBox=\"0 0 14 12\"><path d=\"M7 10.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z\" fill=\"#FFF\" transform=\"translate(0,-2)\"></path><path d=\"M3.5 7.5C4.8 6.2 5.9 5.5 7 5.5s2.2.7 3.5 2\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path><path d=\"M1 4.5C3 2.5 5 1.5 7 1.5s4 1 6 3\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path></svg><svg width=\"22\" height=\"12\" viewBox=\"0 0 22 12\"><rect x=\"0\" y=\"1\" width=\"19\" height=\"10\" rx=\"2\" stroke=\"#FFF\" stroke-width=\"1\" fill=\"none\"></rect><rect x=\"2\" y=\"3\" width=\"15\" height=\"6\" rx=\"1\" fill=\"#FFF\"></rect><rect x=\"20\" y=\"4\" width=\"2\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect></svg></span></div><div style=\"display:flex;align-items:center;padding:12px 20px;position:relative;min-height:16px;\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;margin-right:12px;\"><path d=\"M15 18l-6-6 6-6\" stroke=\"#FFF\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><div style=\"position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;width:max-content;max-width:60%;\"><div style=\"font-size:16px;font-weight:600;letter-spacing:0.25px;line-height:16px;\">Title</div></div><div style=\"flex:1;\"></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">leading icon</span><select class=\"demo-panel-select\" id=\"tb-demo-leadingIcon\" onchange=\"updateTitleBarDemo()\"><option value=\"no\">no</option><option value=\"yes\" selected=\"\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">trailing icon</span><select class=\"demo-panel-select\" id=\"tb-demo-trailingIcon\" onchange=\"updateTitleBarDemo()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">leading control</span><select class=\"demo-panel-select\" id=\"tb-demo-leadingControl\" onchange=\"updateTitleBarDemo()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">subtext</span><select class=\"demo-panel-select\" id=\"tb-demo-subtext\" onchange=\"updateTitleBarDemo()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">title block</span><select class=\"demo-panel-select\" id=\"tb-demo-titleBlock\" onchange=\"updateTitleBarDemo()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -114,6 +160,8 @@ export const titleBar: ComponentData = {
     "specCards": [
       {
         "cardKey": "tb-spec-standard",
+        "demoKey": "standard",
+        "demoControls": titleBarDemoControls,
         "title": "Standard",
         "node": "23:175149",
         "description": "Standard title bar without title block. Status bar (44px) + title row with optional icons, control, and subtext. Height ranges from 84px to 100px depending on subtext.",
@@ -126,6 +174,30 @@ export const titleBar: ComponentData = {
                 "key": "Variant",
                 "value": "Standard",
                 "mono": false
+              },
+              {
+                "key": "Leading icon",
+                "value": "yes",
+                "mono": false,
+                "prop": "leadingIcon"
+              },
+              {
+                "key": "Trailing icon",
+                "value": "no",
+                "mono": false,
+                "prop": "trailingIcon"
+              },
+              {
+                "key": "Leading control",
+                "value": "no",
+                "mono": false,
+                "prop": "leadingControl"
+              },
+              {
+                "key": "Subtext",
+                "value": "no",
+                "mono": false,
+                "prop": "subtext"
               }
             ]
           },
@@ -196,10 +268,12 @@ export const titleBar: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBTitleBar</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">, </span>url<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"gcash.com\"</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBTitleBar</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    url <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"gcash.com\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"width:360px;max-width:100%;background:#1972F9;border-radius:4px;overflow:hidden;font-family:HeyMeow Rnd,system-ui,sans-serif;color:#FFF;\"><div style=\"height:44px;display:flex;align-items:flex-end;padding:0 20px 8px;justify-content:space-between;font-size:12px;font-weight:600;\"><span>9:41</span><span style=\"display:flex;gap:4px;align-items:center;\"><svg width=\"16\" height=\"12\" viewBox=\"0 0 16 12\"><rect x=\"0\" y=\"8\" width=\"3\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"4\" y=\"5\" width=\"3\" height=\"7\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"8\" y=\"2\" width=\"3\" height=\"10\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"12\" y=\"0\" width=\"3\" height=\"12\" rx=\"0.5\" fill=\"#FFF\"></rect></svg><svg width=\"14\" height=\"12\" viewBox=\"0 0 14 12\"><path d=\"M7 10.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z\" fill=\"#FFF\" transform=\"translate(0,-2)\"></path><path d=\"M3.5 7.5C4.8 6.2 5.9 5.5 7 5.5s2.2.7 3.5 2\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path><path d=\"M1 4.5C3 2.5 5 1.5 7 1.5s4 1 6 3\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path></svg><svg width=\"22\" height=\"12\" viewBox=\"0 0 22 12\"><rect x=\"0\" y=\"1\" width=\"19\" height=\"10\" rx=\"2\" stroke=\"#FFF\" stroke-width=\"1\" fill=\"none\"></rect><rect x=\"2\" y=\"3\" width=\"15\" height=\"6\" rx=\"1\" fill=\"#FFF\"></rect><rect x=\"20\" y=\"4\" width=\"2\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect></svg></span></div><div style=\"display:flex;align-items:center;padding:12px 20px;position:relative;min-height:16px;\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;margin-right:12px;\"><path d=\"M15 18l-6-6 6-6\" stroke=\"#FFF\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><div style=\"flex:1;text-align:center;\"><div style=\"font-size:16px;font-weight:600;letter-spacing:0.25px;line-height:16px;\">Title</div></div></div></div>"
+        "previewHtml": "<div id=\"spec-standard-preview\"><div style=\"width:360px;max-width:100%;background:#1972F9;border-radius:4px;overflow:hidden;font-family:Proxima Soft,system-ui,sans-serif;color:#FFF;\"><div style=\"height:44px;display:flex;align-items:flex-end;padding:0 20px 8px;justify-content:space-between;font-size:12px;font-weight:600;\"><span>9:41</span><span style=\"display:flex;gap:4px;align-items:center;\"><svg width=\"16\" height=\"12\" viewBox=\"0 0 16 12\"><rect x=\"0\" y=\"8\" width=\"3\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"4\" y=\"5\" width=\"3\" height=\"7\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"8\" y=\"2\" width=\"3\" height=\"10\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"12\" y=\"0\" width=\"3\" height=\"12\" rx=\"0.5\" fill=\"#FFF\"></rect></svg><svg width=\"14\" height=\"12\" viewBox=\"0 0 14 12\"><path d=\"M7 10.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z\" fill=\"#FFF\" transform=\"translate(0,-2)\"></path><path d=\"M3.5 7.5C4.8 6.2 5.9 5.5 7 5.5s2.2.7 3.5 2\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path><path d=\"M1 4.5C3 2.5 5 1.5 7 1.5s4 1 6 3\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path></svg><svg width=\"22\" height=\"12\" viewBox=\"0 0 22 12\"><rect x=\"0\" y=\"1\" width=\"19\" height=\"10\" rx=\"2\" stroke=\"#FFF\" stroke-width=\"1\" fill=\"none\"></rect><rect x=\"2\" y=\"3\" width=\"15\" height=\"6\" rx=\"1\" fill=\"#FFF\"></rect><rect x=\"20\" y=\"4\" width=\"2\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect></svg></span></div><div style=\"display:flex;align-items:center;padding:12px 20px;position:relative;min-height:16px;\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;margin-right:12px;\"><path d=\"M15 18l-6-6 6-6\" stroke=\"#FFF\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><div style=\"position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;width:max-content;max-width:60%;\"><div style=\"font-size:16px;font-weight:600;letter-spacing:0.25px;line-height:16px;\">Title</div></div></div></div></div>"
       },
       {
         "cardKey": "tb-spec-titleblock",
+        "demoKey": "titleblock",
+        "demoControls": titleBarDemoControls,
         "title": "With Title Block",
         "node": "23:175159",
         "description": "Title bar with expanded header block (72px) below the title row. Used for screens with prominent section headers. Adds \"Header\" text at 26px Semibold.",
@@ -212,6 +286,30 @@ export const titleBar: ComponentData = {
                 "key": "Variant",
                 "value": "With Title Block",
                 "mono": false
+              },
+              {
+                "key": "Leading icon",
+                "value": "yes",
+                "mono": false,
+                "prop": "leadingIcon"
+              },
+              {
+                "key": "Trailing icon",
+                "value": "no",
+                "mono": false,
+                "prop": "trailingIcon"
+              },
+              {
+                "key": "Leading control",
+                "value": "no",
+                "mono": false,
+                "prop": "leadingControl"
+              },
+              {
+                "key": "Subtext",
+                "value": "no",
+                "mono": false,
+                "prop": "subtext"
               }
             ]
           },
@@ -282,7 +380,7 @@ export const titleBar: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBTitleBar</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">, </span>url<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"gcash.com\"</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBTitleBar</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    url <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"gcash.com\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"width:360px;max-width:100%;background:#1972F9;border-radius:4px;overflow:hidden;font-family:HeyMeow Rnd,system-ui,sans-serif;color:#FFF;\"><div style=\"height:44px;display:flex;align-items:flex-end;padding:0 20px 8px;justify-content:space-between;font-size:12px;font-weight:600;\"><span>9:41</span><span style=\"display:flex;gap:4px;align-items:center;\"><svg width=\"16\" height=\"12\" viewBox=\"0 0 16 12\"><rect x=\"0\" y=\"8\" width=\"3\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"4\" y=\"5\" width=\"3\" height=\"7\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"8\" y=\"2\" width=\"3\" height=\"10\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"12\" y=\"0\" width=\"3\" height=\"12\" rx=\"0.5\" fill=\"#FFF\"></rect></svg><svg width=\"14\" height=\"12\" viewBox=\"0 0 14 12\"><path d=\"M7 10.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z\" fill=\"#FFF\" transform=\"translate(0,-2)\"></path><path d=\"M3.5 7.5C4.8 6.2 5.9 5.5 7 5.5s2.2.7 3.5 2\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path><path d=\"M1 4.5C3 2.5 5 1.5 7 1.5s4 1 6 3\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path></svg><svg width=\"22\" height=\"12\" viewBox=\"0 0 22 12\"><rect x=\"0\" y=\"1\" width=\"19\" height=\"10\" rx=\"2\" stroke=\"#FFF\" stroke-width=\"1\" fill=\"none\"></rect><rect x=\"2\" y=\"3\" width=\"15\" height=\"6\" rx=\"1\" fill=\"#FFF\"></rect><rect x=\"20\" y=\"4\" width=\"2\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect></svg></span></div><div style=\"display:flex;align-items:center;padding:12px 20px;position:relative;min-height:16px;\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;margin-right:12px;\"><path d=\"M15 18l-6-6 6-6\" stroke=\"#FFF\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><div style=\"flex:1;text-align:center;\"><div style=\"font-size:16px;font-weight:600;letter-spacing:0.25px;line-height:16px;\">Title</div></div></div><div style=\"height:72px;padding:0 24px;display:flex;align-items:center;\"><div style=\"font-size:26px;font-weight:600;letter-spacing:0.85px;line-height:31px;\">Header</div></div></div>"
+        "previewHtml": "<div id=\"spec-titleblock-preview\"><div style=\"width:360px;max-width:100%;background:#1972F9;border-radius:4px;overflow:hidden;font-family:Proxima Soft,system-ui,sans-serif;color:#FFF;\"><div style=\"height:44px;display:flex;align-items:flex-end;padding:0 20px 8px;justify-content:space-between;font-size:12px;font-weight:600;\"><span>9:41</span><span style=\"display:flex;gap:4px;align-items:center;\"><svg width=\"16\" height=\"12\" viewBox=\"0 0 16 12\"><rect x=\"0\" y=\"8\" width=\"3\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"4\" y=\"5\" width=\"3\" height=\"7\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"8\" y=\"2\" width=\"3\" height=\"10\" rx=\"0.5\" fill=\"#FFF\"></rect><rect x=\"12\" y=\"0\" width=\"3\" height=\"12\" rx=\"0.5\" fill=\"#FFF\"></rect></svg><svg width=\"14\" height=\"12\" viewBox=\"0 0 14 12\"><path d=\"M7 10.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z\" fill=\"#FFF\" transform=\"translate(0,-2)\"></path><path d=\"M3.5 7.5C4.8 6.2 5.9 5.5 7 5.5s2.2.7 3.5 2\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path><path d=\"M1 4.5C3 2.5 5 1.5 7 1.5s4 1 6 3\" stroke=\"#FFF\" stroke-width=\"1.2\" fill=\"none\" stroke-linecap=\"round\"></path></svg><svg width=\"22\" height=\"12\" viewBox=\"0 0 22 12\"><rect x=\"0\" y=\"1\" width=\"19\" height=\"10\" rx=\"2\" stroke=\"#FFF\" stroke-width=\"1\" fill=\"none\"></rect><rect x=\"2\" y=\"3\" width=\"15\" height=\"6\" rx=\"1\" fill=\"#FFF\"></rect><rect x=\"20\" y=\"4\" width=\"2\" height=\"4\" rx=\"0.5\" fill=\"#FFF\"></rect></svg></span></div><div style=\"display:flex;align-items:center;padding:12px 20px;position:relative;min-height:16px;\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"flex-shrink:0;margin-right:12px;\"><path d=\"M15 18l-6-6 6-6\" stroke=\"#FFF\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><div style=\"position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;width:max-content;max-width:60%;\"><div style=\"font-size:16px;font-weight:600;letter-spacing:0.25px;line-height:16px;\">Title</div></div></div><div style=\"height:72px;padding:0 24px;display:flex;align-items:center;\"><div style=\"font-size:26px;font-weight:600;letter-spacing:0.85px;line-height:31px;\">Header</div></div></div></div>"
       }
     ],
     "colorsTables": [
@@ -406,7 +504,7 @@ export const titleBar: ComponentData = {
             "role": "Title",
             "token": "Primary/Label/Light/Base",
             "values": [
-              "HeyMeow Rnd Semibold",
+              "Proxima Soft Semibold",
               "16px",
               "0.25px",
               "16px"
@@ -416,7 +514,7 @@ export const titleBar: ComponentData = {
             "role": "Subtext",
             "token": "Primary/Label/Light/Fine",
             "values": [
-              "HeyMeow Rnd Semibold",
+              "Proxima Soft Semibold",
               "12px",
               "0.5px",
               "12px"
@@ -426,7 +524,7 @@ export const titleBar: ComponentData = {
             "role": "Header",
             "token": "Primary/Headlines/Light/Area",
             "values": [
-              "HeyMeow Rnd Semibold",
+              "Proxima Soft Semibold",
               "26px",
               "0.85px",
               "31px"
@@ -436,7 +534,7 @@ export const titleBar: ComponentData = {
             "role": "CTA (control)",
             "token": "Primary/Label/Light/Small",
             "values": [
-              "HeyMeow Rnd Semibold",
+              "Proxima Soft Semibold",
               "14px",
               "0.25px",
               "14px"

@@ -1,4 +1,53 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+import { buildMultiModeColorsTable, buildStatelessColorsTable } from './_helpers';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/toast.js`.
+const toastDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Type',
+        prop: 'type',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'default' },
+          { value: 'pending', label: 'pending' },
+          { value: 'error', label: 'error' },
+        ],
+      },
+      {
+        label: 'Theme',
+        prop: 'theme',
+        defaultValue: 'dark',
+        options: [
+          { value: 'dark', label: 'dark' },
+          { value: 'light', label: 'light' },
+          { value: 'default', label: 'default' },
+        ],
+      },
+      {
+        label: 'With Icon',
+        prop: 'withIcon',
+        defaultValue: 'yes',
+        options: [
+          { value: 'yes', label: 'yes' },
+          { value: 'no', label: 'no' },
+        ],
+      },
+      {
+        label: 'Large Label',
+        prop: 'largeLabel',
+        defaultValue: 'yes',
+        options: [
+          { value: 'yes', label: 'yes' },
+          { value: 'no', label: 'no' },
+        ],
+      },
+    ],
+  },
+];
 
 export const toast: ComponentData = {
   "meta": {
@@ -26,7 +75,7 @@ export const toast: ComponentData = {
   },
   "overview": {
     "inContextNote": "Toasts float over the app screen — not inline with content. Success toasts confirm completed actions (\"Transfer sent\"), pending toasts acknowledge background work (\"Uploading…\"), and error toasts surface failures that don't block the flow. They auto-dismiss after ~3 seconds unless swiped.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"toast-demo-preview\"><div class=\"eb-preview eb-preview-toast eb-preview-toast--dark eb-preview-toast--large\"><div class=\"eb-preview-toast__container\"><div class=\"eb-preview-toast__icon-wrap\"><svg class=\"eb-preview-toast__icon eb-preview-toast__icon--large\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" fill=\"none\"></circle><path d=\"M7.50 12.20 L10.80 16.50 L17.00 7.50\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path></svg></div><p class=\"eb-preview-toast__label\">Add the popup message here</p></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">message</span><input type=\"text\" id=\"toast-ctrl-message\" class=\"demo-panel-select demo-panel-input\" value=\"Add the popup message here\" oninput=\"_toastUpdate()\" placeholder=\"Toast message\"></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select id=\"toast-ctrl-type\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"default\" selected=\"\">default</option><option value=\"pending\">pending</option><option value=\"error\">error</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Theme</span><select id=\"toast-ctrl-theme\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"dark\" selected=\"\">dark</option><option value=\"light\">light</option><option value=\"default\">default</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">With Icon</span><select id=\"toast-ctrl-withicon\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Large Label</span><select id=\"toast-ctrl-largelabel\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"toast-demo-preview\"><div class=\"eb-preview eb-preview-toast eb-preview-toast--dark eb-preview-toast--large\"><div class=\"eb-preview-toast__container\"><div class=\"eb-preview-toast__icon-wrap\"><svg class=\"eb-preview-toast__icon eb-preview-toast__icon--large\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" fill=\"none\"></circle><path d=\"M7.50 12.20 L10.80 16.50 L17.00 7.50\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path></svg></div><p class=\"eb-preview-toast__label\">Add the popup message here</p></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select id=\"toast-ctrl-type\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"default\" selected=\"\">default</option><option value=\"pending\">pending</option><option value=\"error\">error</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Theme</span><select id=\"toast-ctrl-theme\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"dark\" selected=\"\">dark</option><option value=\"light\">light</option><option value=\"default\">default</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">With Icon</span><select id=\"toast-ctrl-withicon\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Large Label</span><select id=\"toast-ctrl-largelabel\" class=\"demo-panel-select\" onchange=\"_toastUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -206,10 +255,12 @@ export const toast: ComponentData = {
     "specCards": [
       {
         "cardKey": "default-/-dark-—-with-icon,-large-label",
+        "demoKey": "dark",
+        "demoControls": toastDemoControls,
         "title": "Default / Dark — with icon, large label",
         "node": "27:53136",
         "description": "The canonical success toast. Dark navy surface, white text, leading checkmark icon. Used across the app to confirm completed actions (transfers, settings saved, uploads done).",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-1\"><div class=\"eb-preview eb-preview-toast eb-preview-toast--dark eb-preview-toast--large\"><div class=\"eb-preview-toast__container\"><div class=\"eb-preview-toast__icon-wrap\"><svg class=\"eb-preview-toast__icon eb-preview-toast__icon--large\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" fill=\"none\"></circle><path d=\"M7.50 12.20 L10.80 16.50 L17.00 7.50\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path></svg></div><p class=\"eb-preview-toast__label\">Add the popup message here</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -218,22 +269,26 @@ export const toast: ComponentData = {
               {
                 "key": "Type",
                 "value": "default",
-                "mono": true
+                "mono": true,
+                "prop": "type"
               },
               {
                 "key": "Theme",
                 "value": "dark",
-                "mono": true
+                "mono": true,
+                "prop": "theme"
               },
               {
                 "key": "With Icon",
                 "value": "yes",
-                "mono": true
+                "mono": true,
+                "prop": "withIcon"
               },
               {
                 "key": "Large Label",
                 "value": "yes",
-                "mono": true
+                "mono": true,
+                "prop": "largeLabel"
               }
             ]
           },
@@ -350,10 +405,12 @@ export const toast: ComponentData = {
       },
       {
         "cardKey": "error-—-with-icon,-large-label",
+        "demoKey": "error",
+        "demoControls": toastDemoControls,
         "title": "Error — with icon, large label",
         "node": "27:53154",
         "description": "Destructive surface for errors. Red bg, white label, leading X glyph. Only paints when <code>theme=default</code> — the current schema doesn't allow a light/dark error variant.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-2\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-2\"><div class=\"eb-preview eb-preview-toast eb-preview-toast--destructive eb-preview-toast--large\"><div class=\"eb-preview-toast__container\"><div class=\"eb-preview-toast__icon-wrap\"><svg class=\"eb-preview-toast__icon eb-preview-toast__icon--large\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" fill=\"none\"></circle><path d=\"M8 8 L16 16 M16 8 L8 16\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div><p class=\"eb-preview-toast__label\">Add the popup message here</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -361,23 +418,27 @@ export const toast: ComponentData = {
             "rows": [
               {
                 "key": "Type",
-                "value": "Error",
-                "mono": true
-              },
-              {
-                "key": "Has icon",
-                "value": "Yes",
-                "mono": true
-              },
-              {
-                "key": "Label size",
-                "value": "Large",
-                "mono": true
+                "value": "error",
+                "mono": true,
+                "prop": "type"
               },
               {
                 "key": "Theme",
-                "value": "Dark",
-                "mono": true
+                "value": "default",
+                "mono": true,
+                "prop": "theme"
+              },
+              {
+                "key": "With Icon",
+                "value": "yes",
+                "mono": true,
+                "prop": "withIcon"
+              },
+              {
+                "key": "Large Label",
+                "value": "yes",
+                "mono": true,
+                "prop": "largeLabel"
               }
             ]
           },
@@ -442,7 +503,7 @@ export const toast: ComponentData = {
               },
               {
                 "key": "Font",
-                "value": "Proxima Soft",
+                "value": "BarkAda",
                 "mono": true
               },
               {
@@ -463,10 +524,12 @@ export const toast: ComponentData = {
       },
       {
         "cardKey": "pending-—-with-icon,-large-label",
+        "demoKey": "pending",
+        "demoControls": toastDemoControls,
         "title": "Pending — with icon, large label",
         "node": "3424:1308",
         "description": "Acknowledges in-flight work. Ships a <strong>placeholder gray circle</strong> today (<code>icon-placeholder</code>) — should be an animated spinner. Container is wrapped in a <code>&lt;button&gt;</code> element in the Figma code, suggesting tap-to-dismiss is intended but not documented.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-3\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-3\"><div class=\"eb-preview eb-preview-toast eb-preview-toast--dark eb-preview-toast--large\"><div class=\"eb-preview-toast__container\"><div class=\"eb-preview-toast__icon-wrap\"><div class=\"eb-preview-toast__icon-placeholder eb-preview-toast__icon-placeholder--large\"></div></div><p class=\"eb-preview-toast__label\">Add the popup message here</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -474,23 +537,27 @@ export const toast: ComponentData = {
             "rows": [
               {
                 "key": "Type",
-                "value": "Pending",
-                "mono": true
-              },
-              {
-                "key": "Has icon",
-                "value": "Yes",
-                "mono": true
-              },
-              {
-                "key": "Label size",
-                "value": "Large",
-                "mono": true
+                "value": "pending",
+                "mono": true,
+                "prop": "type"
               },
               {
                 "key": "Theme",
-                "value": "Dark",
-                "mono": true
+                "value": "dark",
+                "mono": true,
+                "prop": "theme"
+              },
+              {
+                "key": "With Icon",
+                "value": "yes",
+                "mono": true,
+                "prop": "withIcon"
+              },
+              {
+                "key": "Large Label",
+                "value": "yes",
+                "mono": true,
+                "prop": "largeLabel"
               }
             ]
           },
@@ -555,7 +622,7 @@ export const toast: ComponentData = {
               },
               {
                 "key": "Font",
-                "value": "Proxima Soft",
+                "value": "BarkAda",
                 "mono": true
               },
               {
@@ -576,10 +643,12 @@ export const toast: ComponentData = {
       },
       {
         "cardKey": "default-—-no-icon,-small-label",
+        "demoKey": "compact",
+        "demoControls": toastDemoControls,
         "title": "Default — no icon, small label",
         "node": "27:53196",
         "description": "The compact, text-only toast. No icon, smaller type (12/14, tracking +0.5). Used when the message is short and the context is unambiguous (\"Copied\", \"Saved\").",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-4\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-4\"><div class=\"eb-preview eb-preview-toast eb-preview-toast--dark eb-preview-toast--small\"><div class=\"eb-preview-toast__container\"><p class=\"eb-preview-toast__label\">Add the popup message here</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -588,22 +657,26 @@ export const toast: ComponentData = {
               {
                 "key": "Type",
                 "value": "default",
-                "mono": true
+                "mono": true,
+                "prop": "type"
               },
               {
                 "key": "Theme",
                 "value": "dark",
-                "mono": true
+                "mono": true,
+                "prop": "theme"
               },
               {
                 "key": "With Icon",
                 "value": "no",
-                "mono": true
+                "mono": true,
+                "prop": "withIcon"
               },
               {
                 "key": "Large Label",
                 "value": "no",
-                "mono": true
+                "mono": true,
+                "prop": "largeLabel"
               }
             ]
           },
@@ -671,7 +744,54 @@ export const toast: ComponentData = {
         "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Notice\"</span><span class=\"syn-punc\">,</span>\n    labelSize <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastLabelSize</span><span class=\"syn-punc\">.</span>Small\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — Default · with icon · large label
+      buildMultiModeColorsTable({
+        title: 'Default — Colors by Theme',
+        description: 'Information toast. Theme axis flips surface + label between Dark (navy) and Light (white).',
+        modes: ['Theme · Dark', 'Theme · Light'],
+        rows: [
+          { role: 'Surface bg', token: 'main/toast/default/{theme}/bg',     values: ['#0A2757', '#FFFFFF'] },
+          { role: 'Border',     token: 'main/toast/default/{theme}/border', values: ['#E5EBF4', '#E5EBF4'] },
+          { role: 'Label',      token: 'main/toast/default/{theme}/label',  values: ['#FFFFFF', '#0A2757'] },
+          { role: 'Icon',       token: 'main/toast/default/{theme}/icon',   values: ['#FFFFFF', '#0A2757'] },
+        ],
+      }),
+      // Card 2 — Error
+      buildStatelessColorsTable({
+        title: 'Error — Colors',
+        description: 'Critical/error toast. Single appearance regardless of theme.',
+        rows: [
+          { role: 'Surface bg', token: 'main/toast/error/bg',     value: '#D61B2C' },
+          { role: 'Border',     token: 'main/toast/error/border', value: '#F4C7C9' },
+          { role: 'Label',      token: 'main/toast/error/label',  value: '#FFFFFF' },
+          { role: 'Icon',       token: 'main/toast/error/icon',   value: '#FFFFFF' },
+        ],
+      }),
+      // Card 3 — Pending · with icon · large label
+      buildMultiModeColorsTable({
+        title: 'Pending — Colors by Theme',
+        description: 'In-progress / loading state toast. Same surface palette as Default; spinner replaces the static icon.',
+        modes: ['Theme · Dark', 'Theme · Light'],
+        rows: [
+          { role: 'Surface bg',  token: 'main/toast/pending/{theme}/bg',      values: ['#0A2757', '#FFFFFF'] },
+          { role: 'Border',      token: 'main/toast/pending/{theme}/border',  values: ['#E5EBF4', '#E5EBF4'] },
+          { role: 'Label',       token: 'main/toast/pending/{theme}/label',   values: ['#FFFFFF', '#0A2757'] },
+          { role: 'Spinner',     token: 'main/toast/pending/{theme}/spinner', values: ['#FFFFFF', '#0A2757'] },
+        ],
+      }),
+      // Card 4 — Default · no icon, small label
+      buildMultiModeColorsTable({
+        title: 'Default (No Icon) — Colors by Theme',
+        description: 'Same theme palette as the with-icon variant; only the icon role drops out.',
+        modes: ['Theme · Dark', 'Theme · Light'],
+        rows: [
+          { role: 'Surface bg', token: 'main/toast/default/{theme}/bg',     values: ['#0A2757', '#FFFFFF'] },
+          { role: 'Border',     token: 'main/toast/default/{theme}/border', values: ['#E5EBF4', '#E5EBF4'] },
+          { role: 'Label',      token: 'main/toast/default/{theme}/label',  values: ['#FFFFFF', '#0A2757'] },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

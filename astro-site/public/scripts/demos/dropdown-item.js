@@ -66,19 +66,96 @@ function updateDropdownItemDemo() {
   if (el) el.innerHTML = _ddiBuildSvg(_ddiDemo.type, _ddiDemo.selected);
 }
 
-function updateDropdownItemSpecCard(variant, selected) {
-  var map = { text: 'text', tag: 'text with tag', amount: 'amount', country: 'country', disabled: 'disabeld' };
-  var type = map[variant] || 'text';
-  var el = document.getElementById('ddi-' + variant + '-preview');
-  if (el) el.innerHTML = _ddiBuildSvg(type, selected);
+/* ── Spec card state (per-card, drives previews + DEV code) ──────── */
+/* demoKey → variant defaults. The dropdown panel can drive each card
+   independently; the type/selected dropdowns let the user explore any
+   combination on every card. */
+var _specCards = {
+  'text':     { type: 'text',          selected: 'false' },
+  'tag':      { type: 'text with tag', selected: 'false' },
+  'amount':   { type: 'amount',        selected: 'false' },
+  'country':  { type: 'country',       selected: 'false' },
+  'disabled': { type: 'disabeld',      selected: 'false' }
+};
+window._specCards = _specCards;
+
+/* ── Code snippet builders (called by updateSpecCard + switchCodeTab) ── */
+function _ddiSwiftStateDot(card) {
+  if (card.type === 'disabeld') return '.disabled';
+  if (card.selected === 'true') return '.selected';
+  return '.default';
 }
 
+function _ddiComposeStateName(card) {
+  if (card.type === 'disabeld') return 'Disabled';
+  if (card.selected === 'true') return 'Selected';
+  return 'Default';
+}
+
+function _ddiLabelLiteral(card) {
+  if (card.type === 'amount')  return '\"1,000.00\"';
+  if (card.type === 'country') return '\"Philippines +63\"';
+  return '\"Option label\"';
+}
+
+function buildSwiftSnippet(type, card) {
+  var lines = [];
+  lines.push('EBDropdownItem(' + _ddiLabelLiteral(card) + ')');
+  lines.push('    .ebState(' + _ddiSwiftStateDot(card) + ')');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(type, card) {
+  var lines = [];
+  lines.push('EBDropdownItem(');
+  lines.push('    label = ' + _ddiLabelLiteral(card) + ',');
+  lines.push('    state = EBItemState.' + _ddiComposeStateName(card));
+  lines.push(')');
+  return lines.join('\n');
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+/* ── updateSpecCard — canonical signature ───────────────────────────── */
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update Properties text — data-sp="${cardStyle}-${prop}" */
+  var spType = document.querySelector('[data-sp="' + cardStyle + '-type"]');
+  if (spType) spType.textContent = card.type;
+  var spSelected = document.querySelector('[data-sp="' + cardStyle + '-selected"]');
+  if (spSelected) {
+    if (card.type === 'disabeld') spSelected.textContent = 'Disabled';
+    else if (card.selected === 'true') spSelected.textContent = 'Selected';
+    else spSelected.textContent = 'Default';
+  }
+
+  /* Update DEV code — always */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+    }
+  }
+}
+window.updateSpecCard = updateSpecCard;
+
 function _ddiInitSpecCards() {
-  updateDropdownItemSpecCard('text', 'false');
-  updateDropdownItemSpecCard('tag', 'false');
-  updateDropdownItemSpecCard('amount', 'false');
-  updateDropdownItemSpecCard('country', 'false');
-  updateDropdownItemSpecCard('disabled', 'false');
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'type', _specCards[k].type);
+  });
 }
 
 function _ddiInit() {
@@ -91,3 +168,4 @@ if (document.readyState === 'loading') {
 } else {
   _ddiInit();
 }
+document.addEventListener('astro:page-load', _ddiInit);

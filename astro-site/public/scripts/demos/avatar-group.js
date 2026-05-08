@@ -44,7 +44,7 @@ function _avgBuildSvg(count) {
     var borderColor = '#E5EBF4';
     var textColor = p.type === 'brand' ? '#FFFFFF' : '#2340A9';
     s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + (r - 1) + '" fill="' + bg + '" stroke="' + borderColor + '" stroke-width="1.5"/>';
-    s += '<text x="' + cx + '" y="' + (cy + 3) + '" text-anchor="middle" fill="' + textColor + '" font-size="8" font-weight="700" font-family="\'HeyMeow Rnd\', system-ui, sans-serif">' + p.initials + '</text>';
+    s += '<text x="' + cx + '" y="' + (cy + 3) + '" text-anchor="middle" fill="' + textColor + '" font-size="8" font-weight="700" font-family="\'Proxima Soft\', system-ui, sans-serif">' + p.initials + '</text>';
   });
   s += '</svg>';
   return s;

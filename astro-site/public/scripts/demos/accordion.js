@@ -80,35 +80,11 @@ var _accSpecCards = {
   expanded:  { state: 'default', leadingIcon: true, description: false }
 };
 
-var _accSpecColors = {
-  default: { label: 'Colors — Default', rows: [
-    ['Header bg','#FFFFFF','main/accordion/color/collapsed/bg'],
-    ['Content-body bg','#F4F7FB','surface/content'],
-    ['Label','#0A2757','main/accordion/color/collapsed/label'],
-    ['Description','#90A8D0','main/accordion/color/collapsed/description'],
-    ['Chevron','#005CE5','main/accordion/color/collapsed/icon-chevron'],
-    ['Icon placeholder','#C2C6CF','icon/placeholder'],
-    ['Border','#E5EBF4','main/accordion/color/collapsed/border']
-  ]},
-  pressed: { label: 'Colors — Pressed', rows: [
-    ['Header bg','#EEF3FB','surface/pressed'],
-    ['Content-body bg','#F4F7FB','surface/content'],
-    ['Label','#0A2757','main/accordion/color/collapsed/label'],
-    ['Description','#90A8D0','main/accordion/color/collapsed/description'],
-    ['Chevron','#005CE5','main/accordion/color/collapsed/icon-chevron'],
-    ['Icon placeholder','#C2C6CF','icon/placeholder'],
-    ['Border','#E5EBF4','main/accordion/color/collapsed/border']
-  ]},
-  disabled: { label: 'Colors — Disabled', rows: [
-    ['Header bg','#F6F9FD','bg/color-bg'],
-    ['Content-body bg','#F4F7FB','surface/content'],
-    ['Label','#C2CFE5','text/color-text-disabled'],
-    ['Description','#C2CFE5','text/color-text-disabled'],
-    ['Chevron','#C2CFE5','text/color-text-disabled'],
-    ['Icon placeholder','#C2C6CF','icon/placeholder'],
-    ['Border','#E5EBF4','main/accordion/color/collapsed/border']
-  ]}
-};
+/* Spec-card Colors section is server-rendered from `accordion.ts`
+   (SSR source of truth) and patched at runtime by Plan A's
+   `_patchSpecCardRows` in assessment.js when a row has `variants`.
+   Demo no longer rebuilds the section — we keep the live-preview
+   restyling (header/label/icon colors) below. */
 
 function updateAccSpecCard(cardType, prop, value) {
   var card = _accSpecCards[cardType];
@@ -154,18 +130,9 @@ function updateAccSpecCard(cardType, prop, value) {
   if (spIcon)  spIcon.textContent  = card.leadingIcon ? 'true' : 'false';
   if (spDesc)  spDesc.textContent  = card.description ? 'true' : 'false';
 
-  /* Update colors section */
-  var colorsEl = document.getElementById('spec-acc-' + cardType + '-colors');
-  if (colorsEl) {
-    var colorData = _accSpecColors[card.state] || _accSpecColors['default'];
-    var h = '<div class="spec-detail-label">' + colorData.label + '</div><div class="spec-props">';
-    colorData.rows.forEach(function(r) {
-      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
-      h += '<div class="spec-prop"><span class="spec-prop-key">' + r[0] + '</span><span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + (r[2] ? '<span class="spec-token-name">' + r[2] + '</span>' : '') + '</span></div>';
-    });
-    h += '</div>';
-    colorsEl.innerHTML = h;
-  }
+  /* Colors section is server-rendered from accordion.ts; Plan A's
+     `_patchSpecCardRows` (assessment.js) handles per-variant updates
+     when a row declares `variants`. Demo no longer rebuilds it. */
 
   /* Update DEV code if visible */
   var devView = document.querySelector('[data-view="acc-' + cardType + '-dev"]');
@@ -383,3 +350,89 @@ if (document.readyState === 'loading') {
   }
   document.addEventListener('astro:page-load', reinit);
 })();
+
+/* ── Canonical wiring (matches avatar.js shape) ────────────────────── */
+/* The data file uses demoKey="acc-collapsed" / "acc-expanded" — expose
+   `_specCards` keyed by those values and a canonical `updateSpecCard`
+   so the shared `switchCodeTab(_, lang, cardStyle)` in assessment.js
+   can rebuild the snippet via `getSnippet`. */
+var _specCards = {
+  'acc-collapsed': _accSpecCards.collapsed,
+  'acc-expanded':  _accSpecCards.expanded
+};
+window._specCards = _specCards;
+
+function _accCardKeyToShort(cardKey) {
+  if (cardKey === 'acc-collapsed') return 'collapsed';
+  if (cardKey === 'acc-expanded') return 'expanded';
+  return cardKey;
+}
+
+function buildSwiftSnippet(cardKey, card) {
+  var isExpanded = _accCardKeyToShort(cardKey) === 'expanded';
+  var lines = [];
+  lines.push('EBAccordion("Title", isExpanded: .constant(' + (isExpanded ? 'true' : 'false') + ')) {');
+  lines.push('    Text("' + (isExpanded ? 'Body content shown when expanded' : 'Content') + '")');
+  lines.push('}');
+  if (card && card.state === 'disabled') lines.push('    .disabled(true)');
+  return lines.join('\n');
+}
+
+function buildComposeSnippet(cardKey, card) {
+  var isExpanded = _accCardKeyToShort(cardKey) === 'expanded';
+  var lines = [];
+  lines.push('EBAccordion(');
+  lines.push('    title = "Title",');
+  lines.push('    expanded = ' + (isExpanded ? 'true' : 'false') + ',');
+  if (card && card.state === 'disabled') lines.push('    enabled = false,');
+  lines.push('    onExpandChange = { }');
+  lines.push(') {');
+  lines.push('    Text("' + (isExpanded ? 'Body content shown when expanded' : 'Content') + '")');
+  lines.push('}');
+  return lines.join('\n');
+}
+
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift'
+    ? buildSwiftSnippet(cardKey, card)
+    : buildComposeSnippet(cardKey, card);
+}
+window.getSnippet = getSnippet;
+
+/* Canonical updateSpecCard(cardStyle=demoKey, prop, value).
+   Reads state from `_specCards[cardStyle]`, updates the [data-sp]
+   property cells and the DEV `<code data-code-content>` block. */
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Delegate visual + Colors-section updates to the legacy handler
+     which already knows how to rebuild the SVG preview and colors HTML. */
+  var shortKey = _accCardKeyToShort(cardStyle);
+  if (typeof updateAccSpecCard === 'function') {
+    /* Run the legacy version with the short key so its preview/SVG
+       updates fire. The shared `_specCards` and the legacy
+       `_accSpecCards` reference the SAME object so state stays in sync. */
+    updateAccSpecCard(shortKey, prop, value);
+  }
+
+  /* Property-text cells — `[data-sp="${cardStyle}-${prop}"]`. */
+  var spState = document.querySelector('[data-sp="' + cardStyle + '-state"]');
+  var spIcon  = document.querySelector('[data-sp="' + cardStyle + '-leadingIcon"]');
+  var spDesc  = document.querySelector('[data-sp="' + cardStyle + '-description"]');
+  if (spState) spState.textContent = card.state.charAt(0).toUpperCase() + card.state.slice(1);
+  if (spIcon)  spIcon.textContent  = card.leadingIcon ? 'true' : 'false';
+  if (spDesc)  spDesc.textContent  = card.description ? 'true' : 'false';
+
+  /* DEV code — `[data-code-content="${cardStyle}"]`. */
+  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
+  if (codeEl) {
+    var lang = codeEl.getAttribute('data-lang') || 'swift';
+    var code = getSnippet(cardStyle, lang, card);
+    codeEl.setAttribute('data-final', code);
+    codeEl.textContent = code;
+    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
+  }
+}
+window.updateSpecCard = updateSpecCard;

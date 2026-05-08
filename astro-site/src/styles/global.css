@@ -15,6 +15,47 @@
   font-style: normal;
   font-display: swap;
 }
+/* Proxima Soft — GCash brand primary font, mapped from Figma's Primary text styles. */
+@font-face {
+  font-family: 'Proxima Soft';
+  src: url('/fonts/ProximaSoft/ProximaSoft-Regular.woff2') format('woff2'),
+       url('/fonts/ProximaSoft/ProximaSoft-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Proxima Soft';
+  src: url('/fonts/ProximaSoft/ProximaSoft-Medium.woff2') format('woff2'),
+       url('/fonts/ProximaSoft/ProximaSoft-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Proxima Soft';
+  src: url('/fonts/ProximaSoft/ProximaSoft-Semibold.woff2') format('woff2'),
+       url('/fonts/ProximaSoft/ProximaSoft-Semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Proxima Soft';
+  src: url('/fonts/ProximaSoft/ProximaSoft-Bold.woff2') format('woff2'),
+       url('/fonts/ProximaSoft/ProximaSoft-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Proxima Soft';
+  src: url('/fonts/ProximaSoft/ProximaSoft-Extrabold.woff2') format('woff2'),
+       url('/fonts/ProximaSoft/ProximaSoft-Extrabold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* ── Foundation Tokens ───────────────────────────────────────────────── */
 :root {
@@ -38,8 +79,8 @@
   --na-fg: #525766;    --na-bg: #F3F4F7;
   --fix-fg: #92400E;   --fix-bg: #FEF3C7;
 
-  /* Typography — single family for calm restraint */
-  --font-heading: 'HeyMeow Rnd', system-ui, sans-serif;
+  /* Typography — Proxima Soft for Primary (Figma Primary text styles), BarkAda for Secondary */
+  --font-heading: 'Proxima Soft', system-ui, sans-serif;
   --font-body: 'BarkAda', system-ui, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', 'Fira Code', 'Monaco', monospace;
 
@@ -161,6 +202,50 @@ body {
   min-height: 100vh;
 }
 
+/* ── Component Preview Scope ─────────────────────────────────────────── */
+/* Wraps every live preview + spec card preview so global element rules
+   (`p { color }`, `button { ... }`, `code { ... }`, etc.) cannot leak into
+   component renders. Every common HTML element used inside component
+   markup is explicitly reset here. Component-specific styling
+   (`.eb-preview-toast__label`, etc.) layers on top.
+
+   The reset uses `:not(.demo-figma-panel *)` so the demo controls panel
+   (selects, inputs, buttons) keeps its own author styling.
+
+   See `.claude/plans/visual-regression-plan.md` Phase 4. */
+.eb-preview-scope :where(
+  p, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select,
+  ul, ol, li, dl, dt, dd, blockquote, code, pre, kbd, samp,
+  table, thead, tbody, tr, th, td,
+  figure, figcaption, hr, label, strong, em, small
+):not(:where(.demo-figma-panel, .demo-figma-panel *)) {
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+  text-decoration: none;
+  list-style: none;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.eb-preview-scope :where(a):not(:where(.demo-figma-panel *)) { cursor: pointer; }
+.eb-preview-scope :where(button):not(:where(.demo-figma-panel *)) {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.eb-preview-scope :where(input, select, textarea):not(:where(.demo-figma-panel *)) {
+  outline: none;
+}
+
 /* ── Mobile Top Bar ──────────────────────────────────────────────────── */
 .topbar {
   display: none;
@@ -235,8 +320,21 @@ body {
   flex-direction: column;
   overflow: hidden;
   z-index: 100;
+  /* Opt out of Astro view-transition snapshots so the cross-fade can't
+     visually drift the sidebar between page swaps. */
+  view-transition-name: none;
 }
 .sidebar::-webkit-scrollbar { width: 0; }
+
+/* Suppress all sidebar transitions during the navigation swap window
+   so .active class moves don't trigger the section-list grid replay. */
+.sidebar-nav.nav-no-anim,
+.sidebar-nav.nav-no-anim *,
+.sidebar-nav.nav-no-anim *::before,
+.sidebar-nav.nav-no-anim *::after {
+  transition: none !important;
+  animation: none !important;
+}
 
 a.sidebar-brand {
   display: block;
@@ -301,9 +399,68 @@ a.sidebar-brand {
   padding: var(--space-3) var(--space-2);
   padding-bottom: var(--space-8);
   overflow-y: auto;
+  /* Stop browser scroll-anchoring from reflowing scrollTop after layout
+     changes (font-weight on active item, :has() recompute). This is the
+     load-bearing line that kills per-click drift. */
+  overflow-anchor: none;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
 }
+
+/* Search trigger — visually identical to .nav-item, with a magnifier
+   icon. Opens SearchModal on click. */
+.sidebar-search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-3);
+  margin-bottom: var(--space-2);
+  width: 100%;
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--muted);
+  cursor: pointer;
+  border: 1px solid rgba(100, 106, 120, 0.12);
+  background: rgba(100, 106, 120, 0.04);
+  text-align: left;
+  border-radius: 999px;
+  line-height: 1.4;
+  flex-shrink: 0;
+  transition: background 140ms var(--nav-ease),
+              color 140ms var(--nav-ease),
+              border-color 140ms var(--nav-ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .sidebar-search:hover {
+    background: rgba(100, 106, 120, 0.07);
+    color: var(--text);
+    border-color: rgba(100, 106, 120, 0.18);
+  }
+  [data-theme="dark"] .sidebar-search:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+}
+.sidebar-search:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+/* Active state while the SearchModal is open — toggled by SearchModal's
+   setTriggerState(). */
+.sidebar-search[data-search-open] {
+  color: var(--accent);
+  background: var(--accent-light);
+  border-color: rgba(0, 92, 229, 0.2);
+}
+.sidebar-search[data-search-open] .sidebar-search-icon { opacity: 1; }
+[data-theme="dark"] .sidebar-search[data-search-open] {
+  background: rgba(107, 154, 239, 0.14);
+  color: #B8D2FF;
+  border-color: rgba(107, 154, 239, 0.3);
+}
+.sidebar-search-icon { flex-shrink: 0; opacity: 0.7; }
+.sidebar-search-label { flex: 1; min-width: 0; }
 
 .sidebar-section-label {
   font-size: 12px;
@@ -358,10 +515,14 @@ a.sidebar-brand {
 .nav-section-toggle:not(.open) .nav-section-chevron {
   transform: rotate(-90deg);
 }
+/* ── Sidebar motion tokens (Emil-style strong curves) ────────────────── */
+/* Drawer/collapse curve from iOS — feels weighted but instant. */
+.sidebar-nav { --nav-ease: cubic-bezier(0.32, 0.72, 0, 1); }
+
 .nav-section-list {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: grid-template-rows 220ms var(--nav-ease);
 }
 .nav-section-list-inner {
   overflow: hidden;
@@ -369,6 +530,16 @@ a.sidebar-brand {
 }
 .nav-section-list.open {
   grid-template-rows: 1fr;
+}
+
+/* Suppress all transitions briefly after page-load to prevent already-open
+   sections from re-playing their expand animation on every navigation. */
+.sidebar-nav.nav-no-anim,
+.sidebar-nav.nav-no-anim *,
+.sidebar-nav.nav-no-anim *::before,
+.sidebar-nav.nav-no-anim *::after {
+  transition: none !important;
+  animation: none !important;
 }
 
 /* ── Nav items ───────────────────────────────────────────────────────── */
@@ -388,21 +559,32 @@ a.sidebar-brand {
   width: 100%;
   text-align: left;
   border-radius: 999px;
-  transition: background 0.08s ease, color 0.08s ease;
+  transition: background 140ms var(--nav-ease),
+              color 140ms var(--nav-ease),
+              transform 120ms var(--nav-ease);
   line-height: 1.4;
   margin-bottom: 1px;
 }
-.nav-item:hover {
-  background: rgba(100, 106, 120, 0.06);
-  color: var(--text);
+@media (hover: hover) and (pointer: fine) {
+  .nav-item:hover {
+    background: rgba(100, 106, 120, 0.06);
+    color: var(--text);
+  }
+  [data-theme="dark"] .nav-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+.nav-item:active {
+  transform: scale(0.98);
+}
+.nav-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 .nav-item.active {
   background: var(--accent-light);
   color: var(--accent);
   font-weight: 500;
-}
-[data-theme="dark"] .nav-item:hover {
-  background: rgba(255, 255, 255, 0.04);
 }
 [data-theme="dark"] .nav-item.active {
   background: rgba(107, 154, 239, 0.08);
@@ -466,12 +648,21 @@ a.sidebar-brand {
 .nav-item-chevron-btn .nav-section-chevron {
   flex-shrink: 0;
   opacity: 0.5;
-  transition: transform 0.15s ease, opacity 0.15s ease;
+  transition: transform 200ms var(--nav-ease), opacity 200ms var(--nav-ease);
   transform: rotate(-90deg);
 }
 .nav-item-row.open .nav-item-chevron-btn .nav-section-chevron {
   transform: rotate(0deg);
   opacity: 0.8;
+}
+
+/* Reduced motion: keep state changes legible but cut all movement. */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-nav,
+  .sidebar-nav * {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
 }
 
 /* ── Component nav items ─────────────────────────────────────────────── */
@@ -486,12 +677,22 @@ a.sidebar-brand {
   width: 100%;
   text-align: left;
   border-radius: 999px;
-  transition: background 0.1s ease, color 0.1s ease;
+  /* Specific properties only (no `all`); Emil-style strong easing for
+     hover, fast transform feedback for press. */
+  transition: background 140ms var(--nav-ease),
+              color 140ms var(--nav-ease),
+              transform 120ms var(--nav-ease);
   margin-bottom: 1px;
   /* Anchor variant — kill default link styling */
   text-decoration: none;
   color: inherit;
+  /* Neutralize focus auto-scroll heuristics. */
+  scroll-margin: 0;
 }
+.nav-item,
+.nav-item-row,
+.nav-section-toggle,
+.nav-family-toggle { scroll-margin: 0; }
 a.nav-comp,
 a.nav-comp:visited,
 a.nav-comp:hover {
@@ -503,20 +704,33 @@ a.nav-comp:hover {
 .sidebar-nav > .nav-comp {
   padding-left: var(--space-3);
 }
-/* Hover on any nav row (leaf or group toggle) = neutral dark pill.
-   Same visual as .nav-group-toggle.has-active-child — by design.  */
-.nav-comp:hover {
-  background: rgba(15, 23, 42, 0.05);
+/* Hover only on real pointer devices — touch devices fire hover on tap
+   which causes false positives. */
+@media (hover: hover) and (pointer: fine) {
+  .nav-comp:hover {
+    background: rgba(15, 23, 42, 0.05);
+  }
+  [data-theme="dark"] .nav-comp:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+/* Press feedback — confirms the click landed (Emil rule: 0.97). */
+.nav-comp:active {
+  transform: scale(0.98);
 }
 .nav-comp.active {
   background: var(--accent-light);
 }
 /* Hover on the already-selected leaf stays accent — don't darken over it */
-.nav-comp.active:hover {
-  background: var(--accent-light);
+@media (hover: hover) and (pointer: fine) {
+  .nav-comp.active:hover {
+    background: var(--accent-light);
+  }
 }
-[data-theme="dark"] .nav-comp:hover {
-  background: rgba(255, 255, 255, 0.05);
+/* Focus ring — visible only for keyboard users. */
+.nav-comp:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 [data-theme="dark"] .nav-comp.active {
   background: rgba(107, 154, 239, 0.14);
@@ -715,6 +929,20 @@ a.nav-comp:hover {
 .back-btn:hover { color: var(--text); }
 .back-btn svg { flex-shrink: 0; transition: transform 0.15s ease; }
 .back-btn:hover svg { transform: translateX(-3px); }
+
+.guide-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+.guide-breadcrumb .back-btn { margin-bottom: 0; }
+.guide-breadcrumb-sep,
+.guide-breadcrumb-current {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.guide-breadcrumb-current { color: var(--text); font-weight: 500; }
 
 /* ── Page Header (Component Landing) ─────────────────────────────────── */
 .page-header {
@@ -1485,6 +1713,46 @@ td code, td .mono-inline {
 }
 .style-colors .table-wrap {
   margin: 0 0 var(--space-3);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.style-colors .table-wrap table {
+  min-width: 100%;
+  width: max-content;
+}
+
+/* Color State swatch — sits inline with each value cell so the hex
+   isn't a guessing game. Round disc, 14×14, with a faint hairline
+   border so light colors (white, pale-blues) stay legible against the
+   surface bg. Transparent values render as a 4×4 checkerboard. */
+.cs-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.cs-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.12);
+}
+[data-theme="dark"] .cs-swatch {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+.cs-swatch.is-transparent {
+  background:
+    linear-gradient(45deg, rgba(15, 23, 42, 0.18) 25%, transparent 25%) 0 0/8px 8px,
+    linear-gradient(-45deg, rgba(15, 23, 42, 0.18) 25%, transparent 25%) 0 4px/8px 8px,
+    linear-gradient(45deg, transparent 75%, rgba(15, 23, 42, 0.18) 75%) 4px -4px/8px 8px,
+    linear-gradient(-45deg, transparent 75%, rgba(15, 23, 42, 0.18) 75%) -4px 0/8px 8px,
+    #fff;
+}
+.cs-value {
+  font-family: var(--font-mono);
+  font-size: inherit;
+  color: inherit;
 }
 .style-colors-tokens {
   display: flex;
@@ -3227,16 +3495,16 @@ input.demo-panel-input.demo-panel-select,
   align-items: center;
   gap: 0;
   width: 360px;
-  padding: 16px 12px 16px 24px;
+  padding: 16px;
   background: #FFFFFF;
   border-bottom: 1px solid #E5EBF4;
-  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
 }
 .eb-preview-gcard__icon {
   background: #C2C6CF;
   border-radius: 50%;
   flex-shrink: 0;
-  margin-right: 24px;
+  margin-right: 12px;
 }
 .eb-preview-gcard__icon--64 { width: 64px; height: 64px; }
 .eb-preview-gcard__icon--52 { width: 52px; height: 52px; }
@@ -3314,14 +3582,14 @@ input.demo-panel-input.demo-panel-select,
   letter-spacing: 0.5px;
 }
 .eb-preview-gcard__chevron-wrap {
-  margin-left: 24px;
+  margin-left: 12px;
   padding-top: 14px;
   flex-shrink: 0;
 }
 .eb-preview-gcard__chevron {
-  width: 32px;
-  height: 32px;
-  color: #0A2757;
+  width: 24px;
+  height: 24px;
+  color: #005CE5;
   display: block;
 }
 
@@ -3747,43 +4015,59 @@ input.demo-panel-input.demo-panel-select,
   font-family: var(--font-body);
 }
 
-/* When a SpecRow has a `token`, the prop renders as a 2-line layout:
-     ┌────────────────┬──────────────────────┐
-     │ spec-prop-key  │ spec-swatch + hex    │
-     │                │ spec-token-name      │
-     └────────────────┴──────────────────────┘
-   (key vertically centered, value + token stacked + right-aligned) */
+/* When a SpecRow has a `token`, the prop renders horizontally:
+     ┌──────┬────────────────────────────────────┐
+     │ Key  │  [#hex pill]  token/path/here      │
+     └──────┴────────────────────────────────────┘
+   key on the left, hex value as a pill on the right side, token path
+   inline beside it. */
 .spec-prop.has-token {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto;
-  column-gap: var(--space-4);
-  row-gap: 2px;
+  display: flex;
   align-items: center;
-  /* Right-align both grid items in column 2 against the column edge,
-     not against each other's auto-sized widths. */
-  justify-items: end;
+  gap: var(--space-3);
 }
 .spec-prop.has-token > .spec-prop-key {
-  grid-row: 1 / 3;
-  align-self: center;
-  justify-self: start;
+  flex: 1 1 auto;
+  min-width: 0;
 }
+/* Hex value — same body font / size / color as the rest of the spec
+   sheet (matches `.spec-prop-val` defaults). The swatch is the only
+   visual anchor; no pill, no mono. */
 .spec-prop.has-token > .spec-prop-val {
-  grid-column: 2;
-  grid-row: 1;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-}
-.spec-prop.has-token > .spec-token-name {
-  grid-column: 2;
-  grid-row: 2;
+  gap: 8px;
+  flex: 0 0 auto;
+  padding: 0;
+  background: none;
+  border-radius: 0;
   font-family: var(--font-body);
-  font-size: 12px;
-  color: var(--muted);
+  font-size: var(--text-md);
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0;
+}
+/* Larger swatch (16px square, 4px radius). Subtle 1px inset border so
+   #FFFFFF / very pale colors don't disappear on the white surface. */
+.spec-prop.has-token > .spec-prop-val .spec-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px rgba(15, 57, 125, 0.12);
+}
+/* Token path — same body font / size / color as the prop-val so the
+   row reads as one consistent line. */
+.spec-prop.has-token > .spec-token-name {
+  flex: 0 0 auto;
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: 500;
+  color: var(--text);
   text-align: right;
   letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .spec-swatch {
   display: inline-block;
@@ -4670,7 +4954,8 @@ pre.code-snippet .prp { color: #0369A1; }
   line-height: 18px;
 }
 .eb-preview-cdcard__value {
-  font-size: 16px;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+  font-size: 12px;
   font-weight: 700;
   color: #005CE5;
 }
@@ -4734,6 +5019,7 @@ pre.code-snippet .prp { color: #0369A1; }
 }
 .eb-preview-cit__heading,
 .eb-preview-ccc__heading {
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   font-size: 18px;
   font-weight: 700;
   line-height: 22px;
@@ -4743,7 +5029,9 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-ccc__heading--light { color: #fff; }
 .eb-preview-cit__desc,
 .eb-preview-ccc__desc {
+  font-family: 'BarkAda', system-ui, sans-serif;
   font-size: 12px;
+  font-weight: 600;
   line-height: 16px;
   margin: 0;
   opacity: 0.85;
@@ -5298,6 +5586,74 @@ pre.code-snippet .prp { color: #0369A1; }
   line-height: 1.6;
 }
 
+/* Overview → Assessment Guide CTA card (final section of /). */
+.overview-cta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 24px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  transition: background 160ms cubic-bezier(0.32, 0.72, 0, 1),
+              border-color 160ms cubic-bezier(0.32, 0.72, 0, 1),
+              transform 140ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .overview-cta:hover {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+  .overview-cta:hover .overview-cta-arrow { transform: translateX(2px); color: var(--accent); }
+  .overview-cta:hover .overview-cta-title { color: var(--accent); }
+}
+.overview-cta:active { transform: scale(0.995); }
+.overview-cta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.overview-cta-text {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.overview-cta-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.overview-cta-title {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  transition: color 160ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.overview-cta-sub {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.overview-cta-arrow {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--text);
+  flex-shrink: 0;
+  transition: transform 160ms cubic-bezier(0.32, 0.72, 0, 1),
+              background 160ms cubic-bezier(0.32, 0.72, 0, 1),
+              color 160ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
 /* Legend rows (trait ratings, verdicts) */
 .legend-grid {
   display: flex;
@@ -5534,13 +5890,15 @@ pre.code-snippet .prp { color: #0369A1; }
   background: rgba(255, 255, 255, 0.04);
 }
 
-/* Family group toggle is "focused" when its children list is open
-   (i.e. the current page is one of its children). Same bg as hover. */
-.nav-family-toggle.open {
+/* Family group toggle is "focused" only when the active page is one of
+   its children. Just being expanded (e.g. left open from a previous
+   navigation) shouldn't paint a grey background — that confused the
+   eye into thinking those groups were active.  */
+.nav-family-toggle.open:has(+ .nav-section-list .nav-comp.active) {
   background: rgba(100, 106, 120, 0.06);
   color: var(--text);
 }
-[data-theme="dark"] .nav-family-toggle.open {
+[data-theme="dark"] .nav-family-toggle.open:has(+ .nav-section-list .nav-comp.active) {
   background: rgba(255, 255, 255, 0.04);
 }
 .nav-family-toggle.open .nav-section-chevron { opacity: 0.7; }
@@ -5707,6 +6065,65 @@ pre.code-snippet .prp { color: #0369A1; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
+   COMPONENT PREVIEW BLOCKS — Toast (basic)
+═══════════════════════════════════════════════════════════════════════ */
+.eb-preview-toast {
+  width: 100%;
+  max-width: 312px;
+  border-radius: 8px;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+  box-shadow: 0 4px 12px rgba(2, 14, 34, 0.12);
+  border: 1px solid transparent;
+}
+.eb-preview-toast--dark {
+  background: #0A2757;
+  color: #FFFFFF;
+}
+.eb-preview-toast--light {
+  background: #FFFFFF;
+  color: #0A2757;
+  border-color: #E5EBF4;
+}
+.eb-preview-toast--destructive {
+  background: #D61B2C;
+  color: #FFFFFF;
+}
+.eb-preview-toast__container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  min-height: 48px;
+}
+.eb-preview-toast__icon-wrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.eb-preview-toast__icon { display: block; }
+.eb-preview-toast__icon--small { width: 16px; height: 16px; }
+.eb-preview-toast__icon--large { width: 24px; height: 24px; }
+.eb-preview-toast__icon-placeholder {
+  background: #6780A9;
+  border-radius: 50%;
+  display: block;
+}
+.eb-preview-toast__icon-placeholder--small { width: 16px; height: 16px; }
+.eb-preview-toast__icon-placeholder--large { width: 24px; height: 24px; }
+.eb-preview-toast__label {
+  flex: 1;
+  margin: 0;
+  color: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+  line-height: 20px;
+}
+.eb-preview-toast--large .eb-preview-toast__label { font-size: 14px; }
+.eb-preview-toast--small .eb-preview-toast__label { font-size: 12px; line-height: 16px; }
+
+/* ═══════════════════════════════════════════════════════════════════════
    COMPONENT PREVIEW BLOCKS — Toast With Button
 ═══════════════════════════════════════════════════════════════════════ */
 .eb-preview-toastwb {
@@ -5727,13 +6144,13 @@ pre.code-snippet .prp { color: #0369A1; }
 }
 .eb-preview-toastwb__container {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   padding: 12px 16px;
   min-height: 48px;
 }
 .eb-preview-toastwb--has-desc .eb-preview-toastwb__container {
-  align-items: flex-start;
+  align-items: center;
 }
 .eb-preview-toastwb__text-container {
   flex: 1;
@@ -5741,9 +6158,9 @@ pre.code-snippet .prp { color: #0369A1; }
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding-top: 4px;
 }
 .eb-preview-toastwb__label {
+  color: inherit;
   font-size: 14px;
   font-weight: 700;
   line-height: 20px;
@@ -5751,9 +6168,11 @@ pre.code-snippet .prp { color: #0369A1; }
   letter-spacing: 0.25px;
 }
 .eb-preview-toastwb__desc {
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 16px;
+  color: inherit;
+  font-family: 'BarkAda', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
   margin: 0;
   letter-spacing: 0.25px;
   opacity: 0.85;
@@ -5767,16 +6186,31 @@ pre.code-snippet .prp { color: #0369A1; }
   align-items: center;
 }
 .eb-preview-toastwb__action {
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   font-size: 14px;
   font-weight: 700;
+  line-height: 14px;
   letter-spacing: 0.25px;
-  padding: 4px 8px;
-  border-radius: 4px;
+  height: 24px;
+  padding: 0 16px;
+  border-radius: 999px;
   cursor: pointer;
   user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 }
-.eb-preview-toastwb__action--white { color: #FFFFFF; }
-.eb-preview-toastwb--light .eb-preview-toastwb__action { color: #005CE5; }
+/* Dark surface: white pill with blue label */
+.eb-preview-toastwb--default .eb-preview-toastwb__action {
+  background: #FFFFFF;
+  color: #005CE5;
+}
+/* Light surface: blue pill with white label */
+.eb-preview-toastwb--light .eb-preview-toastwb__action {
+  background: #005CE5;
+  color: #FFFFFF;
+}
 
 /* Alias — same look as .demo-panel-readout */
 .demo-panel-value {

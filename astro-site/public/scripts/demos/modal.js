@@ -4,8 +4,7 @@
  */
 /* ── Modal JS ───────────────────────────────────────────────────── */
 /* Renders miniature phone-like previews of the Modal variants using
-   inline HTML so the dimmed scrim + centered card are visible.
-   Uses generic preview classes; no new CSS classes are added.        */
+   inline HTML so the dimmed scrim + centered card are visible.        */
 
 function _modalCardMarkup(opts) {
   var type = opts.type || 'default';
@@ -24,7 +23,6 @@ function _modalCardMarkup(opts) {
   var key = type + '|' + cta;
   var fallbackNote = '';
   if (!shipped[key]) {
-    // Fallback rules: with-icon → force vertical CTAs; transaction → force 1.
     if (type === 'with-icon') {
       cta = (cta === '2-horizontal' || cta === '2-vertical') ? '2-vertical' : '1-vertical';
     } else if (type === 'transaction-v1' || type === 'transaction-v2') {
@@ -35,7 +33,6 @@ function _modalCardMarkup(opts) {
     fallbackNote = '<div style="margin-top:8px;font-size:11px;color:var(--muted,#6780A9);font-style:italic;text-align:center;">(showing nearest shipped combo)</div>';
   }
 
-  // --- Body markup by type ---
   var body = '';
 
   if (type === 'default' || type === 'with-icon') {
@@ -66,7 +63,7 @@ function _modalCardMarkup(opts) {
       '<div style="background:#fff;border-radius:6px;padding:20px 18px;box-shadow:0 0 4px rgba(232,238,242,0.79);width:220px;text-align:center;">' +
         iconBlock +
         '<div style="font-family:\'Proxima Soft\',sans-serif;font-weight:700;font-size:14px;color:#0A2757;margin-bottom:8px;">Put the title here</div>' +
-        '<div style="font-size:11px;color:#6780A9;line-height:1.45;">Add description here.<br>Add description here.</div>' +
+        '<div style="font-family:\'BarkAda\', system-ui, sans-serif;font-weight:500;font-size:11px;color:#6780A9;line-height:1.45;">Add description here.<br>Add description here.</div>' +
         ctaBlock +
       '</div>';
   } else if (type === 'transaction-v1' || type === 'transaction-v2') {
@@ -110,17 +107,13 @@ function _modalStageMarkup(opts) {
 
   var stage =
     '<div style="position:relative;width:280px;height:360px;margin:0 auto;background:#F6F9FD;border-radius:18px;overflow:hidden;border:1px solid #E5EBF4;">' +
-      // Fake app content behind
       '<div style="padding:14px;">' +
         '<div style="width:60%;height:8px;background:#D9E2EC;border-radius:3px;margin-bottom:10px;"></div>' +
         '<div style="width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;"></div>' +
         '<div style="width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;"></div>' +
         '<div style="width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;"></div>' +
       '</div>' +
-      // Scrim
       (showScrim ? '<div style="position:absolute;inset:0;background:#020E22;opacity:0.56;"></div>' : '') +
-      // Modal card centered. flex-direction:column so the fallback note
-      // (when present) sits BELOW the card instead of pushing it sideways.
       '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;">' +
         card +
       '</div>' +
@@ -142,77 +135,104 @@ function _modalUpdate() {
   });
 }
 
-function _modalSpecMode(card, mode) {
-  var wrap = document.querySelector('#panel-modal');
-  if (!wrap) return;
-  // Scope the toggle buttons to the clicked card
-  var header = null;
-  var cardIds = {
+/* ── Modal Spec Cards ─────────────────────────────────────────────── */
+var _modalSpecCards = {
+  'default': { type: 'default', cta: '1' },
+  'icon':    { type: 'with-icon', cta: '2-vertical' },
+  'txn':     { type: 'transaction-v2', cta: '1' }
+};
+
+var _specCards = _modalSpecCards;
+window._specCards = _specCards;
+
+function buildSwiftSnippet(type, card) {
+  var t = card.type;
+  var cta = card.cta;
+  if (t === 'default') {
+    return 'EBModal("Put the title here")\n    .ebDescription("Add description here.")\n    .ebPrimaryAction("Label", action: { })';
+  }
+  if (t === 'with-icon') {
+    var s = 'EBModal("Put the title here")\n    .ebDescription("Add description here.")\n    .ebIcon(Image(systemName: "checkmark.circle"))\n    .ebPrimaryAction("Label", action: { })';
+    if (cta === '2-vertical' || cta === '2-horizontal') s += '\n    .ebSecondaryAction("Label", action: { })';
+    return s;
+  }
+  return 'EBModal("Put the title here")\n    .ebStyle(.transaction)\n    .ebTransactionRows(rows)\n    .ebReferenceNumber("165A25912345")\n    .ebPrimaryAction("Label", action: { })';
+}
+
+function buildComposeSnippet(type, card) {
+  var t = card.type;
+  var cta = card.cta;
+  if (t === 'default') {
+    return 'EBModal(\n    title = "Put the title here",\n    description = "Add description here.",\n    primaryAction = EBModalAction("Label") { }\n)';
+  }
+  if (t === 'with-icon') {
+    var s = 'EBModal(\n    title = "Put the title here",\n    description = "Add description here.",\n    icon = { Icon(Icons.Filled.CheckCircle, null) },\n    primaryAction = EBModalAction("Label") { }';
+    if (cta === '2-vertical' || cta === '2-horizontal') s += ',\n    secondaryAction = EBModalAction("Label") { }';
+    s += '\n)';
+    return s;
+  }
+  return 'EBModal(\n    title = "Put the title here",\n    style = EBModalStyle.Transaction,\n    rows = transactionDetails,\n    referenceNumber = "165A25912345",\n    primaryAction = EBModalAction("Label") { }\n)';
+}
+
+function getSnippet(type, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+}
+window.getSnippet = getSnippet;
+
+function _modalPropDisplay(prop, value) {
+  if (prop === 'type') {
+    if (value === 'with-icon') return 'with icon';
+    if (value === 'transaction-v1') return 'transaction_v1';
+    if (value === 'transaction-v2') return 'transaction_v2';
+    return value;
+  }
+  if (prop === 'cta') {
+    if (value === '1-vertical') return '1 - vertical';
+    if (value === '2-horizontal') return '2 - horizontal';
+    if (value === '2-vertical') return '2 - vertical';
+    return value;
+  }
+  return value;
+}
+
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _modalSpecCards[cardStyle];
+  if (!card) return;
+  card[prop] = value;
+
+  /* Update preview — find by id */
+  var previewIds = {
     'default': 'modal-spec-preview-default',
     'icon':    'modal-spec-preview-icon',
     'txn':     'modal-spec-preview-txn'
   };
-  var previewEl = document.getElementById(cardIds[card]);
-  if (!previewEl) return;
-  // Update active state on buttons inside the same spec-card
-  var specCard = previewEl.closest('.spec-card');
-  if (specCard) {
-    var btns = specCard.querySelectorAll('.mode-toggle-btn');
-    btns.forEach(function(b) { b.classList.remove('active'); });
-    var sel = specCard.querySelector('.mode-toggle-btn[onclick*="\'' + mode + '\'"]');
-    if (sel) sel.classList.add('active');
-  }
+  var previewEl = document.getElementById(previewIds[cardStyle]);
+  if (previewEl) previewEl.innerHTML = _modalCardMarkup({ type: card.type, cta: card.cta });
 
-  if (mode === 'dev') {
-    var devSpec = '';
-    if (card === 'default') {
-      devSpec =
-        '<div class="dev-spec-block">' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">name</span><span class="dev-spec-val">Modal · default</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">node</span><span class="dev-spec-val">18507:71792</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">width</span><span class="dev-spec-val">320</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">radius</span><span class="dev-spec-val">6 (radius/radius-2)</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">surface.bg</span><span class="dev-spec-val">main/modal-popup/color/bg · #FFFFFF</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">title.color</span><span class="dev-spec-val">main/modal-popup/color/label · #0A2757</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">desc.color</span><span class="dev-spec-val">main/modal-popup/color/label-primary · #6780A9</span></div>' +
-        '</div>';
-    } else if (card === 'icon') {
-      devSpec =
-        '<div class="dev-spec-block">' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">name</span><span class="dev-spec-val">Modal · with icon</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">nodes</span><span class="dev-spec-val">18507:71773 / 18507:71783</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">icon.size</span><span class="dev-spec-val">92 × 92</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">icon.placeholder</span><span class="dev-spec-val">#C2C6CF (hardcoded — should be Slot)</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">cta.gap</span><span class="dev-spec-val">8 (vertical)</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">title.color</span><span class="dev-spec-val">main/modal-popup/color/label</span></div>' +
-        '</div>';
-    } else {
-      devSpec =
-        '<div class="dev-spec-block">' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">name</span><span class="dev-spec-val">Modal · transaction v1 / v2</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">nodes</span><span class="dev-spec-val">18507:71706 / 18507:71732</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">content.bg</span><span class="dev-spec-val">main/modal-popup/color/bg · #FFFFFF</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">footer.bg</span><span class="dev-spec-val">main/modal-popup/color/bg-subtle · #F6F9FD</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">divider</span><span class="dev-spec-val">main/modal-popup/color/border · #E5EBF4</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">copy.icon.color</span><span class="dev-spec-val">main/modal-popup/color/icon-copy · #005CE5</span></div>' +
-          '<div class="dev-spec-row"><span class="dev-spec-key">copy.icon.asset</span><span class="dev-spec-val">Raster PNG (shape_half, shape_full) — should be vector</span></div>' +
-        '</div>';
+  /* Update Properties readouts via [data-sp] */
+  var spType = document.querySelector('[data-sp="' + cardStyle + '-type"]');
+  if (spType) spType.textContent = _modalPropDisplay('type', card.type);
+  var spCta = document.querySelector('[data-sp="' + cardStyle + '-cta"]');
+  if (spCta) spCta.textContent = _modalPropDisplay('cta', card.cta);
+
+  /* Update DEV code via [data-code-content] */
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
+  if (devView) {
+    var activeTab = devView.querySelector('.spec-code-tab.active');
+    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
+    if (codeEl) {
+      var code = getSnippet(cardStyle, lang, card);
+      codeEl.setAttribute('data-final', code);
+      codeEl.setAttribute('data-lang', lang);
+      codeEl.textContent = code;
+      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
     }
-    previewEl.innerHTML = devSpec;
-  } else {
-    var opts = {};
-    if (card === 'default')  opts = { type: 'default', cta: '1' };
-    if (card === 'icon')     opts = { type: 'with-icon', cta: '2-vertical' };
-    if (card === 'txn')      opts = { type: 'transaction-v2', cta: '1' };
-    previewEl.innerHTML = _modalCardMarkup(opts);
   }
 }
+window.updateSpecCard = updateSpecCard;
 
 function _modalInit() {
-  /* In Context preview is filled by the layout's standard ctx-placeholder
-   * (set in modal.ts inContextHtml). We don't render anything into
-   * #modal-context-preview from JS — the placeholder stays until real
-   * GCash screen captures are provided by the design team. */
   _modalUpdate();
 
   var d = document.getElementById('modal-spec-preview-default');
@@ -225,3 +245,7 @@ function _modalInit() {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _modalInit);
 else _modalInit();
+
+(function(){
+  document.addEventListener('astro:page-load', _modalInit);
+})();

@@ -1,4 +1,42 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/toggle-with-label.js`.
+const toggleWithLabelDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Placement',
+        prop: 'placement',
+        defaultValue: 'trailing',
+        options: [
+          { value: 'trailing', label: 'trailing' },
+          { value: 'leading', label: 'leading' },
+        ],
+      },
+      {
+        label: 'isSelected',
+        prop: 'selected',
+        defaultValue: 'true',
+        options: [
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' },
+        ],
+      },
+      {
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'default' },
+          { value: 'disabled', label: 'disabled' },
+        ],
+      },
+    ],
+  },
+];
 
 export const toggleWithLabel: ComponentData = {
   "meta": {
@@ -155,10 +193,12 @@ export const toggleWithLabel: ComponentData = {
     "specCards": [
       {
         "cardKey": "today-—-single-frame",
+        "demoKey": "today",
+        "demoControls": toggleWithLabelDemoControls,
         "title": "Today — single frame",
         "node": "18482:36538",
         "description": "A 180×24 layout frame: Toggle instance on the left of its auto-layout, \"Label\" text on the right. No property set, no variants — functionally identical to placing a Toggle + Text next to each other on a canvas.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-with-label-spec-today\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-with-label-spec-today\"><div class=\"eb-preview eb-preview-setting-row\"><div class=\"eb-preview-setting-row__labels\"><div class=\"eb-preview-setting-row__label\">Label</div></div><span class=\"eb-preview eb-preview-toggle eb-preview-toggle--medium eb-preview-toggle--on\" role=\"switch\" aria-checked=\"true\" tabindex=\"0\"><span class=\"eb-preview-toggle__knob\"></span></span></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -223,10 +263,12 @@ export const toggleWithLabel: ComponentData = {
       },
       {
         "cardKey": "proposed-—-trailing-placement-proposed",
+        "demoKey": "trailing",
+        "demoControls": toggleWithLabelDemoControls,
         "title": "Proposed — trailing placement proposed",
         "node": "",
         "description": "Default arrangement: label stack on the left, toggle on the right. Matches iOS Form and Material 3 list-item patterns.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-with-label-spec-trailing\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-with-label-spec-trailing\"><div class=\"eb-preview eb-preview-setting-row\"><div class=\"eb-preview-setting-row__labels\"><div class=\"eb-preview-setting-row__label\"><span>Push notifications</span></div><div class=\"eb-preview-setting-row__desc\">Get alerts when money moves</div></div><span class=\"eb-preview eb-preview-toggle eb-preview-toggle--medium eb-preview-toggle--on\" role=\"switch\" aria-checked=\"true\" tabindex=\"0\"><span class=\"eb-preview-toggle__knob\"></span></span></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -234,18 +276,21 @@ export const toggleWithLabel: ComponentData = {
             "rows": [
               {
                 "key": "Placement",
-                "value": "Trailing",
-                "mono": true
+                "value": "trailing",
+                "mono": true,
+                "prop": "placement"
               },
               {
-                "key": "Label",
-                "value": "Receive notifications",
-                "mono": true
+                "key": "isSelected",
+                "value": "true",
+                "mono": true,
+                "prop": "selected"
               },
               {
-                "key": "isActive",
-                "value": "Yes",
-                "mono": true
+                "key": "State",
+                "value": "default",
+                "mono": true,
+                "prop": "state"
               }
             ]
           },
@@ -316,19 +361,34 @@ export const toggleWithLabel: ComponentData = {
       },
       {
         "cardKey": "proposed-—-leading-placement-proposed",
+        "demoKey": "leading",
+        "demoControls": toggleWithLabelDemoControls,
         "title": "Proposed — leading placement proposed",
         "node": "",
         "description": "Inverse arrangement: toggle on the left, label stack on the right. Useful in inline form layouts where labels are right-heavy.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-with-label-spec-leading\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"toggle-with-label-spec-leading\"><div class=\"eb-preview eb-preview-setting-row eb-preview-setting-row--leading\"><div class=\"eb-preview-setting-row__labels\"><div class=\"eb-preview-setting-row__label\"><span>Remember me</span></div></div><span class=\"eb-preview eb-preview-toggle eb-preview-toggle--medium eb-preview-toggle--off\" role=\"switch\" aria-checked=\"false\" tabindex=\"0\"><span class=\"eb-preview-toggle__knob\"></span></span></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Variant",
-                "value": "Proposed — leading placement proposed",
-                "mono": false
+                "key": "Placement",
+                "value": "leading",
+                "mono": true,
+                "prop": "placement"
+              },
+              {
+                "key": "isSelected",
+                "value": "false",
+                "mono": true,
+                "prop": "selected"
+              },
+              {
+                "key": "State",
+                "value": "default",
+                "mono": true,
+                "prop": "state"
               }
             ]
           },
@@ -389,7 +449,38 @@ export const toggleWithLabel: ComponentData = {
         "compose": "<span class=\"syn-type\">EBToggle</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    checked <span class=\"syn-eq\">=</span> enabled<span class=\"syn-punc\">,</span>\n    onCheckedChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ enabled = it }</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      // Card 1 — Active with label
+      buildStatelessColorsTable({
+        title: 'Active — Colors',
+        description: 'Toggle in the on position with a leading label.',
+        rows: [
+          { role: 'Track',     token: 'toggle/color/default/active/bg-track',     value: '#005CE5' },
+          { role: 'Indicator', token: 'toggle/color/default/active/bg-indicator', value: '#FFFFFF' },
+          { role: 'Label',     token: 'text/color-text-weak',                     value: '#445C85' },
+        ],
+      }),
+      // Card 2 — Inactive with label
+      buildStatelessColorsTable({
+        title: 'Inactive — Colors',
+        description: 'Toggle in the off position with a leading label.',
+        rows: [
+          { role: 'Track',     token: 'toggle/color/default/inactive/bg-track',     value: '#C2CFE5' },
+          { role: 'Indicator', token: 'toggle/color/default/inactive/bg-indicator', value: '#FFFFFF' },
+          { role: 'Label',     token: 'text/color-text-weak',                       value: '#445C85' },
+        ],
+      }),
+      // Card 3 — Inverse / on dark
+      buildStatelessColorsTable({
+        title: 'Inverse — Colors',
+        description: 'Toggle with a navy label for use on dark surfaces or accent contexts.',
+        rows: [
+          { role: 'Label',     token: 'main/toggle-with-label/label',          value: '#0A2757' },
+          { role: 'Track',     token: 'toggle/color/default/active/bg-track',  value: '#005CE5' },
+          { role: 'Indicator', token: 'toggle/color/default/active/bg-indicator', value: '#FFFFFF' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

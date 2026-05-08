@@ -1,4 +1,58 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/stepper-dash.js`.
+const stepperDashDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties (proposed)',
+    rows: [
+      {
+        label: 'total',
+        prop: 'total',
+        defaultValue: '4',
+        options: [
+          { value: '2', label: '2' },
+          { value: '3', label: '3' },
+          { value: '4', label: '4' },
+          { value: '5', label: '5' },
+          { value: '6', label: '6' },
+          { value: '7', label: '7' },
+          { value: '8', label: '8' },
+          { value: '9', label: '9' },
+          { value: '10', label: '10' },
+        ],
+      },
+      {
+        label: 'current',
+        prop: 'current',
+        defaultValue: '2',
+        options: [
+          { value: '1', label: '1' },
+          { value: '2', label: '2' },
+          { value: '3', label: '3' },
+          { value: '4', label: '4' },
+          { value: '5', label: '5' },
+          { value: '6', label: '6' },
+          { value: '7', label: '7' },
+          { value: '8', label: '8' },
+          { value: '9', label: '9' },
+          { value: '10', label: '10' },
+        ],
+      },
+      {
+        label: 'status',
+        prop: 'status',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'default' },
+          { value: 'success', label: 'success' },
+          { value: 'error',   label: 'error' },
+        ],
+      },
+    ],
+  },
+];
 
 export const stepperDash: ComponentData = {
   "meta": {
@@ -179,10 +233,12 @@ export const stepperDash: ComponentData = {
     "specCards": [
       {
         "cardKey": "stepper---dash-component-set-18649:5223-·-variants-18649:5224…18649:5323",
+        "demoKey": "main",
+        "demoControls": stepperDashDemoControls,
         "title": "Stepper - Dash component set 18649:5223 · variants 18649:5224…18649:5323",
         "node": "18649:5223",
         "description": "Horizontal row of equal-width rounded dashes. Dashes 1…<code>current</code> render in brand blue (<code>bg</code>); dashes <code>current+1</code>…<code>total</code> render in track blue (<code>bg-track</code>). All fills are real vector rectangles bound to stepper tokens.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"stepper-dash-spec-1\"></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"stepper-dash-spec-1\"><div class=\"eb-preview eb-preview-stepper-dash\" role=\"progressbar\" aria-valuenow=\"2\" aria-valuemin=\"1\" aria-valuemax=\"4\" aria-label=\"Step 2 of 4\" style=\"width:268px;display:flex;gap:4px;align-items:center;\"><span class=\"eb-preview-stepper-dash__slot\" style=\"background:#005CE5;\"></span><span class=\"eb-preview-stepper-dash__slot\" style=\"background:#005CE5;\"></span><span class=\"eb-preview-stepper-dash__slot\" style=\"background:#D2E5FF;\"></span><span class=\"eb-preview-stepper-dash__slot\" style=\"background:#D2E5FF;\"></span></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -325,7 +381,16 @@ export const stepperDash: ComponentData = {
         "compose": "<span class=\"syn-type\">EBStepper</span><span class=\"syn-punc\">(</span>\n    currentStep <span class=\"syn-eq\">=</span> 3<span class=\"syn-punc\">,</span>\n    totalSteps <span class=\"syn-eq\">=</span> 7<span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBStepperStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Dash</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    "colorsTables": []
+    colorsTables: [
+      buildStatelessColorsTable({
+        title: 'Stepper Dash — Colors',
+        description: 'Dash-style step indicator. Filled dashes are brand-blue; empty dashes are pale-blue.',
+        rows: [
+          { role: 'Filled dash', token: 'stepper/color/bg',       value: '#005CE5' },
+          { role: 'Empty dash',  token: 'stepper/color/bg-track', value: '#D2E5FF' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

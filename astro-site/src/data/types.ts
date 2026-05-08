@@ -89,6 +89,60 @@ export interface SpecRow {
   /** When set, the value cell gets `data-sp="{demoKey}-{prop}"` so
       the per-component demo script can update it on dropdown change. */
   prop?: string;
+  /**
+   * Per-variant override map (Plan A — dynamic spec-detail sections).
+   *
+   * Lets Properties / Colors / Layout / Typography rows re-render based
+   * on the user's current demo-control selections, without component-
+   * specific JS. Add it to any row that should change with a control;
+   * skip it for rows that stay constant.
+   *
+   * ## Key shape
+   * Single prop: `"<prop>:<value>"` — e.g. `"cta:2-vertical"`, `"size:small"`
+   *
+   * Compound (multi-prop, joined with `|`):
+   *   `"<p1>:<v1>|<p2>:<v2>"` — e.g. `"appearance:destructive|state:pressed"`.
+   * Compound keys are tried first; if no match, each single-prop key is
+   * tried in turn. Values must match the demo-control option `value`
+   * exactly (usually lowercase: `"default"`, not `"Default"`).
+   *
+   * ## What can be overridden
+   * `value` (text + auto-swatch), `token` (path under the row), `mono`
+   * (monospace font), `swatch` (force-show colour swatch). Default
+   * fields on the parent row are the fallback when no variant matches.
+   *
+   * ## Example
+   * ```ts
+   * // Modal Card 1: Layout section
+   * {
+   *   key: 'Height',
+   *   value: '212',     // shown for cta:1, cta:1-vertical, cta:2-horizontal
+   *   mono: true,
+   *   variants: {
+   *     'cta:2-vertical': { value: '270' },  // 270 only when cta=2-vertical
+   *   },
+   * }
+   * ```
+   *
+   * ## Wiring
+   * - Renderer (`SpecCard.astro`) emits `data-row-card` + `data-row-variants`
+   *   attributes when this field is set.
+   * - Client patcher (`assessment.js → _patchSpecCardRows`) wraps every
+   *   component's `window.updateSpecCard()` and patches matching rows
+   *   on each demo-control change.
+   * - Per-component state lives on `window._specCards[<cardKey>]` (set
+   *   up by each component's demo script — already present for all 79).
+   *
+   * ## Caveat — legacy demo scripts
+   * 18 demo scripts (button, accordion, dropdown, action-list*, badge,
+   * checkbox, chip, etc.) currently rebuild Colors / Layout / Typography
+   * sections via `innerHTML =` in their own `updateSpecCard`. For those,
+   * Plan A overrides are wiped on every control change; they have to be
+   * refactored to remove the section-rebuild blocks before `variants`
+   * takes effect. Tracked as a follow-up — pure schema additions in
+   * those data files are inert until the JS is migrated.
+   */
+  variants?: Record<string, Partial<Pick<SpecRow, 'value' | 'token' | 'mono' | 'swatch'>>>;
 }
 
 export interface SpecSection {
@@ -262,7 +316,30 @@ export interface ComponentData {
     inContextAlt?: string;
     inContextNote?: string;
     inContextHtml?: string;      // raw HTML inside .ctx-wrap (SVG placeholder, <img>, etc.)
-    livePreviewHtml?: string;    // raw HTML inside .demo-panel (preview + figma panel)
+    /**
+     * Live preview HTML rendered on the Overview tab.
+     *
+     * REQUIRED CANONICAL STRUCTURE — guarded by
+     * `npm run lint:previews` (scripts/audit/preview-structure-lint.mjs):
+     *
+     *   <div class="demo-layout">
+     *     <div class="demo-preview" id="<scope>">…rendered component…</div>
+     *     <div class="demo-figma-panel">
+     *       <div class="demo-panel-section">
+     *         <div class="demo-panel-heading">Properties</div>
+     *         <div class="demo-panel-row">
+     *           <span class="demo-panel-label">…</span>
+     *           <select class="demo-panel-select" onchange="…">…</select>
+     *         </div>
+     *       </div>
+     *     </div>
+     *   </div>
+     *
+     * For catalog-style previews (no interactive controls), still include
+     * `demo-figma-panel` with descriptive `demo-panel-row` entries so the
+     * 2-column layout stays consistent across components.
+     */
+    livePreviewHtml?: string;
     traits: Trait[];
     behavior: BehaviorRow[];
     resolved: IssueItem[];

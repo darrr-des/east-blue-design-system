@@ -66,20 +66,8 @@ var _specCards = {
 };
 window._specCards = _specCards;
 
-function _amtColorRowsFor(card) {
-  var c = _amtColors[card.state] || _amtColors.Default;
-  var stateKey = card.state.toLowerCase();
-  var rows = [
-    ['Border (underline)', c.border, 'amount-text-field/' + stateKey + '/border'],
-    ['Label',              c.label,  'amount-text-field/' + stateKey + '/label'],
-    ['Amount',             c.amount, 'amount-text-field/' + stateKey + '/label-amount']
-  ];
-  if (card.size === 'Default') {
-    rows.push(['Peso glyph', c.peso, 'amount-text-field/' + stateKey + '/icon-currency']);
-  }
-  rows.push(['Subtext', c.subtext, 'amount-text-field/' + stateKey + '/subtext']);
-  return rows;
-}
+/* Spec Colors per state — moved into amount-text-field.ts `variants`
+   on each Color row (Plan A). Helper no longer needed. */
 
 /* ── Code snippet builders ──────────────────────────────────────── */
 function buildSwiftSnippet(type, card) {
@@ -145,21 +133,9 @@ function updateSpecCard(cardStyle, prop, value) {
   if (spState) spState.textContent = card.state;
   if (spLabel) spLabel.textContent = card.label;
 
-  /* Update Colors section */
-  var colorsEl = document.getElementById('spec-' + cardStyle + '-colors');
-  if (colorsEl) {
-    var rows = _amtColorRowsFor(card);
-    var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
-    rows.forEach(function(r) {
-      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
-      var tokenHtml = r[2] ? '<span class="spec-token-name">' + r[2] + '</span>' : '';
-      h += '<div class="spec-prop has-token"><span class="spec-prop-key">' + r[0] + '</span>'
-         + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span>'
-         + tokenHtml + '</div>';
-    });
-    h += '</div>';
-    colorsEl.innerHTML = h;
-  }
+  /* Colors section is server-rendered from amount-text-field.ts;
+     Plan A's `_patchSpecCardRows` handles state-keyed overrides.
+     Demo no longer rebuilds it. */
 
   /* Update DEV code — always */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');

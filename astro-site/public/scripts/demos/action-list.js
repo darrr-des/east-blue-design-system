@@ -36,7 +36,10 @@ function _litRender(opts) {
   var labelColor   = isDisabled ? '#C2CFE5' : (variant === 'counter' ? '#005CE5' : '#0A2757');
   var descColor    = isDisabled ? '#C2CFE5' : '#6780A9';
   var ctaColor     = isDisabled ? '#9BC5FD' : '#005CE5';
-  var chevColor    = isDisabled ? '#9BC5FD' : (variant === 'counter' ? '#005CE5' : '#0A2757');
+  // Chevron is the brand blue accent across all variants in the
+  // Default / Pressed states (matches `action-list/color/default/chevron`
+  // documented in each spec card's Colors section).
+  var chevColor    = isDisabled ? '#9BC5FD' : '#005CE5';
   var counterBg    = '#EEF2F9';
   var counterColor = isDisabled ? '#C2CFE5' : '#072592';
 
@@ -105,76 +108,6 @@ var _specCards = {
   description: { variant: 'description', state: 'default', density: 'compact' }
 };
 window._specCards = _specCards;
-
-/* Layout deltas per card × density */
-function _litLayoutFor(card) {
-  var compact = card.density !== 'expanded';
-  if (card.variant === 'description') {
-    return { rowH: '60px', padH: '12px', padV: compact ? '8px' : '12px' };
-  }
-  if (card.variant === 'counter') {
-    return { rowH: compact ? '56px' : '64px', padH: '12px', padV: compact ? '11px' : '15px' };
-  }
-  return { rowH: compact ? '48px' : '56px', padH: '12px', padV: compact ? '8px' : '12px' };
-}
-
-function _litColorRowsFor(card) {
-  if (card.state === 'disabled') {
-    if (card.variant === 'counter') {
-      return [
-        ['Bg',      '#FFFFFF', 'action-list/color/disabled/bg'],
-        ['Label',   '#C2CFE5', 'action-list/color/disabled/label'],
-        ['Counter', '#E5EBF4', 'counter/color/empty/bg'],
-        ['Chevron', '#9BC5FD', 'action-list/color/disabled/chevron']
-      ];
-    }
-    if (card.variant === 'description') {
-      return [
-        ['Bg',          '#FFFFFF', 'action-list/color/disabled/bg'],
-        ['Label',       '#C2CFE5', 'action-list/color/disabled/label'],
-        ['Description', '#C2CFE5', 'action-list/color/disabled/description'],
-        ['Link',        '#9BC5FD', 'action-list/color/disabled/label-link'],
-        ['Chevron',     '#9BC5FD', 'action-list/color/disabled/chevron']
-      ];
-    }
-    return [
-      ['Bg',      '#FFFFFF', 'action-list/color/disabled/bg'],
-      ['Label',   '#C2CFE5', 'action-list/color/disabled/label'],
-      ['Link',    '#9BC5FD', 'action-list/color/disabled/label-link'],
-      ['Chevron', '#9BC5FD', 'action-list/color/disabled/chevron']
-    ];
-  }
-  if (card.state === 'loading') {
-    return [
-      ['Bg',       '#FFFFFF', 'action-list/color/default/bg'],
-      ['Skeleton', '#EEF2F9', 'bg/color-bg-strong']
-    ];
-  }
-  /* default */
-  if (card.variant === 'counter') {
-    return [
-      ['Bg',      '#FFFFFF', 'action-list/color/default/bg'],
-      ['Label',   '#005CE5', 'action-list/color/default/label-brand'],
-      ['Counter', '#005CE5', 'counter/color/filled/bg'],
-      ['Chevron', '#005CE5', 'action-list/color/default/chevron']
-    ];
-  }
-  if (card.variant === 'description') {
-    return [
-      ['Bg',          '#FFFFFF', 'action-list/color/default/bg'],
-      ['Label',       '#0A2757', 'action-list/color/default/label'],
-      ['Description', '#6780A9', 'action-list/color/default/description'],
-      ['Link',        '#005CE5', 'action-list/color/default/label-link'],
-      ['Chevron',     '#005CE5', 'action-list/color/default/chevron']
-    ];
-  }
-  return [
-    ['Bg',      '#FFFFFF', 'action-list/color/default/bg'],
-    ['Label',   '#0A2757', 'action-list/color/default/label'],
-    ['Link',    '#005CE5', 'action-list/color/default/label-link'],
-    ['Chevron', '#005CE5', 'action-list/color/default/chevron']
-  ];
-}
 
 /* ── Code snippet builders (called by updateSpecCard + switchCodeTab) ── */
 function buildSwiftSnippet(type, card) {
@@ -263,35 +196,8 @@ function updateSpecCard(cardStyle, prop, value) {
   if (spState)   spState.textContent   = _titleCase(card.state);
   if (spDensity) spDensity.textContent = _titleCase(card.density);
 
-  /* Update Colors section */
-  var colorsEl = document.getElementById('spec-' + cardStyle + '-colors');
-  if (colorsEl) {
-    var rows = _litColorRowsFor(card);
-    var h = '<div class="spec-detail-label">Colors</div><div class="spec-props">';
-    rows.forEach(function(r) {
-      var border = (r[1] === '#FFFFFF') ? 'border:1px solid #E2E4E9' : '';
-      var tokenHtml = r[2] ? '<span class="spec-token-name">' + r[2] + '</span>' : '';
-      h += '<div class="spec-prop has-token"><span class="spec-prop-key">' + r[0] + '</span>'
-         + '<span class="spec-prop-val mono"><span class="spec-swatch" style="background:' + r[1] + ';' + border + '"></span> ' + r[1] + '</span>'
-         + tokenHtml + '</div>';
-    });
-    h += '</div>';
-    colorsEl.innerHTML = h;
-  }
-
-  /* Update Layout section */
-  var layoutEl = document.getElementById('spec-' + cardStyle + '-layout');
-  if (layoutEl) {
-    var L = _litLayoutFor(card);
-    var lh = '<div class="spec-detail-label">Layout</div><div class="spec-props">';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Row height</span><span class="spec-prop-val mono">' + L.rowH + '</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding H</span><span class="spec-prop-val mono">' + L.padH + '</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding V</span><span class="spec-prop-val mono">' + L.padV + '</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Chevron size</span><span class="spec-prop-val mono">24 × 24</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Hit target</span><span class="spec-prop-val mono">full row</span></div>';
-    lh += '</div>';
-    layoutEl.innerHTML = lh;
-  }
+  /* Colors + Layout sections are server-rendered from action-list.ts;
+     Plan A's `_patchSpecCardRows` handles state- and density-keyed overrides. */
 
   /* Update DEV code — always */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
