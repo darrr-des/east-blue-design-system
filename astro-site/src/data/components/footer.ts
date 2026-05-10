@@ -831,7 +831,7 @@ export const footer: ComponentData = {
         "compose": "<span class=\"syn-type\">EBFooter</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Acknowledgement\"</span><span class=\"syn-punc\">)</span>"
       },
       {
-        "cardKey": "variant-7-·-\"in-partnership-with\"-·-grouped-logos-(center)",
+        "cardKey": "variant-7-·-in-partnership-with-·-grouped-logos-center",
         "demoKey": "v7",
         "demoControls": footerDemoControls,
         "title": "Variant 7 · \"In partnership with\" · grouped logos (center)",
