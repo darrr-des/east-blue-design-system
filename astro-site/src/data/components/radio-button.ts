@@ -189,10 +189,34 @@ export const radioButton: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Border (unselected)", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border" },
-              { "key": "Selected fill",       "value": "#005CE5", "token": "radio-button/color/default/selected/bg" },
-              { "key": "Selected dot",        "value": "#FFFFFF", "token": "radio-button/color/default/selected/dot" },
-              { "key": "Error border",        "value": "#D61B2C", "token": "radio-button/color/error/unselected/border" }
+              { "key": "Border", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border",
+                "variants": {
+                  "selected:selected": { "hide": true },
+                  "selected:disabled": { "value": "#EEF2F9" },
+                  "selected:error":    { "hide": true }
+                }
+              },
+              { "key": "Fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg",
+                "variants": {
+                  "selected:unselected": { "hide": true },
+                  "selected:disabled":   { "hide": true },
+                  "selected:error":      { "hide": true }
+                }
+              },
+              { "key": "Dot", "value": "#FFFFFF", "token": "radio-button/color/default/selected/dot",
+                "variants": {
+                  "selected:unselected": { "hide": true },
+                  "selected:disabled":   { "hide": true },
+                  "selected:error":      { "hide": true }
+                }
+              },
+              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border",
+                "variants": {
+                  "selected:unselected": { "hide": true },
+                  "selected:selected":   { "hide": true },
+                  "selected:disabled":   { "hide": true }
+                }
+              }
             ]
           },
           {

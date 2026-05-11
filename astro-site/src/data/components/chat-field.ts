@@ -215,11 +215,14 @@ export const chatField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",          "value": "#FFFFFF", "token": "chat-field/color/bg" },
-              { "key": "Border (default)", "value": "#D7E0EF", "token": "input-field/default/border" },
-              { "key": "Border (active)",  "value": "#005CE5", "token": "input-field/active/border" },
-              { "key": "Placeholder",      "value": "#90A8D0", "token": "input-field/default/placeholder" },
-              { "key": "Send icon",        "value": "#005CE5", "token": "chat-field/color/icon" }
+              { "key": "Surface",     "value": "#FFFFFF", "token": "chat-field/color/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border",
+                "variants": {
+                  "active:yes": { "value": "#005CE5", "token": "input-field/active/border" }
+                }
+              },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" },
+              { "key": "Send icon",   "value": "#005CE5", "token": "chat-field/color/icon" }
             ]
           },
           {
@@ -267,11 +270,14 @@ export const chatField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",          "value": "#FFFFFF", "token": "chat-field/color/bg" },
-              { "key": "Border (default)", "value": "#D7E0EF", "token": "input-field/default/border" },
-              { "key": "Border (active)",  "value": "#005CE5", "token": "input-field/active/border" },
-              { "key": "Placeholder",      "value": "#90A8D0", "token": "input-field/default/placeholder" },
-              { "key": "Send icon",        "value": "#005CE5", "token": "chat-field/color/icon" }
+              { "key": "Surface",     "value": "#FFFFFF", "token": "chat-field/color/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border",
+                "variants": {
+                  "active:yes": { "value": "#005CE5", "token": "input-field/active/border" }
+                }
+              },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" },
+              { "key": "Send icon",   "value": "#005CE5", "token": "chat-field/color/icon" }
             ]
           },
           {

@@ -226,7 +226,9 @@ export const searchField: ComponentData = {
               { "key": "Bg",          "value": "#FFFFFF", "token": "input-field/default/bg" },
               { "key": "Border",      "value": "#D7E0EF", "token": "input-field/default/border" },
               { "key": "Text",        "value": "#0A2757", "token": "input-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" }
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder",
+                "variants": { "state:filled": { "hide": true } }
+              }
             ]
           },
           {
@@ -277,7 +279,9 @@ export const searchField: ComponentData = {
               { "key": "Bg",          "value": "#FFFFFF", "token": "input-field/default/bg" },
               { "key": "Border",      "value": "#D7E0EF", "token": "input-field/default/border" },
               { "key": "Text",        "value": "#0A2757", "token": "input-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" }
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder",
+                "variants": { "state:filled": { "hide": true } }
+              }
             ]
           },
           {

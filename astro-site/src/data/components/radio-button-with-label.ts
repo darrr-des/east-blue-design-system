@@ -185,10 +185,19 @@ export const radioButtonWithLabel: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Border (unselected)", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border" },
-              { "key": "Selected fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border",
+                "variants": {
+                  "selected:true": { "hide": true },
+                  "isError:true":  { "hide": true }
+                }
+              },
+              { "key": "Fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg",
+                "variants": { "selected:false": { "hide": true } }
+              },
               { "key": "Label", "value": "#445C85", "token": "radio-button/color/default/unselected/text" },
-              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border" }
+              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border",
+                "variants": { "isError:false": { "hide": true } }
+              }
             ]
           },
           {
@@ -268,10 +277,19 @@ export const radioButtonWithLabel: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Border (unselected)", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border" },
-              { "key": "Selected fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border",
+                "variants": {
+                  "selected:true": { "hide": true },
+                  "isError:true":  { "hide": true }
+                }
+              },
+              { "key": "Fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg",
+                "variants": { "selected:false": { "hide": true } }
+              },
               { "key": "Label", "value": "#445C85", "token": "radio-button/color/default/unselected/text" },
-              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border" }
+              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border",
+                "variants": { "isError:false": { "hide": true } }
+              }
             ]
           },
           {
@@ -351,10 +369,19 @@ export const radioButtonWithLabel: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Border (unselected)", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border" },
-              { "key": "Selected fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border",
+                "variants": {
+                  "selected:true": { "hide": true },
+                  "isError:true":  { "hide": true }
+                }
+              },
+              { "key": "Fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg",
+                "variants": { "selected:false": { "hide": true } }
+              },
               { "key": "Label", "value": "#445C85", "token": "radio-button/color/default/unselected/text" },
-              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border" }
+              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border",
+                "variants": { "isError:false": { "hide": true } }
+              }
             ]
           },
           {
@@ -434,10 +461,19 @@ export const radioButtonWithLabel: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Border (unselected)", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border" },
-              { "key": "Selected fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg" },
+              { "key": "Border", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border",
+                "variants": {
+                  "selected:true": { "hide": true },
+                  "isError:true":  { "hide": true }
+                }
+              },
+              { "key": "Fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg",
+                "variants": { "selected:false": { "hide": true } }
+              },
               { "key": "Label", "value": "#445C85", "token": "radio-button/color/default/unselected/text" },
-              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border" }
+              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border",
+                "variants": { "isError:false": { "hide": true } }
+              }
             ]
           },
           {

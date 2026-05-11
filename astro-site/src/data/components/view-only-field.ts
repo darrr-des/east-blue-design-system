@@ -247,7 +247,9 @@ export const viewOnlyField: ComponentData = {
               { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border" },
               { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label" },
               { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder" }
+              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder",
+                "variants": { "filled:true": { "hide": true } }
+              }
             ]
           },
           {
@@ -367,7 +369,9 @@ export const viewOnlyField: ComponentData = {
               { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border" },
               { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label" },
               { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder" }
+              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder",
+                "variants": { "filled:true": { "hide": true } }
+              }
             ]
           },
           {
@@ -487,7 +491,9 @@ export const viewOnlyField: ComponentData = {
               { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border" },
               { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label" },
               { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder" }
+              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder",
+                "variants": { "filled:true": { "hide": true } }
+              }
             ]
           },
           {
@@ -607,7 +613,9 @@ export const viewOnlyField: ComponentData = {
               { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border" },
               { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label" },
               { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder" }
+              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder",
+                "variants": { "filled:true": { "hide": true } }
+              }
             ]
           },
           {

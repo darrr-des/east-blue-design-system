@@ -216,11 +216,28 @@ export const selectField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "selected-field/default/bg" },
-              { "key": "Border", "value": "#D7E0EF", "token": "selected-field/default/border" },
-              { "key": "Value", "value": "#0A2757", "token": "selected-field/default/value" },
-              { "key": "Icon", "value": "#005CE5", "token": "selected-field/default/icon" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/default/placeholder" }
+              { "key": "Bg", "value": "#FFFFFF", "token": "selected-field/default/bg",
+                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "selected-field/disabled/bg" } }
+              },
+              { "key": "Border", "value": "#D7E0EF", "token": "selected-field/default/border",
+                "variants": {
+                  "state:Active":   { "value": "#005CE5", "token": "selected-field/active/border" },
+                  "state:Error":    { "value": "#D61B2C", "token": "selected-field/error/border" },
+                  "state:Disabled": { "hide": true }
+                }
+              },
+              { "key": "Value", "value": "#0A2757", "token": "selected-field/default/value",
+                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "selected-field/disabled/value" } }
+              },
+              { "key": "Icon", "value": "#005CE5", "token": "selected-field/default/icon",
+                "variants": { "state:Disabled": { "value": "#9BC5FD", "token": "selected-field/disabled/icon" } }
+              },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/default/placeholder",
+                "variants": {
+                  "state:Disabled": { "hide": true },
+                  "filled:true":    { "hide": true }
+                }
+              }
             ]
           },
           {
@@ -322,10 +339,22 @@ export const selectField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "selected-field/active/bg" },
-              { "key": "Border", "value": "#005CE5", "token": "selected-field/active/border" },
-              { "key": "Value", "value": "#0A2757", "token": "selected-field/active/value" },
-              { "key": "Icon", "value": "#005CE5", "token": "selected-field/active/icon" }
+              { "key": "Bg", "value": "#FFFFFF", "token": "selected-field/active/bg",
+                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "selected-field/disabled/bg" } }
+              },
+              { "key": "Border", "value": "#005CE5", "token": "selected-field/active/border",
+                "variants": {
+                  "state:Default":  { "value": "#D7E0EF", "token": "selected-field/default/border" },
+                  "state:Error":    { "value": "#D61B2C", "token": "selected-field/error/border" },
+                  "state:Disabled": { "hide": true }
+                }
+              },
+              { "key": "Value", "value": "#0A2757", "token": "selected-field/active/value",
+                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "selected-field/disabled/value" } }
+              },
+              { "key": "Icon", "value": "#005CE5", "token": "selected-field/active/icon",
+                "variants": { "state:Disabled": { "value": "#9BC5FD", "token": "selected-field/disabled/icon" } }
+              }
             ]
           },
           {
@@ -427,10 +456,22 @@ export const selectField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "selected-field/error/bg" },
-              { "key": "Border", "value": "#D61B2C", "token": "selected-field/error/border" },
-              { "key": "Value", "value": "#0A2757", "token": "selected-field/error/value" },
-              { "key": "Icon", "value": "#005CE5", "token": "selected-field/error/icon" }
+              { "key": "Bg", "value": "#FFFFFF", "token": "selected-field/error/bg",
+                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "selected-field/disabled/bg" } }
+              },
+              { "key": "Border", "value": "#D61B2C", "token": "selected-field/error/border",
+                "variants": {
+                  "state:Default":  { "value": "#D7E0EF", "token": "selected-field/default/border" },
+                  "state:Active":   { "value": "#005CE5", "token": "selected-field/active/border" },
+                  "state:Disabled": { "hide": true }
+                }
+              },
+              { "key": "Value", "value": "#0A2757", "token": "selected-field/error/value",
+                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "selected-field/disabled/value" } }
+              },
+              { "key": "Icon", "value": "#005CE5", "token": "selected-field/error/icon",
+                "variants": { "state:Disabled": { "value": "#9BC5FD", "token": "selected-field/disabled/icon" } }
+              }
             ]
           },
           {
@@ -532,9 +573,34 @@ export const selectField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#EEF2F9", "token": "selected-field/disabled/bg" },
-              { "key": "Value", "value": "#90A8D0", "token": "selected-field/disabled/value" },
-              { "key": "Icon", "value": "#9BC5FD", "token": "selected-field/disabled/icon" }
+              { "key": "Bg", "value": "#EEF2F9", "token": "selected-field/disabled/bg",
+                "variants": {
+                  "state:Default": { "value": "#FFFFFF", "token": "selected-field/default/bg" },
+                  "state:Active":  { "value": "#FFFFFF", "token": "selected-field/active/bg" },
+                  "state:Error":   { "value": "#FFFFFF", "token": "selected-field/error/bg" }
+                }
+              },
+              { "key": "Border", "value": "#D7E0EF", "token": "selected-field/default/border",
+                "variants": {
+                  "state:Active":   { "value": "#005CE5", "token": "selected-field/active/border" },
+                  "state:Error":    { "value": "#D61B2C", "token": "selected-field/error/border" },
+                  "state:Disabled": { "hide": true }
+                }
+              },
+              { "key": "Value", "value": "#90A8D0", "token": "selected-field/disabled/value",
+                "variants": {
+                  "state:Default": { "value": "#0A2757", "token": "selected-field/default/value" },
+                  "state:Active":  { "value": "#0A2757", "token": "selected-field/active/value" },
+                  "state:Error":   { "value": "#0A2757", "token": "selected-field/error/value" }
+                }
+              },
+              { "key": "Icon", "value": "#9BC5FD", "token": "selected-field/disabled/icon",
+                "variants": {
+                  "state:Default": { "value": "#005CE5", "token": "selected-field/default/icon" },
+                  "state:Active":  { "value": "#005CE5", "token": "selected-field/active/icon" },
+                  "state:Error":   { "value": "#005CE5", "token": "selected-field/error/icon" }
+                }
+              }
             ]
           },
           {
