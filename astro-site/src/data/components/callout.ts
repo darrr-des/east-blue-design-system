@@ -274,10 +274,18 @@ export const callout: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",     "value": "#F6F9FD", "token": "contextual-help/color/default/bg" },
-              { "key": "Border",      "value": "#E5EBF4", "token": "contextual-help/color/default/border" },
-              { "key": "Label",       "value": "#445C85", "token": "contextual-help/color/default/label" },
-              { "key": "Description", "value": "#6780A9", "token": "contextual-help/color/default/description" }
+              { "key": "Surface", "value": "#F6F9FD", "token": "contextual-help/color/default/bg",
+                "variants": { "type:information": { "value": "#E5F1FF", "token": "contextual-help/color/info/bg" } }
+              },
+              { "key": "Border", "value": "#E5EBF4", "token": "contextual-help/color/default/border",
+                "variants": { "type:information": { "value": "#D2E5FF", "token": "contextual-help/color/info/border" } }
+              },
+              { "key": "Label", "value": "#445C85", "token": "contextual-help/color/default/label",
+                "variants": { "type:information": { "value": "#072592", "token": "contextual-help/color/info/label" } }
+              },
+              { "key": "Description", "value": "#6780A9", "token": "contextual-help/color/default/description",
+                "variants": { "type:information": { "token": "contextual-help/color/info/description" } }
+              }
             ]
           },
           {
@@ -327,10 +335,18 @@ export const callout: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",     "value": "#E5F1FF", "token": "contextual-help/color/info/bg" },
-              { "key": "Border",      "value": "#D2E5FF", "token": "contextual-help/color/info/border" },
-              { "key": "Label",       "value": "#072592", "token": "contextual-help/color/info/label" },
-              { "key": "Description", "value": "#6780A9", "token": "contextual-help/color/info/description" }
+              { "key": "Surface", "value": "#E5F1FF", "token": "contextual-help/color/info/bg",
+                "variants": { "type:default": { "value": "#F6F9FD", "token": "contextual-help/color/default/bg" } }
+              },
+              { "key": "Border", "value": "#D2E5FF", "token": "contextual-help/color/info/border",
+                "variants": { "type:default": { "value": "#E5EBF4", "token": "contextual-help/color/default/border" } }
+              },
+              { "key": "Label", "value": "#072592", "token": "contextual-help/color/info/label",
+                "variants": { "type:default": { "value": "#445C85", "token": "contextual-help/color/default/label" } }
+              },
+              { "key": "Description", "value": "#6780A9", "token": "contextual-help/color/info/description",
+                "variants": { "type:default": { "token": "contextual-help/color/default/description" } }
+              }
             ]
           },
           {
@@ -380,10 +396,18 @@ export const callout: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",     "value": "#F6F9FD", "token": "contextual-help/color/default/bg" },
-              { "key": "Border",      "value": "#E5EBF4", "token": "contextual-help/color/default/border" },
-              { "key": "Label",       "value": "#445C85", "token": "contextual-help/color/default/label" },
-              { "key": "Description", "value": "#6780A9", "token": "contextual-help/color/default/description" }
+              { "key": "Surface", "value": "#F6F9FD", "token": "contextual-help/color/default/bg",
+                "variants": { "type:information": { "value": "#E5F1FF", "token": "contextual-help/color/info/bg" } }
+              },
+              { "key": "Border", "value": "#E5EBF4", "token": "contextual-help/color/default/border",
+                "variants": { "type:information": { "value": "#D2E5FF", "token": "contextual-help/color/info/border" } }
+              },
+              { "key": "Label", "value": "#445C85", "token": "contextual-help/color/default/label",
+                "variants": { "type:information": { "value": "#072592", "token": "contextual-help/color/info/label" } }
+              },
+              { "key": "Description", "value": "#6780A9", "token": "contextual-help/color/default/description",
+                "variants": { "type:information": { "token": "contextual-help/color/info/description" } }
+              }
             ]
           },
           {

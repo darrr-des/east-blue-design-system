@@ -175,10 +175,12 @@ export const tabs: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Active label",    "value": "#005CE5", "token": "tab/color/active/label" },
-              { "key": "Active border",   "value": "#005CE5", "token": "tab/color/active/border" },
-              { "key": "Inactive label",  "value": "#6780A9", "token": "tab/color/inactive/label" },
-              { "key": "Inactive border", "value": "#E5EBF4", "token": "tab/color/inactive/border" }
+              { "key": "Label", "value": "#005CE5", "token": "tab/color/active/label",
+                "variants": { "active:false": { "value": "#6780A9", "token": "tab/color/inactive/label" } }
+              },
+              { "key": "Border", "value": "#005CE5", "token": "tab/color/active/border",
+                "variants": { "active:false": { "value": "#E5EBF4", "token": "tab/color/inactive/border" } }
+              }
             ]
           },
           {
@@ -228,10 +230,12 @@ export const tabs: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Active label",    "value": "#005CE5", "token": "tab/color/active/label" },
-              { "key": "Active border",   "value": "#005CE5", "token": "tab/color/active/border" },
-              { "key": "Inactive label",  "value": "#6780A9", "token": "tab/color/inactive/label" },
-              { "key": "Inactive border", "value": "#E5EBF4", "token": "tab/color/inactive/border" }
+              { "key": "Label", "value": "#005CE5", "token": "tab/color/active/label",
+                "variants": { "active:false": { "value": "#6780A9", "token": "tab/color/inactive/label" } }
+              },
+              { "key": "Border", "value": "#005CE5", "token": "tab/color/active/border",
+                "variants": { "active:false": { "value": "#E5EBF4", "token": "tab/color/inactive/border" } }
+              }
             ]
           },
           {
@@ -281,10 +285,12 @@ export const tabs: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Active label",    "value": "#005CE5", "token": "tab/color/active/label" },
-              { "key": "Active border",   "value": "#005CE5", "token": "tab/color/active/border" },
-              { "key": "Inactive label",  "value": "#6780A9", "token": "tab/color/inactive/label" },
-              { "key": "Inactive border", "value": "#E5EBF4", "token": "tab/color/inactive/border" }
+              { "key": "Label", "value": "#005CE5", "token": "tab/color/active/label",
+                "variants": { "active:false": { "value": "#6780A9", "token": "tab/color/inactive/label" } }
+              },
+              { "key": "Border", "value": "#005CE5", "token": "tab/color/active/border",
+                "variants": { "active:false": { "value": "#E5EBF4", "token": "tab/color/inactive/border" } }
+              }
             ]
           },
           {

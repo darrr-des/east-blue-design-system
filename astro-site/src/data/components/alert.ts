@@ -221,10 +221,38 @@ export const alert: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Background", "value": "#E5F1FF", "token": "alert/color/info/bg" },
-              { "key": "Title", "value": "#072592", "token": "alert/color/info/label-title" },
-              { "key": "Description", "value": "#072592", "token": "alert/color/info/description" },
-              { "key": "Icon / accent", "value": "#2340A9", "token": "alert/color/info/icon" }
+              { "key": "Background", "value": "#E5F1FF", "token": "alert/color/information/bg",
+                "variants": {
+                  "type:neutral": { "value": "#F4F6FA", "token": "alert/color/neutral/bg" },
+                  "type:warning": { "value": "#FFF9EB", "token": "alert/color/warning/bg" },
+                  "type:error":   { "value": "#FEECEB", "token": "alert/color/error/bg" },
+                  "type:success": { "value": "#E4F7ED", "token": "alert/color/success/bg" }
+                }
+              },
+              { "key": "Title", "value": "#072592", "token": "alert/color/information/label-title",
+                "variants": {
+                  "type:neutral": { "value": "#0A2757", "token": "alert/color/neutral/label-title" },
+                  "type:warning": { "value": "#6C5009", "token": "alert/color/warning/label-title" },
+                  "type:error":   { "value": "#5F1410", "token": "alert/color/error/label-title" },
+                  "type:success": { "value": "#0B3E23", "token": "alert/color/success/label-title" }
+                }
+              },
+              { "key": "Description", "value": "#072592", "token": "alert/color/information/description",
+                "variants": {
+                  "type:neutral": { "value": "#0A2757", "token": "alert/color/neutral/description" },
+                  "type:warning": { "value": "#6C5009", "token": "alert/color/warning/description" },
+                  "type:error":   { "value": "#5F1410", "token": "alert/color/error/description" },
+                  "type:success": { "value": "#0B3E23", "token": "alert/color/success/description" }
+                }
+              },
+              { "key": "Icon / accent", "value": "#2340A9", "token": "alert/color/information/icon",
+                "variants": {
+                  "type:neutral": { "value": "#6780A9", "token": "alert/color/neutral/icon" },
+                  "type:warning": { "value": "#966F0B", "token": "alert/color/warning/icon" },
+                  "type:error":   { "value": "#B0231C", "token": "alert/color/error/icon" },
+                  "type:success": { "value": "#188A47", "token": "alert/color/success/icon" }
+                }
+              }
             ]
           },
           {
@@ -275,10 +303,31 @@ export const alert: ComponentData = {
             "slug": "colors",
             "rows": [
               { "key": "Surface", "value": "#FFFFFF", "token": "surface/default" },
-              { "key": "Border accent", "value": "#2340A9", "token": "alert/color/info/icon" },
-              { "key": "Title", "value": "#072592", "token": "alert/color/info/label-title" },
-              { "key": "Description", "value": "#072592", "token": "alert/color/info/description" },
-              { "key": "Action link", "value": "#005CE5", "token": "alert/color/info/label-link" }
+              { "key": "Border accent", "value": "#2340A9", "token": "alert/color/information/icon",
+                "variants": {
+                  "type:neutral": { "value": "#6780A9", "token": "alert/color/neutral/icon" },
+                  "type:warning": { "value": "#966F0B", "token": "alert/color/warning/icon" },
+                  "type:error":   { "value": "#B0231C", "token": "alert/color/error/icon" },
+                  "type:success": { "value": "#188A47", "token": "alert/color/success/icon" }
+                }
+              },
+              { "key": "Title", "value": "#072592", "token": "alert/color/information/label-title",
+                "variants": {
+                  "type:neutral": { "value": "#0A2757", "token": "alert/color/neutral/label-title" },
+                  "type:warning": { "value": "#6C5009", "token": "alert/color/warning/label-title" },
+                  "type:error":   { "value": "#5F1410", "token": "alert/color/error/label-title" },
+                  "type:success": { "value": "#0B3E23", "token": "alert/color/success/label-title" }
+                }
+              },
+              { "key": "Description", "value": "#072592", "token": "alert/color/information/description",
+                "variants": {
+                  "type:neutral": { "value": "#0A2757", "token": "alert/color/neutral/description" },
+                  "type:warning": { "value": "#6C5009", "token": "alert/color/warning/description" },
+                  "type:error":   { "value": "#5F1410", "token": "alert/color/error/description" },
+                  "type:success": { "value": "#0B3E23", "token": "alert/color/success/description" }
+                }
+              },
+              { "key": "Action link", "value": "#005CE5", "token": "alert/color/information/label-link" }
             ]
           },
           {

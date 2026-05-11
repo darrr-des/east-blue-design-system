@@ -187,12 +187,17 @@ export const accordion: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",        "value": "#FFFFFF", "token": "accordion/color/collapsed/bg" },
-              { "key": "Border",         "value": "#E5EBF4", "token": "accordion/color/collapsed/border" },
-              { "key": "Label",          "value": "#0A2757", "token": "accordion/color/collapsed/label" },
-              { "key": "Description",   "value": "#90A8D0", "token": "accordion/color/collapsed/description" },
-              { "key": "Chevron",        "value": "#005CE5", "token": "accordion/color/collapsed/icon-chevron" },
-              { "key": "Disabled label", "value": "#C2CFE5", "token": "text/color-text-disabled" }
+              { "key": "Surface", "value": "#FFFFFF", "token": "accordion/color/collapsed/bg" },
+              { "key": "Border",  "value": "#E5EBF4", "token": "accordion/color/collapsed/border" },
+              { "key": "Label", "value": "#0A2757", "token": "accordion/color/collapsed/label",
+                "variants": { "state:disabled": { "value": "#C2CFE5", "token": "text/color-text-disabled" } }
+              },
+              { "key": "Description", "value": "#90A8D0", "token": "accordion/color/collapsed/description",
+                "variants": { "description:false": { "hide": true } }
+              },
+              { "key": "Chevron", "value": "#005CE5", "token": "accordion/color/collapsed/icon-chevron",
+                "variants": { "state:disabled": { "value": "#9BC5FD" } }
+              }
             ]
           },
           {
@@ -252,12 +257,18 @@ export const accordion: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",     "value": "#FFFFFF", "token": "accordion/color/expanded/bg" },
-              { "key": "Border",      "value": "#E5EBF4", "token": "accordion/color/expanded/border" },
-              { "key": "Label",       "value": "#0A2757", "token": "accordion/color/expanded/label" },
-              { "key": "Description", "value": "#90A8D0", "token": "accordion/color/expanded/description" },
-              { "key": "Chevron",     "value": "#005CE5", "token": "accordion/color/expanded/icon-chevron" },
-              { "key": "Body bg",     "value": "#F6F9FD", "token": "bg/color-bg" }
+              { "key": "Surface", "value": "#FFFFFF", "token": "accordion/color/expanded/bg" },
+              { "key": "Border",  "value": "#E5EBF4", "token": "accordion/color/expanded/border" },
+              { "key": "Label", "value": "#0A2757", "token": "accordion/color/expanded/label",
+                "variants": { "state:disabled": { "value": "#C2CFE5", "token": "text/color-text-disabled" } }
+              },
+              { "key": "Description", "value": "#90A8D0", "token": "accordion/color/expanded/description",
+                "variants": { "description:false": { "hide": true } }
+              },
+              { "key": "Chevron", "value": "#005CE5", "token": "accordion/color/expanded/icon-chevron",
+                "variants": { "state:disabled": { "value": "#9BC5FD" } }
+              },
+              { "key": "Body bg", "value": "#F6F9FD", "token": "bg/color-bg" }
             ]
           },
           {
