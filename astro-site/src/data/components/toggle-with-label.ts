@@ -215,8 +215,19 @@ export const toggleWithLabel: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Active track", "value": "#005CE5", "token": "toggle/color/default/active/bg-track" },
-              { "key": "Active indicator", "value": "#FFFFFF", "token": "toggle/color/default/active/bg-indicator" },
+              { "key": "Track", "value": "#005CE5", "token": "toggle/color/default/active/bg-track",
+                "variants": {
+                  "selected:false":                   { "value": "#C2CFE5", "token": "toggle/color/default/inactive/bg-track" },
+                  "state:disabled":                   { "value": "#9BC5FD", "token": "toggle/color/disabled/active/bg-track" },
+                  "selected:false|state:disabled":    { "value": "#EEF2F9", "token": "toggle/color/disabled/inactive/bg-track" }
+                }
+              },
+              { "key": "Indicator", "value": "#FFFFFF", "token": "toggle/color/default/active/bg-indicator",
+                "variants": {
+                  "state:disabled":                { "value": "#F6F9FD", "token": "toggle/color/disabled/active/bg-indicator" },
+                  "selected:false|state:disabled": { "value": "#F6F9FD", "token": "toggle/color/disabled/inactive/bg-indicator" }
+                }
+              },
               { "key": "Label", "value": "#445C85", "token": "text/color-text-weak" }
             ]
           },
@@ -299,8 +310,19 @@ export const toggleWithLabel: ComponentData = {
             "slug": "colors",
             "rows": [
               { "key": "Label color", "value": "#0A2757", "token": "main/toggle-with-label/label" },
-              { "key": "Active track", "value": "#005CE5", "token": "toggle/color/default/active/bg-track" },
-              { "key": "Indicator", "value": "#FFFFFF", "token": "toggle/color/default/active/bg-indicator" }
+              { "key": "Track", "value": "#005CE5", "token": "toggle/color/default/active/bg-track",
+                "variants": {
+                  "selected:false":                   { "value": "#C2CFE5", "token": "toggle/color/default/inactive/bg-track" },
+                  "state:disabled":                   { "value": "#9BC5FD", "token": "toggle/color/disabled/active/bg-track" },
+                  "selected:false|state:disabled":    { "value": "#EEF2F9", "token": "toggle/color/disabled/inactive/bg-track" }
+                }
+              },
+              { "key": "Indicator", "value": "#FFFFFF", "token": "toggle/color/default/active/bg-indicator",
+                "variants": {
+                  "state:disabled":                { "value": "#F6F9FD", "token": "toggle/color/disabled/active/bg-indicator" },
+                  "selected:false|state:disabled": { "value": "#F6F9FD", "token": "toggle/color/disabled/inactive/bg-indicator" }
+                }
+              }
             ]
           },
           {
@@ -396,9 +418,19 @@ export const toggleWithLabel: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Inactive track", "value": "#C2CFE5", "token": "toggle/color/default/inactive/bg-track" },
-              { "key": "Active track", "value": "#005CE5", "token": "toggle/color/default/active/bg-track" },
-              { "key": "Indicator", "value": "#FFFFFF", "token": "toggle/color/default/active/bg-indicator" },
+              { "key": "Track", "value": "#005CE5", "token": "toggle/color/default/active/bg-track",
+                "variants": {
+                  "selected:false":                   { "value": "#C2CFE5", "token": "toggle/color/default/inactive/bg-track" },
+                  "state:disabled":                   { "value": "#9BC5FD", "token": "toggle/color/disabled/active/bg-track" },
+                  "selected:false|state:disabled":    { "value": "#EEF2F9", "token": "toggle/color/disabled/inactive/bg-track" }
+                }
+              },
+              { "key": "Indicator", "value": "#FFFFFF", "token": "toggle/color/default/active/bg-indicator",
+                "variants": {
+                  "state:disabled":                { "value": "#F6F9FD", "token": "toggle/color/disabled/active/bg-indicator" },
+                  "selected:false|state:disabled": { "value": "#F6F9FD", "token": "toggle/color/disabled/inactive/bg-indicator" }
+                }
+              },
               { "key": "Label", "value": "#445C85", "token": "text/color-text-weak" }
             ]
           },

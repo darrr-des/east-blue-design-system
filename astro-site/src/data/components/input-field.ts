@@ -208,10 +208,29 @@ export const inputField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/default/bg" },
-              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border" },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" }
+              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/default/bg",
+                "variants": {
+                  "state:Disabled": { "value": "#EEF2F9", "token": "input-field/disabled/bg" }
+                }
+              },
+              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border",
+                "variants": {
+                  "state:Active":   { "value": "#005CE5", "token": "input-field/active/border" },
+                  "state:Error":    { "value": "#D61B2C", "token": "input-field/error/border" },
+                  "state:Disabled": { "hide": true }
+                }
+              },
+              { "key": "Text", "value": "#0A2757", "token": "input-field/default/text",
+                "variants": {
+                  "state:Disabled": { "value": "#90A8D0", "token": "input-field/disabled/text" }
+                }
+              },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder",
+                "variants": {
+                  "state:Disabled": { "value": "#C2CFE5", "token": "input-field/disabled/placeholder" },
+                  "filled:true":    { "hide": true }
+                }
+              }
             ]
           },
           {
@@ -238,10 +257,12 @@ export const inputField: ComponentData = {
                 "value": "radius/radius-2 (6px)",
                 "mono": true
               },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
+              { "key": "Border", "value": "1px solid", "mono": true,
+                "variants": {
+                  "state:Active": { "value": "2px solid" },
+                  "state:Error":  { "value": "2px solid" },
+                  "state:Disabled": { "hide": true }
+                }
               },
               {
                 "key": "Icon size",
@@ -313,62 +334,50 @@ export const inputField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/active/bg" },
-              { "key": "Border", "value": "#005CE5", "token": "input-field/active/border" },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/active/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/active/placeholder" }
+              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/active/bg",
+                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "input-field/disabled/bg" } }
+              },
+              { "key": "Border", "value": "#005CE5", "token": "input-field/active/border",
+                "variants": {
+                  "state:Default":  { "value": "#D7E0EF", "token": "input-field/default/border" },
+                  "state:Error":    { "value": "#D61B2C", "token": "input-field/error/border" },
+                  "state:Disabled": { "hide": true }
+                }
+              },
+              { "key": "Text", "value": "#0A2757", "token": "input-field/active/text",
+                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "input-field/disabled/text" } }
+              },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/active/placeholder",
+                "variants": {
+                  "state:Disabled": { "value": "#C2CFE5", "token": "input-field/disabled/placeholder" },
+                  "filled:true":    { "hide": true }
+                }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
+              { "key": "Field height", "value": "48px", "mono": true },
+              { "key": "Padding H", "value": "12px", "mono": true },
+              { "key": "Padding V", "value": "14px", "mono": true },
+              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
+              { "key": "Border", "value": "2px solid", "mono": true,
+                "variants": {
+                  "state:Default":  { "value": "1px solid" },
+                  "state:Disabled": { "hide": true }
+                }
               },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
+              { "key": "Icon size", "value": "20 × 20", "mono": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Value font",  "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
             ]
           }
         ],
@@ -418,10 +427,25 @@ export const inputField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/error/bg" },
-              { "key": "Border", "value": "#D61B2C", "token": "input-field/error/border" },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/error/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/error/placeholder" }
+              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/error/bg",
+                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "input-field/disabled/bg" } }
+              },
+              { "key": "Border", "value": "#D61B2C", "token": "input-field/error/border",
+                "variants": {
+                  "state:Default":  { "value": "#D7E0EF", "token": "input-field/default/border" },
+                  "state:Active":   { "value": "#005CE5", "token": "input-field/active/border" },
+                  "state:Disabled": { "hide": true }
+                }
+              },
+              { "key": "Text", "value": "#0A2757", "token": "input-field/error/text",
+                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "input-field/disabled/text" } }
+              },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/error/placeholder",
+                "variants": {
+                  "state:Disabled": { "value": "#C2CFE5", "token": "input-field/disabled/placeholder" },
+                  "filled:true":    { "hide": true }
+                }
+              }
             ]
           },
           {
@@ -523,9 +547,35 @@ export const inputField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#EEF2F9", "token": "input-field/disabled/bg" },
-              { "key": "Text", "value": "#90A8D0", "token": "input-field/disabled/text" },
-              { "key": "Placeholder", "value": "#C2CFE5", "token": "input-field/disabled/placeholder" }
+              { "key": "Bg", "value": "#EEF2F9", "token": "input-field/disabled/bg",
+                "variants": {
+                  "state:Default": { "value": "#FFFFFF", "token": "input-field/default/bg" },
+                  "state:Active":  { "value": "#FFFFFF", "token": "input-field/active/bg" },
+                  "state:Error":   { "value": "#FFFFFF", "token": "input-field/error/bg" }
+                }
+              },
+              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border",
+                "variants": {
+                  "state:Active":   { "value": "#005CE5", "token": "input-field/active/border" },
+                  "state:Error":    { "value": "#D61B2C", "token": "input-field/error/border" },
+                  "state:Disabled": { "hide": true }
+                }
+              },
+              { "key": "Text", "value": "#90A8D0", "token": "input-field/disabled/text",
+                "variants": {
+                  "state:Default": { "value": "#0A2757", "token": "input-field/default/text" },
+                  "state:Active":  { "value": "#0A2757", "token": "input-field/active/text" },
+                  "state:Error":   { "value": "#0A2757", "token": "input-field/error/text" }
+                }
+              },
+              { "key": "Placeholder", "value": "#C2CFE5", "token": "input-field/disabled/placeholder",
+                "variants": {
+                  "state:Default": { "value": "#90A8D0", "token": "input-field/default/placeholder" },
+                  "state:Active":  { "value": "#90A8D0", "token": "input-field/active/placeholder" },
+                  "state:Error":   { "value": "#90A8D0", "token": "input-field/error/placeholder" },
+                  "filled:true":   { "hide": true }
+                }
+              }
             ]
           },
           {

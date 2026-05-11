@@ -214,11 +214,28 @@ export const labeledField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/default/bg" },
-              { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border" },
-              { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label" },
-              { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder" }
+              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/default/bg",
+                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "labeled-field/disabled/bg" } }
+              },
+              { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border",
+                "variants": {
+                  "state:Active":   { "value": "#005CE5", "token": "labeled-field/active/border" },
+                  "state:Error":    { "value": "#D61B2C", "token": "labeled-field/error/border" },
+                  "state:Disabled": { "hide": true }
+                }
+              },
+              { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label",
+                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "labeled-field/disabled/label" } }
+              },
+              { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text",
+                "variants": { "state:Disabled": { "value": "#C2CFE5", "token": "labeled-field/disabled/value" } }
+              },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder",
+                "variants": {
+                  "state:Disabled": { "value": "#C2CFE5", "token": "labeled-field/disabled/placeholder" },
+                  "filled:true":    { "hide": true }
+                }
+              }
             ]
           },
           {
@@ -330,10 +347,22 @@ export const labeledField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/active/bg" },
-              { "key": "Border", "value": "#005CE5", "token": "labeled-field/active/border" },
-              { "key": "Label", "value": "#0A2757", "token": "labeled-field/active/label" },
-              { "key": "Text", "value": "#0A2757", "token": "labeled-field/active/text" }
+              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/active/bg",
+                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "labeled-field/disabled/bg" } }
+              },
+              { "key": "Border", "value": "#005CE5", "token": "labeled-field/active/border",
+                "variants": {
+                  "state:Default":  { "value": "#D7E0EF", "token": "labeled-field/default/border" },
+                  "state:Error":    { "value": "#D61B2C", "token": "labeled-field/error/border" },
+                  "state:Disabled": { "hide": true }
+                }
+              },
+              { "key": "Label", "value": "#0A2757", "token": "labeled-field/active/label",
+                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "labeled-field/disabled/label" } }
+              },
+              { "key": "Text", "value": "#0A2757", "token": "labeled-field/active/text",
+                "variants": { "state:Disabled": { "value": "#C2CFE5", "token": "labeled-field/disabled/value" } }
+              }
             ]
           },
           {
@@ -445,10 +474,22 @@ export const labeledField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/error/bg" },
-              { "key": "Border", "value": "#D61B2C", "token": "labeled-field/error/border" },
-              { "key": "Label", "value": "#0A2757", "token": "labeled-field/error/label" },
-              { "key": "Text", "value": "#0A2757", "token": "labeled-field/error/text" }
+              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/error/bg",
+                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "labeled-field/disabled/bg" } }
+              },
+              { "key": "Border", "value": "#D61B2C", "token": "labeled-field/error/border",
+                "variants": {
+                  "state:Default":  { "value": "#D7E0EF", "token": "labeled-field/default/border" },
+                  "state:Active":   { "value": "#005CE5", "token": "labeled-field/active/border" },
+                  "state:Disabled": { "hide": true }
+                }
+              },
+              { "key": "Label", "value": "#0A2757", "token": "labeled-field/error/label",
+                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "labeled-field/disabled/label" } }
+              },
+              { "key": "Text", "value": "#0A2757", "token": "labeled-field/error/text",
+                "variants": { "state:Disabled": { "value": "#C2CFE5", "token": "labeled-field/disabled/value" } }
+              }
             ]
           },
           {
@@ -560,9 +601,34 @@ export const labeledField: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#EEF2F9", "token": "labeled-field/disabled/bg" },
-              { "key": "Label", "value": "#90A8D0", "token": "labeled-field/disabled/label" },
-              { "key": "Value", "value": "#C2CFE5", "token": "labeled-field/disabled/value" }
+              { "key": "Bg", "value": "#EEF2F9", "token": "labeled-field/disabled/bg",
+                "variants": {
+                  "state:Default": { "value": "#FFFFFF", "token": "labeled-field/default/bg" },
+                  "state:Active":  { "value": "#FFFFFF", "token": "labeled-field/active/bg" },
+                  "state:Error":   { "value": "#FFFFFF", "token": "labeled-field/error/bg" }
+                }
+              },
+              { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border",
+                "variants": {
+                  "state:Active":   { "value": "#005CE5", "token": "labeled-field/active/border" },
+                  "state:Error":    { "value": "#D61B2C", "token": "labeled-field/error/border" },
+                  "state:Disabled": { "hide": true }
+                }
+              },
+              { "key": "Label", "value": "#90A8D0", "token": "labeled-field/disabled/label",
+                "variants": {
+                  "state:Default": { "value": "#0A2757", "token": "labeled-field/default/label" },
+                  "state:Active":  { "value": "#0A2757", "token": "labeled-field/active/label" },
+                  "state:Error":   { "value": "#0A2757", "token": "labeled-field/error/label" }
+                }
+              },
+              { "key": "Value", "value": "#C2CFE5", "token": "labeled-field/disabled/value",
+                "variants": {
+                  "state:Default": { "value": "#0A2757", "token": "labeled-field/default/text" },
+                  "state:Active":  { "value": "#0A2757", "token": "labeled-field/active/text" },
+                  "state:Error":   { "value": "#0A2757", "token": "labeled-field/error/text" }
+                }
+              }
             ]
           },
           {

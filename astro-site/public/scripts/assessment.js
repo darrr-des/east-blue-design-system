@@ -304,6 +304,8 @@
         }
       });
       if (!matched) {
+        /* Ensure row is visible (in case a previous flip hid it). */
+        cell.style.display = '';
         /* Restore defaults from data-row-default-* attributes. */
         var def = cell.getAttribute('data-row-default');
         if (def !== null) {
@@ -314,6 +316,13 @@
         }
         return;
       }
+      /* Hide row when variant says so — used for specs that don't apply
+         to the current demo state (e.g. counter pill on a loading row). */
+      if (matched.hide) {
+        cell.style.display = 'none';
+        return;
+      }
+      cell.style.display = '';
       /* Cache the default once so we can revert later. */
       if (!cell.hasAttribute('data-row-default')) {
         var hexEl = cell.querySelector('.spec-prop-hex');

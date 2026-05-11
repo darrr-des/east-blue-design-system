@@ -111,6 +111,11 @@ export interface SpecRow {
    * (monospace font), `swatch` (force-show colour swatch). Default
    * fields on the parent row are the fallback when no variant matches.
    *
+   * Also supports `hide: true` — when the variant key matches, the row
+   * is hidden entirely (display:none). Use when a row's content simply
+   * does not apply to the current demo state (e.g. the "Counter pill"
+   * color row when state=loading shows a skeleton instead).
+   *
    * ## Example
    * ```ts
    * // Modal Card 1: Layout section
@@ -122,6 +127,9 @@ export interface SpecRow {
    *     'cta:2-vertical': { value: '270' },  // 270 only when cta=2-vertical
    *   },
    * }
+   * // Action-list-counter: hide Counter row when state=loading
+   * { key: 'Counter', value: '#EEF2F9', token: 'counter/color/filled/bg',
+   *   variants: { 'state:loading': { hide: true } } }
    * ```
    *
    * ## Wiring
@@ -142,7 +150,7 @@ export interface SpecRow {
    * takes effect. Tracked as a follow-up — pure schema additions in
    * those data files are inert until the JS is migrated.
    */
-  variants?: Record<string, Partial<Pick<SpecRow, 'value' | 'token' | 'mono' | 'swatch'>>>;
+  variants?: Record<string, Partial<Pick<SpecRow, 'value' | 'token' | 'mono' | 'swatch'>> & { hide?: boolean }>;
 }
 
 export interface SpecSection {
