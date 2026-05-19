@@ -8,8 +8,8 @@ const toastWithButtonDemoControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'Type',
-        prop: 'type',
+        label: 'Theme',
+        prop: 'theme',
         defaultValue: 'default',
         options: [
           { value: 'default', label: 'default' },
@@ -234,450 +234,73 @@ export const toastWithButton: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Styles",
+    "heading": "Types",
     "specCards": [
       {
-        "cardKey": "default-—-with-description",
+        "cardKey": "default",
         "demoKey": "darkdesc",
         "demoControls": toastWithButtonDemoControls,
-        "title": "Default — with description",
+        "title": "Default",
         "node": "813:31117",
-        "description": "The two-line dark toast. Label (14 px bold) above supporting text (10 px BarkAda Medium, 80% white), action button right-aligned and bottom-aligned. Used for reversible success moments that need more context — \"Transfer sent · to Juan Dela Cruz\".",
+        "description": "Confirms a reversible action that the user might want to undo right away — \"Removed from favorites\", \"Transfer sent\". Pairs a label and optional description with a trailing action button.",
         "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-with-button-spec-1\"><div class=\"eb-preview eb-preview-toastwb eb-preview-toastwb--default eb-preview-toastwb--has-desc\"><div class=\"eb-preview-toastwb__container\"><div class=\"eb-preview-toastwb__text-container\"><p class=\"eb-preview-toastwb__label\">Add label here</p><p class=\"eb-preview-toastwb__desc\">Add description here.</p></div><div class=\"eb-preview-toastwb__action-slot\"><div class=\"eb-preview-toastwb__action eb-preview-toastwb__action--white\">Label</div></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "default",
-                "mono": true,
-                "prop": "type"
-              },
-              {
-                "key": "Description",
-                "value": "yes",
-                "mono": true,
-                "prop": "description"
-              },
-              {
-                "key": "Action",
-                "value": "Button - Small/XS (deprecated)",
-                "mono": true
-              }
+              { "key": "Theme",       "value": "default", "mono": true, "prop": "theme" },
+              { "key": "Description", "value": "yes",     "mono": true, "prop": "description" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Default bg", "value": "#0A2757", "token": "toast/color/default/bg" },
-              { "key": "Default label", "value": "#FFFFFF", "token": "toast/color/default/label" },
-              { "key": "Default desc", "value": "#F6F9FDCC (80% alpha)", "token": "toast/color/default/description" },
-              { "key": "Default border", "value": "#E5EBF4", "token": "toast/color/default/border" },
-              { "key": "Light bg", "value": "#FFFFFF", "token": "toast/color/light/bg" },
-              { "key": "Light label", "value": "#0A2757", "token": "toast/color/light/label" },
-              { "key": "Light desc", "value": "#445C85", "token": "toast/color/light/description" },
-              { "key": "Button label", "value": "#005CE5", "token": "comp/button v1/default/label" },
-              { "key": "Button bg", "value": "#FFFFFF", "token": "comp/button v1/default/background-primary" }
+              { "key": "Background", "value": "#0A2757", "token": "toast/color/default/bg",
+                "variants": { "theme:light": { "value": "#FFFFFF", "token": "toast/color/light/bg" } }
+              },
+              { "key": "Label", "value": "#FFFFFF", "token": "toast/color/default/label",
+                "variants": { "theme:light": { "value": "#0A2757", "token": "toast/color/light/label" } }
+              },
+              { "key": "Description", "value": "#F6F9FDCC", "token": "toast/color/default/description",
+                "variants": {
+                  "theme:light":    { "value": "#445C85", "token": "toast/color/light/description" },
+                  "description:no": { "hide": true }
+                }
+              },
+              { "key": "Button label", "value": "#005CE5", "token": "button/v1/default/label" },
+              { "key": "Button bg",    "value": "#FFFFFF", "token": "button/v1/default/bg" }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "330",
-                "mono": true
+              { "key": "Width",         "value": "330",      "mono": true },
+              { "key": "Padding",       "value": "16 × 12",  "mono": true,
+                "variants": { "description:no": { "value": "16 × 8" } }
               },
-              {
-                "key": "Padding H",
-                "value": "16",
-                "mono": true
-              },
-              {
-                "key": "Padding V (description=yes)",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "Padding V (description=no)",
-                "value": "8",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "8",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1 solid token",
-                "mono": true
-              },
-              {
-                "key": "Gap (text ↔ button)",
-                "value": "24",
-                "mono": true
-              },
-              {
-                "key": "Gap (label ↔ description)",
-                "value": "4",
-                "mono": true
-              },
-              {
-                "key": "Button height",
-                "value": "24",
-                "mono": true
-              },
-              {
-                "key": "Button padding",
-                "value": "16 × 8/7",
-                "mono": true
-              },
-              {
-                "key": "Button radius",
-                "value": "99 (pill)",
-                "mono": true
-              }
+              { "key": "Corner radius", "value": "8",        "mono": true },
+              { "key": "Button height", "value": "24",       "mono": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Multi-line Label/Small",
-                "mono": true
+              { "key": "Label",       "value": "Proxima Soft Bold · 14 / 16 · +0.25", "mono": true },
+              { "key": "Description", "value": "BarkAda Medium · 10 / 15", "mono": true,
+                "variants": { "description:no": { "hide": true } }
               },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Label size",
-                "value": "14 / 16 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Default/Small Caption",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Medium",
-                "mono": true
-              },
-              {
-                "key": "Description size",
-                "value": "10 / 15 · +0",
-                "mono": true
-              },
-              {
-                "key": "Button label style",
-                "value": "Primary/Label/Small",
-                "mono": true
-              },
-              {
-                "key": "Button font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Button size",
-                "value": "14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Button",      "value": "Proxima Soft Bold · 14 / 14 · +0.25", "mono": true }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Removed from favorites\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Tap undo to revert\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Undo\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    message <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Removed from favorites\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Tap undo to revert\"</span><span class=\"syn-punc\">,</span>\n    action <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Undo\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>"
       },
-      {
-        "cardKey": "light-—-with-description",
-        "demoKey": "lightdesc",
-        "demoControls": toastWithButtonDemoControls,
-        "title": "Light — with description",
-        "node": "27:53213",
-        "description": "Same two-line layout, inverted surface. White bg, navy label, slate supporting text, blue-on-white action button. Used on dark backgrounds or when the surrounding screen is already high-contrast.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-with-button-spec-2\"><div class=\"eb-preview eb-preview-toastwb eb-preview-toastwb--light eb-preview-toastwb--has-desc\"><div class=\"eb-preview-toastwb__container\"><div class=\"eb-preview-toastwb__text-container\"><p class=\"eb-preview-toastwb__label\">Add label here</p><p class=\"eb-preview-toastwb__desc\">Add description here.</p></div><div class=\"eb-preview-toastwb__action-slot\"><div class=\"eb-preview-toastwb__action eb-preview-toastwb__action--blue\">Label</div></div></div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Type",
-                "value": "light",
-                "mono": true,
-                "prop": "type"
-              },
-              {
-                "key": "Description",
-                "value": "yes",
-                "mono": true,
-                "prop": "description"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/toast/light/bg" },
-              { "key": "Label color", "value": "#0A2757", "token": "main/toast/light/label" },
-              { "key": "Description color", "value": "#3C4A5C", "token": "main/toast/light/description" },
-              { "key": "Action color", "value": "#005CE5", "token": "main/toast/light/action" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Width",
-                "value": "343 (fill, 16 inset)",
-                "mono": true
-              },
-              {
-                "key": "Min height",
-                "value": "88",
-                "mono": true
-              },
-              {
-                "key": "Padding (h)",
-                "value": "16",
-                "mono": true
-              },
-              {
-                "key": "Padding (v)",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "8",
-                "mono": true
-              },
-              {
-                "key": "Gap",
-                "value": "12",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Title style",
-                "value": "Body/Large",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Body/Small",
-                "mono": true
-              },
-              {
-                "key": "Action style",
-                "value": "Body/Medium · Bold",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Bills paid\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Receipt was sent to your email.\"</span><span class=\"syn-punc\">,</span>\n    appearance<span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>light<span class=\"syn-punc\">,</span>\n    action<span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>init<span class=\"syn-punc\">(</span>title<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"View\"</span><span class=\"syn-punc\">, </span>handler<span class=\"syn-punc\">: </span><span class=\"syn-punc\">{ }))</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Bills paid\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Receipt was sent to your email.\"</span><span class=\"syn-punc\">,</span>\n    appearance <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastAppearance</span><span class=\"syn-punc\">.</span>Light<span class=\"syn-punc\">,</span>\n    actionLabel <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"View\"</span><span class=\"syn-punc\">,</span>\n    onAction <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "default-—-no-description",
-        "demoKey": "darknodesc",
-        "demoControls": toastWithButtonDemoControls,
-        "title": "Default — no description",
-        "node": "813:31125",
-        "description": "The compact single-line toast with action. 8 px vertical padding, label only. Used for short reversible actions — \"Copied · Undo\".",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-with-button-spec-3\"><div class=\"eb-preview eb-preview-toastwb eb-preview-toastwb--default eb-preview-toastwb--no-desc\"><div class=\"eb-preview-toastwb__container\"><div class=\"eb-preview-toastwb__text-container\"><p class=\"eb-preview-toastwb__label\">Add label here</p></div><div class=\"eb-preview-toastwb__action-slot\"><div class=\"eb-preview-toastwb__action eb-preview-toastwb__action--white\">Label</div></div></div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Type",
-                "value": "default",
-                "mono": true,
-                "prop": "type"
-              },
-              {
-                "key": "Description",
-                "value": "no",
-                "mono": true,
-                "prop": "description"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface bg", "value": "#0A2757", "token": "main/toast/dark/bg" },
-              { "key": "Label color", "value": "#FFFFFF", "token": "main/toast/dark/label" },
-              { "key": "Action color", "value": "#9BC5FD", "token": "main/toast/dark/action" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Width",
-                "value": "343 (fill, 16 inset)",
-                "mono": true
-              },
-              {
-                "key": "Min height",
-                "value": "64",
-                "mono": true
-              },
-              {
-                "key": "Padding (h)",
-                "value": "16",
-                "mono": true
-              },
-              {
-                "key": "Padding (v)",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "8",
-                "mono": true
-              },
-              {
-                "key": "Gap",
-                "value": "12",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Title style",
-                "value": "Body/Large",
-                "mono": true
-              },
-              {
-                "key": "Action style",
-                "value": "Body/Medium · Bold",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Bills paid\"</span><span class=\"syn-punc\">,</span>\n    appearance<span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>dark<span class=\"syn-punc\">,</span>\n    action<span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>init<span class=\"syn-punc\">(</span>title<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"View\"</span><span class=\"syn-punc\">, </span>handler<span class=\"syn-punc\">: </span><span class=\"syn-punc\">{ }))</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Bills paid\"</span><span class=\"syn-punc\">,</span>\n    appearance <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastAppearance</span><span class=\"syn-punc\">.</span>Dark<span class=\"syn-punc\">,</span>\n    actionLabel <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"View\"</span><span class=\"syn-punc\">,</span>\n    onAction <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "light-—-no-description",
-        "demoKey": "lightnodesc",
-        "demoControls": toastWithButtonDemoControls,
-        "title": "Light — no description",
-        "node": "27:53225",
-        "description": "The compact light-surface toast. Single-line label, blue action button, white bg.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-with-button-spec-4\"><div class=\"eb-preview eb-preview-toastwb eb-preview-toastwb--light eb-preview-toastwb--no-desc\"><div class=\"eb-preview-toastwb__container\"><div class=\"eb-preview-toastwb__text-container\"><p class=\"eb-preview-toastwb__label\">Add label here</p></div><div class=\"eb-preview-toastwb__action-slot\"><div class=\"eb-preview-toastwb__action eb-preview-toastwb__action--blue\">Label</div></div></div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Type",
-                "value": "light",
-                "mono": true,
-                "prop": "type"
-              },
-              {
-                "key": "Description",
-                "value": "no",
-                "mono": true,
-                "prop": "description"
-              },
-              {
-                "key": "Root element",
-                "value": "&lt;div&gt;",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Light bg", "value": "#FFFFFF", "token": "toast/color/light/bg" },
-              { "key": "Light label", "value": "#0A2757", "token": "toast/color/light/label" },
-              { "key": "Light border", "value": "#E5EBF4", "token": "toast/color/light/border" },
-              { "key": "Button label", "value": "#005CE5", "token": "comp/button v1/default/label" },
-              { "key": "Button bg", "value": "#FFFFFF", "token": "comp/button v1/default/background-primary" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Padding",
-                "value": "16 horizontal · 12 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-3 (8px)",
-                "mono": true
-              },
-              {
-                "key": "Button",
-                "value": "Tertiary inline",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Multi-line Label/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Label size",
-                "value": "14 / 16 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Saved\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.light</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"View\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    message <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Saved\"</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Light</span><span class=\"syn-punc\">,</span>\n    action <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"View\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>"
-      }
+      
     ],
     colorsTables: [
       // Card 1 — Default with action button (theme=dark)

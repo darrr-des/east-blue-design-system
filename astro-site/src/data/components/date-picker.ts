@@ -5,7 +5,7 @@ const datePickerDemoControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'state',
+        label: 'State',
         prop: 'state',
         defaultValue: 'Default',
         options: [
@@ -14,16 +14,16 @@ const datePickerDemoControls: DemoControlSection[] = [
         ],
       },
       {
-        label: 'isFilled',
+        label: 'Filled',
         prop: 'filled',
         defaultValue: 'false',
         options: [
-          { value: 'true', label: 'true' },
           { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
         ],
       },
       {
-        label: 'isDisabled',
+        label: 'Disabled',
         prop: 'disabled',
         defaultValue: 'No',
         options: [
@@ -247,44 +247,65 @@ export const datePicker: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Variants",
+    "heading": "Types",
     "specCards": [
       {
-        "cardKey": "dp-spec-default-empty",
-        "demoKey": "dp-default-empty",
+        "cardKey": "default",
+        "demoKey": "default",
         "demoControls": datePickerDemoControls,
-        "title": "Default — Empty",
+        "title": "Default",
         "node": "12879:49784",
-        "description": "Idle trigger with gray border and placeholder text. Calendar glyph visible on the right.",
+        "description": "Calendar trigger field. Flip the State, Filled, and Disabled controls to walk through every variant.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "state", "value": "Default", "prop": "state" },
-              { "key": "filled", "value": "false", "prop": "filled" },
-              { "key": "isDisabled", "value": "No", "prop": "disabled" }
+              { "key": "State", "value": "Default", "prop": "state" },
+              { "key": "Filled", "value": "false", "prop": "filled" },
+              { "key": "Disabled", "value": "No", "prop": "disabled" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Field bg", "value": "#FFFFFF", "token": "selected-field/color/default/bg" },
-              { "key": "Field border", "value": "#D7E0EF", "token": "selected-field/color/default/border" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/color/default/placeholder" },
-              { "key": "Value", "value": "#0A2757", "token": "selected-field/color/default/value" },
-              { "key": "Icon", "value": "#005CE5", "token": "selected-field/color/default/icon" }
+              { "key": "Field bg", "value": "#FFFFFF", "token": "selected-field/color/default/bg",
+                "variants": { "disabled:Yes": { "value": "#EEF2F9", "token": "selected-field/color/disabled/bg" } }
+              },
+              { "key": "Field border", "value": "#D7E0EF", "token": "selected-field/color/default/border",
+                "variants": {
+                  "state:Active": { "value": "#005CE5", "token": "selected-field/color/active/border" },
+                  "disabled:Yes": { "hide": true }
+                }
+              },
+              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/color/default/placeholder",
+                "variants": { "filled:true": { "hide": true } }
+              },
+              { "key": "Value", "value": "#0A2757", "token": "selected-field/color/default/value",
+                "variants": {
+                  "filled:false": { "hide": true },
+                  "disabled:Yes": { "value": "#90A8D0", "token": "selected-field/color/disabled/value" }
+                }
+              },
+              { "key": "Icon", "value": "#005CE5", "token": "selected-field/color/default/icon",
+                "variants": { "disabled:Yes": { "value": "#9BC5FD", "token": "selected-field/color/disabled/icon" } }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Field height", "value": "48px", "mono": true },
-              { "key": "Padding H", "value": "12px", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
-              { "key": "Border", "value": "1px solid", "mono": true },
+              { "key": "Height", "value": "48", "mono": true },
+              { "key": "Padding H", "value": "12", "mono": true },
+              { "key": "Border radius", "value": "6", "mono": true },
+              { "key": "Border", "value": "1px solid", "mono": true,
+                "variants": {
+                  "state:Active": { "value": "2px solid" },
+                  "disabled:Yes": { "value": "none" }
+                }
+              },
               { "key": "Icon size", "value": "20 × 20", "mono": true }
             ]
           },
@@ -301,223 +322,9 @@ export const datePicker: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>$selectedDate<span class=\"syn-punc\">, </span>placeholder<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Select a date\"</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> selectedDate<span class=\"syn-punc\">,</span>\n    onDateChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    placeholder <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Select a date\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"360\" height=\"68\" viewBox=\"0 0 360 68\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><defs><filter id=\"dpShadow\" x=\"-4\" y=\"64\" width=\"368\" height=\"370\" filterUnits=\"userSpaceOnUse\"><feDropShadow dx=\"0\" dy=\"6\" stdDeviation=\"6\" flood-color=\"#020E22\" flood-opacity=\"0.16\"></feDropShadow></filter></defs><text x=\"2\" y=\"12\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"359\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"45\" dominant-baseline=\"central\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\">Value</text><rect x=\"328\" y=\"35\" width=\"20\" height=\"20\" rx=\"3\" stroke=\"#005CE5\" stroke-width=\"1.6\" fill=\"none\"></rect><line x1=\"328\" y1=\"41\" x2=\"348\" y2=\"41\" stroke=\"#005CE5\" stroke-width=\"1.6\"></line><line x1=\"333\" y1=\"32\" x2=\"333\" y2=\"36\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\"></line><line x1=\"343\" y1=\"32\" x2=\"343\" y2=\"36\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\"></line></svg>"
-      },
-      {
-        "cardKey": "dp-spec-default-filled",
-        "demoKey": "dp-default-filled",
-        "demoControls": datePickerDemoControls,
-        "title": "Default — Filled",
-        "node": "12890:42872",
-        "description": "Trigger showing a selected date. Gray border, filled text color #0A2757.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "state", "value": "Default", "prop": "state" },
-              { "key": "filled", "value": "true", "prop": "filled" },
-              { "key": "isDisabled", "value": "No", "prop": "disabled" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Field bg", "value": "#FFFFFF", "token": "selected-field/color/default/bg" },
-              { "key": "Field border", "value": "#D7E0EF", "token": "selected-field/color/default/border" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/color/default/placeholder" },
-              { "key": "Value", "value": "#0A2757", "token": "selected-field/color/default/value" },
-              { "key": "Icon", "value": "#005CE5", "token": "selected-field/color/default/icon" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Field height", "value": "48px", "mono": true },
-              { "key": "Padding H", "value": "12px", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
-              { "key": "Border", "value": "1px solid", "mono": true },
-              { "key": "Icon size", "value": "20 × 20", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Label style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Label font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true },
-              { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Value font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>$selectedDate<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> selectedDate<span class=\"syn-punc\">,</span>\n    onDateChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"360\" height=\"68\" viewBox=\"0 0 360 68\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><defs><filter id=\"dpShadow\" x=\"-4\" y=\"64\" width=\"368\" height=\"370\" filterUnits=\"userSpaceOnUse\"><feDropShadow dx=\"0\" dy=\"6\" stdDeviation=\"6\" flood-color=\"#020E22\" flood-opacity=\"0.16\"></feDropShadow></filter></defs><text x=\"2\" y=\"12\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"359\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"45\" dominant-baseline=\"central\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">03/05/2026</text><rect x=\"328\" y=\"35\" width=\"20\" height=\"20\" rx=\"3\" stroke=\"#005CE5\" stroke-width=\"1.6\" fill=\"none\"></rect><line x1=\"328\" y1=\"41\" x2=\"348\" y2=\"41\" stroke=\"#005CE5\" stroke-width=\"1.6\"></line><line x1=\"333\" y1=\"32\" x2=\"333\" y2=\"36\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\"></line><line x1=\"343\" y1=\"32\" x2=\"343\" y2=\"36\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\"></line></svg>"
-      },
-      {
-        "cardKey": "dp-spec-active-empty",
-        "demoKey": "dp-active-empty",
-        "demoControls": datePickerDemoControls,
-        "title": "Active — Empty",
-        "node": "12879:49827",
-        "description": "Trigger focused with 2px blue border. Inline calendar panel attached below showing month header, weekday row, and date grid.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "state", "value": "Active", "prop": "state" },
-              { "key": "filled", "value": "false", "prop": "filled" },
-              { "key": "isDisabled", "value": "No", "prop": "disabled" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Field bg", "value": "#FFFFFF", "token": "selected-field/color/active/bg" },
-              { "key": "Field border", "value": "#005CE5", "token": "selected-field/color/active/border" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/color/active/placeholder" },
-              { "key": "Value", "value": "#0A2757", "token": "selected-field/color/active/value" },
-              { "key": "Icon", "value": "#005CE5", "token": "selected-field/color/active/icon" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Field height", "value": "48px", "mono": true },
-              { "key": "Padding H", "value": "12px", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
-              { "key": "Border", "value": "2px solid", "mono": true },
-              { "key": "Icon size", "value": "20 × 20", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Label style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Label font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true },
-              { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Value font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>$selectedDate<span class=\"syn-punc\">, </span>placeholder<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Select a date\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebFocused</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> selectedDate<span class=\"syn-punc\">,</span>\n    onDateChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    focused <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"360\" height=\"430\" viewBox=\"0 0 360 430\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><defs><filter id=\"dpShadow\" x=\"-4\" y=\"64\" width=\"368\" height=\"370\" filterUnits=\"userSpaceOnUse\"><feDropShadow dx=\"0\" dy=\"6\" stdDeviation=\"6\" flood-color=\"#020E22\" flood-opacity=\"0.16\"></feDropShadow></filter></defs><text x=\"2\" y=\"12\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"359\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"2\"></rect><text x=\"12\" y=\"45\" dominant-baseline=\"central\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\">Value</text><rect x=\"328\" y=\"35\" width=\"20\" height=\"20\" rx=\"3\" stroke=\"#005CE5\" stroke-width=\"1.6\" fill=\"none\"></rect><line x1=\"328\" y1=\"41\" x2=\"348\" y2=\"41\" stroke=\"#005CE5\" stroke-width=\"1.6\"></line><line x1=\"333\" y1=\"32\" x2=\"333\" y2=\"36\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\"></line><line x1=\"343\" y1=\"32\" x2=\"343\" y2=\"36\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\"></line><rect x=\"0\" y=\"70\" width=\"360\" height=\"358\" rx=\"8\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"1\" filter=\"url(#dpShadow)\"></rect><path d=\"M20 94l-5 5 5 5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path><text x=\"180\" y=\"103\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"18\" font-weight=\"700\" fill=\"#0A2757\">Month / Year</text><path d=\"M340 94l5 5-5 5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path><text x=\"39.42857142857143\" y=\"142\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"700\" fill=\"#0A2757\">Su</text><text x=\"86.28571428571428\" y=\"142\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"700\" fill=\"#0A2757\">M</text><text x=\"133.14285714285714\" y=\"142\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"700\" fill=\"#0A2757\">T</text><text x=\"179.99999999999997\" y=\"142\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"700\" fill=\"#0A2757\">W</text><text x=\"226.85714285714283\" y=\"142\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"700\" fill=\"#0A2757\">Th</text><text x=\"273.7142857142857\" y=\"142\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"700\" fill=\"#0A2757\">F</text><text x=\"320.57142857142856\" y=\"142\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"700\" fill=\"#0A2757\">Sa</text><text x=\"39.42857142857143\" y=\"173\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">1</text><text x=\"86.28571428571428\" y=\"173\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">2</text><text x=\"133.14285714285714\" y=\"173\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">3</text><text x=\"179.99999999999997\" y=\"173\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">4</text><circle cx=\"226.85714285714283\" cy=\"168\" r=\"14\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"1.5\"></circle><text x=\"226.85714285714283\" y=\"173\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#005CE5\">5</text><text x=\"273.7142857142857\" y=\"173\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">6</text><text x=\"320.57142857142856\" y=\"173\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">7</text><text x=\"39.42857142857143\" y=\"213\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">8</text><text x=\"86.28571428571428\" y=\"213\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">9</text><text x=\"133.14285714285714\" y=\"213\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">10</text><text x=\"179.99999999999997\" y=\"213\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">11</text><text x=\"226.85714285714283\" y=\"213\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">12</text><text x=\"273.7142857142857\" y=\"213\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">13</text><text x=\"320.57142857142856\" y=\"213\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">14</text><text x=\"39.42857142857143\" y=\"253\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">15</text><text x=\"86.28571428571428\" y=\"253\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">16</text><text x=\"133.14285714285714\" y=\"253\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">17</text><text x=\"179.99999999999997\" y=\"253\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">18</text><text x=\"226.85714285714283\" y=\"253\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">19</text><text x=\"273.7142857142857\" y=\"253\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">20</text><text x=\"320.57142857142856\" y=\"253\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">21</text><text x=\"39.42857142857143\" y=\"293\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">22</text><text x=\"86.28571428571428\" y=\"293\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">23</text><text x=\"133.14285714285714\" y=\"293\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">24</text><text x=\"179.99999999999997\" y=\"293\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">25</text><text x=\"226.85714285714283\" y=\"293\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">26</text><text x=\"273.7142857142857\" y=\"293\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">27</text><text x=\"320.57142857142856\" y=\"293\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">28</text><text x=\"39.42857142857143\" y=\"333\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">29</text><text x=\"86.28571428571428\" y=\"333\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">30</text><text x=\"133.14285714285714\" y=\"333\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">31</text><text x=\"179.99999999999997\" y=\"333\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\">1</text><text x=\"226.85714285714283\" y=\"333\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\">2</text><text x=\"273.7142857142857\" y=\"333\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\">3</text><text x=\"320.57142857142856\" y=\"333\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\">4</text></svg>"
-      },
-      {
-        "cardKey": "dp-spec-active-filled",
-        "demoKey": "dp-active-filled",
-        "demoControls": datePickerDemoControls,
-        "title": "Active — Filled",
-        "node": "13342:9932",
-        "description": "Trigger focused with 2px blue border and filled value. Calendar visible with the selected day highlighted in the grid.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "state", "value": "Active", "prop": "state" },
-              { "key": "filled", "value": "true", "prop": "filled" },
-              { "key": "isDisabled", "value": "No", "prop": "disabled" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Field bg", "value": "#FFFFFF", "token": "selected-field/color/active/bg" },
-              { "key": "Field border", "value": "#005CE5", "token": "selected-field/color/active/border" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/color/active/placeholder" },
-              { "key": "Value", "value": "#0A2757", "token": "selected-field/color/active/value" },
-              { "key": "Icon", "value": "#005CE5", "token": "selected-field/color/active/icon" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Field height", "value": "48px", "mono": true },
-              { "key": "Padding H", "value": "12px", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
-              { "key": "Border", "value": "2px solid", "mono": true },
-              { "key": "Icon size", "value": "20 × 20", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Label style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Label font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true },
-              { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Value font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>$selectedDate<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebFocused</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> selectedDate<span class=\"syn-punc\">,</span>\n    onDateChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    focused <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"360\" height=\"430\" viewBox=\"0 0 360 430\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><defs><filter id=\"dpShadow\" x=\"-4\" y=\"64\" width=\"368\" height=\"370\" filterUnits=\"userSpaceOnUse\"><feDropShadow dx=\"0\" dy=\"6\" stdDeviation=\"6\" flood-color=\"#020E22\" flood-opacity=\"0.16\"></feDropShadow></filter></defs><text x=\"2\" y=\"12\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"359\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"2\"></rect><text x=\"12\" y=\"45\" dominant-baseline=\"central\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">03/05/2026</text><rect x=\"328\" y=\"35\" width=\"20\" height=\"20\" rx=\"3\" stroke=\"#005CE5\" stroke-width=\"1.6\" fill=\"none\"></rect><line x1=\"328\" y1=\"41\" x2=\"348\" y2=\"41\" stroke=\"#005CE5\" stroke-width=\"1.6\"></line><line x1=\"333\" y1=\"32\" x2=\"333\" y2=\"36\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\"></line><line x1=\"343\" y1=\"32\" x2=\"343\" y2=\"36\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\"></line><rect x=\"0\" y=\"70\" width=\"360\" height=\"358\" rx=\"8\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"1\" filter=\"url(#dpShadow)\"></rect><path d=\"M20 94l-5 5 5 5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path><text x=\"180\" y=\"103\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"18\" font-weight=\"700\" fill=\"#0A2757\">Month / Year</text><path d=\"M340 94l5 5-5 5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path><text x=\"39.42857142857143\" y=\"142\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"700\" fill=\"#0A2757\">Su</text><text x=\"86.28571428571428\" y=\"142\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"700\" fill=\"#0A2757\">M</text><text x=\"133.14285714285714\" y=\"142\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"700\" fill=\"#0A2757\">T</text><text x=\"179.99999999999997\" y=\"142\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"700\" fill=\"#0A2757\">W</text><text x=\"226.85714285714283\" y=\"142\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"700\" fill=\"#0A2757\">Th</text><text x=\"273.7142857142857\" y=\"142\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"700\" fill=\"#0A2757\">F</text><text x=\"320.57142857142856\" y=\"142\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"700\" fill=\"#0A2757\">Sa</text><text x=\"39.42857142857143\" y=\"173\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">1</text><text x=\"86.28571428571428\" y=\"173\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">2</text><text x=\"133.14285714285714\" y=\"173\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">3</text><text x=\"179.99999999999997\" y=\"173\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">4</text><circle cx=\"226.85714285714283\" cy=\"168\" r=\"14\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"1.5\"></circle><text x=\"226.85714285714283\" y=\"173\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#005CE5\">5</text><text x=\"273.7142857142857\" y=\"173\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">6</text><text x=\"320.57142857142856\" y=\"173\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">7</text><text x=\"39.42857142857143\" y=\"213\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">8</text><text x=\"86.28571428571428\" y=\"213\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">9</text><text x=\"133.14285714285714\" y=\"213\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">10</text><text x=\"179.99999999999997\" y=\"213\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">11</text><text x=\"226.85714285714283\" y=\"213\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">12</text><text x=\"273.7142857142857\" y=\"213\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">13</text><text x=\"320.57142857142856\" y=\"213\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">14</text><text x=\"39.42857142857143\" y=\"253\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">15</text><text x=\"86.28571428571428\" y=\"253\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">16</text><text x=\"133.14285714285714\" y=\"253\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">17</text><text x=\"179.99999999999997\" y=\"253\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">18</text><text x=\"226.85714285714283\" y=\"253\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">19</text><text x=\"273.7142857142857\" y=\"253\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">20</text><text x=\"320.57142857142856\" y=\"253\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">21</text><text x=\"39.42857142857143\" y=\"293\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">22</text><text x=\"86.28571428571428\" y=\"293\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">23</text><text x=\"133.14285714285714\" y=\"293\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">24</text><text x=\"179.99999999999997\" y=\"293\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">25</text><text x=\"226.85714285714283\" y=\"293\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">26</text><text x=\"273.7142857142857\" y=\"293\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">27</text><text x=\"320.57142857142856\" y=\"293\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">28</text><text x=\"39.42857142857143\" y=\"333\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">29</text><text x=\"86.28571428571428\" y=\"333\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">30</text><text x=\"133.14285714285714\" y=\"333\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">31</text><text x=\"179.99999999999997\" y=\"333\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\">1</text><text x=\"226.85714285714283\" y=\"333\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\">2</text><text x=\"273.7142857142857\" y=\"333\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\">3</text><text x=\"320.57142857142856\" y=\"333\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\">4</text></svg>"
-      },
-      {
-        "cardKey": "dp-spec-disabled",
-        "demoKey": "dp-disabled",
-        "demoControls": datePickerDemoControls,
-        "title": "Disabled",
-        "node": "13342:10148",
-        "description": "Non-interactive. Gray #EEF2F9 bg, no border, value dims to #90A8D0. Calendar glyph dims. Only isFilled=true is defined in Disabled.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "state", "value": "Default", "prop": "state" },
-              { "key": "filled", "value": "false", "prop": "filled" },
-              { "key": "isDisabled", "value": "Yes", "prop": "disabled" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Field bg", "value": "#EEF2F9", "token": "selected-field/color/disabled/bg" },
-              { "key": "Field border", "value": "#D7E0EF", "token": "selected-field/color/default/border" },
-              { "key": "Value", "value": "#90A8D0", "token": "selected-field/color/disabled/value" },
-              { "key": "Icon", "value": "#9BC5FD", "token": "selected-field/color/disabled/icon" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Field height", "value": "48px", "mono": true },
-              { "key": "Padding H", "value": "12px", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
-              { "key": "Border", "value": "none", "mono": true },
-              { "key": "Icon size", "value": "20 × 20", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Label style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Label font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true },
-              { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Value font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>$selectedDate<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> selectedDate<span class=\"syn-punc\">,</span>\n    onDateChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    enabled <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"360\" height=\"68\" viewBox=\"0 0 360 68\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><defs><filter id=\"dpShadow\" x=\"-4\" y=\"64\" width=\"368\" height=\"370\" filterUnits=\"userSpaceOnUse\"><feDropShadow dx=\"0\" dy=\"6\" stdDeviation=\"6\" flood-color=\"#020E22\" flood-opacity=\"0.16\"></feDropShadow></filter></defs><text x=\"2\" y=\"12\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"359\" height=\"45\" rx=\"5.5\" fill=\"#EEF2F9\"></rect><text x=\"12\" y=\"45\" dominant-baseline=\"central\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\">03/05/2026</text><rect x=\"328\" y=\"35\" width=\"20\" height=\"20\" rx=\"3\" stroke=\"#9BC5FD\" stroke-width=\"1.6\" fill=\"none\"></rect><line x1=\"328\" y1=\"41\" x2=\"348\" y2=\"41\" stroke=\"#9BC5FD\" stroke-width=\"1.6\"></line><line x1=\"333\" y1=\"32\" x2=\"333\" y2=\"36\" stroke=\"#9BC5FD\" stroke-width=\"1.6\" stroke-linecap=\"round\"></line><line x1=\"343\" y1=\"32\" x2=\"343\" y2=\"36\" stroke=\"#9BC5FD\" stroke-width=\"1.6\" stroke-linecap=\"round\"></line></svg>"
+        "previewHtml": "<div id=\"dp-spec-preview\"></div>"
       }
+
     ],
     "colorsTables": [
       {

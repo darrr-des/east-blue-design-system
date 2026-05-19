@@ -133,20 +133,11 @@ function updateDatePickerGroupDemo() {
   if (demo) demo.innerHTML = _dpgBuildPanel(_dpgDemo.type);
 }
 
-/* ── Spec card state — drives per-card preview + DEV snippets ──────── */
+/* ── Spec card state — single dynamic card ────────────────────────── */
 var _specCards = {
-  'dpg-date':  { type: 'Date' },
-  'dpg-year':  { type: 'Year' },
-  'dpg-month': { type: 'Month' }
+  'default': { type: 'Date' }
 };
 window._specCards = _specCards;
-
-/* Mapping demoKey → cardKey (used to find spec-card root in DOM) */
-var _dpgCardKeys = {
-  'dpg-date':  'dpg-spec-date',
-  'dpg-year':  'dpg-spec-year',
-  'dpg-month': 'dpg-spec-month'
-};
 
 function buildSwiftSnippet(cardKey, card) {
   var view = (card.type || 'Date').toLowerCase();
@@ -168,14 +159,11 @@ function updateSpecCard(cardStyle, prop, value) {
   if (!card) return;
   card[prop] = value;
 
-  /* Update preview HTML — locate the .spec-card-preview inside the spec card root */
-  var rootKey = _dpgCardKeys[cardStyle];
-  if (rootKey) {
-    var rootEl = document.getElementById('spec-card-' + rootKey);
-    if (rootEl) {
-      var previewEl = rootEl.querySelector('.spec-card-preview');
-      if (previewEl) previewEl.innerHTML = _dpgBuildPanel(card.type);
-    }
+  /* Update preview HTML inside the spec card root */
+  var rootEl = document.getElementById('spec-card-' + cardStyle);
+  if (rootEl) {
+    var previewEl = rootEl.querySelector('.spec-card-preview');
+    if (previewEl) previewEl.innerHTML = _dpgBuildPanel(card.type);
   }
 
   /* Update Properties readouts */

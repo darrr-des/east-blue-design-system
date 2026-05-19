@@ -297,7 +297,7 @@ export const voucherCardHorizontal: ComponentData = {
         "tag": "Rename"
       }
     ],
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"vch-demo-preview\"><div style=\"display:flex;flex-direction:column;gap:14px;align-items:center;\"><div style=\"display:flex;flex-direction:column;gap:6px;align-items:center;\"><div style=\"width:336px;height:111px;display:flex;background:#FFFFFF;border-radius:6px;overflow:hidden;box-shadow:0 0 4px rgba(2,14,34,0.06);font-family:'Proxima Soft',system-ui;\"><div style=\"flex:1;padding:12px;display:flex;flex-direction:column;justify-content:space-between;min-width:0;\"><div style=\"display:flex;flex-direction:column;gap:4px;\"><div style=\"color:#0A2757;font-size:16px;font-weight:700;line-height:20px;letter-spacing:0.25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;\">Buy Load Globe Go90</div><div style=\"display:flex;gap:4px;align-items:center;\"><div style=\"color:#2340A9;font-size:14px;font-weight:700;letter-spacing:0.25px;\">PHP 50.00</div><div style=\"color:#90A8D0;font-size:14px;font-weight:600;text-decoration:line-through;letter-spacing:0.25px;\">PHP 90.00</div></div></div><div style=\"color:#445C85;font-size:10px;font-family:'BarkAda',system-ui;font-weight:600;line-height:15px;\">Validity: Dec 25 2022 - Jan 5 2023</div></div><div style=\"position:relative;width:96px;height:111px;background:#005CE5;overflow:hidden;\"><div style=\"position:absolute;left:0;top:0;bottom:0;width:1px;border-left:1px dashed rgba(255,255,255,0.9);\"></div><div style=\"position:absolute;left:calc(50% - 22px);top:calc(50% - 22px);width:44px;height:44px;border:3px solid #FFFFFF;border-right-color:transparent;border-radius:50%;opacity:1;\"></div><div style=\"position:absolute;left:calc(50% - 5px);top:calc(50% - 5px);width:10px;height:10px;background:#FFFFFF;border-radius:50%;opacity:1;\"></div><div style=\"position:absolute;right:0;top:0;bottom:0;width:28px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(255,255,255,0.6);\"><div style=\"transform:rotate(-90deg);color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;white-space:nowrap;\">GET VOUCHER</div></div><div style=\"position:absolute;top:8px;left:0;background:#2340A9;color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;padding:4px 8px 2px 8px;border-top-right-radius:4px;border-bottom-right-radius:4px;line-height:10px;\">Limited</div></div></div><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">state=limited</div></div><div style=\"display:flex;flex-direction:column;gap:6px;align-items:center;\"><div style=\"width:336px;height:111px;display:flex;background:#FFFFFF;border-radius:6px;overflow:hidden;box-shadow:0 0 4px rgba(2,14,34,0.06);font-family:'Proxima Soft',system-ui;\"><div style=\"flex:1;padding:12px;display:flex;flex-direction:column;justify-content:space-between;min-width:0;\"><div style=\"display:flex;flex-direction:column;gap:4px;\"><div style=\"color:#0A2757;font-size:16px;font-weight:700;line-height:20px;letter-spacing:0.25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;\">Buy Load Globe Go90</div><div style=\"display:flex;gap:4px;align-items:center;\"><div style=\"color:#2340A9;font-size:14px;font-weight:700;letter-spacing:0.25px;\">PHP 50.00</div><div style=\"color:#90A8D0;font-size:14px;font-weight:600;text-decoration:line-through;letter-spacing:0.25px;\">PHP 90.00</div></div></div><div style=\"color:#445C85;font-size:10px;font-family:'BarkAda',system-ui;font-weight:600;line-height:15px;\">Validity: Dec 25 2022 - Jan 5 2023</div></div><div style=\"position:relative;width:96px;height:111px;background:#005CE5;overflow:hidden;\"><div style=\"position:absolute;left:0;top:0;bottom:0;width:1px;border-left:1px dashed rgba(255,255,255,0.9);\"></div><div style=\"position:absolute;left:calc(50% - 22px);top:calc(50% - 22px);width:44px;height:44px;border:3px solid #FFFFFF;border-right-color:transparent;border-radius:50%;opacity:1;\"></div><div style=\"position:absolute;left:calc(50% - 5px);top:calc(50% - 5px);width:10px;height:10px;background:#FFFFFF;border-radius:50%;opacity:1;\"></div><div style=\"position:absolute;right:0;top:0;bottom:0;width:28px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(255,255,255,0.6);\"><div style=\"transform:rotate(-90deg);color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;white-space:nowrap;\">GET VOUCHER</div></div><div style=\"position:absolute;top:8px;left:0;background:#D61B2C;color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;padding:4px 8px 2px 8px;border-top-right-radius:4px;border-bottom-right-radius:4px;line-height:10px;\">Expiring</div></div></div><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">state=expiring</div></div><div style=\"display:flex;flex-direction:column;gap:6px;align-items:center;\"><div style=\"width:336px;height:111px;display:flex;background:#FFFFFF;border-radius:6px;overflow:hidden;box-shadow:0 0 4px rgba(2,14,34,0.06);font-family:'Proxima Soft',system-ui;\"><div style=\"flex:1;padding:12px;display:flex;flex-direction:column;justify-content:space-between;min-width:0;\"><div style=\"display:flex;flex-direction:column;gap:4px;\"><div style=\"color:#445C85;font-size:16px;font-weight:700;line-height:20px;letter-spacing:0.25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;\">Buy Load Globe Go90</div><div style=\"display:flex;gap:4px;align-items:center;\"><div style=\"color:#6780A9;font-size:14px;font-weight:700;letter-spacing:0.25px;\">PHP 50.00</div><div style=\"color:#90A8D0;font-size:14px;font-weight:600;text-decoration:line-through;letter-spacing:0.25px;\">PHP 90.00</div></div></div><div style=\"color:#6780A9;font-size:10px;font-family:'BarkAda',system-ui;font-weight:600;line-height:15px;\">Validity: Dec 25 2022 - Jan 5 2023</div></div><div style=\"position:relative;width:96px;height:111px;background:#8A96AF;overflow:hidden;\"><div style=\"position:absolute;left:0;top:0;bottom:0;width:1px;border-left:1px dashed rgba(255,255,255,0.9);\"></div><div style=\"position:absolute;left:calc(50% - 22px);top:calc(50% - 22px);width:44px;height:44px;border:3px solid #FFFFFF;border-right-color:transparent;border-radius:50%;opacity:0.55;\"></div><div style=\"position:absolute;left:calc(50% - 5px);top:calc(50% - 5px);width:10px;height:10px;background:#FFFFFF;border-radius:50%;opacity:0.55;\"></div><div style=\"position:absolute;right:0;top:0;bottom:0;width:28px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(255,255,255,0.6);\"><div style=\"transform:rotate(-90deg);color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;white-space:nowrap;\">GET VOUCHER</div></div><div style=\"position:absolute;top:8px;left:0;background:#C2C5CA;color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;padding:4px 8px 2px 8px;border-top-right-radius:4px;border-bottom-right-radius:4px;line-height:10px;\">Used</div></div></div><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">state=used</div></div><div style=\"display:flex;flex-direction:column;gap:6px;align-items:center;\"><div style=\"width:336px;height:111px;display:flex;background:#FFFFFF;border-radius:6px;overflow:hidden;box-shadow:0 0 4px rgba(2,14,34,0.06);font-family:'Proxima Soft',system-ui;\"><div style=\"flex:1;padding:12px;display:flex;flex-direction:column;justify-content:space-between;min-width:0;\"><div style=\"display:flex;flex-direction:column;gap:4px;\"><div style=\"color:#445C85;font-size:16px;font-weight:700;line-height:20px;letter-spacing:0.25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;\">Buy Load Globe Go90</div><div style=\"display:flex;gap:4px;align-items:center;\"><div style=\"color:#6780A9;font-size:14px;font-weight:700;letter-spacing:0.25px;\">PHP 50.00</div><div style=\"color:#90A8D0;font-size:14px;font-weight:600;text-decoration:line-through;letter-spacing:0.25px;\">PHP 90.00</div></div></div><div style=\"color:#6780A9;font-size:10px;font-family:'BarkAda',system-ui;font-weight:600;line-height:15px;\">Validity: Dec 25 2022 - Jan 5 2023</div></div><div style=\"position:relative;width:96px;height:111px;background:#8A96AF;overflow:hidden;\"><div style=\"position:absolute;left:0;top:0;bottom:0;width:1px;border-left:1px dashed rgba(255,255,255,0.9);\"></div><div style=\"position:absolute;left:calc(50% - 22px);top:calc(50% - 22px);width:44px;height:44px;border:3px solid #FFFFFF;border-right-color:transparent;border-radius:50%;opacity:0.55;\"></div><div style=\"position:absolute;left:calc(50% - 5px);top:calc(50% - 5px);width:10px;height:10px;background:#FFFFFF;border-radius:50%;opacity:0.55;\"></div><div style=\"position:absolute;right:0;top:0;bottom:0;width:28px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(255,255,255,0.6);\"><div style=\"transform:rotate(-90deg);color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;white-space:nowrap;\">GET VOUCHER</div></div><div style=\"position:absolute;top:8px;left:0;background:#C2C5CA;color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;padding:4px 8px 2px 8px;border-top-right-radius:4px;border-bottom-right-radius:4px;line-height:10px;\">Expired</div></div></div><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">state=expired</div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Variants</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">States</span><span class=\"demo-panel-value\">default · used · expired</span></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Width</span><span class=\"demo-panel-value\">336 px</span></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Height</span><span class=\"demo-panel-value\">111 px</span></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Composition</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Surface</span><span class=\"demo-panel-value\">white card with soft shadow</span></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Image area</span><span class=\"demo-panel-value\">132×111 (right-aligned)</span></div></div></div></div>"
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"vch-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" id=\"vch-ctrl-state\" onchange=\"_vchDemoUpdate()\"><option value=\"limited\" selected=\"\">Limited</option><option value=\"expiring\">Expiring</option><option value=\"used\">Used</option><option value=\"expired\">Expired</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Badge</span><select class=\"demo-panel-select\" id=\"vch-ctrl-badge\" onchange=\"_vchDemoUpdate()\"><option value=\"yes\" selected=\"\">Yes</option><option value=\"no\">No</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Original price</span><select class=\"demo-panel-select\" id=\"vch-ctrl-original\" onchange=\"_vchDemoUpdate()\"><option value=\"yes\" selected=\"\">Yes</option><option value=\"no\">No</option></select></div></div></div></div>"
   },
   "style": {
     "heading": "Styles",
@@ -339,9 +339,36 @@ export const voucherCardHorizontal: ComponentData = {
             "slug": "colors",
             "rows": [
               { "key": "Surface bg", "value": "#FFFFFF", "token": "main/vouchers/color/default/bg" },
-              { "key": "Title color", "value": "#0A2757", "token": "main/vouchers/color/default/label-title" },
-              { "key": "Amount color", "value": "#2340A9", "token": "main/vouchers/color/label-amount-horizontal" },
-              { "key": "Original amount color", "value": "#90A8D0", "token": "main/vouchers/color/default/label-amount-original" },
+              { "key": "Title color", "value": "#0A2757", "token": "main/vouchers/color/default/label-title",
+                "variants": {
+                  "state:used":    { "value": "#445C85", "token": "main/vouchers/color/used/label-title" },
+                  "state:expired": { "value": "#445C85", "token": "main/vouchers/color/expired/label-title" }
+                }
+              },
+              { "key": "Amount color", "value": "#2340A9", "token": "main/vouchers/color/label-amount-horizontal",
+                "variants": {
+                  "state:used":    { "value": "#6780A9", "token": "main/vouchers/color/used/label-amount" },
+                  "state:expired": { "value": "#6780A9", "token": "main/vouchers/color/expired/label-amount" }
+                }
+              },
+              { "key": "Original amount color", "value": "#90A8D0", "token": "main/vouchers/color/default/label-amount-original",
+                "variants": {
+                  "originalPrice:No": { "hide": true }
+                }
+              },
+              { "key": "Partner bg", "value": "#005CE5", "token": "main/vouchers/color/default/partner-bg",
+                "variants": {
+                  "state:used":    { "value": "#8A96AF", "token": "main/vouchers/color/used/partner-bg" },
+                  "state:expired": { "value": "#8A96AF", "token": "main/vouchers/color/expired/partner-bg" }
+                }
+              },
+              { "key": "Badge bg", "value": "#2340A9", "token": "main/vouchers/color/limited/badge-bg",
+                "variants": {
+                  "state:expiring": { "value": "#D61B2C", "token": "main/vouchers/color/expiring/badge-bg" },
+                  "state:used":     { "value": "#C2C5CA", "token": "main/vouchers/color/used/badge-bg" },
+                  "state:expired":  { "value": "#C2C5CA", "token": "main/vouchers/color/expired/badge-bg" }
+                }
+              },
               {
                 "key": "Shadow color",
                 "value": "#020E220F (~6%)",
@@ -434,116 +461,6 @@ export const voucherCardHorizontal: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBVoucherCard</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Cinema voucher — 50% off\"</span><span class=\"syn-punc\">,</span>\n    amount<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"₱150\"</span><span class=\"syn-punc\">,</span>\n    originalAmount<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"₱300\"</span><span class=\"syn-punc\">,</span>\n    metadata<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Valid until Dec 31\"</span><span class=\"syn-punc\">,</span>\n    image<span class=\"syn-punc\">: </span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"voucher-cinema\"</span><span class=\"syn-punc\">),</span>\n    orientation<span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>horizontal\n<span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBVoucherCard</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Cinema voucher — 50% off\"</span><span class=\"syn-punc\">,</span>\n    amount <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"₱150\"</span><span class=\"syn-punc\">,</span>\n    originalAmount <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"₱300\"</span><span class=\"syn-punc\">,</span>\n    metadata <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Valid until Dec 31\"</span><span class=\"syn-punc\">,</span>\n    image <span class=\"syn-eq\">=</span> <span class=\"syn-type\">R</span><span class=\"syn-punc\">.</span>drawable<span class=\"syn-punc\">.</span>voucher_cinema<span class=\"syn-punc\">,</span>\n    orientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBVoucherOrientation</span><span class=\"syn-punc\">.</span>Horizontal\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "expired",
-        "demoKey": "expired",
-        "demoControls": voucherCardHorizontalDemoControls,
-        "title": "Expired — dimmed metadata, muted colors",
-        "node": "5119:1786",
-        "description": "Expired voucher state. Title and amount shift to muted colors; original price still strike-through; image gets the expired overlay.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"vch-spec-expired-preview\"><div style=\"display:flex;flex-direction:column;gap:6px;align-items:center;\"><div style=\"width:336px;height:111px;display:flex;background:#FFFFFF;border-radius:6px;overflow:hidden;box-shadow:0 0 4px rgba(2,14,34,0.06);font-family:'Proxima Soft',system-ui;\"><div style=\"flex:1;padding:12px;display:flex;flex-direction:column;justify-content:space-between;min-width:0;\"><div style=\"display:flex;flex-direction:column;gap:4px;\"><div style=\"color:#445C85;font-size:16px;font-weight:700;line-height:20px;letter-spacing:0.25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;\">Buy Load Globe Go90</div><div style=\"display:flex;gap:4px;align-items:center;\"><div style=\"color:#6780A9;font-size:14px;font-weight:700;letter-spacing:0.25px;\">PHP 50.00</div><div style=\"color:#90A8D0;font-size:14px;font-weight:600;text-decoration:line-through;letter-spacing:0.25px;\">PHP 90.00</div></div></div><div style=\"color:#6780A9;font-size:10px;font-family:'BarkAda',system-ui;font-weight:600;line-height:15px;\">Validity: Dec 25 2022 - Jan 5 2023</div></div><div style=\"position:relative;width:96px;height:111px;background:#8A96AF;overflow:hidden;\"><div style=\"position:absolute;left:0;top:0;bottom:0;width:1px;border-left:1px dashed rgba(255,255,255,0.9);\"></div><div style=\"position:absolute;left:calc(50% - 22px);top:calc(50% - 22px);width:44px;height:44px;border:3px solid #FFFFFF;border-right-color:transparent;border-radius:50%;opacity:0.55;\"></div><div style=\"position:absolute;left:calc(50% - 5px);top:calc(50% - 5px);width:10px;height:10px;background:#FFFFFF;border-radius:50%;opacity:0.55;\"></div><div style=\"position:absolute;right:0;top:0;bottom:0;width:28px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(255,255,255,0.6);\"><div style=\"transform:rotate(-90deg);color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;white-space:nowrap;\">GET VOUCHER</div></div><div style=\"position:absolute;top:8px;left:0;background:#C2C5CA;color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;padding:4px 8px 2px 8px;border-top-right-radius:4px;border-bottom-right-radius:4px;line-height:10px;\">Expired</div></div></div><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">state=expired</div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Status",
-                "value": "expired",
-                "mono": true,
-                "prop": "state"
-              },
-              {
-                "key": "Has original price",
-                "value": "Yes",
-                "mono": true,
-                "prop": "originalPrice"
-              },
-              {
-                "key": "Has overlay",
-                "value": "Yes",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface bg",        "value": "#FFFFFF", "token": "main/vouchers/color/expired/bg" },
-              { "key": "Title (expired)",   "value": "#445C85", "token": "main/vouchers/color/expired/label-title" },
-              { "key": "Amount (expired)",  "value": "#6780A9", "token": "main/vouchers/color/expired/label-amount" },
-              {
-                "key": "Amount color token",
-                "value": "main/vouchers/color/expired/label-amount",
-                "mono": true
-              },
-              { "key": "Original amount color", "value": "#90A8D0", "token": "main/vouchers/color/expired/label-amount-original" },
-              { "key": "Metadata color", "value": "#6780A9", "token": "main/vouchers/color/expired/label-metadata" },
-              { "key": "Image overlay", "value": "#020E223D (24% opacity)", "token": "bg/color-bg-overlay-weak" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Width",
-                "value": "336",
-                "mono": true
-              },
-              {
-                "key": "Min height",
-                "value": "144",
-                "mono": true
-              },
-              {
-                "key": "Image area",
-                "value": "144 × 144",
-                "mono": true
-              },
-              {
-                "key": "Body padding",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "Gap",
-                "value": "8",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "6",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Multi-line Label/Base",
-                "mono": true
-              },
-              {
-                "key": "Amount style",
-                "value": "Primary/Label/Small",
-                "mono": true
-              },
-              {
-                "key": "Metadata style",
-                "value": "Secondary/Bold/Small Caption",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBVoucherCard</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Cinema voucher — 50% off\"</span><span class=\"syn-punc\">,</span>\n    amount<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"₱150\"</span><span class=\"syn-punc\">,</span>\n    originalAmount<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"₱300\"</span><span class=\"syn-punc\">,</span>\n    metadata<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Expired Mar 14\"</span><span class=\"syn-punc\">,</span>\n    image<span class=\"syn-punc\">: </span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"voucher-cinema\"</span><span class=\"syn-punc\">),</span>\n    orientation<span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>horizontal<span class=\"syn-punc\">,</span>\n    state<span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>expired\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBVoucherCard</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Cinema voucher — 50% off\"</span><span class=\"syn-punc\">,</span>\n    amount <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"₱150\"</span><span class=\"syn-punc\">,</span>\n    originalAmount <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"₱300\"</span><span class=\"syn-punc\">,</span>\n    metadata <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Expired Mar 14\"</span><span class=\"syn-punc\">,</span>\n    image <span class=\"syn-eq\">=</span> <span class=\"syn-type\">R</span><span class=\"syn-punc\">.</span>drawable<span class=\"syn-punc\">.</span>voucher_cinema<span class=\"syn-punc\">,</span>\n    orientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBVoucherOrientation</span><span class=\"syn-punc\">.</span>Horizontal<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBVoucherState</span><span class=\"syn-punc\">.</span>Expired\n<span class=\"syn-punc\">)</span>"
       },
       {
         "cardKey": "no-original",

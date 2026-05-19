@@ -48,10 +48,7 @@ function updateChatFieldDemo() {
 }
 
 function _cfInitSpecCards() {
-  var a = document.getElementById('cf-default-preview');
-  if (a) a.innerHTML = _cfBuildSvg('no');
-  var b = document.getElementById('cf-active-preview');
-  if (b) b.innerHTML = _cfBuildSvg('yes');
+  updateSpecCard('default', 'active', _specCards['default'].active);
 }
 
 function _cfInit() {
@@ -66,11 +63,9 @@ if (document.readyState === 'loading') {
 }
 
 /* ── Canonical wiring (matches avatar.js shape) ────────────────────── */
-/* Per-card state — keyed by the data file's `demoKey` values
-   (`cf-default`, `cf-active`). Each card tracks its own `active` flag. */
+/* Single dynamic spec card — keyed by demoKey `default`. */
 var _specCards = {
-  'cf-default': { active: 'no' },
-  'cf-active':  { active: 'yes' }
+  'default': { active: 'no' }
 };
 window._specCards = _specCards;
 
@@ -106,11 +101,12 @@ function updateSpecCard(cardStyle, prop, value) {
   if (!card) return;
   card[prop] = value;
 
-  /* Update SVG preview — preview elements use ids `cf-default-preview`
-     and `cf-active-preview` (set by `_cfInitSpecCards`).  When `active`
-     changes we re-render the SVG with the new state. */
-  var previewEl = document.getElementById(cardStyle + '-preview');
-  if (previewEl) previewEl.innerHTML = _cfBuildSvg(card.active);
+  /* Update SVG preview inside the spec card root */
+  var rootEl = document.getElementById('spec-card-' + cardStyle);
+  if (rootEl) {
+    var previewEl = rootEl.querySelector('.spec-card-preview');
+    if (previewEl) previewEl.innerHTML = _cfBuildSvg(card.active);
+  }
 
   /* Property-text cells — `[data-sp="${cardStyle}-${prop}"]`. */
   var spActive = document.querySelector('[data-sp="' + cardStyle + '-active"]');

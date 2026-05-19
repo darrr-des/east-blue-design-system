@@ -17,33 +17,6 @@ const onboardingTooltipDemoControls: DemoControlSection[] = [
           { value: 'left', label: 'left' },
         ],
       },
-      {
-        label: 'header',
-        prop: 'header',
-        defaultValue: 'true',
-        options: [
-          { value: 'true', label: 'true' },
-          { value: 'false', label: 'false' },
-        ],
-      },
-      {
-        label: 'description',
-        prop: 'description',
-        defaultValue: 'true',
-        options: [
-          { value: 'true', label: 'true' },
-          { value: 'false', label: 'false' },
-        ],
-      },
-      {
-        label: 'close',
-        prop: 'close',
-        defaultValue: 'true',
-        options: [
-          { value: 'true', label: 'true' },
-          { value: 'false', label: 'false' },
-        ],
-      },
     ],
   },
 ];
@@ -75,7 +48,7 @@ export const onboardingTooltip: ComponentData = {
   "overview": {
     "inContextNote": "A dismissible tip anchored to a feature element — commonly rendered during first-time user education, feature discovery, and coach-mark flows.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"200\" height=\"120\" viewBox=\"0 0 200 120\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"108\" rx=\"10\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <rect x=\"34\" y=\"6\" width=\"132\" height=\"20\" rx=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <text x=\"100\" y=\"19\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Wallet</text>\n          \n          <circle cx=\"100\" cy=\"42\" r=\"4\" fill=\"#005CE5\"></circle>\n          \n          <path d=\"M98 50 l2 -2 2 2 z\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-linejoin=\"round\"></path>\n          <rect x=\"50\" y=\"50\" width=\"100\" height=\"32\" rx=\"3\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\"></rect>\n          <rect x=\"56\" y=\"56\" width=\"34\" height=\"4\" rx=\"1\" fill=\"#0A2757\"></rect>\n          <rect x=\"56\" y=\"64\" width=\"72\" height=\"2\" rx=\"1\" fill=\"#6780A9\"></rect>\n          <rect x=\"56\" y=\"69\" width=\"58\" height=\"2\" rx=\"1\" fill=\"#6780A9\"></rect>\n          <path d=\"M138 56 l4 4 M142 56 l-4 4\" stroke=\"#0A2757\" stroke-width=\"1.3\" stroke-linecap=\"round\"></path>\n          \n          <rect x=\"42\" y=\"94\" width=\"60\" height=\"14\" rx=\"2\" fill=\"#EEF2F9\"></rect>\n          <rect x=\"106\" y=\"94\" width=\"56\" height=\"14\" rx=\"2\" fill=\"#EEF2F9\"></rect>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ont-demo-preview\"><div style=\"display:flex;justify-content:center;align-items:center;width:100%;padding:40px 12px;\"><div style=\"position:relative;width:336px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:6px;padding:16px;box-sizing:border-box;box-shadow:0 0 4px rgba(2,14,34,0.06);\"><div style=\"position:absolute;width:0;height:0;left:50%;top:-8px;transform:translateX(-50%);border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:8px solid #FFFFFF;filter:drop-shadow(0 -1px 0 #E5EBF4);\"></div><div style=\"display:flex;align-items:center;gap:24px;width:100%;\"><div style=\"flex:1 0 0;min-width:0;font-family:'Proxima Soft',system-ui;font-size:18px;line-height:23px;font-weight:700;letter-spacing:0.25px;color:#0A2757;\">Header</div><div style=\"flex-shrink:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center;\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\"><path d=\"M1 1l10 10M11 1L1 11\" stroke=\"#0A2757\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div></div><div style=\"font-family:'BarkAda','Proxima Soft',system-ui;font-size:12px;line-height:18px;font-weight:600;color:#6780A9;margin-top:4px;\">Description goes here</div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Placement</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">pointer</span><select class=\"demo-panel-select\" id=\"ont-ctrl-pointer\" onchange=\"updateOntDemo()\"><option value=\"top\" selected=\"\">top</option><option value=\"right\">right</option><option value=\"bottom\">bottom</option><option value=\"left\">left</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content (not exposed)</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">header</span><span class=\"demo-panel-label muted\">always shown</span></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><span class=\"demo-panel-label muted\">always shown</span></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">close</span><span class=\"demo-panel-label muted\">always shown</span></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">cta</span><span class=\"demo-panel-label muted\">not supported</span></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">icon</span><span class=\"demo-panel-label muted\">not supported</span></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ont-demo-preview\"><div style=\"display:flex;justify-content:center;align-items:center;width:100%;padding:40px 12px;\"><div style=\"position:relative;width:336px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:6px;padding:16px;box-sizing:border-box;box-shadow:0 0 4px rgba(2,14,34,0.06);\"><div style=\"position:absolute;width:0;height:0;left:50%;top:-8px;transform:translateX(-50%);border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:8px solid #FFFFFF;filter:drop-shadow(0 -1px 0 #E5EBF4);\"></div><div style=\"display:flex;align-items:center;gap:24px;width:100%;\"><div style=\"flex:1 0 0;min-width:0;font-family:'Proxima Soft',system-ui;font-size:18px;line-height:23px;font-weight:700;letter-spacing:0.25px;color:#0A2757;\">Header</div><div style=\"flex-shrink:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center;\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\"><path d=\"M1 1l10 10M11 1L1 11\" stroke=\"#0A2757\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div></div><div style=\"font-family:'BarkAda','Proxima Soft',system-ui;font-size:12px;line-height:18px;font-weight:600;color:#6780A9;margin-top:4px;\">Description goes here</div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Placement</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">pointer</span><select class=\"demo-panel-select\" id=\"ont-ctrl-pointer\" onchange=\"updateOntDemo()\"><option value=\"top\" selected=\"\">top</option><option value=\"right\">right</option><option value=\"bottom\">bottom</option><option value=\"left\">left</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -244,12 +217,12 @@ export const onboardingTooltip: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "pointer=top-—-target-element-above",
+        "cardKey": "pointers",
         "demoKey": "top",
         "demoControls": onboardingTooltipDemoControls,
-        "title": "pointer=top — target element above",
+        "title": "Pointers",
         "node": "51:17065",
-        "description": "Pointer triangle above the bubble, surface below. 336 × 90 (pointer adds 12 px on top). Used when the tip describes an element positioned above the tooltip in the flow.",
+        "description": "Pointer triangle indicates target placement. Flip the pointer control in the demo panel to see top / right / bottom / left positions.",
         "previewHtml": "<div id=\"ont-spec-top-preview\" style=\"display:flex;justify-content:center;align-items:center;width:100%;padding:40px 12px;\"><div style=\"position:relative;width:336px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:6px;padding:16px;box-sizing:border-box;box-shadow:0 0 4px rgba(2,14,34,0.06);\"><div style=\"position:absolute;width:0;height:0;left:50%;top:-8px;transform:translateX(-50%);border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:8px solid #FFFFFF;filter:drop-shadow(0 -1px 0 #E5EBF4);\"></div><div style=\"display:flex;align-items:center;gap:24px;width:100%;\"><div style=\"flex:1 0 0;min-width:0;font-family:'Proxima Soft',system-ui;font-size:18px;line-height:23px;font-weight:700;letter-spacing:0.25px;color:#0A2757;\">Header</div><div style=\"flex-shrink:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center;\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\"><path d=\"M1 1l10 10M11 1L1 11\" stroke=\"#0A2757\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div></div><div style=\"font-family:'BarkAda','Proxima Soft',system-ui;font-size:12px;line-height:18px;font-weight:600;color:#6780A9;margin-top:4px;\">Description goes here</div></div></div>",
         "sections": [
           {
@@ -261,29 +234,6 @@ export const onboardingTooltip: ComponentData = {
                 "value": "top",
                 "mono": false,
                 "prop": "pointer"
-              },
-              {
-                "key": "Target",
-                "value": "element above the tooltip",
-                "mono": false
-              },
-              {
-                "key": "header",
-                "value": "true",
-                "mono": true,
-                "prop": "header"
-              },
-              {
-                "key": "description",
-                "value": "true",
-                "mono": true,
-                "prop": "description"
-              },
-              {
-                "key": "close",
-                "value": "true",
-                "mono": true,
-                "prop": "close"
               }
             ]
           },
@@ -302,41 +252,10 @@ export const onboardingTooltip: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "296px (max)",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "16 horizontal · 12 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid #E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Gap (header ↔ desc)",
-                "value": "4px (space/space-4)",
-                "mono": true
-              },
-              {
-                "key": "Pointer size",
-                "value": "12 × 8 (width × height)",
-                "mono": true
-              },
-              {
-                "key": "Shadow",
-                "value": "app/shadow/shadow-low",
-                "mono": true
-              }
+              { "key": "Width",         "value": "296px (max)",     "mono": true },
+              { "key": "Padding",       "value": "16 × 12",         "mono": true },
+              { "key": "Border radius", "value": "6px",             "mono": true },
+              { "key": "Pointer size",  "value": "12 × 8",          "mono": true }
             ]
           },
           {
@@ -369,384 +288,7 @@ export const onboardingTooltip: ComponentData = {
         "swift": "<span class=\"syn-type\">EBOnboardingTooltip</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Onboarding hint\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPointer</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.top</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebOnDismiss</span><span class=\"syn-punc\">(</span><span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBOnboardingTooltip</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Onboarding hint\"</span><span class=\"syn-punc\">,</span>\n    pointer <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBPointer</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Top</span><span class=\"syn-punc\">,</span>\n    onDismiss <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
       },
-      {
-        "cardKey": "pointer=bottom-—-target-element-below",
-        "demoKey": "bottom",
-        "demoControls": onboardingTooltipDemoControls,
-        "title": "pointer=bottom — target element below",
-        "node": "51:17063",
-        "description": "Pointer triangle below the bubble. 336 × 89. Most common placement for tips anchored to an icon in a toolbar or nav bar.",
-        "previewHtml": "<div id=\"ont-spec-bottom-preview\" style=\"display:flex;justify-content:center;align-items:center;width:100%;padding:40px 12px;\"><div style=\"position:relative;width:336px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:6px;padding:16px;box-sizing:border-box;box-shadow:0 0 4px rgba(2,14,34,0.06);\"><div style=\"position:absolute;width:0;height:0;left:50%;bottom:-8px;transform:translateX(-50%);border-left:8px solid transparent;border-right:8px solid transparent;border-top:8px solid #FFFFFF;filter:drop-shadow(0 1px 0 #E5EBF4);\"></div><div style=\"display:flex;align-items:center;gap:24px;width:100%;\"><div style=\"flex:1 0 0;min-width:0;font-family:'Proxima Soft',system-ui;font-size:18px;line-height:23px;font-weight:700;letter-spacing:0.25px;color:#0A2757;\">Header</div><div style=\"flex-shrink:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center;\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\"><path d=\"M1 1l10 10M11 1L1 11\" stroke=\"#0A2757\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div></div><div style=\"font-family:'BarkAda','Proxima Soft',system-ui;font-size:12px;line-height:18px;font-weight:600;color:#6780A9;margin-top:4px;\">Description goes here</div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "pointer",
-                "value": "bottom",
-                "mono": false,
-                "prop": "pointer"
-              },
-              {
-                "key": "Target",
-                "value": "element below the tooltip",
-                "mono": false
-              },
-              {
-                "key": "header",
-                "value": "true",
-                "mono": true,
-                "prop": "header"
-              },
-              {
-                "key": "description",
-                "value": "true",
-                "mono": true,
-                "prop": "description"
-              },
-              {
-                "key": "close",
-                "value": "true",
-                "mono": true,
-                "prop": "close"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
-              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
-              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
-              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
-              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Width",
-                "value": "296px (max)",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "16 horizontal · 12 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid #E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Gap (header ↔ desc)",
-                "value": "4px (space/space-4)",
-                "mono": true
-              },
-              {
-                "key": "Pointer size",
-                "value": "12 × 8 (width × height)",
-                "mono": true
-              },
-              {
-                "key": "Shadow",
-                "value": "app/shadow/shadow-low",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Header style",
-                "value": "Primary/Headlines/Block",
-                "mono": true
-              },
-              {
-                "key": "Header font",
-                "value": "Proxima Soft Bold · 18 / 23 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Caption",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 12 / 18",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBOnboardingTooltip</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Onboarding hint\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPointer</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.bottom</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebOnDismiss</span><span class=\"syn-punc\">(</span><span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBOnboardingTooltip</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Onboarding hint\"</span><span class=\"syn-punc\">,</span>\n    pointer <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBPointer</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Bottom</span><span class=\"syn-punc\">,</span>\n    onDismiss <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "pointer=left-—-target-element-to-the-left",
-        "demoKey": "left",
-        "demoControls": onboardingTooltipDemoControls,
-        "title": "pointer=left — target element to the left",
-        "node": "51:17062",
-        "description": "Pointer triangle on the left edge. 348 × 78 (pointer adds 12 px on the left). Used for tips describing a leading-edge control.",
-        "previewHtml": "<div id=\"ont-spec-left-preview\" style=\"display:flex;justify-content:center;align-items:center;width:100%;padding:40px 12px;\"><div style=\"position:relative;width:336px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:6px;padding:16px;box-sizing:border-box;box-shadow:0 0 4px rgba(2,14,34,0.06);\"><div style=\"position:absolute;width:0;height:0;top:50%;left:-8px;transform:translateY(-50%);border-top:8px solid transparent;border-bottom:8px solid transparent;border-right:8px solid #FFFFFF;filter:drop-shadow(-1px 0 0 #E5EBF4);\"></div><div style=\"display:flex;align-items:center;gap:24px;width:100%;\"><div style=\"flex:1 0 0;min-width:0;font-family:'Proxima Soft',system-ui;font-size:18px;line-height:23px;font-weight:700;letter-spacing:0.25px;color:#0A2757;\">Header</div><div style=\"flex-shrink:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center;\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\"><path d=\"M1 1l10 10M11 1L1 11\" stroke=\"#0A2757\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div></div><div style=\"font-family:'BarkAda','Proxima Soft',system-ui;font-size:12px;line-height:18px;font-weight:600;color:#6780A9;margin-top:4px;\">Description goes here</div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "pointer",
-                "value": "left",
-                "mono": false,
-                "prop": "pointer"
-              },
-              {
-                "key": "Target",
-                "value": "element to the left",
-                "mono": false
-              },
-              {
-                "key": "header",
-                "value": "true",
-                "mono": true,
-                "prop": "header"
-              },
-              {
-                "key": "description",
-                "value": "true",
-                "mono": true,
-                "prop": "description"
-              },
-              {
-                "key": "close",
-                "value": "true",
-                "mono": true,
-                "prop": "close"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
-              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
-              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
-              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
-              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Width",
-                "value": "296px (max)",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "16 horizontal · 12 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid #E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Gap (header ↔ desc)",
-                "value": "4px (space/space-4)",
-                "mono": true
-              },
-              {
-                "key": "Pointer size",
-                "value": "12 × 8 (width × height)",
-                "mono": true
-              },
-              {
-                "key": "Shadow",
-                "value": "app/shadow/shadow-low",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Header style",
-                "value": "Primary/Headlines/Block",
-                "mono": true
-              },
-              {
-                "key": "Header font",
-                "value": "Proxima Soft Bold · 18 / 23 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Caption",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 12 / 18",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBOnboardingTooltip</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Onboarding hint\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPointer</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.left</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebOnDismiss</span><span class=\"syn-punc\">(</span><span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBOnboardingTooltip</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Onboarding hint\"</span><span class=\"syn-punc\">,</span>\n    pointer <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBPointer</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Left</span><span class=\"syn-punc\">,</span>\n    onDismiss <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "pointer=right-—-target-element-to-the-right",
-        "demoKey": "right",
-        "demoControls": onboardingTooltipDemoControls,
-        "title": "pointer=right — target element to the right",
-        "node": "51:17064",
-        "description": "Pointer triangle on the right edge. 348 × 78 (pointer adds 12 px on the right). Used for tips describing a trailing-edge control.",
-        "previewHtml": "<div id=\"ont-spec-right-preview\" style=\"display:flex;justify-content:center;align-items:center;width:100%;padding:40px 12px;\"><div style=\"position:relative;width:336px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:6px;padding:16px;box-sizing:border-box;box-shadow:0 0 4px rgba(2,14,34,0.06);\"><div style=\"position:absolute;width:0;height:0;top:50%;right:-8px;transform:translateY(-50%);border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:8px solid #FFFFFF;filter:drop-shadow(1px 0 0 #E5EBF4);\"></div><div style=\"display:flex;align-items:center;gap:24px;width:100%;\"><div style=\"flex:1 0 0;min-width:0;font-family:'Proxima Soft',system-ui;font-size:18px;line-height:23px;font-weight:700;letter-spacing:0.25px;color:#0A2757;\">Header</div><div style=\"flex-shrink:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center;\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\"><path d=\"M1 1l10 10M11 1L1 11\" stroke=\"#0A2757\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div></div><div style=\"font-family:'BarkAda','Proxima Soft',system-ui;font-size:12px;line-height:18px;font-weight:600;color:#6780A9;margin-top:4px;\">Description goes here</div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "pointer",
-                "value": "right",
-                "mono": false,
-                "prop": "pointer"
-              },
-              {
-                "key": "Target",
-                "value": "element to the right",
-                "mono": false
-              },
-              {
-                "key": "header",
-                "value": "true",
-                "mono": true,
-                "prop": "header"
-              },
-              {
-                "key": "description",
-                "value": "true",
-                "mono": true,
-                "prop": "description"
-              },
-              {
-                "key": "close",
-                "value": "true",
-                "mono": true,
-                "prop": "close"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
-              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
-              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
-              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
-              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Width",
-                "value": "296px (max)",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "16 horizontal · 12 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid #E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Gap (header ↔ desc)",
-                "value": "4px (space/space-4)",
-                "mono": true
-              },
-              {
-                "key": "Pointer size",
-                "value": "12 × 8 (width × height)",
-                "mono": true
-              },
-              {
-                "key": "Shadow",
-                "value": "app/shadow/shadow-low",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Header style",
-                "value": "Primary/Headlines/Block",
-                "mono": true
-              },
-              {
-                "key": "Header font",
-                "value": "Proxima Soft Bold · 18 / 23 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Caption",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 12 / 18",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBOnboardingTooltip</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Onboarding hint\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPointer</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.right</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebOnDismiss</span><span class=\"syn-punc\">(</span><span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBOnboardingTooltip</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Onboarding hint\"</span><span class=\"syn-punc\">,</span>\n    pointer <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBPointer</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Right</span><span class=\"syn-punc\">,</span>\n    onDismiss <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
-      }
+      
     ],
     "colorsTables": [
       {

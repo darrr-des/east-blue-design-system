@@ -316,161 +316,72 @@ export const bottomSheet: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Variants",
+    "heading": "Types",
     "specCards": [
       {
-        "cardKey": "left-align",
+        "cardKey": "default",
         "demoKey": "left-align",
         "demoControls": bottomSheetDemoControls,
-        "title": "Left Align",
+        "title": "Default",
         "node": "12522:12860",
-        "description": "Header aligned to the leading edge. Ships with an optional leading icon placeholder, preamble + title stack, a trailing close X, then the decorative body slots and 2 hard-baked CTAs.",
+        "description": "A modal sheet that slides up from the bottom of the screen — typically used to confirm an action, collect a single input, or surface a focused decision without leaving the current screen.",
         "previewHtml": "<div class=\"spec-preview-body\" id=\"bottom-sheet-spec-preview-left-align\"><div style=\"background:#fff;border-top-left-radius:12px;border-top-right-radius:12px;width:240px;overflow:hidden;box-shadow:0 -2px 10px rgba(2,14,34,0.08);\"><div style=\"display:flex;align-items:flex-start;gap:8px;padding:16px 48px 8px 18px;position:relative;\"><div style=\"width:24px;height:24px;border-radius:50%;background:#C2C6CF;flex-shrink:0;margin-top:2px;\"></div><div style=\"flex:1;\"><div style=\"font-size:10px;color:#90A8D0;font-weight:700;margin-bottom:3px;\">Preamble here...</div><div style=\"font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:14px;color:#0A2757;line-height:1.2;\">Title here of the header...</div></div><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"position:absolute;right:18px;top:18px;opacity:0.8;\"><path d=\"M6 6l12 12M18 6L6 18\" stroke=\"#6780A9\" stroke-width=\"2\" stroke-linecap=\"round\"></path></svg></div><div style=\"padding:0 18px 20px;\"><div style=\"font-family:'BarkAda',serif;font-weight:500;font-size:11px;color:#445C85;line-height:1.5;\">This area is designated for descriptions...</div></div><div style=\"padding:4px 18px 20px;display:flex;flex-direction:column;gap:8px;\"><div style=\"height:28px;background:#005CE5;border-radius:99px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;\">Label</div><div style=\"height:22px;display:flex;align-items:center;justify-content:center;color:#005CE5;font-size:11px;font-weight:700;\">Label</div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Name",            "value": "Bottom Drawer",                            "mono": true },
-              { "key": "Alignment",       "value": "Left Align",                               "mono": true, "prop": "align" },
-              { "key": "Preamble",        "value": "yes",                                      "mono": true, "prop": "preamble" },
-              { "key": "Description",     "value": "yes",                                      "mono": true, "prop": "desc" },
-              { "key": "CTA",             "value": "Primary + Tertiary",                       "mono": true, "prop": "cta" },
-              { "key": "iconPlaceholder", "value": "boolean (default true)",                   "mono": true },
-              { "key": "Header",          "value": "string \"Title here of the header...\"",   "mono": true },
-              { "key": "showSlot1..4",    "value": "booleans — decorative only",               "mono": true },
-              { "key": "Close X",         "value": "Hardcoded — raster PNG" }
+              { "key": "Alignment",   "value": "Left Align",          "mono": true, "prop": "align" },
+              { "key": "Preamble",    "value": "yes",                 "mono": true, "prop": "preamble" },
+              { "key": "Description", "value": "yes",                 "mono": true, "prop": "desc" },
+              { "key": "CTA",         "value": "Primary + Tertiary",  "mono": true, "prop": "cta" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",           "value": "#FFFFFF", "token": "bottom-header/color/bg" },
-              { "key": "Preamble",          "value": "#90A8D0", "token": "bottom-header/color/preamble" },
-              { "key": "Header",            "value": "#0A2757", "token": "bottom-header/color/header" },
-              { "key": "Description",      "value": "#445C85",  "token": "bottom-header/color/description" },
-              { "key": "Close icon",       "value": "#6780A9",  "token": "bottom-header/color/icon-close" },
-              { "key": "Primary CTA bg",   "value": "#005CE5",  "token": "button/primary/brand/enabled/bg" },
-              { "key": "Primary CTA label","value": "#FFFFFF",  "token": "button/primary/brand/enabled/label" },
-              { "key": "Tertiary CTA",     "value": "#005CE5",  "token": "button/tertiary/brand/enabled/label" }
+              { "key": "Surface",     "value": "#FFFFFF", "token": "bottom-sheet/color/bg" },
+              { "key": "Preamble", "value": "#90A8D0", "token": "bottom-sheet/color/preamble",
+                "variants": { "preamble:no": { "hide": true } }
+              },
+              { "key": "Header",      "value": "#0A2757", "token": "bottom-sheet/color/header" },
+              { "key": "Description", "value": "#445C85", "token": "bottom-sheet/color/description",
+                "variants": { "desc:no": { "hide": true } }
+              },
+              { "key": "Close icon", "value": "#6780A9", "token": "bottom-sheet/color/icon-close",
+                "variants": { "align:center": { "hide": true } }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Width",                  "value": "360",                            "mono": true },
-              { "key": "Height (default)",       "value": "324",                            "mono": true },
-              { "key": "Corner radius (top)",    "value": "8",                              "mono": true },
-              { "key": "Corner radius (bottom)", "value": "0",                              "mono": true },
-              { "key": "Header padding",         "value": "pt 24 · pb 8 · pl 24 · pr 48",   "mono": true },
-              { "key": "Header gap (icon ↔ title)", "value": "8",                          "mono": true },
-              { "key": "Preamble ↔ title gap",   "value": "6",                              "mono": true },
-              { "key": "Content padding",        "value": "24 sides · 32 bottom",           "mono": true },
-              { "key": "Description pb",         "value": "12",                             "mono": true },
-              { "key": "CTA group padding",      "value": "px 24 · pb 36",                  "mono": true },
-              { "key": "CTA gap",                "value": "12",                             "mono": true },
-              { "key": "Primary button radius",  "value": "99 (pill)",                      "mono": true },
-              { "key": "Close icon size",        "value": "24 · top 24 · right 24",         "mono": true }
+              { "key": "Width",         "value": "360", "mono": true },
+              { "key": "Corner radius", "value": "8",   "mono": true },
+              { "key": "Header padding","value": "24 × 8", "mono": true },
+              { "key": "Content padding","value": "24 sides · 32 bottom", "mono": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Preamble style",    "value": "Primary/Label/Small",          "mono": true },
-              { "key": "Preamble font",     "value": "Proxima Soft · Bold · 14 / 14","mono": true },
-              { "key": "Preamble tracking", "value": "0.25",                         "mono": true },
-              { "key": "Title style",       "value": "Primary/Headlines/Section",    "mono": true },
-              { "key": "Title font",        "value": "Proxima Soft · Bold · 22 / 26","mono": true },
-              { "key": "Title tracking",    "value": "0",                            "mono": true },
-              { "key": "Description style", "value": "Secondary/Default/Base",       "mono": true },
-              { "key": "Description font",  "value": "BarkAda · Medium · 14 / 20",   "mono": true },
-              { "key": "CTA label style",   "value": "Primary/Label/Large",          "mono": true },
-              { "key": "CTA font",          "value": "Proxima Soft · Bold · 18 / 18","mono": true },
-              { "key": "Header alignment",  "value": "left",                         "mono": true }
+              { "key": "Preamble",    "value": "Proxima Soft Bold · 14 / 14 · +0.25", "mono": true,
+                "variants": { "preamble:no": { "hide": true } }
+              },
+              { "key": "Title",       "value": "Proxima Soft Bold · 22 / 26", "mono": true },
+              { "key": "Description", "value": "BarkAda Medium · 14 / 20", "mono": true,
+                "variants": { "desc:no": { "hide": true } }
+              }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBBottomSheet</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Header\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPreamble</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Preamble\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description body\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAlignment</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.leading</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPrimaryAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Continue\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBBottomSheet</span><span class=\"syn-punc\">(</span>\n    header <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Header\"</span><span class=\"syn-punc\">,</span>\n    preamble <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Preamble\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description body\"</span><span class=\"syn-punc\">,</span>\n    alignment <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSheetAlignment</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Leading</span><span class=\"syn-punc\">,</span>\n    primaryAction <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSheetAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Continue\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>"
       },
-      {
-        "cardKey": "center-align",
-        "demoKey": "center-align",
-        "demoControls": bottomSheetDemoControls,
-        "title": "Center Align",
-        "node": "12817:43834",
-        "description": "Header centered. Silently drops the leading icon + trailing close X and adds an above-title <code>headerSlot</code> used for progress bars / steppers. Same body placeholders and hard-baked CTAs as Left Align.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"bottom-sheet-spec-preview-center-align\"><div style=\"background:#fff;border-top-left-radius:12px;border-top-right-radius:12px;width:240px;overflow:hidden;box-shadow:0 -2px 10px rgba(2,14,34,0.08);\"><div style=\"padding:16px 18px 8px 18px;text-align:center;\"><div style=\"height:4px;background:linear-gradient(90deg,#005CE5 60%,#E5EBF4 60%);border-radius:2px;margin-bottom:10px;\"></div><div style=\"font-size:10px;color:#90A8D0;font-weight:700;margin-bottom:3px;\">Preamble here...</div><div style=\"font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:14px;color:#0A2757;line-height:1.2;\">Title here of the header...</div></div><div style=\"padding:0 18px 20px;text-align:center;\"><div style=\"font-family:'BarkAda',serif;font-weight:500;font-size:11px;color:#445C85;line-height:1.5;\">This area is designated for descriptions...</div></div><div style=\"padding:4px 18px 20px;display:flex;flex-direction:column;gap:8px;\"><div style=\"height:28px;background:#005CE5;border-radius:99px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;\">Label</div><div style=\"height:22px;display:flex;align-items:center;justify-content:center;color:#005CE5;font-size:11px;font-weight:700;\">Label</div></div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Name",         "value": "Bottom Drawer",                                         "mono": true },
-              { "key": "Alignment",    "value": "Center Align",                                          "mono": true, "prop": "align" },
-              { "key": "Preamble",     "value": "yes",                                                   "mono": true, "prop": "preamble" },
-              { "key": "Description",  "value": "yes",                                                   "mono": true, "prop": "desc" },
-              { "key": "CTA",          "value": "Primary + Tertiary",                                    "mono": true, "prop": "cta" },
-              { "key": "headerSlot",   "value": "boolean (default true) — above-title",                  "mono": true },
-              { "key": "Header",       "value": "string \"Title here of the header...\"",                "mono": true },
-              { "key": "Leading icon", "value": "Not present in Center Align" },
-              { "key": "Close X",      "value": "Not present in Center Align" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface",            "value": "#FFFFFF", "token": "bottom-header/color/bg" },
-              { "key": "Preamble",           "value": "#90A8D0", "token": "bottom-header/color/preamble" },
-              { "key": "Header",             "value": "#0A2757", "token": "bottom-header/color/header" },
-              { "key": "Description",        "value": "#445C85", "token": "bottom-header/color/description" },
-              { "key": "Close icon",         "value": "#6780A9", "token": "bottom-header/color/icon-close" },
-              { "key": "Primary CTA bg",     "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
-              { "key": "Primary CTA label",  "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
-              { "key": "Tertiary CTA",       "value": "#005CE5", "token": "button/tertiary/brand/enabled/label" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width",                  "value": "360",                              "mono": true },
-              { "key": "Height (default)",       "value": "330",                              "mono": true },
-              { "key": "Corner radius (top)",    "value": "8",                                "mono": true },
-              { "key": "Header padding",         "value": "pt 24 · pb 8 · px 24",             "mono": true },
-              { "key": "Header gap (slot ↔ title)","value": "16",                            "mono": true },
-              { "key": "Preamble ↔ title gap",   "value": "6",                                "mono": true },
-              { "key": "Header slot height",     "value": "~16 (progress bar / stepper)",     "mono": true },
-              { "key": "Content padding",        "value": "24 sides · 32 bottom",             "mono": true },
-              { "key": "Description pb",         "value": "12",                               "mono": true },
-              { "key": "CTA group padding",      "value": "px 24 · pb 36",                    "mono": true },
-              { "key": "CTA gap",                "value": "12",                               "mono": true },
-              { "key": "Primary button radius",  "value": "99 (pill)",                        "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Preamble style",    "value": "Primary/Label/Small",          "mono": true },
-              { "key": "Preamble font",     "value": "Proxima Soft · Bold · 14 / 14","mono": true },
-              { "key": "Title style",       "value": "Primary/Headlines/Section",    "mono": true },
-              { "key": "Title font",        "value": "Proxima Soft · Bold · 22 / 26","mono": true },
-              { "key": "Description style", "value": "Secondary/Default/Base",       "mono": true },
-              { "key": "Description font",  "value": "BarkAda · Medium · 14 / 20",   "mono": true },
-              { "key": "CTA label style",   "value": "Primary/Label/Large",          "mono": true },
-              { "key": "CTA font",          "value": "Proxima Soft · Bold · 18 / 18","mono": true },
-              { "key": "Header alignment",  "value": "center",                       "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBBottomSheet</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Header\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPreamble</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Preamble\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description body\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAlignment</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.center</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPrimaryAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Continue\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBBottomSheet</span><span class=\"syn-punc\">(</span>\n    header <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Header\"</span><span class=\"syn-punc\">,</span>\n    preamble <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Preamble\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description body\"</span><span class=\"syn-punc\">,</span>\n    alignment <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSheetAlignment</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Center</span><span class=\"syn-punc\">,</span>\n    primaryAction <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSheetAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Continue\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>"
-      }
+      
     ],
     colorsTables: [
       // Card 1 — Default sheet with header + CTA
@@ -483,8 +394,6 @@ export const bottomSheet: ComponentData = {
           { role: 'Header',            token: 'bottom-header/color/header',      value: '#0A2757' },
           { role: 'Description',       token: 'bottom-header/color/description', value: '#445C85' },
           { role: 'Close icon',        token: 'bottom-header/color/icon-close',  value: '#6780A9' },
-          { role: 'Primary CTA bg',    token: 'button/primary/brand/enabled/bg', value: '#005CE5' },
-          { role: 'Primary CTA label', token: 'button/primary/brand/enabled/label', value: '#FFFFFF' },
         ],
       }),
       // Card 2 — Without close icon

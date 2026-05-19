@@ -263,23 +263,21 @@ export const datePickerGroup: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Variants",
+    "heading": "Types",
     "specCards": [
       {
-        "cardKey": "dpg-spec-date",
-        "demoKey": "dpg-date",
+        "cardKey": "default",
+        "demoKey": "default",
         "demoControls": datePickerGroupDemoControls,
-        "title": "Type = Date",
+        "title": "Default",
         "node": "12879:49310",
-        "description": "Day grid. Header shows \"Month / Year\" with Prev/Next chevrons. Weekday row (Su/M/T/W/Th/F/Sa) followed by 6 rows of 7 day cells. Today shown with 1.5px blue ring; prev/next-month days dimmed.",
+        "description": "Calendar surface. Flip the Type control between Date / Year / Month grids.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Type", "value": "Date", "prop": "type" },
-              { "key": "Cell size", "value": "32×32" },
-              { "key": "Variant", "value": "Day-picker grid" }
+              { "key": "Type", "value": "Date", "prop": "type" }
             ]
           },
           {
@@ -290,22 +288,29 @@ export const datePickerGroup: ComponentData = {
               { "key": "Border", "value": "#E5EBF4", "token": "date-picker/month-header/color/border" },
               { "key": "Header label", "value": "#0A2757", "token": "date-picker/month-header/color/label" },
               { "key": "Header icon", "value": "#005CE5", "token": "date-picker/month-header/color/icon" },
-              { "key": "Week-day label", "value": "#0A2757", "token": "date-picker/week-header/color/label" },
-              { "key": "Day cell label", "value": "#0A2757", "token": "date-picker/day/color/unselected/label" },
-              { "key": "Day cell bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" },
+              { "key": "Week-day label", "value": "#0A2757", "token": "date-picker/week-header/color/label",
+                "variants": { "type:Year": { "hide": true }, "type:Month": { "hide": true } }
+              },
+              { "key": "Cell label", "value": "#0A2757", "token": "date-picker/day/color/unselected/label" },
               { "key": "Selected accent", "value": "#005CE5", "token": "border/color-border-primary" },
-              { "key": "Disabled label", "value": "#C2CFE5", "token": "text/color-text-disabled" }
+              { "key": "Dimmed label", "value": "#C2CFE5", "token": "text/color-text-disabled",
+                "variants": { "type:Year": { "hide": true }, "type:Month": { "hide": true } }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Surface width", "value": "328px", "mono": true },
-              { "key": "Cell size", "value": "32 × 32 (day)", "mono": true },
-              { "key": "Header height", "value": "48px", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-3 (8px)", "mono": true },
-              { "key": "Shadow", "value": "app/shadow/shadow (depth 6/12)", "mono": true }
+              { "key": "Surface width", "value": "328", "mono": true },
+              { "key": "Header height", "value": "48", "mono": true },
+              { "key": "Cell size", "value": "32 × 32", "mono": true,
+                "variants": {
+                  "type:Year":  { "value": "100 × 32" },
+                  "type:Month": { "value": "100 × 32" }
+                }
+              },
+              { "key": "Border radius", "value": "8", "mono": true }
             ]
           },
           {
@@ -321,120 +326,9 @@ export const datePickerGroup: ComponentData = {
         ],
         "swift": "<span class=\"syn-type\">EBDatePickerGroup</span><span class=\"syn-punc\">(</span>$selectedDate<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebView</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.day</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBDatePickerGroup</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> selectedDate<span class=\"syn-punc\">,</span>\n    view <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBPickerView</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Day</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"width:360px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:0 0 8px 8px;box-shadow:0 6px 12px -8px rgba(2,14,34,.16);padding:16px;box-sizing:border-box;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:8px;\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M14 7l-5 5 5 5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><div style=\"font-weight:700;font-size:18px;line-height:18px;color:#0A2757;letter-spacing:.25px;\">Month / Year</div><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M10 7l5 5-5 5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div><div style=\"display:grid;grid-template-columns:repeat(7,1fr);gap:0;width:100%;margin-bottom:8px;\"><div style=\"width:32px;height:32px;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;color:#0A2757;font-weight:700;font-size:14px;line-height:14px;letter-spacing:.25px;\">Su</div><div style=\"width:32px;height:32px;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;color:#0A2757;font-weight:700;font-size:14px;line-height:14px;letter-spacing:.25px;\">M</div><div style=\"width:32px;height:32px;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;color:#0A2757;font-weight:700;font-size:14px;line-height:14px;letter-spacing:.25px;\">T</div><div style=\"width:32px;height:32px;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;color:#0A2757;font-weight:700;font-size:14px;line-height:14px;letter-spacing:.25px;\">W</div><div style=\"width:32px;height:32px;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;color:#0A2757;font-weight:700;font-size:14px;line-height:14px;letter-spacing:.25px;\">Th</div><div style=\"width:32px;height:32px;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;color:#0A2757;font-weight:700;font-size:14px;line-height:14px;letter-spacing:.25px;\">F</div><div style=\"width:32px;height:32px;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;color:#0A2757;font-weight:700;font-size:14px;line-height:14px;letter-spacing:.25px;\">Sa</div></div><div style=\"display:grid;grid-template-columns:repeat(7,1fr);gap:0;width:100%;margin-bottom:8px;\"><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#C2CFE5;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">1</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">3</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">4</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:1.5px solid #005CE5;color:#005CE5;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">5</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">6</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">7</div></div><div style=\"display:grid;grid-template-columns:repeat(7,1fr);gap:0;width:100%;margin-bottom:8px;\"><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">8</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">9</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">10</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">11</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">12</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">13</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">14</div></div><div style=\"display:grid;grid-template-columns:repeat(7,1fr);gap:0;width:100%;margin-bottom:8px;\"><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">15</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">16</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">17</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">18</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">19</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">20</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">21</div></div><div style=\"display:grid;grid-template-columns:repeat(7,1fr);gap:0;width:100%;margin-bottom:8px;\"><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">22</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">23</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">24</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">25</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">26</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">27</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">28</div></div><div style=\"display:grid;grid-template-columns:repeat(7,1fr);gap:0;width:100%;margin-bottom:0;\"><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">29</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">30</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">31</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#C2CFE5;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">1</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#C2CFE5;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#C2CFE5;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">3</div><div style=\"width:32px;height:32px;margin:0 auto;display:flex;align-items:flex-start;justify-content:center;padding:10px 6px 12px;box-sizing:border-box;border-radius:30px;border:none;color:#C2CFE5;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">4</div></div></div>"
-      },
-      {
-        "cardKey": "dpg-spec-year",
-        "demoKey": "dpg-year",
-        "demoControls": datePickerGroupDemoControls,
-        "title": "Type = Year",
-        "node": "18431:2825",
-        "description": "Year grid. Header shows \"Year\". 3-col grid with overflow-clip and a drawn <code>Scrollbar</code> decoration at the right. Selected year shown with 1px blue ring and blue label.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Type", "value": "Year", "prop": "type" },
-              { "key": "Cell size", "value": "100×32" },
-              { "key": "Variant", "value": "Year-picker grid" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "date-picker/month-header/color/bg" },
-              { "key": "Border", "value": "#E5EBF4", "token": "date-picker/month-header/color/border" },
-              { "key": "Header label", "value": "#0A2757", "token": "date-picker/month-header/color/label" },
-              { "key": "Header icon", "value": "#005CE5", "token": "date-picker/month-header/color/icon" },
-              { "key": "Cell label", "value": "#0A2757", "token": "date-picker/day/color/unselected/label" },
-              { "key": "Cell bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" },
-              { "key": "Selected accent", "value": "#005CE5", "token": "border/color-border-primary" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Surface width", "value": "328px", "mono": true },
-              { "key": "Cell size", "value": "100 × 32 (year)", "mono": true },
-              { "key": "Header height", "value": "48px", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-3 (8px)", "mono": true },
-              { "key": "Shadow", "value": "app/shadow/shadow (depth 6/12)", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Header style", "value": "Primary/Label/Large", "mono": true },
-              { "key": "Header font", "value": "Proxima Soft Bold · 18 / 18 · +0.25", "mono": true },
-              { "key": "Cell style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Cell font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDatePickerGroup</span><span class=\"syn-punc\">(</span>$selectedDate<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebView</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.year</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDatePickerGroup</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> selectedDate<span class=\"syn-punc\">,</span>\n    view <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBPickerView</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Year</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"width:360px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:0 0 8px 8px;box-shadow:0 6px 12px -8px rgba(2,14,34,.16);padding:16px;box-sizing:border-box;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:8px;\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M14 7l-5 5 5 5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><div style=\"font-weight:700;font-size:18px;line-height:18px;color:#0A2757;letter-spacing:.25px;\">Year</div><div style=\"width:24px;height:24px;\"></div></div><div style=\"display:flex;flex-direction:column;gap:8px;width:100%;position:relative;\"><div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:16px;\"><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2015</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2016</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2017</div></div><div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:16px;\"><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2018</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2019</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2020</div></div><div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:16px;\"><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2021</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2022</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2023</div></div><div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:16px;\"><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2024</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2025</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid #005CE5;color:#005CE5;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2026</div></div><div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:16px;\"><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2027</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2028</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2029</div></div><div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:16px;\"><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2030</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2031</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2032</div></div><div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:16px;\"><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2033</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2034</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">2035</div></div><div style=\"position:absolute;top:50px;bottom:50px;right:-4px;width:4px;background:#0A2757;opacity:.10;border-radius:99px;\"></div></div></div>"
-      },
-      {
-        "cardKey": "dpg-spec-month",
-        "demoKey": "dpg-month",
-        "demoControls": datePickerGroupDemoControls,
-        "title": "Type = Month",
-        "node": "18431:2826",
-        "description": "Month grid. Header shows \"Year\" with only a Next chevron (Prev is missing — asymmetric with Date and Year). 3-col × 4-row grid of 12 months. Selected month shown with 1px blue ring.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Type", "value": "Month", "prop": "type" },
-              { "key": "Cell size", "value": "100×32" },
-              { "key": "Variant", "value": "Month-picker grid" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "date-picker/month-header/color/bg" },
-              { "key": "Border", "value": "#E5EBF4", "token": "date-picker/month-header/color/border" },
-              { "key": "Header label", "value": "#0A2757", "token": "date-picker/month-header/color/label" },
-              { "key": "Header icon", "value": "#005CE5", "token": "date-picker/month-header/color/icon" },
-              { "key": "Cell label", "value": "#0A2757", "token": "date-picker/day/color/unselected/label" },
-              { "key": "Cell bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" },
-              { "key": "Selected accent", "value": "#005CE5", "token": "border/color-border-primary" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Surface width", "value": "328px", "mono": true },
-              { "key": "Cell size", "value": "100 × 32 (month)", "mono": true },
-              { "key": "Header height", "value": "48px", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-3 (8px)", "mono": true },
-              { "key": "Shadow", "value": "app/shadow/shadow (depth 6/12)", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Header style", "value": "Primary/Label/Large", "mono": true },
-              { "key": "Header font", "value": "Proxima Soft Bold · 18 / 18 · +0.25", "mono": true },
-              { "key": "Cell style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Cell font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDatePickerGroup</span><span class=\"syn-punc\">(</span>$selectedDate<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebView</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.month</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDatePickerGroup</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> selectedDate<span class=\"syn-punc\">,</span>\n    view <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBPickerView</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Month</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"width:360px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:0 0 8px 8px;box-shadow:0 6px 12px -8px rgba(2,14,34,.16);padding:16px;box-sizing:border-box;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:8px;\"><div style=\"width:24px;height:24px;\"></div><div style=\"font-weight:700;font-size:18px;line-height:18px;color:#0A2757;letter-spacing:.25px;\">Year</div><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M10 7l5 5-5 5\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div><div style=\"display:flex;flex-direction:column;gap:8px;width:100%;\"><div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:16px;\"><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">Jan</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">Feb</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid #005CE5;color:#005CE5;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">Mar</div></div><div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:16px;\"><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">Apr</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">May</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">Jun</div></div><div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:16px;\"><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">Jul</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">Aug</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">Sep</div></div><div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:16px;\"><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">Oct</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">Nov</div><div style=\"flex:1;display:flex;align-items:center;justify-content:center;padding:10px 12px 8px;border-radius:8px;border:1px solid transparent;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">Dec</div></div></div></div>"
+        "previewHtml": "<div id=\"dpg-spec-preview\"></div>"
       }
+
     ],
     "colorsTables": [
       {

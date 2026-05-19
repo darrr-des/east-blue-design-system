@@ -2,12 +2,12 @@ import type { ComponentData, DemoControlSection } from '../types';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/table-transaction.js`.
-const tableTransactionDemoControls: DemoControlSection[] = [
+const tableTxnHeaderDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'No. of columns',
+        label: 'Columns',
         prop: 'cols',
         defaultValue: '3',
         options: [
@@ -16,12 +16,29 @@ const tableTransactionDemoControls: DemoControlSection[] = [
         ],
       },
       {
-        label: 'Icon (header only)',
+        label: 'Icon',
         prop: 'icon',
         defaultValue: 'no',
         options: [
           { value: 'no', label: 'no' },
           { value: 'yes', label: 'yes' },
+        ],
+      },
+    ],
+  },
+];
+
+const tableTxnContentDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Columns',
+        prop: 'cols',
+        defaultValue: '3',
+        options: [
+          { value: '2', label: '2' },
+          { value: '3', label: '3' },
         ],
       },
     ],
@@ -164,15 +181,15 @@ export const tableTransaction: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Styles",
+    "heading": "Types",
     "specCards": [
       {
-        "cardKey": "header-row-—-36-/-62px-tall",
+        "cardKey": "header-row",
         "demoKey": "header",
-        "demoControls": tableTransactionDemoControls,
-        "title": "Header row — 36 / 62px tall",
+        "demoControls": tableTxnHeaderDemoControls,
+        "title": "Header row",
         "node": "47:324703",
-        "description": "Subtle-bg row with bottom border. Repeats a 10px Proxima Soft Semibold \"Column Label\" N times across equal-width flex columns. <code>icon=yes</code> grows height from 36 to 62px and stacks a 24px placeholder circle above each label.",
+        "description": "Subtle-bg row with bottom border. 10px Proxima Soft Semibold column labels across equal-width flex columns. Optional 24px icon above each label.",
         "previewHtml": "<div id=\"spec-header-preview\"></div>",
         "sections": [
           {
@@ -180,12 +197,7 @@ export const tableTransaction: ComponentData = {
             "slug": "props",
             "rows": [
               {
-                "key": "Row type",
-                "value": "Header",
-                "mono": false
-              },
-              {
-                "key": "No. of columns",
+                "key": "Columns",
                 "value": "3",
                 "mono": false,
                 "prop": "cols"
@@ -195,12 +207,6 @@ export const tableTransaction: ComponentData = {
                 "value": "no",
                 "mono": false,
                 "prop": "icon"
-              },
-              {
-                "key": "Height",
-                "value": "36px",
-                "mono": false,
-                "prop": "height"
               }
             ]
           },
@@ -208,12 +214,12 @@ export const tableTransaction: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "table/color/bg" },
-              { "key": "Subtle row bg", "value": "#F6F9FD", "token": "table/color/bg-subtle" },
+              { "key": "Surface bg", "value": "#F6F9FD", "token": "table/color/bg-subtle" },
               { "key": "Border", "value": "#E5EBF4", "token": "table/color/border" },
-              { "key": "Label", "value": "#0A2757", "token": "table/color/label" },
-              { "key": "Preamble", "value": "#6780A9", "token": "table/color/label-preamble" },
-              { "key": "Currency icon", "value": "#183462", "token": "table/color/icon-currency-secondary" }
+              { "key": "Column label", "value": "#0A2757", "token": "table/color/label" },
+              { "key": "Icon placeholder", "value": "#C2C6CF", "token": "— (hardcoded)",
+                "variants": { "icon:no": { "hide": true } }
+              }
             ]
           },
           {
@@ -221,19 +227,26 @@ export const tableTransaction: ComponentData = {
             "slug": "layout",
             "rows": [
               {
-                "key": "Header height",
-                "value": "36 / 62px",
-                "mono": true
+                "key": "Height",
+                "value": "36",
+                "mono": true,
+                "variants": { "icon:yes": { "value": "62" } }
               },
               {
                 "key": "Padding H",
-                "value": "16px",
+                "value": "24",
                 "mono": true
               },
               {
                 "key": "Padding V",
-                "value": "12px",
+                "value": "12",
                 "mono": true
+              },
+              {
+                "key": "Icon size",
+                "value": "24 × 24",
+                "mono": true,
+                "variants": { "icon:no": { "hide": true } }
               }
             ]
           },
@@ -268,12 +281,12 @@ export const tableTransaction: ComponentData = {
         "compose": "<span class=\"syn-type\">EBTransactionTableHeader</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Section\"</span><span class=\"syn-punc\">,</span>\n    preamble <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Today\"</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "cardKey": "content-row-—-72.5px-tall",
+        "cardKey": "content-row",
         "demoKey": "content",
-        "demoControls": tableTransactionDemoControls,
-        "title": "Content row — 72.5px tall",
+        "demoControls": tableTxnContentDemoControls,
+        "title": "Content row",
         "node": "47:324708",
-        "description": "White bg, bottom border. Two-line layout: a 14px preamble label on top, then N equal-width amount cells below. Each amount cell renders a 15px peso-sign raster + a 14px Proxima Soft Bold numeric value (<code>X,XXX.XX</code>).",
+        "description": "White bg with bottom border. Preamble label on top, then equal-width amount cells with a peso glyph + numeric value (<code>X,XXX.XX</code>).",
         "previewHtml": "<div id=\"spec-content-preview\"></div>",
         "sections": [
           {
@@ -281,20 +294,10 @@ export const tableTransaction: ComponentData = {
             "slug": "props",
             "rows": [
               {
-                "key": "Row type",
-                "value": "Content",
-                "mono": false
-              },
-              {
-                "key": "No. of columns",
+                "key": "Columns",
                 "value": "3",
                 "mono": false,
                 "prop": "cols"
-              },
-              {
-                "key": "Height",
-                "value": "72.5px",
-                "mono": false
               }
             ]
           },
@@ -302,12 +305,11 @@ export const tableTransaction: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "table/color/bg" },
-              { "key": "Subtle row bg", "value": "#F6F9FD", "token": "table/color/bg-subtle" },
+              { "key": "Surface bg", "value": "#FFFFFF", "token": "table/color/bg" },
               { "key": "Border", "value": "#E5EBF4", "token": "table/color/border" },
-              { "key": "Label", "value": "#0A2757", "token": "table/color/label" },
-              { "key": "Preamble", "value": "#6780A9", "token": "table/color/label-preamble" },
-              { "key": "Currency icon", "value": "#183462", "token": "table/color/icon-currency-secondary" }
+              { "key": "Preamble label", "value": "#6780A9", "token": "table/color/label-preamble" },
+              { "key": "Amount value", "value": "#0A2757", "token": "table/color/label" },
+              { "key": "Currency glyph", "value": "#183462", "token": "table/color/icon-currency-secondary" }
             ]
           },
           {
@@ -315,18 +317,18 @@ export const tableTransaction: ComponentData = {
             "slug": "layout",
             "rows": [
               {
-                "key": "Row height",
-                "value": "72.5px",
+                "key": "Height",
+                "value": "72.5",
                 "mono": true
               },
               {
                 "key": "Padding H",
-                "value": "16px",
+                "value": "24",
                 "mono": true
               },
               {
                 "key": "Padding V",
-                "value": "12px",
+                "value": "16",
                 "mono": true
               }
             ]

@@ -7,9 +7,9 @@ const tableSchedulingDemoControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'type',
+        label: 'Type',
         prop: 'type',
-        defaultValue: 'no',
+        defaultValue: '4',
         options: [
           { value: 'no', label: 'no display amount' },
           { value: '2', label: '2 amounts display' },
@@ -161,196 +161,25 @@ export const tableScheduling: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Styles",
+    "heading": "Types",
     "specCards": [
       {
-        "cardKey": "type-=-no-display-amount-—-50.5px-tall",
-        "demoKey": "no",
+        "cardKey": "default",
+        "demoKey": "default",
         "demoControls": tableSchedulingDemoControls,
-        "title": "type = no display amount — 50.5px tall",
+        "title": "Default",
         "node": "47:324362",
-        "description": "Minimum variant. A single date-amount row: a 108px left-aligned date label (<code>MMM DD, YYYY</code>) and a right-aligned peso-prefixed primary amount. No detail rows.",
+        "description": "Date-amount row with optional detail rows. Flip the Type control to add 2 or 4 detail cells (label / value pairs).",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "type",
-                "value": "no display amount",
-                "prop": "type",
-                "mono": false
-              },
-              {
-                "key": "Height",
-                "value": "50.5px",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "table/color/bg" },
-              { "key": "Label", "value": "#0A2757", "token": "table/color/label" },
-              { "key": "Amount", "value": "#005CE5", "token": "table/color/label-amount" },
-              { "key": "Preamble", "value": "#6780A9", "token": "table/color/label-preamble" },
-              { "key": "Currency icon", "value": "#005CE5", "token": "table/color/icon-currency-primary" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Row height",
-                "value": "50.5px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Preamble style",
-                "value": "Primary/Label/Light/Fine",
-                "mono": true
-              },
-              {
-                "key": "Preamble font",
-                "value": "Proxima Soft Semibold · 12 / 12 · +0.5",
-                "mono": true
-              },
-              {
-                "key": "Body style",
-                "value": "Primary/Label/Small",
-                "mono": true
-              },
-              {
-                "key": "Body font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBSchedulingTable.Row</span><span class=\"syn-punc\">(</span>item<span class=\"syn-punc\">, </span>type<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.noAmount</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSchedulingTableRow</span><span class=\"syn-punc\">(</span>\n    item <span class=\"syn-eq\">=</span> item<span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBScheduleType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.NoAmount</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"table-scheduling-preview-no\"></div>"
-      },
-      {
-        "cardKey": "type-=-2-amounts-display-—-89.5px-tall",
-        "demoKey": "two",
-        "demoControls": tableSchedulingDemoControls,
-        "title": "type = 2 amounts display — 89.5px tall",
-        "node": "47:324363",
-        "description": "Date-amount row + one detail row. Details row carries a 111px \"row-item\" leading label and two equal-width cells in the remaining space, each a <code>Label</code> / <code>PHP X,XXX.XX</code> pair.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "type",
-                "value": "2 amounts display",
-                "prop": "type",
-                "mono": false
-              },
-              {
-                "key": "Height",
-                "value": "89.5px",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "table/color/bg" },
-              { "key": "Label", "value": "#0A2757", "token": "table/color/label" },
-              { "key": "Amount", "value": "#005CE5", "token": "table/color/label-amount" },
-              { "key": "Preamble", "value": "#6780A9", "token": "table/color/label-preamble" },
-              { "key": "Currency icon", "value": "#005CE5", "token": "table/color/icon-currency-primary" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Row height",
-                "value": "89.5px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Preamble style",
-                "value": "Primary/Label/Light/Fine",
-                "mono": true
-              },
-              {
-                "key": "Preamble font",
-                "value": "Proxima Soft Semibold · 12 / 12 · +0.5",
-                "mono": true
-              },
-              {
-                "key": "Body style",
-                "value": "Primary/Label/Small",
-                "mono": true
-              },
-              {
-                "key": "Body font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBSchedulingTable.Row</span><span class=\"syn-punc\">(</span>item<span class=\"syn-punc\">, </span>type<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.twoAmounts</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSchedulingTableRow</span><span class=\"syn-punc\">(</span>\n    item <span class=\"syn-eq\">=</span> item<span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBScheduleType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.TwoAmounts</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"table-scheduling-preview-two\"></div>"
-      },
-      {
-        "cardKey": "type-=-4-amounts-display-—-132.5px-tall",
-        "demoKey": "four",
-        "demoControls": tableSchedulingDemoControls,
-        "title": "type = 4 amounts display — 132.5px tall",
-        "node": "47:324364",
-        "description": "Date-amount row + two detail rows (4 cells total). Second detail row shares the same 111px gutter and two label/value cells as the first, with 12px gap between detail rows.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "type",
+                "key": "Type",
                 "value": "4 amounts display",
                 "prop": "type",
                 "mono": false
-              },
-              {
-                "key": "Height",
-                "value": "132.5px",
-                "mono": false
               }
             ]
           },
@@ -358,11 +187,16 @@ export const tableScheduling: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "table/color/bg" },
-              { "key": "Label", "value": "#0A2757", "token": "table/color/label" },
-              { "key": "Amount", "value": "#005CE5", "token": "table/color/label-amount" },
-              { "key": "Preamble", "value": "#6780A9", "token": "table/color/label-preamble" },
-              { "key": "Currency icon", "value": "#005CE5", "token": "table/color/icon-currency-primary" }
+              { "key": "Surface bg", "value": "#FFFFFF", "token": "table/color/bg" },
+              { "key": "Date label", "value": "#0A2757", "token": "table/color/label" },
+              { "key": "Primary amount", "value": "#005CE5", "token": "table/color/label-amount" },
+              { "key": "Currency glyph", "value": "#005CE5", "token": "table/color/icon-currency-primary" },
+              { "key": "Detail label", "value": "#6780A9", "token": "table/color/label-preamble",
+                "variants": { "type:no": { "hide": true } }
+              },
+              { "key": "Detail value", "value": "#0A2757", "token": "table/color/label",
+                "variants": { "type:no": { "hide": true } }
+              }
             ]
           },
           {
@@ -370,14 +204,34 @@ export const tableScheduling: ComponentData = {
             "slug": "layout",
             "rows": [
               {
-                "key": "Row height",
-                "value": "132.5px",
-                "mono": true
+                "key": "Height",
+                "value": "132.5",
+                "mono": true,
+                "variants": {
+                  "type:no": { "value": "50.5" },
+                  "type:2":  { "value": "89.5" }
+                }
               },
               {
                 "key": "Padding H",
-                "value": "16px",
+                "value": "24",
                 "mono": true
+              },
+              {
+                "key": "Padding V",
+                "value": "16",
+                "mono": true
+              },
+              {
+                "key": "Date column width",
+                "value": "108",
+                "mono": true
+              },
+              {
+                "key": "Detail leading width",
+                "value": "111",
+                "mono": true,
+                "variants": { "type:no": { "hide": true } }
               }
             ]
           },
@@ -386,31 +240,33 @@ export const tableScheduling: ComponentData = {
             "slug": "typo",
             "rows": [
               {
-                "key": "Preamble style",
-                "value": "Primary/Label/Light/Fine",
-                "mono": true
-              },
-              {
-                "key": "Preamble font",
+                "key": "Date label",
                 "value": "Proxima Soft Semibold · 12 / 12 · +0.5",
                 "mono": true
               },
               {
-                "key": "Body style",
-                "value": "Primary/Label/Small",
+                "key": "Primary amount",
+                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
                 "mono": true
               },
               {
-                "key": "Body font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
-                "mono": true
+                "key": "Detail label",
+                "value": "Proxima Soft Semibold · 12 / 14 · +0.5",
+                "mono": true,
+                "variants": { "type:no": { "hide": true } }
+              },
+              {
+                "key": "Detail value",
+                "value": "Proxima Soft Semibold · 12 / 12 · +0.5",
+                "mono": true,
+                "variants": { "type:no": { "hide": true } }
               }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBSchedulingTable.Row</span><span class=\"syn-punc\">(</span>item<span class=\"syn-punc\">, </span>type<span class=\"syn-punc\">: </span><span class=\"syn-dot\">.fourAmounts</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBSchedulingTableRow</span><span class=\"syn-punc\">(</span>\n    item <span class=\"syn-eq\">=</span> item<span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBScheduleType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.FourAmounts</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"table-scheduling-preview-four\"></div>"
+        "previewHtml": "<div id=\"table-scheduling-spec-preview\"></div>"
       }
     ],
     "colorsTables": [

@@ -65,11 +65,9 @@ function updateTableSchedulingDemo() {
   if (el) el.innerHTML = _tableSchedBuildRow(_tableSchedDemo.type);
 }
 
-/* ── Table-Scheduling Spec Cards ──────────────────────────────── */
+/* ── Table-Scheduling Spec Card (single dynamic) ──────────────── */
 var _specCards = {
-  no:   { type: 'no' },
-  two:  { type: '2' },
-  four: { type: '4' }
+  default: { type: '4' }
 };
 window._specCards = _specCards;
 
@@ -110,12 +108,7 @@ function updateSpecCard(cardStyle, prop, value) {
   }
 
   /* Update preview inside this card's spec-card-preview */
-  var cardKeyMap = {
-    no:   'type-=-no-display-amount-—-50.5px-tall',
-    two:  'type-=-2-amounts-display-—-89.5px-tall',
-    four: 'type-=-4-amounts-display-—-132.5px-tall'
-  };
-  var fullCardEl = document.getElementById('spec-card-' + cardKeyMap[cardStyle]);
+  var fullCardEl = document.getElementById('spec-card-' + cardStyle);
   if (fullCardEl) {
     var preview = fullCardEl.querySelector('.spec-card-preview');
     if (preview) preview.innerHTML = _tableSchedBuildRow(card.type);
@@ -133,16 +126,8 @@ function updateSpecCard(cardStyle, prop, value) {
 }
 
 function _tableSchedInitSpecCards() {
-  var n = document.getElementById('table-scheduling-preview-no');
-  if (n) n.innerHTML = _tableSchedBuildRow('no');
-  var t2 = document.getElementById('table-scheduling-preview-two');
-  if (t2) t2.innerHTML = _tableSchedBuildRow('2');
-  var t4 = document.getElementById('table-scheduling-preview-four');
-  if (t4) t4.innerHTML = _tableSchedBuildRow('4');
-  /* Initialize each spec card so DEV code reflects current state */
-  ['no', 'two', 'four'].forEach(function(k) {
-    updateSpecCard(k, 'type', _specCards[k].type);
-  });
+  /* Initialize the single spec card preview and DEV code */
+  updateSpecCard('default', 'type', _specCards['default'].type);
 }
 
 function _tableSchedInit() {

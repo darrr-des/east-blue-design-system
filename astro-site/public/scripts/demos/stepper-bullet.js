@@ -92,7 +92,6 @@ function _stepperBulletRenderSpec(card) {
   if (current > steps) current = steps;
   if (current < 1) current = 1;
   return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm" style="padding:12px 0;">' +
-    '<div style="font:500 13px system-ui;color:#3C4A5C;margin-bottom:4px;">' + steps + ' steps, current = ' + current + '</div>' +
     _stepperBulletRender(current, steps) +
   '</div>';
 }

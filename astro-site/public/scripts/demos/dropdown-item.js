@@ -125,6 +125,18 @@ function updateSpecCard(cardStyle, prop, value) {
   if (!card) return;
   card[prop] = value;
 
+  /* Update the spec-card preview SVG — the renderer wraps `previewHtml`
+     in `#spec-card-ddi-spec-{cardStyle} .spec-card-preview`. Re-render
+     with the current type+selected so the visual reflects the flipped
+     control. */
+  var cardWrapper = document.getElementById('spec-card-ddi-spec-' + cardStyle);
+  if (cardWrapper) {
+    var previewEl = cardWrapper.querySelector('.spec-card-preview');
+    if (previewEl) {
+      previewEl.innerHTML = _ddiBuildSvg(card.type, card.selected);
+    }
+  }
+
   /* Update Properties text — data-sp="${cardStyle}-${prop}" */
   var spType = document.querySelector('[data-sp="' + cardStyle + '-type"]');
   if (spType) spType.textContent = card.type;

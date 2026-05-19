@@ -89,9 +89,7 @@ function updateSpecCard(cardStyle, prop, value) {
   }
 
   /* Update preview SVG inside this card's spec-card-preview */
-  var cardKey = cardStyle === 'header'
-    ? 'header-row-—-37-/-65px-tall'
-    : 'content-row-—-56px-tall';
+  var cardKey = cardStyle === 'header' ? 'header-row' : 'content-row';
   var fullCardEl = document.getElementById('spec-card-' + cardKey);
   if (fullCardEl) {
     var preview = fullCardEl.querySelector('.spec-card-preview');

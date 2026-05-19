@@ -169,7 +169,12 @@ export const listItem: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Icon", "value": "#90A8D0", "token": "list-item/color/default/icon-item" },
+              { "key": "Icon", "value": "#90A8D0", "token": "list-item/color/default/icon-item",
+                "variants": {
+                  "asset:check-positive": { "value": "#27C990", "token": "list-item/color/check-positive/icon" },
+                  "asset:pending-notice": { "value": "#CA970C", "token": "list-item/color/pending-notice/icon" }
+                }
+              },
               { "key": "Description", "value": "#445C85", "token": "list-item/color/default/description" },
               { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" }
             ]
@@ -250,7 +255,12 @@ export const listItem: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Icon", "value": "#90A8D0", "token": "list-item/color/default/icon-item" },
+              { "key": "Icon", "value": "#90A8D0", "token": "list-item/color/default/icon-item",
+                "variants": {
+                  "asset:check-positive": { "value": "#27C990", "token": "list-item/color/check-positive/icon" },
+                  "asset:pending-notice": { "value": "#CA970C", "token": "list-item/color/pending-notice/icon" }
+                }
+              },
               { "key": "Description", "value": "#445C85", "token": "list-item/color/default/description" },
               { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" }
             ]
@@ -331,7 +341,12 @@ export const listItem: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Icon", "value": "#90A8D0", "token": "list-item/color/default/icon-item" },
+              { "key": "Icon", "value": "#90A8D0", "token": "list-item/color/default/icon-item",
+                "variants": {
+                  "asset:check-positive": { "value": "#27C990", "token": "list-item/color/check-positive/icon" },
+                  "asset:pending-notice": { "value": "#CA970C", "token": "list-item/color/pending-notice/icon" }
+                }
+              },
               { "key": "Description", "value": "#445C85", "token": "list-item/color/default/description" },
               { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" }
             ]

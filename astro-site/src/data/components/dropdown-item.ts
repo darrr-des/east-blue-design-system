@@ -240,10 +240,17 @@ export const dropdownItem: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg" },
-              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label" },
-              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" },
-              { "key": "Disabled label", "value": "#C2CFE5", "token": "text/color-text-disabled" }
+              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg",
+                "variants": { "selected:true": { "value": "#F6F9FD", "token": "dropdown-item/color/selected/bg" } }
+              },
+              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label",
+                "variants": {
+                  "type:disabeld":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
+                  "type:disabled":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
+                  "selected:true":  { "value": "#005CE5", "token": "dropdown-item/color/selected/label" }
+                }
+              },
+              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" }
             ]
           },
           {
@@ -323,10 +330,17 @@ export const dropdownItem: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg" },
-              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label" },
-              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" },
-              { "key": "Disabled label", "value": "#C2CFE5", "token": "text/color-text-disabled" }
+              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg",
+                "variants": { "selected:true": { "value": "#F6F9FD", "token": "dropdown-item/color/selected/bg" } }
+              },
+              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label",
+                "variants": {
+                  "type:disabeld":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
+                  "type:disabled":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
+                  "selected:true":  { "value": "#005CE5", "token": "dropdown-item/color/selected/label" }
+                }
+              },
+              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" }
             ]
           },
           {
@@ -406,10 +420,17 @@ export const dropdownItem: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg" },
-              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label" },
-              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" },
-              { "key": "Disabled label", "value": "#C2CFE5", "token": "text/color-text-disabled" }
+              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg",
+                "variants": { "selected:true": { "value": "#F6F9FD", "token": "dropdown-item/color/selected/bg" } }
+              },
+              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label",
+                "variants": {
+                  "type:disabeld":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
+                  "type:disabled":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
+                  "selected:true":  { "value": "#005CE5", "token": "dropdown-item/color/selected/label" }
+                }
+              },
+              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" }
             ]
           },
           {
@@ -489,10 +510,17 @@ export const dropdownItem: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg" },
-              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label" },
-              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" },
-              { "key": "Disabled label", "value": "#C2CFE5", "token": "text/color-text-disabled" }
+              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg",
+                "variants": { "selected:true": { "value": "#F6F9FD", "token": "dropdown-item/color/selected/bg" } }
+              },
+              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label",
+                "variants": {
+                  "type:disabeld":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
+                  "type:disabled":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
+                  "selected:true":  { "value": "#005CE5", "token": "dropdown-item/color/selected/label" }
+                }
+              },
+              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" }
             ]
           },
           {
@@ -572,10 +600,17 @@ export const dropdownItem: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg" },
-              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label" },
-              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" },
-              { "key": "Disabled label", "value": "#C2CFE5", "token": "text/color-text-disabled" }
+              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg",
+                "variants": { "selected:true": { "value": "#F6F9FD", "token": "dropdown-item/color/selected/bg" } }
+              },
+              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label",
+                "variants": {
+                  "type:disabeld":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
+                  "type:disabled":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
+                  "selected:true":  { "value": "#005CE5", "token": "dropdown-item/color/selected/label" }
+                }
+              },
+              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" }
             ]
           },
           {

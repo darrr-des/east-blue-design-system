@@ -2,7 +2,34 @@ import type { ComponentData, DemoControlSection } from '../types';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/table.js`.
-const tableDemoControls: DemoControlSection[] = [
+const tableHeaderDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Columns',
+        prop: 'cols',
+        defaultValue: '4',
+        options: [
+          { value: '2', label: '2' },
+          { value: '3', label: '3' },
+          { value: '4', label: '4' },
+        ],
+      },
+      {
+        label: 'Icon',
+        prop: 'icon',
+        defaultValue: 'no',
+        options: [
+          { value: 'no', label: 'no' },
+          { value: 'yes', label: 'yes' },
+        ],
+      },
+    ],
+  },
+];
+
+const tableContentDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
@@ -156,25 +183,20 @@ export const table: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Styles",
+    "heading": "Types",
     "specCards": [
       {
-        "cardKey": "header-row-—-37-/-65px-tall",
+        "cardKey": "header-row",
         "demoKey": "header",
-        "demoControls": tableDemoControls,
-        "title": "Header row — 37 / 65px tall",
+        "demoControls": tableHeaderDemoControls,
+        "title": "Header row",
         "node": "47:323224",
-        "description": "Subtle-bg row with bottom border. Primary-bold label on the left, semibold columns on the right. <code>icon=yes</code> grows height from 37 to 65px and adds a 24px placeholder circle above each column.",
+        "description": "Subtle-bg row with bottom border. Primary-bold label on the left, semibold columns on the right. Optional 24px icon above each column.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              {
-                "key": "Row type",
-                "value": "Header",
-                "mono": false
-              },
               {
                 "key": "Columns",
                 "value": "4",
@@ -182,8 +204,9 @@ export const table: ComponentData = {
                 "mono": false
               },
               {
-                "key": "Height",
-                "value": "37 / 65px",
+                "key": "Icon",
+                "value": "no",
+                "prop": "icon",
                 "mono": false
               }
             ]
@@ -192,11 +215,13 @@ export const table: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "table/color/bg" },
-              { "key": "Subtle row bg", "value": "#D7D8DA", "token": "table/color/bg-subtle" },
-              { "key": "Border", "value": "#828591", "token": "table/color/border" },
-              { "key": "Label", "value": "#0A0A0B", "token": "table/color/label" },
-              { "key": "Description", "value": "#6780A9", "token": "table/color/description" }
+              { "key": "Surface bg", "value": "#F6F9FD", "token": "table/color/bg-subtle" },
+              { "key": "Border", "value": "#E5EBF4", "token": "table/color/border" },
+              { "key": "Label", "value": "#0A2757", "token": "table/color/label" },
+              { "key": "Column", "value": "#0A2757", "token": "table/color/label" },
+              { "key": "Icon placeholder", "value": "#C2C6CF", "token": "— (hardcoded)",
+                "variants": { "icon:no": { "hide": true } }
+              }
             ]
           },
           {
@@ -204,19 +229,26 @@ export const table: ComponentData = {
             "slug": "layout",
             "rows": [
               {
-                "key": "Header height",
-                "value": "37 / 65px",
-                "mono": true
+                "key": "Height",
+                "value": "37",
+                "mono": true,
+                "variants": { "icon:yes": { "value": "65" } }
               },
               {
                 "key": "Padding H",
-                "value": "24px",
+                "value": "24",
                 "mono": true
               },
               {
                 "key": "Padding V",
-                "value": "16px",
+                "value": "8 / 12",
                 "mono": true
+              },
+              {
+                "key": "Icon size",
+                "value": "24 × 24",
+                "mono": true,
+                "variants": { "icon:no": { "hide": true } }
               }
             ]
           },
@@ -252,31 +284,21 @@ export const table: ComponentData = {
         "previewHtml": "<div id=\"table-preview-header\"></div>"
       },
       {
-        "cardKey": "content-row-—-56px-tall",
+        "cardKey": "content-row",
         "demoKey": "content",
-        "demoControls": tableDemoControls,
-        "title": "Content row — 56px tall",
+        "demoControls": tableContentDemoControls,
+        "title": "Content row",
         "node": "47:325869",
-        "description": "White bg. Bold 12px label on the left, 10px BarkAda Semibold description columns on the right (1, 2, or 3 of them).",
+        "description": "White bg. Bold 12px label on the left, BarkAda Semibold description columns on the right.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Row type",
-                "value": "Content",
-                "mono": false
-              },
-              {
                 "key": "Columns",
                 "value": "4",
                 "prop": "cols",
-                "mono": false
-              },
-              {
-                "key": "Height",
-                "value": "56px",
                 "mono": false
               }
             ]
@@ -285,10 +307,9 @@ export const table: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "table/color/bg" },
-              { "key": "Subtle row bg", "value": "#D7D8DA", "token": "table/color/bg-subtle" },
-              { "key": "Border", "value": "#828591", "token": "table/color/border" },
-              { "key": "Label", "value": "#0A0A0B", "token": "table/color/label" },
+              { "key": "Surface bg", "value": "#FFFFFF", "token": "table/color/bg" },
+              { "key": "Border", "value": "#E5EBF4", "token": "table/color/border" },
+              { "key": "Label", "value": "#0A2757", "token": "table/color/label" },
               { "key": "Description", "value": "#6780A9", "token": "table/color/description" }
             ]
           },
@@ -297,18 +318,18 @@ export const table: ComponentData = {
             "slug": "layout",
             "rows": [
               {
-                "key": "Row height",
-                "value": "56px",
+                "key": "Height",
+                "value": "56",
                 "mono": true
               },
               {
                 "key": "Padding H",
-                "value": "24px",
+                "value": "24",
                 "mono": true
               },
               {
                 "key": "Padding V",
-                "value": "12px",
+                "value": "12",
                 "mono": true
               }
             ]

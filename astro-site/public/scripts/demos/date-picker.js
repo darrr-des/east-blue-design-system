@@ -97,24 +97,11 @@ function updateDatePickerDemo() {
   if (el) el.innerHTML = _dpBuildSvg(_dpDemo.state, _dpDemo.filled, _dpDemo.disabled);
 }
 
-/* ── Spec card state — drives per-card preview + DEV snippets ──────── */
+/* ── Spec card state — single dynamic card ───────────────────────── */
 var _specCards = {
-  'dp-default-empty':  { state: 'Default', filled: 'false', disabled: 'No' },
-  'dp-default-filled': { state: 'Default', filled: 'true',  disabled: 'No' },
-  'dp-active-empty':   { state: 'Active',  filled: 'false', disabled: 'No' },
-  'dp-active-filled':  { state: 'Active',  filled: 'true',  disabled: 'No' },
-  'dp-disabled':       { state: 'Default', filled: 'false', disabled: 'Yes' }
+  'default': { state: 'Default', filled: 'false', disabled: 'No' }
 };
 window._specCards = _specCards;
-
-/* Mapping demoKey → cardKey (used to find spec-card root in DOM) */
-var _dpCardKeys = {
-  'dp-default-empty':  'dp-spec-default-empty',
-  'dp-default-filled': 'dp-spec-default-filled',
-  'dp-active-empty':   'dp-spec-active-empty',
-  'dp-active-filled':  'dp-spec-active-filled',
-  'dp-disabled':       'dp-spec-disabled'
-};
 
 function buildSwiftSnippet(cardKey, card) {
   if (card.disabled === 'Yes') {
@@ -151,14 +138,11 @@ function updateSpecCard(cardStyle, prop, value) {
   if (!card) return;
   card[prop] = value;
 
-  /* Update preview SVG — locate the .spec-card-preview inside the spec card root */
-  var rootKey = _dpCardKeys[cardStyle];
-  if (rootKey) {
-    var rootEl = document.getElementById('spec-card-' + rootKey);
-    if (rootEl) {
-      var previewEl = rootEl.querySelector('.spec-card-preview');
-      if (previewEl) previewEl.innerHTML = _dpBuildSvg(card.state, card.filled, card.disabled);
-    }
+  /* Update preview SVG inside the spec card root */
+  var rootEl = document.getElementById('spec-card-' + cardStyle);
+  if (rootEl) {
+    var previewEl = rootEl.querySelector('.spec-card-preview');
+    if (previewEl) previewEl.innerHTML = _dpBuildSvg(card.state, card.filled, card.disabled);
   }
 
   /* Update Properties readouts */
@@ -183,16 +167,8 @@ function updateSpecCard(cardStyle, prop, value) {
   }
 }
 
-/* Legacy alias — preserve old function name in case other code uses it */
-function updateDatePickerSpecCard(key) {
-  /* Legacy: triggered by old onclick handlers */
-  var demoKey = 'dp-' + key;
-  var card = _specCards[demoKey];
-  if (card) updateSpecCard(demoKey, 'state', card.state);
-}
-
 function _dpInitSpecCards() {
-  Object.keys(_specCards).forEach(function(k){ updateSpecCard(k, 'state', _specCards[k].state); });
+  updateSpecCard('default', 'state', _specCards['default'].state);
 }
 
 function _dpInit() {

@@ -239,10 +239,10 @@ export const stepperCircular: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "stepper---circular-canonical-node-27:47768-(10-steps)-·-sibling-frames-27:47819…27:48036",
+        "cardKey": "stepper-circular",
         "demoKey": "main",
         "demoControls": stepperCircularDemoControls,
-        "title": "Stepper - Circular canonical node 27:47768 (10 Steps) · sibling frames 27:47819…27:48036",
+        "title": "Stepper - Circular",
         "node": "27:47768",
         "description": "Row of N 45×45 numbered circles, each with a ring that indicates position through the flow. 9 hardcoded sibling frames today; target is one component with a <code>steps</code> prop.",
         "previewHtml": "<div class=\"spec-preview-body\" id=\"stepper-circular-spec-1\"><div class=\"eb-preview eb-preview-stepper-circular\" style=\"display:flex;align-items:center;gap:20px;padding:12px 0;flex-wrap:wrap;justify-content:center;\"><div style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-dasharray=\"125.66370614359172 0\" stroke-dashoffset=\"31.41592653589793\" transform=\"rotate(-90 22.5 22.5)\"></circle></svg><span style=\"position:relative;font:700 18px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">1</span></div><div style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-dasharray=\"62.83185307179586 62.83185307179586\" stroke-dashoffset=\"31.41592653589793\" transform=\"rotate(-90 22.5 22.5)\"></circle></svg><span style=\"position:relative;font:700 18px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">2</span></div><div style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle></svg><span style=\"position:relative;font:700 18px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">3</span></div><div style=\"position:relative;width:45px;height:45px;display:inline-flex;align-items:center;justify-content:center;\"><svg width=\"45\" height=\"45\" viewBox=\"0 0 45 45\" style=\"position:absolute;inset:0;\"><circle cx=\"22.5\" cy=\"22.5\" r=\"20\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"2.5\"></circle></svg><span style=\"position:relative;font:700 18px 'Proxima Soft', system-ui, sans-serif;color:#005CE5;letter-spacing:0.25px;\">4</span></div></div></div>",
@@ -278,120 +278,23 @@ export const stepperCircular: ComponentData = {
             ]
           },
           {
-            "label": "Properties (today)",
-            "rows": [
-              {
-                "key": "Top-level component",
-                "value": "Stepper - Circular - N Steps",
-                "mono": true
-              },
-              {
-                "key": "Inner symbol",
-                "value": "number = 1 | 2 | … | N",
-                "mono": true
-              },
-              {
-                "key": "Ring implementation",
-                "value": "raster &lt;img&gt;",
-                "mono": true
-              },
-              {
-                "key": "Layout",
-                "value": "horizontal only",
-                "mono": true
-              },
-              {
-                "key": "steps",
-                "value": "2 | 3 | … | 10",
-                "mono": true
-              },
-              {
-                "key": "current",
-                "value": "1 | 2 | … | steps",
-                "mono": true
-              },
-              {
-                "key": "orientation",
-                "value": "horizontal | vertical",
-                "mono": true
-              },
-              {
-                "key": "status (per slot)",
-                "value": "completed | current | upcoming",
-                "mono": true
-              }
-            ]
-          },
-          {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Step circle size",
-                "value": "45 × 45",
-                "mono": true
-              },
-              {
-                "key": "Ring stroke width",
-                "value": "~2 (raster-baked)",
-                "mono": true
-              },
-              {
-                "key": "Gap between circles",
-                "value": "20 (space/space-20)",
-                "mono": true
-              },
-              {
-                "key": "Outer frame padding",
-                "value": "20 vertical, 20 horizontal",
-                "mono": true
-              },
-              {
-                "key": "Total width (N steps)",
-                "value": "45 × N + 20 × (N−1) + 40",
-                "mono": true
-              },
-              {
-                "key": "Height",
-                "value": "85",
-                "mono": true
-              }
+              { "key": "Step circle size",    "value": "45 × 45", "mono": true },
+              { "key": "Ring stroke width",   "value": "2",       "mono": true },
+              { "key": "Gap between circles", "value": "20",      "mono": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              {
-                "key": "DS style",
-                "value": "Primary/Headlines/Block",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Bold",
-                "mono": true
-              },
-              {
-                "key": "Size",
-                "value": "18",
-                "mono": true
-              },
-              {
-                "key": "Line height",
-                "value": "23",
-                "mono": true
-              },
-              {
-                "key": "Tracking",
-                "value": "0.25",
-                "mono": true
-              },
-              {
-                "key": "Digits are center-aligned within the 45×45 circle.",
-                "value": "",
-                "mono": false
-              }
+              { "key": "DS style",    "value": "Primary/Headlines/Block", "mono": true },
+              { "key": "Font",        "value": "Proxima Soft Bold",       "mono": true },
+              { "key": "Size",        "value": "18",                      "mono": true },
+              { "key": "Line height", "value": "23",                      "mono": true },
+              { "key": "Tracking",    "value": "0.25",                    "mono": true }
             ]
           }
         ],

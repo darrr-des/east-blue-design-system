@@ -56,13 +56,9 @@ function updateCalloutDemo() {
   if (el) el.innerHTML = _calBuildSvg(_calDemo.label, _calDemo.labelSize, _calDemo.description, _calDemo.type);
 }
 
-/* ── Spec cards (Style tab) ──────────────────────────────────────── */
+/* ── Spec card (single dynamic) ───────────────────────────────────── */
 var _calSpecCards = {
-  'default-both':  { type: 'default',     label: 'yes', labelSize: 'default', description: 'yes' },
-  'info-both':     { type: 'information', label: 'yes', labelSize: 'default', description: 'yes' },
-  'default-small': { type: 'default',     label: 'yes', labelSize: 'small',   description: 'yes' },
-  'default-desc':  { type: 'default',     label: 'no',  labelSize: 'default', description: 'yes' },
-  'default-label': { type: 'default',     label: 'yes', labelSize: 'default', description: 'no' }
+  'default': { type: 'default', label: 'yes', labelSize: 'default', description: 'yes' }
 };
 var _specCards = _calSpecCards;
 window._specCards = _specCards;
@@ -95,10 +91,11 @@ function updateSpecCard(cardStyle, prop, value) {
   if (!card) return;
   card[prop] = value;
 
-  /* Update preview SVG — `cal-spec-{cardStyle}-preview` */
-  var previewEl = document.getElementById('cal-spec-' + cardStyle + '-preview');
-  if (previewEl) {
-    previewEl.innerHTML = _calBuildSvg(card.label, card.labelSize, card.description, card.type);
+  /* Update preview inside the spec card root */
+  var rootEl = document.getElementById('spec-card-' + cardStyle);
+  if (rootEl) {
+    var previewEl = rootEl.querySelector('.spec-card-preview');
+    if (previewEl) previewEl.innerHTML = _calBuildSvg(card.label, card.labelSize, card.description, card.type);
   }
 
   /* Update Properties readouts */

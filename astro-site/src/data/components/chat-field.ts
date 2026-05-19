@@ -192,117 +192,67 @@ export const chatField: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Styles",
+    "heading": "Types",
     "specCards": [
       {
-        "cardKey": "cf-spec-default",
-        "demoKey": "cf-default",
+        "cardKey": "default",
+        "demoKey": "default",
         "demoControls": chatFieldDemoControls,
-        "title": "Inactive (active=no)",
+        "title": "Default",
         "node": "23:145916",
-        "description": "Idle composer. Inner field renders with 1px #D7E0EF border and placeholder \"Say hi!\" in #90A8D0.",
+        "description": "Message composer with a leading attachment icon, inner input field, and trailing send action. Flip Active to focus the field.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Variant", "value": "Inactive (active=no)" },
-              { "key": "Active",  "value": "no", "prop": "active" },
-              { "key": "State",   "value": "Default" }
+              { "key": "Active", "value": "no", "prop": "active" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",     "value": "#FFFFFF", "token": "chat-field/color/bg" },
+              { "key": "Surface", "value": "#FFFFFF", "token": "chat-field/color/bg" },
               { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border",
                 "variants": {
                   "active:yes": { "value": "#005CE5", "token": "input-field/active/border" }
                 }
               },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" },
-              { "key": "Send icon",   "value": "#005CE5", "token": "chat-field/color/icon" }
+              { "key": "Input text", "value": "#90A8D0", "token": "input-field/default/placeholder",
+                "variants": {
+                  "active:yes": { "value": "#0A2757", "token": "input-field/active/value" }
+                }
+              },
+              { "key": "Send icon", "value": "#005CE5", "token": "chat-field/color/icon" }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Field height",  "value": "48px (auto-grow)", "mono": true },
-              { "key": "Padding H",     "value": "12px", "mono": true },
-              { "key": "Padding V",     "value": "14px", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
-              { "key": "Send button",   "value": "40 × 40", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Input style", "value": "Primary/Multi-line Label/Light/Base", "mono": true },
-              { "key": "Input font",  "value": "Proxima Soft Semibold · 16 / 20 · +0.25", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBChatField</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">: </span>$message<span class=\"syn-punc\">, </span>onSend<span class=\"syn-punc\">: </span><span class=\"syn-punc\">{ </span>sendMessage<span class=\"syn-punc\">() }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBChatField</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> message<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ message = it }</span><span class=\"syn-punc\">,</span>\n    onSend <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ sendMessage() }</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"360\" height=\"88\" viewBox=\"0 0 360 88\" fill=\"none\"><rect width=\"360\" height=\"88\" fill=\"#FFFFFF\"></rect><rect x=\"12\" y=\"28\" width=\"32\" height=\"32\" fill=\"none\"></rect><path d=\"M28 36v16M20 44h16\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\"></path><rect x=\"52.5\" y=\"18.5\" width=\"247\" height=\"51\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"64\" y=\"50\" font-family=\"Proxima Soft, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Say hi!</text><rect x=\"312\" y=\"28\" width=\"32\" height=\"32\" fill=\"none\"></rect><path d=\"M319 44L339 35L332 55L329 46Z\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linejoin=\"round\" fill=\"none\"></path><path d=\"M319 44L329 46\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg>"
-      },
-      {
-        "cardKey": "cf-spec-active",
-        "demoKey": "cf-active",
-        "demoControls": chatFieldDemoControls,
-        "title": "Active (active=yes)",
-        "node": "23:145922",
-        "description": "Focused composer. Inner field switches to a 2px #005CE5 border and text color flips to #0A2757 (filled tone).",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Variant", "value": "Active (active=yes)" },
-              { "key": "Active",  "value": "yes", "prop": "active" },
-              { "key": "State",   "value": "Active" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface",     "value": "#FFFFFF", "token": "chat-field/color/bg" },
-              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border",
-                "variants": {
-                  "active:yes": { "value": "#005CE5", "token": "input-field/active/border" }
-                }
+              { "key": "Field height", "value": "48 (auto-grow)", "mono": true },
+              { "key": "Padding H", "value": "12", "mono": true },
+              { "key": "Padding V", "value": "14", "mono": true },
+              { "key": "Border radius", "value": "6", "mono": true },
+              { "key": "Border width", "value": "1", "mono": true,
+                "variants": { "active:yes": { "value": "2" } }
               },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" },
-              { "key": "Send icon",   "value": "#005CE5", "token": "chat-field/color/icon" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Field height",  "value": "48px (auto-grow)", "mono": true },
-              { "key": "Padding H",     "value": "12px", "mono": true },
-              { "key": "Padding V",     "value": "14px", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
-              { "key": "Send button",   "value": "40 × 40", "mono": true }
+              { "key": "Send button", "value": "40 × 40", "mono": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Input style", "value": "Primary/Multi-line Label/Light/Base", "mono": true },
-              { "key": "Input font",  "value": "Proxima Soft Semibold · 16 / 20 · +0.25", "mono": true }
+              { "key": "Style", "value": "Primary/Multi-line Label/Light/Base", "mono": true },
+              { "key": "Font",  "value": "Proxima Soft Semibold · 16 / 20 · +0.25", "mono": true }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBChatField</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">: </span>$message<span class=\"syn-punc\">, </span>onSend<span class=\"syn-punc\">: </span><span class=\"syn-punc\">{ </span>sendMessage<span class=\"syn-punc\">() }</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBChatField</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> message<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ message = it }</span><span class=\"syn-punc\">,</span>\n    onSend <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ sendMessage() }</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"360\" height=\"88\" viewBox=\"0 0 360 88\" fill=\"none\"><rect width=\"360\" height=\"88\" fill=\"#FFFFFF\"></rect><rect x=\"12\" y=\"28\" width=\"32\" height=\"32\" fill=\"none\"></rect><path d=\"M28 36v16M20 44h16\" stroke=\"#005CE5\" stroke-width=\"2\" stroke-linecap=\"round\"></path><rect x=\"52.5\" y=\"18.5\" width=\"247\" height=\"51\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"2\"></rect><text x=\"64\" y=\"50\" font-family=\"Proxima Soft, system-ui\" font-size=\"16\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.25\">Say hi!</text><rect x=\"312\" y=\"28\" width=\"32\" height=\"32\" fill=\"none\"></rect><path d=\"M319 44L339 35L332 55L329 46Z\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linejoin=\"round\" fill=\"none\"></path><path d=\"M319 44L329 46\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg>"
+        "previewHtml": "<div id=\"cf-spec-preview\"></div>"
       }
     ],
     "colorsTables": [

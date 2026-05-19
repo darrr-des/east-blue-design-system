@@ -8,16 +8,6 @@ const toastDemoControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'Type',
-        prop: 'type',
-        defaultValue: 'default',
-        options: [
-          { value: 'default', label: 'default' },
-          { value: 'pending', label: 'pending' },
-          { value: 'error', label: 'error' },
-        ],
-      },
-      {
         label: 'Theme',
         prop: 'theme',
         defaultValue: 'dark',
@@ -251,120 +241,58 @@ export const toast: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Styles",
+    "heading": "Types",
     "specCards": [
       {
-        "cardKey": "default-/-dark-—-with-icon,-large-label",
+        "cardKey": "default",
         "demoKey": "dark",
         "demoControls": toastDemoControls,
-        "title": "Default / Dark — with icon, large label",
+        "title": "Default",
         "node": "27:53136",
-        "description": "The canonical success toast. Dark navy surface, white text, leading checkmark icon. Used across the app to confirm completed actions (transfers, settings saved, uploads done).",
+        "description": "Confirms a completed action — transfer sent, settings saved, upload finished. Default theme places a checkmark glyph on a dark navy surface.",
         "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-1\"><div class=\"eb-preview eb-preview-toast eb-preview-toast--dark eb-preview-toast--large\"><div class=\"eb-preview-toast__container\"><div class=\"eb-preview-toast__icon-wrap\"><svg class=\"eb-preview-toast__icon eb-preview-toast__icon--large\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" fill=\"none\"></circle><path d=\"M7.50 12.20 L10.80 16.50 L17.00 7.50\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path></svg></div><p class=\"eb-preview-toast__label\">Add the popup message here</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "default",
-                "mono": true,
-                "prop": "type"
-              },
-              {
-                "key": "Theme",
-                "value": "dark",
-                "mono": true,
-                "prop": "theme"
-              },
-              {
-                "key": "With Icon",
-                "value": "yes",
-                "mono": true,
-                "prop": "withIcon"
-              },
-              {
-                "key": "Large Label",
-                "value": "yes",
-                "mono": true,
-                "prop": "largeLabel"
-              }
+              { "key": "Theme",       "value": "dark", "mono": true, "prop": "theme" },
+              { "key": "With Icon",   "value": "yes",  "mono": true, "prop": "withIcon" },
+              { "key": "Large Label", "value": "yes",  "mono": true, "prop": "largeLabel" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Default bg", "value": "#0A2757", "token": "toast/color/default/bg" },
-              { "key": "Default label", "value": "#FFFFFF", "token": "toast/color/default/label" },
-              { "key": "Default icon", "value": "#FFFFFF", "token": "toast/color/default/icon" },
-              { "key": "Default border", "value": "#E5EBF4", "token": "toast/color/default/border" },
-              { "key": "Light bg", "value": "#FFFFFF", "token": "toast/color/light/bg" },
-              { "key": "Light label", "value": "#0A2757", "token": "toast/color/light/label" },
-              { "key": "Light icon", "value": "#0A2757", "token": "toast/color/light/icon" },
-              { "key": "Destructive bg", "value": "#D61B2C", "token": "toast/color/destructive/bg" },
-              { "key": "Destructive label", "value": "#FFFFFF", "token": "toast/color/destructive/label" }
+              { "key": "Background", "value": "#0A2757", "token": "toast/color/default/bg",
+                "variants": {
+                  "theme:light":   { "value": "#FFFFFF", "token": "toast/color/light/bg" },
+                  "theme:default": { "value": "#0A2757", "token": "toast/color/default/bg" }
+                }
+              },
+              { "key": "Label", "value": "#FFFFFF", "token": "toast/color/default/label",
+                "variants": {
+                  "theme:light": { "value": "#0A2757", "token": "toast/color/light/label" }
+                }
+              },
+              { "key": "Icon", "value": "#FFFFFF", "token": "toast/color/default/icon",
+                "variants": {
+                  "theme:light":   { "value": "#0A2757", "token": "toast/color/light/icon" },
+                  "withIcon:no":   { "hide": true }
+                }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "312",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "Padding V (large)",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "Padding V (small)",
-                "value": "0",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "8",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1 solid token",
-                "mono": true
-              },
-              {
-                "key": "Shadow",
-                "value": "0 1 3 rgba(232,238,242,.79)",
-                "mono": true
-              },
-              {
-                "key": "Gap (icon ↔ label)",
-                "value": "8",
-                "mono": true
-              },
-              {
-                "key": "Icon size (large)",
-                "value": "24 × 24",
-                "mono": true
-              },
-              {
-                "key": "Icon size (small)",
-                "value": "16 × 16",
-                "mono": true
-              },
-              {
-                "key": "Icon offset top (large)",
-                "value": "7",
-                "mono": true
+              { "key": "Width",         "value": "312", "mono": true },
+              { "key": "Padding",       "value": "12 × 12", "mono": true },
+              { "key": "Corner radius", "value": "8",   "mono": true },
+              { "key": "Icon size",     "value": "24 × 24", "mono": true,
+                "variants": { "largeLabel:no": { "value": "16 × 16" }, "withIcon:no": { "hide": true } }
               }
             ]
           },
@@ -372,30 +300,12 @@ export const toast: ComponentData = {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              {
-                "key": "Style (large)",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
+              { "key": "Font",  "value": "Proxima Soft Semibold", "mono": true },
+              { "key": "Style", "value": "Primary/Label/Light/Small", "mono": true,
+                "variants": { "largeLabel:no": { "value": "Primary/Multi-line Label/Light/Fine" } }
               },
-              {
-                "key": "Style (small)",
-                "value": "Primary/Multi-line Label/Light/Fine",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Semibold",
-                "mono": true
-              },
-              {
-                "key": "Size (large)",
-                "value": "14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Size (small)",
-                "value": "12 / 14 · +0.5",
-                "mono": true
+              { "key": "Size",  "value": "14 / 14 · +0.25", "mono": true,
+                "variants": { "largeLabel:no": { "value": "12 / 14 · +0.5" } }
               }
             ]
           }
@@ -404,91 +314,43 @@ export const toast: ComponentData = {
         "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    message <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Action successful\"</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span><span class=\"syn-punc\">,</span>\n    icon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Filled</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Check</span><span class=\"syn-punc\">, null) }</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "cardKey": "error-—-with-icon,-large-label",
+        "cardKey": "error",
         "demoKey": "error",
         "demoControls": toastDemoControls,
-        "title": "Error — with icon, large label",
+        "title": "Error",
         "node": "27:53154",
-        "description": "Destructive surface for errors. Red bg, white label, leading X glyph. Only paints when <code>theme=default</code> — the current schema doesn't allow a light/dark error variant.",
+        "description": "Surfaces a failure that needs the user's attention — failed transfer, invalid input, expired session. Red surface with a leading X glyph.",
         "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-2\"><div class=\"eb-preview eb-preview-toast eb-preview-toast--destructive eb-preview-toast--large\"><div class=\"eb-preview-toast__container\"><div class=\"eb-preview-toast__icon-wrap\"><svg class=\"eb-preview-toast__icon eb-preview-toast__icon--large\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" fill=\"none\"></circle><path d=\"M8 8 L16 16 M16 8 L8 16\" stroke=\"#FFFFFF\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div><p class=\"eb-preview-toast__label\">Add the popup message here</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "error",
-                "mono": true,
-                "prop": "type"
-              },
-              {
-                "key": "Theme",
-                "value": "default",
-                "mono": true,
-                "prop": "theme"
-              },
-              {
-                "key": "With Icon",
-                "value": "yes",
-                "mono": true,
-                "prop": "withIcon"
-              },
-              {
-                "key": "Large Label",
-                "value": "yes",
-                "mono": true,
-                "prop": "largeLabel"
-              }
+              { "key": "Theme",       "value": "default", "mono": true, "prop": "theme" },
+              { "key": "With Icon",   "value": "yes",     "mono": true, "prop": "withIcon" },
+              { "key": "Large Label", "value": "yes",     "mono": true, "prop": "largeLabel" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface bg", "value": "#0A2757", "token": "main/toast/error/bg" },
-              { "key": "Icon tint", "value": "#FF6B6B", "token": "main/toast/error/icon" },
-              { "key": "Label color", "value": "#FFFFFF", "token": "main/toast/error/label" }
+              { "key": "Background", "value": "#D61B2C", "token": "toast/color/destructive/bg" },
+              { "key": "Label",      "value": "#FFFFFF", "token": "toast/color/destructive/label" },
+              { "key": "Icon", "value": "#FFFFFF", "token": "toast/color/destructive/icon",
+                "variants": { "withIcon:no": { "hide": true } }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "343 (fill, 16 inset)",
-                "mono": true
-              },
-              {
-                "key": "Min height",
-                "value": "64",
-                "mono": true
-              },
-              {
-                "key": "Padding (h)",
-                "value": "16",
-                "mono": true
-              },
-              {
-                "key": "Padding (v)",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "8",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "24 × 24",
-                "mono": true
-              },
-              {
-                "key": "Gap",
-                "value": "12",
-                "mono": true
+              { "key": "Width",         "value": "312", "mono": true },
+              { "key": "Padding",       "value": "12 × 12", "mono": true },
+              { "key": "Corner radius", "value": "8",   "mono": true },
+              { "key": "Icon size",     "value": "24 × 24", "mono": true,
+                "variants": { "largeLabel:no": { "value": "16 × 16" }, "withIcon:no": { "hide": true } }
               }
             ]
           },
@@ -496,25 +358,12 @@ export const toast: ComponentData = {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Body/Medium",
-                "mono": true
+              { "key": "Font",  "value": "Proxima Soft Semibold", "mono": true },
+              { "key": "Style", "value": "Primary/Label/Light/Small", "mono": true,
+                "variants": { "largeLabel:no": { "value": "Primary/Multi-line Label/Light/Fine" } }
               },
-              {
-                "key": "Font",
-                "value": "BarkAda",
-                "mono": true
-              },
-              {
-                "key": "Size",
-                "value": "14",
-                "mono": true
-              },
-              {
-                "key": "Line-height",
-                "value": "20",
-                "mono": true
+              { "key": "Size",  "value": "14 / 14 · +0.25", "mono": true,
+                "variants": { "largeLabel:no": { "value": "12 / 14 · +0.5" } }
               }
             ]
           }
@@ -523,91 +372,51 @@ export const toast: ComponentData = {
         "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Something went wrong\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastIntent</span><span class=\"syn-punc\">.</span>Error\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "cardKey": "pending-—-with-icon,-large-label",
+        "cardKey": "pending",
         "demoKey": "pending",
         "demoControls": toastDemoControls,
-        "title": "Pending — with icon, large label",
+        "title": "Pending",
         "node": "3424:1308",
-        "description": "Acknowledges in-flight work. Ships a <strong>placeholder gray circle</strong> today (<code>icon-placeholder</code>) — should be an animated spinner. Container is wrapped in a <code>&lt;button&gt;</code> element in the Figma code, suggesting tap-to-dismiss is intended but not documented.",
+        "description": "Acknowledges in-flight work the user kicked off — submitting a form, syncing a balance, processing a payment. A spinner glyph signals the action is still running.",
         "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-3\"><div class=\"eb-preview eb-preview-toast eb-preview-toast--dark eb-preview-toast--large\"><div class=\"eb-preview-toast__container\"><div class=\"eb-preview-toast__icon-wrap\"><div class=\"eb-preview-toast__icon-placeholder eb-preview-toast__icon-placeholder--large\"></div></div><p class=\"eb-preview-toast__label\">Add the popup message here</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "pending",
-                "mono": true,
-                "prop": "type"
-              },
-              {
-                "key": "Theme",
-                "value": "dark",
-                "mono": true,
-                "prop": "theme"
-              },
-              {
-                "key": "With Icon",
-                "value": "yes",
-                "mono": true,
-                "prop": "withIcon"
-              },
-              {
-                "key": "Large Label",
-                "value": "yes",
-                "mono": true,
-                "prop": "largeLabel"
-              }
+              { "key": "Theme",       "value": "dark", "mono": true, "prop": "theme" },
+              { "key": "With Icon",   "value": "yes",  "mono": true, "prop": "withIcon" },
+              { "key": "Large Label", "value": "yes",  "mono": true, "prop": "largeLabel" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface bg", "value": "#0A2757", "token": "main/toast/pending/bg" },
-              { "key": "Icon tint", "value": "#FFC857", "token": "main/toast/pending/icon" },
-              { "key": "Label color", "value": "#FFFFFF", "token": "main/toast/pending/label" }
+              { "key": "Background", "value": "#0A2757", "token": "toast/color/pending/bg",
+                "variants": {
+                  "theme:light": { "value": "#FFFFFF", "token": "toast/color/light/bg" }
+                }
+              },
+              { "key": "Label", "value": "#FFFFFF", "token": "toast/color/pending/label",
+                "variants": {
+                  "theme:light": { "value": "#0A2757", "token": "toast/color/light/label" }
+                }
+              },
+              { "key": "Icon", "value": "#FFC857", "token": "toast/color/pending/icon",
+                "variants": { "withIcon:no": { "hide": true } }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "343 (fill, 16 inset)",
-                "mono": true
-              },
-              {
-                "key": "Min height",
-                "value": "64",
-                "mono": true
-              },
-              {
-                "key": "Padding (h)",
-                "value": "16",
-                "mono": true
-              },
-              {
-                "key": "Padding (v)",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "8",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "24 × 24",
-                "mono": true
-              },
-              {
-                "key": "Gap",
-                "value": "12",
-                "mono": true
+              { "key": "Width",         "value": "312", "mono": true },
+              { "key": "Padding",       "value": "12 × 12", "mono": true },
+              { "key": "Corner radius", "value": "8",   "mono": true },
+              { "key": "Icon size",     "value": "24 × 24", "mono": true,
+                "variants": { "largeLabel:no": { "value": "16 × 16" }, "withIcon:no": { "hide": true } }
               }
             ]
           },
@@ -615,25 +424,12 @@ export const toast: ComponentData = {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Body/Medium",
-                "mono": true
+              { "key": "Font",  "value": "Proxima Soft Semibold", "mono": true },
+              { "key": "Style", "value": "Primary/Label/Light/Small", "mono": true,
+                "variants": { "largeLabel:no": { "value": "Primary/Multi-line Label/Light/Fine" } }
               },
-              {
-                "key": "Font",
-                "value": "BarkAda",
-                "mono": true
-              },
-              {
-                "key": "Size",
-                "value": "14",
-                "mono": true
-              },
-              {
-                "key": "Line-height",
-                "value": "20",
-                "mono": true
+              { "key": "Size",  "value": "14 / 14 · +0.25", "mono": true,
+                "variants": { "largeLabel:no": { "value": "12 / 14 · +0.5" } }
               }
             ]
           }
@@ -641,108 +437,7 @@ export const toast: ComponentData = {
         "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Processing your request…\"</span><span class=\"syn-punc\">,</span>\n    intent<span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>pending\n<span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Processing your request…\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastIntent</span><span class=\"syn-punc\">.</span>Pending\n<span class=\"syn-punc\">)</span>"
       },
-      {
-        "cardKey": "default-—-no-icon,-small-label",
-        "demoKey": "compact",
-        "demoControls": toastDemoControls,
-        "title": "Default — no icon, small label",
-        "node": "27:53196",
-        "description": "The compact, text-only toast. No icon, smaller type (12/14, tracking +0.5). Used when the message is short and the context is unambiguous (\"Copied\", \"Saved\").",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"toast-spec-4\"><div class=\"eb-preview eb-preview-toast eb-preview-toast--dark eb-preview-toast--small\"><div class=\"eb-preview-toast__container\"><p class=\"eb-preview-toast__label\">Add the popup message here</p></div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Type",
-                "value": "default",
-                "mono": true,
-                "prop": "type"
-              },
-              {
-                "key": "Theme",
-                "value": "dark",
-                "mono": true,
-                "prop": "theme"
-              },
-              {
-                "key": "With Icon",
-                "value": "no",
-                "mono": true,
-                "prop": "withIcon"
-              },
-              {
-                "key": "Large Label",
-                "value": "no",
-                "mono": true,
-                "prop": "largeLabel"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Default bg", "value": "#0A2757", "token": "toast/color/default/bg" },
-              { "key": "Default label", "value": "#FFFFFF", "token": "toast/color/default/label" },
-              { "key": "Default border", "value": "#E5EBF4", "token": "toast/color/default/border" },
-              { "key": "Light bg", "value": "#FFFFFF", "token": "toast/color/light/bg" },
-              { "key": "Light label", "value": "#0A2757", "token": "toast/color/light/label" },
-              { "key": "Destructive bg", "value": "#D61B2C", "token": "toast/color/destructive/bg" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Padding",
-                "value": "12 horizontal · 8 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-3 (8px)",
-                "mono": true
-              },
-              {
-                "key": "Min height",
-                "value": "40px",
-                "mono": true
-              },
-              {
-                "key": "Shadow",
-                "value": "Depth/D0",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Style",
-                "value": "Primary/Multi-line Label/Light/Fine",
-                "mono": true
-              },
-              {
-                "key": "Font",
-                "value": "Proxima Soft Semibold",
-                "mono": true
-              },
-              {
-                "key": "Size",
-                "value": "12 / 14 · +0.5",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Notice\"</span><span class=\"syn-punc\">,</span>\n    labelSize<span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>small\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBToast</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Notice\"</span><span class=\"syn-punc\">,</span>\n    labelSize <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBToastLabelSize</span><span class=\"syn-punc\">.</span>Small\n<span class=\"syn-punc\">)</span>"
-      }
+      
     ],
     colorsTables: [
       // Card 1 — Default · with icon · large label

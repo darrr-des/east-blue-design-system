@@ -248,249 +248,70 @@ export const monthYearPickerItem: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Styles",
+    "heading": "Types",
     "specCards": [
       {
-        "cardKey": "mypi-spec-default",
+        "cardKey": "default",
         "demoKey": "default",
         "demoControls": monthYearPickerItemDemoControls,
         "title": "Default",
         "node": "18414:5851",
-        "description": "The base month/year cell. Plain label on white, no ring or fill.",
+        "description": "100×32 cell rendered inside the Month and Year grids of Date Picker - Group. Flip Type between Default / Today / Selected.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "Default",
-                "mono": false,
-                "prop": "type"
-              },
-              {
-                "key": "Variant",
-                "value": "Unselected month/year",
-                "mono": false
-              }
+              { "key": "Type", "value": "Default", "prop": "type" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Label", "value": "#0A2757", "token": "date-picker/day/color/unselected/label" },
-              { "key": "Bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" }
+              { "key": "Label", "value": "#0A2757", "token": "date-picker/day/color/unselected/label",
+                "variants": {
+                  "type:Today":    { "value": "#005CE5", "token": "date-picker/day/color/today/label" },
+                  "type:Selected": { "value": "#FFFFFF", "token": "date-picker/day/color/selected/label" }
+                }
+              },
+              { "key": "Bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg",
+                "variants": {
+                  "type:Selected": { "value": "#005CE5", "token": "date-picker/day/color/selected/bg" }
+                }
+              },
+              { "key": "Border", "value": "none", "token": "—",
+                "variants": {
+                  "type:Today": { "value": "1px #005CE5", "token": "border/color-border-primary" }
+                }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Cell size",
-                "value": "100 × 32",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-3 (8px)",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "4px",
-                "mono": true
-              }
+              { "key": "Cell size", "value": "100 × 32", "mono": true },
+              { "key": "Border radius", "value": "8", "mono": true },
+              { "key": "Padding H", "value": "12", "mono": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Default font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Selected font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
-                "mono": true
+              { "key": "Style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true,
+                "variants": { "type:Selected": { "value": "Proxima Soft Bold · 14 / 14 · +0.25" } }
               }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBMonthYearCell</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBMonthYearCell</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCellState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"mypi-spec-default-preview\" style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"box-sizing:border-box;width:100px;height:32px;background:#FFFFFF;border:none;border-radius:8px;padding:10px 12px 8px;display:flex;align-items:center;justify-content:center;gap:4px;color:#0A2757;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">March</div></div></div>"
-      },
-      {
-        "cardKey": "mypi-spec-today",
-        "demoKey": "today",
-        "demoControls": monthYearPickerItemDemoControls,
-        "title": "Today",
-        "node": "18414:5852",
-        "description": "Today marker. 1px blue border, blue label. Note: thinner than the day cell's 1.5px ring.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Type",
-                "value": "Today",
-                "mono": false,
-                "prop": "type"
-              },
-              {
-                "key": "Variant",
-                "value": "Current month/year",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Label", "value": "#005CE5", "token": "text/color-text-primary" },
-              { "key": "Bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" },
-              { "key": "Border", "value": "#005CE5", "token": "border/color-border-primary" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Cell size",
-                "value": "100 × 32",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-3 (8px)",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "4px",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Default font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Selected font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBMonthYearCell</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.today</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBMonthYearCell</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCellState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Today</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"mypi-spec-today-preview\" style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"box-sizing:border-box;width:100px;height:32px;background:#FFFFFF;border:1px solid #005CE5;border-radius:8px;padding:10px 12px 8px;display:flex;align-items:center;justify-content:center;gap:4px;color:#005CE5;font-weight:600;font-size:14px;line-height:14px;letter-spacing:.25px;\">March</div></div></div>"
-      },
-      {
-        "cardKey": "mypi-spec-selected",
-        "demoKey": "selected",
-        "demoControls": monthYearPickerItemDemoControls,
-        "title": "Selected",
-        "node": "18414:5853",
-        "description": "Currently-selected month or year. Solid blue fill, white bold label. No Disabled form.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Type",
-                "value": "Selected",
-                "mono": false,
-                "prop": "type"
-              },
-              {
-                "key": "Variant",
-                "value": "Picked month/year",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Label", "value": "#FFFFFF", "token": "date-picker/day/color/selected/label" },
-              { "key": "Bg", "value": "#005CE5", "token": "date-picker/day/color/selected/bg" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Cell size",
-                "value": "100 × 32",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-3 (8px)",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "4px",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Default font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Selected font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBMonthYearCell</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.selected</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBMonthYearCell</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> value<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCellState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Selected</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"mypi-spec-selected-preview\" style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"box-sizing:border-box;width:100px;height:32px;background:#005CE5;border:none;border-radius:8px;padding:10px 12px 8px;display:flex;align-items:center;justify-content:center;gap:4px;color:#FFFFFF;font-weight:700;font-size:14px;line-height:14px;letter-spacing:.25px;\">March</div></div></div>"
+        "previewHtml": "<div id=\"mypi-spec-preview\"></div>"
       }
+
     ],
     "colorsTables": [
       {

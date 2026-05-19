@@ -47,11 +47,9 @@ function updateMonthYearPickerItemDemo() {
   if (demo) demo.innerHTML = _mypiFramedCell(_mypiDemo.type, _mypiDemo.label);
 }
 
-/* ── Spec cards ─────────────────────────────────────────────────────── */
+/* ── Spec card — single dynamic card ────────────────────────────────── */
 var _specCards = {
-  'default':  { type: 'Default',  label: 'March' },
-  'today':    { type: 'Today',    label: 'March' },
-  'selected': { type: 'Selected', label: 'March' }
+  'default': { type: 'Default', label: 'March' }
 };
 window._specCards = _specCards;
 
@@ -73,16 +71,11 @@ function updateSpecCard(cardStyle, prop, value) {
   if (!card) return;
   card[prop] = value;
 
-  /* Update preview by replacing innerHTML of the framed wrapper */
-  var previewEl = document.getElementById('mypi-spec-' + cardStyle + '-preview');
-  if (previewEl) {
-    previewEl.innerHTML = ''
-      + '<div style="display:inline-block;font-family:\'Proxima Soft\', system-ui, sans-serif;">'
-      + _mypiBuildCell(card.type, card.label).replace(/^<div[^>]*>|<\/div>$/g, '')
-      + '</div>';
-    /* Simpler: just rewrap the cell */
-    var inner = _mypiBuildCell(card.type, card.label);
-    previewEl.innerHTML = inner;
+  /* Update preview inside the spec card root */
+  var rootEl = document.getElementById('spec-card-' + cardStyle);
+  if (rootEl) {
+    var previewEl = rootEl.querySelector('.spec-card-preview');
+    if (previewEl) previewEl.innerHTML = _mypiFramedCell(card.type, card.label);
   }
 
   /* Update Properties text — data-sp="${cardStyle}-${prop}" */

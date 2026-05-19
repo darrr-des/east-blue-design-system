@@ -1,5 +1,40 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
 import { buildStatelessColorsTable } from './_helpers';
+
+const carouselItemDemoControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'Mode',
+        prop: 'mode',
+        defaultValue: 'light',
+        options: [
+          { value: 'light', label: 'Light Text' },
+          { value: 'dark',  label: 'Dark Text' },
+        ],
+      },
+      {
+        label: 'hasPreamble',
+        prop: 'hasPreamble',
+        defaultValue: 'no',
+        options: [
+          { value: 'no',  label: 'no' },
+          { value: 'yes', label: 'yes' },
+        ],
+      },
+      {
+        label: 'hasTextLink',
+        prop: 'hasTextLink',
+        defaultValue: 'yes',
+        options: [
+          { value: 'yes', label: 'yes' },
+          { value: 'no',  label: 'no' },
+        ],
+      },
+    ],
+  },
+];
 
 export const carouselItem: ComponentData = {
   "meta": {
@@ -212,7 +247,7 @@ export const carouselItem: ComponentData = {
       {
         "cardKey": "default-·-light-text-·-hastextlink=yes",
         "demoKey": "cit-default",
-        "demoControls": [],
+        "demoControls": carouselItemDemoControls,
         "title": "Default · Light Text · hasTextLink=yes",
         "node": "18543:2807",
         "description": "The most common variant — heading + description + button link, inverse text over a dark background image. Used on promotional carousels when the photo has dark tones.",
@@ -264,7 +299,7 @@ export const carouselItem: ComponentData = {
       {
         "cardKey": "headline-only-·-has-preamble-·-has-textlink",
         "demoKey": "cit-headline",
-        "demoControls": [],
+        "demoControls": carouselItemDemoControls,
         "title": "Headline Only · has Preamble · has TextLink",
         "node": "18543:2839",
         "description": "Preamble + headline only — no description line. Use when the headline itself is the full message. Name is misleading: the variant actually requires Preamble + Heading + Button, with description hidden.",

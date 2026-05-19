@@ -81,15 +81,9 @@ function updateDatePickerItemDemo() {
   if (demo) demo.innerHTML = _dpiFramedCell(_dpiDemo.type, _dpiDemo.state);
 }
 
-/* ── Spec card state (per-card, drives previews + DEV code) ──────── */
+/* ── Spec card state — single dynamic card ─────────────────────────── */
 var _specCards = {
-  'default':          { type: 'Default',        state: 'Enabled'  },
-  'today':            { type: 'Today',          state: 'Enabled'  },
-  'selected':         { type: 'Selected',       state: 'Enabled'  },
-  'range':            { type: 'Range (Middle)', state: 'Enabled'  },
-  'prevnext':         { type: 'Prev/Next',      state: 'Enabled'  },
-  'default-disabled': { type: 'Default',        state: 'Disabled' },
-  'today-disabled':   { type: 'Today',          state: 'Disabled' }
+  'default': { type: 'Default', state: 'Enabled' }
 };
 window._specCards = _specCards;
 
@@ -145,11 +139,18 @@ function updateSpecCard(cardStyle, prop, value) {
   if (!card) return;
   card[prop] = value;
 
+  /* Update preview inside the spec card root */
+  var rootEl = document.getElementById('spec-card-' + cardStyle);
+  if (rootEl) {
+    var previewEl = rootEl.querySelector('.spec-card-preview');
+    if (previewEl) previewEl.innerHTML = _dpiFramedCell(card.type, card.state);
+  }
+
   /* Update Properties text — data-sp="${cardStyle}-${prop}" */
   var spType = document.querySelector('[data-sp="' + cardStyle + '-type"]');
   if (spType) spType.textContent = card.type;
   var spState = document.querySelector('[data-sp="' + cardStyle + '-state"]');
-  if (spState) spState.textContent = (card.state === 'Disabled' ? 'true' : 'false');
+  if (spState) spState.textContent = card.state;
 
   /* Update DEV code — always */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');

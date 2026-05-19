@@ -104,9 +104,16 @@ function updateSpecCard(cardStyle, prop, value) {
   if (!card) return;
   card[prop] = value;
 
-  /* Update SVG preview — `srf-default-preview`, `srf-filled-preview`. */
-  var previewEl = document.getElementById(cardStyle + '-preview');
-  if (previewEl) previewEl.innerHTML = _srfBuildSvg(card.state);
+  /* Update spec-card preview SVG. The renderer wraps `previewHtml` in
+     `#spec-card-srf-spec-{state} .spec-card-preview`. The cardKey for
+     each card is `srf-spec-default` / `srf-spec-filled`; the demoKey
+     (passed in here as cardStyle) is `srf-default` / `srf-filled`. */
+  var cardKey = cardStyle.replace(/^srf-/, 'srf-spec-');
+  var wrapper = document.getElementById('spec-card-' + cardKey);
+  if (wrapper) {
+    var previewEl = wrapper.querySelector('.spec-card-preview');
+    if (previewEl) previewEl.innerHTML = _srfBuildSvg(card.state);
+  }
 
   /* Property-text cell. */
   var spState = document.querySelector('[data-sp="' + cardStyle + '-state"]');

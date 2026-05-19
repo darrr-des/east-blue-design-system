@@ -278,611 +278,76 @@ export const datePickerItem: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Styles",
+    "heading": "Types",
     "specCards": [
       {
-        "cardKey": "dpi-spec-default",
+        "cardKey": "default",
         "demoKey": "default",
         "demoControls": datePickerItemDemoControls,
-        "title": "Default · Enabled",
+        "title": "Default",
         "node": "12874:42181",
-        "description": "The base day cell. Plain label on white, no ring or fill.",
+        "description": "32×32 day cell rendered inside the calendar grid. Flip Type and State to walk through every variant.",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              {
-                "key": "Type",
-                "value": "Default",
-                "mono": false,
-                "prop": "type"
-              },
-              {
-                "key": "Disabled",
-                "value": "false",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "Variant",
-                "value": "Plain day cell",
-                "mono": false
-              }
+              { "key": "Type", "value": "Default", "prop": "type" },
+              { "key": "State", "value": "Enabled", "prop": "state" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Label", "value": "#0A2757", "token": "date-picker/day/color/unselected/label" },
-              { "key": "Bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" }
+              { "key": "Label", "value": "#0A2757", "token": "date-picker/day/color/unselected/label",
+                "variants": {
+                  "type:Today":          { "value": "#005CE5", "token": "date-picker/day/color/today/label" },
+                  "type:Selected":       { "value": "#FFFFFF", "token": "date-picker/day/color/selected/label" },
+                  "type:Prev/Next":      { "value": "#C2CFE5", "token": "date-picker/day/color/dimmed/label" },
+                  "state:Disabled":      { "value": "#C2CFE5", "token": "date-picker/day/color/disabled/label" }
+                }
+              },
+              { "key": "Bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg",
+                "variants": {
+                  "type:Selected":       { "value": "#005CE5", "token": "date-picker/day/color/selected/bg" },
+                  "type:Range (Middle)": { "value": "#E5F0FF", "token": "bg/color-bg-info-weakest" }
+                }
+              },
+              { "key": "Border", "value": "none", "token": "—",
+                "variants": {
+                  "type:Today": { "value": "1.5px #005CE5", "token": "border/color-border-primary" }
+                }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Cell size",
-                "value": "32 × 32",
-                "mono": true
+              { "key": "Cell size", "value": "32 × 32", "mono": true },
+              { "key": "Border radius", "value": "pill (16)", "mono": true,
+                "variants": { "type:Range (Middle)": { "value": "0" } }
               },
-              {
-                "key": "Border radius",
-                "value": "pill (16px)",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "44 × 44 (mobile)",
-                "mono": true
-              }
+              { "key": "Hit target", "value": "44 × 44", "mono": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              {
-                "key": "Style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Default font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Selected font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
-                "mono": true
+              { "key": "Style", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "Font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true,
+                "variants": { "type:Selected": { "value": "Proxima Soft Bold · 14 / 14 · +0.25" } }
               }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBDayCell</span><span class=\"syn-punc\">(</span>date<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBDayCell</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDayState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"position:relative;display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"position:relative;width:32px;height:32px;box-sizing:border-box;background:#FFFFFF;border:none;border-radius:30px;display:flex;align-items:center;justify-content:center;color:#0A2757;font-weight:600;font-size:14px;line-height:1;letter-spacing:.25px;\">1</div></div></div>"
-      },
-      {
-        "cardKey": "dpi-spec-today",
-        "demoKey": "today",
-        "demoControls": datePickerItemDemoControls,
-        "title": "Today · Enabled",
-        "node": "13944:5633",
-        "description": "Today marker. 1.5px blue ring, blue label.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Type",
-                "value": "Today",
-                "mono": false,
-                "prop": "type"
-              },
-              {
-                "key": "Disabled",
-                "value": "false",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "Variant",
-                "value": "Today indicator",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Label", "value": "#005CE5", "token": "text/color-text-primary" },
-              { "key": "Bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" },
-              { "key": "Border", "value": "#005CE5", "token": "border/color-border-primary" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Cell size",
-                "value": "32 × 32",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "pill (16px)",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "44 × 44 (mobile)",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Default font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Selected font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDayCell</span><span class=\"syn-punc\">(</span>date<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.today</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDayCell</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDayState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Today</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"position:relative;display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"position:relative;width:32px;height:32px;box-sizing:border-box;background:#FFFFFF;border:1.5px solid #005CE5;border-radius:30px;display:flex;align-items:center;justify-content:center;color:#005CE5;font-weight:600;font-size:14px;line-height:1;letter-spacing:.25px;\">1</div></div></div>"
-      },
-      {
-        "cardKey": "dpi-spec-selected",
-        "demoKey": "selected",
-        "demoControls": datePickerItemDemoControls,
-        "title": "Selected · Enabled",
-        "node": "12874:42183",
-        "description": "Currently-selected date. Solid blue fill, white bold label. No Disabled form.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Type",
-                "value": "Selected",
-                "mono": false,
-                "prop": "type"
-              },
-              {
-                "key": "Disabled",
-                "value": "false",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "Variant",
-                "value": "Picked date",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Label", "value": "#FFFFFF", "token": "date-picker/day/color/selected/label" },
-              { "key": "Bg", "value": "#005CE5", "token": "date-picker/day/color/selected/bg" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Cell size",
-                "value": "32 × 32",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "pill (16px)",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "44 × 44 (mobile)",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Default font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Selected font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDayCell</span><span class=\"syn-punc\">(</span>date<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.selected</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDayCell</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDayState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Selected</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"position:relative;display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"position:relative;width:32px;height:32px;box-sizing:border-box;background:#005CE5;border:none;border-radius:30px;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-weight:700;font-size:14px;line-height:1;letter-spacing:.25px;\">1</div></div></div>"
-      },
-      {
-        "cardKey": "dpi-spec-range",
-        "demoKey": "range",
-        "demoControls": datePickerItemDemoControls,
-        "title": "Range (Middle) · Enabled",
-        "node": "13944:5637",
-        "description": "A cell inside a selected date range. <code>bg/color-bg-info-weakest</code> fill, bold blue label. Ships with <code>extraLeft</code>/<code>extraRight</code> booleans that spill the strip into adjacent cells.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Type",
-                "value": "In range",
-                "mono": false,
-                "prop": "type"
-              },
-              {
-                "key": "Disabled",
-                "value": "false",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "Variant",
-                "value": "Date-range hover/fill",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Label", "value": "#0A2757", "token": "date-picker/day/color/unselected/label" },
-              { "key": "Range bg", "value": "#E5F1FF", "token": "bg/color-bg-info-weakest" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Cell size",
-                "value": "32 × 32",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "pill (16px)",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "44 × 44 (mobile)",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Default font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Selected font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDayCell</span><span class=\"syn-punc\">(</span>date<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.inRange</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDayCell</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDayState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.InRange</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"position:relative;display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"position:absolute;left:-9px;top:0;width:9px;height:32px;background:#E5F1FF;\"></div><div style=\"position:absolute;right:-11px;top:0;width:11px;height:32px;background:#E5F1FF;\"></div><div style=\"position:relative;width:32px;height:32px;box-sizing:border-box;background:#E5F1FF;border:none;border-radius:0;display:flex;align-items:center;justify-content:center;color:#005CE5;font-weight:700;font-size:14px;line-height:1;letter-spacing:.25px;\">1</div></div></div>"
-      },
-      {
-        "cardKey": "dpi-spec-prevnext",
-        "demoKey": "prevnext",
-        "demoControls": datePickerItemDemoControls,
-        "title": "Prev/Next · Enabled",
-        "node": "13944:5653",
-        "description": "A day from the adjacent month spilling into the current month's grid. Dimmed label, no ring, no fill.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Type",
-                "value": "Prev/Next month",
-                "mono": false,
-                "prop": "type"
-              },
-              {
-                "key": "Disabled",
-                "value": "false",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "Variant",
-                "value": "Cell from adjacent month",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Label", "value": "#C2CFE5", "token": "text/color-text-disabled" },
-              { "key": "Bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Cell size",
-                "value": "32 × 32",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "pill (16px)",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "44 × 44 (mobile)",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Default font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Selected font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDayCell</span><span class=\"syn-punc\">(</span>date<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.adjacent</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDayCell</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDayState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Adjacent</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"position:relative;display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"position:relative;width:32px;height:32px;box-sizing:border-box;background:#FFFFFF;border:none;border-radius:30px;display:flex;align-items:center;justify-content:center;color:#C2CFE5;font-weight:600;font-size:14px;line-height:1;letter-spacing:.25px;\">1</div></div></div>"
-      },
-      {
-        "cardKey": "dpi-spec-default-disabled",
-        "demoKey": "default-disabled",
-        "demoControls": datePickerItemDemoControls,
-        "title": "Default · Disabled",
-        "node": "13948:3888",
-        "description": "Disabled day. Label dims to <code>text/color-text-disabled</code> (<code>#C2CFE5</code>).",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Type",
-                "value": "Default",
-                "mono": false,
-                "prop": "type"
-              },
-              {
-                "key": "Disabled",
-                "value": "true",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "Variant",
-                "value": "Disabled — out of range",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Label", "value": "#C2CFE5", "token": "text/color-text-disabled" },
-              { "key": "Bg", "value": "#FFFFFF", "token": "date-picker/day/color/unselected/bg" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Cell size",
-                "value": "32 × 32",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "pill (16px)",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "44 × 44 (mobile)",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Default font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Selected font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDayCell</span><span class=\"syn-punc\">(</span>date<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDayCell</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDayState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span><span class=\"syn-punc\">,</span>\n    enabled <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"position:relative;display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"position:relative;width:32px;height:32px;box-sizing:border-box;background:#FFFFFF;border:none;border-radius:30px;display:flex;align-items:center;justify-content:center;color:#C2CFE5;font-weight:600;font-size:14px;line-height:1;letter-spacing:.25px;\">1</div></div></div>"
-      },
-      {
-        "cardKey": "dpi-spec-today-disabled",
-        "demoKey": "today-disabled",
-        "demoControls": datePickerItemDemoControls,
-        "title": "Today · Disabled",
-        "node": "13948:3891",
-        "description": "Today on a disabled day. Ring and label both use <code>border/color-border-primary-disabled</code> / <code>text/color-text-primary-disabled</code> (<code>#9BC5FD</code>).",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Type",
-                "value": "Today",
-                "mono": false,
-                "prop": "type"
-              },
-              {
-                "key": "Disabled",
-                "value": "true",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "Variant",
-                "value": "Today disabled",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Label", "value": "#9BC5FD", "token": "text/color-text-primary-disabled" },
-              { "key": "Border", "value": "#9BC5FD", "token": "border/color-border-primary-disabled" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Cell size",
-                "value": "32 × 32",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "pill (16px)",
-                "mono": true
-              },
-              {
-                "key": "Hit target",
-                "value": "44 × 44 (mobile)",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Default font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Selected font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDayCell</span><span class=\"syn-punc\">(</span>date<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.today</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDayCell</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDayState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Today</span><span class=\"syn-punc\">,</span>\n    enabled <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"display:flex;align-items:center;justify-content:center;padding:40px;background:#F4F6FA;border-radius:8px;min-height:120px;\"><div style=\"position:relative;display:inline-block;font-family:'Proxima Soft', system-ui, sans-serif;\"><div style=\"position:relative;width:32px;height:32px;box-sizing:border-box;background:#FFFFFF;border:1.5px solid #9BC5FD;border-radius:30px;display:flex;align-items:center;justify-content:center;color:#9BC5FD;font-weight:600;font-size:14px;line-height:1;letter-spacing:.25px;\">1</div></div></div>"
+        "previewHtml": "<div id=\"dpi-spec-preview\"></div>"
       }
+
     ],
     "colorsTables": [
       {

@@ -232,148 +232,30 @@ export const stepperDash: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "stepper---dash-component-set-18649:5223-·-variants-18649:5224…18649:5323",
+        "cardKey": "stepper-dash",
         "demoKey": "main",
         "demoControls": stepperDashDemoControls,
-        "title": "Stepper - Dash component set 18649:5223 · variants 18649:5224…18649:5323",
+        "title": "Stepper - Dash",
         "node": "18649:5223",
         "description": "Horizontal row of equal-width rounded dashes. Dashes 1…<code>current</code> render in brand blue (<code>bg</code>); dashes <code>current+1</code>…<code>total</code> render in track blue (<code>bg-track</code>). All fills are real vector rectangles bound to stepper tokens.",
         "previewHtml": "<div class=\"spec-preview-body\" id=\"stepper-dash-spec-1\"><div class=\"eb-preview eb-preview-stepper-dash\" role=\"progressbar\" aria-valuenow=\"2\" aria-valuemin=\"1\" aria-valuemax=\"4\" aria-label=\"Step 2 of 4\" style=\"width:268px;display:flex;gap:4px;align-items:center;\"><span class=\"eb-preview-stepper-dash__slot\" style=\"background:#005CE5;\"></span><span class=\"eb-preview-stepper-dash__slot\" style=\"background:#005CE5;\"></span><span class=\"eb-preview-stepper-dash__slot\" style=\"background:#D2E5FF;\"></span><span class=\"eb-preview-stepper-dash__slot\" style=\"background:#D2E5FF;\"></span></div></div>",
         "sections": [
           {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Step count",
-                "value": "up to 10",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Dash (segmented)",
-                "mono": false
-              },
-              {
-                "key": "Active marker",
-                "value": "filled segment",
-                "mono": false
-              }
-            ]
-          },
-          {
             "label": "Colors",
             "slug": "colors",
             "rows": [
               { "key": "Filled dash", "value": "#005CE5", "token": "stepper/color/bg" },
-              { "key": "Empty dash", "value": "#D2E5FF", "token": "stepper/color/bg-track" }
-            ]
-          },
-          {
-            "label": "Properties (today)",
-            "rows": [
-              {
-                "key": "highlighted",
-                "value": "1st | 2nd | … | 10th",
-                "mono": true
-              },
-              {
-                "key": "prop1Stepper…prop10Steppers",
-                "value": "boolean × 10",
-                "mono": true
-              },
-              {
-                "key": "Dash implementation",
-                "value": "vector rect (rounded)",
-                "mono": true
-              },
-              {
-                "key": "Frame width",
-                "value": "268 (inner) · 308 (outer)",
-                "mono": true
-              },
-              {
-                "key": "current",
-                "value": "1 | 2 | … | 10",
-                "mono": true
-              },
-              {
-                "key": "total",
-                "value": "2 | 3 | … | 10",
-                "mono": true
-              },
-              {
-                "key": "status",
-                "value": "default | success | error",
-                "mono": true
-              },
-              {
-                "key": "orientation",
-                "value": "horizontal | vertical",
-                "mono": true
-              }
+              { "key": "Empty dash",  "value": "#D2E5FF", "token": "stepper/color/bg-track" }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Outer frame",
-                "value": "308 × 260 (canvas)",
-                "mono": true
-              },
-              {
-                "key": "Row width",
-                "value": "268 (fill-container)",
-                "mono": true
-              },
-              {
-                "key": "Dash height",
-                "value": "4 (space/space-4)",
-                "mono": true
-              },
-              {
-                "key": "Gap between dashes",
-                "value": "4 (space/space-4)",
-                "mono": true
-              },
-              {
-                "key": "Row padding",
-                "value": "0 (space/space-0)",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "100 (pill)",
-                "mono": true
-              },
-              {
-                "key": "Dash width",
-                "value": "flex-1 (equal share of row)",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "No text",
-                "value": "—",
-                "mono": true
-              },
-              {
-                "key": "Label pairing",
-                "value": "external",
-                "mono": true
-              },
-              {
-                "key": "Stepper - Dash is a graphic-only primitive; any \"Step X of Y\" label is the consumer's responsibility and should live in the accessible name.",
-                "value": "",
-                "mono": false
-              }
+              { "key": "Dash height",        "value": "4",           "mono": true },
+              { "key": "Gap between dashes", "value": "4",           "mono": true },
+              { "key": "Corner radius",      "value": "100 (pill)",  "mono": true },
+              { "key": "Dash width",         "value": "flex-1",      "mono": true }
             ]
           }
         ],

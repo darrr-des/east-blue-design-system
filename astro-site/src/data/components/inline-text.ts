@@ -272,11 +272,47 @@ export const inlineText: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Label", "value": "#0A2757", "token": "inline-text/color/label" },
-              { "key": "Value", "value": "#445C85", "token": "inline-text/color/label-value" },
-              { "key": "Description", "value": "#6780A9", "token": "inline-text/color/description" },
-              { "key": "Link", "value": "#005CE5", "token": "inline-text/color/label-link" },
-              { "key": "Icon", "value": "#445C85", "token": "inline-text/color/icon" }
+              { "key": "Label", "value": "#0A2757", "token": "inline-text/color/label",
+                "variants": {
+                  "state:pressed": { "value": "#072592", "token": "inline-text/color/label-pressed" }
+                }
+              },
+              { "key": "Value", "value": "#445C85", "token": "inline-text/color/label-value",
+                "variants": {
+                  "state:pressed": { "value": "#072592", "token": "inline-text/color/label-value-pressed" }
+                }
+              },
+              { "key": "Description", "value": "#6780A9", "token": "inline-text/color/description",
+                "variants": {
+                  "type:default":        { "hide": true },
+                  "type:with-clipboard": { "hide": true },
+                  "type:with-badge":     { "hide": true },
+                  "type:with-text-link": { "hide": true }
+                }
+              },
+              { "key": "Link", "value": "#005CE5", "token": "inline-text/color/label-link",
+                "variants": {
+                  "type:default":         { "hide": true },
+                  "type:with-clipboard":  { "hide": true },
+                  "type:with-badge":      { "hide": true },
+                  "type:with-description":{ "hide": true },
+                  "state:pressed":        { "value": "#003ea0", "token": "inline-text/color/label-link-pressed" }
+                }
+              },
+              { "key": "Icon", "value": "#445C85", "token": "inline-text/color/icon",
+                "variants": {
+                  "type:default":         { "hide": true },
+                  "type:with-badge":      { "hide": true },
+                  "type:with-description":{ "hide": true },
+                  "type:with-text-link":  { "hide": true }
+                }
+              },
+              { "key": "Disabled opacity", "value": "40%", "mono": true,
+                "variants": {
+                  "state:default": { "hide": true },
+                  "state:pressed": { "hide": true }
+                }
+              }
             ]
           },
           {
@@ -323,11 +359,6 @@ export const inlineText: ComponentData = {
                 "key": "Size / Line / Tracking",
                 "value": "16 / 16 / +0.25",
                 "mono": true
-              },
-              {
-                "key": "Value",
-                "value": "Same as label, opacity 0.80 (via color token)",
-                "mono": false
               }
             ]
           }

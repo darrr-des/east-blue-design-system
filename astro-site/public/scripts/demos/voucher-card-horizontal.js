@@ -3,7 +3,8 @@
  * Re-extract via: node astro-site/scripts/extract-demos.mjs voucher-card-horizontal
  */
 /* ── Voucher Card Horizontal JS ─────────────────────────────────── */
-function _vchCard(state, hasOriginal) {
+function _vchCard(state, hasOriginal, hasBadge) {
+  if (typeof hasBadge === 'undefined') hasBadge = true;
   var isGreyed = state === 'used' || state === 'expired';
   var titleColor = isGreyed ? '#445C85' : '#0A2757';
   var amountColor = isGreyed ? '#6780A9' : '#2340A9';
@@ -40,28 +41,30 @@ function _vchCard(state, hasOriginal) {
   s += '<div style="position:absolute;right:0;top:0;bottom:0;width:28px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(255,255,255,0.6);">';
   s += '<div style="transform:rotate(-90deg);color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;white-space:nowrap;">GET VOUCHER</div>';
   s += '</div>';
-  s += '<div style="position:absolute;top:8px;left:0;background:' + badgeBg + ';color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;padding:4px 8px 2px 8px;border-top-right-radius:4px;border-bottom-right-radius:4px;line-height:10px;">' + badgeLabel + '</div>';
+  if (hasBadge) s += '<div style="position:absolute;top:8px;left:0;background:' + badgeBg + ';color:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:0.25px;padding:4px 8px 2px 8px;border-top-right-radius:4px;border-bottom-right-radius:4px;line-height:10px;">' + badgeLabel + '</div>';
   s += '</div>';
 
   s += '</div>';
-  s += '<div style="color:#666;font-size:10px;font-family:system-ui;font-weight:600;">state=' + state + '</div>';
   s += '</div>';
   return s;
 }
 
-function _vchBuildPreview() {
-  var s = '<div style="display:flex;flex-direction:column;gap:14px;align-items:center;">';
-  s += _vchCard('limited', true);
-  s += _vchCard('expiring', true);
-  s += _vchCard('used', true);
-  s += _vchCard('expired', true);
-  s += '</div>';
-  return s;
+/* ── Live preview state (top-of-page playground) ──────────────── */
+var _vchDemo = { state: 'limited', hasOriginal: true, hasBadge: true };
+
+function _vchDemoUpdate() {
+  var stateEl    = document.getElementById('vch-ctrl-state');
+  var badgeEl    = document.getElementById('vch-ctrl-badge');
+  var originalEl = document.getElementById('vch-ctrl-original');
+  if (stateEl)    _vchDemo.state      = stateEl.value;
+  if (badgeEl)    _vchDemo.hasBadge   = (badgeEl.value === 'yes');
+  if (originalEl) _vchDemo.hasOriginal = (originalEl.value === 'yes');
+  var el = document.getElementById('vch-demo-preview');
+  if (el) el.innerHTML = _vchCard(_vchDemo.state, _vchDemo.hasOriginal, _vchDemo.hasBadge);
 }
 
 function _vchInit() {
-  var el = document.getElementById('vch-demo-preview');
-  if (el) el.innerHTML = _vchBuildPreview();
+  _vchDemoUpdate();
 }
 
 /* ── Spec Cards ──────────────────────────────────────────────────── */

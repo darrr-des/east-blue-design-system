@@ -253,29 +253,11 @@ export const counter: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              {
-                "key": "Empty bg",
-                "value": "#EEF2F9",
-                "mono": true,
-                "token": "counter/color/empty/bg"
+              { "key": "Background", "value": "#EEF2F9", "mono": true, "token": "counter/color/empty/bg",
+                "variants": { "state:filled": { "token": "counter/color/filled/bg" } }
               },
-              {
-                "key": "Empty label",
-                "value": "#C2CFE5",
-                "mono": true,
-                "token": "counter/color/empty/label"
-              },
-              {
-                "key": "Filled bg",
-                "value": "#EEF2F9",
-                "mono": true,
-                "token": "counter/color/filled/bg"
-              },
-              {
-                "key": "Filled label",
-                "value": "#072592",
-                "mono": true,
-                "token": "counter/color/filled/label"
+              { "key": "Label", "value": "#C2CFE5", "mono": true, "token": "counter/color/empty/label",
+                "variants": { "state:filled": { "value": "#072592", "token": "counter/color/filled/label" } }
               }
             ]
           },
@@ -449,10 +431,10 @@ export const counter: ComponentData = {
         "compose": "<span class=\"syn-type\">EBCounter</span><span class=\"syn-punc\">(</span>\n    count <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"120\"</span><span class=\"syn-punc\">,</span>\n    limit <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"200\"</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "cardKey": "single-integer-nodes-18482:71326,-18482:71328",
+        "cardKey": "single-integer",
         "demoKey": "single",
         "demoControls": counterDemoControls,
-        "title": "Single integer nodes 18482:71326, 18482:71328",
+        "title": "Single integer",
         "node": "18482:71326",
         "description": "Standalone count — notifications, unread messages, pending items. Hugs tightly around the digit (24 × 24 for single digit, grows for 2+ digits). Empty state shown muted; filled state shown in brand-blue. Pairs with overflow handling (\"99+\") once <code>count</code> is parameterized.",
         "previewHtml": "<div class=\"spec-preview-body\" id=\"counter-spec-single\"><span class=\"eb-preview eb-preview-counter eb-preview-counter--filled\">5</span></div>",

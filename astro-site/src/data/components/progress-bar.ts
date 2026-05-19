@@ -221,10 +221,10 @@ export const progressBar: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "determinate-nodes-27:64947-through-27:64985",
+        "cardKey": "determinate",
         "demoKey": "determinate",
         "demoControls": progressBarDemoControls,
-        "title": "Determinate nodes 27:64947 through 27:64985",
+        "title": "Determinate",
         "node": "27:64947",
         "description": "Linear fill with a light-blue track and a brand-blue fill. The 11 Figma variants step through <code>percentage = 0, 10, 20, …, 100</code> — each variant swaps a pre-sized raster pair. The target implementation renders a single component with a continuous <code>progress</code> value.",
         "previewHtml": "<div class=\"spec-preview-body\" id=\"progress-bar-spec-1\"><div class=\"eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-xs\" style=\"padding:12px 0;\"><div class=\"eb-preview eb-preview-progress-bar\" role=\"progressbar\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:280px;\"><span class=\"eb-preview-progress-bar__track\"></span><span class=\"eb-preview-progress-bar__fill\" style=\"width:60.0%;background:#005CE5;\"></span></div></div></div>",

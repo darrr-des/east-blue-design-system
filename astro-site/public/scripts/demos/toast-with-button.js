@@ -69,18 +69,12 @@ function _toastWithButtonUpdate() {
 
 /* ── Toast - With Button Spec Cards (canonical wiring) ────────── */
 var _specCards = {
-  darkdesc:    { type: 'default', description: 'yes' },
-  lightdesc:   { type: 'light',   description: 'yes' },
-  darknodesc:  { type: 'default', description: 'no'  },
-  lightnodesc: { type: 'light',   description: 'no'  }
+  darkdesc: { theme: 'default', description: 'yes' }
 };
 window._specCards = _specCards;
 
 var _toastWBSpecPreviewId = {
-  darkdesc:    'toast-with-button-spec-1',
-  lightdesc:   'toast-with-button-spec-2',
-  darknodesc:  'toast-with-button-spec-3',
-  lightnodesc: 'toast-with-button-spec-4'
+  darkdesc: 'toast-with-button-spec-1'
 };
 
 function _toastWBRenderSpec(cardKey) {
@@ -89,7 +83,7 @@ function _toastWBRenderSpec(cardKey) {
   var host = document.getElementById(_toastWBSpecPreviewId[cardKey]);
   if (!host) return;
   host.innerHTML = _toastWBRender({
-    type:        card.type,
+    type:        card.theme,
     description: card.description,
     label:       'Add label here',
     desc:        'Add description here.',
@@ -100,15 +94,15 @@ function _toastWBRenderSpec(cardKey) {
 function buildSwiftSnippet(type, card) {
   var lines = [];
   lines.push('EBToast("Removed from favorites")');
-  if (card.type === 'light') lines.push('    .ebTheme(.light)');
-  else                       lines.push('    .ebTheme(.dark)');
+  if (card.theme === 'light') lines.push('    .ebTheme(.light)');
+  else                        lines.push('    .ebTheme(.dark)');
   if (card.description === 'yes') lines.push('    .ebSupportingText("Tap undo to revert")');
   lines.push('    .ebAction("Undo", action: { })');
   return lines.join('\n');
 }
 
 function buildComposeSnippet(type, card) {
-  var theme = card.type === 'light' ? 'Light' : 'Dark';
+  var theme = card.theme === 'light' ? 'Light' : 'Dark';
   var lines = [];
   lines.push('EBToast(');
   lines.push('    message = "Removed from favorites",');
@@ -133,7 +127,7 @@ function updateSpecCard(cardStyle, prop, value) {
   _toastWBRenderSpec(cardStyle);
 
   /* Sync prop readouts */
-  ['type','description'].forEach(function (p) {
+  ['theme','description'].forEach(function (p) {
     var el = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
     if (el) el.textContent = card[p];
   });

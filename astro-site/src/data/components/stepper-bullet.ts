@@ -238,47 +238,14 @@ export const stepperBullet: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "stepper---bullet-canonical-node-27:48287-(5-steps)-·-sibling-frames-27:48235-(3-steps),-27:48254-(4-steps)",
+        "cardKey": "stepper-bullet",
         "demoKey": "bullet",
         "demoControls": stepperBulletDemoControls,
-        "title": "Stepper - Bullet canonical node 27:48287 (5 Steps) · sibling frames 27:48235 (3 Steps), 27:48254 (4 Steps)",
+        "title": "Stepper - Bullet",
         "node": "27:48287",
         "description": "Horizontal row of N 8×8 dots with one dot filled in brand blue to indicate the current step. 3 hardcoded sibling frames today; target is one component with a <code>steps</code> prop.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"stepper-bullet-spec-1\"><div class=\"eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm\" style=\"padding:12px 0;\"><div style=\"font:500 13px system-ui;color:#3C4A5C;margin-bottom:4px;\">4 steps, current = 2</div><div class=\"eb-preview eb-preview-stepper-bullet\" style=\"display:inline-flex;align-items:center;gap:8px;padding:4px 0;\"><span class=\"eb-preview-stepper-bullet-dot\" style=\"display:inline-block;width:8px;height:8px;border-radius:50%;background:#005CE5;\"></span><span class=\"eb-preview-stepper-bullet-dot\" style=\"display:inline-block;width:8px;height:8px;border-radius:50%;background:#005CE5;\"></span><span class=\"eb-preview-stepper-bullet-dot\" style=\"display:inline-block;width:8px;height:8px;border-radius:50%;background:#D2E5FF;\"></span><span class=\"eb-preview-stepper-bullet-dot\" style=\"display:inline-block;width:8px;height:8px;border-radius:50%;background:#D2E5FF;\"></span></div></div></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"stepper-bullet-spec-1\"><div class=\"eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm\" style=\"padding:12px 0;\"><div class=\"eb-preview eb-preview-stepper-bullet\" style=\"display:inline-flex;align-items:center;gap:8px;padding:4px 0;\"><span class=\"eb-preview-stepper-bullet-dot\" style=\"display:inline-block;width:8px;height:8px;border-radius:50%;background:#005CE5;\"></span><span class=\"eb-preview-stepper-bullet-dot\" style=\"display:inline-block;width:8px;height:8px;border-radius:50%;background:#005CE5;\"></span><span class=\"eb-preview-stepper-bullet-dot\" style=\"display:inline-block;width:8px;height:8px;border-radius:50%;background:#D2E5FF;\"></span><span class=\"eb-preview-stepper-bullet-dot\" style=\"display:inline-block;width:8px;height:8px;border-radius:50%;background:#D2E5FF;\"></span></div></div></div>",
         "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Steps",
-                "value": "4",
-                "mono": false,
-                "prop": "steps"
-              },
-              {
-                "key": "Current",
-                "value": "2",
-                "mono": false,
-                "prop": "current"
-              },
-              {
-                "key": "Step counts (today)",
-                "value": "3 / 4 / 5",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Bullet",
-                "mono": false
-              },
-              {
-                "key": "Active marker",
-                "value": "filled dot",
-                "mono": false
-              }
-            ]
-          },
           {
             "label": "Colors",
             "slug": "colors",
@@ -288,105 +255,12 @@ export const stepperBullet: ComponentData = {
             ]
           },
           {
-            "label": "Properties (today)",
-            "rows": [
-              {
-                "key": "Top-level component",
-                "value": "Stepper - Bullet - N Steps",
-                "mono": true
-              },
-              {
-                "key": "Inner variant",
-                "value": "highlighted = 1st | 2nd | … | Nth",
-                "mono": true
-              },
-              {
-                "key": "Dot implementation",
-                "value": "raster &lt;img&gt;",
-                "mono": true
-              },
-              {
-                "key": "Layout",
-                "value": "horizontal only",
-                "mono": true
-              },
-              {
-                "key": "steps",
-                "value": "3 | 4 | … | 10",
-                "mono": true
-              },
-              {
-                "key": "current",
-                "value": "1 | 2 | … | steps",
-                "mono": true
-              },
-              {
-                "key": "orientation",
-                "value": "horizontal | vertical",
-                "mono": true
-              },
-              {
-                "key": "status (per slot)",
-                "value": "completed | current | upcoming",
-                "mono": true
-              }
-            ]
-          },
-          {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Dot size",
-                "value": "8 × 8",
-                "mono": true
-              },
-              {
-                "key": "Gap between dots",
-                "value": "8 (spacer width)",
-                "mono": true
-              },
-              {
-                "key": "Outer frame padding",
-                "value": "0 horizontal, 4 vertical (space/space-4)",
-                "mono": true
-              },
-              {
-                "key": "Container gap token",
-                "value": "space/space-0",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "full (circle)",
-                "mono": true
-              },
-              {
-                "key": "Total width (N dots)",
-                "value": "8 × N + 8 × (N−1) = 16N − 8",
-                "mono": true
-              },
-              {
-                "key": "Height",
-                "value": "16",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "No text layers. Bullet stepper has no numbers or labels.",
-                "value": "",
-                "mono": false
-              },
-              {
-                "key": "Screen readers should receive \"Step X of Y\" as a synthesized accessibility label — see Recommendations.",
-                "value": "",
-                "mono": false
-              }
+              { "key": "Dot size",         "value": "8 × 8",          "mono": true },
+              { "key": "Gap between dots", "value": "8",              "mono": true },
+              { "key": "Corner radius",    "value": "full (circle)",  "mono": true }
             ]
           }
         ],

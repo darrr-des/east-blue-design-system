@@ -173,173 +173,89 @@ export const inlineMessage: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Variants",
+    "heading": "Types",
     "specCards": [
       {
-        "cardKey": "success",
-        "demoKey": "success",
+        "cardKey": "default",
+        "demoKey": "default",
         "demoControls": inlineMessageDemoControls,
-        "title": "Success",
+        "title": "Default",
         "node": "27:168911",
-        "description": "Blue palette. 106px 3D check illustration. Used for completed actions and positive outcomes.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"itm-spec-success\"><div style=\"width:360px;font-family:'Proxima Soft',sans-serif;background:#FFFFFF;border-radius:12px;overflow:hidden;box-shadow:0 0 8px rgba(115,129,154,0.10);\"><div style=\"position:relative;padding:48px 16px 24px;display:flex;flex-direction:column;align-items:center;gap:16px;\"><div style=\"position:absolute;top:16px;right:18px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;\"><svg width=\"18\" height=\"16\" viewBox=\"0 0 18 16\" fill=\"none\"><path d=\"M3 11v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3\" stroke=\"#0A2757\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M9 1v10m0 0L5.5 7.5M9 11l3.5-3.5\" stroke=\"#0A2757\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div><div style=\"display:flex;flex-direction:column;align-items:center;width:100%;\"><img src=\"/assets/inline-message/success.png\" alt=\"\" style=\"width:106px;height:106px;display:block;object-fit:cover;\"><div style=\"height:24px;\"></div><p style=\"margin:0;width:100%;text-align:center;font-weight:700;font-size:22px;line-height:26px;color:#005CE5;\">Add your label here</p></div><div style=\"padding:0 24px;width:100%;\"><p style=\"margin:0;text-align:center;font-family:'BarkAda',sans-serif;font-weight:500;font-size:14px;line-height:20px;color:#445C85;\">Add your description here.<br>This is just a filler sentence.</p></div></div><div style=\"border-top:1px solid #E5EBF4;display:flex;flex-direction:column;\"><div style=\"background:#FFFFFF;border:1px solid #E5EBF4;box-shadow:0 1px 1.5px rgba(232,238,242,0.79);\"><div style=\"border-bottom:1px solid #E5EBF4;padding:12px 20px 12px 24px;\"><p style=\"margin:0;font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:16px;line-height:20px;color:#0A2757;letter-spacing:0.25px;\">Header</p></div><div style=\"background:rgba(246,249,253,0.24);padding:12px 24px;\"><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div></div></div><div style=\"background:#FFFFFF;border:1px solid #E5EBF4;box-shadow:0 1px 1.5px rgba(232,238,242,0.79);\"><div style=\"border-bottom:1px solid #E5EBF4;padding:12px 20px 12px 24px;\"><p style=\"margin:0;font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:16px;line-height:20px;color:#0A2757;letter-spacing:0.25px;\">Header</p></div><div style=\"background:rgba(246,249,253,0.24);padding:12px 24px;\"><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div></div></div></div><div style=\"border-top:1px solid #E5EBF4;padding:24px 0;display:flex;align-items:center;justify-content:center;gap:4px;\"><span style=\"font-weight:600;font-size:16px;line-height:16px;color:#90A8D0;letter-spacing:0.25px;\">Reference no.</span><span style=\"font-weight:700;font-size:18px;line-height:18px;color:#0A2757;letter-spacing:0.25px;\">1234567890</span></div></div></div>",
+        "description": "Result-state notification card with 3D illustration, title, description, optional content body, and optional reference number. Flip Variant for Success / Loading / Error; toggle Body content + Reference no. independently.",
+        "previewHtml": "<div id=\"im-spec-preview\"></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Variant", "value": "Success", "prop": "variant" },
-              { "key": "Intent",  "value": "Success" }
+              { "key": "Variant",      "value": "Success", "prop": "variant" },
+              { "key": "Body content", "value": "Show",    "prop": "hasBody" },
+              { "key": "Reference no.","value": "Show",    "prop": "hasRef" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",         "value": "#FFFFFF", "token": "inline-message/color/success/bg" },
-              { "key": "Border",          "value": "#E5EBF4", "token": "inline-message/color/success/border" },
-              { "key": "Header",          "value": "#0A2757", "token": "inline-message/color/success/label-header" },
-              { "key": "Title",           "value": "#005CE5", "token": "inline-message/color/success/label-title" },
-              { "key": "Description",    "value": "#445C85", "token": "inline-message/color/success/label-description" },
-              { "key": "Reference label", "value": "#90A8D0", "token": "inline-message/color/success/label-reference" }
+              { "key": "Surface",          "value": "#FFFFFF", "token": "inline-message/color/{variant}/bg" },
+              { "key": "Border",           "value": "#E5EBF4", "token": "inline-message/color/{variant}/border" },
+              { "key": "Header",           "value": "#0A2757", "token": "inline-message/color/{variant}/label-header" },
+              { "key": "Title",            "value": "#005CE5", "token": "inline-message/color/success/label-title",
+                "variants": {
+                  "variant:loading": { "value": "#CA970C", "token": "inline-message/color/loading/label-title" },
+                  "variant:error":   { "value": "#D61B2C", "token": "inline-message/color/error/label-title" }
+                }
+              },
+              { "key": "Description",     "value": "#445C85", "token": "inline-message/color/{variant}/label-description" },
+              { "key": "Reference label",  "value": "#90A8D0", "token": "inline-message/color/{variant}/label-reference",
+                "variants": { "hasRef:false": { "hide": true } }
+              }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Card width",    "value": "360px", "mono": true },
-              { "key": "Padding",       "value": "24 horizontal · 24 vertical", "mono": true },
-              { "key": "Border radius", "value": "12px",  "mono": true },
-              { "key": "Shadow",        "value": "Depth/D4", "mono": true },
-              { "key": "Illustration",  "value": "106 × 106", "mono": true }
+              { "key": "Card",            "value": "360 × 664", "mono": true },
+              { "key": "Card radius",     "value": "12 (no shadow)", "mono": true },
+              { "key": "Content section", "value": "360 × 284 · 48 top / 24 horiz / 24 bottom", "mono": true },
+              { "key": "Illustration",    "value": "106 × 106 (24 spacer below)", "mono": true },
+              { "key": "Receipt → desc gap", "value": "16", "mono": true },
+              { "key": "Description",     "value": "312 wide · 2 lines × 20", "mono": true },
+              { "key": "Download icon",   "value": "24 × 24 overlay at top 16 / right 18", "mono": true },
+              { "key": "Body content",    "value": "360 × 316 · border-top + bottom", "mono": true,
+                "variants": { "hasBody:false": { "hide": true } }
+              },
+              { "key": "Section title bar", "value": "44 · padding 12 vert · text x=48", "mono": true,
+                "variants": { "hasBody:false": { "hide": true } }
+              },
+              { "key": "Section container", "value": "bg #F6F9FD @ 24% · 12 vert / 48 horiz", "mono": true,
+                "variants": { "hasBody:false": { "hide": true } }
+              },
+              { "key": "List rows",       "value": "List Item instances — see List Item component", "mono": false,
+                "variants": { "hasBody:false": { "hide": true } }
+              },
+              { "key": "Reference no.",   "value": "360 × 64 · 24 top / 16 row / 24 bottom", "mono": true,
+                "variants": { "hasRef:false": { "hide": true } }
+              }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Title style",       "value": "Primary/Headlines/Section", "mono": true },
-              { "key": "Title font",        "value": "Proxima Soft Bold · 22 / 26", "mono": true },
-              { "key": "Description style", "value": "Secondary/Default/Base", "mono": true },
-              { "key": "Description font",  "value": "BarkAda Medium · 14 / 20", "mono": true },
-              { "key": "Reference no.",     "value": "Primary/Label/Light/Base · Proxima Soft Semibold", "mono": true }
+              { "key": "Title",         "value": "Proxima Soft Bold · 22 / 26 · Primary/Headlines/Section", "mono": true },
+              { "key": "Description",   "value": "BarkAda Medium · 14 / 20 · Secondary/Default/Base",       "mono": true },
+              { "key": "Reference no.", "value": "Proxima Soft Semibold · 16 / 16 · +0.25", "mono": true,
+                "variants": { "hasRef:false": { "hide": true } }
+              }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBInlineMessage</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add your label here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add your description here.\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIntent</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.success</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebReferenceNumber</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"1234567890\"</span><span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBInlineMessage</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add your label here\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add your description here.\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBMessageIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Success</span><span class=\"syn-punc\">,</span>\n    referenceNumber <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"1234567890\"</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "loading",
-        "demoKey": "loading",
-        "demoControls": inlineMessageDemoControls,
-        "title": "Loading",
-        "node": "27:168980",
-        "description": "Lottie spinner animation. Processing / waiting state.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"itm-spec-loading\"><div style=\"width:360px;font-family:'Proxima Soft',sans-serif;background:#FFFFFF;border-radius:12px;overflow:hidden;box-shadow:0 0 8px rgba(115,129,154,0.10);\"><div style=\"position:relative;padding:48px 16px 24px;display:flex;flex-direction:column;align-items:center;gap:16px;\"><div style=\"position:absolute;top:16px;right:18px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;\"><svg width=\"18\" height=\"16\" viewBox=\"0 0 18 16\" fill=\"none\"><path d=\"M3 11v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3\" stroke=\"#0A2757\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M9 1v10m0 0L5.5 7.5M9 11l3.5-3.5\" stroke=\"#0A2757\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div><div style=\"display:flex;flex-direction:column;align-items:center;width:100%;\"><img src=\"/assets/inline-message/loading.png\" alt=\"\" style=\"width:106px;height:106px;display:block;object-fit:cover;\"><div style=\"height:24px;\"></div><p style=\"margin:0;width:100%;text-align:center;font-weight:700;font-size:22px;line-height:26px;color:#CA970C;\">Add your label here</p></div><div style=\"padding:0 24px;width:100%;\"><p style=\"margin:0;text-align:center;font-family:'BarkAda',sans-serif;font-weight:500;font-size:14px;line-height:20px;color:#445C85;\">Add your description here.<br>This is just a filler sentence.</p></div></div><div style=\"border-top:1px solid #E5EBF4;display:flex;flex-direction:column;\"><div style=\"background:#FFFFFF;border:1px solid #E5EBF4;box-shadow:0 1px 1.5px rgba(232,238,242,0.79);\"><div style=\"border-bottom:1px solid #E5EBF4;padding:12px 20px 12px 24px;\"><p style=\"margin:0;font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:16px;line-height:20px;color:#0A2757;letter-spacing:0.25px;\">Header</p></div><div style=\"background:rgba(246,249,253,0.24);padding:12px 24px;\"><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div></div></div><div style=\"background:#FFFFFF;border:1px solid #E5EBF4;box-shadow:0 1px 1.5px rgba(232,238,242,0.79);\"><div style=\"border-bottom:1px solid #E5EBF4;padding:12px 20px 12px 24px;\"><p style=\"margin:0;font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:16px;line-height:20px;color:#0A2757;letter-spacing:0.25px;\">Header</p></div><div style=\"background:rgba(246,249,253,0.24);padding:12px 24px;\"><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div></div></div></div><div style=\"border-top:1px solid #E5EBF4;padding:24px 0;display:flex;align-items:center;justify-content:center;gap:4px;\"><span style=\"font-weight:600;font-size:16px;line-height:16px;color:#90A8D0;letter-spacing:0.25px;\">Reference no.</span><span style=\"font-weight:700;font-size:18px;line-height:18px;color:#0A2757;letter-spacing:0.25px;\">1234567890</span></div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Variant", "value": "Loading", "prop": "variant" },
-              { "key": "Intent",  "value": "Loading" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface",         "value": "#FFFFFF", "token": "inline-message/color/loading/bg" },
-              { "key": "Border",          "value": "#E5EBF4", "token": "inline-message/color/loading/border" },
-              { "key": "Header",          "value": "#0A2757", "token": "inline-message/color/loading/label-header" },
-              { "key": "Title",           "value": "#CA970C", "token": "inline-message/color/loading/label-title" },
-              { "key": "Description",    "value": "#445C85", "token": "inline-message/color/loading/label-description" },
-              { "key": "Reference label", "value": "#90A8D0", "token": "inline-message/color/loading/label-reference" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Card width",    "value": "360px", "mono": true },
-              { "key": "Padding",       "value": "24 horizontal · 24 vertical", "mono": true },
-              { "key": "Border radius", "value": "12px",  "mono": true },
-              { "key": "Shadow",        "value": "Depth/D4", "mono": true },
-              { "key": "Illustration",  "value": "106 × 106", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Title style",       "value": "Primary/Headlines/Section", "mono": true },
-              { "key": "Title font",        "value": "Proxima Soft Bold · 22 / 26", "mono": true },
-              { "key": "Description style", "value": "Secondary/Default/Base", "mono": true },
-              { "key": "Description font",  "value": "BarkAda Medium · 14 / 20", "mono": true },
-              { "key": "Reference no.",     "value": "Primary/Label/Light/Base · Proxima Soft Semibold", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBInlineMessage</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add your label here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add your description here.\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIntent</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.loading</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebReferenceNumber</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"1234567890\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBInlineMessage</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add your label here\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add your description here.\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBMessageIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Loading</span><span class=\"syn-punc\">,</span>\n    referenceNumber <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"1234567890\"</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "error",
-        "demoKey": "error",
-        "demoControls": inlineMessageDemoControls,
-        "title": "Error",
-        "node": "27:169049",
-        "description": "Red palette. Failure illustration. Used for blocked or rejected outcomes.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"itm-spec-error\"><div style=\"width:360px;font-family:'Proxima Soft',sans-serif;background:#FFFFFF;border-radius:12px;overflow:hidden;box-shadow:0 0 8px rgba(115,129,154,0.10);\"><div style=\"position:relative;padding:48px 16px 24px;display:flex;flex-direction:column;align-items:center;gap:16px;\"><div style=\"position:absolute;top:16px;right:18px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;\"><svg width=\"18\" height=\"16\" viewBox=\"0 0 18 16\" fill=\"none\"><path d=\"M3 11v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3\" stroke=\"#0A2757\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M9 1v10m0 0L5.5 7.5M9 11l3.5-3.5\" stroke=\"#0A2757\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div><div style=\"display:flex;flex-direction:column;align-items:center;width:100%;\"><img src=\"/assets/inline-message/error.png\" alt=\"\" style=\"width:106px;height:106px;display:block;object-fit:cover;\"><div style=\"height:24px;\"></div><p style=\"margin:0;width:100%;text-align:center;font-weight:700;font-size:22px;line-height:26px;color:#D61B2C;\">Add your label here</p></div><div style=\"padding:0 24px;width:100%;\"><p style=\"margin:0;text-align:center;font-family:'BarkAda',sans-serif;font-weight:500;font-size:14px;line-height:20px;color:#445C85;\">Add your description here.<br>This is just a filler sentence.</p></div></div><div style=\"border-top:1px solid #E5EBF4;display:flex;flex-direction:column;\"><div style=\"background:#FFFFFF;border:1px solid #E5EBF4;box-shadow:0 1px 1.5px rgba(232,238,242,0.79);\"><div style=\"border-bottom:1px solid #E5EBF4;padding:12px 20px 12px 24px;\"><p style=\"margin:0;font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:16px;line-height:20px;color:#0A2757;letter-spacing:0.25px;\">Header</p></div><div style=\"background:rgba(246,249,253,0.24);padding:12px 24px;\"><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div></div></div><div style=\"background:#FFFFFF;border:1px solid #E5EBF4;box-shadow:0 1px 1.5px rgba(232,238,242,0.79);\"><div style=\"border-bottom:1px solid #E5EBF4;padding:12px 20px 12px 24px;\"><p style=\"margin:0;font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:16px;line-height:20px;color:#0A2757;letter-spacing:0.25px;\">Header</p></div><div style=\"background:rgba(246,249,253,0.24);padding:12px 24px;\"><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div><div style=\"display:flex;gap:8px;align-items:center;padding:2px 0;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" style=\"flex-shrink:0;\"><path d=\"M3 8.5l3 3 7-7\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg><span style=\"flex:1;font-family:'BarkAda',sans-serif;font-weight:600;font-size:14px;line-height:20px;color:#445C85;\">Content</span></div></div></div></div><div style=\"border-top:1px solid #E5EBF4;padding:24px 0;display:flex;align-items:center;justify-content:center;gap:4px;\"><span style=\"font-weight:600;font-size:16px;line-height:16px;color:#90A8D0;letter-spacing:0.25px;\">Reference no.</span><span style=\"font-weight:700;font-size:18px;line-height:18px;color:#0A2757;letter-spacing:0.25px;\">1234567890</span></div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Variant", "value": "Error", "prop": "variant" },
-              { "key": "Intent",  "value": "Error" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface",         "value": "#FFFFFF", "token": "inline-message/color/error/bg" },
-              { "key": "Border",          "value": "#E5EBF4", "token": "inline-message/color/error/border" },
-              { "key": "Header",          "value": "#0A2757", "token": "inline-message/color/error/label-header" },
-              { "key": "Title",           "value": "#D61B2C", "token": "inline-message/color/error/label-title" },
-              { "key": "Description",    "value": "#445C85", "token": "inline-message/color/error/label-description" },
-              { "key": "Reference label", "value": "#90A8D0", "token": "inline-message/color/error/label-reference" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Card width",    "value": "360px", "mono": true },
-              { "key": "Padding",       "value": "24 horizontal · 24 vertical", "mono": true },
-              { "key": "Border radius", "value": "12px",  "mono": true },
-              { "key": "Shadow",        "value": "Depth/D4", "mono": true },
-              { "key": "Illustration",  "value": "106 × 106", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Title style",       "value": "Primary/Headlines/Section", "mono": true },
-              { "key": "Title font",        "value": "Proxima Soft Bold · 22 / 26", "mono": true },
-              { "key": "Description style", "value": "Secondary/Default/Base", "mono": true },
-              { "key": "Description font",  "value": "BarkAda Medium · 14 / 20", "mono": true },
-              { "key": "Reference no.",     "value": "Primary/Label/Light/Base · Proxima Soft Semibold", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBInlineMessage</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add your label here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add your description here.\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIntent</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebReferenceNumber</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"1234567890\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBInlineMessage</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add your label here\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add your description here.\"</span><span class=\"syn-punc\">,</span>\n    intent <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBMessageIntent</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Error</span><span class=\"syn-punc\">,</span>\n    referenceNumber <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"1234567890\"</span>\n<span class=\"syn-punc\">)</span>"
       }
+
     ],
     "colorsTables": [
       {
