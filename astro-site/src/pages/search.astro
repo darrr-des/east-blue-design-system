@@ -1,5 +1,32 @@
 ---
-// Stub — full search will land in a follow-up.
+/* /search — opens the global SearchModal on top of the home page.
+ * The modal lives in Base.astro and is wired via `data-action="open-search"`
+ * or the `eb:open-search` custom event. */
+import Base from '../layouts/Base.astro';
 ---
-<meta http-equiv="refresh" content="0; url=/coming-soon?feature=Search" />
-<script>window.location.replace('/coming-soon?feature=Search');</script>
+
+<Base title="Search">
+  <script is:inline>
+    /* Fire the custom event once the SearchModal is mounted (transition:persist
+       on Base.astro means it's already there from the first page load, but on
+       direct /search navigation this is the first paint). */
+    (function () {
+      function trigger() {
+        document.dispatchEvent(new CustomEvent('eb:open-search'));
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', trigger);
+      } else {
+        trigger();
+      }
+      document.addEventListener('astro:page-load', trigger);
+    })();
+  </script>
+
+  {/* Visible fallback in case JS is disabled or the modal fails to mount. */}
+  <div class="panel panel-narrow">
+    <h1>Search</h1>
+    <p>Use the search bar (top-left of the sidebar) or press <kbd>⌘K</kbd> / <kbd>Ctrl</kbd>+<kbd>K</kbd> to open it.</p>
+    <p><a class="back-btn" href="/">← Back to Overview</a></p>
+  </div>
+</Base>

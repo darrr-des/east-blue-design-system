@@ -26,7 +26,7 @@ const { title, bodyClass = '', activeSlug } = Astro.props;
     <main class="main" transition:animate="fade">
       <slot />
     </main>
-    <SearchModal />
+    <SearchModal transition:persist />
     <script src="/scripts/assessment.js" is:inline></script>
   </body>
 </html>
