@@ -20,6 +20,7 @@ import { chatField } from './chat-field';
 import { checkbox } from './checkbox';
 import { chip } from './chip';
 import { counter } from './counter';
+import { countdown } from './countdown';
 import { datePickerGroup } from './date-picker-group';
 import { datePickerItem } from './date-picker-item';
 import { datePicker } from './date-picker';
@@ -52,7 +53,10 @@ import { radioButtonWithLabel } from './radio-button-with-label';
 import { radioButton } from './radio-button';
 import { recipientField } from './recipient-field';
 import { searchField } from './search-field';
+import { segmentedControlGroup } from './segmented-control-group';
 import { selectField } from './select-field';
+import { serviceItem } from './service-item';
+import { slider } from './slider';
 import { stepperBullet } from './stepper-bullet';
 import { stepperCircular } from './stepper-circular';
 import { stepperDash } from './stepper-dash';
@@ -67,6 +71,7 @@ import { textArea } from './text-area';
 import { titleBar } from './title-bar';
 import { toastWithButton } from './toast-with-button';
 import { toast } from './toast';
+import { toggleSegmentedControl } from './toggle-segmented-control';
 import { toggleWithLabel } from './toggle-with-label';
 import { toggle } from './toggle';
 import { tooltipBlurred } from './tooltip-blurred';
@@ -101,6 +106,7 @@ export const componentMap: Record<string, ComponentData> = {
   'checkbox': checkbox,
   'chip': chip,
   'counter': counter,
+  'countdown': countdown,
   'date-picker-group': datePickerGroup,
   'date-picker-item': datePickerItem,
   'date-picker': datePicker,
@@ -133,7 +139,10 @@ export const componentMap: Record<string, ComponentData> = {
   'radio-button': radioButton,
   'recipient-field': recipientField,
   'search-field': searchField,
+  'segmented-control-group': segmentedControlGroup,
   'select-field': selectField,
+  'service-item': serviceItem,
+  'slider': slider,
   'stepper-bullet': stepperBullet,
   'stepper-circular': stepperCircular,
   'stepper-dash': stepperDash,
@@ -148,6 +157,7 @@ export const componentMap: Record<string, ComponentData> = {
   'title-bar': titleBar,
   'toast-with-button': toastWithButton,
   'toast': toast,
+  'toggle-segmented-control': toggleSegmentedControl,
   'toggle-with-label': toggleWithLabel,
   'toggle': toggle,
   'tooltip-blurred': tooltipBlurred,
@@ -482,6 +492,21 @@ export const componentManifest = [
       {
         "kind": "refine",
         "label": "Needs Refinement"
+      }
+    ]
+  },
+  {
+    "slug": "countdown",
+    "name": "Countdown",
+    "node": "4076:9090",
+    "badges": [
+      {
+        "kind": "restructure",
+        "label": "Restructure"
+      },
+      {
+        "kind": "rework",
+        "label": "Requires Rework"
       }
     ]
   },
@@ -993,6 +1018,22 @@ export const componentManifest = [
     "navGroup": "Form Elements"
   },
   {
+    "slug": "segmented-control-group",
+    "name": "Segmented Control - Group",
+    "node": "27:30940",
+    "badges": [
+      {
+        "kind": "fix",
+        "label": "Fix"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "navGroup": "Toggle"
+  },
+  {
     "slug": "select-field",
     "name": "Select Field",
     "node": "17758:3786",
@@ -1007,6 +1048,36 @@ export const componentManifest = [
       }
     ],
     "navGroup": "Form Elements"
+  },
+  {
+    "slug": "service-item",
+    "name": "Service Item",
+    "node": "20210:2441",
+    "badges": [
+      {
+        "kind": "fix",
+        "label": "Fix"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ]
+  },
+  {
+    "slug": "slider",
+    "name": "Slider",
+    "node": "3235:60722",
+    "badges": [
+      {
+        "kind": "restructure",
+        "label": "Restructure"
+      },
+      {
+        "kind": "rework",
+        "label": "Requires Rework"
+      }
+    ]
   },
   {
     "slug": "stepper-bullet",
@@ -1233,6 +1304,22 @@ export const componentManifest = [
       }
     ],
     "navGroup": "Toast"
+  },
+  {
+    "slug": "toggle-segmented-control",
+    "name": "Toggle - Segmented Control",
+    "node": "27:30929",
+    "badges": [
+      {
+        "kind": "fix",
+        "label": "Fix"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
+    "navGroup": "Toggle"
   },
   {
     "slug": "toggle-with-label",
