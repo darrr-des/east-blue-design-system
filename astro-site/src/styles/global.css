@@ -2370,6 +2370,44 @@ p.rb-banner-desc {
   outline: none;
   border-color: var(--accent);
 }
+/* Toggle/switch flavor — for boolean props (show/hide, on/off). */
+.demo-panel-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+.demo-panel-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.demo-panel-toggle__track {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 18px;
+  border-radius: 999px;
+  background: #C8CDD5;
+  transition: background 160ms ease-out;
+}
+.demo-panel-toggle__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(2, 14, 34, 0.18);
+  transition: transform 160ms ease-out;
+}
+.demo-panel-toggle.is-on .demo-panel-toggle__track { background: var(--accent, #005CE5); }
+.demo-panel-toggle.is-on .demo-panel-toggle__thumb { transform: translateX(14px); }
+[data-theme="dark"] .demo-panel-toggle__track { background: #3A3F47; }
 /* Text-input flavor of .demo-panel-select (no chevron bg, room to type) */
 input.demo-panel-input.demo-panel-select,
 .demo-panel-input.demo-panel-select {
@@ -5973,96 +6011,108 @@ pre.code-snippet .prp { color: #0369A1; }
    COMPONENT PREVIEW BLOCKS — Footer
    Used inside live-preview demos for the Footer component.
 ═══════════════════════════════════════════════════════════════════════ */
+/* Footer — sized 1:1 to Figma node 21:215190.
+   Container is 360 wide with 24px padding all around, plain #FFFFFF surface
+   (no border, no radius, no shadow). Disclaimer text is BarkAda Semibold 12/18
+   in #6780A9. "Powered by" label is Proxima Soft Bold 12/12 +0.5 in #90A8D0
+   (not uppercase). Links are BarkAda Semibold 12/18 in #005CE5. */
 .eb-preview-footer {
-  width: 100%;
-  max-width: 360px;
+  width: 360px;
+  box-sizing: border-box;
   background: #FFFFFF;
-  padding: 16px 20px;
-  border-top: 1px solid #E5EBF4;
-  border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(2, 14, 34, 0.04);
+  padding: 24px 24px 24px 24px;
   font-family: 'Proxima Soft', system-ui, sans-serif;
-  color: #3C4A5C;
-}
-.eb-preview-footer[data-variant="3"],
-.eb-preview-footer[data-variant="4"],
-.eb-preview-footer[data-variant="7"] { text-align: center; }
-
-.eb-preview-footer__row {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.eb-preview-footer[data-variant="2"] .eb-preview-footer__row,
-.eb-preview-footer[data-variant="5"] .eb-preview-footer__row {
-  flex-direction: column;
-  align-items: flex-start;
-}
-.eb-preview-footer__powered-col {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.eb-preview-footer__label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
   color: #6780A9;
 }
-.eb-preview-footer__logo {
-  display: inline-flex;
-  align-items: center;
-  height: 18px;
+/* V1 in Figma has 32px bottom padding (other variants stay at 24) */
+.eb-preview-footer[data-variant="1"] { padding-bottom: 32px; }
+.eb-preview-footer--center { text-align: center; }
+
+/* V1 / V6 — horizontal row: Powered-by column + disclaimer column */
+.eb-preview-footer__row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
 }
-.eb-preview-footer__logo svg { height: 18px; width: auto; }
-.eb-preview-footer__logo--fuse svg text { fill: #F15B2E; }
+
+.eb-preview-footer__powered-col {
+  /* Figma asset-container: vertical auto-layout, padding 4 top / 0 horiz / 10 bottom, gap 10 */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 0 10px;
+  flex: 0 0 auto;
+}
+.eb-preview-footer__powered-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.eb-preview-footer__label {
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  color: #90A8D0;
+  text-transform: none;
+}
+/* Logos render at their intrinsic width/height (set as HTML attributes).
+   No forced height — each brand mark has its own aspect ratio per Figma. */
+.eb-preview-footer__logo {
+  display: inline-block;
+  vertical-align: middle;
+}
+img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 
 .eb-preview-footer__body {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  flex: 1 1 auto;
 }
 .eb-preview-footer__desc {
-  font-size: 11px;
-  line-height: 1.5;
+  font-family: 'BarkAda', 'Proxima Soft', system-ui, sans-serif;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 600;
   color: #6780A9;
   margin: 0;
 }
-.eb-preview-footer__desc--spaced { margin-top: 8px; }
+/* Figma adds a blank-line gap between paragraphs (one line-height of 18px) */
+.eb-preview-footer__desc--spaced { margin-top: 18px; }
+
+.eb-preview-footer__tiny {
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  color: #90A8D0;
+  margin: 0 0 8px;
+}
 
 .eb-preview-footer__link {
   display: inline-block;
+  font-family: 'BarkAda', 'Proxima Soft', system-ui, sans-serif;
   font-size: 12px;
+  line-height: 18px;
   font-weight: 600;
   color: #005CE5;
   text-decoration: none;
-  margin-top: 4px;
 }
 .eb-preview-footer__link:hover { text-decoration: underline; }
 
-.eb-preview-footer__partner-logos {
+.eb-preview-footer__logos {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  margin-top: 8px;
 }
-.eb-preview-footer__partner-logos--grouped {
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.eb-preview-footer__partner-logo {
-  display: inline-flex;
-  align-items: center;
-  height: 24px;
-}
-.eb-preview-footer__partner-logo svg,
-.eb-preview-footer__partner-logo img { max-height: 24px; width: auto; }
-
-.eb-preview-footer__separator {
-  width: 1px;
-  height: 16px;
-  background: #C2CFE5;
-}
+.eb-preview-footer__logos--center { justify-content: center; }
+.eb-preview-footer__logos--left   { justify-content: flex-start; }
 
 /* ═══════════════════════════════════════════════════════════════════════
    COMPONENT PREVIEW BLOCKS — Toast (basic)

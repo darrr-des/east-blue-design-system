@@ -173,8 +173,13 @@ export interface DemoControlOption {
   label: string;
 }
 export interface DemoControlRow {
-  label: string;                       // shown next to the select (e.g. "State")
+  label: string;                       // shown next to the control (e.g. "State")
   prop: string;                        // arg passed to updateSpecCard (e.g. "state")
+  /** Render style. Defaults to 'select' for backwards compatibility.
+      'toggle' renders an on/off switch — useful for boolean props
+      (show/hide, true/false, yes/no). When 'toggle', the row's first
+      option value = "off" and the second = "on". */
+  control?: 'select' | 'toggle';
   options: DemoControlOption[];
   defaultValue?: string;               // initially selected option's value
 }

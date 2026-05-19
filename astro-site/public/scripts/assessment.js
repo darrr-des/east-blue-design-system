@@ -303,9 +303,13 @@
           matchedSpecificity = pairs.length;
         }
       });
+      /* The cell with `data-row-card` is the `.spec-prop-val` span; the
+         parent `.spec-prop` element wraps both the key label and value.
+         Hiding the row requires hiding the parent. */
+      var rowEl = cell.closest('.spec-prop') || cell;
       if (!matched) {
         /* Ensure row is visible (in case a previous flip hid it). */
-        cell.style.display = '';
+        rowEl.style.display = '';
         /* Restore defaults from data-row-default-* attributes. */
         var def = cell.getAttribute('data-row-default');
         if (def !== null) {
@@ -319,10 +323,10 @@
       /* Hide row when variant says so — used for specs that don't apply
          to the current demo state (e.g. counter pill on a loading row). */
       if (matched.hide) {
-        cell.style.display = 'none';
+        rowEl.style.display = 'none';
         return;
       }
-      cell.style.display = '';
+      rowEl.style.display = '';
       /* Cache the default once so we can revert later. */
       if (!cell.hasAttribute('data-row-default')) {
         var hexEl = cell.querySelector('.spec-prop-hex');
