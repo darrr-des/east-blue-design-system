@@ -65,16 +65,23 @@ const guideHtml = extractMainBody(raw);
     <div class="panel-layout">
       <div class="content-wrap">
         <nav class="guide-breadcrumb" aria-label="Breadcrumb">
-          <a class="back-btn" href="/">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Overview
-          </a>
+          <a class="back-btn" href="/">Overview</a>
           <span class="guide-breadcrumb-sep" aria-hidden="true">›</span>
           <span class="guide-breadcrumb-current">Assessment Guide</span>
         </nav>
         <div class="guide-content" set:html={guideHtml} />
+        <a class="overview-cta guide-methodology-cta" href="/eb-methodology">
+          <div class="overview-cta-text">
+            <span class="overview-cta-eyebrow">The why behind the why</span>
+            <span class="overview-cta-title">Read the Assessment Methodology</span>
+            <span class="overview-cta-sub">Every rating, score, and level explained across 12 parts — what it is, how we arrived at it, and why it exists. One table per concept.</span>
+          </div>
+          <span class="overview-cta-arrow" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
       </div>
       <aside class="page-toc" aria-label="On this page">
         <div class="page-toc-label">On this page</div>
@@ -391,6 +398,9 @@ const guideHtml = extractMainBody(raw);
 
 /* td.center utility used in mobile-doc tables */
 .guide-content td.mono.center { text-align: center; }
+
+/* Entry point to the companion Methodology page */
+.guide-methodology-cta { margin-top: 32px; }
 
 /* TOC styling lives in global.css under .page-toc / .page-toc-link — same as
    component pages. Nothing to override here. */

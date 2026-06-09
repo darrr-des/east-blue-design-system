@@ -1,0 +1,354 @@
+---
+import Base from '../layouts/Base.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+/**
+ * Assessment Methodology — "the why behind the why".
+ *
+ * Companion to the Assessment Guide. Reads the standalone `eb-methodology.html`
+ * (12 parts, one summary + one data table each) and embeds just its `.part`
+ * blocks into the Astro layout, re-skinned to the current assessment design via
+ * `.methodology-content`-scoped CSS. The source HTML stays the editable source;
+ * this page only restyles it (fonts, surfaces, badges, dark mode) so it matches
+ * the rest of the site — same approach as `eb-ds-assessment-guide.astro`.
+ *
+ * The standalone header / hero / inline TOC are stripped; the Astro chrome
+ * (breadcrumb, cover, right-side TOC) replaces them. Tables-per-part are kept.
+ */
+
+const HTML_PATH = path.resolve(process.cwd(), '..', 'eb-methodology.html');
+const raw = fs.readFileSync(HTML_PATH, 'utf8');
+
+// Right-side "On this page" — one entry per part. Order matches the source.
+const TOC_SECTIONS = [
+  { id: 'part1',  label: '1 · DS Health — 4 Traits' },
+  { id: 'part2',  label: '2 · Trait Ratings' },
+  { id: 'part3',  label: '3 · DS Health Verdicts' },
+  { id: 'part4',  label: '4 · Native Readiness — C1–C7' },
+  { id: 'part5',  label: '5 · Native Status Levels' },
+  { id: 'part6',  label: '6 · Combined Status' },
+  { id: 'part7',  label: '7 · Mobile Doc Criteria' },
+  { id: 'part8',  label: '8 · Maturity Model (L1–L4)' },
+  { id: 'part9',  label: '9 · Future-Proof Scoring' },
+  { id: 'part10', label: '10 · Design Metrics' },
+  { id: 'part11', label: '11 · Recommendation Priority' },
+  { id: 'part12', label: '12 · How They Connect' },
+];
+
+// Extract just the 12 `.part` blocks from the source HTML's `<div class="mn">`.
+// Everything before Part 1 (standalone header, hero, inline TOC) and the `.mn`
+// wrapper itself are dropped — the Astro chrome replaces them.
+function extractParts(html: string): string {
+  const start = html.indexOf('<div class="part" id="part1">');
+  const end = html.indexOf('</body>');
+  if (start === -1 || end === -1) return '';
+  let inner = html.slice(start, end);
+  // Drop the trailing `</div>` that closed the source's `.mn` wrapper.
+  inner = inner.replace(/<\/div>\s*$/, '');
+  // Wrap each data table in a rounded card so it matches the guide's
+  // `.table-wrap` look (precise — only `.dt` tables, which never nest).
+  inner = inner.replace(
+    /<table class="dt">([\s\S]*?)<\/table>/g,
+    '<div class="m-table-wrap"><table class="dt">$1</table></div>'
+  );
+  return inner.trim();
+}
+
+const partsHtml = extractParts(raw);
+---
+<Base title="Assessment Methodology · East Blue">
+  <div class="panel active methodology-page">
+    <div class="panel-layout">
+      <div class="content-wrap">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+          <a class="back-btn" href="/eb-ds-assessment-guide">Assessment Guide</a>
+          <span class="guide-breadcrumb-sep" aria-hidden="true">›</span>
+          <span class="guide-breadcrumb-current">Methodology</span>
+        </nav>
+
+        <div class="methodology-content">
+          <div class="cover">
+            <div class="cover-eyebrow">East Blue Design System</div>
+            <div class="cover-title">Assessment &amp; Benchmark Methodology</div>
+            <div class="cover-subtitle">The "why behind the why." Every rating, score, and level in the East Blue assessment system — what it is, how we arrived at it, and why it exists. When someone asks "why does East Blue score components this way?", this page is the answer.</div>
+          </div>
+
+          <div set:html={partsHtml} />
+        </div>
+      </div>
+
+      <aside class="page-toc" aria-label="On this page">
+        <div class="page-toc-label">On this page</div>
+        <nav class="page-toc-nav">
+          {TOC_SECTIONS.map((s) => (
+            <a class="page-toc-link" href={`#${s.id}`} data-toc-target={s.id}>{s.label}</a>
+          ))}
+        </nav>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style is:global>
+/* ────────────────────────────────────────────────────────────────────
+   Assessment Methodology — source `eb-methodology.html`, re-skinned to the
+   current assessment design. All selectors are scoped to
+   `.methodology-content` so nothing leaks. Keeps the source markup intact
+   (one summary + one table per part) and only restyles it.
+   ──────────────────────────────────────────────────────────────────── */
+
+.methodology-page { padding: 40px 0 80px; }
+
+/* Legacy palette → themed values. The embedded markup still references these
+   custom props via inline `style=` on score boxes and step cards; mapping them
+   here keeps that markup working while making it theme-aware. The `-bg`
+   variants all resolve to the neutral card surface so step cards read as
+   calm cards — the colour cue comes from the numbered badge instead. */
+.methodology-content {
+  --m-red: #C62828;
+  --m-amb: #B45309;
+  --m-grn: #1A7A4A;
+  --m-pur: #9333EA;
+  --pri: var(--accent);
+  --red: var(--m-red);
+  --amb: var(--m-amb);
+  --grn: var(--m-grn);
+  --pur: var(--m-pur);
+  --m-card: #F1F1F4;
+  --red-bg: var(--m-card);
+  --amb-bg: var(--m-card);
+  --grn-bg: var(--m-card);
+  --blu-bg: var(--m-card);
+  --pur-bg: var(--m-card);
+
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1.65;
+}
+[data-theme="dark"] .methodology-content {
+  --m-red: #F87171;
+  --m-amb: #FBBF24;
+  --m-grn: #4ADE80;
+  --m-pur: #C084FC;
+  --m-card: #262626;
+}
+
+/* Cover */
+.methodology-content .cover {
+  padding: 8px 0 32px;
+  border-bottom: 1px solid var(--sidebar-border);
+  margin-bottom: 36px;
+}
+.methodology-content .cover-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1972F9;
+  margin-bottom: 10px;
+}
+.methodology-content .cover-title {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.methodology-content .cover-subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 70ch;
+}
+
+/* Part — one section per concept */
+.methodology-content .part {
+  margin-bottom: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--sidebar-border);
+  scroll-margin-top: 24px;
+}
+.methodology-content .part:last-child { border-bottom: 0; }
+.methodology-content .part-num { display: none; }
+.methodology-content .part h2 {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.methodology-content .part-intro {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+
+/* Summary card */
+.methodology-content .summary {
+  background: var(--m-card);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+.methodology-content .summary h4 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.methodology-content .summary + .summary { margin-top: -8px; }
+.methodology-content .summary table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.methodology-content .summary td {
+  padding: 7px 0;
+  vertical-align: top;
+  border-bottom: 1px solid var(--row-border);
+}
+.methodology-content .summary tr:last-child td { border-bottom: 0; }
+.methodology-content .summary .s-name {
+  font-weight: 600;
+  color: var(--text);
+  width: 150px;
+  white-space: nowrap;
+  padding-right: 14px;
+}
+.methodology-content .summary .s-mean { color: var(--muted); line-height: 1.55; }
+
+/* Data table — one per part, wrapped in a rounded card */
+.methodology-content .m-table-wrap {
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--sidebar-border);
+  margin: 0 0 16px;
+}
+.methodology-content table.dt {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 0;
+}
+.methodology-content table.dt th {
+  text-align: left;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--thead-fg);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  background: var(--thead-bg);
+  border-bottom: 1px solid var(--row-border);
+  white-space: nowrap;
+}
+.methodology-content table.dt td {
+  padding: 12px 16px;
+  border-top: 1px solid var(--row-border);
+  vertical-align: top;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+.methodology-content table.dt tbody tr:first-child td { border-top: 0; }
+.methodology-content table.dt td:first-child {
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  width: 170px;
+}
+.methodology-content table.dt td strong { font-weight: 600; color: var(--text); }
+
+/* Pills — mapped onto the design-system badge palette */
+.methodology-content .pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+.methodology-content .p-grn { background: #E6F4ED; color: #1A7A4A; }
+.methodology-content .p-amb { background: #FEF3C7; color: #B45309; }
+.methodology-content .p-red { background: #FEE2E2; color: #B91C1C; }
+.methodology-content .p-blu { background: #EEF3FB; color: #1448A3; }
+.methodology-content .p-pur { background: #F3E8FF; color: #9333EA; }
+.methodology-content .p-gry { background: var(--code-bg); color: var(--muted); }
+
+/* Callout */
+.methodology-content .callout {
+  background: var(--accent-light);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin: 20px 0;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.7;
+}
+.methodology-content .callout strong { color: var(--text); font-weight: 600; }
+
+/* Score boxes (Part 9) */
+.methodology-content .score-row { display: flex; gap: 6px; margin: 4px 0; }
+.methodology-content .score-box {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--row-border);
+  border-radius: 8px;
+  padding: 6px 8px;
+  text-align: center;
+}
+.methodology-content .score-box .sv { font-size: 16px; font-weight: 600; }
+.methodology-content .score-box .sl { font-size: 9px; color: var(--muted); }
+
+/* Step cards (Part 12) — neutral card, colour cue from the numbered badge */
+.methodology-content .step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--m-card) !important;
+}
+.methodology-content .step-num {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.methodology-content .step-title { font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.methodology-content .step-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.methodology-content .step-desc strong { color: var(--text-2); font-weight: 600; }
+
+/* Inline code */
+.methodology-content code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--code-bg);
+  padding: 1px 4px;
+  border-radius: 3px;
+  color: var(--code-fg);
+}
+
+/* Mobile — collapse the fixed first-column width so tables don't overflow */
+@media (max-width: 640px) {
+  .methodology-content table.dt td:first-child { white-space: normal; width: auto; }
+  .methodology-content .summary .s-name { width: auto; white-space: normal; }
+}
+</style>

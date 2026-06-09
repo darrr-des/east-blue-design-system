@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>East Blue — Assessment & Benchmark Methodology</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--pri:#0033B8;--pri-lt:#E8EDF8;--navy:#01245C;--navy-d:#04142D;--bg:#fff;--bg2:#F7F8FA;--bg3:#F0F2F5;--tx:#1A1A2E;--tx2:#5A6270;--tx3:#8C939E;--bd:#E2E5EA;--bd2:#ECEEF2;--grn:#0F7B3F;--grn-bg:#E6F4ED;--red:#C62828;--red-bg:#FDECEA;--amb:#E6A817;--amb-bg:#FFF8E1;--blu-bg:#E3EDFC;--pur:#5B3FBF;--pur-bg:#F0ECFC;--r:8px;--rl:12px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Google Sans',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--tx);background:var(--bg);line-height:1.7;font-size:15px}
+.hd{background:var(--navy-d);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+.hd-t{color:#fff;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px}
+.hd-t span{opacity:.4}
+.hd-badge{background:var(--pur);color:#fff;font-size:9px;font-weight:500;padding:2px 7px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase}
+.hd-nav{display:flex;gap:16px}
+.hd-nav a{color:rgba(255,255,255,.5);text-decoration:none;font-size:12px}
+.hd-nav a:hover{color:#fff}
+.mn{max-width:900px;margin:0 auto;padding:48px 24px 80px}
+.hero{margin-bottom:48px}
+.hero h1{font-size:32px;font-weight:500;letter-spacing:-.5px;margin-bottom:8px}
+.hero p{font-size:15px;color:var(--tx2);line-height:1.7}
+.toc{background:var(--bg2);border-radius:var(--rl);padding:20px 24px;margin-bottom:48px}
+.toc h3{font-size:14px;font-weight:500;margin-bottom:10px}
+.toc a{display:block;font-size:13px;color:var(--pri);text-decoration:none;padding:3px 0}
+.toc a:hover{text-decoration:underline}
+.part{margin-bottom:56px;padding-bottom:56px;border-bottom:1px solid var(--bd2)}
+.part:last-child{border-bottom:none}
+.part-num{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;color:var(--pri);margin-bottom:6px}
+.part h2{font-size:22px;font-weight:500;margin-bottom:8px}
+.part-intro{font-size:15px;color:var(--tx2);margin-bottom:20px;line-height:1.7}
+.summary{background:var(--bg2);border-radius:var(--rl);padding:16px 20px;margin-bottom:28px}
+.summary h4{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.4px;color:var(--tx3);margin-bottom:8px}
+.summary table{width:100%;border-collapse:collapse;font-size:13px}
+.summary td{padding:5px 0;vertical-align:top;border-bottom:1px solid var(--bd2)}
+.summary tr:last-child td{border-bottom:none}
+.summary .s-name{font-weight:500;color:var(--tx);width:120px;white-space:nowrap;padding-right:10px}
+
+.summary .s-mean{color:var(--tx2)}
+table.dt{width:100%;border-collapse:collapse;font-size:13px;margin:0 0 16px}
+table.dt th{text-align:left;padding:10px 14px;font-weight:500;font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--bd);background:var(--bg2)}
+table.dt td{padding:12px 14px;border-bottom:1px solid var(--bd2);vertical-align:top;line-height:1.6}
+table.dt tr:last-child td{border-bottom:none}
+table.dt td:first-child{font-weight:500;color:var(--tx);white-space:nowrap;width:160px}
+.pill{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:500}
+.p-grn{background:var(--grn-bg);color:var(--grn)}
+.p-amb{background:var(--amb-bg);color:#9A6700}
+.p-red{background:var(--red-bg);color:var(--red)}
+.p-blu{background:var(--blu-bg);color:var(--pri)}
+.p-gry{background:var(--bg3);color:var(--tx3)}
+.p-pur{background:var(--pur-bg);color:var(--pur)}
+.callout{background:var(--pri-lt);border-left:3px solid var(--pri);padding:14px 18px;border-radius:0;margin:20px 0;font-size:14px;color:var(--tx2);line-height:1.7}
+.callout strong{color:var(--tx)}
+.score-row{display:flex;gap:6px;margin:4px 0}
+.score-box{flex:1;background:var(--bg2);border:1px solid var(--bd2);border-radius:6px;padding:6px 8px;text-align:center}
+.score-box .sv{font-size:16px;font-weight:500}
+.score-box .sl{font-size:9px;color:var(--tx3)}
+.step{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;padding:14px 16px;border-radius:var(--r)}
+.step-num{color:#fff;font-size:11px;font-weight:500;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-title{font-weight:500;margin-bottom:2px}
+.step-desc{font-size:14px;color:var(--tx2);line-height:1.6}
+</style>
+</head>
+<body>
+<div class="hd">
+<div class="hd-t">East Blue <span>/</span> Assessment & Benchmark Methodology <span class="hd-badge">Frost internal</span></div>
+<div class="hd-nav"><a href="index.html">Index</a><a href="report.html">Assessment</a><a href="benchmark.html">Benchmark</a></div>
+</div>
+<div class="mn">
+
+<div class="hero">
+<h1>Assessment & Benchmark Methodology</h1>
+<p>The "why behind the why." Every rating, score, and level in the East Blue assessment system — what it is, how we arrived at it, and why it exists. When someone asks "why does East Blue score components this way?" — this page is the answer.</p>
+</div>
+
+<div class="toc">
+<h3>Contents</h3>
+<a href="#part1">Part 1: DS Health — The 4 Traits</a>
+<a href="#part2">Part 2: Trait Ratings</a>
+<a href="#part3">Part 3: DS Health Verdicts</a>
+<a href="#part4">Part 4: Native Mobile Readiness — C1–C7</a>
+<a href="#part5">Part 5: Native Status Levels</a>
+<a href="#part6">Part 6: Combined Status</a>
+<a href="#part7">Part 7: Mobile Documentation Criteria — 9-Point Assessment</a>
+<a href="#part8">Part 8: Component Maturity Model (L1–L4)</a>
+<a href="#part9">Part 9: Future-Proof Scoring (6 Pillars)</a>
+<a href="#part10">Part 10: Design Metrics (12 Fields)</a>
+<a href="#part11">Part 11: Recommendation Priority System</a>
+<a href="#part12">Part 12: How They Connect — The 7-Step Loop</a>
+</div>
+
+<!-- ==================== PART 1 ==================== -->
+<div class="part" id="part1">
+<div class="part-num">Part 1</div>
+<h2>DS Health — The 4 Traits</h2>
+<p class="part-intro">We studied what makes Material, Atlassian, Carbon, and Polaris components successful across products, platforms, and teams. These 4 traits are what they all have in common. We didn't invent them — the industry's best systems proved them.</p>
+
+<div class="summary">
+<h4>Summary</h4>
+<table>
+<tr><td class="s-name">Reusable</td><td class="s-mean">Material, Atlassian, and Polaris all share components across products and platforms. One-screen components are product-specific, not DS-grade.</td></tr>
+<tr><td class="s-name">Self-contained</td><td class="s-mean">Carbon isolates components with no external dependencies. GCash components that relied on parent containers broke when moved.</td></tr>
+<tr><td class="s-name">Consistent</td><td class="s-mean">Atlassian enforces uniformity via shared tokens. GCash's Accordion used yes/no booleans while everything else used true/false.</td></tr>
+<tr><td class="s-name">Composable</td><td class="s-mean">Carbon's hierarchy and Material's nested architecture proved that systems scale when components snap together as building blocks.</td></tr>
+</table>
+</div>
+
+<table class="dt">
+<thead><tr><th>Trait</th><th>What it is</th><th>How we arrived at this</th><th>What it means in practice</th></tr></thead>
+<tbody>
+<tr>
+<td>Reusable</td>
+<td>Works across multiple screens and flows, not just one specific screen or feature.</td>
+<td>Material's Button works identically across Android, Web, and Flutter. Atlassian uses the same components across Jira, Confluence, Trello, and Bitbucket — wildly different products, same building blocks. The common thread: if it only works on one screen, it's not a component — it's a one-off.</td>
+<td>A GCash button must work in a payment flow, a settings page, and a modal without modification. You design it once and use it everywhere. If it can't do that, it belongs in a product library, not the core design system.</td>
+</tr>
+<tr>
+<td>Self-contained</td>
+<td>Carries its own styles, states, and logic without depending on external setup.</td>
+<td>Carbon packages each component independently — teams pull only what they need without side effects. We saw GCash components that depended on parent containers to set their colors. When moved between screens, they broke. The pattern was clear: a component that depends on external setup breaks when moved.</td>
+<td>Drop the component into any screen and it works immediately. It doesn't need a parent wrapper. It manages its own pressed, disabled, loading states internally. For GCash with 90M+ users and multiple product teams, self-containment means no team can accidentally break another team's UI.</td>
+</tr>
+<tr>
+<td>Consistent</td>
+<td>Naming conventions, property types, and state coverage match the rest of the design system.</td>
+<td>Atlassian's shared design tokens keep color, spacing, and elevation uniform across every product. When we assessed GCash's Accordion, we found it using <code>yes/no</code> boolean values while the rest of the system uses <code>true/false</code>. That inconsistency forced developers to handle special cases — a pattern we saw repeat across multiple components.</td>
+<td>Every component uses the same naming conventions, the same property types, the same state coverage. If buttons use <code>true/false</code>, checkboxes use <code>true/false</code>. No surprises, no special cases, no guessing.</td>
+</tr>
+<tr>
+<td>Composable</td>
+<td>Can be nested inside other components and fits into the existing hierarchy.</td>
+<td>Carbon's hierarchy — Elements → Components → Patterns → Templates — shows exactly how things nest. Material's NavigationDrawer is built from ListItems, which are built from Icons + Text. The systems that scale are the ones where components snap together like building blocks.</td>
+<td>An icon sits inside a button. A button sits inside a card. A card sits inside a list. If a component can't be nested, designers have to rebuild it from scratch every time they need a new combination. For GCash, composability means a single well-built button powers every screen.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ==================== PART 2 ==================== -->
+<div class="part" id="part2">
+<div class="part-num">Part 2</div>
+<h2>Trait Ratings</h2>
+<p class="part-intro">Each of the 4 traits is rated independently. Why three levels? Because "partially works" needs different action than "completely broken." A component with inconsistent naming needs a 10-minute rename. A component with no states needs a redesign. The rating tells you how much work is ahead.</p>
+
+<div class="summary">
+<h4>Summary</h4>
+<table>
+<tr><td class="s-name"><span class="pill p-grn">Pass ✅</span></td><td class="s-mean">Needed a clear "done" signal so healthy traits stop getting revisited.</td></tr>
+<tr><td class="s-name"><span class="pill p-amb">Needs work ⚠️</span></td><td class="s-mean">Binary pass/fail treats a 10-minute rename the same as a full rebuild. Most real components land here.</td></tr>
+<tr><td class="s-name"><span class="pill p-red">Fail ❌</span></td><td class="s-mean">Separates "fix it" from "rethink it." Fail items block all downstream work.</td></tr>
+</table>
+</div>
+
+<table class="dt">
+<thead><tr><th>Rating</th><th>What it is</th><th>How we arrived at this</th><th>What it means in practice</th></tr></thead>
+<tbody>
+<tr>
+<td><span class="pill p-grn">Pass ✅</span></td>
+<td>Fully meets the trait. No issues found.</td>
+<td>You need a clear "done" signal. Without it, every component gets scrutinized endlessly. We created Pass to mean: stop looking for problems here — this trait is clean.</td>
+<td>The component fully satisfies this trait. No workarounds, no exceptions. Move on to the next trait or the next component.</td>
+</tr>
+<tr>
+<td><span class="pill p-amb">Needs work ⚠️</span></td>
+<td>Partially meets the trait. Specific, fixable gaps.</td>
+<td>Without a middle tier, everything becomes binary — ship or rebuild. That's too coarse. Most real components land here. GCash's Accordion was rated ⚠️ on Consistent because its booleans used <code>yes/no</code> instead of <code>true/false</code>. A 10-minute rename, not a redesign — but still a real issue.</td>
+<td>The intent is right, but execution has gaps. Maybe reusable in 3 out of 4 contexts. Maybe naming is consistent except for one property. These are targeted repairs, not fundamental problems.</td>
+</tr>
+<tr>
+<td><span class="pill p-red">Fail ❌</span></td>
+<td>Does not meet the trait. Structural problem requiring rebuild.</td>
+<td>We needed to separate "needs a fix" from "needs a rethink." Fail items go first in the priority queue because they block everything downstream — you can't benchmark a component that fundamentally doesn't work.</td>
+<td>The component structurally can't satisfy this trait in its current form. A component that only works on one screen fails Reusable. A component with no states fails Self-contained. Not a tweak — a rebuild of that aspect.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ==================== PART 3 ==================== -->
+<div class="part" id="part3">
+<div class="part-num">Part 3</div>
+<h2>DS Health Verdicts</h2>
+<p class="part-intro">Why 6 verdicts? Because a component can "belong" in the DS but need very different kinds of work. Fix means tweak properties. Restructure means rebuild architecture. Consolidate means merge. Each verdict tells you the kind of investment required — not just "is it good or bad?"</p>
+
+<div class="summary">
+<h4>Summary</h4>
+<table>
+<tr><td class="s-name"><span class="pill p-grn">Keep</span></td><td class="s-mean">Needed a "stop reviewing" signal for healthy components.</td></tr>
+<tr><td class="s-name"><span class="pill p-amb">Fix</span></td><td class="s-mean">GCash Accordion had good structure but bad naming. One session fix, not a rebuild.</td></tr>
+<tr><td class="s-name"><span class="pill p-amb">Restructure</span></td><td class="s-mean">Separated from Fix because restructuring takes a sprint vs 30 minutes.</td></tr>
+<tr><td class="s-name"><span class="pill p-amb">Consolidate</span></td><td class="s-mean">GCash had multiple list components doing the same thing. Every duplicate doubles maintenance.</td></tr>
+<tr><td class="s-name"><span class="pill p-gry">Product Layer</span></td><td class="s-mean">A DS that includes everything becomes unmaintainable. Core stays lean.</td></tr>
+<tr><td class="s-name"><span class="pill p-red">Remove</span></td><td class="s-mean">Dead components accumulate forever. Even unused ones confuse designers.</td></tr>
+</table>
+</div>
+
+<table class="dt">
+<thead><tr><th>Verdict</th><th>What it is</th><th>How we arrived at this</th><th>What it means in practice</th></tr></thead>
+<tbody>
+<tr>
+<td><span class="pill p-grn">Keep</span></td>
+<td>All 4 traits pass. Ship as-is.</td>
+<td>We needed a clear "don't touch this" signal. Without Keep, every component gets endlessly scrutinized. Keep means the DS Health work is done here.</td>
+<td>All 4 traits pass. Component is healthy. Move to native readiness assessment or benchmarking.</td>
+</tr>
+<tr>
+<td><span class="pill p-amb">Fix</span></td>
+<td>Sound architecture, needs targeted repairs.</td>
+<td>GCash's Accordion had good structure but bad layer names and wrong boolean values. The architecture was sound — it just needed targeted repairs. We needed a verdict that says "the concept is right, the details are wrong."</td>
+<td>Quick wins — usually one Figma session. Rename properties, add missing states, fix token bindings. The component stays, the details get corrected.</td>
+</tr>
+<tr>
+<td><span class="pill p-amb">Restructure</span></td>
+<td>Right purpose, wrong construction. Needs architectural rebuild.</td>
+<td>Some components do the right thing but are built wrong — variant structure makes extending impossible, or the layer hierarchy doesn't map to native code. Restructure is a bigger investment than Fix, so separating them helps with planning.</td>
+<td>The concept stays, the construction changes. A Fix takes 30 minutes. A Restructure takes a full sprint. Different budget, different timeline.</td>
+</tr>
+<tr>
+<td><span class="pill p-amb">Consolidate</span></td>
+<td>Merge duplicates into one component.</td>
+<td>GCash had multiple list components doing the same thing. Every duplicate means every fix gets applied twice. We needed a verdict that says "merge these into one."</td>
+<td>Two components exist that do the same thing. One absorbs the other. The surviving component gets the best properties from both.</td>
+</tr>
+<tr>
+<td><span class="pill p-gry">Product Layer</span></td>
+<td>Too feature-specific for core DS. Move to product library.</td>
+<td>A design system that includes everything becomes unmaintainable. Some components are real but too feature-specific (e.g. a loan calculator widget). They work, but only for one product. The core DS should stay lean.</td>
+<td>Move to a product-specific library. The team that owns the feature owns the component. Don't invest DS resources here.</td>
+</tr>
+<tr>
+<td><span class="pill p-red">Remove</span></td>
+<td>Redundant, deprecated, or doesn't belong. Delete it.</td>
+<td>Without Remove, dead components accumulate forever. Every component in the library has a maintenance cost — even unused ones confuse designers who find them. Remove keeps the library honest.</td>
+<td>Delete it. It's a duplicate, an outdated pattern, or something that was never a design system component (OS-level UI, ad infrastructure).</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ==================== PART 4 ==================== -->
+<div class="part" id="part4">
+<div class="part-num">Part 4</div>
+<h2>Native Mobile Readiness — 7 Criteria (C1–C7)</h2>
+<p class="part-intro">GCash targets iOS (SwiftUI) and Android (Jetpack Compose). These 7 criteria are the minimum requirements for a Figma component to translate cleanly to native code. Each one exists because its absence causes a specific, known failure mode when developers try to build the component natively.</p>
+
+<div class="summary">
+<h4>Summary</h4>
+<table>
+<tr><td class="s-name">C1 Layer structure</td><td class="s-mean">Found 8 layers named "Frame" in GCash Accordion. Messy layers produce messy code.</td></tr>
+<tr><td class="s-name">C2 Variant naming</td><td class="s-mean">Bad names force a translation layer between Figma and code. That layer is where bugs live.</td></tr>
+<tr><td class="s-name">C3 Token coverage</td><td class="s-mean">Hardcoded colors in a 90M-user app are a rebrand time bomb. Tokens update everywhere at once.</td></tr>
+<tr><td class="s-name">C4 Native mappability</td><td class="s-mean">Discovering a design is impossible to build after a sprint is the most expensive failure.</td></tr>
+<tr><td class="s-name">C5 Interaction states</td><td class="s-mean">Missing states are the #1 cause of "works in Figma, feels wrong in app."</td></tr>
+<tr><td class="s-name">C6 Asset quality</td><td class="s-mean">GCash's two-tone icons need programmatic tinting. PNGs can't do that.</td></tr>
+<tr><td class="s-name">C7 Code Connect</td><td class="s-mean">C1–C6 prepare the component. C7 completes the bridge. The end goal of native readiness.</td></tr>
+</table>
+</div>
+
+<table class="dt">
+<thead><tr><th>Criterion</th><th>What it is</th><th>How we arrived at this</th><th>What it means in practice</th></tr></thead>
+<tbody>
+<tr>
+<td><span class="pill p-blu">C1</span> Layer structure</td>
+<td>Clean, semantic layer hierarchy with meaningful names.</td>
+<td>SwiftUI and Compose build UIs as trees of named views. Figma's layer tree is the developer's blueprint. When we assessed GCash's Accordion, 8 layers were named "Frame" — every one needed renaming before a developer could use it. Messy layers = messy code = bugs.</td>
+<td>Layers named "container," "header-row," "icon-leading" — not "Frame 47" or "Group 12." The layer hierarchy should mirror the native view tree.</td>
+</tr>
+<tr>
+<td><span class="pill p-blu">C2</span> Variant naming</td>
+<td>Property names map 1:1 to native code parameters.</td>
+<td>Figma properties become function parameters in code. <code>style=filled</code> maps to <code>.ebStyle(.filled)</code> in SwiftUI. <code>Has Icon=yes</code> doesn't map to anything — it should be <code>hasIcon=true</code>. Bad names force developers to create a translation layer where bugs live.</td>
+<td>Property names should be clean enough to appear directly in SwiftUI/Compose code. No spaces, no special characters, boolean values use true/false.</td>
+</tr>
+<tr>
+<td><span class="pill p-blu">C3</span> Token coverage</td>
+<td>All visual values use design tokens, zero hardcoded values.</td>
+<td>A button with background <code>#0033B8</code> breaks if GCash rebrands. A button with <code>color.primary.main</code> updates automatically. For a 90M-user app, hardcoded colors are a ticking time bomb. We found multiple GCash components with raw hex values.</td>
+<td>Every color, spacing value, and font size uses a design token. Zero hardcoded values. Tokens are the single source of truth across all platforms.</td>
+</tr>
+<tr>
+<td><span class="pill p-blu">C4</span> Native mappability</td>
+<td>No Figma-only visual tricks that can't translate to native.</td>
+<td>Figma lets you do things native platforms can't — complex blend modes, multiple fills with different opacities, elaborate masks. Finding out a design is impossible to build after a sprint of work is the most expensive kind of failure.</td>
+<td>No Figma-only visual tricks. If you can't build it in SwiftUI or Compose, it can't be in the design system. C4 ensures the design is achievable.</td>
+</tr>
+<tr>
+<td><span class="pill p-blu">C5</span> Interaction states</td>
+<td>Every interactive state exists as its own variant — default, pressed, disabled, focused, loading.</td>
+<td>A button without a pressed state looks broken — users tap it and nothing changes. A button without a disabled state gets tapped when it shouldn't be. Missing states are the #1 source of "it works in Figma but feels wrong in the app."</td>
+<td>Every interactive component documents: default, pressed, disabled, focused, loading. Each state is a separate variant. Missing states force developers to invent behavior differently.</td>
+</tr>
+<tr>
+<td><span class="pill p-blu">C6</span> Asset quality</td>
+<td>Icons and images are vector instances colored by design tokens, never raster embeds.</td>
+<td>GCash uses a two-tone icon system. If icons are PNG embeds, the opacity treatment can't be applied programmatically. Developers have to manually create different icon versions for light mode, dark mode, and each color context. Vector component instances solve this with one asset.</td>
+<td>Icons are vector component instances colored with tokens — not raster/PNG embeds or CDN URLs. They can be resized, tinted, and themed natively.</td>
+</tr>
+<tr>
+<td><span class="pill p-blu">C7</span> Code Connect</td>
+<td>The component maps 1:1 to native code via Figma Code Connect.</td>
+<td>Code Connect is the end goal of native readiness. C1–C6 prepare the component for it. Without Code Connect, developers still manually translate Figma properties to code — which is the exact problem a design system is supposed to solve.</td>
+<td>When a developer inspects the button in Figma, they see <code>EBButton(.filled, size: .large)</code> instead of "fill: #0033B8, corner-radius: 8." It eliminates the translation step entirely.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ==================== PART 5 ==================== -->
+<div class="part" id="part5">
+<div class="part-num">Part 5</div>
+<h2>Native Status Levels</h2>
+<p class="part-intro">Native readiness isn't binary. A component might be 90% ready (just needs a property rename) or 20% ready (needs a full rebuild). We created 4 levels to tell you how much work sits between the component and its native implementation.</p>
+
+<div class="summary">
+<h4>Summary</h4>
+<table>
+<tr><td class="s-name"><span class="pill p-grn">Ready</span></td><td class="s-mean">Needed a clear "go" signal. Developer can build from Figma without questions.</td></tr>
+<tr><td class="s-name"><span class="pill p-amb">Needs Refinement</span></td><td class="s-mean">Most components land here. Small issues like unnamed layers or wrong boolean types. One session fix.</td></tr>
+<tr><td class="s-name"><span class="pill p-red">Requires Rework</span></td><td class="s-mean">Some Figma structures have no native equivalent. Architecture work, not cleanup.</td></tr>
+<tr><td class="s-name"><span class="pill p-gry">Not Applicable</span></td><td class="s-mean">No point assessing native readiness on something exiting the library.</td></tr>
+</table>
+</div>
+
+<table class="dt">
+<thead><tr><th>Status</th><th>What it is</th><th>How we arrived at this</th><th>What it means in practice</th></tr></thead>
+<tbody>
+<tr><td><span class="pill p-grn">Ready</span></td><td>Linkable to native exactly as-is, with no blockers.</td><td>We needed a "ship it" signal. Ready means a developer can inspect this component in Figma and implement it natively without asking any questions. All layers named, all states exist, all tokens bound.</td><td>Code Connect is either registered or registerable immediately. No blockers.</td></tr>
+<tr><td><span class="pill p-amb">Needs Refinement</span></td><td>Close to ready — a few small, fixable issues remain.</td><td>Most components land here after initial assessment. The structure is close but has small issues — a few layers need renaming, a property uses <code>yes/no</code> instead of <code>true/false</code>, a color isn't tokenized. Fixable in one session.</td><td>Assign to DS team for targeted fixes. Usually one Figma session.</td></tr>
+<tr><td><span class="pill p-red">Requires Rework</span></td><td>Can't be implemented natively in its current form.</td><td>Some components can't be implemented natively in their current form — the variant structure doesn't map to any native pattern, or it uses Figma-only effects. This needs architecture work, not cleanup.</td><td>Block native implementation until the rework is done. This is a sprint-level investment.</td></tr>
+<tr><td><span class="pill p-gry">Not Applicable</span></td><td>Native readiness isn't worth assessing.</td><td>If the DS Health verdict was Remove or Product Layer, there's no reason to assess native readiness. The component either shouldn't exist or doesn't need a native version.</td><td>Skip entirely. Don't waste time assessing a component that's going away.</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ==================== PART 6 ==================== -->
+<div class="part" id="part6">
+<div class="part-num">Part 6</div>
+<h2>Combined Status</h2>
+<p class="part-intro">DS Health and Native Readiness are independent axes. A component can be healthy (Keep) but not native-ready (Requires Rework). Or perfectly native-ready but should be removed. We created a matrix because a single score hides important nuance — "Keep + Requires Rework" is very different from "Remove + N/A."</p>
+
+<div class="summary">
+<h4>Summary</h4>
+<table>
+<tr><td class="s-name">Keep + Ready</td><td class="s-mean">Both axes pass. No work needed. Register Code Connect and ship.</td></tr>
+<tr><td class="s-name">Keep/Fix + Refinement</td><td class="s-mean">A single score would hide that this is a quick fix, not a rebuild.</td></tr>
+<tr><td class="s-name">Fix/Restructure + Rework</td><td class="s-mean">Blocks native implementation. Starting dev work now means rework later.</td></tr>
+<tr><td class="s-name">Product Layer + N/A</td><td class="s-mean">Too specific for core DS. Product team maintains it.</td></tr>
+<tr><td class="s-name">Remove/Consolidate + N/A</td><td class="s-mean">Component is being deleted or merged. No return on investment.</td></tr>
+</table>
+</div>
+
+<table class="dt">
+<thead><tr><th>DS Verdict</th><th>Native Status</th><th>Combined Action</th></tr></thead>
+<tbody>
+<tr><td><span class="pill p-grn">Keep</span></td><td><span class="pill p-grn">Ready</span></td><td>Ship it. Component is clean and native-ready. Register Code Connect.</td></tr>
+<tr><td><span class="pill p-grn">Keep</span> / <span class="pill p-amb">Fix</span></td><td><span class="pill p-amb">Needs Refinement</span></td><td>Minor fixes needed. Assign to DS team, usually one session.</td></tr>
+<tr><td><span class="pill p-amb">Fix</span> / <span class="pill p-amb">Restructure</span></td><td><span class="pill p-red">Requires Rework</span></td><td>Significant work before engineers can use it. Sprint-level investment.</td></tr>
+<tr><td><span class="pill p-gry">Product Layer</span></td><td><span class="pill p-gry">N/A</span></td><td>Move to product library. Product team maintains it.</td></tr>
+<tr><td><span class="pill p-red">Remove</span> / <span class="pill p-amb">Consolidate</span></td><td><span class="pill p-gry">N/A</span></td><td>Skip native assessment. Component is being deleted or merged.</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><strong>Why two axes?</strong> The DS verdict tells you the strategic decision (keep or kill?). The native status tells you the tactical work (how much effort?). Together they give you both.</div>
+</div>
+
+<!-- ==================== PART 7 ==================== -->
+<div class="part" id="part7">
+<div class="part-num">Part 7</div>
+<h2>Mobile Documentation Criteria — 9-Point Assessment</h2>
+<p class="part-intro">C1–C7 checks if the component is built correctly. The 9-point assessment checks if it's documented correctly — can someone who's never seen this component understand how to use it? We split into Must-Haves (1–5) and Good-to-Haves (6–9) because shipping without an overview is a blocker, but shipping without a changelog is acceptable for v1.</p>
+
+<div class="summary">
+<h4>Summary — Must-Haves</h4>
+<table>
+<tr><td class="s-name">1. Overview</td><td class="s-mean">Every DS we studied starts here. Without it, designers pick the wrong component.</td></tr>
+<tr><td class="s-name">2. Visual ref</td><td class="s-mean">Atlassian and Spectrum show every combination. "Imagine what disabled looks like" isn't docs.</td></tr>
+<tr><td class="s-name">3. Props/API</td><td class="s-mean">First question every developer asks. Without it, devs read source code.</td></tr>
+<tr><td class="s-name">4. Usage</td><td class="s-mean">Polaris and Spectrum pair rules with visuals. Without guidelines, teams invent their own rules.</td></tr>
+<tr><td class="s-name">5. A11y</td><td class="s-mean">90M+ users including those with disabilities. GOV.UK sets the standard.</td></tr>
+</table>
+</div>
+
+<div class="summary">
+<h4>Summary — Good-to-Haves</h4>
+<table>
+<tr><td class="s-name">6. Tokens</td><td class="s-mean">Carbon lists tokens per component. Devs can inspect in Figma, but a reference is faster.</td></tr>
+<tr><td class="s-name">7. Platform</td><td class="s-mean">Material documents per platform. Prevents "works on iOS, broken on Android."</td></tr>
+<tr><td class="s-name">8. Composition</td><td class="s-mean">Spectrum shows composition examples. Answers "how does this work inside a card?"</td></tr>
+<tr><td class="s-name">9. Changelog</td><td class="s-mean">Primer maintains changelogs. Must-have once multiple teams consume the DS.</td></tr>
+</table>
+</div>
+
+<table class="dt">
+<thead><tr><th>#</th><th>Criterion</th><th>How we arrived at this</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><strong>Overview & purpose</strong></td><td>Every DS we studied (Material, Polaris, Spectrum) starts with a clear "what is this component and when should you use it vs alternatives." Without it, designers pick the wrong component.</td></tr>
+<tr><td>2</td><td><strong>Visual reference</strong></td><td>Developers need to see every variant and state rendered. Atlassian and Spectrum show every combination visually. We made this a must-have because "imagine what disabled looks like" isn't documentation.</td></tr>
+<tr><td>3</td><td><strong>Props/API table</strong></td><td>Every developer's first question: "what properties does this accept?" Primer and Carbon document every prop with type, default, and accepted values. Without this, developers read source code instead of docs.</td></tr>
+<tr><td>4</td><td><strong>Usage guidelines</strong></td><td>Polaris and Spectrum include do's and don'ts with visual examples. This prevents misuse — "don't use a destructive button for cancel actions." Without guidelines, every team invents their own rules.</td></tr>
+<tr><td>5</td><td><strong>Accessibility notes</strong></td><td>GCash serves 90M+ users including those with disabilities. ARIA roles, keyboard navigation, and screen reader behavior must be documented. GOV.UK DS sets the standard here.</td></tr>
+<tr><td>6</td><td><strong>Token reference</strong></td><td>When a developer needs to override a color, they need to know which token to change. Carbon lists every token per component. Good-to-have because developers can inspect tokens in Figma, but a reference is faster.</td></tr>
+<tr><td>7</td><td><strong>Platform notes</strong></td><td>SwiftUI and Compose handle things differently — shadow rendering, gesture handling, animation APIs. Material documents these differences per platform. Good-to-have because it prevents "works on iOS, broken on Android."</td></tr>
+<tr><td>8</td><td><strong>Composition patterns</strong></td><td>How does a button work inside a card? Inside a form? Inside a bottom sheet? Spectrum shows composition examples. Good-to-have because it answers "how do I use this with other components?"</td></tr>
+<tr><td>9</td><td><strong>Changelog</strong></td><td>When a component changes, teams using the old version need to know what changed and how to migrate. Primer maintains detailed changelogs. Good-to-have for v1, must-have once multiple teams consume the DS.</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ==================== PART 8 ==================== -->
+<div class="part" id="part8">
+<div class="part-num">Part 8</div>
+<h2>Component Maturity Model (L1–L4)</h2>
+<p class="part-intro">The assessment tells you what's wrong now. The maturity model tells you how far you are from the best in the industry. We created 4 levels by studying where 30 real design systems cluster — most sit at L2-L3, only Material/Fluent/Apple reach L4. The levels aren't aspirational — they're empirical.</p>
+
+<div class="summary">
+<h4>Summary</h4>
+<table>
+<tr><td class="s-name"><span class="pill p-red">L1</span></td><td class="s-mean">Every component starts here. GCash Checkbox is L1 — 0.3/3.0 future-proof.</td></tr>
+<tr><td class="s-name"><span class="pill p-amb">L2</span></td><td class="s-mean">Industry median across 30 systems. Where young DS's naturally sit. Accordion (1.7), Avatar (~1.5).</td></tr>
+<tr><td class="s-name"><span class="pill p-blu">L3</span></td><td class="s-mean">Where "one product" becomes "the platform." Button is here (2.3). Carbon and Atlassian sit here.</td></tr>
+<tr><td class="s-name"><span class="pill p-grn">L4</span></td><td class="s-mean">Only Material, Fluent, Apple reach L4 — teams of 50+ engineers. North star, not requirement.</td></tr>
+</table>
+</div>
+
+<table class="dt">
+<thead><tr><th>Level</th><th>How we arrived at this</th><th>Entry criteria</th><th>East Blue example</th></tr></thead>
+<tbody>
+<tr>
+<td><span class="pill p-red">L1 Functional</span></td>
+<td>Every component starts here. L1 answers one question: "does this thing even work?" Before worrying about tokens or accessibility, you confirm the component functions at all. GOV.UK DS Button sits at L2, but many smaller systems never get past L1.</td>
+<td>Passes C1 and C4 only. Renders correctly with basic interaction. One size, one style.</td>
+<td><strong>Checkbox</strong> — 0.3/3.0 future-proof. No tokens, limited states, no Code Connect.</td>
+</tr>
+<tr>
+<td><span class="pill p-amb">L2 Reliable</span></td>
+<td>L2 separates "barely works" from "reliably works." We found the industry median for Button across 30 systems lands at L2 — most systems have proper states and basic tokens but limited styles and sizes. This is where a young design system naturally sits.</td>
+<td>Passes C1–C4, most of C5. Semantic naming, 2–3 sizes, core states.</td>
+<td><strong>Accordion</strong> (1.7 avg), <strong>Avatar</strong> (~1.5 avg) — both work but have variant and token gaps.</td>
+</tr>
+<tr>
+<td><span class="pill p-blu">L3 Scalable</span></td>
+<td>L3 is where a component goes from "works for one product" to "works for the platform." For GCash with payments, banking, investments, and insurance surfaces, this is the target level. IBM Carbon, Atlassian, and most Tier 1 systems sit here for most components.</td>
+<td>Passes C1–C6, partial C7. 3+ styles, 4+ sizes, composable slots, multi-theme.</td>
+<td><strong>Button</strong> — L3, 2.3 avg. 48 variants, 3 styles, 4 sizes. Missing: Code Connect, motion, edge cases.</td>
+</tr>
+<tr>
+<td><span class="pill p-grn">L4 Industry-grade</span></td>
+<td>L4 is the north star, not the requirement. Only Material, Fluent, and Apple HIG reach L4 for their core components — teams with 50+ engineers dedicated to the design system. Knowing what L4 looks like helps decide which improvements are worth pursuing vs gold-plating.</td>
+<td>Passes all C1–C7. Full documentation, audited a11y, motion specs, cross-platform Code Connect.</td>
+<td>No East Blue component has reached L4 yet. Industry examples: Material 3 Button, Fluent 2 Button, Apple HIG Button.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ==================== PART 9 ==================== -->
+<div class="part" id="part9">
+<div class="part-num">Part 9</div>
+<h2>Future-Proof Scoring (6 Pillars)</h2>
+<p class="part-intro">A rebrand shouldn't require rebuilding components. We identified 6 architectural properties that determine whether a component survives a visual refresh. Each pillar scored 0–3. Average 2.0+ means resilient. These come from studying how Material and Carbon handled their own rebrands — Material 2 → 3, Carbon v10 → v11.</p>
+
+<div class="summary">
+<h4>Summary</h4>
+<table>
+<tr><td class="s-name">Token abstraction</td><td class="s-mean">Material M2→M3: deep chains updated automatically, hardcoded values broke.</td></tr>
+<tr><td class="s-name">API stability</td><td class="s-mean"><code>.filled</code> breaks when "filled" becomes "elevated." Intent names don't.</td></tr>
+<tr><td class="s-name">Variant extensibility</td><td class="s-mean">Carbon uses orthogonal axes. Tested by asking "what happens when you add a ghost style?"</td></tr>
+<tr><td class="s-name">Layout decoupling</td><td class="s-mean">Fixed heights break when text changes. Carbon uses min-height + padding.</td></tr>
+<tr><td class="s-name">Composition isolation</td><td class="s-mean">Found GCash components sharing token layers — changing one accidentally changed another.</td></tr>
+<tr><td class="s-name">Migration path</td><td class="s-mean">Primer maintains changelogs with codemods. Without them, every team upgrades differently.</td></tr>
+</table>
+</div>
+
+<table class="dt">
+<thead><tr><th>Pillar</th><th>How we arrived at this</th><th>Score scale</th></tr></thead>
+<tbody>
+<tr>
+<td><strong>Token abstraction</strong></td>
+<td>When Material rebranded from M2 to M3, components using deep token chains updated automatically. Components with hardcoded values needed manual fixing. The depth of the token chain directly predicts rebrand effort.</td>
+<td><div class="score-row"><div class="score-box"><div class="sv" style="color:var(--red)">0</div><div class="sl">Hardcoded</div></div><div class="score-box"><div class="sv" style="color:var(--amb)">1</div><div class="sl">Component tokens</div></div><div class="score-box"><div class="sv" style="color:var(--pri)">2</div><div class="sl">Semantic chain</div></div><div class="score-box"><div class="sv" style="color:var(--grn)">3</div><div class="sl">Full chain + modes</div></div></div></td>
+</tr>
+<tr>
+<td><strong>API stability</strong></td>
+<td><code>.filled</code> is a visual name. If a rebrand changes "filled" to "elevated," the API name is wrong. Intent-based names like <code>.prominence(.high)</code> survive any visual change. We saw this problem in real rebrands.</td>
+<td><div class="score-row"><div class="score-box"><div class="sv" style="color:var(--red)">0</div><div class="sl">No API</div></div><div class="score-box"><div class="sv" style="color:var(--amb)">1</div><div class="sl">Visual names</div></div><div class="score-box"><div class="sv" style="color:var(--pri)">2</div><div class="sl">Semantic</div></div><div class="score-box"><div class="sv" style="color:var(--grn)">3</div><div class="sl">Intent-based</div></div></div></td>
+</tr>
+<tr>
+<td><strong>Variant extensibility</strong></td>
+<td>Carbon uses orthogonal variant dimensions — adding a new style doesn't touch existing sizes or states. Poorly structured components require duplicating every existing variant to add one new option. We tested this by asking "what happens when you add a ghost style?"</td>
+<td><div class="score-row"><div class="score-box"><div class="sv" style="color:var(--red)">0</div><div class="sl">Duplication</div></div><div class="score-box"><div class="sv" style="color:var(--amb)">1</div><div class="sl">Touches all</div></div><div class="score-box"><div class="sv" style="color:var(--pri)">2</div><div class="sl">Orthogonal</div></div><div class="score-box"><div class="sv" style="color:var(--grn)">3</div><div class="sl">Variable modes</div></div></div></td>
+</tr>
+<tr>
+<td><strong>Layout decoupling</strong></td>
+<td>Fixed heights (50px, 36px) break when text size changes. Carbon uses constraint-based sizing (min-height + padding) that adapts naturally. We found East Blue's button using fixed pixel heights.</td>
+<td><div class="score-row"><div class="score-box"><div class="sv" style="color:var(--red)">0</div><div class="sl">Fixed px</div></div><div class="score-box"><div class="sv" style="color:var(--amb)">1</div><div class="sl">Size tokens</div></div><div class="score-box"><div class="sv" style="color:var(--pri)">2</div><div class="sl">Size modes</div></div><div class="score-box"><div class="sv" style="color:var(--grn)">3</div><div class="sl">Constraint-based</div></div></div></td>
+</tr>
+<tr>
+<td><strong>Composition isolation</strong></td>
+<td>A button sharing token layers with a card means changing the card accidentally changes the button. We found this cross-contamination pattern in multiple GCash components. Fully isolated components have their own variable collections.</td>
+<td><div class="score-row"><div class="score-box"><div class="sv" style="color:var(--red)">0</div><div class="sl">Shares layers</div></div><div class="score-box"><div class="sv" style="color:var(--amb)">1</div><div class="sl">Shared tokens</div></div><div class="score-box"><div class="sv" style="color:var(--pri)">2</div><div class="sl">Slot-based</div></div><div class="score-box"><div class="sv" style="color:var(--grn)">3</div><div class="sl">Fully isolated</div></div></div></td>
+</tr>
+<tr>
+<td><strong>Migration path</strong></td>
+<td>Primer maintains detailed changelogs with before/after examples and codemods. When components change without migration guidance, every consuming team figures out the upgrade path differently. We included this pillar because GCash will inevitably version its components.</td>
+<td><div class="score-row"><div class="score-box"><div class="sv" style="color:var(--red)">0</div><div class="sl">No versioning</div></div><div class="score-box"><div class="sv" style="color:var(--amb)">1</div><div class="sl">Changelog</div></div><div class="score-box"><div class="sv" style="color:var(--pri)">2</div><div class="sl">+ guides</div></div><div class="score-box"><div class="sv" style="color:var(--grn)">3</div><div class="sl">+ codemods</div></div></div></td>
+</tr>
+</tbody>
+</table>
+
+<div class="callout"><strong>Threshold: 2.0+</strong> average = survives rebrand with token changes only. <strong>1.5–1.9</strong> = survives with token swap + manual fixes. <strong>Below 1.5</strong> = needs structural rebuild before any rebrand. East Blue Button currently scores <strong>2.3 — passes</strong>.</div>
+</div>
+
+<!-- ==================== PART 10 ==================== -->
+<div class="part" id="part10">
+<div class="part-num">Part 10</div>
+<h2>Design Metrics (12 Fields)</h2>
+<p class="part-intro">These are the raw, countable attributes measured across all 30 reference systems. We chose these 12 because they're the attributes that vary most between design systems and directly impact developer experience. Each one answers a specific question about the component's capability.</p>
+
+<div class="summary">
+<h4>Summary</h4>
+<table>
+<tr><td class="s-name">Variants</td><td class="s-mean">48 vs median 14.5. Strong.</td></tr>
+<tr><td class="s-name">Styles</td><td class="s-mean">3 vs median 4.5. Gap — missing tonal/ghost.</td></tr>
+<tr><td class="s-name">Sizes</td><td class="s-mean">4 vs median 3. Strong.</td></tr>
+<tr><td class="s-name">States</td><td class="s-mean">5 vs median 5. On par.</td></tr>
+<tr><td class="s-name">Slots</td><td class="s-mean">2 slots. Standard.</td></tr>
+<tr><td class="s-name">Token depth</td><td class="s-mean">3/3. Top tier.</td></tr>
+<tr><td class="s-name">A11y docs</td><td class="s-mean">Documented. Most Tier 1 are tested.</td></tr>
+<tr><td class="s-name">Edge cases</td><td class="s-mean">0 vs median 2. Critical gap.</td></tr>
+<tr><td class="s-name">Motion spec</td><td class="s-mean">None. Material/Fluent/Porsche have full specs.</td></tr>
+<tr><td class="s-name">Dark mode</td><td class="s-mean">Yes. On par.</td></tr>
+<tr><td class="s-name">Responsive</td><td class="s-mean">No. Lower priority for mobile-first.</td></tr>
+<tr><td class="s-name">Code Connect</td><td class="s-mean">No. C7 goal. Only 3 systems have this.</td></tr>
+</table>
+</div>
+
+<table class="dt">
+<thead><tr><th>Metric</th><th>How we arrived at this</th><th>What good vs bad looks like</th></tr></thead>
+<tbody>
+<tr><td><strong>Variants</strong></td><td>The total variant count shows how many combinations the component covers without custom work. We counted variants across all 30 systems to find the median.</td><td>East Blue Button: 48 (strong). Industry median: 14.5</td></tr>
+<tr><td><strong>Styles</strong></td><td>Different contexts need different visual weights — a primary CTA vs a toolbar action vs a destructive confirmation. We tracked how many distinct styles each system offers.</td><td>East Blue: 3. Median: 4.5. Gap: missing tonal/ghost.</td></tr>
+<tr><td><strong>Sizes</strong></td><td>Mobile apps run on screens from 4" to 7"+. Different screens and densities need different component sizes. We counted distinct size options.</td><td>East Blue: 4 (L/M/S/XS). Median: 3. Strong.</td></tr>
+<tr><td><strong>States</strong></td><td>Missing states force developers to guess. We listed which states each system documents and found the median is 5 (default, hover, pressed, focus, disabled).</td><td>East Blue: 5. Median: 5. On par.</td></tr>
+<tr><td><strong>Slots</strong></td><td>Slots allow customization without new variants. A button with an icon slot vs hardcoded icon placement. We tracked whether systems use slot-based composition.</td><td>East Blue: 2 (leadingIcon, trailingIcon). Standard.</td></tr>
+<tr><td><strong>Token depth</strong></td><td>Deeper token chains = more rebrand-resilient. Measured 0 (hardcoded) to 3 (reference → semantic → component + modes).</td><td>East Blue: 3. Top tier.</td></tr>
+<tr><td><strong>A11y docs</strong></td><td>Three levels observed: none, documented (written rules), tested (verified with assistive tech). GOV.UK and Atlassian test with screen readers.</td><td>East Blue: documented. Most Tier 1 systems: tested.</td></tr>
+<tr><td><strong>Edge cases</strong></td><td>What happens with a super long Tagalog label? An icon-only button? RTL layout? Systems that document these prevent production bugs. GCash specifically needs long text handling due to Tagalog.</td><td>East Blue: 0 (critical gap). Median: 2.</td></tr>
+<tr><td><strong>Motion spec</strong></td><td>Without specs, every developer picks different animation timing. Material documents exact ms/easing per state transition.</td><td>East Blue: none. Material/Fluent/Porsche: full.</td></tr>
+<tr><td><strong>Dark mode</strong></td><td>Expected standard for mobile apps. We tracked whether the component has a dark theme variant that works via tokens.</td><td>East Blue: yes. Most systems: yes.</td></tr>
+<tr><td><strong>Responsive</strong></td><td>Does the component adapt to different screen widths? More relevant for web but some mobile components need density awareness.</td><td>East Blue: no. Less critical for mobile-first.</td></tr>
+<tr><td><strong>Code Connect</strong></td><td>The ultimate bridge between design and development. Only Material, Fluent, and Apple have this for their core components.</td><td>East Blue: no. This is the C7 goal.</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ==================== PART 11 ==================== -->
+<div class="part" id="part11">
+<div class="part-num">Part 11</div>
+<h2>Recommendation Priority System</h2>
+<p class="part-intro">Not all gaps matter equally. We created 4 priority levels because working on the wrong gap wastes time. "Skip" exists because knowing what NOT to fix is just as valuable — it prevents you from gold-plating things that are already strengths.</p>
+
+<div class="summary">
+<h4>Summary</h4>
+<table>
+<tr><td class="s-name"><span class="pill p-red">Must</span></td><td class="s-mean">Trails median by 2+ or has zero where median is 2+. Causes visible harm.</td></tr>
+<tr><td class="s-name"><span class="pill p-amb">Should</span></td><td class="s-mean">Trails median by 1 or 50%+ of compared systems have it.</td></tr>
+<tr><td class="s-name"><span class="pill p-blu">Could</span></td><td class="s-mean">Fewer than 50% have it. Polish item, not a blocker.</td></tr>
+<tr><td class="s-name"><span class="pill p-gry">Skip</span></td><td class="s-mean">Without Skip, every benchmark only shows problems. Skip proves progress.</td></tr>
+</table>
+</div>
+
+<table class="dt">
+<thead><tr><th>Priority</th><th>How we arrived at this</th><th>What triggers it</th></tr></thead>
+<tbody>
+<tr><td><span class="pill p-red">Must</span></td><td>Some gaps directly affect users or developers. Zero edge cases for a bilingual app with Tagalog labels (40-60% longer than English) is a real problem, not a nice-to-have. Must items are the ones where the gap causes visible harm.</td><td>Trailing median by 2+ on a core metric, or having zero where median is 2+ (e.g. zero edge cases).</td></tr>
+<tr><td><span class="pill p-amb">Should</span></td><td>Meaningful but not critical. The component works without this, but it's noticeably weaker than the competition. Users won't see it directly, but developers will feel it every day.</td><td>Trailing median by 1, or lacking a feature that 50%+ of compared systems have.</td></tr>
+<tr><td><span class="pill p-blu">Could</span></td><td>Worth doing eventually but doesn't block anything. These are polish items that elevate the DS from "good" to "great." Only worth investing in after all Must and Should items are resolved.</td><td>Fewer than 50% of compared systems have this, or the gap is small (trailing by less than 1).</td></tr>
+<tr><td><span class="pill p-gry">Skip</span></td><td>We included Skip because without it, every benchmark produces only "things to fix" — which makes the DS feel perpetually broken. Skip items are proof of progress. "Your variant count is 3x the industry average" means stop adding variants and start fixing edge cases.</td><td>East Blue exceeds the median by 1.5x+ or leads all compared systems.</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ==================== PART 12 ==================== -->
+<div class="part" id="part12" style="border-bottom:none">
+<div class="part-num">Part 12</div>
+<h2>How They Connect — The 7-Step Loop</h2>
+<p class="part-intro">Assessment finds what's broken. Benchmark measures how far you are from the industry best. They're connected through a 7-step process. The gate check prevents wasted effort on dead components. The benchmark peek prevents double work by showing you the full picture before you touch Figma.</p>
+
+<div class="step" style="background:var(--pur-bg)">
+<div class="step-num" style="background:var(--pur)">1</div>
+<div><div class="step-title">Assess the component</div><div class="step-desc">Run DS Health (4 traits → verdict) and Native Readiness (C1–C7 → status). This tells you what's broken and how badly.</div></div>
+</div>
+
+<div class="step" style="background:var(--red-bg)">
+<div class="step-num" style="background:var(--red)">2</div>
+<div><div class="step-title">Gate check — should we invest?</div><div class="step-desc">If the verdict is <strong>Remove</strong> or <strong>Product Layer</strong>, stop here. Don't benchmark a component that shouldn't exist. Only continue for Keep, Fix, Restructure, or Consolidate.</div></div>
+</div>
+
+<div class="step" style="background:var(--amb-bg)">
+<div class="step-num" style="background:var(--amb)">3</div>
+<div><div class="step-title">Peek at benchmark — gather intel</div><div class="step-desc">Quick benchmark run before fixing anything. See the full picture: assessment issues AND industry gaps. <strong>Don't act yet.</strong> Just know what you're dealing with so you can fix everything in one pass.</div></div>
+</div>
+
+<div class="step" style="background:var(--grn-bg)">
+<div class="step-num" style="background:var(--grn)">4</div>
+<div><div class="step-title">Fix everything in one Figma session</div><div class="step-desc">Combine assessment issues + benchmark gaps into one fix list. Example: "C5 says add hover. Benchmark says add hover AND selected. → Add both now." Touch the component once, not twice.</div></div>
+</div>
+
+<div class="step" style="background:var(--pur-bg)">
+<div class="step-num" style="background:var(--pur)">5</div>
+<div><div class="step-title">Re-assess — confirm all criteria pass</div><div class="step-desc">Run the assessment again. All C1–C7 should pass now. If something still fails, go back to Step 4. Don't move forward until the assessment is clean.</div></div>
+</div>
+
+<div class="step" style="background:var(--blu-bg)">
+<div class="step-num" style="background:var(--pri)">6</div>
+<div><div class="step-title">Full benchmark — compare against the industry</div><div class="step-desc">Now that the component passes assessment, run the full benchmark: L1–L4 maturity, 6-pillar future-proof score, radar chart, and recommendations. These are the "nice to have" improvements, not the broken stuff.</div></div>
+</div>
+
+<div class="step" style="background:var(--grn-bg)">
+<div class="step-num" style="background:var(--grn)">7</div>
+<div><div class="step-title">Polish and repeat</div><div class="step-desc">Fix the top industry gap. Re-benchmark. The next gap surfaces. Each cycle makes the component measurably stronger. Repeat until satisfied, then move to the next component.</div></div>
+</div>
+
+<div class="callout" style="margin-top:24px"><strong>Assessment answers:</strong> "Is this component healthy?"<br><strong>Benchmark answers:</strong> "How good is this healthy component compared to the best in the industry?"<br><br>The gate check prevents wasted effort. The peek prevents double work.</div>
+</div>
+
+</div>
+</body>
+</html>
