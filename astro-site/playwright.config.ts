@@ -12,12 +12,17 @@ export default defineConfig({
   /* Self-baselines: Playwright captures our Chromium rendering as the
      canonical snapshot, then compares future runs against it. Figma exports
      under tests/figma-reference/ are a human review aid, not used here. */
-  snapshotPathTemplate: '{testDir}/visual-baselines/{arg}{ext}',
+  /* Baselines are scoped per platform. macOS and Linux render text with
+     different antialiasing, so a macOS-captured PNG can never match a Linux
+     CI run at threshold 0 — that mismatch is why every CI run failed. Local
+     baselines live under darwin/, CI's under linux/. */
+  snapshotPathTemplate: '{testDir}/visual-baselines/{platform}/{arg}{ext}',
   /* {arg} is a path joined from array form; {ext} adds .png. */
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  /* Retry transient failures (font-load timing, hydration race) up to 2x. */
-  retries: 2,
+  /* Retry transient failures (font-load timing, hydration race). Kept low on
+     CI — a systematic failure costs 1 extra full pass, not 2. */
+  retries: process.env.CI ? 1 : 0,
   /* Cap parallelism so the dev server isn't overwhelmed. */
   workers: process.env.CI ? 2 : 4,
   reporter: [['list'], ['html', { open: 'never', outputFolder: './tests/.playwright-report' }]],
