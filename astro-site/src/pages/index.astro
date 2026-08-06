@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 
 const steps = [
@@ -152,11 +153,56 @@ const verdicts = [
       </section>
 
       <section class="page-section">
-        <a class="overview-cta" href="/eb-ds-assessment-guide">
+        <a class="overview-cta" href={url("/eb-ds-assessment-guide")}>
           <div class="overview-cta-text">
             <span class="overview-cta-eyebrow">Next</span>
             <span class="overview-cta-title">Read the Assessment Guide</span>
             <span class="overview-cta-sub">Methodology, scoring rubric, and the full set of open issues, patterns, and component status references.</span>
+          </div>
+          <span class="overview-cta-arrow" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </section>
+
+      <section class="page-section">
+        <a class="overview-cta" href={url("/eb-screen-design-guide")}>
+          <div class="overview-cta-text">
+            <span class="overview-cta-eyebrow">Designing a screen</span>
+            <span class="overview-cta-title">Read the Screen Design Guide</span>
+            <span class="overview-cta-sub">How to lay out a new GCash screen — anatomy, frame, spacing, headers, type, which buttons to use, and the exact Figma setup spec.</span>
+          </div>
+          <span class="overview-cta-arrow" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </section>
+
+      <section class="page-section">
+        <a class="overview-cta" href={url("/eb-property-naming-guidelines")}>
+          <div class="overview-cta-text">
+            <span class="overview-cta-eyebrow">Naming a property</span>
+            <span class="overview-cta-title">Read the Property Naming Guidelines</span>
+            <span class="overview-cta-sub">The naming contract for every component property — casing by type, boolean verb prefixes, standardized values, State vs Status, and the governance checklist. Divergences are assessed as C2.</span>
+          </div>
+          <span class="overview-cta-arrow" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </section>
+
+      <section class="page-section">
+        <a class="overview-cta" href={url("/eb-font-change-guide")}>
+          <div class="overview-cta-text">
+            <span class="overview-cta-eyebrow">Changing a typeface</span>
+            <span class="overview-cta-title">Read the Font Change Methodology</span>
+            <span class="overview-cta-sub">How to swap a font across the system without breaking screens — intent gates, metric comparison, the one-point rebind, retuning, screen regression, and native handoff.</span>
           </div>
           <span class="overview-cta-arrow" aria-hidden="true">
             <svg width="18" height="18" viewBox="0 0 16 16" fill="none">

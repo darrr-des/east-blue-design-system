@@ -1,0 +1,59 @@
+name: Regenerate visual baselines (Linux)
+
+# The visual regression suite runs on ubuntu, but the committed baselines were
+# captured on macOS. At threshold 0 those can never match, which is why every
+# run of "Visual regression" has failed since it was added.
+#
+# This job captures baselines on the same Linux runner the check uses and
+# commits them under tests/visual-baselines/linux/. Run it manually whenever an
+# intentional visual change lands (new CSS, restructured component, etc).
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Branch to regenerate baselines on
+        required: true
+        default: main
+
+defaults:
+  run:
+    working-directory: astro-site
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: astro-site/package-lock.json
+
+      - run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Capture baselines
+        run: npx playwright test --update-snapshots --reporter=line
+
+      - name: Commit baselines
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests/visual-baselines/linux
+          if git diff --cached --quiet; then
+            echo "No baseline changes."
+          else
+            git commit -m "chore(visual): regenerate Linux baselines"
+            git push origin HEAD:${{ inputs.branch }}
+          fi

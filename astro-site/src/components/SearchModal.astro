@@ -16,6 +16,7 @@
  */
 
 import { componentManifest } from '../data/components/_index';
+import { url } from '../lib/url';
 
 type SearchEntry = {
   name: string;
@@ -30,6 +31,8 @@ const PAGES: SearchEntry[] = [
   { name: 'Components', path: '/sandbox/components-redesign', breadcrumb: '/sandbox' },
   { name: 'Guide',      path: '/eb-ds-assessment-guide',      breadcrumb: '/' },
   { name: 'Methodology', path: '/eb-methodology',             breadcrumb: '/eb-ds-assessment-guide' },
+  { name: 'Font Change Methodology', path: '/eb-font-change-guide', breadcrumb: '/' },
+  { name: 'Property Naming Guidelines', path: '/eb-property-naming-guidelines', breadcrumb: '/' },
 ];
 
 // Components: each manifest entry → an entry. If it has navGroup, breadcrumb
@@ -43,7 +46,12 @@ const COMPONENTS: SearchEntry[] = componentManifest.map((c) => ({
     : '/components',
 }));
 
-const SEARCH_DATA: SearchEntry[] = [...PAGES, ...COMPONENTS];
+// `path` is what the runtime navigates to, so it must carry the deploy base.
+// `breadcrumb` is display-only text and stays root-relative.
+const SEARCH_DATA: SearchEntry[] = [...PAGES, ...COMPONENTS].map((e) => ({
+  ...e,
+  path: url(e.path),
+}));
 
 // Words rotated through the placeholder.
 const PLACEHOLDER_WORDS = ['Components', 'Colors', 'Fonts', 'Icons', 'Guide'];

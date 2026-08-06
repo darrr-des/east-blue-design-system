@@ -41,13 +41,13 @@ export const radioButtonWithLabel: ComponentData = {
   "meta": {
     "slug": "radio-button-with-label",
     "name": "Radio Button with Label",
-    "node": "18482:35673",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18482-35673",
-    "description": "A form row pairing a Radio Button with a text label. 4 variants across a <code>size</code> property with mixed values: <code>default</code>, <code>large</code>, <code>default - error</code>, <code>large - error</code>. Only the unselected state is documented across sizes.",
+    "node": "26184:2712",
+    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26184-2712",
+    "description": "A form row pairing a Radio Button with a text label. 39 variants across <code>Style</code> (Default/Check) × <code>State</code> (Default/Pressed/Disabled) × <code>Size</code> (Large/Medium/Small) × <code>isSelected</code> × <code>isError</code> — mirroring the Radio Button atom exactly.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -56,9 +56,9 @@ export const radioButtonWithLabel: ComponentData = {
     ],
     "navGroup": "Radio",
     "verdict": {
-      "kind": "fix",
-      "title": "Split size + state props",
-      "text": "Split the <code>size</code> property into <code>size=default/large</code> and <code>isError: Bool</code>. Add <code>disabled</code> and <code>selected</code> variants. Instance-swap (or Figma Slot) the radio so the large label pairs with a large radio. The label component should track the atom's state via a single <code>selected</code> prop forwarded down."
+      "kind": "keep",
+      "title": "Rebuilt — in sync with the atom",
+      "text": "The v2.0 rebuild split the compound <code>size</code> values into orthogonal <code>Size</code> × <code>State</code> × <code>isError</code> props, paired the radio size to the label size, added full state coverage including <code>Disabled + isSelected=false</code>, removed the <code>_space_12</code> spacer in favour of a real auto-layout gap, and fixed the <code>icon-ofsset</code> typo. Schema, property order, and all 39 variants now mirror the Radio Button atom. Only Code Connect registration remains."
     }
   },
   "overview": {
@@ -74,49 +74,96 @@ export const radioButtonWithLabel: ComponentData = {
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Carries gap, vertical padding, and typography. Body color, font, and indent all token-bound."
+        "note": "Carries its own gap, vertical padding, and typography, all token-bound. The 12px gap is real auto-layout spacing — the <code>_space_12</code> annotation instance that used to shim it has been removed, so the row maps to native padding rather than a spacer view."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "<code>size</code> values include <code>\"default - error\"</code> and <code>\"large - error\"</code> — space-hyphen-space strings that encode state in a size prop. Breaks native enum mapping. <span class=\"tag-open tag-c2\">C2</span>"
+        "rating": "pass",
+        "note": "The compound <code>\"default - error\"</code> / <code>\"large - error\"</code> values are gone. Five orthogonal props — <code>Style</code> × <code>State</code> × <code>Size</code> × <code>isSelected</code> × <code>isError</code> — in the same order as the Radio Button atom, so native enum mapping is clean."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Always instances the small radio — even when <code>size=large</code>. The large label doesn't visually scale the radio accordingly. <span class=\"tag-open tag-c6\">C6</span>"
+        "rating": "pass",
+        "note": "Wraps the Radio Button atom and mirrors its schema exactly — same props, same order, same 39 variants — so every atom state is reachable through the row. Radio size now pairs to label size (<code>Size=Large</code> nests the 24 × 24 atom) instead of always instancing the small radio."
       }
     ],
-    "behavior": [],
-    "resolved": [],
+    "behavior": [
+      {
+        "state": "Default (unselected)",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Default, isSelected=false",
+        "notes": "Empty ring, label <code>#445C85</code>. Resting state for every unpicked row."
+      },
+      {
+        "state": "Selected",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Default, isSelected=true",
+        "notes": "Brand ring + dot <code>#005CE5</code>. Exactly one row per group carries this."
+      },
+      {
+        "state": "Pressed",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Pressed",
+        "notes": "Radio darkens to <code>#2340A9</code> and the label to <code>#0A2757</code>. Derived at runtime from the touch interaction, not passed as a parameter."
+      },
+      {
+        "state": "Disabled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Radio and label both mute. Ships at both <code>isSelected</code> values, so a disabled group renders its unselected rows."
+      },
+      {
+        "state": "Error",
+        "ios": "yes",
+        "android": "yes",
+        "property": "isError=true",
+        "notes": "Radio switches to <code>#D61B2C</code>; the label is unchanged. Orthogonal to <code>State</code> — combines with Default and Pressed."
+      },
+      {
+        "state": "Selected — check style",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Style=Check, isSelected=true",
+        "notes": "Filled circle + vector checkmark. For single-select list rows; only meaningful when selected."
+      }
+    ],
+    "resolved": [
+      {
+        "body": "v2.0: <code>size</code> no longer encodes state — the compound <code>\"default - error\"</code> / <code>\"large - error\"</code> strings are gone, replaced by orthogonal <code>Size</code> (Large/Medium/Small) × <code>State</code> (Default/Pressed/Disabled) × <code>isError</code> props. Native enum mapping is now clean. (C2)"
+      },
+      {
+        "body": "v2.0: Radio size now pairs to label size — <code>Size=Large</code> nests the 24 × 24 atom instead of hardcoding the 16 × 16 small radio into every variant. (C6)"
+      },
+      {
+        "body": "v2.0: Full state coverage added — <code>isSelected</code>, <code>State=Pressed</code>, <code>State=Disabled</code>, and <code>isError</code>, including <code>Disabled + isSelected=false</code> so a disabled radio group renders its unselected rows. 39 variants total. (C5)"
+      },
+      {
+        "body": "v2.0: <code>_space_12</code> spacer instance removed — the 12px gap is now real auto-layout spacing. The annotation instance (a <code>#0500FF</code> fill wrapping a Roboto <code>\"12\"</code> text node) no longer ships inside the component, and the layout maps to native padding rather than a spacer view. (C1/C4)"
+      },
+      {
+        "body": "v2.0: Layer typo fixed — <code>icon-ofsset</code> renamed to <code>icon-offset</code> across all 39 variants. (C1)"
+      },
+      {
+        "body": "v2.0: Schema aligned with the Radio Button atom — same five props, same property order, same 39-variant coverage. The wrapper can now express everything the atom can. (C2)"
+      },
+      {
+        "body": "v2.0: Check + Pressed mislabel corrected — three Check variants (<code>26184:2839 / 2845 / 2851</code>) were labelled <code>isError=true</code> while painted pressed-navy, which also left <code>Check + Pressed + isError=false</code> non-existent. Renamed to <code>isError=false</code>; label and paint now agree and the wrapper matches the atom. (C5)"
+      },
+      {
+        "body": "v2.0: <code>Disabled</code> deliberately excludes <code>isError</code> — confirmed intentional, matching the atom. A locked row offers no path to resolve a validation error, so the combination ships no variants by design. (C5)"
+      },
+      {
+        "body": "v2.0: Nesting the radio as a plain INSTANCE rather than a Figma Slot reviewed and accepted — the mirrored 39-variant matrix already exposes every atom state through <code>Style</code> / <code>State</code> / <code>Size</code> / <code>isSelected</code> / <code>isError</code>, so a Slot would largely duplicate it. (C4)"
+      }
+    ],
     "open": [
       {
-        "headline": "<code>size</code> property encodes state.",
-        "body": "Values include <code>\"default - error\"</code> and <code>\"large - error\"</code>. Should be two orthogonal props: <code>size = default | large</code> + <code>isError: Bool</code>.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Missing state variants.",
-        "body": "No <code>disabled</code> or <code>selected</code> variants. Forms need all four selection states (selected/unselected × enabled/disabled) plus the error variant.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Radio is hardcoded to the small instance.",
-        "body": "Even in <code>size=large</code> variants, the radio uses the 16×16 small atom. Large label should pair with the 20×20 large radio.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until the <code>size</code> prop split and missing state variants land.",
+        "body": "Previously blocked by the <code>size</code> prop split and missing state variants — both resolved in v2.0. Registration is now unblocked, but the SwiftUI / Compose mappings are not yet wired.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -125,29 +172,36 @@ export const radioButtonWithLabel: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Split the <code>size</code> prop",
-        "body": ":<br>• <code>size: default / large</code><br>• <code>isError: Bool</code><br>• <code>selected: Bool</code><br>• <code>disabled: Bool</code> (or unified <code>state</code> enum)<br>Flat orthogonal props — eliminates the compound string values.",
+        "headline": "Make the whole row tappable.",
+        "body": "The label should be part of the tap target, not just the radio — standard for form rows and a meaningful hit-area win on mobile. Runtime behaviour, so it can't be expressed in Figma; document it in Accessibility instead.",
+        "tag": "A11y"
+      },
+      {
+        "headline": "Register Code Connect mapping to <code>EBRadioButtonRow</code>.",
+        "body": "With the prop split, size pairing, and state coverage all shipped, wire the Figma properties (Style, State, Size, isSelected, isError) 1:1 to the SwiftUI / Compose API — forwarding the same values down to the nested <code>EBRadioButton</code>.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Split the <code>size</code> prop.",
+        "body": "v2.0: Applied — and taken further than proposed. <code>Size</code> × <code>State</code> × <code>isError</code> × <code>isSelected</code> × <code>Style</code>, with pressed folded into <code>State</code>. The compound string values are gone.",
         "tag": "Property"
       },
       {
-        "headline": "Pair radio size to label size",
-        "body": "— <code>size=default</code> → small radio (16 × 16); <code>size=large</code> → large radio (20 × 20). The current always-small behavior breaks visual hierarchy.",
+        "headline": "Pair radio size to label size.",
+        "body": "v2.0: Applied — <code>Size=Large</code> nests the 24 × 24 atom; each size pairs correctly instead of always instancing the small radio.",
         "tag": "Composition"
       },
       {
-        "headline": "Adopt a Figma Slot for the radio",
-        "body": "— lets consumers swap in a Radio Button with any state (selected/disabled/error/etc.) from the atom component. Maps to <code>@ViewBuilder</code> / <code>@Composable</code> slots.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Add disabled + selected variants",
-        "body": "— forms need all state combinations documented.",
+        "headline": "Add disabled + selected variants.",
+        "body": "v2.0: Applied — full coverage across <code>isSelected</code>, <code>Pressed</code>, <code>Disabled</code>, and <code>isError</code>, including the disabled-unselected rows.",
         "tag": "State"
       },
       {
-        "headline": "Make the whole row tappable",
-        "body": "— labels should be tap targets, not just the radio. Document in Accessibility.",
-        "tag": "A11y"
+        "headline": "Adopt a Figma Slot for the nested radio.",
+        "body": "v2.0: Reviewed and closed as not needed — the mirrored 39-variant matrix already exposes every atom state, so a Slot would largely duplicate the variant surface. Revisit only if consumers need to nest a radio the matrix can't express.",
+        "tag": "Slot"
       }
     ]
   },
@@ -691,93 +745,270 @@ export const radioButtonWithLabel: ComponentData = {
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "<code>icon-ofsset</code> (typo — \"offset\"), <code>text-container</code>. Minor spelling issue."
+        "notes": "Semantic names throughout: <code>icon-offset</code> (typo fixed in v2.0), <code>text-container</code>, <code>#label</code>. The <code>_space_12</code> annotation shim was removed — the 12px gap is real auto-layout spacing."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>size</code> values encode error state with space-hyphen-space strings."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Five orthogonal props — <code>Style</code> × <code>State</code> × <code>Size</code> × <code>isSelected</code> × <code>isError</code> — in the same order as the atom. The compound <code>\"default - error\"</code> values are gone; booleans are lowercase <code>true</code>/<code>false</code>."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Label colors, gap, padding all token-bound."
+        "notes": "Label colors, gap, and padding all token-bound. The radio itself inherits the atom's token-bound vector fills and strokes."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "HStack / Row with radio + label."
+        "notes": "Maps to an HStack / Row of radio + label. Auto-layout spacing translates to native padding — no spacer view to reproduce since <code>_space_12</code> was removed."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No disabled, selected, or pressed variants."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Full coverage: <code>isSelected</code> × <code>State</code> (Default / Pressed / Disabled) × <code>isError</code>, including <code>Disabled + isSelected=false</code>. Focused is N/A on mobile; <code>Disabled + isError</code> is a deliberate omission."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Always uses small radio instance — large label doesn't scale the radio."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Radio size now pairs to label size — <code>Size=Large</code> nests the 24 × 24 atom instead of always instancing the 16 × 16 small radio."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Blocked by C2 prop split."
+        "notes": "Unblocked — the C2 prop split and state coverage both landed. No CLI mappings registered yet; waiting on the native component to exist."
       }
     ],
     "codeConnect": [],
     "variants": {
-      "total": 4,
-      "description": "After the prop split, these 4 become 2 <code>size</code> × 2 <code>isError</code> = 4 clean variants, with <code>selected</code> + <code>disabled</code> added as booleans (not variants).",
+      "total": 39,
+      "description": "<code>Style</code> (2) × <code>State</code> (3) × <code>Size</code> (3) × <code>isSelected</code> (2) × <code>isError</code> (2) = 72 theoretical. 39 ship — mirroring the Radio Button atom exactly. <code>Check</code> is only meaningful when selected, and <code>Disabled</code> deliberately excludes <code>isError</code>. Grouped below by Style × State; each row covers all three sizes (Large / Medium / Small).",
       "columns": [
-        "size (current)",
-        "Decomposed",
-        "Node ID"
+        "Style",
+        "State",
+        "isSelected",
+        "isError",
+        "Count",
+        "Notes"
       ],
       "rows": [
         {
           "cells": [
-            "<code>default</code>",
-            "size=default, isError=false",
-            "18482:35674"
+            "Default",
+            "Default",
+            "false",
+            "false",
+            "3",
+            "Empty ring + label"
           ]
         },
         {
           "cells": [
-            "<code>large</code>",
-            "size=large, isError=false",
-            "18482:35686"
+            "Default",
+            "Default",
+            "true",
+            "false",
+            "3",
+            "Brand ring + dot, brand label"
           ]
         },
         {
           "cells": [
-            "<code>default - error</code>",
-            "size=default, isError=true",
-            "18482:35680"
+            "Default",
+            "Default",
+            "false",
+            "true",
+            "3",
+            "Error ring #D61B2C"
           ]
         },
         {
           "cells": [
-            "<code>large - error</code>",
-            "size=large, isError=true",
-            "18482:35692"
+            "Default",
+            "Default",
+            "true",
+            "true",
+            "3",
+            "Error ring + dot"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "false",
+            "false",
+            "3",
+            "Pressed ring #2340A9, navy label"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "true",
+            "false",
+            "3",
+            "Pressed ring + dot"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "false",
+            "true",
+            "3",
+            "Pressed error ring"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Pressed",
+            "true",
+            "true",
+            "3",
+            "Pressed error ring + dot"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "false",
+            "false",
+            "3",
+            "Muted empty ring + muted label"
+          ]
+        },
+        {
+          "cells": [
+            "Default",
+            "Disabled",
+            "true",
+            "false",
+            "3",
+            "Muted ring + dot"
+          ]
+        },
+        {
+          "cells": [
+            "Check",
+            "Default",
+            "true",
+            "false",
+            "3",
+            "Brand fill + vector checkmark"
+          ]
+        },
+        {
+          "cells": [
+            "Check",
+            "Pressed",
+            "true",
+            "false",
+            "3",
+            "Pressed fill + checkmark"
+          ]
+        },
+        {
+          "cells": [
+            "Check",
+            "Disabled",
+            "true",
+            "false",
+            "3",
+            "Muted fill + checkmark"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "July 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt · node 26184:2712",
+      "rows": [
+        {
+          "body": "<strong>Component rebuilt on a new node</strong> — 39 variants across <code>Style</code> × <code>State</code> × <code>Size</code> × <code>isSelected</code> × <code>isError</code>, mirroring the Radio Button atom exactly (same props, same order, same coverage).\n          <span class=\"tag-fixed\">Restructured</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Rebuild"
+          }
+        },
+        {
+          "body": "<strong><code>size</code> no longer encodes state</strong> — the compound <code>\"default - error\"</code> / <code>\"large - error\"</code> values are replaced by orthogonal <code>Size</code> × <code>State</code> × <code>isError</code> props. Native enum mapping is clean.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Radio size now pairs to label size</strong> — <code>Size=Large</code> nests the 24 × 24 atom instead of hardcoding the 16 × 16 small radio into every variant.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Full state coverage added</strong> — <code>isSelected</code>, <code>Pressed</code>, <code>Disabled</code>, and <code>isError</code>, including <code>Disabled + isSelected=false</code> so disabled groups render their unselected rows.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5 Resolved"
+          }
+        },
+        {
+          "body": "<strong><code>_space_12</code> spacer removed</strong> — the 12px gap is now real auto-layout spacing. The annotation instance (<code>#0500FF</code> fill wrapping a Roboto <code>\"12\"</code> text node) no longer ships inside the component, and layout maps to native padding rather than a spacer view.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 · C4 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Layer typo fixed</strong> — <code>icon-ofsset</code> → <code>icon-offset</code> across all 39 variants.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Check + Pressed mislabel corrected</strong> — <code>26184:2839 / 2845 / 2851</code> were labelled <code>isError=true</code> while painted pressed-navy, leaving <code>Check + Pressed + isError=false</code> non-existent. Renamed to <code>isError=false</code>; the wrapper now matches the atom.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5 Resolved"
+          }
+        },
+        {
+          "body": "<strong><code>Disabled + isError=true</code> not covered</strong> — same gap as the atom. Likely intentional, but undocumented. Confirm and record.\n          <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5 Open"
+          }
+        },
+        {
+          "body": "<strong>Code Connect mappings</strong> — now unblocked by the rebuild; SwiftUI / Compose mappings not yet registered.\n          <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7 Open"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

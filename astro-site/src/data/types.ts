@@ -358,6 +358,10 @@ export interface ComponentData {
     resolved: IssueItem[];
     open: IssueItem[];
     recommendations: RecommendItem[];
+    /** Recommendations that have shipped. Rendered as an "Applied
+        Recommendations" block under Resolved Issues. Optional — only
+        components whose recommendations have been applied populate it. */
+    appliedRecommendations?: RecommendItem[];
   };
 
   // Style tab

@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 interface Badge {
   label: string;
   kind: 'keep' | 'fix' | 'restructure' | 'consolidate' | 'product-layer' | 'remove' | 'ready' | 'refine' | 'rework' | 'na';
@@ -52,7 +53,7 @@ const badgeClass = (kind: string) => {
       </svg>
       <div class="verdict-inline-body">
         <div class="verdict-inline-title">{verdict.title}</div>
-        <div class="verdict-inline-text" set:html={verdict.text} />
+        <div class="verdict-inline-text" set:html={withBase(verdict.text)} />
       </div>
     </div>
   )}

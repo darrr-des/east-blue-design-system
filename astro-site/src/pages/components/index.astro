@@ -1,4 +1,5 @@
 ---
+import { url } from '../../lib/url';
 import Base from '../../layouts/Base.astro';
 import { componentMap, componentManifest } from '../../data/components/_index';
 
@@ -123,7 +124,7 @@ function verdictTone(kind?: string): string {
           {cardsAlpha.map((c) => {
             const v = verdictBadge(c.badges);
             return (
-              <a class="cmp-card" href={`/components/${c.slug}`}>
+              <a class="cmp-card" href={url(`/components/${c.slug}`)}>
                 <div class="cmp-card-image" aria-hidden="true"></div>
                 {v && (
                   <span class={`cmp-card-badge cmp-card-badge--${verdictTone(v.kind)}`}>{v.label}</span>
@@ -149,7 +150,7 @@ function verdictTone(kind?: string): string {
                 {list.map((c) => {
                   const v = verdictBadge(c.badges);
                   return (
-                    <a class="cmp-card" href={`/components/${c.slug}`}>
+                    <a class="cmp-card" href={url(`/components/${c.slug}`)}>
                       <div class="cmp-card-image" aria-hidden="true"></div>
                       {v && (
                         <span class={`cmp-card-badge cmp-card-badge--${verdictTone(v.kind)}`}>{v.label}</span>
@@ -172,7 +173,7 @@ function verdictTone(kind?: string): string {
               {otherBucket.map((c) => {
                 const v = verdictBadge(c.badges);
                 return (
-                  <a class="cmp-card" href={`/components/${c.slug}`}>
+                  <a class="cmp-card" href={url(`/components/${c.slug}`)}>
                     <div class="cmp-card-image" aria-hidden="true"></div>
                     {v && (
                       <span class={`cmp-card-badge cmp-card-badge--${verdictTone(v.kind)}`}>{v.label}</span>

@@ -2003,6 +2003,62 @@ code {
   flex-shrink: 0;
 }
 
+/* ── Segmented Issue / Recommendation groups ────────────────────── */
+.seg-group { margin-bottom: var(--space-6); }
+.seg-tabs {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+}
+.seg-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface);
+  border: none;
+  border-right: 1px solid var(--border);
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+.seg-tab:last-child { border-right: none; }
+.seg-tab:hover { color: var(--text); }
+.seg-tab .seg-ico { font-weight: 700; }
+.seg-tab .seg-dot {
+  width: 8px; height: 8px; border-radius: 999px;
+  background: currentColor; display: inline-block;
+}
+.seg-count {
+  font-size: 12px; font-weight: 700; line-height: 1;
+  padding: 3px 7px; border-radius: 999px;
+  background: var(--border); color: var(--muted);
+}
+/* Active tab adopts its status color */
+.seg-tab.seg-open.active     { background: var(--refine-bg);  color: var(--refine-fg); }
+.seg-tab.seg-resolved.active,
+.seg-tab.seg-applied.active  { background: var(--ready-bg);   color: var(--ready-fg); }
+.seg-tab.seg-design.active   { background: var(--accent-light); color: var(--accent); }
+.seg-tab.seg-open.active .seg-count     { background: var(--refine-fg); color: var(--refine-bg); }
+.seg-tab.seg-resolved.active .seg-count,
+.seg-tab.seg-applied.active .seg-count  { background: var(--ready-fg);  color: var(--ready-bg); }
+.seg-tab.seg-design.active .seg-count   { background: var(--accent);    color: #FFFFFF; }
+
+.seg-panel { display: none; }
+.seg-panel.active { display: block; }
+.seg-panel .resolved-list,
+.seg-panel .recommend-list { margin-bottom: 0; }
+
+/* Marker variants — open (amber dot) vs resolved (green ✓, default);
+   applied recommendation (green ✓) vs design (blue →, default) */
+.resolved-list.issues-open li::before   { content: '●'; color: var(--refine-fg); font-size: 11px; }
+.recommend-list.reco-applied li::before { content: '✓'; color: var(--ready-fg); }
+
 /* ── Table footnote ─────────────────────────────────────────────────── */
 .table-footnote {
   font-size: var(--text-xs);
