@@ -70,6 +70,10 @@ jobs:
 
       - name: Capture baselines
         if: steps.gate.outputs.run == 'true'
+        # Same reason as the check — without this the captured "baseline"
+        # would be 202 screenshots of the login page.
+        env:
+          PUBLIC_AUTH_DISABLED: 'true'
         run: npx playwright test --update-snapshots --reporter=line
 
       - name: Commit baselines
