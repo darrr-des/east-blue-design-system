@@ -50,7 +50,13 @@ jobs:
           PUBLIC_AUTH_DISABLED: 'true'
         run: npm run build
 
+      # enablement: true turns Pages on and switches the source to "GitHub
+      # Actions" via the API. Without it, a repo whose Pages source is still
+      # "Deploy from a branch" serves raw repo files — no index.html at the
+      # root, so every URL 404s and deploy-pages below fails.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
