@@ -46,7 +46,8 @@ const hasOverview =
   data.overview.behavior.length ||
   data.overview.resolved.length ||
   data.overview.open.length ||
-  data.overview.recommendations.length;
+  data.overview.recommendations.length ||
+  data.overview.appliedRecommendations?.length;
 
 const hasStyle = data.style.specCards.length > 0;
 const hasCode =
@@ -112,22 +113,58 @@ const hasChangelog = data.changelog.length > 0;
                   <BehaviorTable rows={data.overview.behavior} />
                 </>
               )}
-              {data.overview.resolved.length > 0 && (
+              {(data.overview.open.length > 0 || data.overview.resolved.length > 0) && (
                 <>
-                  <div class="sub-heading" id={`${data.meta.slug}-resolved`}>Resolved Issues</div>
-                  <IssuesList items={data.overview.resolved} />
+                  <div class="sub-heading" id={`${data.meta.slug}-issues`}>Issues</div>
+                  <div class="seg-group" data-seg-group={`${data.meta.slug}-issues`}>
+                    <div class="seg-tabs" role="tablist">
+                      {data.overview.open.length > 0 && (
+                        <button type="button" class="seg-tab seg-open active" data-seg-target="open"
+                          onclick={`switchSeg(this,'${data.meta.slug}-issues','open')`}>
+                          <span class="seg-dot" aria-hidden="true"></span>Open Issues<span class="seg-count">{data.overview.open.length}</span>
+                        </button>
+                      )}
+                      {data.overview.resolved.length > 0 && (
+                        <button type="button" class={`seg-tab seg-resolved${data.overview.open.length === 0 ? ' active' : ''}`} data-seg-target="resolved"
+                          onclick={`switchSeg(this,'${data.meta.slug}-issues','resolved')`}>
+                          <span class="seg-ico" aria-hidden="true">✓</span>Resolved<span class="seg-count">{data.overview.resolved.length}</span>
+                        </button>
+                      )}
+                    </div>
+                    {data.overview.open.length > 0 && (
+                      <div class="seg-panel active" data-seg-panel="open"><IssuesList items={data.overview.open} variant="open" /></div>
+                    )}
+                    {data.overview.resolved.length > 0 && (
+                      <div class={`seg-panel${data.overview.open.length === 0 ? ' active' : ''}`} data-seg-panel="resolved"><IssuesList items={data.overview.resolved} variant="resolved" /></div>
+                    )}
+                  </div>
                 </>
               )}
-              {data.overview.open.length > 0 && (
+              {(data.overview.recommendations.length > 0 || (data.overview.appliedRecommendations?.length ?? 0) > 0) && (
                 <>
-                  <div class="sub-heading" id={`${data.meta.slug}-open`}>Open Issues</div>
-                  <IssuesList items={data.overview.open} />
-                </>
-              )}
-              {data.overview.recommendations.length > 0 && (
-                <>
-                  <div class="sub-heading" id={`${data.meta.slug}-recommend`}>Design Recommendations</div>
-                  <RecommendationsList items={data.overview.recommendations} />
+                  <div class="sub-heading" id={`${data.meta.slug}-recommend`}>Recommendations</div>
+                  <div class="seg-group" data-seg-group={`${data.meta.slug}-recommend`}>
+                    <div class="seg-tabs" role="tablist">
+                      {data.overview.recommendations.length > 0 && (
+                        <button type="button" class="seg-tab seg-design active" data-seg-target="design"
+                          onclick={`switchSeg(this,'${data.meta.slug}-recommend','design')`}>
+                          <span class="seg-ico" aria-hidden="true">→</span>Design<span class="seg-count">{data.overview.recommendations.length}</span>
+                        </button>
+                      )}
+                      {(data.overview.appliedRecommendations?.length ?? 0) > 0 && (
+                        <button type="button" class={`seg-tab seg-applied${data.overview.recommendations.length === 0 ? ' active' : ''}`} data-seg-target="applied"
+                          onclick={`switchSeg(this,'${data.meta.slug}-recommend','applied')`}>
+                          <span class="seg-ico" aria-hidden="true">✓</span>Applied<span class="seg-count">{data.overview.appliedRecommendations!.length}</span>
+                        </button>
+                      )}
+                    </div>
+                    {data.overview.recommendations.length > 0 && (
+                      <div class="seg-panel active" data-seg-panel="design"><RecommendationsList items={data.overview.recommendations} variant="design" /></div>
+                    )}
+                    {(data.overview.appliedRecommendations?.length ?? 0) > 0 && (
+                      <div class={`seg-panel${data.overview.recommendations.length === 0 ? ' active' : ''}`} data-seg-panel="applied"><RecommendationsList items={data.overview.appliedRecommendations!} variant="applied" /></div>
+                    )}
+                  </div>
                 </>
               )}
             </div>
