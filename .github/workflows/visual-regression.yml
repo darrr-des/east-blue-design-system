@@ -1,6 +1,9 @@
 name: Visual regression
 
 on:
+  # Manual trigger — the path filters below mean workflow-only changes never
+  # produce a run, so this is how you re-verify the check on demand.
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
