@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Property Naming Guidelines — East Blue Design System</title>
+</head>
+<body>
+<main class="main">
+<a class="back-btn" href="/">Overview</a>
+<div class="content-wrap">
+
+  <div class="cover">
+    <div class="cover-eyebrow">East Blue Design System</div>
+    <div class="cover-title">Property Naming Guidelines</div>
+    <div class="cover-subtitle">The naming contract for every component property in the GCash Design System — the four property types, the full reference catalog of variant / boolean / text / slot properties, standardized values, and the general guidelines that keep names semantic, generic, and engineering-aligned. This mirrors the team's source of truth in Notion; a component that diverges is a <strong>C2 · Variant &amp; Property Naming</strong> finding during assessment.</div>
+  </div>
+
+  <!-- ───────────────────────────── AT A GLANCE ───────────────────────────── -->
+  <section class="page-section" id="glance">
+    <h2 class="section-heading">At a Glance</h2>
+    <p class="section-desc">The rules that decide 90% of naming calls. If you remember nothing else, remember these.</p>
+    <div class="viz-stats">
+      <div class="viz-stat"><span class="viz-stat-num">Pascal</span><span class="viz-stat-lbl">Variant · Text · Slot names</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">camel</span><span class="viz-stat-lbl">Boolean properties</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">4</span><span class="viz-stat-lbl">Verb prefixes · is has can should</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">Title</span><span class="viz-stat-lbl">Property values</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">State</span><span class="viz-stat-lbl">Interaction — never Status</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">Status</span><span class="viz-stat-lbl">Meaning — never State</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">1</span><span class="viz-stat-lbl">Responsibility per property</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">4</span><span class="viz-stat-lbl">Property types · Variant Boolean Text Slot</span></div>
+    </div>
+    <div class="infobox">
+      <strong>Source of truth.</strong> All naming follows the team's Property Naming Guidelines in Notion:
+      <a href="https://almondine-lycra-2ad.notion.site/Property-Naming-Guidelines-39c2db45edd4801fa59dfda3a3ab3787" target="_blank" rel="noopener">Property Naming Guidelines →</a>.
+      This page is the assessment-side mirror; when the two disagree, Notion wins.
+    </div>
+  </section>
+
+  <!-- ───────────────────────────── PROPERTY TYPES ───────────────────────────── -->
+  <section class="page-section" id="property-types">
+    <h2 class="section-heading">Component Property Types</h2>
+    <p class="section-desc">A cheat-sheet for quick reference. Every property is one of four types — knowing which decides its casing and how it's named.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Description</th><th>Examples</th><th>Use case</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Variant</strong></td>
+            <td>Defines variations of a component, allowing designers to switch between them.</td>
+            <td class="mono">Type · Size (sm, md, lg) · Device (Mobile, Tablet) · Status</td>
+            <td>Structured changes, such as different button styles or states.</td>
+          </tr>
+          <tr>
+            <td><strong>Boolean</strong></td>
+            <td>Toggles visibility, states, or features within a component.</td>
+            <td class="mono">isVisible · isExpanded · isDisabled — true / false</td>
+            <td>On/off states, e.g. showing/hiding icons, enabling/disabling inputs.</td>
+          </tr>
+          <tr>
+            <td><strong>Text</strong></td>
+            <td>Stores and displays textual or numerical values dynamically.</td>
+            <td class="mono">Label · Placeholder · Value</td>
+            <td>Labels, dynamic text content, and numeric properties like badge counts.</td>
+          </tr>
+          <tr>
+            <td><strong>Slot</strong></td>
+            <td>Allows inserting or swapping different subcomponents inside a parent component.</td>
+            <td class="mono">Button · Card · Modal</td>
+            <td>Embedding complex subcomponents, like placing a badge inside a card.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────── VARIANT PROPERTIES ───────────────────────────── -->
+  <section class="page-section" id="variant-props">
+    <h2 class="section-heading">1 · Variant Properties</h2>
+    <p class="section-desc">The core variations of a component — the biggest visual differences, the related components within one component set. <strong>PascalCase</strong> names, <strong>Title Case</strong> values.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Property</th><th>Example values</th><th>Applies to</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Type</strong></td><td class="mono">Primary, Secondary, Tertiary</td><td>Buttons, Badges, Alerts</td><td>Highest hierarchy of component variants</td></tr>
+          <tr><td><strong>State</strong></td><td class="mono">Default, Hover, Pressed, Active, Disabled</td><td>Buttons, Inputs</td><td>Interaction behaviors</td></tr>
+          <tr><td><strong>Size</strong></td><td class="mono">Small, Medium, Large, Xlarge</td><td>Buttons, Inputs, Modals, Avatars</td><td>Standard sizes across components</td></tr>
+          <tr><td><strong>Width</strong></td><td class="mono">Full, Fixed, Compact</td><td>Buttons, Cards, Modals</td><td>Defines width behavior</td></tr>
+          <tr><td><strong>Height</strong></td><td class="mono">Short, Regular, Tall</td><td>Modals, Dropdowns</td><td>Adjusts vertical scaling</td></tr>
+          <tr><td><strong>Spacing</strong></td><td class="mono">Compact, Comfortable, Spacious</td><td>Lists, Menus, Grids</td><td>Defines gaps between elements</td></tr>
+          <tr><td><strong>Density</strong></td><td class="mono">Compact, Comfortable, Expanded, Spacious</td><td>Lists, Tables, Toolbars</td><td>Adjusts padding, row height &amp; control spacing</td></tr>
+          <tr><td><strong>Color Scheme</strong></td><td class="mono">Dark, Brand A, Brand B</td><td>All components</td><td>Overall color theming customisation</td></tr>
+          <tr><td><strong>Border Radius</strong></td><td class="mono">Sharp, Soft, Rounded, Circle</td><td>Avatar, Cards, Buttons, Inputs</td><td>Controls corner roundness</td></tr>
+          <tr><td><strong>Status</strong></td><td class="mono">Default, Success, Warning, Error, Info</td><td>Alerts, Badges, Forms</td><td>Defines semantic meaning</td></tr>
+          <tr><td><strong>Appearance</strong></td><td class="mono">Filled, Outlined, Soft, Elevated</td><td>Buttons, Cards</td><td>Defines rendering style</td></tr>
+          <tr><td><strong>Shape</strong></td><td class="mono">Square, Rounded, Pill, Circle</td><td>Buttons, Avatars</td><td>Defines corner treatment</td></tr>
+          <tr><td><strong>Orientation</strong></td><td class="mono">Horizontal, Vertical</td><td>Tabs, Lists</td><td>Defines layout direction</td></tr>
+          <tr><td><strong>Placement</strong></td><td class="mono">Top, Bottom, Left, Right</td><td>Tooltip, Popover</td><td>Defines placement</td></tr>
+          <tr><td><strong>Alignment</strong></td><td class="mono">Left, Center, Right</td><td>Typography, Layout</td><td>Defines alignment</td></tr>
+          <tr><td><strong>Tone</strong></td><td class="mono">Neutral, Positive, Warning, Negative</td><td>Alerts</td><td>Defines semantic tone</td></tr>
+          <tr><td><strong>Elevation</strong></td><td class="mono">None, 1, 2, 3, 4, 5</td><td>Cards, Dialogs</td><td>Defines elevation level</td></tr>
+          <tr><td><strong>Mode</strong></td><td class="mono">View, Edit, Preview</td><td>Forms, Editors</td><td>Defines operating mode</td></tr>
+          <tr><td><strong>Selection</strong></td><td class="mono">Single, Multiple</td><td>Lists, Tables</td><td>Defines selection behavior</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sub-heading">Standard property — casing</div>
+    <p class="section-desc">Use <strong>PascalCase</strong> for all standard property names.</p>
+    <div class="viz-dodont">
+      <div class="dd dd-do">
+        <div class="dd-tag">✅ Recommended</div>
+        <div class="dd-body"><code>Variant</code> · <code>Size</code> · <code>State</code> · <code>Status</code> · <code>Appearance</code> · <code>Shape</code> · <code>Orientation</code> · <code>Placement</code> · <code>Density</code> · <code>Theme</code> · <code>Mode</code> · <code>HelperText</code> · <code>ErrorMessage</code> · <code>BadgeCount</code></div>
+      </div>
+      <div class="dd dd-dont">
+        <div class="dd-tag">❌ Avoid</div>
+        <div class="dd-body"><code>variant</code> · <code>size</code> · <code>state</code> · <code>status</code> · <code>appearance</code> · <code>shape</code> · <code>orientation</code> · <code>placement</code> · <code>density</code> · <code>theme</code> · <code>mode</code> · <code>Helper Text</code> · <code>Error Message</code> · <code>Badge Count</code></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────── BOOLEAN PROPERTIES ───────────────────────────── -->
+  <section class="page-section" id="boolean-props">
+    <h2 class="section-heading">2 · Boolean Properties</h2>
+    <p class="section-desc">Binary on/off features. Use <strong>lowerCamelCase</strong> with a verb prefix. Every boolean is one of four kinds — a state, the presence of content, a capability, or a configurable behavior.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Prefix</th><th>Purpose</th><th>Examples</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono"><strong>is</strong></td><td>Current state or condition</td><td class="mono">isDisabled · isLoading · isSelected</td></tr>
+          <tr><td class="mono"><strong>has</strong></td><td>Presence of content or child elements</td><td class="mono">hasLeadingIcon · hasBadge · hasFooter</td></tr>
+          <tr><td class="mono"><strong>can</strong></td><td>Capability or permission</td><td class="mono">canDrag · canDismiss · canResize</td></tr>
+          <tr><td class="mono"><strong>should</strong></td><td>Configurable behavior</td><td class="mono">shouldWrap · shouldAnimate · shouldCloseOnSelect</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="rule">Use positive names — <code>isDisabled</code>, never <code>disable</code> / <code>notVisible</code> / <code>hideBadge</code>. Values are always <code>true</code> / <code>false</code>.</div>
+
+    <div class="sub-heading">Full boolean catalog</div>
+    <p class="section-desc">The approved boolean vocabulary, grouped by kind. Reuse these before inventing a new one.</p>
+
+    <details class="guide-details">
+      <summary>State — <code>is*</code> (32)</summary>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Property</th><th>Applies to</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">isDisabled</td><td>Buttons, Fields, Selects, Toggles, Menus</td><td>Controls whether the component is interactive.</td></tr>
+            <tr><td class="mono">isLoading</td><td>Buttons, Cards, Dialogs, Tables</td><td>Displays a loading state while content is processing.</td></tr>
+            <tr><td class="mono">isSelected</td><td>Tabs, Cards, Menu Items, Segmented Controls</td><td>Indicates the component is currently selected.</td></tr>
+            <tr><td class="mono">isChecked</td><td>Checkboxes, Switches</td><td>Indicates whether the control is checked.</td></tr>
+            <tr><td class="mono">isIndeterminate</td><td>Checkboxes, Progress Indicators</td><td>Represents a partially selected or unknown state.</td></tr>
+            <tr><td class="mono">isExpanded</td><td>Accordions, Sidebars, Tree Views</td><td>Controls whether collapsible content is expanded.</td></tr>
+            <tr><td class="mono">isCollapsed</td><td>Accordions, Panels</td><td>Indicates collapsed content. Avoid using together with <code>isExpanded</code>.</td></tr>
+            <tr><td class="mono">isOpen</td><td>Dropdowns, Menus, Popovers, Modals</td><td>Controls whether an overlay is visible.</td></tr>
+            <tr><td class="mono">isActive</td><td>Navigation Items, Tabs, Buttons</td><td>Indicates the currently active item.</td></tr>
+            <tr><td class="mono">isFocused</td><td>Inputs, Buttons</td><td>Displays the focused state.</td></tr>
+            <tr><td class="mono">isHovered</td><td>Interactive Components</td><td>Displays the hover state.</td></tr>
+            <tr><td class="mono">isPressed</td><td>Buttons, Icon Buttons</td><td>Displays the pressed state.</td></tr>
+            <tr><td class="mono">isVisited</td><td>Links</td><td>Indicates a previously visited link.</td></tr>
+            <tr><td class="mono">isReadOnly</td><td>Inputs, Textareas, Selects</td><td>Prevents editing while keeping content selectable.</td></tr>
+            <tr><td class="mono">isRequired</td><td>Inputs, Forms</td><td>Indicates the field is mandatory.</td></tr>
+            <tr><td class="mono">isOptional</td><td>Forms</td><td>Explicitly marks optional fields.</td></tr>
+            <tr><td class="mono">isInvalid</td><td>Inputs, Forms</td><td>Indicates validation has failed.</td></tr>
+            <tr><td class="mono">isValid</td><td>Inputs, Forms</td><td>Indicates validation passed.</td></tr>
+            <tr><td class="mono">isError</td><td>Inputs, Alerts</td><td>Shows an error state. Prefer <code>Status = Error</code> where applicable.</td></tr>
+            <tr><td class="mono">isSuccess</td><td>Alerts, Toasts</td><td>Shows a success state.</td></tr>
+            <tr><td class="mono">isWarning</td><td>Alerts, Banners</td><td>Shows a warning state.</td></tr>
+            <tr><td class="mono">isSticky</td><td>Headers, Toolbars</td><td>Keeps the component fixed during scrolling.</td></tr>
+            <tr><td class="mono">isDraggable</td><td>Cards, Rows, Lists</td><td>Enables drag interactions.</td></tr>
+            <tr><td class="mono">isResizable</td><td>Panels, Tables</td><td>Allows resizing.</td></tr>
+            <tr><td class="mono">isScrollable</td><td>Lists, Containers</td><td>Enables scrolling behavior.</td></tr>
+            <tr><td class="mono">isDismissible</td><td>Alerts, Toasts, Banners</td><td>Allows the user to dismiss the component.</td></tr>
+            <tr><td class="mono">isClosable</td><td>Dialogs, Drawers, Modals</td><td>Shows a close action.</td></tr>
+            <tr><td class="mono">isEditable</td><td>Text Fields, Tables</td><td>Allows editing.</td></tr>
+            <tr><td class="mono">isClickable</td><td>Cards, Tiles</td><td>Makes the component clickable.</td></tr>
+            <tr><td class="mono">isSkeleton</td><td>Cards, Lists, Tables</td><td>Displays placeholder loading UI.</td></tr>
+            <tr><td class="mono">isVisible</td><td>Any component</td><td>Controls visibility.</td></tr>
+            <tr><td class="mono">isHidden</td><td>Any component</td><td>Hides the component. Avoid pairing with <code>isVisible</code>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <details class="guide-details">
+      <summary>Content — <code>has*</code> (25)</summary>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Property</th><th>Applies to</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">hasLeadingIcon</td><td>Buttons, Inputs, Chips</td><td>Displays an icon before the label.</td></tr>
+            <tr><td class="mono">hasTrailingIcon</td><td>Buttons, Inputs</td><td>Displays an icon after the label.</td></tr>
+            <tr><td class="mono">hasAvatar</td><td>List Items, Cards</td><td>Displays an avatar.</td></tr>
+            <tr><td class="mono">hasImage</td><td>Cards, Empty States</td><td>Displays an image.</td></tr>
+            <tr><td class="mono">hasIllustration</td><td>Empty States, Onboarding</td><td>Displays an illustration.</td></tr>
+            <tr><td class="mono">hasThumbnail</td><td>Lists, Cards</td><td>Displays a thumbnail.</td></tr>
+            <tr><td class="mono">hasBadge</td><td>Navigation, Icons</td><td>Displays a badge.</td></tr>
+            <tr><td class="mono">hasCounter</td><td>Tabs, Navigation</td><td>Displays a numeric counter.</td></tr>
+            <tr><td class="mono">hasLabel</td><td>Inputs, Toggles</td><td>Displays a label.</td></tr>
+            <tr><td class="mono">hasDescription</td><td>Cards, Alerts</td><td>Displays supporting description text.</td></tr>
+            <tr><td class="mono">hasHelperText</td><td>Inputs</td><td>Displays helper text.</td></tr>
+            <tr><td class="mono">hasSupportingText</td><td>Cards, Lists</td><td>Displays supporting content.</td></tr>
+            <tr><td class="mono">hasPrefix</td><td>Inputs</td><td>Displays leading content inside the field.</td></tr>
+            <tr><td class="mono">hasSuffix</td><td>Inputs</td><td>Displays trailing content inside the field.</td></tr>
+            <tr><td class="mono">hasDivider</td><td>Lists, Menus</td><td>Displays a divider.</td></tr>
+            <tr><td class="mono">hasBorder</td><td>Cards, Containers</td><td>Displays a border.</td></tr>
+            <tr><td class="mono">hasShadow</td><td>Cards, Modals</td><td>Displays elevation shadow.</td></tr>
+            <tr><td class="mono">hasHeader</td><td>Cards, Panels</td><td>Displays a header section.</td></tr>
+            <tr><td class="mono">hasFooter</td><td>Cards, Panels</td><td>Displays a footer section.</td></tr>
+            <tr><td class="mono">hasActions</td><td>Cards, Dialogs</td><td>Displays an action area.</td></tr>
+            <tr><td class="mono">hasCloseButton</td><td>Dialogs, Toasts</td><td>Displays a close button.</td></tr>
+            <tr><td class="mono">hasBackButton</td><td>Navigation Bars</td><td>Displays a back button.</td></tr>
+            <tr><td class="mono">hasClearButton</td><td>Search Fields</td><td>Displays a clear action.</td></tr>
+            <tr><td class="mono">hasTooltip</td><td>Icons, Inputs</td><td>Displays a tooltip.</td></tr>
+            <tr><td class="mono">hasOverflowMenu</td><td>Cards, Lists</td><td>Displays a "More" menu.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <details class="guide-details">
+      <summary>Capability — <code>can*</code> (9)</summary>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Property</th><th>Applies to</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">canDismiss</td><td>Alerts, Toasts</td><td>Allows the component to be dismissed.</td></tr>
+            <tr><td class="mono">canDrag</td><td>Cards, Lists</td><td>Allows drag-and-drop interactions.</td></tr>
+            <tr><td class="mono">canResize</td><td>Panels, Split Views</td><td>Allows resizing.</td></tr>
+            <tr><td class="mono">canSearch</td><td>Dropdowns, Tables</td><td>Enables search functionality.</td></tr>
+            <tr><td class="mono">canFilter</td><td>Tables, Lists</td><td>Enables filtering.</td></tr>
+            <tr><td class="mono">canSort</td><td>Tables</td><td>Enables sorting.</td></tr>
+            <tr><td class="mono">canClear</td><td>Search Fields</td><td>Allows clearing the current value.</td></tr>
+            <tr><td class="mono">canCopy</td><td>Code Blocks, Inputs</td><td>Allows copy actions.</td></tr>
+            <tr><td class="mono">canEdit</td><td>Tables, Forms</td><td>Allows editing.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <details class="guide-details">
+      <summary>Behavior — <code>should*</code> (8)</summary>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Property</th><th>Applies to</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">shouldWrap</td><td>Typography, Chips</td><td>Wraps content onto multiple lines.</td></tr>
+            <tr><td class="mono">shouldTruncate</td><td>Typography, Tables</td><td>Truncates overflowing text.</td></tr>
+            <tr><td class="mono">shouldAnimate</td><td>Interactive Components</td><td>Enables animations.</td></tr>
+            <tr><td class="mono">shouldAutoFocus</td><td>Inputs, Dialogs</td><td>Automatically focuses on load.</td></tr>
+            <tr><td class="mono">shouldCloseOnSelect</td><td>Dropdowns, Menus</td><td>Closes after an item is selected.</td></tr>
+            <tr><td class="mono">shouldCloseOnOutsideClick</td><td>Popovers, Dialogs</td><td>Closes when clicking outside.</td></tr>
+            <tr><td class="mono">shouldLoop</td><td>Carousels</td><td>Loops through items continuously.</td></tr>
+            <tr><td class="mono">shouldStickToViewport</td><td>Tooltips, Popovers</td><td>Keeps the overlay within the viewport.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </section>
+
+  <!-- ───────────────────────────── TEXT PROPERTIES ───────────────────────────── -->
+  <section class="page-section" id="text-props">
+    <h2 class="section-heading">3 · Text Properties</h2>
+    <p class="section-desc">Editable text or numeric content displayed within a component. Use <strong>PascalCase</strong> for all Text Property names. Grouped by content role.</p>
+
+    <div class="sub-heading">Primary content</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Definition</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">Preamble</td><td>Introductory text displayed before the primary heading to provide context or categorization.</td><td class="mono">NEW FEATURE</td></tr>
+          <tr><td class="mono">Title</td><td>The primary heading of a component, page, dialog, or section.</td><td class="mono">Manage Team Members</td></tr>
+          <tr><td class="mono">Subtitle</td><td>Secondary heading that supports or expands on the Title.</td><td class="mono">Invite and organize your workspace.</td></tr>
+          <tr><td class="mono">Blurb</td><td>A short summary or promotional paragraph that highlights the purpose or value of the content.</td><td class="mono">Collaborate seamlessly with your team in one secure workspace.</td></tr>
+          <tr><td class="mono">Description</td><td>Supporting body text that provides additional details or instructions.</td><td class="mono">Use your company email address.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading">Form content</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Definition</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">Label</td><td>Identifies a field or input.</td><td class="mono">Email Address</td></tr>
+          <tr><td class="mono">Placeholder</td><td>Sample text shown inside an empty field.</td><td class="mono">Enter your email</td></tr>
+          <tr><td class="mono">Value</td><td>The current input value.</td><td class="mono">john@email.com</td></tr>
+          <tr><td class="mono">HelperText</td><td>Guidance shown alongside a field.</td><td class="mono">Must contain at least 8 characters.</td></tr>
+          <tr><td class="mono">Hint</td><td>Short instructional or contextual recommendation shown before interaction.</td><td class="mono">Use your company email address.</td></tr>
+          <tr><td class="mono">ErrorMessage</td><td>Validation feedback displayed when the user's input is invalid.</td><td class="mono">Email address is required.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading">Supporting content</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Definition</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">SupportingText</td><td>Supplemental information that provides additional context or explanation.</td><td class="mono">Last updated 2 days ago.</td></tr>
+          <tr><td class="mono">Caption</td><td>Small descriptive text associated with another element, such as an image, chart, or table.</td><td class="mono">Figure 1. Monthly Sales Report</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading">Metadata</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Definition</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">BadgeCount</td><td>Numeric value displayed inside a badge or notification indicator.</td><td class="mono">99+</td></tr>
+          <tr><td class="mono">Price</td><td>Monetary value displayed by the component.</td><td class="mono">$249.99</td></tr>
+          <tr><td class="mono">Date</td><td>Calendar date.</td><td class="mono">July 16, 2026</td></tr>
+          <tr><td class="mono">Time</td><td>Time value.</td><td class="mono">10:30 AM</td></tr>
+          <tr><td class="mono">DateTime</td><td>Combined date and time.</td><td class="mono">July 16, 2026 · 10:30 AM</td></tr>
+          <tr><td class="mono">ReferenceNumber</td><td>Human-readable identifier used to reference a record or transaction.</td><td class="mono">REF-2026-001245</td></tr>
+          <tr><td class="mono">TransactionID</td><td>Unique identifier assigned to a transaction.</td><td class="mono">TXN-8A73D21F</td></tr>
+          <tr><td class="mono">OrderNumber</td><td>Identifier assigned to a customer order.</td><td class="mono">ORD-105248</td></tr>
+          <tr><td class="mono">InvoiceNumber</td><td>Identifier assigned to an invoice.</td><td class="mono">INV-2026-00482</td></tr>
+          <tr><td class="mono">TicketNumber</td><td>Identifier assigned to a support or service ticket.</td><td class="mono">TKT-009312</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox">Definitions for the Form-content rows are normalized here for clarity; the canonical definitions live in the Notion Property Catalog.</div>
+  </section>
+
+  <!-- ───────────────────────────── SLOT PROPERTIES ───────────────────────────── -->
+  <section class="page-section" id="slot-props">
+    <h2 class="section-heading">4 · Node (Slot / Preset) Properties</h2>
+    <p class="section-desc">Slots let components swap or embed subcomponents dynamically — custom content, badges, or nested elements.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Slot category</th><th>Naming pattern</th><th>Example</th><th>Applies to</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Content slot</strong></td><td class="mono">content · {object}-content</td><td class="mono">content · modal-content</td><td>Cards, Modals, Panels, List Items, Sections — any component where content is swapped</td><td>Entire content areas, allowing flexible replacements like custom sections, states, or placeholders.</td></tr>
+          <tr><td><strong>Element slot</strong></td><td class="mono">{element}</td><td class="mono">section-header · table-footer</td><td>Tabs, Menus, Breadcrumbs, Sidebars, Modals, Tables, Cards</td><td>Structural elements within components — headers, footers, navigation slots.</td></tr>
+          <tr><td><strong>Asset slot</strong></td><td class="mono">component-{asset type}<br>(icon, background, video…)</td><td class="mono">modal-bg · status-icon</td><td>Cards, Banners, Media Components — any component with visual assets</td><td>Visual assets — seamless swapping of images, icons, and media elements.</td></tr>
+          <tr><td><strong>Addon slot</strong></td><td class="mono">addon · {object}-addon · addon-{position}</td><td class="mono">addon · avatarAddon · addon-left</td><td>Inputs, Text Areas — any component with additional elements</td><td>Add-on elements — prefix/suffix icons, decorative elements, etc.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────── PROPERTY VALUES ───────────────────────────── -->
+  <section class="page-section" id="values">
+    <h2 class="section-heading">5 · Property Values</h2>
+    <p class="section-desc">Use <strong>Title Case</strong> for all variant values, drawn from the standard sets — so the same concept reads the same everywhere. Avoid lowercase, uppercase, or implementation-specific values.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Standard values</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Size</strong></td><td class="mono">XS · SM · MD · LG · XL</td></tr>
+          <tr><td><strong>Variant</strong></td><td class="mono">Primary · Secondary · Ghost</td></tr>
+          <tr><td><strong>State</strong> <span class="viz-sp-val">(interaction)</span></td><td class="mono">Default · Hover · Pressed · Focused · Disabled</td></tr>
+          <tr><td><strong>Status</strong> <span class="viz-sp-val">(semantic)</span></td><td class="mono">Success · Warning · Error · Pending</td></tr>
+          <tr><td><strong>Theme</strong></td><td class="mono">Light · Dark</td></tr>
+          <tr><td><strong>Orientation</strong></td><td class="mono">Horizontal · Vertical</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="viz-dodont">
+      <div class="dd dd-do">
+        <div class="dd-tag">DO — semantic</div>
+        <div class="dd-body"><code>Variant = Primary</code><br><code>Status = Success</code><br><code>Tone = Positive</code></div>
+      </div>
+      <div class="dd dd-dont">
+        <div class="dd-tag">DON'T — appearance</div>
+        <div class="dd-body"><code>Variant = Blue</code><br><code>Status = Green</code><br>Booleans as <code>Yes</code> / <code>No</code></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────── GENERAL GUIDELINES ───────────────────────────── -->
+  <section class="page-section" id="general-guidelines">
+    <h2 class="section-heading">6 · General Guidelines</h2>
+    <p class="section-desc">The principles that catch the naming mistakes casing alone won't.</p>
+
+    <div class="sub-heading">Use semantic names</div>
+    <p>Property names should communicate <strong>purpose</strong>, not appearance.</p>
+    <div class="viz-dodont">
+      <div class="dd dd-do"><div class="dd-tag">Recommended</div><div class="dd-body"><code>Variant = Primary</code><br><code>Status = Success</code><br><code>Tone = Positive</code></div></div>
+      <div class="dd dd-dont"><div class="dd-tag">Avoid</div><div class="dd-body"><code>Variant = Blue</code><br><code>Status = Green</code></div></div>
+    </div>
+
+    <div class="sub-heading">Keep property names generic</div>
+    <p>Names should describe reusable behaviors rather than component-specific implementations. The component itself already provides the context.</p>
+    <div class="viz-dodont">
+      <div class="dd dd-do"><div class="dd-tag">Recommended</div><div class="dd-body"><code>Variant</code><br><code>Label</code><br><code>Description</code><br><code>ReferenceNumber</code></div></div>
+      <div class="dd dd-dont"><div class="dd-tag">Avoid</div><div class="dd-body"><code>ButtonVariant</code><br><code>PriceLabel</code><br><code>NavigationDescription</code></div></div>
+    </div>
+
+    <div class="sub-heading">Separate structure from content</div>
+    <p>Structural elements are controlled with Boolean properties; displayed content uses Text Properties.</p>
+    <div class="viz-dodont">
+      <div class="dd dd-do"><div class="dd-tag">Structure — booleans</div><div class="dd-body"><code>hasHeader</code><br><code>hasFooter</code><br><code>hasActions</code></div></div>
+      <div class="dd dd-do"><div class="dd-tag">Content — text</div><div class="dd-body"><code>Title</code><br><code>Subtitle</code><br><code>Description</code></div></div>
+    </div>
+
+    <div class="sub-heading">Separate State from Status</div>
+    <p><code>State</code> represents interaction; <code>Status</code> represents semantic meaning. Never fold one into the other.</p>
+    <div class="viz-dodont">
+      <div class="dd dd-do"><div class="dd-tag">State — interaction</div><div class="dd-body"><code>Default · Hover · Pressed · Focused · Disabled</code></div></div>
+      <div class="dd dd-do"><div class="dd-tag">Status — meaning</div><div class="dd-body"><code>Success · Warning · Error · Pending</code></div></div>
+    </div>
+    <div class="viz-dodont">
+      <div class="dd dd-do"><div class="dd-tag">Recommended</div><div class="dd-body"><code>State = Hover</code><br><code>Status = Success</code></div></div>
+      <div class="dd dd-dont"><div class="dd-tag">Avoid</div><div class="dd-body"><code>State = Success</code></div></div>
+    </div>
+
+    <div class="sub-heading">Keep properties focused</div>
+    <p>Each property should represent a single responsibility — no catch-alls.</p>
+    <div class="viz-dodont">
+      <div class="dd dd-do"><div class="dd-tag">Good</div><div class="dd-body"><code>Variant</code><br><code>State</code><br><code>Status</code></div></div>
+      <div class="dd dd-dont"><div class="dd-tag">Avoid</div><div class="dd-body"><code>Style</code><br><code>Configuration</code><br><code>Settings</code></div></div>
+    </div>
+
+    <div class="sub-heading">Use positive boolean names</div>
+    <p>Booleans describe the desired state, not the absence of one.</p>
+    <div class="viz-dodont">
+      <div class="dd dd-do"><div class="dd-tag">Recommended</div><div class="dd-body"><code>isDisabled</code><br><code>hasBadge</code><br><code>canDismiss</code><br><code>shouldWrap</code></div></div>
+      <div class="dd dd-dont"><div class="dd-tag">Avoid</div><div class="dd-body"><code>disable</code><br><code>hideBadge</code><br><code>notVisible</code></div></div>
+    </div>
+
+    <div class="sub-heading">Maintain consistent terminology</div>
+    <p>Use the same property name for the same concept across the whole system — unless they genuinely represent different content roles.</p>
+    <div class="viz-dodont">
+      <div class="dd dd-do"><div class="dd-tag">Use</div><div class="dd-body"><code>HelperText</code></div></div>
+      <div class="dd dd-dont"><div class="dd-tag">Do not introduce</div><div class="dd-body"><code>SupportText</code><br><code>AssistiveText</code><br><code>HintText</code></div></div>
+    </div>
+
+    <div class="sub-heading">Align with engineering</div>
+    <p>Align design property names with engineering props. Exact parity isn't required, but terminology should stay conceptually aligned.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Design</th><th>Development</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">isDisabled</td><td class="mono">isDisabled</td></tr>
+          <tr><td class="mono">hasLeadingIcon</td><td class="mono">hasLeadingIcon</td></tr>
+          <tr><td class="mono">Variant</td><td class="mono">variant</td></tr>
+          <tr><td class="mono">Size</td><td class="mono">size</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-heading">Optimize for readability</div>
+    <p>Names should be concise and easy to scan in the Figma properties panel.</p>
+    <div class="viz-dodont">
+      <div class="dd dd-do"><div class="dd-tag">Good</div><div class="dd-body"><code>Label</code><br><code>Description</code><br><code>BadgeCount</code><br><code>ReferenceNumber</code></div></div>
+      <div class="dd dd-dont"><div class="dd-tag">Avoid</div><div class="dd-body"><code>NavigationComponentLabel</code><br><code>ProductCardDescription</code><br><code>UserReferenceIdentifier</code></div></div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────── CONTENT HIERARCHY ───────────────────────────── -->
+  <section class="page-section" id="content-hierarchy">
+    <h2 class="section-heading">7 · Standardize Content Hierarchy</h2>
+    <p class="section-desc">When a component has multiple text layers, name them from this ordered vocabulary — top to bottom, most prominent first. A standardized hierarchy improves consistency across the system.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Group</th><th>Order</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Primary</strong></td><td class="mono">Preamble · Title · Subtitle · Blurb · Description</td></tr>
+          <tr><td><strong>Form</strong></td><td class="mono">Label · Placeholder · Value · HelperText · Hint · ErrorMessage</td></tr>
+          <tr><td><strong>Supporting</strong></td><td class="mono">SupportingText · Caption</td></tr>
+          <tr><td><strong>Metadata</strong></td><td class="mono">BadgeCount · Price · Date · ReferenceNumber</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────── GOVERNANCE ───────────────────────────── -->
+  <section class="page-section" id="governance">
+    <h2 class="section-heading">8 · Maintain a Property Catalog</h2>
+    <p class="section-desc">All approved properties are documented in the Property Catalog — the single source of truth for all component properties. Each entry includes:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>What it records</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Property Name</strong></td><td>The approved name (correct casing + prefix).</td></tr>
+          <tr><td><strong>Property Type</strong></td><td>Variant · Boolean · Text · Slot.</td></tr>
+          <tr><td><strong>Definition</strong></td><td>What the property means / controls.</td></tr>
+          <tr><td><strong>Allowed Values</strong></td><td>The standardized value set.</td></tr>
+          <tr><td><strong>Applies To</strong></td><td>Which components use it.</td></tr>
+          <tr><td><strong>Usage Notes</strong></td><td>Caveats, pairings to avoid, engineering alignment.</td></tr>
+          <tr><td><strong>Example</strong></td><td>A representative value.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="infobox">
+      <strong>Assessment tie-in.</strong> A component whose properties diverge from this catalog — spaced multi-word names, <code>State=Success</code>, component-specific text names, negative booleans, appearance-based values — is flagged under <strong>C2 · Variant &amp; Property Naming</strong>. The recurring anti-pattern is a fleet of independent <code>has*</code> booleans; prefer collapsing to named <strong>slots</strong> plus a content enum (how Empty State went from 7 booleans to a clean 2×2).
+    </div>
+  </section>
+
+  <div class="footer">
+    Property Naming Guidelines · East Blue Design System — mirrors the team's Notion source of truth. Naming divergences are assessed under C2 · Variant &amp; Property Naming.
+  </div>
+
+</div><!-- /content-wrap -->
+</main>
+</body>
+</html>
