@@ -87,7 +87,7 @@
       await fetch(backend + '/auth/logout', { method: 'POST', credentials: 'include' });
     } catch (e) { /* network errors don't matter on logout */ }
     try { localStorage.removeItem('eb_auth_token'); } catch (e) {}
-    window.location.href = '/login';
+    window.location.href = (window.__EB_BASE || '/') + 'login';
   };
 
   /* Family open/close state — persist to localStorage so user-opened
@@ -520,6 +520,17 @@
       try { history.replaceState(null, '', '#' + groupId + '=' + tabId); } catch (e) {}
     }
     buildToc();
+  };
+
+  // ── Segmented sub-tabs (Open/Resolved · Design/Applied) ──────────────
+  window.switchSeg = function (btn, groupId, target) {
+    var root = document.querySelector('[data-seg-group="' + groupId + '"]');
+    if (!root) return;
+    root.querySelectorAll('.seg-tab').forEach(function (t) { t.classList.remove('active'); });
+    btn.classList.add('active');
+    root.querySelectorAll('.seg-panel').forEach(function (p) {
+      p.classList.toggle('active', p.dataset.segPanel === target);
+    });
   };
 
   // ── Page TOC + scroll spy ────────────────────────────────────────────
