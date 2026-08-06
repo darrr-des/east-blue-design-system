@@ -263,6 +263,15 @@ Use **positive** names (`isDisabled`, not `disable` / `notVisible` / `hideBadge`
 
 ## Git & tools
 
-**Never commit or push unless explicitly told to.** `main` auto-deploys to production. All review work stays local and uncommitted until the owner says otherwise.
+**Never commit or push unless explicitly told to.** `main` auto-deploys to production — anything merged there ships immediately.
+
+**When the owner does say to commit, put the review on its own branch.** One component, one branch, one pull request:
+
+```bash
+git switch main && git pull
+git switch -c review/<slug>
+```
+
+Commit only that component's `<slug>.ts`, push with `git push -u origin review/<slug>`, then open a pull request. A branch never deploys — only the merge into `main` does — so it's a safe place to park a review that isn't finished.
 
 **Figma tools (read-only inspection):** `join_channel` · `get_node_info` · `get_selection` · `get_document_info` · `export_node_as_image` · `scan_text_nodes`. Write tools (`rename_node`, etc.) — only with per-request permission, per *Editing Figma safely* above.
