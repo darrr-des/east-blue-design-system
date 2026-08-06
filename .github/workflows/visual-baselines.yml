@@ -2,13 +2,21 @@ name: Regenerate visual baselines (Linux)
 
 # The visual regression suite runs on ubuntu, but the committed baselines were
 # captured on macOS. At threshold 0 those can never match, which is why every
-# run of "Visual regression" has failed since it was added.
+# run of "Visual regression" failed. Baselines are now platform-scoped, so CI
+# needs a Linux set under tests/visual-baselines/linux/.
 #
-# This job captures baselines on the same Linux runner the check uses and
-# commits them under tests/visual-baselines/linux/. Run it manually whenever an
-# intentional visual change lands (new CSS, restructured component, etc).
+# Runs two ways:
+#   - automatically on push to main, but ONLY while the Linux baselines are
+#     missing, so it bootstraps itself once and then stays out of the way
+#   - manually via workflow_dispatch, to re-capture after an intentional
+#     visual change (new CSS, restructured component)
+#
+# It must never regenerate on every push — baselines that update themselves
+# would make the regression check meaningless.
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       branch:
@@ -30,23 +38,42 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.branch }}
+          ref: ${{ inputs.branch || github.ref_name }}
+
+      - name: Decide whether to capture
+        id: gate
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "Manual run — capturing."
+          elif [ -d tests/visual-baselines/linux ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Linux baselines already exist — skipping."
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "No Linux baselines yet — bootstrapping."
+          fi
 
       - uses: actions/setup-node@v4
+        if: steps.gate.outputs.run == 'true'
         with:
           node-version: '20'
           cache: npm
           cache-dependency-path: astro-site/package-lock.json
 
       - run: npm ci
+        if: steps.gate.outputs.run == 'true'
 
       - name: Install Playwright Chromium
+        if: steps.gate.outputs.run == 'true'
         run: npx playwright install --with-deps chromium
 
       - name: Capture baselines
+        if: steps.gate.outputs.run == 'true'
         run: npx playwright test --update-snapshots --reporter=line
 
       - name: Commit baselines
+        if: steps.gate.outputs.run == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -54,6 +81,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No baseline changes."
           else
-            git commit -m "chore(visual): regenerate Linux baselines"
-            git push origin HEAD:${{ inputs.branch }}
+            git commit -m "chore(visual): capture Linux baselines [skip ci]"
+            git push origin HEAD:${{ inputs.branch || github.ref_name }}
           fi
