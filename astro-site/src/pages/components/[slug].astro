@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../../lib/url';
+import { url } from '../../lib/url';
 import Base from '../../layouts/Base.astro';
 import ComponentHeader from '../../components/ComponentHeader.astro';
 import DSHealth from '../../components/DSHealth.astro';
@@ -91,14 +93,14 @@ const hasChangelog = data.changelog.length > 0;
                   <div class="sub-heading" id={`${data.meta.slug}-context`} style="margin-top:0">In Context</div>
                   {data.overview.inContextNote && <p class="section-desc">{data.overview.inContextNote}</p>}
                   {data.overview.inContextHtml && (
-                    <div class="ctx-wrap" set:html={data.overview.inContextHtml} />
+                    <div class="ctx-wrap" set:html={withBase(data.overview.inContextHtml)} />
                   )}
                 </>
               )}
               {data.overview.livePreviewHtml && (
                 <>
                   <div class="sub-heading" id={`${data.meta.slug}-preview`}>Live Preview</div>
-                  <div class="demo-panel eb-preview-scope" set:html={data.overview.livePreviewHtml} />
+                  <div class="demo-panel eb-preview-scope" set:html={withBase(data.overview.livePreviewHtml)} />
                 </>
               )}
               {data.overview.traits.length > 0 && (
@@ -217,6 +219,6 @@ const hasChangelog = data.changelog.length > 0;
   </div>
 
   {hasDemoScript && (
-    <script src={`/scripts/demos/${data.meta.slug}.js`} is:inline></script>
+    <script src={url(`/scripts/demos/${data.meta.slug}.js`)} is:inline></script>
   )}
 </Base>

@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 /* /search — opens the global SearchModal on top of the home page.
  * The modal lives in Base.astro and is wired via `data-action="open-search"`
  * or the `eb:open-search` custom event. */
@@ -27,6 +28,6 @@ import Base from '../layouts/Base.astro';
   <div class="panel panel-narrow">
     <h1>Search</h1>
     <p>Use the search bar (top-left of the sidebar) or press <kbd>⌘K</kbd> / <kbd>Ctrl</kbd>+<kbd>K</kbd> to open it.</p>
-    <p><a class="back-btn" href="/">← Back to Overview</a></p>
+    <p><a class="back-btn" href={url("/")}>← Back to Overview</a></p>
   </div>
 </Base>

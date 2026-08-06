@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 import type { IssueItem } from '../data/types';
 interface Props { items: IssueItem[]; variant?: 'open' | 'resolved'; }
 const { items, variant = 'resolved' } = Astro.props;
@@ -8,7 +9,7 @@ const { items, variant = 'resolved' } = Astro.props;
     <li>
       <span>
         {item.headline && <Fragment set:html={`<strong>${item.headline}</strong> `} />}
-        <Fragment set:html={item.body} />
+        <Fragment set:html={withBase(item.body)} />
         {item.tag && (
           <span class={`tag-open tag-${item.tag.criterion.toLowerCase()}`}>{item.tag.label}</span>
         )}

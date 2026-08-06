@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 import type { RecommendItem } from '../data/types';
 interface Props { items: RecommendItem[]; variant?: 'design' | 'applied'; }
 const { items, variant = 'design' } = Astro.props;
@@ -7,7 +8,7 @@ const { items, variant = 'design' } = Astro.props;
   {items.map((item) => (
     <li>
       <span>
-        <Fragment set:html={`<strong>${item.headline}</strong> ${item.body}`} />
+        <Fragment set:html={withBase(`<strong>${item.headline}</strong> ${item.body}`)} />
         <span class="tag-recommend">{item.tag}</span>
       </span>
     </li>
