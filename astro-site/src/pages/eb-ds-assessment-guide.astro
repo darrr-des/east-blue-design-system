@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -65,12 +66,12 @@ const guideHtml = extractMainBody(raw);
     <div class="panel-layout">
       <div class="content-wrap">
         <nav class="guide-breadcrumb" aria-label="Breadcrumb">
-          <a class="back-btn" href="/">Overview</a>
+          <a class="back-btn" href={url("/")}>Overview</a>
           <span class="guide-breadcrumb-sep" aria-hidden="true">›</span>
           <span class="guide-breadcrumb-current">Assessment Guide</span>
         </nav>
         <div class="guide-content" set:html={guideHtml} />
-        <a class="overview-cta guide-methodology-cta" href="/eb-methodology">
+        <a class="overview-cta guide-methodology-cta" href={url("/eb-methodology")}>
           <div class="overview-cta-text">
             <span class="overview-cta-eyebrow">The why behind the why</span>
             <span class="overview-cta-title">Read the Assessment Methodology</span>

@@ -1,6 +1,9 @@
 name: Visual regression
 
 on:
+  # Manual trigger — the path filters below mean workflow-only changes never
+  # produce a run, so this is how you re-verify the check on demand.
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
@@ -47,6 +50,12 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run visual regression
+        # The gate calls /auth/me against a backend that does not exist in CI,
+        # then redirects to /login — so every page under test rendered the
+        # login screen and no spec card was ever found. This is why the suite
+        # failed on every run since it was added.
+        env:
+          PUBLIC_AUTH_DISABLED: 'true'
         run: npm run test:visual -- --reporter=line
 
       - name: Upload diff artefacts

@@ -4,13 +4,13 @@ export const radioButton: ComponentData = {
   "meta": {
     "slug": "radio-button",
     "name": "Radio Button",
-    "node": "18482:35698",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18482-35698",
-    "description": "A circular radio control used inside single-select groups; supports default, selected, and disabled.",
+    "node": "26184:2588",
+    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26184-2588",
+    "description": "A circular radio control for single-select groups. 39 variants across <code>Style</code> (Default/Check) × <code>State</code> (Default/Pressed/Disabled) × <code>Size</code> (Large/Medium/Small) × <code>isSelected</code> × <code>isError</code>.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -19,9 +19,9 @@ export const radioButton: ComponentData = {
     ],
     "navGroup": "Radio",
     "verdict": {
-      "kind": "fix",
-      "title": "Split properties + rebuild as vector",
-      "text": "Replace the sparse <code>selected × style</code> matrix with orthogonal props: <code>selected: Bool</code> + <code>state: default/disabled/error</code>. Retire the <code>checkmark</code> style (it's a checkbox affordance, not a radio). Rebuild the large radio with token-bound vector layers instead of raster SVG images. Rename <code>.base/checkbox</code> → <code>.base/radio</code>. Add pressed + focused states."
+      "kind": "keep",
+      "title": "Rebuilt — structurally clean",
+      "text": "The v2.0 rebuild resolved every structural issue: orthogonal axes (<code>Style</code> × <code>State</code> × <code>Size</code> × <code>isSelected</code> × <code>isError</code>), vector ring + dot at all three sizes, semantic layer names, a real <code>Pressed</code> state, and <code>Disabled</code> + unselected coverage. Pressed now folds into <code>State</code> and error is an orthogonal <code>isError</code> boolean — matching Button v4.0 and Select Item. Only Code Connect registration remains."
     }
   },
   "overview": {
@@ -31,70 +31,104 @@ export const radioButton: ComponentData = {
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "Used in forms, surveys, preference pickers. Two sizes cover 360px and 414px screen needs."
+        "note": "Works across forms, surveys, preference pickers, and single-select list rows. Three sizes (24 / 20 / 16) cover the Large, Medium, and Small text scales, and the Check style extends it to iOS-style picker rows without a second component."
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Small variants use token-bound borders + fills. Large variants export a pre-rendered SVG image for each state — tokens won't propagate to the large size. <span class=\"tag-open tag-c3\">C3</span>"
+        "rating": "pass",
+        "note": "Every size is built from layered vectors — <code>container</code> → <code>circle</code> (fill) + <code>ring</code> (stroke) — so tokens propagate to all three. Carries its own selection, error, and interaction styling; the raster <code>imgContainer</code> export is gone."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Two property-naming issues: <code>selected</code> mixes selection with modifiers (disabled/error), and <code>style</code> is conditional (only meaningful when selected is true). Sparse matrix with ~50% invalid combinations. <span class=\"tag-open tag-c2\">C2</span>"
+        "rating": "pass",
+        "note": "Five orthogonal props — <code>Style</code> × <code>State</code> × <code>Size</code> × <code>isSelected</code> × <code>isError</code>. No conditional axes and no invalid combinations: pressed lives in <code>State</code> alongside Disabled, error is its own boolean, and booleans are lowercase <code>true</code>/<code>false</code>. Matches Button v4.0 and Select Item."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Internal frame is named <code>.base/checkbox</code> instead of <code>.base/radio</code>. Suggests checkbox primitives were reused here. Also the checkmark style is a checkbox affordance, not standard radio iconography. <span class=\"tag-open tag-c6\">C6</span>"
+        "rating": "pass",
+        "note": "Nests inside Radio Button – With Label, which mirrors this schema exactly — same props, same order, same 39 variants. Layers are semantic (<code>container</code> / <code>circle</code> / <code>ring</code>) and the Check style is a vector icon instance rather than a drawn shape."
       }
     ],
-    "behavior": [],
-    "resolved": [],
+    "behavior": [
+      {
+        "state": "Default (unselected)",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Default, isSelected=false",
+        "notes": "Empty ring. Resting state for every unpicked option in a group."
+      },
+      {
+        "state": "Selected",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Default, isSelected=true",
+        "notes": "Brand ring + inner dot, both <code>#005CE5</code>. Exactly one option per group carries this."
+      },
+      {
+        "state": "Pressed",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Pressed",
+        "notes": "Ring and dot darken to <code>#2340A9</code>. Combines with either <code>isSelected</code> value. Derived at runtime from the touch interaction — not a parameter you pass."
+      },
+      {
+        "state": "Disabled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Muted ring and dot. Ships at both <code>isSelected</code> values, so a disabled group can render its unselected options."
+      },
+      {
+        "state": "Error",
+        "ios": "yes",
+        "android": "yes",
+        "property": "isError=true",
+        "notes": "Ring and dot switch to <code>#D61B2C</code>. Orthogonal to <code>State</code> — combines with Default and Pressed."
+      },
+      {
+        "state": "Selected — check style",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Style=Check, isSelected=true",
+        "notes": "Filled circle + vector checkmark instead of a dot. For single-select list rows; only meaningful when selected."
+      }
+    ],
+    "resolved": [
+      {
+        "body": "v2.0: Variant matrix restructured into orthogonal axes — <code>Style</code> (Default/Check) × <code>State</code> (Default/Pressed/Disabled) × <code>Size</code> (Large/Medium/Small) × <code>isSelected</code> × <code>isError</code>. <code>selected</code> no longer conflates selection with modifier states, and no property is conditional on another. (C2)"
+      },
+      {
+        "body": "v2.0: Pressed folded into <code>State</code>, error split into an orthogonal <code>isError</code> boolean — removes the illegal <code>Disabled + Pressed</code> combination the old two-axis model allowed, and matches the Button v4.0 / Select Item pattern. (C2/C4)"
+      },
+      {
+        "body": "v2.0: Large radio rebuilt as layered vectors — <code>container</code> → <code>circle</code> (ELLIPSE fill) + <code>ring</code> (ELLIPSE stroke), both on <code>#005CE5</code>. The pre-rendered <code>imgContainer</code> raster is gone, so token changes now propagate to every size. (C3)"
+      },
+      {
+        "body": "v2.0: Misleading <code>.base/checkbox</code> frame renamed — layers are now <code>container</code> / <code>circle</code> / <code>ring</code>. (C6)"
+      },
+      {
+        "body": "v2.0: Pressed state added — <code>State=Pressed</code> covers touch feedback across Default, Check, and error variants (<code>#2340A9</code>). Focused is N/A on mobile: touch has no focus ring. (C5)"
+      },
+      {
+        "body": "v2.0: <code>Disabled</code> + <code>isSelected=false</code> added at all three sizes — a disabled radio group can now render its unselected options, which was previously impossible. (C5)"
+      },
+      {
+        "body": "v2.0: Boolean variant values lowercased to <code>true</code>/<code>false</code>, matching the C2 convention. (C2)"
+      },
+      {
+        "body": "v2.0: Checkmark promoted to a vector icon instance (<code>Checkmark</code> → <code>Grid</code>) rather than a drawn shape. (C6)"
+      },
+      {
+        "body": "v2.0: <code>Disabled</code> deliberately excludes <code>isError</code> — confirmed as an intentional omission, not a gap. A locked control offers the user no path to resolve a validation error, so the combination has no affordance and ships no variants. (C5)"
+      },
+      {
+        "body": "v2.0: <code>Style=Check</code> confirmed as intentional — retained rather than retired, now shipping as a vector icon instance with full Default / Pressed / Disabled coverage. Usage guidance added to disambiguate it from Checkbox. (C6)"
+      }
+    ],
     "open": [
       {
-        "headline": "Sparse variant matrix.",
-        "body": "<code>selected × size × style</code> = 24 theoretical, ~11 valid. The <code>style</code> property is only meaningful when a selection is present, and <code>selected</code> conflates selection with modifier states.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Large radio is raster-baked.",
-        "body": "Every large variant exports the ring+dot as a pre-rendered SVG image (<code>imgContainer</code>). Token changes won't propagate to the large size until this is rebuilt with layered vectors.",
-        "tag": {
-          "criterion": "C3",
-          "label": "C3 · Token Coverage"
-        }
-      },
-      {
-        "headline": "Internal frame named <code>.base/checkbox</code>.",
-        "body": "Misleading layer naming — the small radio nests a frame called <code>.base/checkbox</code> instead of <code>.base/radio</code>.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "Checkmark style is not standard radio iconography.",
-        "body": "Radios use filled dots universally; checkmarks communicate \"checked\" — a checkbox affordance. The <code>style=checkmark</code> variant visually overlaps with Checkbox.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "No pressed or focused states.",
-        "body": "Engineers must improvise these affordances.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until property split (selected/state/size) and large-radio vector rebuild land.",
+        "body": "Previously blocked by the sparse matrix and the raster large radio — both resolved in v2.0. Registration is now unblocked, but the SwiftUI / Compose mappings are not yet wired.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -103,29 +137,41 @@ export const radioButton: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Split properties into orthogonal axes",
-        "body": ":<br>• <code>selected: Bool</code> (true/false) — pure selection state<br>• <code>state: default / disabled / error</code> — modifier state (can combine with selected)<br>• <code>size: small / large</code> — unchanged<br>Eliminates invalid combinations, maps to Swift <code>Bool</code> and native radio APIs.",
+        "headline": "Register Code Connect mapping to <code>EBRadioButton</code>.",
+        "body": "With the orthogonal axes, vector rebuild, and state coverage all shipped, wire the Figma properties (Style, State, Size, isSelected, isError) 1:1 to the SwiftUI / Compose API. Note <code>isSelected</code>/<code>isError</code> are variant enums, so Code Connect maps them via <code>figma.enum()</code> → <code>Bool</code>.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Split properties into orthogonal axes.",
+        "body": "v2.0: Applied — and taken further than proposed. <code>Style</code> × <code>State</code> × <code>Size</code> × <code>isSelected</code> × <code>isError</code>, with pressed folded into <code>State</code> and error split out as its own boolean. No invalid combinations remain.",
         "tag": "Property"
       },
       {
-        "headline": "Retire the checkmark style.",
-        "body": "Pick filled (blue dot) as the single visual style — it's the universally understood radio affordance. The checkmark variant is visually a checkbox and may cause user confusion when placed next to actual checkboxes.",
-        "tag": "Rename"
-      },
-      {
         "headline": "Rebuild the large radio as vector layers.",
-        "body": "Each variant today exports a flat SVG image; convert to a base ring + inner dot, both with token-bound fills. Matches the small radio's structure and lets tokens flow to both sizes.",
+        "body": "v2.0: Applied — every size is now <code>container</code> → <code>circle</code> + <code>ring</code> vector ellipses. Tokens flow to all three sizes.",
         "tag": "Asset"
       },
       {
-        "headline": "Rename internal frame",
-        "body": "<code>.base/checkbox</code> → <code>.base/radio</code>. Minor but signals correct primitive ownership.",
+        "headline": "Rename the internal frame.",
+        "body": "v2.0: Applied — <code>.base/checkbox</code> is gone; layers are <code>container</code> / <code>circle</code> / <code>ring</code>.",
         "tag": "Rename"
       },
       {
-        "headline": "Add pressed + focused states.",
-        "body": "Pressed = darker blue ring/fill; focused = outer 2px focus ring. Documents the interactive affordances native needs to render.",
+        "headline": "Add pressed states.",
+        "body": "v2.0: Applied — <code>State=Pressed</code> maps touch feedback to <code>#2340A9</code>. Focused was dropped as N/A on mobile.",
         "tag": "State"
+      },
+      {
+        "headline": "Document when to use Check vs Default.",
+        "body": "v2.0: Applied — the Check style was reviewed and deliberately retained rather than retired. Usage guidance now disambiguates it from Checkbox: Check for single-select list rows, Default (filled dot) for forms where real Checkboxes appear alongside.",
+        "tag": "Docs"
+      },
+      {
+        "headline": "Record <code>Disabled + isError</code> as an intentional omission.",
+        "body": "v2.0: Applied — reviewed and confirmed deliberate. A locked control offers no path to resolve a validation error, so the combination ships no variants by design.",
+        "tag": "Docs"
       }
     ]
   },
@@ -482,7 +528,20 @@ export const radioButton: ComponentData = {
         "android": "Use <code>semantics { error(...) }</code>"
       }
     ],
-    "usageGuidelines": [],
+    "usageGuidelines": [
+      {
+        "doText": "Use <code>Style=Check</code> for single-select list rows — settings pickers, option lists, and full-width choice rows where the checkmark reads as \"this one is chosen\" (the iOS picker convention).",
+        "dontText": "Don't use <code>Style=Check</code> in a form where real Checkboxes appear alongside it — the two become visually indistinguishable. Use <code>Style=Default</code> (filled dot) there; the dot is the universal single-select affordance."
+      },
+      {
+        "doText": "Use <code>isError=true</code> together with <code>State=Default</code> or <code>Pressed</code> to flag a failed validation the user can still act on.",
+        "dontText": "Don't expect <code>Disabled + isError</code> — it ships no variants by design. A locked control gives the user no way to resolve the error, so surface the message elsewhere (e.g. a Callout or Alert) rather than on the radio."
+      },
+      {
+        "doText": "Pair <code>Size</code> to the surrounding text scale — Large (24) for 18px labels, Medium (20) for 16px, Small (16) for dense lists.",
+        "dontText": "Don't mix sizes within a single radio group — every option in one group should share the same <code>Size</code> and <code>Style</code>."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
@@ -536,107 +595,223 @@ export const radioButton: ComponentData = {
     ],
     "codeConnect": [],
     "variants": {
-      "total": 11,
-      "description": "After the proposed restructure: 2 <code>selected</code> × 3 <code>state</code> × 2 <code>size</code> = 12 well-formed orthogonal variants (no invalid combinations possible).",
+      "total": 39,
+      "description": "<code>Style</code> (2) × <code>State</code> (3) × <code>Size</code> (3) × <code>isSelected</code> (2) × <code>isError</code> (2) = 72 theoretical. 39 ship. <code>Check</code> is only meaningful when selected, and <code>Disabled</code> deliberately excludes <code>isError</code> — a locked control offers no path to resolve the error. Grouped below by Style × State; each row covers all three sizes.",
       "columns": [
-        "selected",
-        "size",
-        "style",
-        "Node ID"
+        "Style",
+        "State",
+        "isSelected",
+        "isError",
+        "Count",
+        "Notes"
       ],
       "rows": [
         {
           "cells": [
-            "unselected",
-            "large",
-            "default",
-            "18482:35699"
+            "Default",
+            "Default",
+            "false",
+            "false",
+            "3",
+            "Empty ring · all sizes"
           ]
         },
         {
           "cells": [
-            "unselected",
-            "small",
-            "default",
-            "18482:35702"
+            "Default",
+            "Default",
+            "true",
+            "false",
+            "3",
+            "Brand ring + dot #005CE5"
           ]
         },
         {
           "cells": [
-            "selected",
-            "large",
-            "filled",
-            "18482:35715"
+            "Default",
+            "Default",
+            "false",
+            "true",
+            "3",
+            "Error ring #D61B2C"
           ]
         },
         {
           "cells": [
-            "selected",
-            "small",
-            "filled",
-            "18482:35718"
+            "Default",
+            "Default",
+            "true",
+            "true",
+            "3",
+            "Error ring + dot"
           ]
         },
         {
           "cells": [
-            "selected",
-            "large",
-            "checkmark",
-            "18482:35721"
+            "Default",
+            "Pressed",
+            "false",
+            "false",
+            "3",
+            "Pressed ring #2340A9"
           ]
         },
         {
           "cells": [
-            "selected",
-            "small",
-            "checkmark",
-            "18482:35724"
+            "Default",
+            "Pressed",
+            "true",
+            "false",
+            "3",
+            "Pressed ring + dot"
           ]
         },
         {
           "cells": [
-            "disabled",
-            "large",
-            "filled",
-            "18482:35704"
+            "Default",
+            "Pressed",
+            "false",
+            "true",
+            "3",
+            "Pressed error ring"
           ]
         },
         {
           "cells": [
-            "disabled",
-            "small",
-            "filled",
-            "18482:35707"
+            "Default",
+            "Pressed",
+            "true",
+            "true",
+            "3",
+            "Pressed error ring + dot"
           ]
         },
         {
           "cells": [
-            "disabled",
-            "large",
-            "checkmark",
-            "18482:35710"
+            "Default",
+            "Disabled",
+            "false",
+            "false",
+            "3",
+            "Muted empty ring"
           ]
         },
         {
           "cells": [
-            "disabled",
-            "small",
-            "checkmark",
-            "18482:35713"
+            "Default",
+            "Disabled",
+            "true",
+            "false",
+            "3",
+            "Muted ring + dot"
           ]
         },
         {
           "cells": [
-            "error",
-            "large",
-            "default",
-            "18482:35726"
+            "Check",
+            "Default",
+            "true",
+            "false",
+            "3",
+            "Brand fill + vector checkmark"
+          ]
+        },
+        {
+          "cells": [
+            "Check",
+            "Pressed",
+            "true",
+            "false",
+            "3",
+            "Pressed fill + checkmark"
+          ]
+        },
+        {
+          "cells": [
+            "Check",
+            "Disabled",
+            "true",
+            "false",
+            "3",
+            "Muted fill + checkmark"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "July 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt · node 26184:2588",
+      "rows": [
+        {
+          "body": "<strong>Component rebuilt on a new node</strong> — 39 variants across <code>Style</code> (Default/Check) × <code>State</code> (Default/Pressed/Disabled) × <code>Size</code> (Large/Medium/Small) × <code>isSelected</code> × <code>isError</code>, replacing the old sparse <code>selected × size × style</code> matrix.\n          <span class=\"tag-fixed\">Restructured</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Rebuild"
+          }
+        },
+        {
+          "body": "<strong>Properties split into orthogonal axes</strong> — pressed folded into <code>State</code>, error split into an orthogonal <code>isError</code> boolean. Removes the illegal <code>Disabled + Pressed</code> combination and aligns with Button v4.0 / Select Item.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 · C4 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Large radio rebuilt as vector layers</strong> — <code>container</code> → <code>circle</code> + <code>ring</code> ellipses on <code>#005CE5</code>. The pre-rendered <code>imgContainer</code> raster is gone; tokens now propagate to all three sizes.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Layer naming fixed + checkmark promoted to an icon</strong> — <code>.base/checkbox</code> replaced by <code>container</code> / <code>circle</code> / <code>ring</code>; the Check style now nests a vector <code>Checkmark</code> icon instance.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Pressed state + disabled-unselected coverage added</strong> — <code>State=Pressed</code> (<code>#2340A9</code>) covers touch feedback, and <code>Disabled + isSelected=false</code> now exists at all sizes so disabled groups can render unselected options. Focused dropped as N/A on mobile.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Boolean variant values lowercased</strong> — <code>True</code>/<code>False</code> → <code>true</code>/<code>false</code>, matching the C2 convention. Radio Button is now the reference for boolean vocabulary in the system.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Check + Pressed mislabel corrected</strong> — three Check variants were relabelled <code>isError=true</code> while still painted pressed-navy, which also removed Check's pressed state. Renamed back to <code>State=Pressed, isError=false</code>; label and paint now agree.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5 Resolved"
+          }
+        },
+        {
+          "body": "<strong><code>Disabled + isError=true</code> not covered</strong> — 9 slots absent. Likely intentional, but undocumented. Confirm and record.\n          <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C5 Open"
+          }
+        },
+        {
+          "body": "<strong>Code Connect mappings</strong> — now unblocked by the rebuild; SwiftUI / Compose mappings not yet registered.\n          <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7 Open"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

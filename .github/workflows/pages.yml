@@ -1,0 +1,71 @@
+name: Deploy to GitHub Pages
+
+# Publishes the static site to https://darrr-des.github.io/east-blue-design-system/
+#
+# NOTE: this site is PUBLIC. GitHub Pages sites are world-readable even when
+# the source repository is private (private Pages requires Enterprise Cloud).
+# PUBLIC_AUTH_DISABLED bypasses the Google OAuth gate, because the auth backend
+# is not reachable from the github.io origin — without it every page would
+# redirect to /login forever.
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Allow one concurrent deployment; let an in-progress run finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: astro-site/package-lock.json
+
+      - name: Install dependencies
+        working-directory: astro-site
+        run: npm ci
+
+      - name: Build
+        working-directory: astro-site
+        env:
+          # Project site is served from a subpath, not the domain root.
+          PUBLIC_BASE_PATH: /east-blue-design-system/
+          PUBLIC_SITE_URL: https://darrr-des.github.io
+          # No auth backend on this origin — bypass the gate.
+          PUBLIC_AUTH_DISABLED: 'true'
+        run: npm run build
+
+      # NOTE: Pages "Source" must be set to GitHub Actions in repo Settings.
+      # While it is "Deploy from a branch", GitHub also runs its built-in
+      # "pages build and deployment" workflow, which publishes the raw repo
+      # (no index.html at the root) and wins the race against this deploy.
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: astro-site/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

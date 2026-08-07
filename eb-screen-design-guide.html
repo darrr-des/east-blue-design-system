@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Screen Design Guide — GCash Revamp</title>
+<style>
+  /* Compact standalone style so this file is readable on its own.
+     The real site styling comes from eb-screen-design-guide.astro, which
+     extracts just the page body and re-skins it. */
+  :root { --ink:#0A2757; --muted:#5B6B82; --blue:#005CE5; --line:#E4E8EE; --card:#F1F1F4; }
+  body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; color:#2B3950; max-width:860px; margin:0 auto; padding:40px 24px 80px; line-height:1.65; }
+  h1,h2,h3 { color:var(--ink); line-height:1.2; }
+  table { width:100%; border-collapse:collapse; font-size:14px; margin:12px 0 20px; }
+  th { text-align:left; background:#F6F8FB; padding:10px 14px; font-size:12px; text-transform:uppercase; letter-spacing:.02em; color:#3C4A5C; }
+  td { padding:11px 14px; border-top:1px solid var(--line); vertical-align:top; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px; background:var(--card); padding:1px 5px; border-radius:4px; }
+  .table-wrap { border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  .table-wrap table { margin:0; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; font-weight:600; }
+  .badge-keep { color:#1A7A4A; background:#E6F4ED; } .badge-fix { color:#B45309; background:#FEF3C7; }
+  .badge-restructure { color:#9333EA; background:#F3E8FF; } .badge-rework { color:#991B1B; background:#FEE2E2; }
+  .infobox { border-radius:12px; padding:14px 16px; font-size:13px; margin:16px 0; background:#EEF3FB; border:1px solid #D7E2F4; }
+  .step-card, .dep-card { background:var(--card); border-radius:12px; padding:18px 20px; margin-bottom:12px; }
+  .dep-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .footer { border-top:1px solid var(--line); margin-top:56px; padding-top:20px; font-size:12px; color:var(--muted); text-align:center; }
+
+  /* Visuals — literal colors for standalone view (the Astro page restyles theme-aware) */
+  .viz { margin:4px 0 22px; } .viz-cap { font-size:12px; color:var(--muted); margin-top:10px; text-align:center; }
+  .viz-phone { width:200px; height:400px; margin:0 auto; border:2px solid var(--line); border-radius:28px; background:#fff; padding:6px; display:flex; flex-direction:column; gap:4px; overflow:hidden; position:relative; }
+  .viz-region { display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:600; border-radius:6px; text-align:center; }
+  .viz-r-status { height:16px; background:var(--card); } .viz-r-header { height:34px; background:#EAF1FE; color:var(--blue); }
+  .viz-r-content { flex:1; background:var(--card); color:var(--muted); } .viz-r-dock { height:40px; background:var(--blue); color:#fff; } .viz-r-home { height:14px; background:var(--card); }
+  .viz-phone-frame { justify-content:space-between; }
+  .viz-safe { height:34px; border-radius:6px; background:#EAF1FE; color:var(--blue); display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:600; }
+  .viz-frame-body { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; }
+  .viz-dim { font-family:monospace; font-size:13px; font-weight:600; color:var(--ink); } .viz-margin-lbl { font-size:10px; color:var(--muted); }
+  .viz-margin { position:absolute; top:46px; bottom:46px; border-left:1px dashed var(--blue); } .viz-margin-l { left:18px; } .viz-margin-r { right:18px; }
+  .viz-phone-grid { flex-direction:row; gap:0; } .viz-grid-margin { width:20px; background:rgba(224,69,123,.12); }
+  .viz-grid-margin-l { border-right:1px dashed #E0457B; } .viz-grid-margin-r { border-left:1px dashed #E0457B; }
+  .viz-grid-col { flex:1; margin:0 4px; border-radius:6px; background:#EAF1FE; color:var(--blue); display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:600; text-align:center; }
+  .viz-spacing { display:flex; flex-direction:column; gap:9px; padding:4px 0; } .viz-sp-row { display:flex; align-items:center; gap:12px; }
+  .viz-sp-token { font-family:monospace; font-size:11px; color:var(--muted); width:64px; flex-shrink:0; }
+  .viz-sp-bar { height:14px; background:var(--blue); border-radius:3px; flex-shrink:0; opacity:.55; } .viz-sp-bar-key { opacity:1; } .viz-sp-val { font-family:monospace; font-size:11px; color:var(--ink); }
+  .viz-headers { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; } .viz-hd figcaption { font-size:11px; color:var(--muted); text-align:center; margin-top:8px; }
+  .viz-hd-mock { border:1px solid var(--line); border-radius:8px; background:#fff; padding:8px 10px; height:56px; display:flex; align-items:center; }
+  .viz-hd-titlebar { justify-content:space-between; } .viz-hd-ico { color:var(--muted); font-size:15px; } .viz-hd-title { font-weight:600; font-size:12px; color:var(--ink); }
+  .viz-hd-hero { height:72px; align-items:flex-end; } .viz-hd-bigtitle { font-size:18px; font-weight:600; color:var(--ink); }
+  .viz-hd-section { height:40px; } .viz-hd-seclabel { font-size:11px; font-weight:700; color:var(--ink); text-transform:uppercase; letter-spacing:.05em; }
+  .viz-hd-txn { justify-content:center; gap:8px; height:64px; } .viz-hd-avatar { width:24px; height:24px; border-radius:50%; background:#EAF1FE; } .viz-hd-amount { font-size:18px; font-weight:700; color:var(--blue); }
+  .viz-type { display:flex; flex-direction:column; gap:8px; padding:4px 0; } .viz-ty-row { display:flex; align-items:baseline; justify-content:space-between; gap:16px; border-bottom:1px solid var(--line); padding-bottom:8px; }
+  .viz-ty-row:last-child { border-bottom:0; } .viz-ty-spec { color:var(--ink); font-weight:600; line-height:1.15; } .viz-ty-meta { font-family:monospace; font-size:11px; color:var(--muted); white-space:nowrap; }
+  .viz-ty-28 { font-size:28px; } .viz-ty-20 { font-size:20px; } .viz-ty-18 { font-size:18px; } .viz-ty-16 { font-size:16px; } .viz-ty-14 { font-size:14px; } .viz-ty-12 { font-size:12px; }
+  .viz-btns { display:flex; flex-wrap:wrap; gap:10px; align-items:center; padding:4px 0; }
+  .viz-btn { display:inline-flex; align-items:center; justify-content:center; border-radius:99px; font-weight:700; font-size:13px; padding:0 20px; height:44px; white-space:nowrap; }
+  .viz-btn-filled { background:var(--blue); color:#fff; } .viz-btn-outline { background:transparent; color:var(--blue); border:1.5px solid var(--blue); } .viz-btn-text { background:transparent; color:var(--blue); }
+  .viz-btns-ladder { align-items:flex-end; } .viz-bh-50 { height:50px; } .viz-bh-48 { height:48px; } .viz-bh-36 { height:36px; font-size:12px; } .viz-bh-28 { height:28px; font-size:11px; padding:0 14px; } .viz-bh-24 { height:24px; font-size:10px; padding:0 12px; }
+  .viz-swatches { display:flex; flex-wrap:wrap; gap:16px; padding:4px 0; } .viz-sw { display:flex; align-items:center; gap:8px; }
+  .viz-sw-dot { width:28px; height:28px; border-radius:8px; border:1px solid var(--line); flex-shrink:0; } .viz-sw-lbl { font-family:monospace; font-size:11px; color:var(--ink); }
+  .viz-sw-default { background:#fff; } .viz-sw-content { background:var(--card); } .viz-sw-pressed { background:var(--line); } .viz-sw-disabled { background:var(--card); opacity:.5; } .viz-sw-brand { background:#005CE5; border-color:#005CE5; } .viz-sw-brandp { background:#2340A9; border-color:#2340A9; }
+  .viz-target-row { display:flex; align-items:center; gap:32px; flex-wrap:wrap; padding:8px 0 4px; }
+  .viz-target { width:44px; height:44px; border:1.5px dashed var(--blue); border-radius:8px; display:flex; align-items:center; justify-content:center; position:relative; flex-shrink:0; }
+  .viz-target-icon { width:24px; height:24px; border-radius:6px; background:#EAF1FE; } .viz-target-lbl { position:absolute; bottom:-18px; left:50%; transform:translateX(-50%); font-size:10px; color:var(--muted); font-family:monospace; }
+  .viz-states { display:flex; gap:8px; flex-wrap:wrap; } .viz-state-chip { font-size:12px; font-weight:600; padding:4px 12px; border-radius:99px; }
+  .viz-state-default { background:var(--blue); color:#fff; } .viz-state-pressed { background:#2340A9; color:#fff; } .viz-state-disabled { background:var(--card); color:var(--muted); }
+  .viz-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:8px 0 4px; }
+  .viz-stat { background:#EAF1FE; border-radius:12px; padding:16px 12px; text-align:center; }
+  .viz-stat-num { display:block; font-size:23px; font-weight:700; color:var(--blue); line-height:1.1; } .viz-stat-lbl { display:block; font-size:11px; color:var(--muted); margin-top:6px; font-weight:600; }
+  .rule { display:flex; align-items:center; gap:10px; background:#fff; border:1px solid var(--line); border-left:3px solid var(--blue); border-radius:8px; padding:11px 16px; margin:0 0 16px; font-size:14px; font-weight:600; color:var(--ink); }
+  .rule::before { content:"✓"; display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:50%; background:var(--blue); color:#fff; font-size:11px; flex-shrink:0; }
+  .viz-dodont { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:4px 0 20px; }
+  .dd { border-radius:12px; padding:16px; border:1px solid var(--line); } .dd-do { background:rgba(26,122,74,.10); border-color:rgba(26,122,74,.30); } .dd-dont { background:rgba(185,28,28,.10); border-color:rgba(185,28,28,.30); }
+  .dd-tag { font-size:12px; font-weight:700; margin-bottom:12px; } .dd-do .dd-tag { color:#1A7A4A; } .dd-dont .dd-tag { color:#B91C1C; }
+  .dd-body { font-size:13px; color:var(--muted); line-height:1.55; margin-top:10px; } .dd-body strong { color:var(--ink); font-weight:600; }
+</style>
+</head>
+<body>
+<main class="main">
+<a class="back-btn" href="/">Overview</a>
+<div class="content-wrap">
+
+  <div class="cover">
+    <div class="cover-eyebrow">East Blue Design System</div>
+    <div class="cover-title">Screen Design Guide — GCash Revamp</div>
+    <div class="cover-subtitle">How to lay out a new GCash screen. The standard regions of a screen, the frame and safe areas, the spacing and type scale, which buttons to use, and the exact Figma setup. Component specs are grounded in the East Blue assessments; foundations follow iOS / Android / Material best practice.</div>
+  </div>
+
+  <!-- ───────────────────────────── 0. AT A GLANCE ───────────────────────────── -->
+  <section class="page-section" id="glance">
+    <h2 class="section-heading">At a Glance</h2>
+    <p class="section-desc">The numbers behind every screen. If you remember nothing else, remember these.</p>
+    <div class="viz-stats">
+      <div class="viz-stat"><span class="viz-stat-num">390×844</span><span class="viz-stat-lbl">Design frame</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">16px</span><span class="viz-stat-lbl">Side margins</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">4px</span><span class="viz-stat-lbl">Spacing base unit</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">16px</span><span class="viz-stat-lbl">Default block gap</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">50px</span><span class="viz-stat-lbl">Default button</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">44pt</span><span class="viz-stat-lbl">Min touch target</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">16px</span><span class="viz-stat-lbl">Base text size</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">1</span><span class="viz-stat-lbl">Primary button / screen</span></div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────── 1. ANATOMY ───────────────────────────── -->
+  <section class="page-section" id="anatomy">
+    <h2 class="section-heading">1 · Anatomy of a Screen</h2>
+    <p class="section-desc">Every GCash screen is built from the same five vertical regions, top to bottom. Designing a new screen starts by placing these regions, then filling the content area with DS components.</p>
+    <div class="viz viz-anatomy">
+      <div class="viz-phone">
+        <div class="viz-region viz-r-status"><span>Status bar</span></div>
+        <div class="viz-region viz-r-header"><span>Header · 56px</span></div>
+        <div class="viz-region viz-r-content"><span>Content area (scrolls)</span></div>
+        <div class="viz-region viz-r-dock"><span>Action dock</span></div>
+        <div class="viz-region viz-r-home"><span>Home indicator</span></div>
+      </div>
+      <p class="viz-cap">The five stacked regions of every screen, top to bottom.</p>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Region</th><th>Height</th><th>What it holds</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Status bar</strong></td><td class="mono">44–54px (iOS) · 24–28dp (Android)</td><td>OS-owned. Time, signal, battery. Never draw content here — it sits inside the top safe area.</td></tr>
+        <tr><td><strong>App bar / Header</strong></td><td class="mono">56px standard · up to 96px hero</td><td>Screen title, back / close, and up to two trailing actions. Use the <strong>Header</strong> family. One header per screen.</td></tr>
+        <tr><td><strong>Content area</strong></td><td class="mono">Fills remaining height (scrolls)</td><td>The scrollable body — lists, cards, fields, sections. Side margins <code>16px</code>. This is where most of the design happens.</td></tr>
+        <tr><td><strong>Action dock</strong></td><td class="mono">Button height + <code>16px</code> padding</td><td>Optional. Pinned primary CTA at the bottom. Sits above the home indicator on a <code>surface/default</code> bar, often with a top hairline or shadow.</td></tr>
+        <tr><td><strong>Home indicator / nav bar</strong></td><td class="mono">34px (iOS) · 48dp (Android)</td><td>OS-owned bottom safe area. Keep tappable content clear of it; the action dock pads above it.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="infobox">Rule of thumb: <strong>one header, one primary action, one scroll region.</strong> If a screen needs two primary actions or two scroll areas, it's usually two screens.</div>
+  </section>
+
+  <!-- ───────────────────────────── 2. FRAME ───────────────────────────── -->
+  <section class="page-section" id="frame">
+    <h2 class="section-heading">2 · Frame &amp; Safe Areas</h2>
+    <p class="section-desc">Design at one baseline device, then verify the small and large bounds. GCash is portrait-only.</p>
+    <div class="viz viz-frame">
+      <div class="viz-phone viz-phone-frame">
+        <div class="viz-safe viz-safe-top"><span>top safe area</span></div>
+        <div class="viz-margin viz-margin-l"></div>
+        <div class="viz-margin viz-margin-r"></div>
+        <div class="viz-frame-body"><span class="viz-dim">390 × 844</span><span class="viz-margin-lbl">16px margins</span></div>
+        <div class="viz-safe viz-safe-bottom"><span>bottom safe area</span></div>
+      </div>
+      <p class="viz-cap">Baseline frame with safe-area insets and 16px side margins (dashed).</p>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Setting</th><th>Value</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Baseline frame</strong></td><td class="mono">390 × 844</td><td>iPhone 14 / 13. Design here first.</td></tr>
+        <tr><td><strong>Small bound</strong></td><td class="mono">360 × 640</td><td>Smallest common Android. Check nothing clips or wraps badly.</td></tr>
+        <tr><td><strong>Large bound</strong></td><td class="mono">430 × 932</td><td>iPhone Pro Max. Content should grow, not stretch.</td></tr>
+        <tr><td><strong>Side margins</strong></td><td class="mono">16px</td><td>The default content inset on both edges. Full-bleed media may go edge-to-edge.</td></tr>
+        <tr><td><strong>Top safe area</strong></td><td class="mono">≈ 47px</td><td>Header sits below this. Use Figma's device frame to visualize.</td></tr>
+        <tr><td><strong>Bottom safe area</strong></td><td class="mono">≈ 34px</td><td>Action dock and floating elements pad above this.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ───────────────────────────── 3. SPACING ───────────────────────────── -->
+  <section class="page-section" id="spacing">
+    <h2 class="section-heading">3 · Layout Grid &amp; Spacing</h2>
+    <p class="section-desc">All spacing comes from the <code>space/space-*</code> token scale — a 4px base unit.</p>
+    <div class="rule">Pick a token. Never type a raw number.</div>
+    <div class="viz viz-spacing">
+      <div class="viz-sp-row"><span class="viz-sp-token">space-4</span><span class="viz-sp-bar" style="width:8px"></span><span class="viz-sp-val">4</span></div>
+      <div class="viz-sp-row"><span class="viz-sp-token">space-8</span><span class="viz-sp-bar" style="width:16px"></span><span class="viz-sp-val">8</span></div>
+      <div class="viz-sp-row"><span class="viz-sp-token">space-12</span><span class="viz-sp-bar" style="width:24px"></span><span class="viz-sp-val">12</span></div>
+      <div class="viz-sp-row"><span class="viz-sp-token">space-16</span><span class="viz-sp-bar viz-sp-bar-key" style="width:32px"></span><span class="viz-sp-val">16 · default</span></div>
+      <div class="viz-sp-row"><span class="viz-sp-token">space-24</span><span class="viz-sp-bar" style="width:48px"></span><span class="viz-sp-val">24</span></div>
+      <div class="viz-sp-row"><span class="viz-sp-token">space-32</span><span class="viz-sp-bar" style="width:64px"></span><span class="viz-sp-val">32</span></div>
+      <div class="viz-sp-row"><span class="viz-sp-token">space-48</span><span class="viz-sp-bar" style="width:96px"></span><span class="viz-sp-val">48</span></div>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Token</th><th>Value</th><th>Typical use</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">space-4</td><td class="mono">4px</td><td>Icon-to-label, tight inline gaps.</td></tr>
+        <tr><td class="mono">space-8</td><td class="mono">8px</td><td>Within a component — chip padding, stacked label + caption.</td></tr>
+        <tr><td class="mono">space-12</td><td class="mono">12px</td><td>List row padding, gap between related fields.</td></tr>
+        <tr><td class="mono">space-16</td><td class="mono">16px</td><td><strong>The default.</strong> Side margins, gap between cards, section inset.</td></tr>
+        <tr><td class="mono">space-20 / 24</td><td class="mono">20 / 24px</td><td>Gap between distinct content blocks.</td></tr>
+        <tr><td class="mono">space-32 / 48</td><td class="mono">32 / 48px</td><td>Gap between major sections, above a section header.</td></tr>
+      </tbody>
+    </table></div>
+    <p>Available steps: <code>0 · 2 · 4 · 6 · 8 · 10 · 12 · 16 · 20 · 24 · 28 · 32 · 36 · 48 · 56</code>.</p>
+    <div class="viz-dodont">
+      <div class="dd dd-do"><div class="dd-tag">✓ Do</div><div class="dd-body">Gaps on the scale — <strong>8 · 16 · 24 · 32</strong>. Every value is a token.</div></div>
+      <div class="dd dd-dont"><div class="dd-tag">✗ Don't</div><div class="dd-body">Eyeballed values — <strong>15 · 18 · 23</strong>. Off-grid, no token, drifts over time.</div></div>
+    </div>
+    <div class="infobox"><strong>Min / max.</strong> Min gap between tappable elements: <code>space-8</code>. Default block rhythm: <code>space-16</code>. Beyond <code>space-48</code> you usually want a divider or a new section, not more whitespace.</div>
+  </section>
+
+  <!-- ───────────────────────────── 4. HEADERS ───────────────────────────── -->
+  <section class="page-section" id="headers">
+    <h2 class="section-heading">4 · Headers</h2>
+    <p class="section-desc">The East Blue <strong>Header</strong> assessment found four distinct header roles collapsed into look-alike components. Use the right one for the job; don't mix roles on one screen.</p>
+    <div class="viz viz-headers">
+      <figure class="viz-hd">
+        <div class="viz-hd-mock viz-hd-titlebar"><span class="viz-hd-ico">‹</span><span class="viz-hd-title">Title</span><span class="viz-hd-ico">⋯</span></div>
+        <figcaption>Title bar · 56px</figcaption>
+      </figure>
+      <figure class="viz-hd">
+        <div class="viz-hd-mock viz-hd-hero"><span class="viz-hd-bigtitle">Large Title</span></div>
+        <figcaption>Hero · 88–96px</figcaption>
+      </figure>
+      <figure class="viz-hd">
+        <div class="viz-hd-mock viz-hd-section"><span class="viz-hd-seclabel">Section label</span></div>
+        <figcaption>Section header</figcaption>
+      </figure>
+      <figure class="viz-hd">
+        <div class="viz-hd-mock viz-hd-txn"><span class="viz-hd-avatar"></span><span class="viz-hd-amount">₱1,250</span></div>
+        <figcaption>Transaction hero</figcaption>
+      </figure>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Header type</th><th>Height</th><th>Title style</th><th>When to use</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Title bar</strong> (app bar)</td><td class="mono">56px</td><td class="mono">Heading / 18–20</td><td>Default for almost every screen. Back / close on the left, title centered or leading, up to 2 trailing actions.</td></tr>
+        <tr><td><strong>Large-title hero</strong></td><td class="mono">88–96px</td><td class="mono">Display / 24–28</td><td>Top-level destinations (Home, a hub). Bigger title that collapses to a title bar on scroll.</td></tr>
+        <tr><td><strong>Section header</strong></td><td class="mono">Auto + <code>space-32</code> above</td><td class="mono">Heading / 16</td><td>Inside the content area to label a group. Not an app bar — no back button.</td></tr>
+        <tr><td><strong>Transaction / detail hero</strong></td><td class="mono">Auto</td><td class="mono">Display + amount</td><td>Receipt and detail screens — avatar, title, amount, divider. A card hero, not a navigation bar.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="infobox">Header title type uses the <strong>BarkAda / heading font</strong>; body and labels use <strong>Proxima Soft</strong>. Keep titles to one line — truncate with ellipsis rather than wrapping.</div>
+  </section>
+
+  <!-- ───────────────────────────── 5. TYPOGRAPHY ───────────────────────────── -->
+  <section class="page-section" id="type">
+    <h2 class="section-heading">5 · Typography</h2>
+    <p class="section-desc">The label scale below is the one shipped on the Button and shared across components.</p>
+    <div class="rule">Every text layer gets a named style — never a loose size.</div>
+    <div class="viz viz-type">
+      <div class="viz-ty-row"><span class="viz-ty-spec viz-ty-28">Screen title</span><span class="viz-ty-meta">28px · Display</span></div>
+      <div class="viz-ty-row"><span class="viz-ty-spec viz-ty-20">Section heading</span><span class="viz-ty-meta">20px · Heading</span></div>
+      <div class="viz-ty-row"><span class="viz-ty-spec viz-ty-18">Primary label</span><span class="viz-ty-meta">18px · Label/Large</span></div>
+      <div class="viz-ty-row"><span class="viz-ty-spec viz-ty-16">Default body text</span><span class="viz-ty-meta">16px · Label/Base</span></div>
+      <div class="viz-ty-row"><span class="viz-ty-spec viz-ty-14">Supporting text</span><span class="viz-ty-meta">14px · Label/Small</span></div>
+      <div class="viz-ty-row"><span class="viz-ty-spec viz-ty-12">Fine print</span><span class="viz-ty-meta">12px · Label/Fine</span></div>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Role</th><th>Text style</th><th>Size</th><th>Used for</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Screen title</strong></td><td class="mono">Display / Heading</td><td class="mono">24–28px</td><td>Hero header titles. Heading font.</td></tr>
+        <tr><td><strong>Section heading</strong></td><td class="mono">Heading</td><td class="mono">18–20px</td><td>Title bar, section labels.</td></tr>
+        <tr><td><strong>Body / primary label</strong></td><td class="mono">Primary/Label/Large</td><td class="mono">18px</td><td>Primary actions, list titles.</td></tr>
+        <tr><td><strong>Default text</strong></td><td class="mono">Primary/Label/Base</td><td class="mono">16px</td><td>Body copy, field labels, most UI text.</td></tr>
+        <tr><td><strong>Small / supporting</strong></td><td class="mono">Primary/Label/Small</td><td class="mono">14px</td><td>Captions, secondary lines, helper text.</td></tr>
+        <tr><td><strong>Fine print</strong></td><td class="mono">Primary/Label/Fine</td><td class="mono">12px</td><td>Legal, timestamps, badge text.</td></tr>
+      </tbody>
+    </table></div>
+    <p>Body font is <code>Proxima Soft</code>; headings use the brand heading face. Minimum on-screen text size is <strong>12px</strong> — never smaller.</p>
+  </section>
+
+  <!-- ───────────────────────────── 6. BUTTONS ───────────────────────────── -->
+  <section class="page-section" id="buttons">
+    <h2 class="section-heading">6 · Buttons — which to use</h2>
+    <p class="section-desc">Three styles, one decision tree. Everything steps down from the main action.</p>
+    <div class="rule">Exactly one Filled button per screen.</div>
+    <div class="viz viz-btns">
+      <span class="viz-btn viz-btn-filled">Filled · primary</span>
+      <span class="viz-btn viz-btn-outline">Outline · secondary</span>
+      <span class="viz-btn viz-btn-text">Text · tertiary</span>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Style</th><th>API</th><th>Use for</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Filled</strong> (primary)</td><td class="mono">EBButton</td><td>The single main action — Continue, Send, Confirm. Brand blue <code>#005CE5</code>.</td></tr>
+        <tr><td><strong>Outline</strong> (secondary)</td><td class="mono">EBOutlinedButton</td><td>Secondary action paired with a primary — Cancel, Back, Maybe later.</td></tr>
+        <tr><td><strong>Text</strong> (tertiary)</td><td class="mono">EBTextButton</td><td>Low-emphasis / inline actions — Skip, Learn more, See all.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="viz-dodont">
+      <div class="dd dd-do">
+        <div class="dd-tag">✓ Do</div>
+        <div class="viz-btns"><span class="viz-btn viz-btn-filled">Continue</span><span class="viz-btn viz-btn-outline">Cancel</span></div>
+        <div class="dd-body">One Filled primary + one Outline secondary. Clear hierarchy.</div>
+      </div>
+      <div class="dd dd-dont">
+        <div class="dd-tag">✗ Don't</div>
+        <div class="viz-btns"><span class="viz-btn viz-btn-filled">Save</span><span class="viz-btn viz-btn-filled">Send</span></div>
+        <div class="dd-body">Two Filled buttons compete — the user can't tell what's primary.</div>
+      </div>
+    </div>
+
+    <h3 class="sub-heading">Size ladder</h3>
+    <p class="section-desc"><strong>Large</strong> is the default for the GCash app — it's what fills the action dock. Smaller sizes are for inline and dense contexts.</p>
+    <div class="viz viz-btns viz-btns-ladder">
+      <span class="viz-btn viz-btn-filled viz-bh-50">Large</span>
+      <span class="viz-btn viz-btn-filled viz-bh-48">Medium</span>
+      <span class="viz-btn viz-btn-filled viz-bh-36">Small</span>
+      <span class="viz-btn viz-btn-filled viz-bh-28">Compact</span>
+      <span class="viz-btn viz-btn-filled viz-bh-24">XSmall</span>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Size</th><th>Height</th><th>Padding H / V</th><th>Text style</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Large</strong> (default)</td><td class="mono">50px</td><td class="mono">20 / 16</td><td class="mono">Primary/Label/Large · 18px</td></tr>
+        <tr><td>Medium</td><td class="mono">48px</td><td class="mono">16 / 12</td><td class="mono">Primary/Label/Base · 16px</td></tr>
+        <tr><td>Small</td><td class="mono">36px</td><td class="mono">12 / 8</td><td class="mono">Primary/Label/Base · 16px</td></tr>
+        <tr><td>Compact</td><td class="mono">28px</td><td class="mono">12 / 5</td><td class="mono">Primary/Label/Small · 14px</td></tr>
+        <tr><td>XSmall</td><td class="mono">24px</td><td class="mono">10 / 4</td><td class="mono">Primary/Label/Fine · 12px</td></tr>
+      </tbody>
+    </table></div>
+    <p>All sizes: pill radius <code>99px</code>, font <code>Proxima Soft Bold</code>, tracking <code>0.25px</code>. Use the <strong>Destructive</strong> appearance for irreversible actions (delete, remove); <strong>White</strong> / <strong>Subtle</strong> appearances are for colored or media backgrounds.</p>
+    <div class="infobox"><strong>Docked CTA pattern.</strong> When a screen has one clear action, pin a <strong>Large Filled</strong> button full-width in the action dock: button height + <code>16px</code> padding on all sides, on a <code>surface/default</code> bar above the home indicator. Pair with an Outline button stacked above or beside it when a secondary action is needed.</div>
+  </section>
+
+  <!-- ───────────────────────────── 7. COLOR & SURFACES ───────────────────────────── -->
+  <section class="page-section" id="color">
+    <h2 class="section-heading">7 · Color &amp; Surfaces</h2>
+    <p class="section-desc">Screens are built on the surface scale; intent colors carry meaning.</p>
+    <div class="rule">Every color resolves to a token — no raw hex.</div>
+    <div class="viz viz-swatches">
+      <div class="viz-sw"><span class="viz-sw-dot viz-sw-default"></span><span class="viz-sw-lbl">surface/default</span></div>
+      <div class="viz-sw"><span class="viz-sw-dot viz-sw-content"></span><span class="viz-sw-lbl">surface/content</span></div>
+      <div class="viz-sw"><span class="viz-sw-dot viz-sw-pressed"></span><span class="viz-sw-lbl">surface/pressed</span></div>
+      <div class="viz-sw"><span class="viz-sw-dot viz-sw-disabled"></span><span class="viz-sw-lbl">surface/disabled</span></div>
+      <div class="viz-sw"><span class="viz-sw-dot viz-sw-brand"></span><span class="viz-sw-lbl">brand · #005CE5</span></div>
+      <div class="viz-sw"><span class="viz-sw-dot viz-sw-brandp"></span><span class="viz-sw-lbl">pressed · #2340A9</span></div>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Role</th><th>Token</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Page background</strong></td><td class="mono">surface/default</td><td>The base canvas of the screen.</td></tr>
+        <tr><td><strong>Card / content surface</strong></td><td class="mono">surface/content</td><td>Raised cards, sheets, grouped rows.</td></tr>
+        <tr><td><strong>Pressed surface</strong></td><td class="mono">surface/pressed</td><td>Tap feedback on rows and tiles.</td></tr>
+        <tr><td><strong>Disabled surface</strong></td><td class="mono">surface/disabled</td><td>Inactive controls.</td></tr>
+        <tr><td><strong>Brand</strong></td><td class="mono">#005CE5</td><td>Primary actions, links, selected states. Pressed → <code>#2340A9</code>.</td></tr>
+      </tbody>
+    </table></div>
+    <p>Intent colors (Information, Positive, Notice, Negative) come from the Badge / Alert palettes — use them for status, never for decoration. Radius scale: <code>radius-1 → radius-4</code> for cards (≈ 4–16px), <code>radius-round</code> (pill) for buttons and chips.</p>
+  </section>
+
+  <!-- ───────────────────────────── 8. TOUCH & STATES ───────────────────────────── -->
+  <section class="page-section" id="states">
+    <h2 class="section-heading">8 · Touch Targets &amp; States</h2>
+    <p class="section-desc">Native readiness depends on real interaction states. A screen built only in its resting state is incomplete.</p>
+    <div class="viz viz-target-row">
+      <div class="viz-target"><span class="viz-target-icon"></span><span class="viz-target-lbl">44pt</span></div>
+      <div class="viz-states">
+        <span class="viz-state-chip viz-state-default">Default</span>
+        <span class="viz-state-chip viz-state-pressed">Pressed</span>
+        <span class="viz-state-chip viz-state-disabled">Disabled</span>
+      </div>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Rule</th><th>Spec</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Minimum touch target</strong></td><td class="mono">44 × 44pt (iOS) · 48 × 48dp (Android)</td></tr>
+        <tr><td><strong>Min gap between targets</strong></td><td class="mono">8px (space-8)</td></tr>
+        <tr><td><strong>Required states per control</strong></td><td>Default · Pressed · Disabled (+ Selected / Error where relevant)</td></tr>
+        <tr><td><strong>Focus / loading</strong></td><td>Model loading as a skeleton or spinner state, not a blank gap</td></tr>
+      </tbody>
+    </table></div>
+    <div class="infobox">A control smaller than the minimum target (e.g. a 24px icon button) still needs a <strong>44pt hit area</strong> — pad the tappable region even if the glyph is small.</div>
+  </section>
+
+  <!-- ───────────────────────────── 9. FIGMA SETUP ───────────────────────────── -->
+  <section class="page-section" id="figma">
+    <h2 class="section-heading">9 · Figma Setup Spec</h2>
+    <p class="section-desc">The exact settings for a new screen frame in Figma so it stays on-system and hands off cleanly to native.</p>
+    <div class="viz viz-frame">
+      <div class="viz-phone viz-phone-grid">
+        <div class="viz-grid-margin viz-grid-margin-l"></div>
+        <div class="viz-grid-col"><span>1 stretch column</span></div>
+        <div class="viz-grid-margin viz-grid-margin-r"></div>
+      </div>
+      <p class="viz-cap">Layout grid: one stretch column, 16px margins (highlighted).</p>
+    </div>
+    <div class="dep-grid">
+      <div class="dep-card">
+        <div class="dep-label">Frame</div>
+        <div class="dep-title">390 × 844, Auto&nbsp;layout vertical</div>
+        <div class="dep-desc">Top-to-bottom auto layout. Header pinned top, action dock pinned bottom, content set to <em>Fill</em> and scroll. Use a device frame to show safe areas.</div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-label">Layout grid</div>
+        <div class="dep-title">16px margins, 4px baseline</div>
+        <div class="dep-desc">Add a column grid: <code>1 stretch column, 16px margins</code>. Optionally a 4px row grid to keep vertical spacing on the <code>space-*</code> scale.</div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-label">Spacing</div>
+        <div class="dep-title">Tokens only</div>
+        <div class="dep-desc">Set every auto-layout gap and padding from <code>space/space-*</code> variables — not typed numbers. Default gap <code>space-16</code>.</div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-label">Color &amp; type</div>
+        <div class="dep-title">Bound variables &amp; styles</div>
+        <div class="dep-desc">Fills bound to <code>surface/*</code> and brand variables; every text layer assigned a named text style. No raw hex, no loose sizes.</div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-label">Composition</div>
+        <div class="dep-title">Instances, not redraws</div>
+        <div class="dep-desc">Build from DS component instances (Header, Button, List Item, Field…). Don't redraw a component on the canvas — instance-swap and use slots.</div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-label">Naming</div>
+        <div class="dep-title">Semantic layer names</div>
+        <div class="dep-desc">Name frames by role (<code>header</code>, <code>content</code>, <code>action-dock</code>) — never <code>Frame 42</code> / <code>Group 7</code>. Clean names map straight to native code.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────── 10. CHECKLIST ───────────────────────────── -->
+  <section class="page-section" id="checklist">
+    <h2 class="section-heading">10 · Screen-Build Checklist</h2>
+    <div class="step-card">
+      <div class="step-label">Step 1</div>
+      <div class="step-title">Place the regions</div>
+      <div class="step-body">390×844 frame, vertical auto layout. Drop in the header, the scrollable content area, and (if needed) the action dock.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-label">Step 2</div>
+      <div class="step-title">Set margins &amp; spacing</div>
+      <div class="step-body">16px side margins. Every gap from a <code>space-*</code> token. Default block rhythm <code>space-16</code>.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-label">Step 3</div>
+      <div class="step-title">Compose content from DS components</div>
+      <div class="step-body">Instances only. Pick the right Header type and the right List / Card / Field. Use slots for content.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-label">Step 4</div>
+      <div class="step-title">Define the one primary action</div>
+      <div class="step-body">One Large Filled button. Dock it if it's the screen's main action; pair an Outline secondary if needed.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-label">Step 5</div>
+      <div class="step-title">Bind tokens &amp; name layers</div>
+      <div class="step-body">All color/type/spacing bound to variables and styles. Semantic layer names. Then verify at the 360 and 430 width bounds.</div>
+    </div>
+  </section>
+
+  <div class="footer">East Blue Design System · Screen Design Guide · Foundations follow iOS / Android / Material best practice; component specs are grounded in the East Blue component assessments.</div>
+
+</div><!-- /content-wrap -->
+</main>
+</body>
+</html>

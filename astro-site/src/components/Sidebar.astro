@@ -1,5 +1,6 @@
 ---
 import { componentManifest } from '../data/components/_index';
+import { url } from '../lib/url';
 
 interface Props {
   activeSlug?: string;
@@ -57,14 +58,19 @@ while (si < standalone.length || gi < orderedGroups.length) {
   }
 }
 
-const isOverview        = pathname === '/';
-const isComponentsGrid  = pathname === '/components';                          // on the grid page itself → highlight active
-const componentsOpen    = isComponentsGrid || pathname.startsWith('/components/'); // expand the list whenever inside Components
-const isIcons           = pathname === '/icons';
-const isStyles          = pathname === '/styles';
+// Strip the deploy base before matching routes — on the Pages subpath deploy
+// pathname is '/east-blue-design-system/components', not '/components'.
+const basePath = url('/');
+const route = pathname.startsWith(basePath) ? `/${pathname.slice(basePath.length)}` : pathname;
+
+const isOverview        = route === '/';
+const isComponentsGrid  = route === '/components';                          // on the grid page itself → highlight active
+const componentsOpen    = isComponentsGrid || route.startsWith('/components/'); // expand the list whenever inside Components
+const isIcons           = route === '/icons';
+const isStyles          = route === '/styles';
 ---
 <aside class="sidebar">
-  <a class="sidebar-brand" href="/">
+  <a class="sidebar-brand" href={url("/")}>
     <div class="sidebar-brand-row">
       <div class="sidebar-logo">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -100,12 +106,12 @@ const isStyles          = pathname === '/styles';
     </button>
 
     {/* Top-level nav */}
-    <a class={`nav-item${isOverview ? ' active' : ''}`} href="/">Overview</a>
+    <a class={`nav-item${isOverview ? ' active' : ''}`} href={url("/")}>Overview</a>
 
     <div class={`nav-item-row${isComponentsGrid ? ' active' : ''}${componentsOpen ? ' open' : ''}`}>
       <a
         class={`nav-item nav-item-toggleable${isComponentsGrid ? ' active' : ''}`}
-        href="/components"
+        href={url("/components")}
         onclick="toggleComponentsSection(event, false)"
       >
         <span>Components</span>
@@ -122,7 +128,7 @@ const isStyles          = pathname === '/styles';
           row.kind === 'item' ? (
             <a
               class={`nav-comp${activeSlug === row.item.slug ? ' active' : ''}`}
-              href={`/components/${row.item.slug}`}
+              href={url(`/components/${row.item.slug}`)}
             >
               {row.item.navIconSvg && (
                 <div class="nav-comp-icon" set:html={row.item.navIconSvg} />
@@ -150,7 +156,7 @@ const isStyles          = pathname === '/styles';
                   {row.items.map((item) => (
                     <a
                       class={`nav-comp${activeSlug === item.slug ? ' active' : ''}`}
-                      href={`/components/${item.slug}`}
+                      href={url(`/components/${item.slug}`)}
                     >
                       {item.navIconSvg && (
                         <div class="nav-comp-icon" set:html={item.navIconSvg} />
@@ -171,8 +177,8 @@ const isStyles          = pathname === '/styles';
       </div>
     </div>
 
-    <a class={`nav-item${isIcons ? ' active' : ''}`} href="/icons">Icons</a>
-    <a class={`nav-item${isStyles ? ' active' : ''}`} href="/styles">Styles</a>
+    <a class={`nav-item${isIcons ? ' active' : ''}`} href={url("/icons")}>Icons</a>
+    <a class={`nav-item${isStyles ? ' active' : ''}`} href={url("/styles")}>Styles</a>
   </nav>
 
   <!-- User info + logout (populated by AuthGate via window.__ebUser) -->

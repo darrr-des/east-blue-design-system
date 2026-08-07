@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Font Change Methodology — East Blue</title>
+<style>
+  /* Compact standalone style so this file is readable on its own.
+     The real site styling comes from eb-font-change-guide.astro, which
+     extracts just the page body and re-skins it theme-aware. */
+  :root { --ink:#0A2757; --muted:#5B6B82; --blue:#005CE5; --line:#E4E8EE; --card:#F1F1F4; }
+  body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; color:#2B3950; max-width:860px; margin:0 auto; padding:40px 24px 80px; line-height:1.65; }
+  h1,h2,h3 { color:var(--ink); line-height:1.2; }
+  table { width:100%; border-collapse:collapse; font-size:14px; margin:12px 0 20px; }
+  th { text-align:left; background:#F6F8FB; padding:10px 14px; font-size:12px; text-transform:uppercase; letter-spacing:.02em; color:#3C4A5C; }
+  td { padding:11px 14px; border-top:1px solid var(--line); vertical-align:top; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px; background:var(--card); padding:1px 5px; border-radius:4px; }
+  .table-wrap { border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  .table-wrap table { margin:0; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; font-weight:600; }
+  .badge-keep { color:#1A7A4A; background:#E6F4ED; } .badge-fix { color:#B45309; background:#FEF3C7; }
+  .badge-restructure { color:#9333EA; background:#F3E8FF; } .badge-rework { color:#991B1B; background:#FEE2E2; }
+  .infobox { border-radius:12px; padding:14px 16px; font-size:13px; margin:16px 0; background:#EEF3FB; border:1px solid #D7E2F4; }
+  .step-card, .dep-card { background:var(--card); border-radius:12px; padding:18px 20px; margin-bottom:12px; }
+  .dep-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .footer { border-top:1px solid var(--line); margin-top:56px; padding-top:20px; font-size:12px; color:var(--muted); text-align:center; }
+  .viz { margin:4px 0 22px; } .viz-cap { font-size:12px; color:var(--muted); margin-top:10px; text-align:center; }
+  .viz-type { display:flex; flex-direction:column; gap:8px; padding:4px 0; } .viz-ty-row { display:flex; align-items:baseline; justify-content:space-between; gap:16px; border-bottom:1px solid var(--line); padding-bottom:8px; }
+  .viz-ty-row:last-child { border-bottom:0; } .viz-ty-spec { color:var(--ink); font-weight:600; line-height:1.15; } .viz-ty-meta { font-family:monospace; font-size:11px; color:var(--muted); white-space:nowrap; }
+  .viz-ty-28 { font-size:28px; } .viz-ty-20 { font-size:20px; } .viz-ty-18 { font-size:18px; } .viz-ty-16 { font-size:16px; } .viz-ty-14 { font-size:14px; } .viz-ty-12 { font-size:12px; }
+  .viz-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:8px 0 4px; }
+  .viz-stat { background:#EAF1FE; border-radius:12px; padding:16px 12px; text-align:center; }
+  .viz-stat-num { display:block; font-size:23px; font-weight:700; color:var(--blue); line-height:1.1; } .viz-stat-lbl { display:block; font-size:11px; color:var(--muted); margin-top:6px; font-weight:600; }
+  .rule { display:flex; align-items:center; gap:10px; background:#fff; border:1px solid var(--line); border-left:3px solid var(--blue); border-radius:8px; padding:11px 16px; margin:0 0 16px; font-size:14px; font-weight:600; color:var(--ink); }
+  .rule::before { content:"✓"; display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:50%; background:var(--blue); color:#fff; font-size:11px; flex-shrink:0; }
+  .viz-dodont { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:4px 0 20px; }
+  .dd { border-radius:12px; padding:16px; border:1px solid var(--line); } .dd-do { background:rgba(26,122,74,.10); border-color:rgba(26,122,74,.30); } .dd-dont { background:rgba(185,28,28,.10); border-color:rgba(185,28,28,.30); }
+  .dd-tag { font-size:12px; font-weight:700; margin-bottom:12px; } .dd-do .dd-tag { color:#1A7A4A; } .dd-dont .dd-tag { color:#B91C1C; }
+  .dd-body { font-size:13px; color:var(--muted); line-height:1.55; margin-top:10px; } .dd-body strong { color:var(--ink); font-weight:600; }
+  .dep-label, .step-label { font-size:12px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--blue); margin-bottom:6px; }
+  .dep-title, .step-title { font-size:16px; font-weight:600; color:var(--ink); margin-bottom:6px; }
+  .dep-desc, .step-body { font-size:14px; color:var(--muted); line-height:1.6; }
+  .cover { padding:8px 0 32px; border-bottom:1px solid var(--line); margin-bottom:36px; }
+  .cover-eyebrow { font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--blue); margin-bottom:10px; }
+  .cover-title { font-size:28px; font-weight:600; color:var(--ink); margin-bottom:8px; }
+  .cover-subtitle { font-size:14px; color:var(--muted); max-width:72ch; }
+  .section-heading { font-size:18px; font-weight:600; color:var(--ink); margin:0 0 6px; display:flex; align-items:center; gap:10px; }
+  .sec-num { flex:0 0 auto; width:28px; height:28px; border-radius:9px; background:#005CE5; color:#fff; font-size:14px; font-weight:800; display:inline-flex; align-items:center; justify-content:center; box-shadow:0 2px 5px rgba(0,92,229,.3); }
+  .section-desc { font-size:14px; color:var(--muted); margin-bottom:16px; }
+  .sub-heading { font-size:16px; font-weight:600; color:var(--ink); margin:32px 0 12px; }
+  .page-section { margin-bottom:48px; }
+  .back-btn { font-size:13px; color:var(--blue); text-decoration:none; }
+
+  /* Gates (§1) */
+  .viz-gates { display:flex; flex-wrap:wrap; gap:8px; margin:4px 0 6px; }
+  .viz-gate { display:inline-flex; align-items:center; gap:6px; padding:7px 12px; border-radius:8px; background:#EAF1FE; color:#005CE5; font-size:12px; font-weight:700; border:1px solid #D7E2F4; }
+  .viz-gate-ico { font-size:12px; }
+
+  /* Binding diagram (§2) */
+  .viz-bind { display:flex; align-items:stretch; gap:10px; flex-wrap:wrap; margin:4px 0 10px; }
+  .viz-bind-node { flex:1; min-width:110px; border-radius:12px; padding:14px 12px; text-align:center; border:1px solid var(--line); background:#fff; display:flex; flex-direction:column; justify-content:center; }
+  .viz-bind-layers { display:flex; flex-direction:column; gap:5px; margin-bottom:8px; }
+  .viz-bind-layer { height:9px; border-radius:3px; background:var(--card); }
+  .viz-bind-swap { background:#EAF1FE; border-color:#005CE5; }
+  .viz-bind-title { font-size:13px; font-weight:700; color:var(--ink); }
+  .viz-bind-sub { font-size:10px; color:var(--muted); margin-top:3px; font-family:monospace; }
+  .viz-bind-badge { font-size:10px; font-weight:700; color:#005CE5; margin-top:8px; }
+  .viz-bind-swap .viz-bind-title { color:#005CE5; }
+  .viz-bind-arrow { color:var(--muted); font-size:20px; flex:0 0 auto; align-self:center; }
+  .viz-leak { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); }
+  .viz-leak-chip { padding:4px 10px; border-radius:99px; background:rgba(185,28,28,.10); border:1px dashed rgba(185,28,28,.45); color:#B91C1C; font-weight:700; flex-shrink:0; }
+
+  /* Width comparison (§3) */
+  .viz-width { display:flex; flex-direction:column; gap:10px; padding:4px 0; }
+  .viz-width-row { display:flex; align-items:center; gap:12px; }
+  .viz-width-lbl { width:80px; font-size:11px; font-family:monospace; color:var(--muted); flex-shrink:0; }
+  .viz-width-bar { height:24px; border-radius:6px; background:#EAF1FE; border:1px solid #D7E2F4; display:flex; align-items:center; padding:0 10px; font-size:11px; color:#005CE5; font-weight:600; white-space:nowrap; overflow:hidden; }
+  .viz-width-bar-wide { background:rgba(224,69,123,.12); border-color:rgba(224,69,123,.4); color:#B91C1C; }
+
+  /* Box fit (§5) */
+  .viz-fit { display:flex; gap:14px; flex-wrap:wrap; padding:4px 0; }
+  .viz-fit-col { flex:1; min-width:120px; }
+  .viz-fit-box { height:50px; border-radius:99px; display:flex; align-items:center; justify-content:center; background:#005CE5; color:#fff; font-weight:700; font-size:15px; overflow:hidden; }
+  .viz-fit-bad { font-size:22px; align-items:flex-start; line-height:1.1; }
+  .viz-fit-cap { font-size:11px; margin-top:8px; text-align:center; color:var(--muted); }
+  .viz-fit-cap-ok { color:#1A7A4A; font-weight:600; } .viz-fit-cap-bad { color:#B91C1C; font-weight:600; }
+
+  /* Reflow cards (§6) */
+  .viz-reflow { display:flex; gap:24px; justify-content:center; flex-wrap:wrap; padding:4px 0; }
+  .viz-mini { width:170px; }
+  .viz-card { border:1px solid var(--line); border-radius:10px; padding:12px; background:#fff; }
+  .viz-card-title { height:11px; width:55%; background:#005CE5; opacity:.85; border-radius:3px; margin-bottom:10px; }
+  .viz-card-line { height:9px; background:var(--card); border-radius:3px; margin-bottom:7px; }
+  .viz-card-line:last-child { margin-bottom:0; }
+  .viz-card-over { border-color:#E0457B; }
+  .viz-card-line-clip { background:rgba(224,69,123,.35); }
+  .viz-mini-cap { font-size:11px; text-align:center; margin-top:8px; color:var(--muted); }
+
+  /* Merge flow (§8) */
+  .viz-flow { display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:4px 0; }
+  .viz-flow-node { padding:8px 14px; border-radius:8px; background:#EAF1FE; color:#005CE5; font-size:12px; font-weight:700; border:1px solid #D7E2F4; }
+  .viz-flow-arrow { color:var(--muted); font-size:16px; }
+
+  /* ── Realistic UI mockups ──────────────────────────────────────────── */
+  .ui-gallery { display:flex; gap:24px; flex-wrap:wrap; justify-content:center; padding:4px 0; }
+  .ui-col { display:flex; flex-direction:column; }
+  .ui-demo-cap { font-size:11px; text-align:center; margin-top:10px; color:var(--muted); max-width:236px; }
+  .ui-demo-cap-bad { color:#B91C1C; font-weight:600; }
+  .ui-demo-cap-ok { color:#1A7A4A; font-weight:600; }
+
+  /* List + transaction row */
+  .ui-list { border:1px solid var(--line); border-radius:12px; overflow:hidden; background:#fff; }
+  .ui-row { display:flex; align-items:center; gap:10px; padding:11px 12px; border-top:1px solid var(--line); }
+  .ui-row:first-child { border-top:0; }
+  .ui-avatar { width:34px; height:34px; border-radius:50%; background:#EAF1FE; color:#005CE5; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
+  .ui-row-main { flex:1; min-width:0; }
+  .ui-row-name { font-size:13px; font-weight:600; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .ui-row-sub { font-size:11px; color:var(--muted); margin-top:2px; }
+  .ui-row-amt { font-size:13px; font-weight:700; color:var(--ink); flex-shrink:0; white-space:nowrap; }
+  .ui-row-amt-pos { color:#1A7A4A; }
+  .ui-row-broken { flex-wrap:wrap; }
+  .ui-row-broken .ui-row-main { flex:1 1 auto; }
+  .ui-row-broken .ui-row-amt { width:100%; text-align:right; color:#B91C1C; margin-top:2px; }
+
+  /* Button */
+  .ui-btn { height:48px; border-radius:99px; background:#005CE5; color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; }
+  .ui-btn-clip { font-size:21px; align-items:flex-start; line-height:1.05; overflow:hidden; }
+
+  /* Phone screen */
+  .ui-phone { width:236px; border:1px solid var(--line); border-radius:26px; background:#F6F8FB; padding:8px; overflow:hidden; }
+  .ui-status { display:flex; justify-content:space-between; align-items:center; padding:3px 8px 7px; font-size:10px; font-weight:700; color:var(--ink); }
+  .ui-status-dots { display:flex; gap:3px; } .ui-status-dots span { width:5px; height:5px; border-radius:50%; background:var(--ink); opacity:.6; }
+  .ui-hd { display:flex; align-items:center; gap:8px; padding:2px 4px 10px; }
+  .ui-hd-back { font-size:17px; color:var(--ink); line-height:1; } .ui-hd-title { font-size:14px; font-weight:700; color:var(--ink); }
+  .ui-balance { background:#005CE5; border-radius:14px; padding:14px; color:#fff; margin-bottom:12px; }
+  .ui-balance-lbl { font-size:10px; opacity:.85; } .ui-balance-amt { font-size:22px; font-weight:800; margin-top:3px; letter-spacing:-.01em; }
+  .ui-seclabel { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:0 2px 6px; }
+  .ui-dock { margin-top:12px; }
+
+  /* Methodology pipeline hero (§0) */
+  .viz-pipeline { display:flex; align-items:flex-start; gap:0; flex-wrap:wrap; margin:6px 0 24px; }
+  .pl-step { flex:1; min-width:104px; position:relative; text-align:center; padding:0 4px; display:flex; flex-direction:column; align-items:center; }
+  .pl-step::before { content:""; position:absolute; top:17px; left:-50%; width:100%; height:2px; background:#C9DBF7; z-index:0; }
+  .pl-step:first-child::before { display:none; }
+  .pl-num { position:relative; z-index:1; width:34px; height:34px; border-radius:50%; background:#005CE5; color:#fff; font-weight:800; font-size:14px; display:flex; align-items:center; justify-content:center; margin-bottom:9px; box-shadow:0 3px 8px rgba(0,92,229,.35); }
+  .pl-ico { font-size:17px; line-height:1; margin-bottom:5px; }
+  .pl-title { font-size:12px; font-weight:700; color:var(--ink); line-height:1.25; }
+  .pl-sub { font-size:10px; color:var(--muted); margin-top:2px; }
+</style>
+</head>
+<body>
+<main class="main">
+<a class="back-btn" href="/">Overview</a>
+<div class="content-wrap">
+
+  <div class="cover">
+    <div class="cover-eyebrow">East Blue Design System</div>
+    <div class="cover-title">Font Change Methodology</div>
+    <div class="cover-subtitle">How to swap a typeface across the design system without breaking screens. Because typesetting lives in named text styles and the system runs on variable fonts, the swap itself is a one-point change — the work is proving the new font is <em>metric-compatible</em> before it inherits everywhere. Compare on measurements, prove compatibility, rebind at the style layer, retune, then regression-test a fixed screen corpus.</div>
+  </div>
+
+  <!-- ───────────────────────────── 0. AT A GLANCE ───────────────────────────── -->
+  <section class="page-section" id="glance">
+    <h2 class="section-heading">At a Glance</h2>
+    <p class="section-desc">The whole method is one pipeline. Each stage feeds the next; a break at "Test" loops back to "Rebind," never to a font veto.</p>
+    <div class="viz viz-pipeline">
+      <div class="pl-step"><div class="pl-num">1</div><span class="pl-ico">🎯</span><span class="pl-title">Set intent</span><span class="pl-sub">gates &amp; criteria</span></div>
+      <div class="pl-step"><div class="pl-num">2</div><span class="pl-ico">📏</span><span class="pl-title">Compare metrics</span><span class="pl-sub">delta sheet</span></div>
+      <div class="pl-step"><div class="pl-num">3</div><span class="pl-ico">🔍</span><span class="pl-title">Scan leaks</span><span class="pl-sub">off-style layers</span></div>
+      <div class="pl-step"><div class="pl-num">4</div><span class="pl-ico">🔧</span><span class="pl-title">Rebind &amp; retune</span><span class="pl-sub">one swap point</span></div>
+      <div class="pl-step"><div class="pl-num">5</div><span class="pl-ico">📱</span><span class="pl-title">Regression test</span><span class="pl-sub">fixed corpus</span></div>
+      <div class="pl-step"><div class="pl-num">6</div><span class="pl-ico">🚀</span><span class="pl-title">Ship &amp; version</span><span class="pl-sub">native handoff</span></div>
+    </div>
+    <p class="section-desc">And the numbers behind every swap — if you remember nothing else, remember these.</p>
+    <div class="viz-stats">
+      <div class="viz-stat"><span class="viz-stat-num">1</span><span class="viz-stat-lbl">Swap point (text styles)</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">8</span><span class="viz-stat-lbl">Metrics to compare</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">x-height</span><span class="viz-stat-lbl">#1 break driver</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">±2%</span><span class="viz-stat-lbl">Advance-width tolerance</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">12</span><span class="viz-stat-lbl">Stress screens in corpus</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">3</span><span class="viz-stat-lbl">Targets: Figma · iOS · Android</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">wght</span><span class="viz-stat-lbl">Axis that must map 1:1</span></div>
+      <div class="viz-stat"><span class="viz-stat-num">0</span><span class="viz-stat-lbl">Loose font bindings allowed</span></div>
+    </div>
+    <div class="infobox">The swap is cheap; the <strong>proof</strong> is the work. A font that renders larger or wider at the same size will reflow buttons, clip labels, and shift baselines the moment it inherits. The whole method exists to catch that <em>before</em> it ships.</div>
+  </section>
+
+  <!-- ───────────────────────────── 1. WHEN & WHY ───────────────────────────── -->
+  <section class="page-section" id="intent">
+    <h2 class="section-heading"><span class="sec-num">1</span> Intent &amp; Acceptance Criteria</h2>
+    <p class="section-desc">Write down why you're swapping and what "done" means <em>before</em> comparing anything. The intent decides which metrics are pass/fail gates versus nice-to-haves.</p>
+    <div class="viz viz-gates">
+      <span class="viz-gate"><span class="viz-gate-ico">🔒</span> Glyph coverage</span>
+      <span class="viz-gate"><span class="viz-gate-ico">🔒</span> Embed license</span>
+      <span class="viz-gate"><span class="viz-gate-ico">🔒</span> Weight axis range</span>
+      <span class="viz-gate"><span class="viz-gate-ico">🔒</span> File formats</span>
+      <span class="viz-gate"><span class="viz-gate-ico">🔒</span> Size budget</span>
+    </div>
+    <p class="viz-cap">The hard gates — any one failing disqualifies a candidate before comparison even starts.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Reason to swap</th><th>The hard gate it sets</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Language / glyph coverage</strong></td><td>Candidate must cover the full product glyph set — ₱ currency, Filipino diacritics, symbols. A missing glyph is an instant fail.</td></tr>
+        <tr><td><strong>Licensing / cost</strong></td><td>License must permit app-bundle embedding on iOS <em>and</em> Android, plus web. No embed right = can't ship.</td></tr>
+        <tr><td><strong>Brand refresh</strong></td><td>New face must keep the same weight axis range so weight tokens still map. Aesthetic is the goal, but metrics still gate it.</td></tr>
+        <tr><td><strong>Native availability</strong></td><td>Font files must be obtainable in the formats each platform needs (variable TTF/OTF for native, WOFF2 for web).</td></tr>
+        <tr><td><strong>Performance</strong></td><td>File size / axis count budget — a swap that doubles the bundle for one axis you don't use is a regression.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="rule">No swap starts without a written acceptance list. "It looks nicer" is not an acceptance criterion.</div>
+  </section>
+
+  <!-- ───────────────────────────── 2. SWAP ARCHITECTURE ───────────────────────────── -->
+  <section class="page-section" id="architecture">
+    <h2 class="section-heading"><span class="sec-num">2</span> The Swap Architecture — where fonts actually bind</h2>
+    <p class="section-desc">Understanding <em>where</em> a font is bound is the whole reason the swap is cheap in this system. There is exactly one intended binding layer.</p>
+    <div class="viz">
+      <div class="viz-bind">
+        <div class="viz-bind-node">
+          <div class="viz-bind-layers">
+            <span class="viz-bind-layer"></span><span class="viz-bind-layer"></span>
+            <span class="viz-bind-layer"></span><span class="viz-bind-layer"></span>
+          </div>
+          <div class="viz-bind-title">Text layers</div>
+          <div class="viz-bind-sub">hundreds</div>
+        </div>
+        <span class="viz-bind-arrow">→</span>
+        <div class="viz-bind-node viz-bind-swap">
+          <div class="viz-bind-title">Text style</div>
+          <div class="viz-bind-sub">Primary/Label/*</div>
+          <div class="viz-bind-badge">◆ swap point</div>
+        </div>
+        <span class="viz-bind-arrow">→</span>
+        <div class="viz-bind-node">
+          <div class="viz-bind-title">Variable axis</div>
+          <div class="viz-bind-sub">wght token</div>
+        </div>
+      </div>
+      <div class="viz-leak">
+        <span class="viz-leak-chip">⚠ leak</span>
+        <span>Loose bindings &amp; hardcoded weights bypass the style — they keep the old font. Find these first.</span>
+      </div>
+      <p class="viz-cap">Rebind the family once on the style; every layer inherits. Leaks are the only layers that don't.</p>
+    </div>
+    <div class="dep-grid">
+      <div class="dep-card">
+        <div class="dep-label">Intended · one point</div>
+        <div class="dep-title">Named text styles</div>
+        <div class="dep-desc">Every text layer references a style (<code>Primary/Label/Large</code>, <code>Display/Heading</code>…). The style holds the font family. Rebind the family on the style and every layer inherits. This is the swap.</div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-label">Intended · axis config</div>
+        <div class="dep-title">Variable-font axis tokens</div>
+        <div class="dep-desc">Weight (<code>wght</code>) and any optical-size (<code>opsz</code>) axes are set once. A variable font means a weight change is a number, not a new font file — so re-mapping weights after a swap is a config edit.</div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-label">Leak · must find first</div>
+        <div class="dep-title">Loose font bindings</div>
+        <div class="dep-desc">Any text layer with a font set <em>directly</em> instead of via a style won't inherit the swap. These are the layers that silently keep the old font. Hunt them down <strong>before</strong> rebinding.</div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-label">Leak · must find first</div>
+        <div class="dep-title">Hardcoded weights</div>
+        <div class="dep-desc">A layer pinned to a named weight (e.g. "Semibold") rather than a weight token can land on a weight the new family doesn't have. Route these through the axis token.</div>
+      </div>
+    </div>
+    <div class="infobox"><strong>Pre-flight scan.</strong> Before any rebind, scan for off-style typography — every text layer that isn't on a named style, and every weight that isn't on a token. That list <em>is</em> your leak inventory. A clean system has zero; most have a handful in one-off screens.</div>
+  </section>
+
+  <!-- ───────────────────────────── 3. FONT COMPARISON ───────────────────────────── -->
+  <section class="page-section" id="compare">
+    <h2 class="section-heading"><span class="sec-num">3</span> Font Comparison — measure, don't eyeball</h2>
+    <p class="section-desc">This is the step you already do — here it's made objective. Compare the candidate against the incumbent on measurable metrics, not on gut feel. The goal is a delta sheet that predicts exactly where retuning will be needed.</p>
+    <div class="rule">Compare fonts at the same pixel size, side by side, on the same string.</div>
+    <div class="viz viz-type">
+      <div class="viz-ty-row"><span class="viz-ty-spec viz-ty-20">Send ₱1,250 to Juan</span><span class="viz-ty-meta">Incumbent · x-height 0.52em</span></div>
+      <div class="viz-ty-row"><span class="viz-ty-spec viz-ty-20">Send ₱1,250 to Juan</span><span class="viz-ty-meta">Candidate · x-height 0.54em → reads bigger</span></div>
+    </div>
+    <p class="section-desc">Same 20px, same string — the candidate's taller x-height makes it read larger and run wider. That single difference is what forces line-height and fit retuning downstream.</p>
+    <div class="viz viz-width">
+      <div class="viz-width-row"><span class="viz-width-lbl">incumbent</span><span class="viz-width-bar" style="width:68%">Send ₱1,250 to Juan</span></div>
+      <div class="viz-width-row"><span class="viz-width-lbl">candidate</span><span class="viz-width-bar viz-width-bar-wide" style="width:78%">Send ₱1,250 to Juan · +10% wider</span></div>
+    </div>
+    <p class="viz-cap">Rendered width of the identical string. A wider footprint is what pushes labels to wrap on narrow screens.</p>
+    <div class="viz ui-gallery">
+      <div class="ui-col">
+        <div class="ui-list" style="width:236px">
+          <div class="ui-row"><span class="ui-avatar">JD</span><span class="ui-row-main"><span class="ui-row-name">Juan Dela Cruz</span><span class="ui-row-sub">GCash · 2m ago</span></span><span class="ui-row-amt">−₱1,250</span></div>
+        </div>
+        <div class="ui-demo-cap ui-demo-cap-ok">✓ Incumbent — name + amount share one line</div>
+      </div>
+      <div class="ui-col">
+        <div class="ui-list ui-list-wide" style="width:236px">
+          <div class="ui-row ui-row-broken"><span class="ui-avatar">JD</span><span class="ui-row-main"><span class="ui-row-name">Juan Dela Cruz</span><span class="ui-row-sub">GCash · 2m ago</span></span><span class="ui-row-amt">−₱1,250</span></div>
+        </div>
+        <div class="ui-demo-cap ui-demo-cap-bad">✗ Wider candidate — the amount drops to a second line</div>
+      </div>
+    </div>
+    <p class="viz-cap">The exact same List Item component. The metric delta from the comparison above is what breaks the row.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Metric</th><th>Why it matters</th><th>How to read the delta</th></tr></thead>
+      <tbody>
+        <tr><td><strong>x-height / cap-height ratio</strong></td><td>The #1 driver of "looks bigger/smaller at the same px."</td><td>Higher x-height → text reads larger and wider. Retune size or line-height to match optical size.</td></tr>
+        <tr><td><strong>Advance widths</strong> (avg char width)</td><td>Wider glyphs = more wraps on narrow mobile screens.</td><td>Measure the same paragraph's total width. &gt; ±2% = expect reflow on tight layouts.</td></tr>
+        <tr><td><strong>Vertical metrics</strong> (asc / desc / line gap)</td><td>Controls how line-height renders; mismatch shifts baselines in fixed-height controls.</td><td>Different metrics → buttons, chips, inputs need line-height retuning to keep the label centered.</td></tr>
+        <tr><td><strong>Variable axes available</strong></td><td>Determines whether weight/optical tokens survive the swap.</td><td>Missing <code>wght</code> range or <code>opsz</code> = tokens break. Same axes = clean map.</td></tr>
+        <tr><td><strong>Weight mapping</strong></td><td>Numeric weights aren't standardized across families.</td><td>Their 600 may read like your 500. Map by <em>appearance</em>, not by number.</td></tr>
+        <tr><td><strong>Glyph / language coverage</strong></td><td>Missing glyphs break real content.</td><td>Test ₱, diacritics, and any symbol the product uses. Any gap = fail against the intent gate.</td></tr>
+        <tr><td><strong>Licensing / embedding</strong></td><td>Native ships the actual font files.</td><td>Confirm embed rights for iOS bundle + Android assets + web. No right = can't ship.</td></tr>
+        <tr><td><strong>Small-size rendering / hinting</strong></td><td>Body text at 12–14px is where weak fonts fall apart.</td><td>Render captions and fine print on-device. Fuzzy or uneven = fail for a UI face.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="infobox">Deliverable: a <strong>side-by-side spec sheet</strong> — incumbent vs candidate for all eight rows, with a "delta" column flagging where the numbers diverge. That sheet is what you carry into the rebind.</div>
+  </section>
+
+  <!-- ───────────────────────────── 4. COMPATIBILITY SCORECARD ───────────────────────────── -->
+  <section class="page-section" id="scorecard">
+    <h2 class="section-heading"><span class="sec-num">4</span> Metric-Compatibility Scorecard</h2>
+    <p class="section-desc">Turn the comparison into a go / no-go. Score each metric — a fail on a hard gate stops the swap; partials become the retuning to-do list.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Rating</th><th>Meaning</th><th>What it triggers</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-keep">Pass</span></td><td>Metric matches the incumbent within tolerance.</td><td>Nothing. Inherits cleanly.</td></tr>
+        <tr><td><span class="badge badge-fix">Partial</span></td><td>Close, but off enough to shift layout.</td><td>Add to the line-height / tracking retune list (Section 5).</td></tr>
+        <tr><td><span class="badge badge-rework">Fail</span></td><td>Breaks a hard gate — missing glyph, no embed right, no matching weight axis.</td><td>Stop. The candidate is disqualified unless the gate can be removed.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="viz-dodont">
+      <div class="dd dd-do"><div class="dd-tag">✓ Do</div><div class="dd-body">Gate on the <strong>metrics you can't fix</strong> — glyph coverage, licensing, axis availability. These are pass/fail.</div></div>
+      <div class="dd dd-dont"><div class="dd-tag">✗ Don't</div><div class="dd-body">Veto a font over an x-height or width delta. Those are <strong>retunable</strong> — they belong on the fix list, not the reject pile.</div></div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────── 5. REBIND & RETUNE ───────────────────────────── -->
+  <section class="page-section" id="rebind">
+    <h2 class="section-heading"><span class="sec-num">5</span> Rebind &amp; Retune</h2>
+    <p class="section-desc">The swap most people get wrong: they change the family and keep the old line-heights. Everything then drifts. Rebinding and <em>retuning</em> are one step, done on a copy.</p>
+    <div class="viz viz-fit">
+      <div class="viz-fit-col">
+        <div class="viz-fit-box viz-fit-ok">Continue</div>
+        <div class="viz-fit-cap viz-fit-cap-ok">✓ Old font — fits, centered</div>
+      </div>
+      <div class="viz-fit-col">
+        <div class="viz-fit-box viz-fit-bad">Continue</div>
+        <div class="viz-fit-cap viz-fit-cap-bad">✗ New, raw — reads bigger, off-center</div>
+      </div>
+      <div class="viz-fit-col">
+        <div class="viz-fit-box viz-fit-ok">Continue</div>
+        <div class="viz-fit-cap viz-fit-cap-ok">✓ Retuned — line-height absorbs the delta</div>
+      </div>
+    </div>
+    <p class="viz-cap">Same 50px button. Goal: at the style layer, the new font occupies the same box as the old one.</p>
+    <div class="step-card">
+      <div class="step-label">Step 1</div>
+      <div class="step-title">Work on a duplicate / branch</div>
+      <div class="step-body">Never rebind in the live file. Duplicate the library (Figma branch) so the swap is reversible and reviewable before merge.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-label">Step 2</div>
+      <div class="step-title">Rebind the family on each text style</div>
+      <div class="step-body">Change the font family at the style level — the single swap point. Do the leak layers found in Section 2 in the same pass so nothing keeps the old font.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-label">Step 3</div>
+      <div class="step-title">Re-map weights by appearance</div>
+      <div class="step-body">Set the <code>wght</code> axis token so each style <em>reads</em> like it did before — match by appearance, not by number. The old Semibold might be a new 560.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-label">Step 4</div>
+      <div class="step-title">Retune line-height &amp; tracking to absorb the deltas</div>
+      <div class="step-body">Using the Partial rows from the scorecard, adjust line-height and letter-spacing per style so a button still fits, a card still shows two lines, and headings don't reflow. This is where a taller x-height or wider advance gets neutralized.</div>
+    </div>
+    <div class="infobox"><strong>Absorb, don't propagate.</strong> The target is: at the style layer, the new font <em>occupies the same box</em> as the old one. If you get that right, everything downstream inherits correct — that's the payoff of styles + variable fonts.</div>
+  </section>
+
+  <!-- ───────────────────────────── 6. SCREEN REGRESSION ───────────────────────────── -->
+  <section class="page-section" id="screens">
+    <h2 class="section-heading"><span class="sec-num">6</span> Screen Regression Testing</h2>
+    <p class="section-desc">Your "test in screens" step, made systematic. Don't spot-check convenient screens — test a fixed <strong>stress corpus</strong> chosen to expose reflow and baseline shift.</p>
+    <div class="rule">Compare before / after side by side. Log every reflow, clip, and baseline shift.</div>
+    <div class="viz ui-gallery">
+      <div class="ui-col">
+        <div class="ui-phone">
+          <div class="ui-status"><span>9:41</span><span class="ui-status-dots"><span></span><span></span><span></span></span></div>
+          <div class="ui-hd"><span class="ui-hd-back">‹</span><span class="ui-hd-title">Send Money</span></div>
+          <div class="ui-balance"><div class="ui-balance-lbl">Available Balance</div><div class="ui-balance-amt">₱12,480.00</div></div>
+          <div class="ui-seclabel">Recent</div>
+          <div class="ui-list">
+            <div class="ui-row"><span class="ui-avatar">JD</span><span class="ui-row-main"><span class="ui-row-name">Juan Dela Cruz</span><span class="ui-row-sub">GCash · 2m ago</span></span><span class="ui-row-amt">−₱1,250</span></div>
+            <div class="ui-row"><span class="ui-avatar">MS</span><span class="ui-row-main"><span class="ui-row-name">Maria Santos</span><span class="ui-row-sub">Received</span></span><span class="ui-row-amt ui-row-amt-pos">+₱500</span></div>
+          </div>
+          <div class="ui-dock"><div class="ui-btn">Continue</div></div>
+        </div>
+        <div class="ui-demo-cap ui-demo-cap-ok">✓ Before — labels fit, amounts align, button centered</div>
+      </div>
+      <div class="ui-col">
+        <div class="ui-phone">
+          <div class="ui-status"><span>9:41</span><span class="ui-status-dots"><span></span><span></span><span></span></span></div>
+          <div class="ui-hd"><span class="ui-hd-back">‹</span><span class="ui-hd-title">Send Money</span></div>
+          <div class="ui-balance"><div class="ui-balance-lbl">Available Balance</div><div class="ui-balance-amt">₱12,480.00</div></div>
+          <div class="ui-seclabel">Recent</div>
+          <div class="ui-list">
+            <div class="ui-row ui-row-broken"><span class="ui-avatar">JD</span><span class="ui-row-main"><span class="ui-row-name">Juan Dela Cruz</span><span class="ui-row-sub">GCash · 2m ago</span></span><span class="ui-row-amt">−₱1,250</span></div>
+            <div class="ui-row"><span class="ui-avatar">MS</span><span class="ui-row-main"><span class="ui-row-name">Maria Santos</span><span class="ui-row-sub">Received</span></span><span class="ui-row-amt ui-row-amt-pos">+₱500</span></div>
+          </div>
+          <div class="ui-dock"><div class="ui-btn ui-btn-clip">Continue</div></div>
+        </div>
+        <div class="ui-demo-cap ui-demo-cap-bad">✗ After raw swap — wider face wraps the amount, taller face clips the button label</div>
+      </div>
+    </div>
+    <p class="viz-cap">Same screen, same components — the swap's metric deltas surface as a wrapped amount and a clipped CTA. Both are fixed by retuning (Section 5), not by rejecting the font.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Corpus category</th><th>Why it stresses the font</th><th>What to watch</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Density extremes</strong></td><td>Longest strings in the tightest layouts — table rows, list rows, chips.</td><td>Truncation, overflow, uneven wrapping.</td></tr>
+        <tr><td><strong>Fixed-height controls</strong></td><td>Buttons, inputs, tabs, badges have no room to grow.</td><td>Baseline shift — label no longer vertically centered.</td></tr>
+        <tr><td><strong>Multi-line / wrapping</strong></td><td>Cards, empty states, alerts reflow when width changes.</td><td>Line count changing from 2 → 3 breaks card height.</td></tr>
+        <tr><td><strong>Small type</strong></td><td>Captions, helper text, legal at 12–14px.</td><td>Legibility, hinting, cramped tracking.</td></tr>
+        <tr><td><strong>Localized strings</strong></td><td>Longest translation of each label.</td><td>Wraps and clips that only appear in the long language.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="viz-dodont">
+      <div class="dd dd-do"><div class="dd-tag">✓ Do</div><div class="dd-body">Send a reflow back to <strong>Section 5 retuning</strong>. A broken screen usually means a style's line-height still needs work.</div></div>
+      <div class="dd dd-dont"><div class="dd-tag">✗ Don't</div><div class="dd-body">Reject the font because one screen broke — unless it's an <strong>unfixable metric</strong> (missing glyph, no matching weight). Otherwise, retune.</div></div>
+    </div>
+    <div class="infobox">Keep the corpus <strong>fixed and named</strong> — the same 12 screens every swap. A stable corpus makes two different font candidates directly comparable, and makes the next swap faster.</div>
+  </section>
+
+  <!-- ───────────────────────────── 7. NATIVE HANDOFF ───────────────────────────── -->
+  <section class="page-section" id="native">
+    <h2 class="section-heading"><span class="sec-num">7</span> Native Handoff</h2>
+    <p class="section-desc">East Blue tracks SwiftUI + Compose readiness, so a font swap isn't done until it ships to native. The font files, not just the Figma binding, have to move.</p>
+    <div class="dep-grid">
+      <div class="dep-card">
+        <div class="dep-label">iOS · SwiftUI</div>
+        <div class="dep-title">Bundle + register</div>
+        <div class="dep-desc">Add the variable font file to the app bundle, register it in <code>Info.plist</code> (<code>UIAppFonts</code>), and confirm the <code>wght</code> axis is reachable via <code>.fontWeight()</code> / a custom font modifier.</div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-label">Android · Compose</div>
+        <div class="dep-title">Assets + FontFamily</div>
+        <div class="dep-desc">Drop the font into assets/resources, declare the <code>FontFamily</code> with the variable axis, and verify the weight tokens map to real <code>FontWeight</code> values.</div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-label">Web · docs site</div>
+        <div class="dep-title">WOFF2 + font-face</div>
+        <div class="dep-desc">Ship the WOFF2 variable file, update the <code>@font-face</code> and the <code>--font-*</code> custom properties. Check the docs site renders the new face in light and dark.</div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-label">All targets</div>
+        <div class="dep-title">Weight-token parity</div>
+        <div class="dep-desc">Confirm the same weight token resolves to a matching visual weight on all three platforms. A weight that exists in Figma but not natively is a handoff break.</div>
+      </div>
+    </div>
+    <div class="infobox">Confirm <strong>embed licensing</strong> covers native app bundles specifically — web-only licenses are common and don't permit shipping the file inside an <code>.ipa</code> / <code>.apk</code>.</div>
+  </section>
+
+  <!-- ───────────────────────────── 8. VERSION & ROLLOUT ───────────────────────────── -->
+  <section class="page-section" id="rollout">
+    <h2 class="section-heading"><span class="sec-num">8</span> Version &amp; Rollout</h2>
+    <p class="section-desc">A font swap is a breaking typography change. Version it, tie it to the criteria it touches, and roll it out where it can be caught.</p>
+    <div class="viz viz-flow">
+      <span class="viz-flow-node">Retuned text styles</span>
+      <span class="viz-flow-arrow">→</span>
+      <span class="viz-flow-node">Component libraries</span>
+      <span class="viz-flow-arrow">→</span>
+      <span class="viz-flow-node">Screens</span>
+    </div>
+    <p class="viz-cap">Merge order — always downstream. Never rebind screens ahead of the styles they inherit from.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Action</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Changelog entry</strong></td><td>Semver-bump the library. Note old → new family, and link the criteria touched — <code>C3 · Token Coverage</code> (weight tokens), <code>C4 · Native Mappability</code> (font availability).</td></tr>
+        <tr><td><strong>Merge order</strong></td><td>Merge the retuned styles first, then let component libraries inherit, then screens. Never rebind screens ahead of the styles they depend on.</td></tr>
+        <tr><td><strong>Stale-content sweep</strong></td><td>After merge, re-check any doc that names the old font by name — Screen Design Guide typography section, component Style tabs, foundations tokens.</td></tr>
+        <tr><td><strong>Rollback plan</strong></td><td>Because the swap is one binding layer, rollback is re-pointing the styles to the old family. Keep the pre-swap branch until the new face is confirmed on-device.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ───────────────────────────── 9. CHECKLIST ───────────────────────────── -->
+  <section class="page-section" id="checklist">
+    <h2 class="section-heading"><span class="sec-num">9</span> Font-Swap Checklist</h2>
+    <div class="step-card">
+      <div class="step-label">Step 1</div>
+      <div class="step-title">Write intent + acceptance gates</div>
+      <div class="step-body">Why swap, and the pass/fail metrics (glyphs, licensing, axes). No list, no swap.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-label">Step 2</div>
+      <div class="step-title">Build the comparison spec sheet</div>
+      <div class="step-body">Incumbent vs candidate across all 8 metrics, with a delta column. Score each Pass / Partial / Fail.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-label">Step 3</div>
+      <div class="step-title">Scan for leaks</div>
+      <div class="step-body">Every off-style text layer and hardcoded weight. Fix routing so all typography flows through styles + tokens.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-label">Step 4</div>
+      <div class="step-title">Rebind + retune on a branch</div>
+      <div class="step-body">Swap the family on each style, re-map weights by appearance, retune line-height/tracking to absorb the deltas.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-label">Step 5</div>
+      <div class="step-title">Regression-test the fixed corpus</div>
+      <div class="step-body">Same 12 stress screens, before/after. Log breaks; send reflows back to retuning.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-label">Step 6</div>
+      <div class="step-title">Ship to native + version it</div>
+      <div class="step-body">Bundle the font on iOS/Android/web, confirm weight-token parity, changelog with criteria links, keep the rollback branch.</div>
+    </div>
+  </section>
+
+  <div class="footer">East Blue Design System · Font Change Methodology · The swap is one binding layer; the method is the proof that the new face is metric-compatible before it inherits.</div>
+
+</div><!-- /content-wrap -->
+</main>
+</body>
+</html>
