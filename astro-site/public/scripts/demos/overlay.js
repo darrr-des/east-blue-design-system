@@ -8,9 +8,10 @@
    primitives from styles.css (.eb-preview-overlay-stage*).            */
 
 function _overlayStageMarkup(opts) {
-  var surface = opts.surface || 'sheet';
-  var bgTone  = opts.bg || 'light';
-  var showDim = opts.dim !== false;
+  var surface  = opts.surface || 'sheet';
+  var bgTone   = opts.bg || 'light';
+  var showDim  = opts.dim !== false;
+  var strength = opts.strength || 'strong';
 
   // Background content — a fake app screen sitting behind the dim.
   var content =
@@ -22,7 +23,9 @@ function _overlayStageMarkup(opts) {
       '<div class="eb-preview-overlay-stage__card"></div>' +
     '</div>';
 
-  var dim = showDim ? '<div class="eb-preview-overlay-stage__dim"></div>' : '';
+  var dim = showDim
+    ? '<div class="eb-preview-overlay-stage__dim eb-preview-overlay-stage__dim--' + strength + '"></div>'
+    : '';
 
   var floatingSurface = '';
   if (surface === 'sheet') {
@@ -54,20 +57,22 @@ function _overlayStageMarkup(opts) {
 }
 
 function _overlayUpdate() {
-  var bg      = document.getElementById('overlay-ctrl-bg');
-  var surface = document.getElementById('overlay-ctrl-surface');
-  var preview = document.getElementById('overlay-demo-preview');
+  var bg       = document.getElementById('overlay-ctrl-bg');
+  var surface  = document.getElementById('overlay-ctrl-surface');
+  var strength = document.getElementById('overlay-ctrl-strength');
+  var preview  = document.getElementById('overlay-demo-preview');
   if (!preview) return;
   preview.innerHTML = _overlayStageMarkup({
     bg: bg ? bg.value : 'light',
     surface: surface ? surface.value : 'sheet',
+    strength: strength ? strength.value : 'strong',
     dim: true
   });
 }
 
 /* ── Overlay Spec Cards (canonical) ──────────────────────────────── */
 var _overlaySpecCards = {
-  strong: { surface: 'sheet', bg: 'light' }
+  strong: { surface: 'sheet', bg: 'light', strength: 'strong' }
 };
 var _specCards = _overlaySpecCards;
 window._specCards = _specCards;
@@ -81,10 +86,13 @@ function buildComposeSnippet(type, card) {
   return getSnippet(type, 'compose', card);
 }
 function getSnippet(type, lang, card) {
+  var s = (card && card.strength) || 'strong';
+  var swiftCase = s;                                    // .weak / .default / .strong
+  var composeCase = s.charAt(0).toUpperCase() + s.slice(1); // Weak / Default / Strong
   if (lang === 'swift') {
-    return 'EBOverlay(isPresented: $showSheet)\n    .ebStrength(.strong) {\n    // content shown above the scrim\n}';
+    return 'EBOverlay(isPresented: $showSheet)\n    .ebStrength(.' + swiftCase + ') {\n    // content shown above the scrim\n}';
   }
-  return 'EBOverlay(\n    visible = showSheet,\n    onDismiss = { },\n    strength = EBOverlayStrength.Strong\n) {\n    // content shown above the scrim\n}';
+  return 'EBOverlay(\n    visible = showSheet,\n    onDismiss = { },\n    strength = EBOverlayStrength.' + composeCase + '\n) {\n    // content shown above the scrim\n}';
 }
 window.getSnippet = getSnippet;
 
@@ -99,6 +107,7 @@ function updateSpecCard(cardStyle, prop, value) {
     specPreview.innerHTML = _overlayStageMarkup({
       bg: card.bg || 'light',
       surface: card.surface || 'sheet',
+      strength: card.strength || 'strong',
       dim: true
     });
   }
@@ -125,10 +134,10 @@ window.updateSpecCard = updateSpecCard;
 
 function _overlayInit() {
   var ctx = document.getElementById('overlay-context-preview');
-  if (ctx) ctx.innerHTML = _overlayStageMarkup({bg:'light', surface:'sheet', dim:true});
+  if (ctx) ctx.innerHTML = _overlayStageMarkup({bg:'light', surface:'sheet', strength:'strong', dim:true});
   _overlayUpdate();
   var spec = document.getElementById('overlay-spec-preview');
-  if (spec) spec.innerHTML = _overlayStageMarkup({bg:'light', surface:'sheet', dim:true});
+  if (spec) spec.innerHTML = _overlayStageMarkup({bg:'light', surface:'sheet', strength:'strong', dim:true});
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _overlayInit);

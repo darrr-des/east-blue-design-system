@@ -3158,6 +3158,10 @@ input.demo-panel-input.demo-panel-select,
   inset: 0;
   background: rgba(2, 14, 34, 0.56);
 }
+/* Strength tiers — mirror Figma Strength = Weak | Default | Strong */
+.eb-preview-overlay-stage__dim--weak    { background: rgba(2, 14, 34, 0.24); }
+.eb-preview-overlay-stage__dim--default { background: rgba(2, 14, 34, 0.40); }
+.eb-preview-overlay-stage__dim--strong  { background: rgba(2, 14, 34, 0.56); }
 .eb-preview-overlay-stage__sheet {
   position: absolute;
   left: 0; right: 0; bottom: 0;
