@@ -12,6 +12,41 @@ The output is an updated `<slug>.ts` — specifically its **Open Issues, Design 
 
 ---
 
+# How to write it — plain language, always
+
+**This applies to everything: the tables in chat, the data file, and the rendered page.** Write so a design student understands it on first read. Say what's wrong, say what to do, stop.
+
+### Swap the jargon
+
+| Don't write | Write |
+|---|---|
+| axis / property axis | setting (a dropdown you pick from) |
+| variant | version (one combination of settings) |
+| slot | swappable area (a spot you drop your own content into) |
+| instance | copy of another component |
+| token | named color/size from the system |
+| orthogonal | independent — changing one doesn't affect the other |
+| parity | the same options on both sides |
+| consolidate the family | merge the components into one |
+
+### Rules
+
+1. **Cut every word you can.** "The pending toast shows a flat gray circle instead of a spinning loader" beats "The Pending appearance ships a `Placeholder` instance wrapping an `icon-placeholder` rectangle rather than an animated spinner."
+2. **Lead with the problem in the headline.** "The icon can't be swapped." not "Leading icon is a bare instance, not a slot."
+3. **One idea per sentence.** Break up anything with a semicolon or a dash-clause pile-up.
+4. **Say why it matters** when it isn't obvious — "so developers can wire them up directly."
+5. **Name the blocker plainly.** "Blocked until the design system has a spinner component" — not "blocked on a DS spinner component existing."
+6. **Recommendations are instructions.** Start with a verb: "Rename the duplicate layers." "Fill in the red version's gaps."
+7. **Don't hedge.** If it might be intentional, say so in one clause and move on.
+
+### What stays
+
+- **Criterion tags (C1–C6)** — they're how the site groups findings.
+- **Node IDs** — so the reviewer can jump straight to the layer in Figma.
+- **Property and layer names in `<code>`** — the real names, spelled exactly as Figma has them.
+
+---
+
 # The Component Review workflow
 
 ## Step 1 — Trigger
@@ -37,6 +72,8 @@ Figma Channel:   (the code from the Cursor Talk To Figma plugin)
 ## Step 3 — The AI returns the current assessment as tables
 
 The AI reads `astro-site/src/data/components/<slug>.ts` and prints the current Overview-tab items verbatim — nothing is validated yet, this is the baseline.
+
+> Everything printed from here on follows *How to write it — plain language, always* above.
 
 The site renders these as segmented tabs — **Open Issues │ Resolved** and **Design │ Applied**, each with a count (e.g. `Open Issues 1 · Resolved 9`). So the AI prints all four lists, giving the reviewer the full picture and the running counts. If a list is empty, it says so (`Resolved: none yet`).
 
