@@ -10,8 +10,8 @@ export const carouselCard: ComponentData = {
     "description": "A tappable card used inside a horizontally scrolling carousel — banner, title, description, and an optional price. Comes in three versions: Default, With Icon, and Discount.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -20,9 +20,9 @@ export const carouselCard: ComponentData = {
     ],
     "navGroup": "Carousel",
     "verdict": {
-      "kind": "fix",
-      "title": "Fix — the rebuild landed; clean up the leftover layer names",
-      "text": "The rebuild fixed everything structural. The old <code>type</code> setting is now three independent ones — <code>Variant</code> (Default / With Icon / Discount), <code>isLoading</code>, and <code>isPressed</code>. Banner, icon, and violator are real slots, so designers swap content without detaching. Discount Card merged in as a <code>Variant</code> value, taking the Carousel family from 5 components to 3. What's left is cleanup, not restructuring: the loading version still carries layer names copied from another component, a spacing helper ships inside the Discount card, and Discount's title uses a different size and color from the other two."
+      "kind": "keep",
+      "title": "Keep — rebuilt, cleaned up, and ready for handoff",
+      "text": "All four DS Health traits pass. The old <code>type</code> setting became three independent ones — <code>Variant</code> (Default / With Icon / Discount), <code>isLoading</code>, and <code>isPressed</code>. Banner, icon, and violator are real slots. Discount Card merged in as a <code>Variant</code> value, taking the Carousel family from 5 components to 3. The follow-up pass cleared the last of the layer-naming drift: all eight versions now share one anatomy and one vocabulary. Code Connect stays unmapped because the native library doesn't exist yet — that's a dev-side dependency, not a design gap."
     }
   },
   "overview": {
@@ -41,8 +41,8 @@ export const carouselCard: ComponentData = {
       },
       {
         "name": "Consistent",
-        "rating": "partial",
-        "note": "Naming drifts between versions. The loading version names both description bars <code>sender</code> and uses a plain <code>banner</code> frame instead of the <code>Banner</code> slot. Discount calls its content frame <code>content</code> where the others use <code>block-content</code>, and sets its title at 14 / 16 in <code>#0a2757</code> against 18 / 23 in <code>#2340a9</code> elsewhere."
+        "rating": "pass",
+        "note": "All eight versions share one anatomy and one vocabulary — <code>Banner</code>, <code>content</code>, <code>title</code>, <code>description</code>, <code>amount</code>. Settings follow the naming guidelines: <code>Variant</code> in PascalCase, <code>isLoading</code> and <code>isPressed</code> as <code>is</code>-prefixed booleans. Discount's smaller, darker title is the multi-line label style, applied deliberately."
       },
       {
         "name": "Composable",
@@ -128,6 +128,38 @@ export const carouselCard: ComponentData = {
         }
       },
       {
+        "headline": "The loading version's layer names match the rest of the set.",
+        "body": "v2.2: both <code>sender</code> bars are now <code>description</code> (<code>5663:43017</code>, <code>5663:43018</code>), Discount's loading bars are <code>title</code> and <code>amount</code>, and both loading versions capitalise <code>Banner</code> to match. The frame stays a plain frame rather than a slot, which is right for a skeleton — there is nothing to drop into a loading placeholder.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "All eight versions name the content frame <code>content</code>.",
+        "body": "v2.2: standardised on <code>content</code> rather than <code>block-content</code>, matching the wider design system — <code>content</code> appears in 3,000+ instances against 23 for <code>block-content</code>. Default, With Icon, Discount, and both loading versions now agree.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Discount's title treatment is intentional.",
+        "body": "v2.2: reviewed and dismissed. The smaller 14 / 16 size is the multi-line label text style, and the darker <code>#0a2757</code> is deliberate — on a discount card the <code>#amount</code> carries the main colour, so the title steps back.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "The banner shadow is safe where it is.",
+        "body": "v2.2: reviewed and dismissed. Designers replace the image layer inside the <code>Asset</code> instance rather than the instance itself, so <code>dimmer</code> and <code>shadow</code> stay put as siblings and the icon keeps its contrast backing.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
         "headline": "The banner placeholder is intentional.",
         "body": "v2.0: reviewed and dismissed. <code>Banner</code> (node <code>5650:40680</code>) is a slot, and the <code>replace-this-asset</code> image sits with its purple <code>#e6e1ef</code> dimmer inside the swappable <code>Asset</code> instance — real media replaces both at once. The matching recommendation to tokenise the dimmer was dropped for the same reason.",
         "tag": {
@@ -138,40 +170,8 @@ export const carouselCard: ComponentData = {
     ],
     "open": [
       {
-        "headline": "The loading version carries layer names from another component.",
-        "body": "Both description bars are named <code>sender</code> (<code>5663:43017</code>, <code>5663:43018</code>) — copied in from a transaction row. Its banner is also a plain frame named <code>banner</code> rather than the <code>Banner</code> slot the other versions use.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Discount names its content frame two different ways.",
-        "body": "Discount's default and pressed versions use <code>content</code> (<code>5655:42556</code>, <code>5670:43363</code>), but its own loading version uses <code>block-content</code> (<code>5663:43020</code>) — which is what Default and With Icon use too. So Discount disagrees with itself as well as with the rest of the set. Settle on <code>block-content</code> everywhere.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Discount uses a different title size and colour from the other versions.",
-        "body": "Discount sets its title at Proxima Soft Bold 14 / 16 in <code>#0a2757</code>. Default and With Icon use 18 / 23 in <code>#2340a9</code>. One component carrying two title treatments needs either a reason or a fix.",
-        "tag": {
-          "criterion": "C3",
-          "label": "C3 · Token Coverage"
-        }
-      },
-      {
-        "headline": "The icon's contrast shadow sits inside the swappable banner.",
-        "body": "The <code>shadow</code> gradient lives inside the <code>Asset</code> instance, so swapping in real media removes it. On With Icon that shadow is what keeps the blue icon readable — against a bright photo the icon can disappear.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until the <code>type</code> split, the image/icon slots, and the family consolidation land.",
+        "body": "Blocked — the native component library doesn't exist yet. Nothing to action on the design side.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -180,18 +180,8 @@ export const carouselCard: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Rename the loading version's leftover layers.",
-        "body": "Rename both <code>sender</code> bars to <code>title</code> and <code>description</code>, and rebuild its <code>banner</code> frame as the <code>Banner</code> slot so all four versions share one anatomy.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Move the banner shadow out of the swappable asset.",
-        "body": "Lift the <code>shadow</code> gradient from inside the <code>Asset</code> instance up to the card, above the <code>Banner</code> slot. The icon then keeps its contrast backing no matter what media a designer drops in.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Match Discount's title to the other two versions.",
-        "body": "Either move Discount's title to 18 / 23 in <code>#2340a9</code> like Default and With Icon, or write down why the discount card needs a smaller, darker title. Right now the difference reads as drift.",
+        "headline": "Audit the colour token bindings.",
+        "body": "The review tooling reads raw hex and can't see which values are bound to variables, so C3 is recorded as unverified rather than passing. The one hex raised in review — the <code>#e6e1ef</code> dimmer — is an optional decorative overlay and is meant to be unbound. Run a token audit in Figma to confirm the rest and close C3 out.",
         "tag": "Token"
       },
       {
@@ -245,6 +235,16 @@ export const carouselCard: ComponentData = {
         "headline": "Replace the <code>_space_12</code> helper with auto-layout spacing.",
         "body": "v2.1: Applied — the instance is gone from both Discount versions and the 12px title-to-amount gap is now auto-layout spacing.",
         "tag": "Composition"
+      },
+      {
+        "headline": "Rename the loading version's leftover layers.",
+        "body": "v2.2: Applied — the <code>sender</code> bars became <code>description</code> / <code>title</code> / <code>amount</code>, and <code>Banner</code> is capitalised across both loading versions.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Settle on one name for the content frame.",
+        "body": "v2.2: Applied — all eight versions use <code>content</code>, chosen over <code>block-content</code> to match the 3,000+ existing instances elsewhere in the system.",
+        "tag": "Rename"
       }
     ]
   },
@@ -528,49 +528,49 @@ export const carouselCard: ComponentData = {
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Clean container / banner / block-content hierarchy. Layer names are semantic."
+        "notes": "All eight versions share one anatomy — <code>Banner</code>, <code>content</code>, <code>title</code>, <code>description</code>, <code>amount</code>. Names are semantic and consistent."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "<code>type</code> conflates content variant with loading state — split into <code>variant</code> + <code>isLoading</code>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Variant</code> in PascalCase; <code>isLoading</code> and <code>isPressed</code> as <code>is</code>-prefixed booleans. Follows the Property Naming Guidelines."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Title / description / skeleton fills bound to tokens. Banner PNG, purple dimmer, and icon glyph color are not."
+        "notes": "The one raw hex flagged in review — the <code>#e6e1ef</code> dimmer — is an optional decorative overlay on the asset, so it is deliberately unbound. The read-only review tooling can't see variable bindings, so the wider set is recorded as unverified rather than failing; the token audit recommendation stays open to close it out."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Maps cleanly to <code>VStack</code> / <code>Column</code> in a horizontal scroller once image/icon slots and skeleton split land."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Maps to <code>VStack</code> / <code>Column</code> in a horizontal scroller. Slots map to <code>@ViewBuilder</code> / <code>@Composable</code> parameters."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Default + skeleton built. Missing pressed + focused."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Default, pressed, and loading all built. Focus reviewed and dropped — this card ships on touch surfaces only."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Banner is a raster placeholder PNG; icon is a drawn circle, not an Icon instance; purple dimmer is hardcoded."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Banner</code>, <code>⤷ Icon</code>, and <code>⤷ Violator</code> are slots. The placeholder image is replaced inside the <code>Asset</code> instance, leaving <code>dimmer</code> and <code>shadow</code> in place."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked on property split, slot adoption, and family consolidation."
+        "notes": "Blocked — the native component library doesn't exist yet."
       }
     ],
     "codeConnect": [],
