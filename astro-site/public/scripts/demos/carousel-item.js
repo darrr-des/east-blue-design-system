@@ -17,51 +17,73 @@ function _citEscape(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+/* Normalise legacy { mode, type, hasPreamble, hasTextLink } options onto the
+   current Size / Appearance / TopElement / isPressed schema, so the Style-tab
+   spec cards keep rendering until they are rebuilt. */
+function _citNormalise(opts) {
+  var o = opts || {};
+
+  /* Legacy `mode` was named for the TEXT colour; Appearance names the
+     SURFACE. mode=light (white text on dark art) === Appearance=Dark. */
+  var appearance = o.appearance;
+  if (!appearance && o.mode) appearance = o.mode === 'light' ? 'dark' : 'light';
+
+  var topElement = o.topElement;
+  if (!topElement) {
+    if (o.type === 'icon') topElement = 'icon';
+    else if (o.hasPreamble === 'yes') topElement = 'preamble';
+    else topElement = 'none';
+  }
+
+  return {
+    size:       o.size       || 'default',
+    appearance: appearance   || 'dark',
+    topElement: topElement,
+    isPressed:  o.isPressed === true || o.isPressed === 'true',
+    hasButton:  o.hasTextLink !== 'no',
+    preamble:   o.preamble || 'Preamble',
+    heading:    o.heading  || 'Heading',
+    desc:       o.desc     || 'This is a description for this banner.',
+    button:     o.button   || 'Button',
+    focus:      o.focus    || 'center'
+  };
+}
+
 function _citRender(opts) {
-  var mode         = opts.mode || 'light';              // light | dark
-  var type         = opts.type || 'default';            // default | icon | headline
-  var hasPreamble  = opts.hasPreamble === 'yes';
-  var hasTextLink  = opts.hasTextLink !== 'no';
-  var focus        = opts.focus || 'center';            // center | side — cosmetic for context preview
+  var o = _citNormalise(opts);
+  var onDark = o.appearance === 'dark';
 
-  var preamble = opts.preamble || 'Preamble';
-  var heading  = opts.heading  || 'Heading';
-  var desc     = opts.desc     || 'This is a description for this banner.';
-  var button   = opts.button   || 'Button';
+  var cls = 'eb-preview eb-preview-cit ';
+  cls += onDark ? 'eb-preview-cit--bg-dark' : 'eb-preview-cit--bg-light';
+  if (o.size === 'small') cls += ' eb-preview-cit--small';
+  if (o.focus === 'side') cls += ' eb-preview-cit--side';
 
-  // Light text = card sits on a DARK photo; we mock with blue gradient.
-  // Dark text  = card sits on a LIGHT photo; we mock with peach gradient.
-  var bgClass  = mode === 'light' ? 'eb-preview-cit--bg-dark' : 'eb-preview-cit--bg-light';
-  var focusCls = focus === 'side' ? ' eb-preview-cit--side' : '';
+  var headingColor  = onDark ? '#FFFFFF' : '#0A2757';
+  var descColor     = onDark ? 'rgba(246,249,253,0.8)' : '#6780A9';
+  var preambleColor = onDark ? 'rgba(246,249,253,0.8)' : 'rgba(7,37,146,0.6)';
+  var linkColor     = onDark ? '#FFFFFF' : '#005CE5';
 
-  var headingColor   = mode === 'light' ? '#FFFFFF' : '#0A2757';
-  var descColor      = mode === 'light' ? '#FFFFFF' : '#6780A9';
-  var preambleColor  = mode === 'light' ? 'rgba(246,249,253,0.8)' : 'rgba(7,37,146,0.6)';
-  var linkColor      = mode === 'light' ? '#FFFFFF' : '#005CE5';
-
-  var html = '<div class="eb-preview eb-preview-cit ' + bgClass + focusCls + '">';
+  var html = '<div class="' + cls + '">';
   html += '<div class="eb-preview-cit__hero"></div>';
+
+  /* Pressed drops a dim layer over the whole card (Overlay instance). */
+  if (o.isPressed) html += '<div class="eb-preview-cit__dim"></div>';
+
   html += '<div class="eb-preview-cit__content">';
 
-  if (hasPreamble) {
-    html += '<div class="eb-preview-cit__preamble" style="color:' + preambleColor + '">' + _citEscape(preamble) + '</div>';
-  }
-
-  if (type === 'icon') {
+  /* TopElement — what sits above the heading. */
+  if (o.topElement === 'icon') {
     html += '<div class="eb-preview-cit__icon"></div>';
+  } else if (o.topElement === 'preamble') {
+    html += '<div class="eb-preview-cit__preamble" style="color:' + preambleColor + '">' + _citEscape(o.preamble) + '</div>';
   }
 
-  html += '<div class="eb-preview-cit__heading" style="color:' + headingColor + '">' + _citEscape(heading) + '</div>';
+  html += '<div class="eb-preview-cit__heading" style="color:' + headingColor + '">' + _citEscape(o.heading) + '</div>';
+  html += '<div class="eb-preview-cit__desc" style="color:' + descColor + '">' + _citEscape(o.desc) + '</div>';
 
-  if (type !== 'headline' && type !== 'icon') {
-    html += '<div class="eb-preview-cit__desc" style="color:' + descColor + '">' + _citEscape(desc) + '</div>';
-  } else if (type === 'icon') {
-    html += '<div class="eb-preview-cit__desc" style="color:' + descColor + '">' + _citEscape(desc) + '</div>';
-  }
-
-  if (hasTextLink) {
+  if (o.hasButton) {
     html += '<div class="eb-preview-cit__link" style="color:' + linkColor + '">' +
-      '<span>' + _citEscape(button) + '</span>' +
+      '<span>' + _citEscape(o.button) + '</span>' +
       _citChevronSvg(linkColor) +
     '</div>';
   }
@@ -73,9 +95,9 @@ function _citRender(opts) {
 
 function _citContextMarkup() {
   return '<div class="eb-preview-cit-strip">' +
-    _citRender({mode:'light', type:'default', hasPreamble:'no', hasTextLink:'yes', focus:'side', heading:'Send Money', desc:'Abroad in minutes', button:'Learn more'}) +
-    _citRender({mode:'light', type:'default', hasPreamble:'yes', hasTextLink:'yes', focus:'center', preamble:'PROMO', heading:'New user bonus', desc:'₱50 cashback', button:'Claim'}) +
-    _citRender({mode:'dark',  type:'default', hasPreamble:'no', hasTextLink:'yes', focus:'side', heading:'Pay Bills', desc:'500+ billers', button:'View'}) +
+    _citRender({size:'small',   appearance:'dark',  topElement:'none',     focus:'side',   heading:'Send Money',    desc:'Abroad in minutes', button:'Learn more'}) +
+    _citRender({size:'default', appearance:'dark',  topElement:'preamble', focus:'center', preamble:'PROMO', heading:'New user bonus', desc:'₱50 cashback', button:'Claim'}) +
+    _citRender({size:'small',   appearance:'light', topElement:'icon',     focus:'side',   heading:'Pay Bills',     desc:'500+ billers', button:'View'}) +
   '</div>';
 }
 
@@ -83,15 +105,22 @@ function _citUpdate() {
   var get = function (id, fb) { var el = document.getElementById(id); return el ? el.value : fb; };
   var preview = document.getElementById('cit-demo-preview');
   if (!preview) return;
+
+  var topElement = get('cit-ctrl-topelement', 'icon');
+
+  /* Preamble text only applies when TopElement=Preamble. */
+  var preambleRow = document.getElementById('cit-row-preamble');
+  if (preambleRow) preambleRow.style.display = topElement === 'preamble' ? '' : 'none';
+
   preview.innerHTML = _citRender({
-    mode:        get('cit-ctrl-mode', 'light'),
-    type:        get('cit-ctrl-type', 'default'),
-    hasPreamble: get('cit-ctrl-haspreamble', 'no'),
-    hasTextLink: get('cit-ctrl-hastextlink', 'yes'),
-    preamble:    get('cit-ctrl-preamble', 'Preamble'),
-    heading:     get('cit-ctrl-heading', 'Heading'),
-    desc:        get('cit-ctrl-desc', 'This is a description for this banner.'),
-    button:      get('cit-ctrl-button', 'Button')
+    size:       get('cit-ctrl-size', 'default'),
+    appearance: get('cit-ctrl-appearance', 'dark'),
+    topElement: topElement,
+    isPressed:  get('cit-ctrl-ispressed', 'false'),
+    preamble:   get('cit-ctrl-preamble', 'Preamble'),
+    heading:    get('cit-ctrl-heading', 'Heading'),
+    desc:       get('cit-ctrl-desc', 'This is a description for this banner.'),
+    button:     get('cit-ctrl-button', 'Button')
   });
 }
 

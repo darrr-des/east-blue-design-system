@@ -14,7 +14,6 @@ import { bottomSheet } from './bottom-sheet';
 import { button } from './button';
 import { callout } from './callout';
 import { carouselCard } from './carousel-card';
-import { carouselDiscountCard } from './carousel-discount-card';
 import { carouselItem } from './carousel-item';
 import { chatField } from './chat-field';
 import { checkbox } from './checkbox';
@@ -100,7 +99,6 @@ export const componentMap: Record<string, ComponentData> = {
   'button': button,
   'callout': callout,
   'carousel-card': carouselCard,
-  'carousel-discount-card': carouselDiscountCard,
   'carousel-item': carouselItem,
   'chat-field': chatField,
   'checkbox': checkbox,
@@ -397,27 +395,11 @@ export const componentManifest = [
   {
     "slug": "carousel-card",
     "name": "Carousel Card",
-    "node": "23:121311",
+    "node": "5655:42547",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
-      },
-      {
-        "kind": "rework",
-        "label": "Requires Rework"
-      }
-    ],
-    "navGroup": "Carousel"
-  },
-  {
-    "slug": "carousel-discount-card",
-    "name": "Carousel - Discount Card",
-    "node": "18543:2761",
-    "badges": [
-      {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -428,9 +410,18 @@ export const componentManifest = [
   },
   {
     "slug": "carousel-item",
-    "name": "Carousel - Item",
-    "node": "",
-    "badges": [],
+    "name": "Carousel Item",
+    "node": "5776:37969",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
     "navGroup": "Carousel"
   },
   {
