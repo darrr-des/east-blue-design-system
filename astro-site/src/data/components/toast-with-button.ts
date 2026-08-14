@@ -42,15 +42,15 @@ export const toastWithButton: ComponentData = {
         "label": "Consolidate"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "na",
+        "label": "Not Applicable"
       }
     ],
     "navGroup": "Toast",
     "verdict": {
       "kind": "consolidate",
-      "title": "Consolidate — fold into the base Toast",
-      "text": "Remove this component from the family. Base Toast picks up <code>action?: EBToastAction</code> (label + callback) and <code>supportingText?: String</code> (the 10/15 BarkAda second line). Align width with base Toast (312 vs. 330 today) and swap the deprecated Button - Small/XS for Button - XSmall. Covers the \"Undo / Retry / View\" use cases and collapses two components into one."
+      "title": "Consolidate — merged into Toast",
+      "text": "This component no longer exists on its own. Its trailing button is now a <code>hasTrailingAction</code> boolean on <a href=\"/components/toast\">Toast</a> (node <code>4915:25141</code>), with the button in a swappable <code>addon</code> slot. Assessment for this pattern lives on the Toast page."
     }
   },
   "overview": {
@@ -60,22 +60,22 @@ export const toastWithButton: ComponentData = {
       {
         "name": "Reusable",
         "rating": "partial",
-        "note": "Drops into reversible-action moments (Undo, Retry, View). But the narrow axis set (no error, no pending, no icon) means it can't replace the base Toast for most feedback moments — consumers pick the wrong component half the time."
+        "note": "Historical rating from the standalone assessment. This component is merged into Toast — see that page for the current DS Health."
       },
       {
         "name": "Self-contained",
         "rating": "warn",
-        "note": "Embeds the <code>.[DEPRECATED] Button - Small/XS</code> instance (scheduled for deletion). When that source is removed, this component breaks. Owns its surface tokens, but its action surface is borrowed from a deprecated source."
+        "note": "Historical rating from the standalone assessment. This component is merged into Toast — see that page for the current DS Health."
       },
       {
         "name": "Consistent",
         "rating": "fail",
-        "note": "Exists as a parallel component for what should be a property on Toast. <code>type=default|light</code> here vs. base Toast's <code>type=default|pending|error</code> and <code>theme=default|light|dark</code> — same axis name, incompatible value sets. Width is 330; base Toast is 312."
+        "note": "Historical rating from the standalone assessment. This component is merged into Toast — see that page for the current DS Health."
       },
       {
         "name": "Composable",
         "rating": "warn",
-        "note": "The action is baked in as a fixed Button instance — consumers can't swap it for a text-only link, an icon button, or disable/load it. A real slot would let consumers compose the action they need."
+        "note": "Historical rating from the standalone assessment. This component is merged into Toast — see that page for the current DS Health."
       }
     ],
     "behavior": [
@@ -115,123 +115,18 @@ export const toastWithButton: ComponentData = {
         "notes": "The default text in the instance is literally \"Label\". Needs a content contract and an accessibility label override."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Separate component for a button slot that should be a prop on the base Toast.",
-        "body": "Material's Snackbar, SwiftUI's <code>.alert(actions:)</code>, and every other mature DS handle this as an optional action parameter — not a sibling record. Maintaining two components doubles the surface area of every future change and invites drift (different widths, different type sets).",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Axis names + values drift from the base Toast.",
-        "body": "Base Toast exposes <code>type = default | pending | error</code> + <code>theme = default | light | dark</code>. This sibling exposes <code>type = default | light</code> — same axis name, narrower value set, collides on meaning. Consumers wiring Code Connect can't treat them as the same prop.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "<code>description=yes|no</code> is a slot + sizing flag bundled into a string.",
-        "body": "When description is present, vertical padding grows from 8 to 12 and a 4 px gap is inserted below the label. The trigger should be the presence of supporting-text content (<code>supportingText?: String</code>), not a hard-coded variant.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Action surface uses the deprecated Button - Small/XS.",
-        "body": "The embedded Button instance (node <code>21:164490</code>) is marked <strong>DEPRECATED</strong> in Figma, slated for deletion. When that source is removed, every variant of this toast breaks. Must re-link to Button - XSmall.",
+        "headline": "Merged into Toast.",
+        "body": "v2.0: Confirmed by the component owner — Toast - With Button no longer exists as a standalone component. Its trailing button is now a <code>hasTrailingAction</code> boolean on <a href=\"/components/toast\">Toast</a> (node <code>4915:25141</code>), with the button itself living in an <code>addon</code> slot so it can be swapped without detaching. This page is kept as a pointer; all assessment for this pattern lives on Toast. (Family)",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
-      },
-      {
-        "headline": "No icon axis at all.",
-        "body": "Base Toast has <code>With Icon = yes | no</code>. This sibling drops the axis entirely — you can't have an actionable toast with a leading checkmark or error glyph. Merging into Toast recovers the icon automatically.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "Whole-container tap overlaps the action button.",
-        "body": "The <code>default, description=no</code> variant wraps the entire toast in a <code>&lt;button&gt;</code> element, while the inner action is also a button — two conflicting tap targets stacked. Behavior is undefined when the user taps the non-action area.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Action has no states.",
-        "body": "No pressed, disabled, or loading state on the action. \"Retry\" actions commonly need a spinner after tap; destructive \"Undo\" often needs to grey out during processing. Not modeled.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Width 330 vs. base Toast 312.",
-        "body": "Inconsistent with the base Toast's fixed width. A single consolidated component picks one width (recommend 312, matching the rest of the family).",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Code Connect mappings not registered.",
-        "body": "Blocked on consolidation — there should be no separate Code Connect entry; the action slot maps to the base Toast's <code>action</code> parameter.",
-        "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
-        }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Consolidate into the base Toast.",
-        "body": "Remove Toast - With Button from the family. Base Toast picks up two new optional slots: <code>supportingText?: String</code> (the 10/15 BarkAda second line) and <code>action?: EBToastAction</code> (label + callback, with optional loading and disabled states). One component, covers every use case today and the ones this sibling misses (actionable error, actionable with icon).",
-        "tag": "Family"
-      },
-      {
-        "headline": "Migrate the action surface to Button - XSmall.",
-        "body": "The embedded Button - Small/XS is marked deprecated in Figma. Rebind the action instance to the canonical Button - XSmall before the deprecated source is deleted — otherwise every variant breaks.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Replace <code>description=yes|no</code> with a supporting-text slot.",
-        "body": "Promote the second text line to an optional content slot. The padding and gap changes follow from the slot being populated — no duplicate variants required.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Normalize width to 312.",
-        "body": "Match the base Toast. One width across the family.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Define the action's state contract.",
-        "body": "Spec pressed / disabled / loading states on the action slot so \"Retry\" and \"Undo\" flows can reflect processing state.",
-        "tag": "State"
-      },
-      {
-        "headline": "Resolve the whole-container tap conflict.",
-        "body": "Decide: either the toast is dismiss-on-tap (drop the action as the only interactive surface), or the action owns the only tappable region. Pick one and drop the root <code>&lt;button&gt;</code> wrapper from the other variants.",
-        "tag": "State"
-      },
-      {
-        "headline": "Document auto-dismiss suppression when an action is present.",
-        "body": "A toast with an action stays visible until the user taps the action or explicitly dismisses. Call this out as a usage note.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Document the A11y announcement mapping.",
-        "body": "Action label feeds <code>accessibilityLabel</code> (iOS) / <code>contentDescription</code> (Android). Live region polite for neutral, assertive if consolidated into a destructive Toast.",
-        "tag": "A11y"
-      }
-    ]
+    "open": [],
+    "recommendations": []
   },
   "style": {
     "heading": "Types",

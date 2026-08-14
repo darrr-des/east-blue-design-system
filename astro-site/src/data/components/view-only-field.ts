@@ -41,8 +41,8 @@ export const viewOnlyField: ComponentData = {
   "meta": {
     "slug": "view-only-field",
     "name": "View Only Field",
-    "node": "18403:4520",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18403-4520",
+    "node": "4996:25507",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4996-25507",
     "description": "A read-only form field showing a label and value; non-interactive.",
     "badges": [
       {
@@ -50,15 +50,15 @@ export const viewOnlyField: ComponentData = {
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "navGroup": "Form Elements",
     "verdict": {
-      "kind": "refine",
-      "title": "Minor refinements before handoff",
-      "text": "Property <code>variant</code> is overloaded with 4 trailing content types — consider renaming to <code>trailingContent</code> (C2). Checkmark uses raster IMG instead of a vector icon (C6)."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4996:25507</code> in the 2026 Working File as <code>TrailingContent</code> (4) × <code>Size</code> (2) × <code>State</code> (3) = <strong>24 variants</strong>, all uniquely named. Property and layer naming follow the guidelines throughout, the raster checkmark is gone, and every variant composes the shared <code>Subtext Message</code> instance for its helper, error and warning copy. <code>Label</code> and <code>Value</code> are exposed as text properties, and the two internal wrapper frames keep working names by design. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -78,8 +78,8 @@ export const viewOnlyField: ComponentData = {
       },
       {
         "name": "Consistent",
-        "rating": "partial",
-        "note": "Property <code>variant</code> is overloaded — conflates 4 different trailing content types (none/badge/textLink/icon) into one enum. Should be renamed to <code>trailingContent</code>. <code>Size=Default</code> isn't a size name — should be <code>Regular</code>."
+        "rating": "pass",
+        "note": "<code>TrailingContent</code>, <code>Size</code> and <code>State</code> all follow the Property Naming Guidelines, all 24 variants are uniquely named, and the text layers are <code>Label</code> and <code>Value</code> per §3 — both exposed as text properties. The two internal auto-layout wrappers keep working names by design."
       },
       {
         "name": "Composable",
@@ -92,28 +92,28 @@ export const viewOnlyField: ComponentData = {
         "state": "Default",
         "ios": "yes",
         "android": "yes",
-        "property": "variant=Default",
+        "property": "TrailingContent=None",
         "notes": "Label + value only, no trailing slot."
       },
       {
-        "state": "with Badge",
+        "state": "Trailing badge",
         "ios": "yes",
         "android": "yes",
-        "property": "variant=with Badge",
+        "property": "TrailingContent=Badge",
         "notes": "Badge instance in the trailing slot (e.g. \"Change\" status chip)."
       },
       {
-        "state": "with Text Link",
+        "state": "Trailing link",
         "ios": "yes",
         "android": "yes",
-        "property": "variant=with Text Link",
+        "property": "TrailingContent=Link",
         "notes": "Text link in the trailing slot (e.g. \"What is this?\" contextual help)."
       },
       {
-        "state": "with Icon",
+        "state": "Trailing icon",
         "ios": "yes",
         "android": "yes",
-        "property": "variant=with Icon",
+        "property": "TrailingContent=Icon",
         "notes": "Edit icon (pencil) in the trailing slot — typically navigates to an editable state."
       },
       {
@@ -131,35 +131,84 @@ export const viewOnlyField: ComponentData = {
         "notes": "Shows a subtext message below the value (e.g. \"Message content\" helper text)."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Property <code>variant</code> is overloaded.",
-        "body": "Conflates 4 different trailing content types (none, badge, text link, icon) into a single enum. Better expressed as a <code>trailingContent</code> property with semantic values, or split into separate boolean properties per slot.",
+        "headline": "Overloaded <code>variant</code> property renamed.",
+        "body": "v2.0: Rebuilt on node <code>4996:25507</code> in the 2026 Working File. The catch-all <code>variant</code> enum is now <code>TrailingContent = None | Badge | Link | Icon</code> — PascalCase per §1, semantic values, and a clean 1:1 native enum mapping. (C2 · Rename)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "Property value <code>Size=Default</code> isn't a size name.",
-        "body": "\"Default\" describes the starting state, not a size. Rename to <code>Regular</code> (or <code>Small</code>) for consistency with standard size naming across the DS.",
+        "headline": "Size values aligned to the standard scale.",
+        "body": "v2.0: <code>Size=Default</code> — which described a starting state rather than a size — is now <code>Size = SM | LG</code>, matching §5's <code>XS · SM · MD · LG · XL</code> set and the values Amount Text Field uses. (C2 · Rename)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "Checkmark is a raster image.",
-        "body": "Uses <code>imgCheck</code> from Figma CDN instead of a vector icon instance. Replace with a vector from the DS icon library for clean cross-platform rendering at any DPI.",
+        "headline": "Checkmark converted to a vector.",
+        "body": "v2.0: The <code>imgCheck</code> CDN raster is gone. The checkmark still exists as a <code>check</code> vector group inside a <code>Checkmark</code> frame (<code>4996:25514</code>), hidden by default — so it renders crisply at any density when shown. (C6 · Asset)",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
+        "headline": "Error and Warning states added and made selectable.",
+        "body": "v2.1: <code>State = Default | Error | Warning</code> is now a real third axis, giving <code>TrailingContent</code> (4) × <code>Size</code> (2) × <code>State</code> (3) = <strong>24 uniquely-named variants</strong>. An intermediate pass had all 24 authored but only 8 distinct names — three groups shared identical <code>TrailingContent × Size</code> names and differed only by their <code>Subtext Message</code> state, so Figma treated them as conflicts and consumers had no way to select Error or Warning. Naming the axis made two-thirds of the component reachable. (C2 · State)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Text layers renamed to <code>Label</code> and <code>Value</code>.",
+        "body": "v2.2: <code>#label</code> → <code>Label</code> and <code>#text</code> → <code>Value</code>, matching §3 Form-content definitions exactly. Sampled across four variants spanning all three State groups and both sizes. Sets up the text properties, whose names default from the layer names. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Label</code> and <code>Value</code> confirmed exposed as text properties.",
+        "body": "v2.2: Closed on owner confirmation — both are exposed, so consumers set copy from the instance panel without detaching. Not independently verifiable from the assessment tooling, which cannot read component property definitions. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Wrapper frame names confirmed intentional.",
+        "body": "v2.2: Closed by owner decision — <code>content-container</code> and <code>text-container</code> stay as they are. They are internal auto-layout wrappers with no property or override surface, so their names never reach a consumer or a Code Connect mapping; the guidelines govern property names rather than layer names. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>container</code> renamed to <code>FieldRow</code>.",
+        "body": "v2.1: Verified by exact string match across all 24 variants — no trailing whitespace and no leftovers. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Composes the shared <code>Subtext Message</code> instance.",
+        "body": "v2.0: Every variant carries a <code>Subtext Message</code> instance for its helper, error and warning copy, so that anatomy propagates from one source rather than being re-authored. Same pattern as Text Area and Upload File. (Composition)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "open": [
+      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until the <code>variant</code> rename and asset fix land.",
+        "body": "Blocked — no native library exists yet. The schema is clean and ready to map when one does: three enums (<code>TrailingContent</code>, <code>Size</code>, <code>State</code>) and a composed subtext instance.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -168,29 +217,9 @@ export const viewOnlyField: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Rename <code>variant</code> to <code>trailingContent</code>.",
-        "body": "Values: <code>none</code> / <code>badge</code> / <code>textLink</code> / <code>icon</code>. Clearer intent, cleaner native enum mapping, no invalid combinations.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Rename <code>Size=Default</code> to <code>Size=Regular</code>.",
-        "body": "(Or <code>Size=Small</code>, depending on where it sits in the size scale.) Aligns with the Small/Medium/Large convention other components use.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Replace the raster checkmark with a vector icon instance.",
-        "body": "Drop in a real Icon from the DS icon library — ensures crisp rendering at any DPI on iOS and Android.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Expose <code>label</code>, <code>value</code>, and <code>description</code> as text overrides.",
-        "body": "Designers can then customize copy without editing the master component.",
+        "headline": "Surface the <code>Subtext Message</code> copy via nested instances.",
+        "body": "<code>Label</code> and <code>Value</code> are exposed as text properties on the component itself, but the helper, error and warning copy lives inside the nested <code>Subtext Message</code> instance. Selecting that instance and surfacing its text property through <em>nested instances</em> would make all three editable from a single panel rather than requiring designers to drill into the nested layer. Optional — the copy is already editable as an instance override, just less discoverable.",
         "tag": "Property"
-      },
-      {
-        "headline": "Add an error/warning state.",
-        "body": "Read-only fields sometimes need to convey validation status (e.g. \"verification pending\", \"expired\"). A <code>status</code> prop covering <code>none</code> / <code>warning</code> / <code>error</code> makes this explicit.",
-        "tag": "State"
       }
     ]
   },
