@@ -32,24 +32,24 @@ export const textArea: ComponentData = {
   "meta": {
     "slug": "text-area",
     "name": "Text Area",
-    "node": "3070:21245",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=3070-21245",
+    "node": "4781:35856",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4781-35856",
     "description": "A multi-line text input for longer-form entry — label, body, and character counter.",
     "badges": [
       {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "navGroup": "Form Elements",
     "verdict": {
-      "kind": "consolidate",
-      "title": "Consolidate into Input Field",
-      "text": "Text Area duplicates Input Field's State × isFilled schema with identical tokens (renamed under <code>main/text-area/*</code>). SwiftUI exposes multi-line via <code>axis: .vertical</code> on <code>TextField</code>; Compose exposes it via <code>singleLine=false</code>. Fold into Input Field with a <code>multiline</code> / <code>lineLimit</code> prop so the DS maps 1:1 to the native primitive."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4781:35856</code> in the 2026 Working File as <code>State</code> (4) × <code>hasValue</code> (2) = <strong>8 variants</strong>, confirmed standalone rather than folded into Input Field. The structural work is done: property naming follows the guidelines, the desktop resize handle is gone, colors come from the shared generic token scale, the layer tree is clean, and the component composes <code>FormGroup Header</code> and <code>Subtext Message</code> instances. Sample content matches the <code>hasValue</code> flag in all eight variants. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -59,23 +59,23 @@ export const textArea: ComponentData = {
     "traits": [
       {
         "name": "Reusable",
-        "rating": "warn",
-        "note": "Works anywhere multi-line text is needed, but duplicates Input Field's State × isFilled schema. Reuse is better served by extending Input Field with a <code>multiline</code> flag than by shipping a parallel component."
+        "rating": "pass",
+        "note": "Works anywhere multi-line text is needed, carries its own label and supporting-text anatomy, and is confirmed as a standalone component. The <code>State × hasValue</code> schema mirrors Input Field's by design — family consistency rather than duplication."
       },
       {
         "name": "Self-contained",
-        "rating": "partial",
-        "note": "Carries its own border, fill, and text styles per state. No <code>label</code> slot, no <code>helperText</code>/error-message slot, no <code>characterCount</code> slot — validation and labeling are pushed onto every consuming screen."
+        "rating": "pass",
+        "note": "Carries its own border, fill, and text styles per state, plus a <code>FormGroup Header</code> for labelling and a <code>Subtext Message</code> for supporting copy and the character count. Nothing external required to render a complete field."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "<code>isFilled=yes/no</code> (C2, same anti-pattern Input Field already fixed). <code>state=active</code> instead of <code>focused</code> matches Input Field but diverges from the broader DS verb set. Tokens duplicated under <code>main/text-area/*</code> with identical values to <code>main/input-field/*</code>."
+        "rating": "pass",
+        "note": "<code>State=Focused</code> matches Search Field, <code>hasValue</code> follows the <code>has</code>-prefix convention for content presence, <code>Error</code> on the State axis is a confirmed family-level exception, colors come from the shared generic token scale, and sample content matches the <code>hasValue</code> flag in all eight variants."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Nests in form layouts, but has no sibling wrapper (no Labeled Text Area) and no slot contract for icons or character count. The <code>expand-icon</code> frame holds a fixed raster glyph rather than a swappable node."
+        "rating": "pass",
+        "note": "Composes shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances, so label and supporting-text changes propagate from one source across the family rather than being re-authored per component."
       }
     ],
     "behavior": [
@@ -83,81 +83,130 @@ export const textArea: ComponentData = {
         "state": "Default",
         "ios": "yes",
         "android": "yes",
-        "property": "state=default",
-        "notes": "1px #D7E0EF border, white bg. Resize glyph shown."
+        "property": "State=Default",
+        "notes": "1px #D7E0EF border, white bg. No resize glyph — removed in v2.2."
       },
       {
-        "state": "Active (Focused)",
+        "state": "Focused",
         "ios": "yes",
         "android": "yes",
-        "property": "state=active",
-        "notes": "2px #005CE5 border. Should rename to <code>focused</code> to match platform vocabulary."
+        "property": "State=Focused",
+        "notes": "#005CE5 border. Matches SwiftUI <code>@FocusState</code> / Compose <code>FocusRequester</code> vocabulary."
       },
       {
         "state": "Error",
         "ios": "yes",
         "android": "yes",
-        "property": "state=error",
-        "notes": "2px #D61B2C border. No inline error-message slot."
+        "property": "State=Error",
+        "notes": "#D61B2C border. Validation copy goes in the <code>Subtext Message</code> row below."
       },
       {
         "state": "Disabled",
         "ios": "yes",
         "android": "yes",
-        "property": "state=disabled",
+        "property": "State=Disabled",
         "notes": "#EEF2F9 bg, border hidden, text #C2CFE5."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Boolean property uses Yes/No.",
-        "body": "<code>isFilled=yes/no</code> cannot map to Swift <code>Bool</code> or Kotlin <code>Boolean</code> without a translation layer. Input Field already fixed this — Text Area should follow.",
+        "headline": "Boolean property migrated to True/False.",
+        "body": "v2.0: Rebuilt on node <code>4781:35856</code> in the 2026 Working File. <code>isFilled</code> is now a real Figma boolean with <code>True/False</code> values, mapping directly to Swift <code>Bool</code> / Kotlin <code>Boolean</code>. Matches the fix Input Field shipped in 1.1.0. (C2 · Rename)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "Desktop resize-handle glyph baked into a mobile component.",
-        "body": "The <code>text-area icon</code> (12×12px, bottom-right) mirrors the browser-only <code>resize: both</code> affordance. Native <code>TextField(axis: .vertical)</code> / <code>OutlinedTextField(maxLines = n)</code> auto-grow without a user-facing handle — the glyph has no native equivalent and should not ship in mobile variants.",
+        "headline": "<code>State=Active</code> renamed to <code>Focused</code>.",
+        "body": "v2.0: The interaction axis is now <code>State = Default | Focused | Error | Disabled</code>, matching SwiftUI <code>@FocusState</code> / Compose <code>FocusRequester</code> vocabulary and the <code>Focused</code> value in §5 of the Property Naming Guidelines. Consistent with Search Field. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Label and supporting-text slots added.",
+        "body": "v2.0: Each variant now composes a <code>FormGroup Header</code> instance above the field and a <code>Subtext Message</code> instance below it, so labelling and validation copy are part of the component rather than re-implemented per screen. Delivered as shared instances rather than bespoke slots — a better outcome than recommended. (C5 · Slot)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Character-count affordance added.",
+        "body": "v2.0: The <code>Subtext Message</code> instance carries a trailing counter (<code>0/100</code>) alongside the supporting-text row, matching Material 3's <code>supportingText</code> + <code>counter</code> pattern. The DS can now represent limit state. (C5 · Slot)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Confirmed as a standalone component.",
+        "body": "v2.1: Closed by owner decision — Text Area stays its own component rather than folding into Input Field as a <code>multiline</code> flag. The original consolidation case rested on Text Area duplicating Input Field's schema with no anatomy of its own; it now composes shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances and owns a character-count affordance Input Field doesn't need. The parallel <code>State × isFilled</code> schema is deliberate family consistency, not duplication. (Family)",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
       },
       {
-        "headline": "Resize handle is a raster PNG, once per state.",
-        "body": "Four separate PNG assets are referenced for the same 12×12px glyph. Even if the handle survives, it should be a single vector instance tinted by <code>main/text-area/color/&#123;state&#125;/icon-resizer</code>.",
+        "headline": "<code>State=Error</code> exception confirmed.",
+        "body": "v2.1: Closed by owner decision at family level — <code>Error</code> stays on the <code>State</code> axis across Form Elements as a deliberate exception to the State/Status rule, matching how most design systems model form-field validation. Keeps Text Area at 8 variants rather than the 12 a split would require. Applies equally to Search Field and Amount Text Field. (C2 · Property)",
         "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "No <code>label</code> or <code>helperText</code> slot.",
-        "body": "Labels and validation messages are handled by the consumer, so every screen re-implements the anatomy. Native multi-line text fields expose both as first-class parameters.",
+        "headline": "Desktop resize handle removed.",
+        "body": "v2.2: The <code>text-area icon</code> frame is gone from all eight variants, taking the browser-only <code>resize: both</code> affordance with it. Native <code>TextField(axis: .vertical)</code> / <code>OutlinedTextField(maxLines = n)</code> auto-grow without a user-facing grip, so the component now maps cleanly. Field heights normalised to 50px and every variant is a uniform 94px tall. Also closes the raster-vs-vector question, which is moot now the glyph is gone. (C4 · C6 · Asset)",
         "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
         }
       },
       {
-        "headline": "No <code>characterCount</code> / limit affordance.",
-        "body": "Multi-line entry is the canonical use case for character limits (comments, reviews, message composers). There is no count slot and no <code>maxLength</code> hook — the DS cannot represent limit state today.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Tokens duplicated under <code>main/text-area/*</code>.",
-        "body": "Every value in <code>main/text-area/color/*</code> mirrors <code>main/input-field/color/*</code> exactly. If Text Area folds into Input Field, this namespace collapses; if it stays, the two token sets should alias a shared <code>main/field/*</code> collection to prevent drift.",
+        "headline": "Token namespace resolved — generic tokens applied.",
+        "body": "v2.2: Closed by owner confirmation. The component-scoped <code>main/text-area/*</code> namespace was dropped in favour of the shared generic token scale, so there is no longer a parallel token set that can drift from <code>main/input-field/*</code>. Same direction Search Field took. (C1 · Token)",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
         }
       },
+      {
+        "headline": "Character counter corrected in the filled variants.",
+        "body": "v2.2: The four <code>hasValue=True</code> variants now read <code>71/100</code>, matching their body copy, instead of the previous <code>0/100</code>. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Boolean renamed <code>isFilled</code> → <code>hasValue</code>.",
+        "body": "v2.3: The variant axis is now <code>State</code> × <code>hasValue</code>. Resolves the catalog gap in the right direction — §2 assigns the <code>has</code> prefix to presence of content, and <code>hasValue</code> pairs with the <code>Value</code> text property in §3, where <code>isFilled</code> read as a visual descriptor. Input Field and Amount Text Field should follow so the family stays aligned. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Nested duplicate <code>text-container</code> removed.",
+        "body": "v2.3: <code>text-container</code> now holds <code>#text-label</code> directly in every variant — the redundant same-size wrapper inside it is gone, and the layer tree is unambiguous. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Sample content matches <code>hasValue</code> in all eight variants.",
+        "body": "v2.4: Every <code>hasValue=False</code> variant now reads <em>Write your message…</em> with a <code>0/100</code> counter, and every <code>hasValue=True</code> variant carries the body sentence with <code>71/100</code> — verified across all eight by text scan. Field heights follow the content: 34px for one line of placeholder, 50px for two lines of copy. Closes the last C1 finding. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "open": [
       {
         "headline": "Code Connect mappings not registered.",
         "body": "Blocked by property naming and the multi-line-vs-Input Field decision. Cannot register until the family shape is finalized.",
@@ -169,35 +218,20 @@ export const textArea: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Fold Text Area into Input Field as a <code>multiline</code> / <code>lineLimit</code> prop.",
-        "body": "SwiftUI models this as <code>TextField(text:, axis: .vertical).lineLimit(3...6)</code>; Compose models it as <code>OutlinedTextField(singleLine = false, maxLines = 6)</code>. Both are the same primitive with a single flag. Mirroring that in Figma collapses 8 variants into 0 net new variants on Input Field (add a <code>multiline</code> boolean to the existing 8-variant matrix) and removes the duplicated token namespace.",
+        "headline": "Propagate the <code>hasValue</code> rename across Form Elements.",
+        "body": "Text Area now uses <code>hasValue</code>; Input Field still uses <code>isFilled</code>, so the family is split mid-migration. Rename it in the property panel — one operation — then add <code>hasValue</code> to the approved boolean catalog with a definition (\"the field currently holds a value\") so it stops reading as an invented term. Amount Text Field is unaffected: its axes are <code>Size</code> × <code>State</code>, with no content-presence boolean at all.",
         "tag": "Family"
       },
       {
-        "headline": "Rename <code>isFilled</code> to use <code>true/false</code>.",
-        "body": "Same fix Input Field already shipped in 1.1.0. Required for Swift <code>Bool</code> / Kotlin <code>Boolean</code> mapping.",
-        "tag": "Rename"
+        "headline": "Add <code>isFilled</code> to the approved boolean catalog.",
+        "body": "Governance, not a Figma change. <code>isFilled</code> is used by Input Field, Text Area and Amount Text Field but isn't in the published <code>is*</code> catalog, so every component using it technically diverges from §2. Add it with a definition (\"the field currently holds a value\") so the family stops being flagged for it.",
+        "tag": "Docs"
       },
       {
-        "headline": "Rename <code>state=active</code> to <code>state=focused</code>.",
-        "body": "Matches SwiftUI <code>@FocusState</code> and Compose <code>FocusRequester</code> vocabulary. Apply to Input Field and the whole Form Elements family at once so the rename lands once.",
-        "tag": "Rename"
+        "headline": "Fix the character-count sample content.",
+        "body": "Update the <code>Subtext Message</code> counter in the four <code>hasValue=True</code> variants so it matches the visible body text rather than reading <code>0/100</code> against a full field.",
+        "tag": "Docs"
       },
-      {
-        "headline": "Drop the desktop resize handle on mobile variants.",
-        "body": "If Text Area survives as a sibling, remove the <code>expand-icon</code> frame — it has no native equivalent on iOS/Android. Keep it only if a web/desktop DS variant is in scope, gated behind a platform axis.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Add a <code>helperText</code> slot and a <code>characterCount</code> slot beneath the field.",
-        "body": "Multi-line is the canonical character-count surface. Expose a supporting-text row that can host either error copy, hint copy, or a count — matching Material 3's <code>supportingText</code> / <code>counter</code> pattern. If Text Area folds into Input Field, this slot lives on Input Field and serves both single- and multi-line.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Alias <code>main/text-area/*</code> to a shared <code>main/field/*</code> collection.",
-        "body": "If the family stays split for any reason, the two token sets must reference a single source so border/bg/placeholder/disabled colors never drift. Preferable outcome: delete <code>main/text-area/*</code> outright after consolidation.",
-        "tag": "Token"
-      }
     ]
   },
   "style": {

@@ -57,23 +57,23 @@ export const counter: ComponentData = {
   "meta": {
     "slug": "counter",
     "name": "Counter",
-    "node": "18482:71321",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18482-71321",
+    "node": "4675:21497",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4675-21497",
     "description": "A small numeric badge used to display unread or pending counts on icons and rows.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
-      "kind": "fix",
-      "title": "Fix — parameterize values and clean boolean naming",
-      "text": "Both formats (single-integer + slash) belong. The fixes are: rename <code>with limit</code> → <code>hasLimit</code> with <code>true/false</code>; parameterize <code>count: Int</code> and <code>limit: Int?</code>; add <code>99+</code> overflow handling. Variant count stays at 4."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4675:21497</code> in the 2026 Working File and cleared through v2.4. <code>State</code> and <code>hasLimit</code> follow the Property Naming Guidelines; all four variants are dimensionally consistent; every frame and text layer carries a correct semantic name (<code>Count</code> ×4, <code>Separator</code> ×2, <code>Limit</code> ×2, <code>Plus</code> ×2, <code>LimitGroup</code> ×2). <code>Count</code> and <code>Limit</code> are exposed as text properties and the <code>Overflow</code> affordance is property-bound. All four DS Health traits pass. The only item still open is Code Connect registration, blocked until the native library exists. Variant count stays at 4."
     }
   },
   "overview": {
@@ -92,8 +92,8 @@ export const counter: ComponentData = {
       },
       {
         "name": "Consistent",
-        "rating": "partial",
-        "note": "<code>with limit</code> uses <code>yes/no</code> strings instead of <code>true/false</code>. Count/limit values are hardcoded text — not usable for real counts without detaching."
+        "rating": "pass",
+        "note": "<code>State</code> and <code>hasLimit</code> follow the Property Naming Guidelines, all four variants are dimensionally consistent, and every frame and text layer carries a correct, distinct semantic name — <code>Count</code>, <code>Separator</code>, <code>Limit</code>, <code>Plus</code>, <code>LimitGroup</code>."
       },
       {
         "name": "Composable",
@@ -103,35 +103,35 @@ export const counter: ComponentData = {
     ],
     "behavior": [
       {
-        "state": "Empty",
+        "state": "Default",
         "ios": "yes",
         "android": "yes",
-        "property": "state=empty",
-        "notes": "Count is 0. Muted label, same bg. Used to indicate \"nothing pending\"."
+        "property": "State=Default",
+        "notes": "Brand-blue label (#072592) on the neutral chip. The normal presentation."
       },
       {
-        "state": "Filled",
+        "state": "Disabled",
         "ios": "yes",
         "android": "yes",
-        "property": "state=filled",
-        "notes": "Count is greater than 0. Brand-blue label, same bg. Used when there's activity to surface."
+        "property": "State=Disabled",
+        "notes": "Muted label (#C2CFE5) on the same bg. Documented as a disabled <em>context</em> — a Counter sitting inside a disabled row or field. Zero-count styling is no longer modeled as a variant; derive it from <code>count</code> in code."
       },
       {
         "state": "With limit",
         "ios": "yes",
         "android": "yes",
-        "property": "with limit=yes",
+        "property": "hasLimit=True",
         "notes": "Renders \"N / M\" (e.g. \"3 / 10\") — for slot/limit displays like \"beneficiaries used\"."
       },
       {
         "state": "Without limit",
         "ios": "yes",
         "android": "yes",
-        "property": "with limit=no",
-        "notes": "Renders a single integer. Used for unread counts, inbox badges."
+        "property": "hasLimit=False",
+        "notes": "Renders a single integer in a 24×24 circle. Used for unread counts, inbox badges."
       },
       {
-        "state": "Pressed / Disabled",
+        "state": "Pressed / Focused",
         "ios": "na",
         "android": "na",
         "property": "—",
@@ -139,79 +139,129 @@ export const counter: ComponentData = {
       },
       {
         "state": "Overflow (99+)",
-        "ios": "na",
-        "android": "na",
-        "property": "Not modeled",
-        "notes": "Real counts can exceed 99 (unread messages, notifications). Need overflow display (\"99+\") — not built today."
+        "ios": "yes",
+        "android": "yes",
+        "property": "<code>Overflow</code> layer",
+        "notes": "A hidden <code>Overflow</code> frame holding a <code>+</code> glyph sits in the two <code>hasLimit=False</code> circle variants only — it was removed from the slash format in v2.1. Single-integer clamps at <code>maxDisplay</code> (default 99) → \"99+\"; slash format clamps at <code>limit</code>. Clamping is handled in code."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "<code>with limit</code> uses <code>yes/no</code> strings.",
-        "body": "Should be <code>hasLimit: true/false</code> for direct Swift <code>Bool</code> / Kotlin <code>Boolean</code> mapping.",
+        "headline": "<code>with limit</code> renamed to <code>hasLimit</code>.",
+        "body": "v2.0: Rebuilt on node <code>4675:21497</code>. The property is now <code>hasLimit</code> with <code>True/False</code> values — a real Figma boolean toggle that maps directly to Swift <code>Bool</code> / Kotlin <code>Boolean</code>. The <code>State</code> axis was also recased to PascalCase, bringing both properties in line with the Property Naming Guidelines. (C2)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "Count and limit values are hardcoded text.",
-        "body": "\"0 / 10\" and \"10 / 10\" are baked into each variant — consumers must detach to show any other value. Expose <code>count: Int</code> and <code>limit: Int?</code> as parameters so the component renders its own formatted string.",
+        "headline": "Applied — Rename recommendation shipped.",
+        "body": "v2.0: Applied — <code>with limit: yes/no</code> → <code>hasLimit: True/False</code>, exactly as recommended. Logged here rather than in an Applied tab because <code>overview.appliedRecommendations</code> does not yet exist in the schema. (Rename)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "No overflow handling for large counts.",
-        "body": "Inbox counts routinely exceed 99 (unread messages, notifications). The single-integer format needs \"99+\" display; the slash format needs equivalent overflow when count exceeds the limit. Not modeled today.",
+        "headline": "<code>State=Disabled</code> semantics confirmed.",
+        "body": "v2.0: Closed by owner decision — <code>Disabled</code> describes the <em>control context</em> (a Counter sitting inside a disabled row or field), not a zero count. Zero-count styling is derived from <code>count</code> in code and is deliberately not modeled as a variant. This also settles the contrast question: the muted label (#C2CFE5 on #EEF2F9, 1.4:1) is disabled text, which WCAG 1.4.3 exempts. (Docs)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Overflow clamp rule settled.",
+        "body": "v2.0: Closed by owner decision — no further spec work required. Single-integer format clamps at <code>maxDisplay</code> (default 99) and renders \"99+\"; slash format clamps at <code>limit</code> when <code>count &gt; limit</code>. Handled in code; the Figma <code>Overflow</code> layer only supplies the <code>+</code> glyph. (C5)",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
       },
       {
+        "headline": "Two use cases documented.",
+        "body": "v2.0: Closed — single-integer answers <em>how many of X are there</em> (notifications, unread, pending); slash format shows <em>progress against capacity</em> (slots used, steps completed). Captured in the Behavior table and the Style tab; no further action. (Docs)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Counter ↔ Badge relationship documented.",
+        "body": "v2.0: Closed — Counter is numeric (a count or progress); Badge is a status or tag label (Success, Premium). Teams pick by whether the content is a number. No further action. (Docs)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "<code>Disabled</code> variant width evened up.",
+        "body": "v2.1: <code>State=Disabled, hasLimit=True</code> went from 61 × 24 to <code>53 × 24</code>, matching its <code>Default</code> sibling for identical content; the component set narrowed from 109 to 101. Achieved by removing the <code>Overflow</code> frame from the slash-format variants rather than excluding it from layout. Instances no longer jump 8px when switching state. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Count and separator layers renamed.",
+        "body": "v2.1: Applied — all four count layers are now <code>Count</code> (<code>4675:21499</code> · <code>4675:21503</code> · <code>4675:22735</code> · <code>4675:21509</code>) and both slash glyphs are <code>Separator</code> (<code>4675:21500</code> · <code>4675:21504</code>). The property surface is legible for the first time. Two limit layers were misnamed in the same sweep — tracked as an open issue. (Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Overflow glyph layers renamed to <code>Plus</code>.",
+        "body": "v2.2: <code>4681:19238</code> and <code>4681:19235</code> went from <code>#overflow-value</code> to <code>Plus</code> — PascalCase, no hash prefix, per the Property Naming Guidelines. Every layer in the two circle variants now carries a correct semantic name. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Text layer naming complete.",
+        "body": "v2.3: <code>4675:21501</code> and <code>4675:21505</code> renamed to <code>Limit</code>, resolving the duplicate-<code>Count</code> collision in the slash-format variants. Every text layer in the set now carries a correct, distinct semantic name — <code>Count</code> ×4, <code>Separator</code> ×2, <code>Limit</code> ×2, <code>Plus</code> ×2 — verified by characters, not position. Closes the C1 naming issue opened at initial assessment. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Container</code> renamed to <code>LimitGroup</code>.",
+        "body": "v2.4: <code>4675:23030</code> and <code>4675:23007</code> renamed from the generic <code>Container</code> to <code>LimitGroup</code>. Every frame and text layer in the set now carries a semantic name — C1 is fully clean. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Text properties confirmed exposed.",
+        "body": "v2.4: Closed on owner confirmation — <code>Count</code> and <code>Limit</code> are exposed as text properties, so consumers set values without detaching. This closes the \"hardcoded text\" issue raised at initial assessment. Not independently verifiable from the read-only assessment tooling, which cannot read component property definitions. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "<code>Overflow</code> layer binding confirmed.",
+        "body": "v2.4: Closed on owner confirmation — the <code>Overflow</code> frames in the two <code>hasLimit=False</code> circle variants (<code>4681:19237</code> · <code>4681:19234</code>) are property-bound, not manual visibility overrides. Their removal from the slash-format variants in v2.1 was deliberate, and resolves the nonsensical <code>0 / 10+</code> rendering. Clamping stays in code. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      }
+    ],
+    "open": [
+      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Trivial once parameterization and boolean rename land.",
+        "body": "Blocked until the native library exists. Everything upstream is ready: <code>State</code> maps to a two-value enum, <code>hasLimit</code> to a <code>Bool</code>, and <code>Count</code> / <code>Limit</code> to text parameters. Registration is mechanical once there is a component to link to.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Rename <code>with limit</code> to <code>hasLimit</code>.",
-        "body": "Change values from <code>yes/no</code> strings to <code>true/false</code>. Aligns with the boolean naming convention used across the DS.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Expose <code>count</code> and <code>limit</code> as parameters.",
-        "body": "<code>count: Int</code> (required) + <code>limit: Int?</code> (optional — activates slash format when set). Drop the text overrides; the component formats the string itself. Eliminates the \"detach to change the number\" anti-pattern.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Derive <code>state</code> from <code>count</code>.",
-        "body": "Empty when <code>count == 0</code>, filled otherwise. Removes one property the consumer has to set manually. Allow explicit override for edge cases.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Add overflow handling for both formats.",
-        "body": "Single-integer: <code>count &gt; maxDisplay</code> renders \"99+\". Slash format: <code>count &gt; limit</code> should clamp display or render \"limit+\" to prevent visual overflow. Pattern used in Material / Apple badges.",
-        "tag": "State"
-      },
-      {
-        "headline": "Document the two use cases.",
-        "body": "Single-integer = <em>how many of X are there</em> (notifications, unread, pending). Slash format = <em>progress against capacity</em> (slots used, steps completed). Clarify in the spec so teams pick the right format.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Document Counter ↔ Badge relationship.",
-        "body": "Counter = numeric (count, progress). Badge = status/tag label (Success, Premium). Teams reach for the wrong one without this guidance.",
-        "tag": "Docs"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Variants",
@@ -629,9 +679,9 @@ export const counter: ComponentData = {
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>with limit</code> → <code>hasLimit</code> (bool). Parameterize count/limit."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>hasLimit</code> + <code>State</code> follow the naming guidelines; <code>Count</code> and <code>Limit</code> are exposed as text properties."
       },
       {
         "id": "C3",
@@ -650,9 +700,9 @@ export const counter: ComponentData = {
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Display-only — no interactive states needed. But overflow (\"99+\") for large counts is missing."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Display-only — no interactive states needed. Overflow affordance is property-bound and the clamp rule is settled."
       },
       {
         "id": "C6",
@@ -666,7 +716,7 @@ export const counter: ComponentData = {
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Trivial once parameterization + boolean rename land."
+        "notes": "Blocked until the native library exists. <code>State</code> → enum, <code>hasLimit</code> → <code>Bool</code>, <code>Count</code>/<code>Limit</code> → text parameters."
       }
     ],
     "codeConnect": [],

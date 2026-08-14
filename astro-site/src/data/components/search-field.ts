@@ -23,24 +23,24 @@ export const searchField: ComponentData = {
   "meta": {
     "slug": "search-field",
     "name": "Search Field",
-    "node": "18577:14520",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18577-14520",
+    "node": "4697:18836",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4697-18836",
     "description": "A search input field with a leading magnifying-glass icon and an optional clear button.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "fix",
+        "label": "Fix"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Form Elements",
     "verdict": {
-      "kind": "restructure",
-      "title": "Rework before handoff",
-      "text": "Only Default and Filled exist — no focused, error, or disabled states. Search glyph is a raster <code>img</code>, trailing slot is an unresolved <code>Placeholder</code> circle, and the banded top/bottom border diverges from the rest of the Form Elements family. Consider composing from Input Field + leading/trailing icon slots instead of shipping a bespoke component."
+      "kind": "fix",
+      "title": "Fix — one slot decision left",
+      "text": "Rebuilt on node <code>4697:18836</code> in the 2026 Working File and confirmed as a standalone primitive. <code>State = Default | Focused | Error | Disabled</code>, the leading glyph is a library icon instance, the trailing slot holds real <code>Close</code> / <code>Error</code> icons, every layer carries a semantic name, and colors come from the shared generic token scale. The banded top/bottom border is intentional — a full-width element above content, not a field inside a form stack — and <code>Error</code> on the State axis is a documented exception. What remains is a <code>hasClearButton</code> boolean so the filled-but-unfocused state can be expressed, plus documentation."
     }
   },
   "overview": {
@@ -50,23 +50,23 @@ export const searchField: ComponentData = {
     "traits": [
       {
         "name": "Reusable",
-        "rating": "warn",
-        "note": "Only usable when the surface tolerates a banded (top+bottom border) look. Won't compose into forms that use the standard rounded-rect field styling. No size variants, no dark mode."
+        "rating": "pass",
+        "note": "Purpose-built as a full-width element that sits above other content — the banded top/bottom chrome is the correct treatment for that role, confirmed by the component owner. Works anywhere that pattern applies. No size axis or dark mode yet, neither currently required."
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Trailing <code>icon-container</code> holds an unresolved <code>Placeholder</code> wrapper with a raw <code>icon-placeholder</code> circle — consumers must instance-swap to get a usable clear/cancel affordance. Missing focused, error, and disabled tokens."
+        "rating": "pass",
+        "note": "<code>TrailingIcon</code> holds real <code>Close</code> / <code>Error</code> icon instances, and all four interaction states carry their own label and glyph colors. Nothing external required to render."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Variant axis is <code>state=default/filled</code> — conflates \"has content\" with the four interaction states used by every sibling field (Default/Active/Error/Disabled). Token namespace (<code>main/search/*</code>) isolates this from the shared <code>field/*</code> tokens other siblings rely on."
+        "rating": "pass",
+        "note": "Variant axis is <code>State = Default | Focused | Error | Disabled</code>, matching the sibling fields; every layer carries a semantic name (<code>Container</code> · <code>Value</code> · <code>TrailingIcon</code>); colors come from the shared generic token scale rather than a component-scoped namespace. <code>Error</code> on the State axis is a documented, deliberate exception."
       },
       {
         "name": "Composable",
         "rating": "partial",
-        "note": "Trailing <code>icon-container</code> is a real slot and accepts a swap (<code>swapIcon</code>). Leading icon is not slotted — locked to the bundled search glyph (which is raster, not vector)."
+        "note": "<code>TrailingIcon</code> is a real slot carrying swappable instances. Leading icon is a vector <code>Search Small</code> instance but is not slotted — locked to the bundled search glyph."
       }
     ],
     "behavior": [
@@ -74,83 +74,133 @@ export const searchField: ComponentData = {
         "state": "Default (empty)",
         "ios": "yes",
         "android": "yes",
-        "property": "state=default",
-        "notes": "Placeholder text at 50% opacity, trailing slot holds placeholder circle."
-      },
-      {
-        "state": "Filled (has query)",
-        "ios": "yes",
-        "android": "yes",
-        "property": "state=filled",
-        "notes": "Text at full opacity (#0A2757), identical container, trailing slot unchanged."
+        "property": "State=Default",
+        "notes": "Placeholder label at <code>#90A8D0</code>, no trailing icon — nothing to clear in the empty state."
       },
       {
         "state": "Focused",
-        "ios": "no",
-        "android": "no",
-        "property": "—",
-        "notes": "No visible focused variant. Native focus ring cannot be approximated from DS."
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Focused",
+        "notes": "Value at <code>#0A2757</code> with a caret. Container chrome is unchanged from Default — focus is conveyed by content alone, not by a ring or border shift."
       },
       {
         "state": "Error",
-        "ios": "no",
-        "android": "no",
-        "property": "—",
-        "notes": "No error state defined."
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Error",
+        "notes": "Value at <code>#0A2757</code>, trailing slot swaps to the red <code>Error</code> icon. The container border does not change color."
       },
       {
         "state": "Disabled",
-        "ios": "no",
-        "android": "no",
-        "property": "—",
-        "notes": "No disabled state defined."
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Label and leading glyph mute to <code>#C2CFE5</code>, no trailing icon."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "State coverage is incomplete.",
-        "body": "Only <code>default</code> and <code>filled</code> are shipped; focused, error, and disabled are absent. Native <code>TextField</code> / <code>SearchBar</code> expect all four interaction states for focus rings, validation, and disabled styling.",
+        "headline": "State coverage completed.",
+        "body": "v2.0: Rebuilt on node <code>4697:18836</code>. <code>State = Default | Focused | Error | Disabled</code> now ships all four interaction states, matching the schema every sibling field uses. Replaces the old two-value <code>default/filled</code> axis. (C5)",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
       },
       {
-        "headline": "Leading search glyph is a raster asset.",
-        "body": "The search icon renders via <code>&lt;img src={imgShapeFull}&gt;</code> (raster PNG) rather than a vector instance from the icon library. Blocks token-based recoloring and fails crisp rendering on high-density displays.",
+        "headline": "Leading search glyph is now a vector instance.",
+        "body": "v2.0: The raster <code>&lt;img&gt;</code> was replaced with a <code>Search Small</code> icon instance, restoring token-based recoloring and crisp rendering at any density. Applied as recommended. (C6 · Asset)",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
-        "headline": "Trailing slot ships a <code>Placeholder</code> wrapper with a raw circle.",
-        "body": "<code>icon-container</code> contains a <code>Placeholder</code> frame wrapping an <code>icon-placeholder</code> pink-circle shape. This is authoring scaffolding that should be replaced with a real clear/cancel icon (or removed) before the component leaves design.",
+        "headline": "Trailing slot holds real icons.",
+        "body": "v2.0: The <code>Placeholder</code> scaffolding wrapper is gone. <code>TrailingIcon</code> now carries a <code>Close</code> instance in Default, Focused and Disabled, and an <code>Error</code> instance in Error. Applied as recommended. (C1 · Slot)",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "<code>state</code> variant axis conflates content and interaction.",
-        "body": "<code>state=default/filled</code> is a derived content signal (has a value or not) — it shouldn't occupy the same axis that other Form Elements reserve for Default/Active/Error/Disabled. Also fails Code Connect's expectation of boolean-like or enum-of-states schemas.",
+        "headline": "State axis no longer conflates content with interaction.",
+        "body": "v2.0: <code>filled</code> was dropped from the axis rather than split into a boolean — content-filled is derived from whether a value is present, and the axis now carries interaction states only. Resolves the C2 finding, though by a different route than the recommended <code>isFilled</code> split. (C2)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "Banded border diverges from the Form Elements family.",
-        "body": "Container uses <code>border-top + border-bottom</code> only, no left/right, <code>radius-0</code>. Every sibling (Input, Labeled, Select, Recipient, View Only) uses a full rounded-rect stroke at 6px radius. No native primitive renders this shape by default — forces custom background work on both platforms.",
+        "headline": "Layer naming cleaned up.",
+        "body": "v2.1: <code>search-field</code> → <code>Container</code>, <code>#search</code> → <code>Value</code>, <code>icon-container</code> → <code>TrailingIcon</code>, across all four variants, and the Error variant's placeholder junk text (<code>@@ . @#$!#  #_12</code>) was replaced with realistic sample content. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Clear button removed from the empty state.",
+        "body": "v2.2: <code>TrailingIcon</code> was deleted from <code>State=Default</code>, so the empty field no longer offers a clear affordance with nothing to clear. <code>Value</code> widened from 250 to 282 to take the freed space. The trailing slot now appears only where it does something — <code>Close</code> in Focused, <code>Error</code> in Error. (C4 · Slot)",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
       },
       {
+        "headline": "Disabled state's trailing icon resolved.",
+        "body": "v2.2: Rather than muting the <code>Close</code> icon, <code>TrailingIcon</code> was removed from <code>State=Disabled</code> altogether — a disabled field has nothing to clear either. Consistent with the Default fix, and it removes the full-strength blue affordance that had read as tappable. (C5 · State)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Banded border confirmed intentional.",
+        "body": "v2.3: Closed by owner decision — not a divergence. Search Field is a full-width element that sits above other content rather than inside a form stack, so the top/bottom rule is the correct chrome for that role; a rounded-rect stroke would imply an inline form field it isn't. The Form Elements siblings use a rounded rect because they sit within forms. Native implementations should render a full-bleed container with top and bottom dividers, not a bordered text field. (C4 · Family)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "<code>State=Error</code> exception documented.",
+        "body": "v2.3: Closed on owner confirmation — <code>Error</code> stays on the <code>State</code> axis as a deliberate, documented exception to the State/Status rule, matching how most design systems model form-field validation. Keeps the set at 4 variants instead of the 6 a split would require. Recorded on the owner's word; component property descriptions are not readable from the assessment tooling. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Token namespace resolved — reverted to generic tokens.",
+        "body": "v2.3: Closed by owner decision. The component-scoped <code>main/search/color/default/*</code> namespace was abandoned in favour of the shared generic tokens, so the single-sub-mode problem disappears — there is no longer a per-component token tier that has to enumerate every state. Colors now inherit from the system scale like the rest of Form Elements. (Token)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Confirmed as a standalone primitive.",
+        "body": "v2.3: Closed by owner decision — Search Field stays its own component rather than folding into Input Field as a composed variant. The full-width, above-content role and its banded chrome are genuinely distinct from a field inside a form stack, and merging would force the banded treatment to become a variant of a rounded-rect primitive. This also settles the token direction: <code>main/search/*</code> is expanded, not retired. (Composition)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Search icon delegated to the iconography team.",
+        "body": "v2.3: Removed from this component's scope. The <code>Search Small</code> glyph is an instance of the shared icon library — the correct setup, so edits to the icon propagate everywhere it is used. The <code>shape_full</code> BOOLEAN_OPERATION lives in the library source component (<code>4629:59009</code>), not in Search Field, so flattening it is the icon owner's call and affects every consumer equally. No action here. (C6)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      }
+    ],
+    "open": [
+      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Structural gaps (C1/C2/C5/C6) must be resolved before linking. No native file exists yet.",
+        "body": "Blocked — no native library exists yet. The structural blockers are cleared: the property schema is a clean <code>State</code> enum and every layer is semantically named.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -159,34 +209,14 @@ export const searchField: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Compose from Input Field instead of shipping a parallel primitive.",
-        "body": "Once Input Field gains <code>leadingIcon</code> / <code>trailingIcon</code> slots (already recommended in its assessment), a Search Field becomes Input Field + search glyph leading + clear-button trailing — no new component needed. Retires <code>main/search/*</code> tokens and inherits Default/Active/Error/Disabled for free.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Swap the raster <code>shape_full</code> for the canonical search icon instance.",
-        "body": "Reference the same vector icon used elsewhere (24px Search Small) so it inherits <code>main/{component}/color/icon-leading</code> recoloring across modes.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Replace the trailing <code>Placeholder</code> wrapper with a real Clear (X) icon instance.",
-        "body": "The current <code>Placeholder &gt; container &gt; icon-placeholder</code> path is authoring scaffolding. Bind to a 24px Close / Clear icon and expose it as an optional slot that hides when <code>state=default</code>.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Add Active, Error, and Disabled variants, and split content-filled from interaction state.",
-        "body": "Adopt the sibling schema: <code>State = Default | Active | Error | Disabled</code> plus a boolean <code>isFilled = true/false</code>. That yields 8 variants and matches Input Field's axis model exactly.",
+        "headline": "Model the filled-but-unfocused state.",
+        "body": "With <code>State</code> as the only axis, a field that has a value but isn't focused has nowhere to live — <code>Default</code> is empty and <code>Focused</code> carries the caret. That state needs the clear button too. Either add a <code>hasValue</code> boolean, or document that the clear affordance is driven by value presence in code and the Figma variants depict only the canonical four.",
         "tag": "State"
       },
       {
-        "headline": "Align the border treatment with the Form Elements family.",
-        "body": "If Search Field remains a standalone component, switch to the shared 6px rounded-rect stroke — the banded top/bottom look is a screen-level pattern (section divider), not a field chrome treatment, and can be added by the surrounding layout.",
+        "headline": "Carry the same State / Status exception across Form Elements.",
+        "body": "Search Field documents <code>Error</code> on the <code>State</code> axis as a deliberate exception. Amount Text Field has the identical divergence still open, and the rest of the family will hit it too. Record the exception once at family level — ideally in the Property Naming Guidelines themselves — so each component isn't re-litigating it.",
         "tag": "Family"
-      },
-      {
-        "headline": "Rename the <code>main/search/color/default/*</code> namespace to match the new schema.",
-        "body": "Either retire to <code>field/*</code> (if composed) or expand to <code>main/search/color/{default|active|error|disabled}/*</code> so tokens cover every state. Remove the <code>/default/</code> sub-mode once other states exist.",
-        "tag": "Token"
       },
       {
         "headline": "Document search semantics for native handoff.",
@@ -588,16 +618,16 @@ export const searchField: ComponentData = {
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Trailing <code>Placeholder &gt; container &gt; icon-placeholder</code> chain is authoring scaffolding, not a named icon."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Container</code> · <code>Value</code> · <code>TrailingIcon</code> — every layer semantically named, scaffolding removed."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>state=default/filled</code> conflates content with interaction. Diverges from sibling State axis (Default/Active/Error/Disabled)."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>State = Default | Focused | Error | Disabled</code> matches the sibling axis. Remaining: <code>Error</code> is a Status value on the State axis."
       },
       {
         "id": "C3",
@@ -609,50 +639,50 @@ export const searchField: ComponentData = {
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Top+bottom banded border isn't a native default. Missing <code>role=search</code> semantics in layer model."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Banded border is intentional — render as a full-bleed container with top/bottom dividers, not a bordered text field. Remaining: <code>role=search</code> semantics undocumented."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Only default/filled. No focused, error, or disabled variants."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "All four states ship, each with correct trailing affordance. Remaining: filled-but-unfocused isn't modeled."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Leading search glyph is a raster <code>img</code> (<code>shape_full</code>), not a vector instance."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Leading glyph is a <code>Search Small</code> instance from the shared icon library, so icon edits propagate. The <code>shape_full</code> boolean op lives in the library source, outside this component's scope."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked by C1/C2/C5/C6. No CLI mappings registered."
+        "notes": "Blocked — no native library exists yet. The structural blockers (C1/C5/C6) are now cleared."
       }
     ],
     "codeConnect": [
       {
         "aspect": "Property naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>state=default/filled</code> axis needs split into <code>State</code> (enum) + <code>isFilled</code> (bool)"
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>State</code> enum maps cleanly. Open question: whether <code>Error</code> belongs on a separate <code>Status</code> axis"
       },
       {
         "aspect": "State coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Missing Active / Error / Disabled"
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Default / Focused / Error / Disabled all ship"
       },
       {
         "aspect": "Icon quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Raster leading glyph + placeholder trailing slot"
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Vector leading glyph and real trailing icons; <code>shape_full</code> boolean op remains"
       },
       {
         "aspect": "Native component file",

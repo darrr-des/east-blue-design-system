@@ -33,24 +33,24 @@ export const amountTextField: ComponentData = {
   "meta": {
     "slug": "amount-text-field",
     "name": "Amount Text Field",
-    "node": "152:48122",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=152-48122",
-    "description": "A display-style numeric input for PHP amount entry in Send Money, Cash-In, and top-up flows. Sits on a single underline — Large is a 53px headline, Default prefixes a peso glyph with a 35px amount.",
+    "node": "4602:18144",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4602-18144",
+    "description": "A display-style numeric input for PHP amount entry in Send Money, Cash-In, and top-up flows. Sits on a single underline, with a label above and supporting text below. Two sizes × four interaction states.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "fix",
+        "label": "Fix"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Form Elements",
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure before handoff",
-      "text": "Peso glyph is a raster image (C6), state coverage is incomplete — no Active/Disabled (C5), and <code>label=yes/no</code> needs Boolean naming (C2). Decide whether to keep as a standalone sibling or fold into Input Field as <code>type: .currency</code>."
+      "kind": "fix",
+      "title": "Fix — adopt the shared label and helper instances",
+      "text": "Rebuilt on node <code>4602:18144</code> in the 2026 Working File as <code>Size = LG | MD</code> × <code>State = Default | Focused | Disabled | Error</code> = <strong>8 variants</strong>, and confirmed standalone rather than folded into Input Field. The currency glyph is editable text rather than a raster, every layer and property value follows the Property Naming Guidelines, and dimensions are whole numbers. The Disabled treatment — muting the amount but not the surrounding label and helper copy — is deliberate, since those sit outside the enclosed input. One structural difference from its siblings remains: <code>Label</code> and <code>HelperText</code> are bespoke layers where Text Area and Upload File compose shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances."
     }
   },
   "overview": {
@@ -60,111 +60,164 @@ export const amountTextField: ComponentData = {
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Works for any PHP amount entry. Peso glyph is hard-coded — no currency parameterization for a multi-country future. Large variant has no peso glyph at all, which is an inconsistency rather than a deliberate option."
+        "rating": "pass",
+        "note": "Works for any amount entry, and both sizes carry the currency glyph consistently. <code>CurrencySymbol</code> and <code>CurrencyCode</code> are editable text layers, so switching ₱ to another currency is a text edit — not a fork."
       },
       {
         "name": "Self-contained",
-        "rating": "partial",
-        "note": "Carries its own typography, border, and subtext. But only 3 states (Default, Filled, Error) — missing Active (focused) and Disabled states that every other Form Element defines."
+        "rating": "pass",
+        "note": "Carries its own typography, border, and helper text, and all four interaction states (Default / Focused / Disabled / Error) ship in both sizes."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "<code>label=yes/no</code> instead of <code>true/false</code> — doesn't match <code>isFilled=true/false</code> on sibling fields. State set also differs from Input Field's 4-state model (Default/Active/Error/Disabled)."
+        "rating": "pass",
+        "note": "<code>Size = LG | MD</code> and <code>State = Default | Focused | Disabled | Error</code> both follow the Property Naming Guidelines and match the siblings. Every layer carries a correct semantic name — <code>Label</code>, <code>AmountRow</code>, <code>CurrencySymbol</code>, <code>Value</code>, <code>CurrencyCode</code>, <code>HelperText</code> — and <code>Error</code> on the State axis is the confirmed family-level exception."
       },
       {
         "name": "Composable",
         "rating": "partial",
-        "note": "Appears as its own record and as a type inside Dropdown (\"Amount\" variant) and adjacent fields. Doesn't compose Input Field's primitive — keeps a separate anatomy, which duplicates interaction logic in native code."
+        "note": "Drops into form layouts and is confirmed standalone rather than folded into Input Field. Still partial: <code>Label</code> and <code>HelperText</code> are bespoke text layers where Text Area and Upload File compose shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances, so that anatomy is re-authored here rather than inherited."
       }
     ],
     "behavior": [
       {
-        "state": "Default (empty)",
+        "state": "Default",
         "ios": "yes",
         "android": "yes",
-        "property": "state=Default",
-        "notes": "Shows <code>0.00</code> in placeholder color #90A8D0. Border #ADBDDC."
+        "property": "State=Default",
+        "notes": "Shows <code>₱ 0.00 Php</code> in navy. Underline <code>#E5EBF4</code>."
       },
       {
-        "state": "Filled",
+        "state": "Active (focused)",
         "ios": "yes",
         "android": "yes",
-        "property": "state=Filled",
-        "notes": "Amount typed; navy #0A2757 text, border darkens to #445C85."
+        "property": "State=Active",
+        "notes": "Underline darkens to <code>#183462</code>; amount shown at full navy. Named <code>Active</code> here but <code>Focused</code> on Search Field — see open issues."
+      },
+      {
+        "state": "Disabled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Amount mutes. Label and supporting text keep their default colors — see open issues."
       },
       {
         "state": "Error",
         "ios": "yes",
         "android": "yes",
-        "property": "state=Error",
-        "notes": "Red #D61B2C for amount, border, and subtext. Subtext becomes the validation message."
+        "property": "State=Error",
+        "notes": "Red <code>#D61B2C</code> for amount, underline, and supporting text, which becomes the validation message."
       },
       {
-        "state": "Active (focused)",
-        "ios": "no",
-        "android": "no",
-        "property": "—",
-        "notes": "Missing variant. Native field will show caret + keyboard; no DS-defined visual affordance."
-      },
-      {
-        "state": "Disabled",
-        "ios": "no",
-        "android": "no",
-        "property": "—",
-        "notes": "Missing variant. Top-up confirmations and locked amounts have no canonical appearance."
+        "state": "Size",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Size=Large | Medium",
+        "notes": "Large uses a 70px input row, Medium 50px. Both carry the peso glyph."
       }
     ],
     "resolved": [
       {
-        "body": "None yet — initial assessment."
-      }
-    ],
-    "open": [
-      {
-        "headline": "Peso Sign glyph is a raster image.",
-        "body": "The ₱ mark renders via an <code>&lt;img&gt;</code> reference (<code>imgShapeFull</code>) rather than an instance of the <code>Peso Sign - Proxima</code> vector icon. Raster assets can't be recolored with tokens, scale poorly on high-DPI screens, and block Code Connect asset mapping.",
+        "headline": "Peso glyph is no longer a raster image.",
+        "body": "v2.0: Rebuilt on node <code>4602:18144</code>. The ₱ now renders as a text glyph inside the input row rather than an <code>&lt;img&gt;</code> reference, restoring token-based coloring and clean scaling. Applied by a different route than the recommended icon instance-swap, but it resolves the C6 finding. (C6 · Asset)",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
-        "headline": "Missing Active (focused) state.",
-        "body": "The component exposes only Default / Filled / Error. Native keyboards surface a caret on focus, but the DS has no defined focused-border or amount color — devs have to invent one per flow.",
+        "headline": "Active and Disabled states added.",
+        "body": "v2.0: The state axis is now <code>Default | Active | Disabled | Error</code>, matching Input Field's 4-state model, and every state ships in both sizes. Closes both C5 findings. (C5 · State)",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
       },
       {
-        "headline": "Missing Disabled state.",
-        "body": "Amount confirmations, locked top-up amounts, and review screens use an inert version of this field. Without a <code>state=Disabled</code> variant there's no single source of truth for its appearance.",
+        "headline": "Large variant now carries the peso glyph.",
+        "body": "v2.0: Both <code>Size=Large</code> and <code>Size=Medium</code> render <code>₱ 0.00 Php</code>. The inconsistency where Large dropped the currency mark is gone. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "<code>State=Error</code> exception confirmed.",
+        "body": "v2.1: Closed by owner decision at family level — <code>Error</code> stays on the <code>State</code> axis across Form Elements as a deliberate exception to the State/Status rule, matching how most design systems model form-field validation. Applies equally to Search Field and Text Area. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "<code>label=yes/no</code> property removed.",
+        "body": "v2.0: The property is gone from the variant axes, which are now <code>Size</code> × <code>State</code>; the label is always present. This resolves the boolean-naming finding, though by removal rather than the recommended migration to <code>showLabel=true/false</code> — so the ability to hide the label no longer exists. Confirm that was deliberate rather than dropped in the rebuild. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Amount layers renamed to describe their content.",
+        "body": "v2.2: The three <code>#amount</code> nodes in every <code>input</code> frame are now <code>CurrencySymbol</code> (₱), <code>Value</code> (the number) and <code>CurrencyCode</code> (Php), and the title layer is <code>Label</code>. The duplicate-name collisions are gone and <code>Value</code> matches §3's Form-content definition exactly. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Size values aligned to the standard scale.",
+        "body": "v2.2: <code>Size = Large | Medium</code> → <code>LG | MD</code>, matching the <code>XS · SM · MD · LG · XL</code> set in §5 of the Property Naming Guidelines. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Layer and property naming completed.",
+        "body": "v2.3: <code>Focussed</code> → <code>Focused</code>, matching the guidelines and both siblings; <code>SupportText</code> → <code>HelperText</code> across all eight variants, resolving the term §6 explicitly forbids and picking up the one Error-variant layer the previous sweep missed; and <code>input</code> → <code>AmountRow</code>. Every layer and property value in the set now follows the Property Naming Guidelines. (C1 · C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Disabled treatment confirmed intentional.",
+        "body": "v2.3: Closed by owner decision — <code>Label</code> and <code>HelperText</code> sit outside the enclosed input element, so they deliberately keep their default colours while only the amount inside <code>AmountRow</code> mutes. The disabled affordance belongs to the control, not to the surrounding copy. Differs from Text Area and Search Field, which mute the whole field, because those components enclose their text within the input container. (C5)",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
       },
       {
-        "headline": "<code>label</code> property uses <code>yes/no</code> instead of <code>true/false</code>.",
-        "body": "Boolean naming. <code>label=Yes</code> doesn't map cleanly to Swift <code>Bool</code> / Kotlin <code>Boolean</code>, and it diverges from sibling fields that were already migrated to <code>true/false</code> (Input Field's <code>isFilled</code>). Should also be renamed to <code>hasLabel</code> or <code>showLabel</code>.",
+        "headline": "Currency slots ruled unnecessary.",
+        "body": "v2.3: Closed by owner decision — <code>CurrencySymbol</code> and <code>CurrencyCode</code> are already text layers, so switching ₱ to $ or € is a text edit rather than an instance swap. That is more flexible than a slot for a glyph, and it means the component is not in fact hard-coded to PHP. (Slot)",
         "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
         }
       },
       {
-        "headline": "Large variant drops the peso glyph.",
-        "body": "When <code>size=Large</code> the ₱ is removed entirely — the amount is just <code>500.00</code>. If this is intentional it's under-documented; if not, it's an inconsistency that users and devs will stumble on. No property controls it, so it can't be opted into.",
+        "headline": "Confirmed as a standalone component.",
+        "body": "v2.3: Closed by owner decision — Amount Text Field stays its own component rather than folding into Input Field as <code>type: .currency</code>. Its display-style anatomy, 53px numeral and currency-triplet row are distinct enough from a standard field to justify separation, and the decision matches Search Field and Text Area. (Family)",
         "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
         }
       },
+      {
+        "headline": "Fractional widths corrected.",
+        "body": "v2.2: Variants went 384.75 → <code>360</code> and inner rows 336.75 → <code>312</code>; the set narrowed 424.75 → 400. All dimensions are now whole numbers that map cleanly to native layout values. (C4)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      }
+    ],
+    "open": [
       {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked by the structural issues above — register after peso glyph is vectorized, states are added, and <code>label</code> is migrated to Boolean.",
+        "body": "Blocked — no native library exists yet. The structural blockers (raster glyph, missing states) are now cleared.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -173,29 +226,9 @@ export const amountTextField: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Replace the raster peso with a vector instance of <code>Peso Sign - Proxima</code>.",
-        "body": "That library component already exists and is sized per font tier — swap the current <code>&lt;img&gt;</code> for an instance-swap slot so color can bind to <code>main/amount-text-field/{state}/icon-currency</code> and scale at any DPR.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Add <code>state=Active</code> and <code>state=Disabled</code> variants.",
-        "body": "Extends the enum to the same 4-state model used by Input Field (Default / Active / Error / Disabled) plus a <code>Filled</code> display-only state, or collapse <code>Filled</code> into a derived-from-content view. Either way, lock the state axis to match siblings.",
-        "tag": "State"
-      },
-      {
-        "headline": "Migrate <code>label=yes/no</code> to a Boolean <code>showLabel=true/false</code>.",
-        "body": "Matches the canonical naming used by Input Field's <code>isFilled</code> and unlocks direct Code Connect mapping to Swift <code>Bool</code> / Kotlin <code>Boolean</code>. Consider splitting <code>subtext</code> out as its own Boolean so error-copy and helper-copy can be toggled independently of label.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Expose leading and trailing slots for the currency mark and unit suffix.",
-        "body": "Hard-coding the peso glyph ties the component to PHP. A <code>leadingCurrency</code> slot (₱, $, €) and an optional <code>trailingUnit</code> slot (\"PHP\") future-proofs the component for multi-currency flows without a per-country fork.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Family decision — fold into Input Field as <code>type: .currency</code>, or keep as EBAmountTextField sibling.",
-        "body": "Option A: Keep separate — Amount Text Field stays a display-style sibling of Input Field with its own underline anatomy; share tokens via a common text-field token tier. Option B (recommended): Fold into Input Field as <code>EBInputField(type: .currency, …)</code>, using SwiftUI's <code>TextField(value:format:.currency(code:))</code> + <code>.keyboardType(.decimalPad)</code> and Compose's <code>OutlinedTextField(keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal), leadingIcon = { Text(\"₱\") })</code>. Option B eliminates the duplicate peso glyph instance inside Dropdown's \"Amount\" variant and the Recipient Field's currency-prefix case.",
-        "tag": "Family"
+        "headline": "Compose the label and helper rows from the shared instances.",
+        "body": "<code>Label</code> and <code>HelperText</code> are plain text layers here, where Text Area and Upload File both compose a shared <code>FormGroup Header</code> above and a <code>Subtext Message</code> below. Adopting the same two instances means label and helper-copy changes propagate across the family from one source instead of being re-authored per component, and it would bring the character-count and error-message affordances along for free. This is the last structural difference between Amount Text Field and its siblings.",
+        "tag": "Composition"
       },
       {
         "headline": "Document locale and keyboard behavior in the component.",
@@ -772,16 +805,16 @@ export const amountTextField: ComponentData = {
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Semantic names: <code>peso-offset</code>, <code>input</code>, <code>Peso Sign - Proxima</code>. No <code>Frame 42</code> artifacts."
+        "status": "rework",
+        "statusLabel": "Requires Rework",
+        "notes": "Two layers named <code>#label</code> and three named <code>#amount</code> in every variant — the property surface can't distinguish them."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>label=yes/no</code> should be Boolean <code>showLabel=true/false</code>. Large variant's missing peso glyph isn't gated by a property."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>label=yes/no</code> is gone and the state axis matches Input Field. Remaining: <code>Active</code> should be <code>Focused</code>, <code>Error</code> is a Status on the State axis, and <code>Large|Medium</code> diverges from <code>LG|MD</code>."
       },
       {
         "id": "C3",
@@ -800,23 +833,23 @@ export const amountTextField: ComponentData = {
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Missing Active (focused) and Disabled states. Only Default / Filled / Error defined."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "All four states ship in both sizes. Remaining: label and supporting text don't mute in Disabled."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Peso Sign glyph is a raster <code>&lt;img&gt;</code> reference, not a vector instance. Can't be tint-bound to the <code>icon-currency</code> token."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Peso glyph is now a text glyph, not a raster reference — colors with the rest of the amount."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "No CLI mappings registered. Blocked by C2, C5, C6."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Blocked — no native library exists yet. The structural blockers are cleared."
       }
     ],
     "codeConnect": [
