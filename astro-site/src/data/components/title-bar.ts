@@ -49,10 +49,10 @@ const titleBarDemoControls: DemoControlSection[] = [
 export const titleBar: ComponentData = {
   "meta": {
     "slug": "title-bar",
-    "name": "Title Bar",
-    "node": "23:175148",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=23-175148",
-    "description": "A small section header with a title, optional subtitle, and an optional trailing action.",
+    "name": "Title Bar - App",
+    "node": "4784:34355",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4784-34355",
+    "description": "The top-of-screen app bar, with status bar, title row, optional leading and trailing icons, and an optional expanded title block over an image background.",
     "badges": [
       {
         "kind": "keep",
@@ -82,8 +82,8 @@ export const titleBar: ComponentData = {
       },
       {
         "name": "Consistent",
-        "rating": "partial",
-        "note": "Boolean properties use <code>yes/no</code> instead of <code>true/false</code> (C2). <code>leading control</code> only available when <code>leading icon=yes</code> and <code>trailing icon=no</code> -- implicit dependency not expressed in property schema."
+        "rating": "pass",
+        "note": "All four properties carry correct <code>has</code> verb prefixes and genuine <code>True</code>/<code>False</code> boolean values, the leading-control dependency is explicit, and every layer this component owns is semantically named. <code>hasTitleBlock</code> remaining a boolean rather than a layout Variant is a documented, deliberate exception made for authoring usability."
       },
       {
         "name": "Composable",
@@ -100,27 +100,100 @@ export const titleBar: ComponentData = {
         "notes": "Navigation bar. No interaction states beyond tap targets on icons and control text."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Boolean properties use <code>yes/no</code> strings.",
-        "body": "<code>leading icon</code>, <code>trailing icon</code>, <code>leading control</code>, <code>subtext</code>, <code>title block</code> — all incompatible with Swift <code>Bool</code> / Kotlin <code>Boolean</code> for Code Connect.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Trailing icon is a placeholder RECTANGLE.",
-        "body": "The 24×24 <code>icon-placeholder</code> blocks instance swap — native icon slot mapping can't be wired until this becomes a swappable Icon instance.",
+        "headline": "Trailing icon placeholder replaced with a real instance.",
+        "body": "v2.0: Rebuilt on node <code>4784:34355</code> in the 2026 Working File as <strong>Title Bar - App</strong>. The placeholder RECTANGLE is gone — the trailing element is now an <code>icon</code> instance wrapping a <code>trailing-icon</code> from the library. (C6 · Asset)",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
+        "headline": "Boolean values normalised to True/False.",
+        "body": "v2.1: All four properties — <code>hasLeadingIcon</code>, <code>hasTrailingElement</code>, <code>hasSubtext</code>, <code>hasTitleBlock</code> — carry the correct <code>has</code> verb prefix per §2 and now render <code>True</code>/<code>False</code> capitalised, confirming they are genuine Figma booleans rather than string variants. They map directly to Swift <code>Bool</code> and Kotlin <code>Boolean</code>. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Leading control dependency made explicit.",
+        "body": "v2.0: <code>hasLeadingIcon</code> exposes the back/close affordance as a property rather than leaving consumers to infer it from the layout. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Spacer instances removed from layout.",
+        "body": "v2.2: The two <code>_space_12</code> spacer instances inside the title row are gone, replaced by auto-layout gap. Spacer components have no native equivalent — both platforms express this as layout spacing — and these rendered in bright <code>#0500FF</code>, so they would have shipped as visible artifacts. (C4)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Layer naming cleaned up.",
+        "body": "v2.2: <code>Title Bar</code> → <code>TitleBar</code> (space removed), <code>title</code> → <code>TextContainer</code>, <code>title-block</code> → <code>TitleBlock</code>, and both <code>#title</code> text layers → <code>Title</code>. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Two <code>Title</code> layers confirmed intentional.",
+        "body": "v2.2: Closed by owner decision — the 16px title in <code>TitleBar</code> and the 26px title in <code>TitleBlock</code> share the name deliberately. They sit in separate branches and represent the same content role at two scales, so a single name is the honest description. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Dark / transparent variant ruled out.",
+        "body": "v2.2: Closed by owner decision — no dark or transparent variant is planned. The component ships on the brand surface only, so a Theme axis would add variants describing a treatment that is never used. (Family)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Background layer renamed.",
+        "body": "v2.3: <code>image-placeholder</code> → <code>Background</code> across the expanded variants. The name now describes the role rather than implying scaffolding — it is a real background layer carrying the brand fill plus a 5% luminosity image. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Layer naming complete.",
+        "body": "v2.4: <code>icon</code> → <code>TrailingIcon</code>, pairing with <code>Leading Icon</code> opposite it. Every layer this component owns now carries a semantic name — <code>Background</code>, <code>Status Bar</code>, <code>TitleBar</code> with <code>Leading Icon</code> / <code>TextContainer</code> / <code>TrailingIcon</code>, and <code>TitleBlock</code>. The remaining hash-prefixed and kebab names (<code>#time</code>, <code>trailing-icon</code>) belong to nested library instances, not to this component. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>hasTitleBlock</code> kept as a boolean by design.",
+        "body": "v2.4: Closed by owner decision — the property stays a boolean rather than becoming a <code>Variant</code> axis, for authoring usability: keeping one axis means designers do not have to reposition the <code>Background</code> image when toggling the title block on and off. The guidelines reserve <code>has*</code> for content presence rather than layout modes, so this is a documented exception rather than conformance. Worth revisiting only if the two forms diverge further than background fill and height. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      }
+    ],
+    "open": [
+      {
+        "headline": "Status bar is iOS-specific with no Platform axis.",
+        "body": "Every variant embeds a <code>Status Bar - IOS</code> instance carrying an SF Pro clock, iOS battery glyph and cellular indicator. Android renders a different status bar, and in practice the platform draws its own — so this is presentation scaffolding rather than component anatomy. Worth documenting as illustrative so implementers do not try to reproduce it.",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until boolean values and placeholder rectangles are fixed.",
+        "body": "Blocked — no native library exists yet.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -129,28 +202,8 @@ export const titleBar: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Rename boolean values from <code>yes/no</code> to <code>true/false</code>.",
-        "body": "Direct native boolean mapping eliminates the string-to-bool layer when wiring Code Connect.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Replace trailing icon placeholder with a real Icon instance.",
-        "body": "Drop in an actual icon from the DS library (e.g. more/ellipsis, share, search) so product teams can instance-swap without editing the master.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Make <code>leading control</code> dependency explicit.",
-        "body": "Today it requires <code>leading icon=yes</code> and <code>trailing icon=no</code> — document it in the spec or promote it to a separate property so the constraint is enforced, not assumed.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Add a dark / transparent variant.",
-        "body": "For screens with hero images or gradient backgrounds (home, campaign pages, onboarding), the current opaque bar is wrong — a transparent variant lets the hero breathe through.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Document the <code>showAsset</code> property.",
-        "body": "Currently only available when <code>title block=yes</code>; its purpose (background image behind the title) should be explicitly described in the component spec.",
+        "headline": "Document the status bar as illustrative.",
+        "body": "A short note that the embedded iOS status bar is for mock fidelity and that native supplies its own. Saves an implementer trying to rebuild it.",
         "tag": "Docs"
       }
     ]
