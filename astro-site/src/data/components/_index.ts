@@ -1154,48 +1154,48 @@ export const componentManifest = [
   },
   {
     "slug": "table-scheduling",
-    "name": "Table - Scheduling",
-    "node": "47:324365",
+    "name": "Table Scheduling",
+    "node": "5868:40468",
     "badges": [
       {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Table"
   },
   {
     "slug": "table-transaction",
-    "name": "Table - Transaction",
-    "node": "47:324709",
+    "name": "Table Transaction",
+    "node": "5896:39727",
     "badges": [
       {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Table"
   },
   {
     "slug": "table",
-    "name": "Table",
-    "node": "47:326260",
+    "name": "Table Row",
+    "node": "5734:37611",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Table"

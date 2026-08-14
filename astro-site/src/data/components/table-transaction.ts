@@ -2,26 +2,42 @@ import type { ComponentData, DemoControlSection } from '../types';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/table-transaction.js`.
+// Column count is not a property — the ⤷ ColumnSlot holds however many cells
+// you drop in, so `cols` just varies what the preview renders.
+const tableTxnStateRow = {
+  label: 'State',
+  prop: 'state',
+  defaultValue: 'default',
+  options: [
+    { value: 'default', label: 'Default' },
+    { value: 'disabled', label: 'Disabled' },
+  ],
+};
+
+const tableTxnCellsRow = {
+  label: 'Cells',
+  prop: 'cols',
+  defaultValue: '3',
+  options: [
+    { value: '2', label: '2' },
+    { value: '3', label: '3' },
+    { value: '4', label: '4' },
+  ],
+};
+
 const tableTxnHeaderDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
+      tableTxnStateRow,
+      tableTxnCellsRow,
       {
-        label: 'Columns',
-        prop: 'cols',
-        defaultValue: '3',
+        label: '⤷ AssetSlot',
+        prop: 'asset',
+        defaultValue: 'yes',
         options: [
-          { value: '2', label: '2' },
-          { value: '3', label: '3' },
-        ],
-      },
-      {
-        label: 'Icon',
-        prop: 'icon',
-        defaultValue: 'no',
-        options: [
-          { value: 'no', label: 'no' },
-          { value: 'yes', label: 'yes' },
+          { value: 'yes', label: 'filled' },
+          { value: 'no', label: 'empty' },
         ],
       },
     ],
@@ -31,116 +47,160 @@ const tableTxnHeaderDemoControls: DemoControlSection[] = [
 const tableTxnContentDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
-    rows: [
-      {
-        label: 'Columns',
-        prop: 'cols',
-        defaultValue: '3',
-        options: [
-          { value: '2', label: '2' },
-          { value: '3', label: '3' },
-        ],
-      },
-    ],
+    rows: [tableTxnStateRow, tableTxnCellsRow],
   },
 ];
 
 export const tableTransaction: ComponentData = {
   "meta": {
     "slug": "table-transaction",
-    "name": "Table - Transaction",
-    "node": "47:324709",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=47-324709",
-    "description": "A transaction row showing label/value pairs in a structured table layout.",
+    "name": "Table Transaction",
+    "node": "5896:39727",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5896-39727",
+    "description": "A display-only transaction row — a header of column labels, or a content row with a full-width label above however many peso-amount cells you drop into its slot.",
     "badges": [
       {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Table",
     "verdict": {
-      "kind": "fix",
-      "title": "Fold into Table as a recipe, not a separate primitive",
-      "text": "Table - Transaction is a feature-specific composition of existing DS primitives — a header row (which Table already ships) and a content row that is effectively an <strong>Inline Text</strong> with a peso-prefixed amount. Publishing it as its own component duplicates the Table variant matrix and introduces a raster peso asset to DS surface. On mobile, \"transaction details\" render as vertical label / amount stacks — exactly what <strong>Generic Transaction Card</strong> and <strong>Inline Text</strong> already cover. Recommend removing from core DS and documenting the pattern as a recipe on Table's page: \"For transaction totals, compose an <code>EBInlineText</code> stack; use Table only for multi-column tabular history on wider surfaces.\""
+      "kind": "keep",
+      "title": "Keep — now built from the family's shared atoms",
+      "text": "The rebuild turned this from a parallel re-implementation into a genuine composition. Its header slot holds the same <code>Table Cell</code> component that <a href=\"/components/table\">Table Row</a> uses; its content slot holds the same <code>Table Amount Cell</code> that <a href=\"/components/table-scheduling\">Table Scheduling</a> uses. Settings are <code>Role</code> (Header / Content) and <code>State</code> (Default / Disabled), matching Table Row exactly, and <code>no. of columns</code> is gone — column count is however many cells sit in the <code>⤷ ColumnSlot</code>. The raster peso is a <code>Peso Sign - Proxima</code> vector instance inherited from the shared amount cell. Kept as its own component because it carries a full-width <code>#label</code> row above its amount cells, which a plain Table Row doesn't. Rows are display-only, and amounts are unsigned by approved design."
     }
   },
   "overview": {
     "inContextNote": "Per-variant descriptions cite account limits — e.g. daily / monthly send caps showing used vs. remaining peso amounts in aligned columns. Other GCash surfaces like transaction history and receipts use the Generic Transaction Card vertical stack, not this tabular layout.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"220\" height=\"130\" viewBox=\"0 0 220 130\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <rect x=\"40\" y=\"6\" width=\"140\" height=\"120\" rx=\"10\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".2\"></rect>\n          <rect x=\"40\" y=\"6\" width=\"140\" height=\"18\" rx=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <rect x=\"40\" y=\"14\" width=\"140\" height=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <text x=\"110\" y=\"18\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"7\" font-weight=\"700\" font-family=\"system-ui\">Account Limits</text>\n          \n          <rect x=\"40\" y=\"28\" width=\"140\" height=\"12\" fill=\"#F6F9FD\"></rect>\n          <text x=\"64\" y=\"37\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\">USED</text>\n          <text x=\"110\" y=\"37\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\">REMAINING</text>\n          <text x=\"156\" y=\"37\" text-anchor=\"middle\" fill=\"#6780A9\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\">TOTAL</text>\n          \n          <text x=\"46\" y=\"52\" fill=\"#6780A9\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\">Daily</text>\n          <text x=\"64\" y=\"62\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">₱3,500</text>\n          <text x=\"110\" y=\"62\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">₱6,500</text>\n          <text x=\"156\" y=\"62\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">₱10,000</text>\n          <line x1=\"40\" y1=\"68\" x2=\"180\" y2=\"68\" stroke=\"#E5EBF4\"></line>\n          \n          <text x=\"46\" y=\"78\" fill=\"#6780A9\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\">Monthly</text>\n          <text x=\"64\" y=\"88\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">₱42,000</text>\n          <text x=\"110\" y=\"88\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">₱58,000</text>\n          <text x=\"156\" y=\"88\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">₱100,000</text>\n          <line x1=\"40\" y1=\"94\" x2=\"180\" y2=\"94\" stroke=\"#E5EBF4\"></line>\n          <rect x=\"56\" y=\"104\" width=\"108\" height=\"14\" rx=\"7\" fill=\"#005CE5\"></rect>\n          <text x=\"110\" y=\"114\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Request Increase</text>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"table-transaction-demo-preview\"><div style=\"width:360px; height:36px; background:#F6F9FD; border-bottom:1px solid #E5EBF4; padding:12px 24px; display:flex; align-items:center; gap:8px; box-sizing:border-box; color:#0A2757;\"><div style=\"flex:1 0 0; min-width:0; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:2px;\"><span style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:10px; line-height:12px; letter-spacing:0.25px;\">Column Label</span></div><div style=\"flex:1 0 0; min-width:0; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:2px;\"><span style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:10px; line-height:12px; letter-spacing:0.25px;\">Column Label</span></div><div style=\"flex:1 0 0; min-width:0; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:2px;\"><span style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:10px; line-height:12px; letter-spacing:0.25px;\">Column Label</span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select class=\"demo-panel-select\" id=\"table-transaction-demo-type\" onchange=\"updateTableTransactionDemo()\"><option value=\"header\" selected=\"\">header</option><option value=\"content\">content</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">no. of columns</span><select class=\"demo-panel-select\" id=\"table-transaction-demo-cols\" onchange=\"updateTableTransactionDemo()\"><option value=\"2\">2</option><option value=\"3\" selected=\"\">3</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">icon <span class=\"muted\" style=\"font-size:11px;\">(header only)</span></span><select class=\"demo-panel-select\" id=\"table-transaction-demo-icon\" onchange=\"updateTableTransactionDemo()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"table-transaction-demo-preview\"><div class=\"eb-preview eb-preview-ttxn eb-preview-ttxn--header\"><div class=\"eb-preview-ttxn__cols\"><div class=\"eb-preview-ttxn__cell\"><div class=\"eb-preview-ttxn__cell-asset\"></div><span class=\"eb-preview-ttxn__cell-label\">Column Label</span></div><div class=\"eb-preview-ttxn__cell\"><div class=\"eb-preview-ttxn__cell-asset\"></div><span class=\"eb-preview-ttxn__cell-label\">Column Label</span></div><div class=\"eb-preview-ttxn__cell\"><div class=\"eb-preview-ttxn__cell-asset\"></div><span class=\"eb-preview-ttxn__cell-label\">Column Label</span></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Role</span><select class=\"demo-panel-select\" id=\"table-transaction-demo-role\" onchange=\"updateTableTransactionDemo()\"><option value=\"header\" selected=\"\">Header</option><option value=\"content\">Content</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" id=\"table-transaction-demo-state\" onchange=\"updateTableTransactionDemo()\"><option value=\"default\" selected=\"\">Default</option><option value=\"disabled\">Disabled</option></select></div><div class=\"demo-panel-row\" id=\"table-transaction-row-haslabel\"><span class=\"demo-panel-label\">hasLabel</span><select class=\"demo-panel-select\" id=\"table-transaction-demo-haslabel\" onchange=\"updateTableTransactionDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div><div class=\"demo-panel-row\" id=\"table-transaction-row-label\"><span class=\"demo-panel-label\">#label</span><input type=\"text\" id=\"table-transaction-demo-label\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"updateTableTransactionDemo()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasBorder</span><select class=\"demo-panel-select\" id=\"table-transaction-demo-hasborder\" onchange=\"updateTableTransactionDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">⤷ ColumnSlot</div><div class=\"demo-panel-row\" id=\"table-transaction-row-asset\"><span class=\"demo-panel-label\">Table Cell ⤷ AssetSlot</span><select class=\"demo-panel-select\" id=\"table-transaction-demo-asset\" onchange=\"updateTableTransactionDemo()\"><option value=\"yes\" selected=\"\">filled</option><option value=\"no\">empty</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Cells</span><select class=\"demo-panel-select\" id=\"table-transaction-demo-cols\" onchange=\"updateTableTransactionDemo()\"><option value=\"2\">2</option><option value=\"3\" selected=\"\">3</option><option value=\"4\">4</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
-        "rating": "warn",
-        "note": "Locked to the peso-prefixed amount shape. Any transaction surface that needs a date column, a badge, a status chip, or a non-peso currency has to detach or reach for a different component."
+        "rating": "pass",
+        "note": "<code>⤷ ColumnSlot</code> takes any number of cells, and the shared <code>Table Amount Cell</code> carries its own <code>⤷ CurrencySlot</code> — a non-peso currency is a swap, not a detach."
       },
       {
         "name": "Self-contained",
-        "rating": "fail",
-        "note": "Content row ships a raster <code>Peso Sign - Proxima</code> image fill, not a DS icon instance or text glyph. Handoff code references a remote <code>figma.com/api/mcp/asset/*</code> URL — not deliverable to native."
+        "rating": "pass",
+        "note": "The currency prefix is a <code>Peso Sign - Proxima</code> vector instance inherited from the shared amount cell. The raster image fill and its remote asset URL are gone."
       },
       {
         "name": "Consistent",
-        "rating": "fail",
-        "note": "Reuses Table's <code>no. of columns</code> string-with-period naming, but drops the 4-column option and the content icon variant — schema diverges from parent for no apparent reason. Label token <code>main/table/color/label-preamble</code> appears only here."
+        "rating": "pass",
+        "note": "<code>Role</code> and <code>State</code> match Table Row exactly, slots use the family's <code>⤷ …Slot</code> form, and <code>container</code> is named the same way across all four versions. The <code>no. of columns</code> string-with-period property is gone."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Not built from Table, Inline Text, or Generic Transaction Card — re-implements the label and amount stack directly. A true composition would reuse those primitives as nested instances."
+        "rating": "pass",
+        "note": "Built from the family's own atoms — <code>Table Cell</code> in the header, <code>Table Amount Cell</code> in the content row. Nothing is re-implemented locally."
       }
     ],
-    "behavior": [],
-    "resolved": [],
-    "open": [
+    "behavior": [
       {
-        "headline": "Duplicate of Table's variant matrix with narrower coverage.",
-        "body": "Table already ships header / content rows with 2–4 columns and the same icon=yes/no axis. Table - Transaction re-creates that axis but only for 2 and 3 columns, then specializes the content row to peso amounts. The overlap is a maintenance drag and the layer tree is a separate sibling instead of a reuse.",
+        "state": "Header",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Role=Header",
+        "notes": "360 × 66 on a <code>#F6F9FD</code> ground. <code>⤷ ColumnSlot</code> holds <code>Table Cell</code> instances, each with a 24 × 24 <code>⤷ AssetSlot</code> above a Proxima Soft Semibold 12 label."
+      },
+      {
+        "state": "Content",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Role=Content",
+        "notes": "360 × 68 on white. A full-width <code>#label</code> in <code>#6780A9</code> sits above a row of <code>Table Amount Cell</code> instances, each pairing a label with a peso-prefixed <code>#value</code>."
+      },
+      {
+        "state": "Disabled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Text dims to <code>#C2CFE5</code> across labels and values alike."
+      },
+      {
+        "state": "Pressed",
+        "ios": "na",
+        "android": "na",
+        "property": "Not built",
+        "notes": "Not needed — rows are display-only and carry no tap target."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "It composes the family's atoms instead of duplicating them.",
+        "body": "v2.0: rebuilt on node <code>5896:39727</code>. The header's <code>⤷ ColumnSlot</code> holds the same <code>Table Cell</code> component Table Row uses; the content row holds the same <code>Table Amount Cell</code> Table Scheduling uses. What were three parallel re-implementations are now one family sharing parts.",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "<code>no. of columns</code> inherits Table's period-in-name string enum.",
-        "body": "Should be an integer <code>columnCount</code> — or, better, removed altogether in favor of a data-driven <code>columns</code> array on the parent Table. The Transaction fork inherits the anti-pattern without fixing it.",
+        "headline": "<code>no. of columns</code> is gone.",
+        "body": "v2.0: column count comes from the number of cells in <code>⤷ ColumnSlot</code>. The period-in-name string enum inherited from the old Table is no longer there to fix.",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "No native mobile primitive matches this layout.",
-        "body": "Same mobile problem as Table: iOS SwiftUI <code>Table</code> is macOS/iPad only, Material Compose has no Table primitive. Phone-width transaction totals render as stacked <code>EBInlineText</code> rows (label + peso amount) — not a 360px fixed three-column table.",
+        "headline": "The row maps to native primitives.",
+        "body": "v2.0: frames and slots throughout — a <code>VStack</code> / <code>Column</code> with a nested row of cells. No platform table primitive required.",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
       },
       {
-        "headline": "No interaction or semantic-amount states.",
-        "body": "Content row has no pressed / disabled states and amount cells don't distinguish positive, negative, or zero amounts despite being a transaction surface.",
+        "headline": "Interaction states are intentionally minimal.",
+        "body": "v2.0: reviewed and settled. Rows are display-only, so pressed and selected are not needed. <code>State=Disabled</code> is built and dims text to <code>#C2CFE5</code>. Amounts carry no <code>+</code> / <code>−</code> prefix and no positive/negative colouring — that is the approved design, not a gap.",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
       },
       {
-        "headline": "Peso sign ships as a raster image asset.",
-        "body": "The content row's currency prefix is an <code>&lt;img&gt;</code> pointing at a Figma-hosted bitmap (<code>figma.com/api/mcp/asset/...</code>), not an inline glyph, SF Symbol, or vector icon. Header icon placeholder is still a hardcoded <code>#C2C6CF</code> circle as in Table.",
+        "headline": "The peso sign is a vector.",
+        "body": "v2.0: the raster image fill and its remote <code>figma.com/api/mcp/asset/*</code> URL are gone, replaced by a <code>Peso Sign - Proxima</code> instance in <code>⤷ CurrencySlot</code>. The header's hardcoded <code>#C2C6CF</code> circle is now a <code>⤷ AssetSlot</code> holding a swappable <code>Placeholder</code>.",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
+        "headline": "Staying a separate component is intentional.",
+        "body": "v2.0: reviewed and dismissed. Transaction keeps its own record because its content row carries a full-width <code>#label</code> above the amount cells, which a plain Table Row entry doesn't. Same reasoning as Table Scheduling — and since both now build from shared atoms, the family reads as one.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>container</code> is named consistently.",
+        "body": "v2.1: all four versions use lowercase <code>container</code>. The Header versions previously used <code>Container</code>.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "The shared amount cell has a family-neutral name.",
+        "body": "v2.1: <code>Table Scheduling Amount Cell</code> renamed to <code>Table Amount Cell</code>. It is used by both Scheduling and Transaction, so the old name claimed a family it no longer belonged to exclusively. The rename propagated to both components.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "open": [
+      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until the family consolidation decision lands — Code Connect for Table - Transaction would just duplicate Table's mapping.",
+        "body": "Blocked — the native component library doesn't exist yet. Nothing to action on the design side.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -149,34 +209,61 @@ export const tableTransaction: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Remove Table - Transaction from core DS; publish as a Table recipe and a Generic Transaction Card / Inline Text pattern.",
-        "body": "The component is a feature-specific composition, not a primitive. Document two ready-made paths in the Table page: (a) \"For aligned multi-column amount totals on wider surfaces, use Table with amount-formatted column content\"; (b) \"For phone-width transaction details (receipt, limits, fees), compose <code>EBInlineText</code> rows inside <code>Generic Transaction Card</code>.\" Eliminates 6 duplicate variants and the raster peso asset from DS surface.",
-        "tag": "Family"
+        "headline": "Document amount-sign semantics.",
+        "body": "Amounts here are unsigned by approved design — used, remaining, and cap totals rather than signed movements. Write that down so the component isn't reached for on flows that need <code>+</code> / <code>−</code>; those belong to Generic Transaction Card.",
+        "tag": "Docs"
       },
       {
-        "headline": "If Transaction stays, consolidate with Table's row primitive and add an <code>amountFormat</code> column flag.",
-        "body": "Merge into Table's data-driven row with a per-column <code>format: .text | .amount</code>. Amount formatting would auto-prefix the currency glyph. Collapses Table + Table - Transaction from 3 records / 15 variants into 1 record / 2 variants × data.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Replace the raster peso sign with a text glyph or vector icon.",
-        "body": "Currency prefix should be the native Unicode glyph <code>₱</code> (U+20B1) rendered in the row's type style, or — if visual weight needs to match Proxima's peso — a vector SVG shipped as a DS icon (<code>icon/currency/peso-sm</code>). Drop the Figma-hosted bitmap reference.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Rename or drop <code>no. of columns</code>.",
-        "body": "Same fix as Table. If the component is kept, rename to an integer <code>columnCount</code>. If merged into Table's data-driven row, drop it entirely — column count is inferred from the <code>columns</code> array.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Align amount label token with Inline Text.",
-        "body": "The content-row label uses <code>main/table/color/label-preamble</code> (#6780A9) while the amount value uses <code>main/table/color/label</code> (#0A2757). Inline Text covers the same semantic pair with <code>label</code> / <code>value</code> tokens. Merge into a shared token set (<code>main/inline-text/color/label</code>, <code>main/inline-text/color/value</code>) to prevent drift.",
+        "headline": "Align the amount label token with Inline Text.",
+        "body": "The content-row label uses <code>#6780A9</code> and the value <code>#0A2757</code> — the same semantic pair Inline Text covers with its own tokens. A shared set would stop the two drifting apart.",
         "tag": "Token"
       },
       {
-        "headline": "Document amount-sign semantics.",
-        "body": "If Table - Transaction is kept for account limits, add explicit guidance that amounts are always positive totals (used / remaining / cap). For signed transaction flows (income / expense), direct consumers to Generic Transaction Card. Prevents the component from being mis-used on flows it wasn't designed for.",
-        "tag": "Docs"
+        "headline": "Audit the colour token bindings.",
+        "body": "The review tooling reads raw hex and can't see variable bindings, so C3 is recorded as unverified. Confirm <code>#F6F9FD</code>, <code>#E5EBF4</code>, <code>#0A2757</code>, <code>#6780A9</code>, and the <code>#C2CFE5</code> disabled colour are all bound.",
+        "tag": "Token"
+      },
+      {
+        "headline": "Flatten the peso glyph.",
+        "body": "For the Iconography team: <code>Peso Sign - Proxima</code> wraps a <code>shape_full</code> BOOLEAN_OPERATION. Flattening it to a plain vector removes a class of export and scaling surprises. Shared with Table Scheduling.",
+        "tag": "Asset"
+      },
+      {
+        "headline": "See siblings:",
+        "body": "<a href=\"#\" onclick=\"showPanelById('table');return false;\">Table Row</a> and <a href=\"#\" onclick=\"showPanelById('table-scheduling');return false;\">Table Scheduling</a> — all three share <code>Table Cell</code> and <code>Table Amount Cell</code>. Keep slot naming and state coverage aligned across the family.",
+        "tag": "Family"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Remove Table - Transaction from core DS, or fold it into Table as a recipe.",
+        "body": "v2.0: Settled — neither. It keeps its own record because its content row carries a full-width label above the amount cells, and it now composes the family's shared atoms rather than duplicating them.",
+        "tag": "Family"
+      },
+      {
+        "headline": "Consolidate with Table's row primitive.",
+        "body": "v2.0: Applied in substance — the header slot holds Table Row's <code>Table Cell</code> and the content slot holds <code>Table Amount Cell</code>, so the parts are shared even though the record stays separate.",
+        "tag": "Composition"
+      },
+      {
+        "headline": "Rename or drop <code>no. of columns</code>.",
+        "body": "v2.0: Applied — dropped. Column count comes from the number of cells in <code>⤷ ColumnSlot</code>.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Replace the raster peso sign with a text glyph or vector icon.",
+        "body": "v2.0: Applied — a <code>Peso Sign - Proxima</code> vector instance in <code>⤷ CurrencySlot</code>, inherited from the shared amount cell.",
+        "tag": "Asset"
+      },
+      {
+        "headline": "Give the container one name across all versions.",
+        "body": "v2.1: Applied — lowercase <code>container</code> on all four.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Give the shared amount cell a family-neutral name.",
+        "body": "v2.1: Applied — <code>Table Scheduling Amount Cell</code> is now <code>Table Amount Cell</code>, propagated to both Scheduling and Transaction.",
+        "tag": "Rename"
       }
     ]
   },
@@ -599,34 +686,54 @@ export const tableTransaction: ComponentData = {
     "propertyMapping": {
       "rows": [
         {
-          "figma": "type=header",
-          "swift": "EBTableRow(role: .header, …)",
-          "compose": "EBTableRow(role = Header, …)"
+          "figma": "<code>Role = Header | Content</code>",
+          "swift": "<code>role: .header / .content</code>",
+          "compose": "<code>role = EBTableRowRole.Header / Content</code>"
         },
         {
-          "figma": "type=content (peso amounts)",
-          "swift": "VStack { EBInlineText(…) }",
-          "compose": "Column { EBInlineText(…) }"
+          "figma": "<code>State = Default | Disabled</code>",
+          "swift": "<code>.disabled(true)</code>",
+          "compose": "<code>enabled = false</code>"
         },
         {
-          "figma": "no. of columns (drop)",
-          "swift": "columns: [Column]",
-          "compose": "columns: List&lt;Column&gt;"
+          "figma": "<code>hasLabel: Boolean</code> <span class=\"muted\">(content only)</span>",
+          "swift": "<code>label: String?</code> <span class=\"muted\">— nil hides it</span>",
+          "compose": "<code>label: String? = null</code>"
         },
         {
-          "figma": "icon=yes (header slot)",
-          "swift": "leadingIcon: Image?",
-          "compose": "leadingIcon: @Composable (() -&gt; Unit)?"
+          "figma": "<code>hasBorder: Boolean</code>",
+          "swift": "<code>showsDivider: Bool = true</code>",
+          "compose": "<code>showsDivider: Boolean = true</code>"
         },
         {
-          "figma": "Peso Sign - Proxima (raster)",
-          "swift": "Text(\"\\u{20B1}\" + amount)",
-          "compose": "Text(\"₱$amount\")"
+          "figma": "<code>⤷ ColumnSlot</code> (N × <code>Table Cell</code>)",
+          "swift": "<code>columns: [Column]</code>",
+          "compose": "<code>columns: List&lt;Column&gt;</code>"
         },
         {
-          "figma": "Label (preamble) / X,XXX.XX",
-          "swift": "EBInlineText(label:, value:)",
-          "compose": "EBInlineText(label =, value =)"
+          "figma": "<code>⤷ ColumnSlot</code> (N × <code>Table Amount Cell</code>)",
+          "swift": "<code>amounts: [AmountCell]</code>",
+          "compose": "<code>amounts: List&lt;AmountCell&gt;</code>"
+        },
+        {
+          "figma": "<code>Table Cell → ⤷ AssetSlot</code>",
+          "swift": "<code>Column.asset: AnyView?</code>",
+          "compose": "<code>Column.asset: @Composable (() -&gt; Unit)?</code>"
+        },
+        {
+          "figma": "<code>Table Amount Cell → ⤷ CurrencySlot</code>",
+          "swift": "<code>currency: AnyView</code>",
+          "compose": "<code>currency: @Composable () -&gt; Unit</code>"
+        },
+        {
+          "figma": "<code>#label</code> (content row)",
+          "swift": "<code>label: String</code>",
+          "compose": "<code>label: String</code>"
+        },
+        {
+          "figma": "<code>Table Amount Cell → #label</code>",
+          "swift": "<span class=\"muted\">hidden here — the row's single <code>label</code> covers every cell</span>",
+          "compose": "<span class=\"muted\">hidden here — the row's single <code>label</code> covers every cell</span>"
         }
       ],
       "filePaths": {
@@ -667,118 +774,100 @@ export const tableTransaction: ComponentData = {
     "scorecard": [
       {
         "id": "C1",
-        "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Duplicate sibling to Table with narrower column coverage. Should fold in, not stand alone."
+        "criterion": "Layer Structure &amp; Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Composes Table Row&#39;s <code>Table Cell</code> in the header and the shared <code>Table Amount Cell</code> in the content row. <code>container</code> is named the same way across all four versions."
       },
       {
         "id": "C2",
-        "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Inherits Table's <code>no. of columns</code> string-with-period anti-pattern unchanged."
+        "criterion": "Variant &amp; Property Naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Role</code> and <code>State</code> match Table Row exactly. The <code>no. of columns</code> property and its period are gone."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "bg / border / label / label-preamble / icon-currency-secondary all bound. Header icon placeholder uses hardcoded <code>#C2C6CF</code>."
+        "notes": "Not verified — the read-only tooling cannot see variable bindings. The hardcoded <code>#C2C6CF</code> header circle is gone, replaced by a <code>⤷ AssetSlot</code>."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No native mobile Table primitive; transaction totals render as Inline Text stacks."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Frames and slots throughout — builds as a <code>VStack</code> / <code>Column</code> with a nested row of cells."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No pressed / disabled states; no semantic handling of positive / negative amounts."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Display-only by design, so pressed is not needed. <code>State=Disabled</code> dims text to <code>#C2CFE5</code>. Amounts are unsigned by approved design."
       },
       {
         "id": "C6",
-        "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Peso sign ships as a raster <code>&lt;img&gt;</code>; header icon is a hardcoded placeholder circle."
+        "criterion": "Asset &amp; Icon Quality",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Raster replaced by a <code>Peso Sign - Proxima</code> vector instance, and the header circle by a <code>⤷ AssetSlot</code>. The glyph still wraps a <code>shape_full</code> BOOLEAN_OPERATION — delegated to the Iconography team."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked until the family consolidation decision lands."
+        "notes": "Blocked — the native component library does not exist yet."
       }
     ],
     "codeConnect": [],
     "variants": {
-      "total": 6,
-      "description": "A <code>2 type</code> × <code>2 no. of columns</code> × <code>2 icon</code> matrix, pruned: icon only applies to header rows, so content × icon=yes doesn't exist. Total 6 variants.",
+      "total": 4,
+      "description": "<code>Role</code> (2) × <code>State</code> (2) = <strong>4 published versions</strong>, listed below. Two booleans sit on top without adding variants — <code>hasBorder</code> on every row, and <code>hasLabel</code> on Content only — so the real combination count is 12. Column count isn't a version either: the <code>⤷ ColumnSlot</code> takes however many cells you drop in — <code>Table Cell</code> instances in the header, <code>Table Amount Cell</code> instances in the content row, where each cell's own <code>#label</code> is hidden.",
       "columns": [
-        "type",
-        "no. of columns",
-        "icon",
-        "Height",
-        "Node ID"
+        "Role",
+        "State",
+        "Dimensions",
+        "Background",
+        "Node"
       ],
       "rows": [
         {
           "cells": [
-            "header",
-            "2",
-            "no",
-            "36px",
-            "47:324707"
+            "<strong>Header</strong>",
+            "Default",
+            "360 × 66",
+            "<code>#F6F9FD</code>",
+            "<code>5896:39740</code>"
           ]
         },
         {
           "cells": [
-            "header",
-            "3",
-            "no",
-            "36px",
-            "47:324703"
+            "Header",
+            "Disabled",
+            "360 × 66",
+            "<code>#F6F9FD</code>",
+            "<code>5900:40254</code>"
           ]
         },
         {
           "cells": [
-            "header",
-            "2",
-            "yes",
-            "62px",
-            "47:324705"
+            "<strong>Content</strong>",
+            "Default",
+            "360 × 68",
+            "<code>#FFFFFF</code>",
+            "<code>5896:39762</code>"
           ]
         },
         {
           "cells": [
-            "header",
-            "3",
-            "yes",
-            "62px",
-            "47:324706"
-          ]
-        },
-        {
-          "cells": [
-            "content",
-            "2",
-            "no",
-            "72.5px",
-            "47:324704"
-          ]
-        },
-        {
-          "cells": [
-            "content",
-            "3",
-            "no",
-            "72.5px",
-            "47:324708"
+            "Content",
+            "Disabled",
+            "360 × 68",
+            "<code>#FFFFFF</code>",
+            "<code>5900:40274</code>"
           ]
         }
       ]

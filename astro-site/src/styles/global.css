@@ -5047,6 +5047,235 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-ccard__sk--label  { height: 27px; width: 100%; }
 .eb-preview-ccard__sk--amount { height: 10px; width: 101px; }
 
+/* ── Table Row (360 wide, Role x State — node 5734:37611) ────────── */
+/* Height hugs its content — min-height holds the Figma default (68 header /
+   70 content) while the asset, description, or a taller cell push it open. */
+.eb-preview-trow {
+  box-sizing: border-box;
+  width: 360px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 24px;
+  font-family: var(--font-body);
+  border-bottom: 1px solid #E5EBF4;
+}
+.eb-preview-trow--header   { min-height: 68px; background: #F6F9FD; }
+.eb-preview-trow--content  { min-height: 70px; background: #FFFFFF; }
+.eb-preview-trow--disabled { background: #F6F9FD; }
+
+/* Table Label — fixed 120 leading column */
+.eb-preview-trow__label {
+  width: 120px;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.eb-preview-trow__label-text {
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+  font-weight: 700;
+  color: #0A2757;
+}
+.eb-preview-trow--header  .eb-preview-trow__label-text { font-size: 14px; line-height: 14px; letter-spacing: 0.25px; }
+.eb-preview-trow--content .eb-preview-trow__label-text { font-size: 12px; line-height: 12px; letter-spacing: 0.5px; }
+.eb-preview-trow--disabled .eb-preview-trow__label-text { color: #C2CFE5; }
+
+/* Table Label's own ⤷ AssetSlot, shown when hasAsset is true */
+.eb-preview-trow__label-asset {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #C8D3E5;
+}
+
+/* Optional supporting line — 10px token, dims with the rest when disabled */
+.eb-preview-trow__label-desc {
+  font-family: 'BarkAda', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 15px;
+  color: #6780A9;
+}
+.eb-preview-trow--disabled .eb-preview-trow__label-desc { color: #C2CFE5; }
+
+/* Columns Slot — equal-width Table Cell instances */
+.eb-preview-trow__cols {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  gap: 0;
+}
+.eb-preview-trow__cell {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.eb-preview-trow__cell-asset {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #C8D3E5;
+}
+.eb-preview-trow__cell-text { color: #0A2757; }
+.eb-preview-trow--header .eb-preview-trow__cell-text {
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+}
+.eb-preview-trow--content .eb-preview-trow__cell-text {
+  font-family: 'BarkAda', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+}
+.eb-preview-trow--disabled .eb-preview-trow__cell-text { color: #C2CFE5; }
+
+/* ── Table Transaction (360 wide, Role × State — node 5896:39727) ── */
+.eb-preview-ttxn {
+  box-sizing: border-box;
+  width: 360px;
+  padding: 12px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  border-bottom: 1px solid #E5EBF4;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+}
+.eb-preview-ttxn--header  { height: 66px; background: #F6F9FD; }
+.eb-preview-ttxn--content { height: 68px; background: #FFFFFF; }
+
+.eb-preview-ttxn__label {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.5px;
+  color: #6780A9;
+}
+.eb-preview-ttxn__cols { display: flex; gap: 0; }
+.eb-preview-ttxn__cell { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.eb-preview-ttxn__cell-asset {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #C8D3E5;
+}
+.eb-preview-ttxn__cell-label {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.5px;
+  color: #0A2757;
+}
+.eb-preview-ttxn__cell-sub {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.5px;
+  color: #6780A9;
+}
+.eb-preview-ttxn__cell-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  color: #0A2757;
+}
+.eb-preview-ttxn--disabled .eb-preview-ttxn__label,
+.eb-preview-ttxn--disabled .eb-preview-ttxn__cell-label,
+.eb-preview-ttxn--disabled .eb-preview-ttxn__cell-sub,
+.eb-preview-ttxn--disabled .eb-preview-ttxn__cell-amount { color: #C2CFE5; }
+
+/* ── Table Scheduling (360 wide, State — node 5868:40468) ────────── */
+.eb-preview-tsched {
+  box-sizing: border-box;
+  width: 360px;
+  padding: 16px 24px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E5EBF4;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+}
+.eb-preview-tsched__head {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.eb-preview-tsched__date {
+  width: 108px;
+  min-width: 108px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  color: #0A2757;
+}
+.eb-preview-tsched__peso {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  color: #005CE5;
+}
+.eb-preview-tsched__total {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #005CE5;
+}
+.eb-preview-tsched__details { display: flex; align-items: flex-start; }
+.eb-preview-tsched__row-label {
+  width: 95px;
+  min-width: 95px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.5px;
+  color: #6780A9;
+}
+.eb-preview-tsched__cells { flex: 1 1 auto; min-width: 0; display: flex; gap: 8px; }
+.eb-preview-tsched__cell { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.eb-preview-tsched__cell-label {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.5px;
+  color: #6780A9;
+}
+.eb-preview-tsched__cell-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  color: #0A2757;
+}
+/* Disabled dims every text layer — date, total, labels and values alike */
+.eb-preview-tsched--disabled .eb-preview-tsched__date,
+.eb-preview-tsched--disabled .eb-preview-tsched__peso,
+.eb-preview-tsched--disabled .eb-preview-tsched__total,
+.eb-preview-tsched--disabled .eb-preview-tsched__row-label,
+.eb-preview-tsched--disabled .eb-preview-tsched__cell-label,
+.eb-preview-tsched--disabled .eb-preview-tsched__cell-amount { color: #C2CFE5; }
+
+/* hasBorder=false drops the bottom rule on every Table-family row.
+   Declared after all three blocks so it wins on cascade order. */
+.eb-preview-trow--no-border,
+.eb-preview-tsched--no-border,
+.eb-preview-ttxn--no-border { border-bottom: none; }
+
 /* ── Carousel Item (peeking hero card, 312 wide) ─────────────────── */
 /* DOM order is .hero then .content (as written by the render fn), but
    Figma has content on the LEFT and hero on the RIGHT — so row-reverse. */
