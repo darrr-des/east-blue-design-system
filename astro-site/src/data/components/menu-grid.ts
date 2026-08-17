@@ -112,6 +112,14 @@ export const menuGrid: ComponentData = {
         }
       },
       {
+        "headline": "Container metrics are uniform across all 20 variants.",
+        "body": "Two <code>Row=5</code> variants previously broke the shared metrics — <code>Column=5, Row=5</code> was 352 wide against 336 everywhere else, and <code>Column=2, Row=5</code> used 60-tall tiles against 64. Both were corrected in Figma. Every variant is now a 336-wide container at a 4 row gap, with 64-tall tiles at <code>Column=2</code> and 72-tall tiles at <code>Column=3</code>–<code>5</code>.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
         "headline": "Icons come through a slot.",
         "body": "Each tile's icon is a Figma <code>SLOT</code>, not baked artwork, so cells are swappable without detaching the instance.",
         "tag": {
@@ -121,14 +129,6 @@ export const menuGrid: ComponentData = {
       }
     ],
     "open": [
-      {
-        "headline": "Two <code>Row=5</code> variants break the shared metrics.",
-        "body": "18 of the 20 variants are a 336-wide container of 72-tall tiles. <code>Column=5, Row=5</code> (<code>5973:70287</code>) is 352 wide — 16px past every sibling — and <code>Column=2, Row=5</code> (<code>5973:70162</code>) uses 60-tall tiles instead of 64. Both look like the Row=5 column was built in a separate pass. Worth a sweep so the container width and tile height are uniform across the set.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
       {
         "headline": "Code Connect mappings not registered.",
         "body": "Left open for engineering. The property surface is stable and linkable — <code>Column</code> and <code>Row</code> map straight onto a lazy grid's column count and item count.",
@@ -763,7 +763,7 @@ export const menuGrid: ComponentData = {
     "codeConnect": [],
     "variants": {
       "total": 20,
-      "description": "4 <code>Column</code> × 5 <code>Row</code> = <strong>20 variants</strong>. <code>Column</code> counts tiles across, <code>Row</code> counts tiles down. Every variant is a 336-wide container of <strong>Service Item</strong> instances at a 4 row gap. Rows marked <strong>*</strong> break the shared metrics — see the open issue.",
+      "description": "4 <code>Column</code> × 5 <code>Row</code> = <strong>20 variants</strong>. <code>Column</code> counts tiles across, <code>Row</code> counts tiles down. Every variant is a 336-wide container of <strong>Service Item</strong> instances at a 4 row gap.",
       "columns": [
         "Column",
         "Row",
@@ -813,7 +813,7 @@ export const menuGrid: ComponentData = {
             "Column = 2",
             "Row = 5",
             "10",
-            "336 × 332 <strong>*</strong>",
+            "336 × 352",
             "<code>5973:70162</code>"
           ]
         },
@@ -948,7 +948,7 @@ export const menuGrid: ComponentData = {
             "Column = 5",
             "Row = 5",
             "25",
-            "352 × 392 <strong>*</strong>",
+            "336 × 392",
             "<code>5973:70287</code>"
           ]
         }
@@ -1009,6 +1009,22 @@ export const menuGrid: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.0.1",
+      "date": "August 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Changes Applied via Figma · node 5973:70111",
+      "rows": [
+        {
+          "body": "<strong><code>Row=5</code> dimensions corrected</strong> — <code>Column=5, Row=5</code> (<code>5973:70287</code>) narrowed from 352 to 336 to match every sibling, and <code>Column=2, Row=5</code> (<code>5973:70162</code>) moved from 60-tall to 64-tall tiles, taking the container from 332 to 352. All 20 variants now share the same container width and per-column tile height.\n          <span class=\"tag-fixed tag-c1\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        }
+      ]
+    },
     {
       "version": "2.0.0",
       "date": "August 2026",
