@@ -21,7 +21,16 @@ var TT_CLOSE_GAP = 16;
 var TT_ACTION_H = 28;
 var TT_BTN_W = 59;
 var TT_RADIUS = 6;
-var TT_POINTER_INSET = 15;
+var TT_BTN_RADIUS = 14;      /* height / 2 — a stadium, matching the Figma path.
+                                Do not use an arbitrarily large value here: SVG
+                                clamps rx to width/2 and ry to height/2
+                                independently, which turns the pill into an
+                                ellipse. */
+var TT_POINTER_INSET = 15;   /* from the container's leading edge (top/bottom) */
+var TT_POINTER_INSET_V = 6;  /* from the container's top edge (left/right) */
+var TT_POINTER_BLEED = 1;    /* the manual 1px offset in Figma — the tail base
+                                overlaps the container border so the border does
+                                not draw a line across the join */
 
 /* Pointer artwork, lifted verbatim from the Figma vector export. It is a
    real vector in the file — 24 x 12 pointing up — rotated per placement. */
@@ -56,12 +65,22 @@ function _ttContainerHeight(text, asset, action) {
     (action ? TT_GAP + TT_ACTION_H : 0) + TT_PAD;
 }
 
+/* Absolute placement — the caller must not wrap this in another transform. */
 function _ttPointer(placement, c, cH) {
+  var b = TT_POINTER_BLEED;
   var t;
-  if (placement === 'top') t = 'translate(' + TT_POINTER_INSET + ', 0)';
-  else if (placement === 'bottom') t = 'translate(' + (TT_POINTER_INSET + 24) + ', ' + (cH + 12) + ') rotate(180)';
-  else if (placement === 'left') t = 'translate(0, ' + (TT_POINTER_INSET + 24) + ') rotate(-90)';
-  else t = 'translate(' + (TT_W + 12) + ', ' + TT_POINTER_INSET + ') rotate(90)';
+  if (placement === 'top') {
+    /* container starts at y=12; tail spans 1..13, overlapping by 1 */
+    t = 'translate(' + TT_POINTER_INSET + ', ' + b + ')';
+  } else if (placement === 'bottom') {
+    t = 'translate(' + (TT_POINTER_INSET + 24) + ', ' + (cH + 12 - b) + ') rotate(180)';
+  } else if (placement === 'left') {
+    /* container starts at x=12; tail spans 1..13, overlapping by 1 */
+    t = 'translate(' + b + ', ' + (TT_POINTER_INSET_V + 24) + ') rotate(-90)';
+  } else {
+    /* container ends at x=336; tail spans 335..347, overlapping by 1 */
+    t = 'translate(' + (TT_W + 12 - b) + ', ' + TT_POINTER_INSET_V + ') rotate(90)';
+  }
   return '<g transform="' + t + '">' +
     '<path d="' + TT_POINTER_FILL + '" fill="' + c.bg + '"/>' +
     '<path d="' + TT_POINTER_STROKE + '" stroke="' + c.border + '" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' +
@@ -97,9 +116,10 @@ function _ttBuildSvg(opts) {
   s += '<rect x="' + (ox + 0.5) + '" y="' + (oy + 0.5) + '" width="' + (TT_W - 1) + '" height="' + (cH - 1) +
     '" rx="' + TT_RADIUS + '" fill="' + c.bg + '" stroke="' + c.border + '"/>';
 
-  /* pointer — drawn after the container so its base sits over the border */
-  s += '<g transform="translate(' + ox + ', ' + (placement === 'bottom' ? 0 : 0) + ')">' +
-    _ttPointer(placement, c, cH) + '</g>';
+  /* Pointer — drawn after the container so its filled base paints over the
+     container border along the 1px overlap. _ttPointer positions absolutely,
+     so it must not be wrapped in a further transform. */
+  s += _ttPointer(placement, c, cH);
 
   /* ⤷ AssetSlot */
   if (asset) {
@@ -133,7 +153,8 @@ function _ttBuildSvg(opts) {
   if (action) {
     var by = detailsY + detailsH + TT_GAP;
     var bx = ox + TT_W - TT_PAD - TT_BTN_W - 3;
-    s += '<rect x="' + bx + '" y="' + by + '" width="' + TT_BTN_W + '" height="' + TT_ACTION_H + '" rx="99" fill="#005CE5"/>';
+    s += '<rect x="' + bx + '" y="' + by + '" width="' + TT_BTN_W + '" height="' + TT_ACTION_H +
+      '" rx="' + TT_BTN_RADIUS + '" ry="' + TT_BTN_RADIUS + '" fill="#005CE5"/>';
     s += '<text x="' + (bx + TT_BTN_W / 2) + '" y="' + (by + 19) + '" text-anchor="middle" fill="#FFFFFF"' +
       ' font-size="16" font-weight="700" letter-spacing="0.25" font-family="' + font + '">Next</text>';
   }
@@ -159,10 +180,6 @@ function updateTooltipDemo() {
 
   var el = g('tt-demo-preview');
   if (el) el.innerHTML = _ttBuildSvg(_ttDemo);
-
-  /* Surface the hug result so the height reads as computed, not fixed. */
-  var hEl = g('tt-demo-height');
-  if (hEl) hEl.textContent = _ttContainerHeight(_ttDemo.text, _ttDemo.asset, _ttDemo.action) + 'px';
 }
 
 /* ── Spec cards ────────────────────────────────────────────────────── */
