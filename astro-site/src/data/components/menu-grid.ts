@@ -184,10 +184,8 @@ export const menuGrid: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Active icon", "value": "#005CE5", "token": "dashboard/service-item/color/active/icon" },
-              { "key": "Active label", "value": "#072592", "token": "dashboard/service-item/color/active/label" },
-              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" },
-              { "key": "Divider", "value": "#E5EBF4", "token": "border/color-border-weak" }
+              { "key": "Container bg", "value": "#FFFFFF", "token": "bg/color-bg-main" },
+              { "key": "Border (weak)", "value": "#E5EBF4", "token": "border/color-border-weak" }
             ]
           },
           {
@@ -292,10 +290,8 @@ export const menuGrid: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Active icon", "value": "#005CE5", "token": "dashboard/service-item/color/active/icon" },
-              { "key": "Active label", "value": "#072592", "token": "dashboard/service-item/color/active/label" },
-              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" },
-              { "key": "Divider", "value": "#E5EBF4", "token": "border/color-border-weak" }
+              { "key": "Container bg", "value": "#FFFFFF", "token": "bg/color-bg-main" },
+              { "key": "Border (weak)", "value": "#E5EBF4", "token": "border/color-border-weak" }
             ]
           },
           {
@@ -400,10 +396,8 @@ export const menuGrid: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Active icon", "value": "#005CE5", "token": "dashboard/service-item/color/active/icon" },
-              { "key": "Active label", "value": "#072592", "token": "dashboard/service-item/color/active/label" },
-              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" },
-              { "key": "Divider", "value": "#E5EBF4", "token": "border/color-border-weak" }
+              { "key": "Container bg", "value": "#FFFFFF", "token": "bg/color-bg-main" },
+              { "key": "Border (weak)", "value": "#E5EBF4", "token": "border/color-border-weak" }
             ]
           },
           {
@@ -477,7 +471,7 @@ export const menuGrid: ComponentData = {
     "colorsTables": [
       {
         "title": "Colors by State",
-        "description": "Service Item ships only the <code>active</code> color set. Pressed and disabled are not yet defined at the token layer — see C5 in the Open Issues.",
+        "description": "Menu Grid owns only the container surface. Every colour inside a tile — icon, label, description — belongs to <a href=\"/components/service-item\">Service Item</a> and is documented there.",
         "columns": [
           "Value"
         ],
@@ -487,20 +481,6 @@ export const menuGrid: ComponentData = {
             "token": "bg/color-bg-main",
             "values": [
               "#FFFFFF"
-            ]
-          },
-          {
-            "role": "Service icon",
-            "token": "dashboard/service-item/color/active/icon",
-            "values": [
-              "#005CE5"
-            ]
-          },
-          {
-            "role": "Service label",
-            "token": "dashboard/service-item/color/active/label",
-            "values": [
-              "#072592"
             ]
           },
           {
@@ -514,6 +494,7 @@ export const menuGrid: ComponentData = {
       },
       {
         "title": "Layout",
+        "description": "Measured from the component set. <code>Column=5</code> tightens the horizontal padding and column gap to fit five 64px tiles inside the same 336px container.",
         "columns": [
           "Value"
         ],
@@ -529,105 +510,57 @@ export const menuGrid: ComponentData = {
             "role": "Padding (horizontal)",
             "token": "space/space-8",
             "values": [
+              "8px · 6.4px at Column=5"
+            ]
+          },
+          {
+            "role": "Padding (vertical)",
+            "token": "space/space-8",
+            "values": [
               "8px"
             ]
           },
           {
-            "role": "Padding (top)",
-            "token": "space/space-10",
-            "values": [
-              "10px"
-            ]
-          },
-          {
-            "role": "Padding (bottom)",
-            "token": "space/space-6",
-            "values": [
-              "6px"
-            ]
-          },
-          {
-            "role": "Cell gap (row & col)",
+            "role": "Row gap",
             "token": "space/space-4",
             "values": [
               "4px"
             ]
           },
           {
-            "role": "Bottom radius",
+            "role": "Column gap",
+            "token": "space/space-4",
+            "values": [
+              "4px · 0.8px at Column=5"
+            ]
+          },
+          {
+            "role": "Corner radius",
             "token": "radius/radius-2",
             "values": [
               "6px"
             ]
           },
           {
-            "role": "Service Item min-width",
+            "role": "Tile width",
             "token": "—",
             "values": [
-              "64px"
+              "158 · 104 · 77 · 64 by Column"
             ]
           },
           {
-            "role": "Service Item icon container",
+            "role": "Tile height",
             "token": "—",
             "values": [
-              "40 × 40"
+              "64px at Column=2 · 72px at Column=3–5"
             ]
           },
           {
-            "role": "Icon padding",
-            "token": "space/space-4",
+            "role": "Icon slot",
+            "token": "—",
             "values": [
-              "4px"
+              "48 × 48"
             ]
-          },
-          {
-            "role": "Icon → label gap",
-            "token": "space/space-6",
-            "values": [
-              "6px"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Typography (Service Item Label)",
-        "columns": [],
-        "rows": [
-          {
-            "role": "DS text style",
-            "token": "Primary/Label/Fine",
-            "values": []
-          },
-          {
-            "role": "Font",
-            "token": "Proxima Soft",
-            "values": []
-          },
-          {
-            "role": "Weight",
-            "token": "700 (Bold)",
-            "values": []
-          },
-          {
-            "role": "Size",
-            "token": "12px",
-            "values": []
-          },
-          {
-            "role": "Line height",
-            "token": "12px",
-            "values": []
-          },
-          {
-            "role": "Tracking",
-            "token": "+0.5",
-            "values": []
-          },
-          {
-            "role": "Alignment",
-            "token": "center",
-            "values": []
           }
         ]
       }
@@ -728,8 +661,8 @@ export const menuGrid: ComponentData = {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "na",
-        "statusLabel": "Not Assessed",
-        "notes": "Out of scope for this review — token paths live in remote library collections and were not audited for this pass."
+        "statusLabel": "Not Applicable",
+        "notes": "Menu Grid owns only the container surface and its spacing. Every tokenised colour inside a tile belongs to <a href=\"/components/service-item\">Service Item</a> and is audited there — the same delegation as C5."
       },
       {
         "id": "C4",
@@ -1022,6 +955,20 @@ export const menuGrid: ComponentData = {
             "kind": "resolved",
             "label": "C1"
           }
+        },
+        {
+          "body": "<strong>C3 scoped to what Menu Grid owns</strong> — the container surface and its spacing. All tokenised colour inside a tile belongs to <a href=\"/components/service-item\">Service Item</a> and is audited on that component, the same delegation already applied to C5. The Colors table no longer restates Service Item's icon and label tokens.\n          <span class=\"tag-fixed tag-c3\">Scoped</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Container padding corrected</strong> — the Layout table documented 10px top and 6px bottom. Measured values are 8px on both, and the icon slot is 48 × 48 rather than the 40 × 40 carried over from the v1 assessment.\n          <span class=\"tag-fixed tag-c1\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
         }
       ]
     },
@@ -1067,13 +1014,6 @@ export const menuGrid: ComponentData = {
             "label": "Docs"
           }
         },
-        {
-          "body": "<strong>Token coverage not assessed</strong> — C3 was out of scope for this pass; token paths live in remote library collections.\n          <span class=\"tag-open tag-c3\">Deferred</span>",
-          "delta": {
-            "kind": "partial",
-            "label": "C3"
-          }
-        }
       ]
     },
     {
