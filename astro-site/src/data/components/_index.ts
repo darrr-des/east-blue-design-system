@@ -73,6 +73,7 @@ import { toast } from './toast';
 import { toggleSegmentedControl } from './toggle-segmented-control';
 import { toggleWithLabel } from './toggle-with-label';
 import { toggle } from './toggle';
+import { tooltip } from './tooltip';
 import { tooltipBlurred } from './tooltip-blurred';
 import { tooltipV2 } from './tooltip-v2';
 import { uploadFile } from './upload-file';
@@ -158,6 +159,7 @@ export const componentMap: Record<string, ComponentData> = {
   'toggle-segmented-control': toggleSegmentedControl,
   'toggle-with-label': toggleWithLabel,
   'toggle': toggle,
+  'tooltip': tooltip,
   'tooltip-blurred': tooltipBlurred,
   'tooltip-v2': tooltipV2,
   'upload-file': uploadFile,
@@ -1343,6 +1345,22 @@ export const componentManifest = [
       }
     ],
     "navGroup": "Toggle"
+  },
+  {
+    "slug": "tooltip",
+    "name": "Tooltip",
+    "node": "6295:79647",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "ready",
+        "label": "Ready"
+      }
+    ],
+    "navGroup": "Tooltip"
   },
   {
     "slug": "tooltip-blurred",
