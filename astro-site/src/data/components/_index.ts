@@ -901,7 +901,7 @@ export const componentManifest = [
   },
   {
     "slug": "onboarding-tooltip",
-    "name": "Onboarding - Tooltip",
+    "name": "Tooltip - Onboarding",
     "node": "51:17066",
     "badges": [
       {

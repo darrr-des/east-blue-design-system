@@ -24,10 +24,10 @@ const onboardingTooltipDemoControls: DemoControlSection[] = [
 export const onboardingTooltip: ComponentData = {
   "meta": {
     "slug": "onboarding-tooltip",
-    "name": "Onboarding - Tooltip",
+    "name": "Tooltip - Onboarding",
     "node": "51:17066",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=51-17066",
-    "description": "A directional tooltip used in onboarding overlays, with a pointer, header, description, and dismiss control.",
+    "description": "Named <code>Onboarding - Tooltip</code> in Figma. A directional tooltip used in onboarding overlays, with a pointer, header, description, and dismiss control. Superseded by <a href=\"/components/tooltip\">Tooltip</a>.",
     "badges": [
       {
         "kind": "remove",
