@@ -33,15 +33,15 @@ export const actionListDescription: ComponentData = {
         "label": "Consolidate"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "na",
+        "label": "Not Applicable"
       }
     ],
     "navGroup": "Action List",
     "verdict": {
       "kind": "consolidate",
-      "title": "Merge into base List via a <code>description</code> slot",
-      "text": "This component duplicates the entire base <strong>List</strong> anatomy just to render a 12/14 description line under the label. Native platforms already expose this as one parameter — SwiftUI composes primary + secondary labels in a <code>VStack</code>, Material 3's <code>ListItem</code> has <code>supportingContent</code>. Collapse all three siblings (<em>List</em>, <em>with Description</em>, <em>with Counter</em>) into one Action List component with optional <code>description</code> and <code>trailing</code> slots. This also closes the Density-coverage gap (base List has Compact + Expanded; this variant does not)."
+      "title": "Consolidate — merged into Action Row",
+      "text": "This component no longer exists on its own. It is merged into <a href=\"/components/action-list\">Action Row</a> (node <code>4628:19843</code>), where the description line is now part of every row. Assessment for this pattern lives on the Action Row page."
     }
   },
   "overview": {
@@ -52,22 +52,22 @@ export const actionListDescription: ComponentData = {
       {
         "name": "Reusable",
         "rating": "warn",
-        "note": "Works for any settings or notification list row with a subtitle. Duplicates base List's anatomy instead of reusing it — a <code>description</code> slot on the base component would handle this."
+        "note": "Historical rating from the standalone assessment. This component is merged into Action Row — see that page for current DS Health."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Carries its own text styles (<code>Primary/Label/Light/Base</code> + <code>Primary/Multi-line Label/Light/Fine</code>), background, and spacing."
+        "note": "Historical rating from the standalone assessment. This component is merged into Action Row — see that page for current DS Health."
       },
       {
         "name": "Consistent",
         "rating": "warn",
-        "note": "Ships only 3 states vs base List's 6 (missing Density axis). Leading asset is a raw <code>#c2c6cf</code> circle placeholder, not an instance of List Item Asset. <span class=\"tag-open tag-c5\">C5</span> <span class=\"tag-open tag-c1\">C1</span>"
+        "note": "Historical rating from the standalone assessment. This component is merged into Action Row — see that page for current DS Health."
       },
       {
         "name": "Composable",
         "rating": "fail",
-        "note": "Exists as a standalone sibling of base List rather than a compositional variant — bloats the library and forces consumers to swap entire components just to add a subtitle. <span class=\"tag-open tag-c4\">C4</span>"
+        "note": "Historical rating from the standalone assessment. This component is merged into Action Row — see that page for current DS Health."
       }
     ],
     "behavior": [
@@ -100,71 +100,18 @@ export const actionListDescription: ComponentData = {
         "notes": "Missing — native pressed token should map to <code>main/action-list/color/pressed/bg</code> (to be added) <span class=\"tag-open tag-c5\">C5</span>"
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Sibling component duplicates base List anatomy.",
-        "body": "A 12/14 description line is a single optional parameter on every native list primitive (SwiftUI secondary label, Material <code>supportingContent</code>). Standalone sibling forces consumers to swap whole components instead of flipping one prop.",
+        "headline": "Merged into Action Row.",
+        "body": "v2.0: Confirmed by the component owner — this no longer exists as a standalone component. It is merged into <a href=\"/components/action-list\">Action Row</a> (node <code>4628:19843</code>), where the description line is now part of every row. This page is kept as a pointer; all assessment for this pattern lives on Action Row. (Family)",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
-      },
-      {
-        "headline": "Leading asset is a raw <code>#c2c6cf</code> placeholder.",
-        "body": "The icon container is a 32px filled circle with a hard-coded gray — not an instance of List Item Asset, not bound to a token. Consumers can override via instance-swap but the default is visually broken.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Missing Density axis.",
-        "body": "Base List ships <code>Density=Compact</code> (48px) and <code>Density=Expanded</code> (56px). This variant skips the axis entirely, producing a 70–76px row with no Compact counterpart.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "No Pressed state.",
-        "body": "Only Default / Disabled / Loading are modeled. Action lists are tappable — pressed styling should live in Figma as a token so native <code>.pressed</code> / <code>ripple</code> can reference it.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until family consolidation lands — no point mapping a component that will be removed.",
-        "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
-        }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Consolidate into one <code>Action Row</code> component.",
-        "body": "This file becomes a <code>subtitle: String?</code> configuration of the unified <code>Action Row</code>, alongside the \"with Counter\" sibling mapped to <code>trailing=counter</code>. Three components collapse into one with clean slot-based composition.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Replace the leading-icon placeholder with a Figma Slot.",
-        "body": "The raw 32px <code>#c2c6cf</code> circle should become a named <code>leading</code> slot accepting any List Item Asset instance or a 32 × 32 icon. Maps 1:1 to SwiftUI <code>@ViewBuilder leading</code> / Compose <code>leadingContent</code>.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Add Density × Pressed coverage to the merged component.",
-        "body": "The consolidated Action List should carry Compact (48px) + Expanded (56px) from base List, plus a Pressed visual state so tokens like <code>main/action-list/color/pressed/bg</code> exist for native ripple/highlight.",
-        "tag": "State"
-      },
-      {
-        "headline": "Rename the family to <code>Action Row</code>.",
-        "body": "\"Action List\" implies a collection; each component here is a single row. Native name: <code>EBActionRow</code>. Tokens can stay under <code>main/action-list/...</code> or be renamed to <code>main/action-row/...</code> for consistency.",
-        "tag": "Rename"
-      }
-    ]
+    "open": [],
+    "recommendations": []
   },
   "style": {
     "heading": "Variants",

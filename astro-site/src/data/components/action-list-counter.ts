@@ -42,15 +42,15 @@ export const actionListCounter: ComponentData = {
         "label": "Consolidate"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "na",
+        "label": "Not Applicable"
       }
     ],
     "navGroup": "Action List",
     "verdict": {
       "kind": "consolidate",
-      "title": "Consolidate — fold into base Action List as a trailing slot",
-      "text": "This variant sibling just adds an <code>EBCounter</code> to the base transaction row. That should be a <code>trailing</code> slot (or a <code>counter: Int?</code> parameter that swaps in a Counter) on the base component — not a second component with a duplicated 2 × 3 density/state matrix. Shipping as a sibling doubles maintenance cost on every token or layout change, and the same anti-pattern will repeat for the \"with Description\" sibling."
+      "title": "Consolidate — merged into Action Row",
+      "text": "This component no longer exists on its own. It is merged into <a href=\"/components/action-list\">Action Row</a> (node <code>4628:19843</code>), where the trailing counter is now a <code>Trailing=Counter</code> value. Assessment for this pattern lives on the Action Row page."
     }
   },
   "overview": {
@@ -61,22 +61,22 @@ export const actionListCounter: ComponentData = {
       {
         "name": "Reusable",
         "rating": "warn",
-        "note": "Reusable on its own — but the reuse path collides with the base Transaction row. Teams have to pick between two near-identical components instead of one with a trailing slot. <span class=\"tag-open tag-c1\">C1</span>"
+        "note": "Historical rating from the standalone assessment. This component is merged into Action Row — see that page for current DS Health."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Carries its own tokens, typography, and the trailing Counter composition. Nothing external needed to render."
+        "note": "Historical rating from the standalone assessment. This component is merged into Action Row — see that page for current DS Health."
       },
       {
         "name": "Consistent",
         "rating": "warn",
-        "note": "<code>Density</code> is PascalCase; <code>State</code> is PascalCase here but <code>state</code> (lowercase) on Counter — inconsistent casing across the family. Loading skeleton is a generic strip instead of a trailing pill shape. <span class=\"tag-open tag-c2\">C2</span>"
+        "note": "Historical rating from the standalone assessment. This component is merged into Action Row — see that page for current DS Health."
       },
       {
         "name": "Composable",
         "rating": "fail",
-        "note": "Composition happens at the wrong layer. The Counter is already a standalone component — \"row with a trailing Counter\" should be the consumer wiring two components together (or a trailing slot on the row), not a third component that hardcodes both. <span class=\"tag-open tag-c1\">C1</span>"
+        "note": "Historical rating from the standalone assessment. This component is merged into Action Row — see that page for current DS Health."
       }
     ],
     "behavior": [
@@ -109,81 +109,18 @@ export const actionListCounter: ComponentData = {
         "notes": "No pressed / focused variants on the row. Inherited gap — same issue as base Transaction row."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Duplicated variant matrix.",
-        "body": "This sibling recreates the base row's 2 × 3 (<code>Density</code> × <code>State</code>) matrix just to bolt on a trailing Counter. Every future change to the base row (radius, padding, token rename) has to be mirrored here. Fold into the base row via a <code>trailing</code> slot or a <code>counter: Int?</code> parameter.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Property casing is inconsistent across the family.",
-        "body": "<code>Density</code> and <code>State</code> use PascalCase, while the composed <code>Counter</code> child uses lowercase <code>state</code>. Pick one (recommend lowercase) and apply across every List Item and Counter property.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Loading skeleton doesn't match the trailing Counter shape.",
-        "body": "The 46 × 16 strip is the generic \"trailing icon\" skeleton used on the base row — it doesn't look like a 24 × 24 pill. Either shape the skeleton to match or drop the Counter entirely in Loading (and let the skeleton stand in).",
+        "headline": "Merged into Action Row.",
+        "body": "v2.0: Confirmed by the component owner — this no longer exists as a standalone component. It is merged into <a href=\"/components/action-list\">Action Row</a> (node <code>4628:19843</code>), where the trailing counter is now a <code>Trailing=Counter</code> value. This page is kept as a pointer; all assessment for this pattern lives on Action Row. (Family)",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
-      },
-      {
-        "headline": "No pressed / focused states.",
-        "body": "Action rows are interactive targets; they need pressed and focused visuals for native parity. Missing on the base row too — fix once at the base.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until the consolidation lands — wiring this sibling directly would entrench the duplication.",
-        "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
-        }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Consolidate into one <code>Action Row</code> component.",
-        "body": "This file becomes a <code>trailing=counter</code> configuration of the unified <code>Action Row</code> (with a <code>counter: Int</code> value prop), alongside the \"with Description\" sibling mapped to <code>subtitle: String?</code>. Three components collapse into one with clean slot-based composition.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Adopt a Figma Slot for the trailing area.",
-        "body": "With the slot, this file's 6 variants disappear; consumers drop an existing <code>Counter</code> instance (node <code>18482:71321</code>) into the trailing slot of the base row. Maps cleanly to <code>@ViewBuilder trailing</code> (SwiftUI) / <code>trailing: @Composable () -&gt; Unit</code> (Compose) for Code Connect.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Normalize property casing.",
-        "body": "Rename <code>Density</code> → <code>density</code> and <code>State</code> → <code>state</code> so the whole Transaction family (base, with Counter, with Description) matches the lowercase convention used on Counter and most of the DS.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Shape the Loading skeleton or omit the trailing.",
-        "body": "If the base row's Loading skeleton stays, match the trailing skeleton to a 24 × 24 pill so consumers see the actual footprint. Easier path: drop the trailing skeleton and let the 46 × 16 strip stand in for all trailing content.",
-        "tag": "State"
-      },
-      {
-        "headline": "Add pressed / focused states at the base row.",
-        "body": "Action rows are tappable; native parity requires pressed + focused visuals. Fix on the base Transaction row once, and every \"with X\" sibling (or slotted consumer) inherits it.",
-        "tag": "State"
-      },
-      {
-        "headline": "Document the migration path.",
-        "body": "When the base row gets a trailing slot, deprecate this component and link consumers to the base row with Counter composition. Otherwise teams keep instancing the sibling and the duplication doesn't go away.",
-        "tag": "Docs"
-      }
-    ]
+    "open": [],
+    "recommendations": []
   },
   "style": {
     "heading": "Variants",

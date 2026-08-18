@@ -46,26 +46,26 @@ const stepperBulletDemoControls: DemoControlSection[] = [
 export const stepperBullet: ComponentData = {
   "meta": {
     "slug": "stepper-bullet",
-    "name": "Stepper - Bullet",
-    "node": "27:48287",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=27-48287",
-    "description": "A row of dot markers indicating progress through a multi-step flow, with the current step using a larger emphasis dot.",
+    "name": "Stepper",
+    "node": "4337:11140",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4337-11140",
+    "description": "A progress indicator for multi-step flows, in bullet, circular and dash forms. Merges the former Stepper - Bullet, Stepper - Circular and Stepper - Dash.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Stepper",
     "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <circle cx=\"9\" cy=\"16\" r=\"2.5\" fill=\"#005CE5\"/>\n      <circle cx=\"16\" cy=\"16\" r=\"2.5\" fill=\"#D2E5FF\"/>\n      <circle cx=\"23\" cy=\"16\" r=\"2.5\" fill=\"#D2E5FF\"/>\n    </svg>",
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — collapse 3 sibling components into one <code>Stepper - Bullet</code> with <code>steps</code> and <code>current</code> properties",
-      "text": "Step count is a scalar, not a component axis. The current schema has 3 top-level components (3/4/5 steps) and inside each, an <code>highlighted = 1st … Nth</code> ordinal enum for the active dot. Rebuild as a single component: <code>steps: Int</code> (3–10) and <code>current: Int</code> (1..steps). Replace the raster dot PNGs with a vector <code>Ellipse</code> whose fill is bound to <code>main/stepper/color/bg</code> (active) or <code>main/stepper/color/bg-track</code> (inactive). Native side maps to a custom <code>EBStepperBullet(current:total:)</code> rendered as an <code>HStack</code> / <code>Row</code> of <code>Circle</code> shapes. Better still: unify Dash + Bullet + Circular into one <code>EBStepper(current:total:style: .bullet | .dash | .circular)</code> API."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4337:11140</code> in the 2026 Working File as a single <strong>Stepper</strong>, merging the former Bullet, Circular and Dash components into <code>Type</code> × <code>Steps</code> × <code>Current</code> × <code>Status</code>. Step count is a property rather than sibling components, the ordinal position enum is now an integer, Status states exist where the originals had almost none, property naming follows the guidelines throughout, and the step markers are vectors. The full 2–10 range, the per-Type Status coverage and horizontal-only orientation are all deliberate. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -74,23 +74,23 @@ export const stepperBullet: ComponentData = {
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Fits any low-information position indicator (carousel, onboarding), but the 3-sibling split forces consumers to swap components when step count changes instead of flipping a prop."
+        "rating": "pass",
+        "note": "One component now covers all three visual forms and every step count from 2 to 10, where the same coverage previously took three components and twelve siblings between them."
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Each 8×8 dot renders as a raster <code>&lt;img&gt;</code>. Two PNG assets per sibling (filled + track) — six total for what should be one vector <code>Ellipse</code> with two token-bound fills."
+        "rating": "pass",
+        "note": "Owns its typography, spacing and status colours, and the step markers are vector shapes bound to tokens rather than baked assets. Nothing external required to render."
       },
       {
         "name": "Consistent",
-        "rating": "fail",
-        "note": "Step count modeled as 3 top-level components, same anti-pattern as Stepper - Circular (9 siblings). Every other scalar axis in the DS is a property. Breaks the naming hierarchy — \"Stepper - Bullet\" is three components, not one."
+        "rating": "pass",
+        "note": "<code>Type</code>, <code>Steps</code>, <code>Current</code> and <code>Status</code> are orthogonal and correctly named — <code>Type</code> is a §1 standard property, integers replace the old ordinal enum, and every value is Title Cased per §5."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Small footprint (8px dots, 8px gaps) composes cleanly into carousel, modal, and onboarding layouts. But no connector line between dots means it reads as isolated markers rather than a progress rail."
+        "rating": "pass",
+        "note": "Drops into any multi-step flow, and all three visual forms share one API so a screen can switch between them without swapping components. Horizontal-only is a deliberate scope decision."
       }
     ],
     "behavior": [
@@ -130,51 +130,92 @@ export const stepperBullet: ComponentData = {
         "notes": "Classic Material / iOS bullet steppers draw a thin line between dots tinted to match completed / upcoming. This family uses blank 8-px gaps instead."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Step count is modeled as 3 sibling components instead of a <code>steps</code> prop.",
-        "body": "The family ships as <code>Stepper - Bullet - 3 Steps</code>, <code>- 4 Steps</code>, <code>- 5 Steps</code> — three top-level components that differ only by hardcoded count. Same anti-pattern as Stepper - Circular (9 siblings). Should be a single <code>Stepper - Bullet</code> with <code>steps: Int</code> and <code>current: Int</code> — 3× maintenance collapses to 1×, and the component scales to 6, 7, 8+ without new files.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Variant axis <code>highlighted = 1st | 2nd | … | Nth</code> uses ordinal enums instead of an integer.",
-        "body": "Each sibling has a nested symbol with <code>highlighted=1st</code>, <code>2nd</code>, <code>3rd</code>, <code>4th</code>, <code>5th</code> to mark the active dot. Ordinals don't compose — the 4-step sibling can't have a \"5th\" option, and there's no path to current=N+1. Promote to a top-level integer <code>current: 1..steps</code>.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Every dot is a raster <code>&lt;img&gt;</code> PNG — 8×8 ellipse baked as an image.",
-        "body": "Two PNGs per sibling (filled + track) × 3 siblings = six raster assets for what is mathematically a filled circle. Blocks theming (can't retint), breaks at @3x, and ships bytes the native renderer doesn't need. An 8-px <code>Circle()</code> / <code>Box(Modifier.clip(CircleShape))</code> with a token-bound fill is all that's required.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "No native primitive matches — this needs a custom component.",
-        "body": "SwiftUI has no <code>BulletStepper</code>; Material 3 provides only <code>LinearProgressIndicator</code> and a linear <code>Stepper</code>. Both platforms need a custom <code>EBStepperBullet</code> built from an <code>HStack</code>/<code>Row</code> of <code>Circle</code>/<code>Box</code> shapes. The raster-baked dots make this worse — the dev can't reuse the asset.",
+        "headline": "Three Stepper components merged into one.",
+        "body": "v2.0: Rebuilt on node <code>4337:11140</code> in the 2026 Working File as a single <strong>Stepper</strong> set. Stepper - Bullet, Stepper - Circular and Stepper - Dash are now <code>Type = Bullet | Circular | Dash</code> — the unification all three assessments recommended independently. (C4 · Family)",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
       },
       {
-        "headline": "No completed / upcoming distinction, no pressed / focused states, no connector line.",
-        "body": "The spec treats every non-current dot identically. Users can't see direction of travel. Tappable-to-jump behavior (common in carousels) has no pressed state modeled. And the 8-px blank gaps between dots would normally be a connector rail in classic bullet steppers.",
+        "headline": "Step count is a property, not sibling components.",
+        "body": "v2.0: Bullet had three siblings and Circular nine, each hard-coding a step count; Dash encoded it as ten <code>propNStepper</code> booleans. All of that is now a single <code>Steps</code> axis. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Ordinal position replaced by an integer.",
+        "body": "v2.0: The <code>highlighted = 1st | 2nd | … | Nth</code> ordinal enum is now <code>Current</code> carrying integers, which maps directly to a <code>currentStep: Int</code> parameter rather than needing a lookup table. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Status states added.",
+        "body": "v2.0: <code>Status = Current | Completed | Upcoming | Error</code> now exists where none of the three originals distinguished completed from upcoming, and only Dash had any notion of error. (C5)",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
       },
       {
+        "headline": "<code>Style</code> renamed to <code>Type</code>.",
+        "body": "v2.1: §6 names <code>Style</code> explicitly as a catch-all to avoid, alongside <code>Configuration</code> and <code>Settings</code>. <code>Type</code> is a standard variant property from §1 and says the same thing without the anti-pattern. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "All variant values Title Cased.",
+        "body": "v2.1: <code>Bullet | Circular | Dash</code> and <code>Current | Completed | Upcoming | Error</code> now follow §5, replacing the lowercase values. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Uneven Status coverage confirmed intentional.",
+        "body": "v2.1: Closed by owner decision — Bullet carries only Current and Completed, Circular is almost entirely Current with single Completed and Upcoming entries, and Dash carries Error throughout. Each Type supports the statuses its usage actually calls for rather than filling out a uniform matrix. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Full 2–10 step range retained.",
+        "body": "v2.1: Closed by owner decision, superseding an earlier intent to cap the range — the set keeps all <strong>225 variants</strong>. Figma cannot parameterise a repeating count, so enumerating every combination is the only way to make each one selectable; capping would mean any flow longer than the cap had no variant and a designer would have to detach. The cost is set size in Figma only — the native API takes <code>steps</code> and <code>current</code> as integers and has no such limit. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Dots and ring arcs confirmed as vectors.",
+        "body": "v2.1: Confirmed by the component owner — the step markers are vector shapes, not the raster PNGs all three original assessments flagged. They recolour with tokens and stay crisp at any density. Not independently verifiable from the assessment tooling, whose response limit the node exceeds. (C6 · Asset)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "Horizontal-only orientation confirmed intentional.",
+        "body": "v2.1: Closed by owner decision — Stepper ships horizontal only. An <code>Orientation</code> axis would multiply an already large set for a layout the product does not use, and vertical progress indication is better served by a different pattern than a rotated stepper. Revisit only if a long-flow screen genuinely calls for it. (Composition)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      }
+    ],
+    "open": [
+      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until the family collapses to one component and the raster dots are replaced with vector circles. Mapping 3 separate siblings would codify the anti-pattern into the tooling.",
+        "body": "Blocked — no native library exists yet. The schema maps cleanly once one exists: <code>Type</code> as an enum, <code>Steps</code> and <code>Current</code> as integers, <code>Status</code> as an enum.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -183,54 +224,9 @@ export const stepperBullet: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Collapse all 3 siblings into one <code>Stepper - Bullet</code> with <code>steps</code> and <code>current</code> properties.",
-        "body": "Delete <code>Stepper - Bullet - 3 Steps</code>, <code>- 4 Steps</code>, <code>- 5 Steps</code> as separate components. Create one <code>Stepper - Bullet</code> with <code>steps: 3 | 4 | … | 10</code> and <code>current: 1 | 2 | … | 10</code>. Variant math drops from 3 top-level × 3–5 <code>highlighted</code> = 12 pre-baked variants to 1 component with runtime-computed fills. Native API: <code>EBStepperBullet(current: Int, total: Int)</code>.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Unify Dash + Bullet + Circular under one <code>EBStepper(current:total:style:)</code> API.",
-        "body": "All three siblings share the same data shape (<code>current</code> + <code>total</code>) and the same token set (<code>main/stepper/color/*</code>). Collapse them into one native component with <code>style: .dash | .bullet | .circular</code>. Figma keeps three component symbols (different visual languages) but they share the same property schema — making migration / swap between styles trivial.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Rename the nested <code>highlighted = 1st | 2nd | … | Nth</code> ordinal axis to an integer <code>current</code>.",
-        "body": "Ordinal enums don't scale and conflate position with presentation. Use <code>current: Int</code> at the top level and let each dot compute its own fill from <code>index == current ? bg : bg-track</code>.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Replace raster dot PNGs with vector <code>Ellipse</code> fills bound to tokens.",
-        "body": "Each dot is an 8×8 ellipse — the simplest possible vector. Two fills only: <code>main/stepper/color/bg</code> (active) and <code>main/stepper/color/bg-track</code> (inactive). No PNG assets, resolution-independent, theme-able.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Add <code>completed</code> vs <code>upcoming</code> differentiation.",
-        "body": "Optional but common: completed dots use a muted brand tint; upcoming use the track. Model as <code>status: completed | current | upcoming</code> computed per-slot from <code>current</code>. Adds direction-of-travel cue without the user having to count.",
-        "tag": "State"
-      },
-      {
-        "headline": "Spec a connector line between dots (optional variant).",
-        "body": "Classic bullet steppers draw a 1–2 px line between each dot pair, tinted to match completed (brand) vs upcoming (track). Today the 8-px blank gap reads as isolated markers. Add <code>showConnector: Bool</code> (default off for carousel-style use, on for wizard-style use).",
-        "tag": "Property"
-      },
-      {
-        "headline": "Add an <code>orientation</code> property for vertical layouts.",
-        "body": "Dot steppers sometimes appear as a vertical list in sidebars or long-form onboarding. Add <code>orientation: horizontal | vertical</code>.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Build as a custom native component.",
-        "body": "Neither SwiftUI nor Material has a <code>BulletStepper</code> primitive. Ship <code>EBStepperBullet</code>: iOS uses <code>HStack { ForEach(0..&lt;total) { Circle().fill(index == current ? Color.stepperBg : Color.stepperBgTrack).frame(width: 8, height: 8) } }</code>; Android uses <code>Row { repeat(total) { Box(Modifier.size(8.dp).clip(CircleShape).background(if (it == current) EBTokens.stepperBg else EBTokens.stepperBgTrack)) } }</code>.",
-        "tag": "Composition"
-      },
-      {
         "headline": "Announce \"Step X of Y\" to screen readers.",
-        "body": "The component is decorative by default — assistive tech reads nothing. Wrap in a semantic container that announces <code>\"Step \\(current) of \\(total)\"</code> (SwiftUI <code>.accessibilityLabel</code>, Compose <code>Modifier.semantics { contentDescription = … }</code>). Also: minimum touch target is 44×44 — if dots are tappable, wrap each in a padded hit area, don't make the 8-px dot itself the target.",
+        "body": "All three original assessments raised this and it is still unaddressed. A progress indicator that conveys position only visually is invisible to assistive technology — the native component should expose the position as an accessibility value.",
         "tag": "A11y"
-      },
-      {
-        "headline": "Document the canonical composition and retire the sibling names.",
-        "body": "Update the sticker sheet page to show one <code>Stepper - Bullet</code> with property controls; add a migration note pointing <code>Stepper - Bullet - N Steps</code> consumers at the new <code>steps</code> prop.",
-        "tag": "Docs"
       }
     ]
   },
