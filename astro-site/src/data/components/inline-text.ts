@@ -210,6 +210,14 @@ export const inlineText: ComponentData = {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
+      },
+      {
+        "headline": "Stacking and typography documented.",
+        "body": "v2.2: Documented rather than deferred. <strong>Stacking</strong> — rows carry no separator of their own and no vertical padding: a row is 24px tall without a description and 44px with one, at 368 wide. The containing list or card supplies the gap between rows and any dividers, so a run of Inline Text rows sits flush unless the parent spaces them. <strong>Typography reconciliation with Generic Transaction Card</strong> — the supporting scale is already shared: <code>Description</code> and the card's <code>Metadata</code> are both BarkAda Semibold 12/18 at <code>#6780A9</code>, identical. The primary scale differs deliberately: the card's own title is Proxima Soft Semibold 18/18 while Inline Text's <code>Label</code> and <code>Value</code> are 16/16. That gap is the hierarchy — the card heading sits above the detail rows beneath it — not a drift to correct. (Docs)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
       }
     ],
     "open": [
@@ -222,13 +230,7 @@ export const inlineText: ComponentData = {
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Document the stacking recipe and reconcile typography.",
-        "body": "How multiple Inline Text rows stack in a list, and how the label/value type scale relates to Generic Transaction Card's metadata — the two show similar content at different sizes. No Figma change required.",
-        "tag": "Docs"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",

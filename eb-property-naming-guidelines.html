@@ -203,6 +203,7 @@
             <tr><td class="mono">hasLabel</td><td>Inputs, Toggles</td><td>Displays a label.</td></tr>
             <tr><td class="mono">hasDescription</td><td>Cards, Alerts</td><td>Displays supporting description text.</td></tr>
             <tr><td class="mono">hasHelperText</td><td>Inputs</td><td>Displays helper text.</td></tr>
+            <tr><td class="mono">hasValue</td><td>Inputs</td><td>The field holds entered content. Use only where the filled state changes the component’s geometry — otherwise derive it from value presence in code rather than adding a variant axis.</td></tr>
             <tr><td class="mono">hasSupportingText</td><td>Cards, Lists</td><td>Displays supporting content.</td></tr>
             <tr><td class="mono">hasPrefix</td><td>Inputs</td><td>Displays leading content inside the field.</td></tr>
             <tr><td class="mono">hasSuffix</td><td>Inputs</td><td>Displays trailing content inside the field.</td></tr>
@@ -445,6 +446,20 @@
         </tbody>
       </table>
     </div>
+
+    <div class="sub-heading">State vs Status — and the form-validation exception</div>
+    <p><code>State</code> describes how the user is interacting with a component — <code>Default</code>, <code>Pressed</code>, <code>Focused</code>, <code>Disabled</code>. <code>Status</code> describes what the system is reporting about it — <code>Success</code>, <code>Warning</code>, <code>Error</code>, <code>Info</code>. Keeping them on separate axes means a component can be focused <em>and</em> in error at the same time, which a single merged axis cannot express.</p>
+    <div class="viz-dodont">
+      <div class="dd dd-do"><div class="dd-tag">Recommended</div><div class="dd-body"><code>State = Default | Pressed | Disabled</code><br><code>Status = Success | Warning | Error</code></div></div>
+      <div class="dd dd-dont"><div class="dd-tag">Avoid</div><div class="dd-body"><code>State = Default | Pressed | Success | Error</code></div></div>
+    </div>
+    <p><strong>The exception — form fields.</strong> Text-entry components may carry <code>Error</code> on the <code>State</code> axis rather than splitting into a second property. This is deliberate and system-wide, not a per-component oversight:</p>
+    <ul class="rule-list">
+      <li>A form field in error is in a distinct <em>interaction</em> state, not merely reporting a status — it has failed validation and is asking for input again.</li>
+      <li>Splitting the axis multiplies the variant count for a combination that does not occur in practice: a field is not meaningfully <em>focused and in error</em> as two independent dimensions at design time, because focus is transient and error persists until the value changes.</li>
+      <li>Every major design system models field validation this way, so splitting it would make GCash fields harder to map to native components, not easier.</li>
+    </ul>
+    <p>Components covered by the exception: <strong>Search Field</strong>, <strong>Amount Text Field</strong>, <strong>Text Area</strong>, and any future text-entry sibling. Everything else follows the two-axis rule above. Record the exception in the component description so a consumer can tell a deliberate choice from an omission.</p>
 
     <div class="sub-heading">Optimize for readability</div>
     <p>Names should be concise and easy to scan in the Figma properties panel.</p>

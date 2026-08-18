@@ -213,25 +213,25 @@ export const toast: ComponentData = {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
-      }
-    ],
-    "open": [
+      },
       {
-        "headline": "No swipe-to-dismiss or auto-duration contract.",
-        "body": "Neither the dismiss gesture nor the auto-hide duration is documented, so every consuming screen invents its own. Native has conventions for both worth adopting rather than inventing.",
+        "headline": "Dismiss and auto-duration contract documented.",
+        "body": "v2.4: Documented. <strong>Auto-hide</strong> — 4 seconds by default; 8 seconds when <code>hasTrailingAction=True</code>, since the user needs time to read the message and reach the action. <code>Appearance=Pending</code> does not auto-hide at all: it represents an in-flight operation and is replaced by a Default or Destructive toast when that operation resolves. <strong>Dismissal</strong> — a horizontal swipe in either direction dismisses. Tapping the toast body does nothing; only the trailing action is a tap target, and triggering it dismisses the toast. <strong>Stacking</strong> — one toast at a time; a new message replaces the current one rather than queueing behind it. Durations follow Material 3 Snackbar convention (4s short, longer when an action is present) rather than a product measurement, so they are a starting contract — say the word if product has specific numbers and I will amend. (C5 · Docs)",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
       },
       {
-        "headline": "No native primitive mapping documented.",
-        "body": "Nothing records how this maps to SwiftUI or Compose, or how the a11y live-region announcement should behave for a transient message.",
+        "headline": "Native mapping and a11y live region documented.",
+        "body": "v2.4: Documented. <strong>iOS</strong> — there is no system toast; build a custom view presented through a <code>ViewModifier</code> over the root, anchored to the bottom safe area. <strong>Android</strong> — Material 3 <code>Snackbar</code> with <code>SnackbarHost</code> covers the Default and Destructive appearances and maps <code>hasTrailingAction</code> onto its action slot, though the Pending appearance and the Theme axis need a custom composable. <strong>Accessibility</strong> — a transient message that is never focused must be announced, not merely rendered. On iOS post an <code>AccessibilityNotification.Announcement</code> with the message text; on Android set <code>Modifier.semantics { liveRegion = LiveRegionMode.Polite }</code>, raised to <code>Assertive</code> for <code>Appearance=Destructive</code> so an error interrupts rather than queues. The trailing action carries its own label; the leading icon is decorative and should be hidden from the accessibility tree. (C4 · A11y · Docs)",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
-      },
+      }
+    ],
+    "open": [
       {
         "headline": "Code Connect mappings not registered.",
         "body": "Blocked — no native library exists yet.",
@@ -241,13 +241,7 @@ export const toast: ComponentData = {
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Document duration, dismiss and the a11y live region.",
-        "body": "Auto-hide duration, swipe-to-dismiss behaviour, and how the message should be announced — SwiftUI accessibility notifications, Compose <code>liveRegion</code> semantics. No Figma change required.",
-        "tag": "Docs"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Types",
