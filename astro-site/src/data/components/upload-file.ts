@@ -52,24 +52,24 @@ export const uploadFile: ComponentData = {
   "meta": {
     "slug": "upload-file",
     "name": "Upload File",
-    "node": "18482:35064",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18482-35064",
+    "node": "4853:26511",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4853-26511",
     "description": "A file-upload field with a tappable upload affordance, file-name display, and progress/error states.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "navGroup": "Form Elements",
     "verdict": {
-      "kind": "fix",
-      "title": "Property + token cleanup needed",
-      "text": "Fix the <code>boder</code> → <code>border</code> token typo (library-wide). Normalize <code>hasLabel</code> to <code>true/false</code>. Split <code>state=\"Uploaded with thumbnail\"</code> into <code>state=uploaded</code> + <code>hasThumbnail: Bool</code>. Rename <code>\"Upload error\"</code> → <code>error</code> (remove space). Adopt a Figma Slot for the thumbnail image. Add <code>disabled</code> state."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4853:26511</code> in the 2026 Working File as <code>Status</code> (4) × <code>State</code> (3), authored as a deliberately sparse eight-variant matrix. Property naming is clean, process outcome and interaction state are on separate axes, the thumbnail is a real Figma <code>SLOT</code>, and the component composes shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances. Interaction-state coverage is complete — <code>Focused</code> ships and <code>Pressed</code> is deliberately out of scope — and the progress-bar GIF is confirmed a Figma-preview device rather than a handoff asset. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -80,22 +80,22 @@ export const uploadFile: ComponentData = {
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "Used in KYC flows, insurance claims, profile setup — anywhere a user uploads a document or photo. Five states cover the full upload lifecycle."
+        "note": "Used in KYC flows, insurance claims, profile setup — anywhere a user uploads a document or photo. <code>Status</code> covers the full upload lifecycle — Default, Uploading, Uploaded and Error."
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Carries its own bg, border, padding, radius. Progress bar relies on an external <strong>Lottie animation</strong> — must be bundled with the native package as an asset dependency. Thumbnail placeholder uses a hardcoded hex with baked opacity instead of a token. <span class=\"tag-open tag-c3\">C3</span>"
+        "rating": "pass",
+        "note": "Carries its own bg, border, padding and radius, and composes shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances for labelling and helper copy. The progress-bar GIF is a Figma-preview device only — native drives the platform progress primitive from real upload percentage, with no asset to bundle."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Three property-naming issues: <code>hasLabel</code> uses yes/no, <code>state=\"Upload error\"</code> contains a space, and <code>\"Uploaded with thumbnail\"</code> is really an orthogonal boolean, not a state. Also the <code>boder</code> typo in every border token. <span class=\"tag-open tag-c2\">C2</span> <span class=\"tag-open tag-c3\">C3</span>"
+        "rating": "pass",
+        "note": "<code>Status = Default | Uploading | Uploaded | Error</code> × <code>State = Default | Disabled</code> cleanly separates process outcome from interaction state, and the property-naming issues are resolved. Every layer carries a correct, consistent semantic name across all eight variants, and colors come from the shared generic token scale. <span class=\"tag-open tag-c1\">C1</span> <span class=\"tag-open tag-c3\">C3</span>"
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Thumbnail is a 52×52 hardcoded placeholder block (same <code>icon-placeholder</code> pattern we've flagged in Chip, Tab Item, List Item Asset) — should be a Figma Slot so product teams can drop in any preview image. <span class=\"tag-open tag-c6\">C6</span>"
+        "rating": "pass",
+        "note": "The thumbnail is a real Figma <code>SLOT</code> (<code>Thumbnail-Slot</code>), so product teams can drop in a file preview without detaching, and the component composes shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances for its label and helper rows."
       }
     ],
     "behavior": [
@@ -142,59 +142,140 @@ export const uploadFile: ComponentData = {
         "notes": "Not defined. Engineers must improvise. <span class=\"tag-open tag-c5\">C5</span>"
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Property naming issues.",
-        "body": "<code>hasLabel</code> uses <code>yes/no</code> instead of <code>true/false</code>; <code>state=\"Upload error\"</code> contains a space; <code>state=\"Uploaded with thumbnail\"</code> mixes two orthogonal dimensions (state + thumbnail presence).",
+        "headline": "Property naming cleaned up.",
+        "body": "v2.0: Rebuilt on node <code>4853:26511</code> in the 2026 Working File. <code>Upload error</code> → <code>Error</code> (no space), <code>Uploaded with thumbnail</code> split so thumbnail presence is no longer folded into the state value, and <code>hasLabel</code> is gone — the label is now an always-present <code>FormGroup Header</code> instance. (C2)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "Token typo — <code>boder</code>.",
-        "body": "Every border token is misspelled: <code>main/upload-file/color/default/boder</code>, <code>main/upload-file/color/error/boder</code>. Rename across the whole collection.",
+        "headline": "Label and subtext scaffolding reused.",
+        "body": "v2.0: Every variant composes a shared <code>FormGroup Header</code> above and a <code>Subtext Message</code> below, matching Text Area. The label, helper copy and error message are no longer re-authored per component. (Composition)",
         "tag": {
-          "criterion": "C3",
-          "label": "C3 · Token Coverage"
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "Thumbnail color hardcoded.",
-        "body": "Uses <code>#0057E4</code> with <code>opacity: 5%</code> baked in instead of a token.",
+        "headline": "Axis renamed <code>State</code> → <code>Status</code>.",
+        "body": "v2.1: <code>Uploading</code>, <code>Uploaded</code> and <code>Error</code> are process outcomes rather than interaction states, so <code>Status</code> is the correct axis per the Property Naming Guidelines. Closes the half-applied state restructure. (C2 · Property)",
         "tag": {
-          "criterion": "C3",
-          "label": "C3 · Token Coverage"
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "No disabled / pressed / focused states.",
-        "body": "Forms need a disabled variant for read-only views; pressed and focused are expected interaction affordances.",
+        "headline": "Disabled variant added.",
+        "body": "v2.1: A fifth variant covers the read-only case that KYC review and locked submission screens need — previously there was no canonical appearance for it. Added on the <code>Status</code> axis rather than a separate <code>State</code> axis; see open issues for the consequence. (C5)",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
       },
       {
-        "headline": "Thumbnail is a placeholder.",
-        "body": "52×52 gray block instead of a swappable image slot. Should be a Figma Slot that accepts a real image instance.",
+        "headline": "Error variant structure normalised.",
+        "body": "v2.1: <code>Status=Error</code> now wraps its <code>input-field</code> in an <code>Attach File - Input</code> frame (<code>6526:105078</code>) like the other four variants. Previously it was the only one missing that layer, which made the tree inconsistent across the set. Its filename layer was also renamed <code>#name</code> → <code>FileName</code>. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>State</code> split onto its own axis.",
+        "body": "v2.2: <code>Status = Default | Uploading | Uploaded | Error</code> × <code>State = Default | Disabled</code>, authored as a deliberately sparse sparse matrix. <code>Disabled × Uploading</code> and <code>Disabled × Error</code> are intentionally left unauthored — an upload in flight is already non-interactive, and an error you can't act on is a dead end. Process outcome and interaction state are now cleanly separated, and <code>Pressed</code> / <code>Focused</code> have somewhere to live. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Disabled + Uploaded variant authored.",
+        "body": "v2.2: <code>6572:111324</code> covers the locked review screen showing an already-attached document — the case the single-axis set couldn't express. Muted container, muted filename, and the subtext dims with it. The trash icon is muted rather than removed, a deliberate choice to signal that deletion returns when the form unlocks. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Thumbnail converted to a Figma Slot.",
+        "body": "v2.2: <code>Icon Placeholder</code> is now <code>Thumbnail-Slot</code>, a real <code>SLOT</code> node (<code>6572:111570</code>) carrying an <code>icon-placeholder</code> rectangle as its default content. Product teams can drop a real file preview in without detaching, and the hardcoded placeholder colour is now slot default rather than baked component chrome. Closes the placeholder, slot-adoption and thumbnail-token findings together. (C6 · Slot)",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
-        "headline": "Lottie dependency.",
-        "body": "Progress bar requires the Lottie animation (<code>0a1cb540-b53a-4e28-afa5-8aa5ca7ebaa1</code>) to be bundled with the native package. Document as a required asset.",
+        "headline": "Error progress bar removed.",
+        "body": "v2.2: <code>Status=Error</code> no longer renders a 20% progress bar against its <em>\"Maximum file size: 20MB\"</em> message — a file rejected for size never starts uploading, so the two contradicted. Variant height dropped 167 → 148 to match. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>label</code> wrapper renamed to <code>FileRow</code>.",
+        "body": "v2.2: The frame holding the thumbnail, attach icon and filename is now <code>FileRow</code> rather than <code>label</code>, which had described none of its contents. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Progress-bar layer names cleaned up.",
+        "body": "v2.3: <code>🟢 https://app.lottiefiles.com/animation/0a1cb540-…</code> → <code>progress-fill</code>, and the progress percentage text <code>#label</code> → <code>ProgressValue</code>. The filename wrapper also went <code>name</code> → <code>FileNameWrapper</code>. Layer naming is now clean apart from <code>container</code>. The asset behind <code>progress-fill</code> is a separate finding — see open issues. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Focused</code> state added.",
+        "body": "v2.4: <code>State = Default | Focused | Disabled</code>, with <code>Focused</code> authored against <code>Status=Default</code> (<code>6572:111764</code>) and <code>Status=Uploaded</code> (<code>6572:111782</code>) — the same two pairings <code>Disabled</code> carries, and for the same reason. Eight variants in the sparse matrix. Completes interaction-state coverage, since <code>Pressed</code> is deliberately out of scope. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Layer naming complete across all eight variants.",
+        "body": "v2.5: The wrapper frame is now exactly <code>UploadField</code> in all eight variants — verified by exact string match, with no trailing whitespace and no leftover <code>container</code>. An intermediate pass had left three different names for the same frame, including five with an invisible trailing space that would have broken name-based override matching. Together with <code>FileRow</code>, <code>FileName</code>, <code>FileNameWrapper</code>, <code>ProgressValue</code> and <code>Thumbnail-Slot</code>, every layer in the set now carries a correct, consistent semantic name. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Token namespace resolved — generic tokens applied.",
+        "body": "v2.4: Closed by owner confirmation. The component-scoped <code>main/upload-file/color/*</code> namespace was dropped in favour of the shared generic token scale, which retires the <code>boder</code> misspelling along with it — there is no longer a per-component tier carrying the typo. Same direction Search Field and Text Area took. (C3 · Token)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Progress-bar GIF confirmed preview-only.",
+        "body": "v2.4: Closed by owner decision — the animated GIF fill on <code>progress-fill</code> exists so the Figma variant previews motion, not as a handoff asset. Native implementations use the platform progress primitive (SwiftUI <code>ProgressView(value:)</code>, Compose <code>LinearProgressIndicator(progress =)</code>) driven by real upload percentage; the Figma fill is never exported. Worth stating in the handoff notes so an implementer doesn't mistake it for a required asset. (C6)",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
+      {
+        "headline": "<code>Pressed</code> ruled out of scope.",
+        "body": "v2.2: Closed by owner decision — Upload File will not carry a <code>Pressed</code> variant. Tapping the field opens the system file picker, and both platforms supply their own touch feedback for that transition, so a DS-defined pressed appearance would add a variant without adding information. <code>Focused</code> remains in scope; it carries accessibility weight that <code>Pressed</code> does not. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      }
+    ],
+    "open": [
       {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until state/property restructure and token rename land.",
+        "body": "Blocked — no native library exists yet. The schema is clean and ready to map when one does: <code>Status</code> and <code>State</code> as enums, <code>FileName</code> as a text parameter, and <code>Thumbnail-Slot</code> as a swappable node.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"

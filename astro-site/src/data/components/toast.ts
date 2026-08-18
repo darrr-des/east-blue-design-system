@@ -43,24 +43,24 @@ export const toast: ComponentData = {
   "meta": {
     "slug": "toast",
     "name": "Toast",
-    "node": "27:53135",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=27-53135",
-    "description": "A transient bottom-anchored message used for confirmations and inline alerts; auto-dismisses after a short delay.",
+    "node": "4915:25141",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4915-25141",
+    "description": "A transient bottom-anchored message for confirmations and inline alerts, with optional leading icon, description and trailing action. Auto-dismisses after a short delay.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Toast",
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — collapse the family and clean up the axes",
-      "text": "Merge Toast + Toast - With Button into one component with an optional <code>action</code> slot. Split the overloaded <code>theme</code> axis into <code>appearance = neutral | destructive | pending</code> + <code>theme = light | dark</code>. Replace <code>Large Label</code> with <code>size = small | base</code>. Replace the Pending placeholder circle with a real spinner instance. Add a dismiss contract (swipe + auto-duration)."
+      "kind": "keep",
+      "title": "Keep — documentation gaps only",
+      "text": "Rebuilt on node <code>4915:25141</code> in the 2026 Working File as <code>Appearance</code> × <code>Theme</code> × <code>Size</code> × three <code>has*</code> booleans, authored as a sparse 22-variant set. The family restructure is complete: Toast and Toast - With Button are merged, the overloaded <code>theme</code> axis is split, every variant value follows §5, layer naming is clean, and the description and trailing action are real Figma Slots composing shared components. All four DS Health traits pass. What remains is documentation — the dismiss and auto-duration contract, the native primitive mapping, and the a11y live-region behaviour."
     }
   },
   "overview": {
@@ -74,18 +74,18 @@ export const toast: ComponentData = {
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Owns its colors and typography, but the Pending type ships a 16/24 <code>icon-placeholder</code> gray circle instead of a real spinner — consumers can't drop in a live progress indicator without editing the master."
+        "rating": "pass",
+        "note": "Owns its colors and typography, composes a shared <code>Subtext Message</code> for the description and a <code>Button - XSmall</code> for the action, and each Appearance carries its own icon instance from the library. Nothing external required to render."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "The <code>theme</code> axis mixes appearance (light/dark surface) with semantic status — Error forces <code>theme=default</code> and loses the dark/light choice. <code>Large Label</code> is really a size axis phrased as a content flag."
+        "rating": "pass",
+        "note": "<code>Appearance</code> and <code>Theme</code> are separate axes, <code>Size</code> uses the standard <code>MD | SM</code> scale, the three <code>has*</code> booleans carry correct verb prefixes and are genuine Figma booleans, and every variant value is Title Cased per §5."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "No action slot — a sibling component (Toast - With Button) exists just to add one button. Action should be an optional slot on this component, not a separate family member."
+        "rating": "pass",
+        "note": "The trailing action is an <code>addon</code> <code>SLOT</code> holding a <code>Button - XSmall</code> instance — <code>addon</code> being §4's canonical name for this pattern — and the description is a <code>content</code> <code>SLOT</code> carrying a shared <code>Subtext Message</code>. The separate Toast - With Button sibling is retired."
       }
     ],
     "behavior": [
@@ -125,51 +125,100 @@ export const toast: ComponentData = {
         "notes": "Error toasts should announce as assertive; default/pending as polite. Not spec'd."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Two components model one primitive.",
-        "body": "Toast + Toast - With Button differ only in the presence of an action button. Action belongs on this component as an optional slot, not a separate family member. Doubling the surface area of every future change.",
+        "headline": "Toast and Toast - With Button consolidated.",
+        "body": "v2.0: Rebuilt on node <code>4915:25141</code> in the 2026 Working File. The two components that modelled one primitive are now a single set — the trailing button is a <code>hasTrailingAction</code> boolean rather than a separate component. Confirmed as a permanent merge by the component owner. (C4 · Family)",
         "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
         }
       },
       {
-        "headline": "<code>theme</code> axis overloaded with status.",
-        "body": "Values are <code>default | light | dark</code> but <code>default</code> is only valid when <code>type=error</code> (it paints the destructive red surface). Real axes are <code>appearance = neutral | destructive | pending</code> × <code>theme = light | dark</code>. Current schema blocks light/dark error variants.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "<code>Large Label</code> is a size flag, not a content flag.",
-        "body": "The two values change padding, font size, and line-height — this is a size axis. Rename to <code>size = small | base</code> (or <code>compact</code> / <code>regular</code>) so the schema reads correctly.",
+        "headline": "<code>theme</code> axis split into Appearance and Theme.",
+        "body": "v2.0: The overloaded axis that mixed status with light/dark is now <code>Appearance</code> (default · destructive · pending) × <code>Theme</code> (dark · light), exactly as recommended. Semantic meaning and visual mode are independent. (C2 · Property)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "Booleans use <code>yes/no</code> strings.",
-        "body": "<code>With Icon</code> / <code>Large Label</code> — blocks direct Swift <code>Bool</code> / Kotlin <code>Boolean</code> mapping.",
+        "headline": "<code>Large Label</code> replaced by a real Size axis.",
+        "body": "v2.0: The content flag masquerading as a size is now <code>Size = base | sm</code>. Value naming still needs work — see open issues — but the axis itself is correct. (C2 · Rename)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "Pending type uses a placeholder icon.",
-        "body": "16 × 16 (small) and 24 × 24 (base) gray <code>icon-placeholder</code> circles instead of an animated spinner. No instance of a ProgressView / CircularProgressIndicator — native consumers can't wire up a real loading state.",
+        "headline": "Boolean values normalised.",
+        "body": "v2.0: <code>hasLeadingIcon</code>, <code>hasTrailingAction</code> and <code>hasDescription</code> use <code>true</code>/<code>false</code> rather than <code>yes</code>/<code>no</code> strings, and all three carry the correct <code>has</code> verb prefix per §2. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Action slot added.",
+        "body": "v2.0: The trailing action is an <code>addon</code> <code>SLOT</code> holding a <code>Button - XSmall</code> instance — and <code>addon</code> is the canonical name §4 gives for exactly this pattern. Consumers can swap the button without detaching. (Slot)",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
+        "headline": "Description composed from the shared Subtext Message.",
+        "body": "v2.0: The description is a <code>content</code> <code>SLOT</code> carrying a shared <code>Subtext Message</code> instance, matching Text Area, Upload File and View Only Field. Copy changes propagate from one source. (Composition)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Size and Theme values aligned to the standard sets.",
+        "body": "v2.1: <code>Size = base | sm</code> → <code>MD | SM</code>, matching §5's <code>XS · SM · MD · LG · XL</code> scale and the values Amount Text Field and View Only Field use. <code>Theme</code> is now <code>Dark | Light</code> in Title Case per §5. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Booleans confirmed as real Figma booleans.",
+        "body": "v2.1: <code>hasLeadingIcon</code>, <code>hasTrailingAction</code> and <code>hasDescription</code> now render <code>True</code>/<code>False</code> capitalised, matching every genuine Figma boolean elsewhere in the file. They map directly to Swift <code>Bool</code> and Kotlin <code>Boolean</code>. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Layer naming completed.",
+        "body": "v2.2: <code>container</code> → <code>ToastRow</code>, the two sibling <code>offset</code> frames → <code>LeadingIcon</code> and <code>TextContent</code>, <code>text-container</code> → <code>TextGroup</code>, and <code>#content</code> → <code>Title</code>. The two anonymous slots also gained names — <code>Text-Slot</code> for the description and <code>Component-Slot</code> for the trailing action. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Pending placeholder replaced with a real icon.",
+        "body": "v2.2: The <code>icon-placeholder</code> rectangle is gone. <code>LeadingIcon</code> now holds an <code>Information</code> instance from the icon library — chosen by the owner over a spinner, so Pending reads as an informational notice rather than an in-flight progress state. Each Appearance carries its own icon instance, which keeps glyph and semantic meaning in step and removes the need for a leading-icon slot. (C6 · Asset)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "All variant values Title Cased.",
+        "body": "v2.3: <code>Appearance=pending</code> → <code>Pending</code>, the last value the casing sweep had missed. Every one of the 22 variant names now conforms to §5 — <code>Appearance = Default | Destructive | Pending</code>, <code>Theme = Dark | Light</code>, <code>Size = MD | SM</code>, and three <code>has*</code> booleans on <code>True | False</code>. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      }
+    ],
+    "open": [
+      {
         "headline": "No swipe-to-dismiss or auto-duration contract.",
-        "body": "Standard toast behaviors on both iOS and Android. Neither is annotated in the Figma component spec — engineers have to guess the duration budget and gesture handling.",
+        "body": "Neither the dismiss gesture nor the auto-hide duration is documented, so every consuming screen invents its own. Native has conventions for both worth adopting rather than inventing.",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
@@ -177,7 +226,7 @@ export const toast: ComponentData = {
       },
       {
         "headline": "No native primitive mapping documented.",
-        "body": "SwiftUI has no first-party toast (pre-iOS 17); Compose uses SnackbarHost + Snackbar. The component doesn't call out either mapping — dev-handoff guessing game.",
+        "body": "Nothing records how this maps to SwiftUI or Compose, or how the a11y live-region announcement should behave for a transient message.",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
@@ -185,7 +234,7 @@ export const toast: ComponentData = {
       },
       {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked on family consolidation and axis cleanup.",
+        "body": "Blocked — no native library exists yet.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -194,49 +243,9 @@ export const toast: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Consolidate Toast + Toast - With Button.",
-        "body": "Target schema: <code>EBToast(message, appearance = .neutral | .destructive | .pending, theme = .light | .dark, size = .small | .base, leadingIcon?: Icon, action?: EBToastAction)</code>. Remove the <code>With Button</code> component from the family.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Split <code>theme</code> into <code>appearance</code> + <code>theme</code>.",
-        "body": "<code>appearance = neutral | destructive | pending</code> controls semantic status + surface palette; <code>theme = light | dark</code> controls the neutral-surface contrast mode. Unlocks light/dark destructive variants and matches every other DS component's mental model.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Rename <code>Large Label</code> to <code>size = small | base</code>.",
-        "body": "Matches the actual axis (padding, font size, spacing) and mirrors Button / Alert sizing.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Normalize booleans to <code>true/false</code>.",
-        "body": "<code>With Icon</code> and any remaining flags. Then rename <code>With Icon</code> to <code>leadingIcon</code> once promoted to a Slot.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Replace Pending placeholder with a real spinner.",
-        "body": "Instance-swap a ProgressView / CircularProgressIndicator (or the DS Spinner component when it ships) into the leading-icon slot for <code>appearance=pending</code>. Same slot covers the checkmark for <code>appearance=neutral</code> and the X for <code>appearance=destructive</code>.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Promote the leading icon to a swappable Slot.",
-        "body": "Adopt Figma Slots so consumers can drop in any Icon from the DS icon library. Default slot content per appearance: checkmark / spinner / error glyph.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Add an optional action slot.",
-        "body": "<code>action?: EBToastAction</code> — takes label + callback. Covers the \"Undo\", \"Retry\", \"View\" use cases and replaces the need for Toast - With Button entirely.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Document duration + dismiss behavior.",
-        "body": "Annotate default duration (3s short / 5s long), swipe-to-dismiss, tap-to-dismiss, and the <code>onDismiss</code> callback contract in the component spec. Not a visual variant — a usage note.",
+        "headline": "Document duration, dismiss and the a11y live region.",
+        "body": "Auto-hide duration, swipe-to-dismiss behaviour, and how the message should be announced — SwiftUI accessibility notifications, Compose <code>liveRegion</code> semantics. No Figma change required.",
         "tag": "Docs"
-      },
-      {
-        "headline": "Document the A11y live-region mapping.",
-        "body": "Error toasts announce as assertive (<code>UIAccessibility .high</code> / <code>LiveRegionMode.Assertive</code>); default + pending as polite. Spell this out so engineers wire the right roles.",
-        "tag": "A11y"
       }
     ]
   },

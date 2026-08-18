@@ -50,25 +50,25 @@ const headerDemoControls: DemoControlSection[] = [
 export const header: ComponentData = {
   "meta": {
     "slug": "header",
-    "name": "Header",
-    "node": "18430:2919",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18430-2919",
-    "description": "The top-of-screen header pattern with title, leading back action, and trailing actions.",
+    "name": "Section Header",
+    "node": "4363:11467",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4363-11467",
+    "description": "A section-level heading row with preamble, title, counter, description, and optional leading and trailing media.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "navGroup": "Header",
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — rename, split, and collapse the variant matrix",
-      "text": "Today four components share the \"Header\" prefix but solve four different problems. The base Header (this one) should be renamed <strong>Section Header</strong>, its 8 boolean slots collapsed into 3 props (<code>preamble</code>, <code>leadingMedia</code>, <code>trailing</code>), and the sibling \"Header - *\" components either renamed by role or merged into existing primitives. See the <strong>Family Restructure</strong> section below for the full plan."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4363:11467</code> in the 2026 Working File and renamed to <strong>Section Header</strong>. The 8-boolean matrix collapsed to <code>TrailingMedia</code> (4) × <code>hasLeadingMedia</code> (2) = 8 variants; property and layer naming follow the guidelines throughout, with text layers mapping onto §7 hierarchy as <code>Preamble → Title → Description</code>; and both media containers are now real Figma Slots. The nested <code>Counter</code> is the shared component as published, and the row is a static section label so interaction states are deliberately out of scope. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -77,8 +77,8 @@ export const header: ComponentData = {
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Works across many screen sections, but boolean slots force consumers to think in invalid combinations (icon + left illustration + right illustration all true?)."
+        "rating": "pass",
+        "note": "Works across many screen sections. <code>TrailingMedia</code> (4) × <code>hasLeadingMedia</code> (2) gives 8 variants with no invalid combinations — every one is a shape a real section actually takes."
       },
       {
         "name": "Self-contained",
@@ -87,13 +87,13 @@ export const header: ComponentData = {
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "The \"Header\" name is shared with three structurally different components (Centered, With Logo, Transaction). Property model (8 booleans) conflicts with the enum-slot model used by other components in the DS."
+        "rating": "pass",
+        "note": "Renamed to Section Header, freeing the shared prefix. <code>TrailingMedia</code> is PascalCase per §1, <code>hasLeadingMedia</code> uses <code>True | False</code> per §5, and the text layers map onto §7 hierarchy — <code>Preamble → Title → Description</code>."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Actionable slots (link, edit, counter) are drawn in-place rather than accepting Button/Badge/Link instances. Consumers can't swap in their own action component."
+        "rating": "pass",
+        "note": "Leading media is an <code>Image-Slot</code> and the trailing icon an <code>Icon-Slot</code>, both real Figma Slots; <code>Trailing Media</code> is an instance in every variant that has one; and the count comes from the shared <code>Counter</code> component rather than being drawn in place."
       }
     ],
     "behavior": [
@@ -126,43 +126,76 @@ export const header: ComponentData = {
         "notes": "Focus lives on the trailing action, not the header itself."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Family-wide naming conflict.",
-        "body": "\"Header\" prefix conflates 4 roles (section header, page banner, brand bar, detail hero). Rename each by role.",
+        "headline": "Renamed to Section Header.",
+        "body": "v2.0: Rebuilt on node <code>4363:11467</code> in the 2026 Working File and renamed from <code>Header</code> to <strong>Section Header</strong>, describing what it actually is — a section-level heading row, not a screen chrome bar. Frees the <em>Header</em> prefix that four structurally different components were sharing. (C1 · Rename)",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "8 boolean props, 256 theoretical combos, 16 built.",
-        "body": "The boolean model implies combinations that don't exist. Collapse <code>icon</code> + <code>left illustration</code> into <code>leadingMedia</code>, and <code>right illustration</code> + <code>link</code> + <code>edit</code> + <code>counter</code> into <code>trailing</code>.",
+        "headline": "Eight boolean props collapsed to two.",
+        "body": "v2.0: The 8-boolean matrix with 256 theoretical combinations and 16 built variants is now <code>TrailingMedia</code> (4) × <code>hasLeadingMedia</code> (2) = <strong>8 variants</strong>. Fewer than the three props recommended, and every combination is meaningful. (C2 · Property)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "Trailing actions aren't real components.",
-        "body": "Link (\"View All\"), Edit, and Counter are drawn in-place rather than accepting Button / Badge / Link instances. Breaks composition and blocks state handling (pressed, disabled).",
+        "headline": "Property naming corrected.",
+        "body": "v2.1: <code>hasTrailingMedia</code> → <code>TrailingMedia</code> — a four-value enum should not carry a boolean <code>has</code> prefix (§2) — and <code>hasLeadingMedia</code> values went <code>Yes | No</code> → <code>True | False</code>, which §5 lists explicitly under DON'T. The <code>has</code> prefix is correct on that one because it is a genuine boolean. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Layer naming completed.",
+        "body": "v2.1–v2.2: Two frames both named <code>container</code> became <code>LeadingMedia</code> and <code>HeaderContent</code>; <code>#title</code> → <code>Preamble</code>, <code>#heading</code> → <code>Title</code>, <code>#description</code> → <code>Description</code>, <code>header-description</code> → <code>DescriptionRow</code>, <code>header-counter</code> → <code>CounterSlot</code>. The component-name prefixes are gone per §6, and the text layers now map exactly onto §7 content hierarchy: <code>Preamble → Title → Description</code>. Verified across all eight variants by full text scan. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Media containers converted to real Figma Slots.",
+        "body": "v2.2: Leading media went from a <code>Placeholder</code> instance to an <code>Image-Slot</code> <code>SLOT</code> in all four <code>hasLeadingMedia=True</code> variants, and the trailing icon is now an <code>Icon-Slot</code> <code>SLOT</code> inside the <code>Trailing Media</code> instance. Teams can drop in real content without detaching. (C6 · Slot)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "Trailing media made consistent across variants.",
+        "body": "v2.2: <code>Trailing Media</code> is an INSTANCE in every variant that has one — the Icon variants previously used a plain FRAME — and the stray instance in <code>TrailingMedia=None, hasLeadingMedia=True</code> is gone, so both None variants now match. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Nested <code>Counter</code> confirmed correct.",
+        "body": "v2.2: Closed by owner decision — the <code>Counter</code> instance points at the Counter component as published, and stays. The rebuilt copy at <code>4675:21497</code> is a working-file version rather than a replacement, so no swap is needed. Worth revisiting only if the two ever diverge in the published library. (C4 · Composition)",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
       },
       {
-        "headline": "No pressed/disabled states",
-        "body": "on the actionable slots. Natively, those slots need full state coverage — at minimum pressed + disabled.",
+        "headline": "Interaction states ruled out of scope.",
+        "body": "v2.2: Closed by owner decision — Section Header is not tappable. It is a static section label, so <code>Default | Pressed | Disabled</code> would describe interactions the component never has. Any tap target lives in the trailing media, and its states belong to that component. (C5)",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
-      },
+      }
+    ],
+    "open": [
       {
-        "headline": "No Code Connect mappings.",
-        "body": "Trivial once slots are enumerated.",
+        "headline": "Code Connect mappings not registered.",
+        "body": "Blocked — no native library exists yet. The schema is clean and ready: one enum, one boolean, three text layers and two slots.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -171,33 +204,8 @@ export const header: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Rename to \"Section Header\".",
-        "body": "Unambiguously signals in-screen section title; frees \"Header\" namespace.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Collapse to 3 props",
-        "body": "— <code>preamble?</code>, <code>leadingMedia?: icon | illustration</code>, <code>trailing?: illustration | link | edit | counter</code> — plus the required <code>title</code>. Eliminates invalid combos, drops variant count from 16 to ~6 canonical patterns.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Promote actionable slots to real components.",
-        "body": "\"View All\" becomes a <strong>Text Button</strong> instance. \"Edit\" becomes an <strong>Icon Button</strong>. \"Counter\" becomes a <strong>Badge</strong> instance. Each carries its own pressed/disabled states.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Move \"Header - Transaction\" out of the family.",
-        "body": "It's a card hero, not a header. Rename to Detail Hero and rehome near Visual Popup.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Merge \"Header - With Logo\" into Title Bar.",
-        "body": "Add <code>leading = title | logo</code> slot to Title Bar instead of maintaining a second app-bar component.",
-        "tag": "Family"
-      },
-      {
-        "headline": "See siblings:",
-        "body": "<a href=\"#\" onclick=\"showPanelById('header-centered');return false;\">Header - Centered</a>, <a href=\"#\" onclick=\"showPanelById('header-with-logo');return false;\">Header - With Logo</a>, <a href=\"#\" onclick=\"showPanelById('header-transaction');return false;\">Header - Transaction</a>. Restructure is a family-wide decision.",
+        "headline": "Resolve the remaining Header-family names.",
+        "body": "With the base renamed, <em>Header - Transaction</em> and <em>Header - With Logo</em> are the last two using the freed prefix. The latter is already <strong>Brand App Bar</strong> in Figma; the site still calls it Header - With Logo. Transaction still needs a decision on whether it belongs in this family at all.",
         "tag": "Family"
       }
     ]
