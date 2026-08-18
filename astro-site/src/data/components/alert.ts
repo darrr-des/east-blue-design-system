@@ -26,13 +26,13 @@ export const alert: ComponentData = {
   "meta": {
     "slug": "alert",
     "name": "Alert",
-    "node": "18444:2012",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18444-2012",
-    "description": "A persistent in-flow status banner with intent (info, success, warning, danger), title, description, and optional CTA.",
+    "node": "26449:14796",
+    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26449-14796",
+    "description": "A persistent status surface with intent, title, description, and an optional action — in Card or Banner style. 30 variants across <code>Type</code> (Neutral / Information / Warning / Error / Success) × <code>Style</code> (Card / Banner) × <code>Content</code> (Default / Header Only / Description Only), with a <code>Leading Container</code> icon slot and a <code>Dismiss Container</code> slot.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -40,9 +40,9 @@ export const alert: ComponentData = {
       }
     ],
     "verdict": {
-      "kind": "fix",
-      "title": "Fix — clarify property schema before native handoff",
-      "text": "Normalize boolean values, replace the placeholder left-icon with a swappable slot, and expose an explicit <code>style = banner | card</code> (or split into two components) so the two layouts aren't hidden behind a <code>fullWidth</code> boolean. Add a dismiss contract while you're in there."
+      "kind": "keep",
+      "title": "Rebuilt — explicit Style, slots, and intent enum",
+      "text": "The rebuild resolved every structural issue: <code>Style=Card / Banner</code> is now an explicit axis (was hidden behind a <code>Full Width</code> boolean), the yes/no booleans collapsed into a clean <code>Type</code> × <code>Style</code> × <code>Content</code> matrix, <code>Type=Default</code> became <code>Neutral</code>, the left icon is a swappable <code>Leading Container</code> slot, and a dismiss slot plus a real action-button instance shipped. v2.1 finished the naming — <code>#text</code> → <code>#description</code> across all 20 description nodes, and <code>Trailing Element</code> → <code>Dismiss Container</code> across all 30 variants. Only the A11y live-region docs and Code Connect remain."
     }
   },
   "overview": {
@@ -56,103 +56,115 @@ export const alert: ComponentData = {
       },
       {
         "name": "Self-contained",
-        "rating": "partial",
-        "note": "Owns its colors, spacing, and typography tokens. But the Learn More action is drawn in-place — not an instance of Text Button — so it can't inherit pressed/disabled states."
+        "rating": "pass",
+        "note": "Owns its colors, spacing, and typography tokens across all five intents and both styles. The action is now a real button instance (with its own states) rather than drawn in-place."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Boolean properties use <code>yes/no</code> strings with inconsistent casing (<code>No</code> vs <code>no</code>). <code>Type=Default</code> mixes a neutral appearance into an otherwise-semantic set."
+        "rating": "pass",
+        "note": "Three Title Case enums — <code>Type</code> × <code>Style</code> × <code>Content</code> — a complete 30-variant matrix, and <code>Type=Default</code> renamed <code>Neutral</code>. Internal naming now matches: the description node is <code>#description</code>, and the paired slots read <code>Leading Container</code> / <code>Dismiss Container</code>."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Composes into forms fine, but the left-icon slot is a hardcoded placeholder circle — can't swap in an icon from the DS icon library."
+        "rating": "pass",
+        "note": "A swappable <code>Leading Container</code> icon slot in both styles, a <code>Dismiss Container</code> holding a <code>Content</code> slot, and an action-button instance — consumers compose an icon, an action, and a dismiss without editing the master."
       }
     ],
     "behavior": [
       {
-        "state": "Show / hide",
+        "state": "Intent",
         "ios": "yes",
         "android": "yes",
-        "property": "Not modeled",
-        "notes": "Alerts fade/slide in on mount. Host-screen concern, not component state."
+        "property": "Type=Neutral / Information / Warning / Error / Success",
+        "notes": "Five intents drive background, border/accent, and icon color. Neutral is the no-charge appearance (renamed from the old Default)."
       },
       {
-        "state": "Action tap (Learn More)",
-        "ios": "na",
-        "android": "na",
-        "property": "No button",
-        "notes": "Learn More text + chevron is a drawn element — no pressed state. Should be a Text Button instance."
+        "state": "Card style",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Style=Card",
+        "notes": "Bordered rounded card (radius 4) with a leading icon slot, action button, and trailing dismiss slot."
       },
       {
-        "state": "Dismiss (X close)",
-        "ios": "na",
-        "android": "na",
-        "property": "Not built",
-        "notes": "Dismissable alerts need an X button + <code>onDismiss</code> callback. Not modeled today."
+        "state": "Banner style",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Style=Banner",
+        "notes": "Flat inline surface with a 6px <code>Left Border Accent</code> instead of a full border."
+      },
+      {
+        "state": "Content composition",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Content=Default / Header Only / Description Only",
+        "notes": "Default shows title + description; the other two drop one. Composes with every Type and Style."
+      },
+      {
+        "state": "Action tap",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Button instance",
+        "notes": "The \"Learn more\" action is a real button instance with its own states, plus a chevron slot — no longer drawn in-place."
+      },
+      {
+        "state": "Dismiss",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Dismiss Container (Content slot)",
+        "notes": "The trailing slot carries the dismiss / close affordance."
       },
       {
         "state": "A11y announcement",
         "ios": "na",
         "android": "na",
         "property": "Not annotated",
-        "notes": "Error alerts should announce as <code>role=\"alert\"</code> / <code>LiveRegion.Assertive</code>. Informational use <code>role=\"status\"</code> / <code>LiveRegion.Polite</code>."
+        "notes": "Error alerts should announce as <code>role=\"alert\"</code> / <code>LiveRegion.Assertive</code>, informational as <code>role=\"status\"</code> / <code>LiveRegion.Polite</code>. Still to document."
       }
     ],
-    "resolved": [],
+    "resolved": [
+      {
+        "body": "v2.0: Boolean properties eliminated — the old yes/no <code>Full Width</code> / <code>Left Icon</code> / <code>Right Icon</code> / <code>Description</code> booleans (with the <code>No</code>/<code>no</code> casing bug) collapsed into a clean <code>Type</code> × <code>Style</code> × <code>Content</code> enum matrix. (C2)"
+      },
+      {
+        "body": "v2.0: The Card-vs-Banner distinction is now an explicit <code>Style</code> axis rather than being hidden behind a <code>Full Width</code> boolean — Card is the bordered accent surface, Banner the flat inline strip with a left accent. (C1)"
+      },
+      {
+        "body": "v2.0: <code>Type=Default</code> renamed <code>Neutral</code> — no longer conflated with \"the default/unset value\", and consistent with the semantic siblings. (C2)"
+      },
+      {
+        "body": "v2.0: Left-icon placeholder replaced with a real <code>Leading Container</code> SLOT (32 × 32) in both Card and Banner, so consumers swap in any DS icon. (C6)"
+      },
+      {
+        "body": "v2.0: Dismiss contract added — a <code>Trailing Element</code> wrapping a <code>Content</code> slot carries the close affordance, covering the previously-missing dismissable pattern. (C5)"
+      },
+      {
+        "body": "v2.0: The \"Learn more\" action is now a real button instance (with a chevron slot) rather than drawn text + chevron, so it carries its own states and its copy is swappable. (C5)"
+      },
+      {
+        "body": "v2.1: Description text node renamed <code>#text</code> → <code>#description</code> across all 20 variants that carry one — Card and Banner, Default and Description Only. Verified by a full text-node rescan with zero <code>#text</code> remaining. (C2)"
+      },
+      {
+        "body": "v2.1: Trailing dismiss wrapper renamed <code>Trailing Element</code> → <code>Dismiss Container</code> across all 30 variants, pairing cleanly with <code>Leading Container</code>. <code>Dismiss</code> was chosen over <code>Trailing Container</code> deliberately: the nested <code>Button_New</code> already exposes its own <code>Trailing Container</code> slot, so reusing that name would have put two identically-named layers in one variant. (C2)"
+      },
+      {
+        "body": "v2.1: Component moved into the Sticker Sheets v2 library; the assessment now points at the canonical node rather than the 2026 Working File. (C1)"
+      },
+      {
+        "body": "v2.1: The <code>Button_New</code> action instance is <strong>intentional</strong> — reviewed and confirmed. It is a real Button component slotted into the Alert, not a placeholder or copy-paste artifact, so its name belongs to that component rather than to Alert. Not an Alert defect. (C1)"
+      }
+    ],
     "open": [
       {
-        "headline": "Boolean properties use <code>yes/no</code> strings.",
-        "body": "<code>Full Width</code>, <code>Left Icon</code>, <code>Right Icon</code>, <code>Description</code> — and <code>Full Width</code> has inconsistent casing (<code>No</code> on the non-full-width Information variant, <code>no</code> elsewhere). Blocks direct Swift <code>Bool</code> / Kotlin <code>Boolean</code> mapping.",
+        "headline": "A11y live-region mapping not documented.",
+        "body": "Error alerts should announce assertively, informational alerts politely. Not yet annotated on the component, so engineers have no spec for the correct roles.",
         "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Two layouts hidden behind <code>Full Width</code>.",
-        "body": "Non-full-width variants are accent cards (left border + Learn More action); full-width variants are flat banners. The axis name describes the width, not the real structural difference. Either split into two components or rename to <code>style = banner | card</code>.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "<code>Type=Default</code> mixes with semantic types.",
-        "body": "Default is a neutral appearance; Information / Warning / Error / Success are semantic statuses. Mixing them in one enum blurs the mental model. Rename to <code>Neutral</code> or put it on a separate axis.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Left-icon slot is a placeholder circle.",
-        "body": "24 × 24 gray <code>icon-placeholder</code> — not swappable via instance-swap. Consumers can't drop in a real Icon from the DS icon library.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "No dismiss / close state.",
-        "body": "Dismissable alerts are a standard pattern (X button on the right, <code>onDismiss</code> callback). Not modeled in any of the 20 variants.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Learn More action is drawn in-place.",
-        "body": "Text + chevron aren't a real Text Button instance — no pressed or disabled state coverage, can't swap in \"Try again\", \"View details\", etc. without editing the master.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
+          "criterion": "C7",
+          "label": "C7 · Code Connect Linkability"
         }
       },
       {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until schema cleanup and slot adoption land.",
+        "body": "Structure and naming are settled enough to register. Blocked only on the SwiftUI / Compose mappings being wired and the native component existing — snippets remain a Planned API.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -161,39 +173,61 @@ export const alert: ComponentData = {
     ],
     "recommendations": [
       {
+        "headline": "Document the A11y live-region mapping.",
+        "body": "Spell out assertive for error, polite for informational, so engineers wire <code>role=\"alert\"</code> / <code>role=\"status\"</code> correctly.",
+        "tag": "A11y"
+      },
+      {
+        "headline": "Register Code Connect mapping to <code>EBAlert</code>.",
+        "body": "Wire <code>Type</code>, <code>Style</code>, and <code>Content</code> to the SwiftUI / Compose API, and map the <code>Leading Container</code> and trailing dismiss slots to native content slots.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": [
+      {
         "headline": "Normalize boolean values and casing.",
-        "body": "<code>Full Width</code> / <code>Left Icon</code> / <code>Right Icon</code> / <code>Description</code> → <code>true/false</code>. Eliminates the <code>No</code>/<code>no</code> casing bug.",
+        "body": "v2.0: Applied — the yes/no booleans are gone entirely, replaced by three Title Case enums. The <code>No</code>/<code>no</code> casing bug no longer exists.",
         "tag": "Rename"
       },
       {
         "headline": "Expose <code>style = banner | card</code>.",
-        "body": "Makes the real difference explicit: <code>card</code> has the left-border accent + action link, <code>banner</code> is the flat inline surface. Either this, or split into two components (<code>AlertBanner</code> + <code>AlertCard</code>).",
+        "body": "v2.0: Applied — <code>Style=Card / Banner</code> is a real axis; the layout difference is no longer hidden behind width.",
         "tag": "Property"
       },
       {
         "headline": "Rename <code>Type=Default</code> to <code>Neutral</code>.",
-        "body": "Disambiguates from \"the default / unset value\" and matches the semantic naming of its siblings.",
+        "body": "v2.0: Applied.",
         "tag": "Rename"
       },
       {
         "headline": "Replace the left-icon placeholder with a swappable Icon slot.",
-        "body": "Adopt Figma Slots so product teams can drop in any Icon from the DS library without editing the master.",
+        "body": "v2.0: Applied — <code>Leading Container</code> SLOT in both styles.",
         "tag": "Slot"
       },
       {
-        "headline": "Add a dismissable variant",
-        "body": "with an X icon on the right and an <code>onDismiss</code> callback contract. Pairs with a default timeout for transient alerts.",
+        "headline": "Add a dismissable variant.",
+        "body": "v2.0: Applied — the <code>Trailing Element</code> / <code>Content</code> slot carries the dismiss affordance.",
         "tag": "State"
       },
       {
-        "headline": "Promote the Learn More action to a Text Button slot.",
-        "body": "Gains pressed / disabled states automatically, and lets consumers swap copy (\"View details\", \"Try again\", \"Undo\") without editing the master. Same pattern Button will have once trailing slots ship.",
+        "headline": "Promote the Learn More action to a button instance.",
+        "body": "v2.0: Applied — it is now a real button instance with its own states, rather than drawn in-place. (Naming cleanup pending — see the <code>Button_New</code> open issue.)",
         "tag": "Composition"
       },
       {
-        "headline": "Document the A11y live-region mapping.",
-        "body": "Error alerts should announce as assertive; informational alerts as polite. Spell this out in the component spec so engineers wire the right roles.",
-        "tag": "A11y"
+        "headline": "Rename <code>#text</code> → <code>#description</code>.",
+        "body": "v2.1: Applied — all 20 description nodes, verified by rescan.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Align the paired slot names.",
+        "body": "v2.1: Applied as <code>Leading Container</code> / <code>Dismiss Container</code> — avoiding a collision with the Button's own nested <code>Trailing Container</code> slot.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Give the action button a semantic name.",
+        "body": "v2.1: Reviewed and closed as not needed — <code>Button_New</code> is a real Button component slotted into the Alert, so the name is owned by that component.",
+        "tag": "Rename"
       }
     ]
   },

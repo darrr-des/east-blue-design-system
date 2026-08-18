@@ -76,13 +76,13 @@ export const tabItem: ComponentData = {
   "meta": {
     "slug": "tab-item",
     "name": "Tab Item",
-    "node": "18482:33262",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18482-33262",
-    "description": "A single tab inside the Tabs component — label, optional leading icon, and active/inactive/disabled states.",
+    "node": "26327:10941",
+    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26327-10941",
+    "description": "A single tab inside Tabs — label, swappable Icon slot, optional Counter and red dot. 24 variants across <code>State</code> (Default/Hover/Disabled) × <code>Orientation</code> (Vertical/Horizontal) × <code>Size</code> (Medium/Large) × <code>Placement</code> (Leading/Trailing) × <code>isSelected</code>.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -91,9 +91,9 @@ export const tabItem: ComponentData = {
     ],
     "navGroup": "Tabs",
     "verdict": {
-      "kind": "fix",
-      "title": "Prop and asset cleanup needed",
-      "text": "Rename <code>isActive?</code> → <code>selected</code> (true/false). Unify the leading-icon slot across orientations. Replace the hardcoded counter (and its raw hex colors) with an instance of the canonical <strong>Badge</strong>. Replace the placeholder circle with a swappable Icon slot. <span class=\"tag-open tag-c2\">C2</span> <span class=\"tag-open tag-c3\">C3</span> <span class=\"tag-open tag-c6\">C6</span>"
+      "kind": "keep",
+      "title": "Rebuilt — structurally clean",
+      "text": "The rebuild resolved every structural issue: <code>isActive?</code> renamed <code>isSelected</code> with lowercase <code>true</code>/<code>false</code>, a real <code>Icon Slot</code> replaces the placeholder circle in both orientations, the counter is a <code>Counter</code> INSTANCE on tokenised <code>#EEF2F9</code>, and a <code>State</code> axis (Default / Hover / Disabled) now ships alongside <code>isSelected</code> — 24 variants. Only Code Connect registration remains."
     }
   },
   "overview": {
@@ -103,114 +103,121 @@ export const tabItem: ComponentData = {
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "Used by Tabs for all tab surfaces. Four orientation/size combinations cover 360px and 414px screens."
+        "note": "Used by Tabs across both orientations and two sizes. The Icon Slot and Counter make one atom cover icon tabs, label-only tabs, and tabs with a count."
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Carries layout, border, typography. But the counter pill uses hardcoded colors (<code>#ECF1FA</code>, <code>#0F3390</code>) instead of tokens. <span class=\"tag-open tag-c3\">C3</span>"
+        "rating": "pass",
+        "note": "Carries its own layout, border, and typography. The counter is a <code>Counter</code> instance on <code>#EEF2F9</code> rather than a locally drawn pill with raw hex, so token changes propagate."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Property <code>isActive?</code> has a trailing <code>?</code> and uses Yes/No. The leading-icon slot behaves differently across orientations: vertical always renders one, horizontal exposes <code>hasLeadingIcon</code> boolean. <span class=\"tag-open tag-c2\">C2</span>"
+        "rating": "pass",
+        "note": "Five orthogonal props — <code>State</code> × <code>Orientation</code> × <code>Size</code> × <code>Placement</code> × <code>isSelected</code>. Booleans are lowercase <code>true</code>/<code>false</code>, matching the DS-wide standard, and <code>State</code> is kept separate from <code>isSelected</code> the way Radio Button models it. <code>Placement</code> is scoped to Horizontal by design, since Vertical stacks the icon above the label."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Counter pill is drawn locally rather than instancing the canonical <strong>Badge</strong> component — changes to Badge won't propagate. Icon is a hardcoded gray circle <code>icon-placeholder</code> instead of a swappable Icon slot. <span class=\"tag-open tag-c6\">C6</span>"
+        "rating": "pass",
+        "note": "A real <code>Icon Slot</code> SLOT (32px vertical / 24px horizontal) lets consumers swap in any icon, and the counter instances the canonical component so its updates propagate. Nests inside Tabs as an instance."
       }
     ],
     "behavior": [
       {
-        "state": "Active",
+        "state": "Selected",
         "ios": "yes",
         "android": "yes",
-        "property": "isActive?=Yes",
-        "notes": "Blue label, blue bottom border"
+        "property": "isSelected=true",
+        "notes": "Brand <code>#005CE5</code> indicator border on the container, brand label."
       },
       {
-        "state": "Inactive",
+        "state": "Unselected",
         "ios": "yes",
         "android": "yes",
-        "property": "isActive?=No",
-        "notes": "Gray label, light gray bottom border"
+        "property": "isSelected=false",
+        "notes": "Muted label <code>#6780A9</code>, neutral <code>#E5EBF4</code> border."
       },
       {
-        "state": "Pressed / Disabled",
-        "ios": "na",
-        "android": "na",
-        "property": "—",
-        "notes": "Not defined. <span class=\"tag-open tag-c5\">C5</span>"
-      },
-      {
-        "state": "Has counter",
+        "state": "Horizontal",
         "ios": "yes",
         "android": "yes",
-        "property": "hasCounter=true (horizontal only)",
-        "notes": "Counter pill. Should instance Badge, not duplicate colors. <span class=\"tag-open tag-c6\">C6</span>"
+        "property": "Orientation=Horizontal",
+        "notes": "Label beside the icon, 24px Icon Slot. <code>Placement</code> puts the icon leading or trailing."
       },
       {
-        "state": "Has red dot",
+        "state": "Vertical",
         "ios": "yes",
         "android": "yes",
-        "property": "hasRedDot=true",
-        "notes": "6px red dot in top-right corner"
+        "property": "Orientation=Vertical",
+        "notes": "Icon above the label, 32px Icon Slot. Only <code>Placement=Leading</code> ships."
+      },
+      {
+        "state": "Counter",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Counter instance",
+        "notes": "Pill on <code>#EEF2F9</code>, radius 99999. A real instance, so Counter updates propagate."
+      },
+      {
+        "state": "Red dot",
+        "ios": "yes",
+        "android": "yes",
+        "property": "red-dot",
+        "notes": "6px <code>#D61B2C</code> notification dot. Modelled as a fixed layer by design rather than a boolean or slot."
+      },
+      {
+        "state": "Hover (pressed)",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Hover",
+        "notes": "Touch-down feedback — container stroke darkens to <code>#2340A9</code>, the DS pressed navy. Named <code>Hover</code> here; maps to the platform pressed binding (<code>configuration.isPressed</code> / <code>InteractionSource</code>) since touch has no hover. Ships at <code>isSelected=true</code>."
+      },
+      {
+        "state": "Disabled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Non-interactive tab. Ships at <code>isSelected=false</code> — the current tab is not disabled in practice."
       }
     ],
-    "resolved": [],
+    "resolved": [
+      {
+        "body": "v2.0: Property <code>isActive?</code> renamed <code>isSelected</code> — the trailing <code>?</code> is gone from the generated type. Values remain capitalised and are tracked separately. (C2)"
+      },
+      {
+        "body": "v2.0: Icon placeholder replaced with a real Figma <code>Icon Slot</code> SLOT — 32 × 32 vertical, 24 × 24 horizontal, both empty and swappable. The hardcoded grey <code>icon-placeholder</code> circle is gone. (C6)"
+      },
+      {
+        "body": "v2.0: Counter is now a <code>Counter</code> INSTANCE rather than a locally drawn pill, so updates to the canonical component propagate to every Tab Item. (C6)"
+      },
+      {
+        "body": "v2.0: Counter colours moved off raw hex — the instance ships on <code>#EEF2F9</code>, matching the DS counter token, replacing the hardcoded <code>#ECF1FA</code> / <code>#0F3390</code> pair. (C3)"
+      },
+      {
+        "body": "v2.0: Leading-icon behaviour unified across orientations — both Vertical and Horizontal now carry the same <code>Icon Slot</code>, and icon position is expressed by the <code>Placement</code> property rather than a vertical-always-renders rule plus a <code>hasLeadingIcon</code> boolean. (C2)"
+      },
+      {
+        "body": "v2.0: <code>red-dot</code> as a fixed 6px <code>#D61B2C</code> ELLIPSE confirmed <strong>intentional</strong> — kept as a layer rather than promoted to a boolean property or slot. (C6)"
+      },
+      {
+        "body": "v2.1: <code>isSelected</code> values renamed <code>True</code>/<code>False</code> → <code>true</code>/<code>false</code> across all 12 variants — Tab Item is now on the DS-wide boolean standard alongside Radio Button, Select Item, and Select. Verified with no stray property values or conflicting variants. (C2)"
+      },
+      {
+        "body": "v2.1: Interaction states added — a <code>State</code> axis (Default / Hover / Disabled) takes the set from 12 to 24 variants. <code>State</code> is kept orthogonal to <code>isSelected</code> rather than collapsed into it, because the two vary independently: <code>isSelected</code> is which tab is active, <code>State</code> is the transient interaction. Same model as Radio Button. (C5)"
+      },
+      {
+        "body": "v2.1: <code>State=Hover</code> retained deliberately rather than renamed <code>Pressed</code>. The variants are painted <code>#2340A9</code> (the DS pressed navy) and behave as the touch-down state; the term is a naming convention only. Tab Item is the sole component using <code>Hover</code> — Button, Radio Button, Select Item, and Select Group all say <code>Pressed</code> — so Code Connect should bind it to the platform pressed state. (C2)"
+      },
+      {
+        "body": "v2.1: State coverage confirmed <strong>intentional</strong> — <code>Hover</code> ships only at <code>isSelected=true</code> and <code>Disabled</code> only at <code>isSelected=false</code>, giving 24 of 36 theoretical cells. Reviewed and accepted as the useful set. (C5)"
+      },
+      {
+        "body": "v2.1: <code>Placement</code> being meaningful only for Horizontal confirmed <strong>intentional</strong> — Vertical stacks the icon above the label, so a trailing (below-label) variant is not a layout GCash uses. (C2)"
+      }
+    ],
     "open": [
       {
-        "headline": "Property <code>isActive?</code> has a <code>?</code> in its name.",
-        "body": "And uses <code>Yes</code>/<code>No</code> values. Rename to <code>selected</code> with <code>true</code>/<code>false</code> to match Checkbox/Radio conventions.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Leading-icon slot is inconsistent across orientations.",
-        "body": "Vertical always renders an icon; horizontal gates it on <code>hasLeadingIcon</code>. Unify to a single <code>leading = none | icon</code> prop that behaves identically in both orientations.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Counter pill uses hardcoded hex values.",
-        "body": "<code>#ECF1FA</code> bg, <code>#0F3390</code> label — not bound to tokens, so theme changes won't propagate.",
-        "tag": {
-          "criterion": "C3",
-          "label": "C3 · Token Coverage"
-        }
-      },
-      {
-        "headline": "Counter is drawn locally instead of instancing Badge.",
-        "body": "Breaks compositional inheritance — future Badge updates (color, sizing, overflow) won't reach Tab Item.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "Icon is a hardcoded placeholder circle.",
-        "body": "32px (vertical) / 24px (horizontal) gray <code>icon-placeholder</code> — should be a swappable Icon slot via instance swap.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "No pressed / disabled states documented.",
-        "body": "Tap feedback and non-interactive state are critical for a tab atom — engineers are improvising them today.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until property rename, slot adoption, and state coverage land.",
+        "body": "All asset, composition, naming, and state blockers are resolved. Registration is unblocked but the SwiftUI / Compose mappings are not yet wired and the native component does not exist — snippets remain a Planned API. Note for whoever wires it: <code>State=Hover</code> maps to the pressed/<code>isPressed</code> binding on both platforms.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -219,34 +226,41 @@ export const tabItem: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Rename <code>isActive?</code> → <code>selected</code>",
-        "body": "with <code>true</code>/<code>false</code> values. Matches Swift <code>Bool</code> / Kotlin <code>Boolean</code> for Code Connect.",
+        "headline": "Register Code Connect mapping to <code>EBTabItem</code>.",
+        "body": "Wire <code>State</code>, <code>Orientation</code>, <code>Size</code>, <code>Placement</code>, and <code>isSelected</code> 1:1 to the SwiftUI / Compose API. Map <code>State=Hover</code> to the platform pressed binding (<code>configuration.isPressed</code> / <code>InteractionSource</code>), since touch has no hover.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Rename <code>isActive?</code> → <code>selected</code> with <code>true</code>/<code>false</code>.",
+        "body": "v2.1: Fully applied — the property is <code>isSelected</code> (trailing <code>?</code> gone) and all 12 variants now carry lowercase <code>true</code>/<code>false</code>, matching Radio Button, Select Item, and Select. Code Connect can map straight to <code>Bool</code>.",
         "tag": "Rename"
       },
       {
-        "headline": "Unify the leading-icon slot",
-        "body": "— replace the always-on vertical icon and the <code>hasLeadingIcon</code> boolean with a single <code>leading=none/icon</code> slot that behaves identically across orientations.",
+        "headline": "Unify the leading-icon slot.",
+        "body": "v2.0: Applied — both orientations carry the same <code>Icon Slot</code>, with icon position expressed by <code>Placement</code> instead of a vertical-only render plus a <code>hasLeadingIcon</code> boolean.",
         "tag": "Property"
       },
       {
-        "headline": "Replace the local counter pill with a Badge instance",
-        "body": "Badge already ships tokenized colors and will inherit any future token changes. Same pattern used when Avatar Group was repointed to the canonical Avatar.",
+        "headline": "Replace the local counter pill with an instance.",
+        "body": "v2.0: Applied — <code>Counter</code> is a real INSTANCE, so its updates propagate to every Tab Item.",
         "tag": "Composition"
       },
       {
-        "headline": "Replace <code>icon-placeholder</code> with a swappable Icon slot",
-        "body": "(instance-swap). Lets product teams drop in any icon without editing the master.",
+        "headline": "Replace <code>icon-placeholder</code> with a swappable Icon slot.",
+        "body": "v2.0: Applied — a real Figma <code>Icon Slot</code> SLOT ships in both orientations.",
         "tag": "Slot"
       },
       {
-        "headline": "Add <code>pressed</code> and <code>disabled</code> states",
-        "body": "as explicit variants so engineers don't have to improvise tap feedback.",
-        "tag": "State"
+        "headline": "Add tokens for the counter.",
+        "body": "v2.0: Applied — the counter instance ships on <code>#EEF2F9</code>, matching the DS counter token rather than raw hex.",
+        "tag": "Token"
       },
       {
-        "headline": "Add tokens for the counter",
-        "body": "under <code>main/tab/counter/{bg,label}</code> if keeping it standalone, or adopt Badge's existing tokens.",
-        "tag": "Token"
+        "headline": "Add <code>pressed</code> and <code>disabled</code> states.",
+        "body": "v2.1: Applied — a <code>State</code> axis now ships (Default / Hover / Disabled), taking the set from 12 to 24 variants. <code>State</code> is orthogonal to <code>isSelected</code>, matching the Radio Button model rather than collapsing the two.",
+        "tag": "State"
       }
     ]
   },

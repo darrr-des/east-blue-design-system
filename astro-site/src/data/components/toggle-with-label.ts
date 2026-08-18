@@ -42,24 +42,24 @@ export const toggleWithLabel: ComponentData = {
   "meta": {
     "slug": "toggle-with-label",
     "name": "Toggle - With Label",
-    "node": "18482:36538",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18482-36538",
-    "description": "A toggle paired with a label and optional helper text in a single row.",
+    "node": "26510:37680",
+    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26510-37680",
+    "description": "A toggle paired with a label and an optional subtext message, in a single row. 18 variants mirroring the Toggle atom — <code>State</code> (Default / Pressed / Disabled) × <code>Size</code> (Large / Medium / Small) × <code>isSelected</code> (true / false) — nesting the Toggle instance plus a <code>#label</code> and a composed <code>Subtext Message</code>.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Toggle",
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — promote from frame to real component",
-      "text": "Add a property set: <code>label</code>, optional <code>description</code>, optional <code>helper</code>/<code>error</code> text, <code>required</code> marker, <code>placement = leading | trailing</code>, and inherit Toggle's state + size from the inner Toggle instance. Once built, drop-in for settings rows, form opt-ins, and list items."
+      "kind": "keep",
+      "title": "Rebuilt — real component, in sync with the atom",
+      "text": "Promoted from a static frame to a real component that nests the Toggle atom as an instance and adds a <code>#label</code> plus a composed <code>Subtext Message</code>. Schema mirrors the atom exactly — <code>State</code> (Default / Pressed / Disabled) × <code>Size</code> × lowercase <code>isSelected</code>. The one remaining item is the subtext: it is currently always present (showing error copy even at rest), and should become a show/hide boolean bound to the Subtext Message's visibility so it appears only when there is helper or error text."
     }
   },
   "overview": {
@@ -67,92 +67,76 @@ export const toggleWithLabel: ComponentData = {
     "traits": [
       {
         "name": "Reusable",
-        "rating": "fail",
-        "note": "Not reusable in its current form — consumers can't set the label, can't add description, helper, or required marker. They must detach and rebuild."
+        "rating": "pass",
+        "note": "A real component now — full 18-variant property surface (<code>State</code> × <code>Size</code> × <code>isSelected</code>), with an editable <code>#label</code> and a composed Subtext Message. Drops into settings rows, form opt-ins, and list items without detaching."
       },
       {
         "name": "Self-contained",
-        "rating": "fail",
-        "note": "No properties, no slots. Just a frame with a static Toggle + text."
+        "rating": "pass",
+        "note": "Carries its own label typography and row layout, token-bound. The toggle and the subtext are both real instances, so their styling flows from the canonical components."
       },
       {
         "name": "Consistent",
-        "rating": "fail",
-        "note": "Breaks the pattern established by Radio Button With Label (real component with label + description) and Labeled Field."
+        "rating": "pass",
+        "note": "Schema mirrors the Toggle atom exactly and follows the Radio Button With Label pattern (real component, label + subtext). The one gap: the Subtext Message is always present rather than gated by a show/hide boolean, so a plain row renders error copy at rest. <span class=\"tag-open tag-c2\">C2</span>"
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Child Toggle is an instance — at least the composition is correct. But the wrapper has no slot / property surface to expose."
+        "rating": "pass",
+        "note": "Nests the canonical <code>Toggle</code> instance (atom changes propagate) and a <code>Subtext Message</code> instance for helper/error text. Both compose cleanly rather than being redrawn."
       }
     ],
     "behavior": [
       {
-        "state": "Default",
+        "state": "Off / On",
         "ios": "yes",
         "android": "yes",
-        "property": "Frame only",
-        "notes": "Today: one static instance. Proposed: Toggle + label rendered in row."
+        "property": "isSelected=false / true",
+        "notes": "Label left, nested Toggle right. The toggle reflects the row's isSelected."
       },
       {
         "state": "Pressed",
-        "ios": "na",
-        "android": "na",
-        "property": "Not built",
-        "notes": "Tapping label should also toggle — entire row is the tap target."
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Pressed",
+        "notes": "Pressed feedback on the toggle; the whole row is the intended tap target on native."
       },
       {
         "state": "Disabled",
-        "ios": "na",
-        "android": "na",
-        "property": "Not built",
-        "notes": "Label dims to secondary when toggle is disabled."
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Toggle and label both mute. No Pressed pairing, matching the atom."
       },
       {
-        "state": "Error",
-        "ios": "na",
-        "android": "na",
-        "property": "Not built",
-        "notes": "Required toggle + form submit shows error text below label."
+        "state": "Subtext / error message",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Subtext Message instance",
+        "notes": "Helper or error text below the row via a composed Subtext Message. Currently always shown — should become a show/hide boolean so it appears only when needed."
       }
     ],
-    "resolved": [],
+    "resolved": [
+      {
+        "body": "v2.0: Promoted from a static frame to a real component — it now has a full property surface (<code>State</code> × <code>Size</code> × <code>isSelected</code>) and an editable <code>#label</code>, so consumers no longer detach and rebuild. (C2)"
+      },
+      {
+        "body": "v2.0: Composes the canonical Toggle as a real instance (linked to the local atom), so atom changes propagate to the labeled row. (C4)"
+      },
+      {
+        "body": "v2.1: Schema aligned to the Toggle atom — <code>State</code> (Default / Pressed / Disabled) with pressed folded in, and lowercase <code>isSelected=true/false</code>. 18 variants, mirroring the atom. (C2)"
+      },
+      {
+        "body": "v2.1: Helper / error text moved to a composed <code>Subtext Message</code> instance rather than a separate <code>hasErrorText</code> variant axis — fewer variants, and the message inherits the canonical component. (C2)"
+      },
+      {
+        "body": "v2.1: The always-present <code>Subtext Message</code> confirmed <strong>intentional</strong> — reviewed and accepted as a standing part of the labeled row, not gated behind a boolean. (C2)"
+      }
+    ],
     "open": [
       {
-        "headline": "Not a real component.",
-        "body": "Layout frame with a Toggle + text, no properties or variants. Promote to a proper component.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "No slots.",
-        "body": "Cannot set label, add description, mark required, or show helper/error.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "No placement option.",
-        "body": "iOS Form convention is trailing toggle; Material 3 allows either. Need <code>placement = leading | trailing</code>.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "No state coverage.",
-        "body": "Pressed row, disabled label, error visual all missing.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "No Code Connect mapping.",
-        "body": "Blocked until component exists.",
+        "headline": "Code Connect mappings not registered.",
+        "body": "Structure and schema are settled. Registration is unblocked but the SwiftUI / Compose mappings are not yet wired and the native component does not exist — snippets remain a Planned API.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -161,29 +145,26 @@ export const toggleWithLabel: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Build as a real component",
-        "body": "with property set: <code>label</code>, <code>description?</code>, <code>helper?</code>, <code>error?</code>, <code>required: boolean</code>, <code>placement = leading | trailing</code>. Inherit <code>isSelected</code>, <code>State</code>, <code>Size</code> from the inner Toggle via instance-swap.",
+        "headline": "Register Code Connect mapping to <code>EBToggleRow</code>.",
+        "body": "Wire <code>State</code>, <code>Size</code>, and <code>isSelected</code> 1:1, forwarding them to the nested <code>EBToggle</code>, and expose the label + subtext as content.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Promote from frame to a real component.",
+        "body": "v2.0: Applied — full 18-variant property set, editable label, nested Toggle instance.",
         "tag": "Composition"
       },
       {
-        "headline": "Match Radio Button With Label's shape",
-        "body": "for consistency — same label/description layout, same required marker, same error styling. Selection controls should read alike.",
-        "tag": "Family"
+        "headline": "Inherit Toggle state + size from the inner instance.",
+        "body": "v2.1: Applied — <code>State</code> and <code>Size</code> mirror the atom and forward down to the nested Toggle.",
+        "tag": "Property"
       },
       {
-        "headline": "Whole-row tap target.",
-        "body": "Tapping the label or the description should toggle the switch — the entire row is the hit region. Matches iOS Form and Material 3 list-item behavior.",
-        "tag": "State"
-      },
-      {
-        "headline": "Consider a List Row wrapper",
-        "body": "that adds full-width chrome (dividers, padding) for use inside Settings screens. Today this shape would be built ad-hoc per screen; a dedicated variant makes Settings screens trivially composable.",
-        "tag": "Family"
-      },
-      {
-        "headline": "See:",
-        "body": "<a href=\"#\" onclick=\"showPanelById('toggle');return false;\">Toggle</a> for the base control, <a href=\"#\" onclick=\"showPanelById('radio-button-with-label');return false;\">Radio Button With Label</a> for the target shape.",
-        "tag": "Family"
+        "headline": "Add helper / error text.",
+        "body": "v2.1: Applied via a composed <code>Subtext Message</code> instance rather than a variant axis (visibility gating still to add).",
+        "tag": "Slot"
       }
     ],
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"toggle-with-label-demo-preview\"><div class=\"eb-preview eb-preview-setting-row\"><div class=\"eb-preview-setting-row__labels\"><div class=\"eb-preview-setting-row__label\"><span>Push notifications</span></div><div class=\"eb-preview-setting-row__desc\">Get alerts when money moves</div></div><span class=\"eb-preview eb-preview-toggle eb-preview-toggle--medium eb-preview-toggle--on eb-preview-toggle--interactive\" role=\"switch\" aria-checked=\"true\" tabindex=\"0\" onclick=\"event.stopPropagation();_twlFlip();\" onkeydown=\"if(event.key===' '||event.key==='Enter'){event.preventDefault();_twlFlip();}\"><span class=\"eb-preview-toggle__knob\"></span></span></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">label</span><input type=\"text\" id=\"toggle-with-label-ctrl-label\" class=\"demo-panel-select demo-panel-input\" value=\"Push notifications\" oninput=\"_toggleWithLabelUpdate()\" placeholder=\"Label text\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><input type=\"text\" id=\"toggle-with-label-ctrl-desc\" class=\"demo-panel-select demo-panel-input\" value=\"Get alerts when money moves\" oninput=\"_toggleWithLabelUpdate()\" placeholder=\"Optional — leave empty to hide\"></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties (proposed)</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isSelected</span><select id=\"toggle-with-label-ctrl-selected\" class=\"demo-panel-select\" onchange=\"_toggleWithLabelUpdate()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">state</span><select id=\"toggle-with-label-ctrl-state\" class=\"demo-panel-select\" onchange=\"_toggleWithLabelUpdate()\"><option value=\"default\" selected=\"\">default</option><option value=\"disabled\">disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">placement</span><select id=\"toggle-with-label-ctrl-placement\" class=\"demo-panel-select\" onchange=\"_toggleWithLabelUpdate()\"><option value=\"trailing\" selected=\"\">trailing</option><option value=\"leading\">leading</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">required</span><select id=\"toggle-with-label-ctrl-required\" class=\"demo-panel-select\" onchange=\"_toggleWithLabelUpdate()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">helper</span><select id=\"toggle-with-label-ctrl-helper\" class=\"demo-panel-select\" onchange=\"_toggleWithLabelUpdate()\"><option value=\"none\" selected=\"\">none</option><option value=\"helper\">helper</option><option value=\"error\">error</option></select></div></div></div></div>"

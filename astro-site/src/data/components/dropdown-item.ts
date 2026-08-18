@@ -34,7 +34,7 @@ const dropdownItemDemoControls: DemoControlSection[] = [
 export const dropdownItem: ComponentData = {
   "meta": {
     "slug": "dropdown-item",
-    "name": "Dropdown Item",
+    "name": "Select Item",
     "node": "18577:13033",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18577-13033",
     "description": "A single selectable row inside a Dropdown popover — label, optional leading icon, and selected/disabled states.",
@@ -63,22 +63,22 @@ export const dropdownItem: ComponentData = {
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "Single row primitive that powers every Dropdown overlay and Dropdown Item Group. Covers plain text, tag labeled, amount, country, and disabled content types from one component."
+        "note": "Single row primitive powering every Select Group and Dropdown overlay. One component covers Icon, Peso Sign, and Flag leading content across three densities (Compact 40 / Default 48 / Comfortable 56), with named Leading / Content / Trailing slots taking anything else."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Ships its own divider, padding, label styling, optional badge slot, peso sign, and flag slot. Tokens cover default, active, and disabled roles via <code>main/dropdown-item/color/*</code>."
+        "note": "Ships its own padding, label + supporting text styling, and slot scaffolding. Colors are token-bound across Default, Pressed, and Disabled; the Flag type resolves through the shared <code>Flags Library</code> rather than baking in an asset."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Enum value <code>disabeld</code> is misspelled and ships in the generated TypeScript type. Disabled is modeled as a <code>type</code> rather than an orthogonal state, so you cannot combine it with text / amount / country cleanly."
+        "rating": "pass",
+        "note": "The <code>disabeld</code> typo is gone — disabled is now an orthogonal <code>State</code> value (Default / Pressed / Disabled) that composes with any <code>Type</code>. <code>isSelected</code> is a clean two-value boolean on <code>true</code>/<code>false</code>, matching the C2 rule and Radio Button."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Fits inside Dropdown overlay and Dropdown Item Group. The country variant hardcodes the Philippines flag as a raster image rather than a swappable flag slot, which blocks reuse for any other locale."
+        "rating": "pass",
+        "note": "Nests inside Select Group via a Figma Slot. The Flag type is a swappable vector instance (<code>Flags Library - 16px</code>) rather than a hardcoded raster, so any locale works, and the three named element slots let consumers compose badges, checkmarks, or values without forking the component."
       }
     ],
     "behavior": [
@@ -118,51 +118,39 @@ export const dropdownItem: ComponentData = {
         "notes": "Not defined. Required for keyboard / D-pad navigation in dropdown overlays."
       }
     ],
-    "resolved": [],
+    "resolved": [
+      {
+        "body": "v2.0: Enum typo <code>disabeld</code> fixed — disabled is now a correctly-spelled <code>State</code> value, not a misspelled content type. (C2)"
+      },
+      {
+        "body": "v2.0: Disabled promoted to an orthogonal <code>State</code> axis (Default / Pressed / Disabled) — composes with any Type, so \"Peso Sign + Disabled\" and \"Flag + Disabled\" are now expressible. (C4)"
+      },
+      {
+        "body": "v2.0: Country flag replaced with a vector instance — now maps to <code>Flags Library - 16px</code> in the Leading slot, locale-swappable rather than a baked-in Philippines PNG. (C6)"
+      },
+      {
+        "body": "v2.0: Pressed state added — <code>State=Pressed</code> covers touch feedback (iOS highlight / Android ripple). Focused is N/A on mobile. (C5)"
+      },
+      {
+        "body": "v2.0: Selected affordance added — <code>isSelected=Yes</code> flips the label to brand <code>#005CE5</code> and exposes a checkmark via the Trailing icon slot, no longer relying on label color alone. (C5)"
+      },
+      {
+        "body": "v2.1: <code>isSelected</code> collapsed to a clean two-value boolean — the ambiguous third <code>Default</code> value was removed and the prop now applies uniformly across all three Types. Coverage is consistent at 9 × unselected + 3 × selected per Type, and the selection prop maps 1:1 to a native <code>Bool</code>. (C2)"
+      },
+      {
+        "body": "v2.1: <code>isSelected</code> values renamed <code>Yes</code>/<code>No</code> → <code>true</code>/<code>false</code> across all 36 variants — Select Item now matches the documented C2 rule and the rebuilt Radio Button. The system is on a single boolean vocabulary. (C2)"
+      },
+      {
+        "body": "v2.1: <code>State=Disabled</code> + <code>isSelected=true</code> deliberately omitted — reviewed and confirmed intentional. A disabled row offers the user no action, and when the parent Select is disabled the menu never opens, so the combination is unreachable. (C5)"
+      },
+      {
+        "body": "v2.1: <code>State=Pressed</code> + <code>isSelected=true</code> deliberately not modelled — reviewed and confirmed correct. Pressed is the act of choosing, so the meaningful case is pressing an <em>unselected</em> row, which ships. On native, pressed is not an authored state but an overlay the platform applies (SwiftUI <code>configuration.isPressed</code>, Compose <code>InteractionSource</code>), so pressed-over-selected composes at runtime without a dedicated variant. Authoring the 9 would specify nothing a developer does not already get. (C5)"
+      }
+    ],
     "open": [
       {
-        "headline": "Enum value <code>disabeld</code> is misspelled.",
-        "body": "The variant name ships into the generated TS type (<code>type?: \"text\" | \"amount\" | \"country\" | \"text with tag\" | \"disabeld\"</code>). Every consumer has to mirror the typo or lose autocomplete. Rename to <code>disabled</code>.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Country flag is a raster PNG.",
-        "body": "The <code>country</code> variant embeds a Philippines image (<code>imgPhilippines</code>) as a raster fill, not a vector flag instance. Blocks clean native handoff and freezes the row to a single locale.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "No pressed or focused state variants.",
-        "body": "Only <code>selected</code> on/off plus a pseudo-disabled type. Touch feedback (iOS highlight, Android ripple) and keyboard focus are not covered at the DS layer.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Disabled is modeled as a <code>type</code> value.",
-        "body": "It collides with content types (text, amount, country) — you can't express \"amount + disabled\" or \"country + disabled\" in the current schema. Should be an orthogonal <code>state</code> / <code>disabled</code> axis.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "No selected-visual affordance beyond label color.",
-        "body": "Selected state only changes label hex (#0A2757 → #005CE5). A checkmark trailing slot or background fill would make the picked item unambiguous, especially for color-blind users.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked by the typo, missing states, and raster asset above.",
+        "body": "Previously blocked by the enum typo, missing states, and raster flag — all resolved in the Select Item rebuild. Registration is now unblocked, but the SwiftUI / Compose mappings are not yet wired.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -171,39 +159,51 @@ export const dropdownItem: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Rename <code>disabeld</code> enum value to <code>disabled</code>.",
-        "body": "Zero visual change, fixes the type surface, and unblocks Code Connect naming hygiene.",
+        "headline": "Register Code Connect mapping to <code>EBSelectItem</code>.",
+        "body": "With the rename, orthogonal state axis, and vector flag all shipped, wire the Figma properties (Type, Density, State, isSelected + the Leading / Content / Trailing slots) 1:1 to the SwiftUI / Compose API.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Renamed <code>disabeld</code> → <code>disabled</code>.",
+        "body": "v2.0: Applied — disabled is now a correctly-spelled <code>State</code> value.",
         "tag": "Rename"
       },
       {
-        "headline": "Promote disabled to its own axis.",
-        "body": "Split the current 5-value <code>type</code> into two props: <code>type</code> (text / text with tag / amount / country) × <code>disabled</code> (true / false). Matches how every native primitive models enabled/disabled and collapses the matrix to 4 × 2 × 2 (selected) = 16 compositional variants with clean semantics.",
+        "headline": "Promoted disabled to its own axis.",
+        "body": "v2.0: Applied — <code>State</code> (Default / Pressed / Disabled) is orthogonal to Type, so disabled composes with Icon / Peso Sign / Flag.",
         "tag": "Property"
       },
       {
-        "headline": "Replace the raster Philippines flag with a vector flag slot.",
-        "body": "Introduce a <code>leadingAsset</code> slot (or `flag` slot) that accepts a vector flag instance. Current PNG blocks reuse for any non-PH locale and ships a raster asset to native.",
+        "headline": "Replaced the raster flag with a vector flag slot.",
+        "body": "v2.0: Applied — the Leading slot now carries a <code>Flags Library - 16px</code> vector instance, locale-swappable.",
         "tag": "Slot"
       },
       {
-        "headline": "Add pressed and focused state variants.",
-        "body": "Define a state axis so iOS highlight and Android ripple map to tokenized backgrounds instead of being improvised at instance level.",
+        "headline": "Added a pressed state.",
+        "body": "v2.0: Applied — <code>State=Pressed</code> maps touch feedback to a tokenized background. Focused is N/A on mobile.",
         "tag": "State"
       },
       {
-        "headline": "Add an explicit selected-visual affordance.",
-        "body": "A trailing checkmark (or tokenized background fill) on <code>selected=true</code> removes the reliance on label color alone — improves accessibility and scannability.",
+        "headline": "Added an explicit selected-visual affordance.",
+        "body": "v2.0: Applied — brand-color label plus a checkmark via the Trailing icon slot on <code>isSelected=Yes</code>.",
         "tag": "State"
       },
       {
-        "headline": "Generalize the amount variant around a trailing value slot.",
-        "body": "Instead of a baked-in peso + amount text, expose a trailing content slot that the peso sign and amount compose into. Opens the row to reuse for any key/value pair (balance, fee, exchange rate).",
+        "headline": "Generalized the amount variant around slots.",
+        "body": "v2.0: Applied — the peso sign is a Leading vector slot (<code>Peso Sign - Proxima</code>) with the value in Content and a free Trailing slot for a badge or value.",
         "tag": "Slot"
       },
       {
-        "headline": "Register Code Connect mapping to <code>EBDropdownItem</code>.",
-        "body": "After the rename and state work, wire the Figma properties 1:1 to the SwiftUI / Compose API.",
-        "tag": "Docs"
+        "headline": "Collapsed <code>isSelected</code> to a clean boolean.",
+        "body": "v2.1: Applied — the third <code>Default</code> value is gone; <code>isSelected</code> is a true two-value boolean across every Type, with consistent coverage.",
+        "tag": "Property"
+      },
+      {
+        "headline": "Standardise the boolean vocabulary on <code>true</code>/<code>false</code>.",
+        "body": "v2.1: Applied — <code>isSelected</code> values renamed <code>Yes</code>/<code>No</code> → <code>true</code>/<code>false</code> across all 36 variants, matching the C2 rule and Radio Button. The system is now on one boolean vocabulary.",
+        "tag": "Rename"
       }
     ]
   },
@@ -1139,6 +1139,87 @@ export const dropdownItem: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.1.0",
+      "date": "July 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "isSelected normalised · node 25689:371384",
+      "rows": [
+        {
+          "body": "<strong><code>isSelected</code> collapsed to two values</strong> — the ambiguous third <code>Default</code> value was removed; the prop now applies uniformly across Icon, Peso Sign, and Flag. Coverage is consistent at 9 × unselected + 3 × selected per Type, and selection maps 1:1 to a native <code>Bool</code>.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Boolean vocabulary standardised</strong> — <code>isSelected</code> values renamed <code>Yes</code>/<code>No</code> → <code>true</code>/<code>false</code> across all 36 variants. Select Item now matches the documented C2 rule and the rebuilt Radio Button; the system is on a single boolean vocabulary.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Resolved"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "July 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt as Select Item · node 25689:371384",
+      "rows": [
+        {
+          "body": "<strong>Component rebuilt and renamed Dropdown Item → Select Item</strong> — new slot-based architecture: Type (Icon / Peso Sign / Flag) × Density (Compact / Default / Comfortable) × State (Default / Pressed / Disabled) × isSelected (No / Yes / Default), with named Leading / Content / Trailing element slots.\n          <span class=\"tag-fixed\">Restructured</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Rebuild"
+          }
+        },
+        {
+          "body": "<strong>Enum typo <code>disabeld</code> resolved</strong> — disabled is now a correctly-spelled orthogonal <code>State</code> value, not a misspelled content type. Composes with any Type (e.g. Peso Sign + Disabled), resolving the earlier C2 + C4 issues.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 · C4 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Raster flag replaced with a vector instance</strong> — the country flag now maps to <code>Flags Library - 16px</code> in the Leading slot, locale-swappable rather than a baked-in Philippines PNG.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Pressed state + selected affordance added</strong> — <code>State=Pressed</code> covers touch feedback (focused is N/A on mobile), and <code>isSelected=Yes</code> flips the label to brand color plus exposes a checkmark via the Trailing icon slot.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Amount variant generalized</strong> — the peso sign is now a Leading vector slot (<code>Peso Sign - Proxima</code>) with the value in Content; the trailing slot stays free for a badge or value.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Slot"
+          }
+        },
+        {
+          "body": "<strong><code>isSelected</code> exposes three values (No / Yes / Default)</strong> — ambiguous for a boolean and inconsistent across Types. Collapse to Yes/No.\n          <span class=\"tag-open\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C2 Open"
+          }
+        },
+        {
+          "body": "<strong>Code Connect mappings</strong> — now unblocked by the rebuild; SwiftUI / Compose mappings not yet registered.\n          <span class=\"tag-open tag-c7\">Open</span>",
+          "delta": {
+            "kind": "open",
+            "label": "C7 Open"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

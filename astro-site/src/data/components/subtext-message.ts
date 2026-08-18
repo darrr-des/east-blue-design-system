@@ -23,23 +23,23 @@ export const subtextMessage: ComponentData = {
   "meta": {
     "slug": "subtext-message",
     "name": "Subtext Message",
-    "node": "18687:71133",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18687-71133",
-    "description": "A small caption rendered beneath form fields for helper text or validation messages.",
+    "node": "4091:13864",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4091-13864",
+    "description": "A small caption rendered beneath form fields for helper text or validation messages. 8 variants across <code>Status</code> (Default / Success / Error / Disabled) × <code>Size</code> (Small / Default), each with a leading status icon and a <code>#message</code> plus trailing <code>#label</code>. (Assessed in the 2026 Working File.)",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure before native handoff",
-      "text": "Asymmetric anatomy (Primary has no icon, Success/Error hardcode icons), misnamed <code>leadingLabel</code> boolean, generic <code>shape_full</code> icon layers, no disabled state. Decide: keep as standalone primitive or fold into form-field <code>supportingText</code> slot."
+      "kind": "keep",
+      "title": "Rebuilt — uniform anatomy across all statuses",
+      "text": "The rebuild made the anatomy symmetric: every variant now carries a <code>leading-icon</code> whose glyph changes per status, rather than Primary having none and Success/Error hardcoding theirs. A <code>Disabled</code> status was added, the misnamed <code>leadingLabel</code> boolean is gone, and the text surface is two named properties (<code>#message</code> + trailing <code>#label</code>). Schema is a clean <code>Status</code> × <code>Size</code> matrix. It has also earned its place as a standalone primitive — Toggle with Label, Segmented Control - Group, Callout, and Upload File all compose it. Only Code Connect registration remains."
     }
   },
   "overview": {
@@ -49,100 +49,99 @@ export const subtextMessage: ComponentData = {
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Works under any form field. But it's only ever rendered beneath a field — in practice it's a field-composition concern, not a standalone primitive. No disabled variant to mirror field disabled state."
+        "rating": "pass",
+        "note": "The shared helper/validation line across the system — composed by Toggle with Label, Segmented Control - Group, Callout, and Upload File. Two sizes (Small / Default) cover dense and standard form rows, and a Disabled status now mirrors the parent field."
       },
       {
         "name": "Self-contained",
-        "rating": "partial",
-        "note": "Carries own type, color, spacing, and icon per variant. However, Success / Error icons are drawn shapes named <code>shape_full</code> — not instance-swapped from the DS Icon library."
+        "rating": "pass",
+        "note": "Carries its own type, color, and spacing per status, token-bound. The leading icon is an instance whose glyph changes per status rather than a drawn shape per variant."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Anatomy diverges by variant — Primary has no icon slot, Success / Error hardcode icons. Boolean <code>leadingLabel</code> is misnamed (the Label text renders trailing in the flex row)."
+        "rating": "pass",
+        "note": "Anatomy is uniform — every variant has the same <code>leading-icon</code> + <code>content</code> structure, with the glyph varying by status. The misnamed <code>leadingLabel</code> boolean is gone; text is now two named properties (<code>#message</code> and a trailing <code>#label</code>). Clean <code>Status</code> × <code>Size</code> matrix, 8 variants, no gaps."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Instance-placed under form fields today. Native equivalents (SwiftUI convention, Compose <code>supportingText</code>) treat this as a field slot, not a peer component — suggesting it should be folded in."
+        "rating": "pass",
+        "note": "Nested as a real instance by every form component that needs helper or validation text, so its styling and status colors propagate from one place. Maps to the native supporting-text slot without the consumer redrawing it."
       }
     ],
     "behavior": [
       {
-        "state": "Primary (helper)",
+        "state": "Default (helper)",
         "ios": "yes",
         "android": "yes",
-        "property": "Variant=Primary",
-        "notes": "Neutral weaker text #6780A9. No icon."
+        "property": "Status=Default",
+        "notes": "Neutral <code>#6780A9</code> text with a neutral leading icon. Standard helper copy."
       },
       {
         "state": "Success",
         "ios": "yes",
         "android": "yes",
-        "property": "Variant=Success",
-        "notes": "Green text #048570, filled check icon #12AF80."
+        "property": "Status=Success",
+        "notes": "Success palette with a check glyph in the leading icon."
       },
       {
         "state": "Error",
         "ios": "yes",
         "android": "yes",
-        "property": "Variant=Error",
-        "notes": "Red text + icon #D61B2C."
+        "property": "Status=Error",
+        "notes": "Error <code>#D61B2C</code> text and icon, with the error glyph — not a recoloured checkmark."
       },
       {
         "state": "Disabled",
-        "ios": "na",
-        "android": "na",
-        "property": "—",
-        "notes": "No disabled variant today. When parent field is disabled, there's no matched subtext state."
+        "ios": "yes",
+        "android": "yes",
+        "property": "Status=Disabled",
+        "notes": "Muted text + icon, mirroring a disabled parent field. Added in the rebuild."
+      },
+      {
+        "state": "Size",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Size=Small / Default",
+        "notes": "Small for dense rows (15px line), Default for standard form rows (18px). Composes with every Status."
+      },
+      {
+        "state": "Message + label",
+        "ios": "yes",
+        "android": "yes",
+        "property": "#message · #label",
+        "notes": "<code>#message</code> carries the helper/validation copy; <code>#label</code> is the trailing text on the right of the row."
       }
     ],
-    "resolved": [],
+    "resolved": [
+      {
+        "body": "v2.0: Anatomy made uniform — every variant now carries the same <code>leading-icon</code> + <code>content</code> structure with the glyph varying by status, replacing the old split where Primary had no icon and Success / Error hardcoded theirs. (C4)"
+      },
+      {
+        "body": "v2.0: Misnamed <code>leadingLabel</code> boolean removed — the text surface is now two named properties, <code>#message</code> plus a trailing <code>#label</code>, so the name no longer contradicts the rendered position. (C2)"
+      },
+      {
+        "body": "v2.0: <code>Status=Disabled</code> added at both sizes, so a disabled parent field has a matched subtext state instead of consumers hiding it or hand-tuning opacity. (C5)"
+      },
+      {
+        "body": "v2.0: Layer naming improved — the icon wrapper is now semantically <code>leading-icon</code>, and the text nodes are exposed as <code>#message</code> / <code>#label</code> properties rather than generic frames. (C1)"
+      },
+      {
+        "body": "v2.0: Status icon glyph confirmed to change per status (check for Success, error mark for Error) rather than a single recoloured checkmark — reviewed and verified. (C6)"
+      },
+      {
+        "body": "v2.0: Standalone-primitive question settled — it earns its place as a shared component rather than folding into a field slot, since Toggle with Label, Segmented Control - Group, Callout, and Upload File all compose it. (C4)"
+      },
+      {
+        "body": "v2.0: The leading icon's <code>shape_full</code> BOOLEAN_OPERATION is <strong>not tracked here</strong> — it is owned by the iconography team and fixed at the icon-library level, the same as the Peso Sign. Not a Subtext Message defect. (C6)"
+      },
+      {
+        "body": "v2.1: <code>Size=Base</code> renamed <code>Size=Default</code> across all 8 variants — the size step now reads naturally against <code>Small</code> and matches how <code>Default</code> is used as the standard step elsewhere in the DS. (C2)"
+      }
+    ],
     "open": [
       {
-        "headline": "Anatomy diverges by variant.",
-        "body": "Primary has no icon, Success / Error hardcode specific icons (Checkmark Circular / Close). The \"leading icon\" is not a uniform slot — it's an if-branch on Variant. Consumers can't override the Success / Error icon without detaching.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "<code>leadingLabel</code> boolean is misnamed.",
-        "body": "The \"Label\" text actually renders on the trailing side of the flex row (after the message content), not leading. Naming contradicts rendered position and will mislead SwiftUI / Compose param names downstream.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Icon layer named <code>shape_full</code>.",
-        "body": "The inner 12×12 shape inside the Checkmark / Close containers carries a generic, flattened-style name. Suggests a raster image fill or BOOLEAN_OPERATION rather than a proper vector Icon instance swappable from the DS Icon library.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "Container layers named generically.",
-        "body": "Nested frames labeled <code>container</code> and <code>content</code> don't describe role — Code Connect slot inference relies on semantic names like <code>#leading-icon</code>, <code>#message</code>, <code>#label</code>.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "No Disabled variant.",
-        "body": "When the parent field is disabled, the subtext has no paired state — consumers either hide it or rely on manual opacity adjustments. Every sibling form field carries a Disabled state; the subtext should too.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked behind C1 / C2 / C4 / C6. Also depends on the family-level decision below — whether this stays a standalone component or folds into the form-field <code>supportingText</code> slot.",
+        "body": "Anatomy and schema are settled, so registration is unblocked — but the SwiftUI / Compose mappings are not yet wired and the native component does not exist. Snippets remain a Planned API.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -151,33 +150,35 @@ export const subtextMessage: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Fold Subtext Message into each form field as a <code>supportingText</code> slot.",
-        "body": "This is the native convention on both platforms — Material 3 <code>TextField</code> exposes <code>supportingText</code>, and SwiftUI pairs a <code>Text</code> under the field using the same validation state. Folding it in removes the C4 / C5 gaps (field already has Disabled + Error states) and lets consumers drive the message by passing <code>supportingText: String?</code> + deriving color from <code>isError</code>. The standalone component can stay as an annotation helper for designers but is no longer the canonical consumer integration path.",
-        "tag": "Family"
+        "headline": "Register Code Connect mapping to <code>EBSubtextMessage</code>.",
+        "body": "Wire <code>Status</code> and <code>Size</code> 1:1, and map <code>#message</code> / <code>#label</code> to the native supporting-text parameters.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Give every variant a uniform leading-icon slot.",
+        "body": "v2.0: Applied — all four statuses share the same anatomy, with the glyph varying per status.",
+        "tag": "Slot"
       },
       {
-        "headline": "Rename <code>leadingLabel</code> → <code>trailingLabel</code>.",
-        "body": "The \"Label\" text renders at the end of the flex row — the property name must match rendered position so SwiftUI / Compose params don't surprise developers. If the intent is to actually make the Label leading, swap the layer order in Figma and keep the current name.",
+        "headline": "Fix the misnamed <code>leadingLabel</code> boolean.",
+        "body": "v2.0: Applied — the boolean is gone; text is now <code>#message</code> + trailing <code>#label</code>.",
         "tag": "Rename"
       },
       {
-        "headline": "Normalize anatomy with a real leading-icon slot across all variants.",
-        "body": "Rebuild so every variant shares the same structure: optional <code>#leading-icon</code> (Icon instance) → <code>#message</code> (text) → optional <code>#trailing-label</code> (Label text). Primary keeps icon = off by default; Success / Error default icon = on. This lets one <code>Variant</code> enum + one boolean icon slot + one boolean label slot cover all six variants uniformly.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Replace <code>shape_full</code> with DS Icon library instances.",
-        "body": "Swap the Success checkmark and Error close for <code>Icon=Checkmark Circular</code> and <code>Icon=Close</code> instance-swaps bound to <code>main/subtext-message/*/icon</code> tokens. Flattened boolean shapes can't be retinted, recolored, or resized cleanly and they block Code Connect 1:1 icon param mapping.",
-        "tag": "Asset"
-      },
-      {
         "headline": "Add a Disabled variant.",
-        "body": "Match the 4-state contract of every sibling form field (Default / Active / Error / Disabled). When the parent field is disabled, the subtext needs a paired muted color token (e.g. <code>main/subtext-message/disabled/label</code>).",
+        "body": "v2.0: Applied — <code>Status=Disabled</code> at both sizes, mirroring the parent field.",
         "tag": "State"
       },
       {
-        "headline": "Rename container layers.",
-        "body": "<code>container</code> → <code>#leading-icon-slot</code>, <code>content</code> → <code>#content</code>, inner shape → <code>#icon-glyph</code>. Semantic names drive Code Connect slot inference.",
+        "headline": "Use semantic layer names.",
+        "body": "v2.0: Applied — <code>leading-icon</code> plus <code>#message</code> / <code>#label</code> text properties.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Rename <code>Size=Base</code> to <code>Default</code>.",
+        "body": "v2.1: Applied — <code>Small</code> / <code>Default</code> across all 8 variants.",
         "tag": "Rename"
       }
     ]

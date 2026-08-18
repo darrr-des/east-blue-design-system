@@ -23,13 +23,13 @@ export const tabs: ComponentData = {
   "meta": {
     "slug": "tabs",
     "name": "Tabs",
-    "node": "18482:33249",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18482-33249",
-    "description": "The Tabs container composes a row of <strong>Tab Item</strong> atoms and manages the active index. Currently exposes 3 variants split by <code>tabsCount</code> (2 / 3 / 4). Figma component is currently named singular \"Tab\" — should be renamed \"Tabs\".",
+    "node": "26327:11046",
+    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26327-11046",
+    "description": "The Tabs container composes a row of <strong>Tab Item</strong> instances. 12 variants across <code>Orientation</code> (Vertical/Horizontal) × <code>Size</code> (Medium/Large) × <code>Tabs Count</code> (2/3/4).",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -38,9 +38,9 @@ export const tabs: ComponentData = {
     ],
     "navGroup": "Tabs",
     "verdict": {
-      "kind": "fix",
-      "title": "Rename + drop count variant",
-      "text": "Rename the Figma component from \"Tab\" → \"Tabs\" (plural) to disambiguate from the Tab Item atom. Drop <code>tabsCount</code> — native tabs accept a list of items, not a fixed count variant. The container becomes one flexible component instead of 3 rigid variants."
+      "kind": "keep",
+      "title": "Rebuilt — container is clean",
+      "text": "Renamed to <strong>Tabs</strong> (plural), disambiguating it from the Tab Item atom, and rebuilt to 12 variants across <code>Orientation</code> × <code>Size</code> × <code>Tabs Count</code>. Every cell is a real Tab Item instance, so atom changes propagate. The fixed <code>Tabs Count</code> axis and the absence of a scrollable variant are both intentional — GCash tabs are capped at 2–4. Only Code Connect registration remains."
     }
   },
   "overview": {
@@ -51,83 +51,75 @@ export const tabs: ComponentData = {
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "Used anywhere a screen needs to switch between sections — Transactions, Vouchers, Profile tabs, category filters. Container adapts to 2–4 tabs via variant."
+        "note": "Used anywhere a screen switches between sections — Transactions, Vouchers, Profile, category filters. Two orientations and two sizes cover both compact rows and vertical rails."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Carries its own width, shadow (<code>Depth/D4</code>), and flex layout. Composes Tab Item children cleanly."
+        "note": "Carries its own layout and spacing across all 12 variants, and delegates every cell to the Tab Item atom rather than redrawing tabs locally."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Component named \"Tab\" (singular) while it's actually the container — confusing alongside the Tab Item atom. <code>tabsCount</code> uses string values (<code>\"2\"/\"3\"/\"4\"</code>) instead of integer or dropping the variant. <span class=\"tag-open tag-c2\">C2</span>"
+        "rating": "pass",
+        "note": "Named <strong>Tabs</strong> (plural), correctly distinguishing the container from the Tab Item atom. Three orthogonal props — <code>Orientation</code> × <code>Size</code> × <code>Tabs Count</code> = a complete 2 × 2 × 3 matrix with no invalid cells."
       },
       {
         "name": "Composable",
         "rating": "pass",
-        "note": "Every cell is an instance of the canonical Tab Item (<code>27:89110</code>). Changes to Tab Item propagate here."
+        "note": "Every cell is a real <code>Tab Item</code> INSTANCE, so atom changes propagate automatically. Orientation and Size forward down to the nested items."
       }
     ],
     "behavior": [
       {
-        "state": "2 tabs",
+        "state": "Horizontal",
         "ios": "yes",
         "android": "yes",
-        "property": "tabsCount=\"2\"",
-        "notes": "Width 124px"
+        "property": "Orientation=Horizontal",
+        "notes": "Tabs laid out in a row with the label beside the optional icon. Medium 48px tall, Large 50px."
       },
       {
-        "state": "3 tabs",
+        "state": "Vertical",
         "ios": "yes",
         "android": "yes",
-        "property": "tabsCount=\"3\"",
-        "notes": "Width 186px"
+        "property": "Orientation=Vertical",
+        "notes": "Tabs stacked with the icon above the label, 92px tall. Used for rail-style navigation."
       },
       {
-        "state": "4 tabs",
+        "state": "Tab count",
         "ios": "yes",
         "android": "yes",
-        "property": "tabsCount=\"4\"",
-        "notes": "Width 248px"
+        "property": "Tabs Count=2 | 3 | 4",
+        "notes": "Container width adapts to the number of tabs. Capped at 4 by design — GCash tab bars do not exceed four destinations."
       },
       {
         "state": "5+ tabs / scrollable",
         "ios": "na",
         "android": "na",
         "property": "—",
-        "notes": "Not documented. Native needs a scrollable variant for overflow. <span class=\"tag-open tag-c5\">C5</span>"
+        "notes": "Not modelled by design. The 2–4 cap is deliberate, so horizontal overflow and scrolling do not arise."
       }
     ],
-    "resolved": [],
+    "resolved": [
+      {
+        "body": "v2.0: Component renamed <code>Tab</code> → <strong>Tabs</strong> (plural) — the container is no longer confusable with the Tab Item atom. (C2)"
+      },
+      {
+        "body": "v2.0: Rebuilt to 12 variants across <code>Orientation</code> (Vertical / Horizontal) × <code>Size</code> (Medium / Large) × <code>Tabs Count</code> (2 / 3 / 4) — a complete 2 × 2 × 3 matrix, up from the earlier count-only split. (C2)"
+      },
+      {
+        "body": "v2.0: <code>Tabs Count</code> as a fixed variant axis confirmed <strong>intentional</strong> — GCash tab bars are capped at 2–4 destinations, so a Slot-based container is not needed here. (C2)"
+      },
+      {
+        "body": "v2.0: Absence of a scrollable / overflow variant confirmed <strong>intentional</strong> — follows directly from the 2–4 cap; horizontal overflow never occurs. (C5)"
+      },
+      {
+        "body": "v2.0: Composition verified — every cell is a real <code>Tab Item</code> INSTANCE rather than a redrawn tab, so atom changes propagate to all 12 variants. (C4)"
+      }
+    ],
     "open": [
       {
-        "headline": "Component name is singular (\"Tab\").",
-        "body": "Should be plural (\"Tabs\") to match the container semantics and disambiguate from the Tab Item atom.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "<code>tabsCount</code> is a variant with string values.",
-        "body": "<code>\"2\"/\"3\"/\"4\"</code> — native tabs take a list; the count should not be a discrete Figma variant. Drop the property and let the container accept a collection.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "No scrollable / overflow variant documented.",
-        "body": "For 5+ tabs, native uses <code>ScrollableTabRow</code> on Android and horizontal scroll on iOS — DS has no pattern, so engineers improvise.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until the plural rename and <code>tabsCount</code> drop land.",
+        "body": "The rename and container structure are settled, so registration is unblocked — but the SwiftUI / Compose mappings are not yet wired and the native component does not exist. Snippets remain a Planned API.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -136,18 +128,25 @@ export const tabs: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Rename \"Tab\" → \"Tabs\"",
-        "body": "(plural). Matches the atom/container pattern already used by Avatar + Avatar Group and Menu Grid + Service Item.",
+        "headline": "Register Code Connect mapping to <code>EBTabs</code>.",
+        "body": "Wire <code>Orientation</code>, <code>Size</code>, and <code>Tabs Count</code> to the SwiftUI / Compose API, forwarding orientation and size down to the nested <code>EBTabItem</code> children.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Rename \"Tab\" → \"Tabs\".",
+        "body": "v2.0: Applied — the container is now plural, disambiguating it from the Tab Item atom.",
         "tag": "Rename"
       },
       {
         "headline": "Drop the <code>tabsCount</code> variant.",
-        "body": "The container should be a single flexible component that accepts an array of Tab Items. Collapses 3 variants → 1.",
+        "body": "v2.0: Reviewed and closed as not needed — the 2–4 cap is deliberate, so a flexible slot-based container would add complexity without covering a real case.",
         "tag": "Property"
       },
       {
-        "headline": "Add a scrollable variant",
-        "body": "(or document that 5+ tabs should switch to a ScrollableTabRow pattern). Prevents engineers from improvising overflow behavior.",
+        "headline": "Add a scrollable variant.",
+        "body": "v2.0: Reviewed and closed as not needed — follows from the 2–4 cap; overflow never occurs.",
         "tag": "State"
       }
     ]
