@@ -3,6 +3,7 @@ import { accordion } from './accordion';
 import { actionListCounter } from './action-list-counter';
 import { actionListDescription } from './action-list-description';
 import { actionList } from './action-list';
+import { adCarousel } from './ad-carousel';
 import { adSpace } from './ad-space';
 import { alert } from './alert';
 import { amountTextField } from './amount-text-field';
@@ -90,6 +91,7 @@ export const componentMap: Record<string, ComponentData> = {
   'action-list-counter': actionListCounter,
   'action-list-description': actionListDescription,
   'action-list': actionList,
+  'ad-carousel': adCarousel,
   'ad-space': adSpace,
   'alert': alert,
   'amount-text-field': amountTextField,
