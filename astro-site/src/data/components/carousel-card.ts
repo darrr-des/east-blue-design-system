@@ -5,49 +5,49 @@ export const carouselCard: ComponentData = {
   "meta": {
     "slug": "carousel-card",
     "name": "Carousel Card",
-    "node": "23:121311",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=23-121311",
-    "description": "A tappable card used inside a horizontally scrolling carousel — image, title, and optional description.",
+    "node": "5655:42547",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5655-42547",
+    "description": "A tappable card used inside a horizontally scrolling carousel — banner, title, description, and an optional price. Comes in three versions: Default, With Icon, and Discount.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Carousel",
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — split the type enum, add slots, consolidate the family",
-      "text": "The <code>type</code> property conflates a content variant (default vs with icon) with a loading state (skeleton) — these should be orthogonal axes. Banner image, dimmer, and icon badge are all hardcoded placeholders instead of instance slots. No pressed/focused state despite the card being tappable. Most importantly, this component is 1 of 5 near-duplicate \"carousel card / item\" components that should consolidate to 1–2 canonical primitives."
+      "kind": "keep",
+      "title": "Keep — rebuilt, cleaned up, and ready for handoff",
+      "text": "All four DS Health traits pass. The old <code>type</code> setting became three independent ones — <code>Variant</code> (Default / With Icon / Discount), <code>isLoading</code>, and <code>isPressed</code>. Banner, icon, and violator are real slots. Discount Card merged in as a <code>Variant</code> value, taking the Carousel family from 5 components to 3. The follow-up pass cleared the last of the layer-naming drift: all eight versions now share one anatomy and one vocabulary. Code Connect stays unmapped because the native library doesn't exist yet — that's a dev-side dependency, not a design gap."
     }
   },
   "overview": {
     "inContextNote": "Carousel Card lives in a horizontal scroller — typically a \"Featured\" or \"For You\" rail on a home or category screen. Cards are peeked (part of the next one visible) to signal scrollability.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ccard-demo-preview\"><div class=\"eb-preview eb-preview-ccard eb-preview-ccard--default\"><div class=\"eb-preview-ccard__banner\"><div class=\"eb-preview-ccard__banner-img\"></div><div class=\"eb-preview-ccard__banner-dimmer\"></div></div><div class=\"eb-preview-ccard__content\"><p class=\"eb-preview-ccard__title\">Title</p><p class=\"eb-preview-ccard__desc\">Description here.<br>Description here.</p></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">title</span><input type=\"text\" id=\"ccard-ctrl-title\" class=\"demo-panel-select demo-panel-input\" value=\"Title\" oninput=\"_ccardUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><input type=\"text\" id=\"ccard-ctrl-desc\" class=\"demo-panel-select demo-panel-input\" value=\"Description here. Description here.\" oninput=\"_ccardUpdate()\"></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select id=\"ccard-ctrl-type\" class=\"demo-panel-select\" onchange=\"_ccardUpdate()\"><option value=\"default\" selected=\"\">default</option><option value=\"with-icon\">with icon</option><option value=\"skeleton\">skeleton loader</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ccard-demo-preview\"><div class=\"eb-preview eb-preview-ccard eb-preview-ccard--default\"><div class=\"eb-preview-ccard__banner\"><div class=\"eb-preview-ccard__banner-img\"></div><div class=\"eb-preview-ccard__banner-dimmer\"></div><div class=\"eb-preview-ccard__banner-shadow\"></div><div class=\"eb-preview-ccard__violator\">New</div></div><div class=\"eb-preview-ccard__content\"><p class=\"eb-preview-ccard__title\">Title</p><p class=\"eb-preview-ccard__desc\">Description here.<br>Description here.</p></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">title</span><input type=\"text\" id=\"ccard-ctrl-title\" class=\"demo-panel-select demo-panel-input\" value=\"Title\" oninput=\"_ccardUpdate()\"></div><div class=\"demo-panel-row\" id=\"ccard-row-desc\"><span class=\"demo-panel-label\">description</span><input type=\"text\" id=\"ccard-ctrl-desc\" class=\"demo-panel-select demo-panel-input\" value=\"Description here. Description here.\" oninput=\"_ccardUpdate()\"></div><div class=\"demo-panel-row\" id=\"ccard-row-amount\"><span class=\"demo-panel-label\">amount</span><input type=\"text\" id=\"ccard-ctrl-amount\" class=\"demo-panel-select demo-panel-input\" value=\"PHP 200.00\" oninput=\"_ccardUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">⤷ Violator</span><input type=\"text\" id=\"ccard-ctrl-violator\" class=\"demo-panel-select demo-panel-input\" value=\"New\" oninput=\"_ccardUpdate()\"></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Variant</span><select id=\"ccard-ctrl-variant\" class=\"demo-panel-select\" onchange=\"_ccardUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"with-icon\">With Icon</option><option value=\"discount\">Discount</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isLoading</span><select id=\"ccard-ctrl-isloading\" class=\"demo-panel-select\" onchange=\"_ccardUpdate()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isPressed</span><select id=\"ccard-ctrl-ispressed\" class=\"demo-panel-select\" onchange=\"_ccardUpdate()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Works across \"featured\", \"services\", \"articles\" carousels, but is one of 5 near-duplicate Carousel components — reuse is fragmented across the family."
+        "rating": "pass",
+        "note": "Slots for banner, icon, and violator let one card serve featured, services, and discount rails. Absorbing Discount Card took the Carousel family from 5 components to 3."
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Banner ships a hardcoded \"replace-this-asset\" PNG + a purple <code>#e6e1ef</code> multiply dimmer + a hardcoded <code>#c2c6cf</code> icon circle. None of these are instance slots, so consumers can't swap media or icons cleanly."
+        "rating": "pass",
+        "note": "Banner, icon, and violator are real slots with sensible defaults. The placeholder image and its purple dimmer sit inside the swappable <code>Asset</code>, so dropping in real media replaces both."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "<code>type</code> enum mixes content axes with a loading state. Naming diverges from the sibling <code>Carousel - Item</code> family, which uses <code>position</code> and a different anatomy."
+        "rating": "pass",
+        "note": "All eight versions share one anatomy and one vocabulary — <code>Banner</code>, <code>content</code>, <code>title</code>, <code>description</code>, <code>amount</code>. Settings follow the naming guidelines: <code>Variant</code> in PascalCase, <code>isLoading</code> and <code>isPressed</code> as <code>is</code>-prefixed booleans. Discount's smaller, darker title is the multi-line label style, applied deliberately."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Stacks cleanly into a horizontal scroller. Skeleton state is first-class (good), but the icon badge isn't an Icon instance so it can't be composed with the DS icon set."
+        "rating": "pass",
+        "note": "<code>⤷ Icon</code> is an empty slot, so DS icons drop straight in. Cards stack cleanly into a horizontal scroller and the skeleton is first-class."
       }
     ],
     "behavior": [
@@ -55,75 +55,123 @@ export const carouselCard: ComponentData = {
         "state": "Default",
         "ios": "yes",
         "android": "yes",
-        "property": "type=default",
-        "notes": "Banner image + title + 2-line description. No overlay."
+        "property": "Variant=Default",
+        "notes": "Banner slot + title + 2-line description. 140 × 214."
       },
       {
-        "state": "With icon",
+        "state": "With Icon",
         "ios": "yes",
         "android": "yes",
-        "property": "type=with icon",
-        "notes": "Adds a bottom gradient shadow on the banner and a circular icon badge (30×30, blue fill) at the bottom-left of the banner."
+        "property": "Variant=With Icon",
+        "notes": "Default layout plus a 34 × 34 <code>⤷ Icon</code> slot at the bottom-left of the banner. The slot ships empty on a <code>#005ce5</code> circle — drop any DS icon in."
       },
       {
-        "state": "Skeleton (loading)",
+        "state": "Discount",
         "ios": "yes",
         "android": "yes",
-        "property": "type=skeleton loader",
-        "notes": "Gray block for the banner; bar placeholders for title + 2 description lines."
+        "property": "Variant=Discount",
+        "notes": "Taller banner (140 × 152) over a white content block with title and <code>#amount</code>. 140 × 226."
+      },
+      {
+        "state": "Loading",
+        "ios": "yes",
+        "android": "yes",
+        "property": "isLoading=true",
+        "notes": "Banner and text become flat <code>#eef2f9</code> blocks. Built for Default (212) and Discount (211); With Icon reuses the Default skeleton, since a skeleton hides the icon anyway."
       },
       {
         "state": "Pressed",
-        "ios": "na",
-        "android": "na",
-        "property": "Not built",
-        "notes": "Card is tappable (navigates to detail) — needs a pressed state: scale-down 0.98 or a subtle bg tint."
+        "ios": "yes",
+        "android": "yes",
+        "property": "isPressed=true",
+        "notes": "Title dims to <code>#445c85</code> and description to <code>#90a8d0</code>. The banner does not change."
       },
       {
         "state": "Focused",
         "ios": "na",
         "android": "na",
         "property": "Not built",
-        "notes": "Keyboard/D-pad navigation — needs an outline ring for TV/tablet surfaces and accessibility."
+        "notes": "Not needed — this card ships on touch surfaces only."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "<code>type</code> enum conflates a content variant with a loading state.",
-        "body": "<code>default</code> and <code>with icon</code> describe content shape; <code>skeleton loader</code> describes a loading state. Split into two orthogonal axes: <code>variant = default | with-icon</code> and <code>isLoading: Boolean</code> (or a sibling <code>CarouselCardSkeleton</code> component).",
+        "headline": "The <code>type</code> setting no longer mixes content with loading state.",
+        "body": "v2.0: rebuilt on node <code>5655:42547</code> as three independent settings — <code>Variant</code> (Default / With Icon / Discount), <code>isLoading</code>, and <code>isPressed</code>. Picking a content version no longer forces a loading choice.",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "Banner is a hardcoded raster placeholder.",
-        "body": "Ships a static <code>replace-this-asset</code> PNG plus a purple <code>#e6e1ef</code> <code>mix-blend-multiply</code> dimmer layer. Neither is a Figma Slot — designers must detach and redraw to swap media. Expose an image slot and drop the fixed dimmer (tint should be optional + tokenized).",
+        "headline": "The icon badge is a real slot.",
+        "body": "v2.0: <code>⤷ Icon</code> (node <code>5655:42609</code>) is a 34 × 34 slot, empty by design. Any DS icon or Avatar drops straight in without detaching. It replaces the drawn <code>#c2c6cf</code> circle.",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
-        "headline": "Icon badge on \"with icon\" variant is a filled circle, not an Icon instance.",
-        "body": "A <code>#c2c6cf</code> 24×24 circle sits inside a 30×30 blue pill — there's no instance swap, so brand icons, service glyphs, or Avatars can't be dropped in without detaching.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "No pressed or focused state.",
-        "body": "Carousel cards are tappable and navigate somewhere — pressed feedback (scale or tint) is expected, and focused is needed for keyboard/D-pad surfaces. Only Default + skeleton are modeled today.",
+        "headline": "The card has a pressed state.",
+        "body": "v2.0: <code>isPressed</code> dims the title to <code>#445c85</code> and the description to <code>#90a8d0</code>. Focus was reviewed and dropped — this card ships on touch surfaces only.",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
       },
       {
+        "headline": "The spacing helper is out of the Discount card.",
+        "body": "v2.1: <code>_space_12</code> removed from both Discount versions (<code>5655:42551</code>, <code>5670:43358</code>). The <code>content</code> frame now runs <code>#title</code> straight into <code>#amount</code>, with the 12px gap carried by auto-layout spacing instead of a placed instance.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "The loading version's layer names match the rest of the set.",
+        "body": "v2.2: both <code>sender</code> bars are now <code>description</code> (<code>5663:43017</code>, <code>5663:43018</code>), Discount's loading bars are <code>title</code> and <code>amount</code>, and both loading versions capitalise <code>Banner</code> to match. The frame stays a plain frame rather than a slot, which is right for a skeleton — there is nothing to drop into a loading placeholder.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "All eight versions name the content frame <code>content</code>.",
+        "body": "v2.2: standardised on <code>content</code> rather than <code>block-content</code>, matching the wider design system — <code>content</code> appears in 3,000+ instances against 23 for <code>block-content</code>. Default, With Icon, Discount, and both loading versions now agree.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Discount's title treatment is intentional.",
+        "body": "v2.2: reviewed and dismissed. The smaller 14 / 16 size is the multi-line label text style, and the darker <code>#0a2757</code> is deliberate — on a discount card the <code>#amount</code> carries the main colour, so the title steps back.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "The banner shadow is safe where it is.",
+        "body": "v2.2: reviewed and dismissed. Designers replace the image layer inside the <code>Asset</code> instance rather than the instance itself, so <code>dimmer</code> and <code>shadow</code> stay put as siblings and the icon keeps its contrast backing.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "The banner placeholder is intentional.",
+        "body": "v2.0: reviewed and dismissed. <code>Banner</code> (node <code>5650:40680</code>) is a slot, and the <code>replace-this-asset</code> image sits with its purple <code>#e6e1ef</code> dimmer inside the swappable <code>Asset</code> instance — real media replaces both at once. The matching recommendation to tokenise the dimmer was dropped for the same reason.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      }
+    ],
+    "open": [
+      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until the <code>type</code> split, the image/icon slots, and the family consolidation land.",
+        "body": "Blocked — the native component library doesn't exist yet. Nothing to action on the design side.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -132,38 +180,23 @@ export const carouselCard: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Consolidate Carousel Card + Carousel - Discount Card into a single <code>Carousel Card</code>.",
-        "body": "The two are the same anatomy — 140-wide vertical card with banner + block-content — differing only in visual treatment. Merge into one component with a <code>variant</code> prop (<code>default</code> / <code>discount</code>) and let the discount-specific overlay (price tag, strikethrough, etc.) live as an overlay slot. Today's 5-component family collapses to 2: <code>Carousel Card</code> and <code>Carousel Item</code>.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Consolidate Carousel - Item + Carousel Item - Center + Carousel Item - Side into a single <code>Carousel Item</code>.",
-        "body": "\"Center\" and \"side\" describe a peek carousel's runtime layout position, not a component variant — a carousel layout computes which item is center vs side, it shouldn't be baked into the component as an enum. Merge these 3 into one <code>Carousel Item</code> and let the parent carousel apply the peek transform.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Split <code>type</code> into <code>variant</code> + <code>isLoading</code>.",
-        "body": "<code>variant = default | with-icon</code> describes content shape. <code>isLoading: Boolean</code> (or a dedicated <code>CarouselCardSkeleton</code> sibling) describes the loading state. Keeps content and state axes orthogonal and matches how Generic Card proposes to handle skeleton.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Adopt Figma Slots for banner and icon badge.",
-        "body": "Banner becomes an image slot accepting any frame; icon badge becomes an Icon / Avatar instance slot. Native maps banner → <code>AsyncImage</code> / <code>AsyncImage</code> slot and icon → <code>@ViewBuilder</code> (SwiftUI) or <code>@Composable</code> (Compose).",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Replace the hardcoded purple dimmer with an optional tint token.",
-        "body": "The <code>#e6e1ef</code> <code>mix-blend-multiply</code> layer is a loudly-colored overlay that shouldn't ship as a default on every banner. Make it an optional <code>overlay</code> prop bound to <code>main/carousel/color/overlay</code> (currently unbound).",
+        "headline": "Audit the colour token bindings.",
+        "body": "The review tooling reads raw hex and can't see which values are bound to variables, so C3 is recorded as unverified rather than passing. The one hex raised in review — the <code>#e6e1ef</code> dimmer — is an optional decorative overlay and is meant to be unbound. Run a token audit in Figma to confirm the rest and close C3 out.",
         "tag": "Token"
       },
       {
-        "headline": "Add pressed + focused states.",
-        "body": "Pressed: scale 0.98 or bg tint on the full card. Focused: 2px outline ring in <code>border/focus</code>. Tappable components need both.",
-        "tag": "State"
+        "headline": "Document the <code>⤷ Violator</code> slot.",
+        "body": "The slot ships a blue <code>#1972f9</code> \"New\" badge on all three content versions by design. Nothing in the docs mentions it, so designers won't know they can swap or clear it.",
+        "tag": "Docs"
+      },
+      {
+        "headline": "Consolidate Carousel - Item + Carousel Item - Center + Carousel Item - Side into a single <code>Carousel Item</code>.",
+        "body": "\"Center\" and \"side\" describe where an item sits in a peek carousel at runtime, not a version of the component. The carousel layout works out which item is centre — it shouldn't be baked in as a setting. Merge these 3 into one <code>Carousel Item</code> and let the parent carousel apply the peek transform.",
+        "tag": "Family"
       },
       {
         "headline": "Rename to clarify hierarchy.",
-        "body": "After consolidation, <code>Carousel Card</code> (this component + Discount Card) handles the full-width banner pattern; <code>Carousel Item</code> (peek variants) handles the peek pattern. Avoid overlap in naming between the two.",
+        "body": "<code>Carousel Card</code> (this component, now including Discount) handles the full-width banner pattern; <code>Carousel Item</code> handles the peek pattern. Keep the two names from overlapping once the Item family merges.",
         "tag": "Rename"
       },
       {
@@ -175,6 +208,43 @@ export const carouselCard: ComponentData = {
         "headline": "See siblings:",
         "body": "<a href=\"#\" onclick=\"showPanelById('generic-card');return false;\">Generic Card</a> (horizontal list row) — same \"card + skeleton + tappable\" pattern, different layout. Keep skeleton treatment aligned across both.",
         "tag": "Family"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Consolidate Carousel Card + Carousel - Discount Card into a single <code>Carousel Card</code>.",
+        "body": "v2.0: Applied — Discount is now a <code>Variant</code> value on this component rather than a separate one. The Carousel family drops from 5 components to 3.",
+        "tag": "Family"
+      },
+      {
+        "headline": "Split <code>type</code> into <code>variant</code> + <code>isLoading</code>.",
+        "body": "v2.0: Applied — shipped as <code>Variant</code> (Default / With Icon / Discount) plus <code>isLoading</code>, with <code>isPressed</code> added alongside. Content and state are now separate choices.",
+        "tag": "Property"
+      },
+      {
+        "headline": "Adopt Figma Slots for banner and icon badge.",
+        "body": "v2.0: Applied — <code>Banner</code> and <code>⤷ Icon</code> are both slots, and a third <code>⤷ Violator</code> slot was added for the corner badge.",
+        "tag": "Slot"
+      },
+      {
+        "headline": "Add pressed + focused states.",
+        "body": "v2.0: Applied — <code>isPressed</code> dims the title and description. Focus was reviewed and dropped: this card ships on touch surfaces only.",
+        "tag": "State"
+      },
+      {
+        "headline": "Replace the <code>_space_12</code> helper with auto-layout spacing.",
+        "body": "v2.1: Applied — the instance is gone from both Discount versions and the 12px title-to-amount gap is now auto-layout spacing.",
+        "tag": "Composition"
+      },
+      {
+        "headline": "Rename the loading version's leftover layers.",
+        "body": "v2.2: Applied — the <code>sender</code> bars became <code>description</code> / <code>title</code> / <code>amount</code>, and <code>Banner</code> is capitalised across both loading versions.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Settle on one name for the content frame.",
+        "body": "v2.2: Applied — all eight versions use <code>content</code>, chosen over <code>block-content</code> to match the 3,000+ existing instances elsewhere in the system.",
+        "tag": "Rename"
       }
     ]
   },
@@ -458,49 +528,49 @@ export const carouselCard: ComponentData = {
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Clean container / banner / block-content hierarchy. Layer names are semantic."
+        "notes": "All eight versions share one anatomy — <code>Banner</code>, <code>content</code>, <code>title</code>, <code>description</code>, <code>amount</code>. Names are semantic and consistent."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "<code>type</code> conflates content variant with loading state — split into <code>variant</code> + <code>isLoading</code>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Variant</code> in PascalCase; <code>isLoading</code> and <code>isPressed</code> as <code>is</code>-prefixed booleans. Follows the Property Naming Guidelines."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Title / description / skeleton fills bound to tokens. Banner PNG, purple dimmer, and icon glyph color are not."
+        "notes": "The one raw hex flagged in review — the <code>#e6e1ef</code> dimmer — is an optional decorative overlay on the asset, so it is deliberately unbound. The read-only review tooling can't see variable bindings, so the wider set is recorded as unverified rather than failing; the token audit recommendation stays open to close it out."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Maps cleanly to <code>VStack</code> / <code>Column</code> in a horizontal scroller once image/icon slots and skeleton split land."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Maps to <code>VStack</code> / <code>Column</code> in a horizontal scroller. Slots map to <code>@ViewBuilder</code> / <code>@Composable</code> parameters."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Default + skeleton built. Missing pressed + focused."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Default, pressed, and loading all built. Focus reviewed and dropped — this card ships on touch surfaces only."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Banner is a raster placeholder PNG; icon is a drawn circle, not an Icon instance; purple dimmer is hardcoded."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Banner</code>, <code>⤷ Icon</code>, and <code>⤷ Violator</code> are slots. The placeholder image is replaced inside the <code>Asset</code> instance, leaving <code>dimmer</code> and <code>shadow</code> in place."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked on property split, slot adoption, and family consolidation."
+        "notes": "Blocked — the native component library doesn't exist yet."
       }
     ],
     "codeConnect": [],

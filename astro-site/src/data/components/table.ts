@@ -2,14 +2,26 @@ import type { ComponentData, DemoControlSection } from '../types';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/table.js`.
-const tableHeaderDemoControls: DemoControlSection[] = [
+// Column count is not a property — the Columns Slot holds however many
+// Table Cell instances you drop in, so `cols` just varies what the preview
+// renders. `asset` toggles the Placeholder inside each cell's Asset Slot.
+const tableRowDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'Columns',
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'disabled', label: 'Disabled' },
+        ],
+      },
+      {
+        label: 'Table Cells',
         prop: 'cols',
-        defaultValue: '4',
+        defaultValue: '3',
         options: [
           { value: '2', label: '2' },
           { value: '3', label: '3' },
@@ -17,132 +29,178 @@ const tableHeaderDemoControls: DemoControlSection[] = [
         ],
       },
       {
-        label: 'Icon',
-        prop: 'icon',
-        defaultValue: 'no',
+        label: '⤷ Asset Slot',
+        prop: 'asset',
+        defaultValue: 'yes',
         options: [
-          { value: 'no', label: 'no' },
-          { value: 'yes', label: 'yes' },
+          { value: 'yes', label: 'filled' },
+          { value: 'no', label: 'empty' },
         ],
       },
     ],
   },
 ];
 
-const tableContentDemoControls: DemoControlSection[] = [
-  {
-    heading: 'Properties',
-    rows: [
-      {
-        label: 'Columns',
-        prop: 'cols',
-        defaultValue: '4',
-        options: [
-          { value: '2', label: '2' },
-          { value: '3', label: '3' },
-          { value: '4', label: '4' },
-        ],
-      },
-    ],
-  },
-];
+const tableHeaderDemoControls = tableRowDemoControls;
+const tableContentDemoControls = tableRowDemoControls;
 
 export const table: ComponentData = {
   "meta": {
     "slug": "table",
-    "name": "Table",
-    "node": "47:326260",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=47-326260",
-    "description": "A structured table primitive for displaying rows of label/value or column-aligned data.",
+    "name": "Table Row",
+    "node": "5734:37611",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5734-37611",
+    "description": "A display-only table row — a leading label and however many data cells you drop into its Columns Slot. Comes in Header and Content roles, each with a disabled state.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Table",
     "verdict": {
-      "kind": "fix",
-      "title": "Collapse the family and rethink Table on mobile",
-      "text": "The 3-component setup (Table + Table - Item + Table - Label) hardcodes a column-count variant matrix that doesn't scale. On mobile, tabular data almost always renders as a vertical stack of label/value pairs — which is exactly what the existing <strong>Inline Text</strong> component already does. Evaluate whether Table should ship as a DS primitive at all, or be reserved for true data-dense desktop contexts while mobile screens compose <code>List</code> + <code>Inline Text</code> rows instead. If Table stays, collapse the matrix into a single data-driven row (<code>columns: [Column]</code>) with named <code>leading</code> / <code>trailing</code> slots and optional per-row icon."
+      "kind": "keep",
+      "title": "Keep — rebuilt as one composable row",
+      "text": "The old three-component setup (Table + Table - Item + Table - Label) is gone, and with it the <code>no. of columns</code> variant matrix. <code>Table Row</code> now composes <code>Table Label</code> and <code>Table Cell</code> as real instances through slots, so column count is whatever you put in the <code>Columns Slot</code> rather than a property to pick from. Settings are <code>Role</code> (Header / Content) and <code>State</code> (Default / Disabled) — 4 versions in place of 3 components and 14 variants. Rows are display-only by design, so there is no pressed or selected state. The follow-up pass cleared the rest: <code>#description</code> moved to the 10px token, the disabled state now dims every text layer, and all three slots settled on <code>⤷ …Slot</code>. Code Connect stays unmapped because the native library doesn't exist yet."
     }
   },
   "overview": {
     "inContextNote": "Sticker sheet shows Table instances stacked on a Template Screen to build a static 6-row pattern — 1 header row + 5 content rows. No scroll, no sort, no selection.",
     "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"220\" height=\"130\" viewBox=\"0 0 220 130\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <rect x=\"40\" y=\"6\" width=\"140\" height=\"120\" rx=\"10\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".2\"></rect>\n          <rect x=\"40\" y=\"6\" width=\"140\" height=\"18\" rx=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <rect x=\"40\" y=\"14\" width=\"140\" height=\"10\" fill=\"#005CE5\" opacity=\".85\"></rect>\n          <text x=\"110\" y=\"18\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"7\" font-weight=\"700\" font-family=\"system-ui\">Title</text>\n          \n          <rect x=\"40\" y=\"28\" width=\"140\" height=\"16\" fill=\"#F6F9FD\"></rect>\n          <text x=\"46\" y=\"38\" fill=\"#0A2757\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">Header</text>\n          <text x=\"94\" y=\"38\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\">Column</text>\n          <text x=\"128\" y=\"38\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\">Column</text>\n          <text x=\"162\" y=\"38\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-weight=\"600\" font-family=\"system-ui\">Column</text>\n          <line x1=\"40\" y1=\"44\" x2=\"180\" y2=\"44\" stroke=\"#E5EBF4\"></line>\n          \n          <text x=\"46\" y=\"54\" fill=\"#0A2757\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">Label</text>\n          <text x=\"94\" y=\"54\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-family=\"system-ui\">Desc</text>\n          <text x=\"128\" y=\"54\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-family=\"system-ui\">Desc</text>\n          <text x=\"162\" y=\"54\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-family=\"system-ui\">Desc</text>\n          <text x=\"46\" y=\"66\" fill=\"#0A2757\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">Label</text>\n          <text x=\"94\" y=\"66\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-family=\"system-ui\">Desc</text>\n          <text x=\"128\" y=\"66\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-family=\"system-ui\">Desc</text>\n          <text x=\"162\" y=\"66\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-family=\"system-ui\">Desc</text>\n          <text x=\"46\" y=\"78\" fill=\"#0A2757\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">Label</text>\n          <text x=\"94\" y=\"78\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-family=\"system-ui\">Desc</text>\n          <text x=\"128\" y=\"78\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-family=\"system-ui\">Desc</text>\n          <text x=\"162\" y=\"78\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-family=\"system-ui\">Desc</text>\n          <text x=\"46\" y=\"90\" fill=\"#0A2757\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">Label</text>\n          <text x=\"94\" y=\"90\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-family=\"system-ui\">Desc</text>\n          <text x=\"128\" y=\"90\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-family=\"system-ui\">Desc</text>\n          <text x=\"162\" y=\"90\" text-anchor=\"middle\" fill=\"#0A2757\" font-size=\"5\" font-family=\"system-ui\">Desc</text>\n          <rect x=\"56\" y=\"104\" width=\"108\" height=\"14\" rx=\"7\" fill=\"#005CE5\"></rect>\n          <text x=\"110\" y=\"114\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"6\" font-weight=\"700\" font-family=\"system-ui\">Label</text>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"table-demo-preview\"><div style=\"width:360px; height:37px; background:#F6F9FD; border-bottom:1px solid #E5EBF4; padding:0 24px; display:flex; align-items:center; gap:16px; box-sizing:border-box; color:#0A2757;\"><div style=\"min-width:99px; width:99px; font-family:'Proxima Soft', system-ui; font-weight:700; font-size:14px; line-height:14px; letter-spacing:0.25px;\">Header</div><div style=\"flex:1 0 0; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;\"><span style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:14px; letter-spacing:0.5px; text-align:center;\">Column</span></div><div style=\"flex:1 0 0; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;\"><span style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:14px; letter-spacing:0.5px; text-align:center;\">Column</span></div><div style=\"flex:1 0 0; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;\"><span style=\"font-family:'Proxima Soft', system-ui; font-weight:600; font-size:12px; line-height:14px; letter-spacing:0.5px; text-align:center;\">Column</span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select class=\"demo-panel-select\" id=\"table-demo-type\" onchange=\"updateTableDemo()\"><option value=\"header\" selected=\"\">header</option><option value=\"content\">content</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">no. of columns</span><select class=\"demo-panel-select\" id=\"table-demo-cols\" onchange=\"updateTableDemo()\"><option value=\"2\">2</option><option value=\"3\">3</option><option value=\"4\" selected=\"\">4</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">icon <span class=\"muted\" style=\"font-size:11px;\">(header only)</span></span><select class=\"demo-panel-select\" id=\"table-demo-icon\" onchange=\"updateTableDemo()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"table-demo-preview\"><div class=\"eb-preview eb-preview-trow eb-preview-trow--header\"><div class=\"eb-preview-trow__label\"><span class=\"eb-preview-trow__label-text\">Header</span></div><div class=\"eb-preview-trow__cols\"><div class=\"eb-preview-trow__cell\"><div class=\"eb-preview-trow__cell-asset\"></div><span class=\"eb-preview-trow__cell-text\">Title</span></div><div class=\"eb-preview-trow__cell\"><div class=\"eb-preview-trow__cell-asset\"></div><span class=\"eb-preview-trow__cell-text\">Title</span></div><div class=\"eb-preview-trow__cell\"><div class=\"eb-preview-trow__cell-asset\"></div><span class=\"eb-preview-trow__cell-text\">Title</span></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Role</span><select class=\"demo-panel-select\" id=\"table-demo-role\" onchange=\"updateTableDemo()\"><option value=\"header\" selected=\"\">Header</option><option value=\"content\">Content</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" id=\"table-demo-state\" onchange=\"updateTableDemo()\"><option value=\"default\" selected=\"\">Default</option><option value=\"disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasBorder</span><select class=\"demo-panel-select\" id=\"table-demo-hasborder\" onchange=\"updateTableDemo()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">⤷ Table Label</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Title</span><input type=\"text\" id=\"table-demo-title\" class=\"demo-panel-select demo-panel-input\" value=\"Header\" oninput=\"updateTableDemo()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasAsset</span><select class=\"demo-panel-select\" id=\"table-demo-hasasset\" onchange=\"updateTableDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasDescription</span><select class=\"demo-panel-select\" id=\"table-demo-showdesc\" onchange=\"updateTableDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">⤷ ColumnSlot</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Table Cell ⤷ AssetSlot</span><select class=\"demo-panel-select\" id=\"table-demo-asset\" onchange=\"updateTableDemo()\"><option value=\"yes\" selected=\"\">filled</option><option value=\"no\">empty</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Table Cells</span><select class=\"demo-panel-select\" id=\"table-demo-cols\" onchange=\"updateTableDemo()\"><option value=\"2\">2</option><option value=\"3\" selected=\"\">3</option><option value=\"4\">4</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
-        "rating": "warn",
-        "note": "Works for the narrow case of 2–4 equal-width columns with a left label and right descriptions. Breaks for mixed widths, amounts, badges, or sortable columns — all common table use cases."
+        "rating": "pass",
+        "note": "The <code>Columns Slot</code> takes any number of <code>Table Cell</code> instances, and each cell carries its own <code>Asset Slot</code> and text. Column count, icons, and cell content are all the consumer's to set."
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Header row carries bg, border, label/column typography; content row carries label + description. But column count is locked at build time — consumers can't add or remove columns without detaching."
+        "rating": "pass",
+        "note": "Row carries its own background, border, and typography per role. Nothing is locked at build time any more — the old fixed column matrix is gone."
       },
       {
         "name": "Consistent",
-        "rating": "fail",
-        "note": "<code>no. of columns</code> is a string enum with a period in the name — collides with C2 naming conventions. Three orphan sibling components (Table, Table - Item, Table - Label) when one data-driven row would suffice. <span class=\"tag-open tag-c2\">C2</span>"
+        "rating": "pass",
+        "note": "<code>Role</code> and <code>State</code> are PascalCase variant properties with Title Case values, and <code>State=Default | Disabled</code> is a valid subset of the standard interaction set. The <code>no. of columns</code> property, with its period, is gone."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Items and Labels are declared as reusable atoms but the parent Table doesn't slot them — it re-implements the label and description directly. No real composition."
+        "rating": "pass",
+        "note": "Real composition at last — <code>Table Label</code> and <code>Table Cell</code> are placed as instances inside slots rather than redrawn. The old complaint was that both atoms were published but never actually slotted."
       }
     ],
-    "behavior": [],
-    "resolved": [],
-    "open": [
+    "behavior": [
       {
-        "headline": "Three orphan components instead of one data-driven row.",
-        "body": "Table, Table - Item, and Table - Label are published as separate components but only Table is consumed — Item and Label are never placed directly. Should collapse into a single row primitive that accepts a columns array.",
+        "state": "Header",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Role=Header",
+        "notes": "360 × 68 on a <code>#F6F9FD</code> ground. Label is Proxima Soft Bold 14 / 14; each cell's text is Bold 14 too."
+      },
+      {
+        "state": "Content",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Role=Content",
+        "notes": "360 × 70, transparent ground. Label drops to Bold 12 / 12 and cell text becomes BarkAda Regular 12 / 18."
+      },
+      {
+        "state": "Disabled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Every text layer — label, description, and all cells — dims to <code>#C2CFE5</code>. The row takes a <code>#F6F9FD</code> ground, the same colour a Header row uses."
+      },
+      {
+        "state": "Pressed",
+        "ios": "na",
+        "android": "na",
+        "property": "Not built",
+        "notes": "Not needed — rows are display-only and carry no tap target."
+      },
+      {
+        "state": "Selected",
+        "ios": "na",
+        "android": "na",
+        "property": "Not built",
+        "notes": "Not needed — no row selection in this pattern."
+      }
+    ],
+    "resolved": [
+      {
+        "headline": "One row replaces three components.",
+        "body": "v2.0: rebuilt on node <code>5734:37611</code> as <code>Table Row</code>. <code>Table Label</code> and <code>Table Cell</code> are now placed as real instances inside slots instead of being published and ignored. 3 components and 14 variants become 1 component and 4.",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "<code>no. of columns</code> uses string enum with a period in the property name.",
-        "body": "Should be an integer <code>columnCount</code> — the period breaks code-friendly naming and the string \"2\"/\"3\"/\"4\" can't interpolate to a data-driven row count.",
+        "headline": "<code>no. of columns</code> is gone.",
+        "body": "v2.0: column count is no longer a property. The <code>Columns Slot</code> holds however many <code>Table Cell</code> instances you drop in, which is what data-driven was always meant to mean. The period in the property name goes with it.",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "No native mobile primitive matches this layout.",
-        "body": "iOS SwiftUI <code>Table</code> is macOS/iPad-only; Material Compose has no Table primitive. On phones, tabular data is a vertical stack of label/value pairs (Inline Text) or a horizontally-scrollable list. Current 360px-fixed rows don't adapt.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "No interaction state coverage.",
-        "body": "Rows have no hover, pressed, focused, selected, or disabled states. If rows are ever tappable (drill-down into a row detail), there's no visual affordance.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Header icon is a raw placeholder circle.",
-        "body": "<code>icon=yes</code> variants render a hardcoded <code>#C2C6CF</code> 24px circle with no instance swap or named slot. Consumers have no documented way to set the icon.",
+        "headline": "The icon placeholder is a slot.",
+        "body": "v2.0: every <code>Table Cell</code> carries a 24 × 24 <code>Asset Slot</code> holding a swappable <code>Placeholder</code> instance, and <code>Table Label</code> has one too. The hardcoded <code>#C2C6CF</code> circle and the <code>icon=yes/no</code> boolean are both gone.",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
+        "headline": "The row maps to native primitives.",
+        "body": "v2.0: a slot-based row is just an <code>HStack</code> / <code>Row</code> of cells, so it no longer depends on a platform <code>Table</code> primitive that phones don't have. Rows stay 360 wide for now because they sit inside a fixed component group; they move to fill when the screens that need it are reworked.",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "The label description is readable now.",
+        "body": "v2.1: <code>#description</code> moved from 8 / 12 to the 10px token used elsewhere in the system — BarkAda SemiBold 10 / 15. 10px is the accepted middle ground; moving to the 12px token stays open as a recommendation.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "The disabled state dims every text layer.",
+        "body": "v2.1: <code>#description</code> now takes <code>#C2CFE5</code> in <code>State=Disabled</code> (<code>5761:37774</code>), matching <code>#label</code> and the cells. A disabled row dims as one thing.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Slot layer names follow one pattern.",
+        "body": "v2.1: all three slots renamed to the <code>⤷ …Slot</code> form — <code>⤷ ColumnSlot</code> on the row, and <code>⤷ AssetSlot</code> on both <code>Table Label</code> and <code>Table Cell</code>. Table Scheduling uses the same pattern.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Interaction states are intentionally minimal.",
+        "body": "v2.0: reviewed and settled. Rows are display-only — no tap target, no selection — so pressed, focused, and selected are not needed. <code>State=Disabled</code> is built for rows showing unavailable data.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      }
+    ],
+    "open": [
+      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until the family consolidates and native decision lands.",
+        "body": "Blocked — the native component library doesn't exist yet. Nothing to action on the design side.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -151,34 +209,81 @@ export const table: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Reconsider whether Table belongs in a mobile-first DS.",
-        "body": "GCash ships on phones where tables almost never render as true HTML-style tables. The sticker sheet pattern screen is doing what <strong>Inline Text</strong> already does — a stack of label / value rows. Two cleaner paths: (a) remove Table from core DS, publish usage guidance pointing to <code>List</code> + <code>Inline Text</code> for label/value data; (b) keep Table but scope it to genuine multi-column data (transaction history, scheduled payments, etc.) and rebuild it as a data-driven row.",
-        "tag": "Family"
+        "headline": "Move <code>#description</code> from the 10px token to the 12px one.",
+        "body": "10px was chosen as a middle ground and matches other components today, so this isn't urgent. 12px is the target — it's the floor the rest of the system's body text sits on, and small supporting text is exactly where legibility is thinnest.",
+        "tag": "A11y"
       },
       {
+        "headline": "Give disabled rows their own background.",
+        "body": "Disabled currently uses <code>#F6F9FD</code>, the same ground as a Header row, so the two read alike in a stack. Either give disabled a distinct tint or let it keep the row's own background and carry the state through text colour alone.",
+        "tag": "Token"
+      },
+      {
+        "headline": "Write the slot naming convention into the guidelines.",
+        "body": "The Table family now uses <code>⤷ …Slot</code> — <code>⤷ ColumnSlot</code>, <code>⤷ AssetSlot</code>, <code>⤷ CurrencySlot</code>. The carousel components use <code>⤷</code> without the suffix (<code>⤷ LeadingIcon</code>, <code>⤷ Violator</code>) and no prefix at all on top-level slots (<code>Banner</code>, <code>Background</code>). Both are internally consistent; the library needs one rule so new slot-based components stop diverging.",
+        "tag": "Docs"
+      },
+      {
+        "headline": "Document that rows are display-only.",
+        "body": "There is no tap target and no selection by design. Write it down so native developers wrap the row in a non-interactive container rather than inferring a missing state.",
+        "tag": "Docs"
+      },
+      {
+        "headline": "Revisit the fixed 360 width when screens are reworked.",
+        "body": "Rows are 360 wide because they currently sit inside a fixed component group. The intent is to move to fill. Worth tracking so it doesn't get forgotten once those screens are edited.",
+        "tag": "Composition"
+      },
+      {
+        "headline": "Audit the colour token bindings.",
+        "body": "The review tooling reads raw hex and can't see variable bindings, so C3 is recorded as unverified rather than passing. Confirm <code>#F6F9FD</code>, <code>#E5EBF4</code>, <code>#0A2757</code>, <code>#6780A9</code>, and the <code>#C2CFE5</code> disabled colour are all bound.",
+        "tag": "Token"
+      },
+      {
+        "headline": "Introduce a shared label/value token set with Inline Text.",
+        "body": "A table label and an Inline Text label play the same role — a thing and its value. Aligning <code>main/table/color/label</code> with <code>main/inline-text/*</code> reduces drift and helps cross-component theming.",
+        "tag": "Token"
+      }
+    ],
+    "appliedRecommendations": [
+      {
         "headline": "Collapse the three-component family into one row primitive.",
-        "body": "Merge <em>Table</em>, <em>Table - Item</em>, and <em>Table - Label</em> into a single <strong>Table Row</strong> component with a <code>columns</code> slot array and a <code>role</code> variant (<code>header</code> / <code>content</code>). Eliminates the <code>no. of columns</code> variant explosion — 9 records collapse into 2 + slot content. Published node count drops from 3 components / 14 variants to 1 component / 2 variants.",
+        "body": "v2.0: Applied — <code>Table Row</code> with a <code>Columns Slot</code> and a <code>Role</code> variant, exactly as proposed. 3 components and 14 variants become 1 component and 4.",
         "tag": "Property"
       },
       {
-        "headline": "Rename <code>no. of columns</code> to an integer (or drop it entirely).",
-        "body": "The period in the property name breaks C2 naming conventions. If the data-driven restructure lands, column count is inferred from the <code>columns</code> array and the prop disappears. Otherwise rename to <code>columnCount</code> with integer values.",
+        "headline": "Rename <code>no. of columns</code> to an integer, or drop it entirely.",
+        "body": "v2.0: Applied — dropped. Column count comes from the number of <code>Table Cell</code> instances in the slot.",
         "tag": "Rename"
       },
       {
         "headline": "Replace the header icon placeholder with a named slot.",
-        "body": "Declare an <code>icon</code> Slot on the header-role row so consumers drop in any 24px icon component. Drop the <code>icon=yes/no</code> boolean — slot presence signals intent. Maps cleanly to <code>@ViewBuilder</code> / <code>@Composable</code> slot.",
+        "body": "v2.0: Applied — <code>Asset Slot</code> on both <code>Table Label</code> and <code>Table Cell</code>, and the <code>icon=yes/no</code> boolean is gone.",
         "tag": "Slot"
       },
       {
         "headline": "Add row interaction states.",
-        "body": "If rows are ever tappable (drill-down row detail, sortable columns), publish <code>default</code> / <code>pressed</code> / <code>selected</code> / <code>disabled</code> state variants. If rows stay display-only, document that explicitly so native devs wrap in a non-interactive container.",
+        "body": "v2.0: Applied as far as it goes — <code>State=Disabled</code> shipped. Pressed and selected were reviewed and dropped: rows are display-only.",
         "tag": "State"
       },
       {
-        "headline": "Introduce shared label/value token set with Inline Text.",
-        "body": "Table label and Inline Text label serve the same semantic role — \"a thing and its value\". Aligning tokens (<code>main/table/color/label</code> with <code>main/inline-text/*</code>) reduces drift and supports cross-component theming.",
+        "headline": "Reconsider whether Table belongs in a mobile-first DS.",
+        "body": "v2.0: Settled — Table stays, scoped to genuine multi-column data and rebuilt as a data-driven row. That was option (b) of the two paths originally offered.",
+        "tag": "Family"
+      },
+      {
+        "headline": "Raise the label description above 8px.",
+        "body": "v2.1: Applied — <code>#description</code> is now BarkAda SemiBold 10 / 15, on the shared 10px token. The move to 12px stays open as a recommendation.",
+        "tag": "A11y"
+      },
+      {
+        "headline": "Dim <code>#description</code> in the disabled state.",
+        "body": "v2.1: Applied — it takes <code>#C2CFE5</code> alongside the label and cells.",
         "tag": "Token"
+      },
+      {
+        "headline": "Settle one slot naming convention for the component.",
+        "body": "v2.1: Applied — <code>⤷ ColumnSlot</code> and <code>⤷ AssetSlot</code> throughout. Settling it library-wide stays open as a Docs item.",
+        "tag": "Rename"
       }
     ]
   },
@@ -190,8 +295,8 @@ export const table: ComponentData = {
         "demoKey": "header",
         "demoControls": tableHeaderDemoControls,
         "title": "Header row",
-        "node": "47:323224",
-        "description": "Subtle-bg row with bottom border. Primary-bold label on the left, semibold columns on the right. Optional 24px icon above each column.",
+        "node": "5734:37630",
+        "description": "360 × 68 on a <code>#F6F9FD</code> ground with a bottom border. <code>Table Label</code> on the left at Proxima Soft Bold 14; each <code>Table Cell</code> stacks a 24 × 24 <code>⤷ Asset Slot</code> above Bold 14 text.",
         "sections": [
           {
             "label": "Properties",
@@ -288,8 +393,8 @@ export const table: ComponentData = {
         "demoKey": "content",
         "demoControls": tableContentDemoControls,
         "title": "Content row",
-        "node": "47:325869",
-        "description": "White bg. Bold 12px label on the left, BarkAda Semibold description columns on the right.",
+        "node": "5734:37657",
+        "description": "360 × 70 on a transparent ground. <code>Table Label</code> drops to Proxima Soft Bold 12, and each <code>Table Cell</code> renders BarkAda Regular 12 / 18 beneath its <code>⤷ Asset Slot</code>.",
         "sections": [
           {
             "label": "Properties",
@@ -571,29 +676,54 @@ export const table: ComponentData = {
     "propertyMapping": {
       "rows": [
         {
-          "figma": "type=header/content",
-          "swift": "role: .header / .content",
-          "compose": "role = EBTableRowRole.Header / Content"
+          "figma": "<code>Role = Header | Content</code>",
+          "swift": "<code>role: .header / .content</code>",
+          "compose": "<code>role = EBTableRowRole.Header / Content</code>"
         },
         {
-          "figma": "no. of columns (drop)",
-          "swift": "columns: [Column]",
-          "compose": "columns: List&lt;Column&gt;"
+          "figma": "<code>State = Default | Disabled</code>",
+          "swift": "<code>.disabled(true)</code>",
+          "compose": "<code>enabled = false</code>"
         },
         {
-          "figma": "icon (slot)",
-          "swift": "leadingIcon: Image?",
-          "compose": "leadingIcon: @Composable (() -&gt; Unit)?"
+          "figma": "<code>hasBorder: Boolean</code>",
+          "swift": "<code>showsDivider: Bool = true</code>",
+          "compose": "<code>showsDivider: Boolean = true</code>"
         },
         {
-          "figma": "Label here text",
-          "swift": "label: String",
-          "compose": "label: String"
+          "figma": "<code>⤷ ColumnSlot</code> (N × <code>Table Cell</code>)",
+          "swift": "<code>columns: [Column]</code>",
+          "compose": "<code>columns: List&lt;Column&gt;</code>"
         },
         {
-          "figma": "Description text (xN)",
-          "swift": "columns: [Column]",
-          "compose": "columns: List&lt;Column&gt;"
+          "figma": "<code>Table Label → Title</code> <span class=\"muted\">(text)</span>",
+          "swift": "<code>title: String</code>",
+          "compose": "<code>title: String</code>"
+        },
+        {
+          "figma": "<code>Table Label → hasDescription</code>",
+          "swift": "<code>description: String?</code> <span class=\"muted\">— nil hides it</span>",
+          "compose": "<code>description: String? = null</code>"
+        },
+        {
+          "figma": "<code>Table Label → hasAsset</code>",
+          "swift": "<code>leadingIcon: AnyView?</code> <span class=\"muted\">— nil hides it</span>",
+          "compose": "<code>leadingIcon: @Composable (() -&gt; Unit)? = null</code>"
+        },
+        {
+          "figma": "<code>Table Label → ⤷ AssetSlot</code>",
+          "swift": "<code>leadingIcon: AnyView?</code>",
+          "compose": "<code>leadingIcon: @Composable (() -&gt; Unit)?</code>"
+        },
+        {
+          "figma": "<code>Table Cell → #description</code>",
+          "swift": "<code>Column.text: String</code>",
+          "compose": "<code>Column.text: String</code>"
+        },
+        {
+          "figma": "<code>Table Cell → ⤷ AssetSlot</code>",
+          "swift": "<code>Column.asset: AnyView?</code>",
+          "compose": "<code>Column.asset: @Composable (() -&gt; Unit)?</code>"
         }
       ],
       "filePaths": {
@@ -635,144 +765,99 @@ export const table: ComponentData = {
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "3 orphan components (Table, Table - Item, Table - Label) where 1 data-driven row would suffice."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One <code>Table Row</code> composing <code>Table Label</code> and <code>Table Cell</code> instances through slots, all named <code>⤷ …Slot</code>."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>no. of columns</code> uses string enum with a period; should be integer or dropped."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Role</code> and <code>State</code> are PascalCase with Title Case values. The <code>no. of columns</code> property and its period are gone."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Label / bg / border bound to <code>main/table/*</code>. Header icon placeholder uses hardcoded <code>#C2C6CF</code>."
+        "notes": "Not verified — the read-only tooling can't see variable bindings. <code>#description</code> now sits on the shared 10px token; moving it to 12px is an open recommendation."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No native iOS/Android mobile primitive. Needs a mobile rethink — list of label/value pairs vs true desktop table."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "A slot-based row is an <code>HStack</code> / <code>Row</code> of cells — no platform <code>Table</code> primitive needed. Fixed 360 width is deliberate for now and moves to fill when the screens are reworked."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No hover / pressed / selected / disabled states."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Display-only by design, so pressed and selected are not needed. <code>State=Disabled</code> dims every text layer to <code>#C2CFE5</code>. It still reuses the Header background — tracked as a recommendation."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Header icon is a raw placeholder circle with no slot or instance swap."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "24 × 24 <code>Asset Slot</code> on both <code>Table Label</code> and <code>Table Cell</code>, holding a swappable <code>Placeholder</code> instance."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked until family consolidation and native decision land."
+        "notes": "Blocked — the native component library doesn't exist yet."
       }
     ],
     "codeConnect": [],
     "variants": {
-      "total": 0,
-      "description": "Table ships 9 variants. Family siblings <strong>Table - Item</strong> (3 variants) and <strong>Table - Label</strong> (2 variants) are declared but never placed directly in screens — only Table is consumed.",
+      "total": 4,
+      "description": "<code>Role</code> (2) × <code>State</code> (2) = <strong>4 published versions</strong>, listed below. Three booleans sit on top of them without adding variants — <code>hasBorder</code> on the row, and <code>hasAsset</code> and <code>hasDescription</code> on the nested <code>Table Label</code> — so the real combination count is 32. Column count isn't a version either: the <code>⤷ ColumnSlot</code> takes however many <code>Table Cell</code> instances you drop in. This replaces the old three-component family, which published 9 + 3 + 2 variants between them.",
       "columns": [
-        "type",
-        "no. of columns",
-        "icon",
-        "Height",
-        "Node ID"
+        "Role",
+        "State",
+        "Dimensions",
+        "Background",
+        "Node"
       ],
       "rows": [
         {
           "cells": [
-            "header",
-            "2",
-            "no",
-            "37px",
-            "47:323220"
+            "<strong>Header</strong>",
+            "Default",
+            "360 × 68",
+            "<code>#F6F9FD</code>",
+            "<code>5734:37630</code>"
           ]
         },
         {
           "cells": [
-            "header",
-            "3",
-            "no",
-            "37px",
-            "47:323222"
+            "Header",
+            "Disabled",
+            "360 × 68",
+            "<code>#F6F9FD</code>",
+            "<code>5761:37748</code>"
           ]
         },
         {
           "cells": [
-            "header",
-            "4",
-            "no",
-            "37px",
-            "47:323224"
+            "<strong>Content</strong>",
+            "Default",
+            "360 × 70",
+            "transparent",
+            "<code>5734:37657</code>"
           ]
         },
         {
           "cells": [
-            "header",
-            "2",
-            "yes",
-            "65px",
-            "47:323221"
-          ]
-        },
-        {
-          "cells": [
-            "header",
-            "3",
-            "yes",
-            "65px",
-            "47:323223"
-          ]
-        },
-        {
-          "cells": [
-            "header",
-            "4",
-            "yes",
-            "65px",
-            "47:323225"
-          ]
-        },
-        {
-          "cells": [
-            "content",
-            "2",
-            "no",
-            "56px",
-            "47:325867"
-          ]
-        },
-        {
-          "cells": [
-            "content",
-            "3",
-            "no",
-            "56px",
-            "47:325868"
-          ]
-        },
-        {
-          "cells": [
-            "content",
-            "4",
-            "no",
-            "56px",
-            "47:325869"
+            "Content",
+            "Disabled",
+            "360 × 70",
+            "<code>#F6F9FD</code>",
+            "<code>5761:37773</code>"
           ]
         }
       ]

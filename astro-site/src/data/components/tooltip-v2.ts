@@ -73,19 +73,19 @@ export const tooltipV2: ComponentData = {
     "description": "A small floating callout anchored to a target with a directional pointer; ships in eight pointer positions.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "remove",
+        "label": "Remove"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "na",
+        "label": "Not Applicable"
       }
     ],
     "navGroup": "Tooltip",
     "verdict": {
-      "kind": "restructure",
-      "title": "Unify 3 Tooltip siblings into one Tooltip component; drop the \"V2\" suffix",
-      "text": "This component, <a href=\"#\">Onboarding - Tooltip</a>, and <a href=\"#\">Tooltip Blurred and Transparent</a> model the same primitive with different skins. Merge into one <code>Tooltip</code> with <code>placement: .top | .right | .bottom | .left</code> (one enum, not 4 booleans), <code>appearance: .default | .onboarding | .translucent</code>, <code>hasArrow</code>, <code>hasDismiss</code>, and a content slot. Replace the raster pointer with a vector, the placeholder icon circle with a Figma Slot, and strip the <code>V2</code> suffix — production component names should never carry a version. Maps cleanly to <code>TipKit</code> / <code>PlainTooltip</code> / <code>RichTooltip</code> on native."
+      "kind": "remove",
+      "title": "Superseded by Tooltip",
+      "text": "Superseded by <a href=\"/components/tooltip\">Tooltip</a>. The version suffix is gone, the four pointer booleans became a single <code>Placement</code> enum, the leading placeholder and CTA moved into <code>⤷ AssetSlot</code> and <code>⤷ ActionSlot</code>, and the raster pointer and close image were replaced with a vector and a DS icon instance. Kept as a record of the assessment that drove the consolidation."
     }
   },
   "overview": {
@@ -159,267 +159,12 @@ export const tooltipV2: ComponentData = {
       }
     ],
     "resolved": [],
-    "open": [
-      {
-        "headline": "Component is named <code>Tooltip V2</code>.",
-        "body": "Version suffixes don't belong in production DS component names — they imply a V1 that wasn't removed, and force consumers to choose which version is \"right\". Rename to <code>Tooltip</code> and delete V1 (or, if V1 is still in use, merge/deprecate before renaming).",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Three sibling Tooltip components for one primitive.",
-        "body": "<code>Tooltip V2</code> (70:14908), <code>Onboarding - Tooltip</code> (51:17066), and <code>Tooltip Blurred and Transparent</code> (49:335349) all model the same floating popover with different skins. Collapse into one <code>Tooltip</code> with an <code>appearance</code> enum.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Pointer direction is 4 independent booleans.",
-        "body": "<code>pointerTop</code>, <code>pointerRight</code>, <code>pointerBottom</code>, <code>pointerLeft</code> — nothing prevents a consumer from enabling two or all four. A single <code>placement: .top | .right | .bottom | .left | .none</code> enum is the correct shape. Maps 1:1 to <code>TipKit</code> <code>.arrowEdge</code> and Compose <code>TooltipAnchorPosition</code>.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Pointer triangle is a raster asset.",
-        "body": "4 separate image fills (<code>imgPointer</code>, <code>imgPointer1</code>, <code>imgPointer2</code>, <code>imgPointer3</code>) for what should be one vector shape rotated per edge. Replace with a single vector triangle component; rotation handled by the <code>placement</code> enum.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "Leading icon is a gray placeholder circle.",
-        "body": "The <code>Icon=yes</code> variant renders a flat <code>#C2C6CF</code> 46 px circle under a \"Placeholder\" frame — same anti-pattern as Action List / List Item. Replace with a named <code>leading</code> Figma Slot so consumers can drop in an Icon, Avatar, or illustration.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "Close (X) is an image asset, not a DS icon instance.",
-        "body": "The dismiss control uses <code>imgShapeFull</code> inside a generic \"Close\" frame rather than an instance of the DS's <code>icon/close</code>. That hides the icon from a11y / token updates and blocks Code Connect from seeing it as a real control.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "CTA Button padding drifts between variants.",
-        "body": "<code>CTA=one, Header=yes</code> uses <code>px-16 / py-12</code>; <code>CTA=one, Header=no</code> uses <code>px-12 / py-6</code>; <code>CTA=two</code> uses yet another combo. The underlying <code>Button - XSmall</code> instance should be identical across all variants — same size mode, same padding.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "No dismiss / show states modeled.",
-        "body": "Close button exists visually but carries no interaction property; there is no Pressed / Focused state on the dismiss control or on CTAs at the tooltip level. Tooltips also have an implicit \"appearing / dismissing\" lifecycle that isn't documented.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Code Connect mappings not registered.",
-        "body": "Blocked on the consolidation + slot adoption + enum conversion. Mapping the current 3-sibling / 4-boolean shape to native would cement the wrong schema.",
-        "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
-        }
-      }
-    ],
-    "recommendations": [
-      {
-        "headline": "Consolidate the 3 Tooltip siblings into one component.",
-        "body": "New schema: <code>placement: .top | .right | .bottom | .left</code> (replaces the 4 booleans), <code>appearance: .default | .onboarding | .translucent</code> (replaces the 3 sibling components), <code>hasArrow: Bool</code>, <code>hasDismiss: Bool</code>, <code>cta: .none | .primary | .primaryAndSecondary</code>, plus a <code>leading</code> slot for icon/avatar and a content slot for the body. Replaces today's <code>8 + ? + ?</code> variants across 3 components with roughly <code>4 placement × 3 appearance × 3 cta = 36</code> permutations of one clean schema.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Rename <code>Tooltip V2</code> → <code>Tooltip</code>.",
-        "body": "Version suffixes shouldn't appear in production DS names. If V1 is still referenced anywhere, migrate its instances first, then delete V1, then drop the suffix.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Replace 4 pointer booleans with a single <code>placement</code> enum.",
-        "body": "Prevents nonsensical states (all 4 pointers on), maps 1:1 to SwiftUI <code>.arrowEdge</code> and Compose <code>TooltipAnchorPosition</code>, and reduces the variant matrix dramatically.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Replace the raster pointer with a vector triangle.",
-        "body": "Today there are 4 separate rasters (top/right/bottom/left). One vector shape, rotated per <code>placement</code>, fills the same role with zero asset burden, scales cleanly, and picks up token color updates automatically.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Adopt a <code>leading</code> Figma Slot for the icon.",
-        "body": "Drop the <code>#C2C6CF</code> placeholder circle. Maps to <code>@ViewBuilder</code> (SwiftUI) and a <code>@Composable</code> slot (Compose). Empty slot = no leading.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Instance-swap the close button to <code>icon/close</code>.",
-        "body": "Use the canonical DS close-icon instance rather than an inline <code>imgShapeFull</code>. Gets you token-driven color, a11y labeling, and press-state handling for free.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Normalize CTA Button padding.",
-        "body": "Every tooltip variant uses the same Button size mode (XSmall). Enforce one padding via the Button component itself — don't let the tooltip override.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Document the dismiss contract + lifecycle.",
-        "body": "Add a description on the component: <em>\"Tap the close X or tap outside to dismiss, unless <code>hasDismiss = false</code> (force interaction with CTA). Tooltip appears with fade + slight scale from the pointer anchor; dismisses with reverse.\"</em> Close the gap between designer intent and dev implementation.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Add Pressed / Focused on the close control and CTAs.",
-        "body": "Inner Button instances handle their own states, but the close X does not — it's an image. Once it becomes an icon-button instance, states follow.",
-        "tag": "State"
-      }
-    ]
+    "open": [],
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",
-    "specCards": [
-      {
-        "cardKey": "tooltip-v2-variations",
-        "demoKey": "tt2-hero",
-        "demoControls": tooltipV2DemoControls,
-        "previewHtml": "<div id=\"tt2-preview-tt2-hero\"></div>",
-        "title": "Tooltip v2 variations",
-        "node": "70:14907",
-        "description": "Full-shape onboarding variant. Leading icon placeholder + header + description + primary CTA + close. 359 × 181.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "cta",
-                "value": "one",
-                "mono": false,
-                "prop": "cta"
-              },
-              {
-                "key": "icon",
-                "value": "yes",
-                "mono": false,
-                "prop": "icon"
-              },
-              {
-                "key": "description",
-                "value": "true",
-                "mono": false,
-                "prop": "description"
-              },
-              {
-                "key": "header",
-                "value": "true",
-                "mono": false,
-                "prop": "header"
-              },
-              {
-                "key": "Variant",
-                "value": "Hero — full content",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
-              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
-              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
-              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
-              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" },
-              { "key": "Primary CTA bg", "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
-              { "key": "Primary CTA label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
-              { "key": "Secondary CTA", "value": "#005CE5", "token": "button/secondary/brand/enabled/border" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Width",
-                "value": "296px (max)",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "16 horizontal · 12 vertical",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid #E5EBF4",
-                "mono": true
-              },
-              {
-                "key": "Gap (header ↔ desc)",
-                "value": "4px (space/space-4)",
-                "mono": true
-              },
-              {
-                "key": "Pointer size",
-                "value": "12 × 8 (width × height)",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Header style",
-                "value": "Primary/Headlines/Block",
-                "mono": true
-              },
-              {
-                "key": "Header font",
-                "value": "Proxima Soft Bold · 18 / 23 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Caption",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 12 / 18",
-                "mono": true
-              },
-              {
-                "key": "CTA style",
-                "value": "Primary/Label/Base",
-                "mono": true
-              },
-              {
-                "key": "CTA font",
-                "value": "Proxima Soft Bold · 16 / 16 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBTooltip</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Helpful tip\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebLeadingIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"info.circle\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPrimaryAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Got it\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTooltip</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Helpful tip\"</span><span class=\"syn-punc\">,</span>\n    leadingIcon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Filled</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Info</span><span class=\"syn-punc\">, null) }</span><span class=\"syn-punc\">,</span>\n    primaryAction <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTooltipAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Got it\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      
-    ],
+    "specCards": [],
     "colorsTables": [
       {
         "title": "Colors by State",
@@ -891,6 +636,22 @@ export const tooltipV2: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "August 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Consolidated into Tooltip · node 6295:79647",
+      "rows": [
+        {
+          "body": "<strong>Superseded by Tooltip</strong> — <code>Tooltip V2</code> was consolidated into the unified <a href=\"/components/tooltip\">Tooltip</a> set (node <code>6295:79647</code>) alongside its two siblings. Verdict changed to Remove; open issues and recommendations cleared, since they are resolved on the successor.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Consolidated"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

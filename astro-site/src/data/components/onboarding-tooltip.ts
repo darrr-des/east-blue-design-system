@@ -24,25 +24,25 @@ const onboardingTooltipDemoControls: DemoControlSection[] = [
 export const onboardingTooltip: ComponentData = {
   "meta": {
     "slug": "onboarding-tooltip",
-    "name": "Onboarding - Tooltip",
+    "name": "Tooltip - Onboarding",
     "node": "51:17066",
     "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=51-17066",
-    "description": "A directional tooltip used in onboarding overlays, with a pointer, header, description, and dismiss control.",
+    "description": "Named <code>Onboarding - Tooltip</code> in Figma. A directional tooltip used in onboarding overlays, with a pointer, header, description, and dismiss control. Superseded by <a href=\"/components/tooltip\">Tooltip</a>.",
     "badges": [
       {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "remove",
+        "label": "Remove"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "na",
+        "label": "Not Applicable"
       }
     ],
     "navGroup": "Tooltip",
     "verdict": {
-      "kind": "restructure",
-      "title": "Fold into the unified Tooltip; \"Onboarding -\" prefix is misleading (no walkthrough content)",
-      "text": "This component, <a href=\"#\">Tooltip V2</a>, and <a href=\"#\">Tooltip Blurred and Transparent</a> model the same primitive with slightly different shapes. Merge into one <code>Tooltip</code> with <code>placement: .top | .right | .bottom | .left</code> (the only axis this sibling ships), <code>appearance: .default | .onboarding | .translucent</code>, <code>hasDismiss</code>, and an optional content/CTA body. Replace the 4 raster pointers with one vector and the raw close image with an <code>icon/close</code> instance. Once merged, rename the sibling that truly supports walkthroughs (with step indicator + Next/Skip) to carry the <code>.onboarding</code> appearance — or drop the name entirely."
+      "kind": "remove",
+      "title": "Superseded by Tooltip",
+      "text": "Superseded by <a href=\"/components/tooltip\">Tooltip</a>. This component was folded into the unified 24-variant set at node <code>6295:79647</code>, which resolves every issue raised here — the pointer is a vector, the close is a DS icon instance, the pointer schema became a single <code>Placement</code> enum, and content moved into named Figma slots. Kept as a record of the assessment that drove the consolidation."
     }
   },
   "overview": {
@@ -109,187 +109,12 @@ export const onboardingTooltip: ComponentData = {
       }
     ],
     "resolved": [],
-    "open": [
-      {
-        "headline": "Name implies walkthrough content that isn't shipped.",
-        "body": "<code>Onboarding - Tooltip</code> has no step indicator, no Next/Skip/Back CTAs, no progress dots, no illustration slot — it's just header + description + close. The prefix misleads consumers. Either rename to <code>Tooltip / Placement</code> and fold into the unified Tooltip, or add the actual onboarding axes (step indicator, Next/Skip) before keeping the name.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Three sibling Tooltip components for one primitive.",
-        "body": "<code>Tooltip V2</code> (70:14908), this component (51:17066), and <code>Tooltip Blurred and Transparent</code> (49:335349) all model the same floating popover with slightly different shapes. Collapse into one <code>Tooltip</code> with <code>appearance</code> + <code>placement</code>.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Pointer schema disagrees with sibling.",
-        "body": "Onboarding - Tooltip models pointer direction as one <code>pointer</code> enum (correct), but Tooltip V2 models the same concept as 4 independent booleans. Siblings in the same family should never disagree on the shape of a shared axis.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Pointer triangle is a raster asset.",
-        "body": "4 separate image fills (<code>imgPointer</code>, <code>imgPointer1</code>, <code>imgPointer2</code>, <code>imgPointer3</code>) for what should be one vector shape rotated per direction. Replace with a single vector triangle; rotation handled by the <code>placement</code> enum.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "Close (X) is an image asset, not a DS icon instance.",
-        "body": "The dismiss control uses <code>imgShapeFull</code> inside a generic \"Close\" frame rather than an instance of the DS's <code>icon/close</code>. Hides the icon from a11y labeling and token updates, blocks Code Connect from seeing it as a real control.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "No body or CTA slot.",
-        "body": "There is no way to add a leading icon, an illustration, a step indicator, or a CTA. Any consumer that needs those must abandon this component for Tooltip V2 — defeating the point of a dedicated \"Onboarding\" sibling.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "No dismiss / show states modeled.",
-        "body": "Close button is decorative; no Pressed / Focused state on the dismiss control. No <em>appearing / dismissing</em> lifecycle documented.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Code Connect mappings not registered.",
-        "body": "Blocked on the family consolidation. Mapping today's 3-sibling shape to native would cement the wrong schema.",
-        "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
-        }
-      }
-    ],
-    "recommendations": [
-      {
-        "headline": "Fold the 3 Tooltip siblings into one component.",
-        "body": "New schema: <code>placement: .top | .right | .bottom | .left</code> (this sibling's only axis), <code>appearance: .default | .onboarding | .translucent</code>, <code>hasArrow: Bool</code>, <code>hasDismiss: Bool</code>, <code>cta: .none | .primary | .primaryAndSecondary</code>, and a <code>leading</code> slot. This sibling's 4 variants collapse into the <code>placement</code> axis of the <code>.default</code> appearance — no dedicated component needed.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Rename or retire the \"Onboarding -\" prefix.",
-        "body": "The prefix should either be reserved for a sibling that actually ships onboarding affordances (step indicator, Next/Skip, Back) — in which case this component doesn't qualify — or dropped entirely in favor of an <code>appearance: .onboarding</code> enum on the unified Tooltip. Today's name promises content it doesn't deliver.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Replace the 4 raster pointers with one vector triangle.",
-        "body": "Today there are 4 separate rasters (top/right/bottom/left). One vector shape, rotated per <code>placement</code>, fills the same role with zero asset burden, scales cleanly, and picks up surface + border token updates automatically.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Instance-swap the close to <code>icon/close</code>.",
-        "body": "Use the canonical DS close-icon instance rather than an inline <code>imgShapeFull</code>. Gets you token-driven color, a11y labeling, and press-state handling for free.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Adopt a content slot for body + optional CTA.",
-        "body": "The current closed shape (header + description + close, nothing else) is the reason this sibling exists. Adopt the unified Tooltip's content slot and this component disappears into the single source of truth.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Add Pressed / Focused on the close control.",
-        "body": "Once the close becomes an icon-button instance rather than an image, states follow the canonical Button/Icon pattern.",
-        "tag": "State"
-      },
-      {
-        "headline": "Document the dismiss contract + lifecycle.",
-        "body": "Add a description on the component: <em>\"Tap the close X or tap outside to dismiss. Tooltip appears with fade + slight scale from the pointer anchor; dismisses with reverse.\"</em> Close the gap between designer intent and dev implementation.",
-        "tag": "Docs"
-      }
-    ]
+    "open": [],
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",
-    "specCards": [
-      {
-        "cardKey": "pointers",
-        "demoKey": "top",
-        "demoControls": onboardingTooltipDemoControls,
-        "title": "Pointers",
-        "node": "51:17065",
-        "description": "Pointer triangle indicates target placement. Flip the pointer control in the demo panel to see top / right / bottom / left positions.",
-        "previewHtml": "<div id=\"ont-spec-top-preview\" style=\"display:flex;justify-content:center;align-items:center;width:100%;padding:40px 12px;\"><div style=\"position:relative;width:336px;background:#FFFFFF;border:1px solid #E5EBF4;border-radius:6px;padding:16px;box-sizing:border-box;box-shadow:0 0 4px rgba(2,14,34,0.06);\"><div style=\"position:absolute;width:0;height:0;left:50%;top:-8px;transform:translateX(-50%);border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:8px solid #FFFFFF;filter:drop-shadow(0 -1px 0 #E5EBF4);\"></div><div style=\"display:flex;align-items:center;gap:24px;width:100%;\"><div style=\"flex:1 0 0;min-width:0;font-family:'Proxima Soft',system-ui;font-size:18px;line-height:23px;font-weight:700;letter-spacing:0.25px;color:#0A2757;\">Header</div><div style=\"flex-shrink:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center;\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\"><path d=\"M1 1l10 10M11 1L1 11\" stroke=\"#0A2757\" stroke-width=\"1.6\" stroke-linecap=\"round\"></path></svg></div></div><div style=\"font-family:'BarkAda','Proxima Soft',system-ui;font-size:12px;line-height:18px;font-weight:600;color:#6780A9;margin-top:4px;\">Description goes here</div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "pointer",
-                "value": "top",
-                "mono": false,
-                "prop": "pointer"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "nudge/color/primary/bg" },
-              { "key": "Border", "value": "#E5EBF4", "token": "nudge/color/primary/border" },
-              { "key": "Header", "value": "#0A2757", "token": "nudge/color/primary/label" },
-              { "key": "Description", "value": "#6780A9", "token": "nudge/color/primary/description" },
-              { "key": "Close icon", "value": "#0A2757", "token": "nudge/color/primary/icon-close" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width",         "value": "296px (max)",     "mono": true },
-              { "key": "Padding",       "value": "16 × 12",         "mono": true },
-              { "key": "Border radius", "value": "6px",             "mono": true },
-              { "key": "Pointer size",  "value": "12 × 8",          "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Header style",
-                "value": "Primary/Headlines/Block",
-                "mono": true
-              },
-              {
-                "key": "Header font",
-                "value": "Proxima Soft Bold · 18 / 23 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Bold/Caption",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda Semibold · 12 / 18",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBOnboardingTooltip</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Onboarding hint\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPointer</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.top</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebOnDismiss</span><span class=\"syn-punc\">(</span><span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBOnboardingTooltip</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Onboarding hint\"</span><span class=\"syn-punc\">,</span>\n    pointer <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBPointer</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Top</span><span class=\"syn-punc\">,</span>\n    onDismiss <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      
-    ],
+    "specCards": [],
     "colorsTables": [
       {
         "title": "Colors by State",
@@ -643,6 +468,22 @@ export const onboardingTooltip: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "August 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Consolidated into Tooltip · node 6295:79647",
+      "rows": [
+        {
+          "body": "<strong>Superseded by Tooltip</strong> — <code>Onboarding - Tooltip</code> was consolidated into the unified <a href=\"/components/tooltip\">Tooltip</a> set (node <code>6295:79647</code>) alongside its two siblings. Verdict changed to Remove; open issues and recommendations cleared, since they are resolved on the successor.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Consolidated"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

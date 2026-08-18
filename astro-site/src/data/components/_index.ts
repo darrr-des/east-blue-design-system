@@ -14,7 +14,6 @@ import { bottomSheet } from './bottom-sheet';
 import { button } from './button';
 import { callout } from './callout';
 import { carouselCard } from './carousel-card';
-import { carouselDiscountCard } from './carousel-discount-card';
 import { carouselItem } from './carousel-item';
 import { chatField } from './chat-field';
 import { checkbox } from './checkbox';
@@ -74,6 +73,7 @@ import { toast } from './toast';
 import { toggleSegmentedControl } from './toggle-segmented-control';
 import { toggleWithLabel } from './toggle-with-label';
 import { toggle } from './toggle';
+import { tooltip } from './tooltip';
 import { tooltipBlurred } from './tooltip-blurred';
 import { tooltipV2 } from './tooltip-v2';
 import { uploadFile } from './upload-file';
@@ -100,7 +100,6 @@ export const componentMap: Record<string, ComponentData> = {
   'button': button,
   'callout': callout,
   'carousel-card': carouselCard,
-  'carousel-discount-card': carouselDiscountCard,
   'carousel-item': carouselItem,
   'chat-field': chatField,
   'checkbox': checkbox,
@@ -160,6 +159,7 @@ export const componentMap: Record<string, ComponentData> = {
   'toggle-segmented-control': toggleSegmentedControl,
   'toggle-with-label': toggleWithLabel,
   'toggle': toggle,
+  'tooltip': tooltip,
   'tooltip-blurred': tooltipBlurred,
   'tooltip-v2': tooltipV2,
   'upload-file': uploadFile,
@@ -397,27 +397,11 @@ export const componentManifest = [
   {
     "slug": "carousel-card",
     "name": "Carousel Card",
-    "node": "23:121311",
+    "node": "5655:42547",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
-      },
-      {
-        "kind": "rework",
-        "label": "Requires Rework"
-      }
-    ],
-    "navGroup": "Carousel"
-  },
-  {
-    "slug": "carousel-discount-card",
-    "name": "Carousel - Discount Card",
-    "node": "18543:2761",
-    "badges": [
-      {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -428,9 +412,18 @@ export const componentManifest = [
   },
   {
     "slug": "carousel-item",
-    "name": "Carousel - Item",
-    "node": "",
-    "badges": [],
+    "name": "Carousel Item",
+    "node": "5776:37969",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
     "navGroup": "Carousel"
   },
   {
@@ -908,7 +901,7 @@ export const componentManifest = [
   },
   {
     "slug": "onboarding-tooltip",
-    "name": "Onboarding - Tooltip",
+    "name": "Tooltip - Onboarding",
     "node": "51:17066",
     "badges": [
       {
@@ -1163,48 +1156,48 @@ export const componentManifest = [
   },
   {
     "slug": "table-scheduling",
-    "name": "Table - Scheduling",
-    "node": "47:324365",
+    "name": "Table Scheduling",
+    "node": "5868:40468",
     "badges": [
       {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Table"
   },
   {
     "slug": "table-transaction",
-    "name": "Table - Transaction",
-    "node": "47:324709",
+    "name": "Table Transaction",
+    "node": "5896:39727",
     "badges": [
       {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Table"
   },
   {
     "slug": "table",
-    "name": "Table",
-    "node": "47:326260",
+    "name": "Table Row",
+    "node": "5734:37611",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Table"
@@ -1352,6 +1345,22 @@ export const componentManifest = [
       }
     ],
     "navGroup": "Toggle"
+  },
+  {
+    "slug": "tooltip",
+    "name": "Tooltip",
+    "node": "6295:79647",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "ready",
+        "label": "Ready"
+      }
+    ],
+    "navGroup": "Tooltip"
   },
   {
     "slug": "tooltip-blurred",
