@@ -5696,6 +5696,190 @@ pre.code-snippet .prp { color: #0369A1; }
 [data-theme="dark"] .eb-preview-adcarousel__cta { color: #62A0FA; }
 
 
+
+/* ═════════════════════════════════════════════════════════════════════
+   DATE PICKER FAMILY — live preview primitives
+   Cell · Header · Header Trigger · Calendar · field trigger.
+   Measurements mirror the 2026 Working File rebuild.
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* ── Cell (32×32 day, 59×32 month/year) ─────────────────────────── */
+.eb-preview-dpcell {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+  line-height: 14px;
+  color: #0A2757;
+}
+.eb-preview-dpcell--day { width: 32px; border-radius: 24px; }
+.eb-preview-dpcell--monthyear { width: 59px; border-radius: 8px; }
+
+.eb-preview-dpcell__label { position: relative; z-index: 2; }
+
+/* Range strip sits behind the cell and bleeds 10px past it. */
+.eb-preview-dpcell__range {
+  position: absolute;
+  top: 0;
+  height: 32px;
+  background: #E5F1FF;
+  z-index: 1;
+}
+.eb-preview-dpcell__range--start { left: 16px; width: 26px; }
+.eb-preview-dpcell__range--end { right: 16px; width: 26px; }
+.eb-preview-dpcell__range--middle { left: -10px; width: 52px; }
+
+.eb-preview-dpcell--today { box-shadow: inset 0 0 0 1px #005CE5; color: #005CE5; }
+.eb-preview-dpcell--selected { background: #005CE5; color: #FFFFFF; }
+.eb-preview-dpcell--rangemiddle { color: #005CE5; }
+.eb-preview-dpcell--prevnext { color: #6780A9; }
+.eb-preview-dpcell--disabled { color: #C2CFE5; }
+.eb-preview-dpcell--selected.eb-preview-dpcell--disabled { background: #9BC5FD; color: #FFFFFF; }
+.eb-preview-dpcell--today.eb-preview-dpcell--disabled { box-shadow: inset 0 0 0 1px #C2CFE5; color: #C2CFE5; }
+
+/* ── Weekday header cell ────────────────────────────────────────── */
+.eb-preview-dpwk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+
+/* ── Header Trigger ─────────────────────────────────────────────── */
+.eb-preview-dphdr {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 4px;
+  background: #F6F9FD;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+  white-space: nowrap;
+}
+.eb-preview-dphdr--pressed { background: #EEF2F9; }
+.eb-preview-dphdr--disabled { background: #FFFFFF; color: #C2CFE5; }
+.eb-preview-dphdr__caret { flex: 0 0 auto; display: block; }
+
+/* ── Calendar surface ───────────────────────────────────────────── */
+.eb-preview-dpcal {
+  width: 312px;
+  padding: 16px;
+  background: #FFFFFF;
+  border: 1px solid #E5EBF4;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+.eb-preview-dpcal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 24px;
+  margin-bottom: 8px;
+}
+.eb-preview-dpcal__chevron { flex: 0 0 auto; color: #005CE5; }
+.eb-preview-dpcal__center {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.eb-preview-dpcal__title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+.eb-preview-dpcal__row {
+  display: flex;
+  justify-content: space-between;
+  height: 32px;
+  margin-top: 8px;
+}
+/* Month and Year modes lay out as a 3-column wrap grid. */
+.eb-preview-dpcal__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 16px;
+  justify-items: center;
+  margin-top: 8px;
+}
+.eb-preview-dpcal__scrollbar {
+  width: 4px;
+  height: 120px;
+  margin-left: auto;
+  border-radius: 99px;
+  background: #E5EBF4;
+}
+
+/* ── Field trigger ──────────────────────────────────────────────── */
+.eb-preview-dptrig { width: 312px; font-family: inherit; }
+.eb-preview-dptrig__label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+  color: #0A2757;
+}
+.eb-preview-dptrig__field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 12px;
+  border: 1px solid #D7E0EF;
+  border-radius: 6px;
+  background: #FFFFFF;
+  box-sizing: border-box;
+}
+.eb-preview-dptrig__value {
+  flex: 1 1 auto;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+  color: #90A8D0;
+}
+.eb-preview-dptrig--filled .eb-preview-dptrig__value { color: #0A2757; }
+.eb-preview-dptrig--pressed .eb-preview-dptrig__field { border-color: #005CE5; }
+.eb-preview-dptrig--disabled .eb-preview-dptrig__field { background: #EEF2F9; border-color: transparent; }
+.eb-preview-dptrig--disabled .eb-preview-dptrig__value { color: #90A8D0; }
+.eb-preview-dptrig--error .eb-preview-dptrig__field { border-color: #D81E1E; }
+.eb-preview-dptrig__subtext {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #445C85;
+}
+.eb-preview-dptrig__icon { flex: 0 0 auto; display: block; color: #005CE5; }
+
+[data-theme="dark"] .eb-preview-dpcal { background: #141B28; border-color: #2A3446; }
+[data-theme="dark"] .eb-preview-dpcell,
+[data-theme="dark"] .eb-preview-dpwk,
+[data-theme="dark"] .eb-preview-dpcal__title,
+[data-theme="dark"] .eb-preview-dphdr { color: #E4EAF3; }
+[data-theme="dark"] .eb-preview-dphdr { background: #1B2333; }
+[data-theme="dark"] .eb-preview-dptrig__field { background: #141B28; border-color: #2A3446; }
+[data-theme="dark"] .eb-preview-dptrig__label { color: #E4EAF3; }
+
+
 /* TOC scroll target offset — leave room for the sticky comp-tabs bar
    (sticky top:16px + ~52px bar + 28px breathing) */
 .sub-heading[id] { scroll-margin-top: 96px; }

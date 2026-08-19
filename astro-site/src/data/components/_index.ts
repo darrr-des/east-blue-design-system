@@ -21,6 +21,10 @@ import { checkbox } from './checkbox';
 import { chip } from './chip';
 import { counter } from './counter';
 import { countdown } from './countdown';
+import { datePickerCalendar } from './date-picker-calendar';
+import { datePickerHeaderTrigger } from './date-picker-header-trigger';
+import { datePickerHeader } from './date-picker-header';
+import { datePickerCell } from './date-picker-cell';
 import { datePickerGroup } from './date-picker-group';
 import { datePickerItem } from './date-picker-item';
 import { datePicker } from './date-picker';
@@ -109,6 +113,10 @@ export const componentMap: Record<string, ComponentData> = {
   'chip': chip,
   'counter': counter,
   'countdown': countdown,
+  'date-picker-calendar': datePickerCalendar,
+  'date-picker-header-trigger': datePickerHeaderTrigger,
+  'date-picker-header': datePickerHeader,
+  'date-picker-cell': datePickerCell,
   'date-picker-group': datePickerGroup,
   'date-picker-item': datePickerItem,
   'date-picker': datePicker,
