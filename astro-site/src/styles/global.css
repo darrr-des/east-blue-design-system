@@ -5560,127 +5560,140 @@ pre.code-snippet .prp { color: #0369A1; }
 
 /* ═════════════════════════════════════════════════════════════════════
    AD SPACE — live preview primitives
-   One shape with 7 sizes across 3 families (banner / promo / hero).
+   One shape, three versions (Receipt / Banner / Promo), each built
+   around a single swappable asset area.
    ═════════════════════════════════════════════════════════════════════ */
 .eb-preview-adspace {
   position: relative;
   display: flex;
   flex-direction: column;
+  gap: 8px;
+  font-family: inherit;
+}
+.eb-preview-adspace--receipt { width: 300px; }
+.eb-preview-adspace--banner  { width: 320px; }
+.eb-preview-adspace--promo   { width: 224px; }
+
+/* Swappable asset area — stands in for ⤷ AssetSlot */
+.eb-preview-adspace__asset {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #F6F9FD;
   border: 1px solid #E5EBF4;
   border-radius: 4px;
   overflow: hidden;
-  font-family: var(--font-body);
+}
+.eb-preview-adspace--receipt .eb-preview-adspace__asset { height: 250px; }
+.eb-preview-adspace--banner  .eb-preview-adspace__asset { height: 174px; }
+.eb-preview-adspace--promo   .eb-preview-adspace__asset { height: 152px; }
+
+/* Product media in the slot, standing in for a real creative. */
+.eb-preview-adspace__asset--filled {
+  background: linear-gradient(135deg, #005CE5 0%, #4A9BFF 100%);
+  border-color: transparent;
 }
 
-/* Size-family wrappers: banner = full-surface ad mock */
-.eb-preview-adspace--banner-sm   { width: 320px; height: 50px; }
-.eb-preview-adspace--banner-lg   { width: 320px; height: 100px; }
-.eb-preview-adspace--banner-mrec { width: 300px; height: 250px; }
-
-/* Promo tiles — image + caption underneath */
-.eb-preview-adspace--promo-sm { width: 131px; height: 126px; border-radius: 6px; }
-.eb-preview-adspace--promo-md { width: 224px; height: 200px; border-radius: 8px; }
-
-/* Hero banners — image overlay + caption */
-.eb-preview-adspace--hero-sm { width: 296px; height: 174px; border-radius: 8px; }
-.eb-preview-adspace--hero-md { width: 336px; height: 174px; border-radius: 8px; }
-
-/* Banner family — flat placeholder with subtle "Ad" label */
-.eb-preview-adspace__banner-fill {
-  flex: 1;
-  background: linear-gradient(135deg, #D7E0EE 0%, #B7C5DD 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #3C4A5C;
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.04em;
-  position: relative;
-}
-.eb-preview-adspace__banner-dim {
-  position: absolute;
-  inset: 0;
-  background: rgba(10,39,87,0.04);
-  pointer-events: none;
-}
-.eb-preview-adspace__banner-label {
-  position: absolute;
-  top: 4px;
-  right: 6px;
-  font-size: 9px;
-  font-weight: 700;
-  color: rgba(10,39,87,0.45);
-  background: rgba(255,255,255,0.7);
-  padding: 1px 4px;
-  border-radius: 2px;
-  letter-spacing: 0.06em;
-}
-
-/* Promo / hero — image + caption */
-.eb-preview-adspace__image {
-  position: relative;
-  background: linear-gradient(135deg, #C9D2E0 0%, #97A5BF 100%);
-  flex-shrink: 0;
-}
-.eb-preview-adspace__image--full { flex: 1; }
-.eb-preview-adspace--promo-sm .eb-preview-adspace__image { height: 98px; }
-.eb-preview-adspace--promo-md .eb-preview-adspace__image { height: 152px; }
-.eb-preview-adspace--hero-sm  .eb-preview-adspace__image,
-.eb-preview-adspace--hero-md  .eb-preview-adspace__image { flex: 1; }
-
-.eb-preview-adspace__image-label {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #B84B4B;
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 2px;
-  white-space: nowrap;
-}
-
-.eb-preview-adspace__caption {
+.eb-preview-adspace__asset-label {
   font-size: 12px;
   font-weight: 600;
-  color: #0A2757;
-  line-height: 14px;
-}
-.eb-preview-adspace__caption--below {
-  padding: 8px 10px;
-  background: #fff;
-}
-.eb-preview-adspace__caption--overlay {
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
-  color: #fff;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  letter-spacing: 0.02em;
+  color: #8A97AC;
 }
 
-/* Loading state: skeleton overlay covers everything */
-.eb-preview-adspace--loading .eb-preview-adspace__image,
-.eb-preview-adspace--loading .eb-preview-adspace__banner-fill {
-  background: #EEF2F9;
+/* Banner's top title — #title */
+.eb-preview-adspace__title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0.25px;
+  color: #072592;
 }
-.eb-preview-adspace--loading .eb-preview-adspace__image-label,
-.eb-preview-adspace--loading .eb-preview-adspace__banner-label,
-.eb-preview-adspace--loading .eb-preview-adspace__caption { display: none; }
-.eb-preview-adspace__skeleton {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
-  animation: eb-skeleton-shimmer 1.4s ease-in-out infinite;
+
+/* Content block — #header + #description */
+.eb-preview-adspace__content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
-@keyframes eb-skeleton-shimmer {
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+.eb-preview-adspace__header {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0.25px;
+  color: #005CE5;
 }
+.eb-preview-adspace__description {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #445C85;
+}
+
+[data-theme="dark"] .eb-preview-adspace__asset { background: #1B2333; border-color: #2A3446; }
+[data-theme="dark"] .eb-preview-adspace__asset-label { color: #7C8AA0; }
+[data-theme="dark"] .eb-preview-adspace__title { color: #9DBBF5; }
+[data-theme="dark"] .eb-preview-adspace__header { color: #62A0FA; }
+[data-theme="dark"] .eb-preview-adspace__description { color: #A8B6CC; }
+
+/* ═════════════════════════════════════════════════════════════════════
+   AD CAROUSEL — live preview primitives
+   Header (#title + optional CTA) over a clipped rail of Ad Space cards.
+   ═════════════════════════════════════════════════════════════════════ */
+.eb-preview-adcarousel {
+  width: 360px;
+  padding: 12px 0;
+  background: #FFFFFF;
+  border: 1px solid #E5EBF4;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.eb-preview-adcarousel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 24px;
+  margin-bottom: 16px;
+}
+.eb-preview-adcarousel__title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0.25px;
+  color: #072592;
+}
+/* Button - XSmall: 114 x 26, pill radius, no background.
+   Label sits 8px from the left edge, icon 8px from the right. */
+.eb-preview-adcarousel__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 99px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #005CE5;
+  white-space: nowrap;
+}
+.eb-preview-adcarousel__cta-icon {
+  flex: 0 0 auto;
+  display: block;
+}
+/* Rail is wider than the shell on purpose — the next card peeks. */
+.eb-preview-adcarousel__rail {
+  display: flex;
+  gap: 16px;
+  padding-left: 24px;
+}
+.eb-preview-adcarousel__rail > * { flex: 0 0 auto; }
+
+[data-theme="dark"] .eb-preview-adcarousel { background: #141B28; border-color: #2A3446; }
+[data-theme="dark"] .eb-preview-adcarousel__title { color: #9DBBF5; }
+[data-theme="dark"] .eb-preview-adcarousel__cta { color: #62A0FA; }
 
 
 /* TOC scroll target offset — leave room for the sticky comp-tabs bar
