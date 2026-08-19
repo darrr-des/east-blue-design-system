@@ -23,25 +23,25 @@ const chatFieldDemoControls: DemoControlSection[] = [
 export const chatField: ComponentData = {
   "meta": {
     "slug": "chat-field",
-    "name": "Chat Field",
-    "node": "23:145915",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=23-145915",
-    "description": "A message-composer input with a text area, leading attachment, and trailing send action.",
+    "name": "Chat Composer",
+    "node": "5536:31209",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5536-31209",
+    "description": "A message composer that arranges a leading action slot, a composed Input Field and a trailing send slot into one row.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Chat",
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure as a composed pattern",
-      "text": "Chat Field wraps an Input Field instance with two icon buttons and exposes only a single <code>active</code> boolean. That schema drops Error, Disabled, and <code>isFilled</code> coverage that the inner Input Field already carries, and the leading/trailing glyphs ship as rasters. Rename to <strong>Chat Composer</strong> (or <strong>Message Composer</strong>), expose the field as a nested instance with its full state matrix, and replace both 32×32 icon slots with Icon Button instances so native can map 1:1 to <code>HStack { Button + TextField + Button }</code>."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>5536:31209</code> in the 2026 Working File, and the restructure has landed in full: renamed <strong>Chat Composer</strong>, rebuilt as a composed pattern around a real <code>Input Field</code> instance, with <code>leadingAction</code> and <code>trailingAction</code> as genuine Figma Slots holding their icon instances directly, both action glyphs vectorised from the shared icon library, and a send control that dims when there is nothing to send. The schema is now <code>isActive</code> × <code>hasValue</code> — two independent booleans carrying the §2 prefix with Title Case values, naming what actually differs between variants rather than the effect that follows. Disabled and error states are scoped out for this release by owner decision. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -51,23 +51,23 @@ export const chatField: ComponentData = {
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Works anywhere a message composer is needed, but the 360px fixed width and single layout (leading-attach + field + send) assume one use case. No variants for audio-only composers, multi-attach rows, or send-disabled states."
+        "rating": "pass",
+        "note": "A generic composer row — the two action slots make it work for chat, comments or any send-a-message surface, rather than binding it to one screen."
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Bundles its own layout and icons but delegates all field styling and state to a nested Input Field, while exposing only <code>active</code>. Error, Disabled, and <code>isFilled</code> states that Input Field ships are silently unreachable through Chat Field's surface API."
+        "rating": "pass",
+        "note": "Owns its row layout and spacing; the field, the icons and the slot contents all come from published DS components, so nothing is redrawn locally."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "<code>active=yes/no</code> (C2 anti-pattern). The property forwards to the inner field's <code>State=Active</code>, so a chat-field-level boolean duplicates a field-level enum. The two leading/trailing icon frames are named <code>container</code> rather than semantic slot names like <code>leading</code> / <code>trailing</code>."
+        "rating": "pass",
+        "note": "The schema is <code>isActive</code> × <code>hasValue</code> — both §2 booleans in lowerCamelCase with Title Case values per §5 — naming the field’s focus and content rather than the effects that follow from them. Structure matches: real Figma Slots holding their instances directly on both sides, library icon instances, and a composed <code>Input Field</code>. Note for handoff: what this component calls <code>isActive</code> is what its Form Elements siblings express as <code>State=Focused</code>."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Already nests an Input Field instance — good. But the leading and trailing icons are fixed raster glyphs, not Icon Button instances, so the composer cannot be recomposed for an emoji picker, voice-note, or camera entry point without editing the component."
+        "rating": "pass",
+        "note": "Two real Figma Slots around a composed <code>Input Field</code> instance. It arranges DS parts rather than reimplementing them, and a consumer can swap either action without detaching."
       }
     ],
     "behavior": [
@@ -107,89 +107,107 @@ export const chatField: ComponentData = {
         "notes": "No disabled state for the composer, and no way to dim the send icon when the field is empty."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Icon frames are generically named <code>container</code>.",
-        "body": "Both the leading (plus/attach) and trailing (send) slots share the layer name <code>container</code>, so Code Connect can't tell leading from trailing. Should be semantic: <code>leading</code> / <code>trailing</code> (or <code>attach-slot</code> / <code>send-slot</code>) to match native <code>HStack</code> ordering.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Boolean uses <code>yes/no</code> and misnames the intent.",
-        "body": "<code>active=yes/no</code> cannot map to Swift <code>Bool</code> / Kotlin <code>Boolean</code> without a translation layer, and <code>active</code> is ambiguous — the true meaning is \"inner field is focused\". The property is redundant with the inner Input Field's <code>State=Active</code>.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Composer maps to three native siblings, not a single primitive.",
-        "body": "iOS and Android both compose this pattern as <code>HStack { Button + TextField + Button }</code> / <code>Row { IconButton + OutlinedTextField + IconButton }</code>. Shipping Chat Field as a single Figma component with a private <code>active</code> boolean hides that composition from Code Connect, making 1:1 mapping impossible.",
+        "headline": "Renamed to Chat Composer and rebuilt as a composed pattern.",
+        "body": "v2.0: Rebuilt on node <code>5536:31209</code> in the 2026 Working File. The component no longer redraws a text field — it composes a real <code>Input Field</code> instance between two action slots, which is exactly the restructure the previous assessment asked for. It is now a layout that arranges existing DS parts rather than a primitive competing with one, and a fix to Input Field reaches it for free. (C4 · Composition)",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
       },
       {
-        "headline": "2 variants cover less state than the inner Input Field already has.",
-        "body": "Input Field ships 8 variants (State × isFilled). Chat Field wraps it but collapses the surface to a single Active toggle — Error, Disabled, and the Default-but-filled case are unreachable through Chat Field.",
+        "headline": "<code>leadingAction</code> and <code>trailingAction</code> are real Figma Slots.",
+        "body": "v2.0: Both are genuine <code>SLOT</code> nodes rather than frames standing in for them, so a consumer swaps in their own attach control or send affordance without detaching. This also gives the native handoff two named content slots to bind rather than fixed children. (C1 · Slot)",
         "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "Leading and trailing icons are raster PNGs.",
-        "body": "Both <code>Add_Full</code> (plus, 32×32) and <code>Send Message Medium</code> (paper-plane, 32×32) are referenced via PNG asset URLs (<code>imgShapeFull</code> / <code>imgShapeFull1</code>). Native platforms ship vector SF Symbols (<code>plus</code>, <code>paperplane.fill</code>) / Material icons (<code>Add</code>, <code>Send</code>); the rasters cannot tint, scale, or accept token-based color.",
+        "headline": "Action glyphs are vectors, not rasters.",
+        "body": "v2.0: Both PNGs are gone. The leading control is an <code>Add_Full</code> instance carrying a <code>shape_full</code> boolean operation, and the trailing control is a <code>Send Message Medium</code> instance — both from the shared icon library, so they recolor from tokens and stay crisp at any density. Confirmed visually as well as structurally. (C6 · Asset)",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
+        "headline": "Send-disabled visual added.",
+        "body": "v2.0: The trailing send control now dims when there is nothing to send — a pale blue paper plane at <code>sendEnabled=false</code> against the full <code>#005CE5</code> at <code>sendEnabled=true</code>, alongside the field showing placeholder copy rather than a value. This is the recommendation applied: an empty composer no longer offers a send affordance that looks live. Verified by export rather than from the layer tree. (C5 · State)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "<code>active=yes/no</code> retired; variant count doubled.",
+        "body": "v2.0: The old two-variant set with a <code>yes/no</code> boolean is replaced by two axes over four variants — a state axis carrying <code>default</code> and <code>active</code> (the field border moving <code>#D7E0EF</code> → <code>#005CE5</code>), and a send-enablement boolean using real <code>true</code>/<code>false</code> values. The set now depicts focus and content independently rather than collapsing them. Property casing still needs a pass and is tracked below. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Trailing action slot dropped its generic wrapper.",
+        "body": "v2.0: <code>trailingAction</code> holds its icon instance directly, with no intermediate frame named <code>container</code>. The leading slot still carries one, tracked below. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Property schema rebuilt as two booleans.",
+        "body": "v2.1: Verified on the live node. <code>state = default | active</code> and <code>sendEnabled</code> are replaced by <code>isActive = False | True</code> × <code>hasValue = False | True</code>. Both carry the §2 <code>is</code> / <code>has</code> prefix in lowerCamelCase with Title Case values per §5, and expressing focus as a boolean rather than a two-value enum is the better fit — there were only ever two positions, and the two axes are genuinely independent: a composer can be focused and empty, or unfocused and full. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Axis renamed to name the cause, not the effect.",
+        "body": "v2.1: <code>sendEnabled</code> → <code>hasValue</code>. The axis now describes what actually differs between the variants — the field holds content — with the send control’s appearance following from it. That removes the impossible combination the old name allowed, where a designer could set <code>sendEnabled=true</code> on an empty composer, and aligns the vocabulary with <a href=\"#\" onclick=\"showPanelById('text-area');return false;\">Text Area</a>. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Action slots evened up.",
+        "body": "v2.1: The <code>container</code> frame is gone from <code>leadingAction</code>, which now holds its <code>Add_Full</code> instance directly, matching <code>trailingAction</code>. Both slots are structurally identical, so a consumer swapping either one meets the same shape. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>hasValue</code> as an explicit axis — recorded exception.",
+        "body": "v2.1: The family rule set on <a href=\"#\" onclick=\"showPanelById('text-area');return false;\">Text Area</a> is that <code>hasValue</code> earns a variant axis where the filled state changes geometry, and is derived in code where it changes only color — which is why <a href=\"#\" onclick=\"showPanelById('search-field');return false;\">Search Field</a> has no such boolean. Chat Composer is 88px in all four variants, so it looks like it should derive too. It keeps the axis deliberately: unlike a bare field, the composer owns a <em>separate interactive control</em> whose enabled state has to be specified for handoff, and the send button’s two appearances are a spec a developer needs to see rather than infer. Recorded here so the apparent contradiction reads as a considered exception. (C2 · Docs)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Disabled and error states scoped out for now.",
+        "body": "v2.1: Confirmed by the owner — the composer ships focus and content only. Unavailable conversations are out of scope for this release rather than unhandled, so a native implementation should not expect a dimmed composer to bind to. When offline, muted, rate-limited or blocked-recipient cases are taken on, they arrive together as one state pass rather than being added piecemeal. Recorded so the absence reads as scope rather than omission. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      }
+    ],
+"open": [
+      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked by the composition decision, property rename, and icon vectorization. Once the composer is rebuilt as Input Field + two Icon Button slots, mapping is a direct pass-through to the sibling components' own Code Connect entries.",
+        "body": "Blocked — no native library exists yet. The structure is ready: two named slots around a composed <code>Input Field</code>, driven by two booleans.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Rename to Chat Composer (or Message Composer) and rebuild as a composed pattern.",
-        "body": "Target schema: a 3-slot layout — <code>leadingAction</code> (Icon Button instance), <code>field</code> (Input Field instance with <code>multiline</code>/<code>lineLimit</code> 1…5 per the Text Area consolidation), <code>trailingAction</code> (Icon Button instance). Drop the <code>active</code> boolean — focus comes from the nested field. Result: 0 net variants on the composer, full field state matrix inherited, and both icons become recomposable.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Rename <code>active=yes/no</code> away.",
-        "body": "If the composer keeps any boolean at all, use semantic naming tied to a real affordance — e.g. <code>sendEnabled: true/false</code> — and let the field's own focus state carry the focused appearance.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Expose <code>leadingAction</code> and <code>trailingAction</code> as Figma Slots.",
-        "body": "Consumers will need to swap plus for camera, microphone, or emoji entry points, and paper-plane for voice-note-record without forking the component. Slots also let the layer names convey leading vs trailing, fixing C1.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Vectorize both action glyphs.",
-        "body": "Replace the PNG <code>Add_Full</code> and <code>Send Message Medium</code> with vector icon components tinted via <code>main/chat-field/color/icon</code>. Aligns with the token that already exists and with SF Symbols / Material icons on native.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Add a send-disabled visual for empty fields.",
-        "body": "Common chat pattern: the send icon dims to <code>~40% opacity</code> or a muted token when the field has no text. Currently not representable. Covered naturally by exposing <code>trailingAction</code> as an Icon Button slot with its own enabled/disabled variant.",
-        "tag": "State"
-      },
-      {
-        "headline": "Document a Chat component family.",
-        "body": "This is the first component in the Chat group. Plan siblings now: <code>Chat Bubble (sent/received)</code>, <code>Chat Bubble (with attachment)</code>, <code>Chat Typing Indicator</code>, <code>Chat Date Separator</code>. Defining the family shape now prevents each bubble from being drawn ad-hoc in product files.",
-        "tag": "Family"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Types",

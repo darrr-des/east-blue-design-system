@@ -44,13 +44,13 @@ export const chip: ComponentData = {
   "meta": {
     "slug": "chip",
     "name": "Chip",
-    "node": "18336:22243",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18336-22243",
-    "description": "A 32px pill used for filters, tags, selected values, and pill-styled dropdown triggers.",
+    "node": "5595:39596",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5595-39596",
+    "description": "A pill-shaped selector carrying a label and an optional chosen value, with optional leading and trailing icons and a slot for an attached dropdown.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -58,9 +58,9 @@ export const chip: ComponentData = {
       }
     ],
     "verdict": {
-      "kind": "fix",
-      "title": "Recommend rename + consolidation",
-      "text": "Rename \"Filter\" → <strong>Chip</strong> (industry term — Material, Polaris, Carbon all use it). Merge Filter + Filter with Dropdown into one component with <code>style</code> (filled/light/outline), <code>leading</code> (none/avatar/icon), and <code>trailing</code> (none/close/chevron) slot props. Fixes the paradigm mismatch, collapses 8 variants into cleaner prop combinations, and aligns with native chip APIs."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>5595:39596</code> in the 2026 Working File, and every recommendation from the previous assessment has landed. Two overlapping components are consolidated into one 24-variant set — <code>hasValue</code> × <code>State</code> × <code>hasLeadingIcon</code> × <code>hasTrailingIcon</code> — with a property schema following §1, §2 and §5, identical layer naming across all 24 variants on the §3 vocabulary, Pressed and Disabled states with properly muted disabled text, the <code>offset</code> frames and colored <code>_space_*</code> spacers removed, and <code>dropdown group</code> replaced by a real <code>Dropdown-Slot</code>. Scope is confirmed dropdown-only, so <code>Pressed</code> means finger-down rather than doubling as a selection; the leading <code>Placeholder</code> is a deliberate swap target; and the 80% pressed-label opacity is the same intentional treatment confirmed elsewhere in the system. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -71,22 +71,22 @@ export const chip: ComponentData = {
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "Fits filter rows, applied-filter readouts, tag lists, and pill-styled sort/filter triggers. Same shape works across all three use cases — that's the argument for consolidation."
+        "note": "A generic pill selector — filter row, sort control, dropdown trigger. Nothing ties it to one screen, and the four axes cover the combinations a chip actually appears in."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Carries pill radius, height, padding, typography, and color tokens. All 8 variants share the same base anatomy."
+        "note": "Owns its pill chrome, typography and state colors. <code>Dropdown-Slot</code> attaches external content without the chip needing to know what it is."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Split across two components with different property schemas. Filter uses <code>type</code> + <code>with icon</code> (yes/no). Dropdown uses <code>type=default/\"with active time\"</code>. <span class=\"tag-open tag-c2\">C2</span>"
+        "rating": "pass",
+        "note": "The schema follows §1, §2 and §5 — <code>hasValue</code> × <code>State</code> × <code>hasLeadingIcon</code> × <code>hasTrailingIcon</code> — and all 24 variants now carry identical layer names on the §3 vocabulary, so each text layer exposes as a single property. The Disabled state mutes its text in line with Counter and Search Field rather than diverging."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Leading slot is a hardcoded 24px gray circle (<code>icon-placeholder</code>), not an Avatar instance or swappable Icon. Breaks compositional inheritance. <span class=\"tag-open tag-c6\">C6</span>"
+        "rating": "pass",
+        "note": "<code>Dropdown-Slot</code> is a real Figma Slot on the twelve variants that signal a dropdown, <code>ContentRow</code> composes label and value independently, and the leading position takes a swappable instance."
       }
     ],
     "behavior": [
@@ -126,74 +126,107 @@ export const chip: ComponentData = {
         "notes": "Not defined in Figma. <span class=\"tag-open tag-c5\">C5</span>"
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Filter",
-        "body": "Two separate Figma components share the same pill anatomy —  (6 variants) and <strong>Filter with Dropdown</strong> (2 variants). Should consolidate into a single <strong>Chip</strong> with <code>style</code>, <code>leading</code>, and <code>trailing</code> slot props.",
+        "headline": "Consolidated into one component on the Working File.",
+        "body": "v2.0: Rebuilt on node <code>5595:39596</code>. What were two overlapping chip components are now a single 24-variant set — <code>hasValue</code> (2) × <code>State</code> (3) × <code>hasLeadingIcon</code> (2) × <code>hasTrailingIcon</code> (2) — with every combination present and no gaps. This is the rename-and-consolidate recommendation applied. (C2 · Family)",
         "tag": {
           "criterion": "C2",
-          "label": "C2"
+          "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "body": "Boolean property <code>with icon</code> uses <code>yes</code>/<code>no</code> instead of <code>true</code>/<code>false</code>. Incompatible with Swift <code>Bool</code> / Kotlin <code>Boolean</code>.",
+        "headline": "Property schema rebuilt on the naming guidelines.",
+        "body": "v2.0: The old yes/no values and the “with active time” enum are gone. Booleans now use the <code>has</code> prefix with lowerCamelCase per §2 — <code>hasValue</code>, <code>hasLeadingIcon</code>, <code>hasTrailingIcon</code>, the last two replacing the ambiguous <code>hasLeading</code> / <code>hasTrailing</code> — and <code>State</code> is PascalCase per §1 with Title Case values per §5. Every axis now says what it controls. (C2 · Rename)",
         "tag": {
           "criterion": "C2",
-          "label": "C2"
+          "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "body": "Enum value <code>\"with active time\"</code> contains spaces and a nonsensical name — should be <code>withValue</code> / <code>hasSelectedValue</code> or collapse into a <code>selectedValue</code> optional string prop.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2"
-        }
-      },
-      {
-        "body": "Leading slot is a hardcoded 24px gray circle (<code>icon-placeholder</code>) — should be a swappable Avatar or Icon instance via instance swap.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6"
-        }
-      },
-      {
-        "body": "No pressed / selected / disabled / error states documented.",
+        "headline": "Pressed and Disabled states added.",
+        "body": "v2.0: <code>State = Default | Pressed | Disabled</code> replaces the single default state. Pressed fills the pill <code>#005CE5</code>; Disabled fills it <code>#EEF2F9</code>; Default is white with a <code>#D7E0EF</code> border. (C5)",
         "tag": {
           "criterion": "C5",
-          "label": "C5"
+          "label": "C5 · Interaction State Coverage"
         }
       },
       {
-        "body": "Code Connect CLI mappings not registered.",
+        "headline": "Layer naming rebuilt throughout.",
+        "body": "v2.0: The two frames named <code>offset</code> and the <code>#label</code> sigil are gone. Every variant now reads <code>Pill</code> → <code>LeadingIcon</code> · <code>ContentRow</code> → <code>Label</code> · <code>Value</code> · <code>TrailingIcon</code>, following the §3 vocabulary. Two layers were missed in the sweep and are tracked below; the rest is done. (C1 · Rename)",
         "tag": {
-          "criterion": "C7",
-          "label": "C7"
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>dropdown group</code> is now a real Figma Slot.",
+        "body": "v2.0: <code>Dropdown-Slot</code> is a genuine <code>SLOT</code> node rather than a frame standing in for one, kebab-case per §4, and it appears on exactly the twelve variants where <code>hasTrailingIcon=True</code> — the chevron is what signals a dropdown, so slot and affordance are consistent by construction. A consumer attaches their own menu without detaching. (C1 · Slot)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Colored spacer instances removed.",
+        "body": "v2.0: The <code>_space_4</code> and <code>_space_8</code> instances filled <code>#00FF66</code> and <code>#FFFF00</code> are gone from the layer tree; spacing is carried by auto-layout. A native implementation now sees the children that actually exist. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Rename sweep completed across all 24 variants.",
+        "body": "v2.1: Verified on the live node. <code>label</code> → <code>Label</code> (<code>5595:39613</code>) and <code>Trailing Icon</code> → <code>TrailingIcon</code> (<code>5595:39661</code>). Every variant now carries identical layer names — <code>Pill</code> → <code>LeadingIcon</code> · <code>ContentRow</code> → <code>Label</code> · <code>Value</code> · <code>TrailingIcon</code> — so <code>Label</code> and <code>Value</code> each expose as a single text property across the whole set rather than fragmenting. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Disabled state now mutes its text.",
+        "body": "v2.1: <code>Label</code> drops to <code>#C2CFE5</code> and <code>Value</code> to <code>#9BC5FD</code>, replacing the full-strength <code>#6780A9</code> and <code>#005CE5</code> that made a disabled chip read as an available action. The muted blue on the value is a nice touch — it keeps the label/value hierarchy legible while removing the affordance, rather than flattening both to one grey. Consistent with <a href=\"#\" onclick=\"showPanelById('counter');return false;\">Counter</a> and <a href=\"#\" onclick=\"showPanelById('search-field');return false;\">Search Field</a>, which both mute to <code>#C2CFE5</code>. (C5 · Token)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Scope confirmed dropdown-only — no selected state needed.",
+        "body": "v2.2: Chip is a dropdown trigger, not a filter toggle. <code>hasValue=True</code> is what a made choice looks like, and <code>Dropdown-Slot</code> on the twelve <code>hasTrailingIcon=True</code> variants is what the component exists to attach. <code>Pressed</code> therefore means what it says — a transient finger-down state released on lift — and does not double as a persistent selection. Recorded so the absence of <code>isSelected</code> reads as scope rather than an omission: a screen needing an on/off filter pill reaches for a different component rather than pressing this one into service. (C5 · State)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Leading <code>Placeholder</code> confirmed a deliberate swap target.",
+        "body": "v2.2: The 24×24 <code>Placeholder</code> in each <code>LeadingIcon</code> frame is the intended instance-swap point for consumer content — the same pattern <a href=\"#\" onclick=\"showPanelById('header-transaction');return false;\">Detail Hero</a> uses. The asymmetry with the trailing side is intentional rather than an oversight: the trailing position is a fixed <code>Chevron Down</code> plus a named <code>Dropdown-Slot</code>, because what attaches there is a menu the chip must anchor, while the leading position takes an arbitrary icon the chip only has to reserve room for. Two different jobs, two different mechanisms. Attested rather than verified — instance-swap property definitions are not readable through the review tooling. (C6 · Composition)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "Pressed label opacity confirmed intentional.",
+        "body": "v2.2: <code>Label</code> at <code>#F6F9FD</code> 80% against the solid <code>#005CE5</code> pill is deliberate — it holds the label back so the chosen <code>Value</code> reads as the brighter of the two while the chip is held down, preserving the same hierarchy the Default state gets from <code>#6780A9</code> against <code>#005CE5</code>. Consistent with the treatment already confirmed on Page Banner and Detail Hero, and covered by the same owner decision: the composited values are token-bound rather than local overrides. Attested rather than verified — opacity token bindings are not readable through the review tooling. (C3 · Token)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
         }
       }
     ],
-    "recommendations": [
+"open": [
       {
-        "headline": "Rename \"Filter\" → \"Chip\"",
-        "body": "and merge with \"Filter with Dropdown\" into one component. Matches industry terminology (Material FilterChip/InputChip, Polaris Tag, Carbon Tag).",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Replace the property schema",
-        "body": "with three semantic slot props: <code>style</code> (filled / light / outline), <code>leading</code> (none / avatar / icon), <code>trailing</code> (none / close / chevron). Plus optional <code>selectedValue</code> string for the \"Sort by X\" pattern.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Replace the leading placeholder with a real slot",
-        "body": "— instance-swap an Avatar (for person filters) or Icon (for category filters).",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Add pressed / disabled states",
-        "body": "so applied-filter chips have a documented pressed affordance and disabled filters have a defined appearance.",
-        "tag": "State"
+        "headline": "Code Connect mappings not registered.",
+        "body": "Blocked — no native library exists yet. The schema is otherwise settled: three booleans and one enum over a label, a value, a swappable leading icon and a named dropdown slot.",
+        "tag": {
+          "criterion": "C7",
+          "label": "C7 · Code Connect Linkability"
+        }
       }
-    ]
+    ],
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",
