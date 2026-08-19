@@ -50,13 +50,13 @@ export const inlineText: ComponentData = {
   "meta": {
     "slug": "inline-text",
     "name": "Inline Text",
-    "node": "18652:71101",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18652-71101",
-    "description": "A single-line text element used for inline labels, captions, or value pairs within a row.",
+    "node": "4419:24515",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4419-24515",
+    "description": "A label-and-value row with an optional trailing element, description line and text link — used for inline detail pairs within lists and cards.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -64,9 +64,9 @@ export const inlineText: ComponentData = {
       }
     ],
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — type enum hides 5 trailing-slot compositions",
-      "text": "Same anti-pattern as Alert's <code>Full Width</code> and Generic Transaction Card's <code>type</code>. Replace the enum with orthogonal booleans (<code>hasCopy</code>, <code>hasDescription</code>, <code>hasTextLink</code>) plus a unified <code>trailing</code> slot so Badge can be instance-swapped instead of drawn inline. The component itself belongs — its four semantic color tokens (<code>label</code>, <code>label-value</code>, <code>description</code>, <code>label-link</code>) give it enough DS opinion to ship as <code>EBInlineText</code>, but behind a cleaner schema."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4419:24515</code> in the 2026 Working File as <code>Type</code> (Copy Icon · Badge · Checkmark · Slot) × <code>hasDescription</code> × <code>hasTextLink</code> = <strong>16 variants</strong>. The enum that hid five compositions is split into orthogonal axes, so clipboard plus description plus link is now a real combination rather than an unreachable one. The trailing element routes through a shared <code>Trailing Elements</code> instance holding a real Badge or DS icon, and every layer carries a distinct semantic name mapping onto §3. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -80,18 +80,18 @@ export const inlineText: ComponentData = {
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Binds tokens cleanly but draws its own Badge inline (information/light hardcoded) instead of instance-swapping from the canonical Badge component — parallel source of truth for badge styling."
+        "rating": "pass",
+        "note": "Binds tokens cleanly and routes the trailing element through a shared <code>Trailing Elements</code> instance holding a real <code>Badge</code> or DS icon, so styling propagates rather than being redrawn here."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "The <code>type</code> enum conflates two axes (trailing-slot content and sub-row content). <code>with Description</code> and <code>with Text Link</code> describe the second row; <code>with Clipboard</code> and <code>with Badge</code> describe the first. Merging them into one enum forces consumers to pick incompatible combinations."
+        "rating": "pass",
+        "note": "<code>Type</code> × <code>hasDescription</code> × <code>hasTextLink</code> are orthogonal, boolean values are genuine <code>True</code>/<code>False</code>, and every layer carries a distinct semantic name — the text layers mapping onto §3 as <code>Label</code>, <code>Value</code>, <code>Description</code>, plus <code>LinkLabel</code>. <code>Type=Slot</code> is a deliberate, documented choice."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Used as a stacking block inside larger components — good. But consumers can't freely combine (e.g. clipboard + description) because the enum makes those permutations unrepresentable."
+        "rating": "pass",
+        "note": "Stacks inside transaction cards, modal summaries and list items, and the three axes combine freely — clipboard plus description plus link is now a real combination rather than an unreachable one. <code>Type=Slot</code> accepts arbitrary trailing content."
       }
     ],
     "behavior": [
@@ -138,94 +138,99 @@ export const inlineText: ComponentData = {
         "notes": "Copy icon has no pressed state or success toast hook — users get no feedback when the tap lands."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "<code>type</code> enum conflates two axes and hides 5 different layouts.",
-        "body": "<code>with Clipboard</code> and <code>with Badge</code> describe the trailing slot, while <code>with Description</code> and <code>with Text Link</code> describe a second row. As one enum, the combinations \"clipboard + description\" and \"badge + text link\" are unrepresentable — even though real screens need them. Split into orthogonal booleans (<code>hasCopy</code>, <code>hasDescription</code>, <code>hasTextLink</code>) with a unified <code>trailing</code> slot.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Enum values mix concerns and use \"with X\" phrasing.",
-        "body": "<code>with Clipboard</code> / <code>with Badge</code> / <code>with Description</code> / <code>with Text Link</code> all read as feature toggles (\"with feature X\"), which reinforces the anti-pattern of the previous bullet. Under the proposed schema, these become boolean props named by what they ARE, not what they add.",
+        "headline": "<code>type</code> enum split into orthogonal axes.",
+        "body": "v2.0: Rebuilt on node <code>4419:24515</code> in the 2026 Working File. The single enum that hid five layouts is now <code>Type</code> (Copy Icon · Badge · Checkmark · Slot) × <code>hasDescription</code> × <code>hasTextLink</code> = 16 variants. Trailing-element kind, description presence and link presence are independent, so no combination is unreachable. (C2 · Property)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "Badge variant is drawn inline, not instance-swapped.",
-        "body": "The <code>with Badge</code> variant hardcodes <code>main/badge/information/light/background</code> and <code>main/badge/information/light/label</code> — duplicating the Badge component's styling rules. If Badge changes its hover state, border, or typography, Inline Text silently drifts. Replace with an instance swap on a trailing slot.",
+        "headline": "Enum values cleaned up.",
+        "body": "v2.0: The \"with X\" phrasing is gone — values are now <code>Copy Icon</code>, <code>Badge</code>, <code>Checkmark</code> and <code>Slot</code>, each naming the trailing element rather than describing a composite layout. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Badge is instance-swapped, not drawn inline.",
+        "body": "v2.0: The trailing element goes through a shared <code>Trailing Elements</code> instance which in turn holds a real <code>Badge</code> instance. Badge styling changes now propagate rather than needing to be redrawn here. (C6 · Composition)",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
-        "headline": "Copy icon appears to be drawn inline rather than a DS Icon instance.",
-        "body": "The <code>Copy</code> node is a local instance, but its child layers (<code>shape_half</code>, <code>shape_full</code>) suggest a one-off vector rather than a canonical icon swapped from the DS icon library. Confirm the source and, if necessary, replace with a swappable <code>icon</code> prop so consumers can choose clipboard / share / refresh trailing actions.",
+        "headline": "Copy icon uses the shared wrapper.",
+        "body": "v2.1: Confirmed by the component owner — <code>Type=Copy Icon</code> routes through the same <code>Trailing Elements</code> instance as Badge rather than drawing the glyph inline, so it inherits the DS icon. (C6)",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
-        "headline": "No pressed state on the copy action.",
-        "body": "The clipboard variant is the only interactive part of Inline Text and it ships with no pressed tint, no focus ring, and no success toast hook. Add a pressed state on the icon and document the success-toast convention.",
+        "headline": "Clipboard property renamed to describe the element.",
+        "body": "v2.0: The property value now reads <code>Type=Copy Icon</code>, naming what appears rather than the clipboard mechanism behind it. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Layer naming completed.",
+        "body": "v2.1: Seven renames — the 16px <code>#label</code> → <code>Label</code>, the 12px link <code>#label</code> → <code>LinkLabel</code>, <code>#amount</code> → <code>Value</code>, <code>description</code> → <code>Description</code>, the two <code>container</code> frames → <code>ValueGroup</code> and <code>DescriptionGroup</code>, and <code>bottom-container</code> → <code>SupportingRow</code>. Resolves the duplicate <code>#label</code> and duplicate <code>container</code> collisions, and the text names now map onto §3 — <code>Label</code>, <code>Value</code>, <code>Description</code>. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Row frame renamed to <code>MainRow</code>.",
+        "body": "v2.2: The top row no longer shares the component set's own name, pairing cleanly with <code>SupportingRow</code> below it. Every layer this component owns now carries a distinct semantic name. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Type=Slot</code> confirmed intentional.",
+        "body": "v2.2: Closed by owner decision — <code>Slot</code> stays. The team treats Slot as a first-class concept in the system rather than an implementation detail, so the value reads as a named content mode to anyone working in the library. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Pressed state ruled out of scope.",
+        "body": "v2.2: Closed by owner decision — nested buttons and links across the system do not currently carry pressed states, so adding one here would make Inline Text the outlier rather than the standard. Revisit at family level if pressed states are introduced for nested interactive elements generally. (C5)",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
       },
       {
+        "headline": "Stacking and typography documented.",
+        "body": "v2.2: Documented rather than deferred. <strong>Stacking</strong> — rows carry no separator of their own and no vertical padding: a row is 24px tall without a description and 44px with one, at 368 wide. The containing list or card supplies the gap between rows and any dividers, so a run of Inline Text rows sits flush unless the parent spaces them. <strong>Typography reconciliation with Generic Transaction Card</strong> — the supporting scale is already shared: <code>Description</code> and the card's <code>Metadata</code> are both BarkAda Semibold 12/18 at <code>#6780A9</code>, identical. The primary scale differs deliberately: the card's own title is Proxima Soft Semibold 18/18 while Inline Text's <code>Label</code> and <code>Value</code> are 16/16. That gap is the hierarchy — the card heading sits above the detail rows beneath it — not a drift to correct. (Docs)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "open": [
+      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked on the slot / boolean restructure — mapping today's single <code>type</code> enum would bake the anti-pattern into the native API.",
+        "body": "Blocked — no native library exists yet. The schema is clean: one enum, two booleans, three text layers and a swappable trailing instance.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Replace <code>type</code> with orthogonal booleans + a trailing slot.",
-        "body": "Target schema: <code>label: String</code>, <code>trailing: value(String) | badge(Badge) | custom</code>, <code>hasCopy: Bool</code>, <code>hasDescription: Bool</code>, <code>hasTextLink: Bool</code>, <code>description?: String</code>, <code>ctaLabel?: String</code>. This unlocks valid combinations today's enum forbids (copy + description, badge + link) without adding any net new variants.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Instance-swap Badge instead of drawing it inline.",
-        "body": "Expose a <code>trailing</code> slot that accepts a Badge instance. Removes the parallel badge-styling source, keeps Inline Text honest as a layout primitive.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Rename the clipboard prop to describe the action.",
-        "body": "<code>hasCopy</code> reads better than today's <code>with Clipboard</code> — \"copy\" is the action, \"clipboard\" is the target. Provide an <code>onCopy</code> callback in the native API and document the success-toast convention.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Confirm the copy icon is a DS Icon instance.",
-        "body": "If it's a local one-off, replace with a swapped DS Icon so the whole family shares one icon source. While at it, expose <code>trailingIcon</code> as a slot so screens can use share / external-link / refresh instead of copy.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Add a pressed state on the copy icon.",
-        "body": "Subtle tint change (<code>icon</code> → <code>icon-pressed</code>) plus a documented toast (\"Copied to clipboard\") on tap. This is the only interactive affordance in Inline Text — it needs feedback.",
-        "tag": "State"
-      },
-      {
-        "headline": "Document the stacking recipe.",
-        "body": "Most real usage is a vertical stack of 3–6 Inline Text rows inside a modal or card (fee breakdowns, transaction details). Add a \"Receipt block\" recipe page showing the stack spacing (8 px gap, 1 px divider optional) so consumers don't reinvent it.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Reconcile typography with Generic Transaction Card's metadata.",
-        "body": "Inline Text's description row uses BarkAda Semibold 12/18. Generic Transaction Card's date metadata uses the same font but a different line-height bucket. Align captions family-wide so receipt text reads consistently.",
-        "tag": "Family"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",

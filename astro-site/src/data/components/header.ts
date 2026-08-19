@@ -190,6 +190,14 @@ export const header: ComponentData = {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
+      },
+      {
+        "headline": "Header-family restructure closed.",
+        "body": "v2.3: Closed for this component. The restructure that mattered here is done — the base component is <strong>Section Header</strong>, which frees the <em>Header</em> prefix that four structurally different components were sharing, and its own naming, properties and layers all follow the guidelines. <em>Header - With Logo</em> has since been renamed <strong>Brand App Bar</strong> in Figma, confirming it stays a distinct component rather than merging into Title Bar. What remains is bookkeeping on two other pages rather than work on this one: the site still lists Brand App Bar under its old name, and <em>Detail Hero</em> still needs a call on whether it belongs in the family at all. Both are tracked on their own component pages. (Family)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
       }
     ],
     "open": [
@@ -202,13 +210,7 @@ export const header: ComponentData = {
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Resolve the remaining Header-family names.",
-        "body": "With the base renamed, <em>Header - Transaction</em> and <em>Header - With Logo</em> are the last two using the freed prefix. The latter is already <strong>Brand App Bar</strong> in Figma; the site still calls it Header - With Logo. Transaction still needs a decision on whether it belongs in this family at all.",
-        "tag": "Family"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",

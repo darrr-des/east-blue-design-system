@@ -53,20 +53,20 @@ export const stepperCircular: ComponentData = {
     "description": "A row of numbered circles whose ring arcs indicate progress through a multi-step flow.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "consolidate",
+        "label": "Consolidate"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "na",
+        "label": "Not Applicable"
       }
     ],
     "navGroup": "Stepper",
     "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <circle cx=\"7\" cy=\"16\" r=\"4\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"1.5\"/>\n      <circle cx=\"16\" cy=\"16\" r=\"4\" fill=\"none\" stroke=\"#005CE5\" stroke-width=\"1.5\" stroke-dasharray=\"12 20\"/>\n      <circle cx=\"25\" cy=\"16\" r=\"4\" fill=\"none\" stroke=\"#D2E5FF\" stroke-width=\"1.5\"/>\n    </svg>",
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — collapse 9 sibling components into one <code>Stepper - Circular</code> with <code>steps</code> and <code>current</code> properties",
-      "text": "Step count is a scalar — not a component axis. The current schema has 9 top-level components (2..10 steps) and inside each, 10 symbols of pre-rendered ring arcs. Every step count ships ~N PNGs. Rebuild as a single component: <code>steps: Int</code> (range 2–10) and <code>current: Int</code> (1..steps). Redraw the ring as a stroked SVG arc derived from <code>current / steps</code> so the fill scales with math, not image swaps. Native side maps to a custom <code>EBStepperCircular(current:total:)</code> rendered over an <code>HStack</code> / <code>Row</code> of <code>Circle</code> shapes with <code>.trim(from:to:)</code> or <code>drawArc</code>."
+      "kind": "consolidate",
+      "title": "Consolidate — merged into Stepper",
+      "text": "This component no longer exists on its own. It is merged into <a href=\"/components/stepper-bullet\">Stepper</a> (node <code>4337:11140</code>), where its nine step-count siblings are now the <code>Steps</code> axis and the circular form is <code>Type=Circular</code>. Assessment for this pattern lives on the Stepper page."
     }
   },
   "overview": {
@@ -76,22 +76,22 @@ export const stepperCircular: ComponentData = {
       {
         "name": "Reusable",
         "rating": "partial",
-        "note": "Visually fits any multi-step flow, but the 9-sibling split forces consumers to swap components when step count changes, not just a prop."
+        "note": "Historical rating from the standalone assessment. This component is merged into Stepper — see that page for current DS Health."
       },
       {
         "name": "Self-contained",
         "rating": "warn",
-        "note": "Each step circle's ring arc renders via raster <code>&lt;img&gt;</code>. ~10 PNGs per sibling × 9 siblings ≈ 50+ assets for what should be one SVG arc with two parameters."
+        "note": "Historical rating from the standalone assessment. This component is merged into Stepper — see that page for current DS Health."
       },
       {
         "name": "Consistent",
         "rating": "fail",
-        "note": "Step count modelled as 9 top-level components. Every other scalar in the DS (Badge counter, Progress Bar target) is a property, not a component family. Breaks the naming hierarchy — \"Stepper - Circular\" is not a component, it's nine."
+        "note": "Historical rating from the standalone assessment. This component is merged into Stepper — see that page for current DS Health."
       },
       {
         "name": "Composable",
         "rating": "partial",
-        "note": "Fixed 45-px circles at 20-px gaps fit most screen widths for 2–6 steps; at 7+ steps the total width exceeds a typical mobile canvas (410+ px). No responsive shrink or wrap behavior."
+        "note": "Historical rating from the standalone assessment. This component is merged into Stepper — see that page for current DS Health."
       }
     ],
     "behavior": [
@@ -131,109 +131,18 @@ export const stepperCircular: ComponentData = {
         "notes": "Horizontal only. Vertical steppers (common on narrow screens or list layouts) would need a second orientation mode or a sibling."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Step count is modeled as 9 sibling components instead of a <code>steps</code> prop.",
-        "body": "Today the family ships as <code>Stepper - Circular - 2 Steps</code>, <code>… - 3 Steps</code>, … <code>… - 10 Steps</code> — 9 top-level components that differ only by hardcoded count. Every other design system exposes one <code>Stepper</code> with <code>steps: Int</code> (or <code>total: Int</code> + <code>current: Int</code>). 9× maintenance, 9× Code Connect mapping, and no path to N=11+ without adding a 10th file.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Step ring arcs are pre-rendered raster <code>&lt;img&gt;</code> assets, one per step index.",
-        "body": "Each <code>number=N</code> symbol's ring is a baked PNG — the progressive fill is achieved by image swap, not by math. Blocks theming (can't retint), breaks at high DPI, and ships dozens of assets the native renderer doesn't need. Should be a stroked SVG arc with <code>strokeDasharray</code> (or <code>Circle().trim(from:to:)</code> on iOS, <code>drawArc</code> on Compose).",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "Variant axis <code>number</code> encodes position, not a property.",
-        "body": "The inner symbol uses <code>number = 1 | 2 | … | N</code> which both labels the circle (the displayed digit) and implicitly sets the ring-arc raster. Two concerns collapsed into one enum. Should be: <code>index: Int</code> (the number shown) and <code>status: completed | current | upcoming</code> (the visual).",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "No native primitive is a 1:1 match — this needs a custom component.",
-        "body": "SwiftUI has no built-in circular stepper; Material 3 shows only a linear <code>Stepper</code>. Both platforms require a custom <code>EBStepperCircular</code> built from a <code>Row</code>/<code>HStack</code> of <code>Circle</code>/<code>Box</code> shapes with arc-drawn progress. Today's raster baking makes this worse — the dev can't reuse the asset.",
+        "headline": "Merged into Stepper.",
+        "body": "v2.0: Confirmed by the component owner — this no longer exists as a standalone component. It is merged into <a href=\"/components/stepper-bullet\">Stepper</a> (node <code>4337:11140</code>), where its nine step-count siblings are now the <code>Steps</code> axis and the circular form is <code>Type=Circular</code>. This page is kept as a pointer; all assessment for this pattern lives on Stepper. (Family)",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
-      },
-      {
-        "headline": "No pressed / focused / disabled state modeled.",
-        "body": "Wizards often allow tapping a completed step to return to it. With no interaction states in Figma, the developer has to invent hover / pressed treatment and the designer has no reference.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until the family collapses to one component and the raster arcs are replaced with vector strokes. Mapping 9 separate siblings would codify the anti-pattern into the tooling.",
-        "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
-        }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Collapse all 9 siblings into one <code>Stepper - Circular</code> with <code>steps</code> and <code>current</code> properties.",
-        "body": "Delete <code>Stepper - Circular - 2 Steps</code> through <code>… - 10 Steps</code> as separate components. Create one <code>Stepper - Circular</code> with <code>steps: 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10</code> (enum) and <code>current: 1 | 2 | … | 10</code> — or, if Figma supports integer ranges, a numeric property. Variant math drops from 9 top-level components × ~10 step symbols = ~90 variant assets to 1 component with a runtime-computed arc. Native API: <code>EBStepperCircular(current: Int, total: Int)</code>.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Split the inner symbol's <code>number</code> axis into <code>index</code> (digit shown) and <code>status</code> (ring treatment).",
-        "body": "Today one enum does both. Separate them: <code>index: Int</code> for the label text and <code>status: completed | current | upcoming</code> for the ring fill. The outer component then computes status per slot from <code>current</code>.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Replace raster ring arcs with stroked SVG / vector arcs.",
-        "body": "Each step circle's ring should be a 2-px stroked circle with <code>stroke-dasharray</code> (or two half-circles via <code>trim</code>). Colors bound to <code>main/stepper/color/bg-track</code> (unfilled) and <code>main/stepper/color/bg</code> (filled). Same visual output, theme-able, resolution-independent, no PNG assets.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Add a <code>completed</code> visual state with a checkmark icon option.",
-        "body": "Many wizards replace the digit with a check once a step is done. Today there's no variant for this — everything shows a number. Add <code>showCheckOnComplete: Bool</code> (or model it into the <code>status</code> enum as <code>completed-check</code>).",
-        "tag": "State"
-      },
-      {
-        "headline": "Add an <code>orientation</code> property for vertical layouts.",
-        "body": "Long flows (8+ steps) don't fit a phone-width row. Vertical stacks are common for checkout or document review wizards. Add <code>orientation: horizontal | vertical</code> and spec the connector line between circles for both axes.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Spec a connector line between circles.",
-        "body": "Today the 9 sibling frames space circles with a 20-px gap but no visible connector. Most steppers draw a line from the trailing edge of one circle to the leading edge of the next, tinted to match completed (brand) vs upcoming (track) states. Add this to the spec — it's the difference between \"a row of circles\" and \"a stepper\".",
-        "tag": "Property"
-      },
-      {
-        "headline": "Rename layers <code>step-container</code> → <code>Ring</code> (and the ring arc layer → <code>Arc</code>).",
-        "body": "\"step-container\" is a technical label; \"Ring\" is what a designer or developer searches for.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Build as a custom native component, not a ProgressView wrapper.",
-        "body": "Neither SwiftUI <code>ProgressView</code> nor Material <code>LinearProgressIndicator</code> visually match this pattern. Ship a dedicated <code>EBStepperCircular</code>: iOS uses an <code>HStack</code> of <code>ZStack { Circle().stroke(track); Circle().trim(from:0,to:progress).stroke(fill); Text(index) }</code>; Android uses a <code>Row</code> of <code>Box(Modifier.size(45.dp))</code> with <code>Canvas</code> drawing <code>drawArc(sweepAngle = progress * 360f)</code>.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Announce \"Step X of Y\" to screen readers.",
-        "body": "The component is decorative by default — assistive tech reads only the number. Wrap in a semantic container that announces <code>\"Step \\(current) of \\(total)\"</code> (SwiftUI <code>.accessibilityLabel</code>, Compose <code>Modifier.semantics { contentDescription = … }</code>).",
-        "tag": "A11y"
-      },
-      {
-        "headline": "Document the canonical composition and retire the sibling names.",
-        "body": "Update the sticker sheet page to show one <code>Stepper - Circular</code> with property controls; add a migration note pointing <code>Stepper - Circular - N Steps</code> consumers to the new <code>steps</code> prop.",
-        "tag": "Docs"
-      }
-    ]
+    "open": [],
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",

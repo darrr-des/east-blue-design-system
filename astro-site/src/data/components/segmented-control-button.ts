@@ -84,7 +84,11 @@ export const segmentedControlButton: ComponentData = {
         ],
         swift: '<span class="syn-comment">// Composed by EBSegmentedControl — not used directly</span>',
         compose: '<span class="syn-comment">// Composed by EBSegmentedControl — not used directly</span>',
-        previewHtml: '<div id="scb-spec-preview"></div>',
+        /* Rendered inline rather than by a demo script: this component has no
+           demo JS, so an empty host div left the card blank — a zero-size
+           element the visual suite cannot screenshot. Mirrors the documented
+           Active=true / State=Default segment. */
+        previewHtml: '<div id="scb-spec-preview"><span style="display:inline-flex;align-items:center;justify-content:center;height:40px;padding:12px 16px;border-radius:6px;background:#005CE5;color:#FFFFFF;font-family:\'Proxima Soft\', system-ui;font-weight:700;font-size:16px;line-height:16px;letter-spacing:0.25px;box-sizing:border-box;">Active</span></div>',
       },
     ],
   },

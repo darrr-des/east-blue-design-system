@@ -31,32 +31,26 @@ astro-site/
 
 Two ways to update a component:
 
-**A. Edit the source HTML, regenerate (current state).** The legacy `assessment-src/components/<slug>.html` files are still authoritative. Edit, then:
+**Edit the `.ts` data file directly.** `src/data/components/<slug>.ts` is the source of truth. Edit it, then:
 
 ```bash
 npm run build
 ```
 
-This runs `migrate.mjs` (re-parses all 79 HTML files into `.ts` data) and then `astro build`.
+That is `astro build` and nothing else — the page for the component is regenerated from the data file by `[slug].astro`.
 
-**B. Edit the `.ts` data file directly (target state).** Once you cut over to Astro as the source of truth, edit `src/data/components/<slug>.ts` directly — one line change instead of hunting through HTML. Skip the migration step:
-
-```bash
-npm run build:astro
-```
-
-Just be aware that running `npm run migrate` will overwrite hand-edits in `.ts` files. Migrate first, then edit, until you delete `assessment-src/`.
+The cutover this section used to describe is finished: `assessment-src/` has been removed from the repo, and the legacy HTML is no longer authoritative for anything. `scripts/utils/migrate.mjs` is kept as a record of that one-time conversion and cannot run without the source folder.
 
 ## Common commands
 
 | Command              | What it does |
 |----------------------|--------------|
 | `npm run dev`        | Dev server at http://127.0.0.1:4321 with hot reload |
-| `npm run migrate`    | Parse `assessment-src/` HTML → `src/data/components/*.ts` |
 | `npm run audit`      | Print per-component completeness report |
-| `npm run build`      | `migrate` + `astro build` → outputs `dist/` |
-| `npm run build:astro`| `astro build` only (skips migration) |
+| `npm run lint`       | Preview-structure + colors-table coverage checks |
+| `npm run build`      | `astro build` → outputs `dist/` |
 | `npm run preview`    | Serve the built `dist/` locally for verification |
+| `npm run test:visual`| Playwright visual regression against `tests/visual-baselines/` |
 
 ## Deployment
 

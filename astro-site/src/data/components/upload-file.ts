@@ -69,7 +69,7 @@ export const uploadFile: ComponentData = {
     "verdict": {
       "kind": "keep",
       "title": "Keep — all findings resolved",
-      "text": "Rebuilt on node <code>4853:26511</code> in the 2026 Working File as <code>Status</code> (4) × <code>State</code> (3), authored as a deliberately sparse eight-variant matrix. Property naming is clean, process outcome and interaction state are on separate axes, the thumbnail is a real Figma <code>SLOT</code>, and the component composes shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances. Interaction-state coverage is complete — <code>Focused</code> ships and <code>Pressed</code> is deliberately out of scope — and the progress-bar GIF is confirmed a Figma-preview device rather than a handoff asset. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+      "text": "Rebuilt on node <code>4853:26511</code> in the 2026 Working File, and the headline recommendation has landed: the conflated state property is now <code>Status = Default | Uploading | Error | Uploaded</code> × <code>State = Default | Focused | Disabled</code>, the two-axis split §6 of the Property Naming Guidelines prescribes, with the four unsupported combinations documented as unreachable. <code>Thumbnail-Slot</code> is a real Figma Slot on a token-bound placeholder, the label and subtext rows reuse the shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances, the file row is cleanly named throughout, the <code>boder</code> token typo is fixed, and the Lottie dependency behind the <code>Uploading</code> status is documented including its failure fallback. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -90,7 +90,7 @@ export const uploadFile: ComponentData = {
       {
         "name": "Consistent",
         "rating": "pass",
-        "note": "<code>Status = Default | Uploading | Uploaded | Error</code> × <code>State = Default | Disabled</code> cleanly separates process outcome from interaction state, and the property-naming issues are resolved. Every layer carries a correct, consistent semantic name across all eight variants, and colors come from the shared generic token scale. <span class=\"tag-open tag-c1\">C1</span> <span class=\"tag-open tag-c3\">C3</span>"
+        "note": "The property model is exemplary — <code>Status</code> and <code>State</code> on separate axes, the split §6 of the Property Naming Guidelines prescribes — with the four unsupported combinations documented as unreachable rather than undrawn. The file row, the Figma Slot and the shared scaffolding instances all follow convention; the two internal container frames keep their original names as a recorded exception."
       },
       {
         "name": "Composable",
@@ -270,50 +270,91 @@ export const uploadFile: ComponentData = {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
+      },
+      {
+        "headline": "State property restructured onto two axes.",
+        "body": "v2.4: Verified on the live node. The single conflated axis is now <code>Status = Default | Uploading | Error | Uploaded</code> × <code>State = Default | Focused | Disabled</code> — system report and user interaction on separate properties, exactly the split §6 of the Property Naming Guidelines now prescribes. This is the recommendation applied. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Thumbnail is a real Figma Slot.",
+        "body": "v2.4: <code>Thumbnail-Slot</code> (<code>6572:111553</code>) is a genuine <code>SLOT</code> node, not a frame standing in for one, and its name is kebab-case per §4. A consumer swaps their own thumbnail in without detaching, and native handoff has a real content slot to bind. (C1 · Slot)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Label and subtext scaffolding reuses the shared components.",
+        "body": "v2.4: The row above the field is a <code>FormGroup Header</code> instance and the row below is a <code>Subtext Message</code> instance — the same two Upload File’s siblings use, rather than redrawn locally. A change to either propagates across Form Elements for free. (C4 · Composition)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "File row layer naming cleaned up.",
+        "body": "v2.4: <code>FileRow</code>, <code>FileNameWrapper</code>, <code>FileName</code> and <code>TrailingAction</code> all read as PascalCase semantic names, and the trailing control is a real <code>Trash</code> icon instance rather than a drawn glyph. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Container frame names accepted as-is.",
+        "body": "v2.5: <code>Attach File - Input</code> and <code>input-field</code> keep their current names by owner decision. They are internal structural frames rather than slots or text layers, nothing binds to them, and renaming carried more churn than the consistency was worth. Recorded so a later reviewer reads them as a settled exception rather than a missed pass. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Unsupported variant combinations documented.",
+        "body": "v2.5: Eight of twelve combinations ship, and the four gaps are deliberate. <code>Uploading</code> has no Focused or Disabled because a field mid-transfer is not interactive — the control is busy, not available. <code>Error</code> has no Focused or Disabled because the error state is what a user focuses in order to fix, so it collapses back to <code>Default</code> the moment they do, and a disabled field cannot have failed an upload it was never able to start. Only <code>Default</code> and <code>Uploaded</code> carry the full interaction range. Native implementations should treat the missing combinations as unreachable rather than undrawn. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "<code>boder</code> token typo corrected.",
+        "body": "v2.5: Fixed in the token collection on owner confirmation, before Code Connect could bind generated native constants to the misspelling. Attested rather than verified — token names are not readable through the review tooling. (C3 · Token)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Thumbnail placeholder confirmed token-bound.",
+        "body": "v2.5: The placeholder inside <code>Thumbnail-Slot</code> fills <code>#EEF2F9</code>, the shared surface value used across Form Elements rather than a local hex. Confirmed by the owner; variable bindings are not readable through the review tooling, so this is attested. (C3 · Token)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Lottie dependency documented.",
+        "body": "v2.5: The <code>Uploading</code> status is driven by a Lottie animation the static component cannot depict — the file row holds its layout while the animation plays in place of the thumbnail. It loops for the duration of the transfer and is replaced, not stopped, when the status moves to <code>Uploaded</code> or <code>Error</code>. If the animation fails to load, implementations should fall back to the platform’s indeterminate progress indicator rather than an empty slot, so the field never reads as idle while a transfer is running. Progress is indeterminate by design: the component reports that an upload is happening, not how far along it is. (Docs)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
       }
     ],
-    "open": [
+"open": [
       {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked — no native library exists yet. The schema is clean and ready to map when one does: <code>Status</code> and <code>State</code> as enums, <code>FileName</code> as a text parameter, and <code>Thumbnail-Slot</code> as a swappable node.",
+        "body": "Blocked — no native library exists yet. The property schema is clean and every layer is semantically named, so mapping is a mechanical step once the library lands.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Restructure the state property",
-        "body": ":<br>• <code>state: default / uploading / uploaded / error</code> (4 values, clean enums)<br>• <code>hasThumbnail: Bool</code> (orthogonal — can combine with <code>uploaded</code>)<br>• <code>hasLabel: Bool</code> (true/false)<br>• <code>disabled: Bool</code> (new)<br>Collapses 10 variants into 4 states × 2 hasLabel × 2 hasThumbnail × 2 disabled = 32 prop combinations with no invalid states.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Fix the <code>boder</code> typo across the token collection.",
-        "body": "Rename both <code>default/boder</code> and <code>error/boder</code>. Library-wide change — affects every variant.",
-        "tag": "Token"
-      },
-      {
-        "headline": "Tokenize the thumbnail placeholder",
-        "body": "— replace hardcoded <code>#0057E4 @ 5%</code> with <code>main/upload-file/color/default/thumbnail-bg</code>.",
-        "tag": "Token"
-      },
-      {
-        "headline": "Adopt a Figma Slot for the thumbnail",
-        "body": "— swappable preview image. Maps to <code>@ViewBuilder</code> / <code>@Composable</code> slot for Code Connect.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Reuse Labeled Field for the label + subtext scaffolding.",
-        "body": "Today Upload File reimplements the label-above + subtext-below pattern that Labeled Field already ships. Making Upload File an input slot inside Labeled Field reduces duplication.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Document the Lottie dependency",
-        "body": "— Progress bar is a Lottie animation. Native packages must bundle the animation JSON. Consider replacing with a native progress bar for a lighter dependency.",
-        "tag": "Docs"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",

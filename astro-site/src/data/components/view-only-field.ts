@@ -58,7 +58,7 @@ export const viewOnlyField: ComponentData = {
     "verdict": {
       "kind": "keep",
       "title": "Keep — all findings resolved",
-      "text": "Rebuilt on node <code>4996:25507</code> in the 2026 Working File as <code>TrailingContent</code> (4) × <code>Size</code> (2) × <code>State</code> (3) = <strong>24 variants</strong>, all uniquely named. Property and layer naming follow the guidelines throughout, the raster checkmark is gone, and every variant composes the shared <code>Subtext Message</code> instance for its helper, error and warning copy. <code>Label</code> and <code>Value</code> are exposed as text properties, and the two internal wrapper frames keep working names by design. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+      "text": "Rebuilt on node <code>4996:25507</code> in the 2026 Working File. <code>TrailingContent = None | Badge | Link | Icon</code> × <code>Size = SM | LG</code> × <code>Status = Default | Error | Warning</code> ships all 24 combinations with no gaps, layer naming follows the §3 vocabulary and the trailing containers are kebab-case per §4. The axis rename from <code>State</code> to <code>Status</code> settles the last divergence: a display-only field has no interaction states to describe, so the form-field exception in §6 did not apply and the property now says what it actually carries. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -79,7 +79,7 @@ export const viewOnlyField: ComponentData = {
       {
         "name": "Consistent",
         "rating": "pass",
-        "note": "<code>TrailingContent</code>, <code>Size</code> and <code>State</code> all follow the Property Naming Guidelines, all 24 variants are uniquely named, and the text layers are <code>Label</code> and <code>Value</code> per §3 — both exposed as text properties. The two internal auto-layout wrappers keep working names by design."
+        "note": "Layer naming follows the §3 vocabulary as <code>Label</code> and <code>Value</code>, the trailing containers are kebab-case per §4, and the 24-variant matrix is complete with no gaps. The axis now reads <code>Status = Default | Error | Warning</code>, which is correct for a display-only component: it reports what the system knows about the value rather than describing an interaction that cannot occur."
       },
       {
         "name": "Composable",
@@ -203,25 +203,43 @@ export const viewOnlyField: ComponentData = {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
         }
+      },
+      {
+        "headline": "Variant matrix verified complete at 24.",
+        "body": "v2.4: Re-read on the live node. <code>TrailingContent = None | Badge | Link | Icon</code> × <code>Size = SM | LG</code> × <code>State = Default | Error | Warning</code> ships all 24 combinations with no gaps — SM at 55–56px and LG at 72px throughout. <code>Label</code> and <code>Value</code> carry the §3 vocabulary, and the trailing containers are kebab-case (<code>badge-container</code>, <code>icon-container</code>, <code>text-link-container</code>) per §4. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>State</code> axis renamed to <code>Status</code>.",
+        "body": "v2.5: Verified on the live node — all 24 variants now read <code>TrailingContent</code> × <code>Size</code> × <code>Status = Default | Error | Warning</code>. The axis was carrying three statuses and no interaction values on a component that is display-only and can never be focused, pressed or disabled, so the form-field exception in §6 of the Property Naming Guidelines did not reach it. The rename cost nothing structurally — same three values, same 24 variants — and the component now reads correctly against the guideline the rest of the family is measured by. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "<code>Subtext Message</code> copy exposed via nested instance properties.",
+        "body": "v2.5: The message and its trailing label can be set from the parent without detaching. Attested rather than verified — nested-instance property exposure is not readable through the review tooling, so this is recorded on the owner’s confirmation. (C1 · Slot)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
       }
     ],
-    "open": [
+"open": [
       {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked — no native library exists yet. The schema is clean and ready to map when one does: three enums (<code>TrailingContent</code>, <code>Size</code>, <code>State</code>) and a composed subtext instance.",
+        "body": "Blocked — no native library exists yet. The property schema is clean and every layer is semantically named, so mapping is a mechanical step once the library lands.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Surface the <code>Subtext Message</code> copy via nested instances.",
-        "body": "<code>Label</code> and <code>Value</code> are exposed as text properties on the component itself, but the helper, error and warning copy lives inside the nested <code>Subtext Message</code> instance. Selecting that instance and surfacing its text property through <em>nested instances</em> would make all three editable from a single panel rather than requiring designers to drill into the nested layer. Optional — the copy is already editable as an instance override, just less discoverable.",
-        "tag": "Property"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",

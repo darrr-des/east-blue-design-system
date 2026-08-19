@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "migrate": "node scripts/migrate.mjs",
-    "_comment_migrate": "DESTRUCTIVE — overwrites src/data/components/*.ts from assessment-src/. Only run if you intentionally want to regenerate from legacy HTML.",
+    "migrate": "node scripts/utils/migrate.mjs",
+    "_comment_migrate": "HISTORICAL — the one-time conversion from the legacy assessment-src/ HTML into src/data/components/*.ts. That folder is no longer in the repo, so this exits immediately; src/data/components/*.ts is the source of truth. DESTRUCTIVE if assessment-src/ is ever restored: it overwrites every data file.",
     "audit": "node scripts/audit.mjs",
     "lint:previews": "node scripts/audit/preview-structure-lint.mjs",
     "lint:colors": "node scripts/audit/colors-table-coverage.mjs",

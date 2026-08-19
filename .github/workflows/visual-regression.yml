@@ -15,16 +15,11 @@ on:
       - 'astro-site/tests/**'
       - 'astro-site/playwright.config.ts'
       - 'astro-site/package*.json'
+  # Deliberately unfiltered. `visual` is a required status check on main, and a
+  # required check that never runs is never reported — a PR touching only docs
+  # would sit blocked on "Waiting for status to be reported" with no way to
+  # merge. Running the suite on every PR costs ~7 minutes and always reports.
   pull_request:
-    paths:
-      - 'astro-site/public/scripts/demos/**'
-      - 'astro-site/src/data/components/**'
-      - 'astro-site/src/components/**'
-      - 'astro-site/src/styles/**'
-      - 'astro-site/src/pages/components/**'
-      - 'astro-site/tests/**'
-      - 'astro-site/playwright.config.ts'
-      - 'astro-site/package*.json'
 
 defaults:
   run:

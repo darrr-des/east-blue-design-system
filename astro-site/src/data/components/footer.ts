@@ -55,24 +55,24 @@ export const footer: ComponentData = {
   "meta": {
     "slug": "footer",
     "name": "Footer",
-    "node": "21:215190",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=21-215190",
+    "node": "4227:11068",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4227-11068",
     "description": "A page-bottom region containing partner logos, regulatory disclaimers, and helper links.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Header",
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — rename props, collapse partner axes, slot partner logos",
-      "text": "The current 6-axis boolean model invites ~96 invalid combinations for only 7 real shapes. Three of those axes (<code>gcash x partner</code>, <code>with partner</code>, <code>grouped logos</code>) all describe the same thing: which partner logo(s) sit next to GCash. Collapse them into one <code>partnerLogos</code> enum, rename the remaining props to camelCase, and expose a Slot so consumers can instance-swap any partner logo instead of shipping a new variant per brand (CIMB, Fuse, PDAX, Bayad…)."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4227:11068</code> in the 2026 Working File as <code>Alignment</code> × <code>LogoType</code> × <code>Label</code> × <code>Description</code>, authored as a curated seven-variant set. The per-partner axes are collapsed into one enum, property and layer naming follow the guidelines throughout, and every dimension is a whole pixel. Five questions the original assessment left open are settled by decision: the raster partner marks, the baked disclaimer, <code>Alignment</code> staying a property, Footer remaining a component, and the variant selection being curated rather than partial. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -81,23 +81,23 @@ export const footer: ComponentData = {
     "traits": [
       {
         "name": "Reusable",
-        "rating": "warn",
-        "note": "Works only for products that match one of the seven hardcoded shapes (GLoan, GCredit, GSave, PDAX, Bayad). Any new product or partner requires a new variant rather than an instance swap."
+        "rating": "pass",
+        "note": "Works as the page-bottom region across the flows that need a regulatory disclaimer. The seven authored variants are a curated set matching real screens rather than a partial matrix, so every supported arrangement is available without detaching."
       },
       {
         "name": "Self-contained",
-        "rating": "partial",
-        "note": "Carries its own bg, typography, and spacing tokens — but disclaimer copy is baked per variant instead of accepting a text prop."
+        "rating": "pass",
+        "note": "Owns its disclaimer copy, partner marks and layout. The baked legal text is deliberate — fixed wording that must not drift per instance."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Property names mix spaces and verbose phrasing (\"gcash x partner\", \"with partner\", \"grouped logos\"). Three axes describe the same concept (which partner logo). <code>alignment</code> is a layout concern the consumer should own."
+        "rating": "pass",
+        "note": "Property names follow §1, the partner axes are collapsed into one <code>LogoType</code> enum, <code>Label</code> reads <code>True</code>/<code>False</code>, and every layer carries a semantic name."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Disclaimer + link render as drawn text rather than instances of <strong>Inline Text</strong> / <strong>Callout</strong>. Partner logos are baked raster fills, not a Slot accepting Logo instances."
+        "rating": "pass",
+        "note": "Partner marks come from <code>Logos - Footer</code> instances so a logo change updates from one source, and the component drops into any page bottom without configuration."
       }
     ],
     "behavior": [
@@ -123,67 +123,100 @@ export const footer: ComponentData = {
         "notes": "Informational link — rarely disabled in practice."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Variant names carry the full property matrix.",
-        "body": "Every variant is literally named <code>description=…, label=…, gcash x partner=…, alignment=…, with partner=…, grouped logos=…</code>. Cumbersome to read and includes spaces inside values.",
+        "headline": "Property names cleaned up.",
+        "body": "v2.0: Rebuilt on node <code>4227:11068</code> in the 2026 Working File. The spaced, jargon-laden property names are gone — the schema is now <code>Alignment</code> × <code>LogoType</code> × <code>Label</code> × <code>Description</code>, all PascalCase per §1. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Three partner axes collapsed into one enum.",
+        "body": "v2.0: <code>LogoType = Group | Single | None</code> replaces the separate per-partner axes, which is what drove most of the original cartesian blow-up. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "<code>hasDescription</code> renamed to <code>Description</code>.",
+        "body": "v2.1: The property carries three values — <code>Default</code>, <code>None</code>, <code>Link</code> — so a <code>has*</code> prefix was wrong on two counts: §2 reserves it for true/false booleans, and <code>Link</code> describes a content type rather than presence. Now a plain enum. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Layer naming cleaned up.",
+        "body": "v2.1: <code>container</code> → <code>FooterContent</code> and <code>#text</code> → <code>Disclaimer</code>, so the layer names say what they hold. (C1)",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "Property names contain spaces and jargon.",
-        "body": "<code>gcash x partner</code>, <code>with partner</code>, <code>grouped logos</code> are invalid identifiers for code generation and Code Connect, and three of them all describe \"which partner logo is shown\".",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Sparse 6-axis cartesian.",
-        "body": "2 × 2 × 2 × 2 × 2 × 3 (counting <code>description</code> as 3-value) ≈ 96 theoretical combos, only 7 built. Boolean model promises invalid combinations.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Alignment is a layout concern, not a component prop.",
-        "body": "The consumer's parent frame should control centering — not a footer variant. Forces two full variant trees for the same content.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "Disclaimer copy is baked into each variant.",
-        "body": "\"Fuse Lending, Inc. SEC Reg. No. CS201617622…\" and \"I acknowledge receipt of this statement…\" live inside the component. Any copy change requires reshipping the variant. Should be a <code>disclaimer: String</code> prop.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "Help-center link is drawn, not an instance.",
-        "body": "\"GLoan on Help Center\" / \"GCredit on Help Center\" / \"Find GSave in the Help Center\" are styled text spans, not Text Button instances. No pressed state, no underline affordance, no tap target.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Partner logos are baked raster.",
-        "body": "CIMB, Fuse, PDAX, and Bayad ship as <code>&lt;img&gt;</code> tags with remote asset URLs. No vector source, no slot for consumers to instance-swap. Adding a new partner requires a new variant.",
+        "headline": "Raster partner logos accepted.",
+        "body": "v2.1: Closed by owner decision — the partner marks stay as supplied raster assets inside <code>Logos - Footer</code> instances. Partner branding arrives as fixed artwork the DS does not control and may not redraw, so vectorising would mean recreating third-party marks. The instancing is the part that matters: a logo change updates from one source rather than per variant. (C6)",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
-        "headline": "No Code Connect mapping.",
-        "body": "Cannot map until property names normalize and drawn text becomes slots.",
+        "headline": "Baked disclaimer copy accepted.",
+        "body": "v2.1: Closed by owner decision — the regulatory disclaimer stays as text in the component rather than becoming a slot. It is legal copy with fixed wording, so making it freely editable per instance would invite exactly the drift the fixed wording exists to prevent. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Alignment</code> retained as a property.",
+        "body": "v2.1: Closed by owner decision — alignment stays on the component rather than moving to the consumer. The original assessment argued it is a layout concern; in practice the two alignments pair with different logo and label arrangements, so treating it as a component property keeps those pairings authored rather than left to each screen. (C4)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Footer confirmed as a component.",
+        "body": "v2.1: Closed by owner decision — Footer stays a DS component rather than becoming a screen-level composition. The regulatory disclaimer and partner marks are fixed content that must appear identically wherever they appear, which is precisely what a component guarantees and a composition does not. (Family)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "<code>Label</code> values normalised.",
+        "body": "v2.2: The <code>No</code> value is renamed <code>False</code>, so <code>Label</code> now reads <code>True</code> / <code>False</code> consistently across all seven variants. It maps cleanly to a Swift <code>Bool</code> or Kotlin <code>Boolean</code>. The property keeps the bare name <code>Label</code> rather than taking a <code>has</code> prefix — worth revisiting only if the family standardises on verb-prefixed booleans. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Variant heights rounded.",
+        "body": "v2.3: All seven variants now measure whole pixels — 150, 182, 120, 116, 95, 108 and 80 — replacing the unrounded auto-layout results. The last outlier, <code>Alignment=Left, LogoType=Single, Label=False, Description=Link</code>, went 115.751 → 116. Every dimension maps cleanly to a native layout value. (C4)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Variant selection confirmed curated.",
+        "body": "v2.3: Closed by owner decision — the seven authored variants are the curated set, not a partial fill of a 36-cell matrix. Each corresponds to a screen that exists: left-aligned footers carry no label, <code>LogoType=None</code> and <code>Description=Default</code> each serve a single context. Unauthored combinations are deliberately unsupported rather than pending, so a consumer finding no variant for a pairing has the answer. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      }
+    ],
+    "open": [
+      {
+        "headline": "Code Connect mappings not registered.",
+        "body": "Blocked — no native library exists yet.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -191,46 +224,6 @@ export const footer: ComponentData = {
       }
     ],
     "recommendations": [
-      {
-        "headline": "Collapse three partner axes into one enum.",
-        "body": "Replace <code>gcash x partner</code> + <code>with partner</code> + <code>grouped logos</code> with a single <code>partnerLogos: .none | .single | .grouped | .gcashX</code>. Removes ~40 invalid combos and makes the design space legible.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Rename all property names to camelCase.",
-        "body": "<code>gcash x partner</code> → <code>partnerLogos</code>, <code>with partner</code> → absorbed into <code>partnerLogos</code>, <code>grouped logos</code> → absorbed, <code>label</code> → <code>poweredByLabel</code>. No spaces, no ambiguity.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Expose partner logos as a Slot.",
-        "body": "Instead of shipping a variant per brand (CIMB, Fuse, PDAX, Bayad), adopt a Figma Slot that accepts any Logo instance. New partner = new instance, not new variant.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Move <code>alignment</code> to the consumer.",
-        "body": "Parent screen/frame owns centering. Removes one full axis and halves the variant count.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Expose disclaimer + help link as slots, not baked copy.",
-        "body": "Disclaimer becomes an instance of <strong>Inline Text</strong> or <strong>Callout</strong>. \"…on Help Center\" becomes a <strong>Text Button</strong> instance. Both inherit their component's state + accessibility.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Provide vector source for partner logos.",
-        "body": "Swap raster fills for vector Logo instances in a dedicated Partner Logos set. Fixes C6 and unlocks the Slot recommendation above.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Consider whether Footer is a component at all.",
-        "body": "Once alignment moves to the consumer and disclaimer/link/logos become slot-filled instances, Footer is essentially a layout primitive (VStack with padding + white bg). It may be cheaper to document the recipe than ship a 7-variant component.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Family context.",
-        "body": "Footer lives with <a href=\"#\" onclick=\"showPanelById('header');return false;\">Header</a> siblings in the Figma Pages panel. Keep them grouped in the sidebar but treat restructure independently.",
-        "tag": "Family"
-      }
     ]
   },
   "style": {

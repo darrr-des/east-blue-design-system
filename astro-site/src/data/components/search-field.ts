@@ -28,8 +28,8 @@ export const searchField: ComponentData = {
     "description": "A search input field with a leading magnifying-glass icon and an optional clear button.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -38,9 +38,9 @@ export const searchField: ComponentData = {
     ],
     "navGroup": "Form Elements",
     "verdict": {
-      "kind": "fix",
-      "title": "Fix — one slot decision left",
-      "text": "Rebuilt on node <code>4697:18836</code> in the 2026 Working File and confirmed as a standalone primitive. <code>State = Default | Focused | Error | Disabled</code>, the leading glyph is a library icon instance, the trailing slot holds real <code>Close</code> / <code>Error</code> icons, every layer carries a semantic name, and colors come from the shared generic token scale. The banded top/bottom border is intentional — a full-width element above content, not a field inside a form stack — and <code>Error</code> on the State axis is a documented exception. What remains is a <code>hasClearButton</code> boolean so the filled-but-unfocused state can be expressed, plus documentation."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4697:18836</code> in the 2026 Working File and confirmed a standalone primitive. <code>State = Default | Focused | Error | Disabled</code>, the leading glyph is a library icon instance, the trailing slot holds real <code>Close</code> / <code>Error</code> icons and appears only where it does something, every layer carries a semantic name, and colors come from the shared generic token scale. The banded top/bottom border and the constant container chrome are both intentional — this is a full-width element above content, not a field inside a form stack. <code>Error</code> on the <code>State</code> axis is now a documented system-wide exception recorded in §6 of the Property Naming Guidelines rather than a per-component argument, and the filled-but-unfocused state is derived from value presence in code instead of doubling the variant set. Native search semantics, the keyboard contract and the accessibility requirements are all documented. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -65,8 +65,8 @@ export const searchField: ComponentData = {
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "<code>TrailingIcon</code> is a real slot carrying swappable instances. Leading icon is a vector <code>Search Small</code> instance but is not slotted — locked to the bundled search glyph."
+        "rating": "pass",
+        "note": "<code>TrailingIcon</code> is a real slot carrying swappable <code>Close</code> and <code>Error</code> instances. The leading glyph is deliberately not slotted — a search field’s search icon is part of what identifies the component, and making it swappable would turn this into a generic icon-prefixed input, which is <a href=\"#\" onclick=\"showPanelById('amount-text-field');return false;\">a different component</a>’s job."
       }
     ],
     "behavior": [
@@ -195,9 +195,49 @@ export const searchField: ComponentData = {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
+      },
+      {
+        "headline": "Filled-but-unfocused state documented rather than added as a variant.",
+        "body": "v2.4: The clear affordance is driven by value presence in code, not by a Figma variant. <code>State</code> stays a pure interaction axis of four; a field holding a value while unfocused renders as <code>Default</code> chrome with the <code>Value</code> color of <code>Focused</code> (<code>#0A2757</code>) and the trailing <code>Close</code> icon shown. Adding a <code>hasValue</code> boolean would have doubled the set to depict something the runtime already derives from whether the text is empty. Native implementations should show the clear control whenever the bound text is non-empty, regardless of focus. (State · Docs)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "State / Status exception recorded at family level.",
+        "body": "v2.4: Written into <strong>§6 of the Property Naming Guidelines</strong> rather than re-argued per component. Text-entry components may carry <code>Error</code> on the <code>State</code> axis; everything else keeps <code>State</code> (interaction) and <code>Status</code> (system report) on separate axes. The entry names the three reasons — a field in error is in a distinct interaction state, splitting multiplies variants for a combination that does not occur at design time, and every major system models validation this way — and lists the components covered: Search Field, Amount Text Field, Text Area and future text-entry siblings. <a href=\"#\" onclick=\"showPanelById('amount-text-field');return false;\">Amount Text Field</a> had already settled the same question on its own page; the guideline entry now carries it once so no third component has to. (Family · Docs)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Native search semantics documented.",
+        "body": "v2.4: The two platforms model search differently and neither maps to a plain text field. <strong>iOS</strong>: <code>.searchable(text:)</code> is a modifier applied to a <code>NavigationStack</code> or <code>List</code>, not a standalone view — the system owns placement, the cancel button and the scroll-to-reveal behavior, so a hand-built field should not be substituted. <strong>Android</strong>: Material 3 offers <code>SearchBar</code>, which expands into a full-screen search surface with its own result list, or a plain <code>TextField</code> with a leading search icon where inline search is wanted. Search Field’s banded full-width chrome maps to the latter. <strong>Keyboard contract</strong>: Enter submits (<code>onSubmit</code> / <code>ImeAction.Search</code>), Escape or the clear control empties the field and returns focus to it, and the field never submits on every keystroke unless the screen is explicitly live-filtering. (Docs)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Search and clear-button accessibility documented.",
+        "body": "v2.4: The field must announce as a search input rather than a generic text field — <code>.accessibilityAddTraits(.isSearchField)</code> on iOS, <code>Modifier.semantics { role = Role.SearchField }</code> or the equivalent <code>contentDescription</code> on Android — so VoiceOver and TalkBack read it correctly and users can jump to it by type. The trailing control needs its own label, <strong>“Clear search”</strong>, not the icon name; it is a button, not decoration, and must be reachable and at least 44×44pt / 48×48dp as a touch target even though the glyph is 24×24. In <code>Disabled</code> the field should be announced as dimmed rather than hidden from the tree. (A11y)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Container chrome confirmed constant across states.",
+        "body": "v2.4: The border stays <code>#E5EBF4</code> in all four states — focus is carried by the caret and the clear control, error by the trailing icon. Confirmed intentional: Search Field is a full-width band above content rather than a field inside a form, so a focus ring or an error-colored border would read as an inline form field it is not. Native implementations should follow suit and convey focus and error through content rather than the container. Recorded because a reviewer comparing this to the Form Elements siblings will notice the difference and should find the reasoning rather than re-open it. (C5 · Docs)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
       }
     ],
-    "open": [
+"open": [
       {
         "headline": "Code Connect mappings not registered.",
         "body": "Blocked — no native library exists yet. The structural blockers are cleared: the property schema is a clean <code>State</code> enum and every layer is semantically named.",
@@ -207,28 +247,7 @@ export const searchField: ComponentData = {
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Model the filled-but-unfocused state.",
-        "body": "With <code>State</code> as the only axis, a field that has a value but isn't focused has nowhere to live — <code>Default</code> is empty and <code>Focused</code> carries the caret. That state needs the clear button too. Either add a <code>hasValue</code> boolean, or document that the clear affordance is driven by value presence in code and the Figma variants depict only the canonical four.",
-        "tag": "State"
-      },
-      {
-        "headline": "Carry the same State / Status exception across Form Elements.",
-        "body": "Search Field documents <code>Error</code> on the <code>State</code> axis as a deliberate exception. Amount Text Field has the identical divergence still open, and the rest of the family will hit it too. Record the exception once at family level — ideally in the Property Naming Guidelines themselves — so each component isn't re-litigating it.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Document search semantics for native handoff.",
-        "body": "iOS uses <code>.searchable(text:)</code> on a container (it is not a standalone view); Android uses Material 3 <code>SearchBar</code> (which expands into full-screen search) or a <code>TextField</code> with a leading search icon. Document both paths and the Enter-to-submit / Escape-to-clear keyboard contract.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Add <code>role=\"search\"</code> / search semantics and a labeled clear button.",
-        "body": "The clear-button slot needs its own accessibility label (\"Clear search\"). iOS VoiceOver and Android TalkBack must announce the field as a search input, not a generic text field.",
-        "tag": "A11y"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",

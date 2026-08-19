@@ -32,25 +32,25 @@ const headerCenteredDemoControls: DemoControlSection[] = [
 export const headerCentered: ComponentData = {
   "meta": {
     "slug": "header-centered",
-    "name": "Header - Centered",
-    "node": "18430:2858",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18430-2858",
+    "name": "Page Banner",
+    "node": "4368:12839",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4368-12839",
     "description": "A header variant with the title centered, optional leading and trailing actions on either side.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Header",
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — rename and re-label the surface property",
-      "text": "Rename to <strong>Page Banner</strong> — \"Header\" conflates with three structurally different components. Replace <code>type = dark | light</code> with <code>surface = brand | default</code> — the current name describes appearance, not semantic intent. See the <a href=\"/components/header\">Header family restructure</a> for the full plan."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4368:12839</code> in the 2026 Working File as <strong>Page Banner</strong>, with <code>Surface = Brand | Default</code> replacing the old <code>type = dark | light</code>. Layer naming is now settled across both variants — <code>Content</code> wrapping <code>Title</code> and a <code>SubtitleRow</code> of <code>Label</code> and <code>Value</code> — which lets the title expose as a single text property and clears the legacy <code>#</code> prefix. The brand surface color and its alpha values are confirmed intentional, the remaining alignment difference is inert because the text node hugs its content, and an <code>Alignment</code> axis was decided against. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -60,38 +60,38 @@ export const headerCentered: ComponentData = {
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "Generic page banner, reusable anywhere a centered title is needed."
+        "note": "Generic page banner — works at the top of any screen, modal or feature card. Nothing ties it to one surface."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Owns its typography, color tokens, and surface fill."
+        "note": "Owns its typography, fills and border. Nothing external required to render."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Shares \"Header\" prefix with 3 structurally different components. <code>type=dark|light</code> names appearance rather than semantic tone."
+        "rating": "pass",
+        "note": "The <em>Header</em> prefix, the appearance-named property and the layer naming are all resolved. <code>Surface = Brand | Default</code> is PascalCase per §1 with Title Case values per §5, and the text layers map onto the §3 vocabulary as <code>Title</code> · <code>Label</code> · <code>Value</code>, identically in both variants."
       },
       {
         "name": "Composable",
         "rating": "pass",
-        "note": "Drops into any screen, modal, or card as a page title."
+        "note": "Drops into any screen, modal or card as a page title, and composes nothing it should not."
       }
     ],
     "behavior": [
       {
-        "state": "Default (brand)",
+        "state": "Default (Brand)",
         "ios": "yes",
         "android": "yes",
-        "property": "type=dark",
-        "notes": "White text on brand-blue surface."
+        "property": "Surface=Brand",
+        "notes": "White title on the brand surface."
       },
       {
-        "state": "Default (default)",
+        "state": "Default (Default)",
         "ios": "yes",
         "android": "yes",
-        "property": "type=light",
-        "notes": "Dark text on default surface."
+        "property": "Surface=Default",
+        "notes": "Dark title on the default white surface."
       },
       {
         "state": "Pressed",
@@ -108,55 +108,84 @@ export const headerCentered: ComponentData = {
         "notes": "Not interactive."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Rename to Page Banner.",
-        "body": "\"Header\" prefix shared with 3 structurally different components.",
+        "headline": "Renamed to Page Banner.",
+        "body": "v2.0: Rebuilt on node <code>4368:12839</code> in the 2026 Working File. The name no longer sits in the <em>Header</em> namespace that four structurally different components were sharing, and it says what the component is — a full-width banner setting the title of the surface below it, not a navigation bar. (C1 · Rename)",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "Rename <code>type=dark|light</code> to <code>surface=brand|default</code>.",
-        "body": "Current name describes appearance; convention is to name by semantic surface role.",
+        "headline": "<code>type = dark | light</code> replaced by <code>Surface</code>.",
+        "body": "v2.0: The axis now reads <code>Surface = Brand | Default</code>, naming the surface role rather than the appearance that follows from it — the same shape Brand App Bar landed on, so the two read consistently across the family. PascalCase property per §1, Title Case values per §5. (C2 · Rename)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "No Code Connect mapping.",
-        "body": "",
+        "headline": "Layer names settled across both variants.",
+        "body": "v2.1: Verified on the live node. <code>header</code> → <code>Content</code>; the 22px title, previously <code>#name</code> in Brand and <code>#label</code> in Default, is now <code>Title</code> in both; <code>text-container</code> → <code>SubtitleRow</code>, holding <code>Label</code> and <code>Value</code>. Three problems closed at once: the cross-variant mismatch that stopped the title exposing as a single text property, the duplicate <code>#label</code> inside the Default variant, and the legacy <code>#</code> prefix. Names now follow the §3 vocabulary. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Brand surface color and its alpha values confirmed intentional.",
+        "body": "v2.1: The brand fill <code>#1972F9</code> differs from Brand App Bar’s <code>#005CE5</code>, and the brand sub-row key and border are <code>#F6F9FD</code> at 72% and 24%. Confirmed by the owner as bound to generic tokens and deliberate rather than local overrides — the two surfaces serve different jobs, and a banner sitting above content is not required to match the app bar’s blue. Attested rather than verified: variable bindings and opacity tokens are not readable through the review tooling, so this is recorded on the owner’s confirmation. (C3 · Token)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Sub-row alignment difference is inert.",
+        "body": "v2.1: The sub-row key still reads <code>LEFT</code> on Brand and <code>CENTER</code> on Default, but the text node hugs its content — 36px wide for “Label:” inside a 119px row — so horizontal alignment inside it has nothing to distribute and produces no visual difference on either surface. A leftover value rather than a behavioural one, and nothing a native implementation has to reproduce. (C4)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "No <code>Alignment</code> property.",
+        "body": "v2.1: Decided against. A centered banner is what the component is for; a left-aligned title is a different component’s job, and adding the axis would double the set to serve a case nobody has asked for. Closed rather than carried forward a third time. (Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Sub-row composition confirmed as intended.",
+        "body": "v2.1: The <code>SubtitleRow</code> is present in both live variants; the owner confirms the current composition is the intended one, closing the question left over from the old <code>description = yes | no</code> control. Attested rather than verified — component property definitions are not readable through the review tooling. (Docs)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Place in the header family settled.",
+        "body": "v2.1: Page Banner is confirmed a distinct component, not a variant of another. It sets the title of the surface below it; <strong>Section Header</strong> labels a section inside a scroll, <strong>Brand App Bar</strong> carries the wordmark, and <strong>Title Bar - App</strong> carries navigation. Four different jobs, four components, none folding into another. Siblings: <a href=\"#\" onclick=\"showPanelById('header');return false;\">Section Header</a> · <a href=\"#\" onclick=\"showPanelById('header-with-logo');return false;\">Brand App Bar</a> · <a href=\"#\" onclick=\"showPanelById('header-transaction');return false;\">Detail Hero</a>. (Family)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      }
+    ],
+"open": [
+      {
+        "headline": "Code Connect mappings not registered.",
+        "body": "Blocked — no native library exists yet. The schema is small once one does: a single <code>Surface</code> enum over a title and a sub-row.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Rename to Page Banner.",
-        "body": "Frees the \"Header\" namespace and signals semantic role clearly.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Use <code>surface = brand | default</code>",
-        "body": "instead of <code>type = dark | light</code>. Matches how other DS components (Button appearance, Badge tone) describe surface variants.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Optional: expose <code>alignment</code> prop",
-        "body": "(center | leading) for teams that want a left-aligned variant without creating a new component.",
-        "tag": "Property"
-      },
-      {
-        "headline": "See siblings:",
-        "body": "<a href=\"#\" onclick=\"showPanelById('header');return false;\">Header</a>, <a href=\"#\" onclick=\"showPanelById('header-with-logo');return false;\">Header - With Logo</a>, <a href=\"#\" onclick=\"showPanelById('header-transaction');return false;\">Header - Transaction</a>.",
-        "tag": "Family"
-      }
-    ]
+    "recommendations": []
+  
   },
   "style": {
     "heading": "Styles",

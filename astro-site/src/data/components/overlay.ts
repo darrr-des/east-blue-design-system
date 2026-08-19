@@ -50,8 +50,8 @@ export const overlay: ComponentData = {
     "description": "A full-viewport scrim used to dim background content behind sheets, modals, and tooltips. Three strength tiers.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -59,9 +59,9 @@ export const overlay: ComponentData = {
       }
     ],
     "verdict": {
-      "kind": "fix",
-      "title": "Keep — documentation gaps only",
-      "text": "Overlay now exposes a <code>Strength</code> property with three tiers (Weak 24% · Default 40% · Strong 56%) and ships at a 360×800 default that scales correctly at any size. It maps cleanly to native primitives (SwiftUI <code>.presentationBackground</code>, Compose <code>Scrim</code>). Remaining work is documentation: annotate the tap-to-dismiss contract and register a Code Connect mapping."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Three strength tiers — Weak 24%, Default 40%, Strong 56% — on a 360×800 default that scales exactly with its instance, verified across five placements from 640 to 932. Structure is one layer deep, each tier binds to its own semantic token, and the dismiss contract and layer order are documented. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -85,8 +85,8 @@ export const overlay: ComponentData = {
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Sits behind sheets/dialogs/drawers and sizes correctly, but the layer order (Content → Overlay → floating surface) is still undocumented."
+        "rating": "pass",
+        "note": "Sits behind sheets, dialogs and drawers and sizes correctly at any placement. Layer order is documented — <code>Content → Overlay → Floating surface</code> — so teams no longer have to infer it."
       }
     ],
     "behavior": [
@@ -121,55 +121,73 @@ export const overlay: ComponentData = {
     ],
     "resolved": [
       {
-        "body": "<code>Strength</code> property added — <code>Weak</code> (24%) · <code>Default</code> (40%) · <code>Strong</code> (56%), replacing the single 56% variant whose <code>-strong</code> token name implied a missing sibling (C2)"
+        "headline": "<code>Strength</code> property added.",
+        "body": "v2.0: <code>Weak</code> (24%) · <code>Default</code> (40%) · <code>Strong</code> (56%), replacing the single 56% variant whose <code>-strong</code> token name implied a missing sibling. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
       },
       {
-        "body": "Default frame resized 360×640 → <code>360×800</code>; the <code>dim</code> layer tracks the instance exactly at every size, verified across five placements from 640 to 932 (C4)"
+        "headline": "Default frame resized and verified at scale.",
+        "body": "v2.0: 360×640 → <code>360×800</code>, with the <code>dim</code> layer tracking the instance exactly at every size — verified across five placements from 640 to 932. (C4)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
       },
       {
-        "body": "<code>Container</code> wrapper frame removed — structure simplified to <code>COMPONENT → dim</code> (C1)"
-      }
-    ],
-    "open": [
+        "headline": "<code>Container</code> wrapper removed.",
+        "body": "v2.0: Structure simplified to <code>COMPONENT → dim</code>, one layer deep. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
       {
-        "headline": "Tap-to-dismiss contract not annotated.",
-        "body": "The standard behavior (tap-scrim dismisses, unless the surface is modal) should be documented on the component so designers and devs agree on the contract.",
+        "headline": "Tap-to-dismiss contract settled.",
+        "body": "v2.1: The behaviour is documented on this page — tap outside dismisses the surface above unless that surface is modal, in which case dismissal requires an explicit action. Layer order is <code>Content → Overlay → Floating surface</code>. (C5 · Docs)",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
       },
       {
-        "headline": "No Code Connect mapping.",
-        "body": "Both prior blockers (frame sizing and the strength property) are now settled, so the mapping is unblocked — three variants map 1:1 to a single <code>strength</code> enum parameter.",
+        "headline": "Strength tiers bound to their own tokens.",
+        "body": "v2.2: Confirmed by the component owner — each tier now resolves through its own semantic token rather than a shared fill with a hand-set opacity, so a theme change is one edit and developers no longer copy three loose alpha values. Not independently verifiable from the assessment tooling, which cannot read variable bindings: the paint still reports as <code>#020E22</code> at 24/40/56% opacity either way. (C3 · Token)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "\"Don't Use\" label clarified.",
+        "body": "v2.2: Closed by owner confirmation — the label belongs to the enclosing Figma section, which is a working container for in-progress material, not a directive against the component. The <code>Overlay</code> set at <code>4465:20631</code> inside it is current and is what this page documents. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Cross-system naming documented.",
+        "body": "v2.2: Closed — the team keeps <strong>Overlay</strong>. Other systems name this primitive differently: <em>Scrim</em> (Material 3), <em>Backdrop</em> (Fluent, Polaris), <em>Mask</em> (Ant), <em>Blanket</em> (Atlassian), <em>Underlay</em> (Spectrum). Recorded here so anyone cross-referencing another system finds the equivalent rather than assuming a gap. (Docs)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "open": [
+      {
+        "headline": "Code Connect mappings not registered.",
+        "body": "Blocked — no native library exists yet. Three variants map 1:1 to a single <code>strength</code> enum parameter.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Confirm one token per strength tier.",
-        "body": "Each tier should bind to its own semantic token (<code>bg/color-bg-overlay-weak</code> · <code>-default</code> · <code>-strong</code>) rather than carrying a manual opacity override on a shared token. Not verifiable from the assessment tooling — needs a Dev Mode check on each <code>dim</code> layer.",
-        "tag": "Token"
-      },
-      {
-        "headline": "Annotate the dismiss contract.",
-        "body": "Add a description on the component: <em>\"Tap-outside dismisses the surface above, unless the surface is modal (requires explicit action).\"</em> This closes the gap between designer intent and developer implementation.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Document layer order.",
-        "body": "Add a short note: <code>Content → Overlay → Floating surface (Sheet / Dialog / Drawer)</code>. Prevents teams from accidentally putting the floating surface under the scrim.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Naming note (informational).",
-        "body": "Other DS call this primitive <em>Scrim</em> (Material 3), <em>Backdrop</em> (Fluent / Polaris), <em>Mask</em> (Ant), <em>Blanket</em> (Atlassian), <em>Underlay</em> (Spectrum). Team keeps <strong>Overlay</strong> — worth documenting here so cross-DS references aren't confusing.",
-        "tag": "Docs"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",
