@@ -746,13 +746,30 @@ function main() {
     }
   }
 
-  // Emit the index file with full manifest and a component map
+  // Emit the index file: a component map plus a manifest derived from it.
+  // The manifest used to be written out as a literal copy of every
+  // component's meta, which drifted the moment a data file changed on its
+  // own. Deriving it here keeps the generator in step with the checked-in
+  // file rather than reverting it on the next run.
   const imports = manifest.map((m) => `import { ${safeIdent(m.slug)} } from './${m.slug}';`).join('\n');
   const map = manifest.map((m) => `  '${m.slug}': ${safeIdent(m.slug)},`).join('\n');
-  const manifestBody = JSON.stringify(manifest, null, 2);
+  const manifestExport = [
+    '/**',
+    ' * Nav / search manifest — derived from `componentMap` so it can never drift.',
+    ' *',
+    ' * Previously this was a hand-maintained duplicate of every component\'s meta,',
+    ' * which silently went stale whenever a data file changed (e.g. a component\'s',
+    ' * badges were updated but the sidebar status dot kept the old colour).',
+    ' *',
+    ' * Consumers read slug / name / node / badges / navGroup / navIconSvg — all of',
+    " * which live on `meta`. Order follows componentMap's insertion order; every",
+    ' * consumer sorts for display anyway.',
+    ' */',
+    'export const componentManifest = Object.values(componentMap).map((c) => c.meta);',
+  ].join('\n');
   fs.writeFileSync(
     INDEX_OUT,
-    `import type { ComponentData } from '../types';\n${imports}\n\nexport const componentMap: Record<string, ComponentData> = {\n${map}\n};\n\nexport const componentManifest = ${manifestBody} as const;\n`,
+    `import type { ComponentData } from '../types';\n${imports}\n\nexport const componentMap: Record<string, ComponentData> = {\n${map}\n};\n\n${manifestExport}\n`,
     'utf8'
   );
   console.log(`\nWrote ${okCount} components, ${failCount} failed`);
