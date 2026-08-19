@@ -5822,12 +5822,18 @@ pre.code-snippet .prp { color: #0369A1; }
   justify-items: center;
   margin-top: 8px;
 }
+/* The list and its indicator share a stacking context so the indicator
+   floats over the right edge instead of adding height below the grid. */
+.eb-preview-dpcal__scrollarea { position: relative; }
 .eb-preview-dpcal__scrollbar {
+  position: absolute;
+  top: 8px;
+  right: 0;
   width: 4px;
   height: 120px;
-  margin-left: auto;
   border-radius: 99px;
   background: #E5EBF4;
+  pointer-events: none;
 }
 
 /* ── Field trigger ──────────────────────────────────────────────── */

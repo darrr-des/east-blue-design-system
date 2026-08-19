@@ -28,6 +28,7 @@ function _dpcRender(opts) {
     if (selection.indexOf('range') === 0) selection = 'none';
     if (role === 'prev-next') role = 'default';
   }
+  if (role === 'prev-next') selection = 'none';
 
   var cls = ['eb-preview-dpcell', 'eb-preview-dpcell--' + kind];
   if (role === 'today') cls.push('eb-preview-dpcell--today');
@@ -45,34 +46,51 @@ function _dpcRender(opts) {
 }
 
 function _dpcUpdate() {
-  var getVal = function (id, fallback) { var el = document.getElementById(id); return el ? el.value : fallback; };
-  var preview = document.getElementById('dpc-demo-preview');
+  var byId = function (id) { return document.getElementById(id); };
+  var preview = byId("dpc-demo-preview");
   if (!preview) return;
 
-  var kind = getVal('dpc-ctrl-kind', 'day');
-  preview.innerHTML = _dpcRender({
-    kind: kind,
-    role: getVal('dpc-ctrl-role', 'default'),
-    selection: getVal('dpc-ctrl-selection', 'none'),
-    disabled: getVal('dpc-ctrl-disabled', 'false') === 'true'
-  });
+  var kindSel = byId("dpc-ctrl-kind");
+  var roleSel = byId("dpc-ctrl-role");
+  var selSel = byId("dpc-ctrl-selection");
+  var disSel = byId("dpc-ctrl-disabled");
 
-  /* Hide the options the current Kind cannot express, rather than
-     letting the preview silently ignore them. */
-  var roleSel = document.getElementById('dpc-ctrl-role');
-  var selSel = document.getElementById('dpc-ctrl-selection');
-  var setDisabled = function (sel, values, off) {
+  var kind = kindSel ? kindSel.value : "day";
+
+  /* Normalise the controls before rendering, so the preview never shows a
+     combination the component cannot express.
+
+     MonthYear has no Prev-Next and no ranges — those cells are header
+     controls that pick one value. A Prev-Next day belongs to the
+     neighbouring month, so it is never selected or part of a range. */
+  var allow = function (sel, allowed) {
     if (!sel) return;
     Array.prototype.forEach.call(sel.options, function (o) {
-      if (values.indexOf(o.value) !== -1) {
-        o.disabled = off;
-        if (off && o.selected) sel.value = sel.options[0].value;
-      }
+      o.disabled = allowed.indexOf(o.value) === -1;
     });
+    if (sel.selectedOptions && sel.selectedOptions[0] && sel.selectedOptions[0].disabled) {
+      sel.value = allowed[0];
+    }
   };
-  var isMonthYear = kind === 'monthyear';
-  setDisabled(roleSel, ['prev-next'], isMonthYear);
-  setDisabled(selSel, ['range-start', 'range-middle', 'range-end'], isMonthYear);
+
+  var isMonthYear = kind === "monthyear";
+  allow(roleSel, isMonthYear ? ["default", "today"] : ["default", "today", "prev-next"]);
+
+  var role = roleSel ? roleSel.value : "default";
+  var selections = ["none", "selected"];
+  if (!isMonthYear && role !== "prev-next") {
+    selections = selections.concat(["range-start", "range-middle", "range-end"]);
+  } else if (role === "prev-next") {
+    selections = ["none"];
+  }
+  allow(selSel, selections);
+
+  preview.innerHTML = _dpcRender({
+    kind: kind,
+    role: role,
+    selection: selSel ? selSel.value : "none",
+    disabled: disSel ? disSel.value === "true" : false
+  });
 }
 window._dpcUpdate = _dpcUpdate;
 

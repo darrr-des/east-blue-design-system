@@ -83,8 +83,12 @@ function _dpcalRender(mode) {
   } else {
     var years = [];
     for (var y = 2015; y <= 2029; y++) years.push(String(y));
+    /* The indicator floats over the right edge of the list, as in Figma —
+       it must not take part in the vertical flow. */
+    h += '<div class="eb-preview-dpcal__scrollarea">';
     h += _dpcalListGrid(years, 11);
     h += '<div class="eb-preview-dpcal__scrollbar"></div>';
+    h += '</div>';
   }
 
   return h + '</div>';
@@ -96,10 +100,6 @@ function _dpcalUpdate() {
   var preview = document.getElementById('dpcal-demo-preview');
   if (preview) preview.innerHTML = _dpcalRender(mode);
 
-  var cells = document.getElementById('dpcal-info-cells');
-  var header = document.getElementById('dpcal-info-header');
-  if (cells) cells.textContent = mode === 'day' ? '42' : (mode === 'month' ? '12' : '18');
-  if (header) header.textContent = mode === 'day' ? '2 triggers' : 'Title';
 }
 window._dpcalUpdate = _dpcalUpdate;
 
