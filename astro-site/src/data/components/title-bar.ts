@@ -180,17 +180,17 @@ export const titleBar: ComponentData = {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
-      }
-    ],
-    "open": [
+      },
       {
-        "headline": "Status bar is iOS-specific with no Platform axis.",
-        "body": "Every variant embeds a <code>Status Bar - IOS</code> instance carrying an SF Pro clock, iOS battery glyph and cellular indicator. Android renders a different status bar, and in practice the platform draws its own — so this is presentation scaffolding rather than component anatomy. Worth documenting as illustrative so implementers do not try to reproduce it.",
+        "headline": "Status bar documented as illustrative.",
+        "body": "v2.5: Documented rather than deferred. The <code>Status Bar - IOS</code> instance embedded in every variant — SF Pro clock, iOS battery glyph, cellular and wifi indicators — is <strong>mock fidelity only</strong>. Neither platform lets an app draw its own status bar: iOS and Android render it from system state, and an app controls only its appearance (light or dark content, and on Android the background behind it). Implementers should build the title row and treat the 44px above it as safe-area inset, not as anatomy to reproduce. That is also why no <code>Platform</code> axis is needed — the component would look identical on Android in every respect the app actually controls. (C4 · Docs)",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
-      },
+      }
+    ],
+    "open": [
       {
         "headline": "Code Connect mappings not registered.",
         "body": "Blocked — no native library exists yet.",
@@ -200,13 +200,7 @@ export const titleBar: ComponentData = {
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Document the status bar as illustrative.",
-        "body": "A short note that the embedded iOS status bar is for mock fidelity and that native supplies its own. Saves an implementer trying to rebuild it.",
-        "tag": "Docs"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",

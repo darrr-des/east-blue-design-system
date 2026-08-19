@@ -49,7 +49,7 @@ export const textArea: ComponentData = {
     "verdict": {
       "kind": "keep",
       "title": "Keep — all findings resolved",
-      "text": "Rebuilt on node <code>4781:35856</code> in the 2026 Working File as <code>State</code> (4) × <code>hasValue</code> (2) = <strong>8 variants</strong>, confirmed standalone rather than folded into Input Field. The structural work is done: property naming follows the guidelines, the desktop resize handle is gone, colors come from the shared generic token scale, the layer tree is clean, and the component composes <code>FormGroup Header</code> and <code>Subtext Message</code> instances. Sample content matches the <code>hasValue</code> flag in all eight variants. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
+      "text": "Rebuilt on node <code>4781:35856</code> in the 2026 Working File. <code>State = Default | Focused | Error | Disabled</code> × <code>hasValue = False | True</code> gives eight variants, the label and subtext are shared instances rather than redrawn, focus and error borders are distinct, the character counter matches its sample exactly, and the local layers now read <code>ValueContainer</code> → <code>Value</code>. Two family questions were settled here rather than left to recur: <code>hasValue</code> is the pattern for fields whose filled state changes geometry, and the error color on a validation message belongs to the shared <code>Subtext Message</code> component. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -70,7 +70,7 @@ export const textArea: ComponentData = {
       {
         "name": "Consistent",
         "rating": "pass",
-        "note": "<code>State=Focused</code> matches Search Field, <code>hasValue</code> follows the <code>has</code>-prefix convention for content presence, <code>Error</code> on the State axis is a confirmed family-level exception, colors come from the shared generic token scale, and sample content matches the <code>hasValue</code> flag in all eight variants."
+        "note": "Axes are clean — <code>State = Default | Focused | Error | Disabled</code> × <code>hasValue</code>, PascalCase per §1 with Title Case values — and <code>hasValue</code> is now the documented family pattern for fields whose filled state changes geometry. Local layers follow the §3 vocabulary as <code>ValueContainer</code> → <code>Value</code>, the label and subtext come from shared instances, and the character counter matches its sample content."
       },
       {
         "name": "Composable",
@@ -204,35 +204,51 @@ export const textArea: ComponentData = {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
         }
+      },
+      {
+        "headline": "Character-count sample content corrected.",
+        "body": "v2.4: Verified on the live node. The counter now reads <code>0/100</code> in the <code>hasValue=False</code> variants and <code>71/100</code> in the <code>hasValue=True</code> variants, matching the 71-character sample string exactly. Previously the count and the content disagreed, which made the counter look decorative rather than bound. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Local layer names cleaned up.",
+        "body": "v2.5: Verified on the live node. <code>text-container</code> → <code>ValueContainer</code> and <code>#text-label</code> → <code>Value</code> across all eight variants, so the entered text exposes as a single <code>Value</code> property matching the §3 vocabulary. The bordered frame keeps the name <code>Text Area</code>; it is the only frame at that level and Figma already nests it under the component, so the shadowing is accepted rather than churned. The remaining <code>#label</code> and <code>#subtext</code> layers belong to the shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances and are their owner’s to rename. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>hasValue</code> settled as a family rule.",
+        "body": "v2.5: Both approaches in Form Elements are correct, and the rule that separates them is layout. Where the filled state changes the component’s geometry it needs an explicit boolean, because the two shapes cannot be one variant: Text Area is 78px empty and 94px filled, so <code>hasValue</code> earns its place and the set is eight. Where filled changes only color and affordance — <a href=\"#\" onclick=\"showPanelById('search-field');return false;\">Search Field</a>, whose height is constant at 56px — the state is derived from value presence in code and the set stays at four. A consumer can now tell from the geometry alone which pattern a field follows. <code>hasValue</code> goes into the §2 approved boolean catalog on that basis. (C2 · Family)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Error-state subtext coloring settled.",
+        "body": "v2.5: The family rule is that a validation message carries the error color — <a href=\"#\" onclick=\"showPanelById('amount-text-field');return false;\">Amount Text Field</a> turns its <code>HelperText</code> <code>#D61B2C</code> and is the reference. Text Area’s subtext is not a local layer: it is the shared <code>Subtext Message</code> instance, which also carries the character counter, so the error color belongs to that component rather than to this one. Recorded here as a shared-component follow-up rather than a Text Area defect, so the difference reads as a known boundary instead of an inconsistency. (C5 · Token)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
       }
     ],
-    "open": [
+"open": [
       {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked by property naming and the multi-line-vs-Input Field decision. Cannot register until the family shape is finalized.",
+        "body": "Blocked — no native library exists yet. The property schema is clean and every layer is semantically named, so mapping is a mechanical step once the library lands.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Propagate the <code>hasValue</code> rename across Form Elements.",
-        "body": "Text Area now uses <code>hasValue</code>; Input Field still uses <code>isFilled</code>, so the family is split mid-migration. Rename it in the property panel — one operation — then add <code>hasValue</code> to the approved boolean catalog with a definition (\"the field currently holds a value\") so it stops reading as an invented term. Amount Text Field is unaffected: its axes are <code>Size</code> × <code>State</code>, with no content-presence boolean at all.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Add <code>isFilled</code> to the approved boolean catalog.",
-        "body": "Governance, not a Figma change. <code>isFilled</code> is used by Input Field, Text Area and Amount Text Field but isn't in the published <code>is*</code> catalog, so every component using it technically diverges from §2. Add it with a definition (\"the field currently holds a value\") so the family stops being flagged for it.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Fix the character-count sample content.",
-        "body": "Update the <code>Subtext Message</code> counter in the four <code>hasValue=True</code> variants so it matches the visible body text rather than reading <code>0/100</code> against a full field.",
-        "tag": "Docs"
-      },
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",

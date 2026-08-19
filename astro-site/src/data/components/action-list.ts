@@ -32,25 +32,25 @@ const actionListDemoControls: DemoControlSection[] = [
 export const actionList: ComponentData = {
   "meta": {
     "slug": "action-list",
-    "name": "Action List",
-    "node": "18577:14545",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18577-14545",
-    "description": "A row primitive used in lists of tappable rows — title, optional trailing CTA, and chevron.",
+    "name": "Action Row",
+    "node": "4628:19843",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4628-19843",
+    "description": "A tappable list row with a leading asset slot, label and description, and a trailing chevron with optional counter. Merges the former Action List, Action List with Counter and Action List with Description.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Action List",
     "verdict": {
-      "kind": "restructure",
-      "title": "Collapse 3 siblings into one slot-driven row",
-      "text": "The three components differ by <em>presence</em> — a description line, a trailing counter — not by role. Replace with one <code>List</code> component with <code>description?: String</code>, <code>trailing: .cta | .counter | .chevron | .none</code>, plus a named <code>leading</code> slot for the icon. Align label typography across the family (currently Semibold 16 Neutral vs. Bold 18 Brand). Add a Pressed state — these rows are primary nav targets. Reconcile with <a href=\"/components/list-item\">List Item</a> (display-only body rows) and clarify when to use which."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4628:19843</code> in the 2026 Working File and renamed <strong>Action Row</strong>, merging the three former Action List siblings into <code>TrailingContent</code> (2) × <code>State</code> (4) × <code>Density</code> (2) = 16 variants, plus a <code>hasDescription</code> boolean. Interaction states now exist where there were none, the leading asset and counter are real Figma Slots, and layer and property naming matches the conventions the rest of the family settled on. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -65,18 +65,18 @@ export const actionList: ComponentData = {
       },
       {
         "name": "Self-contained",
-        "rating": "partial",
-        "note": "Colors and padding bound to <code>main/action-list/*</code> tokens. Loading skeleton uses <code>bg/color-bg-strong</code> for placeholders. Leaked internal spacer annotations (<code>_space_2</code>, <code>_space_16</code>) are rendered inside production instances. <span class=\"tag-open tag-c1\">C1</span>"
+        "rating": "pass",
+        "note": "Carries its own surface, dividers and state colors, and composes a chevron and counter from library instances. Nothing external required to render a complete row."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Three sibling components encode a single row pattern by presence. Label typography diverges: <code>List</code> and <code>List - with Description</code> use Semibold 16 Neutral (<code>#0A2757</code>); <code>List - with Counter</code> uses Bold 18 Brand Blue (<code>#005CE5</code>). <span class=\"tag-open tag-c2\">C2</span>"
+        "rating": "pass",
+        "note": "<code>TrailingContent</code>, <code>State</code> and <code>Density</code> are orthogonal, <code>Density</code> is used exactly as §1 defines it, <code>hasDescription</code> carries the correct verb prefix, and <code>TrailingContent</code> matches View Only Field for the same concept. Every addressable layer is semantically named; the skeleton loader keeps working names by design."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Leading icon is an always-gray placeholder circle, not a Figma Slot. Trailing content is baked into each sibling rather than driven by a <code>trailing</code> enum. <span class=\"tag-open tag-c4\">C4</span> <span class=\"tag-open tag-c6\">C6</span>"
+        "rating": "pass",
+        "note": "<code>Asset Slot</code> and <code>Counter Slot</code> are real Figma Slots, and the chevron and counter come from library instances — teams drop in content without detaching. Stacks cleanly into lists."
       }
     ],
     "behavior": [
@@ -116,59 +116,92 @@ export const actionList: ComponentData = {
         "notes": "TV / keyboard focus ring not defined. Android a11y also relies on it."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Three sibling components for one row pattern.",
-        "body": "<code>List</code>, <code>List - with Counter</code>, and <code>List - with Description</code> differ only by the presence of a description line and/or a trailing counter. Collapse into a single <code>List</code> component with optional <code>description</code> and a <code>trailing</code> union.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Label typography diverges across the family.",
-        "body": "<code>List</code> + <code>List - with Description</code> use Proxima Soft Semibold 16 / Neutral Dark (<code>#0A2757</code>). <code>List - with Counter</code> uses Proxima Soft Bold 18 / Brand Blue (<code>#005CE5</code>). Same row family should read as one thing. Pick one token (<code>label</code> or <code>label-brand</code>) and one size.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Leaked spacer annotation layers.",
-        "body": "Internal <code>_space_2</code> (<code>4115:3220</code>) and <code>_space_16</code> (<code>21:40139</code>) annotation frames are rendered as opacity-0 layers inside every production instance. Artifacts of authoring, not part of the public component. Remove or move to a separate documentation artboard.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Leading icon is a gray placeholder.",
-        "body": "All three siblings default to a <code>#C2C6CF</code> filled 32 px circle under a frame named <em>Placeholder</em>. Same instance-swap anti-pattern as <a href=\"#\" onclick=\"showPanelById('list-item');return false;\">List Item</a>. Adopt a Figma Slot so consumers can drop in a real icon (or an Avatar).",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "No Pressed state.",
-        "body": "These rows are the primary tap surface for navigation menus. The State enum exposes only Default / Disabled / Loading. Add Pressed (tinted bg and/or chevron darken).",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Trailing content is baked per sibling.",
-        "body": "CTA text lives on the base, a filled Counter lives on the Counter sibling, and a chevron appears only sometimes. Introduce a <code>trailing</code> enum (<code>.cta(String) | .counter(Int) | .chevron | .none</code>) so one component covers all three patterns. Maps cleanly to native enums.",
+        "headline": "Three Action List components merged into Action Row.",
+        "body": "v2.0: Rebuilt on node <code>4628:19843</code> in the 2026 Working File and renamed <strong>Action Row</strong>. Action List, Action List with Counter and Action List with Description are now one set: the counter is a <code>Trailing=Counter</code> value, and the description is part of the row rather than a separate component. Confirmed as a permanent merge by the component owner. (C4 · Family)",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
       },
       {
+        "headline": "Variant matrix is orthogonal and complete.",
+        "body": "v2.0: <code>Trailing</code> (CTA · Counter) × <code>State</code> (Default · Pressed · Disabled · Loading) × <code>Density</code> (Compact · Expanded) = <strong>16 variants</strong>, all authored. <code>Density</code> is used exactly as §1 defines it — adjusting row height and padding, 56px against 64px — rather than gating content. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Interaction states added.",
+        "body": "v2.0: <code>State</code> now covers Default, Pressed, Disabled and Loading, where the original components had no state coverage at all. Pressed carries its own <code>#F6F9FD</code> surface. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Leading asset and counter are real Figma Slots.",
+        "body": "v2.0: <code>Asset Slot</code> and <code>Counter Slot</code> are <code>SLOT</code> nodes, and the chevron and counter are library instances. Teams can drop in real content without detaching — the composition pattern the rest of the family has converged on. (C6 · Slot)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "Frame naming aligned to the family.",
+        "body": "v2.1: The two frames both called <code>Container</code> are now <code>Row</code> and <code>TrailingGroup</code>, and the spaced names are hyphenated to match the convention Toast, Upload File and Section Header settled on — <code>Asset-Slot</code>, <code>Counter-Slot</code>, <code>Text-Container</code>, <code>Icon-Container</code>, <code>Bottom-Stroke</code>. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Trailing</code> renamed to <code>TrailingContent</code>.",
+        "body": "v2.1: The axis now carries the same name View Only Field uses for the same concept, satisfying §6 on consistent terminology. Any future component with a trailing area has one name to adopt rather than a choice between two. (C2 · Family)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Text and action layer naming completed.",
+        "body": "v2.2: <code>#label</code> → <code>Label</code> and <code>#blurb</code> → <code>Description</code>, mapping onto §3 — the content is supporting text beneath a label rather than the promotional summary <code>Blurb</code> denotes. <code>leading icon</code> → <code>Leading-Icon</code> and <code>Action Button</code> → <code>Action-Button</code> complete the hyphenated convention. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>hasDescription</code> boolean added.",
+        "body": "v2.3: Confirmed by the component owner — a <code>hasDescription</code> boolean now toggles the description line, restoring the label-only row the original Action List provided. Implemented as a boolean component property rather than a fourth variant axis, so the matrix stays at 16 rather than doubling. Not independently verifiable from the assessment tooling, which cannot read component property definitions. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Nested <code>Wrapper</code> collision resolved.",
+        "body": "v2.3: The <code>Wrapper</code> frame nested inside another <code>Wrapper</code> in the Loading variants is now <code>Skeleton-Trailing</code>, naming what it actually holds. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Skeleton loader retained as authored.",
+        "body": "v2.3: Closed by owner decision — the Loading variants keep their skeleton geometry as built, including the repeated <code>trailing icon</code> and <code>line</code> rectangle names. These are internal placeholder shapes with no property surface and no override target, so their names never reach a consumer or a Code Connect mapping — the same reasoning applied to View Only Field's wrapper frames. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "open": [
+      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked on the consolidation + slot adoption. Adding mappings for three siblings would cement the wrong schema.",
+        "body": "Blocked — no native library exists yet. The schema is otherwise clean: three enums plus two swappable slots.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -177,39 +210,9 @@ export const actionList: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Consolidate into one <code>Action Row</code> component.",
-        "body": "One component with properties <code>title: String</code>, <code>subtitle?: String</code> (replaces \"with Description\"), <code>trailing: chevron | counter | switch | badge | none</code> (replaces \"with Counter\"), <code>state: default | pressed | disabled | loading</code>, plus a <code>leading</code> slot for icon/avatar. Replaces 15 variants across 3 components with clean slot-based composition.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Add a <code>leading</code> Figma Slot for the icon.",
-        "body": "Maps 1:1 to <code>@ViewBuilder</code> (SwiftUI) and a <code>@Composable</code> slot (Compose). Accepts Icon, Avatar, or a custom 32 px component. Remove the placeholder fill entirely — empty slot means no leading.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Reconcile label typography.",
-        "body": "Pick one: either Neutral Dark Semibold 16 (matches <code>List Item</code> + most action rows) or Brand Blue Bold 18 (matches the current Counter sibling). Neutral is the safer default — Brand Blue reads like a <em>link</em>, which the whole row already behaves as. Apply the choice to all three shapes.",
-        "tag": "Token"
-      },
-      {
-        "headline": "Add Pressed (and ideally Focused) states.",
-        "body": "Pressed = <code>bg</code> tints to <code>#F4F6FA</code>, chevron / CTA darkens one step. Focused = 2 px brand ring at 2 px offset. Baseline for native row components.",
-        "tag": "State"
-      },
-      {
-        "headline": "Remove <code>_space_2</code> / <code>_space_16</code> spacer annotations.",
-        "body": "These are authoring artifacts. Move to a separate \"Annotations\" artboard or delete once the auto-layout is settled. They export as opacity-0 layers to consumers.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Disambiguate vs <code>List Item</code>.",
-        "body": "This component is <em>tappable action navigation</em> (icon + label + trailing CTA/counter/chevron). <code>List Item</code> is <em>display body rows</em> (bullet + text for terms/steps). Document the distinction and cross-link the two — today the names don't telegraph which is which.",
+        "headline": "Record <code>State=Loading</code> under the existing State/Status exception.",
+        "body": "<code>Loading</code> is a process status rather than an interaction state, the same shape as <code>Error</code> on the form fields. It falls under the exception already documented for that family rather than needing its own justification.",
         "tag": "Docs"
-      },
-      {
-        "headline": "Rename the family to <code>Action Row</code>.",
-        "body": "\"Action List\" implies a collection, but each component here is a single row. Native name: <code>EBActionRow</code>. Disambiguates from the <code>List</code> container (scroll primitive) and the <code>List Item</code> display rows (terms/steps). Single-component consolidation eliminates the \"with X\" naming pattern entirely.",
-        "tag": "Rename"
       }
     ]
   },

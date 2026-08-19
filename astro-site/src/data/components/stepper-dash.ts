@@ -63,20 +63,20 @@ export const stepperDash: ComponentData = {
     "description": "A flat segmented progress indicator — a row of rounded dashes where filled dashes mark current and earlier steps.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "consolidate",
+        "label": "Consolidate"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "na",
+        "label": "Not Applicable"
       }
     ],
     "navGroup": "Stepper",
     "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <rect x=\"3\" y=\"15\" width=\"6\" height=\"2\" rx=\"1\" fill=\"#005CE5\"/>\n      <rect x=\"11\" y=\"15\" width=\"6\" height=\"2\" rx=\"1\" fill=\"#005CE5\"/>\n      <rect x=\"19\" y=\"15\" width=\"6\" height=\"2\" rx=\"1\" fill=\"#D2E5FF\"/>\n      <rect x=\"27\" y=\"15\" width=\"2\" height=\"2\" rx=\"1\" fill=\"#D2E5FF\"/>\n    </svg>",
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — collapse the boolean slot flags and ordinal enum into <code>current: Int</code> + <code>total: Int</code>",
-      "text": "Visually the component is already in great shape — vector dashes, token-bound fills, clean rounded geometry. The structural problem is the schema: <code>highlighted</code> is an ordinal enum (1st…10th) when it should be a number, and the 10 <code>propNStepper</code> booleans emulate what should be a single <code>total</code> scalar. Rebuild as one variant with <code>current: 1…10</code> and <code>total: 2…10</code>, and fix the duplicate <code>6th</code> layer name that covers positions 7–10. Native side stays a custom component (no platform primitive renders \"N equal-width dashes\" out of the box)."
+      "kind": "consolidate",
+      "title": "Consolidate — merged into Stepper",
+      "text": "This component no longer exists on its own. It is merged into <a href=\"/components/stepper-bullet\">Stepper</a> (node <code>4337:11140</code>), where its ten <code>propNStepper</code> booleans are now the <code>Steps</code> axis and the dash form is <code>Type=Dash</code>. Assessment for this pattern lives on the Stepper page."
     }
   },
   "overview": {
@@ -86,22 +86,22 @@ export const stepperDash: ComponentData = {
       {
         "name": "Reusable",
         "rating": "partial",
-        "note": "Applies to any 2–10 step linear flow. Hard-capped at 10 (the ordinal enum only goes up to 10th), so longer flows need a different component."
+        "note": "Historical rating from the standalone assessment. This component is merged into Stepper — see that page for current DS Health."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Pure vector — rounded rectangles bound to <code>main/stepper/color/bg</code> and <code>main/stepper/color/bg-track</code>. No raster assets, no external dependencies."
+        "note": "Historical rating from the standalone assessment. This component is merged into Stepper — see that page for current DS Health."
       },
       {
         "name": "Consistent",
         "rating": "warn",
-        "note": "Ordinal enum (<code>1st…10th</code>) where a number belongs; 10 boolean visibility flags where a scalar <code>total</code> belongs; layer names duplicate <code>6th</code> across positions 7–10."
+        "note": "Historical rating from the standalone assessment. This component is merged into Stepper — see that page for current DS Health."
       },
       {
         "name": "Composable",
         "rating": "partial",
-        "note": "Frame is 268 px wide with fill-container dashes, so it stretches inside a parent. Family-wise, Dash, Bullet, and Circular each ship independently; a unified <code>EBStepper(style:)</code> API would compose better."
+        "note": "Historical rating from the standalone assessment. This component is merged into Stepper — see that page for current DS Health."
       }
     ],
     "behavior": [
@@ -134,99 +134,18 @@ export const stepperDash: ComponentData = {
         "notes": "Display-only today — no pressed or focused variant. If designers want to allow tapping a completed dash to return, that interaction needs spec'ing."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Total step count encoded as 10 boolean props instead of an integer.",
-        "body": "Ships <code>prop1Stepper…prop10Steppers</code> — ten toggles used as visibility flags for \"how many dashes to render\". To spec a 4-dash stepper a consumer flips four toggles on and six off; to change to 5 dashes they flip one more. Should be a single <code>total: Int</code> (or <code>total: 2 | 3 | … | 10</code> enum).",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "<code>highlighted</code> is ordinal, not numeric.",
-        "body": "<code>highlighted = 1st | 2nd | … | 10th</code> reads as a label, not a position. Native APIs and product code want an integer they can feed a <code>current / total</code> calculation — rename to <code>current</code> and switch to a numeric range.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Duplicate <code>6th</code> layer name across positions 7–10.",
-        "body": "In the <code>highlighted=1st</code> variant, dash layers are labelled <code>1st</code>, <code>2nd</code>, <code>3rd</code>, <code>4th</code>, <code>5th</code>, <code>6th</code>, <code>6th</code>, <code>6th</code>, <code>6th</code>, <code>6th</code>. Looks like a copy-paste oversight when the component was extended from 6 to 10 slots. Rename to <code>7th</code>…<code>10th</code>.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "No native primitive matches.",
-        "body": "Neither SwiftUI nor Material 3 ships a \"segmented dash\" progress indicator. Implementation is a custom <code>HStack</code>/<code>Row</code> of rounded rectangles — manageable, but the DS must own the composable and its theming.",
+        "headline": "Merged into Stepper.",
+        "body": "v2.0: Confirmed by the component owner — this no longer exists as a standalone component. It is merged into <a href=\"/components/stepper-bullet\">Stepper</a> (node <code>4337:11140</code>), where its ten <code>propNStepper</code> booleans are now the <code>Steps</code> axis and the dash form is <code>Type=Dash</code>. This page is kept as a pointer; all assessment for this pattern lives on Stepper. (Family)",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
-      },
-      {
-        "headline": "No completed, error, or interactive state modeled.",
-        "body": "Only the default two-tone (brand / track) rendering exists. Add variants for completed-successfully (green), error-at-step-N (red), and optionally pressed/focused if steps are tappable.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until the ordinal enum and boolean visibility props collapse into <code>current</code> and <code>total</code>. Mapping today's schema would codify the anti-pattern.",
-        "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
-        }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Replace the 10 <code>propNStepper</code> booleans with a single <code>total</code> property.",
-        "body": "Today a designer builds \"4-dash stepper\" by toggling <code>prop1Stepper=true, prop2=true, prop3=true, prop4=true, prop5..10=false</code>. Replace with <code>total: 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10</code>. Variant math drops from (10 ordinal × 2^10 boolean combos, nominally) to <strong>9 × 10 = 90</strong>, and more importantly the schema becomes legible — \"4 dashes, step 2 active\" instead of \"highlighted=2nd + 4 booleans on, 6 booleans off\".",
-        "tag": "Property"
-      },
-      {
-        "headline": "Rename <code>highlighted = 1st…10th</code> to <code>current: 1…10</code>.",
-        "body": "The property name reads as a Boolean (\"is highlighted?\") and the values read as rank labels. Both are wrong — the value is a numeric index. Rename to <code>current</code> and switch values from ordinal strings to integers so consumers can do <code>current / total</code> math.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Fix duplicated <code>6th</code> layer names on slots 7–10.",
-        "body": "Rename the last four inner dash layers to <code>7th</code>, <code>8th</code>, <code>9th</code>, <code>10th</code> so the inspector and dev handoff read cleanly. Low-effort cleanup.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Add <code>status</code> states for completed, error, and loading.",
-        "body": "Introduce an optional component-level <code>state: default | success | error</code> that repaints the whole row (green when the flow finishes, red when the current step errors). Indeterminate / loading is optional — a subtle pulsing animation on the current dash while an async step resolves. Tokens: <code>main/stepper/color/bg-positive</code>, <code>main/stepper/color/bg-negative</code>.",
-        "tag": "State"
-      },
-      {
-        "headline": "Unify Stepper - Dash, Stepper - Bullet, and Stepper - Circular into one <code>EBStepper</code> API.",
-        "body": "All three render the same underlying data (<code>current</code>, <code>total</code>) and differ only in the visual treatment of each slot. On the native side, ship one <code>EBStepper(current:total:style:)</code> with <code>style: .dash | .bullet | .circular</code> instead of three separate components — the state, accessibility, and layout logic are identical across styles. Figma can keep three sibling records for the sticker sheet, but the API is one surface.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Document a canonical \"dash height × total\" sizing chart.",
-        "body": "The single frame is 268 px wide with 4-px dash height and 4-px gap. As <code>total</code> grows the individual dash width shrinks — at <code>total=10</code> each dash is ~22 px. Document the minimum sensible per-dash width and the component's fill behavior inside narrower parents.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Announce \"Step X of Y\" to screen readers.",
-        "body": "Dashes are purely decorative — assistive tech sees nothing today. Wrap in a container with <code>accessibilityLabel = \"Step \\(current) of \\(total)\"</code> on iOS and <code>Modifier.semantics { contentDescription = … }</code> on Android.",
-        "tag": "A11y"
-      },
-      {
-        "headline": "Spec a vertical orientation for long flows.",
-        "body": "With 10 dashes in a narrow column, individual dashes get uncomfortably short. Add <code>orientation: horizontal | vertical</code> so flows can stack top-to-bottom when horizontal width is constrained.",
-        "tag": "Property"
-      }
-    ]
+    "open": [],
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",

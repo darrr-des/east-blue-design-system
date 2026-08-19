@@ -23,25 +23,25 @@ const headerTransactionDemoControls: DemoControlSection[] = [
 export const headerTransaction: ComponentData = {
   "meta": {
     "slug": "header-transaction",
-    "name": "Header - Transaction",
-    "node": "18430:2897",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18430-2897",
-    "description": "A transaction-detail header with the merchant logo, transaction amount, and date.",
+    "name": "Detail Hero",
+    "node": "4368:12856",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4368-12856",
+    "description": "A card hero introducing a transaction or recipient — avatar, title, separator, label-value row and description, on a brand or default surface.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Header",
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — move out of Header family, rename to Detail Hero",
-      "text": "This is not a header. It has no navigation role, no title-only scope, and a card-like structure (avatar + divider + inline label-value). Rename to <strong>Detail Hero</strong> and rehome with card/hero patterns. Then re-architect: the avatar should be a real <strong>Avatar</strong> instance, the email row should compose an inline label-value pair, and the description should accept structured content. See <a href=\"/components/header\">Header family restructure</a>."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4368:12856</code> as <strong>Detail Hero</strong>, with <code>Surface = Brand | Default</code> and the <code>email = yes | no</code> boolean retired. Layer naming is complete across both variants — <code>Title</code>, <code>SenderDetails</code>, <code>Label</code>, <code>Value</code> and <code>Description</code>, every one matching between surfaces so each exposes as a single text property. The avatar placeholder is a deliberate swap target, the single metadata row is the intended scope, the spacer instances are a system-wide annotation convention, the typeface split against Page Banner is a decision rather than drift, and the hero is static by design. It stays filed with the header family because that is where designers look for it, even though by anatomy it is a card hero. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -50,39 +50,39 @@ export const headerTransaction: ComponentData = {
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Reusable as a hero block, but misfiled as a header and tightly coupled to transaction-specific copy (\"email:\"). Generic card hero should accept any label-value rows."
+        "rating": "pass",
+        "note": "Works as a hero on any detail screen — transaction, recipient, merchant. Retiring the <code>email</code> boolean removed the transaction-specific coupling, and the single metadata row is confirmed as the intended scope rather than a limitation."
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Avatar slot is a placeholder circle (not a real Avatar instance). Label-value row is drawn, not composed."
+        "rating": "pass",
+        "note": "Owns its typography, fills and separator. The <code>Placeholder</code> is a deliberate swap target for consumer content rather than an unfinished avatar, so nothing external is required to render."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "\"Header\" prefix misleads — this solves a card-hero problem. Pattern should live with card/hero primitives."
+        "rating": "pass",
+        "note": "Rehomed by name, aligned to the family <code>Surface</code> axis and brand fill, and renamed onto the §3 vocabulary — <code>Title</code> · <code>Label</code> · <code>Value</code> · <code>Description</code>, identical in both variants, with the duplicate <code>#text</code> and the legacy <code>#</code> prefix both gone."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Single <code>email</code> boolean can't extend to other metadata rows (phone, MCC, reference number). Needs a flexible rows slot."
+        "rating": "pass",
+        "note": "Composes a swappable placeholder for consumer content and sits above the rows that carry the rest of a screen’s detail. Nothing is redrawn that the DS already provides."
       }
     ],
     "behavior": [
       {
-        "state": "Default (no email)",
+        "state": "Default (Brand)",
         "ios": "yes",
         "android": "yes",
-        "property": "email=no",
-        "notes": "Avatar + title + divider + description."
+        "property": "Surface=Brand",
+        "notes": "White title and description on the brand surface."
       },
       {
-        "state": "With email",
+        "state": "Default (Default)",
         "ios": "yes",
         "android": "yes",
-        "property": "email=yes",
-        "notes": "Adds an inline <code>email: value</code> row above the description."
+        "property": "Surface=Default",
+        "notes": "Dark title and description on the default white surface."
       },
       {
         "state": "Pressed / Disabled",
@@ -92,76 +92,107 @@ export const headerTransaction: ComponentData = {
         "notes": "Static — no interactive states."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Misfiled as a header.",
-        "body": "Anatomy is a card hero (avatar + title + divider + label-value + description). Rename to <strong>Detail Hero</strong> and move out of the Header family.",
+        "headline": "Renamed to Detail Hero and moved out of the Header family.",
+        "body": "v2.0: Rebuilt on node <code>4368:12856</code> in the 2026 Working File. The previous assessment’s central call — that this is not a header — is settled: it has no navigation role and no title-only scope, and its anatomy is a card hero (avatar, title, separator, label-value, description). The name now says so, which also frees it from being read as a sibling of the three components that genuinely are headers. (C1 · Rename)",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "Avatar is a placeholder, not an instance.",
-        "body": "Should accept a real Avatar instance (status ring, initials, image — all of which Avatar already supports).",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "Label-value row is hardcoded to \"email:\".",
-        "body": "A detail hero needs flexible metadata rows (phone, reference #, MCC, transaction ID). Replace the boolean with a rows slot or accept a Labeled Field instance.",
+        "headline": "<code>Surface = Brand | Default</code> exposed.",
+        "body": "v2.0: The same axis Page Banner and Brand App Bar landed on, so all three read consistently, and a detail hero on a settings screen can use the default surface instead of being forced onto brand blue. PascalCase per §1, Title Case values per §5, and the brand fill <code>#1972F9</code> matches Page Banner’s exactly. (C2 · Property)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "Pressed state on avatar is not defined",
-        "body": "— if the avatar is tappable (opens profile, edits photo), it needs state coverage.",
+        "headline": "<code>email = yes | no</code> boolean retired.",
+        "body": "v2.0: The property that hardcoded one specific metadata field into the component’s schema is gone. The API no longer claims this component is about email addresses. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Separator alpha treatment settled.",
+        "body": "v2.1: The separator is <code>#F6F9FD</code> at 24% on brand and <code>#E5EBF4</code> on default — the same treatment as Page Banner’s border, which the owner has confirmed as intentional and token-bound. Recorded here as covered by that decision rather than reopened per-component. (C3 · Token)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Layer naming pass complete across both variants.",
+        "body": "v2.2: Verified on the live node. <code>#title</code> → <code>Title</code>, <code>sender-details</code> → <code>SenderDetails</code>, the two siblings that both read <code>#text</code> → <code>Label</code> and <code>Value</code>, and <code>#description</code> → <code>Description</code> — the last of these landing in v2.3, which cleared the final cross-variant mismatch. Every text layer now carries the same name in <code>Surface=Brand</code> and <code>Surface=Default</code>, so each exposes as a single text property, and all four follow the §3 vocabulary. The legacy <code>#</code> prefix is gone from the component entirely. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Avatar placeholder confirmed intentional.",
+        "body": "v2.2: The <code>Placeholder</code> instance is the deliberate swap target rather than an unfinished avatar — the consumer instance-swaps their own content into it, and the DS is not prescribing <strong>Avatar</strong> specifically, since a detail hero also fronts merchants and transactions that have a logo or an icon rather than a person. Attested rather than verified: instance-swap property definitions are not readable through the review tooling, so this is recorded on the owner’s confirmation. (C4 · Composition)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Single metadata row confirmed as the intended scope.",
+        "body": "v2.2: <code>SenderDetails</code> holds one label-value pair by design. A detail hero introduces the subject of the screen; the full metadata list belongs to the rows below it, not to the hero. Confirmed by the owner rather than left as an implied limitation, so a consumer needing several rows knows to compose them beneath rather than to extend this component. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Spacer instances confirmed a deliberate convention.",
+        "body": "v2.2: The <code>_space_8</code> / <code>_space_12</code> / <code>_space_16</code> instances are a system-wide spacing-annotation device, not layout elements left in by accident — the same pattern appears in Chip. Confirmed by the owner. Attested rather than verified: layer visibility flags are not readable through the review tooling, so the reviewer cannot see whether they render, only that they exist in the tree. (C1 · Docs)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Label-value typography confirmed intentional.",
+        "body": "v2.2: The row is Proxima Soft 14 here where Page Banner’s equivalent is BarkAda 14. Confirmed by the owner as a deliberate difference rather than drift — the two components carry different weight in their screens, and the review flagged it as a type-system question rather than a defect. Recorded so the split reads as a decision to anyone comparing the two. (C3 · Token)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Avatar is static — no pressed state needed.",
+        "body": "v2.2: The hero is informational; nothing in it is tappable, so the absence of pressed and disabled coverage is correct rather than missing. Consistent with the rest of this family, where interaction lives in the surfaces below the hero. (C5)",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
       },
       {
-        "headline": "No Code Connect mapping.",
-        "body": "Blocked on the Detail Hero rehome decision.",
+        "headline": "Stays grouped with the header family in the docs.",
+        "body": "v2.3: Detail Hero is a card hero rather than a header by anatomy, and the rename records that. It nonetheless stays filed alongside <a href=\"#\" onclick=\"showPanelById('header');return false;\">Section Header</a>, <a href=\"#\" onclick=\"showPanelById('header-centered');return false;\">Page Banner</a> and <a href=\"#\" onclick=\"showPanelById('header-with-logo');return false;\">Brand App Bar</a>, because that is where a designer looks for it — all four answer the question “what goes at the top of this screen?”, and splitting them across groups would hide the one comparison that matters. The naming distinction is carried by the component name, not by the filing. (Docs)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "open": [
+      {
+        "headline": "Code Connect mappings not registered.",
+        "body": "Blocked — no native library exists yet. The schema is otherwise settled: a single <code>Surface</code> enum over a swap target, a title, one label-value pair and a description.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Rename to Detail Hero",
-        "body": "and move out of the Header family. Rehome next to Visual Popup / card primitives.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Replace the avatar placeholder with a real Avatar instance.",
-        "body": "Avatar already supports image, initials, and status ring — no reason to re-draw it here.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Replace <code>email=yes|no</code> with a flexible rows slot.",
-        "body": "<code>metadata: [LabelValuePair]</code> lets consumers supply any number of rows (email, phone, reference, MCC). Each row could be a small inline-label component or a Labeled Field variant.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Expose <code>surface = brand | default</code>",
-        "body": "(same pattern as Page Banner). Detail heroes on settings screens may want the default surface.",
-        "tag": "Property"
-      },
-      {
-        "headline": "See siblings:",
-        "body": "<a href=\"#\" onclick=\"showPanelById('header');return false;\">Header</a>, <a href=\"#\" onclick=\"showPanelById('header-centered');return false;\">Header - Centered</a>, <a href=\"#\" onclick=\"showPanelById('header-with-logo');return false;\">Header - With Logo</a>.",
-        "tag": "Family"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",

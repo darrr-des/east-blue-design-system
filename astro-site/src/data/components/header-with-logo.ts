@@ -23,25 +23,25 @@ const headerWithLogoDemoControls: DemoControlSection[] = [
 export const headerWithLogo: ComponentData = {
   "meta": {
     "slug": "header-with-logo",
-    "name": "Header - With Logo",
-    "node": "18430:2875",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18430-2875",
-    "description": "A header variant featuring the GCash wordmark instead of a title; trailing actions optional.",
+    "name": "Brand App Bar",
+    "node": "4566:17590",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4566-17590",
+    "description": "A wordmark-only app bar in brand and default surfaces, used where a screen needs identity rather than navigation.",
     "badges": [
       {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Header",
     "verdict": {
-      "kind": "restructure",
-      "title": "Consolidate — merge into Title Bar",
-      "text": "This component solves the same problem as Title Bar (<code>23:175148</code>) but swaps the title text for a logo. Rather than maintain two app-bar components, add a <code>leading = title | logo</code> slot to Title Bar and retire this file. One app bar primitive, two behaviours. See <a href=\"/components/header\">Header family restructure</a> for the full plan."
+      "kind": "keep",
+      "title": "Keep — confirmed standalone",
+      "text": "Rebuilt on node <code>4566:17590</code> in the 2026 Working File and renamed <strong>Brand App Bar</strong>, which settles the original either/or in favour of keeping it separate from Title Bar. <code>Surface = Brand | Default</code> replaces the old <code>logo=dark|light</code> axis, the wordmark is a single swappable instance rather than two baked assets, and both variants are a clean 90px. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -50,23 +50,23 @@ export const headerWithLogo: ComponentData = {
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Serves a narrow role that overlaps entirely with Title Bar. Two components for \"top app bar\" is one too many."
+        "rating": "pass",
+        "note": "Drops onto any screen that needs brand identity rather than navigation — onboarding, splash, marketing surfaces. Two surfaces cover the light and dark contexts it appears on."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Owns its surface, logo asset, and layout."
+        "note": "Owns its surface fill and the logo instance. Nothing external required to render."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Duplicates Title Bar's scope. \"Header\" prefix conflates with 3 structurally different components."
+        "rating": "pass",
+        "note": "<code>Surface = Brand | Default</code> is PascalCase per §1 with Title Case values, and <code>LogoContainer</code> matches the naming convention the rest of the system uses. Dimensions are whole pixels."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "No leading/trailing action slots (back button, profile avatar, etc.) — only a logo. If the screen needs navigation, consumers must switch to Title Bar, losing the logo."
+        "rating": "pass",
+        "note": "Composes the shared <code>GCash Logo</code> instance so a wordmark change propagates from one source, and sits as the top element on any screen. Its lack of action slots is deliberate — screens needing controls use Title Bar - App."
       }
     ],
     "behavior": [
@@ -92,35 +92,68 @@ export const headerWithLogo: ComponentData = {
         "notes": "Not interactive."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Consolidate into Title Bar.",
-        "body": "Duplicates app-bar scope. Add <code>leading = title | logo</code> slot to Title Bar and retire this file.",
+        "headline": "Confirmed as a standalone component, renamed Brand App Bar.",
+        "body": "v2.0: Rebuilt on node <code>4566:17590</code> in the 2026 Working File. The original assessment framed this as either/or — merge into Title Bar, or keep it separate and rename to <strong>Brand App Bar</strong>. The rename has shipped, which settles it: this stays its own component. A brand bar showing only the wordmark has a different job from a title bar carrying navigation, and folding it in would have meant a Title Bar variant that hides every control it exists to provide. (Family)",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
       },
       {
-        "headline": "\"Header\" prefix",
-        "body": "conflates with 3 structurally different components. If kept as a separate component, rename to <strong>Brand App Bar</strong>.",
+        "headline": "\"Header\" prefix released.",
+        "body": "v2.0: The name no longer collides with the three structurally different components that shared the prefix. Section Header keeps the generic name; this one says what it is. (C1 · Rename)",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "<code>logo=dark|light</code>",
-        "body": "names the asset, not the surface. Should be <code>theme = dark | light</code> or tied to the surrounding surface token.",
+        "headline": "<code>logo=dark|light</code> replaced by <code>Surface</code>.",
+        "body": "v2.0: The axis now reads <code>Surface = Brand | Default</code>, describing the surface the bar sits on rather than the asset sitting on it — <code>#005CE5</code> with the light wordmark, or white with the blue one. That is the better of the two options the original assessment offered, since the logo treatment follows from the surface rather than being set independently of it. (C2 · Rename)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "No Code Connect mapping.",
-        "body": "",
+        "headline": "Logo is a single swappable instance.",
+        "body": "v2.0: Both variants carry a <code>GCash Logo</code> instance that changes appearance with the surface, rather than baking a dark and a light asset into the component. A wordmark update propagates from one source. (C6 · Composition)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "Fractional height corrected.",
+        "body": "v2.1: Both variants went 89.7466 → <code>90</code>. The stray sub-pixel value came from the logo instance driving the frame height; it now maps cleanly to a native layout value. (C4)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "<code>logo-container</code> renamed.",
+        "body": "v2.1: → <code>LogoContainer</code>, matching the PascalCase convention the rest of the system settled on. It is also now the surface wrapper rather than just a logo holder, which the name reflects. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Control-free by design — Title Bar - App covers screens needing actions.",
+        "body": "Confirmed intentional. The bar carries only a wordmark: no back control, no avatar, no trailing action. That is the point of a brand bar — an uncluttered mark, not a navigation surface. Any screen that needs a control reaches for <strong>Title Bar - App</strong> instead, which exists precisely to carry them. Recorded here so the absence of slots reads as a decision rather than an unfinished component, and so a designer who needs a control switches components rather than detaching this one. (C4 · Docs)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      }
+    ],
+"open": [
+      {
+        "headline": "Code Connect mappings not registered.",
+        "body": "Blocked — no native library exists yet. The schema is trivial once one does: a single <code>Surface</code> enum over a logo instance.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -128,26 +161,6 @@ export const headerWithLogo: ComponentData = {
       }
     ],
     "recommendations": [
-      {
-        "headline": "Merge into Title Bar.",
-        "body": "Add a <code>leading</code> slot to Title Bar that accepts either a title string or a logo instance. One app bar component, two behaviours. Eliminates \"which component do I use?\" friction.",
-        "tag": "Family"
-      },
-      {
-        "headline": "If kept separate, rename to Brand App Bar.",
-        "body": "Frees the \"Header\" namespace and signals the narrow branded-surface role.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Use a single Logo component",
-        "body": "as the visual — don't bake dark/light as a Header-level property. The Logo component should own its theme variants and be instance-swapped inside the app bar.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "See siblings:",
-        "body": "<a href=\"#\" onclick=\"showPanelById('header');return false;\">Header</a>, <a href=\"#\" onclick=\"showPanelById('header-centered');return false;\">Header - Centered</a>, <a href=\"#\" onclick=\"showPanelById('header-transaction');return false;\">Header - Transaction</a>, <a href=\"#\" onclick=\"showPanelById('title-bar');return false;\">Title Bar</a> (merge target).",
-        "tag": "Family"
-      }
     ]
   },
   "style": {

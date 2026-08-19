@@ -38,8 +38,8 @@ export const amountTextField: ComponentData = {
     "description": "A display-style numeric input for PHP amount entry in Send Money, Cash-In, and top-up flows. Sits on a single underline, with a label above and supporting text below. Two sizes × four interaction states.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -48,9 +48,9 @@ export const amountTextField: ComponentData = {
     ],
     "navGroup": "Form Elements",
     "verdict": {
-      "kind": "fix",
-      "title": "Fix — adopt the shared label and helper instances",
-      "text": "Rebuilt on node <code>4602:18144</code> in the 2026 Working File as <code>Size = LG | MD</code> × <code>State = Default | Focused | Disabled | Error</code> = <strong>8 variants</strong>, and confirmed standalone rather than folded into Input Field. The currency glyph is editable text rather than a raster, every layer and property value follows the Property Naming Guidelines, and dimensions are whole numbers. The Disabled treatment — muting the amount but not the surrounding label and helper copy — is deliberate, since those sit outside the enclosed input. One structural difference from its siblings remains: <code>Label</code> and <code>HelperText</code> are bespoke layers where Text Area and Upload File compose shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>4602:18144</code> in the 2026 Working File. <code>Size = LG | MD</code> × <code>State = Default | Focused | Disabled | Error</code> gives eight variants, and every one carries the same five semantic names — <code>Label</code>, <code>AmountRow</code> wrapping <code>CurrencySymbol</code> · <code>Value</code> · <code>CurrencyCode</code>, and <code>HelperText</code> — with no legacy prefix and no cross-variant mismatch. The Error state colors the border, the full amount row and the helper text, which is the family reference treatment. Keeping <code>Label</code> and <code>HelperText</code> local rather than composing the shared form scaffolding is a recorded decision: this is a centered, large-type standalone field, not a form row. Locale, currency-code and keyboard behavior are documented. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -75,8 +75,8 @@ export const amountTextField: ComponentData = {
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Drops into form layouts and is confirmed standalone rather than folded into Input Field. Still partial: <code>Label</code> and <code>HelperText</code> are bespoke text layers where Text Area and Upload File compose shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances, so that anatomy is re-authored here rather than inherited."
+        "rating": "pass",
+        "note": "<code>AmountRow</code> composes cleanly and <code>CurrencySymbol</code> · <code>Value</code> · <code>CurrencyCode</code> are independently addressable, so a locale can drop the code without restructuring. <code>Label</code> and <code>HelperText</code> stay local by design — the shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances are built for left-aligned form rows and would need overriding in every variant of this centered, large-type field."
       }
     ],
     "behavior": [
@@ -212,30 +212,51 @@ export const amountTextField: ComponentData = {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
+      },
+      {
+        "headline": "Layer naming verified complete across all eight variants.",
+        "body": "v2.4: Re-read on the live node. Every variant carries the same five semantic names — <code>Label</code>, <code>AmountRow</code> wrapping <code>CurrencySymbol</code> · <code>Value</code> · <code>CurrencyCode</code>, and <code>HelperText</code> — with no legacy prefix, no duplicate siblings and no cross-variant mismatch. Each text layer can therefore expose as a single property across the set. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Error state colors the full amount row and its helper text.",
+        "body": "v2.4: In <code>State=Error</code> the border, <code>CurrencySymbol</code>, <code>Value</code>, <code>CurrencyCode</code> and <code>HelperText</code> all move to <code>#D61B2C</code>. The validation message is carried by color as well as position, which is the stronger of the two treatments in Form Elements — <a href=\"#\" onclick=\"showPanelById('text-area');return false;\">Text Area</a> leaves its subtext neutral, and that difference is now tracked on Text Area rather than here. (C5)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Local <code>Label</code> and <code>HelperText</code> confirmed intentional.",
+        "body": "v2.5: Amount Text Field deliberately does not compose <code>FormGroup Header</code> and <code>Subtext Message</code>. Those instances are built for left-aligned form rows sitting above a bordered input; this component is a centered, standalone amount entry whose label and helper text are centered on the amount at 18px and 14px, sized against a 53pt value rather than a 14px one. Adopting the shared scaffolding would mean overriding its alignment, sizing and spacing in every variant — inheriting the maintenance cost without the benefit. Recorded as a deliberate divergence so the odd one out in Form Elements reads as a decision. (C4 · Composition)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Locale and keyboard behavior documented.",
+        "body": "v2.5: The component shows <code>₱</code> and <code>Php</code> together because it is used where the amount must be unambiguous — a transfer confirmation, not a price. Where the surrounding screen already establishes currency, <code>CurrencyCode</code> is omitted and the symbol carries it alone. Locale drives the symbol, the code, and the grouping and decimal separators together, never independently; implementations should format through the platform’s currency formatter rather than string-concatenating a symbol onto a number. <strong>Keyboard</strong>: decimal pad on both platforms (<code>.keyboardType(.decimalPad)</code> / <code>KeyboardType.Decimal</code>), no locale-switching mid-entry, a hard cap of two fraction digits, and pasted input stripped to digits and a single separator rather than rejected outright — a user pasting <code>₱1,000.00</code> should land on <code>1000.00</code>, not an empty field. (Docs)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
       }
     ],
-    "open": [
+"open": [
       {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked — no native library exists yet. The structural blockers (raster glyph, missing states) are now cleared.",
+        "body": "Blocked — no native library exists yet. The property schema is clean and every layer is semantically named, so mapping is a mechanical step once the library lands.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Compose the label and helper rows from the shared instances.",
-        "body": "<code>Label</code> and <code>HelperText</code> are plain text layers here, where Text Area and Upload File both compose a shared <code>FormGroup Header</code> above and a <code>Subtext Message</code> below. Adopting the same two instances means label and helper-copy changes propagate across the family from one source instead of being re-authored per component, and it would bring the character-count and error-message affordances along for free. This is the last structural difference between Amount Text Field and its siblings.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Document locale and keyboard behavior in the component.",
-        "body": "Decimal separator, thousands separator, minimum/maximum, and zero-padding rules are product concerns today. Adding a short <code>Docs</code> note in Figma (or in this assessment's Code tab) gives implementers a single source of truth.",
-        "tag": "Docs"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Variants",
