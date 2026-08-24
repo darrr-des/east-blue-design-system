@@ -5696,6 +5696,334 @@ pre.code-snippet .prp { color: #0369A1; }
 [data-theme="dark"] .eb-preview-adcarousel__cta { color: #62A0FA; }
 
 
+
+/* ═════════════════════════════════════════════════════════════════════
+   VOUCHER FAMILY — live preview primitives
+   Voucher (12 versions) · Voucher Details (2 versions).
+   Measurements mirror the 2026 Working File rebuild.
+   ═════════════════════════════════════════════════════════════════════ */
+
+.eb-preview-vch {
+  position: relative;
+  display: flex;
+  background: #FFFFFF;
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-vch--vertical { flex-direction: column; width: 162px; }
+.eb-preview-vch--horizontal { flex-direction: row; width: 312px; height: 124px; }
+.eb-preview-vch--horizontal.eb-preview-vch--large { width: 344px; }
+
+/* ── Asset — the ticket panel with its notch ────────────────────── */
+.eb-preview-vch__asset {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F6F9FD;
+  overflow: hidden;
+}
+.eb-preview-vch--vertical .eb-preview-vch__asset { width: 162px; height: 90px; }
+.eb-preview-vch--vertical.eb-preview-vch--large .eb-preview-vch__asset { height: 153px; }
+.eb-preview-vch--horizontal .eb-preview-vch__asset { width: 96px; height: 124px; }
+
+.eb-preview-vch__placeholder {
+  font-size: 8px;
+  font-weight: 700;
+  color: #0A2757;
+  text-align: center;
+}
+
+/* The notch is two circles punched from the panel edges. Vertical
+   punches left and right; horizontal punches top and bottom. */
+.eb-preview-vch__notch { position: absolute; background: #FFFFFF; border-radius: 50%; }
+.eb-preview-vch--vertical .eb-preview-vch__notch { width: 16px; height: 16px; bottom: -8px; }
+.eb-preview-vch--vertical .eb-preview-vch__notch--a { left: -8px; }
+.eb-preview-vch--vertical .eb-preview-vch__notch--b { right: -8px; }
+.eb-preview-vch--horizontal .eb-preview-vch__notch { width: 16px; height: 16px; left: -8px; }
+.eb-preview-vch--horizontal .eb-preview-vch__notch--a { top: -8px; }
+.eb-preview-vch--horizontal .eb-preview-vch__notch--b { bottom: -8px; }
+
+/* ── Content ────────────────────────────────────────────────────── */
+.eb-preview-vch__content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 12px;
+  background: #FFFFFF;
+  min-width: 0;
+}
+.eb-preview-vch__title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+.eb-preview-vch__desc {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 15px;
+  color: #445C85;
+}
+.eb-preview-vch__prices { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.eb-preview-vch__price {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  color: #005CE5;
+}
+.eb-preview-vch__original {
+  font-size: 12px;
+  font-weight: 500;
+  color: #C2CFE5;
+  text-decoration: line-through;
+}
+.eb-preview-vch__validity {
+  font-size: 8px;
+  font-weight: 500;
+  line-height: 12px;
+  color: #445C85;
+}
+
+/* ── Badges ─────────────────────────────────────────────────────── */
+.eb-preview-vch__badge {
+  align-self: flex-start;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: #005CE5;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+.eb-preview-vch__discount {
+  position: absolute;
+  top: 9px;
+  right: 0;
+  padding: 2px 8px;
+  border-radius: 4px 0 0 4px;
+  background: #0A2757;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 10px;
+  letter-spacing: 0.25px;
+  color: #FFFFFF;
+  z-index: 3;
+}
+/* Horizontal anchors its status badge over the asset panel. */
+.eb-preview-vch--horizontal .eb-preview-vch__badge--float {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  z-index: 3;
+}
+
+/* ── Used / Expired — the Filter overlay ────────────────────────── */
+.eb-preview-vch__filter {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.eb-preview-vch--used .eb-preview-vch__asset .eb-preview-vch__filter { background: rgba(2, 14, 34, 0.56); }
+.eb-preview-vch--expired .eb-preview-vch__asset .eb-preview-vch__filter { background: #C2CFE5; }
+.eb-preview-vch--used .eb-preview-vch__badge,
+.eb-preview-vch--expired .eb-preview-vch__badge { background: #6780A9; }
+.eb-preview-vch--expired .eb-preview-vch__title,
+.eb-preview-vch--expired .eb-preview-vch__desc,
+.eb-preview-vch--expired .eb-preview-vch__price,
+.eb-preview-vch--expired .eb-preview-vch__validity { color: #9BB0D0; }
+.eb-preview-vch--expired .eb-preview-vch__discount { background: #C2CFE5; }
+
+/* Horizontal carries a fixed action rail rather than a slot. */
+.eb-preview-vch__rail {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 28px;
+  height: 100%;
+  background: #0A2757;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+.eb-preview-vch__rail span {
+  writing-mode: vertical-rl;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+.eb-preview-vch--used .eb-preview-vch__rail,
+.eb-preview-vch--expired .eb-preview-vch__rail { background: #6780A9; }
+
+/* ── Voucher Details ────────────────────────────────────────────── */
+.eb-preview-vdet {
+  width: 336px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #FFFFFF;
+  border: 1px solid #E5EBF4;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-vdet__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 64px;
+  padding: 0 10px;
+  border-bottom: 1px solid #E5EBF4;
+}
+.eb-preview-vdet__logo {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #EEF2F9;
+}
+.eb-preview-vdet__merchant { flex: 1 1 auto; min-width: 0; }
+.eb-preview-vdet__hdr {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+.eb-preview-vdet__subhdr {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #6780A9;
+}
+.eb-preview-vdet__badge {
+  flex: 0 0 auto;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: #2340A9;
+  font-size: 10px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+.eb-preview-vdet__details { padding: 12px 16px; }
+.eb-preview-vdet__title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+.eb-preview-vdet__prices { display: flex; align-items: baseline; gap: 8px; margin-top: 8px; }
+.eb-preview-vdet__price {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  color: #005CE5;
+}
+.eb-preview-vdet__original {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+  color: #90A8D0;
+  text-decoration: line-through;
+}
+.eb-preview-vdet__validity {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #6780A9;
+}
+/* The strip is a notched divider: a hairline with a punch at each end. */
+.eb-preview-vdet__strip { position: relative; height: 16px; }
+.eb-preview-vdet__strip::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 50%;
+  border-top: 1px dashed #E5EBF4;
+}
+.eb-preview-vdet__strip i {
+  position: absolute;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #F6F9FD;
+  border: 1px solid #E5EBF4;
+}
+.eb-preview-vdet__strip i:first-child { left: -8px; }
+.eb-preview-vdet__strip i:last-child { right: -8px; }
+.eb-preview-vdet__body { padding: 12px 16px 16px; }
+.eb-preview-vdet__desc {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  color: #445C85;
+}
+.eb-preview-vdet__terms { margin-top: 12px; border-top: 1px solid #E5EBF4; padding-top: 12px; }
+.eb-preview-vdet__terms-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0A2757;
+}
+.eb-preview-vdet__terms-head--block { font-size: 14px; }
+.eb-preview-vdet__terms-list {
+  margin: 12px 0 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: #F6F9FD;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.eb-preview-vdet__terms-list li {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 18px;
+  color: #445C85;
+}
+.eb-preview-vdet__terms-list li::before { content: "✓"; color: #9BC5FD; flex: 0 0 auto; }
+.eb-preview-vdet__terms-text {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 20px;
+  color: #445C85;
+}
+.eb-preview-vdet__link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #005CE5;
+}
+
+[data-theme="dark"] .eb-preview-vch,
+[data-theme="dark"] .eb-preview-vch__content { background: #141B28; }
+[data-theme="dark"] .eb-preview-vch__title { color: #E4EAF3; }
+[data-theme="dark"] .eb-preview-vdet { background: #141B28; border-color: #2A3446; }
+[data-theme="dark"] .eb-preview-vdet__hdr,
+[data-theme="dark"] .eb-preview-vdet__title,
+[data-theme="dark"] .eb-preview-vdet__terms-head { color: #E4EAF3; }
+[data-theme="dark"] .eb-preview-vdet__terms-list { background: #1B2333; }
+
+
 /* TOC scroll target offset — leave room for the sticky comp-tabs bar
    (sticky top:16px + ~52px bar + 28px breathing) */
 .sub-heading[id] { scroll-margin-top: 96px; }
