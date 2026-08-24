@@ -2,52 +2,44 @@
  * Powers the live-preview dropdowns/toggles for the header-centered component page.
  * Re-extract via: node astro-site/scripts/extract-demos.mjs header-centered
  */
-/* ── Header - Centered (Page Banner) JS ─────────────────────────── */
-/* Pixel-accurate replica of node 18430:2858.
-   Dark variant: #1972F9 bg, white title, 72%-white "Label:" key,
-   white value, 24%-white bottom border.
-   Light variant: white bg, #0A2757 title, #6780A9 key, dark value.
-   Size: 360px × hug. Padding: 24 24 34 24.                          */
+/* ── Page Banner JS ─────────────────────────────────────────────── */
+/* Pixel-accurate replica of node 4368:12839.
+   Surface=Brand:   #1972F9 bg, white title, 72%-white "Label:" key,
+                    white value, 24%-white bottom border.
+   Surface=Default: white bg, #0A2757 title, #6780A9 key, dark value.
+   Size: 360px × hug. Padding: 24 24 34 24.
+   The SubtitleRow is present in both variants — confirmed intended
+   composition, so there is no description toggle.                   */
 
 function _headerCenteredRender(opts) {
-  var isDark  = opts.type === 'dark';
-  var hasDesc = opts.desc === 'yes';
-  var themeClass = isDark ? 'eb-preview-header-centered--dark' : 'eb-preview-header-centered--light';
-  var html = '<div class="eb-preview eb-preview-header-centered ' + themeClass + '">' +
-    '<p class="eb-preview-header-centered__title">Label</p>';
-  if (hasDesc) {
-    html +=
-      '<p class="eb-preview-header-centered__sublabel">' +
-        '<span class="eb-preview-header-centered__sublabel-key">Label:</span>' +
-        '<span class="eb-preview-header-centered__sublabel-value">&nbsp;Add Content</span>' +
-      '</p>';
-  }
-  html += '</div>';
-  return html;
+  var surface = opts.surface === 'default' ? 'default' : 'brand';
+  return '<div class="eb-preview eb-preview-header-centered eb-preview-header-centered--' + surface + '">' +
+    '<p class="eb-preview-header-centered__title">Label</p>' +
+    '<p class="eb-preview-header-centered__sublabel">' +
+      '<span class="eb-preview-header-centered__sublabel-key">Label:</span>' +
+      '<span class="eb-preview-header-centered__sublabel-value">&nbsp;Add Content</span>' +
+    '</p>' +
+  '</div>';
 }
 
 function _headerCenteredContextMarkup() {
   return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-lg">' +
-    _headerCenteredRender({type:'dark',  desc:'yes'}) +
-    _headerCenteredRender({type:'light', desc:'no'}) +
+    _headerCenteredRender({surface:'brand'}) +
+    _headerCenteredRender({surface:'default'}) +
   '</div>';
 }
 
 function _headerCenteredUpdate() {
-  var type    = document.getElementById('header-centered-ctrl-type');
-  var desc    = document.getElementById('header-centered-ctrl-desc');
+  var surface = document.getElementById('header-centered-ctrl-surface');
   var preview = document.getElementById('header-centered-demo-preview');
   if (!preview) return;
-  preview.innerHTML = _headerCenteredRender({
-    type: type ? type.value : 'dark',
-    desc: desc ? desc.value : 'yes'
-  });
+  preview.innerHTML = _headerCenteredRender({ surface: surface ? surface.value : 'brand' });
 }
 
 /* ── Spec Cards ──────────────────────────────────────────────────── */
 var _headerCenteredSpecCards = {
-  'hc-dark':  { type: 'dark',  desc: 'yes' },
-  'hc-light': { type: 'light', desc: 'yes' }
+  'hc-dark':  { surface: 'brand'   },
+  'hc-light': { surface: 'default' }
 };
 
 /* Map demoKey → existing previewHtml container id from data file. */
@@ -67,18 +59,13 @@ function buildComposeSnippet(type, card) {
   return getSnippet(type, 'compose', card);
 }
 function getSnippet(type, lang, card) {
-  var surface = card.type === 'dark' ? '.brand' : '.default';
-  var surfaceCompose = card.type === 'dark' ? 'Brand' : 'Default';
-  var hasDesc = card.desc === 'yes';
+  var isDefault = card.surface === 'default';
+  var surface = isDefault ? '.default' : '.brand';
+  var surfaceCompose = isDefault ? 'Default' : 'Brand';
   if (lang === 'swift') {
-    var s = 'EBCenteredHeader("Page title")\n    .ebStyle(' + surface + ')';
-    if (hasDesc) s += '\n    .ebDescription("Description body copy")';
-    return s;
+    return 'EBPageBanner("Label")\n    .ebSurface(' + surface + ')\n    .ebSubtitle(key: "Label:", value: "Add Content")';
   } else {
-    var c = 'EBCenteredHeader(\n    title = "Page title",\n    style = EBHeaderStyle.' + surfaceCompose;
-    if (hasDesc) c += ',\n    description = "Description body copy"';
-    c += '\n)';
-    return c;
+    return 'EBPageBanner(\n    title = "Label",\n    surface = EBSurface.' + surfaceCompose + ',\n    subtitleKey = "Label:",\n    subtitleValue = "Add Content"\n)';
   }
 }
 window.getSnippet = getSnippet;
@@ -96,10 +83,8 @@ function updateSpecCard(cardStyle, prop, value) {
   }
 
   /* Update DES property readouts via [data-sp="${cardStyle}-${prop}"]. */
-  var spType = document.querySelector('[data-sp="' + cardStyle + '-type"]');
-  if (spType) spType.textContent = card.type;
-  var spDesc = document.querySelector('[data-sp="' + cardStyle + '-desc"]');
-  if (spDesc) spDesc.textContent = card.desc;
+  var spSurface = document.querySelector('[data-sp="' + cardStyle + '-surface"]');
+  if (spSurface) spSurface.textContent = card.surface === 'default' ? 'Default' : 'Brand';
 
   /* Update DEV code — `[data-code-content="${cardStyle}"]`. */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
@@ -122,9 +107,8 @@ function _headerCenteredInit() {
   if (ctx) ctx.innerHTML = _headerCenteredContextMarkup();
   _headerCenteredUpdate();
   /* Initial spec card render. */
-  updateSpecCard('hc-dark',  'desc', 'yes');
-  updateSpecCard('hc-light', 'desc', 'yes');
-  updateSpecCard('hc-light', 'type', 'light');
+  updateSpecCard('hc-dark',  'surface', 'brand');
+  updateSpecCard('hc-light', 'surface', 'default');
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _headerCenteredInit);

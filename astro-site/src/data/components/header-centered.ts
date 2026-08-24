@@ -8,21 +8,12 @@ const headerCenteredDemoControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'type',
-        prop: 'type',
-        defaultValue: 'dark',
+        label: 'Surface',
+        prop: 'surface',
+        defaultValue: 'brand',
         options: [
-          { value: 'dark', label: 'dark' },
-          { value: 'light', label: 'light' },
-        ],
-      },
-      {
-        label: 'description',
-        prop: 'desc',
-        defaultValue: 'yes',
-        options: [
-          { value: 'yes', label: 'yes' },
-          { value: 'no', label: 'no' },
+          { value: 'brand', label: 'Brand' },
+          { value: 'default', label: 'Default' },
         ],
       },
     ],
@@ -55,7 +46,7 @@ export const headerCentered: ComponentData = {
   },
   "overview": {
     "inContextNote": "Page Banner sits at the top of a screen, modal, or feature card — centered, taking full width, setting the title of the surface below it.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"header-centered-demo-preview\"><div class=\"eb-preview eb-preview-header-centered eb-preview-header-centered--dark\"><p class=\"eb-preview-header-centered__title\">Label</p><p class=\"eb-preview-header-centered__sublabel\"><span class=\"eb-preview-header-centered__sublabel-key\">Label:</span><span class=\"eb-preview-header-centered__sublabel-value\">&nbsp;Add Content</span></p></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select id=\"header-centered-ctrl-type\" class=\"demo-panel-select\" onchange=\"_headerCenteredUpdate()\"><option value=\"dark\" selected=\"\">dark</option><option value=\"light\">light</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><select id=\"header-centered-ctrl-desc\" class=\"demo-panel-select\" onchange=\"_headerCenteredUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"header-centered-demo-preview\"><div class=\"eb-preview eb-preview-header-centered eb-preview-header-centered--brand\"><p class=\"eb-preview-header-centered__title\">Label</p><p class=\"eb-preview-header-centered__sublabel\"><span class=\"eb-preview-header-centered__sublabel-key\">Label:</span><span class=\"eb-preview-header-centered__sublabel-value\">&nbsp;Add Content</span></p></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Surface</span><select id=\"header-centered-ctrl-surface\" class=\"demo-panel-select\" onchange=\"_headerCenteredUpdate()\"><option value=\"brand\" selected=\"\">Brand</option><option value=\"default\">Default</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -207,7 +198,7 @@ export const headerCentered: ComponentData = {
                 "key": "type",
                 "value": "dark",
                 "mono": true,
-                "prop": "type"
+                "prop": "surface"
               },
               {
                 "key": "description",
@@ -296,7 +287,7 @@ export const headerCentered: ComponentData = {
                 "key": "type",
                 "value": "light",
                 "mono": true,
-                "prop": "type"
+                "prop": "surface"
               },
               {
                 "key": "description",

@@ -8,40 +8,31 @@ const bottomSheetDemoControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'Alignment',
+        label: 'TitleAlignment',
         prop: 'align',
         defaultValue: 'left',
         options: [
-          { value: 'left', label: 'Left Align' },
-          { value: 'center', label: 'Center Align' },
+          { value: 'left', label: 'Left' },
+          { value: 'center', label: 'Center' },
         ],
       },
       {
-        label: 'Preamble',
-        prop: 'preamble',
-        defaultValue: 'yes',
+        label: 'FooterOrientation',
+        prop: 'footer',
+        defaultValue: 'vertical',
         options: [
-          { value: 'yes', label: 'Yes' },
-          { value: 'no', label: 'No' },
+          { value: 'vertical', label: 'Vertical' },
+          { value: 'horizontal', label: 'Horizontal' },
         ],
       },
       {
-        label: 'Description',
-        prop: 'desc',
-        defaultValue: 'yes',
+        label: 'Subtitle',
+        prop: 'subtitle',
+        defaultValue: 'description',
         options: [
-          { value: 'yes', label: 'Yes' },
-          { value: 'no', label: 'No' },
-        ],
-      },
-      {
-        label: 'CTA',
-        prop: 'cta',
-        defaultValue: '2',
-        options: [
-          { value: '2', label: 'Primary + Tertiary' },
-          { value: '1', label: 'Primary Only' },
-          { value: '0', label: 'None' },
+          { value: 'none', label: 'None' },
+          { value: 'supporting', label: 'Supporting' },
+          { value: 'description', label: 'Description' },
         ],
       },
     ],
@@ -52,48 +43,48 @@ export const bottomSheet: ComponentData = {
   "meta": {
     "slug": "bottom-sheet",
     "name": "Bottom Sheet",
-    "node": "12817:43833",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=12817-43833",
-    "description": "The bottom-anchored sheet surface used for list pickers, confirmations, forms, and onboarding.",
+    "node": "5304:32717",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5304-32717",
+    "description": "The bottom-anchored sheet surface — a drag handle, a slotted header, an optional subtitle, and content and footer slots a consumer fills.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — rebuild around a content slot and delegate sheet mechanics to the platform",
-      "text": "Three structural problems stack: (1) scope is wrong — the component is the sheet header, not the sheet; (2) the content region is 4 decorative boxes instead of a Figma Slot, so every real usage detaches or adds a new product-local variant; and (3) it overlaps with <code>Modal</code> (<code>18507:71705</code>) and <code>Overlay</code> (<code>47:329691</code>), all three independently declaring what a floating-surface-over-scrim looks like. Proposal: rebuild as <code>EBBottomSheet</code> — a thin wrapper around SwiftUI <code>.sheet</code> / Compose <code>ModalBottomSheet</code> — with explicit <em>dragHandle</em>, <em>header</em>, <em>content</em>, and <em>footer</em> slots, and consume the already-assessed Overlay for the scrim."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>5304:32717</code> in the 2026 Working File. The component is the sheet rather than its header — <code>DragHandle</code> → <code>Header</code> → <code>Description</code> → <code>Content-Slot</code> → <code>Footer-Slot</code>, with five real Figma Slots and a vector <code>Close</code> instance. Naming is complete: <code>TitleAlignment</code> and <code>FooterOrientation</code> follow §1 and §5, the subtitle is a single <code>Subtitle</code> enum enforcing an exclusivity that was previously an unwritten convention, slots are kebab-cased per §4, and text layers follow §7 as <code>Preamble → Title → Description</code>. The centred header is confirmed a deliberate second layout rather than a stripped-down first one, the present/dismiss/detent contract is documented and owner-confirmed, and the boundary with Modal and Overlay is recorded — Overlay is the scrim, Bottom Sheet is bottom-anchored and gesture-dismissible, Modal is centred and blocking. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
     "inContextNote": "Bottom Sheet anchors to the bottom edge over a dimmed background. In the sticker-sheet context file (12522:109042), instances are used across a wide range of content shapes: ID pickers, confirmation dialogs, transfer summaries, tips lists, welcome cards, and switch-account prompts — each with different inner composition, all wrapped in the same surface.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"bottom-sheet-demo-preview\"><div style=\"position:relative;width:280px;height:360px;margin:0 auto;background:#F6F9FD;border-radius:18px;overflow:hidden;border:1px solid #E5EBF4;\"><div style=\"padding:14px;\"><div style=\"width:60%;height:8px;background:#D9E2EC;border-radius:3px;margin-bottom:10px;\"></div><div style=\"width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;\"></div><div style=\"width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;\"></div><div style=\"width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;\"></div></div><div style=\"position:absolute;inset:0;background:#020E22;opacity:0.56;\"></div><div style=\"position:absolute;left:50%;transform:translateX(-50%);bottom:0;top:110px;display:flex;align-items:flex-start;justify-content:center;\"><div style=\"background:#fff;border-top-left-radius:12px;border-top-right-radius:12px;width:240px;overflow:hidden;box-shadow:0 -2px 10px rgba(2,14,34,0.08);\"><div style=\"width:32px;height:4px;background:#C2C6CF;border-radius:2px;margin:8px auto 0;\"></div><div style=\"display:flex;align-items:flex-start;gap:8px;padding:16px 48px 8px 18px;position:relative;\"><div style=\"width:24px;height:24px;border-radius:50%;background:#C2C6CF;flex-shrink:0;margin-top:2px;\"></div><div style=\"flex:1;\"><div style=\"font-size:10px;color:#90A8D0;font-weight:700;margin-bottom:3px;\">Preamble here...</div><div style=\"font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:14px;color:#0A2757;line-height:1.2;\">Title here of the header...</div></div><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" style=\"position:absolute;right:18px;top:18px;opacity:0.8;\"><path d=\"M6 6l12 12M18 6L6 18\" stroke=\"#6780A9\" stroke-width=\"2\" stroke-linecap=\"round\"></path></svg></div><div style=\"padding:0 18px 20px;\"><div style=\"font-family:'BarkAda',serif;font-weight:500;font-size:11px;color:#445C85;line-height:1.5;\">This area is designated for descriptions...</div></div><div style=\"padding:4px 18px 20px;display:flex;flex-direction:column;gap:8px;\"><div style=\"height:28px;background:#005CE5;border-radius:99px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;\">Label</div><div style=\"height:22px;display:flex;align-items:center;justify-content:center;color:#005CE5;font-size:11px;font-weight:700;\">Label</div></div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties (current)</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">alignment</span><select id=\"bottom-sheet-ctrl-align\" class=\"demo-panel-select\" onchange=\"_bottomSheetUpdate()\"><option value=\"left\" selected=\"\">Left Align</option><option value=\"center\">Center Align</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">preamble</span><select id=\"bottom-sheet-ctrl-preamble\" class=\"demo-panel-select\" onchange=\"_bottomSheetUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><select id=\"bottom-sheet-ctrl-desc\" class=\"demo-panel-select\" onchange=\"_bottomSheetUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">cta</span><select id=\"bottom-sheet-ctrl-cta\" class=\"demo-panel-select\" onchange=\"_bottomSheetUpdate()\"><option value=\"2\" selected=\"\">primary + tertiary</option><option value=\"1\">primary only</option><option value=\"0\">none</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Proposed (not in Figma yet)</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">detent</span><select id=\"bottom-sheet-ctrl-detent\" class=\"demo-panel-select\" onchange=\"_bottomSheetUpdate()\"><option value=\"medium\" selected=\"\">medium</option><option value=\"large\">large</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">drag handle</span><select id=\"bottom-sheet-ctrl-handle\" class=\"demo-panel-select\" onchange=\"_bottomSheetUpdate()\"><option value=\"yes\" selected=\"\">visible</option><option value=\"no\">hidden</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">scrim</span><select id=\"bottom-sheet-ctrl-scrim\" class=\"demo-panel-select\" onchange=\"_bottomSheetUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">content</span><select id=\"bottom-sheet-ctrl-content\" class=\"demo-panel-select\" onchange=\"_bottomSheetUpdate()\"><option value=\"text\" selected=\"\">text + CTAs</option><option value=\"list\">list picker</option><option value=\"form\">form fields</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"bottom-sheet-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">TitleAlignment</span><select id=\"bottom-sheet-ctrl-align\" class=\"demo-panel-select\" onchange=\"_bottomSheetUpdate()\"><option value=\"left\" selected=\"\">Left</option><option value=\"center\">Center</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">FooterOrientation</span><select id=\"bottom-sheet-ctrl-footer\" class=\"demo-panel-select\" onchange=\"_bottomSheetUpdate()\"><option value=\"vertical\" selected=\"\">Vertical</option><option value=\"horizontal\">Horizontal</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Subtitle</span><select id=\"bottom-sheet-ctrl-subtitle\" class=\"demo-panel-select\" onchange=\"_bottomSheetUpdate()\"><option value=\"none\">None</option><option value=\"supporting\">Supporting</option><option value=\"description\" selected=\"\">Description</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content-Slot (illustrative)</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Slot content</span><select id=\"bottom-sheet-ctrl-content\" class=\"demo-panel-select\" onchange=\"_bottomSheetUpdate()\"><option value=\"text\" selected=\"\">Empty slot</option><option value=\"list\">List picker</option><option value=\"form\">Form fields</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
-        "rating": "fail",
-        "note": "The component ships only the header block — every real product usage (list picker, confirmation, form, tips list) has to either detach or duplicate the surface. Content region is 4 fixed placeholder rectangles, not a slot."
+        "rating": "pass",
+        "note": "A list picker, a confirmation, a form and a tips list are now the same component with different slot contents. The <code>content</code> slot removed the reason every product usage previously detached or spawned a local variant."
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Owns its surface bg, header colours, and CTA buttons via token bindings, but redraws the modal-surface concern already owned by the separately-maintained Overlay component. Scrim is not part of the component — consumers must add Overlay by hand every time."
+        "rating": "pass",
+        "note": "Owns its surface, drag handle, header structure and subtitle. It correctly does not own the scrim — that belongs to the platform presentation on both iOS and Android — though that division still needs stating for consumers."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Token namespace is <code>main/bottom-header/color/*</code>, but the component is named <em>Bottom Drawer</em> — neither name matches common usage \"Bottom Sheet\". The Alignment axis silently changes the shape of the component (Center drops Close X, adds a headerSlot). Two axis values behave like two separate components."
+        "rating": "pass",
+        "note": "<code>TitleAlignment</code> and <code>FooterOrientation</code> are PascalCase per §1 with Title Case values per §5, <code>Subtitle</code> collapses two mutually exclusive booleans into one enum so the type no longer permits an undefined combination, the five slots are kebab-cased per §4, frames are PascalCase, and text layers follow the §7 hierarchy as <code>Preamble → Title → Description</code>. The centred header carrying fewer slots is recorded as a deliberate second layout rather than an inconsistency."
       },
       {
         "name": "Composable",
-        "rating": "fail",
-        "note": "Content cannot be swapped without detaching. CTAs are hard-baked Button instances (1 primary + 1 tertiary) — count and pairing are fixed. No way to compose DS Action List, Form fields, or Filter chips inside the sheet as a first-class operation."
+        "rating": "pass",
+        "note": "Five real Figma Slots — <code>content</code>, <code>footer</code>, and three in the header — so body, actions, leading icon and trailing control are all consumer-supplied. The footer buttons are slot defaults rather than fixed structure."
       }
     ],
     "behavior": [
@@ -161,159 +152,171 @@ export const bottomSheet: ComponentData = {
         "notes": "Content slot owner's responsibility; sheet itself has no intrinsic empty/loading/error state."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Component scope is the header, not the sheet.",
-        "body": "\"Bottom Drawer\" only models the rounded top surface plus a header and hard-baked CTA row. The actual sheet primitives — drag handle, detents, scrim, snap behaviour, swipe-down-to-dismiss — are absent. Every product usage in the context file (<code>12522:109042</code>) has to re-compose the sheet by hand.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Content region is 4 decorative placeholder rectangles, not a Slot.",
-        "body": "Inside the body, <code>UI Slot</code>, <code>SLOT 2</code>, <code>SLOT 3</code>, <code>SLOT 4</code> are pink-dashed <code>#FFECF8</code> rectangles toggled by booleans <code>showSlot1..4</code>. They are not Figma Slots — designers can't instance-swap in Action List rows, form fields, or Filter chips without detaching.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Alignment axis hides a second component.",
-        "body": "Left Align and Center Align are not just text-alignment differences: Left Align has an icon placeholder + title block + Close X on the right; Center Align has a separate <code>headerSlot</code> (used for progress bars / steppers) + title block and no Close X. These are two distinct layouts collapsed into one enum.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "No drag handle primitive.",
-        "body": "Nothing in the Figma tree renders a drag handle (\"grabber\"). iOS and Android expect this as an explicit visual affordance the user grabs to resize. Either add a handle node bound to a token, or document that rendering is delegated to the platform primitive.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "No detent axis.",
-        "body": "There's no <code>medium / large / fitContent</code> axis on the component. Sheet height is whatever the decorative slots sum to. Native APIs require a discrete detent set; the Figma model doesn't reflect this.",
+        "headline": "Scope corrected — the component is now the sheet, not its header.",
+        "body": "v2.0: Rebuilt on node <code>5304:32717</code> in the 2026 Working File. The shell is <code>dragHandle</code> → <code>header</code> → <code>description</code> → <code>content</code> → <code>footer</code>, so a list picker, a confirmation and a form are all the same component with different slot contents. This was the headline finding of the previous assessment and it is fully addressed. (C4 · Composition)",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
       },
       {
-        "headline": "Scope overlap with Modal and Overlay.",
-        "body": "Bottom Sheet, Modal (<code>18507:71705</code>), and Overlay (<code>47:329691</code>) all independently model \"surface above a scrim\". None of them compose each other. The scrim should live in Overlay (already assessed); Modal and Bottom Sheet should consume it.",
+        "headline": "Content region is a real Figma Slot.",
+        "body": "v2.0: The four decorative placeholder rectangles are gone. <code>content</code> is a genuine <code>SLOT</code> node, so a consumer drops their own body in without detaching and without spawning a product-local variant. This is what took Reusable and Composable from <em>fail</em> to <em>pass</em>. (C1 · Slot)",
         "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "Close X is raster and asymmetric.",
-        "body": "The close icon is a Figma CDN PNG asset (<code>shape_full</code>) rendered only on Left Align — Center Align has no dismiss affordance at all. Both alignments should offer the same affordance, and it should be a vector Icon instance bound to <code>main/bottom-header/color/icon-close</code>.",
+        "headline": "Footer is a slot, not baked buttons.",
+        "body": "v2.0: <code>footer</code> is a <code>SLOT</code> carrying two <code>Button - Large/Medium</code> instances as default content rather than as fixed structure. Action count and pairing are now the consumer’s decision, and the <code>footerOreintation</code> axis switches the default pair between a 312px stack and two 150px side-by-side buttons. (C1 · Slot)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Header gained three named slots.",
+        "body": "v2.0: <code>aboveTitleSlot</code>, <code>leadingSlot</code> and <code>trailingSlot</code> are all real <code>SLOT</code> nodes around a <code>titleBlock</code>. The raw grey circle that stood in for a leading icon and the baked close control are both replaced by slots a consumer fills. (C1 · Slot)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Drag handle is a shared primitive.",
+        "body": "v2.0: <code>dragHandle</code> is an instance wrapping a 32×4 <code>#C2CFE5</code> pill at radius 99999, consistent across all eight variants. The sheet no longer redraws its own affordance. (C6 · Composition)",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
-        "headline": "CTAs are hard-baked, not composable.",
-        "body": "A single primary button + a single tertiary button are instance-swapped inside the component with booleans <code>primaryAction</code> / <code>secondaryAction</code>. Consumers who need one button, two horizontal buttons, three stacked options, or a link-only footer have to detach. CTA should be a footer slot receiving any button composition.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "Icon placeholder is a raw grey circle, not a Slot.",
-        "body": "Left Align's leading icon is a hardcoded <code>#C2C6CF</code> circle inside an <code>icon-placeholder</code> frame. Same anti-pattern as Modal's icon slot. Should be a Figma Slot backed by the Icon component.",
+        "headline": "Component renamed to Bottom Sheet.",
+        "body": "v2.0: The set now reads <strong>Bottom Sheet</strong> rather than <em>Bottom Drawer</em>, matching how the pattern is actually referred to and how both platforms name it. The token namespace was not readable through the review tooling and is tracked separately. (C1 · Rename)",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "Token namespace and component name disagree.",
-        "body": "The component is named \"Bottom Drawer\" while its tokens live in <code>main/bottom-header/color/*</code>. DS literature (Material, HIG) and this report use \"Bottom Sheet\". Pick one name and propagate: rename the component, rename the token collection, or both.",
+        "headline": "<code>footerOreintation</code> typo corrected.",
+        "body": "v2.1: Verified on the live node — all eight variants now read <code>footerOrientation</code>. Fixed before Code Connect or any generated native constant could bind to the misspelling, which is the cheap moment to do it. (C2 · Rename)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "No Code Connect mapping.",
-        "body": "Blocked until the restructure lands — mapping the current schema would hardcode the wrong architecture.",
+        "headline": "Variant values moved to Title Case.",
+        "body": "v2.1: <code>Left | Center</code>, <code>Vertical | Horizontal</code> and <code>True | False</code> across all eight variants, per §5. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Slots kebab-cased and frames moved to PascalCase.",
+        "body": "v2.1: <code>content</code> → <code>Content-Slot</code>, <code>footer</code> → <code>Footer-Slot</code>, <code>aboveTitleSlot</code> → <code>Title-Slot</code>, <code>leadingSlot</code> → <code>Leading-Slot</code>, <code>trailingSlot</code> → <code>Trailing-Slot</code>, all kebab-case per §4. The wrapping frames <code>header</code> and <code>description</code> are now <code>Header</code> and <code>Description</code>, and <code>#description</code> → <code>Description</code>, dropping the last legacy sigil. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Header slots now carry real content.",
+        "body": "v2.1: <code>Leading-Slot</code> holds a <code>Placeholder</code> instance as its swap target and <code>Trailing-Slot</code> holds a <code>Close</code> icon instance built on a <code>shape_full</code> boolean operation — the raster close control the original assessment flagged is gone, replaced by a vector from the shared library. (C6 · Asset)",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "<code>Title-Slot</code> renamed <code>Above-Title-Slot</code>.",
+        "body": "v2.2: Position meaning restored. The slot sits above the title row for a badge, an illustration or an eyebrow, and its name now says so rather than implying it holds the title. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Title text layer renamed <code>Title</code>.",
+        "body": "v2.2: <code>5377:35197</code> was called <code>Header</code> inside a frame also called <code>Header</code> — two things under one name in a single variant. It now reads <code>Title</code>, which resolves the collision and completes the §7 hierarchy alongside its sibling <code>Preamble</code>. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Drag Handle</code> → <code>DragHandle</code>.",
+        "body": "v2.2: The space is gone, matching the unspaced PascalCase used for frames everywhere else in the system. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Naming pass complete.",
+        "body": "v2.3: Verified on the live node. The <code>⤷</code> glyph is stripped from all three header slots, so the five slots now read one way — <code>Above-Title-Slot</code>, <code>Leading-Slot</code>, <code>Trailing-Slot</code>, <code>Content-Slot</code>, <code>Footer-Slot</code>, kebab-case per §4. <code>titleRow</code> and <code>titleBlock</code> are now <code>TitleRow</code> and <code>TitleBlock</code>, and the enum properties read <code>TitleAlignment</code> and <code>FooterOrientation</code> in PascalCase per §1 with Title Case values per §5. The two booleans correctly stay lowerCamelCase per §2. Nothing in the component carries a legacy name, a sigil or a decorative character. (C1 · C2 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Centred header confirmed control-free.",
+        "body": "v2.4: Confirmed by the owner as a deliberate constraint. <code>TitleAlignment=Center</code> drops <code>Leading-Slot</code> and <code>Trailing-Slot</code> because a centred title serves a different kind of sheet — a confirmation, a success or a celebration, where the whole surface <em>is</em> the message and the footer carries every action. A close control in the corner of that layout competes with the centred composition and duplicates a dismissal the footer already offers. A sheet that needs a leading icon or a close button uses <code>TitleAlignment=Left</code>, which carries both slots. Native implementations should treat the two alignments as two header layouts rather than one layout with a text-align flag. Recorded so the missing slots read as a rule rather than as an incomplete variant. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Present, dismiss and detent contract documented.",
+        "body": "v2.4: <strong>Height</strong> — the sheet is content-sized: it grows to fit <code>Content-Slot</code> and stops at a maximum of roughly 90% of the viewport, beyond which the content scrolls inside the sheet while the header and footer stay pinned. There is no fixed detent ladder, which is why no detent axis exists in Figma. <strong>Dismissal</strong> — the <code>DragHandle</code> is functional: swipe-down dismisses, and tapping the scrim dismisses. Where a flow must not be abandoned midway, the consumer disables both and relies on the footer actions. <strong>Scrim</strong> — supplied by the platform presentation, not by this component, which is why the set has no scrim layer. <strong>Native mapping</strong> — iOS <code>.sheet</code> with <code>.presentationDetents([.height(contentHeight), .large])</code>, <code>.presentationDragIndicator(.visible)</code> and <code>.interactiveDismissDisabled()</code> where dismissal is blocked; Android <code>ModalBottomSheet</code> with <code>sheetState</code>, <code>dragHandle = { BottomSheetDefaults.DragHandle() }</code> and <code>properties = ModalBottomSheetProperties(shouldDismissOnBackPress = …)</code>. Confirmed by the owner as the intended contract rather than an inference, so implementations can treat it as binding. (C5 · Docs)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Boundary with Modal and Overlay recorded.",
+        "body": "v2.4: The three are not duplicates once their jobs are named. <strong><a href=\"#\" onclick=\"showPanelById('overlay');return false;\">Overlay</a></strong> is the scrim itself — a full-viewport dimming layer in three strength tiers, and nothing else; it is what a surface sits <em>on top of</em>. <strong>Bottom Sheet</strong> is bottom-anchored, content-sized, draggable and dismissible, for choices and flows where the underlying screen stays relevant — pickers, summaries, forms. <strong><a href=\"#\" onclick=\"showPanelById('modal');return false;\">Modal</a></strong> is centre-anchored and blocking, for confirmations that must be answered before anything else continues; it does not drag and should not be dismissible by scrim tap. The rule of thumb: bottom-anchored and dismissible by gesture is a Bottom Sheet, centred and requiring an answer is a Modal, and the dimming behind either is Overlay. Bottom Sheet does not contain a scrim because the platform presentation supplies it; Modal, which is placed rather than presented, composes Overlay directly. (C4 · Family)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Subtitle modelled as one enum.",
+        "body": "v2.5: <code>hasSupportingText</code> × <code>hasDescription</code> is replaced by <code>Subtitle = None | Supporting | Description</code>. The two booleans were never independent — no variant in the set carries both, because they are alternative treatments of the same slot beneath the title — so the pair advertised a fourth combination the component does not define, with nothing preventing a designer landing on it. The enum enforces the exclusivity in the type rather than as an unwritten convention, and makes the matrix honest at 3 × 2 × 2 = 12 rather than a nominal 16. Accepted as a breaking property change, taken now while the cost is a reset binding in Figma rather than a native API revision after Code Connect exists. Remaining gap, now countable: <code>Center</code> ships only the <code>Description</code> subtitle, so four of the twelve are unbuilt pending the same call already made about the centred header’s slots. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Centred sheets take the Description subtitle only — matrix complete at 8.",
+        "body": "v2.6: Confirmed by the owner — the centred-header rule extends to the subtitle. <code>Center</code> is the layout for confirmations, successes and celebrations, where the surface itself is the message — so it takes the fuller <code>Description</code> treatment, while <code>Supporting</code> is the denser, left-aligned option and <code>None</code> belongs to sheets whose content carries the meaning. The four <code>Center</code> × <code>Supporting|None</code> combinations are therefore unsupported rather than unbuilt, and eight is the complete matrix: <code>Left</code> × 3 subtitles × 2 footer orientations = 6, plus <code>Center</code> × <code>Description</code> × 2 = 2. Native implementations should treat a centred sheet without a description as out of contract. Recorded so the gap reads as the same rule that governs the centred header’s slots rather than as a backlog. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      }
+    ],
+"open": [
+      {
+        "headline": "Code Connect mappings not registered.",
+        "body": "Blocked — no native library exists yet. Nothing in the schema blocks it: three cleanly named axes over five kebab-case slots, with the typo and the invalid identifier characters cleared and the subtitle exclusivity enforced by the type.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Restructure around a clean shell with four named slots.",
-        "body": "Target shape: <code>EBBottomSheet(isPresented, detents, dragHandle, header, content, footer)</code>. <em>header</em> = optional title bar region (title, preamble, leading icon, trailing icon / close). <em>content</em> = the one and only body Slot — accepts any DS composition (Action List, form fields, filter chips, tips list). <em>footer</em> = button group pinned to the bottom. Every current product usage becomes a <strong>composition</strong>: list picker = BottomSheet + Action List; confirmation = BottomSheet + description + button group; form = BottomSheet + Labeled Fields + button group; tips list = BottomSheet + numbered list; welcome card = BottomSheet + illustration + button group.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Promote the body to a real Figma Slot.",
-        "body": "Replace the 4 pink-dashed placeholder rectangles with a single named <code>content</code> Slot (Figma's Slot feature). Default to an empty 24-padded frame; let consumers instance-swap in Action List rows, form fields, or any other DS primitive without detaching.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Consolidate the Bottom Sheet / Modal / Overlay family.",
-        "body": "Canonical hierarchy: <code>Overlay</code> (scrim primitive, already shipped) → consumed by both <code>Modal</code> (centered dialog) and <code>Bottom Sheet</code> (bottom-anchored sheet). The three ship distinct anchor positions but share the scrim. Do not collapse Modal and Bottom Sheet into one — native platforms treat them as separate APIs (<code>.sheet</code> vs <code>.alert</code> / <code>Dialog</code> vs <code>ModalBottomSheet</code>).",
-        "tag": "Family"
-      },
-      {
-        "headline": "Replace the Alignment enum with a proper header schema.",
-        "body": "Split the silent shape-shift into explicit properties: <code>titleAlignment = left | center</code> (just text-align), <code>leadingSlot</code> (icon / avatar / empty), <code>trailingSlot</code> (close X / icon button / empty), <code>aboveTitleSlot</code> (stepper / progress bar / empty). Both alignments now share the same structural shape, just different text-align and slot content.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Add an explicit detent axis.",
-        "body": "Introduce <code>Detent = medium | large | fitContent</code> as a Figma variant — even if visually similar, this makes the Code Connect mapping 1:1 with <code>.presentationDetents([.medium, .large])</code> / <code>SheetValue.PartiallyExpanded</code>. Designers can then show in mocks which detent a sheet resolves to.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Add a drag-handle primitive.",
-        "body": "Vector rect, 32×4, radius 4, bound to a new token <code>main/bottom-header/color/drag-handle</code> (suggest <code>#C2C6CF</code>). Ship as its own tiny component so Modal-style sheets can omit it and Bottom Sheet can include it. Default visible for Bottom Sheet.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Footer action group should be a slot, not baked buttons.",
-        "body": "Replace the <code>primaryAction</code> + <code>secondaryAction</code> booleans with a <code>footer</code> slot that accepts any button composition — 0, 1, 2 horizontal, 2 vertical, link-only, icon+label. Same fix that Modal needs, and both should share a new <code>EBButtonGroup</code> primitive if the team wants to keep the DS tight.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Replace the raster close icon with a vector instance.",
-        "body": "Swap the Figma CDN PNG close for the DS vector <em>Close</em> icon, and bind colour to <code>main/bottom-header/color/icon-close</code> (<code>#6780A9</code>). Available on both alignments via the trailing slot.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Convert the leading icon-placeholder into an Icon slot.",
-        "body": "Same pattern as Modal: add a Figma Slot for the leading icon backed by the Icon component so designers can swap without detaching. Default to a neutral status icon or nothing.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Rename the component and its token namespace.",
-        "body": "Pick one: either rename the component to <strong>Bottom Sheet</strong> and rename the token collection from <code>main/bottom-header/color/*</code> to <code>main/bottom-sheet/color/*</code>, or keep \"Drawer\" and align tokens to <code>main/bottom-drawer/*</code>. Current disagreement between component name, token name, and common DS vocabulary costs designers every time they search. Recommended: rename to <strong>Bottom Sheet</strong> to match Material / HIG / this assessment.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Annotate the present / dismiss / gesture contract.",
-        "body": "Document on the component: slide-up entrance, fade-out-with-scrim exit, swipe-down-to-dismiss, tap-outside-dismiss, ESC/back button behaviour, focus trap, restore-focus-on-close. Developers currently have to infer these from adjacent patterns.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Add a dismissible/modal switch.",
-        "body": "Some flows (transfer confirmation, destructive action) need a non-swipe-dismiss sheet. Surface this as <code>dismissible: bool</code> on the component, mapping to iOS <code>.interactiveDismissDisabled(!dismissible)</code> and Compose <code>sheetState.confirmValueChange</code>.",
-        "tag": "State"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Types",

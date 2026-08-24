@@ -8,12 +8,12 @@ const headerWithLogoDemoControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'logo',
-        prop: 'theme',
-        defaultValue: 'light',
+        label: 'Surface',
+        prop: 'surface',
+        defaultValue: 'brand',
         options: [
-          { value: 'light', label: 'light' },
-          { value: 'dark', label: 'dark' },
+          { value: 'brand', label: 'Brand' },
+          { value: 'default', label: 'Default' },
         ],
       },
     ],
@@ -46,7 +46,7 @@ export const headerWithLogo: ComponentData = {
   },
   "overview": {
     "inContextNote": "Brand app bar appears on splash, login, onboarding, and home screens — anywhere the brand identity should lead before page-specific navigation takes over.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"header-with-logo-demo-preview\"><div class=\"eb-preview eb-preview-header-logo\"><div class=\"eb-preview-header-logo__mark eb-preview-header-logo__mark--light\"><svg class=\"eb-preview-header-logo__glyph\" viewBox=\"0 0 28 28\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"14\" cy=\"14\" r=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"></circle><path d=\"M14 6 A8 8 0 1 1 8.5 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"></path><circle cx=\"19\" cy=\"9\" r=\"1.5\" fill=\"currentColor\"></circle></svg><span>GCash</span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">logo</span><select id=\"header-with-logo-ctrl-theme\" class=\"demo-panel-select\" onchange=\"_headerWithLogoUpdate()\"><option value=\"light\" selected=\"\">light</option><option value=\"dark\">dark</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"header-with-logo-demo-preview\"><div class=\"eb-preview eb-preview-header-logo eb-preview-header-logo--brand\"><div class=\"eb-preview-header-logo__mark\"><svg class=\"eb-preview-header-logo__glyph\" viewBox=\"0 0 28 28\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"14\" cy=\"14\" r=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"></circle><path d=\"M14 6 A8 8 0 1 1 8.5 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"></path><circle cx=\"19\" cy=\"9\" r=\"1.5\" fill=\"currentColor\"></circle></svg><span>GCash</span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Surface</span><select id=\"header-with-logo-ctrl-surface\" class=\"demo-panel-select\" onchange=\"_headerWithLogoUpdate()\"><option value=\"brand\" selected=\"\">Brand</option><option value=\"default\">Default</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -173,7 +173,7 @@ export const headerWithLogo: ComponentData = {
         "title": "Dark logo variant",
         "node": "18430:2876",
         "description": "Dark GCash mark on brand surface. Used where extra contrast is needed or on lighter brand tints.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-with-logo-spec-1\"><div class=\"eb-preview eb-preview-header-logo\"><div class=\"eb-preview-header-logo__mark eb-preview-header-logo__mark--dark\"><svg class=\"eb-preview-header-logo__glyph\" viewBox=\"0 0 28 28\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"14\" cy=\"14\" r=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"></circle><path d=\"M14 6 A8 8 0 1 1 8.5 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"></path><circle cx=\"19\" cy=\"9\" r=\"1.5\" fill=\"currentColor\"></circle></svg><span>GCash</span></div></div></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-with-logo-spec-1\"><div class=\"eb-preview eb-preview-header-logo eb-preview-header-logo--brand\"><div class=\"eb-preview-header-logo__mark\"><svg class=\"eb-preview-header-logo__glyph\" viewBox=\"0 0 28 28\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"14\" cy=\"14\" r=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"></circle><path d=\"M14 6 A8 8 0 1 1 8.5 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"></path><circle cx=\"19\" cy=\"9\" r=\"1.5\" fill=\"currentColor\"></circle></svg><span>GCash</span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -183,7 +183,7 @@ export const headerWithLogo: ComponentData = {
                 "key": "logo",
                 "value": "dark",
                 "mono": true,
-                "prop": "theme"
+                "prop": "surface"
               }
             ]
           },
@@ -245,7 +245,7 @@ export const headerWithLogo: ComponentData = {
         "title": "Light logo variant",
         "node": "18430:2887",
         "description": "Light GCash mark on brand surface. The default variant for most branded screens.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-with-logo-spec-2\"><div class=\"eb-preview eb-preview-header-logo\"><div class=\"eb-preview-header-logo__mark eb-preview-header-logo__mark--light\"><svg class=\"eb-preview-header-logo__glyph\" viewBox=\"0 0 28 28\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"14\" cy=\"14\" r=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"></circle><path d=\"M14 6 A8 8 0 1 1 8.5 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"></path><circle cx=\"19\" cy=\"9\" r=\"1.5\" fill=\"currentColor\"></circle></svg><span>GCash</span></div></div></div>",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-with-logo-spec-2\"><div class=\"eb-preview eb-preview-header-logo eb-preview-header-logo--brand\"><div class=\"eb-preview-header-logo__mark\"><svg class=\"eb-preview-header-logo__glyph\" viewBox=\"0 0 28 28\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"14\" cy=\"14\" r=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"></circle><path d=\"M14 6 A8 8 0 1 1 8.5 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"></path><circle cx=\"19\" cy=\"9\" r=\"1.5\" fill=\"currentColor\"></circle></svg><span>GCash</span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -255,7 +255,7 @@ export const headerWithLogo: ComponentData = {
                 "key": "logo",
                 "value": "light",
                 "mono": true,
-                "prop": "theme"
+                "prop": "surface"
               }
             ]
           },
