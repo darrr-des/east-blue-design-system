@@ -5696,6 +5696,249 @@ pre.code-snippet .prp { color: #0369A1; }
 [data-theme="dark"] .eb-preview-adcarousel__cta { color: #62A0FA; }
 
 
+
+/* ═════════════════════════════════════════════════════════════════════
+   MODAL FAMILY — live preview primitives
+   Modal · Modal - Transaction Receipt · Modal - Transaction Receipt Entry.
+   Measurements mirror the 2026 Working File rebuild.
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* ── Shared: the action area and its buttons ────────────────────── */
+.eb-preview-mdl__actions,
+.eb-preview-mtr__actions {
+  display: flex;
+  gap: 8px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+.eb-preview-mdl--vertical .eb-preview-mdl__actions,
+.eb-preview-mtr--vertical .eb-preview-mtr__actions { flex-direction: column; }
+.eb-preview-mdl--horizontal .eb-preview-mdl__actions,
+.eb-preview-mtr--horizontal .eb-preview-mtr__actions { flex-direction: row; }
+
+.eb-preview-mdl__btn,
+.eb-preview-mtr__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  border-radius: 99px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0.25px;
+  box-sizing: border-box;
+}
+.eb-preview-mdl--horizontal .eb-preview-mdl__btn,
+.eb-preview-mtr--horizontal .eb-preview-mtr__btn { flex: 1 1 0; min-width: 0; }
+.eb-preview-mdl__btn--filled,
+.eb-preview-mtr__btn--filled { background: #005CE5; color: #FFFFFF; }
+.eb-preview-mdl__btn--outlined,
+.eb-preview-mtr__btn--outlined {
+  border: 1.5px solid #005CE5;
+  color: #005CE5;
+  background: transparent;
+}
+
+/* ── Modal - Transaction Receipt Entry ──────────────────────────── */
+.eb-preview-mtre-shell {
+  width: 272px;
+  padding: 16px;
+  border-radius: 6px;
+  background: #FFFFFF;
+  border: 1px solid #E5EBF4;
+  box-sizing: content-box;
+  font-family: inherit;
+}
+.eb-preview-mtre { display: flex; width: 272px; box-sizing: border-box; }
+.eb-preview-mtre--stacked { flex-direction: column; gap: 4px; }
+.eb-preview-mtre--inline { flex-direction: row; align-items: baseline; gap: 0; }
+
+.eb-preview-mtre__label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #6780A9;
+}
+.eb-preview-mtre__value {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+/* Stacked gives the value room to wrap; inline keeps it on one line. */
+.eb-preview-mtre--stacked .eb-preview-mtre__value { line-height: 16px; }
+.eb-preview-mtre--inline .eb-preview-mtre__value {
+  line-height: 14px;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Label fills the slack, value hugs — a longer label pushes the value. */
+.eb-preview-mtre--inline .eb-preview-mtre__label { flex: 1 1 auto; min-width: 0; }
+.eb-preview-mtre--inline .eb-preview-mtre__value { flex: 0 1 auto; }
+
+/* ── Modal - Transaction Receipt ────────────────────────────────── */
+.eb-preview-mtr {
+  width: 320px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #F6F9FD;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-mtr__content {
+  padding: 24px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E5EBF4;
+  box-sizing: border-box;
+}
+.eb-preview-mtr__title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0;
+  color: #0A2757;
+}
+.eb-preview-mtr__description {
+  margin-top: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+.eb-preview-mtr__rows {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.eb-preview-mtr__row { display: flex; align-items: baseline; gap: 8px; }
+.eb-preview-mtr__row-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #6780A9;
+}
+.eb-preview-mtr__row-value {
+  flex: 0 1 auto;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+  text-align: right;
+  white-space: nowrap;
+}
+.eb-preview-mtr__reference {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 24px;
+  background: #F6F9FD;
+  box-sizing: border-box;
+}
+/* The copy glyph — two offset rounded squares, drawn rather than imported. */
+.eb-preview-mtr__copy {
+  position: relative;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+}
+.eb-preview-mtr__copy::before,
+.eb-preview-mtr__copy::after {
+  content: "";
+  position: absolute;
+  border-radius: 3px;
+  border: 2px solid #005CE5;
+}
+.eb-preview-mtr__copy::before {
+  left: 3px;
+  top: 6px;
+  width: 11px;
+  height: 13px;
+  opacity: 0.35;
+}
+.eb-preview-mtr__copy::after {
+  left: 9px;
+  top: 2px;
+  width: 11px;
+  height: 13px;
+  background: #FFFFFF;
+}
+
+/* ── Modal ──────────────────────────────────────────────────────── */
+.eb-preview-mdl {
+  width: 320px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #FFFFFF;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+/* 24 top, none at the bottom — Content stops at the description's baseline
+   and ⤷ ActionSlot supplies its own 24 below it, exactly as in Figma. */
+.eb-preview-mdl__content {
+  padding: 24px 24px 0;
+  text-align: center;
+  box-sizing: border-box;
+}
+.eb-preview-mdl__icon {
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 16px;
+  border-radius: 8px;
+  background: #EEF2F9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.eb-preview-mdl__icon span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #90A8D0;
+}
+/* hasIcon=false collapses the slot and the gap beneath it. */
+.eb-preview-mdl--no-icon .eb-preview-mdl__icon { display: none; }
+.eb-preview-mdl__title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0;
+  color: #0A2757;
+}
+/* BarkAda is the secondary face — longer copy at smaller sizes. */
+.eb-preview-mdl__description {
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #6780A9;
+}
+
+/* ── Dark theme ─────────────────────────────────────────────────── */
+[data-theme="dark"] .eb-preview-mtre-shell,
+[data-theme="dark"] .eb-preview-mdl,
+[data-theme="dark"] .eb-preview-mtr__content { background: #141B28; }
+[data-theme="dark"] .eb-preview-mtre-shell { border-color: #2A3446; }
+[data-theme="dark"] .eb-preview-mtr,
+[data-theme="dark"] .eb-preview-mtr__reference { background: #101725; }
+[data-theme="dark"] .eb-preview-mtr__content { border-bottom-color: #2A3446; }
+[data-theme="dark"] .eb-preview-mtre__value,
+[data-theme="dark"] .eb-preview-mtr__row-value,
+[data-theme="dark"] .eb-preview-mtr__title,
+[data-theme="dark"] .eb-preview-mtr__description,
+[data-theme="dark"] .eb-preview-mdl__title { color: #E4EAF3; }
+[data-theme="dark"] .eb-preview-mdl__icon { background: #1B2333; }
+[data-theme="dark"] .eb-preview-mtr__copy::after { background: #141B28; }
 /* TOC scroll target offset — leave room for the sticky comp-tabs bar
    (sticky top:16px + ~52px bar + 28px breathing) */
 .sub-heading[id] { scroll-margin-top: 96px; }
