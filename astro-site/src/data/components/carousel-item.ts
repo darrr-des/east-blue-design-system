@@ -39,41 +39,50 @@ const carouselItemDemoControls: DemoControlSection[] = [
 export const carouselItem: ComponentData = {
   "meta": {
     "slug": "carousel-item",
-    "name": "Carousel - Item",
-    "node": "",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=",
-    "description": "A horizontal-scroll item used as a building block for product/promo carousels.",
-    "badges": [],
+    "name": "Carousel Item",
+    "node": "5776:37969",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5776-37969",
+    "description": "A full-bleed banner item for a horizontal carousel — background image, heading, description, and a button. 24 versions across size, appearance, top element, and pressed state.",
+    "badges": [
+      {
+        "kind": "keep",
+        "label": "Keep"
+      },
+      {
+        "kind": "refine",
+        "label": "Needs Refinement"
+      }
+    ],
     "navGroup": "Carousel",
     "verdict": {
-      "kind": "consolidate",
-      "title": "Consolidate — merge Carousel - Item + Center + Side into a single position-agnostic component",
-      "text": "All three have the same 10 variants (Mode × Type × hasTextLink × hasPreamble) — only dimensions differ. Position (center vs side) is a runtime layout concern: the carousel container applies scale/opacity based on scroll progress, not via component variants. Collapse to one <code>Carousel Item</code> (or fold into <code>Carousel Card</code>), strip <code>mode</code> in favour of a proper <code>appearance</code> mode set, replace the raster background with a <code>background</code> slot, vectorize the chevron, and add pressed state."
+      "kind": "keep",
+      "title": "Keep — rebuilt as one component with a complete version grid",
+      "text": "The three near-identical siblings (Item, Center, Side) collapsed into one <code>Carousel Item</code>, and every issue from the first assessment is closed. Settings are now <code>Size</code>, <code>Appearance</code>, <code>TopElement</code>, and <code>isPressed</code> — a full 2 × 2 × 3 × 2 grid with all 24 versions built, no gaps. <code>Background</code> and <code>⤷ LeadingIcon</code> are real slots, the chevron is a vector instance inside a proper Button, and pressed ships as a dim overlay. Code Connect stays unmapped because the native library doesn't exist yet."
     }
   },
   "overview": {
     "inContextNote": "Carousel - Item is one card in a horizontal swipe carousel — typically a promotional banner stack on the Home or Dashboard screen. The center item is emphasized; side items peek in at reduced opacity/scale. In today's Figma file, those visual states exist as separate components (Item, Item - Center, Item - Side) rather than being driven by the carousel container.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"cit-demo-preview\"><div class=\"eb-preview eb-preview-cit eb-preview-cit--bg-dark\"><div class=\"eb-preview-cit__hero\"></div><div class=\"eb-preview-cit__content\"><div class=\"eb-preview-cit__heading\" style=\"color:#FFFFFF\">Heading</div><div class=\"eb-preview-cit__desc\" style=\"color:#FFFFFF\">This is a description for this banner. This is a description.</div><div class=\"eb-preview-cit__link\" style=\"color:#FFFFFF\"><span>Button</span><svg class=\"eb-preview-cit__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 6l6 6-6 6\" stroke=\"#FFFFFF\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">preamble</span><input type=\"text\" id=\"cit-ctrl-preamble\" class=\"demo-panel-select demo-panel-input\" value=\"Preamble\" oninput=\"_citUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">heading</span><input type=\"text\" id=\"cit-ctrl-heading\" class=\"demo-panel-select demo-panel-input\" value=\"Heading\" oninput=\"_citUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><input type=\"text\" id=\"cit-ctrl-desc\" class=\"demo-panel-select demo-panel-input\" value=\"This is a description for this banner. This is a description.\" oninput=\"_citUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">button</span><input type=\"text\" id=\"cit-ctrl-button\" class=\"demo-panel-select demo-panel-input\" value=\"Button\" oninput=\"_citUpdate()\"></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">mode</span><select id=\"cit-ctrl-mode\" class=\"demo-panel-select\" onchange=\"_citUpdate()\"><option value=\"light\" selected=\"\">Light Text</option><option value=\"dark\">Dark Text</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select id=\"cit-ctrl-type\" class=\"demo-panel-select\" onchange=\"_citUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"icon\">with Icon</option><option value=\"headline\">Headline Only</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasPreamble</span><select id=\"cit-ctrl-haspreamble\" class=\"demo-panel-select\" onchange=\"_citUpdate()\"><option value=\"no\" selected=\"\">no</option><option value=\"yes\">yes</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTextLink</span><select id=\"cit-ctrl-hastextlink\" class=\"demo-panel-select\" onchange=\"_citUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"cit-demo-preview\"><div class=\"eb-preview eb-preview-cit eb-preview-cit--bg-dark\"><div class=\"eb-preview-cit__hero\"></div><div class=\"eb-preview-cit__content\"><div class=\"eb-preview-cit__icon\"></div><div class=\"eb-preview-cit__heading\" style=\"color:#FFFFFF\">Heading</div><div class=\"eb-preview-cit__desc\" style=\"color:rgba(246,249,253,0.8)\">This is a description for this banner.</div><div class=\"eb-preview-cit__link\" style=\"color:#FFFFFF\"><span>Button</span><svg class=\"eb-preview-cit__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 6l6 6-6 6\" stroke=\"#FFFFFF\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\" id=\"cit-row-preamble\"><span class=\"demo-panel-label\">preamble</span><input type=\"text\" id=\"cit-ctrl-preamble\" class=\"demo-panel-select demo-panel-input\" value=\"Preamble\" oninput=\"_citUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">heading</span><input type=\"text\" id=\"cit-ctrl-heading\" class=\"demo-panel-select demo-panel-input\" value=\"Heading\" oninput=\"_citUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">description</span><input type=\"text\" id=\"cit-ctrl-desc\" class=\"demo-panel-select demo-panel-input\" value=\"This is a description for this banner.\" oninput=\"_citUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">button</span><input type=\"text\" id=\"cit-ctrl-button\" class=\"demo-panel-select demo-panel-input\" value=\"Button\" oninput=\"_citUpdate()\"></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Size</span><select id=\"cit-ctrl-size\" class=\"demo-panel-select\" onchange=\"_citUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"small\">Small</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Appearance</span><select id=\"cit-ctrl-appearance\" class=\"demo-panel-select\" onchange=\"_citUpdate()\"><option value=\"dark\" selected=\"\">Dark</option><option value=\"light\">Light</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">TopElement</span><select id=\"cit-ctrl-topelement\" class=\"demo-panel-select\" onchange=\"_citUpdate()\"><option value=\"icon\" selected=\"\">Icon</option><option value=\"preamble\">Preamble</option><option value=\"none\">None</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isPressed</span><select id=\"cit-ctrl-ispressed\" class=\"demo-panel-select\" onchange=\"_citUpdate()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
-        "rating": "warn",
-        "note": "The card itself is reusable for banner carousels. But because the background is a baked-in raster and there's no image slot, every product team has to detach or fork to change imagery."
+        "rating": "pass",
+        "note": "<code>Background</code> is a slot, so any team drops in its own artwork without detaching. One component now covers what took three."
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Card chrome + text tokens are self-contained, but background image, chevron, and icon placeholder ship as rasters embedded in the variant — not swappable instances."
+        "rating": "pass",
+        "note": "Background, leading icon, and the button all arrive as slots or instances. Pressed is handled inside the component by an <code>Overlay</code> instance rather than left to the consumer."
       },
       {
         "name": "Consistent",
-        "rating": "fail",
-        "note": "Three near-identical components (Item 282, Center 312, Side 312/146) with the same 10-variant schema. Property casing is mixed (<code>hasPreamble</code> vs <code>with Icon</code>). <code>type=Headline Only</code> is actually \"with Preamble + Heading Only\" — mis-named."
+        "rating": "pass",
+        "note": "All 24 versions share one anatomy — <code>Background</code>, <code>content</code>, <code>top-container</code>, <code>text-container</code>, <code>Button_New</code>. Settings follow the naming guidelines: <code>Size</code>, <code>Appearance</code>, and <code>TopElement</code> in PascalCase, <code>isPressed</code> as an <code>is</code>-prefixed boolean with <code>true</code> / <code>false</code> values."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Slots into a horizontal carousel container, but the container hasn't been formalized — consumers stitch peek/scale behaviour per screen."
+        "rating": "pass",
+        "note": "Composes the DS button rather than drawing its own, and the chevron rides in the button's <code>Trailing Container</code> slot. Stacks into a horizontal scroller; the carousel container itself is still undocumented and tracked as a recommendation."
       }
     ],
     "behavior": [
@@ -81,107 +90,122 @@ export const carouselItem: ComponentData = {
         "state": "Default",
         "ios": "yes",
         "android": "yes",
-        "property": "mode × type × hasTextLink × hasPreamble",
-        "notes": "Static banner with tap target on the whole card (if <code>hasTextLink</code>) or on the button only."
+        "property": "Size=Default",
+        "notes": "282 × 160. Background slot, heading, description, and a button with a trailing chevron."
       },
       {
-        "state": "Focused (center)",
-        "ios": "na",
-        "android": "na",
-        "property": "Carousel Item - Center (312×160)",
-        "notes": "Modeled as a sibling component. Should be a scroll-progress-driven style inside the carousel container."
+        "state": "Small",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Size=Small",
+        "notes": "282 × 146. Same anatomy, 14px shorter. These are the two heights the old Center and Side components used, so a carousel that shrinks its side items swaps versions rather than applying a transform."
       },
       {
-        "state": "Peeking (side)",
-        "ios": "na",
-        "android": "na",
-        "property": "Carousel Item - Side (312×146)",
-        "notes": "Modeled as a sibling component. Should be a scroll-progress-driven style inside the carousel container."
+        "state": "Dark appearance",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Appearance=Dark",
+        "notes": "For dark artwork — heading in <code>#ffffff</code>, description in <code>#f6f9fd</code> at 80%."
+      },
+      {
+        "state": "Light appearance",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Appearance=Light",
+        "notes": "For pale artwork — dark text. Note the inversion from the old <code>mode</code> setting: what was <code>mode=Light Text</code> is now <code>Appearance=Dark</code>."
+      },
+      {
+        "state": "Top element",
+        "ios": "yes",
+        "android": "yes",
+        "property": "TopElement=Icon | Preamble | None",
+        "notes": "Chooses what sits above the heading — a 24 × 24 <code>⤷ LeadingIcon</code> slot, a preamble line, or nothing."
       },
       {
         "state": "Pressed",
+        "ios": "yes",
+        "android": "yes",
+        "property": "isPressed=true",
+        "notes": "An <code>Overlay</code> instance drops a <code>dim</code> layer over the background at <code>#020e22</code> / 24%. Text colours stay put."
+      },
+      {
+        "state": "Loading",
         "ios": "na",
         "android": "na",
         "property": "Not built",
-        "notes": "Banner is tappable — needs a subtle scale-down or overlay tint on press."
-      },
-      {
-        "state": "Disabled",
-        "ios": "na",
-        "android": "na",
-        "property": "—",
-        "notes": "Promotional banner — disabled state isn't meaningful."
+        "notes": "No skeleton. Carousel Card ships one — deferred for now, tracked as a family-consistency item."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Position is a separate component, not a runtime style.",
-        "body": "Carousel - Item (282), Carousel Item - Center (312×160), and Carousel Item - Side (312×146) all share the same 10-variant schema. Center/side should be carousel-container-driven visual states via scale + opacity on scroll progress — not distinct DS components.",
+        "headline": "The three sibling components are now one.",
+        "body": "v2.0: rebuilt on node <code>5776:37969</code>. Item, Center, and Side collapsed into a single <code>Carousel Item</code>, and what was carousel position is now a <code>Size</code> setting — <code>Default</code> (282 × 160) and <code>Small</code> (282 × 146).",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "Property casing is inconsistent.",
-        "body": "Booleans are camelCase (<code>hasPreamble</code>, <code>hasTextLink</code>) but enum values are Title-Cased or hyphenated with lowercase (<code>Light Text</code>, <code>with Icon</code>, <code>Headline Only</code>). Pick one convention.",
+        "headline": "Property names follow the guidelines.",
+        "body": "v2.0: <code>Size</code>, <code>Appearance</code>, and <code>TopElement</code> are PascalCase variant properties; <code>isPressed</code> is an <code>is</code>-prefixed boolean with lowercase <code>true</code> / <code>false</code>; the slot is <code>⤷ LeadingIcon</code>. The old mix of <code>hasPreamble</code>, <code>with Icon</code>, and <code>Light Text</code> is gone.",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "<code>type=Headline Only</code> is misleading.",
-        "body": "That variant renders Preamble + Heading + Button (no description). Either rename to <code>noDescription</code> or collapse into a boolean <code>hasDescription</code>.",
+        "headline": "<code>type=Headline Only</code> is gone.",
+        "body": "v2.0: replaced by <code>TopElement = Icon | Preamble | None</code>, which names what actually changes — the element above the heading.",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "<code>mode</code> is about text color, not appearance.",
-        "body": "The enum decides text color only (inverse on dark photos vs dark on light photos). Native platforms should infer contrast from the background image or expose a proper <code>appearance</code> enum — not a layer-level token swap.",
+        "headline": "<code>mode</code> became a real appearance setting.",
+        "body": "v2.0: now <code>Appearance = Dark | Light</code>, picking the whole text colour set at once instead of overriding layers. Watch the inversion — the old <code>mode=Light Text</code> is the new <code>Appearance=Dark</code>.",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
       },
       {
-        "headline": "Background image has no slot.",
-        "body": "The image is baked into the variant — product teams can't drop in their own artwork without detaching the instance.",
+        "headline": "The background is a slot.",
+        "body": "v2.0: <code>Background</code> is a SLOT on all 24 versions, wrapping an <code>Asset</code> instance. Teams drop in their own artwork without detaching.",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
       },
       {
-        "headline": "Chevron is a raster <code>shape_full</code> PNG.",
-        "body": "Doesn't scale cleanly and can't accept a token-bound tint. Ships twice (once per <code>mode</code>).",
+        "headline": "The chevron is a vector instance.",
+        "body": "v2.0: now <code>Chevron Right Small</code>, riding in the button's <code>Trailing Container</code> slot. The raster <code>shape_full</code> is gone, and it ships once rather than once per appearance.",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
-        "headline": "Icon placeholder in <code>with Icon</code> is a drawn grey circle.",
-        "body": "Not a swappable Icon or Avatar instance.",
+        "headline": "The icon placeholder is a slot.",
+        "body": "v2.0: <code>⤷ LeadingIcon</code> (<code>5804:42380</code>) is an empty 24 × 24 slot in place of the drawn grey circle. Any DS icon or Avatar drops in.",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
-        "headline": "No pressed state.",
-        "body": "Banner is tappable but only Default is modeled.",
+        "headline": "The card has a pressed state.",
+        "body": "v2.0: <code>isPressed</code> ships on all 24 versions. An <code>Overlay</code> instance dims the background with a <code>#020e22</code> layer at 24%, leaving text colours untouched.",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
-      },
+      }
+    ],
+    "open": [
       {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until the three siblings are consolidated and the image + icon slots are adopted.",
+        "body": "Blocked — the native component library doesn't exist yet. Nothing to action on the design side.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -190,54 +214,76 @@ export const carouselItem: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Consolidate Carousel - Item + Center + Side into a single <code>Carousel Item</code>.",
-        "body": "All three share the same 10-variant schema; only dimensions differ. Pick one canonical size (312×160 is the most common) and let the carousel container handle center-vs-side styling via scroll progress. Preferred target: fold into <a href=\"#\" onclick=\"showPanelById('carousel-card');return false;\">Carousel Card</a> if content shape is compatible, otherwise keep as <code>EBCarouselItem</code> sibling.",
+        "headline": "Note why <code>Size</code> uses <code>Default</code> and <code>Small</code>.",
+        "body": "The standard size scale is <code>XS · SM · MD · LG · XL</code>. This component deliberately uses <code>Default</code> and <code>Small</code> to put the emphasis on the default behaviour. Write the exception down so the next reviewer doesn't file it as drift.",
+        "tag": "Docs"
+      },
+      {
+        "headline": "Settle the <code>Button_New</code> name.",
+        "body": "The button instance inside every version is named <code>Button_New</code>, which reads like a migration artifact. Held for the final reviewer to decide — it belongs to the Button component, not this one.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Decide whether Carousel Item needs a loading state.",
+        "body": "Carousel Card ships <code>isLoading</code> with skeletons; this component has none. Deferred for now. Settle it either way so the card family stays predictable.",
+        "tag": "State"
+      },
+      {
+        "headline": "Audit the colour token bindings.",
+        "body": "The review tooling reads raw hex and can't see which values are bound to variables, so C3 is recorded as unverified rather than passing. The description colour in particular is <code>#f6f9fd</code> at 80% opacity rather than a flat token value — worth confirming that's the intended binding.",
+        "tag": "Token"
+      },
+      {
+        "headline": "Document the carousel container.",
+        "body": "Peek behaviour, snap-to-centre, the page indicator, and auto-advance belong on a dedicated <code>EBCarousel</code> container — not on each item. On iOS that's <code>.scrollTransition</code>; on Android, <code>graphicsLayer</code> keyed off <code>HorizontalPager</code> page offset.",
         "tag": "Family"
       },
       {
-        "headline": "Let the carousel container own focus/peek styling.",
-        "body": "Center-item scale, side-item opacity, and peek offset are layout concerns — not component variants. On iOS use <code>.scrollTransition { content, phase in content.opacity(phase.isIdentity ? 1 : 0.6).scaleEffect(phase.isIdentity ? 1 : 0.94) }</code>. On Android use <code>graphicsLayer</code> keyed off <code>HorizontalPager</code> page offset.",
-        "tag": "Composition"
+        "headline": "Announce as a link or button.",
+        "body": "The whole card is tappable — VoiceOver and TalkBack should read heading, description, and the button label as one actionable announcement.",
+        "tag": "A11y"
+      },
+      {
+        "headline": "See siblings:",
+        "body": "<a href=\"#\" onclick=\"showPanelById('carousel-card');return false;\">Carousel Card</a> — the narrow 140-wide card for the same rails. Keep slot naming and state coverage aligned across both.",
+        "tag": "Family"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Consolidate Carousel - Item + Center + Side into a single <code>Carousel Item</code>.",
+        "body": "v2.0: Applied — one component replaces three. Position became the <code>Size</code> setting.",
+        "tag": "Family"
       },
       {
         "headline": "Add a <code>background</code> slot.",
-        "body": "Replace the baked-in raster with a Figma Slot that accepts an image, gradient, or illustration instance. Native: <code>background: AnyView</code> (SwiftUI) / <code>background: @Composable () -&gt; Unit</code> (Compose).",
+        "body": "v2.0: Applied — <code>Background</code> is a SLOT on all 24 versions.",
         "tag": "Slot"
       },
       {
         "headline": "Replace <code>mode</code> with an <code>appearance</code> enum.",
-        "body": "<code>appearance: light | dark</code> (matching Button's conventions) — picks the full text/link color set in one go rather than Figma overriding each layer. Later, auto-derive from background luminance if tooling supports it.",
+        "body": "v2.0: Applied — <code>Appearance = Dark | Light</code> now picks the whole text colour set.",
         "tag": "Property"
       },
       {
-        "headline": "Rename <code>type=Headline Only</code> to <code>hasDescription: false</code>.",
-        "body": "The current name doesn't describe what that variant renders. Collapse <code>type</code> to <code>Default | with Icon</code> and move description visibility to a boolean.",
+        "headline": "Rename <code>type=Headline Only</code>.",
+        "body": "v2.0: Applied — replaced by <code>TopElement = Icon | Preamble | None</code>.",
         "tag": "Rename"
       },
       {
-        "headline": "Add a leading icon slot (Icon or Avatar).",
-        "body": "Replace the grey circle placeholder with a proper Figma Slot that accepts an Icon or Avatar instance.",
+        "headline": "Add a leading icon slot.",
+        "body": "v2.0: Applied — <code>⤷ LeadingIcon</code>, an empty 24 × 24 slot.",
         "tag": "Slot"
       },
       {
         "headline": "Vectorize the chevron.",
-        "body": "Swap the raster <code>shape_full</code> for a vector glyph — one instance, token-bound color, crisp at any scale.",
+        "body": "v2.0: Applied — <code>Chevron Right Small</code> instance inside the button's <code>Trailing Container</code> slot.",
         "tag": "Asset"
       },
       {
         "headline": "Add pressed state.",
-        "body": "Subtle scale-down (0.98) or dark overlay (6–8% black) on press — banners are tappable and need tap feedback.",
+        "body": "v2.0: Applied — <code>isPressed</code> dims the background via an <code>Overlay</code> instance at <code>#020e22</code> / 24%.",
         "tag": "State"
-      },
-      {
-        "headline": "Document the carousel container.",
-        "body": "The peek behaviour, snap-to-center, page indicator, and auto-advance belong on a dedicated <code>EBCarousel</code> container component — not in each item.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Announce as a link / button.",
-        "body": "The whole card is tappable — VoiceOver and TalkBack should read heading + description + \"Button\" as a single actionable announcement.",
-        "tag": "A11y"
       }
     ]
   },
@@ -461,51 +507,51 @@ export const carouselItem: ComponentData = {
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Position-specific duplicates (Item / Center / Side) should be one component with container-driven styling."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One component replaces three. All 24 versions share <code>Background</code>, <code>content</code>, <code>top-container</code>, <code>text-container</code>."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Mixed casing; <code>Headline Only</code> is mis-named."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Size</code>, <code>Appearance</code>, <code>TopElement</code> in PascalCase; <code>isPressed</code> boolean with lowercase values. <code>Size=Default|Small</code> is a deliberate exception to the <code>XS–XL</code> scale."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Text colors bind to <code>main/carousel/color/*</code>, <code>text/color-text-inverse*</code>, radius + shadow tokens."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Not verified. The read-only review tooling reads raw hex and can't see variable bindings. No evidence of a problem, but a token audit is needed to close this out — the 80% opacity on the description colour is worth confirming."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Background is a baked raster — needs to become a slot. Position-as-variant doesn't map to pager APIs."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Background</code> and <code>⤷ LeadingIcon</code> map to <code>@ViewBuilder</code> / <code>@Composable</code> slots. <code>Size</code> and <code>Appearance</code> are plain enums."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Default only — no pressed state for a tappable card."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Default and pressed built across all 24. No loading state — deferred, tracked as a family-consistency item."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Raster chevron; drawn circle icon placeholder."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Vector <code>Chevron Right Small</code> instance; <code>⤷ LeadingIcon</code> slot; <code>Background</code> slot."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked until consolidation + slots land."
+        "notes": "Blocked — the native component library doesn't exist yet."
       }
     ],
     "codeConnect": [],

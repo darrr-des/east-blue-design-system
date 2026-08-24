@@ -130,6 +130,39 @@ The overall native readiness of a component based on all 7 criteria.
 
 ---
 
+## Cross-Project Application — Rubric Notes
+
+The 4 Traits and 7 Criteria are project-agnostic and transfer to components from any Figma file without modification. Only three inputs are project-specific *configuration*, not framework: the token naming convention (`main/{component}/…`), the standing font flags (Proxima Soft / BarkAda), and the Figma file key.
+
+Two refinements surfaced when the framework was first run against a foreign file — a swipe-to-confirm CTA living in a screen-development file rather than a component library. Apply both when assessing components outside the GCash DS library.
+
+### C3 — Separate "unbound tokens" from "not a DS file"
+
+C3 (Token Coverage) assumes the file is a **token-backed component library**. Run against a **screen-development or prototyping file**, C3 will read Fail by default — every visual value is a raw literal because the file was never meant to be a token source.
+
+Before scoring C3 Fail, check what the file's variable collections actually contain:
+
+- **Design tokens** (color / spacing / radius / type) → score C3 normally against binding coverage.
+- **Prototype state variables only** (e.g. `isSwiped`, `phone_number`, `amount_input`, `isHidden`) → the file is a *consumer* of a DS, not a *source*. Note this explicitly: "No design tokens in file — prototyping file, not a DS library source." The component still can't hand off without token binding, but the failure is a file-scope issue, not a component defect.
+
+This distinction keeps a screen-dev component from reading as catastrophically broken when its only real C3 task is to adopt the upstream DS tokens.
+
+### C5 — Add progress-range states for continuous / gesture components
+
+C5 (Interaction State Coverage) is written for **discrete** states (default, pressed, focused, disabled). A **continuous or gesture-driven** component — swipe-to-confirm, slider, pull-to-refresh, drag handle — has no fixed state set; its defining behavior is the *progress between* its endpoints.
+
+When the component is gesture-driven, score C5 against this expanded set instead of the discrete one:
+
+- **Idle / start** — resting state before interaction.
+- **In-progress (0–100%)** — the drag/scrub range, including a partial-then-released "snap back" path.
+- **Threshold met / committed** — the success or completion end state.
+- **Failure / cancelled** — interaction abandoned or rejected (often missing).
+- **Disabled** — still required.
+
+A two-variant set (e.g. `isSwiped = false | true`) cannot express a swipe and should score C5 Fail on coverage grounds, not pass just because both endpoints exist.
+
+---
+
 ## HTML Report Architecture
 
 The report is a modular, build-assembled static site on GitHub Pages.

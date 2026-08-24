@@ -1,87 +1,124 @@
-/* Auto-extracted from assessment-src/components/table-transaction.html.
- * Powers the live-preview dropdowns/toggles for the table-transaction component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs table-transaction
+/* Powers the live-preview controls for the table-transaction component page.
+ *
+ * Tracks component set 5896:39727 — Role (Header / Content) × State
+ * (Default / Disabled). Column count is not a property: the ⤷ ColumnSlot
+ * holds however many cells you drop in — Table Cell instances in the header,
+ * Table Amount Cell instances in the content row.
  */
-/* ── Table - Transaction JS ─────────────────────────────────────── */
-var _tableTxnDemo = { type: 'header', cols: '3', icon: 'no' };
 
-function _tableTxnBuildRow(type, cols, icon) {
-  var W = 360;
-  var padH = 24;
-  var isHeader = type === 'header';
-  var bg = isHeader ? '#F6F9FD' : '#FFFFFF';
-  var border = 'border-bottom:1px solid #E5EBF4;';
-  var headerGap = 8;
-  var colsNum = parseInt(cols, 10);
+function _ttxnEscape(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
 
-  if (isHeader) {
-    var height = icon === 'yes' ? 62 : 36;
-    var labelFont = 'font-family:\'Proxima Soft\', system-ui; font-weight:600; font-size:10px; line-height:12px; letter-spacing:0.25px;';
-    var s = '<div style="width:' + W + 'px; height:' + height + 'px; background:' + bg + '; ' + border + ' padding:12px ' + padH + 'px; display:flex; align-items:center; gap:' + headerGap + 'px; box-sizing:border-box; color:#0A2757;">';
-    for (var i = 0; i < colsNum; i++) {
-      s += '<div style="flex:1 0 0; min-width:0; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:2px;">';
-      if (icon === 'yes') {
-        s += '<div style="width:24px; height:24px; background:#C2C6CF; border-radius:41px;"></div>';
-      }
-      s += '<span style="' + labelFont + '">Column Label</span>';
-      s += '</div>';
+/* Legacy option shape was { type, cols, icon }. */
+function _ttxnNormalise(opts) {
+  var o = opts || {};
+  return {
+    role:  o.role  || (o.type === 'content' ? 'content' : 'header'),
+    state: o.state || 'default',
+    cols:  parseInt(o.cols, 10) || 3,
+    asset: o.asset === undefined ? (o.icon === 'no' ? 'no' : 'yes') : o.asset,
+    hasLabel:  o.hasLabel  === undefined ? true : (o.hasLabel === 'true' || o.hasLabel === true),
+    hasBorder: o.hasBorder === undefined ? true : (o.hasBorder === 'true' || o.hasBorder === true),
+    label: o.label || 'Label'
+  };
+}
+
+function _ttxnBuild(opts) {
+  var o = _ttxnNormalise(opts);
+  var isHeader = o.role === 'header';
+
+  var cls = 'eb-preview eb-preview-ttxn eb-preview-ttxn--' + (isHeader ? 'header' : 'content');
+  if (o.state === 'disabled') cls += ' eb-preview-ttxn--disabled';
+  if (!o.hasBorder) cls += ' eb-preview-ttxn--no-border';
+
+  var s = '<div class="' + cls + '">';
+
+  /* Content rows carry a full-width #label above the amount cells. */
+  if (!isHeader && o.hasLabel) {
+    s += '<div class="eb-preview-ttxn__label">' + _ttxnEscape(o.label) + '</div>';
+  }
+
+  s += '<div class="eb-preview-ttxn__cols">';
+  for (var i = 0; i < o.cols; i++) {
+    s += '<div class="eb-preview-ttxn__cell">';
+    if (isHeader) {
+      /* Table Cell — ⤷ AssetSlot above a column label */
+      if (o.asset === 'yes') s += '<div class="eb-preview-ttxn__cell-asset"></div>';
+      s += '<span class="eb-preview-ttxn__cell-label">Column Label</span>';
+    } else {
+      /* Table Amount Cell — its own #label is hidden here, so only the
+         peso-prefixed value renders. The row's single #label covers them all. */
+      s += '<span class="eb-preview-ttxn__cell-amount"><span>₱</span><span>X,XXX.XX</span></span>';
     }
     s += '</div>';
-    return s;
   }
+  s += '</div>';
 
-  // content row
-  var preambleFont = 'font-family:\'Proxima Soft\', system-ui; font-weight:600; font-size:14px; line-height:14px; letter-spacing:0.25px; color:#6780A9;';
-  var amountFont = 'font-family:\'Proxima Soft\', system-ui; font-weight:700; font-size:14px; line-height:14px; letter-spacing:0.25px; color:#0A2757;';
-  var s2 = '<div style="width:' + W + 'px; background:' + bg + '; ' + border + ' padding:16px ' + padH + 'px; box-sizing:border-box; display:flex; flex-direction:column; gap:8px;">';
-  s2 += '<div style="' + preambleFont + '">Label</div>';
-  s2 += '<div style="display:flex; gap:16px; align-items:center;">';
-  for (var j = 0; j < colsNum; j++) {
-    s2 += '<div style="flex:1 0 0; min-width:0; display:flex; align-items:center; gap:2px;">';
-    s2 += '<span style="' + amountFont + '">₱</span>';
-    s2 += '<span style="' + amountFont + '">X,XXX.XX</span>';
-    s2 += '</div>';
-  }
-  s2 += '</div></div>';
-  return s2;
+  s += '</div>';
+  return s;
 }
 
 function updateTableTransactionDemo() {
-  _tableTxnDemo.type = document.getElementById('table-transaction-demo-type').value;
-  _tableTxnDemo.cols = document.getElementById('table-transaction-demo-cols').value;
-  _tableTxnDemo.icon = document.getElementById('table-transaction-demo-icon').value;
-  var effectiveIcon = _tableTxnDemo.type === 'content' ? 'no' : _tableTxnDemo.icon;
+  var get = function (id, fb) { var el = document.getElementById(id); return el ? el.value : fb; };
   var el = document.getElementById('table-transaction-demo-preview');
-  if (el) el.innerHTML = _tableTxnBuildRow(_tableTxnDemo.type, _tableTxnDemo.cols, effectiveIcon);
+  if (!el) return;
+
+  var role = get('table-transaction-demo-role', 'header');
+
+  /* The asset slot is header-only; hasLabel is content-only, and the #label
+     text only applies while that boolean is on. */
+  var isHeader = role === 'header';
+  var hasLabel = get('table-transaction-demo-haslabel', 'true') === 'true';
+
+  var assetRow = document.getElementById('table-transaction-row-asset');
+  if (assetRow) assetRow.style.display = isHeader ? '' : 'none';
+  var hasLabelRow = document.getElementById('table-transaction-row-haslabel');
+  if (hasLabelRow) hasLabelRow.style.display = isHeader ? 'none' : '';
+  var labelRow = document.getElementById('table-transaction-row-label');
+  if (labelRow) labelRow.style.display = (!isHeader && hasLabel) ? '' : 'none';
+
+  el.innerHTML = _ttxnBuild({
+    role:  role,
+    state: get('table-transaction-demo-state', 'default'),
+    hasLabel:  hasLabel,
+    hasBorder: get('table-transaction-demo-hasborder', 'true'),
+    cols:  get('table-transaction-demo-cols', '3'),
+    asset: get('table-transaction-demo-asset', 'yes'),
+    label: get('table-transaction-demo-label', 'Label')
+  });
 }
 
-/* ── Spec Cards (canonical) ──────────────────────────────────────── */
+/* ── Spec cards ─────────────────────────────────────────────────── */
 var _specCards = {
-  header:  { type: 'header',  cols: '3', icon: 'no' },
-  content: { type: 'content', cols: '3', icon: 'no' }
+  header:  { role: 'header',  state: 'default', cols: '3', asset: 'yes' },
+  content: { role: 'content', state: 'default', cols: '3' }
 };
 window._specCards = _specCards;
 
-function buildSwiftSnippet(type, card) {
-  if (type === 'header') {
-    var label = card.icon === 'yes'
-      ? 'EBTransactionTable.Header("Section", icon: Image(systemName: "square"))'
-      : 'EBTransactionTable.Header("Section")';
-    return label + '\n    .ebColumns(' + card.cols + ')';
-  }
-  return 'EBTransactionTable.Row(transaction: item)\n    .ebColumns(' + card.cols + ')';
+function buildSwiftSnippet(cardKey, card) {
+  var role = card.role === 'content' ? '.content' : '.header';
+  var lines = ['EBTableTransactionRow('];
+  lines.push('    role: ' + role + ',');
+  if (card.role === 'content') lines.push('    label: "Label",');
+  lines.push(card.role === 'content' ? '    amounts: amounts' : '    columns: columns');
+  lines.push(card.state === 'disabled' ? ')\n.disabled(true)' : ')');
+  return lines.join('\n');
 }
 
-function buildComposeSnippet(type, card) {
-  if (type === 'header') {
-    var iconLine = card.icon === 'yes' ? '\n    icon = { Icon(Icons.Default.Square, null) },' : '';
-    return 'EBTransactionTableHeader(\n    title = "Section",' + iconLine + '\n    columns = ' + card.cols + '\n)';
-  }
-  return 'EBTransactionTableRow(\n    transaction = item,\n    columns = ' + card.cols + '\n)';
+function buildComposeSnippet(cardKey, card) {
+  var role = card.role === 'content' ? 'EBTableRowRole.Content' : 'EBTableRowRole.Header';
+  var lines = ['EBTableTransactionRow('];
+  lines.push('    role = ' + role + ',');
+  if (card.role === 'content') lines.push('    label = "Label",');
+  lines.push((card.role === 'content' ? '    amounts = amounts' : '    columns = columns') + (card.state === 'disabled' ? ',' : ''));
+  if (card.state === 'disabled') lines.push('    enabled = false');
+  lines.push(')');
+  return lines.join('\n');
 }
 
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
 }
 window.getSnippet = getSnippet;
 
@@ -90,54 +127,38 @@ function updateSpecCard(cardStyle, prop, value) {
   if (!card) return;
   card[prop] = value;
 
-  /* Content rows always have icon=no */
-  var effectiveIcon = card.type === 'content' ? 'no' : card.icon;
-
-  /* Update preview — find the inner div in the SpecCard preview block */
-  var previewRoot = document.getElementById('spec-' + cardStyle + '-preview');
-  if (previewRoot) {
-    previewRoot.innerHTML = _tableTxnBuildRow(card.type, card.cols, effectiveIcon);
+  var spEl = document.querySelector('[data-sp="' + cardStyle + '-' + prop + '"]');
+  if (spEl) {
+    var hexEl = spEl.querySelector('.spec-prop-hex');
+    if (hexEl) hexEl.textContent = value;
+    else spEl.textContent = value;
   }
 
-  /* Update Properties readouts */
-  var spCols = document.querySelector('[data-sp="' + cardStyle + '-cols"]');
-  if (spCols) spCols.textContent = card.cols;
-  var spIcon = document.querySelector('[data-sp="' + cardStyle + '-icon"]');
-  if (spIcon) spIcon.textContent = card.type === 'content' ? '—' : card.icon;
-  var spHeight = document.querySelector('[data-sp="' + cardStyle + '-height"]');
-  if (spHeight) {
-    if (card.type === 'header') spHeight.textContent = card.icon === 'yes' ? '62px' : '36px';
-    else spHeight.textContent = '72.5px';
+  var cardKey = cardStyle === 'header' ? 'header-row' : 'content-row';
+  var fullCardEl = document.getElementById('spec-card-' + cardKey);
+  if (fullCardEl) {
+    var preview = fullCardEl.querySelector('.spec-card-preview');
+    if (preview) preview.innerHTML = _ttxnBuild(card);
   }
 
-  /* Update DEV code — locate via `[data-code-content="${demoKey}"]`. */
-  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-  if (devView) {
-    var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
-    if (codeEl) {
-      var code = getSnippet(cardStyle, lang, card);
-      codeEl.setAttribute('data-final', code);
-      codeEl.setAttribute('data-lang', lang);
-      codeEl.textContent = code;
-      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-    }
+  var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
+  if (codeEl) {
+    var lang = codeEl.getAttribute('data-lang') || 'swift';
+    var raw = getSnippet(cardStyle, lang, card);
+    codeEl.setAttribute('data-final', raw);
+    codeEl.textContent = raw;
+    if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
   }
 }
 
-function _tableTxnInit() {
-  if (document.getElementById('table-transaction-demo-preview')) {
-    updateTableTransactionDemo();
-  }
-  /* Initialize spec card previews */
-  Object.keys(_specCards).forEach(function(k) {
+function _ttxnInit() {
+  updateTableTransactionDemo();
+  ['header', 'content'].forEach(function (k) {
     updateSpecCard(k, 'cols', _specCards[k].cols);
   });
 }
 
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _tableTxnInit);
-else _tableTxnInit();
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _ttxnInit);
+else _ttxnInit();
 
-/* Re-init after Astro view-transition swaps */
-document.addEventListener('astro:page-load', _tableTxnInit);
+document.addEventListener('astro:page-load', _ttxnInit);

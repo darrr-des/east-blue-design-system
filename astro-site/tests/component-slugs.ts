@@ -20,7 +20,6 @@ export const COMPONENT_SLUGS = [
   'button',
   'callout',
   'carousel-card',
-  'carousel-discount-card',
   'carousel-item',
   'chat-field',
   'checkbox',

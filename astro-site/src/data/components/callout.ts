@@ -55,18 +55,18 @@ export const callout: ComponentData = {
     "description": "A compact attention strip with neutral, info, warning, or danger intent, optional description, and an optional leading icon.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure before native handoff",
-      "text": "Rename to <strong>Callout</strong>, collapse the redundant <code>label</code> + <code>label size</code> booleans into a single <code>labelSize</code> enum, and expand <code>type</code> into a proper 4-value <code>intent</code> enum (info / success / warning / error). Add a leading-icon slot, a trailing action slot, and Pressed / Disabled states."
+      "kind": "keep",
+      "title": "Rebuilt — intent enum and slots landed",
+      "text": "The rebuild resolved every structural issue: renamed to <strong>Callout</strong>, <code>type</code> expanded to a 5-value intent enum (Information / Default / Warning / Error / Success), the redundant <code>label</code> + <code>label size</code> axes collapsed into <code>Content</code> × <code>Size</code>, and real Figma <code>Leading Slot</code> / <code>Trailing Slot</code> added. 45 variants with no invalid cells. Stateless by design — Callout is a display strip; interactivity lives in the Trailing Slot. Only Code Connect registration and the token rename remain."
     }
   },
   "overview": {
@@ -76,23 +76,23 @@ export const callout: ComponentData = {
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Works inline across forms, modals, and flows. But the intent enum is limited to Default and Information — consumers needing Warning or Error callouts today reach for Alert, which over-weights the UI."
+        "rating": "pass",
+        "note": "Covers the full intent range — Information, Default, Warning, Error, Success — so consumers no longer reach for the heavier Alert just to show a warning. Three sizes (Large / Small / XSmall) and three content shapes (Default / Description Only / Header Only) cover inline use in forms, modals, and flows."
       },
       {
         "name": "Self-contained",
-        "rating": "partial",
-        "note": "Carries its own container, label, description, and per-type tokens (<code>main/contextual-help/color/{default|info}/*</code>). Missing: a leading icon slot and a trailing action slot; both are standard in the industry pattern."
+        "rating": "pass",
+        "note": "Carries its own container, title, description, and per-intent tokens across all five intents. Both the leading icon and trailing action are now real Figma slots rather than missing affordances."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Two properties encode one concept: <code>label=yes/no</code> + <code>label size=small/default/no</code>. Three Cartesian cells are invalid. The <code>type</code> property is also a 2-value stub of what should be a proper intent enum."
+        "rating": "pass",
+        "note": "Three orthogonal props — <code>Type</code> × <code>Size</code> × <code>Content</code> = 45 variants with no invalid cells. The old <code>label</code> + <code>label size</code> pair that encoded one concept across two properties is gone, and <code>type</code> is a full intent enum rather than a two-value stub."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Drops into any column or modal. No interaction states means it can't host an inline \"Learn more\" link cleanly; consumers either link the whole container (no pressed state defined) or nest a Button, which over-pads."
+        "rating": "pass",
+        "note": "Named <code>Leading Slot</code> (24 × 24, radius 99) and <code>Trailing Slot</code> let consumers compose an icon and an inline action without forking the component. Both map to <code>@ViewBuilder</code> / <code>@Composable</code> slots on native."
       }
     ],
     "behavior": [
@@ -100,106 +100,79 @@ export const callout: ComponentData = {
         "state": "Default (neutral)",
         "ios": "yes",
         "android": "yes",
-        "property": "type=default",
-        "notes": "Grey-blue bg #F6F9FD, border #E5EBF4, label #445C85, description #6780A9. Ambient hints."
+        "property": "Type=Default",
+        "notes": "Grey-blue bg <code>#F6F9FD</code>, border <code>#E5EBF4</code>, subtext <code>#6780A9</code>. Ambient hints with no intent."
       },
       {
         "state": "Information",
         "ios": "yes",
         "android": "yes",
-        "property": "type=information",
-        "notes": "Light blue bg #E5F1FF, border #D2E5FF, label #072592. Helpful context."
+        "property": "Type=Information",
+        "notes": "Light blue bg <code>#E5F1FF</code>, border <code>#D2E5FF</code>, title <code>#072592</code>. Helpful context."
       },
       {
         "state": "Warning",
-        "ios": "na",
-        "android": "na",
-        "property": "— (missing)",
-        "notes": "No warning intent. Consumers reach for Alert component instead, which is heavier."
+        "ios": "yes",
+        "android": "yes",
+        "property": "Type=Warning",
+        "notes": "Amber bg <code>#FFF9EB</code>, border <code>#F9E39A</code>, subtext <code>#966F0B</code>. Added in the rebuild — previously required the heavier Alert."
       },
       {
         "state": "Error",
-        "ios": "na",
-        "android": "na",
-        "property": "— (missing)",
-        "notes": "No error intent. Same workaround as Warning."
+        "ios": "yes",
+        "android": "yes",
+        "property": "Type=Error",
+        "notes": "Red bg <code>#F8E6E6</code>, border <code>#F4C7C9</code>, subtext <code>#D61B2C</code>. Added in the rebuild."
       },
       {
-        "state": "Pressed",
-        "ios": "na",
-        "android": "na",
-        "property": "— (missing)",
-        "notes": "If the callout is tappable (e.g. opens a sheet with more info), there's no pressed state to reflect that affordance."
+        "state": "Success",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Type=Success",
+        "notes": "Green bg <code>#E7F8F0</code>, border <code>#CAF2E0</code>, subtext <code>#035E50</code>. Added in the rebuild."
       },
       {
-        "state": "Disabled",
+        "state": "Content composition",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Content",
+        "notes": "<code>Default</code> shows title + description, <code>Header Only</code> shows the title alone, <code>Description Only</code> the body alone. Composes with every intent and size."
+      },
+      {
+        "state": "Pressed / Disabled",
         "ios": "na",
         "android": "na",
-        "property": "— (missing)",
-        "notes": "No disabled state. Parent form disabled context is not reflected in the callout."
+        "property": "—",
+        "notes": "Not modelled by design. Callout is a display strip, not an interactive control — any interactivity lives in whatever occupies the Trailing Slot, which carries its own states."
       }
     ],
-    "resolved": [],
+    "resolved": [
+      {
+        "body": "v2.0: Renamed <code>Contextual Help</code> → <strong>Callout</strong> — the internal jargon is gone and the name matches external precedent (Radix Themes uses the same term for an icon + short-message strip). (C1)"
+      },
+      {
+        "body": "v2.0: <code>type</code> expanded from a two-value stub into a full 5-value intent enum — <code>Information</code> / <code>Default</code> / <code>Warning</code> / <code>Error</code> / <code>Success</code>. (C2)"
+      },
+      {
+        "body": "v2.0: Redundant <code>label</code> + <code>label size</code> axes collapsed — content composition is now one <code>Content</code> axis (Default / Description Only / Header Only) with <code>Size</code> (Large / Small / XSmall) as a separate orthogonal prop. Full 5 × 3 × 3 = 45 matrix, no invalid combinations. (C2)"
+      },
+      {
+        "body": "v2.0: Leading icon slot added — a real Figma <code>Leading Slot</code> (24 × 24, radius 99) in every variant, so consumers can drop in any icon or avatar. (C4)"
+      },
+      {
+        "body": "v2.0: Trailing action slot added — a real Figma <code>Trailing Slot</code> in every variant for a dismiss affordance or inline action. (C4)"
+      },
+      {
+        "body": "v2.0: Empty leading slot with no per-intent icon defaults confirmed <strong>intentional</strong> — the slot is left for the consumer to fill rather than shipping a default icon per intent. (C6)"
+      },
+      {
+        "body": "v2.0: Absence of interaction states confirmed <strong>intentional</strong> — Callout is a display strip, not an interactive control. Any interactivity lives in whatever occupies the Trailing Slot, which carries its own states. (C5)"
+      }
+    ],
     "open": [
       {
-        "headline": "Component name \"Contextual Help\" is internal jargon.",
-        "body": "Industry-standard term for this shape is <strong>Callout</strong> — used by Atlassian, GitHub, Notion, and Stripe. The current name doesn't describe the anatomy and overlaps conceptually with Tooltip. Rename the component to make its purpose self-evident in picker menus and code.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Redundant label axes.",
-        "body": "<code>label=yes/no</code> and <code>label size=small/default/no</code> encode overlapping information. When <code>label=no</code>, <code>label size</code> is forced to <code>no</code>; two of the nine Cartesian cells (<code>no/small</code>, <code>no/default</code>) are invalid and unused. Collapse to a single <code>labelSize: none | small | default</code> enum.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "<code>type=default | information</code> is a two-value stub.",
-        "body": "Real-world callouts need Info / Success / Warning / Error. Today consumers escalate to Alert for Warning or Error because no Warning or Error callout exists — Alert over-weights the UI for soft messages. Expand to a 4-value <code>intent</code> enum.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "No leading icon slot.",
-        "body": "Every mature callout in the industry (Material, HIG, GitHub, Notion, Stripe) leads with an intent-bound icon — info, check, warning triangle, error circle. This component relies on colour alone, which fails WCAG 1.4.1 (Use of Color).",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "No interaction states.",
-        "body": "Callouts frequently host a trailing \"Learn more\" link or open a sheet on tap. Without Pressed / Focused / Disabled, the Figma source can't express either affordance and consumers nest a Button (too heavy) or link the whole container (no pressed feedback).",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "No trailing action slot.",
-        "body": "A named trailing slot — for a \"Learn more\" TextButton or a dismiss X — is a canonical callout affordance. Consumers currently detach the instance or append a sibling, both of which break DS governance.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "Icon for <code>type=information</code> not wired.",
-        "body": "Figma ships an Information variant with no actual information icon — only a blue tint. If the plan is to carry intent via colour, this is the C6 gap to close: add a vector icon instance bound to <code>main/callout/info/icon</code>.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked behind the rename, property-schema collapse, intent-enum expansion, icon slot, and interaction states. No native component file exists yet.",
+        "body": "The naming, intent enum, slot, and content-axis blockers are all resolved in the rebuild. Registration is now unblocked but the SwiftUI / Compose mappings are not yet wired, and the native component does not exist — snippets remain a Planned API.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -208,44 +181,46 @@ export const callout: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Rename <em>Contextual Help</em> → <em>Callout</em>.",
-        "body": "Industry-standard term (Atlassian, GitHub, Notion, Stripe). Describes the anatomy — an inline informational block — and doesn't collide with Tooltip, Alert, or Subtext Message. Also rename the token namespace from <code>main/contextual-help/*</code> to <code>main/callout/*</code>, and the component file to <code>EBCallout.swift</code> / <code>EBCallout.kt</code>.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Collapse <code>label</code> + <code>label size</code> into one <code>labelSize</code> enum.",
-        "body": "Replace the two properties with a single <code>labelSize: none | small | default</code> enum. Three Cartesian cells (<code>no/small</code>, <code>no/default</code>, plus the implicit invalid combinations) disappear, and consumers pick a size directly — no more \"turn label on then pick a size\" two-step.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Expand <code>type</code> into a 4-value <code>intent</code> enum.",
-        "body": "Replace <code>type=default | information</code> with <code>intent: .info | .success | .warning | .error</code>. Add the corresponding token groups (<code>main/callout/success/*</code>, <code>main/callout/warning/*</code>, <code>main/callout/error/*</code>) and default leading icons per intent. Pushes soft-severity messages off Alert and into Callout where they belong.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Add a leading-icon slot with per-intent defaults.",
-        "body": "Every callout intent ships a default icon (info-circle, check-circle, warning-triangle, error-circle) that consumers can override or hide. Bind to <code>main/callout/{intent}/icon</code>. Closes the colour-only accessibility gap and matches Material, HIG, GitHub, and Notion conventions.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Add a trailing action slot.",
-        "body": "Adopt Figma Slots to expose <code>#trailing-action</code> for a single TextButton (e.g. \"Learn more\") or a close X icon. Consumers instance-swap a Text Button into the slot; the callout handles spacing and vertical alignment.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Add Pressed and Disabled states.",
-        "body": "When the entire callout is tappable (opens a sheet with more detail), it needs a Pressed state with a slightly darker bg token. When a parent form is disabled, the callout needs a matched Disabled state (muted label + description + 0.6 opacity border).",
-        "tag": "State"
-      },
-      {
         "headline": "Rename <code>main/contextual-help/color/info/*</code> → <code>main/callout/info/*</code>.",
-        "body": "Token names follow the component name. Rename the whole group at once when the component rename lands; defer until native handoff so consuming files don't thrash.",
+        "body": "Token names should follow the component name now that the rename has landed. Deliberately deferred until native handoff so consuming files do not churn twice — still outstanding.",
         "tag": "Token"
       },
       {
         "headline": "Document the Callout vs Alert vs Subtext Message vs Tooltip decision tree.",
-        "body": "Designers conflate these four because the naming overlaps. Publish a one-pager: Subtext (field helper), Callout (inline block, soft intent), Alert (page-level banner, hard intent), Tooltip (hover/press popover). No Figma change — a usage doc on the guide page.",
+        "body": "Designers conflate these four because the naming overlaps. Publish a one-pager: Subtext (field helper), Callout (inline display strip, soft intent, no CTA), Alert (persistent status block with a title and optional action), Tooltip (transient, anchored). The clearest tell is the action — if it has a CTA or title hierarchy it is an Alert, not a Callout.",
         "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Rename <code>Contextual Help</code> → <code>Callout</code>.",
+        "body": "v2.0: Applied — the component set is now named <strong>Callout</strong>, dropping the internal jargon and matching external precedent.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Collapse <code>label</code> + <code>label size</code> into one axis.",
+        "body": "v2.0: Applied, and cleaner than proposed — instead of a single <code>labelSize</code> enum, content composition is now <code>Content</code> (Default / Description Only / Header Only) with <code>Size</code> (Large / Small / XSmall) as a separate orthogonal prop. No invalid cells across the full 45-variant matrix.",
+        "tag": "Property"
+      },
+      {
+        "headline": "Expand <code>type</code> into a proper intent enum.",
+        "body": "v2.0: Applied, and one value beyond the recommendation — <code>Information</code> / <code>Default</code> / <code>Warning</code> / <code>Error</code> / <code>Success</code>, replacing the two-value stub.",
+        "tag": "Property"
+      },
+      {
+        "headline": "Add a leading-icon slot.",
+        "body": "v2.0: Applied — a real Figma <code>Leading Slot</code> (24 × 24, radius 99) ships in every variant. The per-intent default icons from the original recommendation were deliberately <strong>not</strong> added; the slot is left for the consumer to fill.",
+        "tag": "Slot"
+      },
+      {
+        "headline": "Add a trailing action slot.",
+        "body": "v2.0: Applied — a real Figma <code>Trailing Slot</code> ships in every variant for a dismiss affordance or inline action.",
+        "tag": "Slot"
+      },
+      {
+        "headline": "Add Pressed and Disabled states.",
+        "body": "v2.0: Reviewed and closed as not needed — Callout is a display strip, not an interactive control. Any interactivity lives in whatever occupies the Trailing Slot, which carries its own states.",
+        "tag": "State"
       }
     ]
   },

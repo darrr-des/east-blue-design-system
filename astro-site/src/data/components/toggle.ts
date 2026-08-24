@@ -31,13 +31,13 @@ export const toggle: ComponentData = {
   "meta": {
     "slug": "toggle",
     "name": "Toggle",
-    "node": "18482:36508",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18482-36508",
-    "description": "A binary switch control with on, off, and disabled states.",
+    "node": "26510:37625",
+    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26510-37625",
+    "description": "A binary switch. 18 variants across <code>State</code> (Default / Pressed / Disabled) × <code>Size</code> (Large / Medium / Small) × <code>isSelected</code> (true / false). Vector track + thumb, all colors token-bound.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -46,9 +46,9 @@ export const toggle: ComponentData = {
     ],
     "navGroup": "Toggle",
     "verdict": {
-      "kind": "fix",
-      "title": "Fix — normalize to the Selection Control schema",
-      "text": "Rename <code>isActive</code> → <code>isSelected</code>, change <code>Yes/No</code> values to <code>true/false</code>, expand states from 2 → 5 (Default, Pressed, Focused, Disabled, Error), add Small/Medium/Large sizes. Once normalized, Toggle sits alongside Checkbox and Radio Button under one shared schema and maps cleanly to native <code>Toggle</code> / <code>Switch</code>."
+      "kind": "keep",
+      "title": "Rebuilt — normalized to the Selection Control schema",
+      "text": "The rebuild added the Size axis (Large / Medium / Small), added interaction states, folded pressed into <code>State</code> (Default / Pressed / Disabled), and moved the booleans to lowercase <code>true</code>/<code>false</code>. Toggle now shares the same schema as Radio Button — <code>State</code> × <code>Size</code> × a selection boolean — and maps cleanly to native <code>Toggle</code> / <code>Switch</code>. Only Code Connect and the ARIA-role docs remain."
     }
   },
   "overview": {
@@ -67,88 +67,74 @@ export const toggle: ComponentData = {
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "<code>isActive</code> + <code>Yes/No</code> breaks the DS convention set by Checkbox (<code>isSelected</code> + <code>true/false</code>). Selection controls should share one schema."
+        "rating": "pass",
+        "note": "Normalized to the shared Selection Control schema — <code>State</code> (Default / Pressed / Disabled) × <code>Size</code> × <code>isSelected</code> (<code>true</code>/<code>false</code>), matching Radio Button. Pressed is folded into <code>State</code> rather than a stray boolean, and Disabled correctly omits Pressed. It now shares the full schema with Checkbox and Radio Button, including the <code>isSelected</code> boolean name."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Drops into rows and forms fine, but Toggle - With Label is a frame not a component, limiting composition into list items and labeled form rows."
+        "rating": "pass",
+        "note": "Drops into rows and forms, and Toggle - With Label now nests it as a real instance — so atom changes propagate to the labeled variant."
       }
     ],
     "behavior": [
       {
-        "state": "Default · Off",
+        "state": "Off / On",
         "ios": "yes",
         "android": "yes",
-        "property": "State=Default, isActive=No",
-        "notes": "Gray track, knob left."
-      },
-      {
-        "state": "Default · On",
-        "ios": "yes",
-        "android": "yes",
-        "property": "State=Default, isActive=Yes",
-        "notes": "Brand track, knob right."
+        "property": "isSelected=false / true",
+        "notes": "Grey track + knob-left when off; brand <code>#005CE5</code> track + knob-right when on."
       },
       {
         "state": "Pressed",
-        "ios": "na",
-        "android": "na",
-        "property": "Not built",
-        "notes": "Need darker track + scaled knob — critical feedback for tap."
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Pressed",
+        "notes": "Darker track for tap feedback. Composes with either isSelected. Derived at runtime on native, not a passed parameter."
+      },
+      {
+        "state": "Disabled",
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Muted track/knob, tap blocked. Ships at both isSelected values; correctly has no Pressed pairing."
       },
       {
         "state": "Focused",
         "ios": "na",
         "android": "na",
-        "property": "Not built",
-        "notes": "2px focus ring for keyboard / switch-control users."
-      },
-      {
-        "state": "Disabled · Off / On",
-        "ios": "yes",
-        "android": "yes",
-        "property": "State=Disabled",
-        "notes": "Muted track/knob, tap blocked."
-      },
-      {
-        "state": "Error",
-        "ios": "na",
-        "android": "na",
-        "property": "Not built",
-        "notes": "Needed when required toggle (e.g. \"accept terms\") is unset on submit."
+        "property": "—",
+        "notes": "N/A on mobile — touch has no focus ring."
       }
     ],
-    "resolved": [],
+    "resolved": [
+      {
+        "body": "v2.0: Size axis added — <code>Large</code> / <code>Medium</code> / <code>Small</code> (48 / 40 / 32 wide), previously absent. (C2)"
+      },
+      {
+        "body": "v2.0: Interaction states added — a <code>State</code> axis now covers Default / Pressed / Disabled where the old component had only on/off/disabled. (C5)"
+      },
+      {
+        "body": "v2.1: Schema normalized to the Selection Control pattern — <code>isPressed</code> folded into <code>State</code> (Default / Pressed / Disabled, matching Radio Button), and the selection boolean moved from <code>isActive=Yes/No</code> to lowercase <code>isActive=true/false</code>. Disabled correctly omits Pressed. Same 18 variants, no illegal-combination gap. (C2)"
+      },
+      {
+        "body": "v2.1: Divergence from the Checkbox / Radio Button schema closed on the structural axes — Toggle now shares <code>State</code> × <code>Size</code> × selection-boolean, so it maps to native <code>Toggle</code> / <code>Switch</code> the same way. (C2)"
+      },
+      {
+        "body": "v2.2: Selection boolean renamed <code>isActive</code> → <code>isSelected</code> across all 18 variants — Toggle now uses the exact same name as Checkbox and Radio Button, so the three selection controls are fully interchangeable. (C2)"
+      }
+    ],
     "open": [
       {
-        "headline": "Property schema diverges from Checkbox.",
-        "body": "Rename <code>isActive</code> → <code>isSelected</code>, change values <code>Yes/No</code> → <code>true/false</code>. Selection controls should share one schema.",
+        "headline": "ARIA role not documented.",
+        "body": "The native switch role and the required-toggle error announcement are not annotated on the component, so engineers have no spec for the a11y wiring.",
         "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
+          "criterion": "C7",
+          "label": "C7 · Code Connect Linkability"
         }
       },
       {
-        "headline": "Missing interaction states.",
-        "body": "Only Default + Disabled built. Add Pressed, Focused, Error to match Checkbox's 5-state model.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Missing size axis.",
-        "body": "No Small/Medium/Large. Add to match Checkbox + Radio Button.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "No Code Connect mapping.",
-        "body": "Blocked until schema normalizes.",
+        "headline": "Code Connect mappings not registered.",
+        "body": "Schema is normalized and stable, so registration is unblocked — but the SwiftUI / Compose mappings are not yet wired and the native component does not exist. Snippets remain a Planned API.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -157,24 +143,41 @@ export const toggle: ComponentData = {
     ],
     "recommendations": [
       {
+        "headline": "Document the ARIA / switch role.",
+        "body": "Spell out the native switch role and the required-toggle error announcement in the handoff spec.",
+        "tag": "A11y"
+      },
+      {
+        "headline": "Register Code Connect mapping to <code>EBToggle</code>.",
+        "body": "Wire <code>State</code>, <code>Size</code>, and <code>isSelected</code> 1:1 to the SwiftUI <code>Toggle</code> / Compose <code>Switch</code> API.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": [
+      {
         "headline": "Normalize to the Selection Control schema.",
-        "body": "Bring Toggle in line with Checkbox and Radio Button so all three share one property language: <code>isSelected: true | false</code> (from <code>isActive: Yes | No</code>) × <code>State: Default | Pressed | Focused | Disabled | Error</code> (up from Default/Disabled only) × <code>Size: Small | Medium | Large</code> (new axis). Variant count grows from 4 → 30, all covered by a clean 2 × 5 × 3 matrix.",
+        "body": "v2.1: Applied — <code>State</code> (Default / Pressed / Disabled) × <code>Size</code> × lowercase <code>isSelected</code>, matching Radio Button. Pressed folded into <code>State</code>; booleans lowercase.",
         "tag": "Property"
       },
       {
-        "headline": "Promote Toggle - With Label to a proper component",
-        "body": "with <code>label</code>, optional <code>description</code>, optional <code>helper</code>/<code>error</code> text, <code>required</code> marker, and <code>placement = leading | trailing</code>. See <a href=\"#\" onclick=\"showPanelById('toggle-with-label');return false;\">Toggle - With Label</a>.",
-        "tag": "Composition"
+        "headline": "Add the Size axis.",
+        "body": "v2.0: Applied — Large / Medium / Small.",
+        "tag": "Property"
       },
       {
-        "headline": "Consider a Loading state",
-        "body": "for async toggles (settings that sync to the server). Shows a spinner on the knob while the request is in flight — common in Material 3 and iOS 17.",
+        "headline": "Add interaction states.",
+        "body": "v2.0: Applied — Pressed and Disabled now ship as <code>State</code> values.",
         "tag": "State"
       },
       {
-        "headline": "Document the ARIA role.",
-        "body": "Natively, Toggle maps to the <code>switch</code> role with <code>aria-checked = true | false</code>. Screen readers say \"on/off\" instead of \"checked/unchecked\" — the correct affordance for a settings toggle.",
-        "tag": "A11y"
+        "headline": "Promote Toggle - With Label to a real component.",
+        "body": "v2.0: Applied — the labeled variant is now its own component that nests this Toggle as an instance (see the Toggle with Label assessment).",
+        "tag": "Composition"
+      },
+      {
+        "headline": "Rename <code>isActive</code> → <code>isSelected</code>.",
+        "body": "v2.2: Applied — aligns the selection boolean with Checkbox and Radio Button across all 18 variants.",
+        "tag": "Rename"
       }
     ]
   },
@@ -551,7 +554,7 @@ export const toggle: ComponentData = {
         "criterion": "Variant & Property Naming",
         "status": "rework",
         "statusLabel": "Requires Rework",
-        "notes": "Rename <code>isActive</code> → <code>isSelected</code>, values <code>Yes/No</code> → <code>true/false</code>; add Size axis."
+        "notes": "Rename <code>isSelected</code> → <code>isSelected</code>, values <code>Yes/No</code> → <code>true/false</code>; add Size axis."
       },
       {
         "id": "C3",
@@ -592,7 +595,7 @@ export const toggle: ComponentData = {
     "codeConnect": [],
     "variants": {
       "total": 4,
-      "description": "<code>State</code> × <code>isActive</code> = <strong>4 variants</strong> today. Proposed: <code>isSelected</code> × <code>State</code> × <code>Size</code> = <strong>30 variants</strong>.",
+      "description": "<code>State</code> × <code>isSelected</code> = <strong>4 variants</strong> today. Proposed: <code>isSelected</code> × <code>State</code> × <code>Size</code> = <strong>30 variants</strong>.",
       "columns": [
         "#",
         "Node",
@@ -656,7 +659,7 @@ export const toggle: ComponentData = {
           }
         },
         {
-          "body": "<strong>C2 — Property naming</strong> — Rename <code>isActive</code> → <code>isSelected</code>; change values <code>Yes/No</code> → <code>true/false</code>. <span class=\"tag-open tag-c2\">Open</span>",
+          "body": "<strong>C2 — Property naming</strong> — Rename <code>isSelected</code> → <code>isSelected</code>; change values <code>Yes/No</code> → <code>true/false</code>. <span class=\"tag-open tag-c2\">Open</span>",
           "delta": {
             "kind": "open",
             "label": "C2"

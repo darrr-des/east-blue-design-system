@@ -3,25 +3,25 @@ import type { ComponentData } from '../types';
 export const dropdownItemGroup: ComponentData = {
   "meta": {
     "slug": "dropdown-item-group",
-    "name": "Dropdown Item Group",
-    "node": "6383:3446",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=6383-3446",
-    "description": "The popover surface that opens when a Dropdown is tapped — a stack of Dropdown Items in a rounded card with a drop shadow.",
+    "name": "Select Group",
+    "node": "25783:1255",
+    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=25783-1255",
+    "description": "The menu surface that opens when a Select is tapped — a rounded card wrapping a Figma Slot of Select Items. 9 variants across <code>Border Type</code> (Middle Inset / Full Width / None) × <code>Density</code> (Compact / Default / Comfortable).",
     "badges": [
       {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "fix",
+        "label": "Fix"
       },
       {
-        "kind": "na",
-        "label": "Not Applicable"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Dropdown",
     "verdict": {
-      "kind": "consolidate",
-      "title": "Consolidate into Dropdown composition",
-      "text": "Not a reusable DS primitive. Layout is hardcoded (8 rows, last row is a detached frame — not a DropdownItem instance). Native menu infrastructure handles the popover surface on both platforms. Fold into the <code>Dropdown</code> component's expanded state as inline overlay behavior, not a separate component."
+      "kind": "fix",
+      "title": "Rebuilt as a real container — cleanup remains",
+      "text": "The v2.0 rebuild turned a hardcoded preview artifact into a genuine Slot-based container: every variant wraps a Figma <code>SLOT</code>, the detached last row is now a real instance, dividers are separate nodes (so no stray bottom border), and it's consumed by Select. The <strong>Consolidate</strong> verdict is withdrawn — it earns its place as a component. Remaining work is cleanup: a <code>MIddle Inset</code> typo, a vestigial <code>Dropdown Item - Last</code> name, hidden 366px leftovers, and a Scrollbar frame native renders itself."
     }
   },
   "overview": {
@@ -31,23 +31,23 @@ export const dropdownItemGroup: ComponentData = {
     "traits": [
       {
         "name": "Reusable",
-        "rating": "warn",
-        "note": "Layout is hardcoded to 8 Dropdown Items with a fixed 366px width. No item count property, no content slot, no width-fills-container behavior. Consumers cannot reuse this for a 3-item menu or a 12-item menu without manually rebuilding the composition."
+        "rating": "pass",
+        "note": "A real Figma <code>SLOT</code> now wraps the content, so consumers can drop in any number of Select Items rather than rebuilding the composition. Fill behaviour works — nested in Select the instance resizes to the 366px trigger and the Slot, items, and dividers all fill with it."
       },
       {
         "name": "Self-contained",
-        "rating": "partial",
-        "note": "Carries its own bg, radius, and shadow tokens. But the last row is a detached frame named <code>Dropdown - Item</code> (node <code>6383:3442</code>) instead of a DropdownItem component instance — breaking the self-contained promise."
+        "rating": "pass",
+        "note": "Carries its own background, radius, border, and divider scaffolding across three densities. The detached last row is gone — every row is now a real Select Item instance, so item changes propagate."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Seven rows are DropdownItem instances, the eighth is a detached duplicate frame. The component name uses a hyphenated \" - \" (<code>Dropdown Item - Group</code>) which doesn't match other DS naming (\"Avatar Group\", \"Button Group\")."
+        "rating": "pass",
+        "note": "Named <code>Select Group</code>, matching Avatar Group / Button Group — the irregular <code>\" - \"</code> separator is gone. <code>Border Type</code> values are spelled correctly (Middle Inset / Full Width / None), and the terminal row reads <code>Select Item - Last</code>, where the <code>- Last</code> suffix is a deliberate semantic marker rather than a leftover."
       },
       {
         "name": "Composable",
-        "rating": "fail",
-        "note": "Not a composable container. No slot, no <code>items</code> property, no variant axis. Cannot be nested inside Dropdown as an overlay — the Dropdown's <code>Expanded</code> variant draws its own list instead of referencing this group. Effectively a preview artifact, not a component."
+        "rating": "pass",
+        "note": "Now a genuine container — every variant exposes a Figma <code>SLOT</code>, and Select nests it as an instance alongside Select Field rather than drawing its own list. Maps to a <code>@ViewBuilder</code> / <code>@Composable</code> content slot."
       }
     ],
     "behavior": [
@@ -73,51 +73,45 @@ export const dropdownItemGroup: ComponentData = {
         "notes": "Native menus clip and scroll automatically when item count exceeds available height."
       }
     ],
-    "resolved": [],
+    "resolved": [
+      {
+        "body": "v2.0: Rebuilt as a real Slot-based container — every variant now wraps a Figma <code>SLOT</code>, so consumers can compose any number of Select Items instead of rebuilding the stack. The <strong>Consolidate</strong> verdict is withdrawn: it is a genuine component, not a preview artifact. (C1)"
+      },
+      {
+        "body": "v2.0: Detached last row replaced with a real instance — the hand-built <code>Dropdown - Item</code> frame (node <code>6383:3442</code>) is gone. Every row is now a Select Item instance, so item changes propagate. (C1)"
+      },
+      {
+        "body": "v2.0: Redundant bottom border removed — dividers are now separate <code>Horizontal / Divider</code> nodes placed <em>between</em> rows, so the last row carries none. <code>Border Type=None</code> drops them entirely. (C1)"
+      },
+      {
+        "body": "v2.0: Renamed <code>Dropdown Item - Group</code> → <code>Select Group</code>, matching Avatar Group / Button Group. The irregular <code>\" - \"</code> separator is gone. (C2)"
+      },
+      {
+        "body": "v2.0: Now genuinely composed — Select nests this as an instance alongside Select Field rather than drawing its own list. The popover surface is a real container mapping to a native content slot, which answers the earlier C4 concern that it was a phantom. (C4)"
+      },
+      {
+        "body": "v2.0: Divider treatment promoted to a property — <code>Border Type</code> (Middle Inset / Full Width / None) × <code>Density</code> (Compact / Default / Comfortable) gives 9 variants where the old component had one hardcoded layout. (C2)"
+      },
+      {
+        "body": "v2.0: The stacked 366px <code>Select Item</code> / <code>Horizontal / Divider</code> instances and the <code>Label</code> inside the Slot are <strong>intentional</strong>, not leftovers — reviewed and confirmed. They sit inside the Slot as scroll-overflow content and are not dead layers. (C1)"
+      },
+      {
+        "body": "v2.0: The <code>Scrollbar</code> frame is <strong>intentional</strong> — reviewed and confirmed. It documents the menu's scroll affordance in the design. Handoff note: SwiftUI and Compose render scroll indicators inside their own scroll containers, so developers should rely on the native indicator rather than rebuilding this layer. (C4)"
+      },
+      {
+        "body": "v2.0: Fill-container width verified working — the standalone component sits at 320px, but nested in Select the instance resizes to 366px and the Slot, every Select Item, and every divider fill with it. The Scrollbar stays right-aligned to the card edge. No fixed-width bug; the 320px is just the component's canvas size. (C1)"
+      },
+      {
+        "body": "v2.0: <code>Border Type=MIddle Inset</code> typo fixed — the value now reads <code>Middle Inset</code> across all 9 variants, so the generated type no longer carries the capital-I misspelling. (C2)"
+      },
+      {
+        "body": "v2.0: Last row renamed <code>Dropdown Item - Last</code> → <code>Select Item - Last</code> — the vestigial <code>Dropdown</code> prefix from the old architecture is gone. The <code>- Last</code> suffix is <strong>intentional</strong>, marking the terminal row. (C1)"
+      }
+    ],
     "open": [
       {
-        "headline": "Last row is a detached frame, not a component instance.",
-        "body": "The eighth row (node <code>6383:3442</code>, <code>Dropdown - Item</code>) is a hand-built frame with inline styles instead of a DropdownItem instance. Breaks the group's consistency and means any DropdownItem property change will not propagate to the last row.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "No slot, no item count, no width parameter.",
-        "body": "The group is a fixed layout of 8 rows at 366px. There is no <code>items</code> slot, no numeric count property, and no fill-container option. Consumers cannot build a 3-item menu or a wider menu without rebuilding it.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Component name uses irregular \" - \" separator.",
-        "body": "<code>Dropdown Item - Group</code> doesn't match other DS group naming (<code>Avatar Group</code>, <code>Button Group</code>, <code>List</code>). Consider renaming to <code>Dropdown Menu</code> or folding under <code>Dropdown/Menu</code>.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Popover surface does not exist as a separate native primitive.",
-        "body": "Both SwiftUI (<code>Menu</code>) and Compose (<code>DropdownMenu</code>) handle the surface — shadow, radius, bg, positioning, clipping — automatically. Modeling it as a standalone Figma component creates a phantom that cannot be Code Connect-mapped 1:1.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "Last row has a bottom border.",
-        "body": "Every row in the group carries <code>border-b</code> including the final row, producing a redundant separator flush with the card's bottom edge. Should be removed on the last item or moved to a top-border-all-except-first pattern.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
         "headline": "Code Connect mappings not registered.",
-        "body": "If the component is kept, it has no parameters to map. If consolidated into Dropdown, it will not need its own mapping.",
+        "body": "Unblocked by the Slot rebuild — the container now has a real native counterpart rather than being a preview artifact. Not yet wired, and still waiting on the native library to exist.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -126,34 +120,41 @@ export const dropdownItemGroup: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Consolidate into the <code>Dropdown</code> component's Expanded state.",
-        "body": "The popover surface is not independently reusable — it always pairs with a Dropdown trigger. Remove this as a separate DS primitive and express the overlay via Dropdown's <code>type=Expanded</code> variant. Native <code>Menu</code>/<code>DropdownMenu</code> primitives render the surface automatically.",
-        "tag": "Family"
-      },
+        "headline": "Register Code Connect mapping to <code>EBSelectGroup</code>.",
+        "body": "With the Slot rebuild the container now has a genuine native counterpart — a menu surface wrapping a content slot. Wire <code>Border Type</code> and <code>Density</code> to the SwiftUI / Compose API once the native component exists.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": [
       {
-        "headline": "Alternatively, convert to a Slot-based container.",
-        "body": "If kept, replace the hardcoded 8 instances with a Figma Slot accepting any number of Dropdown Items. Rename to <code>Dropdown Menu</code>. Set width to fill-container so the parent trigger decides sizing.",
+        "headline": "Convert to a Slot-based container.",
+        "body": "v2.0: Applied — every variant now wraps a real Figma <code>SLOT</code>, so consumers compose any number of Select Items instead of rebuilding the stack. This is what withdrew the <strong>Consolidate</strong> verdict.",
         "tag": "Slot"
       },
       {
-        "headline": "Replace the detached last row with a DropdownItem instance.",
-        "body": "Node <code>6383:3442</code> is a hand-built frame — swap it for a DropdownItem component instance so property changes propagate uniformly.",
+        "headline": "Replace the detached last row with a real instance.",
+        "body": "v2.0: Applied — the hand-built <code>Dropdown - Item</code> frame is gone; every row is a live Select Item instance, so item changes propagate.",
         "tag": "Composition"
       },
       {
         "headline": "Remove the bottom border on the last item.",
-        "body": "Use a <code>::not(:last-child)</code>-equivalent pattern (separator between rows, not after the final row) to avoid the double line against the card's bottom edge.",
+        "body": "v2.0: Applied — dividers are now separate <code>Horizontal / Divider</code> nodes placed between rows, so the last row carries none. <code>Border Type=None</code> drops them entirely.",
         "tag": "Property"
       },
       {
-        "headline": "Rename to <code>Dropdown Menu</code> (if kept).",
-        "body": "\"Dropdown Item - Group\" reads as a group of items; \"Dropdown Menu\" matches the native primitive (<code>Menu</code> / <code>DropdownMenu</code>) and reads better in the component picker.",
+        "headline": "Rename to match DS group naming.",
+        "body": "v2.0: Applied — <code>Dropdown Item - Group</code> → <code>Select Group</code>, matching Avatar Group / Button Group. The irregular <code>\" - \"</code> separator is gone.",
         "tag": "Rename"
       },
       {
-        "headline": "Document as an internal artifact, not a shipped component.",
-        "body": "If the team keeps it purely for Figma layout previews, mark it <code>_internal</code> or move it to a Hidden page so it doesn't appear in the public component picker.",
-        "tag": "Docs"
+        "headline": "Fix the <code>MIddle Inset</code> typo.",
+        "body": "v2.0: Applied — the value now reads <code>Middle Inset</code> across all 9 variants, so the generated type no longer carries the capital-I misspelling.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Rename the last row off the old <code>Dropdown</code> prefix.",
+        "body": "v2.0: Applied — the terminal row is now <code>Select Item - Last</code>. The vestigial <code>Dropdown</code> prefix is gone; the <code>- Last</code> suffix is retained deliberately as a semantic marker for the last row.",
+        "tag": "Rename"
       }
     ]
   },

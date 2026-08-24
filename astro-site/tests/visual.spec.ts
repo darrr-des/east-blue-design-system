@@ -41,15 +41,18 @@ function loadCases(): Case[] {
     const text = fs.readFileSync(path.join(DATA_DIR, file), 'utf8');
     const slug = file.replace(/\.ts$/, '');
     /* Walk each cardKey occurrence and check whether its block contains a
-       `previewHtml` field before the next `cardKey` (or end of array). */
-    const cardKeyRe = /"cardKey"\s*:\s*"([^"]+)"/g;
+       `previewHtml` field before the next `cardKey` (or end of array).
+       Data files come in two shapes — JSON-style ("cardKey": "…") from the
+       migration, and hand-written TS (cardKey: '…'). Matching only the
+       first silently skipped six components, so both are accepted. */
+    const cardKeyRe = /["']?cardKey["']?\s*:\s*["']([^"']+)["']/g;
     const matches = [...text.matchAll(cardKeyRe)];
     for (let i = 0; i < matches.length; i++) {
       const ck = matches[i];
       const nextStart = i + 1 < matches.length ? matches[i + 1].index : text.length;
       const blockEnd = nextStart != null ? nextStart : text.length;
       const block = text.slice(ck.index ?? 0, blockEnd);
-      if (/"previewHtml"\s*:\s*"/.test(block)) {
+      if (/["']?previewHtml["']?\s*:\s*["']/.test(block)) {
         out.push({ slug, cardKey: ck[1] });
       }
     }

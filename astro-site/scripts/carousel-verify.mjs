@@ -21,6 +21,5 @@ async function check(slug) {
   panels.forEach((p) => console.log(' ', p));
 }
 await check('carousel-card');
-await check('carousel-discount-card');
 await check('carousel-item');
 await browser.close();

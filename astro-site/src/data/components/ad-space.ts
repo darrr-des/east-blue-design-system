@@ -1,94 +1,32 @@
 import type { ComponentData, DemoControlSection } from '../types';
 import { buildStatelessColorsTable } from './_helpers';
 
-// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
-// in `public/scripts/demos/ad-space.js`.
-const adSpaceBannerControls: DemoControlSection[] = [
+/* Ad Space is three versions on one `Variant` setting (node 6507:74166).
+   Each spec card documents one version and has nothing to vary inside it,
+   so every card shares one control: what sits in the asset slot. */
+const adSpaceAssetControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'Size',
-        prop: 'size',
-        defaultValue: 'banner-sm',
+        label: '⤷ AssetSlot',
+        prop: 'asset',
+        defaultValue: 'placeholder',
         options: [
-          { value: 'banner-sm',   label: 'banner-sm · 320×50' },
-          { value: 'banner-lg',   label: 'banner-lg · 320×100' },
-          { value: 'banner-mrec', label: 'banner-mrec · 300×250' },
-        ],
-      },
-      {
-        label: 'isLoading',
-        prop: 'loading',
-        defaultValue: 'false',
-        options: [
-          { value: 'false', label: 'false' },
-          { value: 'true',  label: 'true' },
+          { value: 'placeholder', label: 'Slot Block placeholder' },
+          { value: 'filled', label: 'Product media' },
         ],
       },
     ],
   },
 ];
-
-const adSpacePromoControls: DemoControlSection[] = [
-  {
-    heading: 'Properties',
-    rows: [
-      {
-        label: 'Size',
-        prop: 'size',
-        defaultValue: 'promo-md',
-        options: [
-          { value: 'promo-sm', label: 'promo-sm · 131×126' },
-          { value: 'promo-md', label: 'promo-md · 224×200' },
-        ],
-      },
-      {
-        label: 'isLoading',
-        prop: 'loading',
-        defaultValue: 'false',
-        options: [
-          { value: 'false', label: 'false' },
-          { value: 'true',  label: 'true' },
-        ],
-      },
-    ],
-  },
-];
-
-const adSpaceHeroControls: DemoControlSection[] = [
-  {
-    heading: 'Properties',
-    rows: [
-      {
-        label: 'Size',
-        prop: 'size',
-        defaultValue: 'hero-md',
-        options: [
-          { value: 'hero-sm', label: 'hero-sm · 296×174' },
-          { value: 'hero-md', label: 'hero-md · 336×174' },
-        ],
-      },
-      {
-        label: 'isLoading',
-        prop: 'loading',
-        defaultValue: 'false',
-        options: [
-          { value: 'false', label: 'false' },
-          { value: 'true',  label: 'true' },
-        ],
-      },
-    ],
-  },
-];
-
 export const adSpace: ComponentData = {
   "meta": {
     "slug": "ad-space",
     "name": "Ad Space",
-    "node": "18563:9789",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18563-9789",
-    "description": "A canonical surface for ads, promos, and sponsored placements — supports banner, promo, and hero size families with a single content slot.",
+    "node": "6507:74166",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=6507-74166",
+    "description": "A container for ads, promos, and sponsored placements. Three versions — Receipt, Banner, and Promo — each built around one swappable asset area.",
     "badges": [
       {
         "kind": "keep",
@@ -99,333 +37,329 @@ export const adSpace: ComponentData = {
         "label": "Ready"
       }
     ],
+    "navGroup": "Ad Space",
+    "verdict": {
+      "kind": "keep",
+      "title": "Keep — rebuilt on a clean three-version shape",
+      "text": "All four DS Health traits pass. The old seven-size schema is gone: the component is now three versions on a single <code>Variant</code> setting, each built the same way — <code>Container</code> wrapping a <code>⤷ AssetSlot</code> and an optional <code>Content</code> block. Layer names share one vocabulary across every version. Media flows through the slot, so no campaign artwork ships inside the design system. Code Connect stays unmapped because the native library doesn't exist yet — a dev-side dependency, not a design gap."
+    },
     "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <rect x=\"3\" y=\"6\" width=\"26\" height=\"8\" rx=\"1.5\" fill=\"#005CE5\"/>\n      <text x=\"16\" y=\"12\" text-anchor=\"middle\" fill=\"white\" font-size=\"5\" font-weight=\"700\" font-family=\"system-ui\">Ad</text>\n      <rect x=\"3\" y=\"17\" width=\"12\" height=\"9\" rx=\"1.5\" fill=\"#E6E1EF\"/>\n      <rect x=\"17\" y=\"17\" width=\"12\" height=\"9\" rx=\"1.5\" fill=\"#EEF2F9\"/>\n    </svg>"
   },
   "overview": {
-    "inContextNote": "Each of the three size families has a canonical home in the app: banners inline within transaction flows, promos on the dashboard tile grid, and heroes full-width on home or category surfaces.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ads-demo-preview\"><div class=\"eb-preview-adspace eb-preview-adspace--promo eb-preview-adspace--promo-md\" style=\"width:224px;height:200px;\"><div class=\"eb-preview-adspace__image\"><span class=\"eb-preview-adspace__image-label\">Replace me · 224×200</span></div><div class=\"eb-preview-adspace__caption eb-preview-adspace__caption--below\">Offer title</div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">size</span><select id=\"ads-ctrl-size\" class=\"demo-panel-select\" onchange=\"_adsUpdate()\"><optgroup label=\"banner (AdMob)\"><option value=\"banner-sm\">banner-sm · 320×50</option><option value=\"banner-lg\">banner-lg · 320×100</option><option value=\"banner-mrec\">banner-mrec · 300×250</option></optgroup><optgroup label=\"promo (tile)\"><option value=\"promo-sm\">promo-sm · 131×126</option><option value=\"promo-md\" selected=\"\">promo-md · 224×200</option></optgroup><optgroup label=\"hero (full-width)\"><option value=\"hero-sm\">hero-sm · 296×174</option><option value=\"hero-md\">hero-md · 336×174</option></optgroup></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isLoading</span><select id=\"ads-ctrl-loading\" class=\"demo-panel-select\" onchange=\"_adsUpdate()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">caption</span><input type=\"text\" id=\"ads-ctrl-caption\" class=\"demo-panel-select demo-panel-input\" value=\"Offer title\" oninput=\"_adsUpdate()\"></div></div></div></div>",
+    "inContextNote": "Each version has a home in the app: Receipt sits inside transaction and receipt flows, Banner runs inline in a feed or content column, and Promo is the dashboard tile that also fills the Ad Carousel rail.",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ads-demo-preview\"><div class=\"eb-preview-adspace eb-preview-adspace--banner\"><div class=\"eb-preview-adspace__title\">Title</div><div class=\"eb-preview-adspace__asset\"><span class=\"eb-preview-adspace__asset-label\">Asset</span></div><div class=\"eb-preview-adspace__content\"><div class=\"eb-preview-adspace__header\">Header</div><div class=\"eb-preview-adspace__description\">Description Goes Here</div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Variant</span><select id=\"ads-ctrl-variant\" class=\"demo-panel-select\" onchange=\"_adsUpdate()\"><option value=\"receipt\">Receipt</option><option value=\"banner\" selected=\"\">Banner</option><option value=\"promo\">Promo</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">#title</span><input type=\"text\" id=\"ads-ctrl-title\" class=\"demo-panel-select demo-panel-input\" value=\"Title\" oninput=\"_adsUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">#header</span><input type=\"text\" id=\"ads-ctrl-header\" class=\"demo-panel-select demo-panel-input\" value=\"Header\" oninput=\"_adsUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">#description</span><input type=\"text\" id=\"ads-ctrl-description\" class=\"demo-panel-select demo-panel-input\" value=\"Description Goes Here\" oninput=\"_adsUpdate()\"></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "One component serves every ad placement across the app: inline receipt banners, dashboard tiles, and full-width heroes. Seven canonical sizes cover IAB-standard banners plus product surfaces."
+        "note": "One shape covers every ad placement — receipt inserts, in-feed banners, and dashboard promo tiles. The asset area is a real slot, so a product team drops in its own media without asking for a new component."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Ships its own surface, caption typography, loading skeleton, and corner radius tokens. Media flows through the <code>content</code> slot — no hardcoded rasters, no placeholder \"replace me\" assets."
+        "note": "Ships its own container, text styles, corner radius, and slot placeholder. No campaign artwork lives inside the design system, and nothing about a specific surface is baked in."
       },
       {
         "name": "Consistent",
         "rating": "pass",
-        "note": "Size naming follows a predictable pattern: <code>&lt;family&gt;-&lt;size&gt;</code>. Content and state are orthogonal axes. Caption typography uses the same DS text style across all promo and hero sizes."
+        "note": "All three versions read the same way: <code>Container</code> → <code>⤷ AssetSlot</code> → <code>Content</code>. Text layers share one vocabulary — <code>#title</code>, <code>#header</code>, <code>#description</code> — so the same name means the same thing everywhere."
       },
       {
         "name": "Composable",
         "rating": "pass",
-        "note": "Plugs into the DS Carousel for multi-ad layouts (e.g. a row of <code>hero-md</code>), into list rows for inline banners, and into the dashboard grid for promo tiles. No sibling \"Ad Carousel\" or \"Ad Group\" needed."
+        "note": "Drops into the <a href=\"/components/ad-carousel\">Ad Carousel</a> rail through <code>⤷ CarouselSlot</code>, and stands alone inline. No sibling component per placement."
       }
     ],
     "behavior": [
       {
-        "state": "banner-sm",
+        "state": "Variant=Receipt",
         "ios": "na",
         "android": "na",
-        "property": "GADBannerView",
-        "notes": "<code>AdView</code>"
+        "property": "EBAdSpace(.receipt)",
+        "notes": "300 × 250. Asset only — no text."
       },
       {
-        "state": "banner-lg",
+        "state": "Variant=Banner",
         "ios": "na",
         "android": "na",
-        "property": "GADBannerView",
-        "notes": "<code>AdView</code>"
+        "property": "EBAdSpace(.banner)",
+        "notes": "320 × 262. Carries <code>#title</code> above the asset."
       },
       {
-        "state": "banner-mrec",
+        "state": "Variant=Promo",
         "ios": "na",
         "android": "na",
-        "property": "GADBannerView",
-        "notes": "<code>AdView</code>"
+        "property": "EBAdSpace(.promo)",
+        "notes": "224 × 208. Fills the Ad Carousel rail."
       },
       {
-        "state": "promo-sm",
+        "state": "⤷ AssetSlot",
         "ios": "na",
         "android": "na",
-        "property": "custom EBAdSpace",
-        "notes": "custom composable"
-      },
-      {
-        "state": "promo-md",
-        "ios": "na",
-        "android": "na",
-        "property": "custom EBAdSpace",
-        "notes": "custom composable"
-      },
-      {
-        "state": "hero-sm",
-        "ios": "na",
-        "android": "na",
-        "property": "custom EBAdSpace",
-        "notes": "custom composable"
-      },
-      {
-        "state": "hero-md",
-        "ios": "na",
-        "android": "na",
-        "property": "custom EBAdSpace",
-        "notes": "custom composable"
-      },
-      {
-        "state": "isLoading",
-        "ios": "na",
-        "android": "na",
-        "property": "RedactedShape",
-        "notes": "shimmer composable"
+        "property": "content slot",
+        "notes": "Swappable area for product-supplied media."
       }
     ],
-    "resolved": [],
+    "resolved": [
+      {
+        "headline": "The setting holds versions, not sizes.",
+        "body": "The <code>Size</code> setting was renamed to <code>Variant</code>. Its values — Receipt, Banner, Promo — name where the ad goes, which is what they always described. <code>Size</code> is reserved for XS–XL under the naming guidelines.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "All three versions share one anatomy.",
+        "body": "Receipt used to hang its asset area straight off the root while the other two wrapped theirs. It now has the same <code>Container</code>, so every version reads <code>Container</code> → <code>⤷ AssetSlot</code>. The slot was renamed to <code>⤷ AssetSlot</code> in all three, matching the convention Tooltip uses.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Text layers no longer contradict their contents.",
+        "body": "A layer called <code>#label</code> held the text \"Title\", while a different layer called <code>#title</code> held \"Header\". They are now <code>#title</code> and <code>#header</code> — each name matches what it holds, in every version.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
     "open": [],
     "recommendations": [
       {
-        "headline": "Adoption — deprecate and delete the three legacy components.",
-        "body": "Swap all Figma usages of Ads On Receipt, Ad Space - Group - Large, and Dashboard Promo Cards to <code>Ad Space</code> with the matching <code>size</code>. Delete the old components plus the Placeholder Banner and Promo Cards Images asset libraries once zero-usage is confirmed.",
+        "headline": "Retire the old component in Sticker Sheets v2.",
+        "body": "This assessment now points at <code>6507:74166</code> in the 2026 Working File. The previous component at <code>18563:9789</code> is deprecated. Swap the remaining Figma usages, then delete it along with the Placeholder Banner and Promo Cards Images asset libraries once zero usage is confirmed.",
         "tag": "Family"
       },
       {
-        "headline": "Asset pipeline — ship promo and hero imagery as product assets, not DS assets.",
-        "body": "Product teams export 1×/2×/3× image assets from their marketing pipeline and pass them into the <code>content</code> slot. The DS ships the container, typography, radius, and skeleton only — no imagery. This is what retires the 8-variant Placeholder Banner and 6-variant Promo Cards Images asset sets.",
+        "headline": "Ship imagery as product assets, not design system assets.",
+        "body": "Product teams export their own 1×/2×/3× images and pass them into <code>⤷ AssetSlot</code>. The design system ships the container, type styles, radius, and slot placeholder — never the artwork.",
         "tag": "Asset"
       },
       {
-        "headline": "Carousel composition — no \"Ad Carousel\" component.",
-        "body": "Multi-ad rails (e.g. a horizontal row of <code>hero-md</code>) are authored as <code>&lt;Carousel&gt;&lt;AdSpace size=\"hero-md\" /&gt;&lt;AdSpace size=\"hero-md\" /&gt;…&lt;/Carousel&gt;</code>. The old <code>carousel=yes</code> pseudo-variant is retired because it was a static 3-card Figma preview, not a runtime carousel. Document this composition pattern in the Carousel and Ad Space guidelines.",
-        "tag": "Composition"
+        "headline": "Revisit whether the carousel container should stay ad-specific.",
+        "body": "<a href=\"/components/ad-carousel\">Ad Carousel</a> is a title, an optional button, and a rail of cards — nothing in it is about ads. Swap Ad Space for a Carousel Card and it becomes the dashboard rail. Keeping it ad-specific was a deliberate call this pass, to avoid a name collision with Carousel Card and Carousel Item. Worth revisiting when the Carousel family is reviewed.",
+        "tag": "Family"
       },
       {
-        "headline": "Tokens — propose a <code>main/ad-space/color/*</code> namespace.",
-        "body": "Ship <code>main/ad-space/color/surface</code> (card background), <code>main/ad-space/color/caption</code> (caption text), and <code>main/ad-space/color/loading-skeleton</code> (shimmer fill). Today the legacy components reuse generic <code>bg/color-bg-main</code> and <code>bg/color-bg-strong</code>; a dedicated namespace makes cross-family theming (dark mode, partner-branded surfaces) tractable.",
+        "headline": "Propose a <code>main/ad-space/color/*</code> token namespace.",
+        "body": "Ship <code>main/ad-space/color/surface</code>, <code>main/ad-space/color/title</code>, <code>main/ad-space/color/header</code>, and <code>main/ad-space/color/description</code>. A dedicated namespace makes dark mode and partner-branded surfaces tractable instead of inheriting generic background tokens.",
         "tag": "Token"
       },
       {
-        "headline": "Telemetry — bake impression and tap tracking into the native component.",
-        "body": "The iOS <code>EBAdSpace</code> view and Android composable should emit <code>onImpression</code> (50% visible for ≥1s) and <code>onTap</code> callbacks. AdMob-backed <code>banner-*</code> sizes get this for free; <code>promo-*</code> and <code>hero-*</code> need product-side reporting. Document the contract in the Code tab so consumer teams wire analytics consistently.",
+        "headline": "Bake impression and tap tracking into the native component.",
+        "body": "The iOS view and Android composable should emit <code>onImpression</code> (50% visible for at least one second) and <code>onTap</code>. Document the contract in the Code tab so every consumer team wires analytics the same way.",
         "tag": "Docs"
       },
       {
-        "headline": "A11y — treat ads as labeled buttons, not decorative images.",
-        "body": "Every Ad Space is tappable and leads somewhere; the whole surface must expose a single accessibility label (caption + \"Advertisement\" trait). Banner family should announce \"Advertisement\" as its accessibility hint per App Store / Play Store disclosure norms.",
+        "headline": "Treat ads as labeled buttons, not decorative images.",
+        "body": "Every Ad Space is tappable and leads somewhere, so the whole surface should expose one accessibility label built from <code>#header</code> and <code>#description</code>, plus an \"Advertisement\" trait to meet App Store and Play Store disclosure norms.",
         "tag": "A11y"
       },
       {
-        "headline": "Caption — optional, typography-constrained, never mandatory.",
-        "body": "Promo and hero families accept an optional caption string; banner family has none (AdMob renders its own chrome). Caption uses <code>Secondary/Bold/Caption</code> — one line for promo-sm, up to two lines for promo-md / hero-*. Empty caption hides the label slot; it does not reserve space.",
+        "headline": "Watch the Banner title override inside the carousel.",
+        "body": "Banner carries <code>#title</code> above the asset, Promo has only <code>#header</code> and <code>#description</code>, and Receipt has no text. Inside Ad Carousel the Banner title is switched off on each copy so it doesn't repeat the rail heading. That is a per-copy override rather than a property, so a designer who swaps the copy gets the title back. A <code>hasTitle</code> boolean would remove the risk if it proves annoying in practice.",
         "tag": "Slot"
       },
       {
         "headline": "See siblings:",
-        "body": "<a href=\"#\" onclick=\"showPanelById('carousel-card');return false;\">Carousel Card</a> and the broader Carousel family — Ad Space heroes wrap inside the DS Carousel; keep skeleton treatment aligned across card primitives.",
+        "body": "<a href=\"/components/ad-carousel\">Ad Carousel</a> wraps this component in a scrolling rail. Keep the asset slot and placeholder treatment aligned with <a href=\"/components/carousel-card\">Carousel Card</a> as the Carousel family is reviewed.",
         "tag": "Family"
       }
-    ]
+    ],
+    "appliedRecommendations": []
   },
   "style": {
-    "heading": "Size families",
+    "heading": "Versions",
+    "description": "Three versions on one Variant setting. Every version wraps a Container around a ⤷ AssetSlot; Banner and Promo add a Content block beneath it, and Banner alone carries a #title above.",
     "specCards": [
       {
-        "cardKey": "ads-spec-card-banner",
-        "demoKey": "banner",
-        "demoControls": adSpaceBannerControls,
-        "title": "Banner family",
-        "node": "18563:9789",
-        "description": "IAB-standard banner sizes driven by AdMob. The DS provides a fixed-dimension surface; the ad SDK renders the creative in the content slot.",
-        "previewHtml": "<div id=\"ads-spec-banner\"><div class=\"eb-preview-adspace eb-preview-adspace--banner eb-preview-adspace--banner-sm\" style=\"width:320px;height:50px;\"><div class=\"eb-preview-adspace__banner-fill\"><span class=\"eb-preview-adspace__banner-label\">Ad</span><span class=\"eb-preview-adspace__banner-dim\">320×50</span></div></div></div>",
+        "cardKey": "ads-spec-card-receipt",
+        "demoKey": "receipt",
+        "demoControls": adSpaceAssetControls,
+        "title": "Receipt",
+        "node": "6518:74485",
+        "description": "Asset only, no text. Sits inside transaction and receipt flows where the surrounding screen already supplies the context.",
+        "previewHtml": "<div id=\"ads-spec-receipt\"><div class=\"eb-preview-adspace eb-preview-adspace--receipt\"><div class=\"eb-preview-adspace__asset\"><span class=\"eb-preview-adspace__asset-label\">Asset</span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Size family",   "value": "banner" },
-              { "key": "Size",          "value": "banner-sm", "prop": "size" },
-              { "key": "isLoading",     "value": "false", "prop": "loading" },
-              { "key": "Content slot",  "value": "AdMob view" }
+              { "key": "Variant", "value": "Receipt" },
+              { "key": "⤷ AssetSlot", "value": "Slot Block placeholder" },
+              { "key": "#title", "value": "—" },
+              { "key": "#header / #description", "value": "—" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",          "value": "#FFFFFF", "token": "ad-space/color/surface" },
-              { "key": "Loading skeleton", "value": "#EEF2F9", "token": "ad-space/color/loading-skeleton" },
-              { "key": "\"Ad\" marker",      "value": "#6780A9", "token": "text/color-text-subtle" }
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
+              { "key": "Slot placeholder", "value": "#9F3DFB", "token": "authoring only — not rendered in product", "swatch": true }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Dimensions", "value": "320 × 50", "mono": true,
-                "variants": {
-                  "size:banner-lg":   { "value": "320 × 100" },
-                  "size:banner-mrec": { "value": "300 × 250" }
-                }
-              },
-              { "key": "Corner radius",  "value": "radius/radius-1 (4px)", "mono": true },
-              { "key": "Padding",        "value": "0 (ad fills surface)", "mono": true }
+              { "key": "Dimensions", "value": "300 × 250", "mono": true },
+              { "key": "⤷ AssetSlot", "value": "300 × 250", "mono": true },
+              { "key": "Corner radius", "value": "4", "mono": true },
+              { "key": "Padding", "value": "0 — asset fills the container", "mono": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "\"Ad\" marker style", "value": "Secondary/Bold/Caption", "mono": true },
-              { "key": "Font",              "value": "BarkAda Semibold · 10 / 14 · +0.25", "mono": true }
+              { "key": "Text layers", "value": "none", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>size<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.bannerSm</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">GADBannerView</span><span class=\"syn-punc\">(</span>adSize<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.banner</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">BannerSm</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">AndroidView</span><span class=\"syn-punc\">(</span>factory <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> ctx <span class=\"syn-eq\">-&gt;</span> <span class=\"syn-type\">AdView</span><span class=\"syn-punc\">(</span>ctx<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">})</span>\n<span class=\"syn-punc\">}</span>"
+        "swift": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.receipt</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">)</span><span class=\"syn-punc\">.</span><span class=\"syn-fn\">resizable</span><span class=\"syn-punc\">()</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Receipt</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+      },
+      {
+        "cardKey": "ads-spec-card-banner",
+        "demoKey": "banner",
+        "demoControls": adSpaceAssetControls,
+        "title": "Banner",
+        "node": "5703:38546",
+        "description": "The widest version. Carries #title above the asset and a #header + #description block beneath. Inside the Ad Carousel rail the title is switched off so it doesn't repeat the rail heading.",
+        "previewHtml": "<div id=\"ads-spec-banner\"><div class=\"eb-preview-adspace eb-preview-adspace--banner\"><div class=\"eb-preview-adspace__title\">Title</div><div class=\"eb-preview-adspace__asset\"><span class=\"eb-preview-adspace__asset-label\">Asset</span></div><div class=\"eb-preview-adspace__content\"><div class=\"eb-preview-adspace__header\">Header</div><div class=\"eb-preview-adspace__description\">Description Goes Here</div></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "Variant", "value": "Banner" },
+              { "key": "⤷ AssetSlot", "value": "Slot Block placeholder" },
+              { "key": "#title", "value": "Title" },
+              { "key": "#header", "value": "Header" },
+              { "key": "#description", "value": "Description Goes Here" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
+              { "key": "#title", "value": "#072592", "token": "text/color-text-heading", "swatch": true },
+              { "key": "#header", "value": "#005CE5", "token": "text/color-text-link", "swatch": true },
+              { "key": "#description", "value": "#445C85", "token": "text/color-text-body", "swatch": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Dimensions", "value": "320 × 262", "mono": true },
+              { "key": "#title row", "value": "320 × 16", "mono": true },
+              { "key": "Title to Container", "value": "16", "mono": true },
+              { "key": "⤷ AssetSlot", "value": "320 × 174", "mono": true },
+              { "key": "Asset to Content", "value": "16", "mono": true },
+              { "key": "Content block", "value": "320 × 40", "mono": true },
+              { "key": "Corner radius", "value": "4", "mono": true }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "#title style", "value": "Primary/Bold/Heading", "mono": true },
+              { "key": "#title font", "value": "Proxima Soft Bold · 18 / 18 · +0.25", "mono": true },
+              { "key": "#header font", "value": "Proxima Soft Bold · 18 / 18 · +0.25", "mono": true },
+              { "key": "#description font", "value": "BarkAda SemiBold · 12 / 18 · 0", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-dot\">.banner</span><span class=\"syn-punc\">,</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    header<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Header\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Description Goes Here\"</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">)</span><span class=\"syn-punc\">.</span><span class=\"syn-fn\">resizable</span><span class=\"syn-punc\">()</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n    variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Banner</span><span class=\"syn-punc\">,</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    header <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Header\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description Goes Here\"</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       },
       {
         "cardKey": "ads-spec-card-promo",
         "demoKey": "promo",
-        "demoControls": adSpacePromoControls,
-        "title": "Promo family",
-        "node": "18563:9917",
-        "description": "Product-owned dashboard tiles. Image fills the upper portion; an optional caption sits beneath.",
-        "previewHtml": "<div id=\"ads-spec-promo\"><div class=\"eb-preview-adspace eb-preview-adspace--promo eb-preview-adspace--promo-md\" style=\"width:224px;height:200px;\"><div class=\"eb-preview-adspace__image\"><span class=\"eb-preview-adspace__image-label\">Replace me · 224×200</span></div><div class=\"eb-preview-adspace__caption eb-preview-adspace__caption--below\">Earn up to 5% on savings</div></div></div>",
+        "demoControls": adSpaceAssetControls,
+        "title": "Promo",
+        "node": "6528:77243",
+        "description": "The dashboard tile, and the default card inside the Ad Carousel rail. Same Content block as Banner, without the title above the asset.",
+        "previewHtml": "<div id=\"ads-spec-promo\"><div class=\"eb-preview-adspace eb-preview-adspace--promo\"><div class=\"eb-preview-adspace__asset\"><span class=\"eb-preview-adspace__asset-label\">Asset</span></div><div class=\"eb-preview-adspace__content\"><div class=\"eb-preview-adspace__header\">Header</div><div class=\"eb-preview-adspace__description\">Description Goes Here</div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Size family",   "value": "promo" },
-              { "key": "Size",          "value": "promo-md", "prop": "size" },
-              { "key": "isLoading",     "value": "false",    "prop": "loading" },
-              { "key": "Content slot",  "value": "Image or illustration" },
-              { "key": "Caption prop",  "value": "caption: String?" }
+              { "key": "Variant", "value": "Promo" },
+              { "key": "⤷ AssetSlot", "value": "Slot Block placeholder" },
+              { "key": "#title", "value": "—" },
+              { "key": "#header", "value": "Header" },
+              { "key": "#description", "value": "Description Goes Here" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",           "value": "#FFFFFF", "token": "ad-space/color/surface" },
-              { "key": "Caption",           "value": "#2340A9", "token": "ad-space/color/caption" },
-              { "key": "Image placeholder", "value": "#E6E1EF", "token": "ad-space/color/loading-skeleton" }
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
+              { "key": "#header", "value": "#005CE5", "token": "text/color-text-link", "swatch": true },
+              { "key": "#description", "value": "#445C85", "token": "text/color-text-body", "swatch": true }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Dimensions", "value": "224 × 200", "mono": true,
-                "variants": { "size:promo-sm": { "value": "131 × 126" } } },
-              { "key": "Image aspect", "value": "3:2", "mono": true,
-                "variants": { "size:promo-sm": { "value": "4:3" } } },
-              { "key": "Corner radius",   "value": "radius/radius-2 (8px)", "mono": true },
-              { "key": "Caption padding", "value": "8 horizontal, 6 vertical", "mono": true }
+              { "key": "Dimensions", "value": "224 × 208", "mono": true },
+              { "key": "⤷ AssetSlot", "value": "224 × 152", "mono": true },
+              { "key": "Asset to Content", "value": "16", "mono": true },
+              { "key": "Content block", "value": "224 × 40", "mono": true },
+              { "key": "Corner radius", "value": "4", "mono": true },
+              { "key": "Peek inside Ad Carousel", "value": "96 of the next card", "mono": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Caption style", "value": "Secondary/Bold/Caption", "mono": true },
-              { "key": "Font",          "value": "BarkAda Semibold · 12 / 16", "mono": true },
-              { "key": "Max lines",     "value": "1 (sm) · 2 (md)", "mono": true }
+              { "key": "#header style", "value": "Primary/Bold/Heading", "mono": true },
+              { "key": "#header font", "value": "Proxima Soft Bold · 18 / 18 · +0.25", "mono": true },
+              { "key": "#description font", "value": "BarkAda SemiBold · 12 / 18 · 0", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n    size<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.promoMd</span><span class=\"syn-punc\">,</span>\n    caption<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Earn rewards every day\"</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> imageURL<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PromoMd</span><span class=\"syn-punc\">,</span>\n    caption <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Earn rewards every day\"</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> imageUrl<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
-      },
-      {
-        "cardKey": "ads-spec-card-hero",
-        "demoKey": "hero",
-        "demoControls": adSpaceHeroControls,
-        "title": "Hero family",
-        "node": "18563:9808",
-        "description": "Full-width hero banners for home and category surfaces. <code>hero-md</code> is the canonical item inside a DS Carousel for multi-ad rails.",
-        "previewHtml": "<div id=\"ads-spec-hero\"><div class=\"eb-preview-adspace eb-preview-adspace--hero eb-preview-adspace--hero-md\" style=\"width:336px;height:174px;\"><div class=\"eb-preview-adspace__image eb-preview-adspace__image--full\"><span class=\"eb-preview-adspace__image-label\">Replace me · 336×174</span></div><div class=\"eb-preview-adspace__caption eb-preview-adspace__caption--overlay\">Weekend deals are here</div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Size family",  "value": "hero" },
-              { "key": "Size",         "value": "hero-md",  "prop": "size" },
-              { "key": "isLoading",    "value": "false",    "prop": "loading" },
-              { "key": "Content slot", "value": "Image or illustration" },
-              { "key": "Carousel",     "value": "DS Carousel for multi-ad rails" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface",           "value": "#FFFFFF", "token": "ad-space/color/surface" },
-              { "key": "Caption (overlay)", "value": "#FFFFFF", "token": "ad-space/color/caption-overlay" },
-              { "key": "Caption scrim",     "value": "#040506", "token": "overlay/scrim-bottom" },
-              { "key": "Image placeholder", "value": "#E6E1EF", "token": "ad-space/color/loading-skeleton" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Dimensions", "value": "336 × 174", "mono": true,
-                "variants": { "size:hero-sm": { "value": "296 × 174" } } },
-              { "key": "Image aspect", "value": "15:8", "mono": true,
-                "variants": { "size:hero-sm": { "value": "17:10" } } },
-              { "key": "Corner radius",   "value": "radius/radius-3 (12px)", "mono": true },
-              { "key": "Caption padding", "value": "12 horizontal, 8 vertical", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Caption style", "value": "Primary/Headlines/Block", "mono": true },
-              { "key": "Font",          "value": "Proxima Soft Bold · 16 / 20 · +0.25", "mono": true },
-              { "key": "Max lines",     "value": "2", "mono": true },
-              { "key": "Position",      "value": "Overlay on lower third", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">Carousel</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>ads<span class=\"syn-punc\">) {</span> ad <span class=\"syn-kw\">in</span>\n        <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>size<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.heroMd</span><span class=\"syn-punc\">,</span> caption<span class=\"syn-punc\">:</span> ad.caption<span class=\"syn-punc\">) {</span>\n            <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> ad.image<span class=\"syn-punc\">)</span>\n        <span class=\"syn-punc\">}</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBCarousel</span><span class=\"syn-punc\">(</span>items <span class=\"syn-eq\">=</span> ads<span class=\"syn-punc\">) {</span> ad <span class=\"syn-eq\">-&gt;</span>\n    <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n        size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">HeroMd</span><span class=\"syn-punc\">,</span>\n        caption <span class=\"syn-eq\">=</span> ad.caption\n    <span class=\"syn-punc\">) {</span>\n        <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad.image<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>"
+        "swift": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-dot\">.promo</span><span class=\"syn-punc\">,</span>\n    header<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Header\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Description Goes Here\"</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">)</span><span class=\"syn-punc\">.</span><span class=\"syn-fn\">resizable</span><span class=\"syn-punc\">()</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n    variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Promo</span><span class=\"syn-punc\">,</span>\n    header <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Header\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description Goes Here\"</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
     colorsTables: [
-      // All three cards (banner, promo, hero) share the same surface palette.
-      // The actual ad creative is supplied by the publisher and lives outside
-      // the design system's color contract.
+      buildStatelessColorsTable({
+        title: 'Receipt — Colors',
+        description: 'Asset only. The purple slot placeholder is an authoring aid and never renders in product.',
+        rows: [
+          { role: 'Surface', token: 'bg/color-bg-main', value: '#FFFFFF' },
+        ],
+      }),
       buildStatelessColorsTable({
         title: 'Banner — Colors',
-        description: 'Surface tile that hosts the ad creative. Skeleton + label colors are the only DS-owned tokens.',
+        description: 'Three text roles. #title and #header share a size and weight but not a colour.',
         rows: [
-          { role: 'Surface',          token: 'ad-space/color/surface',          value: '#FFFFFF' },
-          { role: 'Loading skeleton', token: 'ad-space/color/loading-skeleton', value: '#EEF2F9' },
-          { role: '"Ad" marker',      token: 'text/color-text-subtle',          value: '#6780A9' },
+          { role: 'Surface',      token: 'bg/color-bg-main',        value: '#FFFFFF' },
+          { role: '#title',       token: 'text/color-text-heading', value: '#072592' },
+          { role: '#header',      token: 'text/color-text-link',    value: '#005CE5' },
+          { role: '#description', token: 'text/color-text-body',    value: '#445C85' },
         ],
       }),
       buildStatelessColorsTable({
         title: 'Promo — Colors',
-        description: 'Same DS-owned palette as the Banner; promo creative fills the surface.',
+        description: 'Same palette as Banner, minus the title role.',
         rows: [
-          { role: 'Surface',          token: 'ad-space/color/surface',          value: '#FFFFFF' },
-          { role: 'Loading skeleton', token: 'ad-space/color/loading-skeleton', value: '#EEF2F9' },
-          { role: '"Ad" marker',      token: 'text/color-text-subtle',          value: '#6780A9' },
-        ],
-      }),
-      buildStatelessColorsTable({
-        title: 'Hero — Colors',
-        description: 'Same DS-owned palette as the Banner; hero creative fills the larger surface.',
-        rows: [
-          { role: 'Surface',          token: 'ad-space/color/surface',          value: '#FFFFFF' },
-          { role: 'Loading skeleton', token: 'ad-space/color/loading-skeleton', value: '#EEF2F9' },
-          { role: '"Ad" marker',      token: 'text/color-text-subtle',          value: '#6780A9' },
+          { role: 'Surface',      token: 'bg/color-bg-main',     value: '#FFFFFF' },
+          { role: '#header',      token: 'text/color-text-link', value: '#005CE5' },
+          { role: '#description', token: 'text/color-text-body', value: '#445C85' },
         ],
       }),
     ],
@@ -433,130 +367,150 @@ export const adSpace: ComponentData = {
   "code": {
     "installation": {
       "planned": true,
-      "blocks": []
+      "blocks": [
+        {
+          "label": "Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Gradle",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        }
+      ],
+      "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
     },
     "propertyMapping": {
+      "description": "Figma properties mapped to the intended native parameters.",
       "rows": [
         {
-          "figma": "<code>size: banner-sm | banner-lg | banner-mrec | promo-sm | promo-md | hero-sm | hero-md</code>",
-          "swift": "<code>size: EBAdSpaceSize</code>",
-          "compose": "<code>size: EBAdSpaceSize</code>"
+          "figma": "Variant",
+          "swift": "AdSpaceVariant (.receipt / .banner / .promo)",
+          "compose": "variant: AdSpaceVariant"
         },
         {
-          "figma": "<code>isLoading: Boolean</code>",
-          "swift": "<code>isLoading: Bool</code>",
-          "compose": "<code>isLoading: Boolean</code>"
+          "figma": "⤷ AssetSlot",
+          "swift": "@ViewBuilder content: () -> Content",
+          "compose": "content: @Composable BoxScope.() -> Unit"
         },
         {
-          "figma": "<code>content: Frame</code> (slot)",
-          "swift": "<code>content: () -&gt; AnyView</code>",
-          "compose": "<code>content: @Composable () -&gt; Unit</code>"
+          "figma": "#title",
+          "swift": "title: String? (Banner only)",
+          "compose": "title: String? (Banner only)"
         },
         {
-          "figma": "<code>caption: String?</code>",
-          "swift": "<code>caption: String?</code>",
-          "compose": "<code>caption: String?</code>"
+          "figma": "#header",
+          "swift": "header: String?",
+          "compose": "header: String?"
         },
         {
-          "figma": "(not modeled)",
-          "swift": "<code>onImpression: (() -&gt; Void)?</code>",
-          "compose": "<code>onImpression: (() -&gt; Unit)?</code>"
-        },
-        {
-          "figma": "(not modeled)",
-          "swift": "<code>onTap: (() -&gt; Void)?</code>",
-          "compose": "<code>onClick: (() -&gt; Unit)?</code>"
+          "figma": "#description",
+          "swift": "description: String?",
+          "compose": "description: String?"
         }
       ]
     },
-    "usageSnippets": [],
-    "accessibility": [
+    "usageSnippets": [
       {
-        "requirement": "Ad disclosure",
-        "ios": "Add <code>.accessibilityHint(\"Advertisement\")</code> so VoiceOver announces the trait alongside the caption.",
-        "android": "Set <code>Modifier.semantics { contentDescription = \"Advertisement, ${caption}\" }</code>."
+        "subheading": "Receipt — asset only",
+        "swift": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.receipt</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">)</span><span class=\"syn-punc\">.</span><span class=\"syn-fn\">resizable</span><span class=\"syn-punc\">()</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Receipt</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       },
       {
-        "requirement": "Ad as a single button",
-        "ios": "Whole surface wrapped in <code>Button { onTap() }</code> with <code>accessibilityElement(children: .combine)</code>.",
-        "android": "<code>Modifier.clickable { onClick() }.semantics(mergeDescendants = true)</code>."
+        "subheading": "Banner — title above, text beneath",
+        "swift": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-dot\">.banner</span><span class=\"syn-punc\">,</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Sponsored\"</span><span class=\"syn-punc\">,</span>\n    header<span class=\"syn-punc\">:</span> ad<span class=\"syn-punc\">.</span>headline<span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> ad<span class=\"syn-punc\">.</span>blurb\n<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">)</span><span class=\"syn-punc\">.</span><span class=\"syn-fn\">resizable</span><span class=\"syn-punc\">() }</span>",
+        "compose": "<span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>\n    variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Banner</span><span class=\"syn-punc\">,</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Sponsored\"</span><span class=\"syn-punc\">,</span>\n    header <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>headline<span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>blurb\n<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">,</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">) }</span>"
       },
       {
-        "requirement": "Image alt",
-        "ios": "Banner content is decorative from a11y's perspective — caption carries the meaning.",
-        "android": "<code>contentDescription = null</code> on the inner image; caption carries meaning."
-      },
-      {
-        "requirement": "Min touch target",
-        "ios": "All seven sizes exceed 44 pt height ✓",
-        "android": "All seven sizes exceed 48 dp height ✓"
-      },
-      {
-        "requirement": "Loading state",
-        "ios": "<code>accessibilityLabel(\"Loading advertisement\")</code> on the skeleton; suppress individual shimmer announcements.",
-        "android": "<code>contentDescription = \"Loading advertisement\"</code> on the skeleton container."
-      },
-      {
-        "requirement": "Focus ring",
-        "ios": "<code>.focused()</code> → 2 px outline using <code>border/focus</code> token for iPad keyboard nav.",
-        "android": "<code>Modifier.focusable()</code> + border in <code>border/focus</code>."
-      },
-      {
-        "requirement": "AdMob compliance",
-        "ios": "Google Mobile Ads SDK handles its own a11y metadata for <code>banner-*</code> — do not override.",
-        "android": "Google Mobile Ads SDK handles its own a11y metadata for <code>banner-*</code> — do not override."
+        "subheading": "Promo — inside an Ad Carousel rail",
+        "swift": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Sponsored\"</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>ads<span class=\"syn-punc\">) {</span> ad <span class=\"syn-kw\">in</span>\n        <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.promo</span><span class=\"syn-punc\">,</span> header<span class=\"syn-punc\">:</span> ad<span class=\"syn-punc\">.</span>headline<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">) }</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Sponsored\"</span><span class=\"syn-punc\">) {</span>\n    ads<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> ad <span class=\"syn-eq\">-&gt;</span>\n        <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">AdSpaceVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Promo</span><span class=\"syn-punc\">,</span> header <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>headline<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">,</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">) }</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
-    "usageGuidelines": [],
+    "accessibility": [
+      {
+        "requirement": "The whole card is one tappable element",
+        "ios": "<code>.accessibilityElement(children: .combine)</code> with a single <code>.isButton</code> trait",
+        "android": "<code>Modifier.clickable</code> on the container, children marked <code>clearAndSetSemantics</code>"
+      },
+      {
+        "requirement": "Disclosed as advertising",
+        "ios": "<code>.accessibilityHint(\"Advertisement\")</code>",
+        "android": "<code>contentDescription</code> prefixed with \"Advertisement\""
+      },
+      {
+        "requirement": "Label built from the text layers",
+        "ios": "<code>#header</code> then <code>#description</code>, joined",
+        "android": "Same order in <code>contentDescription</code>"
+      },
+      {
+        "requirement": "Asset is not announced separately",
+        "ios": "<code>.accessibilityHidden(true)</code> on the image",
+        "android": "<code>contentDescription = null</code> on the image"
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Pass campaign artwork into ⤷ AssetSlot from the product's own asset pipeline.",
+        "dontText": "Don't add campaign images to the design system library."
+      },
+      {
+        "doText": "Use Promo inside an Ad Carousel when the rail should read as scrollable.",
+        "dontText": "Don't expect a peek from Banner in a rail; at 320 wide it fills the shell by design."
+      },
+      {
+        "doText": "Let Receipt carry no text where the surrounding screen already gives context.",
+        "dontText": "Don't force a header onto Receipt by detaching the copy."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Single <code>Ad Space</code> component, semantic frame naming (<code>surface</code>, <code>content</code>, <code>caption</code>). No legacy \"Group\"/\"Large\"/\"hifi\"/\"midfi\" baggage."
+        "notes": "All three versions read <code>Container</code> → <code>⤷ AssetSlot</code>. Text layers renamed so each name matches its contents."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "One <code>size</code> enum, one <code>isLoading</code> boolean, one <code>caption</code> string. Content and state axes are orthogonal."
+        "notes": "<code>Size</code> renamed to <code>Variant</code>; values name the placement, which is what they always described."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Proposes a <code>main/ad-space/color/*</code> namespace (surface, caption, loading-skeleton) plus <code>radius/radius-1|2|3</code> per family. All typography bound to DS text styles."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Colours are attested as token-bound but were not verifiable with read-only tools. A <code>main/ad-space/color/*</code> namespace is proposed."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "<code>banner-*</code> maps 1:1 to <code>GADBannerView</code> / <code>AdView</code>. <code>promo-*</code> / <code>hero-*</code> map to <code>EBAdSpace</code> (ZStack/Box image + optional caption). Carousel composition reuses <code>EBCarousel</code>."
+        "notes": "A container with an image slot and two optional text rows maps directly to both platforms."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Default, pressed, focused, disabled, and loading states all modeled. Loading is an orthogonal boolean, not a variant."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "Display-only surface — confirmed by design. Tap handling belongs to the host."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "No DS-side assets. Content flows through the slot; placeholder libraries are retired."
+        "notes": "No raster ships inside the component. The Slot Block placeholder is the standard authoring aid."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Clean single-component mapping: <code>EBAdSpace</code> with enum <code>size</code>, boolean <code>isLoading</code>, slot <code>content</code>, string <code>caption</code>. 1:1 param mapping to both platforms."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Blocked — the native library does not exist yet."
       }
     ],
     "codeConnect": [
@@ -564,119 +518,70 @@ export const adSpace: ComponentData = {
         "aspect": "Property naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Clean: <code>size</code> (7), <code>isLoading</code> (bool), <code>caption</code> (string), <code>content</code> (slot)."
+        "notes": "<code>Variant</code> (3 values), <code>⤷ AssetSlot</code> (slot), and three text layers map one to one."
       },
       {
         "aspect": "Token coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>main/ad-space/color/*</code> namespace proposed; all colors and radii bound."
-      },
-      {
-        "aspect": "State coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Default + loading modeled; pressed/focused handled at the native layer."
-      },
-      {
-        "aspect": "Native component file",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "EBAdSpace.swift / EBAdSpace.kt not yet published — Planned API."
+        "notes": "Text colours need a Dev Mode check before mapping."
       },
       {
-        "aspect": "AdMob SDK wiring",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Google Mobile Ads SPM + Gradle dependencies documented in Installation."
+        "aspect": "Registration",
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Blocked until the native library exists."
       }
     ],
     "variants": {
-      "total": 7,
-      "description": "One <code>size</code> enum with 7 values across 3 size families. <code>isLoading</code> is an orthogonal boolean, not a variant (would otherwise double the count to 14). <code>caption</code> is optional input, not a variant.",
-      "columns": [
-        "Family",
-        "Size value",
-        "Dimensions",
-        "Aspect",
-        "Corner radius",
-        "Content slot"
-      ],
+      "total": 3,
+      "description": "1 Variant setting × 3 values = 3 versions. Content is supplied through the slot and the text layers, not through extra versions.",
+      "columns": ["Variant", "Size", "Text layers", "Node"],
       "rows": [
-        {
-          "cells": [
-            "<strong>banner</strong>",
-            "<code>banner-sm</code>",
-            "320 × 50",
-            "32:5",
-            "4",
-            "AdMob · IAB Mobile Banner"
-          ]
-        },
-        {
-          "cells": [
-            "<strong>banner</strong>",
-            "<code>banner-lg</code>",
-            "320 × 100",
-            "16:5",
-            "4",
-            "AdMob · IAB Large Banner"
-          ]
-        },
-        {
-          "cells": [
-            "<strong>banner</strong>",
-            "<code>banner-mrec</code>",
-            "300 × 250",
-            "6:5",
-            "4",
-            "AdMob · IAB MREC"
-          ]
-        },
-        {
-          "cells": [
-            "<strong>promo</strong>",
-            "<code>promo-sm</code>",
-            "131 × 126",
-            "4:3 (image)",
-            "8",
-            "Image + 1-line caption"
-          ]
-        },
-        {
-          "cells": [
-            "<strong>promo</strong>",
-            "<code>promo-md</code>",
-            "224 × 200",
-            "3:2 (image)",
-            "8",
-            "Image + up to 2-line caption"
-          ]
-        },
-        {
-          "cells": [
-            "<strong>hero</strong>",
-            "<code>hero-sm</code>",
-            "296 × 174",
-            "17:10",
-            "12",
-            "Image + optional caption overlay"
-          ]
-        },
-        {
-          "cells": [
-            "<strong>hero</strong>",
-            "<code>hero-md</code>",
-            "336 × 174",
-            "15:8",
-            "12",
-            "Image + caption; default Carousel item"
-          ]
-        }
+        { "cells": ["Receipt", "300 × 250", "none", "6518:74485"] },
+        { "cells": ["Banner", "320 × 262", "#title · #header · #description", "5703:38546"] },
+        { "cells": ["Promo", "224 × 208", "#header · #description", "6528:77243"] }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "August 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt in the 2026 Working File — node 6507:74166",
+      "rows": [
+        {
+          "body": "<strong>Seven sizes became three versions.</strong> The <code>banner-sm</code> … <code>hero-md</code> enum is gone. The component is now <code>Variant = Receipt | Banner | Promo</code> on a new node in the 2026 Working File. The previous component at <code>18563:9789</code> in Sticker Sheets v2 is deprecated.\n          <span class=\"tag-fixed\">Rebuilt</span>",
+          "delta": { "kind": "resolved", "label": "Family" }
+        },
+        {
+          "body": "<strong>C2 — <code>Size</code> renamed to <code>Variant</code>.</strong> The values name where the ad goes rather than how big it is, so <code>Size</code> is freed for its XS–XL meaning under the naming guidelines.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "<strong>C1 — one anatomy across all three versions.</strong> Receipt gained the <code>Container</code> wrapper the other two already had, and the slot was renamed <code>⤷ AssetSlot</code> everywhere.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": { "kind": "resolved", "label": "C1 resolved" }
+        },
+        {
+          "body": "<strong>C1 — text layers renamed.</strong> <code>#label</code> (holding \"Title\") became <code>#title</code>, and the old <code>#title</code> (holding \"Header\") became <code>#header</code>, in every version.\n          <span class=\"tag-fixed\">Resolved</span>",
+          "delta": { "kind": "resolved", "label": "C1 resolved" }
+        },
+        {
+          "body": "<strong><code>isLoading</code> and the caption removed.</strong> Neither exists on the rebuilt component. The skeleton treatment and the optional caption string documented against the old seven-size schema no longer apply.\n          <span class=\"tag-fixed\">Removed</span>",
+          "delta": { "kind": "resolved", "label": "Property" }
+        },
+        {
+          "body": "<strong>C3 — token binding attested, not verified.</strong> Text colours are reported as bound to colour styles, but the read-only tools used for this assessment return raw hex without exposing bindings. Needs a Dev Mode confirmation.",
+          "delta": { "kind": "partial", "label": "C3 partial" }
+        },
+        {
+          "body": "<strong>New sibling: <a href=\"/components/ad-carousel\">Ad Carousel</a>.</strong> The rail that wraps this component is now assessed as its own page under the Ad Space group.",
+          "delta": { "kind": "resolved", "label": "Family" }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

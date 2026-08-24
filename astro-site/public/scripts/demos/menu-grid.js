@@ -3,27 +3,74 @@
  * Re-extract via: node astro-site/scripts/extract-demos.mjs menu-grid
  */
 /* ── Menu Grid Component JS ───────────────────────────────────────── */
-var _mgDemo = { row: 4, col: 4 };
+/* Geometry measured off the Figma component set (node 5973:70111).
+ * The container is always 336 wide; the tile width, horizontal gap and
+ * side padding are per-column-count values rather than one formula —
+ * Column=5 packs 64-wide tiles at a 0.8 gap with 6.4 side padding, which
+ * a uniform (320 - gaps) / n expression does not reproduce. Each row of
+ * the table sums back to 336 exactly.
+ *
+ * Column=2 renders the Service Item child at Orientation=Horizontal
+ * (158 × 64, icon left of the label). Column=3 | 4 | 5 renders
+ * Orientation=Vertical (72 tall, icon above the label). That switch is
+ * driven by the column count alone — Menu Grid exposes no orientation
+ * property of its own.
+ */
+var _mgDemo = { row: 2, col: 4 };
 
-function _mgBuildSvg(rows, cols) {
-  var cellW = 64;
-  var cellH = 56;
-  var gap = 4;
-  var padH = 8;
-  var padT = 10;
-  var padB = 6;
-  var w = padH * 2 + cols * cellW + (cols - 1) * gap;
-  var h = padT + padB + rows * cellH + (rows - 1) * gap;
+var MG_CONTAINER_W = 336;
+var MG_PAD_V = 8;
+var MG_GAP_V = 4;
+var MG_ICON = 48;
+
+var MG_LAYOUT = {
+  2: { tileW: 158, tileH: 64, gap: 4, padH: 8 },
+  3: { tileW: 104, tileH: 72, gap: 4, padH: 8 },
+  4: { tileW: 77, tileH: 72, gap: 4, padH: 8 },
+  5: { tileW: 64, tileH: 72, gap: 0.8, padH: 6.4 }
+};
+
+function _mgLayout(cols) {
+  return MG_LAYOUT[cols] || MG_LAYOUT[4];
+}
+
+function _mgOrientation(cols) {
+  return cols === 2 ? 'horizontal' : 'vertical';
+}
+
+function _mgTileW(cols) {
+  return _mgLayout(cols).tileW;
+}
+
+function _mgTileH(cols) {
+  return _mgLayout(cols).tileH;
+}
+
+function _mgBuildSvg(cols, rows) {
+  var L = _mgLayout(cols);
+  var tileW = L.tileW;
+  var tileH = L.tileH;
+  var horizontal = _mgOrientation(cols) === 'horizontal';
+  var w = MG_CONTAINER_W;
+  var h = MG_PAD_V * 2 + rows * tileH + (rows - 1) * MG_GAP_V;
+  var font = "'Proxima Soft', system-ui, sans-serif";
+
   var s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
   s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" rx="6" fill="#FFFFFF" stroke="#E5EBF4" stroke-width="1"/>';
+
   for (var r = 0; r < rows; r++) {
     for (var c = 0; c < cols; c++) {
-      var x = padH + c * (cellW + gap);
-      var y = padT + r * (cellH + gap);
-      var iconCx = x + cellW / 2;
-      var iconCy = y + 20;
-      s += '<circle cx="' + iconCx + '" cy="' + iconCy + '" r="14" fill="#E8EBF0"/>';
-      s += '<text x="' + iconCx + '" y="' + (y + 50) + '" text-anchor="middle" fill="#072592" font-size="9" font-weight="700" font-family="\'Proxima Soft\', system-ui, sans-serif">Label</text>';
+      var x = L.padH + c * (tileW + L.gap);
+      var y = MG_PAD_V + r * (tileH + MG_GAP_V);
+      if (horizontal) {
+        /* icon left, label right — Container is inset 12 from the tile edge */
+        s += '<circle cx="' + (x + 12 + MG_ICON / 2) + '" cy="' + (y + tileH / 2) + '" r="' + (MG_ICON / 2) + '" fill="#E5EBF4"/>';
+        s += '<text x="' + (x + 12 + MG_ICON + 12) + '" y="' + (y + tileH / 2 + 4) + '" fill="#072592" font-size="12" font-weight="700" letter-spacing="0.5" font-family="' + font + '">Label</text>';
+      } else {
+        /* icon above, label centred beneath */
+        s += '<circle cx="' + (x + tileW / 2) + '" cy="' + (y + MG_ICON / 2) + '" r="' + (MG_ICON / 2) + '" fill="#E5EBF4"/>';
+        s += '<text x="' + (x + tileW / 2) + '" y="' + (y + 63) + '" text-anchor="middle" fill="#072592" font-size="12" font-weight="700" letter-spacing="0.5" font-family="' + font + '">Label</text>';
+      }
     }
   }
   s += '</svg>';
@@ -33,12 +80,17 @@ function _mgBuildSvg(rows, cols) {
 function updateMenuGridDemo() {
   var rEl = document.getElementById('mg-demo-row');
   var cEl = document.getElementById('mg-demo-col');
-  var r = rEl ? parseInt(rEl.value, 10) || 4 : 4;
+  var r = rEl ? parseInt(rEl.value, 10) || 2 : 2;
   var c = cEl ? parseInt(cEl.value, 10) || 4 : 4;
   _mgDemo.row = r;
   _mgDemo.col = c;
   var el = document.getElementById('mg-demo-preview');
-  if (el) el.innerHTML = _mgBuildSvg(r, c);
+  if (el) el.innerHTML = _mgBuildSvg(c, r);
+
+  /* Column=2 flips the Service Item child to Orientation=Horizontal —
+     surface it as a live readout so the coupling is visible. */
+  var oEl = document.getElementById('mg-demo-orientation');
+  if (oEl) oEl.textContent = _mgOrientation(c) === 'horizontal' ? 'Horizontal' : 'Vertical';
 }
 
 /* ── Menu Grid Spec Cards ─────────────────────────────────────────── */
@@ -79,7 +131,7 @@ function updateSpecCard(cardStyle, prop, value) {
   var specCardEl = document.getElementById('spec-card-mg-spec-' + _mgKeyToLegacy(cardStyle));
   if (specCardEl) {
     var previewBody = specCardEl.querySelector('.spec-preview-body');
-    if (previewBody) previewBody.innerHTML = _mgBuildSvg(rows, cols);
+    if (previewBody) previewBody.innerHTML = _mgBuildSvg(cols, rows);
   }
 
   /* Update Properties readouts via [data-sp] */
@@ -94,11 +146,16 @@ function updateSpecCard(cardStyle, prop, value) {
      to the Plan A migration: keep the JS rebuild for menu-grid Layout. */
   var layoutEl = document.getElementById('spec-' + cardStyle + '-layout');
   if (layoutEl) {
+    var L = _mgLayout(cols);
+    var orientation = _mgOrientation(cols) === 'horizontal' ? 'Horizontal' : 'Vertical';
     var lh = '<div class="spec-detail-label">Layout</div><div class="spec-props">';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Cells</span><span class="spec-prop-val mono">' + rows + ' × ' + cols + ' = ' + (rows * cols) + '</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Tile size</span><span class="spec-prop-val mono">square (auto by column count)</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Icon size</span><span class="spec-prop-val mono">40 × 40</span></div>';
-    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding</span><span class="spec-prop-val mono">10 vertical · 8 horizontal</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Cells</span><span class="spec-prop-val mono">' + cols + ' × ' + rows + ' = ' + (rows * cols) + '</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Item orientation</span><span class="spec-prop-val mono">' + orientation + '</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Tile size</span><span class="spec-prop-val mono">' + L.tileW + ' × ' + L.tileH + '</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Icon slot</span><span class="spec-prop-val mono">48 × 48</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Container width</span><span class="spec-prop-val mono">336</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Padding</span><span class="spec-prop-val mono">' + L.padH + ' horizontal · ' + MG_PAD_V + ' vertical</span></div>';
+    lh += '<div class="spec-prop"><span class="spec-prop-key">Gap</span><span class="spec-prop-val mono">' + L.gap + ' × ' + MG_GAP_V + '</span></div>';
     lh += '<div class="spec-prop"><span class="spec-prop-key">Border radius</span><span class="spec-prop-val mono">radius/radius-2 (6px)</span></div>';
     lh += '</div>';
     layoutEl.innerHTML = lh;

@@ -31,14 +31,14 @@ const dropdownDemoControls: DemoControlSection[] = [
 export const dropdown: ComponentData = {
   "meta": {
     "slug": "dropdown",
-    "name": "Dropdown",
-    "node": "18482:31910",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18482-31910",
-    "description": "A trigger button that opens a popover surface containing selectable options.",
+    "name": "Select",
+    "node": "25783:1148",
+    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=25783-1148",
+    "description": "A trigger field that opens a Select Group of options. 16 variants across <code>Type</code> (Default/Peso) × <code>State</code> (Default/Expanded/Error/Disabled) × <code>isFilled</code>. Composes a Select Field trigger with a Select Group menu.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -47,9 +47,9 @@ export const dropdown: ComponentData = {
     ],
     "navGroup": "Dropdown",
     "verdict": {
-      "kind": "fix",
-      "title": "Fix required before handoff",
-      "text": "Missing disabled and pressed states (C5). DropdownItem <code>selected</code> uses yes/no instead of true/false (C2). Amount variant Peso Sign uses BOOLEAN_OPERATION (C6)."
+      "kind": "keep",
+      "title": "Rebuilt — schema is clean",
+      "text": "The v2.0 rebuild added <code>State=Disabled</code>, dropped the product-specific Mobile variant, and now composes Select Field + Select Group. v2.1 finished the schema: <code>isFilled</code> renamed to <code>true</code>/<code>false</code> to agree with the Select Field it wraps, <code>State=Active</code> renamed <code>Expanded</code>, and the redundant <code>isSelected</code> removed. The matrix is a clean <code>Type</code> (2) × <code>State</code> (4) × <code>isFilled</code> (2) = 16 with no correlated axes. No pressed state is correct — form fields use <code>Expanded</code> for interaction feedback, not pressed."
     }
   },
   "overview": {
@@ -59,99 +59,93 @@ export const dropdown: ComponentData = {
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Text and Error variants are generic dropdown patterns usable across many flows. Amount (peso-specific) and Mobile (phone input) variants are product-specific to GCash and limit cross-context reuse."
+        "rating": "pass",
+        "note": "The product-specific Mobile (phone input) variant is gone — <code>Type</code> is now just Default / Peso, so the component is a generic select usable across flows. Peso remains a GCash currency affordance but is a thin content variation, not a bundled feature."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Bundles trigger field, chevron affordance, dropdown list overlay with shadow, and subtext slot. All visual states (collapsed/expanded/error) are self-contained with proper token bindings."
+        "note": "Bundles the trigger field, chevron affordance, and the menu overlay. Every state — Default, Active, Error, Disabled — is self-contained with token-bound fills and borders."
       },
       {
         "name": "Consistent",
-        "rating": "partial",
-        "note": "DropdownItem <code>selected</code> uses <code>yes/no</code> string instead of <code>true/false</code> boolean (C2). Property <code>type</code> is a generic name — could conflict with platform keywords. Layer <code>dropdowncontainer</code> inconsistent with kebab-case convention."
+        "rating": "pass",
+        "note": "Three orthogonal props — <code>Type</code> × <code>State</code> × <code>isFilled</code> — with no redundant or correlated axis. <code>isFilled</code> uses lowercase <code>true</code>/<code>false</code>, agreeing with the <code>Select Field</code> it nests and the DS-wide standard, and <code>State=Expanded</code> names the open menu literally rather than the ambiguous \"Active\"."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Text/Error/Amount variants compose well with form layouts. Mobile variant bundles too many concerns (dropdown + phone input) — should be separated into discrete components. Trigger field is not a swappable slot."
+        "rating": "pass",
+        "note": "Now composes properly — every variant nests a <code>Select Field</code> trigger instance and a <code>Select Group</code> menu instance rather than hand-building either. The Mobile variant's bundled phone input has been extracted."
       }
     ],
     "behavior": [
       {
-        "state": "Collapsed (Default)",
+        "state": "Default",
         "ios": "yes",
         "android": "yes",
-        "property": "type=Collapsed",
-        "notes": "Gray #D7E0EF border, white bg. Chevron down."
+        "property": "State=Default",
+        "notes": "Gray <code>#D7E0EF</code> border, white bg, chevron down. Resting state, menu closed."
       },
       {
-        "state": "Expanded (Active)",
+        "state": "Expanded",
         "ios": "yes",
         "android": "yes",
-        "property": "type=Expanded",
-        "notes": "Blue #005CE5 border, chevron up. Dropdown list overlay with shadow."
+        "property": "State=Expanded",
+        "notes": "Blue <code>#005CE5</code> border, chevron up, Select Group menu open beneath. This is also the tap feedback — the field goes straight from Default to Expanded on tap."
       },
       {
         "state": "Error",
         "ios": "yes",
         "android": "yes",
-        "property": "variant=Error",
-        "notes": "Red border — weak #F4C7C9 (collapsed), strong #D61B2C (expanded)."
+        "property": "State=Error",
+        "notes": "Red border — weak <code>#F4C7C9</code> collapsed, strong <code>#D61B2C</code> when expanded. Orthogonal to whether a value is filled."
       },
       {
         "state": "Disabled",
-        "ios": "no",
-        "android": "no",
-        "property": "—",
-        "notes": "Not defined. Required for form accessibility."
+        "ios": "yes",
+        "android": "yes",
+        "property": "State=Disabled",
+        "notes": "Non-interactive; the menu cannot open. Added in v2.0 for conditional form flows (e.g. \"Country\" locked until \"Region\" is picked)."
+      },
+      {
+        "state": "Filled vs empty",
+        "ios": "yes",
+        "android": "yes",
+        "property": "isFilled",
+        "notes": "Whether the field shows a chosen value or placeholder text. Composes with every State."
       },
       {
         "state": "Pressed",
-        "ios": "no",
-        "android": "no",
+        "ios": "na",
+        "android": "na",
         "property": "—",
-        "notes": "Not defined. Touch feedback expected on mobile."
+        "notes": "Not modelled by design. Select is a form field, not a button — the field family (Select Field, Recipient Field) uses <code>Expanded</code> / active-style feedback rather than a pressed state."
       }
     ],
-    "resolved": [],
+    "resolved": [
+      {
+        "body": "v2.0: <code>State=Pressed</code> deliberately not modelled — reviewed and confirmed correct. Select belongs to the <strong>form-field</strong> family (Select Field, Recipient Field), whose convention is Default / Active / Error / Disabled with no pressed state; buttons and list rows use pressed, fields use active. Tapping a Select transitions straight to <code>Active</code> (blue border, menu open), which is the tap feedback — a pressed frame would be a transient flash between the two. (C5)"
+      },
+      {
+        "body": "v2.1: <code>isFilled</code> values renamed <code>no</code>/<code>yes</code> → <code>false</code>/<code>true</code> across all 16 variants — Select now agrees with the <code>Select Field</code> it nests and with the DS-wide boolean standard. (C2)"
+      },
+      {
+        "body": "v2.1: <code>State=Active</code> renamed to <code>Expanded</code> — the state is named for what it is, the open menu. (C2)"
+      },
+      {
+        "body": "v2.1: Redundant <code>isSelected</code> property removed — it was perfectly correlated with the old <code>State=Active</code> and contributed no combinations. The matrix is unchanged at 16 variants (<code>Type</code> 2 × <code>State</code> 4 × <code>isFilled</code> 2), with no collisions. (C2)"
+      },
+      {
+        "body": "v2.1: <code>isFilled</code> confirmed as a genuine property, not redundant like <code>isSelected</code> — it varies independently against every <code>State</code>, controlling whether the field shows a chosen value or placeholder text. Retained deliberately. (C2)"
+      },
+      {
+        "body": "v2.1: Peso Sign <code>shape_full</code> BOOLEAN_OPERATION deliberately not tracked here — owned by the iconography team and handled at the icon-library level. The same node appears in Select Item's Leading slot, so the flattened vector will land across both components at once. Not a Select defect. (C6)"
+      }
+    ],
     "open": [
       {
-        "headline": "DropdownItem <code>selected</code> uses <code>yes/no</code> strings.",
-        "body": "Should be <code>true/false</code> for direct Swift <code>Bool</code> / Kotlin <code>Boolean</code> mapping in Code Connect.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "No disabled state.",
-        "body": "Form dropdowns must support a non-interactive state for accessibility and conditional form flows (e.g. \"Country\" disabled until \"Region\" is picked).",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "No pressed state.",
-        "body": "Touch feedback is expected on both platforms — iOS highlight, Android ripple. Currently consumers improvise this.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Peso Sign uses a <code>shape_full</code> BOOLEAN_OPERATION.",
-        "body": "Not a clean vector path — renders inconsistently across SVG export and native platforms. Flatten to a single path.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked until the boolean and state issues above are resolved.",
+        "body": "The DropdownItem boolean issue is resolved (Select Item now ships lowercase <code>true</code>/<code>false</code>). Still blocked on the trigger's own state coverage and on the native library existing — the snippets remain a Planned API.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -160,28 +154,50 @@ export const dropdown: ComponentData = {
     ],
     "recommendations": [
       {
+        "headline": "Register Code Connect mapping to <code>EBSelect</code>.",
+        "body": "With the schema settled — <code>Type</code> × <code>State</code> × <code>isFilled</code>, no redundant axis — wire the Figma properties 1:1 to the SwiftUI / Compose API, forwarding State and isFilled down to the nested <code>EBSelectField</code> and the menu to <code>EBSelectGroup</code>.",
+        "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Rename <code>isFilled</code> values to <code>true</code>/<code>false</code>.",
+        "body": "v2.1: Applied — all 16 variants now read <code>isFilled=false</code>/<code>true</code>, matching the nested <code>Select Field</code> it wraps and the wider form-field family. The parent no longer disagrees with its own child.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Rename <code>State=Active</code> to <code>Expanded</code>.",
+        "body": "v2.1: Applied — the state now names what it is (the open menu) rather than the ambiguous \"Active\", which read as focused or enabled. Frees <code>Active</code> should a focus state ever be needed.",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Drop <code>isSelected</code> and derive it from <code>State</code>.",
+        "body": "v2.1: Applied — the redundant property is gone. The matrix is now a clean <code>Type</code> (2) × <code>State</code> (4) × <code>isFilled</code> (2) = 16 with no correlated axis, and Code Connect has one less prop to map.",
+        "tag": "Property"
+      },
+      {
         "headline": "Add a <code>Disabled</code> state to the variant matrix.",
-        "body": "Required for form accessibility and conditional logic — without it, consumers hack opacity filters on the parent frame.",
+        "body": "v2.0: Applied — <code>State=Disabled</code> ships across all four Type × isFilled combinations, so conditional form flows (e.g. \"Country\" locked until \"Region\" is picked) no longer need an opacity hack on the parent frame.",
         "tag": "State"
       },
       {
-        "headline": "Rename <code>type</code> to <code>isExpanded</code>.",
-        "body": "Avoids platform keyword conflicts (<code>type</code> is reserved in many languages) and aligns with boolean naming convention.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Rename DropdownItem <code>selected</code> values to <code>true/false</code>.",
-        "body": "Direct boolean mapping eliminates the string-to-bool conversion layer when wiring Code Connect.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Extract Mobile variant into a dedicated <code>CountryCodeDropdown</code>.",
-        "body": "It bundles too many concerns (dropdown + phone input) for a generic dropdown and forces the base component to carry country-specific logic.",
+        "headline": "Extract Mobile variant into a dedicated component.",
+        "body": "v2.0: Applied — the Mobile (phone input) variant is gone. <code>Type</code> is now just Default / Peso, so the base component no longer carries country-code logic.",
         "tag": "Family"
       },
       {
+        "headline": "Rename <code>type</code> to <code>isExpanded</code>.",
+        "body": "v2.0: Superseded by the restructure — <code>type</code> no longer encodes expansion. <code>Type</code> now means content type (Default / Peso) and the open menu is <code>State=Active</code>, so the keyword clash the rename was avoiding is gone. (See the open issue on renaming <code>Active</code> → <code>Expanded</code>.)",
+        "tag": "Rename"
+      },
+      {
+        "headline": "Rename DropdownItem <code>selected</code> values to <code>true</code>/<code>false</code>.",
+        "body": "v2.1: Applied on the item — Select Item (the rebuilt DropdownItem) now ships lowercase <code>true</code>/<code>false</code> across all 36 variants, matching the C2 rule and Radio Button. The string-to-bool conversion layer is gone.",
+        "tag": "Rename"
+      },
+      {
         "headline": "Add a selected-visual state to DropdownItem.",
-        "body": "Checkmark or background highlight makes the current selection unambiguous — today the open menu looks the same whether an item is picked or not.",
+        "body": "v2.0: Applied on the item — Select Item's <code>isSelected=true</code> flips the label to brand <code>#005CE5</code> and exposes a checkmark via the Trailing icon slot, so a picked row is unambiguous.",
         "tag": "State"
       }
     ]

@@ -41,13 +41,13 @@ export const emptyState: ComponentData = {
   "meta": {
     "slug": "empty-state",
     "name": "Empty State",
-    "node": "27:169325",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=27-169325",
-    "description": "A full-frame empty-state pattern — illustration or icon, title, description, and optional CTA.",
+    "node": "26356:13970",
+    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26356-13970",
+    "description": "A centred no-content surface — visual, header (title + description), and an action. 4 variants across <code>Style</code> (Default/Subtle) × <code>VisualType</code> (Icon/Asset), with a <code>Visual Container</code>, <code>Action Container</code> slot, and a token-bound header.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -55,9 +55,9 @@ export const emptyState: ComponentData = {
       }
     ],
     "verdict": {
-      "kind": "fix",
-      "title": "Prop schema + slot restructure",
-      "text": "Collapse the two title/description surfaces into one (there's no reason to have both \"top header\" and \"bottom header\"). Rename <code>color=white/grey blue</code> → <code>style=default/subtle</code> to match token naming. Replace icon and asset placeholders with Figma Slots. Resulting prop set: <code>style</code>, <code>title</code>, <code>description</code>, optional slots for <code>icon</code> / <code>asset</code> / <code>action</code>."
+      "kind": "keep",
+      "title": "Rebuilt — schema and slots landed",
+      "text": "The rebuild collapsed a 7-boolean, 256-combination mess into a clean 2 × 2 — <code>Style</code> (Default/Subtle) × <code>VisualType</code> (Icon/Asset). The duplicate header booleans merged into one header (title + description), <code>color</code> became <code>Style</code>, and the icon, asset, and action are all real Figma slots. The visual slot was unified to a single <code>Visual Container</code> so switching <code>VisualType</code> keeps its content, and <code>visualType</code> was recased to <code>VisualType</code> to match the enum convention. Only Code Connect registration remains."
     }
   },
   "overview": {
@@ -68,116 +68,120 @@ export const emptyState: ComponentData = {
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "Used for any \"no content\" surface — empty transaction lists, no search results, first-run inbox, unfilled saved contacts."
+        "note": "Used for any \"no content\" surface — empty transaction lists, no search results, first-run inbox, unfilled saved contacts. Icon and Asset visual types cover both compact and illustrative empties."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Carries bg, padding, typography — all token-bound."
+        "note": "Carries its own background, padding, and typography, all token-bound. Subtle ships <code>#F6F9FD</code>, Default white."
       },
       {
         "name": "Consistent",
-        "rating": "fail",
-        "note": "<code>color=\"white\"</code> / <code>color=\"grey blue\"</code> (space in value) doesn't match token namespace <code>default</code> / <code>subtle</code>. Two booleans <code>header</code> + <code>header1</code> are impossible to distinguish. Duplicate top/bottom header surfaces add structural complexity. <span class=\"tag-open tag-c2\">C2</span>"
+        "rating": "pass",
+        "note": "Two orthogonal enums — <code>Style</code> × <code>VisualType</code> = a complete 2 × 2, replacing the old 7-boolean / 256-combination schema. Values match the token namespace (Default / Subtle), the duplicate header booleans are gone, and both enums are Title Case."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Button composes the canonical Button instance ✓. But icon and asset are hardcoded placeholder shapes — should be Figma Slots for swappable content. <span class=\"tag-open tag-c6\">C6</span>"
+        "rating": "pass",
+        "note": "Three real Figma slots — a unified <code>Visual Container</code> for the icon or asset, and an <code>Action Container</code> holding a canonical Button instance. Switching <code>VisualType</code> preserves the visual slot content because both types share one slot name."
       }
     ],
     "behavior": [
       {
-        "state": "Default (white)",
+        "state": "Default",
         "ios": "yes",
         "android": "yes",
-        "property": "color=white",
-        "notes": "White bg — use when sitting on a light-blue surface"
+        "property": "Style=Default",
+        "notes": "White background — use when the empty state sits on a light-blue surface."
       },
       {
-        "state": "Subtle (grey blue)",
+        "state": "Subtle",
         "ios": "yes",
         "android": "yes",
-        "property": "color=grey blue",
-        "notes": "Light-blue bg — use when sitting on a white surface"
+        "property": "Style=Subtle",
+        "notes": "Light-blue <code>#F6F9FD</code> background — use when sitting on a white surface."
+      },
+      {
+        "state": "Icon visual",
+        "ios": "yes",
+        "android": "yes",
+        "property": "VisualType=Icon",
+        "notes": "64px icon in the Visual Container. Compact empties."
+      },
+      {
+        "state": "Asset visual",
+        "ios": "yes",
+        "android": "yes",
+        "property": "VisualType=Asset",
+        "notes": "230px illustration in the Visual Container. Richer, first-run empties."
       },
       {
         "state": "Pressed / Disabled",
         "ios": "na",
         "android": "na",
         "property": "—",
-        "notes": "Display surface — interactivity lives on the child Button."
+        "notes": "Not modelled by design — Empty State is a display surface. Interactivity lives on the Button in the Action Container, which carries its own states."
       }
     ],
-    "resolved": [],
+    "resolved": [
+      {
+        "body": "v2.0: 7-boolean schema collapsed to two enums — <code>Style</code> (Default/Subtle) × <code>VisualType</code> (Icon/Asset), a clean 2 × 2. The old 256-combination surface with mutually exclusive booleans is gone. (C2)"
+      },
+      {
+        "body": "v2.0: Duplicate <code>header</code> / <code>header1</code> booleans merged into a single header frame with <code>#heading</code> + <code>#description</code>. (C2)"
+      },
+      {
+        "body": "v2.0: <code>color=white/grey blue</code> renamed <code>Style=Default/Subtle</code>, matching the token namespace and dropping the space-in-value. Subtle ships <code>#F6F9FD</code>. (C2)"
+      },
+      {
+        "body": "v2.0: Icon placeholder replaced with a real Figma slot, and the flat coloured asset rectangle with an <code>Asset</code> slot wrapping an instance — both swappable. (C6)"
+      },
+      {
+        "body": "v2.0: Action promoted to a slot too — <code>Action Container</code> holds a canonical <code>Button</code> instance rather than a drawn button. (C6)"
+      },
+      {
+        "body": "v2.1: Visual slot unified to a single <code>Visual Container</code> across all four variants (was <code>Icon Container</code> / <code>Asset Container</code>). Switching <code>VisualType</code> on an instance now preserves the slot content, and Code Connect maps one slot instead of two. (C1)"
+      },
+      {
+        "body": "v2.1: <code>visualType</code> recased to <code>VisualType</code> — Title Case, matching the enum convention (<code>Style</code>, <code>Type</code>, <code>State</code>) rather than the boolean camelCase style. (C2)"
+      }
+    ],
     "open": [
       {
-        "headline": "Property values don't match token namespace",
-        "body": "— <code>color=\"white\"</code> / <code>color=\"grey blue\"</code> (with space) should be <code>style=default</code> / <code>style=subtle</code> matching <code>main/empty-state/color/default/*</code> and <code>main/empty-state/color/subtle/*</code>.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2"
-        }
-      },
-      {
-        "headline": "Duplicate <code>header</code> / <code>header1</code> booleans",
-        "body": "— unreadable in the Figma property panel. And the underlying structure (top heading+description, then bottom heading+description) is unusual — most empty states have one title+description.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2"
-        }
-      },
-      {
-        "headline": "7 boolean props = 256 prop combinations",
-        "body": "— many are semantically invalid (e.g. <code>hasIcon=true</code> + <code>hasAsset=true</code> together is redundant). Collapse into meaningful configurations.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2"
-        }
-      },
-      {
-        "headline": "Icon is a hardcoded gray circle placeholder",
-        "body": "— should be a Figma Slot so consumers can drop in any 64 × 64 icon.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6"
-        }
-      },
-      {
-        "headline": "Asset is a flat colored rectangle",
-        "body": "— should be a Figma Slot for the real illustration.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6"
-        }
-      },
-      {
-        "body": "Code Connect CLI mappings not registered.",
+        "headline": "Code Connect mappings not registered.",
+        "body": "The schema collapse, slot adoption, and naming are all resolved. Registration is unblocked but the SwiftUI / Compose mappings are not yet wired and the native component does not exist — snippets remain a Planned API.",
         "tag": {
           "criterion": "C7",
-          "label": "C7"
+          "label": "C7 · Code Connect Linkability"
         }
       }
     ],
     "recommendations": [
       {
-        "headline": "Collapse to one title + description.",
-        "body": "Drop the top-heading/bottom-heading duplication — most empty states have a single title/description pair. The <code>header</code> / <code>header1</code> / <code>topHeading</code> / <code>topDescription</code> booleans all go away.",
+        "headline": "Register Code Connect mapping to <code>EBEmptyState</code>.",
+        "body": "Wire <code>Style</code> and <code>VisualType</code> to the SwiftUI / Compose API, and map the <code>Visual Container</code> and <code>Action Container</code> slots to <code>@ViewBuilder</code> / <code>@Composable</code> content slots.",
         "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Collapse to one title + description.",
+        "body": "v2.0: Applied — the duplicate header booleans merged into a single header with <code>#heading</code> + <code>#description</code>.",
+        "tag": "Property"
       },
       {
-        "headline": "Rename <code>color</code> → <code>style</code> with values <code>default</code> / <code>subtle</code>",
-        "body": "to match token namespace. Clean enum values, no space characters.",
+        "headline": "Rename <code>color</code> → <code>Style</code> with values Default / Subtle.",
+        "body": "v2.0: Applied — matches the token namespace and drops the space-in-value.",
         "tag": "Rename"
       },
       {
-        "headline": "Adopt Figma Slots for <code>icon</code>, <code>asset</code>, and <code>action</code>",
-        "body": "Icon slot accepts 64 × 64 icons. Asset slot accepts any 360 × 230 illustration. Action slot accepts any Button configuration (not just primary). Maps cleanly to <code>@ViewBuilder</code> / <code>@Composable</code> slots.",
-        "tag": "Docs"
+        "headline": "Adopt Figma Slots for icon, asset, and action.",
+        "body": "v2.0: Applied — all three are real slots, and the visual slot was unified to a single <code>Visual Container</code> in v2.1.",
+        "tag": "Slot"
       },
       {
-        "headline": "Document \"icon vs asset\"",
-        "body": "— both appear to serve the same purpose (visual anchor above the headline). Pick one convention: either icon (compact 64px) OR illustration (full-width 230px), not both simultaneously.",
+        "headline": "Document \"icon vs asset\".",
+        "body": "v2.0: Superseded by the schema — the choice is now an explicit <code>VisualType</code> enum (Icon / Asset) rather than a convention to document.",
         "tag": "Docs"
       }
     ]

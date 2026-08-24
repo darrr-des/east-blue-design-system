@@ -4874,9 +4874,13 @@ pre.code-snippet .prp { color: #0369A1; }
 
 /* ═════════════════════════════════════════════════════════════════════
    CAROUSEL FAMILY — live preview primitives
-   Covers: ccard (Carousel Card), cdcard (Discount Card), cit (Item),
-   ccc (Item - Center), csi (Item - Side). All 5 use an SVG image
-   placeholder for the banner/hero area so the previews render something.
+   Covers: ccard (Carousel Card) and cit (Carousel Item). Both use an SVG
+   image placeholder for the banner/hero area so the previews render
+   something.
+
+   ccc (Item - Center) and csi (Item - Side) selectors below are legacy —
+   those components merged into Carousel Item and nothing references them
+   any more. Safe to delete.
    ═════════════════════════════════════════════════════════════════════ */
 
 .eb-preview-stack--row { flex-direction: row; flex-wrap: wrap; align-items: flex-start; }
@@ -4884,7 +4888,6 @@ pre.code-snippet .prp { color: #0369A1; }
 /* Shared image placeholder — soft gray gradient + a "Replace me"
    label centered in the frame, matching Figma's placeholder convention. */
 .eb-preview-ccard__banner-img,
-.eb-preview-cdcard__banner-img,
 .eb-preview-cit__hero,
 .eb-preview-ccc__hero,
 .eb-preview-csi__hero {
@@ -4893,7 +4896,6 @@ pre.code-snippet .prp { color: #0369A1; }
     linear-gradient(135deg, #C9D2E0 0%, #97A5BF 100%);
 }
 .eb-preview-ccard__banner-img::after,
-.eb-preview-cdcard__banner-img::after,
 .eb-preview-cit__hero::after,
 .eb-preview-ccc__hero::after,
 .eb-preview-csi__hero::after {
@@ -4994,75 +4996,289 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-ccard__sk--desc  { height: 10px; width: 100%; }
 .eb-preview-ccard__sk--desc2 { height: 10px; width: 97px; }
 
-/* ── Carousel Discount Card (140w, perforate notch, violator badge) ─ */
-.eb-preview-cdcard {
-  position: relative;
+/* Violator slot — 42×18 badge pinned to the banner's top-right (5655:42305) */
+.eb-preview-ccard__violator {
+  position: absolute;
+  top: 12px;
+  right: 0;
+  min-width: 42px;
+  height: 18px;
   display: flex;
-  flex-direction: column;
-  width: 140px;
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(2,14,34,0.08);
-  overflow: hidden;
-  font-family: var(--font-body);
-}
-.eb-preview-cdcard__banner {
-  position: relative;
-  width: 100%;
-  height: 140px;
-  overflow: hidden;
-}
-.eb-preview-cdcard__banner-img {
-  position: absolute;
-  inset: 0;
-}
-.eb-preview-cdcard__violator {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: #005CE5;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  background: #1972F9;
   color: #fff;
   font-size: 12px;
   font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 4px;
+  letter-spacing: 0.5px;
+  border-radius: 4px 0 0 4px;
   z-index: 2;
 }
-.eb-preview-cdcard__perforate {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 10px;
-  background:
-    radial-gradient(circle at 0 50%, transparent 5px, #fff 5.5px),
-    radial-gradient(circle at 100% 50%, transparent 5px, #fff 5.5px);
-  pointer-events: none;
+
+/* Discount variant — taller banner (152) over a white content block */
+.eb-preview-ccard--discount .eb-preview-ccard__banner { height: 152px; }
+.eb-preview-ccard__content--discount {
+  background: #fff;
+  padding: 10px;
+  gap: 12px;
 }
-.eb-preview-cdcard__content {
-  display: flex;
-  flex-direction: column;
-  padding: 12px;
-  gap: 8px;
-}
-.eb-preview-cdcard__label {
+.eb-preview-ccard__label {
+  margin: 0;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   font-size: 14px;
   font-weight: 700;
+  line-height: 16px;
   color: #0A2757;
-  line-height: 18px;
 }
-.eb-preview-cdcard__value {
+.eb-preview-ccard__amount {
+  margin: 0;
   font-family: 'Proxima Soft', system-ui, sans-serif;
   font-size: 12px;
   font-weight: 700;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  color: #2340A9;
+}
+
+/* Pressed — text steps back; the banner is untouched (5670:43340) */
+.eb-preview-ccard--pressed .eb-preview-ccard__title  { color: #445C85; }
+.eb-preview-ccard--pressed .eb-preview-ccard__desc   { color: #90A8D0; }
+.eb-preview-ccard--pressed .eb-preview-ccard__label  { color: #445C85; }
+.eb-preview-ccard--pressed .eb-preview-ccard__amount { color: #90A8D0; }
+
+/* Discount skeleton bars */
+.eb-preview-ccard__sk--label  { height: 27px; width: 100%; }
+.eb-preview-ccard__sk--amount { height: 10px; width: 101px; }
+
+/* ── Table Row (360 wide, Role x State — node 5734:37611) ────────── */
+/* Height hugs its content — min-height holds the Figma default (68 header /
+   70 content) while the asset, description, or a taller cell push it open. */
+.eb-preview-trow {
+  box-sizing: border-box;
+  width: 360px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 24px;
+  font-family: var(--font-body);
+  border-bottom: 1px solid #E5EBF4;
+}
+.eb-preview-trow--header   { min-height: 68px; background: #F6F9FD; }
+.eb-preview-trow--content  { min-height: 70px; background: #FFFFFF; }
+.eb-preview-trow--disabled { background: #F6F9FD; }
+
+/* Table Label — fixed 120 leading column */
+.eb-preview-trow__label {
+  width: 120px;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.eb-preview-trow__label-text {
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+  font-weight: 700;
+  color: #0A2757;
+}
+.eb-preview-trow--header  .eb-preview-trow__label-text { font-size: 14px; line-height: 14px; letter-spacing: 0.25px; }
+.eb-preview-trow--content .eb-preview-trow__label-text { font-size: 12px; line-height: 12px; letter-spacing: 0.5px; }
+.eb-preview-trow--disabled .eb-preview-trow__label-text { color: #C2CFE5; }
+
+/* Table Label's own ⤷ AssetSlot, shown when hasAsset is true */
+.eb-preview-trow__label-asset {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #C8D3E5;
+}
+
+/* Optional supporting line — 10px token, dims with the rest when disabled */
+.eb-preview-trow__label-desc {
+  font-family: 'BarkAda', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 15px;
+  color: #6780A9;
+}
+.eb-preview-trow--disabled .eb-preview-trow__label-desc { color: #C2CFE5; }
+
+/* Columns Slot — equal-width Table Cell instances */
+.eb-preview-trow__cols {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  gap: 0;
+}
+.eb-preview-trow__cell {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.eb-preview-trow__cell-asset {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #C8D3E5;
+}
+.eb-preview-trow__cell-text { color: #0A2757; }
+.eb-preview-trow--header .eb-preview-trow__cell-text {
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+}
+.eb-preview-trow--content .eb-preview-trow__cell-text {
+  font-family: 'BarkAda', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+}
+.eb-preview-trow--disabled .eb-preview-trow__cell-text { color: #C2CFE5; }
+
+/* ── Table Transaction (360 wide, Role × State — node 5896:39727) ── */
+.eb-preview-ttxn {
+  box-sizing: border-box;
+  width: 360px;
+  padding: 12px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  border-bottom: 1px solid #E5EBF4;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+}
+.eb-preview-ttxn--header  { height: 66px; background: #F6F9FD; }
+.eb-preview-ttxn--content { height: 68px; background: #FFFFFF; }
+
+.eb-preview-ttxn__label {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.5px;
+  color: #6780A9;
+}
+.eb-preview-ttxn__cols { display: flex; gap: 0; }
+.eb-preview-ttxn__cell { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.eb-preview-ttxn__cell-asset {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #C8D3E5;
+}
+.eb-preview-ttxn__cell-label {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.5px;
+  color: #0A2757;
+}
+.eb-preview-ttxn__cell-sub {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.5px;
+  color: #6780A9;
+}
+.eb-preview-ttxn__cell-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  color: #0A2757;
+}
+.eb-preview-ttxn--disabled .eb-preview-ttxn__label,
+.eb-preview-ttxn--disabled .eb-preview-ttxn__cell-label,
+.eb-preview-ttxn--disabled .eb-preview-ttxn__cell-sub,
+.eb-preview-ttxn--disabled .eb-preview-ttxn__cell-amount { color: #C2CFE5; }
+
+/* ── Table Scheduling (360 wide, State — node 5868:40468) ────────── */
+.eb-preview-tsched {
+  box-sizing: border-box;
+  width: 360px;
+  padding: 16px 24px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E5EBF4;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+}
+.eb-preview-tsched__head {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.eb-preview-tsched__date {
+  width: 108px;
+  min-width: 108px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  color: #0A2757;
+}
+.eb-preview-tsched__peso {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
   color: #005CE5;
 }
-.eb-preview-cdcard--skeleton { box-shadow: none; background: transparent; }
-.eb-preview-cdcard__sk-banner { height: 140px; background: #EEF2F9; border-radius: 4px; }
-.eb-preview-cdcard__sk-content { padding-top: 12px; display: flex; flex-direction: column; gap: 8px; }
-.eb-preview-cdcard__sk { background: #EEF2F9; border-radius: 4px; }
-.eb-preview-cdcard__sk--title { height: 14px; width: 90%; }
-.eb-preview-cdcard__sk--amount { height: 14px; width: 50%; }
+.eb-preview-tsched__total {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #005CE5;
+}
+.eb-preview-tsched__details { display: flex; align-items: flex-start; }
+.eb-preview-tsched__row-label {
+  width: 95px;
+  min-width: 95px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.5px;
+  color: #6780A9;
+}
+.eb-preview-tsched__cells { flex: 1 1 auto; min-width: 0; display: flex; gap: 8px; }
+.eb-preview-tsched__cell { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.eb-preview-tsched__cell-label {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.5px;
+  color: #6780A9;
+}
+.eb-preview-tsched__cell-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  color: #0A2757;
+}
+/* Disabled dims every text layer — date, total, labels and values alike */
+.eb-preview-tsched--disabled .eb-preview-tsched__date,
+.eb-preview-tsched--disabled .eb-preview-tsched__peso,
+.eb-preview-tsched--disabled .eb-preview-tsched__total,
+.eb-preview-tsched--disabled .eb-preview-tsched__row-label,
+.eb-preview-tsched--disabled .eb-preview-tsched__cell-label,
+.eb-preview-tsched--disabled .eb-preview-tsched__cell-amount { color: #C2CFE5; }
+
+/* hasBorder=false drops the bottom rule on every Table-family row.
+   Declared after all three blocks so it wins on cascade order. */
+.eb-preview-trow--no-border,
+.eb-preview-tsched--no-border,
+.eb-preview-ttxn--no-border { border-bottom: none; }
 
 /* ── Carousel Item (peeking hero card, 312 wide) ─────────────────── */
 /* DOM order is .hero then .content (as written by the render fn), but
@@ -5082,6 +5298,19 @@ pre.code-snippet .prp { color: #0369A1; }
   box-shadow: 0 4px 12px rgba(2,14,34,0.08);
 }
 .eb-preview-csi { height: 146px; } /* Side is 14px shorter */
+
+/* Size=Small — 14px shorter than Default (5804:42531) */
+.eb-preview-cit--small { height: 146px; }
+
+/* isPressed — an Overlay instance dims the whole card (5821:44338) */
+.eb-preview-cit__dim {
+  position: absolute;
+  inset: 0;
+  background: #020E22;
+  opacity: 0.24;
+  pointer-events: none;
+  z-index: 3;
+}
 
 /* Background-mode tints (blue or pink-peach) */
 .eb-preview-cit--bg-dark,
@@ -5331,127 +5560,140 @@ pre.code-snippet .prp { color: #0369A1; }
 
 /* ═════════════════════════════════════════════════════════════════════
    AD SPACE — live preview primitives
-   One shape with 7 sizes across 3 families (banner / promo / hero).
+   One shape, three versions (Receipt / Banner / Promo), each built
+   around a single swappable asset area.
    ═════════════════════════════════════════════════════════════════════ */
 .eb-preview-adspace {
   position: relative;
   display: flex;
   flex-direction: column;
+  gap: 8px;
+  font-family: inherit;
+}
+.eb-preview-adspace--receipt { width: 300px; }
+.eb-preview-adspace--banner  { width: 320px; }
+.eb-preview-adspace--promo   { width: 224px; }
+
+/* Swappable asset area — stands in for ⤷ AssetSlot */
+.eb-preview-adspace__asset {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #F6F9FD;
   border: 1px solid #E5EBF4;
   border-radius: 4px;
   overflow: hidden;
-  font-family: var(--font-body);
+}
+.eb-preview-adspace--receipt .eb-preview-adspace__asset { height: 250px; }
+.eb-preview-adspace--banner  .eb-preview-adspace__asset { height: 174px; }
+.eb-preview-adspace--promo   .eb-preview-adspace__asset { height: 152px; }
+
+/* Product media in the slot, standing in for a real creative. */
+.eb-preview-adspace__asset--filled {
+  background: linear-gradient(135deg, #005CE5 0%, #4A9BFF 100%);
+  border-color: transparent;
 }
 
-/* Size-family wrappers: banner = full-surface ad mock */
-.eb-preview-adspace--banner-sm   { width: 320px; height: 50px; }
-.eb-preview-adspace--banner-lg   { width: 320px; height: 100px; }
-.eb-preview-adspace--banner-mrec { width: 300px; height: 250px; }
-
-/* Promo tiles — image + caption underneath */
-.eb-preview-adspace--promo-sm { width: 131px; height: 126px; border-radius: 6px; }
-.eb-preview-adspace--promo-md { width: 224px; height: 200px; border-radius: 8px; }
-
-/* Hero banners — image overlay + caption */
-.eb-preview-adspace--hero-sm { width: 296px; height: 174px; border-radius: 8px; }
-.eb-preview-adspace--hero-md { width: 336px; height: 174px; border-radius: 8px; }
-
-/* Banner family — flat placeholder with subtle "Ad" label */
-.eb-preview-adspace__banner-fill {
-  flex: 1;
-  background: linear-gradient(135deg, #D7E0EE 0%, #B7C5DD 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #3C4A5C;
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.04em;
-  position: relative;
-}
-.eb-preview-adspace__banner-dim {
-  position: absolute;
-  inset: 0;
-  background: rgba(10,39,87,0.04);
-  pointer-events: none;
-}
-.eb-preview-adspace__banner-label {
-  position: absolute;
-  top: 4px;
-  right: 6px;
-  font-size: 9px;
-  font-weight: 700;
-  color: rgba(10,39,87,0.45);
-  background: rgba(255,255,255,0.7);
-  padding: 1px 4px;
-  border-radius: 2px;
-  letter-spacing: 0.06em;
-}
-
-/* Promo / hero — image + caption */
-.eb-preview-adspace__image {
-  position: relative;
-  background: linear-gradient(135deg, #C9D2E0 0%, #97A5BF 100%);
-  flex-shrink: 0;
-}
-.eb-preview-adspace__image--full { flex: 1; }
-.eb-preview-adspace--promo-sm .eb-preview-adspace__image { height: 98px; }
-.eb-preview-adspace--promo-md .eb-preview-adspace__image { height: 152px; }
-.eb-preview-adspace--hero-sm  .eb-preview-adspace__image,
-.eb-preview-adspace--hero-md  .eb-preview-adspace__image { flex: 1; }
-
-.eb-preview-adspace__image-label {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #B84B4B;
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 2px;
-  white-space: nowrap;
-}
-
-.eb-preview-adspace__caption {
+.eb-preview-adspace__asset-label {
   font-size: 12px;
   font-weight: 600;
-  color: #0A2757;
-  line-height: 14px;
-}
-.eb-preview-adspace__caption--below {
-  padding: 8px 10px;
-  background: #fff;
-}
-.eb-preview-adspace__caption--overlay {
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
-  color: #fff;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  letter-spacing: 0.02em;
+  color: #8A97AC;
 }
 
-/* Loading state: skeleton overlay covers everything */
-.eb-preview-adspace--loading .eb-preview-adspace__image,
-.eb-preview-adspace--loading .eb-preview-adspace__banner-fill {
-  background: #EEF2F9;
+/* Banner's top title — #title */
+.eb-preview-adspace__title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0.25px;
+  color: #072592;
 }
-.eb-preview-adspace--loading .eb-preview-adspace__image-label,
-.eb-preview-adspace--loading .eb-preview-adspace__banner-label,
-.eb-preview-adspace--loading .eb-preview-adspace__caption { display: none; }
-.eb-preview-adspace__skeleton {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
-  animation: eb-skeleton-shimmer 1.4s ease-in-out infinite;
+
+/* Content block — #header + #description */
+.eb-preview-adspace__content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
-@keyframes eb-skeleton-shimmer {
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+.eb-preview-adspace__header {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0.25px;
+  color: #005CE5;
 }
+.eb-preview-adspace__description {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #445C85;
+}
+
+[data-theme="dark"] .eb-preview-adspace__asset { background: #1B2333; border-color: #2A3446; }
+[data-theme="dark"] .eb-preview-adspace__asset-label { color: #7C8AA0; }
+[data-theme="dark"] .eb-preview-adspace__title { color: #9DBBF5; }
+[data-theme="dark"] .eb-preview-adspace__header { color: #62A0FA; }
+[data-theme="dark"] .eb-preview-adspace__description { color: #A8B6CC; }
+
+/* ═════════════════════════════════════════════════════════════════════
+   AD CAROUSEL — live preview primitives
+   Header (#title + optional CTA) over a clipped rail of Ad Space cards.
+   ═════════════════════════════════════════════════════════════════════ */
+.eb-preview-adcarousel {
+  width: 360px;
+  padding: 12px 0;
+  background: #FFFFFF;
+  border: 1px solid #E5EBF4;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.eb-preview-adcarousel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 24px;
+  margin-bottom: 16px;
+}
+.eb-preview-adcarousel__title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0.25px;
+  color: #072592;
+}
+/* Button - XSmall: 114 x 26, pill radius, no background.
+   Label sits 8px from the left edge, icon 8px from the right. */
+.eb-preview-adcarousel__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 99px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #005CE5;
+  white-space: nowrap;
+}
+.eb-preview-adcarousel__cta-icon {
+  flex: 0 0 auto;
+  display: block;
+}
+/* Rail is wider than the shell on purpose — the next card peeks. */
+.eb-preview-adcarousel__rail {
+  display: flex;
+  gap: 16px;
+  padding-left: 24px;
+}
+.eb-preview-adcarousel__rail > * { flex: 0 0 auto; }
+
+[data-theme="dark"] .eb-preview-adcarousel { background: #141B28; border-color: #2A3446; }
+[data-theme="dark"] .eb-preview-adcarousel__title { color: #9DBBF5; }
+[data-theme="dark"] .eb-preview-adcarousel__cta { color: #62A0FA; }
 
 
 /* TOC scroll target offset — leave room for the sticky comp-tabs bar

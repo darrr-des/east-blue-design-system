@@ -40,13 +40,13 @@ export const inlineMessage: ComponentData = {
   "meta": {
     "slug": "inline-message",
     "name": "Inline Message",
-    "node": "27:168910",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=27-168910",
-    "description": "A subtle inline status message rendered alongside form fields or content — neutral, info, success, or error intent.",
+    "node": "26416:18421",
+    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26416-18421",
+    "description": "A full-frame status surface — illustration, title, description, and an optional body — for confirm / processing / error / neutral outcomes. 4 variants across a single <code>Type</code> axis (Success / Loading / Error / Neutral), with an <code>Illustration Container</code> and a <code>Body Container</code> slot.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -54,9 +54,9 @@ export const inlineMessage: ComponentData = {
       }
     ],
     "verdict": {
-      "kind": "fix",
-      "title": "Asset bundling + token + slot cleanup",
-      "text": "3D illustrations + Lottie animation require bundling as native assets. Replace the alpha-composited <code>bg-subtle</code> token with a solid color. Expose the body-content section as a Figma Slot so consumers can override the List with their own content (transaction breakdowns, shared-with lists, etc.)."
+      "kind": "keep",
+      "title": "Rebuilt — slot-based and simplified",
+      "text": "The rebuild exposed the body content as a real <code>Body Container</code> slot, added a <code>Neutral</code> type, resolved the alpha <code>bg-subtle</code> token, and collapsed the two illustration sizes into a single 106px <code>Illustration Container</code> — dropping the redundant <code>Illustration Size</code> axis to a clean single-axis <code>Type</code> enum. Slot names were also de-duplicated and the illustration term unified. Only Code Connect registration remains."
     }
   },
   "overview": {
@@ -71,18 +71,18 @@ export const inlineMessage: ComponentData = {
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Carries its own bg, border, radius, and shadow. But illustrations are raster 3D renders bundled externally, and Loading likely uses a Lottie animation. Document both as required assets. <span class=\"tag-open tag-c6\">C6</span>"
+        "rating": "pass",
+        "note": "Carries its own background, border, radius, and typography, all token-bound. The illustration is a swappable <code>Illustration Container</code> slot at a single 106px size, and the asset itself is resolved."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Type enum values are clean (Success / Loading / Error). <code>bg-subtle</code> token bakes in 24% alpha — rendered color depends on what's behind it, which is unusual for a \"bg\" token. <span class=\"tag-open tag-c3\">C3</span>"
+        "rating": "pass",
+        "note": "Single <code>Type</code> axis (Success / Loading / Error / Neutral), Title Case. The redundant <code>Illustration Size</code> axis was removed, the <code>bg-subtle</code> alpha token was resolved, and the slot names were de-duplicated (<code>Illustration Container</code> / <code>Body Container</code>) with the illustration term unified."
       },
       {
         "name": "Composable",
         "rating": "pass",
-        "note": "Body content composes instances of the canonical <strong>List Item</strong> component. Changes to List Item propagate here ✓."
+        "note": "Two real Figma slots — <code>Illustration Container</code> for the visual and <code>Body Container</code> for custom content (transaction breakdowns, beneficiary lists), so consumers compose their own body rather than being locked to a fixed List. Both map to <code>@ViewBuilder</code> / <code>@Composable</code> slots."
       }
     ],
     "behavior": [
@@ -90,84 +90,94 @@ export const inlineMessage: ComponentData = {
         "state": "Success",
         "ios": "yes",
         "android": "yes",
-        "property": "type=Success",
-        "notes": "Blue palette. Completed action, positive outcome."
+        "property": "Type=Success",
+        "notes": "Positive-outcome palette. Completed action."
       },
       {
         "state": "Loading",
         "ios": "yes",
         "android": "yes",
-        "property": "type=Loading",
-        "notes": "Lottie spinner animation. Processing state."
+        "property": "Type=Loading",
+        "notes": "Processing state — the illustration slot carries the loading animation."
       },
       {
         "state": "Error",
         "ios": "yes",
         "android": "yes",
-        "property": "type=Error",
-        "notes": "Red/negative palette. Failed or blocked action."
+        "property": "Type=Error",
+        "notes": "Negative palette. Failed or blocked action."
       },
       {
-        "state": "Asset Size",
+        "state": "Neutral",
         "ios": "yes",
         "android": "yes",
-        "property": "assetSize=Large/Small",
-        "notes": "Large: 106px illustration. Small: reduced illustration for denser layouts."
+        "property": "Type=Neutral",
+        "notes": "Informational, no positive/negative charge. Added in the rebuild."
+      },
+      {
+        "state": "Body content",
+        "ios": "yes",
+        "android": "yes",
+        "property": "Body Container (slot)",
+        "notes": "Optional custom content below the header — transaction breakdown, beneficiary list, or any composed instances."
       }
     ],
-    "resolved": [],
+    "resolved": [
+      {
+        "body": "v2.0: Body content exposed as a real Figma slot — <code>Body Container</code> — so consumers compose their own List Items, tables, or custom content instead of being locked to a fixed List. (C2)"
+      },
+      {
+        "body": "v2.0: <code>Neutral</code> type added — the enum now covers Success / Loading / Error / Neutral, so informational messages no longer have to borrow a charged intent. (C2)"
+      },
+      {
+        "body": "v2.0: <code>bg-subtle</code> alpha token resolved — the background no longer composites against whatever sits behind it. (C3)"
+      },
+      {
+        "body": "v2.0: Illustration is now a swappable <code>Illustration Container</code> slot rather than a baked-in raster, and the asset itself is resolved. (C6)"
+      },
+      {
+        "body": "v2.1: Redundant <code>Illustration Size</code> axis removed — the two 106 / 64 sizes collapsed to a single 106px <code>Illustration Container</code>, leaving a clean single-axis <code>Type</code> enum (8 variants → 4). (C2)"
+      },
+      {
+        "body": "v2.1: Slot names de-duplicated — <code>Illustration Container Slot</code> / <code>Body Container Slot</code> → <code>Illustration Container</code> / <code>Body Container</code> (dropping the doubled \"Container Slot\"), and the size property was aligned from <code>Asset Size</code> to the same <code>Illustration</code> term so the prop and slot agree. (C1/C2)"
+      }
+    ],
     "open": [
       {
-        "headline": "<code>bg-subtle</code> token bakes in alpha",
-        "body": "— <code>rgba(246,249,253,0.24)</code> composites against whatever sits behind it, so the actual rendered color varies by context. Should be a solid token (e.g. <code>#F9FBFD</code>) or use an explicit layering convention.",
-        "tag": {
-          "criterion": "C3",
-          "label": "C3"
-        }
-      },
-      {
-        "headline": "Illustrations are raster 3D renders",
-        "body": "— Success / Loading / Error illustrations must be bundled with the native package. Loading is almost certainly a Lottie animation (same pattern as Upload File). Document as required assets.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6"
-        }
-      },
-      {
-        "headline": "Body content not exposed as a slot",
-        "body": "— <code>hasBodyContent</code> is a boolean but the List inside is not overridable. Consumers doing transaction breakdowns, beneficiary lists, etc. need slot access.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2"
-        }
-      },
-      {
-        "body": "Code Connect CLI mappings not registered.",
+        "headline": "Code Connect mappings not registered.",
+        "body": "The slot, token, and schema blockers are all resolved. Registration is unblocked but the SwiftUI / Compose mappings are not yet wired and the native component does not exist — snippets remain a Planned API.",
         "tag": {
           "criterion": "C7",
-          "label": "C7"
+          "label": "C7 · Code Connect Linkability"
         }
       }
     ],
     "recommendations": [
       {
-        "headline": "Expose the body-content area as a Figma Slot",
-        "body": "so consumers can compose their own List Items, tables, or custom content. Maps to <code>@ViewBuilder</code> / <code>@Composable</code> slot for Code Connect.",
+        "headline": "Register Code Connect mapping to <code>EBInlineMessage</code>.",
+        "body": "Wire <code>Type</code> to the SwiftUI / Compose API and map the <code>Illustration Container</code> and <code>Body Container</code> slots to <code>@ViewBuilder</code> / <code>@Composable</code> content slots.",
         "tag": "Docs"
+      }
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Expose the body-content area as a Figma Slot.",
+        "body": "v2.0: Applied — <code>Body Container</code> is a real slot; consumers compose their own content and it maps to a native content slot.",
+        "tag": "Slot"
       },
       {
-        "headline": "Replace <code>bg-subtle</code> with a solid token",
-        "body": "— either <code>main/inline-message/color/{type}/bg-soft</code> or use a layering convention that doesn't depend on alpha compositing.",
+        "headline": "Consider a \"neutral / info\" type.",
+        "body": "v2.0: Applied — <code>Type=Neutral</code> ships alongside Success / Loading / Error.",
+        "tag": "Property"
+      },
+      {
+        "headline": "Replace <code>bg-subtle</code> with a solid token.",
+        "body": "v2.0: Applied — the alpha-composited background is resolved to a context-independent value.",
         "tag": "Token"
       },
       {
-        "headline": "Document illustration + Lottie asset dependencies",
-        "body": "in the native package README. Bundle the JSON / raster sources so the component ships self-contained.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Consider a \"neutral / info\" type",
-        "body": "— today only success/loading/error are covered, but some flows need a neutral informational outcome (e.g. \"Transaction pending review\").",
+        "headline": "Document illustration + Lottie asset dependencies.",
+        "body": "v2.0: Superseded — the illustration is now a swappable slot with a resolved asset rather than a bundled raster to document.",
         "tag": "Docs"
       }
     ]
