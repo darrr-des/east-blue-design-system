@@ -59,7 +59,7 @@ export const modalTransactionReceipt: ComponentData = {
       {
         "name": "Consistent",
         "rating": "pass",
-        "note": "<code>Content</code>, <code>TransactionDetails</code>, <code>Container</code>, <code>Reference</code>, <code>⤷ TransactionSlot</code> and <code>⤷ ActionSlot</code> all follow the family conventions after this pass, and <code>ActionOrientation</code> matches the property name on <a href=\"/components/modal\">Modal</a>."
+        "note": "<code>Content</code>, <code>TransactionDetails</code>, <code>Container</code>, <code>Reference</code>, <code>ReferenceNumber</code>, <code>⤷ TransactionSlot</code> and <code>⤷ ActionSlot</code> all follow the family conventions after this pass, and <code>ActionOrientation</code> matches the property name on <a href=\"/components/modal\">Modal</a>."
       },
       {
         "name": "Composable",
@@ -132,7 +132,7 @@ export const modalTransactionReceipt: ComponentData = {
       },
       {
         "headline": "The reference row says what it is.",
-        "body": "<code>For Receipt</code> became <code>Reference Number</code>, and its two text layers picked up <code>#label</code> and <code>#value</code> to match the primitive's vocabulary even though the row is not an instance of it.",
+        "body": "<code>For Receipt</code> became <code>ReferenceNumber</code>, and its two text layers picked up <code>#label</code> and <code>#value</code> to match the primitive's vocabulary even though the row is not an instance of it. The name landed spaced at first and was joined in a later pass, settling the convention against <code>TransactionDetails</code> beside it — the displayed copy still reads \"Reference Number\", since that is text rather than a layer name.",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
@@ -268,7 +268,7 @@ export const modalTransactionReceipt: ComponentData = {
               { "key": "#title to #description", "value": "16", "mono": true },
               { "key": "Container to slot", "value": "12", "mono": true },
               { "key": "Row pitch", "value": "36 — 24 tall, 12 gap", "mono": true },
-              { "key": "Reference strip", "value": "320 × 40", "mono": true },
+              { "key": "Reference", "value": "320 × 40 — holds ReferenceNumber + Copy", "mono": true },
               { "key": "Action area", "value": "320 × 156", "mono": true,
                 "variants": {
                   "actions:horizontal": { "value": "320 × 98" }
@@ -340,7 +340,7 @@ export const modalTransactionReceipt: ComponentData = {
           "compose": "entries: @Composable ColumnScope.() -> Unit"
         },
         {
-          "figma": "Reference Number · #value",
+          "figma": "ReferenceNumber · #value",
           "swift": "reference: String?",
           "compose": "reference: String?"
         },
@@ -414,7 +414,7 @@ export const modalTransactionReceipt: ComponentData = {
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "<code>Content</code>, <code>TransactionDetails</code>, <code>Container</code> and <code>Reference</code> all renamed to the family convention this pass."
+        "notes": "<code>Content</code>, <code>TransactionDetails</code>, <code>Container</code>, <code>Reference</code> and <code>ReferenceNumber</code> all renamed to the family convention this pass."
       },
       {
         "id": "C2",
@@ -510,7 +510,7 @@ export const modalTransactionReceipt: ComponentData = {
           "delta": { "kind": "resolved", "label": "C1 resolved" }
         },
         {
-          "body": "<code>For Receipt</code> renamed to <code>Reference Number</code>, with its text layers renamed to <code>#label</code> and <code>#value</code>.",
+          "body": "<code>For Receipt</code> renamed to <code>ReferenceNumber</code>, with its text layers renamed to <code>#label</code> and <code>#value</code>. The space was closed in a follow-up so the layer matches <code>TransactionDetails</code>; the displayed copy still reads \"Reference Number\".",
           "delta": { "kind": "resolved", "label": "C1 resolved" }
         },
         {
