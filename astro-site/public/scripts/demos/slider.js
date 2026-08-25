@@ -22,14 +22,12 @@ function _sldrRender(opts) {
   var h = '<div class="eb-preview-sldr eb-preview-sldr--' + state + '" data-sldr="' + opts.key + '">';
   h += '<div class="eb-preview-sldr__track">';
   h += '<div class="eb-preview-sldr__fill">';
-  /* hasTooltip=false removes the knob as well as the bubble — both live
-     inside DraggableFill and both are absent from those variants. The
-     fill is still draggable, which is the oddity: there is nothing left
-     to signal that it can be dragged. */
+  /* hasTooltip gates the bubble only — the knob is present in all six
+     variants, so the control still reads as draggable with it off. */
   if (hasTooltip) {
     h += '<div class="eb-preview-sldr__tooltip"><span class="eb-preview-sldr__pct">' + value + '%</span></div>';
-    h += '<div class="eb-preview-sldr__knob"></div>';
   }
+  h += '<div class="eb-preview-sldr__knob"></div>';
   h += '</div></div></div>';
   return h;
 }
