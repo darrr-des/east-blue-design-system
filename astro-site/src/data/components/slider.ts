@@ -39,8 +39,8 @@ export const slider: ComponentData = {
     "description": "A horizontal slider — a filled track, a knob, and an optional percentage tooltip that rides above it.",
     "badges": [
       {
-        "kind": "keep",
-        "label": "Keep"
+        "kind": "fix",
+        "label": "Fix"
       },
       {
         "kind": "refine",
@@ -48,9 +48,9 @@ export const slider: ComponentData = {
       }
     ],
     "verdict": {
-      "kind": "keep",
-      "title": "Keep — the continuous primitive the first assessment asked for",
-      "text": "The May assessment found eleven discrete variants modelling a continuous value at 10% steps, no Pressed or Disabled treatment, and an always-on tooltip with no way to switch it off. All three are resolved. The value is no longer a variant at all: <code>DraggableFill</code> sits inside <code>⤷ Track</code>, and the slot is what makes it resizable on an instance, so a designer drags it to the value rather than picking the nearest tenth. What survives as a variant is <code>State</code> and <code>hasTooltip</code>. Several rounds of naming cleanup landed on top — including a layer that was literally named \"Adjust this bsed on the length needed\". The Needs Refinement badge is about state polish, not structure: the knob is unchanged in Disabled, and focus is not specified."
+      "kind": "fix",
+      "title": "Fix — the continuous primitive landed; one axis does more than its name says",
+      "text": "The May assessment found eleven discrete variants modelling a continuous value at 10% steps, no Pressed or Disabled treatment, and an always-on tooltip with no way to switch it off. All three are resolved. The value is no longer a variant at all: <code>DraggableFill</code> sits inside <code>⤷ Track</code>, and the slot is what makes it resizable on an instance, so a designer drags it to the value rather than picking the nearest tenth. Several rounds of naming cleanup landed on top — including a layer that was literally named \"Adjust this bsed on the length needed\". What is left is <code>hasTooltip</code>: setting it to <code>false</code> removes the knob as well as the bubble, which leaves a filled bar with no handle and overlaps <a href=\"/components/progress-bar\">Progress Bar</a>. That is the one open item; the rest of the gap is state polish."
     }
   },
   "overview": {
@@ -69,8 +69,8 @@ export const slider: ComponentData = {
       },
       {
         "name": "Consistent",
-        "rating": "pass",
-        "note": "<code>⤷ Track</code>, <code>DraggableFill</code>, <code>KnobContainer</code>, <code>Knob</code>, <code>Tooltip</code>, <code>Label</code>, <code>PointerDecorator</code>, <code>Pointer</code> and <code>#percentage</code> all follow the conventions settled across Modal, Voucher and List Item, and <code>hasTooltip</code> uses lowercase boolean values."
+        "rating": "partial",
+        "note": "Layer names all follow the conventions settled across Modal, Voucher and List Item, and <code>hasTooltip</code> uses lowercase boolean values. The axis itself is the gap — it hides the knob as well as the bubble, so the name understates what it does."
       },
       {
         "name": "Composable",
@@ -111,8 +111,8 @@ export const slider: ComponentData = {
         "state": "hasTooltip=false",
         "ios": "na",
         "android": "na",
-        "property": "track only",
-        "notes": "Track, fill and knob only. The knob is still present — only the bubble is removed."
+        "property": "track and fill only",
+        "notes": "Removes the knob as well as the bubble — both live inside <code>DraggableFill</code> and neither is present in these variants. What is left is a filled bar with no handle."
       },
       {
         "state": "Value",
@@ -212,7 +212,16 @@ export const slider: ComponentData = {
         }
       }
     ],
-    "open": [],
+    "open": [
+      {
+        "headline": "hasTooltip also removes the knob.",
+        "body": "In the <code>false</code> variants <code>DraggableFill</code> has no children at all — both <code>Tooltip</code> and <code>KnobContainer</code> are gone. So the property does more than its name says, and what it leaves behind is a filled bar with no handle, which reads as a progress indicator rather than a slider. The design system already has <a href=\"/components/progress-bar\">Progress Bar</a> for that job. Either the knob should stay and only the bubble toggle, or the axis should be renamed for what it actually controls — and if a handle-less variant is genuinely wanted, its relationship to Progress Bar needs settling so two components do not describe the same thing.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      }
+    ],
     "recommendations": [
       {
         "headline": "Give the disabled knob a treatment.",
@@ -276,7 +285,7 @@ export const slider: ComponentData = {
               },
               { "key": "hasTooltip", "value": "true", "prop": "hastooltip",
                 "variants": {
-                  "hastooltip:false": { "value": "false" }
+                  "hastooltip:false": { "value": "false — also removes the knob" }
                 }
               },
               { "key": "⤷ Track", "value": "slot — also the unfilled rail" },
@@ -342,7 +351,7 @@ export const slider: ComponentData = {
               { "key": "Knob position", "value": "right-aligned to the fill's edge", "mono": true },
               { "key": "Tooltip", "value": "34 × 26, centred on the knob", "mono": true,
                 "variants": {
-                  "hastooltip:false": { "value": "hidden" }
+                  "hastooltip:false": { "value": "hidden — and so is the knob" }
                 }
               },
               { "key": "Tooltip offset", "value": "23 above the component — overflows by design", "mono": true },
@@ -488,9 +497,9 @@ export const slider: ComponentData = {
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>State</code> and <code>hasTooltip</code> with lowercase boolean values. The tooltip axis stays a variant because a boolean cannot reach a layer inside a slot — a Figma limit, documented rather than worked around."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>State</code> and <code>hasTooltip</code> with lowercase boolean values, and the tooltip axis stays a variant because a boolean cannot reach a layer inside a slot. The open item is that <code>hasTooltip=false</code> also removes the knob, so the name understates what the axis controls."
       },
       {
         "id": "C3",
@@ -531,9 +540,9 @@ export const slider: ComponentData = {
     "codeConnect": [
       {
         "aspect": "Property naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>State</code>, <code>hasTooltip</code> and <code>#percentage</code> map cleanly. <code>DraggableFill</code> maps to the active track rather than one-to-one, which is deliberate."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "<code>State</code> and <code>#percentage</code> map cleanly, and <code>DraggableFill</code> maps to the active track by design. <code>hasTooltip</code> needs settling first — it currently gates the handle as well as the bubble."
       },
       {
         "aspect": "Token coverage",
