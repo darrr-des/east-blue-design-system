@@ -5696,6 +5696,110 @@ pre.code-snippet .prp { color: #0369A1; }
 [data-theme="dark"] .eb-preview-adcarousel__cta { color: #62A0FA; }
 
 
+
+/* ═════════════════════════════════════════════════════════════════════
+   SLIDER — live preview primitives
+   Track, draggable fill, knob, optional tooltip. 2026 Working File.
+   The value is the fill's width, so it is set by a modifier class
+   rather than an inline style.
+   ═════════════════════════════════════════════════════════════════════ */
+
+.eb-preview-sldr {
+  width: 365px;
+  max-width: 100%;
+  padding-top: 26px;          /* clearance the tooltip needs above */
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-sldr--no-tooltip { padding-top: 0; }
+
+.eb-preview-sldr__track {
+  position: relative;
+  height: 10px;
+  border-radius: 99px;
+  background: #E5EBF4;
+}
+/* Default carries no overrides — the base rules are the default state.
+   Stated explicitly so every class in the markup resolves to something. */
+.eb-preview-sldr--default .eb-preview-sldr__track { background: #E5EBF4; }
+.eb-preview-sldr--pressed .eb-preview-sldr__track { background: #D7E0EF; }
+
+/* The fill carries the knob and the tooltip, so both ride its right
+   edge as the width changes — the same reason Tooltip sits inside
+   DraggableFill in Figma. */
+.eb-preview-sldr__fill {
+  position: relative;
+  height: 10px;
+  border-radius: 99px;
+  background: #005CE5;
+}
+.eb-preview-sldr--disabled .eb-preview-sldr__fill { background: #C2CFE5; }
+.eb-preview-sldr--pressed .eb-preview-sldr__fill { background: #2340A9; }
+
+.eb-preview-sldr__fill--v0 { width: 0; }
+.eb-preview-sldr__fill--v10 { width: 10%; }
+.eb-preview-sldr__fill--v25 { width: 25%; }
+.eb-preview-sldr__fill--v50 { width: 50%; }
+.eb-preview-sldr__fill--v75 { width: 75%; }
+.eb-preview-sldr__fill--v100 { width: 100%; }
+
+/* Right-aligned to the fill's edge, matching KnobContainer's placement. */
+.eb-preview-sldr__knob {
+  position: absolute;
+  top: -4px;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid #E5EBF4;
+  box-sizing: border-box;
+}
+.eb-preview-sldr--pressed .eb-preview-sldr__knob { border-color: #ADBDDC; }
+
+/* 34 wide, centred on the knob whose centre sits 9px in from the edge. */
+.eb-preview-sldr__tooltip {
+  position: absolute;
+  bottom: 16px;
+  right: -8px;
+  width: 34px;
+  height: 22px;
+  border-radius: 4px;
+  background: #005CE5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.eb-preview-sldr--disabled .eb-preview-sldr__tooltip { background: #C2CFE5; }
+.eb-preview-sldr--pressed .eb-preview-sldr__tooltip { background: #2340A9; }
+
+/* The pointer below the bubble. */
+.eb-preview-sldr__tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -4px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #005CE5;
+}
+.eb-preview-sldr--disabled .eb-preview-sldr__tooltip::after { border-top-color: #C2CFE5; }
+.eb-preview-sldr--pressed .eb-preview-sldr__tooltip::after { border-top-color: #2340A9; }
+
+.eb-preview-sldr__pct {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #FFFFFF;
+}
+/* Disabled keeps the muted bubble and darkens the text — 9.27:1. */
+.eb-preview-sldr--disabled .eb-preview-sldr__pct { color: #0A2757; }
+
+[data-theme="dark"] .eb-preview-sldr__track { background: #2A3446; }
+[data-theme="dark"] .eb-preview-sldr--pressed .eb-preview-sldr__track { background: #333F54; }
+[data-theme="dark"] .eb-preview-sldr__knob { background: #E4EAF3; border-color: #2A3446; }
 /* TOC scroll target offset — leave room for the sticky comp-tabs bar
    (sticky top:16px + ~52px bar + 28px breathing) */
 .sub-heading[id] { scroll-margin-top: 96px; }
