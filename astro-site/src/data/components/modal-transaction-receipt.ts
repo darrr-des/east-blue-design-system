@@ -39,7 +39,7 @@ export const modalTransactionReceipt: ComponentData = {
     "verdict": {
       "kind": "keep",
       "title": "Keep — the receipt half of the old Modal, now standing on its own",
-      "text": "This is the half of the old Modal that dealt with receipts, split out into its own component. The rebuild did the important thing right: <code>⤷ TransactionSlot</code> holds real <a href=\"/components/modal-transaction-receipt-entry\">Modal - Transaction Receipt Entry</a> instances rather than hand-drawn rows, so the primitive's renames flowed straight through. Layer names, the property name, both slot names and the button component were all brought into line during this assessment, and nothing is outstanding. The Needs Refinement badge is about handoff rather than structure: the copy control has no confirmation state and its row falls short of the platform tap-target minimums."
+      "text": "This is the half of the old Modal that dealt with receipts, split out into its own component. The rebuild did the important thing right: <code>⤷ TransactionSlot</code> holds real <a href=\"/components/modal-transaction-receipt-entry\">Modal - Transaction Receipt Entry</a> instances rather than hand-drawn rows, so the primitive's renames flowed straight through. Layer names, the property name, both slot names and the button component were all brought into line during this assessment, and nothing is outstanding on the component itself — Code Connect stays open only because the native library does not exist yet. The Needs Refinement badge is about handoff rather than structure: the copy control has no confirmation state and its row falls short of the platform tap-target minimums."
     }
   },
   "overview": {
@@ -179,7 +179,16 @@ export const modalTransactionReceipt: ComponentData = {
         }
       }
     ],
-    "open": [],
+    "open": [
+      {
+        "headline": "Code Connect mappings not registered.",
+        "body": "Blocked — the native library does not exist yet, so there is nothing to map onto. The component side is ready: <code>ActionOrientation</code>, <code>⤷ TransactionSlot</code> and <code>⤷ ActionSlot</code> map one to one now the property name and both slot names are settled.",
+        "tag": {
+          "criterion": "C7",
+          "label": "C7 · Code Connect Linkability"
+        }
+      }
+    ],
     "recommendations": [
       {
         "headline": "Give the reference row a real tap target height.",
@@ -421,7 +430,7 @@ export const modalTransactionReceipt: ComponentData = {
         "criterion": "Variant & Property Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "<code>ActionOrientation</code> closed its space, and both slots picked up the <code>⤷</code> prefix. Nothing outstanding."
+        "notes": "<code>ActionOrientation</code> closed its space, and both slots picked up the <code>⤷</code> prefix. Nothing outstanding on this axis."
       },
       {
         "id": "C3",

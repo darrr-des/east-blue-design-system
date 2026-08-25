@@ -39,7 +39,7 @@ export const modalTransactionReceiptEntry: ComponentData = {
     "verdict": {
       "kind": "keep",
       "title": "Keep — the smallest piece of the receipt, and it behaves like one",
-      "text": "Two text layers, one setting, no wrapper. <a href=\"/components/modal-transaction-receipt\">Modal - Transaction Receipt</a> instances it three times through <code>⤷ TransactionSlot</code>, which is the test a primitive has to pass. The inline layout is built the way it should be — <code>#label</code> fills the slack and <code>#value</code> hugs — so a long label pushes the value rather than clipping it. Nothing is outstanding."
+      "text": "Two text layers, one setting, no wrapper. <a href=\"/components/modal-transaction-receipt\">Modal - Transaction Receipt</a> instances it three times through <code>⤷ TransactionSlot</code>, which is the test a primitive has to pass. The inline layout is built the way it should be — <code>#label</code> fills the slack and <code>#value</code> hugs — so a long label pushes the value rather than clipping it. Nothing is outstanding on the component itself; Code Connect stays open because the native library does not exist yet."
     }
   },
   "overview": {
@@ -124,7 +124,16 @@ export const modalTransactionReceiptEntry: ComponentData = {
         }
       }
     ],
-    "open": [],
+    "open": [
+      {
+        "headline": "Code Connect mappings not registered.",
+        "body": "Blocked — the native library does not exist yet, so there is nothing to map onto. The component side is ready: <code>Layout</code> (enum), <code>#label</code> and <code>#value</code> (text) map one to one with no rename at the boundary.",
+        "tag": {
+          "criterion": "C7",
+          "label": "C7 · Code Connect Linkability"
+        }
+      }
+    ],
     "recommendations": [
       {
         "headline": "Write down what the inline value does when it overflows.",

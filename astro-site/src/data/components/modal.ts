@@ -48,7 +48,7 @@ export const modal: ComponentData = {
     "verdict": {
       "kind": "keep",
       "title": "Keep — the restructure the first assessment asked for has happened",
-      "text": "The April assessment flagged this component for carrying two unrelated things in one set: a general-purpose dialog and a transaction receipt. It recommended splitting them and extracting <code>EBTransactionReceipt</code>. That is exactly what the 2026 rebuild did — the receipt layouts are now <a href=\"/components/modal-transaction-receipt\">Modal - Transaction Receipt</a>, and what remains here is the dialog on its own. The <code>_space_*</code> spacer rectangles are gone, the hardcoded placeholder circle is a real <code>⤷ IconSlot</code>, and the mixed-casing enums are one clean <code>ActionOrientation</code>. Nothing is outstanding."
+      "text": "The April assessment flagged this component for carrying two unrelated things in one set: a general-purpose dialog and a transaction receipt. It recommended splitting them and extracting <code>EBTransactionReceipt</code>. That is exactly what the 2026 rebuild did — the receipt layouts are now <a href=\"/components/modal-transaction-receipt\">Modal - Transaction Receipt</a>, and what remains here is the dialog on its own. The <code>_space_*</code> spacer rectangles are gone, the hardcoded placeholder circle is a real <code>⤷ IconSlot</code>, and the mixed-casing enums are one clean <code>ActionOrientation</code>. Nothing is outstanding on the component itself; Code Connect stays open because the native library does not exist yet."
     }
   },
   "overview": {
@@ -180,7 +180,16 @@ export const modal: ComponentData = {
         }
       }
     ],
-    "open": [],
+    "open": [
+      {
+        "headline": "Code Connect mappings not registered.",
+        "body": "Blocked — the native library does not exist yet, so there is nothing to map onto. The component side is ready: <code>ActionOrientation</code>, <code>hasIcon</code>, both <code>⤷</code> slots and the two text layers map one to one with no rename at the boundary.",
+        "tag": {
+          "criterion": "C7",
+          "label": "C7 · Code Connect Linkability"
+        }
+      }
+    ],
     "recommendations": [
       {
         "headline": "Tidy the Placeholder's own layer names.",
