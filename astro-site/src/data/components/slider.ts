@@ -27,24 +27,6 @@ const sliderControls: DemoControlSection[] = [
         defaultValue: 'true'
       }
     ]
-  },
-  {
-    heading: 'DraggableFill',
-    rows: [
-      {
-        label: 'Width',
-        prop: 'value',
-        options: [
-          { value: '0', label: '0%' },
-          { value: '10', label: '10%' },
-          { value: '25', label: '25%' },
-          { value: '50', label: '50%' },
-          { value: '75', label: '75%' },
-          { value: '100', label: '100%' }
-        ],
-        defaultValue: '10'
-      }
-    ]
   }
 ];
 
@@ -72,8 +54,8 @@ export const slider: ComponentData = {
     }
   },
   "overview": {
-    "inContextNote": "Used where a value is approximate rather than typed — amount estimation, settings, filters. Contexts are illustrative; final screens will reference actual GCash patterns.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"sldr-demo-preview\"><div class=\"eb-preview-sldr eb-preview-sldr--default\"><div class=\"eb-preview-sldr__track\"><div class=\"eb-preview-sldr__fill eb-preview-sldr__fill--v10\"><div class=\"eb-preview-sldr__tooltip\"><span class=\"eb-preview-sldr__pct\">10%</span></div><div class=\"eb-preview-sldr__knob\"></div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"sldr-ctrl-state\" class=\"demo-panel-select\" onchange=\"_sldrUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"disabled\">Disabled</option><option value=\"pressed\">Pressed</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTooltip</span><select id=\"sldr-ctrl-hastooltip\" class=\"demo-panel-select\" onchange=\"_sldrUpdate()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">DraggableFill</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Width</span><select id=\"sldr-ctrl-value\" class=\"demo-panel-select\" onchange=\"_sldrUpdate()\"><option value=\"0\">0%</option><option value=\"10\" selected=\"\">10%</option><option value=\"25\">25%</option><option value=\"50\">50%</option><option value=\"75\">75%</option><option value=\"100\">100%</option></select></div></div></div></div>",
+    "inContextNote": "The preview is draggable — grab the knob or press anywhere on the track, the same continuous model the slot gives you in Figma. Used where a value is approximate rather than typed — amount estimation, settings, filters. Contexts are illustrative; final screens will reference actual GCash patterns.",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"sldr-demo-preview\"><div class=\"eb-preview-sldr eb-preview-sldr--default\" data-sldr=\"demo\"><div class=\"eb-preview-sldr__track\"><div class=\"eb-preview-sldr__fill\"><div class=\"eb-preview-sldr__tooltip\"><span class=\"eb-preview-sldr__pct\">10%</span></div><div class=\"eb-preview-sldr__knob\"></div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"sldr-ctrl-state\" class=\"demo-panel-select\" onchange=\"_sldrUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"disabled\">Disabled</option><option value=\"pressed\">Pressed</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTooltip</span><select id=\"sldr-ctrl-hastooltip\" class=\"demo-panel-select\" onchange=\"_sldrUpdate()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -280,7 +262,7 @@ export const slider: ComponentData = {
         "title": "Slider",
         "node": "6802:105580",
         "description": "Six variants across two axes. The value is not one of them — it is the width of DraggableFill, which the slot makes editable on an instance.",
-        "previewHtml": "<div id=\"sldr-spec-default\"><div class=\"eb-preview-sldr eb-preview-sldr--default\"><div class=\"eb-preview-sldr__track\"><div class=\"eb-preview-sldr__fill eb-preview-sldr__fill--v10\"><div class=\"eb-preview-sldr__tooltip\"><span class=\"eb-preview-sldr__pct\">10%</span></div><div class=\"eb-preview-sldr__knob\"></div></div></div></div></div>",
+        "previewHtml": "<div id=\"sldr-spec-default\"><div class=\"eb-preview-sldr eb-preview-sldr--default\" data-sldr=\"spec\"><div class=\"eb-preview-sldr__track\"><div class=\"eb-preview-sldr__fill\"><div class=\"eb-preview-sldr__tooltip\"><span class=\"eb-preview-sldr__pct\">10%</span></div><div class=\"eb-preview-sldr__knob\"></div></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
@@ -298,7 +280,7 @@ export const slider: ComponentData = {
                 }
               },
               { "key": "⤷ Track", "value": "slot — also the unfilled rail" },
-              { "key": "DraggableFill", "value": "resized on the instance to set the value" },
+              { "key": "DraggableFill", "value": "resized on the instance — drag the preview" },
               { "key": "#percentage", "value": "10%" },
               { "key": "Node", "value": "6764:106099", "mono": true,
                 "variants": {
@@ -354,15 +336,7 @@ export const slider: ComponentData = {
               { "key": "Height", "value": "26", "mono": true },
               { "key": "Track height", "value": "10", "mono": true },
               { "key": "Track radius", "value": "99", "mono": true },
-              { "key": "DraggableFill width", "value": "37 of 365", "mono": true,
-                "variants": {
-                  "value:0": { "value": "0 of 365" },
-                  "value:25": { "value": "91 of 365" },
-                  "value:50": { "value": "183 of 365" },
-                  "value:75": { "value": "274 of 365" },
-                  "value:100": { "value": "365 of 365" }
-                }
-              },
+              { "key": "DraggableFill width", "value": "0–365 — drag the preview to set it", "mono": true },
               { "key": "Figma sample", "value": "62 of 365 (≈17%) while #percentage reads 10%", "mono": true },
               { "key": "Knob", "value": "16 × 16 in an 18 × 18 container", "mono": true },
               { "key": "Knob position", "value": "right-aligned to the fill's edge", "mono": true },
