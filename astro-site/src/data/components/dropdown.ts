@@ -184,7 +184,7 @@ export const dropdown: ComponentData = {
       },
       {
         "headline": "The leading mark's right padding is uniform at 8.",
-        "body": "The two currency types had different right padding on their <code>peso-sign</code> frame, so the label started at a slightly different place depending on which one was chosen. Both are now 8, and the frames sit flush against <code>text-container</code> — the frame widths still differ, 23 against 18, but only because the custom SVG glyph is wider than Proxima's.",
+        "body": "The two currency types had different right padding on their <code>peso-sign</code> frame, so the label started at a slightly different place depending on which one was chosen. Both are now 8, and the frames sit flush against <code>text-container</code> — the frame widths still differ, 23 against 18, but only because the custom SVG glyph is wider than Proxima's. The layer belongs to <a href=\"/components/select-field\">Select Field</a> rather than to Select, but the change is confined to the variants where a currency mark is visible, so nothing that does not show one moves.",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
