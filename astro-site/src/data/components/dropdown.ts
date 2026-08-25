@@ -183,6 +183,14 @@ export const dropdown: ComponentData = {
         }
       },
       {
+        "headline": "The leading mark's right padding is uniform at 8.",
+        "body": "The two currency types had different right padding on their <code>peso-sign</code> frame, so the label started at a slightly different place depending on which one was chosen. Both are now 8, and the frames sit flush against <code>text-container</code> — the frame widths still differ, 23 against 18, but only because the custom SVG glyph is wider than Proxima's.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
         "headline": "No pressed state, still correct.",
         "body": "Form fields signal interaction by expanding rather than by tinting, so Pressed would be a state with nothing to show. Confirmed in the previous assessment and unchanged here.",
         "tag": {
@@ -314,7 +322,13 @@ export const dropdown: ComponentData = {
               { "key": "Menu height", "value": "312 at Compact density", "mono": true },
               { "key": "Menu placement", "value": "overlays below the trigger — outside its 46px box", "mono": true },
               { "key": "Chevron", "value": "32 × 32", "mono": true },
-              { "key": "Side inset", "value": "12", "mono": true }
+              { "key": "Side inset", "value": "12", "mono": true },
+              { "key": "Leading mark", "value": "–", "mono": true,
+                "variants": {
+                  "type:pesosignvector": { "value": "23 wide — glyph + 8 right pad" },
+                  "type:pesosigntext": { "value": "18 wide — glyph + 8 right pad" }
+                }
+              }
             ]
           },
           {
