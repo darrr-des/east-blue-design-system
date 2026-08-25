@@ -5696,6 +5696,236 @@ pre.code-snippet .prp { color: #0369A1; }
 [data-theme="dark"] .eb-preview-adcarousel__cta { color: #62A0FA; }
 
 
+
+/* ═════════════════════════════════════════════════════════════════════
+   SELECT FAMILY — live preview primitives
+   Select · Select Group · Select Item. 2026 Working File rebuild.
+   Select Field (the trigger) is out of scope, so the trigger here is
+   drawn to match rather than documented as its own component.
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* ── Select Item ────────────────────────────────────────────────── */
+.eb-preview-sitem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 320px;
+  max-width: 100%;
+  padding: 0 12px;
+  background: #FFFFFF;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-sitem--compact { min-height: 40px; }
+.eb-preview-sitem--default { min-height: 48px; }
+.eb-preview-sitem--comfortable { min-height: 56px; }
+/* Density sets padding around a hugging content block, so the row grows
+   when Supporting Text is switched on rather than overlapping it. */
+.eb-preview-sitem--supporting.eb-preview-sitem--comfortable { min-height: 60px; }
+
+.eb-preview-sitem--pressed { background: #F6F9FD; }
+
+.eb-preview-sitem__lead {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0A2757;
+}
+.eb-preview-sitem__lead--flag { width: 16px; }
+.eb-preview-sitem--selected .eb-preview-sitem__lead { color: #005CE5; }
+.eb-preview-sitem--disabled .eb-preview-sitem__lead { color: #C2CFE5; }
+.eb-preview-sitem__lead svg { display: block; }
+
+.eb-preview-sitem__content {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.eb-preview-sitem__primary {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+.eb-preview-sitem--selected .eb-preview-sitem__primary { color: #005CE5; }
+.eb-preview-sitem--disabled .eb-preview-sitem__primary { color: #C2CFE5; }
+/* Stays #6780A9 in every state, including disabled — flagged as a
+   recommendation, since it ends up darker than the label it supports. */
+.eb-preview-sitem__supporting {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.5px;
+  color: #6780A9;
+}
+
+.eb-preview-sitem__trail {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.eb-preview-sitem__badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #E5F1FF;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  color: #005CE5;
+}
+
+/* ── Select Group ───────────────────────────────────────────────── */
+.eb-preview-sgroup {
+  width: 320px;
+  max-width: 100%;
+  padding: 4px 0;
+  border-radius: 6px;
+  background: #FFFFFF;
+  border: 1px solid #E5EBF4;
+  font-family: inherit;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.eb-preview-sgroup__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+}
+.eb-preview-sgroup--compact .eb-preview-sgroup__row { height: 40px; }
+.eb-preview-sgroup--default .eb-preview-sgroup__row { height: 48px; }
+.eb-preview-sgroup--comfortable .eb-preview-sgroup__row { height: 56px; }
+
+/* The dividers are siblings inside the slot in Figma, which is why
+   BorderType=None simply has none. Reproduced here as a border so the
+   three options read the way they do in the file. */
+.eb-preview-sgroup--middleinset .eb-preview-sgroup__row + .eb-preview-sgroup__row {
+  border-top: 1px solid #E5EBF4;
+  margin: 0 12px;
+  padding: 0;
+}
+.eb-preview-sgroup--fullwidth .eb-preview-sgroup__row + .eb-preview-sgroup__row {
+  border-top: 1px solid #E5EBF4;
+}
+/* None needs no override — in Figma the divider nodes are simply absent
+   from those variants, which is why they are 24 shorter. Stated so every
+   class in the markup resolves to something. */
+.eb-preview-sgroup--none .eb-preview-sgroup__row + .eb-preview-sgroup__row {
+  border-top: 0;
+}
+
+.eb-preview-sgroup__lead {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.eb-preview-sgroup__lead svg { display: block; }
+.eb-preview-sgroup__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+
+/* ── Select ─────────────────────────────────────────────────────── */
+.eb-preview-sel {
+  width: 366px;
+  max-width: 100%;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-sel__field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 12px;
+  border-radius: 6px;
+  background: #FFFFFF;
+  border: 1px solid #D7E0EF;
+  box-sizing: border-box;
+}
+.eb-preview-sel--expanded .eb-preview-sel__field { border-color: #005CE5; }
+.eb-preview-sel--error .eb-preview-sel__field { border-color: #D61B2C; }
+.eb-preview-sel--disabled .eb-preview-sel__field {
+  border-color: #E5EBF4;
+  background: #F6F9FD;
+}
+
+.eb-preview-sel__lead {
+  flex: 0 0 auto;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0A2757;
+}
+.eb-preview-sel__value {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #90A8D0;
+}
+/* isFilled swaps the placeholder for a chosen value in the label colour. */
+.eb-preview-sel--filled .eb-preview-sel__value { color: #0A2757; }
+
+.eb-preview-sel__chevron {
+  position: relative;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+}
+.eb-preview-sel__chevron::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 6px;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid #005CE5;
+  border-bottom: 2px solid #005CE5;
+  transform: rotate(45deg);
+}
+.eb-preview-sel--expanded .eb-preview-sel__chevron::before {
+  top: 10px;
+  transform: rotate(225deg);
+}
+.eb-preview-sel--disabled .eb-preview-sel__chevron::before {
+  border-right-color: #C2CFE5;
+  border-bottom-color: #C2CFE5;
+}
+
+/* The menu overlays what sits beneath it rather than growing the
+   trigger — the same relationship the Figma variants have. */
+.eb-preview-sel__menu { margin-top: 4px; }
+.eb-preview-sel__menu .eb-preview-sgroup { width: 366px; }
+
+[data-theme="dark"] .eb-preview-sitem,
+[data-theme="dark"] .eb-preview-sgroup,
+[data-theme="dark"] .eb-preview-sel__field { background: #141B28; }
+[data-theme="dark"] .eb-preview-sgroup { border-color: #2A3446; }
+[data-theme="dark"] .eb-preview-sitem--pressed { background: #1B2333; }
+[data-theme="dark"] .eb-preview-sitem__primary,
+[data-theme="dark"] .eb-preview-sgroup__label { color: #E4EAF3; }
 /* TOC scroll target offset — leave room for the sticky comp-tabs bar
    (sticky top:16px + ~52px bar + 28px breathing) */
 .sub-heading[id] { scroll-margin-top: 96px; }

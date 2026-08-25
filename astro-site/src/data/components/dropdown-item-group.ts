@@ -1,117 +1,184 @@
-import type { ComponentData } from '../types';
+import type { ComponentData, DemoControlSection } from '../types';
+
+/* Demo controls for the Style tab's single spec card. Both axes shape the
+   slot's default content rather than being applied to whatever fills it —
+   see the resolved list for why that is a Figma constraint. */
+const selectGroupControls: DemoControlSection[] = [
+  {
+    heading: 'Properties',
+    rows: [
+      {
+        label: 'BorderType',
+        prop: 'border',
+        options: [
+          { value: 'middleinset', label: 'MiddleInset' },
+          { value: 'fullwidth', label: 'FullWidth' },
+          { value: 'none', label: 'None' }
+        ],
+        defaultValue: 'middleinset'
+      },
+      {
+        label: 'Density',
+        prop: 'density',
+        options: [
+          { value: 'compact', label: 'Compact' },
+          { value: 'default', label: 'Default' },
+          { value: 'comfortable', label: 'Comfortable' }
+        ],
+        defaultValue: 'compact'
+      }
+    ]
+  }
+];
 
 export const dropdownItemGroup: ComponentData = {
   "meta": {
     "slug": "dropdown-item-group",
     "name": "Select Group",
-    "node": "25783:1255",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=25783-1255",
-    "description": "The menu surface that opens when a Select is tapped — a rounded card wrapping a Figma Slot of Select Items. 9 variants across <code>Border Type</code> (Middle Inset / Full Width / None) × <code>Density</code> (Compact / Default / Comfortable).",
+    "node": "7947:111630",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=7947-111630",
+    "description": "The menu surface a Select opens — a rounded card wrapping a slot of Select Items, with optional dividers between them.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
-    "navGroup": "Dropdown",
+    "navGroup": "Select",
     "verdict": {
-      "kind": "fix",
-      "title": "Rebuilt as a real container — cleanup remains",
-      "text": "The v2.0 rebuild turned a hardcoded preview artifact into a genuine Slot-based container: every variant wraps a Figma <code>SLOT</code>, the detached last row is now a real instance, dividers are separate nodes (so no stray bottom border), and it's consumed by Select. The <strong>Consolidate</strong> verdict is withdrawn — it earns its place as a component. Remaining work is cleanup: a <code>MIddle Inset</code> typo, a vestigial <code>Dropdown Item - Last</code> name, hidden 366px leftovers, and a Scrollbar frame native renders itself."
+      "kind": "keep",
+      "title": "Keep — the cleanup its own verdict listed is done",
+      "text": "The previous pass had already turned this from a hardcoded preview artifact into a genuine slot-based container, and withdrew a Consolidate verdict in the process. What it left behind was a list of cleanup: a <code>MIddle Inset</code> typo, a vestigial <code>Dropdown Item - Last</code> name, hidden 366px leftovers, and a Scrollbar frame. The first three are gone. The Scrollbar stays, confirmed as intentional. This pass also joined the property and its values to <code>BorderType = MiddleInset | FullWidth | None</code> and named the slot <code>⤷ SelectionSlot</code>. Nothing is outstanding on the component itself; Code Connect stays open because the native library does not exist yet."
     }
   },
   "overview": {
-    "inContextNote": "The group appears immediately below a Dropdown trigger in the expanded state. On native platforms it is rendered by the OS menu primitive, not drawn manually.",
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"140\" height=\"120\" viewBox=\"0 0 140 120\" fill=\"none\">\n          <rect x=\"16\" y=\"8\" width=\"108\" height=\"12\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".2\"></rect>\n          <rect x=\"22\" y=\"12\" width=\"40\" height=\"4\" rx=\"1\" fill=\"currentColor\" opacity=\".12\"></rect>\n          <path d=\"M110 13l2 3 2-3\" stroke=\"currentColor\" stroke-width=\"1\" stroke-linecap=\"round\" opacity=\".25\"></path>\n          <rect x=\"16\" y=\"26\" width=\"108\" height=\"86\" rx=\"4\" fill=\"currentColor\" opacity=\".03\" stroke=\"currentColor\" stroke-width=\".6\" stroke-opacity=\".2\"></rect>\n          <line x1=\"20\" y1=\"40\" x2=\"120\" y2=\"40\" stroke=\"currentColor\" stroke-width=\".4\" opacity=\".15\"></line>\n          <line x1=\"20\" y1=\"54\" x2=\"120\" y2=\"54\" stroke=\"currentColor\" stroke-width=\".4\" opacity=\".15\"></line>\n          <line x1=\"20\" y1=\"68\" x2=\"120\" y2=\"68\" stroke=\"currentColor\" stroke-width=\".4\" opacity=\".15\"></line>\n          <line x1=\"20\" y1=\"82\" x2=\"120\" y2=\"82\" stroke=\"currentColor\" stroke-width=\".4\" opacity=\".15\"></line>\n          <line x1=\"20\" y1=\"96\" x2=\"120\" y2=\"96\" stroke=\"currentColor\" stroke-width=\".4\" opacity=\".15\"></line>\n          <rect x=\"22\" y=\"31\" width=\"50\" height=\"4\" rx=\"1\" fill=\"currentColor\" opacity=\".18\"></rect>\n          <rect x=\"22\" y=\"45\" width=\"60\" height=\"4\" rx=\"1\" fill=\"currentColor\" opacity=\".18\"></rect>\n          <rect x=\"22\" y=\"59\" width=\"46\" height=\"4\" rx=\"1\" fill=\"currentColor\" opacity=\".18\"></rect>\n          <rect x=\"22\" y=\"73\" width=\"54\" height=\"4\" rx=\"1\" fill=\"currentColor\" opacity=\".18\"></rect>\n          <rect x=\"22\" y=\"87\" width=\"58\" height=\"4\" rx=\"1\" fill=\"currentColor\" opacity=\".18\"></rect>\n          <rect x=\"22\" y=\"101\" width=\"48\" height=\"4\" rx=\"1\" fill=\"currentColor\" opacity=\".18\"></rect>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"dig-demo-preview\"><div style=\"display:inline-block;border-radius:6px;box-shadow:0 6px 12px -8px rgba(2,14,34,.16);background:#FFFFFF;\"><svg width=\"366\" height=\"400\" viewBox=\"0 0 366 400\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;border-radius:6px;\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"399\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"1\"></rect><text x=\"14\" y=\"30\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text><line x1=\"0\" y1=\"50\" x2=\"366\" y2=\"50\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"14\" y=\"80\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text><line x1=\"0\" y1=\"100\" x2=\"366\" y2=\"100\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"14\" y=\"130\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text><line x1=\"0\" y1=\"150\" x2=\"366\" y2=\"150\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"14\" y=\"180\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text><line x1=\"0\" y1=\"200\" x2=\"366\" y2=\"200\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"14\" y=\"230\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text><line x1=\"0\" y1=\"250\" x2=\"366\" y2=\"250\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"14\" y=\"280\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text><line x1=\"0\" y1=\"300\" x2=\"366\" y2=\"300\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"14\" y=\"330\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text><line x1=\"0\" y1=\"350\" x2=\"366\" y2=\"350\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"14\" y=\"380\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text></svg></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">variant</span><span class=\"demo-panel-value\">(none)</span></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">item count</span><span class=\"demo-panel-value\">8 (fixed)</span></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">width</span><span class=\"demo-panel-value\">366px (fixed)</span></div></div></div></div>",
+    "inContextNote": "The surface that appears under a Select when it expands. On its own it is never shown — it is either filled by a Select or filled by hand with Select Items.",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"sgroup-demo-preview\"><div class=\"eb-preview-sgroup eb-preview-sgroup--middleinset eb-preview-sgroup--compact\"><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">BorderType</span><select id=\"sgroup-ctrl-border\" class=\"demo-panel-select\" onchange=\"_sgroupUpdate()\"><option value=\"middleinset\" selected=\"\">MiddleInset</option><option value=\"fullwidth\">FullWidth</option><option value=\"none\">None</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Density</span><select id=\"sgroup-ctrl-density\" class=\"demo-panel-select\" onchange=\"_sgroupUpdate()\"><option value=\"compact\" selected=\"\">Compact</option><option value=\"default\">Default</option><option value=\"comfortable\">Comfortable</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "A real Figma <code>SLOT</code> now wraps the content, so consumers can drop in any number of Select Items rather than rebuilding the composition. Fill behaviour works — nested in Select the instance resizes to the 366px trigger and the Slot, items, and dividers all fill with it."
+        "note": "One surface for every Select in the product, and usable on its own wherever a list of options needs a card around it."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Carries its own background, radius, border, and divider scaffolding across three densities. The detached last row is gone — every row is now a real Select Item instance, so item changes propagate."
+        "note": "Owns the card — the white fill, the hairline, the 6px radius and the padding around the rows. It does not draw the rows themselves."
       },
       {
         "name": "Consistent",
         "rating": "pass",
-        "note": "Named <code>Select Group</code>, matching Avatar Group / Button Group — the irregular <code>\" - \"</code> separator is gone. <code>Border Type</code> values are spelled correctly (Middle Inset / Full Width / None), and the terminal row reads <code>Select Item - Last</code>, where the <code>- Last</code> suffix is a deliberate semantic marker rather than a leftover."
+        "note": "<code>BorderType</code> and its values are joined after this pass, the <code>MIddle Inset</code> typo is gone, and the slot carries the family's <code>⤷</code> prefix as <code>⤷ SelectionSlot</code>."
       },
       {
         "name": "Composable",
         "rating": "pass",
-        "note": "Now a genuine container — every variant exposes a Figma <code>SLOT</code>, and Select nests it as an instance alongside Select Field rather than drawing its own list. Maps to a <code>@ViewBuilder</code> / <code>@Composable</code> content slot."
+        "note": "A real Figma <code>SLOT</code> filled with <a href=\"/components/dropdown-item\">Select Item</a> instances, and consumed as a whole by <a href=\"/components/dropdown\">Select</a>. What it cannot do is apply its own properties to substituted content — see the resolved list."
       }
     ],
     "behavior": [
       {
-        "state": "Default (open)",
-        "ios": "yes",
-        "android": "yes",
-        "property": "—",
-        "notes": "White bg, 6px radius, drop shadow. Rendered by <code>Menu</code> (iOS) / <code>DropdownMenu</code> (Android) automatically."
+        "state": "BorderType=MiddleInset",
+        "ios": "na",
+        "android": "na",
+        "property": "inset dividers",
+        "notes": "Dividers sit between rows, inset from both edges. The default the component ships with."
       },
       {
-        "state": "Item hover/press",
-        "ios": "yes",
-        "android": "yes",
-        "property": "—",
-        "notes": "Handled by the per-item Dropdown Item component, not the group. Touch feedback is platform-native."
+        "state": "BorderType=FullWidth",
+        "ios": "na",
+        "android": "na",
+        "property": "edge-to-edge dividers",
+        "notes": "Same dividers, running the full width of the card."
       },
       {
-        "state": "Scroll",
-        "ios": "yes",
-        "android": "yes",
-        "property": "—",
-        "notes": "Native menus clip and scroll automatically when item count exceeds available height."
+        "state": "BorderType=None",
+        "ios": "na",
+        "android": "na",
+        "property": "no dividers",
+        "notes": "The divider nodes are absent entirely, which is why these variants are 24 shorter than their bordered siblings."
+      },
+      {
+        "state": "Density",
+        "ios": "na",
+        "android": "na",
+        "property": "312 / 368 / 424",
+        "notes": "Sets the row height of the Select Items in the default content — 40, 48 and 56 respectively — which is what drives the card's height."
+      },
+      {
+        "state": "⤷ SelectionSlot",
+        "ios": "na",
+        "android": "na",
+        "property": "7 rows by default",
+        "notes": "Ships with seven Select Items and a hidden Label. Substituted content replaces all of it, dividers included."
       }
     ],
     "resolved": [
       {
-        "body": "v2.0: Rebuilt as a real Slot-based container — every variant now wraps a Figma <code>SLOT</code>, so consumers can compose any number of Select Items instead of rebuilding the stack. The <strong>Consolidate</strong> verdict is withdrawn: it is a genuine component, not a preview artifact. (C1)"
+        "headline": "The MIddle Inset typo is gone.",
+        "body": "The value carried a capital I in the middle of the word. It is now <code>MiddleInset</code> — and joined at the same time, so the property reads <code>BorderType = MiddleInset | FullWidth | None</code>.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
       },
       {
-        "body": "v2.0: Detached last row replaced with a real instance — the hand-built <code>Dropdown - Item</code> frame (node <code>6383:3442</code>) is gone. Every row is now a Select Item instance, so item changes propagate. (C1)"
+        "headline": "The vestigial Dropdown Item - Last name is gone.",
+        "body": "The final row in the slot was still called <code>Dropdown Item - Last</code>, left over from before the Dropdown to Select rename — and confusingly its instance had been renamed while the master had not, so the two disagreed depending on where you looked. It is now simply <code>Select Item</code>: seven rows with six dividers between them, and no trailing divider to suppress.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
       },
       {
-        "body": "v2.0: Redundant bottom border removed — dividers are now separate <code>Horizontal / Divider</code> nodes placed <em>between</em> rows, so the last row carries none. <code>Border Type=None</code> drops them entirely. (C1)"
+        "headline": "The hidden 366px leftovers are gone.",
+        "body": "Five stale <code>Select Item</code> instances sat in the slot at 366 × 52 with no children, all stacked at a single coordinate. They were invisible but shipped inside every variant. Removed.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
       },
       {
-        "body": "v2.0: Renamed <code>Dropdown Item - Group</code> → <code>Select Group</code>, matching Avatar Group / Button Group. The irregular <code>\" - \"</code> separator is gone. (C2)"
+        "headline": "The slot is named for what belongs in it.",
+        "body": "It was <code>Slot</code> — the arrow prefix arrived first, then the name. <code>⤷ SelectionSlot</code> now says what the container is for, rather than just marking it as a slot.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
       },
       {
-        "body": "v2.0: Now genuinely composed — Select nests this as an instance alongside Select Field rather than drawing its own list. The popover surface is a real container mapping to a native content slot, which answers the earlier C4 concern that it was a phantom. (C4)"
+        "headline": "Both properties shape the default content rather than being applied to the slot.",
+        "body": "Each of the nine variants contains its own hand-placed rows: <code>MiddleInset</code> and <code>FullWidth</code> interleave six <code>Horizontal / Divider</code> siblings between seven Select Items, and <code>None</code> simply has no divider nodes at all. So a consumer who fills the slot with their own rows loses both the dividers and the density, because those lived in the default content they replaced. This is the same Figma limit the Slider hit — a component property cannot reach into a slot — and it is understood and already instructed to designers. Recorded here because natively both are list-level properties applied to whatever rows the list holds, which is a genuine divergence a developer needs told rather than left to infer.",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
       },
       {
-        "body": "v2.0: Divider treatment promoted to a property — <code>Border Type</code> (Middle Inset / Full Width / None) × <code>Density</code> (Compact / Default / Comfortable) gives 9 variants where the old component had one hardcoded layout. (C2)"
+        "headline": "The hidden Label is a subsection header.",
+        "body": "A 320 × 28 instance at the top of the slot, hidden in all nine variants. Confirmed as intentional: it acts as a divider or subsection heading for grouped option lists, and stays hidden by default because most lists are flat.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
       },
       {
-        "body": "v2.0: The stacked 366px <code>Select Item</code> / <code>Horizontal / Divider</code> instances and the <code>Label</code> inside the Slot are <strong>intentional</strong>, not leftovers — reviewed and confirmed. They sit inside the Slot as scroll-overflow content and are not dead layers. (C1)"
-      },
-      {
-        "body": "v2.0: The <code>Scrollbar</code> frame is <strong>intentional</strong> — reviewed and confirmed. It documents the menu's scroll affordance in the design. Handoff note: SwiftUI and Compose render scroll indicators inside their own scroll containers, so developers should rely on the native indicator rather than rebuilding this layer. (C4)"
-      },
-      {
-        "body": "v2.0: Fill-container width verified working — the standalone component sits at 320px, but nested in Select the instance resizes to 366px and the Slot, every Select Item, and every divider fill with it. The Scrollbar stays right-aligned to the card edge. No fixed-width bug; the 320px is just the component's canvas size. (C1)"
-      },
-      {
-        "body": "v2.0: <code>Border Type=MIddle Inset</code> typo fixed — the value now reads <code>Middle Inset</code> across all 9 variants, so the generated type no longer carries the capital-I misspelling. (C2)"
-      },
-      {
-        "body": "v2.0: Last row renamed <code>Dropdown Item - Last</code> → <code>Select Item - Last</code> — the vestigial <code>Dropdown</code> prefix from the old architecture is gone. The <code>- Last</code> suffix is <strong>intentional</strong>, marking the terminal row. (C1)"
+        "headline": "The Scrollbar frame stays.",
+        "body": "A hand-drawn 12 × full-height rectangle inside the slot, hidden. Native platforms render their own scroll indicator, so this has no counterpart in code — kept deliberately as a design-time affordance, consistent with how the same call was made elsewhere in the system.",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
       }
     ],
     "open": [
       {
         "headline": "Code Connect mappings not registered.",
-        "body": "Unblocked by the Slot rebuild — the container now has a real native counterpart rather than being a preview artifact. Not yet wired, and still waiting on the native library to exist.",
+        "body": "Blocked — the native library does not exist yet, so there is nothing to map onto. The component side is ready: <code>BorderType</code>, <code>Density</code> and <code>⤷ SelectionSlot</code> all map one to one, with the caveat that the first two are list-level properties natively rather than variants of the default content.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -120,377 +187,344 @@ export const dropdownItemGroup: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Register Code Connect mapping to <code>EBSelectGroup</code>.",
-        "body": "With the Slot rebuild the container now has a genuine native counterpart — a menu surface wrapping a content slot. Wire <code>Border Type</code> and <code>Density</code> to the SwiftUI / Compose API once the native component exists.",
+        "headline": "Pass the Divider component's name upstream.",
+        "body": "The dividers are instances of a component published as <code>Horizontal / Divider</code>. Two things are off, neither of them this component's to fix. The spaces around the slash are inconsistent with how the rest of the file namespaces — <code>Primary/Label/Large</code>, <code>Flags Library - 16px</code> — and the order is inverted: it produces a folder named Horizontal containing Divider, and presumably a Vertical folder containing another Divider, splitting one family across two folders named for the wrong thing. <code>Divider/Horizontal</code> would group them.",
         "tag": "Docs"
-      }
-    ],
-    "appliedRecommendations": [
-      {
-        "headline": "Convert to a Slot-based container.",
-        "body": "v2.0: Applied — every variant now wraps a real Figma <code>SLOT</code>, so consumers compose any number of Select Items instead of rebuilding the stack. This is what withdrew the <strong>Consolidate</strong> verdict.",
-        "tag": "Slot"
       },
       {
-        "headline": "Replace the detached last row with a real instance.",
-        "body": "v2.0: Applied — the hand-built <code>Dropdown - Item</code> frame is gone; every row is a live Select Item instance, so item changes propagate.",
-        "tag": "Composition"
+        "headline": "Write down what a slot swap costs.",
+        "body": "Because the dividers and the density live in the default content, replacing the slot's contents silently drops both. Designers have been briefed, but the constraint is invisible from the component — it belongs in the usage documentation where someone reaches for it, and in the native contract where it does not apply at all.",
+        "tag": "Docs"
       },
       {
-        "headline": "Remove the bottom border on the last item.",
-        "body": "v2.0: Applied — dividers are now separate <code>Horizontal / Divider</code> nodes placed between rows, so the last row carries none. <code>Border Type=None</code> drops them entirely.",
+        "headline": "Give the Label a way to be switched on.",
+        "body": "It is a real subsection header sitting hidden in every variant. Revealing it currently means finding a hidden layer inside a slot. A boolean on the group — or shipping it as an option inside the slot's default content — would make it discoverable rather than folklore.",
         "tag": "Property"
       },
       {
-        "headline": "Rename to match DS group naming.",
-        "body": "v2.0: Applied — <code>Dropdown Item - Group</code> → <code>Select Group</code>, matching Avatar Group / Button Group. The irregular <code>\" - \"</code> separator is gone.",
-        "tag": "Rename"
+        "headline": "Publish the token names once Dev Mode is read.",
+        "body": "The card's fill, hairline and the row colours resolve to library variables, but the read-only tools return variable IDs rather than names, so the spec tables carry hex values only.",
+        "tag": "Token"
       },
       {
-        "headline": "Fix the <code>MIddle Inset</code> typo.",
-        "body": "v2.0: Applied — the value now reads <code>Middle Inset</code> across all 9 variants, so the generated type no longer carries the capital-I misspelling.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Rename the last row off the old <code>Dropdown</code> prefix.",
-        "body": "v2.0: Applied — the terminal row is now <code>Select Item - Last</code>. The vestigial <code>Dropdown</code> prefix is gone; the <code>- Last</code> suffix is retained deliberately as a semantic marker for the last row.",
-        "tag": "Rename"
+        "headline": "See siblings:",
+        "body": "<a href=\"/components/dropdown-item\">Select Item</a> fills the slot, and <a href=\"/components/dropdown\">Select</a> is the control that opens this surface. <a href=\"/components/select-field\">Select Field</a> is the trigger, deliberately outside this family's scope.",
+        "tag": "Family"
       }
-    ]
+    ],
+    "appliedRecommendations": []
   },
   "style": {
-    "heading": "Variants",
+    "heading": "Structure",
     "specCards": [
       {
-        "cardKey": "dig-spec-default",
+        "cardKey": "sgroup-spec-card-default",
         "demoKey": "default",
-        "title": "Default",
-        "node": "6383:3446",
-        "description": "Rounded card surface containing a vertical stack of Dropdown Items. 6px corner radius, white background, 12px-blur drop shadow at 6px offset.",
-        // Intentionally static showcase — Figma has a single variant with no
-        // property axes. Empty array marks that this was considered, not forgotten.
-        demoControls: [],
+        "demoControls": selectGroupControls,
+        "title": "Select Group",
+        "node": "7947:111630",
+        "description": "A card wrapping ⤷ SelectionSlot. The preview shows five rows rather than the seven the component ships, so the card fits the page.",
+        "previewHtml": "<div id=\"sgroup-spec-default\"><div class=\"eb-preview-sgroup eb-preview-sgroup--middleinset eb-preview-sgroup--compact\"><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Variant",    "value": "Default" },
-              { "key": "Item count", "value": "8 (fixed)" }
+              { "key": "BorderType", "value": "MiddleInset", "prop": "border",
+                "variants": {
+                  "border:fullwidth": { "value": "FullWidth" },
+                  "border:none": { "value": "None — divider nodes absent" }
+                }
+              },
+              { "key": "Density", "value": "Compact", "prop": "density",
+                "variants": {
+                  "density:default": { "value": "Default" },
+                  "density:comfortable": { "value": "Comfortable" }
+                }
+              },
+              { "key": "⤷ SelectionSlot", "value": "7 × Select Item + hidden Label" },
+              { "key": "Dividers", "value": "6 × Horizontal / Divider, siblings in the slot",
+                "variants": {
+                  "border:none": { "value": "none — absent from the variant" }
+                }
+              },
+              { "key": "Scrollbar", "value": "hidden — native draws its own" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF",       "token": "bg/color-bg-main" },
-              { "key": "Border",  "value": "#E5EBF4",       "token": "border/color-border-weak" },
-              { "key": "Shadow",  "value": "depth 6/12", "mono": true, "token": "app/shadow/shadow" }
+              { "key": "Card", "value": "#FFFFFF", "token": "library variable · name pending Dev Mode read", "swatch": true },
+              { "key": "Card hairline", "value": "#E5EBF4", "token": "library variable · name pending Dev Mode read", "swatch": true },
+              { "key": "Divider", "value": "#E5EBF4", "token": "library variable · name pending Dev Mode read", "swatch": true,
+                "variants": {
+                  "border:none": { "value": "–", "swatch": false }
+                }
+              },
+              { "key": "Row", "value": "set by Select Item", "token": "–" }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Width",         "value": "328px",  "mono": true },
-              { "key": "Border radius", "value": "6px",    "mono": true },
-              { "key": "Padding",       "value": "8 vertical", "mono": true },
-              { "key": "Item count",    "value": "up to 8", "mono": true }
+              { "key": "Width", "value": "320", "mono": true },
+              { "key": "Height", "value": "312", "mono": true,
+                "variants": {
+                  "border:none": { "value": "288" },
+                  "density:default": { "value": "368" },
+                  "density:comfortable": { "value": "424" },
+                  "border:none|density:default": { "value": "344" },
+                  "border:none|density:comfortable": { "value": "400" }
+                }
+              },
+              { "key": "Corner radius", "value": "6", "mono": true },
+              { "key": "Padding", "value": "4 top and bottom", "mono": true },
+              { "key": "Row height", "value": "40", "mono": true,
+                "variants": {
+                  "density:default": { "value": "48" },
+                  "density:comfortable": { "value": "56" }
+                }
+              },
+              { "key": "Divider height", "value": "4", "mono": true },
+              { "key": "Rows shipped", "value": "7", "mono": true },
+              { "key": "Scrollbar", "value": "12 wide, full height, hidden", "mono": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Item style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Item font",  "value": "Proxima Soft Semibold · 14 / 14", "mono": true }
+              { "key": "Applies to", "value": "none of its own — the rows carry the type", "mono": true },
+              { "key": "Row text", "value": "see Select Item — Proxima Soft SemiBold 16 / 20", "mono": true },
+              { "key": "Label header", "value": "hidden by default; a subsection heading when shown", "mono": true },
+              { "key": "Text styles", "value": "shared library styles · names pending Dev Mode read", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBDropdown</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">, </span>options<span class=\"syn-punc\">: </span>items<span class=\"syn-punc\">) {</span> item <span class=\"syn-kw\">in</span>\n    <span class=\"syn-type\">EBDropdownItem</span><span class=\"syn-punc\">(</span>item.label<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBDropdownMenu</span><span class=\"syn-punc\">(</span>\n    items <span class=\"syn-eq\">=</span> items<span class=\"syn-punc\">,</span>\n    onItemSelect <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div style=\"display:inline-block;border-radius:6px;box-shadow:0 6px 12px -8px rgba(2,14,34,.16);background:#FFFFFF;\"><svg width=\"366\" height=\"400\" viewBox=\"0 0 366 400\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;border-radius:6px;\"><rect x=\"0.5\" y=\"0.5\" width=\"365\" height=\"399\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"1\"></rect><text x=\"14\" y=\"30\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text><line x1=\"0\" y1=\"50\" x2=\"366\" y2=\"50\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"14\" y=\"80\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text><line x1=\"0\" y1=\"100\" x2=\"366\" y2=\"100\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"14\" y=\"130\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text><line x1=\"0\" y1=\"150\" x2=\"366\" y2=\"150\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"14\" y=\"180\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text><line x1=\"0\" y1=\"200\" x2=\"366\" y2=\"200\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"14\" y=\"230\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text><line x1=\"0\" y1=\"250\" x2=\"366\" y2=\"250\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"14\" y=\"280\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text><line x1=\"0\" y1=\"300\" x2=\"366\" y2=\"300\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"14\" y=\"330\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text><line x1=\"0\" y1=\"350\" x2=\"366\" y2=\"350\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"14\" y=\"380\" font-family=\"'Proxima Soft', system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text></svg></div>"
-      }
-    ],
-    "colorsTables": [
-      {
-        "title": "Colors by State",
-        "description": "Display-only surface. The group itself only contributes bg, shadow, and row dividers — all per-item colors come from Dropdown Item.",
-        "columns": [
-          "VALUE"
-        ],
-        "rows": [
-          {
-            "role": "Surface bg",
-            "token": "bg/color-bg-main",
-            "values": [
-              "#FFFFFF"
-            ]
-          },
-          {
-            "role": "Row divider",
-            "token": "main/dropdown-item/color/default/border",
-            "values": [
-              "#E5EBF4"
-            ]
-          },
-          {
-            "role": "Shadow color",
-            "token": "elevation/app/shadow/color-shadow",
-            "values": [
-              "#020E2229"
-            ]
-          },
-          {
-            "role": "Shadow border",
-            "token": "elevation/app/shadow/color-border",
-            "values": [
-              "#FFFFFF00"
-            ]
-          },
-          {
-            "role": "Item label",
-            "token": "main/dropdown-item/color/default/label",
-            "values": [
-              "#0A2757"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "columns": [],
-        "rows": [
-          {
-            "role": "Width",
-            "token": "366px (fixed)",
-            "values": []
-          },
-          {
-            "role": "Item count",
-            "token": "8 (fixed)",
-            "values": []
-          },
-          {
-            "role": "Corner radius",
-            "token": "6px",
-            "values": []
-          },
-          {
-            "role": "Item padding",
-            "token": "16px vertical, 12px left, 16px right",
-            "values": []
-          },
-          {
-            "role": "Item gap",
-            "token": "space-8 (0px effective)",
-            "values": []
-          },
-          {
-            "role": "Row divider",
-            "token": "1px bottom border per row",
-            "values": []
-          },
-          {
-            "role": "Shadow offset",
-            "token": "0 6px (x y)",
-            "values": []
-          },
-          {
-            "role": "Shadow blur",
-            "token": "12px",
-            "values": []
-          },
-          {
-            "role": "Shadow spread",
-            "token": "-8px",
-            "values": []
-          }
-        ]
-      },
-      {
-        "title": "Typography",
-        "columns": [
-          "Font",
-          "Size",
-          "Tracking",
-          "Line-height"
-        ],
-        "rows": [
-          {
-            "role": "Dropdown item label",
-            "token": "Primary/Label/Light/Large",
-            "values": [
-              "Proxima Soft Semibold",
-              "18px",
-              "0.25px",
-              "18px"
-            ]
-          }
-        ]
+        "swift": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>\n    borderType<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.middleInset</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.compact</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>options<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>$0<span class=\"syn-punc\">.</span>label<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>\n    borderType <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBorderType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">MiddleInset</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Compact</span>\n<span class=\"syn-punc\">) {</span>\n    options<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>it<span class=\"syn-punc\">.</span>label<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">}</span>"
       }
     ]
   },
   "code": {
     "installation": {
-      "planned": false,
-      "blocks": []
-    },
-    "propertyMapping": {
-      "rows": [
+      "planned": true,
+      "blocks": [
         {
-          "figma": "(no properties)",
-          "swift": "Menu / View ZStack",
-          "compose": "DropdownMenu"
+          "label": "Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
-          "figma": "Width 366px",
-          "swift": "—",
-          "compose": "—"
-        },
-        {
-          "figma": "Item count 8",
-          "swift": "ForEach(items)",
-          "compose": "items.forEach"
+          "label": "Gradle",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
         }
       ],
-      "filePaths": {
-        "swift": "ios/Components/Dropdown/EBDropdownMenu.swift",
-        "compose": "android/components/dropdown/EBDropdownMenu.kt"
-      }
+      "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
     },
-    "usageSnippets": [],
+    "propertyMapping": {
+      "description": "Figma properties mapped to the intended native parameters. Both properties are variants of the slot's default content in Figma but genuine list-level parameters in code — the divergence is deliberate and documented.",
+      "rows": [
+        { "figma": "BorderType", "swift": "borderType: EBBorderType", "compose": "borderType: EBBorderType" },
+        { "figma": "Density", "swift": "density: EBDensity", "compose": "density: EBDensity" },
+        { "figma": "⤷ SelectionSlot", "swift": "@ViewBuilder content: () -> Content", "compose": "content: @Composable ColumnScope.() -> Unit" },
+        { "figma": "Label (hidden)", "swift": "header: String?", "compose": "header: String?" },
+        { "figma": "Scrollbar", "swift": "— platform draws its own", "compose": "— platform draws its own" }
+      ]
+    },
+    "usageSnippets": [
+      {
+        "subheading": "Inset dividers (default)",
+        "swift": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>borderType<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.middleInset</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>accounts<span class=\"syn-punc\">) {</span> account <span class=\"syn-kw\">in</span>\n        <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>account<span class=\"syn-punc\">.</span>name<span class=\"syn-punc\">,</span> isSelected<span class=\"syn-punc\">:</span> account <span class=\"syn-eq\">==</span> selected<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>borderType <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBorderType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">MiddleInset</span><span class=\"syn-punc\">) {</span>\n    accounts<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span>\n        <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>it<span class=\"syn-punc\">.</span>name<span class=\"syn-punc\">,</span> selected <span class=\"syn-eq\">=</span> it <span class=\"syn-eq\">==</span> selected<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>"
+      },
+      {
+        "subheading": "No dividers, comfortable rows",
+        "swift": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>borderType<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.none</span><span class=\"syn-punc\">,</span> density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.comfortable</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>countries<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>$0<span class=\"syn-punc\">.</span>name<span class=\"syn-punc\">,</span> leading<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.flag</span><span class=\"syn-punc\">(</span>$0<span class=\"syn-punc\">.</span>code<span class=\"syn-punc\">)) }</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>\n    borderType <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBorderType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">None</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Comfortable</span>\n<span class=\"syn-punc\">) {</span> countries<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>it<span class=\"syn-punc\">.</span>name<span class=\"syn-punc\">) } }</span>"
+      },
+      {
+        "subheading": "With a subsection header",
+        "swift": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>header<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Recent\"</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>recent<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>$0<span class=\"syn-punc\">.</span>label<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>header <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Recent\"</span><span class=\"syn-punc\">) {</span>\n    recent<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>it<span class=\"syn-punc\">.</span>label<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">}</span>"
+      }
+    ],
     "accessibility": [
       {
-        "requirement": "Menu role",
-        "ios": "Automatic via <code>Menu</code>",
-        "android": "Automatic via <code>DropdownMenu</code> (<code>Role.DropdownList</code>)"
+        "requirement": "Exposed as a list of options",
+        "ios": "<code>.accessibilityElement(children: .contain)</code> with a radio-group trait",
+        "android": "<code>Modifier.selectableGroup()</code> on the column"
       },
       {
-        "requirement": "Focus trap",
-        "ios": "VoiceOver moves focus into the menu on open",
-        "android": "TalkBack moves focus into the menu on open"
+        "requirement": "Announced when it opens",
+        "ios": "Focus moves into the list; the Select's label carries the context",
+        "android": "<code>paneTitle</code> on the popup"
       },
       {
-        "requirement": "Dismiss on outside tap",
-        "ios": "Automatic",
-        "android": "<code>onDismissRequest</code>"
+        "requirement": "Dividers are decorative",
+        "ios": "<code>.accessibilityHidden(true)</code>",
+        "android": "<code>contentDescription = null</code>"
       },
       {
-        "requirement": "Max visible items",
-        "ios": "Native scroll when exceeded",
-        "android": "Native scroll when exceeded"
+        "requirement": "Subsection header reads as a heading",
+        "ios": "<code>.accessibilityAddTraits(.isHeader)</code> when the Label is shown",
+        "android": "<code>Modifier.semantics { heading() }</code>"
+      },
+      {
+        "requirement": "Long lists stay reachable",
+        "ios": "Scrolls to the selected row when opened",
+        "android": "Same — the selected row is brought into view"
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Render the menu surface through SwiftUI's Menu or Compose's DropdownMenu. Let the platform handle shadow, clipping, positioning, and keyboard dismissal.",
-        "dontText": "Don't hand-draw a shadowed card and place items inside it. You'll reimplement focus management, scroll clipping, and accessibility semantics that the platform gives you for free."
+        "doText": "Let the group own the dividers between rows.",
+        "dontText": "Don't add dividers inside a Select Item — BorderType already places them."
       },
       {
-        "doText": "Keep Dropdown Item as the per-row component. Use it inside the native menu's builder closure (SwiftUI) or inside DropdownMenuItem's text slot (Compose).",
-        "dontText": "Don't use this Figma component as a layout reference for production — the fixed 8-row, 366px-wide, detached-last-row structure won't match real menu content."
+        "doText": "Re-apply density when you replace the slot's contents.",
+        "dontText": "Don't assume swapped-in rows inherit the group's density — they don't, in Figma."
+      },
+      {
+        "doText": "Use None when the rows already read as separate cards.",
+        "dontText": "Don't stack dividers against a row that draws its own border."
+      },
+      {
+        "doText": "Show the Label when a list has genuine sections.",
+        "dontText": "Don't use it as a title for the whole menu — that belongs on the Select."
       }
     ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Fixed 8-item layout with no slot. Last row is a detached frame (<code>6383:3442</code>), not a DropdownItem instance. Component name uses irregular \" - \" separator."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The vestigial <code>Dropdown Item - Last</code> and the five hidden 366px leftovers are both gone. The hidden Label is confirmed as an intentional subsection header."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "No variant properties exist. Component name <code>Dropdown Item - Group</code> is irregular; prefer <code>Dropdown Menu</code>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>BorderType = MiddleInset | FullWidth | None</code> after the typo fix and the joining, and the slot is <code>⤷ SelectionSlot</code>."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "All colors, radius, spacing, and shadow values bound to tokens (<code>bg/color-bg-main</code>, <code>elevation/app/shadow/*</code>, <code>space/space-*</code>)."
+        "notes": "The card fill, hairline and divider resolve to library variables. Names need a Dev Mode read before they can be printed."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Popover surface is rendered by <code>Menu</code> / <code>DropdownMenu</code> natively. No 1:1 component to map to."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "A card wrapping a list maps directly. The one divergence — properties shaping default content rather than applying to the slot — is a Figma limit, documented rather than worked around."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Surface has no interactive states of its own. Per-item states live on Dropdown Item."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "The surface has no states of its own. Pressed and selected belong to the rows inside it."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "No icons or raster assets. Pure layout + shadow."
+        "notes": "No artwork of its own. The Scrollbar is a hand-drawn rectangle, hidden and confirmed intentional."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "na",
-        "statusLabel": "Not Applicable",
-        "notes": "No native component to map to. Consolidate into Dropdown instead."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Blocked — the native library does not exist yet."
       }
     ],
     "codeConnect": [
       {
         "aspect": "Property naming",
-        "status": "na",
-        "statusLabel": "Not Applicable",
-        "notes": "No properties exist on the component."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>BorderType</code>, <code>Density</code> and <code>⤷ SelectionSlot</code> map one to one now the values are joined."
       },
       {
-        "aspect": "Slot coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No items slot — blocks any meaningful mapping."
+        "aspect": "Token coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Bindings are in place; only the human-readable names are outstanding."
       },
       {
-        "aspect": "Native component file",
-        "status": "na",
-        "statusLabel": "Not Applicable",
-        "notes": "Handled by <code>Menu</code>/<code>DropdownMenu</code>. No dedicated EB component required."
-      },
-      {
-        "aspect": "Recommendation",
+        "aspect": "Registration",
         "status": "empty",
-        "statusLabel": "Consolidate",
-        "notes": "Fold into Dropdown's Expanded variant or convert to a slot-based Dropdown Menu before mapping."
+        "statusLabel": "Not Mapped",
+        "notes": "Blocked until the native library exists."
       }
     ],
     "variants": {
-      "total": 1,
-      "description": "Single variant, no property axes.",
-      "columns": [
-        "Variant",
-        "Width",
-        "Item Count",
-        "Node ID"
-      ],
+      "total": 9,
+      "description": "3 BorderType × 3 Density = 9. Row count is not an axis — the slot ships seven and takes whatever replaces them.",
+      "columns": ["BorderType", "Density", "Row height", "Card height", "Node"],
       "rows": [
-        {
-          "cells": [
-            "Default",
-            "366px",
-            "8 (7 instances + 1 detached frame)",
-            "6383:3446"
-          ]
-        }
+        { "cells": ["MiddleInset", "Compact", "40", "312", "7947:111631"] },
+        { "cells": ["FullWidth", "Compact", "40", "312", "7947:111659"] },
+        { "cells": ["None", "Compact", "40", "288", "7947:111687"] },
+        { "cells": ["MiddleInset", "Default", "48", "368", "7947:111709"] },
+        { "cells": ["FullWidth", "Default", "48", "368", "7947:111737"] },
+        { "cells": ["None", "Default", "48", "344", "7947:111765"] },
+        { "cells": ["MiddleInset", "Comfortable", "56", "424", "7947:111787"] },
+        { "cells": ["FullWidth", "Comfortable", "56", "424", "7947:111815"] },
+        { "cells": ["None", "Comfortable", "56", "400", "7947:111843"] }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "August 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Slot rebuild + reassessment on the 2026 Working File · node 7947:111630",
+      "rows": [
+        {
+          "body": "<strong>Covers two changes at once.</strong> The slot rebuild that turned this from a hardcoded preview artifact into a real container — and withdrew a Consolidate verdict — was described in the component's verdict but never given a changelog entry of its own. This version records it alongside the cleanup that followed.",
+          "delta": { "kind": "resolved", "label": "Rebuilt" }
+        },
+        {
+          "body": "<strong>The <code>MIddle Inset</code> typo is gone</strong> — the property and its values are now joined as <code>BorderType = MiddleInset | FullWidth | None</code>.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "<strong>The vestigial <code>Dropdown Item - Last</code> is gone.</strong> Its master and instance had disagreed since the Dropdown to Select rename; the last row is now simply <code>Select Item</code>, with six dividers between seven rows and none trailing.",
+          "delta": { "kind": "resolved", "label": "C1 resolved" }
+        },
+        {
+          "body": "<strong>Five hidden 366px leftovers removed</strong> — stale Select Item instances stacked at one coordinate inside the slot, invisible but shipping in every variant.",
+          "delta": { "kind": "resolved", "label": "C1 resolved" }
+        },
+        {
+          "body": "<code>Slot</code> renamed to <code>⤷ SelectionSlot</code>, so the name says what belongs in it rather than only marking it as a slot.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "The Scrollbar frame kept, confirmed as an intentional design-time affordance with no native counterpart. The hidden <code>Label</code> confirmed as a subsection header for grouped lists.",
+          "delta": { "kind": "resolved", "label": "C4 resolved" }
+        },
+        {
+          "body": "Both properties documented as shaping the slot's <em>default content</em> rather than applying to substituted content — a Figma limit, already instructed to designers, and a genuine divergence from the native contract where both are list-level.",
+          "delta": { "kind": "resolved", "label": "C4 resolved" }
+        },
+        {
+          "body": "Node moved from <code>25783:1255</code> (Sticker Sheets v2) to <code>7947:111630</code> (2026 Working File), and <code>navGroup</code> changed from Dropdown to Select.",
+          "delta": { "kind": "resolved", "label": "Rebuilt" }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",
