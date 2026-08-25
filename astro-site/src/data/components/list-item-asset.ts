@@ -46,7 +46,7 @@ export const listItemAsset: ComponentData = {
     "verdict": {
       "kind": "keep",
       "title": "Keep — the flatten-and-slot restructure the first assessment asked for has landed",
-      "text": "The April assessment found three entangled axes — <code>type</code> × <code>indicator</code> × <code>state</code>, 72 theoretical combinations for about ten valid ones — and asked for a single semantic enum plus a real Figma Slot in place of the custom placeholder. The 2026 rebuild is exactly that: one <code>Type</code> axis with eight values and a working <code>⤷ IconSlot</code>. This pass closed the naming that was left: the spaces came out of the multi-word values, the bullet became a real ellipse instead of a rounded rectangle, and the numbered text layer got a name instead of being called after its own content. Nothing is outstanding."
+      "text": "The April assessment found three entangled axes — <code>type</code> × <code>indicator</code> × <code>state</code>, 72 theoretical combinations for about ten valid ones — and asked for a single semantic enum plus a real Figma Slot in place of the custom placeholder. The 2026 rebuild is exactly that: one <code>Type</code> axis with eight values and a working <code>⤷ IconSlot</code>. This pass closed the naming that was left: the spaces came out of the multi-word values, the bullet became a real ellipse instead of a rounded rectangle, and the numbered text layer got a name instead of being called after its own content. Nothing is outstanding on the component itself; Code Connect stays open because the native library does not exist yet."
     }
   },
   "overview": {
@@ -222,7 +222,16 @@ export const listItemAsset: ComponentData = {
         }
       }
     ],
-    "open": [],
+    "open": [
+      {
+        "headline": "Code Connect mappings not registered.",
+        "body": "Blocked — the native library does not exist yet, so there is nothing to map onto. The component side is ready: <code>Type</code>, <code>#number</code> and <code>⤷ IconSlot</code> all map one to one now the spaces are out of the multi-word values.",
+        "tag": {
+          "criterion": "C7",
+          "label": "C7 · Code Connect Linkability"
+        }
+      }
+    ],
     "recommendations": [
       {
         "headline": "Write down that markers are not mixed within a list.",

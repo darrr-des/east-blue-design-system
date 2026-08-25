@@ -70,7 +70,7 @@ export const listItem: ComponentData = {
     "verdict": {
       "kind": "keep",
       "title": "Keep — composes the primitive properly and fills its container",
-      "text": "The April assessment left three recommendations here. Two were taken directly: <code>level</code> became <code>ListLevel</code>, and the trailing slot that was only a suggestion now exists as <code>⤷ TrailingSlot</code> behind a <code>hasTrailing</code> boolean. The third asked for the leading asset to become a Figma Slot; the rebuild kept it as a <a href=\"/components/list-item-asset\">List Item - Asset</a> instance instead, which reaches the same place by a better route — that component now carries its own <code>Type=Slot</code>, so arbitrary 16 × 16 content already has a way in without loosening this row to accept anything. This pass set <code>#label</code> to fill and closed the space in <code>TrailingContainer</code>. Nothing is outstanding."
+      "text": "The April assessment left three recommendations here. Two were taken directly: <code>level</code> became <code>ListLevel</code>, and the trailing slot that was only a suggestion now exists as <code>⤷ TrailingSlot</code> behind a <code>hasTrailing</code> boolean. The third asked for the leading asset to become a Figma Slot; the rebuild kept it as a <a href=\"/components/list-item-asset\">List Item - Asset</a> instance instead, which reaches the same place by a better route — that component now carries its own <code>Type=Slot</code>, so arbitrary 16 × 16 content already has a way in without loosening this row to accept anything. This pass set <code>#label</code> to fill and closed the space in <code>TrailingContainer</code>. Nothing is outstanding on the component itself; Code Connect stays open because the native library does not exist yet."
     }
   },
   "overview": {
@@ -200,7 +200,16 @@ export const listItem: ComponentData = {
         }
       }
     ],
-    "open": [],
+    "open": [
+      {
+        "headline": "Code Connect mappings not registered.",
+        "body": "Blocked — the native library does not exist yet, so there is nothing to map onto. The component side is ready: <code>ListLevel</code>, <code>hasTrailing</code>, <code>#label</code> and <code>⤷ TrailingSlot</code> all map one to one with no rename at the boundary.",
+        "tag": {
+          "criterion": "C7",
+          "label": "C7 · Code Connect Linkability"
+        }
+      }
+    ],
     "recommendations": [
       {
         "headline": "The leading column is not pinned, which is what makes mixed markers break.",
