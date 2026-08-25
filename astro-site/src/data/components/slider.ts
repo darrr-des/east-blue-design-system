@@ -220,7 +220,16 @@ export const slider: ComponentData = {
         }
       }
     ],
-    "open": [],
+    "open": [
+      {
+        "headline": "Code Connect mappings not registered.",
+        "body": "Blocked — the native library does not exist yet, so there is nothing to map onto. The component side is ready: <code>State</code>, <code>hasTooltip</code> and <code>#percentage</code> all map one to one, and <code>DraggableFill</code> maps to the active track.",
+        "tag": {
+          "criterion": "C7",
+          "label": "C7 · Code Connect Linkability"
+        }
+      }
+    ],
     "recommendations": [
       {
         "headline": "Give the disabled knob a treatment.",
