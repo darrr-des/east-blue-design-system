@@ -19,9 +19,9 @@ export const list: ComponentData = {
     ],
     "navGroup": "List",
     "verdict": {
-      "kind": "fix",
-      "title": "Remove or restructure",
-      "text": "List today is a frame of 8 hardcoded List Item instances — not a reusable component. Two paths forward: (1) remove it from the sticker sheet and keep List Item as the published atom; (2) restructure into a real container that accepts a collection of items (same approach proposed for Tabs)."
+      "kind": "remove",
+      "title": "Removed — List Item is the published atom",
+      "text": "The April assessment offered two paths: remove List from the sticker sheet and publish <a href=\"/components/list-item\">List Item</a> as the atom, or restructure it into a real container that accepts a collection of items. The first was taken, and List is gone from the 2026 rebuild. Consumers stack List Items themselves with auto layout, the same way a plain text list is built. What remains of the family is <a href=\"/components/list-item\">List Item</a> and <a href=\"/components/list-item-asset\">List Item - Asset</a>. Kept as a record of the assessment that drove the removal."
     }
   },
   "overview": {
@@ -49,33 +49,8 @@ export const list: ComponentData = {
     ],
     "behavior": [],
     "resolved": [],
-    "open": [
-      {
-        "headline": "Not a real component.",
-        "body": "List today is a frame with 8 hardcoded List Item instances — no property set, no variants, no slots. Consumers can't populate it with their own items without detaching and rebuilding from the List Item atom.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      }
-    ],
-    "recommendations": [
-      {
-        "headline": "Remove List from the sticker sheet.",
-        "body": "Publish List Item (and List Item Asset) as the shipped components. Consumers stack List Items themselves using auto-layout — same pattern as plain text lists. Keeps the sticker sheet focused on reusable atoms.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Or restructure into a real container.",
-        "body": "Expose a single flexible List component with auto-layout that accepts a collection of List Items (same approach proposed for Tabs dropping <code>tabsCount</code>). Native maps to <code>ForEach</code> / <code>LazyColumn</code>. Provides a documented home for list-level concerns like spacing, dividers, or separators.",
-        "tag": "Property"
-      },
-      {
-        "headline": "If restructuring",
-        "body": ", consider adding list-level props for spacing (<code>gap=8/12/16</code>) and an optional divider between items. These are the decisions that logically belong to a container, not an item.",
-        "tag": "Property"
-      }
-    ],
+    "open": [],
+    "recommendations": [],
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"list-demo-preview\"><div style=\"display:flex;flex-direction:column;gap:8px;max-width:310px;\"><div style=\"display:flex;gap:8px;align-items:flex-start;padding-left:0px;\"><div style=\"padding-top:2px;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"><circle cx=\"8\" cy=\"8\" r=\"2.5\" fill=\"#90A8D0\"></circle></svg></div><div style=\"color:#445C85;font-family:'BarkAda', system-ui;font-weight:600;font-size:14px;line-height:20px;\">List body with level-1 style</div></div><div style=\"display:flex;gap:8px;align-items:flex-start;padding-left:0px;\"><div style=\"padding-top:2px;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"><circle cx=\"8\" cy=\"8\" r=\"2.5\" fill=\"#90A8D0\"></circle></svg></div><div style=\"color:#445C85;font-family:'BarkAda', system-ui;font-weight:600;font-size:14px;line-height:20px;\">List body with level-1 style</div></div><div style=\"display:flex;gap:8px;align-items:flex-start;padding-left:16px;\"><div style=\"padding-top:2px;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"><circle cx=\"8\" cy=\"8\" r=\"2.5\" fill=\"#90A8D0\"></circle></svg></div><div style=\"color:#445C85;font-family:'BarkAda', system-ui;font-weight:600;font-size:14px;line-height:20px;\">List body with level-2 style</div></div><div style=\"display:flex;gap:8px;align-items:flex-start;padding-left:32px;\"><div style=\"padding-top:2px;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"><circle cx=\"8\" cy=\"8\" r=\"2.5\" fill=\"#90A8D0\"></circle></svg></div><div style=\"color:#445C85;font-family:'BarkAda', system-ui;font-weight:600;font-size:14px;line-height:20px;\">List body with level-3 style</div></div><div style=\"display:flex;gap:8px;align-items:flex-start;padding-left:0px;\"><div style=\"padding-top:2px;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"><circle cx=\"8\" cy=\"8\" r=\"2.5\" fill=\"#90A8D0\"></circle></svg></div><div style=\"color:#445C85;font-family:'BarkAda', system-ui;font-weight:600;font-size:14px;line-height:20px;\">List body with level-1 style</div></div><div style=\"display:flex;gap:8px;align-items:flex-start;padding-left:0px;\"><div style=\"padding-top:2px;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"><circle cx=\"8\" cy=\"8\" r=\"2.5\" fill=\"#90A8D0\"></circle></svg></div><div style=\"color:#445C85;font-family:'BarkAda', system-ui;font-weight:600;font-size:14px;line-height:20px;\">List body with level-1 style</div></div><div style=\"display:flex;gap:8px;align-items:flex-start;padding-left:0px;\"><div style=\"padding-top:2px;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"><circle cx=\"8\" cy=\"8\" r=\"2.5\" fill=\"#90A8D0\"></circle></svg></div><div style=\"color:#445C85;font-family:'BarkAda', system-ui;font-weight:600;font-size:14px;line-height:20px;\">List body with level-1 style</div></div></div></div></div>"
   },
   "style": {
@@ -198,6 +173,27 @@ export const list: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "August 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Removed from the 2026 rebuild",
+      "rows": [
+        {
+          "body": "<strong>List removed.</strong> The April assessment gave two paths — remove it and publish List Item as the atom, or restructure it into a real container. The first was taken.",
+          "delta": { "kind": "resolved", "label": "Removed" }
+        },
+        {
+          "body": "<a href=\"/components/list-item\">List Item</a> and <a href=\"/components/list-item-asset\">List Item - Asset</a> are the family. Both were reassessed against the 2026 Working File and both came back Keep.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "List-level concerns — spacing between rows, dividers — sit with whatever composes the rows, since there is no container component to own them.",
+          "delta": { "kind": "resolved", "label": "Documented" }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",
