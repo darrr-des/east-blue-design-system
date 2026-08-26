@@ -3410,151 +3410,125 @@ input.demo-panel-input.demo-panel-select,
   box-shadow: 0 1px 0 rgba(10, 23, 87, 0.02);
 }
 
-/* =============================================================== */
-/* Alert — node 18444:2012                                          */
-/* Two layout flavors share one component today:                   */
-/* • Banner (fullWidth=yes) — flat, 12 px vertical padding, shadow */
-/* • Card (fullWidth=no)    — left-border accent, bigger padding,  */
-/*   always ships with right icon + Learn More action              */
-/* =============================================================== */
+/* ═════════════════════════════════════════════════════════════════════
+   ALERT — live preview primitives · node 6627:102953
+   Type(5) × Style(2) × Content(3) = 30 variants, 360 wide.
+   Replaces the pre-v2.0 block, which was still modelling the old
+   `fullWidth` boolean that Style=Card|Banner superseded.
+
+   Card   — tinted fill + a stroke in the accent colour, radius 4
+   Banner — the same tinted fill + a 6px left bar, no stroke
+   Both draw their intent from the same accent, which is why the two
+   styles read as one family.
+   ═════════════════════════════════════════════════════════════════════ */
+
 .eb-preview-alert {
+  --alert-fill: #F6F9FD;
+  --alert-accent: #D7E0EF;
+  position: relative;
   box-sizing: border-box;
   width: 360px;
   max-width: 100%;
-  display: flex;
-  gap: 8px;
-  border-radius: 4px;
-  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--alert-fill);
+  font-family: inherit;
+  overflow: hidden;
 }
-.eb-preview-alert--banner {
-  padding: 12px 16px;
-  align-items: center;
-  box-shadow: 0 1px 3px 0 rgba(232, 238, 242, 0.79);
-}
+/* Neutral is what the root already sets — stated so every class the
+   markup emits resolves to a rule rather than to nothing. */
+.eb-preview-alert--neutral     { --alert-fill: #F6F9FD; --alert-accent: #D7E0EF; }
+.eb-preview-alert--information { --alert-fill: #E5F1FF; --alert-accent: #005CE5; }
+.eb-preview-alert--warning     { --alert-fill: #FFF9EB; --alert-accent: #EBB30A; }
+.eb-preview-alert--error       { --alert-fill: #F8E6E6; --alert-accent: #D61B2C; }
+.eb-preview-alert--success     { --alert-fill: #E7F8F0; --alert-accent: #27C990; }
+
 .eb-preview-alert--card {
-  padding: 4px 16px 16px 20px;
-  border-left: 6px solid var(--alert-border, transparent);
-  align-items: flex-start;
+  border: 1px solid var(--alert-accent);
+  border-radius: 4px;
+}
+/* The Banner's accent is a 6px bar rather than a stroke. */
+.eb-preview-alert--banner::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: var(--alert-accent);
 }
 
-/* Color variants — each sets bg + CSS custom props for inner elements */
-.eb-preview-alert--neutral {
-  background: #F6F9FD;
-  --alert-title: #0A2757;
-  --alert-desc: #6780A9;
-  --alert-icon: #0A2757;
-  --alert-link: #0A2757;
-  --alert-border: transparent;
-}
-.eb-preview-alert--information {
-  background: #E5F1FF;
-  --alert-title: #072592;
-  --alert-desc: #072592;
-  --alert-icon: #2340A9;
-  --alert-link: #072592;
-  --alert-border: #005CE5;
-}
-.eb-preview-alert--warning {
-  background: #FFF9EB;
-  --alert-title: #6C5009;
-  --alert-desc: #966F0B;
-  --alert-icon: #966F0B;
-  --alert-link: #966F0B;
-  --alert-border: #EBB30A;
-}
-.eb-preview-alert--error {
-  background: #F8E6E6;
-  --alert-title: #D61B2C;
-  --alert-desc: #D61B2C;
-  --alert-icon: #B50707;
-  --alert-link: #D61B2C;
-  --alert-border: #D61B2C;
-}
-.eb-preview-alert--success {
-  background: #E7F8F0;
-  --alert-title: #035E50;
-  --alert-desc: #035E50;
-  --alert-icon: #035E50;
-  --alert-link: #035E50;
-  --alert-border: #27C990;
-}
-
-/* Content column */
 .eb-preview-alert__content {
-  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 18px;
+}
+
+/* Both slots ship empty in all 30 variants — deliberately. Drawn as
+   their footprint so the space they reserve is visible. */
+.eb-preview-alert__leading,
+.eb-preview-alert__trailing {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border: 1px dashed var(--alert-accent);
+  border-radius: 99px;
+  opacity: 0.45;
+}
+.eb-preview-alert__trailing { border-radius: 4px; }
+
+.eb-preview-alert__body {
+  flex: 1 1 auto;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding-top: 2px;
+  gap: 4px;
 }
-.eb-preview-alert--card .eb-preview-alert__content { padding-top: 4px; }
+
 .eb-preview-alert__title {
-  color: var(--alert-title);
+  font-size: 18px;
   font-weight: 700;
+  line-height: 23px;
   letter-spacing: 0.25px;
-  margin: 0;
+  color: #0A2757;
 }
+/* Banner sets its title a step smaller — 16/20 against the card's 18/23. */
 .eb-preview-alert--banner .eb-preview-alert__title {
   font-size: 16px;
   line-height: 20px;
 }
-.eb-preview-alert--card .eb-preview-alert__title {
-  font-size: 18px;
-  line-height: 23px;
-  padding-top: 7px;
-}
+
+/* #445C85 clears AA on all five tints — 5.60:1 at worst, on Error. */
 .eb-preview-alert__desc {
-  color: var(--alert-desc);
-  font-family: "BarkAda", system-ui, sans-serif;
-  font-weight: 600;
   font-size: 12px;
+  font-weight: 600;
   line-height: 18px;
-  margin: 0;
-  opacity: 0.8;
-}
-.eb-preview-alert--neutral .eb-preview-alert__desc { opacity: 1; }
-
-/* Left-icon slot — today a placeholder circle (flagged as C6) */
-.eb-preview-alert__icon-left {
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  border-radius: 999px;
-  background: #C2C6CF;
+  letter-spacing: 0;
+  color: #445C85;
 }
 
-/* Right-icon slot — semantic status glyph */
-.eb-preview-alert__icon-right {
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  color: var(--alert-icon);
-}
-.eb-preview-alert--banner .eb-preview-alert__icon-right {
-  width: 24px;
-  height: 24px;
-}
+.eb-preview-alert--titleonly .eb-preview-alert__desc { display: none; }
+.eb-preview-alert--descriptiononly .eb-preview-alert__title { display: none; }
 
-/* Action (Learn More + chevron) — only in card variant */
 .eb-preview-alert__action {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
-  color: var(--alert-link);
-  font-family: "BarkAda", system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 18px;
-  margin-top: 8px;
-  padding-left: 3px;
-  opacity: 0.8;
+  gap: 4px;
+  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #005CE5;
 }
-.eb-preview-alert--neutral .eb-preview-alert__action { opacity: 1; }
 .eb-preview-alert__action-chevron {
-  width: 14px;
-  height: 14px;
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid #005CE5;
+  border-top: 2px solid #005CE5;
+  transform: rotate(45deg);
 }
+
+[data-theme="dark"] .eb-preview-alert__title { color: #E4EAF3; }
+[data-theme="dark"] .eb-preview-alert__desc { color: #C8CDD5; }
 
 /* =============================================================== */
 /* Counter — node 21:43333                                          */
