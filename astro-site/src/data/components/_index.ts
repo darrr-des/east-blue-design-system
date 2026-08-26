@@ -20,6 +20,8 @@ import { chatField } from './chat-field';
 import { checkbox } from './checkbox';
 import { chip } from './chip';
 import { counter } from './counter';
+import { countdownPromo } from './countdown-promo';
+import { countdownUnit } from './countdown-unit';
 import { countdown } from './countdown';
 import { datePickerCalendar } from './date-picker-calendar';
 import { datePickerHeaderTrigger } from './date-picker-header-trigger';
@@ -112,6 +114,8 @@ export const componentMap: Record<string, ComponentData> = {
   'checkbox': checkbox,
   'chip': chip,
   'counter': counter,
+  'countdown-promo': countdownPromo,
+  'countdown-unit': countdownUnit,
   'countdown': countdown,
   'date-picker-calendar': datePickerCalendar,
   'date-picker-header-trigger': datePickerHeaderTrigger,
