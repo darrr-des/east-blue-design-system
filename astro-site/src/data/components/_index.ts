@@ -51,6 +51,8 @@ import { listItem } from './list-item';
 import { list } from './list';
 import { menuGrid } from './menu-grid';
 import { modal } from './modal';
+import { modalTransactionReceiptEntry } from './modal-transaction-receipt-entry';
+import { modalTransactionReceipt } from './modal-transaction-receipt';
 import { monthYearPickerItem } from './month-year-picker-item';
 import { onboardingTooltip } from './onboarding-tooltip';
 import { overlay } from './overlay';
@@ -146,6 +148,8 @@ export const componentMap: Record<string, ComponentData> = {
   'list': list,
   'menu-grid': menuGrid,
   'modal': modal,
+  'modal-transaction-receipt': modalTransactionReceipt,
+  'modal-transaction-receipt-entry': modalTransactionReceiptEntry,
   'month-year-picker-item': monthYearPickerItem,
   'onboarding-tooltip': onboardingTooltip,
   'overlay': overlay,
