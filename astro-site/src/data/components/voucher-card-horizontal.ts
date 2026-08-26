@@ -40,20 +40,20 @@ export const voucherCardHorizontal: ComponentData = {
     "description": "A 336×111 horizontal voucher card with text content on the left and a perforated image frame on the right; ships in four state variants (limited, expiring, used, expired).",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "remove",
+        "label": "Remove"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "na",
+        "label": "Not Applicable"
       }
     ],
     "navGroup": "Voucher",
     "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <rect x=\"3\" y=\"10\" width=\"26\" height=\"12\" rx=\"1.5\" fill=\"#FFFFFF\" stroke=\"#C8CDD5\" stroke-width=\"1\"/>\n      <path d=\"M21 10h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-6V10Z\" fill=\"#005CE5\"/>\n      <circle cx=\"24.5\" cy=\"16\" r=\"2.2\" stroke=\"#FFFFFF\" stroke-width=\"1\" fill=\"none\"/>\n      <circle cx=\"24.5\" cy=\"16\" r=\"0.7\" fill=\"#FFFFFF\"/>\n      <rect x=\"20.6\" y=\"10\" width=\"0.8\" height=\"12\" fill=\"#E6EAF2\"/>\n      <rect x=\"5\" y=\"12\" width=\"12\" height=\"1.6\" rx=\"0.3\" fill=\"#0A2757\"/>\n      <rect x=\"5\" y=\"15\" width=\"8\" height=\"1.3\" rx=\"0.3\" fill=\"#2340A9\"/>\n      <rect x=\"5\" y=\"18.5\" width=\"10\" height=\"1\" rx=\"0.3\" fill=\"#445C85\"/>\n      <rect x=\"21\" y=\"10.5\" width=\"5\" height=\"2\" rx=\"0.3\" fill=\"#2340A9\"/>\n    </svg>",
     "verdict": {
-      "kind": "fix",
-      "title": "Merge the voucher-card family, port the state axis to the unified component",
-      "text": "Voucher Card Horizontal, Vertical Voucher (<code>5119:1635</code>), and Horizontal Voucher (<code>5121:4533</code>) are three parallel records of the same component. This one carries the canonical state coverage the others lack — <code>state: limited | expiring | used | expired</code>. The consolidation target is a single <code>Voucher Card</code> with <code>orientation: vertical | horizontal</code> × <code>state</code> (5 values if a <code>default</code> is added), text Slots for title / price / originalPrice / validity, a logo Slot for partner branding, and a composable badges array replacing the hardcoded state-to-badge mapping. Push the merge from here, not from the other siblings."
+      "kind": "remove",
+      "title": "Superseded by Voucher",
+      "text": "Superseded by <a href=\"/components/voucher\">Voucher</a>. This card, <a href=\"/components/horizontal-voucher\">Horizontal Voucher</a>, <a href=\"/components/vertical-voucher\">Vertical Voucher</a> and <a href=\"/components/voucher-asset\">Voucher Asset</a> all described the same object. They are now settings on one component at node <code>5372:38309</code> — <code>AssetSize</code>, <code>Orientation</code> and <code>State</code> — where the frozen strings became text layers and the badges became slots. Kept as a record of the assessment that drove the consolidation."
     }
   },
   "overview": {
@@ -171,132 +171,8 @@ export const voucherCardHorizontal: ComponentData = {
         }
       }
     ],
-    "open": [
-      {
-        "headline": "Three parallel components for one concept.",
-        "body": "Voucher Card Horizontal, Vertical Voucher (<code>5119:1635</code>), and Horizontal Voucher (<code>5121:4533</code>) are three separate records of the same component. This is a family-level consolidation — the unified <code>Voucher Card</code> needs <code>orientation: vertical | horizontal</code> × <code>state: default | limited | expiring | used | expired</code> = 10 variants, not three divergent symbols.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "All text content is hardcoded.",
-        "body": "Title \"Buy Load Globe Go90\", price \"PHP 50.00\", original price \"PHP 90.00\", and validity \"Validity: Dec 25 2022 - Jan 5 2023\" are frozen strings inside every variant. Booleans <code>badge</code> and <code>crossedValue</code> only toggle visibility — they do not accept content. Consumers cannot render a real voucher without detaching.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Badge text is state-derived, not independently settable.",
-        "body": "The corner ribbon label flips between \"Limited\" / \"Expiring\" / \"Used\" / \"Expired\" based on the <code>state</code> enum. A consumer who wants to show \"New\" or \"Featured\" on a limited voucher cannot — state and badge label are conflated. Split into <code>state</code> (drives visual treatment) + <code>badge</code> (independent Slot/string).",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Partner logo is a raster GCash asset with no slot.",
-        "body": "<code>imgLogoNoText</code>, <code>imgGCashLogosV2RgbIconBwWhiteTransparent</code>, and <code>imgVoucherImageV1</code> are raster image fills inside the 96×111 partner-image frame. Vouchers for Globe, Smart, GrabFood, or Shopee all render with the GCash logo. No logo Slot exists.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "Duplicated partner-image subtrees per state.",
-        "body": "<code>voucher</code> (used by limited/expiring) and <code>Voucher Image V1</code> (used by used/expired) are two complete parallel subtrees inside the same frame — differing only by background fill (<code>bg/color-bg-primary</code> vs <code>bg/color-bg-overlay-weak</code>). Should be a single subtree with state-driven tokens.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "\"GET VOUCHER\" rotated text is not a Button.",
-        "body": "The CTA label is a rotated <code>&lt;p&gt;</code> inside the partner-image frame — not a Button instance, no pressed/focused/disabled state, no onTap handler semantics. If tapping the partner half is supposed to redeem the voucher, that needs to be an actual Button or the whole card needs to be the tap target.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Perforated ticket edge is a raster mask.",
-        "body": "<code>imgPerforate</code> is a raster image used as a mask to produce the perforated dashed edge between the content block and partner frame. Should be a vector path or an SVG mask; at 1× / 2× / 3× the raster will alias.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "No default (neutral) state.",
-        "body": "Every variant renders a corner badge. A voucher that is simply available (neither limited nor expiring) has no option to render without a badge beyond setting <code>badge=false</code>, which drops the callout but keeps the limited-state visual treatment. Add a <code>default</code> state for active-but-unflagged vouchers.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Two-boolean + 4-enum surface cannot map 1:1 to native.",
-        "body": "A proper <code>EBVoucherCard(orientation:, state:, title:, price:, originalPrice:, validity:, logo:, badge:, onTap:)</code> shape has no 1:1 correspondence in the current component — title/price/originalPrice/validity/logo are all hardcoded. Code Connect linkability requires the family consolidation and property-ification first.",
-        "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
-        }
-      }
-    ],
-    "recommendations": [
-      {
-        "headline": "Merge the three voucher cards into a single Voucher Card component.",
-        "body": "Vertical Voucher + Horizontal Voucher + Voucher Card Horizontal collapse into one component with <code>orientation: vertical | horizontal</code> × <code>state: default | limited | expiring | used | expired</code> = 10 variants. Port <em>this</em> component's state axis to the unified schema; port Vertical Voucher's content-block structure; drop Horizontal Voucher entirely.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Promote every text string to a property.",
-        "body": "Add <code>title: String</code>, <code>price: String</code>, <code>originalPrice: String?</code>, <code>validity: String?</code>. Retire the <code>crossedValue</code> boolean — visibility falls out of whether <code>originalPrice</code> is set. Keep the text-style bindings intact.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Split <code>state</code> (visual treatment) from <code>badge</code> (label).",
-        "body": "Keep <code>state</code> as the 5-value enum that drives bg / label colors / partner-image treatment. Expose <code>badge: EBBadge?</code> as an independent Slot so consumers can pick any badge style and text (\"New\", \"Featured\", \"Limited\", custom). The current state-to-badge-text mapping becomes the <em>default</em> badge when none is supplied.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Adopt a Figma Slot for the partner logo.",
-        "body": "Replace the raster GCash asset with a 64×64 logo Slot inside the partner-image frame. Consumers instance-swap partner brand marks (Globe, Smart, GrabFood, Shopee, etc.) without detaching. Keep the perforated ticket shape and overlay treatment in the frame itself.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Collapse the two partner-image subtrees into one.",
-        "body": "<code>voucher</code> (limited/expiring) and <code>Voucher Image V1</code> (used/expired) are duplicate layer trees differing only by background token. A single subtree gated by state-driven fills (<code>main/vouchers/color/{state}/partner-bg</code>) removes the duplication.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Add a <code>default</code> state.",
-        "body": "Current states are all \"flagged\" — active-but-unflagged vouchers have no clean render. Add <code>state: default</code> with the active (non-greyed) treatment and no corner badge by default.",
-        "tag": "State"
-      },
-      {
-        "headline": "Replace the perforated raster mask with a vector path.",
-        "body": "The perforated ticket edge should be an SVG path or a vector mask — not a raster image. Same treatment as recommended for Voucher Asset.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Make the card the tap target; remove the rotated \"GET VOUCHER\" text as a faux-button.",
-        "body": "The entire card is the semantic action (\"redeem / open voucher details\"). Document the handoff as <code>onTap</code>; keep \"GET VOUCHER\" only as a decorative label if product still wants it visible, or drop it entirely.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Add pressed / focused / disabled to the card frame.",
-        "body": "Vouchers are always tappable — the unified Voucher Card needs a pressed state variant (e.g. opacity 0.8 or scale 0.98), a focused state for keyboard navigation, and a disabled treatment for unavailable vouchers distinct from <code>expired</code>.",
-        "tag": "State"
-      },
-      {
-        "headline": "Rename the duplicated <code>Badge</code> layers per state.",
-        "body": "All four badge layers are named <code>Badge</code> with no variant-qualifying name. After the family merge, there should be a single <code>badge-slot</code> layer; until then, name them <code>badge-limited</code> / <code>badge-expiring</code> / <code>badge-used</code> / <code>badge-expired</code> for clarity.",
-        "tag": "Rename"
-      }
-    ],
+    "open": [],
+    "recommendations": [],
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"vch-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" id=\"vch-ctrl-state\" onchange=\"_vchDemoUpdate()\"><option value=\"limited\" selected=\"\">Limited</option><option value=\"expiring\">Expiring</option><option value=\"used\">Used</option><option value=\"expired\">Expired</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Badge</span><select class=\"demo-panel-select\" id=\"vch-ctrl-badge\" onchange=\"_vchDemoUpdate()\"><option value=\"yes\" selected=\"\">Yes</option><option value=\"no\">No</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Original price</span><select class=\"demo-panel-select\" id=\"vch-ctrl-original\" onchange=\"_vchDemoUpdate()\"><option value=\"yes\" selected=\"\">Yes</option><option value=\"no\">No</option></select></div></div></div></div>"
   },
   "style": {

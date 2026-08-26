@@ -785,7 +785,7 @@ export const inlineText: ComponentData = {
         {
           "figma": "<code>type=with Badge</code>",
           "swift": "<code>trailing = .badge(Badge)</code> (instance)",
-          "compose": "同上"
+          "compose": "<code>trailing: EBInlineTextTrailing</code>"
         },
         {
           "figma": "<code>type=with Clipboard</code>",
