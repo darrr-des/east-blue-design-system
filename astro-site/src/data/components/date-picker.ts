@@ -1,609 +1,278 @@
 import type { ComponentData, DemoControlSection } from '../types';
 
-const datePickerDemoControls: DemoControlSection[] = [
+const fieldControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
         label: 'State',
         prop: 'state',
-        defaultValue: 'Default',
+        defaultValue: 'default',
         options: [
-          { value: 'Default', label: 'Default' },
-          { value: 'Active', label: 'Active' },
-        ],
+          { value: 'default', label: 'Default' },
+          { value: 'pressed', label: 'Pressed' },
+          { value: 'disabled', label: 'Disabled' },
+          { value: 'error', label: 'Error' }
+        ]
       },
       {
-        label: 'Filled',
+        label: 'isFilled',
         prop: 'filled',
         defaultValue: 'false',
         options: [
           { value: 'false', label: 'false' },
-          { value: 'true', label: 'true' },
-        ],
-      },
-      {
-        label: 'Disabled',
-        prop: 'disabled',
-        defaultValue: 'No',
-        options: [
-          { value: 'No', label: 'No' },
-          { value: 'Yes', label: 'Yes' },
-        ],
-      },
-    ],
-  },
+          { value: 'true', label: 'true' }
+        ]
+      }
+    ]
+  }
 ];
 
 export const datePicker: ComponentData = {
   "meta": {
     "slug": "date-picker",
     "name": "Date Picker",
-    "node": "12879:49826",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=12879-49826",
-    "description": "The full calendar UI used to pick a date — header, weekday row, and a 7×6 day grid.",
+    "node": "7201:112099",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=7201-112099",
+    "description": "The date field a user actually taps. Eight versions across four states and a filled flag, built on the system's own Dropdown rather than a redrawn field.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "refine",
+        "label": "Needs Refinement"
       }
     ],
     "navGroup": "Date Picker",
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure required before handoff",
-      "text": "Component is structurally an Input Field with a calendar glyph — the whole calendar panel should be a separate popover, not nested in the trigger. State × isDisabled axes produce invalid combinations (C2). Calendar icon is a raster (C6). No Error/Pressed states (C5). Blocks native <code>DatePicker</code> mapping."
+      "kind": "keep",
+      "title": "Keep — the entry point, now built on Dropdown",
+      "text": "All four DS Health traits pass. This is the component teams reach for: the field, its states, and the calendar it opens. It composes <code>Dropdown - Generic</code> instead of redrawing a form field, which is what closed the old consistency gap with the rest of the form family. Error and Pressed exist for the first time, and Disabled moved onto <code>State</code> so the impossible combinations the old two-boolean schema allowed are gone. It is badged Needs Refinement for two inherited details from Dropdown, not for anything in its own structure."
     }
   },
   "overview": {
-    "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"64\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <text x=\"20\" y=\"22\" font-size=\"6\" fill=\"currentColor\" opacity=\".15\" font-family=\"system-ui\">Date of Birth</text>\n          <rect x=\"20\" y=\"26\" width=\"80\" height=\"12\" rx=\"3\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".15\"></rect>\n          <rect x=\"24\" y=\"31\" width=\"30\" height=\"2\" rx=\"1\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <rect x=\"86\" y=\"28\" width=\"10\" height=\"8\" rx=\"1.5\" stroke=\"currentColor\" stroke-width=\".8\" opacity=\".25\"></rect>\n          <line x1=\"86\" y1=\"31\" x2=\"96\" y2=\"31\" stroke=\"currentColor\" stroke-width=\".8\" opacity=\".25\"></line>\n          <rect x=\"20\" y=\"42\" width=\"80\" height=\"22\" rx=\"3\" fill=\"currentColor\" opacity=\".05\"></rect>\n          <text x=\"32\" y=\"52\" font-size=\"5\" fill=\"currentColor\" opacity=\".2\" font-family=\"system-ui\">March 2026</text>\n          <g opacity=\".15\" fill=\"currentColor\">\n            <circle cx=\"28\" cy=\"58\" r=\"1.5\"></circle><circle cx=\"38\" cy=\"58\" r=\"1.5\"></circle><circle cx=\"48\" cy=\"58\" r=\"1.5\"></circle><circle cx=\"58\" cy=\"58\" r=\"1.5\"></circle><circle cx=\"68\" cy=\"58\" r=\"1.5\"></circle><circle cx=\"78\" cy=\"58\" r=\"1.5\"></circle><circle cx=\"88\" cy=\"58\" r=\"1.5\"></circle>\n          </g>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"dp-demo-preview\"><svg width=\"360\" height=\"68\" viewBox=\"0 0 360 68\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><defs><filter id=\"dpShadow\" x=\"-4\" y=\"64\" width=\"368\" height=\"370\" filterUnits=\"userSpaceOnUse\"><feDropShadow dx=\"0\" dy=\"6\" stdDeviation=\"6\" flood-color=\"#020E22\" flood-opacity=\"0.16\"></feDropShadow></filter></defs><text x=\"2\" y=\"12\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"359\" height=\"45\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"45\" dominant-baseline=\"central\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\">Value</text><rect x=\"328\" y=\"35\" width=\"20\" height=\"20\" rx=\"3\" stroke=\"#005CE5\" stroke-width=\"1.6\" fill=\"none\"></rect><line x1=\"328\" y1=\"41\" x2=\"348\" y2=\"41\" stroke=\"#005CE5\" stroke-width=\"1.6\"></line><line x1=\"333\" y1=\"32\" x2=\"333\" y2=\"36\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\"></line><line x1=\"343\" y1=\"32\" x2=\"343\" y2=\"36\" stroke=\"#005CE5\" stroke-width=\"1.6\" stroke-linecap=\"round\"></line></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" onchange=\"_dpDemo.state=this.value;updateDatePickerDemo()\"><option value=\"Default\">Default</option><option value=\"Active\">Active</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select class=\"demo-panel-select\" onchange=\"_dpDemo.filled=this.value;updateDatePickerDemo()\"><option value=\"true\">true</option><option value=\"false\" selected=\"\">false</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isDisabled</span><select class=\"demo-panel-select\" onchange=\"_dpDemo.disabled=this.value;updateDatePickerDemo()\"><option value=\"Yes\">Yes</option><option value=\"No\" selected=\"\">No</option></select></div></div></div></div>",
+    "inContextNote": "Sits inline in a form — a transaction history filter, a scheduling screen, a date of birth field. Tapping it opens <a href=\"/components/date-picker-calendar\">Date Picker - Calendar</a> as an overlay; the chosen date returns to the field and flips isFilled.",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"dp-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"dp-ctrl-state\" class=\"demo-panel-select\" onchange=\"_dpUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"pressed\">Pressed</option><option value=\"disabled\">Disabled</option><option value=\"error\">Error</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isFilled</span><select id=\"dp-ctrl-filled\" class=\"demo-panel-select\" onchange=\"_dpUpdate()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">#label</span><input type=\"text\" id=\"dp-ctrl-label\" class=\"demo-panel-select demo-panel-input\" value=\"Label\" oninput=\"_dpUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">#value</span><input type=\"text\" id=\"dp-ctrl-value\" class=\"demo-panel-select demo-panel-input\" value=\"Select option\" oninput=\"_dpUpdate()\"></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
-        "rating": "partial",
-        "note": "Trigger is generic enough for any date field context. Re-use is limited because the calendar panel is bundled inline — consumers can't show the trigger without the whole calendar, and can't show the calendar without the trigger."
+        "rating": "pass",
+        "note": "One field covers every date entry in the app. Nothing about a particular form is baked in — the label and value are text properties."
       },
       {
         "name": "Self-contained",
-        "rating": "warn",
-        "note": "Carries its own tokens for trigger states, but no Error state despite sibling Select Field having one. Calendar glyph is a raster image reference, not a DS icon instance."
+        "rating": "pass",
+        "note": "Carries its label, field, calendar icon, error subtext and all four states. What it does not carry it inherits from Dropdown, deliberately."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "<code>isDisabled</code> uses <code>Yes/No</code> (should be <code>true/false</code>). Axis design is ambiguous — Disabled is conceptually a state, not orthogonal to State, yielding 5 usable of 8 combinations. Diverges from Input Field / Select Field pattern which use a single <code>State</code> enum including <code>Disabled</code>."
+        "rating": "pass",
+        "note": "Uses <code>State</code> with the same vocabulary as <a href=\"/components/date-picker-header-trigger\">Date Picker - Header Trigger</a>, and looks like every other form field because it is one."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Calendar popover (Date Picker - Group) is composed inline, not as a separate overlay with its own positioning. Cannot be swapped for a sheet, bottom sheet, or native dialog. Blocks 1:1 mapping to SwiftUI <code>DatePicker</code> / Compose <code>DatePickerDialog</code>."
+        "rating": "pass",
+        "note": "Built from <code>Dropdown - Generic</code>, and pairs with <a href=\"/components/date-picker-calendar\">Date Picker - Calendar</a> as its overlay."
       }
     ],
     "behavior": [
       {
-        "state": "Default (empty)",
-        "ios": "yes",
-        "android": "yes",
-        "property": "State=Default, isFilled=false",
-        "notes": "Gray #D7E0EF border. Placeholder \"Value\" #90A8D0."
+        "state": "State=Default",
+        "ios": "na",
+        "android": "na",
+        "property": "312 × 68",
+        "notes": "White field, <code>#D7E0EF</code> border."
       },
       {
-        "state": "Default (filled)",
-        "ios": "yes",
-        "android": "yes",
-        "property": "State=Default, isFilled=true",
-        "notes": "Gray border, selected date shown in #0A2757."
+        "state": "State=Pressed",
+        "ios": "na",
+        "android": "na",
+        "property": "312 × 68",
+        "notes": "Border goes brand blue while the calendar is open."
       },
       {
-        "state": "Active (opening — empty)",
-        "ios": "yes",
-        "android": "yes",
-        "property": "State=Active, isFilled=false",
-        "notes": "Blue #005CE5 2px border. Inline calendar panel attached below."
+        "state": "State=Disabled",
+        "ios": "na",
+        "android": "na",
+        "property": "312 × 68",
+        "notes": "Filled <code>#EEF2F9</code>, no border. Same height as Default."
       },
       {
-        "state": "Active (filled)",
-        "ios": "yes",
-        "android": "yes",
-        "property": "State=Active, isFilled=true",
-        "notes": "Blue border, filled value, calendar visible."
+        "state": "State=Error",
+        "ios": "na",
+        "android": "na",
+        "property": "312 × 94",
+        "notes": "Red border plus subtext — the only version that is taller."
       },
       {
-        "state": "Disabled",
-        "ios": "yes",
-        "android": "yes",
-        "property": "isDisabled=Yes",
-        "notes": "Gray #EEF2F9 bg. Value #90A8D0. No border. Calendar glyph dims."
+        "state": "isFilled=false",
+        "ios": "na",
+        "android": "na",
+        "property": "placeholder",
+        "notes": "\"Select option\" in the muted value colour."
       },
       {
-        "state": "Error",
-        "ios": "no",
-        "android": "no",
-        "property": "—",
-        "notes": "Not defined. Sibling Select/Input Field both support Error — must be added for validation flows (e.g. \"Enter a valid birth date\")."
-      },
-      {
-        "state": "Pressed",
-        "ios": "no",
-        "android": "no",
-        "property": "—",
-        "notes": "Not defined. Touch feedback expected on both platforms."
+        "state": "isFilled=true",
+        "ios": "na",
+        "android": "na",
+        "property": "value",
+        "notes": "The chosen date in the heading colour."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Layer naming inconsistent with sibling fields.",
-        "body": "Trigger frame is named <code>Select Field</code> and its inner <code>container</code> / <code>text-container</code> are generic — but the component itself is <code>Date Picker</code>. The Date Picker - Group popover has layer names like <code>row</code>, <code>Monday</code>...<code>Saturday</code> (day-of-week labels as layer names rather than semantic roles). Normalize to kebab-case semantic names.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "<code>isDisabled</code> uses <code>Yes/No</code>, <code>isFilled</code> uses <code>False/True</code>.",
-        "body": "Should be lowercase <code>true/false</code> for direct Swift <code>Bool</code> / Kotlin <code>Boolean</code> mapping. Inconsistent casing between the two booleans also breaks Code Connect naming uniformity.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Axis design produces invalid combinations.",
-        "body": "<code>State × isFilled × isDisabled</code> is a 2×2×2=8 matrix but only 5 combinations exist because Disabled collapses State. Siblings (Input Field, Select Field) use a single <code>State</code> enum including <code>Disabled</code> — Date Picker should follow that pattern.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Calendar popover is composed inline, not as an overlay.",
-        "body": "Date Picker - Group is nested inside the trigger's stack and positioned absolutely — it cannot be swapped for a sheet or presented by the native date dialog. SwiftUI <code>DatePicker</code> and Compose <code>DatePickerDialog</code> both expect the trigger and the picker to be separable.",
+        "headline": "The field is a Dropdown, not a redraw.",
+        "body": "Every version wraps one <code>Dropdown - Generic</code> instance. The old component drew its own field, which is why it drifted from the rest of the form family on border colour, height and label placement.",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
       },
       {
-        "headline": "No Error state.",
-        "body": "Input Field, Select Field, and Dropdown all support Error; Date Picker does not. Birth-date and expiry flows routinely need inline validation (\"Must be 18+\", \"Date can't be in the past\").",
+        "headline": "Error and Pressed exist.",
+        "body": "Neither had a version before, so a form could not show an invalid date and the field gave no feedback while its calendar was open. Both are now <code>State</code> values, each covering both filled and empty.",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
       },
       {
-        "headline": "No Pressed state.",
-        "body": "Standard tap feedback (iOS highlight, Android ripple) is missing. Consumers improvise it per-screen.",
+        "headline": "One state setting instead of overlapping booleans.",
+        "body": "<code>isDisabled</code> used <code>Yes</code> and <code>No</code> while <code>isFilled</code> used <code>False</code> and <code>True</code>, and the two together permitted combinations that could not happen. Disabled is now a <code>State</code> value, leaving <code>State</code> × <code>isFilled</code> — orthogonal, and complete at eight of eight.",
         "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "Calendar glyph is a raster <code>shape_full</code> image.",
-        "body": "The trigger icon pulls from an MCP asset URL rather than a vector icon instance. Won't scale cleanly, won't inherit state tokens, can't be swapped.",
+        "headline": "The calendar glyph is a vector.",
+        "body": "It shipped as a raster image that could not recolour. It is now a <code>shape_full</code> vector inside a <code>Calendar</code> icon instance.",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
-        "headline": "Code Connect mappings not registered.",
-        "body": "Blocked by C1/C2/C4/C5/C6 above.",
+        "headline": "Disabled stopped being taller than Default.",
+        "body": "Every version carries Dropdown's <code>description</code> frame. Disabled sized itself to include the empty frame and came out 26px taller than Default, so disabling a date field pushed the rest of the form down. It now hugs its content at 68, and only Error — which has real subtext — is 94.",
         "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "The boolean values are lowercase.",
+        "body": "<code>isFilled</code> read <code>False</code> and <code>True</code>. It now matches the rest of the family — <code>false</code> and <code>true</code>, like <code>isDisabled</code> on the cell and <code>hasCaret</code> on the header trigger.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "The calendar moved out of the trigger.",
+        "body": "The old component composed its calendar inline, so the field and the surface could not be used or assessed apart. The calendar is now <a href=\"/components/date-picker-calendar\">Date Picker - Calendar</a>, opened as an overlay.",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
         }
       }
     ],
+    "open": [],
     "recommendations": [
       {
-        "headline": "Family — Unify the two cell primitives.",
-        "body": "<code>Date Picker - Item</code> (day cells) and <code>Month and Year Picker - Item</code> (month/year cells) are both selectable cells with identical state semantics (Default/Today/Selected/Disabled). Only size + typography differ. Propose one <code>Picker Cell</code> component with axes <code>kind: day | month | year</code> + <code>state: default | today | selected | disabled</code>. Reduces 10 variants across 2 components to 1 component with 2 clean axes.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Composition — Wrap the native date pickers instead of redrawing them.",
-        "body": "iOS: <code>DatePicker(selection:, displayedComponents:)</code> with <code>.datePickerStyle(.graphical|.compact|.wheel|.field)</code>. Android: Material 3 <code>DatePicker</code> + <code>DatePickerDialog</code>. The DS <code>EBDatePicker</code> should be a thin wrapper that tokenizes the trigger and cells to match brand — not a from-scratch calendar redraw in Figma. Keeps accessibility, localization, and leap-year logic native.",
+        "headline": "Let the description frame size to the field.",
+        "body": "Dropdown's <code>description</code> frame is 366 wide inside a 312 wide component — a 54px overflow on every version. It cannot be set to fill width while hidden, which is why it is fixed. Worth solving in <code>Dropdown - Generic</code> so every field built on it inherits the fix.",
         "tag": "Composition"
       },
       {
-        "headline": "Field-trigger consistency — Unify with Input Field as <code>type: .date</code>.",
-        "body": "Structurally this is an Input Field with a date value display + calendar glyph. Matches SwiftUI <code>TextField(value:, format: .date)</code> / Compose <code>OutlinedTextField(readOnly=true) + DatePickerDialog</code>. Consolidates a fragmented field family and inherits Input Field's Error state, label slot, and helper text.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Collapse <code>State × isFilled × isDisabled</code> into a single <code>state</code> enum.",
-        "body": "Target schema: <code>state: default | active | error | disabled</code> + <code>isFilled: true | false</code>. Matches Input Field (8 variants from 4×2). Removes the 3 invalid combinations in the current matrix and aligns with the rest of the Form Elements family.",
+        "headline": "Drive the unused Dropdown slots by property, not by hiding.",
+        "body": "Composing Dropdown brings a <code>peso-sign</code> prefix and a <code>flag-container</code> holding a raster Philippines flag. Both are currently switched off by hand. Hand-hidden layers reappear the moment someone swaps the instance — if Dropdown exposed booleans for them, a date field could turn them off declaratively.",
         "tag": "Property"
       },
       {
-        "headline": "Separate the calendar panel from the trigger.",
-        "body": "Move Date Picker - Group to a true overlay component (top-anchored, dismissible, shadow-elevated) rather than an inline child of the trigger. Lets the trigger be used alone (e.g. inline text input mode) and lets the panel be presented by either a dropdown or a sheet depending on context.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Add Error and Pressed states.",
-        "body": "Error: red border + subtext (mirror Input Field tokens). Pressed: slight bg tint for tap feedback. Required for form accessibility and parity with the rest of Form Elements.",
-        "tag": "State"
-      },
-      {
-        "headline": "Replace the calendar raster with a vector icon instance.",
-        "body": "Use the existing DS calendar icon (if present) or add one to the icon library. Color-bind to <code>selected-field/color/{state}/icon</code> so it dims with Disabled automatically.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Rename booleans to lowercase <code>true/false</code>.",
-        "body": "<code>isDisabled=Yes/No</code> to <code>isDisabled=true/false</code>; <code>isFilled=False/True</code> to <code>isFilled=false/true</code>. Consistent with the naming convention adopted by Input Field.",
+        "headline": "Take the <code>[Option 02]</code> suffix off the name.",
+        "body": "The component is still <code>Date Picker Trigger [Option 02]</code> at node <code>7201:112099</code>. Option 01 was set aside; this one becomes <code>Date Picker</code>. Rename <a href=\"/components/date-picker-calendar\">the calendar</a> first, since it currently holds that name.",
         "tag": "Rename"
+      },
+      {
+        "headline": "Announce the field as a date control.",
+        "body": "Expose the current value as a spoken date rather than a formatted string, state that activating it opens a calendar, and tie the Error subtext to the field so it is read on focus rather than sitting as loose text.",
+        "tag": "A11y"
+      },
+      {
+        "headline": "Document that the picker is a wrapper, not a reimplementation.",
+        "body": "Both platforms ship a date picker with locale, keyboard and accessibility built in. The Code tab should state that the intent is to present the platform picker inside this field's styling, so nobody rebuilds the calendar from the Figma grid.",
+        "tag": "Docs"
       }
-    ]
+    ],
+    "appliedRecommendations": []
   },
   "style": {
-    "heading": "Types",
+    "heading": "States",
+    "description": "Four states across a filled flag. Default, Pressed and Disabled are all 68 tall; only Error grows to carry its subtext.",
     "specCards": [
       {
-        "cardKey": "default",
-        "demoKey": "default",
-        "demoControls": datePickerDemoControls,
-        "title": "Default",
-        "node": "12879:49784",
-        "description": "Calendar trigger field. Flip the State, Filled, and Disabled controls to walk through every variant.",
+        "cardKey": "dp-spec-card-field",
+        "demoKey": "field",
+        "demoControls": fieldControls,
+        "title": "Date Picker",
+        "node": "7201:112099",
+        "description": "One Dropdown - Generic instance per version. The calendar icon sits in the field's trailing slot.",
+        "previewHtml": "<div id=\"dp-spec-field\"></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               { "key": "State", "value": "Default", "prop": "state" },
-              { "key": "Filled", "value": "false", "prop": "filled" },
-              { "key": "Disabled", "value": "No", "prop": "disabled" }
+              { "key": "isFilled", "value": "false", "prop": "filled" },
+              { "key": "#label", "value": "Label" },
+              { "key": "#value", "value": "Select option", "variants": { "filled:true": { "value": "the chosen date" } } },
+              { "key": "Versions", "value": "8" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Field bg", "value": "#FFFFFF", "token": "selected-field/color/default/bg",
-                "variants": { "disabled:Yes": { "value": "#EEF2F9", "token": "selected-field/color/disabled/bg" } }
-              },
-              { "key": "Field border", "value": "#D7E0EF", "token": "selected-field/color/default/border",
-                "variants": {
-                  "state:Active": { "value": "#005CE5", "token": "selected-field/color/active/border" },
-                  "disabled:Yes": { "hide": true }
-                }
-              },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "selected-field/color/default/placeholder",
-                "variants": { "filled:true": { "hide": true } }
-              },
-              { "key": "Value", "value": "#0A2757", "token": "selected-field/color/default/value",
-                "variants": {
-                  "filled:false": { "hide": true },
-                  "disabled:Yes": { "value": "#90A8D0", "token": "selected-field/color/disabled/value" }
-                }
-              },
-              { "key": "Icon", "value": "#005CE5", "token": "selected-field/color/default/icon",
-                "variants": { "disabled:Yes": { "value": "#9BC5FD", "token": "selected-field/color/disabled/icon" } }
-              }
+              { "key": "Field — default", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
+              { "key": "Border — default", "value": "#D7E0EF", "token": "border/color-border-field", "swatch": true },
+              { "key": "Border — pressed", "value": "#005CE5", "token": "border/color-border-focus", "swatch": true },
+              { "key": "Field — disabled", "value": "#EEF2F9", "token": "bg/color-bg-disabled", "swatch": true },
+              { "key": "Border — error", "value": "#D81E1E", "token": "border/color-border-error", "swatch": true },
+              { "key": "#label", "value": "#0A2757", "token": "text/color-text-heading", "swatch": true },
+              { "key": "#value — placeholder", "value": "#90A8D0", "token": "text/color-text-placeholder", "swatch": true },
+              { "key": "Calendar icon", "value": "#025AE9", "token": "icon/color-icon-link", "swatch": true }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Height", "value": "48", "mono": true },
-              { "key": "Padding H", "value": "12", "mono": true },
-              { "key": "Border radius", "value": "6", "mono": true },
-              { "key": "Border", "value": "1px solid", "mono": true,
-                "variants": {
-                  "state:Active": { "value": "2px solid" },
-                  "disabled:Yes": { "value": "none" }
-                }
-              },
-              { "key": "Icon size", "value": "20 × 20", "mono": true }
+              { "key": "Width", "value": "312", "mono": true },
+              { "key": "Height", "value": "68", "mono": true, "variants": { "state:error": { "value": "94 — subtext adds 26" } } },
+              { "key": "Label row", "value": "312 × 22", "mono": true },
+              { "key": "Field", "value": "312 × 46", "mono": true },
+              { "key": "Corner radius", "value": "6", "mono": true },
+              { "key": "Calendar icon", "value": "32 × 32", "mono": true },
+              { "key": "Description frame", "value": "366 — overflows the 312 field", "mono": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Label style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Label font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true },
-              { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Value font", "value": "Proxima Soft Semibold · 14 / 14 · +0.25", "mono": true }
+              { "key": "#label style", "value": "Primary/SemiBold/Subheading", "mono": true },
+              { "key": "#label font", "value": "Proxima Soft SemiBold · 16 / 16 · +0.25", "mono": true },
+              { "key": "#value font", "value": "Proxima Soft SemiBold · 14 / 14 · +0.25", "mono": true },
+              { "key": "Subtext", "value": "BarkAda SemiBold · 12 / 18", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>$selectedDate<span class=\"syn-punc\">, </span>placeholder<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Select a date\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    date <span class=\"syn-eq\">=</span> selectedDate<span class=\"syn-punc\">,</span>\n    onDateChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    placeholder <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Select a date\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"dp-spec-preview\"></div>"
-      }
-
-    ],
-    "colorsTables": [
-      {
-        "title": "Colors by State",
-        "description": "Trigger colors reuse the <code>selected-field</code> token family (shared with Dropdown and Select Field). Calendar panel uses dedicated <code>date-picker</code> tokens.",
-        "columns": [
-          "DEFAULT",
-          "ACTIVE",
-          "DISABLED"
-        ],
-        "rows": [
-          {
-            "role": "Trigger border",
-            "token": "selected-field/color/{state}/border",
-            "values": [
-              "#D7E0EF",
-              "#005CE5 (2px)",
-              "hidden"
-            ]
-          },
-          {
-            "role": "Trigger bg",
-            "token": "selected-field/color/{state}/bg",
-            "values": [
-              "#FFFFFF",
-              "#FFFFFF",
-              "#EEF2F9"
-            ]
-          },
-          {
-            "role": "Value (filled)",
-            "token": "selected-field/color/{state}/value",
-            "values": [
-              "#0A2757",
-              "#0A2757",
-              "#90A8D0"
-            ]
-          },
-          {
-            "role": "Placeholder",
-            "token": "selected-field/color/{state}/placeholder",
-            "values": [
-              "#90A8D0",
-              "#90A8D0",
-              "–"
-            ]
-          },
-          {
-            "role": "Calendar icon",
-            "token": "selected-field/color/{state}/icon",
-            "values": [
-              "#005CE5",
-              "#005CE5",
-              "#9BC5FD"
-            ]
-          },
-          {
-            "role": "Header label",
-            "token": "formgroup-header/color/label",
-            "values": [
-              "#0A2757",
-              "#0A2757",
-              "#0A2757"
-            ]
-          },
-          {
-            "role": "Panel bg",
-            "token": "date-picker/month-header/color/bg",
-            "values": [
-              "–",
-              "#FFFFFF",
-              "–"
-            ]
-          },
-          {
-            "role": "Panel border",
-            "token": "date-picker/month-header/color/border",
-            "values": [
-              "–",
-              "#E5EBF4",
-              "–"
-            ]
-          },
-          {
-            "role": "Panel shadow",
-            "token": "elevation/app/shadow",
-            "values": [
-              "–",
-              "0 6px 12px rgba(2,14,34,.16)",
-              "–"
-            ]
-          },
-          {
-            "role": "Month label",
-            "token": "date-picker/month-header/color/label",
-            "values": [
-              "–",
-              "#0A2757",
-              "–"
-            ]
-          },
-          {
-            "role": "Month chevron",
-            "token": "date-picker/month-header/color/icon",
-            "values": [
-              "–",
-              "#005CE5",
-              "–"
-            ]
-          },
-          {
-            "role": "Weekday label",
-            "token": "date-picker/week-header/color/label",
-            "values": [
-              "–",
-              "#0A2757",
-              "–"
-            ]
-          },
-          {
-            "role": "Day (unselected)",
-            "token": "date-picker/day/color/unselected/label",
-            "values": [
-              "–",
-              "#0A2757",
-              "–"
-            ]
-          },
-          {
-            "role": "Day (today border)",
-            "token": "border/color-border-primary",
-            "values": [
-              "–",
-              "#005CE5 (1.5px)",
-              "–"
-            ]
-          },
-          {
-            "role": "Day (prev/next month)",
-            "token": "text/color-text-disabled",
-            "values": [
-              "–",
-              "#C2CFE5",
-              "–"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "columns": [],
-        "rows": [
-          {
-            "role": "Component width",
-            "token": "360px (fixed)",
-            "values": []
-          },
-          {
-            "role": "Trigger height",
-            "token": "46px",
-            "values": []
-          },
-          {
-            "role": "Trigger height (Active, empty)",
-            "token": "46px (border 2px inset)",
-            "values": []
-          },
-          {
-            "role": "Corner radius (trigger)",
-            "token": "6px (radius/radius-2)",
-            "values": []
-          },
-          {
-            "role": "Trigger padding",
-            "token": "6px top, 8px bottom, 12px horizontal",
-            "values": []
-          },
-          {
-            "role": "Calendar icon size",
-            "token": "32 × 32 (glyph ~24 × 25 inside)",
-            "values": []
-          },
-          {
-            "role": "Panel padding",
-            "token": "16px all sides",
-            "values": []
-          },
-          {
-            "role": "Panel corner radius",
-            "token": "8px top-left/top-right, 6px bottom-left/bottom-right",
-            "values": []
-          },
-          {
-            "role": "Panel gap (rows)",
-            "token": "8px",
-            "values": []
-          },
-          {
-            "role": "Day cell size",
-            "token": "32 × 32",
-            "values": []
-          },
-          {
-            "role": "Day cell radius",
-            "token": "30px (pill)",
-            "values": []
-          },
-          {
-            "role": "Month chevron size",
-            "token": "24 × 24",
-            "values": []
-          },
-          {
-            "role": "Header label padding-bottom",
-            "token": "8px",
-            "values": []
-          }
-        ]
-      },
-      {
-        "title": "Typography",
-        "columns": [
-          "Font",
-          "Size",
-          "Tracking",
-          "Line-height"
-        ],
-        "rows": [
-          {
-            "role": "Header label",
-            "token": "Primary/Label/Light/Small",
-            "values": [
-              "Proxima Soft Semibold",
-              "14px",
-              "0.25px",
-              "14px"
-            ]
-          },
-          {
-            "role": "Trigger value / placeholder",
-            "token": "Primary/Label/Light/Small",
-            "values": [
-              "Proxima Soft Semibold",
-              "14px",
-              "0.25px",
-              "14px"
-            ]
-          },
-          {
-            "role": "Month / Year label",
-            "token": "Primary/Label/Large",
-            "values": [
-              "Proxima Soft Bold",
-              "18px",
-              "0.25px",
-              "18px"
-            ]
-          },
-          {
-            "role": "Weekday label",
-            "token": "Primary/Label/Small",
-            "values": [
-              "Proxima Soft Bold",
-              "14px",
-              "0.25px",
-              "14px"
-            ]
-          },
-          {
-            "role": "Day label",
-            "token": "Primary/Label/Light/Small",
-            "values": [
-              "Proxima Soft Semibold",
-              "14px",
-              "0.25px",
-              "14px"
-            ]
-          }
-        ]
+        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selection<span class=\"syn-punc\">:</span> $date<span class=\"syn-punc\">,</span>\n    placeholder<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Select option\"</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span>\n    placeholder <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Select option\"</span><span class=\"syn-punc\">,</span>\n    onSelect <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> date <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>"
       }
     ]
   },
@@ -612,310 +281,150 @@ export const datePicker: ComponentData = {
       "planned": true,
       "blocks": [
         {
-          "label": "iOS — Swift Package Manager",
-          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
+          "label": "Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
-          "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:date-picker:1.0.0\"</span>)\n}"
-        },
-        {
-          "label": "Import",
-          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.datepicker.*  <span class=\"cmt\">// Compose</span>"
+          "label": "Gradle",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
         }
       ],
-      "footnote": "Package not yet published. These are the planned distribution paths. The recommendation is to wrap native date pickers rather than redraw them."
+      "footnote": "Planned API — the native library does not exist yet. The intent is a styled field that presents the platform's own date picker, not a reimplementation of the calendar."
     },
     "propertyMapping": {
+      "description": "Figma properties mapped to the intended native parameters.",
       "rows": [
-        {
-          "figma": "State = Default",
-          "swift": "—",
-          "compose": "—"
-        },
-        {
-          "figma": "State = Active",
-          "swift": "isPresented: Binding&lt;Bool&gt;",
-          "compose": "showPicker: Boolean"
-        },
-        {
-          "figma": "isFilled (False/True)",
-          "swift": "selection: Binding&lt;Date?&gt;",
-          "compose": "selectedDate: LocalDate?"
-        },
-        {
-          "figma": "isDisabled (Yes/No)",
-          "swift": ".disabled(true)",
-          "compose": "enabled = false"
-        },
-        {
-          "figma": "label (formgroup-header)",
-          "swift": "label: String",
-          "compose": "label: String"
-        },
-        {
-          "figma": "subtext (optional)",
-          "swift": "helperText: String?",
-          "compose": "helperText: String?"
-        }
-      ],
-      "filePaths": {
-        "swift": "ios/Components/DatePicker/EBDatePicker.swift",
-        "compose": "android/components/datepicker/EBDatePicker.kt"
-      }
+        { "figma": "State=Default / Pressed", "swift": "derived from focus and presentation", "compose": "interactionSource" },
+        { "figma": "State=Disabled", "swift": ".disabled(true)", "compose": "enabled = false" },
+        { "figma": "State=Error", "swift": "errorMessage: String?", "compose": "errorMessage: String?" },
+        { "figma": "isFilled", "swift": "derived — selection != nil", "compose": "derived — selected != null" },
+        { "figma": "#label", "swift": "label: String", "compose": "label: String" },
+        { "figma": "#value", "swift": "selection: Date? / placeholder: String", "compose": "selected: LocalDate? / placeholder: String" },
+        { "figma": "Calendar icon", "swift": "fixed trailing icon", "compose": "fixed trailing icon" }
+      ]
     },
     "usageSnippets": [
       {
-        "subheading": "Default",
-        "swift": "<span class=\"typ\">EBDatePicker</span>(<span class=\"str\">\"Date of Birth\"</span>, <span class=\"prp\">selection</span>: $birthDate)",
-        "compose": "<span class=\"typ\">EBDatePicker</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Date of Birth\"</span>,\n    <span class=\"prp\">selectedDate</span> = birthDate,\n    <span class=\"prp\">onDateSelected</span> = { birthDate = it }\n)"
+        "subheading": "A date field",
+        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Date of birth\"</span><span class=\"syn-punc\">,</span> selection<span class=\"syn-punc\">:</span> $birthday<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Date of birth\"</span><span class=\"syn-punc\">,</span> selected <span class=\"syn-eq\">=</span> birthday<span class=\"syn-punc\">,</span> onSelect <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> birthday <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">})</span>"
       },
       {
-        "subheading": "With Helper Text",
-        "swift": "<span class=\"typ\">EBDatePicker</span>(<span class=\"str\">\"Date of Birth\"</span>, <span class=\"prp\">selection</span>: $birthDate)\n    .<span class=\"fn\">ebHelperText</span>(<span class=\"str\">\"You must be 18 or older\"</span>)",
-        "compose": "<span class=\"typ\">EBDatePicker</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Date of Birth\"</span>,\n    <span class=\"prp\">selectedDate</span> = birthDate,\n    <span class=\"prp\">onDateSelected</span> = { birthDate = it },\n    <span class=\"prp\">helperText</span> = <span class=\"str\">\"You must be 18 or older\"</span>\n)"
+        "subheading": "Showing a validation error",
+        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-str\">\"Start date\"</span><span class=\"syn-punc\">,</span>\n    selection<span class=\"syn-punc\">:</span> $start<span class=\"syn-punc\">,</span>\n    errorMessage<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Pick a date in the future\"</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Start date\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> start<span class=\"syn-punc\">,</span>\n    errorMessage <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Pick a date in the future\"</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
         "subheading": "Disabled",
-        "swift": "<span class=\"typ\">EBDatePicker</span>(<span class=\"str\">\"Date of Birth\"</span>, <span class=\"prp\">selection</span>: $birthDate)\n    .<span class=\"fn\">disabled</span>(<span class=\"kw\">true</span>)",
-        "compose": "<span class=\"typ\">EBDatePicker</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Date of Birth\"</span>,\n    <span class=\"prp\">selectedDate</span> = birthDate,\n    <span class=\"prp\">onDateSelected</span> = { birthDate = it },\n    <span class=\"prp\">enabled</span> = <span class=\"kw\">false</span>\n)"
+        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Settlement date\"</span><span class=\"syn-punc\">,</span> selection<span class=\"syn-punc\">:</span> $date<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span><span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Settlement date\"</span><span class=\"syn-punc\">,</span> selected <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span> enabled <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span><span class=\"syn-punc\">)</span>"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Minimum touch target",
-        "ios": "44 × 44 pt",
-        "android": "48 × 48 dp"
+        "requirement": "Announced as a date control",
+        "ios": "<code>.accessibilityLabel(label)</code> with <code>.accessibilityValue(date.formatted(date: .long, time: .omitted))</code>",
+        "android": "<code>contentDescription</code> plus <code>stateDescription</code> carrying the spoken date"
       },
       {
-        "requirement": "Accessibility label",
-        "ios": "<code>.accessibilityLabel(\"Date of Birth\")</code>",
-        "android": "<code>contentDescription = \"Date of Birth\"</code>"
+        "requirement": "Activation is described",
+        "ios": "<code>.accessibilityHint(\"Opens a calendar\")</code>",
+        "android": "<code>onClickLabel = \"Open calendar\"</code>"
       },
       {
-        "requirement": "Selected value",
-        "ios": "<code>.accessibilityValue(formattedDate)</code>",
-        "android": "<code>semantics { stateDescription }</code>"
+        "requirement": "Error subtext is tied to the field",
+        "ios": "Append to <code>accessibilityValue</code> so it reads on focus",
+        "android": "<code>Modifier.semantics { error(message) }</code>"
       },
       {
-        "requirement": "Role",
-        "ios": "VoiceOver announces as date picker",
-        "android": "TalkBack announces via <code>Role.Button</code> + expanded state"
-      },
-      {
-        "requirement": "Localization",
-        "ios": "Native <code>DatePicker</code> respects locale calendar",
-        "android": "Native <code>DatePickerDialog</code> respects locale calendar"
+        "requirement": "Disabled is announced, not just greyed",
+        "ios": "<code>.disabled(true)</code> sets the trait automatically",
+        "android": "<code>enabled = false</code> sets the trait automatically"
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Wrap the native DatePicker / DatePickerDialog so accessibility, localization, and leap-year logic are handled by the OS.",
-        "dontText": "Redraw the calendar grid from scratch — the Figma calendar is a visual spec, not a reimplementation target."
+        "doText": "Present the platform's date picker inside this field's styling.",
+        "dontText": "Don't rebuild the calendar from the Figma grid — locale and accessibility come free from the platform."
       },
       {
-        "doText": "Pair the trigger with a visible label above it. Use helper text to clarify expected range (\"Pick a future date\").",
-        "dontText": "Use the trigger as a free-text date field — it's for picking from the panel, not typing. If free-entry is required, use Input Field with a date format."
+        "doText": "Let isFilled follow from whether a date is selected.",
+        "dontText": "Don't expose isFilled as something a developer sets by hand."
+      },
+      {
+        "doText": "Use Error with a message that says what to do.",
+        "dontText": "Don't turn the border red without subtext explaining why."
       }
     ],
     "scorecard": [
-      {
-        "id": "C1",
-        "criterion": "Layer Structure & Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Trigger reuses <code>Select Field</code> / <code>container</code> / <code>text-container</code>. Day cell rows use weekday names (<code>Monday</code>…<code>Saturday</code>) as layer names."
-      },
-      {
-        "id": "C2",
-        "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>isDisabled=Yes/No</code>, <code>isFilled=False/True</code>. Inconsistent casing. Axis design yields 5 of 8 combinations."
-      },
-      {
-        "id": "C3",
-        "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All colors bound to <code>selected-field</code> and <code>date-picker</code> tokens. Spacing and radius tokens consistent."
-      },
-      {
-        "id": "C4",
-        "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Inline calendar panel blocks mapping to native <code>DatePicker</code> / <code>DatePickerDialog</code>. Must be separable."
-      },
-      {
-        "id": "C5",
-        "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No Error state (siblings have it). No Pressed state."
-      },
-      {
-        "id": "C6",
-        "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Calendar glyph is a raster <code>shape_full</code> image. Month chevrons use <code>shape_full</code> images as well."
-      },
-      {
-        "id": "C7",
-        "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Blocked by C1/C2/C4/C5/C6."
-      }
+      { "id": "C1", "criterion": "Layer Structure & Naming", "status": "refine", "statusLabel": "Needs Refinement", "notes": "One Dropdown instance per version, and the disabled height is fixed. Outstanding: Dropdown's <code>description</code> frame is 366 wide inside a 312 field." },
+      { "id": "C2", "criterion": "Variant & Property Naming", "status": "ready", "statusLabel": "Ready", "notes": "<code>State</code> × <code>isFilled</code> is orthogonal and complete, with lowercase booleans." },
+      { "id": "C3", "criterion": "Token Coverage", "status": "ready", "statusLabel": "Ready", "notes": "Field, border, text and icon colours all follow the shared form tokens through Dropdown." },
+      { "id": "C4", "criterion": "Native Mappability", "status": "ready", "statusLabel": "Ready", "notes": "A form field with a trailing icon that presents a picker — the standard pattern on both platforms." },
+      { "id": "C5", "criterion": "Interaction State Coverage", "status": "ready", "statusLabel": "Ready", "notes": "Default, Pressed, Disabled and Error, each across both filled states." },
+      { "id": "C6", "criterion": "Asset & Icon Quality", "status": "refine", "statusLabel": "Needs Refinement", "notes": "The calendar glyph is a vector. Inherited from Dropdown: a hidden raster flag and a currency prefix that a date field will never use." },
+      { "id": "C7", "criterion": "Code Connect Linkability", "status": "empty", "statusLabel": "Not Mapped", "notes": "Blocked — the native library does not exist yet." }
     ],
     "codeConnect": [
-      {
-        "aspect": "Property naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>isDisabled</code>/<code>isFilled</code> need lowercase boolean values"
-      },
-      {
-        "aspect": "Axis design",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Collapse to single <code>state</code> enum matching Input/Select Field pattern"
-      },
-      {
-        "aspect": "Composition",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Calendar panel must be separable to map native dialog/sheet"
-      },
-      {
-        "aspect": "Asset quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Calendar glyph + chevrons must be vector icons"
-      },
-      {
-        "aspect": "State coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Error and Pressed states missing"
-      },
-      {
-        "aspect": "Native component file",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "EBDatePicker.swift / EBDatePicker.kt not yet created"
-      }
+      { "aspect": "Property naming", "status": "ready", "statusLabel": "Ready", "notes": "<code>State</code> and <code>isFilled</code> map onto an enum and a derived boolean." },
+      { "aspect": "Token coverage", "status": "ready", "statusLabel": "Ready", "notes": "Inherited from Dropdown, which is already tokenised." },
+      { "aspect": "Registration", "status": "empty", "statusLabel": "Not Mapped", "notes": "Blocked until the native library exists." }
     ],
     "variants": {
-      "total": 5,
-      "description": "Declared as a 2×2×2 matrix (<code>State × isFilled × isDisabled</code>) but only 5 combinations exist — Disabled collapses both State and isFilled=false into a single variant.",
-      "columns": [
-        "State",
-        "isFilled",
-        "isDisabled",
-        "Node ID"
-      ],
+      "total": 8,
+      "description": "4 State × 2 isFilled = 8 versions, complete with no gaps.",
+      "columns": ["State", "isFilled", "Height", "Node"],
       "rows": [
-        {
-          "cells": [
-            "Default",
-            "false",
-            "No",
-            "12879:49784"
-          ]
-        },
-        {
-          "cells": [
-            "Default",
-            "true",
-            "No",
-            "12890:42872"
-          ]
-        },
-        {
-          "cells": [
-            "Active",
-            "false",
-            "No",
-            "12879:49827"
-          ]
-        },
-        {
-          "cells": [
-            "Active",
-            "true",
-            "No",
-            "13342:9932"
-          ]
-        },
-        {
-          "cells": [
-            "Default",
-            "true",
-            "Yes",
-            "13342:10148"
-          ]
-        }
+        { "cells": ["Default", "false", "68", "7201:112100"] },
+        { "cells": ["Default", "true", "68", "7201:112105"] },
+        { "cells": ["Pressed", "false", "68", "7201:112102"] },
+        { "cells": ["Pressed", "true", "68", "7201:112107"] },
+        { "cells": ["Disabled", "false", "68", "7201:112112"] },
+        { "cells": ["Disabled", "true", "68", "7201:112110"] },
+        { "cells": ["Error", "false", "94", "7201:112116"] },
+        { "cells": ["Error", "true", "94", "7201:112114"] }
       ]
     }
   },
   "changelog": [
     {
-      "version": "1.0.0",
-      "date": "April 2026",
+      "version": "2.0.0",
+      "date": "August 2026",
       "kind": "major",
       "kindLabel": "Major",
-      "header": "Initial Assessment · node 12879:49826",
+      "header": "Rebuilt on Dropdown — node 7201:112099",
       "rows": [
         {
-          "body": "<strong>Component assessed</strong> — 5 usable variants documented across <code>State × isFilled × isDisabled</code>. Field-shaped trigger with inline calendar panel on Active. Lead component of the Date Picker family.\n          <span class=\"tag-fixed\">Documented</span>",
-          "delta": {
-            "kind": "resolved",
-            "label": "Initial"
-          }
+          "body": "<strong>Rebuilt in the 2026 Working File.</strong> The previous component at <code>12879:49826</code> in Sticker Sheets v2 is deprecated. The calendar it composed inline is now <a href=\"/components/date-picker-calendar\">Date Picker - Calendar</a>.",
+          "delta": { "kind": "resolved", "label": "Family" }
         },
         {
-          "body": "<strong>Axis design produces invalid combinations</strong> — 2×2×2 matrix yields only 5 of 8 possible variants. Should collapse to a single <code>state</code> enum like Input/Select Field.\n          <span class=\"tag-open\">Open</span>",
-          "delta": {
-            "kind": "open",
-            "label": "C2 Open"
-          }
+          "body": "<strong>C4 — composes <code>Dropdown - Generic</code></strong> rather than redrawing a form field, closing the consistency gap with the rest of the form family.",
+          "delta": { "kind": "resolved", "label": "C4 resolved" }
         },
         {
-          "body": "<strong>Boolean casing inconsistent</strong> — <code>isDisabled=Yes/No</code> and <code>isFilled=False/True</code>. Both need lowercase <code>true/false</code> for Code Connect.\n          <span class=\"tag-open\">Open</span>",
-          "delta": {
-            "kind": "open",
-            "label": "C2 Open"
-          }
+          "body": "<strong>C5 — Error and Pressed added.</strong> Neither existed; a form could not show an invalid date, and the field gave no feedback while its calendar was open.",
+          "delta": { "kind": "resolved", "label": "C5 resolved" }
         },
         {
-          "body": "<strong>Calendar panel nested in trigger</strong> — Date Picker - Group is composed inline rather than being a separate overlay. Blocks mapping to native <code>DatePicker</code> / <code>DatePickerDialog</code>.\n          <span class=\"tag-open\">Open</span>",
-          "delta": {
-            "kind": "open",
-            "label": "C4 Open"
-          }
+          "body": "<strong>C2 — one state setting.</strong> <code>isDisabled</code> (<code>Yes</code>/<code>No</code>) folded into <code>State</code>, leaving <code>State</code> × <code>isFilled</code> orthogonal and complete. Boolean values lowercased.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
         },
         {
-          "body": "<strong>No Error or Pressed state</strong> — Siblings (Input Field, Select Field, Dropdown) have Error. Pressed is required for touch feedback parity.\n          <span class=\"tag-open\">Open</span>",
-          "delta": {
-            "kind": "open",
-            "label": "C5 Open"
-          }
+          "body": "<strong>C6 — the calendar glyph is a vector</strong> inside a <code>Calendar</code> icon instance, no longer a raster image.",
+          "delta": { "kind": "resolved", "label": "C6 resolved" }
         },
         {
-          "body": "<strong>Calendar glyph is a raster image</strong> — <code>shape_full</code> image reference, not a vector icon instance. Month chevrons also use raster <code>shape_full</code> assets.\n          <span class=\"tag-open\">Open</span>",
-          "delta": {
-            "kind": "open",
-            "label": "C6 Open"
-          }
+          "body": "<strong>C1 — Disabled hugs its content.</strong> It was 26px taller than Default because it sized around Dropdown's empty <code>description</code> frame, so disabling a field shifted the form.",
+          "delta": { "kind": "resolved", "label": "C1 resolved" }
         },
         {
-          "body": "<strong>Code Connect mappings</strong> — Not registered. Blocked by C1/C2/C4/C5/C6.\n          <span class=\"tag-open tag-c7\">Open</span>",
-          "delta": {
-            "kind": "open",
-            "label": "C7 Open"
-          }
+          "body": "<strong>C1 — the description frame still overflows</strong> at 366 wide inside a 312 field. It cannot fill width while hidden; raised against <code>Dropdown - Generic</code>.",
+          "delta": { "kind": "open", "label": "C1 open" }
+        },
+        {
+          "body": "<strong>C6 — unused Dropdown slots are hand-hidden.</strong> A currency prefix and a raster flag ride along, switched off manually rather than by property.",
+          "delta": { "kind": "partial", "label": "C6 partial" }
         }
       ]
     }

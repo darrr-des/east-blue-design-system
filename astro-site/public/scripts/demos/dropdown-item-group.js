@@ -1,46 +1,76 @@
-/* Auto-extracted from assessment-src/components/dropdown-item-group.html.
- * Powers the live-preview dropdowns/toggles for the dropdown-item-group component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs dropdown-item-group
+/* Powers the live-preview controls for the dropdown-item-group
+ * (Select Group) component page. Rebuilt for the 2026 Working File
+ * (node 7947:111630).
+ *
+ * BorderType and Density both shape the slot's DEFAULT CONTENT in Figma
+ * rather than being applied to whatever fills it — a component property
+ * cannot reach inside a slot. The preview reproduces the result, not the
+ * mechanism; the constraint itself is written up on the page.
+ *
+ * The component ships seven rows; the preview shows five so the card
+ * fits the page without scrolling.
  */
-/* ── Dropdown Item Group Component JS ──────────────────────────────── */
-function _digBuildSvg() {
-  var w = 366;
-  var rowH = 50;
-  var rows = 8;
-  var totalH = rowH * rows;
-  var bg = '#FFFFFF';
-  var divider = '#E5EBF4';
-  var labelColor = '#0A2757';
-  /* Card wrapper with subtle CSS box-shadow (matches date-picker-group pattern). */
-  var wrap = '<div style="display:inline-block;border-radius:6px;box-shadow:0 6px 12px -8px rgba(2,14,34,.16);background:#FFFFFF;">';
-  var s = '<svg width="' + w + '" height="' + totalH + '" viewBox="0 0 ' + w + ' ' + totalH + '" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:6px;">';
-  s += '<rect x="0.5" y="0.5" width="' + (w - 1) + '" height="' + (totalH - 1) + '" rx="5.5" fill="' + bg + '" stroke="' + divider + '" stroke-width="1"/>';
-  /* rows */
-  for (var i = 0; i < rows; i++) {
-    var y = i * rowH;
-    s += '<text x="14" y="' + (y + 30) + '" font-family="\'Proxima Soft\', system-ui" font-size="18" font-weight="600" fill="' + labelColor + '">Dropdown Item</text>';
-    /* divider between rows (skip below last row) */
-    if (i < rows - 1) {
-      s += '<line x1="0" y1="' + (y + rowH) + '" x2="' + w + '" y2="' + (y + rowH) + '" stroke="' + divider + '" stroke-width="1"/>';
-    }
+
+var _SGROUP_GEAR =
+  '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+  '<path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="#0A2757" stroke-width="1.6"/>' +
+  '<circle cx="12" cy="12" r="9" stroke="#0A2757" stroke-width="1.6"/></svg>';
+
+var _SGROUP_ROWS = 5;
+
+function _sgroupRender(o) {
+  var border = o.border || 'middleinset';
+  var density = o.density || 'compact';
+
+  var h = '<div class="eb-preview-sgroup eb-preview-sgroup--' + border +
+          ' eb-preview-sgroup--' + density + '">';
+  for (var i = 0; i < _SGROUP_ROWS; i++) {
+    h += '<div class="eb-preview-sgroup__row">';
+    h += '<span class="eb-preview-sgroup__lead">' + _SGROUP_GEAR + '</span>';
+    h += '<span class="eb-preview-sgroup__label">Text</span>';
+    h += '</div>';
   }
-  s += '</svg>';
-  return wrap + s + '</div>';
+  h += '</div>';
+  return h;
 }
 
-function updateDropdownItemGroupDemo() {
-  var el = document.getElementById('dig-demo-preview');
-  if (el) el.innerHTML = _digBuildSvg();
-  var spec = document.getElementById('dig-default-preview');
-  if (spec) spec.innerHTML = _digBuildSvg();
+function _sgroupRead() {
+  var v = function (id, fb) { var el = document.getElementById(id); return el ? el.value : fb; };
+  return {
+    border: v('sgroup-ctrl-border', 'middleinset'),
+    density: v('sgroup-ctrl-density', 'compact')
+  };
 }
 
-function _digInit() {
-  updateDropdownItemGroupDemo();
+function _sgroupUpdate() {
+  var el = document.getElementById('sgroup-demo-preview');
+  if (el) el.innerHTML = _sgroupRender(_sgroupRead());
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', _digInit);
-} else {
-  _digInit();
+/* ── Spec card state ─────────────────────────────────────────────── */
+var _specCards = {
+  default: { border: 'middleinset', density: 'compact' }
+};
+window._specCards = _specCards;
+
+function updateSpecCard(cardKey, prop, value) {
+  var card = _specCards[cardKey];
+  if (!card) return;
+  card[prop] = value;
+  var host = document.getElementById('sgroup-spec-' + cardKey);
+  if (host) host.innerHTML = _sgroupRender(card);
 }
+window.updateSpecCard = updateSpecCard;
+
+function _sgroupInit() {
+  _sgroupUpdate();
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'border', _specCards[k].border);
+  });
+}
+
+(function () {
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _sgroupInit);
+  else _sgroupInit();
+  document.addEventListener('astro:page-load', _sgroupInit);
+})();

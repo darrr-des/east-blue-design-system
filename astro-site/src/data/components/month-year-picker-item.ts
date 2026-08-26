@@ -29,19 +29,19 @@ export const monthYearPickerItem: ComponentData = {
     "description": "The 100×32 selectable cell used inside the Month and Year views of Date Picker - Group.",
     "badges": [
       {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "remove",
+        "label": "Remove"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "na",
+        "label": "Not Applicable"
       }
     ],
     "navGroup": "Date Picker",
     "verdict": {
-      "kind": "consolidate",
-      "title": "Consolidate into a unified Picker Cell",
-      "text": "This cell and Date Picker - Item are the same selectable-cell primitive at different pixel sizes (100×32 vs 32×32) with identical state semantics (Default / Today / Selected). Collapse both into a single <code>Picker Cell</code> with <code>kind: day | month | year</code> + <code>state: default | today | selected | disabled</code>. This cell currently lacks Disabled, Pressed, and Focused entirely — the unification should rectangularize the state axis across all kinds."
+      "kind": "remove",
+      "title": "Superseded by Date Picker - Cell",
+      "text": "Superseded by <a href=\"/components/date-picker-cell\">Date Picker - Cell</a>. This cell and <a href=\"/components/date-picker-item\">Date Picker - Item</a> folded into one component at node <code>5943:41825</code> as <code>Kind=MonthYear</code>. The Disabled version it never had now exists, the inner frame that was always called <code>Month</code> is now <code>Container</code>, and the Today ring matches the day cell exactly. Kept as a record of the assessment that drove the consolidation."
     }
   },
   "overview": {
@@ -122,130 +122,8 @@ export const monthYearPickerItem: ComponentData = {
       }
     ],
     "resolved": [],
-    "open": [
-      {
-        "headline": "Sibling duplication with Date Picker - Item.",
-        "body": "The two components are the same selectable-cell primitive at different pixel sizes (100×32 vs 32×32) with overlapping state semantics (Default, Today, Selected). Maintaining them as siblings doubles the variant surface and forces the Group panel to instance-swap based on view.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Inner frame is always named <code>Month</code> — even when it's the year cell.",
-        "body": "The same Figma component is instance-swapped as both a month cell (Jan, Feb, Mar…) and a year cell (2024, 2025…), but the inner auto-layout frame is named <code>Month</code> in all three variants. The layer name lies for half the instances.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "State axis is narrower than the sibling day cell.",
-        "body": "The day cell has <code>Type</code> × <code>State=Enabled|Disabled</code>. This cell has a single <code>Type</code> axis with no State at all. Cells in the same family should share the same state shape — even if specific values differ by <code>kind</code>.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Tokens named <code>main/date-picker/day/*</code> are used for non-day cells.",
-        "body": "The cell's bg and label resolve to <code>main/date-picker/day/color/selected/*</code> and <code>main/date-picker/day/color/unselected/*</code> — but it's rendering a month or year, not a day. The token scope is misleadingly named. Either rename to <code>main/date-picker/cell/*</code> or split into <code>main/picker-cell/{day|month|year}/*</code>.",
-        "tag": {
-          "criterion": "C3",
-          "label": "C3 · Token Coverage"
-        }
-      },
-      {
-        "headline": "Cell has no 1:1 native primitive.",
-        "body": "Both SwiftUI <code>DatePicker(.graphical)</code> and Material 3 <code>DatePicker</code> render their own month/year views and don't accept a custom cell view. This Figma component is therefore a reference spec, not a mappable component — should be marked as such or merged into the Picker Cell family.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "No Disabled variant.",
-        "body": "When a parent limits the pickable date range, disabled months or years have no token-bound appearance on this cell. The sibling day cell at least ships Disabled on Default and Today — this cell has no Disabled form for any Type.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "No Pressed, Hover, or Focused variants.",
-        "body": "Tap feedback (iOS ripple / Android state layer) and keyboard focus ring are not defined. Native pickers supply these automatically, but any custom wrapper has no tokens to apply.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Today + Selected collision is unresolved.",
-        "body": "There is no variant for the common case of the current month/year being the selected one. The design team should decide which presentation wins (ring + fill, fill-only, or a hybrid) and publish a variant.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Today ring thickness drifts from the sibling day cell.",
-        "body": "This cell uses a 1px border; the sibling day cell uses a 1.5px ring. Same visual pattern, different stroke weight — selection/today emphasis should be one token shared across Picker Cell kinds, not per-component values.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "Code Connect mappings not registered.",
-        "body": "Blocked by the native-pickers-own-it direction (C4) and by the pending Picker Cell family unification (C1). Map only once the unified component exists and the wrapper surface is confirmed.",
-        "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
-        }
-      }
-    ],
-    "recommendations": [
-      {
-        "headline": "Family — Consolidate Date Picker - Item + Month and Year Picker - Item into ONE <code>Picker Cell</code>.",
-        "body": "Both are selectable cells with identical state semantics (Default / Today / Selected); only pixel size (32×32 vs 100×32) and corner radius (30px pill vs 8px rounded-rect) differ. Proposed schema: <code>kind = day | month | year</code> + <code>state = default | today | selected | disabled</code> (plus <code>range-middle | prev-next</code> exposed only when <code>kind=day</code>). Collapses 10 sibling variants across two components into one component with two clean axes. A single native <code>PickerCell</code> composable renders the correct dimensions, radius, and typography per <code>kind</code>.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Property — Add a <code>State</code> axis to match the day cell.",
-        "body": "Even before consolidation, promote the single-axis <code>Type</code> schema into <code>Type × State = Enabled | Disabled | Pressed | Focused</code> to align with the day cell's shape. At minimum, publish <code>Disabled</code> variants for Default, Today, and Selected so the cell is usable in a date-range-restricted picker.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Rename — Fix the inner frame name.",
-        "body": "The inner auto-layout frame is named <code>Month</code> in all three variants, but the same component is instance-swapped as the year cell too. Rename to <code>Cell</code> or <code>Label Container</code> so it reads true for both Month and Year views.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Token — Rename <code>main/date-picker/day/*</code> to <code>main/date-picker/cell/*</code>.",
-        "body": "The shared token scope is named <code>day</code> but also resolves for month and year cells. Rename (or split into <code>main/picker-cell/{day|month|year}/*</code> if treatments intentionally diverge) so the token name honestly describes what it styles.",
-        "tag": "Token"
-      },
-      {
-        "headline": "Token — Share a selection-emphasis token across Picker Cell kinds.",
-        "body": "Create <code>main/picker-cell/selection/*</code> tokens that resolve to either \"fill\" or \"ring\" based on <code>kind</code>, and harmonise the Today ring stroke (1px here, 1.5px on the day cell) on a single <code>border/picker-cell/today</code> token.",
-        "tag": "Token"
-      },
-      {
-        "headline": "State — Add Pressed, Focused, and Today+Selected variants.",
-        "body": "Extend the state coverage with Pressed and Focused (needed for any custom wrapper rendering tap / keyboard affordances), and publish a decision variant for the common \"today is also selected\" case.",
-        "tag": "State"
-      },
-      {
-        "headline": "A11y — Flag the 32px height as below minimum target.",
-        "body": "The 100×32 cell is below WCAG 2.5.5 minimum 44×44 on the vertical axis. If a custom wrapper is ever built, pad the tap zone vertically so the hit area meets 44px. Document on the component so consumers don't ship the tight target outside the native picker context.",
-        "tag": "A11y"
-      },
-      {
-        "headline": "Docs — Mark as reference, not a production component.",
-        "body": "Given that both platforms render their own month/year views inside the native <code>DatePicker</code>, this cell is a visual reference for the token-styled wrapper, not a component developers rebuild. Add a description banner and a <code>_reference</code> prefix once the Picker Cell family unification lands.",
-        "tag": "Docs"
-      }
-    ]
+    "open": [],
+    "recommendations": []
   },
   "style": {
     "heading": "Types",

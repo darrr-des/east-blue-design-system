@@ -27,19 +27,19 @@ export const datePickerGroup: ComponentData = {
     "description": "The calendar surface that hosts the Day/Month/Year picker grids.",
     "badges": [
       {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "remove",
+        "label": "Remove"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "na",
+        "label": "Not Applicable"
       }
     ],
     "navGroup": "Date Picker",
     "verdict": {
-      "kind": "consolidate",
-      "title": "Consolidate into native pickers — don't redraw",
-      "text": "Both iOS (<code>DatePicker(.graphical)</code>) and Material 3 (<code>DatePicker</code>/<code>DatePickerDialog</code>) render the calendar surface with full locale, keyboard, and a11y support built in. The DS should ship a tokenized wrapper, not a from-scratch Figma redraw. Current component has raster chevrons (C6), no cell state coverage (C5), day-of-week layer names (C1), misleading <code>Type</code> axis (C2), a fake drawn scrollbar (C4), and asymmetric Month navigation (C4)."
+      "kind": "remove",
+      "title": "Superseded by Date Picker - Calendar",
+      "text": "Superseded by <a href=\"/components/date-picker-calendar\">Date Picker - Calendar</a>. The calendar surface was rebuilt at node <code>6769:105110</code> and is now composed from <a href=\"/components/date-picker-cell\">Date Picker - Cell</a> and <a href=\"/components/date-picker-header\">Date Picker - Header</a> instances rather than redrawn. <code>Type</code> became <code>Mode = Day | Year | Month</code>, the chevrons are icon instances, and Month gained its missing chevron. Kept as a record of the assessment that drove the consolidation."
     }
   },
   "overview": {
@@ -127,140 +127,8 @@ export const datePickerGroup: ComponentData = {
       }
     ],
     "resolved": [],
-    "open": [
-      {
-        "headline": "Day cells are named by weekday, not by index or role.",
-        "body": "The day rows contain layers literally named <code>Sunday</code>, <code>Monday</code>... <code>Saturday</code> instead of <code>day-cell[0]</code>...<code>day-cell[6]</code> or a single repeated instance. Weekday is runtime data, not a layer identity. This leaks through to Dev Mode handoff as nonsense layer names.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Weekday header rows are instance-swapped <code>Date Picker - Item</code>, not a dedicated weekday cell.",
-        "body": "The header row uses the same Date Picker - Item component as the day grid but with a <code>.base/date-item</code> inner naming. Handoff can't distinguish \"day label\" from \"weekday label\" from property alone.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "<code>Type = Date | Year | Month</code> is misleading.",
-        "body": "\"Date\" means the day grid, not a date value. Native convention and consumer mental model is <code>mode: day | month | year</code>. Rename the axis so code-connect params read <code>mode = .day</code> instead of <code>type = \"Date\"</code>.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "No 1:1 native primitive for the whole calendar surface.",
-        "body": "SwiftUI <code>DatePicker(selection:).datePickerStyle(.graphical)</code> and Material 3 <code>DatePicker(state:)</code> both render the full calendar internally. Keeping this as a drawn Figma component means the developer either ignores it (using native) or redraws it from scratch (defeating the purpose of a DS).",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "Year variant has a drawn fake <code>Scrollbar</code> rectangle.",
-        "body": "Node <code>18414:6277</code> is a <code>Scrollbar</code> layer with a 4px × 80px blue-tinted pill absolutely positioned over the grid. Scroll state can't be represented in static geometry — native pickers render the scroll indicator automatically. Remove, and use a scrollable container instead.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "Month variant is missing the Prev chevron.",
-        "body": "Node <code>18431:2826</code>'s header has only a Chevron Right — the left slot is an empty 24×24 box (<code>Chevron Left</code> removed). Date and Year variants both have bidirectional navigation; Month is asymmetric.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "Cell interaction states not defined on the grid.",
-        "body": "Only Default, Today (day), Selected (year/month), and Prev/Next (day-only, disabled-looking) exist. Missing: Pressed, Hover/Focus, In-range, Range-start, Range-end, Business-rule disabled (outside minDate/maxDate).",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Chevrons are raster <code>shape_full</code> assets.",
-        "body": "Both Prev and Next chevrons in every variant reference <code>https://www.figma.com/api/mcp/asset/...</code> image URLs rather than a vector icon instance. Won't scale, won't inherit token colors, can't be swapped. Reuse the DS chevron icon component.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "No dedicated picker surface token scope.",
-        "body": "The panel bg and border reuse <code>main/date-picker/month-header/color/bg</code> / <code>...border</code> as a stand-in — but the month-header is a sub-region, not the surface. Without a distinct <code>main/date-picker/group/*</code> scope, changing one visually mutates the other.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "Code Connect mappings not registered.",
-        "body": "Blocked by C1/C2/C4/C5/C6 and by the recommendation to wrap native pickers instead of mapping this drawn surface directly.",
-        "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
-        }
-      }
-    ],
-    "recommendations": [
-      {
-        "headline": "Composition — Wrap the native date pickers, don't redraw them.",
-        "body": "iOS: <code>DatePicker(selection:, displayedComponents:).datePickerStyle(.graphical)</code> renders the calendar surface with full locale, leap-year, keyboard, VoiceOver, and Dynamic Type support. Material 3: <code>DatePicker(state:)</code> + <code>DatePickerDialog</code> does the same. The DS should ship <code>EBDatePickerPanel</code> as a token-styled overlay of the native picker — not a from-scratch Figma surface. Documentation lives as a reference spec here; production code calls the native API.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Family — Unify Date Picker - Item and Month/Year Picker - Item into one <code>Picker Cell</code>.",
-        "body": "Day, month, and year cells inside this Group are all selectable cells with the same state semantics. Replace the two sibling components with one <code>Picker Cell</code> with <code>kind: day | month | year</code> and <code>state: default | today | selected | in-range | disabled</code>. Collapses 10 variants across 2 components into one component with two clean axes.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Property — Rename <code>Type</code> to <code>mode</code> and use native terminology.",
-        "body": "Change <code>Type = Date | Year | Month</code> to <code>mode = day | month | year</code>. Matches SwiftUI <code>displayedComponents</code> and Compose <code>DisplayMode</code>. Eliminates the ambiguity of \"Date\" meaning \"day grid\".",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Rename day cells by index/role, not by weekday.",
-        "body": "Replace the <code>Sunday</code>...<code>Saturday</code> layer names with a single repeated <code>day-cell</code> instance indexed by position, or with semantic roles (<code>header-cell</code>, <code>day-cell</code>, <code>spacer-cell</code>). Weekday is data, not layer identity.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Replace chevron raster glyphs with vector icon instances.",
-        "body": "Swap the two <code>shape_full</code> image references per variant (×3 = 6 assets) for the DS chevron icon component. Color-bind to <code>main/date-picker/month-header/color/icon</code> so hover/disabled states propagate.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Add Prev chevron to the Month variant.",
-        "body": "Navigate between year clusters (2015-2024, 2025-2034...) so Month behaves symmetrically with Date and Year.",
-        "tag": "State"
-      },
-      {
-        "headline": "Remove the drawn Scrollbar on the Year variant.",
-        "body": "Delete node <code>18414:6277</code> and its child rectangle. Mark the Grid frame as scrollable in the component spec (overflow-clip already applied) and document that native pickers render the scroll indicator automatically.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Add cell state coverage via Picker Cell axes.",
-        "body": "Expose Pressed, Hover/Focus, In-range, Range-start, Range-end, and business-rule Disabled on the unified Picker Cell component. Link to Figma tokens in a dedicated <code>main/date-picker/cell/*</code> scope.",
-        "tag": "State"
-      },
-      {
-        "headline": "Introduce a <code>main/date-picker/group/*</code> token scope for the surface.",
-        "body": "Separate the panel-level bg/border/shadow tokens from the month-header tokens so the two can be themed independently.",
-        "tag": "Token"
-      },
-      {
-        "headline": "Document as a reference spec, not a production component.",
-        "body": "Given the native-pickers-own-this direction, this Figma component should be annotated as a <em>visual reference</em> for designers reviewing what the native picker will look like in GCash theme — not as a component developers are expected to rebuild. Add a description banner in Figma and mark it <code>_reference</code>.",
-        "tag": "Docs"
-      }
-    ]
+    "open": [],
+    "recommendations": []
   },
   "style": {
     "heading": "Types",
