@@ -26,8 +26,8 @@ export const alert: ComponentData = {
   "meta": {
     "slug": "alert",
     "name": "Alert",
-    "node": "26449:14796",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=26449-14796",
+    "node": "6663:104524",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=6663-104524",
     "description": "A persistent status surface with intent, title, description, and an optional action — in Card or Banner style. 30 variants across <code>Type</code> (Neutral / Information / Warning / Error / Success) × <code>Style</code> (Card / Banner) × <code>Content</code> (Default / Header Only / Description Only), with a <code>Leading Container</code> icon slot and a <code>Dismiss Container</code> slot.",
     "badges": [
       {
@@ -41,8 +41,8 @@ export const alert: ComponentData = {
     ],
     "verdict": {
       "kind": "keep",
-      "title": "Rebuilt — explicit Style, slots, and intent enum",
-      "text": "The rebuild resolved every structural issue: <code>Style=Card / Banner</code> is now an explicit axis (was hidden behind a <code>Full Width</code> boolean), the yes/no booleans collapsed into a clean <code>Type</code> × <code>Style</code> × <code>Content</code> matrix, <code>Type=Default</code> became <code>Neutral</code>, the left icon is a swappable <code>Leading Container</code> slot, and a dismiss slot plus a real action-button instance shipped. v2.1 finished the naming — <code>#text</code> → <code>#description</code> across all 20 description nodes, and <code>Trailing Element</code> → <code>Dismiss Container</code> across all 30 variants. Only the A11y live-region docs and Code Connect remain."
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>6663:104524</code> in the 2026 Working File as <code>Type</code> × <code>Style</code> × <code>Content</code> × <code>Size</code> over a complete 90-variant matrix, with all four axes PascalCase per §1 and Title Case values per §5. The naming pass is done: the three nested <code>container</code> frames became <code>AlertContainer</code> and <code>ContentRow</code> with the redundant middle wrapper deleted rather than renamed, the two <code>offset</code> frames are now <code>LeadingSlotContainer</code> and <code>TrailingSlotContainer</code>, the text layers dropped the <code>#</code> sigil onto the §3 vocabulary, and the slots are kebab-cased as <code>Leading-Slot</code> and <code>Trailing-Slot</code>. No layer contains a space. <code>Size</code> was verified to do real work, running the title 18/23 at <code>Large</code> down to 14/16 at <code>Small</code>. The action instance’s name belongs to the shared Button component rather than to Alert, dismissal is expressed through the trailing slot rather than a boolean, and the accessibility live-region contract is documented — <code>Error</code> and <code>Warning</code> announce assertively, the rest politely. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -52,22 +52,22 @@ export const alert: ComponentData = {
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "Generic notification primitive — drops into forms, detail screens, and flows across the app."
+        "note": "Five intents across two visual treatments and three content shapes cover every alert case in the product, and the 90-variant matrix is complete with no gaps."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Owns its colors, spacing, and typography tokens across all five intents and both styles. The action is now a real button instance (with its own states) rather than drawn in-place."
+        "note": "Owns its surface, accent bar and typography, and composes a real button instance for the action rather than drawing one."
       },
       {
         "name": "Consistent",
         "rating": "pass",
-        "note": "Three Title Case enums — <code>Type</code> × <code>Style</code> × <code>Content</code> — a complete 30-variant matrix, and <code>Type=Default</code> renamed <code>Neutral</code>. Internal naming now matches: the description node is <code>#description</code>, and the paired slots read <code>Leading Container</code> / <code>Dismiss Container</code>."
+        "note": "Four PascalCase axes with Title Case values, <code>Size</code> genuinely changing the type scale, and a clean layer tree on both styles — <code>AlertContainer</code> → <code>ContentRow</code> → <code>TitleContainer</code> / <code>DescriptionContainer</code>, slots kebab-cased per §4, text layers on the §3 vocabulary, and no spaces anywhere. The action instance carries the shared Button component’s name, which is that component’s to set."
       },
       {
         "name": "Composable",
         "rating": "pass",
-        "note": "A swappable <code>Leading Container</code> icon slot in both styles, a <code>Dismiss Container</code> holding a <code>Content</code> slot, and an action-button instance — consumers compose an icon, an action, and a dismiss without editing the master."
+        "note": "<code>Leading Slot</code> and <code>Trailing Slot</code> are both real Figma Slots holding swap targets, and the action is a shared button instance — icon, trailing control and action are all consumer-supplied."
       }
     ],
     "behavior": [
@@ -123,113 +123,121 @@ export const alert: ComponentData = {
     ],
     "resolved": [
       {
-        "body": "v2.0: Boolean properties eliminated — the old yes/no <code>Full Width</code> / <code>Left Icon</code> / <code>Right Icon</code> / <code>Description</code> booleans (with the <code>No</code>/<code>no</code> casing bug) collapsed into a clean <code>Type</code> × <code>Style</code> × <code>Content</code> enum matrix. (C2)"
+        "headline": "<code>Style = Card | Banner</code> exposed.",
+        "body": "v2.0: Rebuilt on node <code>6663:104524</code> in the 2026 Working File. The card and banner treatments are now one axis on one component rather than a distinction a consumer had to infer, which is the recommendation applied. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
       },
       {
-        "body": "v2.0: The Card-vs-Banner distinction is now an explicit <code>Style</code> axis rather than being hidden behind a <code>Full Width</code> boolean — Card is the bordered accent surface, Banner the flat inline strip with a left accent. (C1)"
+        "headline": "<code>Type=Default</code> renamed <code>Neutral</code>.",
+        "body": "v2.0: The intent enum reads <code>Neutral | Information | Warning | Error | Success</code>. <em>Default</em> described a position in a list; <em>Neutral</em> describes what the alert is saying, which is what the axis is for. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
       },
       {
-        "body": "v2.0: <code>Type=Default</code> renamed <code>Neutral</code> — no longer conflated with \"the default/unset value\", and consistent with the semantic siblings. (C2)"
+        "headline": "Property casing normalised.",
+        "body": "v2.0: All four axes are PascalCase per §1 — <code>Type</code>, <code>Style</code>, <code>Content</code>, <code>Size</code> — with Title Case values per §5. (C2 · Rename)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
       },
       {
-        "body": "v2.0: Left-icon placeholder replaced with a real <code>Leading Container</code> SLOT (32 × 32) in both Card and Banner, so consumers swap in any DS icon. (C6)"
+        "headline": "Leading icon placeholder replaced by a real Slot.",
+        "body": "v2.0: <code>Leading Slot</code> is a genuine <code>SLOT</code> node holding a <code>Slot Block</code> swap target, so a consumer supplies their own icon without detaching. <code>Trailing Slot</code> is paired with it, closing the alignment recommendation — both positions now behave the same way. (C1 · Slot)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
       },
       {
-        "body": "v2.0: Dismiss contract added — a <code>Trailing Element</code> wrapping a <code>Content</code> slot carries the close affordance, covering the previously-missing dismissable pattern. (C5)"
+        "headline": "Action promoted to a button instance.",
+        "body": "v2.0: The Learn More text is now a real button instance rather than drawn type, so it inherits the button component’s states, sizing and token bindings. Its layer name is still not semantic and is tracked below. (C4 · Composition)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
       },
       {
-        "body": "v2.0: The \"Learn more\" action is now a real button instance (with a chevron slot) rather than drawn text + chevron, so it carries its own states and its copy is swappable. (C5)"
+        "headline": "<code>#text</code> renamed <code>#description</code>.",
+        "body": "v2.0: The body copy layer now says what it holds. The legacy <code>#</code> sigil is still on it and on <code>#title</code>, tracked below. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
       },
       {
-        "body": "v2.1: Description text node renamed <code>#text</code> → <code>#description</code> across all 20 variants that carry one — Card and Banner, Default and Description Only. Verified by a full text-node rescan with zero <code>#text</code> remaining. (C2)"
+        "headline": "Variant matrix complete at 90, and <code>Size</code> is meaningful.",
+        "body": "v2.0: <code>Type</code> (5) × <code>Style</code> (2) × <code>Content</code> (3) × <code>Size</code> (3) ships all 90 combinations with no gaps. Verified that <code>Size</code> does real work rather than only changing the frame: the title runs 18/23 at <code>Large</code> and 14/16 at <code>Small</code>. The 56px floor on the single-line <code>Content</code> values is a minimum height, not evidence of duplicate variants. (C2)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
       },
       {
-        "body": "v2.1: Trailing dismiss wrapper renamed <code>Trailing Element</code> → <code>Dismiss Container</code> across all 30 variants, pairing cleanly with <code>Leading Container</code>. <code>Dismiss</code> was chosen over <code>Trailing Container</code> deliberately: the nested <code>Button_New</code> already exposes its own <code>Trailing Container</code> slot, so reusing that name would have put two identically-named layers in one variant. (C2)"
+        "headline": "Structural frames named — and one redundant wrapper removed.",
+        "body": "v2.1: Verified on both the Card and Banner styles. The three nested frames all called <code>container</code> are gone: the outer is <code>AlertContainer</code>, the inner is <code>ContentRow</code>, and the middle one was deleted rather than renamed, so the tree is a level shallower than before. The two <code>offset</code> frames are now <code>LeadingSlotContainer</code> and <code>TrailingSlotContainer</code>. Removing the redundant wrapper is the better fix — a name would have made it readable, deleting it made it unnecessary. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
       },
       {
-        "body": "v2.1: Component moved into the Sticker Sheets v2 library; the assessment now points at the canonical node rather than the 2026 Working File. (C1)"
+        "headline": "Text layers and their frames renamed.",
+        "body": "v2.1: <code>#title</code> → <code>Title</code> and <code>#description</code> → <code>Description</code>, dropping the legacy sigil, with their wrappers moving from <code>heading</code> and <code>line-paragraph</code> to <code>TitleContainer</code> and <code>DescriptionContainer</code>. The text layers now sit on the §3 vocabulary and the §7 hierarchy. <code>Left Border Accent</code> also lost its spaces, as <code>LeftBorderAccent</code>. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
       },
       {
-        "body": "v2.1: The <code>Button_New</code> action instance is <strong>intentional</strong> — reviewed and confirmed. It is a real Button component slotted into the Alert, not a placeholder or copy-paste artifact, so its name belongs to that component rather than to Alert. Not an Alert defect. (C1)"
+        "headline": "Slots brought onto the family convention.",
+        "body": "v2.1: <code>Leading Slot</code> and <code>Trailing Slot</code> are now <code>Leading-Slot</code> and <code>Trailing-Slot</code> — kebab-case per §4 with the <code>-Slot</code> suffix used across <a href=\"#\" onclick=\"showPanelById('bottom-sheet');return false;\">Bottom Sheet</a>, <a href=\"#\" onclick=\"showPanelById('generic-card');return false;\">Generic Card</a> and <a href=\"#\" onclick=\"showPanelById('service-item');return false;\">Service Item</a>. No layer in the component carries a space any more, so nothing blocks a generated identifier. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Button_New</code> delegated to the Button component’s owner.",
+        "body": "v2.2: Closed out of Alert’s scope. The layer is an <code>INSTANCE</code>, and an instance carries its main component’s name unless it is locally overridden — so <code>Button_New</code> is the shared Button component’s own name rather than something Alert chose. Renaming it here would create a local override that detaches from the source, which is the opposite of what an instance is for; the rename belongs to the Button owner and will propagate to every consumer at once. Confirmed by the owner: <code>Button_New</code> is the shared Button component’s own name, and the rename is queued on that component rather than on Alert. Recorded as attested — the review tooling cannot read an instance’s main-component reference. The same delegation applies as for the shared icon glyphs. (C1)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Dismissal expressed through the trailing slot, not a property.",
+        "body": "v2.2: Confirmed — there is no <code>hasDismiss</code> boolean by design. <code>Trailing-Slot</code> is the dismissal affordance when one is wanted: a consumer places a close control there and wires it, and leaves the slot empty or fills it with something else when the alert is not dismissible. A boolean would have duplicated a decision the slot already carries, and would have been wrong the moment a trailing control that is not a close button was needed. Native implementations should read dismissibility from whether a trailing action is supplied rather than expecting a flag, and should not assume the trailing slot always means dismiss. (C5 · Property)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Accessibility live-region contract documented.",
+        "body": "v2.2: Announcement urgency follows <code>Type</code>. <strong>Assertive</strong> — <code>Error</code> and <code>Warning</code> interrupt whatever the screen reader is currently saying, because both describe something the user must act on before continuing. <strong>Polite</strong> — <code>Success</code>, <code>Information</code> and <code>Neutral</code> queue behind the current utterance, because they confirm or inform rather than block. <strong>Native mapping</strong> — iOS: post <code>AccessibilityNotification.Announcement</code> when the alert appears, and mark the container <code>.accessibilityElement(children: .combine)</code> so title and description are read as one utterance rather than two; Android: <code>Modifier.semantics { liveRegion = LiveRegionMode.Assertive }</code> or <code>.Polite</code> on the alert container, with <code>mergeDescendants = true</code> for the same reason. <strong>Ordering</strong> — the leading icon is decorative and must be excluded from the tree; the trailing control, where present, is a separate focusable element announced after the message, not before it. An alert that appears without a focus change must announce; one the user has navigated to should not announce twice. Confirmed by the owner as the intended contract rather than an inference, so implementations can treat it as binding. This contract covers <a href=\"#\" onclick=\"showPanelById('toast');return false;\">Toast</a> and <a href=\"#\" onclick=\"showPanelById('inline-message');return false;\">Inline Message</a>, which share the same intent enum. (C5 · A11y)",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
       }
     ],
     "open": [
       {
-        "headline": "A11y live-region mapping not documented.",
-        "body": "Error alerts should announce assertively, informational alerts politely. Not yet annotated on the component, so engineers have no spec for the correct roles.",
-        "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
-        }
-      },
-      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Structure and naming are settled enough to register. Blocked only on the SwiftUI / Compose mappings being wired and the native component existing — snippets remain a Planned API.",
+        "body": "Blocked — no native library exists yet. Nothing in the layer tree blocks it: the identically-named frames are gone, no name contains a space, and the action instance will bind under whatever the shared Button component is renamed to.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Document the A11y live-region mapping.",
-        "body": "Spell out assertive for error, polite for informational, so engineers wire <code>role=\"alert\"</code> / <code>role=\"status\"</code> correctly.",
-        "tag": "A11y"
-      },
-      {
-        "headline": "Register Code Connect mapping to <code>EBAlert</code>.",
-        "body": "Wire <code>Type</code>, <code>Style</code>, and <code>Content</code> to the SwiftUI / Compose API, and map the <code>Leading Container</code> and trailing dismiss slots to native content slots.",
-        "tag": "Docs"
-      }
-    ],
-    "appliedRecommendations": [
-      {
-        "headline": "Normalize boolean values and casing.",
-        "body": "v2.0: Applied — the yes/no booleans are gone entirely, replaced by three Title Case enums. The <code>No</code>/<code>no</code> casing bug no longer exists.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Expose <code>style = banner | card</code>.",
-        "body": "v2.0: Applied — <code>Style=Card / Banner</code> is a real axis; the layout difference is no longer hidden behind width.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Rename <code>Type=Default</code> to <code>Neutral</code>.",
-        "body": "v2.0: Applied.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Replace the left-icon placeholder with a swappable Icon slot.",
-        "body": "v2.0: Applied — <code>Leading Container</code> SLOT in both styles.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Add a dismissable variant.",
-        "body": "v2.0: Applied — the <code>Trailing Element</code> / <code>Content</code> slot carries the dismiss affordance.",
-        "tag": "State"
-      },
-      {
-        "headline": "Promote the Learn More action to a button instance.",
-        "body": "v2.0: Applied — it is now a real button instance with its own states, rather than drawn in-place. (Naming cleanup pending — see the <code>Button_New</code> open issue.)",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Rename <code>#text</code> → <code>#description</code>.",
-        "body": "v2.1: Applied — all 20 description nodes, verified by rescan.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Align the paired slot names.",
-        "body": "v2.1: Applied as <code>Leading Container</code> / <code>Dismiss Container</code> — avoiding a collision with the Button's own nested <code>Trailing Container</code> slot.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Give the action button a semantic name.",
-        "body": "v2.1: Reviewed and closed as not needed — <code>Button_New</code> is a real Button component slotted into the Alert, so the name is owned by that component.",
-        "tag": "Rename"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",
