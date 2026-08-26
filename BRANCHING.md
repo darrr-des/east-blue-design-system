@@ -40,16 +40,19 @@ git config user.email "you@email.com"
 
 ## Branch naming
 
-Pick the prefix that matches what you're doing:
+**One branch per designer.** Everything you push goes on your own branch — assessments, fixes, docs, all of it.
 
-| Prefix | Use for | Example |
-|---|---|---|
-| `review/` | A component assessment | `review/segmented-control-button` |
-| `fix/` | Correcting something broken | `fix/dropdown-token-paths` |
-| `docs/` | Guides, README, methodology | `docs/screen-normalization` |
-| `feat/` | New site functionality | `feat/search-filters` |
+| Designer | Branch |
+|---|---|
+| Dar | `darrr-des` |
+| Wilmer | `wilmer-design` |
+| Kurt | `kurteous-frost` |
 
-For component reviews, use the **component slug** — the same name as its data file. A review of `astro-site/src/data/components/empty-state.ts` goes on `review/empty-state`. One component, one branch, one pull request.
+You keep that branch for good. It is not deleted after a merge — sync it with `main` and carry on.
+
+This replaces the earlier `review/<component>` convention. Per-component branches produced ten open branches at once with no clear owner, and every one of them had to be merged separately. One branch per person keeps the list readable and makes it obvious at a glance whose work is waiting.
+
+> **Why not per-component?** It reads tidier in the abstract, but `main` requires the `visual` check to pass and requires your branch to be up to date before merging. Ten branches means ten syncs and ten seven-minute check runs, and any one of them going red blocks only itself while the rest go stale. One branch per person is one sync, one check, one merge.
 
 > **Gotcha — don't use a bare name as a namespace.** If a branch called `yourname` exists, git will refuse to create `yourname/anything`:
 >
@@ -73,13 +76,14 @@ git pull
 
 Always pull first. Branching from a stale `main` means resolving conflicts later.
 
-### Step 2 — Create your branch
+### Step 2 — Switch to your branch
 
 ```bash
-git switch -c review/empty-state
+git switch darrr-des        # your own branch
+git merge origin/main       # catch it up to main
 ```
 
-`-c` means "create". You're now on the new branch. It starts as an exact copy of `main`.
+You already have a branch — you keep the same one. Merging `main` into it first means you are working from current data, and that a pull request from it will be mergeable.
 
 ### Step 3 — Do the work
 
@@ -113,16 +117,16 @@ Message format: `<prefix>: <what changed>` — `review:`, `fix:`, `docs:`, `feat
 ### Step 7 — Push
 
 ```bash
-git push -u origin review/empty-state
+git push
 ```
 
-`-u` links your local branch to the remote one, so future pushes are just `git push`.
+Your branch is already linked to its remote, so a plain `git push` is enough.
 
 Git prints a pull request link:
 
 ```
-Create a pull request for 'review/empty-state' on GitHub by visiting:
-   https://github.com/darrr-des/east-blue-design-system/pull/new/review/empty-state
+Create a pull request for 'darrr-des' on GitHub by visiting:
+   https://github.com/darrr-des/east-blue-design-system/pull/new/darrr-des
 ```
 
 ### Step 8 — Open the pull request
@@ -135,12 +139,12 @@ Describe what changed and why. If it's a component review, say which Figma node 
 
 The owner merges with **Squash and merge**, which collapses your commits into one on `main`. That merge is what deploys.
 
-Then clean up locally:
+Your branch stays — don't delete it. Catch it up to `main` ready for next time:
 
 ```bash
-git switch main
-git pull
-git branch -d review/empty-state
+git switch <your-branch>
+git fetch origin
+git merge origin/main
 ```
 
 ---
@@ -174,9 +178,9 @@ git stash pop    # bring it back
 **Someone else merged while you were working.** Your branch is now behind. Catch it up:
 
 ```bash
-git switch main && git pull
-git switch review/empty-state
-git merge main
+git fetch origin
+git switch <your-branch>
+git merge origin/main
 ```
 
 Resolve any conflicts, commit, push again. The pull request updates automatically.
@@ -184,7 +188,7 @@ Resolve any conflicts, commit, push again. The pull request updates automaticall
 **You committed to `main` by accident.** If you haven't pushed yet, move the commit onto a branch:
 
 ```bash
-git switch -c review/empty-state   # your commit comes along
+git switch <your-branch>           # your commit comes along
 git switch main
 git reset --hard origin/main       # reset main to match GitHub
 ```
@@ -217,8 +221,10 @@ Branches live on GitHub today:
 | Branch | Purpose |
 |---|---|
 | `main` | Production — auto-deploys, protected |
-| `wilmer-design`, `kurteous-frost` | Collaborator working branches |
-| `darrr-des` | Owner's personal working branch |
+| `darrr-des` | Dar's working branch |
+| `wilmer-design` | Wilmer's working branch |
+| `kurteous-frost` | Kurt's working branch |
+| `mhark-design`, `docs/review-guide-branching` | Kept for reference |
 | `astro-migration`, `enable-auth-gate` | Older feature branches, kept for reference |
 
 **`main` is protected.** Direct pushes are rejected for everyone, owner included — every change arrives through a pull request. The `visual` check must pass before a pull request can merge, and your branch must be up to date with `main` first. No approval from another person is required, so you can merge your own once it is green.
