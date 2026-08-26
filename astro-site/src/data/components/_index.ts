@@ -88,6 +88,7 @@ import { uploadFile } from './upload-file';
 import { verticalVoucher } from './vertical-voucher';
 import { viewOnlyField } from './view-only-field';
 import { visualPopup } from './visual-popup';
+import { voucher } from './voucher';
 import { voucherAsset } from './voucher-asset';
 import { voucherCardHorizontal } from './voucher-card-horizontal';
 import { voucherDetails } from './voucher-details';
@@ -182,6 +183,7 @@ export const componentMap: Record<string, ComponentData> = {
   'vertical-voucher': verticalVoucher,
   'view-only-field': viewOnlyField,
   'visual-popup': visualPopup,
+  'voucher': voucher,
   'voucher-asset': voucherAsset,
   'voucher-card-horizontal': voucherCardHorizontal,
   'voucher-details': voucherDetails,
