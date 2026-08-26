@@ -7503,3 +7503,182 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 [data-theme="dark"] .eb-preview-sldr__track { background: #2A3446; }
 [data-theme="dark"] .eb-preview-sldr--pressed .eb-preview-sldr__track { background: #333F54; }
 [data-theme="dark"] .eb-preview-sldr__knob { background: #E4EAF3; border-color: #2A3446; }
+
+
+/* ═════════════════════════════════════════════════════════════════════
+   LIST ITEM ASSET — live preview primitives
+   The leading marker in a list item. Eight versions on one Type axis.
+   Measurements mirror the 2026 Working File rebuild.
+   ═════════════════════════════════════════════════════════════════════ */
+
+.eb-preview-lia {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-lia__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* The marker box is the 20px alignment frame. Width varies by version —
+   16 for the icons, 12 for Numbered, 9 for Bullet and Square — which is
+   why markers are not mixed within one list. */
+.eb-preview-lia__marker {
+  position: relative;
+  flex: 0 0 auto;
+  width: 16px;
+  height: 20px;
+  box-sizing: border-box;
+}
+.eb-preview-lia__marker--narrow { width: 9px; }
+.eb-preview-lia__marker--number { width: 12px; }
+.eb-preview-lia__marker svg { display: block; }
+
+/* Bullet and Square sit 8 from the top — hand-set optical alignment
+   against the label's 20px line box, not geometric centring. */
+.eb-preview-lia__marker--bullet::before,
+.eb-preview-lia__marker--square::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 2px;
+  width: 5px;
+  height: 5px;
+  background: #90A8D0;
+}
+.eb-preview-lia__marker--bullet::before { border-radius: 50%; }
+.eb-preview-lia__marker--square::before { border-radius: 1px; }
+
+/* #number sits 4 from the top, same reasoning. */
+.eb-preview-lia__marker--number {
+  padding-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #90A8D0;
+}
+
+/* The slot ships empty by design — shown as its footprint so the
+   16 × 16 it reserves is visible rather than invisible. */
+.eb-preview-lia__marker--slot::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  border: 1px dashed #90A8D0;
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
+.eb-preview-lia__label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #445C85;
+}
+
+[data-theme="dark"] .eb-preview-lia__label { color: #C8CDD5; }
+
+/* ═════════════════════════════════════════════════════════════════════
+   LIST ITEM — live preview primitives
+   One row: leading marker, filling label, optional trailing slot.
+   Three ListLevel values set the indent. 2026 Working File rebuild.
+   ═════════════════════════════════════════════════════════════════════ */
+
+.eb-preview-litem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 294px;
+  max-width: 100%;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-litem__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 20px;
+}
+/* ListLevel is an indent and nothing else — the marker and the type are
+   identical at every level. */
+.eb-preview-litem__row--l1 { padding-left: 0; }
+.eb-preview-litem__row--l2 { padding-left: 16px; }
+.eb-preview-litem__row--l3 { padding-left: 32px; }
+
+/* The marker's width is set by whichever List Item Asset version sits in
+   the instance — which is why the label's start moves when it changes. */
+.eb-preview-litem__asset {
+  position: relative;
+  flex: 0 0 auto;
+  width: 16px;
+  height: 20px;
+  box-sizing: border-box;
+}
+.eb-preview-litem__asset--bullet,
+.eb-preview-litem__asset--square { width: 9px; }
+.eb-preview-litem__asset--numbered { width: 12px; }
+.eb-preview-litem__asset svg { display: block; }
+
+.eb-preview-litem__asset--bullet::before,
+.eb-preview-litem__asset--square::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 2px;
+  width: 5px;
+  height: 5px;
+  background: #90A8D0;
+}
+.eb-preview-litem__asset--bullet::before { border-radius: 50%; }
+.eb-preview-litem__asset--square::before { border-radius: 1px; }
+
+.eb-preview-litem__asset--numbered {
+  padding-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #90A8D0;
+}
+
+/* #label fills, so the indent comes out of its width rather than out of
+   the row's — which is what keeps every level the same total width. */
+.eb-preview-litem__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #445C85;
+}
+
+/* hasTrailing=false hides the container entirely; shown, it reserves a
+   16 × 16 slot that ships empty. */
+.eb-preview-litem__trailing {
+  position: relative;
+  flex: 0 0 auto;
+  width: 16px;
+  height: 20px;
+}
+.eb-preview-litem__trailing::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  border: 1px dashed #90A8D0;
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
+[data-theme="dark"] .eb-preview-litem__label { color: #C8CDD5; }
