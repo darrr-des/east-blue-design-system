@@ -40,19 +40,19 @@ export const datePickerItem: ComponentData = {
     "description": "The 32×32 selectable day cell rendered inside the Date Picker calendar grid.",
     "badges": [
       {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "remove",
+        "label": "Remove"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "na",
+        "label": "Not Applicable"
       }
     ],
     "navGroup": "Date Picker",
     "verdict": {
-      "kind": "consolidate",
-      "title": "Consolidate into a unified Picker Cell",
-      "text": "This cell and Month and Year Picker - Item are the same selectable-cell primitive at different pixel sizes (32×32 vs 100×32) with identical state semantics. Collapse both into a single <code>Picker Cell</code> with <code>kind: day | month | year</code> + <code>state: default | today | selected | range-middle | prev-next | disabled</code>. Also note: at 32×32 the cell is below WCAG's 44×44 minimum touch target (A11y)."
+      "kind": "remove",
+      "title": "Superseded by Date Picker - Cell",
+      "text": "Superseded by <a href=\"/components/date-picker-cell\">Date Picker - Cell</a>. This cell and <a href=\"/components/month-year-picker-item\">Month and Year Picker - Item</a> folded into one component at node <code>5943:41825</code>, where <code>Kind</code> tells the two apart and <code>Role</code> and <code>Selection</code> replace the old <code>Type</code> setting that mixed display role with selection state. Range values are now <code>Range-Start</code>, <code>Range-Middle</code> and <code>Range-End</code>. Kept as a record of the assessment that drove the consolidation."
     }
   },
   "overview": {
@@ -147,135 +147,8 @@ export const datePickerItem: ComponentData = {
       }
     ],
     "resolved": [],
-    "open": [
-      {
-        "headline": "Sibling duplication with Month and Year Picker - Item.",
-        "body": "The two components are the same selectable-cell primitive at different pixel sizes (32×32 vs 100×32) with overlapping state semantics (Default, Today, Selected). Maintaining them as siblings doubles the variant surface and forces the Group panel to decide which cell to instance-swap based on the current view.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Range continuity is drawn per-cell, not at the row.",
-        "body": "The <code>Range (Middle)</code> variant includes two absolutely-positioned siblings (<code>Range highlight start</code>, <code>Range highlight end</code>) that spill 28–34% beyond the cell bounds to visually connect with neighbours. Range continuity is row-level geometry; modelling it on the cell produces per-cell decoration with leak.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "<code>Type</code> axis mixes display role with selection state.",
-        "body": "Default, Today, and Prev/Next describe what the cell <em>is</em>; Selected and Range (Middle) describe what the user has <em>done</em>. These belong on two axes (<code>role</code> and <code>selection</code>), not one. The current shape produces invalid combinations (e.g. you can't express \"Today that is also Selected\").",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Variant value <code>Range (Middle)</code> uses punctuation and whitespace.",
-        "body": "Rename to <code>range-middle</code> (or, after the axis-split, <code>selection = range-middle</code>). Current value generates <code>type=\"Range (Middle)\"</code> in code-connect output, which is awkward to match on.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Cell has no 1:1 native primitive.",
-        "body": "Both SwiftUI <code>DatePicker(.graphical)</code> and Material 3 <code>DatePicker</code> render their own day cells and don't accept a custom cell view. This Figma component is therefore a reference spec, not a mappable component — should be marked as such or merged into the Picker Cell family.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "Disabled coverage incomplete.",
-        "body": "The <code>State</code> axis nominally supports Disabled, but Disabled variants exist only on Default and Today. Selected, Range (Middle), and Prev/Next have no Disabled form — unreachable if the user picks a selected date then the parent toggles disabled.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "No Pressed, Hover, or Focused variants.",
-        "body": "Tap feedback (iOS ripple / Android state layer) and keyboard focus ring are not defined. Native pickers supply these automatically, but any custom overlay or wrapper has no tokens to apply.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Today + Selected collision is unresolved.",
-        "body": "There is no variant for the common case of today being the currently-selected date. The design team should decide which presentation wins (ring + fill, fill-only, or a hybrid) and publish a variant.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "Selection emphasis pattern not shared with Month/Year cells.",
-        "body": "Selected on this cell is a solid fill; Selected on Month and Year Picker - Item is a 1px ring. The two selection treatments drift — should be one token-driven \"selection emphasis\" applied consistently per <code>kind</code>.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "Code Connect mappings not registered.",
-        "body": "Blocked by the native-pickers-own-it direction (C4) and by the pending Picker Cell family unification (C1). Map only once the unified component exists and the wrapper surface is confirmed.",
-        "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
-        }
-      }
-    ],
-    "recommendations": [
-      {
-        "headline": "Family — Consolidate Date Picker - Item + Month and Year Picker - Item into ONE <code>Picker Cell</code>.",
-        "body": "Both are selectable cells with identical state semantics (Default / Today / Selected / Disabled); only pixel size (32×32 vs 100×32) and typography differ. Proposed schema: <code>kind = day | month | year</code> + <code>state = default | today | selected | range-middle | prev-next | disabled</code>. Collapses 10 sibling variants across two components into one component with two clean axes. A single native <code>PickerCell</code> composable renders the correct typography per <code>kind</code>.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Property — Split <code>Type</code> into <code>role</code> + <code>selection</code> (after consolidation).",
-        "body": "Within the unified Picker Cell, separate display role (<code>default | today | prev-next</code>) from selection state (<code>none | selected | range-start | range-middle | range-end</code>). Lets designers express \"Today that is also Selected\" and fixes the current invalid combinations.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Rename <code>Range (Middle)</code> to <code>range-middle</code>.",
-        "body": "Remove parentheses and whitespace from the variant value. Cleaner code-connect output and matches the kebab-case used by other DS enums.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "State — Add Pressed, Focused, and Today+Selected variants.",
-        "body": "Extend the state axis with Pressed and Focused (needed for any custom wrapper rendering tap / keyboard affordances), and publish a decision variant for the common \"today is also selected\" case.",
-        "tag": "State"
-      },
-      {
-        "headline": "State — Complete Disabled coverage across all Types.",
-        "body": "The <code>State</code> axis currently only exists on Default and Today. Publish Disabled variants for Selected, Range (Middle), and Prev/Next so the axis is rectangular — no missing cells in the variant matrix.",
-        "tag": "State"
-      },
-      {
-        "headline": "Composition — Move range-strip continuity from the cell to the row.",
-        "body": "Remove the absolutely-positioned <code>Range highlight start</code> / <code>Range highlight end</code> siblings from the cell. Render the range strip as a row-level decoration behind the cells (a full-width rectangle between range-start and range-end). Keeps the cell component self-contained.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Token — Share a selection-emphasis token across Picker Cell kinds.",
-        "body": "Create <code>main/picker-cell/selection/*</code> tokens that resolve to either \"fill\" or \"ring\" based on <code>kind</code>, so day/month/year selection treatments stay intentionally consistent rather than drifting.",
-        "tag": "Token"
-      },
-      {
-        "headline": "A11y — Flag the 32×32 touch target.",
-        "body": "Below WCAG 2.5.5 minimum 44×44. If a custom wrapper is ever built, extend the hit area beyond the visual cell (add transparent padding). Document this on the component so consumers don't accidentally ship the tight target outside the native picker context.",
-        "tag": "A11y"
-      },
-      {
-        "headline": "Docs — Mark as reference, not a production component.",
-        "body": "Given that both platforms render their own day cells inside the native <code>DatePicker</code>, this cell is a visual reference for the token-styled wrapper, not a component developers rebuild. Add a description banner and a <code>_reference</code> prefix once the Picker Cell family unification lands.",
-        "tag": "Docs"
-      }
-    ]
+    "open": [],
+    "recommendations": []
   },
   "style": {
     "heading": "Types",

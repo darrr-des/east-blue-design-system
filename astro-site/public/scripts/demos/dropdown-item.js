@@ -1,183 +1,117 @@
-/* Auto-extracted from assessment-src/components/dropdown-item.html.
- * Powers the live-preview dropdowns/toggles for the dropdown-item component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs dropdown-item
+/* Powers the live-preview controls for the dropdown-item (Select Item)
+ * component page. Rebuilt for the 2026 Working File (node 7947:111969).
+ *
+ * Four axes, 48 variants — but the State x isSelected grid is sparse on
+ * purpose: selected-and-pressed and selected-and-disabled do not exist.
+ * Rather than hide that, the preview clamps the combination and says so,
+ * which is what Figma's variant picker effectively does.
  */
-/* ── Dropdown Item Component JS ─────────────────────────────────── */
-var _ddiDemo = { type: 'text', selected: 'false' };
 
-function _ddiBuildSvg(type, selected) {
-  var isSelected = (selected === 'true' || selected === true);
-  var w = 366;
-  var h = 50;
-  var labelColor = '#0A2757';
-  var selectedColor = '#005CE5';
-  var disabledLabel = '#C2CFE5';
-  var disabledBg = '#F6F9FD';
-  var borderColor = '#E5EBF4';
-  var badgeBg = '#D61B2C';
-  var pesoColorDefault = '#0A2757';
-  var pesoColorSelected = '#005CE5';
+var _SITEM_GEAR =
+  '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+  '<path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" stroke-width="1.6"/>' +
+  '<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="currentColor" stroke-width="1.6"/></svg>';
 
-  var s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+/* Stand-in for the Flags Library instance — the real one is a vector
+   from the shared library, which is what closed the raster-PNG finding. */
+var _SITEM_FLAG =
+  '<svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true">' +
+  '<rect x="0.5" y="0.5" width="15" height="11" rx="1.5" fill="#FFFFFF" stroke="#E5EBF4"/>' +
+  '<rect x="1" y="1" width="14" height="1.4" fill="#F15A5B"/>' +
+  '<rect x="1" y="3.8" width="14" height="1.4" fill="#F15A5B"/>' +
+  '<rect x="1" y="6.6" width="14" height="1.4" fill="#F15A5B"/>' +
+  '<rect x="1" y="9.4" width="14" height="1.4" fill="#F15A5B"/>' +
+  '<rect x="1" y="1" width="6" height="5" fill="#434389"/></svg>';
 
-  /* disabled background */
-  if (type === 'disabeld') {
-    s += '<rect x="0" y="0" width="' + w + '" height="' + h + '" fill="' + disabledBg + '"/>';
-  }
-
-  /* bottom divider */
-  s += '<line x1="0" y1="' + (h - 0.5) + '" x2="' + w + '" y2="' + (h - 0.5) + '" stroke="' + borderColor + '" stroke-width="1"/>';
-
-  var textColor = isSelected ? selectedColor : labelColor;
-  if (type === 'disabeld') textColor = disabledLabel;
-
-  if (type === 'text' || type === 'text with tag' || type === 'disabeld') {
-    /* left-aligned label */
-    s += '<text x="12" y="31" font-family="Proxima Soft, system-ui" font-size="18" font-weight="600" fill="' + textColor + '">Dropdown Item</text>';
-    if (type === 'text with tag') {
-      /* trailing badge — 42px wide */
-      var bx = w - 16 - 42;
-      s += '<rect x="' + bx + '" y="16" width="42" height="18" rx="4" fill="' + badgeBg + '"/>';
-      s += '<text x="' + (bx + 21) + '" y="28" font-family="Proxima Soft, system-ui" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">Label</text>';
-    }
-  } else if (type === 'amount') {
-    var pesoColor = isSelected ? pesoColorSelected : pesoColorDefault;
-    /* Peso glyph */
-    s += '<text x="12" y="32" font-family="Proxima Soft, system-ui" font-size="18" font-weight="700" fill="' + pesoColor + '">&#8369;</text>';
-    s += '<text x="34" y="32" font-family="Proxima Soft, system-ui" font-size="18" font-weight="600" fill="' + textColor + '">X,XXX.XX</text>';
-  } else if (type === 'country') {
-    /* flag — stylized PH tricolor to stand in for the raster */
-    var fx = 12, fy = 17;
-    s += '<rect x="' + fx + '" y="' + fy + '" width="25" height="16" rx="2" fill="#FCFCFC" stroke="#E5EBF4" stroke-width="0.5"/>';
-    s += '<path d="M' + fx + ' ' + fy + 'h25v8H' + fx + 'z" fill="#0038A8"/>';
-    s += '<path d="M' + fx + ' ' + (fy + 8) + 'h25v8H' + fx + 'z" fill="#CE1126"/>';
-    s += '<path d="M' + fx + ' ' + fy + 'l10 8-10 8z" fill="#FFFFFF"/>';
-    s += '<circle cx="' + (fx + 4) + '" cy="' + (fy + 8) + '" r="1.5" fill="#FCD116"/>';
-    /* label */
-    s += '<text x="' + (fx + 25 + 8) + '" y="31" font-family="Proxima Soft, system-ui" font-size="18" font-weight="600" fill="' + textColor + '">Philippines +63</text>';
-  }
-
-  s += '</svg>';
-  return s;
+function _sitemLead(type) {
+  if (type === 'flag') return ['--flag', _SITEM_FLAG];
+  /* PesoSignVector and PesoSignText render near-identically at this size
+     — one is a custom SVG matched to the font, the other Proxima's own
+     glyph. The preview shows the same mark for both, which is honest:
+     the difference is not visible, which is why it needs documenting. */
+  if (type === 'pesosignvector' || type === 'pesosigntext') return ['', '₱'];
+  return ['', _SITEM_GEAR];
 }
 
-function updateDropdownItemDemo() {
-  var el = document.getElementById('ddi-demo-preview');
-  if (el) el.innerHTML = _ddiBuildSvg(_ddiDemo.type, _ddiDemo.selected);
+function _sitemRender(o) {
+  var state = o.state || 'default';
+  /* Selected only exists alongside State=Default. */
+  var selected = o.selected && state === 'default';
+  var lead = _sitemLead(o.type);
+
+  var cls = 'eb-preview-sitem eb-preview-sitem--' + (o.density || 'compact');
+  if (state !== 'default') cls += ' eb-preview-sitem--' + state;
+  if (selected) cls += ' eb-preview-sitem--selected';
+  if (o.supporting) cls += ' eb-preview-sitem--supporting';
+
+  var h = '<div class="' + cls + '">';
+  h += '<span class="eb-preview-sitem__lead' + (lead[0] ? ' eb-preview-sitem__lead' + lead[0] : '') + '">' + lead[1] + '</span>';
+  h += '<span class="eb-preview-sitem__content">';
+  h += '<span class="eb-preview-sitem__primary">Text</span>';
+  if (o.supporting) h += '<span class="eb-preview-sitem__supporting">Supporting Text</span>';
+  h += '</span>';
+  h += '<span class="eb-preview-sitem__trail">';
+  if (o.badge) h += '<span class="eb-preview-sitem__badge">Label</span>';
+  h += '</span></div>';
+
+  if (o.selected && state !== 'default') {
+    h += '<div class="table-footnote">isSelected=true has no variant with State=' +
+         (state === 'pressed' ? 'Pressed' : 'Disabled') +
+         ' — the grid is sparse by design, which is what holds the set at 48 rather than 72.</div>';
+  }
+  return h;
 }
 
-/* ── Spec card state (per-card, drives previews + DEV code) ──────── */
-/* demoKey → variant defaults. The dropdown panel can drive each card
-   independently; the type/selected dropdowns let the user explore any
-   combination on every card. */
+function _sitemRead() {
+  var v = function (id, fb) { var el = document.getElementById(id); return el ? el.value : fb; };
+  return {
+    type: v('sitem-ctrl-type', 'icon'),
+    density: v('sitem-ctrl-density', 'compact'),
+    state: v('sitem-ctrl-state', 'default'),
+    selected: v('sitem-ctrl-isselected', 'false') === 'true',
+    supporting: v('sitem-ctrl-supporting', 'false') === 'true',
+    badge: v('sitem-ctrl-badge', 'false') === 'true'
+  };
+}
+
+function _sitemUpdate() {
+  var el = document.getElementById('sitem-demo-preview');
+  if (el) el.innerHTML = _sitemRender(_sitemRead());
+}
+
+/* ── Spec card state ─────────────────────────────────────────────── */
 var _specCards = {
-  'text':     { type: 'text',          selected: 'false' },
-  'tag':      { type: 'text with tag', selected: 'false' },
-  'amount':   { type: 'amount',        selected: 'false' },
-  'country':  { type: 'country',       selected: 'false' },
-  'disabled': { type: 'disabeld',      selected: 'false' }
+  default: { type: 'icon', density: 'compact', state: 'default', isselected: 'false' }
 };
 window._specCards = _specCards;
 
-/* ── Code snippet builders (called by updateSpecCard + switchCodeTab) ── */
-function _ddiSwiftStateDot(card) {
-  if (card.type === 'disabeld') return '.disabled';
-  if (card.selected === 'true') return '.selected';
-  return '.default';
-}
-
-function _ddiComposeStateName(card) {
-  if (card.type === 'disabeld') return 'Disabled';
-  if (card.selected === 'true') return 'Selected';
-  return 'Default';
-}
-
-function _ddiLabelLiteral(card) {
-  if (card.type === 'amount')  return '\"1,000.00\"';
-  if (card.type === 'country') return '\"Philippines +63\"';
-  return '\"Option label\"';
-}
-
-function buildSwiftSnippet(type, card) {
-  var lines = [];
-  lines.push('EBDropdownItem(' + _ddiLabelLiteral(card) + ')');
-  lines.push('    .ebState(' + _ddiSwiftStateDot(card) + ')');
-  return lines.join('\n');
-}
-
-function buildComposeSnippet(type, card) {
-  var lines = [];
-  lines.push('EBDropdownItem(');
-  lines.push('    label = ' + _ddiLabelLiteral(card) + ',');
-  lines.push('    state = EBItemState.' + _ddiComposeStateName(card));
-  lines.push(')');
-  return lines.join('\n');
-}
-
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
-}
-window.getSnippet = getSnippet;
-
-/* ── updateSpecCard — canonical signature ───────────────────────────── */
-function updateSpecCard(cardStyle, prop, value) {
-  var card = _specCards[cardStyle];
+function updateSpecCard(cardKey, prop, value) {
+  var card = _specCards[cardKey];
   if (!card) return;
   card[prop] = value;
-
-  /* Update the spec-card preview SVG — the renderer wraps `previewHtml`
-     in `#spec-card-ddi-spec-{cardStyle} .spec-card-preview`. Re-render
-     with the current type+selected so the visual reflects the flipped
-     control. */
-  var cardWrapper = document.getElementById('spec-card-ddi-spec-' + cardStyle);
-  if (cardWrapper) {
-    var previewEl = cardWrapper.querySelector('.spec-card-preview');
-    if (previewEl) {
-      previewEl.innerHTML = _ddiBuildSvg(card.type, card.selected);
-    }
-  }
-
-  /* Update Properties text — data-sp="${cardStyle}-${prop}" */
-  var spType = document.querySelector('[data-sp="' + cardStyle + '-type"]');
-  if (spType) spType.textContent = card.type;
-  var spSelected = document.querySelector('[data-sp="' + cardStyle + '-selected"]');
-  if (spSelected) {
-    if (card.type === 'disabeld') spSelected.textContent = 'Disabled';
-    else if (card.selected === 'true') spSelected.textContent = 'Selected';
-    else spSelected.textContent = 'Default';
-  }
-
-  /* Update DEV code — always */
-  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-  if (devView) {
-    var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
-    if (codeEl) {
-      var code = getSnippet(cardStyle, lang, card);
-      codeEl.setAttribute('data-final', code);
-      codeEl.setAttribute('data-lang', lang);
-      codeEl.textContent = code;
-      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-    }
+  var host = document.getElementById('sitem-spec-' + cardKey);
+  if (host) {
+    host.innerHTML = _sitemRender({
+      type: card.type,
+      density: card.density,
+      state: card.state,
+      selected: card.isselected === 'true',
+      supporting: false,
+      badge: false
+    });
   }
 }
 window.updateSpecCard = updateSpecCard;
 
-function _ddiInitSpecCards() {
+function _sitemInit() {
+  _sitemUpdate();
   Object.keys(_specCards).forEach(function (k) {
     updateSpecCard(k, 'type', _specCards[k].type);
   });
 }
 
-function _ddiInit() {
-  updateDropdownItemDemo();
-  _ddiInitSpecCards();
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', _ddiInit);
-} else {
-  _ddiInit();
-}
-document.addEventListener('astro:page-load', _ddiInit);
+(function () {
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _sitemInit);
+  else _sitemInit();
+  document.addEventListener('astro:page-load', _sitemInit);
+})();

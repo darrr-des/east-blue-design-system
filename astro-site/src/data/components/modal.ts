@@ -1,192 +1,189 @@
 import type { ComponentData, DemoControlSection } from '../types';
-import { buildStatelessColorsTable } from './_helpers';
 
-// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
-// in `public/scripts/demos/modal.js`.
-const modalDemoControls: DemoControlSection[] = [
+/* Demo controls for the Style tab's single spec card. */
+const modalControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'Type',
-        prop: 'type',
-        defaultValue: 'default',
+        label: 'ActionOrientation',
+        prop: 'actions',
         options: [
-          { value: 'default', label: 'default' },
-          { value: 'with-icon', label: 'with icon' },
-          { value: 'transaction-v1', label: 'transaction_v1' },
-          { value: 'transaction-v2', label: 'transaction_v2' },
+          { value: 'vertical', label: 'Vertical' },
+          { value: 'horizontal', label: 'Horizontal' }
         ],
+        defaultValue: 'vertical'
       },
       {
-        label: 'CTA',
-        prop: 'cta',
-        defaultValue: '1',
+        label: 'hasIcon',
+        prop: 'hasicon',
         options: [
-          { value: '1', label: '1' },
-          { value: '1-vertical', label: '1 - vertical' },
-          { value: '2-horizontal', label: '2 - horizontal' },
-          { value: '2-vertical', label: '2 - vertical' },
+          { value: 'true', label: 'true' },
+          { value: 'false', label: 'false' }
         ],
-      },
-    ],
-  },
+        defaultValue: 'true'
+      }
+    ]
+  }
 ];
 
 export const modal: ComponentData = {
   "meta": {
     "slug": "modal",
     "name": "Modal",
-    "node": "18507:71705",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18507-71705",
-    "description": "A centered overlay surface used for blocking confirmations and dialogs — header, body, and primary/secondary actions.",
+    "node": "5879:41278",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5879-41278",
+    "description": "The general-purpose dialog — an optional illustration, a centred title and description, and one or two actions.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
+    "navGroup": "Modal",
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — duplicates Overlay scope and compresses two unrelated layouts",
-      "text": "A single <code>Modal</code> component is trying to serve both a general-purpose dialog (default / with icon) and a specialised transaction-receipt layout (transaction_v1 / v2). These are not \"variants\" of the same thing — they have different information architectures, different tokens, and different native mappings. On top of that, Modal overlaps in name and scope with the existing <code>Overlay</code> component (<code>47:329691</code>), which currently ships the scrim only. Consolidate the family: one canonical <strong>Modal</strong> that owns the surface + scrim, and a separate <strong>Transaction Receipt Card</strong> for the receipt layout."
+      "kind": "keep",
+      "title": "Keep — the restructure the first assessment asked for has happened",
+      "text": "The April assessment flagged this component for carrying two unrelated things in one set: a general-purpose dialog and a transaction receipt. It recommended splitting them and extracting <code>EBTransactionReceipt</code>. That is exactly what the 2026 rebuild did — the receipt layouts are now <a href=\"/components/modal-transaction-receipt\">Modal - Transaction Receipt</a>, and what remains here is the dialog on its own. The <code>_space_*</code> spacer rectangles are gone, the hardcoded placeholder circle is a real <code>⤷ IconSlot</code>, and the mixed-casing enums are one clean <code>ActionOrientation</code>. Nothing is outstanding on the component itself; Code Connect stays open because the native library does not exist yet."
     }
   },
   "overview": {
     "inContextNote": "Contexts are illustrative. Final screens will reference actual GCash patterns.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"modal-demo-preview\"><div style=\"position:relative;width:280px;height:360px;margin:0 auto;background:#F6F9FD;border-radius:18px;overflow:hidden;border:1px solid #E5EBF4;\"><div style=\"padding:14px;\"><div style=\"width:60%;height:8px;background:#D9E2EC;border-radius:3px;margin-bottom:10px;\"></div><div style=\"width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;\"></div><div style=\"width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;\"></div><div style=\"width:100%;height:32px;background:#E5EBF4;border-radius:6px;margin-bottom:8px;\"></div></div><div style=\"position:absolute;inset:0;background:#020E22;opacity:0.56;\"></div><div style=\"position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;\"><div style=\"background:#fff;border-radius:6px;padding:20px 18px;box-shadow:0 0 4px rgba(232,238,242,0.79);width:220px;text-align:center;\"><div style=\"font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:14px;color:#0A2757;margin-bottom:8px;\">Put the title here</div><div style=\"font-family:'BarkAda', system-ui, sans-serif;font-weight:500;font-size:11px;color:#6780A9;line-height:1.45;\">Add description here.<br>Add description here.</div><div style=\"height:28px;background:#005CE5;border-radius:99px;margin-top:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;\">Label</div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select id=\"modal-ctrl-type\" class=\"demo-panel-select\" onchange=\"_modalUpdate()\"><option value=\"default\">default</option><option value=\"with-icon\">with icon</option><option value=\"transaction-v1\">transaction_v1</option><option value=\"transaction-v2\">transaction_v2</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">cta</span><select id=\"modal-ctrl-cta\" class=\"demo-panel-select\" onchange=\"_modalUpdate()\"><option value=\"1\">1</option><option value=\"1-vertical\">1 - vertical</option><option value=\"2-horizontal\">2 - horizontal</option><option value=\"2-vertical\">2 - vertical</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">scrim</span><select id=\"modal-ctrl-scrim\" class=\"demo-panel-select\" onchange=\"_modalUpdate()\"><option value=\"yes\" selected=\"\">yes</option><option value=\"no\">no</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"mdl-demo-preview\"><div class=\"eb-preview-mdl eb-preview-mdl--vertical\"><div class=\"eb-preview-mdl__content\"><div class=\"eb-preview-mdl__icon\"><span>Icon</span></div><div class=\"eb-preview-mdl__title\">Put the title here</div><div class=\"eb-preview-mdl__description\">Add description here.<br>Add description here.</div></div><div class=\"eb-preview-mdl__actions\"><div class=\"eb-preview-mdl__btn eb-preview-mdl__btn--filled\">Label</div><div class=\"eb-preview-mdl__btn eb-preview-mdl__btn--outlined\">Label</div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">ActionOrientation</span><select id=\"mdl-ctrl-actions\" class=\"demo-panel-select\" onchange=\"_mdlUpdate()\"><option value=\"vertical\" selected=\"\">Vertical</option><option value=\"horizontal\">Horizontal</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasIcon</span><select id=\"mdl-ctrl-hasicon\" class=\"demo-panel-select\" onchange=\"_mdlUpdate()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">#title</span><input type=\"text\" id=\"mdl-ctrl-title\" class=\"demo-panel-select demo-panel-input\" value=\"Put the title here\" oninput=\"_mdlUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">#description</span><input type=\"text\" id=\"mdl-ctrl-desc\" class=\"demo-panel-select demo-panel-input\" value=\"Add description here. Add description here.\" oninput=\"_mdlUpdate()\"></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
-        "rating": "warn",
-        "note": "General-dialog variants (default / with icon) are reusable across many screens, but transaction_v1 / v2 are specific to the receipt / order-summary use case and shouldn't live inside a generic Modal."
+        "rating": "pass",
+        "note": "Now that the receipt layouts have moved out, this is a dialog and nothing else — a slot, two text layers and an action area. Any confirmation, warning or prompt in the product is this component with different content."
       },
       {
         "name": "Self-contained",
-        "rating": "partial",
-        "note": "Modal owns its bg, border, shadow, and label tokens, but relies on an external Overlay to dim the page. The relationship between the two components is not annotated anywhere."
+        "rating": "pass",
+        "note": "Carries its own surface, radius, type styles and spacing, all bound to library variables. The scrim sits deliberately outside it in <a href=\"/components/overlay\">Overlay</a>, which is what resolved the duplicate-scope flag from the first assessment."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "Enum casing is mixed within the same property: <code>transaction_v1</code> / <code>transaction_v2</code> use snake_case, <code>1 - vertical</code> / <code>2 - horizontal</code> use space-dashed-space. Also duplicates scope with the Overlay component."
+        "rating": "pass",
+        "note": "<code>Container</code>, <code>Content</code>, <code>⤷ IconSlot</code>, <code>⤷ ActionSlot</code>, <code>#title</code> and <code>#description</code> all match the conventions settled across Date Picker, Voucher and Countdown. <code>hasIcon</code> follows the boolean prefix already used by Ad Carousel's <code>hasCTA</code>."
       },
       {
         "name": "Composable",
-        "rating": "warn",
-        "note": "Transaction variants hard-code inner transaction rows and a reference-number slot — consumers can't swap content. Should be split into a Modal shell + a composable Transaction Receipt child."
+        "rating": "pass",
+        "note": "Two real slots, both accepting substituted content without detaching. The buttons come from <code>Button_New</code>, the same component the receipt modal now uses."
       }
     ],
     "behavior": [
       {
-        "state": "Present / dismiss",
-        "ios": "yes",
-        "android": "yes",
-        "property": "Not annotated",
-        "notes": "Scale-in + fade animation is implied by pattern but not documented on the component."
+        "state": "ActionOrientation=Vertical",
+        "ios": "na",
+        "android": "na",
+        "property": "320 × 370",
+        "notes": "Two full-width buttons stacked, primary on top. The action area is 156 tall."
       },
       {
-        "state": "Tap-outside dismiss",
-        "ios": "yes",
-        "android": "yes",
-        "property": "Not annotated",
-        "notes": "Overlay owns the tap-region. Contract should be documented (dismissible vs. modal)."
+        "state": "ActionOrientation=Horizontal",
+        "ios": "na",
+        "android": "na",
+        "property": "320 × 312",
+        "notes": "Two 132-wide buttons side by side, primary on the right. Everything above the action area is unchanged."
       },
       {
-        "state": "CTA resolution",
-        "ios": "yes",
-        "android": "yes",
-        "property": "Via Button child",
-        "notes": "1 / 2-horizontal / 2-vertical layouts maped by <code>cta</code> property."
+        "state": "hasIcon=true",
+        "ios": "na",
+        "android": "na",
+        "property": "default",
+        "notes": "Shows the 92 × 92 illustration slot with its Placeholder instance."
       },
       {
-        "state": "Copy to clipboard (transaction)",
-        "ios": "yes",
-        "android": "yes",
-        "property": "Icon only, no state",
-        "notes": "Copy icon is raster, with no pressed / success feedback state defined."
-      },
-      {
-        "state": "Focus trap / a11y",
-        "ios": "yes",
-        "android": "yes",
-        "property": "Implicit",
-        "notes": "Focus should be trapped inside the modal while open; restore to trigger on close."
+        "state": "hasIcon=false",
+        "ios": "na",
+        "android": "na",
+        "property": "collapsed",
+        "notes": "Collapses the slot and the 16px below it, taking 108 off the height."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "Duplicate scope with Overlay component.",
-        "body": "A separate <code>Overlay</code> record (node <code>47:329691</code>) already owns the scrim primitive; this Modal should compose it, not re-declare the modal surface. Today the two are maintained independently and there's no annotation describing which is canonical.",
-        "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
-        }
-      },
-      {
-        "headline": "Two unrelated layouts compressed into one component.",
-        "body": "<code>type=default</code> and <code>type=with icon</code> are general-purpose dialog shapes, while <code>type=transaction_v1</code> and <code>type=transaction_v2</code> are transaction-receipt layouts with their own inner rows and reference-number slot. These are different components masquerading as variants.",
+        "headline": "The receipt layouts moved out.",
+        "body": "The first assessment flagged this set for compressing a general-purpose dialog and a transaction receipt into one component with different information architectures and different native mappings. <code>transaction_v1</code> and <code>transaction_v2</code> are now <a href=\"/components/modal-transaction-receipt\">Modal - Transaction Receipt</a>, and the row inside it is <a href=\"/components/modal-transaction-receipt-entry\">Modal - Transaction Receipt Entry</a>.",
         "tag": {
           "criterion": "C4",
           "label": "C4 · Native Mappability"
         }
       },
       {
-        "headline": "Mixed enum casing within a single property.",
-        "body": "<code>type</code> uses <code>default</code>, <code>with icon</code> (space), <code>transaction_v1</code>, <code>transaction_v2</code> (snake_case). <code>cta</code> uses <code>1</code>, <code>1 - vertical</code>, <code>2 - horizontal</code>, <code>2 - vertical</code> (spaces around dashes). Neither is consistent with the rest of the DS.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Opacity-0 spacer frames instead of gap.",
-        "body": "Inner layers named <code>_space_16</code>, <code>_space_12</code> with <code>opacity:0</code> are used to create vertical rhythm. These are non-semantic and don't translate to native auto-layout. Use <code>gap</code> on the parent instead.",
+        "headline": "The spacer rectangles are gone.",
+        "body": "The old build used opacity-0 <code>_space_*</code> rectangles to fake gaps. Spacer nodes have no native equivalent — auto layout spacing does the job — and the rebuild removed them.",
         "tag": {
           "criterion": "C1",
           "label": "C1 · Layer Structure & Naming"
         }
       },
       {
-        "headline": "Raster copy-to-clipboard icon.",
-        "body": "The transaction variants use PNG assets <code>shape_half</code> / <code>shape_full</code> for the copy icon. Should be a vector icon instance bound to <code>main/modal-popup/color/icon-copy</code>.",
+        "headline": "The placeholder circle is a real slot.",
+        "body": "The illustration used to be a hardcoded circle drawn into the component. It is now <code>⤷ IconSlot</code>, a 92 × 92 slot holding a <code>Placeholder</code> instance that consumers swap.",
         "tag": {
           "criterion": "C6",
           "label": "C6 · Asset & Icon Quality"
         }
       },
       {
-        "headline": "Icon-placeholder slot is a grey circle, not an instance swap.",
-        "body": "The <code>with icon</code> variants render a raw <code>#C2C6CF</code> circle (<code>icon-placeholder</code>). Consumers can't swap in a real icon without detaching. Should be a Slot backed by the <code>Icon</code> component.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "No interaction states on the modal surface.",
-        "body": "The component ships only a default state — no pressed / dragging state for the CTA group, no loading state for async actions, and no entrance/exit transition annotation.",
+        "headline": "The illustration can be switched off.",
+        "body": "The slot was empty and always on, so every dialog reserved 116px for an illustration whether or not it had one, with no way to collapse it. A <code>hasIcon</code> boolean now controls it, defaulting to true, and a Placeholder gives consumers a starting point.",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
       },
       {
-        "headline": "Missing CTA combos.",
-        "body": "Transaction variants only ship with <code>cta=1</code>; \"with icon\" only ships with vertical CTAs. The <code>cta</code> axis is not complete across all <code>type</code> values, so designers resort to detaching when they need another arrangement.",
+        "headline": "The enums are one clean property.",
+        "body": "The old set mixed casing and styles across two axes — <code>transaction_v1</code> alongside <code>1 - vertical</code> — with a sparse CTA matrix. What is left is <code>ActionOrientation = Vertical | Horizontal</code>, renamed during this pass to close the space it used to carry.",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "No Code Connect mapping.",
-        "body": "Blocked on restructure — once the transaction layout is extracted and the enum values are cleaned up, mapping is trivial.",
+        "headline": "Both modals share one button.",
+        "body": "This component was on <code>Button_New</code> while the receipt modal was still on <code>Button - Large/Medium</code> — two masters with different internal structure in one family. The receipt moved across, so the label is addressable as <code>#label</code> in both.",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "The BarkAda description is deliberate.",
+        "body": "The first assessment left this open as a question for design. Confirmed: BarkAda is the secondary face, used for longer copy at smaller sizes, while Proxima Soft carries titles, labels and shorter or larger text. That is why this description is BarkAda 14/20 and the receipt modal's is Proxima Soft 16/20 — a rule, not drift.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "The Container wrapper earns its place.",
+        "body": "It has the same bounds and radius as the variant frame around it, which usually means a level that can be removed. Confirmed that it holds the auto layout, so it stays.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Centred here, left-aligned in the receipt.",
+        "body": "<code>#title</code> and <code>#description</code> are centred in this component and left-aligned in <a href=\"/components/modal-transaction-receipt\">Modal - Transaction Receipt</a>. Confirmed as intentional: a confirmation dialog centres, and a receipt is left-aligned tabular data.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "open": [
+      {
+        "headline": "Code Connect mappings not registered.",
+        "body": "Blocked — the native library does not exist yet, so there is nothing to map onto. The component side is ready: <code>ActionOrientation</code>, <code>hasIcon</code>, both <code>⤷</code> slots and the two text layers map one to one with no rename at the boundary.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -195,798 +192,379 @@ export const modal: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Consolidate with Overlay — one canonical Modal family.",
-        "body": "The current split (Overlay = scrim only, Modal = surface + scrim baked in) duplicates intent. Rename and re-partition into: <code>Overlay</code> (scrim primitive, already assessed) + <code>Modal</code> (surface composition that references Overlay) + <code>TransactionReceipt</code> (the transaction_v1/v2 layout pulled out as its own card). Document which component owns which concern.",
-        "tag": "Family"
+        "headline": "Tidy the Placeholder's own layer names.",
+        "body": "The instance filling <code>⤷ IconSlot</code> wraps a lowercase <code>container</code> frame. It belongs to the Placeholder component rather than to Modal, so it is not a fault here, but it is the same PascalCase convention the rest of the family has adopted and worth passing upstream.",
+        "tag": "Docs"
       },
       {
-        "headline": "Extract transaction_v1 / transaction_v2 as a separate component.",
-        "body": "Move the receipt layout into a new <code>Transaction Receipt</code> component (likely a composition of List + Reference Number + Copy action), and drop the <code>transaction_*</code> values from Modal's <code>type</code> enum. Modal keeps only general-dialog variants.",
-        "tag": "Composition"
-      },
-      {
-        "headline": "Normalise enum casing.",
-        "body": "Pick one convention for all multi-word values. Recommendation: single lowercase words separated by dashes — <code>default</code>, <code>with-icon</code>, <code>cta-single</code>, <code>cta-single-vertical</code>, <code>cta-double-horizontal</code>, <code>cta-double-vertical</code>. Align with Button and other DS components.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Replace opacity-0 spacer frames with auto-layout gap.",
-        "body": "Remove the <code>_space_16</code> / <code>_space_12</code> invisible rectangles and set <code>gap</code> on the parent auto-layout frames (using <code>space/space-16</code> and <code>space/space-12</code> tokens). Native translators can then emit proper <code>spacing</code> parameters.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Convert icon-placeholder into a Figma Slot.",
-        "body": "Add a named <code>icon</code> slot to the <code>with icon</code> variants backed by the DS Icon component, so designers can instance-swap without detaching. Default to a neutral status icon.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Replace raster copy icon with a vector instance.",
-        "body": "Swap <code>shape_half</code> / <code>shape_full</code> PNGs for the DS vector Copy icon and bind colour to <code>main/modal-popup/color/icon-copy</code>. While there, add a pressed / copied success state.",
-        "tag": "Asset"
-      },
-      {
-        "headline": "Complete the CTA matrix.",
-        "body": "Ship every <code>type × cta</code> combination (or constrain the schema so unsupported combos aren't implied). Currently <code>default</code> is missing <code>1-vertical</code>, <code>with icon</code> is missing horizontal pairs, and transactions only ship with <code>cta=1</code>. Either fill the gaps or reshape the enum.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Add loading and destructive states.",
-        "body": "Modals routinely host async confirmations — add a <code>state=loading</code> variant (CTA replaced with spinner) and surface destructive-action styling via a boolean or via the child Button's existing <code>isError</code> prop.",
+        "headline": "Give the dialog a loading state.",
+        "body": "Confirmations that trigger a network call leave the primary button with nowhere to go while it waits. The first assessment raised this and it is still true. Whether it lives on the button or on the modal is a Button family decision, so it belongs there rather than here.",
         "tag": "State"
       },
       {
-        "headline": "Annotate the dismiss contract.",
-        "body": "Document on the component: entrance / exit animation, focus trap, restore-focus-on-close, ESC-to-dismiss, tap-outside-dismiss. Developers currently have to infer these from adjacent patterns.",
+        "headline": "Publish the token names once Dev Mode is read.",
+        "body": "Fills resolve to library variables and the text carries shared library styles — verified on the component's own nodes, and <code>#description</code> shares its variable with the receipt modal's row labels. The read-only tools return IDs rather than names, so the spec tables carry hex values only.",
+        "tag": "Token"
+      },
+      {
+        "headline": "Pair it with Overlay in documentation.",
+        "body": "This component is the card. The scrim is <a href=\"/components/overlay\">Overlay</a>. That split resolved the duplicate-scope flag from the first assessment, but it only works if both pages say so — otherwise the next person builds a scrim into the card again.",
         "tag": "Docs"
       },
       {
-        "headline": "Title + description copy should come from the DS text styles.",
-        "body": "Title is bound to <code>Primary/Headlines/Section</code> and description to <code>Secondary/Default/Base</code> (BarkAda). Confirm the secondary-font description is intentional — flag as the standing custom-font action item if not.",
-        "tag": "Docs"
+        "headline": "See siblings:",
+        "body": "<a href=\"/components/modal-transaction-receipt\">Modal - Transaction Receipt</a> is the receipt half that was split out of this component, and <a href=\"/components/modal-transaction-receipt-entry\">Modal - Transaction Receipt Entry</a> is the row inside it. <a href=\"/components/overlay\">Overlay</a> supplies the scrim. <a href=\"/components/bottom-sheet\">Bottom Sheet</a> is the non-blocking alternative.",
+        "tag": "Family"
       }
     ],
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"10\" width=\"100\" height=\"60\" rx=\"8\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".15\"></rect>\n          <rect x=\"20\" y=\"22\" width=\"56\" height=\"3\" rx=\"1.5\" fill=\"currentColor\" opacity=\".15\"></rect>\n          <rect x=\"20\" y=\"30\" width=\"34\" height=\"3\" rx=\"1.5\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <rect x=\"20\" y=\"38\" width=\"48\" height=\"3\" rx=\"1.5\" fill=\"currentColor\" opacity=\".1\"></rect>\n          <circle cx=\"86\" cy=\"32\" r=\"3\" fill=\"#CA970C\" opacity=\".7\"></circle>\n          <circle cx=\"86\" cy=\"44\" r=\"3\" fill=\"#D61B2C\" opacity=\".7\"></circle>\n        </svg>\n      </div>"
+    "appliedRecommendations": []
   },
   "style": {
-    "heading": "Styles",
+    "heading": "Structure",
     "specCards": [
       {
-        "cardKey": "default",
+        "cardKey": "mdl-spec-card-default",
         "demoKey": "default",
-        "demoControls": modalDemoControls,
-        "title": "Default",
-        "node": "18507:71792",
-        "description": "The general-purpose dialog. Title + description + single CTA on a white card. Use for confirmations, errors, and neutral informational prompts.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"modal-spec-preview-default\"><div style=\"background:#fff;border-radius:6px;padding:20px 18px;box-shadow:0 0 4px rgba(232,238,242,0.79);width:220px;text-align:center;\"><div style=\"font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:14px;color:#0A2757;margin-bottom:8px;\">Put the title here</div><div style=\"font-family:'BarkAda', system-ui, sans-serif;font-weight:500;font-size:11px;color:#6780A9;line-height:1.45;\">Add description here.<br>Add description here.</div><div style=\"height:28px;background:#005CE5;border-radius:99px;margin-top:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;\">Label</div></div></div>",
+        "demoControls": modalControls,
+        "title": "Modal",
+        "node": "5879:41278",
+        "description": "An illustration slot, a centred title and description, and the action area. Only the action area changes between the two variants; hasIcon collapses the slot.",
+        "previewHtml": "<div id=\"mdl-spec-default\"><div class=\"eb-preview-mdl eb-preview-mdl--vertical\"><div class=\"eb-preview-mdl__content\"><div class=\"eb-preview-mdl__icon\"><span>Icon</span></div><div class=\"eb-preview-mdl__title\">Put the title here</div><div class=\"eb-preview-mdl__description\">Add description here.<br>Add description here.</div></div><div class=\"eb-preview-mdl__actions\"><div class=\"eb-preview-mdl__btn eb-preview-mdl__btn--filled\">Label</div><div class=\"eb-preview-mdl__btn eb-preview-mdl__btn--outlined\">Label</div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              {
-                "key": "Name",
-                "value": "Modal",
-                "mono": true
+              { "key": "ActionOrientation", "value": "Vertical", "prop": "actions",
+                "variants": {
+                  "actions:horizontal": { "value": "Horizontal" }
+                }
               },
-              {
-                "key": "type",
-                "value": "default",
-                "prop": "type",
-                "mono": true
+              { "key": "hasIcon", "value": "true", "prop": "hasicon",
+                "variants": {
+                  "hasicon:false": { "value": "false" }
+                }
               },
-              {
-                "key": "cta",
-                "value": "1",
-                "prop": "cta",
-                "mono": true
+              { "key": "⤷ IconSlot", "value": "Placeholder instance",
+                "variants": {
+                  "hasicon:false": { "value": "collapsed" }
+                }
               },
-              {
-                "key": "Title slot",
-                "value": "Text · Primary/Headlines/Section",
-                "mono": false
-              },
-              {
-                "key": "Description slot",
-                "value": "Text · Secondary/Default/Base",
-                "mono": false
-              }
+              { "key": "⤷ ActionSlot", "value": "2 × Button_New" },
+              { "key": "#title", "value": "Put the title here" },
+              { "key": "#description", "value": "Add description here." }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",           "value": "#FFFFFF", "token": "modal-popup/color/bg" },
-              { "key": "Subtle surface", "value": "#F6F9FD", "token": "modal-popup/color/bg-subtle",
-                "variants": {
-                  "type:default":   { "hide": true },
-                  "type:with-icon": { "hide": true }
-                }
-              },
-              { "key": "Border",            "value": "#E5EBF4", "token": "modal-popup/color/border" },
-              { "key": "Title",             "value": "#0A2757", "token": "modal-popup/color/label" },
-              { "key": "Description",       "value": "#6780A9", "token": "modal-popup/color/label-primary" },
-              { "key": "Accent icon", "value": "#005CE5", "token": "modal-popup/color/icon-copy",
-                "variants": {
-                  "type:default":   { "hide": true },
-                  "type:with-icon": { "hide": true }
-                }
-              },
-              { "key": "Primary CTA bg",    "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
-              { "key": "Primary CTA label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
-              { "key": "Secondary CTA", "value": "#005CE5", "token": "button/secondary/brand/enabled/border",
-                "variants": {
-                  "cta:1":          { "hide": true },
-                  "cta:1-vertical": { "hide": true }
-                }
-              }
+              { "key": "Surface", "value": "#FFFFFF", "token": "library variable · name pending Dev Mode read", "swatch": true },
+              { "key": "#title", "value": "#0A2757", "token": "library variable · name pending Dev Mode read", "swatch": true },
+              { "key": "#description", "value": "#6780A9", "token": "library variable · name pending Dev Mode read", "swatch": true },
+              { "key": "Button filled bg", "value": "#005CE5", "token": "library variable · name pending Dev Mode read", "swatch": true },
+              { "key": "Button filled label", "value": "#FFFFFF", "token": "library variable · name pending Dev Mode read", "swatch": true },
+              { "key": "Button outlined border", "value": "#005CE5", "token": "library variable · name pending Dev Mode read", "swatch": true },
+              { "key": "Button outlined label", "value": "#005CE5", "token": "library variable · name pending Dev Mode read", "swatch": true }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Width",
-                "value": "320",
-                "mono": true
+              { "key": "Width", "value": "320", "mono": true },
+              { "key": "Height", "value": "370", "mono": true,
+                "variants": {
+                  "actions:horizontal": { "value": "312" },
+                  "hasicon:false": { "value": "262" },
+                  "actions:horizontal|hasicon:false": { "value": "204" }
+                }
               },
-              {
-                key: 'Height',
-                value: '212',
-                mono: true,
-                variants: {
-                  'cta:1': { value: '212' },
-                  'cta:1-vertical': { value: '212' },
-                  'cta:2-horizontal': { value: '212' },
-                  'cta:2-vertical': { value: '270' },
-                },
+              { "key": "Corner radius", "value": "6", "mono": true },
+              { "key": "Content height", "value": "214", "mono": true,
+                "variants": {
+                  "hasicon:false": { "value": "106" }
+                }
               },
-              {
-                "key": "Padding",
-                "value": "24 / 32 top · 24 sides",
-                "mono": true
+              { "key": "Side inset", "value": "24", "mono": true },
+              { "key": "Padding top", "value": "24", "mono": true },
+              { "key": "⤷ IconSlot", "value": "92 × 92, centred", "mono": true,
+                "variants": {
+                  "hasicon:false": { "value": "collapsed" }
+                }
               },
-              {
-                "key": "Corner radius",
-                "value": "6",
-                "mono": true
+              { "key": "Icon to #title", "value": "16", "mono": true },
+              { "key": "#title to #description", "value": "16", "mono": true },
+              { "key": "Action area", "value": "320 × 156", "mono": true,
+                "variants": {
+                  "actions:horizontal": { "value": "320 × 98" }
+                }
               },
-              {
-                "key": "Border",
-                "value": "none (shadow only)",
-                "mono": true
+              { "key": "Button size", "value": "272 × 50", "mono": true,
+                "variants": {
+                  "actions:horizontal": { "value": "132 × 50" }
+                }
               },
-              {
-                "key": "CTA group padding",
-                "value": "py 24",
-                "mono": true
-              }
+              { "key": "Button gap", "value": "8", "mono": true },
+              { "key": "Button radius", "value": "99", "mono": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Section",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft · Bold",
-                "mono": true
-              },
-              {
-                "key": "Title size",
-                "value": "22 / 26",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Default/Base",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda · Medium",
-                "mono": true
-              },
-              {
-                "key": "Description size",
-                "value": "14 / 20",
-                "mono": true
-              },
-              {
-                "key": "Alignment",
-                "value": "center",
-                "mono": true
-              }
+              { "key": "Text styles", "value": "shared library styles · names pending Dev Mode read", "mono": true },
+              { "key": "#title", "value": "Proxima Soft Bold · 22 / 26 · 0", "mono": true },
+              { "key": "#description", "value": "BarkAda Medium · 14 / 20 · 0", "mono": true },
+              { "key": "Button #label", "value": "Proxima Soft Bold · 18 / 18 · +0.25", "mono": true },
+              { "key": "Alignment", "value": "title and description centred", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add description here.\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPrimaryAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add description here.\"</span><span class=\"syn-punc\">,</span>\n    primaryAction <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBModalAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "with-icon",
-        "demoKey": "icon",
-        "demoControls": modalDemoControls,
-        "title": "With Icon",
-        "node": "18507:71773",
-        "description": "Dialog that leads with a 92×92 icon to set tone — success, warning, or info. CTAs stack vertically (1 or 2).",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"modal-spec-preview-icon\"><div style=\"background:#fff;border-radius:6px;padding:20px 18px;box-shadow:0 0 4px rgba(232,238,242,0.79);width:220px;text-align:center;\"><div style=\"width:64px;height:64px;border-radius:50%;background:#C2C6CF;margin:0 auto 12px;\"></div><div style=\"font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:14px;color:#0A2757;margin-bottom:8px;\">Put the title here</div><div style=\"font-family:'BarkAda', system-ui, sans-serif;font-weight:500;font-size:11px;color:#6780A9;line-height:1.45;\">Add description here.<br>Add description here.</div><div style=\"display:flex;flex-direction:column;gap:6px;margin-top:14px;\"><div style=\"height:28px;background:#005CE5;border-radius:99px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;\">Label</div><div style=\"height:28px;border:2px solid #005CE5;border-radius:99px;display:flex;align-items:center;justify-content:center;color:#005CE5;font-size:11px;font-weight:700;\">Label</div></div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "type",
-                "value": "with icon",
-                "prop": "type",
-                "mono": true
-              },
-              {
-                "key": "cta",
-                "value": "1 - vertical",
-                "prop": "cta",
-                "mono": true
-              },
-              {
-                "key": "Icon slot",
-                "value": "92 × 92 placeholder circle (should be Slot)",
-                "mono": false
-              },
-              {
-                "key": "Title slot",
-                "value": "Text · Primary/Headlines/Section",
-                "mono": false
-              },
-              {
-                "key": "Description slot",
-                "value": "Text · Secondary/Default/Base",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface",           "value": "#FFFFFF", "token": "modal-popup/color/bg" },
-              { "key": "Subtle surface", "value": "#F6F9FD", "token": "modal-popup/color/bg-subtle",
-                "variants": {
-                  "type:default":   { "hide": true },
-                  "type:with-icon": { "hide": true }
-                }
-              },
-              { "key": "Border",            "value": "#E5EBF4", "token": "modal-popup/color/border" },
-              { "key": "Title",             "value": "#0A2757", "token": "modal-popup/color/label" },
-              { "key": "Description",       "value": "#6780A9", "token": "modal-popup/color/label-primary" },
-              { "key": "Accent icon", "value": "#005CE5", "token": "modal-popup/color/icon-copy",
-                "variants": {
-                  "type:default":   { "hide": true },
-                  "type:with-icon": { "hide": true }
-                }
-              },
-              { "key": "Primary CTA bg",    "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
-              { "key": "Primary CTA label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
-              { "key": "Secondary CTA", "value": "#005CE5", "token": "button/secondary/brand/enabled/border",
-                "variants": {
-                  "cta:1":          { "hide": true },
-                  "cta:1-vertical": { "hide": true }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Width",
-                "value": "320",
-                "mono": true
-              },
-              {
-                "key": "Height (cta=1-v)",
-                "value": "312",
-                "mono": true
-              },
-              {
-                "key": "Height (cta=2-v)",
-                "value": "370",
-                "mono": true
-              },
-              {
-                "key": "Icon container",
-                "value": "92 × 92",
-                "mono": true
-              },
-              {
-                "key": "Icon radius",
-                "value": "~72.5 (circle)",
-                "mono": true
-              },
-              {
-                "key": "Gap icon → title",
-                "value": "16",
-                "mono": true
-              },
-              {
-                "key": "Gap title → desc",
-                "value": "16",
-                "mono": true
-              },
-              {
-                "key": "CTA gap",
-                "value": "8 (vertical)",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Section",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft · Bold · 22 / 26",
-                "mono": true
-              },
-              {
-                "key": "Description style",
-                "value": "Secondary/Default/Base",
-                "mono": true
-              },
-              {
-                "key": "Description font",
-                "value": "BarkAda · Medium · 14 / 20",
-                "mono": true
-              },
-              {
-                "key": "Alignment",
-                "value": "center",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Add description here.\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebIcon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"checkmark.circle\"</span><span class=\"syn-punc\">))</span>\n    .<span class=\"syn-fn\">ebPrimaryAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebSecondaryAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add description here.\"</span><span class=\"syn-punc\">,</span>\n    icon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Filled</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.CheckCircle</span><span class=\"syn-punc\">, null) }</span><span class=\"syn-punc\">,</span>\n    primaryAction <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBModalAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">) { }</span><span class=\"syn-punc\">,</span>\n    secondaryAction <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBModalAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "transaction",
-        "demoKey": "txn",
-        "demoControls": modalDemoControls,
-        "title": "Transaction (v1 · v2)",
-        "node": "18507:71706",
-        "description": "Receipt-style dialog used for order, transfer, and subscription summaries. <code>v1</code> stacks label + value per row; <code>v2</code> is horizontal. Both include a reference-number row with copy-to-clipboard. <strong>Recommended for extraction into its own <code>TransactionReceipt</code> component.</strong>",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"modal-spec-preview-txn\"><div style=\"background:#F6F9FD;border-radius:6px;box-shadow:0 0 4px rgba(232,238,242,0.79);width:220px;overflow:hidden;\"><div style=\"background:#fff;padding:14px;border-bottom:1px solid #E5EBF4;\"><div style=\"font-family:'Proxima Soft',sans-serif;font-weight:700;font-size:13px;color:#0A2757;margin-bottom:10px;\">Put the title here</div><div style=\"font-size:10px;color:#0A2757;font-weight:600;line-height:1.45;margin-bottom:6px;\">First line of text goes here<br>Second line of text goes here</div><div style=\"display:flex;justify-content:space-between;padding:4px 0;font-size:10px;\"><span style=\"color:#6780A9;\">Label</span><span style=\"color:#0A2757;font-weight:600;\">Put content here</span></div><div style=\"display:flex;justify-content:space-between;padding:4px 0;font-size:10px;\"><span style=\"color:#6780A9;\">Label</span><span style=\"color:#0A2757;font-weight:600;\">Put content here</span></div><div style=\"display:flex;justify-content:space-between;padding:4px 0;font-size:10px;\"><span style=\"color:#6780A9;\">Label</span><span style=\"color:#0A2757;font-weight:600;\">Put content here</span></div></div><div style=\"background:#F6F9FD;padding:8px 14px;display:flex;justify-content:space-between;align-items:center;font-size:10px;\"><span style=\"color:#6780A9;\">Reference Number</span><span style=\"display:flex;align-items:center;gap:6px;\"><span style=\"color:#0A2757;font-weight:600;\">165A25912345</span><svg width=\"10\" height=\"10\" viewBox=\"0 0 24 24\" fill=\"none\"><rect x=\"8\" y=\"8\" width=\"12\" height=\"12\" rx=\"2\" stroke=\"#005CE5\" stroke-width=\"2\"></rect><path d=\"M4 16V5a1 1 0 0 1 1-1h11\" stroke=\"#005CE5\" stroke-width=\"2\"></path></svg></span></div><div style=\"background:#F6F9FD;padding:6px 14px 14px;\"><div style=\"height:26px;background:#005CE5;border-radius:99px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;\">Label</div></div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "type",
-                "value": "transaction_v1",
-                "prop": "type",
-                "mono": true
-              },
-              {
-                "key": "cta",
-                "value": "1",
-                "prop": "cta",
-                "mono": true
-              },
-              {
-                "key": "Detail rows",
-                "value": "3 per variant, stacked (v1) or inline (v2)",
-                "mono": false
-              },
-              {
-                "key": "Reference row",
-                "value": "Label + value + copy icon",
-                "mono": false
-              },
-              {
-                "key": "Copy icon",
-                "value": "shape_half",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface",           "value": "#FFFFFF", "token": "modal-popup/color/bg" },
-              { "key": "Subtle surface", "value": "#F6F9FD", "token": "modal-popup/color/bg-subtle",
-                "variants": {
-                  "type:default":   { "hide": true },
-                  "type:with-icon": { "hide": true }
-                }
-              },
-              { "key": "Border",            "value": "#E5EBF4", "token": "modal-popup/color/border" },
-              { "key": "Title",             "value": "#0A2757", "token": "modal-popup/color/label" },
-              { "key": "Description",       "value": "#6780A9", "token": "modal-popup/color/label-primary" },
-              { "key": "Accent icon", "value": "#005CE5", "token": "modal-popup/color/icon-copy",
-                "variants": {
-                  "type:default":   { "hide": true },
-                  "type:with-icon": { "hide": true }
-                }
-              },
-              { "key": "Primary CTA bg",    "value": "#005CE5", "token": "button/primary/brand/enabled/bg" },
-              { "key": "Primary CTA label", "value": "#FFFFFF", "token": "button/primary/brand/enabled/label" },
-              { "key": "Secondary CTA", "value": "#005CE5", "token": "button/secondary/brand/enabled/border",
-                "variants": {
-                  "cta:1":          { "hide": true },
-                  "cta:1-vertical": { "hide": true }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Width",
-                "value": "320",
-                "mono": true
-              },
-              {
-                "key": "Height (v1)",
-                "value": "398",
-                "mono": true
-              },
-              {
-                "key": "Height (v2)",
-                "value": "404",
-                "mono": true
-              },
-              {
-                "key": "Content padding",
-                "value": "24 all sides",
-                "mono": true
-              },
-              {
-                "key": "Reference row padding",
-                "value": "16 top · 8 bottom · 24 sides",
-                "mono": true
-              },
-              {
-                "key": "CTA padding",
-                "value": "8 top · 24 bottom · 24 sides",
-                "mono": true
-              },
-              {
-                "key": "Row gap (v1)",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "Row gap (v2)",
-                "value": "12",
-                "mono": true
-              },
-              {
-                "key": "Copy icon",
-                "value": "24 × 24",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Section",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft · Bold · 22 / 26",
-                "mono": true
-              },
-              {
-                "key": "Section text",
-                "value": "Primary/Multi-line Label/Light/Base · 16 / 20",
-                "mono": true
-              },
-              {
-                "key": "Row label / value",
-                "value": "Primary/Label/Light/Small · 14 / 14",
-                "mono": true
-              },
-              {
-                "key": "Multi-line row (v1)",
-                "value": "Primary/Multi-line Label/Light/Small · 14 / 16",
-                "mono": true
-              },
-              {
-                "key": "Alignment",
-                "value": "left (v1/v2 body), center (title)",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.transaction</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebTransactionRows</span><span class=\"syn-punc\">(</span>rows<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebReferenceNumber</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"165A25912345\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPrimaryAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>action<span class=\"syn-punc\">: { }</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBModalStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Transaction</span><span class=\"syn-punc\">,</span>\n    rows <span class=\"syn-eq\">=</span> transactionDetails<span class=\"syn-punc\">,</span>\n    referenceNumber <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"165A25912345\"</span><span class=\"syn-punc\">,</span>\n    primaryAction <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBModalAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">) { }</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Add description here.\"</span><span class=\"syn-punc\">,</span>\n    icon<span class=\"syn-punc\">:</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"success\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Confirm\"</span><span class=\"syn-punc\">) {</span> confirm<span class=\"syn-punc\">() }</span>\n    <span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Cancel\"</span><span class=\"syn-punc\">) {</span> dismiss<span class=\"syn-punc\">() }</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add description here.\"</span><span class=\"syn-punc\">,</span>\n    icon <span class=\"syn-eq\">= {</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">R</span><span class=\"syn-punc\">.</span>drawable<span class=\"syn-punc\">.</span>success<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Confirm\"</span><span class=\"syn-punc\">,</span> onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">::</span>confirm<span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Cancel\"</span><span class=\"syn-punc\">,</span> onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">::</span>dismiss<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       }
-    ],
-    colorsTables: [
-      // Card 1 — Default (white card · single CTA)
-      buildStatelessColorsTable({
-        title: 'Default — Colors',
-        description: 'White surface card with title, description, and primary CTA over a dimmed scrim.',
-        rows: [
-          { role: 'Surface bg',     token: 'main/modal/surface',          value: '#FFFFFF' },
-          { role: 'Title label',    token: 'text/primary/headline',       value: '#0A2757' },
-          { role: 'Description',    token: 'text/primary/body/secondary', value: '#6780A9' },
-          { role: 'Scrim (overlay)', token: 'main/overlay/scrim',         value: '#020E22 @ 56%' },
-        ],
-      }),
-      // Card 2 — With Icon
-      buildStatelessColorsTable({
-        title: 'With Icon — Colors',
-        description: 'White surface with a leading status icon. Icon color inherits from the placed Icon instance (no own token).',
-        rows: [
-          { role: 'Surface bg',     token: 'main/modal/surface',          value: '#FFFFFF' },
-          { role: 'Title label',    token: 'text/primary/headline',       value: '#0A2757' },
-          { role: 'Description',    token: 'text/primary/body/secondary', value: '#6780A9' },
-          { role: 'Scrim (overlay)', token: 'main/overlay/scrim',         value: '#020E22 @ 56%' },
-        ],
-      }),
-      // Card 3 — Transaction (v1 · v2)
-      buildStatelessColorsTable({
-        title: 'Transaction — Colors',
-        description: 'Two-zone surface: a white content card sits on top of a light-blue receipt-offset shelf that holds the reference number row.',
-        rows: [
-          { role: 'Outer surface bg',    token: 'main/modal/transaction/shelf',    value: '#F6F9FD' },
-          { role: 'Inner content bg',    token: 'main/modal/transaction/content',  value: '#FFFFFF' },
-          { role: 'Inner content border', token: 'main/modal/transaction/border',  value: '#E5EBF4' },
-          { role: 'Title label',         token: 'text/primary/headline',           value: '#0A2757' },
-          { role: 'Description',         token: 'text/primary/body/secondary',     value: '#6780A9' },
-          { role: 'Scrim (overlay)',     token: 'main/overlay/scrim',              value: '#020E22 @ 56%' },
-        ],
-      }),
-    ],
+    ]
   },
   "code": {
     "installation": {
       "planned": true,
-      "blocks": []
+      "blocks": [
+        {
+          "label": "Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Gradle",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        }
+      ],
+      "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
     },
     "propertyMapping": {
+      "description": "Figma properties mapped to the intended native parameters.",
       "rows": [
         {
-          "figma": "<code>type = default</code>",
-          "swift": "<code>EBModal(title:, description:)</code>",
-          "compose": "<code>EBModal(title, description)</code>"
+          "figma": "ActionOrientation",
+          "swift": ".ebActionOrientation(.vertical / .horizontal)",
+          "compose": "actionOrientation: EBActionOrientation"
         },
         {
-          "figma": "<code>type = with icon</code>",
-          "swift": "<code>EBModal(icon:, title:, description:)</code>",
-          "compose": "<code>EBModal(icon = { … }, title, description)</code>"
+          "figma": "hasIcon",
+          "swift": "icon: Image?",
+          "compose": "icon: (@Composable () -> Unit)?"
         },
         {
-          "figma": "<code>type = transaction_v1 / v2</code>",
-          "swift": "Extract → <code>EBTransactionReceipt(layout: .stacked / .inline)</code>",
-          "compose": "Extract → <code>EBTransactionReceipt(layout = Stacked / Inline)</code>"
+          "figma": "#title",
+          "swift": "title: String",
+          "compose": "title: String"
         },
         {
-          "figma": "<code>cta = 1</code>",
-          "swift": "<code>{ EBButton(…) }</code> (single trailing closure)",
-          "compose": "<code>content: { EBButton(…) }</code>"
+          "figma": "#description",
+          "swift": "description: String?",
+          "compose": "description: String?"
         },
         {
-          "figma": "<code>cta = 1 - vertical</code>",
-          "swift": "Implicit — single button is always full-width",
-          "compose": "Implicit — single button is always full-width"
+          "figma": "⤷ IconSlot",
+          "swift": "icon: Image?",
+          "compose": "icon: (@Composable () -> Unit)?"
         },
         {
-          "figma": "<code>cta = 2 - horizontal</code>",
-          "swift": "<code>{ EBButton(…); EBOutlinedButton(…) }</code> + <code>.ctaLayout(.horizontal)</code>",
-          "compose": "<code>ctaLayout = CtaLayout.Horizontal</code>"
-        },
-        {
-          "figma": "<code>cta = 2 - vertical</code>",
-          "swift": "<code>.ctaLayout(.vertical)</code>",
-          "compose": "<code>ctaLayout = CtaLayout.Vertical</code>"
-        },
-        {
-          "figma": "(proposed) Dismissible",
-          "swift": "<code>.interactiveDismissDisabled(!dismissible)</code>",
-          "compose": "<code>DialogProperties(dismissOnClickOutside = dismissible)</code>"
-        },
-        {
-          "figma": "(proposed) Loading state",
-          "swift": "<code>.ebLoading(isLoading)</code>",
-          "compose": "<code>isLoading = true</code>"
+          "figma": "⤷ ActionSlot",
+          "swift": "@ViewBuilder actions: () -> Actions",
+          "compose": "actions: @Composable () -> Unit"
         }
       ]
     },
-    "usageSnippets": [],
-    "accessibility": [
+    "usageSnippets": [
       {
-        "requirement": "Modal trait",
-        "ios": "Apply <code>.accessibilityAddTraits(.isModal)</code> — VoiceOver trap focus inside.",
-        "android": "Use <code>Dialog</code> / <code>AlertDialog</code> — TalkBack treats content as modal by default."
+        "subheading": "Vertical actions with an illustration (default)",
+        "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Delete this card?\"</span><span class=\"syn-punc\">,</span> icon<span class=\"syn-punc\">:</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"warning\"</span><span class=\"syn-punc\">)) {</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Delete\"</span><span class=\"syn-punc\">,</span> role<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.destructive</span><span class=\"syn-punc\">) {</span> delete<span class=\"syn-punc\">() }</span>\n    <span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Keep\"</span><span class=\"syn-punc\">) {</span> dismiss<span class=\"syn-punc\">() }</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Delete this card?\"</span><span class=\"syn-punc\">,</span>\n    icon <span class=\"syn-eq\">= {</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">R</span><span class=\"syn-punc\">.</span>drawable<span class=\"syn-punc\">.</span>warning<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Delete\"</span><span class=\"syn-punc\">,</span> colors <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBButtonDefaults</span><span class=\"syn-punc\">.</span><span class=\"syn-fn\">destructiveColors</span><span class=\"syn-punc\">())</span>\n    <span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Keep\"</span><span class=\"syn-punc\">,</span> onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">::</span>dismiss<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       },
       {
-        "requirement": "Focus management",
-        "ios": "Focus moves to modal on present; restores to trigger on dismiss.",
-        "android": "Focus enters dialog content on show; restored to trigger element on dismiss."
+        "subheading": "No illustration (hasIcon=false)",
+        "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Session expired\"</span><span class=\"syn-punc\">,</span> description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Sign in again to continue.\"</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Sign in\"</span><span class=\"syn-punc\">) {</span> signIn<span class=\"syn-punc\">() }</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Session expired\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Sign in again to continue.\"</span><span class=\"syn-punc\">,</span>\n    icon <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span>\n<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Sign in\"</span><span class=\"syn-punc\">,</span> onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">::</span>signIn<span class=\"syn-punc\">) }</span>"
       },
       {
-        "requirement": "Title announcement",
-        "ios": "Bind the title Text as the <code>accessibilityHeading</code> so it's read first.",
-        "android": "Use <code>Modifier.semantics { heading() }</code> on the title; set <code>paneTitle</code> on the surface."
-      },
-      {
-        "requirement": "Dismiss gesture",
-        "ios": "ESC / tap-outside / swipe-down should all route through one dismiss handler.",
-        "android": "Back gesture + tap-outside configured via <code>DialogProperties(dismissOnBackPress, dismissOnClickOutside)</code>."
-      },
-      {
-        "requirement": "Destructive action",
-        "ios": "Use <code>role: .destructive</code> on the CTA so VoiceOver announces destructive intent.",
-        "android": "Use destructive colour palette; set <code>contentDescription</code> on CTA explicitly."
-      },
-      {
-        "requirement": "Copy to clipboard",
-        "ios": "Announce \"Copied\" via <code>UIAccessibility.post(.announcement, …)</code>.",
-        "android": "Announce via <code>view.announceForAccessibility(\"Copied\")</code>."
-      },
-      {
-        "requirement": "Tap target (copy icon)",
-        "ios": "Wrap 24×24 icon in a ≥44×44 tappable area.",
-        "android": "Wrap 24×24 icon in a ≥48×48 dp tappable area."
+        "subheading": "Horizontal actions",
+        "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Discard changes?\"</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Cancel\"</span><span class=\"syn-punc\">) {</span> dismiss<span class=\"syn-punc\">() }</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Discard\"</span><span class=\"syn-punc\">) {</span> discard<span class=\"syn-punc\">() }</span>\n<span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">.</span><span class=\"syn-fn\">ebActionOrientation</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.horizontal</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Discard changes?\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Horizontal</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Cancel\"</span><span class=\"syn-punc\">,</span> onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">::</span>dismiss<span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Discard\"</span><span class=\"syn-punc\">,</span> onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">::</span>discard<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
-    "usageGuidelines": [],
+    "accessibility": [
+      {
+        "requirement": "Dialog announced on present",
+        "ios": "<code>.accessibilityAddTraits(.isModal)</code>, focus moves to <code>#title</code>",
+        "android": "<code>Dialog</code> with <code>Modifier.semantics { paneTitle = title }</code>"
+      },
+      {
+        "requirement": "Focus is trapped while open",
+        "ios": "<code>.accessibilityFocused</code> held inside the dialog",
+        "android": "<code>Dialog</code> traps focus by default"
+      },
+      {
+        "requirement": "Illustration is decorative",
+        "ios": "<code>.accessibilityHidden(true)</code> unless it carries meaning",
+        "android": "<code>contentDescription = null</code> unless it carries meaning"
+      },
+      {
+        "requirement": "Primary action is reachable first",
+        "ios": "Primary precedes secondary in the accessibility order in both orientations",
+        "android": "Primary precedes secondary in the traversal order in both orientations"
+      },
+      {
+        "requirement": "Dismissal has a non-visual path",
+        "ios": "Escape gesture maps to the secondary action",
+        "android": "Back press maps to the secondary action"
+      }
+    ],
+    "usageGuidelines": [
+      {
+        "doText": "Use vertical actions when both labels are long or the secondary action matters.",
+        "dontText": "Don't use horizontal actions with labels that will truncate at 132px."
+      },
+      {
+        "doText": "Switch hasIcon off when there is no illustration to show.",
+        "dontText": "Don't leave the slot on and empty — it reserves 108px of nothing."
+      },
+      {
+        "doText": "Pair the modal with Overlay for the scrim.",
+        "dontText": "Don't build a scrim into the card — this component is the card only."
+      },
+      {
+        "doText": "Use Modal - Transaction Receipt for receipts.",
+        "dontText": "Don't rebuild a receipt inside this component; that split is what the restructure was for."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Opacity-0 <code>_space_*</code> spacer rectangles used instead of gap. Icon-placeholder is a raw circle node, not a named icon slot."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Container</code>, <code>Content</code>, <code>#title</code> and <code>#description</code> all follow the family convention. The spacer rectangles from the first assessment are gone, and the Container wrapper is confirmed as holding the auto layout."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Mixed casing: <code>transaction_v1</code> (snake) vs <code>1 - vertical</code> (space-dash-space). CTA matrix is sparse across <code>type</code> values."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>ActionOrientation</code> closed its space this pass. <code>hasIcon</code> follows the boolean prefix convention and stays off the variant name."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "bg, label, label-primary, border, bg-subtle, icon-copy all bound to <code>main/modal-popup/color/*</code>. Shadow uses <code>Shadow/Depth 0</code>."
+        "notes": "Fills resolve to library variables and text carries shared library styles — verified on the component's own nodes. The BarkAda description is confirmed as the secondary-face rule, not drift."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "General-dialog variants map to <code>.sheet</code> / <code>Dialog</code>; transaction variants do not — they need a dedicated Receipt component. Not a single native primitive."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The receipt layouts have been extracted, so what is left maps cleanly to a dialog with two view-builder slots. Both modals now share one button component."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Only default state shipped. No loading, no destructive variant, no copy-success feedback, no present/dismiss transition annotation."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Button states come from Button_New. <code>hasIcon</code> covers the with and without cases. A loading state belongs to the Button family rather than here."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Copy icon is raster PNG (<code>shape_half</code>, <code>shape_full</code>). Icon-placeholder slot is a hardcoded grey circle instead of a vector icon instance."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The hardcoded placeholder circle is now a real slot with a Placeholder instance, and the raster copy icon left with the receipt layouts."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked on restructure — duplicate scope with Overlay + embedded transaction layout must be resolved before mapping."
+        "notes": "Blocked — the native library does not exist yet."
       }
     ],
-    "codeConnect": [],
+    "codeConnect": [
+      {
+        "aspect": "Property naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>ActionOrientation</code>, <code>hasIcon</code>, both <code>⤷</code> slots and the two text layers map one to one with no rename at the boundary."
+      },
+      {
+        "aspect": "Token coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Bindings are in place; only the human-readable names are outstanding."
+      },
+      {
+        "aspect": "Registration",
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Blocked until the native library exists."
+      }
+    ],
     "variants": {
-      "total": 7,
-      "description": "A <code>type</code> × <code>cta</code> matrix would yield <strong>4 × 4 = 16</strong>, but only 7 combinations are shipped. The rest are gaps.",
-      "columns": [
-        "Type",
-        "CTA",
-        "Node",
-        "Dimensions",
-        "Notes"
-      ],
+      "total": 2,
+      "description": "1 component set × 2 ActionOrientation values = 2 variants. hasIcon is a boolean component property, so it toggles the illustration without doubling the set.",
+      "columns": ["ActionOrientation", "Size", "Action area", "Buttons", "Node"],
       "rows": [
-        {
-          "cells": [
-            "<strong>default</strong>",
-            "<code>1</code>",
-            "<code>18507:71792</code>",
-            "320 × 212",
-            "Title + description + single CTA."
-          ]
-        },
-        {
-          "cells": [
-            "<strong>default</strong>",
-            "<code>2 - horizontal</code>",
-            "<code>18507:71799</code>",
-            "320 × 212",
-            "Outlined secondary + filled primary, side-by-side."
-          ]
-        },
-        {
-          "cells": [
-            "<strong>default</strong>",
-            "<code>2 - vertical</code>",
-            "<code>18507:71807</code>",
-            "320 × 270",
-            "Stacked CTAs, both full-width."
-          ]
-        },
-        {
-          "cells": [
-            "<strong>with icon</strong>",
-            "<code>1 - vertical</code>",
-            "<code>18507:71783</code>",
-            "320 × 312",
-            "92×92 icon placeholder + title + desc + single CTA."
-          ]
-        },
-        {
-          "cells": [
-            "<strong>with icon</strong>",
-            "<code>2 - vertical</code>",
-            "<code>18507:71773</code>",
-            "320 × 370",
-            "92×92 icon + title + desc + two stacked CTAs."
-          ]
-        },
-        {
-          "cells": [
-            "<strong>transaction_v1</strong>",
-            "<code>1</code>",
-            "<code>18507:71706</code>",
-            "320 × 398",
-            "Receipt layout — rows stacked (label above value). Reference row with copy icon."
-          ]
-        },
-        {
-          "cells": [
-            "<strong>transaction_v2</strong>",
-            "<code>1</code>",
-            "<code>18507:71732</code>",
-            "320 × 404",
-            "Receipt layout — rows inline (label left, value right). Reference row with copy icon. Outer surface uses <code>bg-subtle</code>."
-          ]
-        }
+        { "cells": ["Vertical", "320 × 370", "320 × 156", "2 × 272 × 50, primary on top", "5879:41275"] },
+        { "cells": ["Horizontal", "320 × 312", "320 × 98", "2 × 132 × 50, primary on right", "5879:41276"] }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "August 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt on the 2026 Working File · node 5879:41278",
+      "rows": [
+        {
+          "body": "<strong>Restructured as recommended</strong> — the receipt layouts were extracted into <a href=\"/components/modal-transaction-receipt\">Modal - Transaction Receipt</a> and <a href=\"/components/modal-transaction-receipt-entry\">Modal - Transaction Receipt Entry</a>. What remains here is the general-purpose dialog, which is what the first assessment asked for.",
+          "delta": { "kind": "resolved", "label": "C4 resolved" }
+        },
+        {
+          "body": "<strong>Duplicate scope with Overlay settled</strong> — Modal owns the card, <a href=\"/components/overlay\">Overlay</a> owns the scrim. Neither builds the other.",
+          "delta": { "kind": "resolved", "label": "C7 resolved" }
+        },
+        {
+          "body": "<code>_space_*</code> spacer rectangles removed and the hardcoded placeholder circle replaced with <code>⤷ IconSlot</code>.",
+          "delta": { "kind": "resolved", "label": "C1 resolved" }
+        },
+        {
+          "body": "<strong>Mixed-casing enums gone</strong> — <code>transaction_v1</code>, <code>transaction_v2</code> and <code>1 - vertical</code> collapsed into <code>ActionOrientation = Vertical | Horizontal</code>, renamed this pass to close the space it carried.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "<code>hasIcon</code> added, defaulting to true, with a <code>Placeholder</code> instance in the slot — the illustration can now be switched off instead of reserving 108px of empty space.",
+          "delta": { "kind": "resolved", "label": "C5 resolved" }
+        },
+        {
+          "body": "<strong>Raster copy icon resolved</strong> — the <code>shape_half</code> and <code>shape_full</code> PNGs left with the receipt layouts, where the copy control is now a vector instance.",
+          "delta": { "kind": "resolved", "label": "C6 resolved" }
+        },
+        {
+          "body": "<strong>BarkAda description confirmed</strong> — the first assessment left this open for design. BarkAda is the secondary face for longer copy at smaller sizes; Proxima Soft carries titles, labels and shorter or larger text.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "Buttons unified on <code>Button_New</code> across the family, so the label is addressable as <code>#label</code> in both modals.",
+          "delta": { "kind": "resolved", "label": "C4 resolved" }
+        },
+        {
+          "body": "Node moved from <code>18507:71705</code> (Sticker Sheets v2) to <code>5879:41278</code> (2026 Working File).",
+          "delta": { "kind": "resolved", "label": "Rebuilt" }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

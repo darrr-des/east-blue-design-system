@@ -587,12 +587,12 @@ export const genericTransactionCard: ComponentData = {
         {
           "figma": "<code>type=more information</code>",
           "swift": "<code>trailing = .menu(() -&gt; Void)</code>",
-          "compose": "同上"
+          "compose": "<code>trailing: EBRowTrailing</code>"
         },
         {
           "figma": "<code>type=no amount</code>",
           "swift": "<code>trailing = .badge(Badge)</code> + <code>metadata = reference</code>",
-          "compose": "同上"
+          "compose": "<code>trailing: EBRowTrailing</code>"
         },
         {
           "figma": "<code>type=skeleton loader</code>",

@@ -20,7 +20,13 @@ import { chatField } from './chat-field';
 import { checkbox } from './checkbox';
 import { chip } from './chip';
 import { counter } from './counter';
+import { countdownPromo } from './countdown-promo';
+import { countdownUnit } from './countdown-unit';
 import { countdown } from './countdown';
+import { datePickerCalendar } from './date-picker-calendar';
+import { datePickerHeaderTrigger } from './date-picker-header-trigger';
+import { datePickerHeader } from './date-picker-header';
+import { datePickerCell } from './date-picker-cell';
 import { datePickerGroup } from './date-picker-group';
 import { datePickerItem } from './date-picker-item';
 import { datePicker } from './date-picker';
@@ -45,6 +51,8 @@ import { listItem } from './list-item';
 import { list } from './list';
 import { menuGrid } from './menu-grid';
 import { modal } from './modal';
+import { modalTransactionReceiptEntry } from './modal-transaction-receipt-entry';
+import { modalTransactionReceipt } from './modal-transaction-receipt';
 import { monthYearPickerItem } from './month-year-picker-item';
 import { onboardingTooltip } from './onboarding-tooltip';
 import { overlay } from './overlay';
@@ -82,6 +90,7 @@ import { uploadFile } from './upload-file';
 import { verticalVoucher } from './vertical-voucher';
 import { viewOnlyField } from './view-only-field';
 import { visualPopup } from './visual-popup';
+import { voucher } from './voucher';
 import { voucherAsset } from './voucher-asset';
 import { voucherCardHorizontal } from './voucher-card-horizontal';
 import { voucherDetails } from './voucher-details';
@@ -108,7 +117,13 @@ export const componentMap: Record<string, ComponentData> = {
   'checkbox': checkbox,
   'chip': chip,
   'counter': counter,
+  'countdown-promo': countdownPromo,
+  'countdown-unit': countdownUnit,
   'countdown': countdown,
+  'date-picker-calendar': datePickerCalendar,
+  'date-picker-header-trigger': datePickerHeaderTrigger,
+  'date-picker-header': datePickerHeader,
+  'date-picker-cell': datePickerCell,
   'date-picker-group': datePickerGroup,
   'date-picker-item': datePickerItem,
   'date-picker': datePicker,
@@ -133,6 +148,8 @@ export const componentMap: Record<string, ComponentData> = {
   'list': list,
   'menu-grid': menuGrid,
   'modal': modal,
+  'modal-transaction-receipt': modalTransactionReceipt,
+  'modal-transaction-receipt-entry': modalTransactionReceiptEntry,
   'month-year-picker-item': monthYearPickerItem,
   'onboarding-tooltip': onboardingTooltip,
   'overlay': overlay,
@@ -170,6 +187,7 @@ export const componentMap: Record<string, ComponentData> = {
   'vertical-voucher': verticalVoucher,
   'view-only-field': viewOnlyField,
   'visual-popup': visualPopup,
+  'voucher': voucher,
   'voucher-asset': voucherAsset,
   'voucher-card-horizontal': voucherCardHorizontal,
   'voucher-details': voucherDetails,

@@ -1,156 +1,210 @@
 import type { ComponentData, DemoControlSection } from '../types';
 
-// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
-// in `public/scripts/demos/dropdown-item.js`.
-const dropdownItemDemoControls: DemoControlSection[] = [
+/* Demo controls for the Style tab's single spec card. Four axes, but the
+   State × isSelected grid is deliberately sparse — see the resolved list. */
+const selectItemControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'type',
+        label: 'Type',
         prop: 'type',
-        defaultValue: 'text',
         options: [
-          { value: 'text',          label: 'text' },
-          { value: 'text with tag', label: 'text with tag' },
-          { value: 'amount',        label: 'amount' },
-          { value: 'country',       label: 'country' },
-          { value: 'disabeld',      label: 'disabeld' },
+          { value: 'icon', label: 'Icon' },
+          { value: 'pesosignvector', label: 'PesoSignVector' },
+          { value: 'flag', label: 'Flag' },
+          { value: 'pesosigntext', label: 'PesoSignText' }
         ],
+        defaultValue: 'icon'
       },
       {
-        label: 'selected',
-        prop: 'selected',
-        defaultValue: 'false',
+        label: 'Density',
+        prop: 'density',
+        options: [
+          { value: 'compact', label: 'Compact' },
+          { value: 'default', label: 'Default' },
+          { value: 'comfortable', label: 'Comfortable' }
+        ],
+        defaultValue: 'compact'
+      },
+      {
+        label: 'State',
+        prop: 'state',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'pressed', label: 'Pressed' },
+          { value: 'disabled', label: 'Disabled' }
+        ],
+        defaultValue: 'default'
+      },
+      {
+        label: 'isSelected',
+        prop: 'isselected',
         options: [
           { value: 'false', label: 'false' },
-          { value: 'true',  label: 'true' },
+          { value: 'true', label: 'true' }
         ],
-      },
-    ],
-  },
+        defaultValue: 'false'
+      }
+    ]
+  }
 ];
 
 export const dropdownItem: ComponentData = {
   "meta": {
     "slug": "dropdown-item",
     "name": "Select Item",
-    "node": "18577:13033",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18577-13033",
-    "description": "A single selectable row inside a Dropdown popover — label, optional leading icon, and selected/disabled states.",
+    "node": "7947:111969",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=7947-111969",
+    "description": "One selectable row inside a Select Group — a leading element, a label with optional supporting text, and an optional trailing badge.",
     "badges": [
       {
-        "kind": "fix",
-        "label": "Fix"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
-    "navGroup": "Dropdown",
+    "navGroup": "Select",
     "verdict": {
-      "kind": "fix",
-      "title": "Fix required before handoff",
-      "text": "Enum value typo <code>disabeld</code> (C2). Country variant uses a raster PNG flag (C6). No pressed/focused state variants (C5). Disabled is modeled as a <code>type</code> value rather than an orthogonal state (C4)."
+      "kind": "keep",
+      "title": "Keep — every finding from the last assessment is closed",
+      "text": "The previous pass left four things: an enum value spelled <code>disabeld</code>, a Country variant drawing its flag from a raster PNG, no pressed state at all, and Disabled modelled as a <code>type</code> value rather than a state. All four are fixed. Disabled and Pressed are now values on an orthogonal <code>State</code> axis, and the flag is a real vector instance from the Flags Library — the exported SVG is paths and masks with no image in it. This pass closed the value naming, so <code>Type</code> now reads <code>Icon</code>, <code>PesoSignVector</code>, <code>Flag</code> and <code>PesoSignText</code>. Nothing is outstanding on the component itself; Code Connect stays open because the native library does not exist yet."
     }
   },
   "overview": {
-    "inContextNote": "Dropdown Item is the row primitive consumed by the Dropdown overlay and by Dropdown Item Group. Not used standalone.",
-    "inContextHtml": "<div class=\"ctx-placeholder\">\n        <svg width=\"120\" height=\"80\" viewBox=\"0 0 120 80\" fill=\"none\">\n          <rect x=\"10\" y=\"8\" width=\"100\" height=\"64\" rx=\"6\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".15\"></rect>\n          <rect x=\"14\" y=\"14\" width=\"92\" height=\"11\" rx=\"1\" fill=\"currentColor\" opacity=\".05\"></rect>\n          <rect x=\"18\" y=\"18\" width=\"40\" height=\"3\" rx=\"1\" fill=\"currentColor\" opacity=\".3\"></rect>\n          <line x1=\"14\" y1=\"25\" x2=\"106\" y2=\"25\" stroke=\"currentColor\" stroke-width=\".5\" opacity=\".15\"></line>\n          <rect x=\"14\" y=\"25\" width=\"92\" height=\"11\" rx=\"1\" fill=\"currentColor\" opacity=\".05\"></rect>\n          <rect x=\"18\" y=\"29\" width=\"32\" height=\"3\" rx=\"1\" fill=\"#005CE5\" opacity=\".4\"></rect>\n          <line x1=\"14\" y1=\"36\" x2=\"106\" y2=\"36\" stroke=\"currentColor\" stroke-width=\".5\" opacity=\".15\"></line>\n          <rect x=\"14\" y=\"36\" width=\"92\" height=\"11\" rx=\"1\" fill=\"currentColor\" opacity=\".05\"></rect>\n          <rect x=\"18\" y=\"40\" width=\"24\" height=\"3\" rx=\"1\" fill=\"currentColor\" opacity=\".3\"></rect>\n          <rect x=\"80\" y=\"39\" width=\"18\" height=\"5\" rx=\"1\" fill=\"#D61B2C\" opacity=\".5\"></rect>\n          <line x1=\"14\" y1=\"47\" x2=\"106\" y2=\"47\" stroke=\"currentColor\" stroke-width=\".5\" opacity=\".15\"></line>\n          <rect x=\"14\" y=\"47\" width=\"92\" height=\"11\" rx=\"1\" fill=\"currentColor\" opacity=\".05\"></rect>\n          <rect x=\"18\" y=\"51\" width=\"8\" height=\"4\" rx=\".5\" fill=\"currentColor\" opacity=\".3\"></rect>\n          <rect x=\"28\" y=\"51\" width=\"28\" height=\"3\" rx=\"1\" fill=\"currentColor\" opacity=\".3\"></rect>\n          <line x1=\"14\" y1=\"58\" x2=\"106\" y2=\"58\" stroke=\"currentColor\" stroke-width=\".5\" opacity=\".15\"></line>\n          <rect x=\"14\" y=\"58\" width=\"92\" height=\"11\" rx=\"1\" fill=\"currentColor\" opacity=\".04\"></rect>\n          <rect x=\"18\" y=\"62\" width=\"30\" height=\"3\" rx=\"1\" fill=\"currentColor\" opacity=\".15\"></rect>\n        </svg>\n      </div>",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ddi-demo-preview\"><svg width=\"366\" height=\"50\" viewBox=\"0 0 366 50\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"0\" y1=\"49.5\" x2=\"366\" y2=\"49.5\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"12\" y=\"31\" font-family=\"Proxima Soft, system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text></svg></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">type</span><select class=\"demo-panel-select\" onchange=\"_ddiDemo.type=this.value;updateDropdownItemDemo()\"><option value=\"text\">text</option><option value=\"text with tag\">text with tag</option><option value=\"amount\">amount</option><option value=\"country\">country</option><option value=\"disabeld\">disabeld</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">selected</span><select class=\"demo-panel-select\" onchange=\"_ddiDemo.selected=this.value;updateDropdownItemDemo()\"><option value=\"false\">false</option><option value=\"true\">true</option></select></div></div></div></div>",
+    "inContextNote": "Rows appear inside a Select Group, which is what a Select opens. On its own the row is never shown — the preview here is a single row at the size the group would give it.",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"sitem-demo-preview\"><div class=\"eb-preview-sitem eb-preview-sitem--compact\"><span class=\"eb-preview-sitem__lead eb-preview-sitem__lead--icon\"></span><span class=\"eb-preview-sitem__content\"><span class=\"eb-preview-sitem__primary\">Text</span></span><span class=\"eb-preview-sitem__trail\"></span></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select id=\"sitem-ctrl-type\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"icon\" selected=\"\">Icon</option><option value=\"pesosignvector\">PesoSignVector</option><option value=\"flag\">Flag</option><option value=\"pesosigntext\">PesoSignText</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Density</span><select id=\"sitem-ctrl-density\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"compact\" selected=\"\">Compact</option><option value=\"default\">Default</option><option value=\"comfortable\">Comfortable</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"sitem-ctrl-state\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"pressed\">Pressed</option><option value=\"disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isSelected</span><select id=\"sitem-ctrl-isselected\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Supporting Text</span><select id=\"sitem-ctrl-supporting\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"false\" selected=\"\">hidden</option><option value=\"true\">shown</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Badge</span><select id=\"sitem-ctrl-badge\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"false\" selected=\"\">hidden</option><option value=\"true\">shown</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "Single row primitive powering every Select Group and Dropdown overlay. One component covers Icon, Peso Sign, and Flag leading content across three densities (Compact 40 / Default 48 / Comfortable 56), with named Leading / Content / Trailing slots taking anything else."
+        "note": "One row serving every Select in the product. Three densities cover compact pickers through to comfortable lists, and the four leading types cover the cases the product actually has."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Ships its own padding, label + supporting text styling, and slot scaffolding. Colors are token-bound across Default, Pressed, and Disabled; the Flag type resolves through the shared <code>Flags Library</code> rather than baking in an asset."
+        "note": "Owns its own height, padding, type and colour, with the leading, content and trailing pieces each coming from their own component rather than being drawn inline."
       },
       {
         "name": "Consistent",
         "rating": "pass",
-        "note": "The <code>disabeld</code> typo is gone — disabled is now an orthogonal <code>State</code> value (Default / Pressed / Disabled) that composes with any <code>Type</code>. <code>isSelected</code> is a clean two-value boolean on <code>true</code>/<code>false</code>, matching the C2 rule and Radio Button."
+        "note": "<code>State</code> is orthogonal to <code>Type</code> after the rebuild, the <code>disabeld</code> spelling is gone, and the multi-word values are joined — <code>PesoSignVector</code> and <code>PesoSignText</code>, matching the same values on <a href=\"/components/dropdown\">Select</a>."
       },
       {
         "name": "Composable",
         "rating": "pass",
-        "note": "Nests inside Select Group via a Figma Slot. The Flag type is a swappable vector instance (<code>Flags Library - 16px</code>) rather than a hardcoded raster, so any locale works, and the three named element slots let consumers compose badges, checkmarks, or values without forking the component."
+        "note": "Built to fill <a href=\"/components/dropdown-item-group\">Select Group</a>'s <code>⤷ SelectionSlot</code>. Leading, content and trailing are separate components, so the row composes rather than redrawing their internals."
       }
     ],
     "behavior": [
       {
-        "state": "Default (unselected)",
-        "ios": "yes",
-        "android": "yes",
-        "property": "selected=false",
-        "notes": "Label #0A2757, bottom border #E5EBF4."
+        "state": "State=Default",
+        "ios": "na",
+        "android": "na",
+        "property": "row #FFFFFF",
+        "notes": "Label <code>#0A2757</code>. The row the group ships six of."
       },
       {
-        "state": "Selected",
-        "ios": "yes",
-        "android": "yes",
-        "property": "selected=true",
-        "notes": "Label #005CE5 (brand), same divider. No background highlight — relies on text color alone."
+        "state": "State=Pressed",
+        "ios": "na",
+        "android": "na",
+        "property": "row #F6F9FD",
+        "notes": "The row tints; the label colour does not change."
       },
       {
-        "state": "Disabled",
-        "ios": "yes",
-        "android": "yes",
-        "property": "type=disabeld",
-        "notes": "Soft fill #F6F9FD, label #C2CFE5. Modeled as a content type rather than a state (C4)."
+        "state": "State=Disabled",
+        "ios": "na",
+        "android": "na",
+        "property": "row #FFFFFF",
+        "notes": "Label drops to <code>#C2CFE5</code>. The row keeps its white background rather than tinting."
       },
       {
-        "state": "Pressed",
-        "ios": "no",
-        "android": "no",
-        "property": "—",
-        "notes": "Not defined. iOS highlight and Android ripple will have to be improvised at instance level."
+        "state": "isSelected=true",
+        "ios": "na",
+        "android": "na",
+        "property": "label #005CE5",
+        "notes": "Label and leading icon turn brand blue. The row background stays white — selection is carried by colour, not by a fill."
       },
       {
-        "state": "Focused",
-        "ios": "no",
-        "android": "no",
-        "property": "—",
-        "notes": "Not defined. Required for keyboard / D-pad navigation in dropdown overlays."
+        "state": "Density",
+        "ios": "na",
+        "android": "na",
+        "property": "40 / 48 / 56",
+        "notes": "Compact, Default and Comfortable change the row height and its vertical padding. The content block itself is the same in all three."
+      },
+      {
+        "state": "Supporting Text",
+        "ios": "na",
+        "android": "na",
+        "property": "hidden by default",
+        "notes": "A second line under the label. The row hugs, so enabling it grows Comfortable from 56 to 60."
       }
     ],
     "resolved": [
       {
-        "body": "v2.0: Enum typo <code>disabeld</code> fixed — disabled is now a correctly-spelled <code>State</code> value, not a misspelled content type. (C2)"
+        "headline": "The disabeld typo is gone.",
+        "body": "The old build shipped a misspelled enum value, and the documentation carried both <code>type:disabeld</code> and <code>type:disabled</code> keys defensively so the spec table would render either way. Disabled is now a value on the <code>State</code> axis, spelled correctly, and the defensive duplicate is no longer needed.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
       },
       {
-        "body": "v2.0: Disabled promoted to an orthogonal <code>State</code> axis (Default / Pressed / Disabled) — composes with any Type, so \"Peso Sign + Disabled\" and \"Flag + Disabled\" are now expressible. (C4)"
+        "headline": "Disabled is a state, not a type.",
+        "body": "It used to be a value on <code>type</code>, which meant a disabled row could not also be an icon row or a flag row — the two ideas were competing for one axis. <code>State = Default | Pressed | Disabled</code> is now orthogonal to <code>Type</code>, so every leading type has all three.",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
       },
       {
-        "body": "v2.0: Country flag replaced with a vector instance — now maps to <code>Flags Library - 16px</code> in the Leading slot, locale-swappable rather than a baked-in Philippines PNG. (C6)"
+        "headline": "The flag is a real vector.",
+        "body": "The Country variant drew its flag from a raster PNG. It is now a <code>Flags Library - 16px</code> instance — the exported SVG is paths, masks and a boolean operation with no <code>&lt;image&gt;</code> element anywhere in it, so it scales and recolours like every other asset in the system.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
       },
       {
-        "body": "v2.0: Pressed state added — <code>State=Pressed</code> covers touch feedback (iOS highlight / Android ripple). Focused is N/A on mobile. (C5)"
+        "headline": "Pressed exists now.",
+        "body": "There was no pressed treatment at all, on a row whose entire purpose is being tapped. Every Type and Density now has <code>State=Pressed</code>, tinting the row to <code>#F6F9FD</code>.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
       },
       {
-        "body": "v2.0: Selected affordance added — <code>isSelected=Yes</code> flips the label to brand <code>#005CE5</code> and exposes a checkmark via the Trailing icon slot, no longer relying on label color alone. (C5)"
+        "headline": "The multi-word values are joined.",
+        "body": "<code>Peso Sign</code> and <code>Text - Peso Sign</code> carried spaces and a hyphen separator. They are now <code>PesoSignVector</code> and <code>PesoSignText</code> — renamed for what they actually are rather than how they were first described, and matching the same two values on <a href=\"/components/dropdown\">Select</a>.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
       },
       {
-        "body": "v2.1: <code>isSelected</code> collapsed to a clean two-value boolean — the ambiguous third <code>Default</code> value was removed and the prop now applies uniformly across all three Types. Coverage is consistent at 9 × unselected + 3 × selected per Type, and the selection prop maps 1:1 to a native <code>Bool</code>. (C2)"
+        "headline": "The sparse State × isSelected grid is deliberate.",
+        "body": "Four of the six combinations exist per Type and Density: Default with either <code>isSelected</code>, plus Pressed and Disabled unselected. Selected-and-pressed and selected-and-disabled are intentionally left out, which is why the set is 48 variants rather than 72.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
       },
       {
-        "body": "v2.1: <code>isSelected</code> values renamed <code>Yes</code>/<code>No</code> → <code>true</code>/<code>false</code> across all 36 variants — Select Item now matches the documented C2 rule and the rebuilt Radio Button. The system is on a single boolean vocabulary. (C2)"
-      },
-      {
-        "body": "v2.1: <code>State=Disabled</code> + <code>isSelected=true</code> deliberately omitted — reviewed and confirmed intentional. A disabled row offers the user no action, and when the parent Select is disabled the menu never opens, so the combination is unreachable. (C5)"
-      },
-      {
-        "body": "v2.1: <code>State=Pressed</code> + <code>isSelected=true</code> deliberately not modelled — reviewed and confirmed correct. Pressed is the act of choosing, so the meaningful case is pressing an <em>unselected</em> row, which ships. On native, pressed is not an authored state but an overlay the platform applies (SwiftUI <code>configuration.isPressed</code>, Compose <code>InteractionSource</code>), so pressed-over-selected composes at runtime without a dedicated variant. Authoring the 9 would specify nothing a developer does not already get. (C5)"
+        "headline": "Type stays a fixed enum rather than a slot.",
+        "body": "All four values differ only in what sits in the 24 × 24 leading element, and that element is already an instance — so promoting it to a slot would collapse the set from 48 variants to 12 and let any future leading content in without a fifth value. Kept as an enum on purpose: fixed choices are easier for less experienced designers to use correctly than an open slot. Carried as a recommendation rather than a fault, for whenever flexibility matters more than guardrails.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
       }
     ],
     "open": [
       {
         "headline": "Code Connect mappings not registered.",
-        "body": "Previously blocked by the enum typo, missing states, and raster flag — all resolved in the Select Item rebuild. Registration is now unblocked, but the SwiftUI / Compose mappings are not yet wired.",
+        "body": "Blocked — the native library does not exist yet, so there is nothing to map onto. The component side is ready: <code>Type</code>, <code>Density</code>, <code>State</code> and <code>isSelected</code> all map one to one now the multi-word values are joined.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
@@ -159,699 +213,148 @@ export const dropdownItem: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Register Code Connect mapping to <code>EBSelectItem</code>.",
-        "body": "With the rename, orthogonal state axis, and vector flag all shipped, wire the Figma properties (Type, Density, State, isSelected + the Leading / Content / Trailing slots) 1:1 to the SwiftUI / Compose API.",
+        "headline": "Promote the leading element to a slot when guardrails matter less.",
+        "body": "<code>Type</code> exists only to enumerate what goes in the 24 × 24 leading box, and that box is already an instance. Turning it into <code>⤷ LeadingSlot</code> would take the set from 48 variants to 12 and absorb any future leading content — a flag for a new market, a merchant logo, an avatar — without a fifth enum value. The trade is discoverability: a slot gives a designer no menu to pick from. Worth revisiting once the team is comfortable with the slot pattern, which is the same move that worked on <a href=\"/components/list-item-asset\">List Item - Asset</a>.",
+        "tag": "Slot"
+      },
+      {
+        "headline": "Mute Supporting Text in the disabled state.",
+        "body": "Primary Text drops to <code>#C2CFE5</code> when the row is disabled, but Supporting Text stays at <code>#6780A9</code> in every state. In a disabled row that leaves the supporting line noticeably darker than the label it supports, which inverts their hierarchy. It only shows when Supporting Text is switched on, so this is latent rather than visible today.",
+        "tag": "Token"
+      },
+      {
+        "headline": "Check Supporting Text's contrast before shipping it.",
+        "body": "<code>#6780A9</code> on white is 4.01:1. At 12px SemiBold that counts as normal text under WCAG, which needs 4.5:1 — so the supporting line falls just short. A step darker would clear it. Worth settling before the line is used, rather than after it appears in a screen.",
+        "tag": "A11y"
+      },
+      {
+        "headline": "Pass the icon-grid scaffolding upstream.",
+        "body": "The leading icon instances nest a <code>Grid</code> template carrying <code>Guide lines</code>, <code>Keyshapes</code> and <code>Trim area</code>. They are hidden and do not render, so this is not a fault here, but they ship inside every instance and belong to the icon library rather than to this row.",
         "tag": "Docs"
+      },
+      {
+        "headline": "Document when to use PesoSignVector versus PesoSignText.",
+        "body": "The two render almost identically at 16px — one is a custom SVG drawn to match the font, the other is Proxima's own ₱ glyph. The distinction is real and deliberate, but a designer picking from a dropdown cannot see it. One sentence on the component saves a coin-flip.",
+        "tag": "Docs"
+      },
+      {
+        "headline": "See siblings:",
+        "body": "<a href=\"/components/dropdown-item-group\">Select Group</a> is the surface these rows fill, and <a href=\"/components/dropdown\">Select</a> is the control that opens it. <a href=\"/components/select-field\">Select Field</a> is the trigger, deliberately outside this family's scope.",
+        "tag": "Family"
       }
     ],
-    "appliedRecommendations": [
-      {
-        "headline": "Renamed <code>disabeld</code> → <code>disabled</code>.",
-        "body": "v2.0: Applied — disabled is now a correctly-spelled <code>State</code> value.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Promoted disabled to its own axis.",
-        "body": "v2.0: Applied — <code>State</code> (Default / Pressed / Disabled) is orthogonal to Type, so disabled composes with Icon / Peso Sign / Flag.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Replaced the raster flag with a vector flag slot.",
-        "body": "v2.0: Applied — the Leading slot now carries a <code>Flags Library - 16px</code> vector instance, locale-swappable.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Added a pressed state.",
-        "body": "v2.0: Applied — <code>State=Pressed</code> maps touch feedback to a tokenized background. Focused is N/A on mobile.",
-        "tag": "State"
-      },
-      {
-        "headline": "Added an explicit selected-visual affordance.",
-        "body": "v2.0: Applied — brand-color label plus a checkmark via the Trailing icon slot on <code>isSelected=Yes</code>.",
-        "tag": "State"
-      },
-      {
-        "headline": "Generalized the amount variant around slots.",
-        "body": "v2.0: Applied — the peso sign is a Leading vector slot (<code>Peso Sign - Proxima</code>) with the value in Content and a free Trailing slot for a badge or value.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Collapsed <code>isSelected</code> to a clean boolean.",
-        "body": "v2.1: Applied — the third <code>Default</code> value is gone; <code>isSelected</code> is a true two-value boolean across every Type, with consistent coverage.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Standardise the boolean vocabulary on <code>true</code>/<code>false</code>.",
-        "body": "v2.1: Applied — <code>isSelected</code> values renamed <code>Yes</code>/<code>No</code> → <code>true</code>/<code>false</code> across all 36 variants, matching the C2 rule and Radio Button. The system is now on one boolean vocabulary.",
-        "tag": "Rename"
-      }
-    ]
+    "appliedRecommendations": []
   },
   "style": {
-    "heading": "Styles",
+    "heading": "Structure",
     "specCards": [
       {
-        "cardKey": "ddi-spec-text",
-        "demoKey": "text",
-        "demoControls": dropdownItemDemoControls,
-        "title": "Text",
-        "node": "23:199456",
-        "description": "Plain text row. Default content type used by Dropdown. Label switches from neutral #0A2757 (default) to brand #005CE5 (selected).",
+        "cardKey": "sitem-spec-card-default",
+        "demoKey": "default",
+        "demoControls": selectItemControls,
+        "title": "Select Item",
+        "node": "7947:111969",
+        "description": "Four axes, 48 variants. Leading, content and trailing are each their own component, so the row composes rather than drawing their internals.",
+        "previewHtml": "<div id=\"sitem-spec-default\"><div class=\"eb-preview-sitem eb-preview-sitem--compact\"><span class=\"eb-preview-sitem__lead eb-preview-sitem__lead--icon\"></span><span class=\"eb-preview-sitem__content\"><span class=\"eb-preview-sitem__primary\">Text</span></span><span class=\"eb-preview-sitem__trail\"></span></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false,
-                "prop": "selected"
+              { "key": "Type", "value": "Icon", "prop": "type",
+                "variants": {
+                  "type:pesosignvector": { "value": "PesoSignVector — custom ₱ SVG" },
+                  "type:flag": { "value": "Flag — Flags Library - 16px" },
+                  "type:pesosigntext": { "value": "PesoSignText — Proxima's ₱ glyph" }
+                }
               },
-              {
-                "key": "Variant",
-                "value": "Text",
-                "mono": false,
-                "prop": "type"
-              }
+              { "key": "Density", "value": "Compact", "prop": "density",
+                "variants": {
+                  "density:default": { "value": "Default" },
+                  "density:comfortable": { "value": "Comfortable" }
+                }
+              },
+              { "key": "State", "value": "Default", "prop": "state",
+                "variants": {
+                  "state:pressed": { "value": "Pressed" },
+                  "state:disabled": { "value": "Disabled" }
+                }
+              },
+              { "key": "isSelected", "value": "false", "prop": "isselected",
+                "variants": {
+                  "isselected:true": { "value": "true" }
+                }
+              },
+              { "key": "Leading Element", "value": "24 × 24 instance",
+                "variants": {
+                  "type:flag": { "value": "16 × 24 instance" }
+                }
+              },
+              { "key": "Content Element", "value": "Primary Text · Supporting Text (hidden)" },
+              { "key": "Trailing Element", "value": "Badge (hidden)" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg",
-                "variants": { "selected:true": { "value": "#F6F9FD", "token": "dropdown-item/color/selected/bg" } }
-              },
-              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label",
+              { "key": "Row", "value": "#FFFFFF", "token": "library variable · name pending Dev Mode read", "swatch": true,
                 "variants": {
-                  "type:disabeld":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
-                  "type:disabled":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
-                  "selected:true":  { "value": "#005CE5", "token": "dropdown-item/color/selected/label" }
+                  "state:pressed": { "value": "#F6F9FD" }
                 }
               },
-              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" }
+              { "key": "Primary Text", "value": "#0A2757", "token": "library variable · name pending Dev Mode read", "swatch": true,
+                "variants": {
+                  "state:disabled": { "value": "#C2CFE5" },
+                  "isselected:true": { "value": "#005CE5" }
+                }
+              },
+              { "key": "Supporting Text", "value": "#6780A9 — unchanged in every state", "token": "library variable · name pending Dev Mode read", "swatch": true },
+              { "key": "Leading Element", "value": "follows the label colour", "token": "–" },
+              { "key": "Badge", "value": "#E5F1FF bg · #005CE5 label", "token": "library variable · name pending Dev Mode read", "swatch": true }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Row height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Divider",
-                "value": "1px bottom border",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 18 / 18",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDropdownItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDropdownItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBItemState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"50\" viewBox=\"0 0 366 50\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"0\" y1=\"49.5\" x2=\"366\" y2=\"49.5\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"12\" y=\"31\" font-family=\"Proxima Soft, system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text></svg>"
-      },
-      {
-        "cardKey": "ddi-spec-tag",
-        "demoKey": "tag",
-        "demoControls": dropdownItemDemoControls,
-        "title": "Text with tag",
-        "node": "883:29328",
-        "description": "Row with a trailing Badge instance (Negative/Heavy variant in stock). Used when an option needs an inline status label.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false,
-                "prop": "selected"
-              },
-              {
-                "key": "Variant",
-                "value": "Text with tag",
-                "mono": false,
-                "prop": "type"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg",
-                "variants": { "selected:true": { "value": "#F6F9FD", "token": "dropdown-item/color/selected/bg" } }
-              },
-              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label",
+              { "key": "Width", "value": "320 — fills the group", "mono": true },
+              { "key": "Height", "value": "40", "mono": true,
                 "variants": {
-                  "type:disabeld":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
-                  "type:disabled":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
-                  "selected:true":  { "value": "#005CE5", "token": "dropdown-item/color/selected/label" }
+                  "density:default": { "value": "48" },
+                  "density:comfortable": { "value": "56" }
                 }
               },
-              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Row height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Divider",
-                "value": "1px bottom border",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 18 / 18",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDropdownItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDropdownItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBItemState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"50\" viewBox=\"0 0 366 50\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"0\" y1=\"49.5\" x2=\"366\" y2=\"49.5\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"12\" y=\"31\" font-family=\"Proxima Soft, system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Dropdown Item</text><rect x=\"308\" y=\"16\" width=\"42\" height=\"18\" rx=\"4\" fill=\"#D61B2C\"></rect><text x=\"329\" y=\"28\" font-family=\"Proxima Soft, system-ui\" font-size=\"12\" font-weight=\"700\" fill=\"#FFFFFF\" text-anchor=\"middle\">Label</text></svg>"
-      },
-      {
-        "cardKey": "ddi-spec-amount",
-        "demoKey": "amount",
-        "demoControls": dropdownItemDemoControls,
-        "title": "Amount",
-        "node": "23:199458",
-        "description": "Peso sign (vector, Proxima-sized) + amount text. Icon currency token flips to brand on selected.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false,
-                "prop": "selected"
-              },
-              {
-                "key": "Variant",
-                "value": "Amount",
-                "mono": false,
-                "prop": "type"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg",
-                "variants": { "selected:true": { "value": "#F6F9FD", "token": "dropdown-item/color/selected/bg" } }
-              },
-              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label",
+              { "key": "Height with Supporting Text", "value": "grows — the row hugs its content", "mono": true,
                 "variants": {
-                  "type:disabeld":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
-                  "type:disabled":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
-                  "selected:true":  { "value": "#005CE5", "token": "dropdown-item/color/selected/label" }
+                  "density:comfortable": { "value": "60" }
                 }
               },
-              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Row height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Divider",
-                "value": "1px bottom border",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 18 / 18",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDropdownItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDropdownItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBItemState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"50\" viewBox=\"0 0 366 50\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"0\" y1=\"49.5\" x2=\"366\" y2=\"49.5\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"12\" y=\"32\" font-family=\"Proxima Soft, system-ui\" font-size=\"18\" font-weight=\"700\" fill=\"#0A2757\">₱</text><text x=\"34\" y=\"32\" font-family=\"Proxima Soft, system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">X,XXX.XX</text></svg>"
-      },
-      {
-        "cardKey": "ddi-spec-country",
-        "demoKey": "country",
-        "demoControls": dropdownItemDemoControls,
-        "title": "Country",
-        "node": "23:199472",
-        "description": "Leading flag (25 × 16, 2px radius) + country name and dial code. <strong>Flag is a raster PNG</strong>, not a vector instance — open issue (C6).",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false,
-                "prop": "selected"
-              },
-              {
-                "key": "Variant",
-                "value": "Country",
-                "mono": false,
-                "prop": "type"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg",
-                "variants": { "selected:true": { "value": "#F6F9FD", "token": "dropdown-item/color/selected/bg" } }
-              },
-              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label",
+              { "key": "Side inset", "value": "12", "mono": true },
+              { "key": "Leading Element", "value": "24 × 24", "mono": true,
                 "variants": {
-                  "type:disabeld":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
-                  "type:disabled":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
-                  "selected:true":  { "value": "#005CE5", "token": "dropdown-item/color/selected/label" }
+                  "type:flag": { "value": "16 × 24" }
                 }
               },
-              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Row height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Divider",
-                "value": "1px bottom border",
-                "mono": true
-              }
+              { "key": "Content Element", "value": "216 × 24", "mono": true },
+              { "key": "Trailing Element", "value": "40 × 24", "mono": true },
+              { "key": "Corner radius", "value": "0 — the group clips the first and last rows", "mono": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 18 / 18",
-                "mono": true
-              }
+              { "key": "Text styles", "value": "shared library styles · names pending Dev Mode read", "mono": true },
+              { "key": "Primary Text", "value": "Proxima Soft SemiBold · 16 / 20 · +0.25", "mono": true },
+              { "key": "Supporting Text", "value": "Proxima Soft SemiBold · 12 / 14 · +0.5", "mono": true },
+              { "key": "Badge #value", "value": "Proxima Soft Bold · 12 / 12 · +0.5", "mono": true },
+              { "key": "Per density", "value": "identical at all three — density changes padding, not type", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBDropdownItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDropdownItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBItemState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"50\" viewBox=\"0 0 366 50\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"0\" y1=\"49.5\" x2=\"366\" y2=\"49.5\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><rect x=\"12\" y=\"17\" width=\"25\" height=\"16\" rx=\"2\" fill=\"#FCFCFC\" stroke=\"#E5EBF4\" stroke-width=\"0.5\"></rect><path d=\"M12 17h25v8H12z\" fill=\"#0038A8\"></path><path d=\"M12 25h25v8H12z\" fill=\"#CE1126\"></path><path d=\"M12 17l10 8-10 8z\" fill=\"#FFFFFF\"></path><circle cx=\"16\" cy=\"25\" r=\"1.5\" fill=\"#FCD116\"></circle><text x=\"45\" y=\"31\" font-family=\"Proxima Soft, system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\">Philippines +63</text></svg>"
-      },
-      {
-        "cardKey": "ddi-spec-disabled",
-        "demoKey": "disabled",
-        "demoControls": dropdownItemDemoControls,
-        "title": "Disabeld Typo",
-        "node": "883:30386",
-        "description": "Soft fill row with muted label. Currently only exists at <code>selected=false</code>. <strong>Enum value is misspelled (<code>disabeld</code>)</strong> — open issue (C2).",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Disabled",
-                "mono": false,
-                "prop": "selected"
-              },
-              {
-                "key": "Variant",
-                "value": "Disabeld Typo",
-                "mono": false,
-                "prop": "type"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "dropdown-item/color/default/bg",
-                "variants": { "selected:true": { "value": "#F6F9FD", "token": "dropdown-item/color/selected/bg" } }
-              },
-              { "key": "Label", "value": "#0A2757", "token": "dropdown-item/color/default/label",
-                "variants": {
-                  "type:disabeld":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
-                  "type:disabled":  { "value": "#C2CFE5", "token": "text/color-text-disabled" },
-                  "selected:true":  { "value": "#005CE5", "token": "dropdown-item/color/selected/label" }
-                }
-              },
-              { "key": "Border", "value": "#E5EBF4", "token": "dropdown-item/color/default/border" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Row height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Divider",
-                "value": "1px bottom border",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 18 / 18",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBDropdownItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.disabled</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDropdownItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBItemState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Disabled</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"366\" height=\"50\" viewBox=\"0 0 366 50\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0\" y=\"0\" width=\"366\" height=\"50\" fill=\"#F6F9FD\"></rect><line x1=\"0\" y1=\"49.5\" x2=\"366\" y2=\"49.5\" stroke=\"#E5EBF4\" stroke-width=\"1\"></line><text x=\"12\" y=\"31\" font-family=\"Proxima Soft, system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#C2CFE5\">Dropdown Item</text></svg>"
-      }
-    ],
-    "colorsTables": [
-      {
-        "title": "Colors by State",
-        "description": "All color roles are bound to the <code>main/dropdown-item/color/*</code> token family. Dropdown Item has no variable modes — colors are keyed by state only.",
-        "columns": [
-          "DEFAULT",
-          "SELECTED",
-          "DISABLED"
-        ],
-        "rows": [
-          {
-            "role": "Row bg",
-            "token": "main/dropdown-item/color/{state}/bg",
-            "values": [
-              "transparent",
-              "transparent",
-              "#F6F9FD"
-            ]
-          },
-          {
-            "role": "Label",
-            "token": "main/dropdown-item/color/{state}/label",
-            "values": [
-              "#0A2757",
-              "#005CE5",
-              "#C2CFE5"
-            ]
-          },
-          {
-            "role": "Bottom border",
-            "token": "main/dropdown-item/color/{state}/border",
-            "values": [
-              "#E5EBF4",
-              "#E5EBF4",
-              "#E5EBF4"
-            ]
-          },
-          {
-            "role": "Peso sign (amount)",
-            "token": "main/dropdown-item/color/{state}/icon-currency",
-            "values": [
-              "#0A2757",
-              "#005CE5",
-              "–"
-            ]
-          },
-          {
-            "role": "Badge bg (text with tag)",
-            "token": "main/badge/negative/heavy/background",
-            "values": [
-              "#D61B2C",
-              "#D61B2C",
-              "–"
-            ]
-          },
-          {
-            "role": "Badge label (text with tag)",
-            "token": "main/badge/negative/heavy/label",
-            "values": [
-              "#FFFFFF",
-              "#FFFFFF",
-              "–"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "columns": [
-          "Token"
-        ],
-        "rows": [
-          {
-            "role": "Row width",
-            "token": "366px (fill)",
-            "values": [
-              "—"
-            ]
-          },
-          {
-            "role": "Row height",
-            "token": "50px (text / text with tag) · 51.2–52px (amount / country)",
-            "values": [
-              "—"
-            ]
-          },
-          {
-            "role": "Padding top/bottom",
-            "token": "16px",
-            "values": [
-              "space/space-16"
-            ]
-          },
-          {
-            "role": "Padding left",
-            "token": "12px",
-            "values": [
-              "space/space-12"
-            ]
-          },
-          {
-            "role": "Padding right",
-            "token": "16px",
-            "values": [
-              "space/space-16"
-            ]
-          },
-          {
-            "role": "Gap (country / text with tag)",
-            "token": "8px",
-            "values": [
-              "space/space-8"
-            ]
-          },
-          {
-            "role": "Flag size (country)",
-            "token": "25 × 16",
-            "values": [
-              "—"
-            ]
-          },
-          {
-            "role": "Flag radius",
-            "token": "2px",
-            "values": [
-              "radius/radius-1 (approx)"
-            ]
-          },
-          {
-            "role": "Peso sign size (amount)",
-            "token": "18 × 18",
-            "values": [
-              "—"
-            ]
-          },
-          {
-            "role": "Bottom border",
-            "token": "1px solid",
-            "values": [
-              "main/dropdown-item/color/{state}/border"
-            ]
-          },
-          {
-            "role": "Row corner radius",
-            "token": "0",
-            "values": [
-              "radius/radius-0"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Typography",
-        "columns": [
-          "Font",
-          "Size",
-          "Tracking",
-          "Line-height"
-        ],
-        "rows": [
-          {
-            "role": "Label (all types)",
-            "token": "Primary/Label/Light/Large",
-            "values": [
-              "Proxima Soft Semibold",
-              "18px",
-              "0.25px",
-              "18px"
-            ]
-          },
-          {
-            "role": "Amount text",
-            "token": "Primary/Label/Light/Large",
-            "values": [
-              "Proxima Soft Semibold",
-              "18px",
-              "0.25px",
-              "18px"
-            ]
-          },
-          {
-            "role": "Badge label (text with tag)",
-            "token": "Primary/Label/Fine",
-            "values": [
-              "Proxima Soft Bold",
-              "12px",
-              "0.5px",
-              "12px"
-            ]
-          }
-        ]
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    leading<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.icon</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"settings\"</span><span class=\"syn-punc\">),</span>\n    isSelected<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">.</span><span class=\"syn-fn\">ebDensity</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.compact</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    leading <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectLeading</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">R</span><span class=\"syn-punc\">.</span>drawable<span class=\"syn-punc\">.</span>settings<span class=\"syn-punc\">),</span>\n    selected <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Compact</span>\n<span class=\"syn-punc\">)</span>"
       }
     ]
   },
@@ -860,120 +363,88 @@ export const dropdownItem: ComponentData = {
       "planned": true,
       "blocks": [
         {
-          "label": "iOS — Swift Package Manager",
-          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
+          "label": "Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
-          "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:dropdown:1.0.0\"</span>)\n}"
-        },
-        {
-          "label": "Import",
-          "code": "<span class=\"kw\">import</span> EastBlueDS  <span class=\"cmt\">// SwiftUI</span>\n<span class=\"kw\">import</span> com.eastblue.ds.dropdown.*  <span class=\"cmt\">// Compose</span>"
+          "label": "Gradle",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
         }
       ],
-      "footnote": "Dropdown Item is bundled with the Dropdown package. The planned SwiftUI API exposes it as EBDropdownItem; on Compose it maps to Material 3's DropdownMenuItem with EB-styled content."
+      "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
     },
     "propertyMapping": {
+      "description": "Figma properties mapped to the intended native parameters.",
       "rows": [
-        {
-          "figma": "type = text",
-          "swift": "EBDropdownItem(label:)",
-          "compose": "DropdownMenuItem(text = { Text(label) })"
-        },
-        {
-          "figma": "type = text with tag",
-          "swift": "EBDropdownItem(label:tag:)",
-          "compose": "trailing = { EBBadge(…) }"
-        },
-        {
-          "figma": "type = amount",
-          "swift": ".ebStyle(.amount)",
-          "compose": "style = EBDropdownItemStyle.Amount"
-        },
-        {
-          "figma": "type = country",
-          "swift": "EBDropdownItem(flag:name:dialCode:)",
-          "compose": "leadingIcon = { FlagIcon(…) }"
-        },
-        {
-          "figma": "type = disabeld <span class=\"badge badge-rework\">Typo</span>",
-          "swift": ".disabled(true)",
-          "compose": "enabled = false"
-        },
-        {
-          "figma": "selected = true",
-          "swift": "isSelected: Bool",
-          "compose": "selected: Boolean"
-        },
-        {
-          "figma": "selected = false",
-          "swift": "isSelected: Bool (default)",
-          "compose": "selected: Boolean (default)"
-        }
-      ],
-      "filePaths": {
-        "swift": "ios/Components/Dropdown/EBDropdownItem.swift",
-        "compose": "android/components/dropdown/EBDropdownItem.kt"
-      }
+        { "figma": "Type", "swift": "leading: EBSelectLeading", "compose": "leading: EBSelectLeading" },
+        { "figma": "Density", "swift": ".ebDensity(.compact / .default / .comfortable)", "compose": "density: EBDensity" },
+        { "figma": "State", "swift": "driven by interaction · .disabled(true)", "compose": "driven by interaction · enabled = false" },
+        { "figma": "isSelected", "swift": "isSelected: Bool", "compose": "selected: Boolean" },
+        { "figma": "Primary Text", "swift": "label: String", "compose": "label: String" },
+        { "figma": "Supporting Text", "swift": "supporting: String?", "compose": "supporting: String?" },
+        { "figma": "Trailing Element", "swift": "@ViewBuilder trailing: () -> Trailing", "compose": "trailing: (@Composable () -> Unit)?" }
+      ]
     },
     "usageSnippets": [
       {
-        "subheading": "Text",
-        "swift": "<span class=\"typ\">EBDropdownItem</span>(<span class=\"str\">\"Dropdown Item\"</span>)\n    .<span class=\"fn\">isSelected</span>(category == <span class=\"str\">\"item\"</span>)\n    .<span class=\"fn\">onTap</span> { category = <span class=\"str\">\"item\"</span> }",
-        "compose": "<span class=\"typ\">EBDropdownItem</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Dropdown Item\"</span>,\n    <span class=\"prp\">selected</span> = selected == <span class=\"str\">\"item\"</span>,\n    <span class=\"prp\">onClick</span> = { selected = <span class=\"str\">\"item\"</span> }\n)"
+        "subheading": "A plain row",
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Savings account\"</span><span class=\"syn-punc\">,</span> leading<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.icon</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"wallet\"</span><span class=\"syn-punc\">))</span>",
+        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Savings account\"</span><span class=\"syn-punc\">,</span>\n    leading <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectLeading</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">R</span><span class=\"syn-punc\">.</span>drawable<span class=\"syn-punc\">.</span>wallet<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "Text with tag",
-        "swift": "<span class=\"typ\">EBDropdownItem</span>(<span class=\"str\">\"Dropdown Item\"</span>) {\n    <span class=\"typ\">EBBadge</span>(<span class=\"str\">\"Label\"</span>, <span class=\"prp\">level</span>: .<span class=\"prp\">heavy</span>, <span class=\"prp\">state</span>: .<span class=\"prp\">negative</span>)\n}",
-        "compose": "<span class=\"typ\">EBDropdownItem</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Dropdown Item\"</span>,\n    <span class=\"prp\">trailing</span> = { <span class=\"typ\">EBBadge</span>(<span class=\"str\">\"Label\"</span>, level = <span class=\"typ\">EBBadgeLevel</span>.Heavy, state = <span class=\"typ\">EBBadgeState</span>.Negative) }\n)"
+        "subheading": "Selected, with supporting text",
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-str\">\"GCash wallet\"</span><span class=\"syn-punc\">,</span>\n    supporting<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Available balance PHP 1,240.00\"</span><span class=\"syn-punc\">,</span>\n    leading<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pesoSignVector</span><span class=\"syn-punc\">,</span>\n    isSelected<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"GCash wallet\"</span><span class=\"syn-punc\">,</span>\n    supporting <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Available balance PHP 1,240.00\"</span><span class=\"syn-punc\">,</span>\n    leading <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectLeading</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PesoSignVector</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "Amount",
-        "swift": "<span class=\"typ\">EBDropdownItem</span>(<span class=\"prp\">amount</span>: <span class=\"str\">\"1,000.00\"</span>)\n    .<span class=\"fn\">ebStyle</span>(.<span class=\"prp\">amount</span>)",
-        "compose": "<span class=\"typ\">EBDropdownItem</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"1,000.00\"</span>,\n    <span class=\"prp\">style</span> = <span class=\"typ\">EBDropdownItemStyle</span>.<span class=\"prp\">Amount</span>\n)"
-      },
-      {
-        "subheading": "Country",
-        "swift": "<span class=\"typ\">EBDropdownItem</span>(\n    <span class=\"prp\">flag</span>: <span class=\"typ\">Image</span>(<span class=\"str\">\"flag_ph\"</span>),\n    <span class=\"prp\">name</span>: <span class=\"str\">\"Philippines\"</span>,\n    <span class=\"prp\">dialCode</span>: <span class=\"str\">\"+63\"</span>\n)",
-        "compose": "<span class=\"typ\">EBDropdownItem</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Philippines +63\"</span>,\n    <span class=\"prp\">leadingIcon</span> = { <span class=\"typ\">FlagIcon</span>(<span class=\"typ\">CountryCode</span>.PH) }\n)"
+        "subheading": "A country row",
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Philippines\"</span><span class=\"syn-punc\">,</span> leading<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.flag</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"PH\"</span><span class=\"syn-punc\">))</span>\n    <span class=\"syn-punc\">.</span><span class=\"syn-fn\">ebDensity</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.comfortable</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Philippines\"</span><span class=\"syn-punc\">,</span>\n    leading <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectLeading</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Flag</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"PH\"</span><span class=\"syn-punc\">),</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Comfortable</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Minimum touch target",
-        "ios": "44 × 44 pt (row is 50pt tall)",
-        "android": "48 × 48 dp"
+        "requirement": "Exposed as a selectable option",
+        "ios": "<code>.accessibilityAddTraits(.isButton)</code> plus <code>.isSelected</code> when chosen",
+        "android": "<code>Modifier.selectable(selected = …, role = Role.RadioButton)</code>"
       },
       {
-        "requirement": "Accessibility label",
-        "ios": "<code>.accessibilityLabel(\"Philippines, +63\")</code>",
-        "android": "<code>contentDescription = \"Philippines, +63\"</code>"
+        "requirement": "Selection is not colour-only",
+        "ios": "Selected state announced, not just rendered in brand blue",
+        "android": "<code>selected = true</code> carries into the node's state description"
       },
       {
-        "requirement": "Role",
-        "ios": "<code>.accessibilityAddTraits(.isButton)</code>",
-        "android": "<code>Role.Button</code>"
+        "requirement": "Supporting text reads with the label",
+        "ios": "<code>.accessibilityElement(children: .combine)</code>",
+        "android": "<code>Modifier.semantics(mergeDescendants = true)</code>"
       },
       {
-        "requirement": "Selected announcement",
-        "ios": "<code>.accessibilityAddTraits(.isSelected)</code>",
-        "android": "<code>selected = true</code> in semantics"
+        "requirement": "Leading element is decorative",
+        "ios": "<code>.accessibilityHidden(true)</code> — except Flag, whose country belongs in the label",
+        "android": "<code>contentDescription = null</code> — same exception"
       },
       {
-        "requirement": "Disabled announcement",
-        "ios": "<code>.disabled(true)</code> → VoiceOver says \"dimmed\"",
-        "android": "<code>enabled = false</code> → TalkBack says \"disabled\""
+        "requirement": "Row meets the touch minimum",
+        "ios": "Compact is 40 — needs 44 of hit area even where the row draws shorter",
+        "android": "Compact is 40 — needs 48dp"
       }
     ],
     "usageGuidelines": [
       {
-        "doText": "Consume Dropdown Item through Dropdown or Dropdown Item Group. Keep labels short — 18px Semibold is the only supported text size.",
-        "dontText": "Don't use Dropdown Item outside a dropdown overlay. For standalone list rows, use the List Item component instead."
+        "doText": "Pick one Density for a whole list.",
+        "dontText": "Don't mix densities inside one Select Group — the rows stop scanning as a column."
       },
       {
-        "doText": "Pair selected state with a trailing checkmark (once added) so the picked item is unambiguous, especially on the country and amount variants.",
-        "dontText": "Don't rely on the disabeld type to build disabled versions of amount or country — it only ships for the text content type. Use the planned disabled state axis instead."
+        "doText": "Use Flag when the option is a country and the flag identifies it.",
+        "dontText": "Don't rely on the flag alone — the country name belongs in the label for screen readers."
+      },
+      {
+        "doText": "Keep the label short enough to sit on one line.",
+        "dontText": "Don't push detail into the label when Supporting Text is the place for it."
+      },
+      {
+        "doText": "Let the group own the dividers between rows.",
+        "dontText": "Don't add a divider inside the row — Select Group's BorderType already places them."
       }
     ],
     "scorecard": [
@@ -982,163 +453,121 @@ export const dropdownItem: ComponentData = {
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Semantic names: <code>container</code>, <code>name</code>, <code>offset</code>, <code>Peso Sign - Proxima</code>, <code>Field Trailing Flag</code>, <code>philippines</code>."
+        "notes": "Leading, Content and Trailing are each their own component. The row draws none of their internals."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Enum value <code>disabeld</code> is misspelled and ships into the generated TS type."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The <code>disabeld</code> typo is gone, the multi-word values are joined, and <code>Type</code> is a deliberate enum rather than a slot."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "All colors bound to <code>main/dropdown-item/color/*</code>; space + radius + typography tokens all present."
+        "notes": "Fills resolve to library variables. Supporting Text's <code>#6780A9</code> is 4.01:1 on white, just under AA for 12px — carried as a recommendation."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Maps to a custom SwiftUI row / Material 3 <code>DropdownMenuItem</code>. Disabled should be an orthogonal prop, not a type value."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Disabled is a state rather than a type, so the axes map cleanly onto a selectable list row on both platforms."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No pressed or focused variants. Selected state relies on label color alone — no checkmark or background fill."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Pressed now exists across every Type and Density. The two missing selected combinations are confirmed intentional."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Country variant uses a raster PNG flag, not a vector instance. Peso sign is a vector via <code>Peso Sign - Proxima</code>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The raster flag is now a vector Flags Library instance. The icons nest hidden grid scaffolding, which belongs to the icon library."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "No CLI mappings registered yet; blocked by C2, C5, C6."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Blocked — the native library does not exist yet."
       }
     ],
     "codeConnect": [
       {
         "aspect": "Property naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Rename <code>disabeld</code> → <code>disabled</code> before registering"
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "All four axes map one to one with no rename at the boundary now the multi-word values are joined."
       },
       {
-        "aspect": "Asset quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Replace raster PH flag with vector flag slot"
+        "aspect": "Token coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Bindings are in place; only the human-readable names are outstanding."
       },
       {
-        "aspect": "State coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Pressed / focused variants missing"
-      },
-      {
-        "aspect": "Native component file",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "EBDropdownItem.swift / EBDropdownItem.kt not yet created"
+        "aspect": "Registration",
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Blocked until the native library exists."
       }
     ],
     "variants": {
-      "total": 9,
-      "description": "5 <code>type</code> values × 2 <code>selected</code> values = 10 theoretical slots, but <code>disabeld</code> only ships with <code>selected=false</code>, giving 9 actual variants.",
-      "columns": [
-        "type",
-        "selected",
-        "Node ID",
-        "Notes"
-      ],
+      "total": 48,
+      "description": "4 Type × 3 Density × 4 of the 6 State × isSelected combinations = 48. Selected-and-pressed and selected-and-disabled are intentionally omitted, which is what keeps it from being 72.",
+      "columns": ["Type", "Leading element", "State × isSelected", "Heights", "Count"],
       "rows": [
-        {
-          "cells": [
-            "text",
-            "false",
-            "23:199454",
-            "Neutral label"
-          ]
-        },
-        {
-          "cells": [
-            "text",
-            "true",
-            "23:199456",
-            "Brand label"
-          ]
-        },
-        {
-          "cells": [
-            "text with tag",
-            "false",
-            "883:29328",
-            "Trailing Badge instance"
-          ]
-        },
-        {
-          "cells": [
-            "text with tag",
-            "true",
-            "883:30370",
-            "Brand label + Badge"
-          ]
-        },
-        {
-          "cells": [
-            "amount",
-            "false",
-            "23:199458",
-            "Peso sign + \"X,XXX.XX\""
-          ]
-        },
-        {
-          "cells": [
-            "amount",
-            "true",
-            "23:199465",
-            "Brand peso + brand label"
-          ]
-        },
-        {
-          "cells": [
-            "country",
-            "false",
-            "23:199472",
-            "Raster flag + \"Philippines +63\""
-          ]
-        },
-        {
-          "cells": [
-            "country",
-            "true",
-            "23:199476",
-            "Brand \"Philippines +63\""
-          ]
-        },
-        {
-          "cells": [
-            "disabeld <span class=\"badge badge-rework\">Typo</span>",
-            "false",
-            "883:30386",
-            "Soft fill + muted label"
-          ]
-        }
+        { "cells": ["Icon", "24 × 24 icon instance", "Default ×2, Pressed, Disabled", "40 / 48 / 56", "12"] },
+        { "cells": ["PesoSignVector", "custom ₱ SVG matched to the font", "Default ×2, Pressed, Disabled", "40 / 48 / 56", "12"] },
+        { "cells": ["Flag", "Flags Library - 16px vector", "Default ×2, Pressed, Disabled", "40 / 48 / 56", "12"] },
+        { "cells": ["PesoSignText", "Proxima's native ₱ glyph", "Default ×2, Pressed, Disabled", "40 / 48 / 56", "12"] }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "3.0.0",
+      "date": "August 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt on the 2026 Working File · node 7947:111969",
+      "rows": [
+        {
+          "body": "<strong>The <code>disabeld</code> typo is gone.</strong> Disabled is now a correctly spelled value on the <code>State</code> axis, so the documentation no longer needs to carry both spellings defensively.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "<strong>Disabled promoted from a <code>type</code> value to an orthogonal <code>State</code>.</strong> Every leading type now has Default, Pressed and Disabled instead of the two ideas competing for one axis.",
+          "delta": { "kind": "resolved", "label": "C4 resolved" }
+        },
+        {
+          "body": "<strong>The raster PNG flag is a vector.</strong> Now a <code>Flags Library - 16px</code> instance — the exported SVG contains no image element.",
+          "delta": { "kind": "resolved", "label": "C6 resolved" }
+        },
+        {
+          "body": "<strong>Pressed state added</strong> across all four types and three densities, tinting the row to <code>#F6F9FD</code>.",
+          "delta": { "kind": "resolved", "label": "C5 resolved" }
+        },
+        {
+          "body": "<code>Peso Sign</code> and <code>Text - Peso Sign</code> renamed to <code>PesoSignVector</code> and <code>PesoSignText</code> — spaces and the hyphen separator removed, and named for what they are rather than how they were first described.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "Selected-and-pressed and selected-and-disabled confirmed as intentionally omitted, holding the set at 48 variants rather than 72.",
+          "delta": { "kind": "resolved", "label": "C5 resolved" }
+        },
+        {
+          "body": "Node moved from <code>18577:13033</code> (Sticker Sheets v2) to <code>7947:111969</code> (2026 Working File), and <code>navGroup</code> changed from Dropdown to Select to match the component's name.",
+          "delta": { "kind": "resolved", "label": "Rebuilt" }
+        }
+      ]
+    },
     {
       "version": "2.1.0",
       "date": "July 2026",
