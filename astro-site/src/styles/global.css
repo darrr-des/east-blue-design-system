@@ -3411,151 +3411,125 @@ input.demo-panel-input.demo-panel-select,
   box-shadow: 0 1px 0 rgba(10, 23, 87, 0.02);
 }
 
-/* =============================================================== */
-/* Alert — node 18444:2012                                          */
-/* Two layout flavors share one component today:                   */
-/* • Banner (fullWidth=yes) — flat, 12 px vertical padding, shadow */
-/* • Card (fullWidth=no)    — left-border accent, bigger padding,  */
-/*   always ships with right icon + Learn More action              */
-/* =============================================================== */
+/* ═════════════════════════════════════════════════════════════════════
+   ALERT — live preview primitives · node 6627:102953
+   Type(5) × Style(2) × Content(3) = 30 variants, 360 wide.
+   Replaces the pre-v2.0 block, which was still modelling the old
+   `fullWidth` boolean that Style=Card|Banner superseded.
+
+   Card   — tinted fill + a stroke in the accent colour, radius 4
+   Banner — the same tinted fill + a 6px left bar, no stroke
+   Both draw their intent from the same accent, which is why the two
+   styles read as one family.
+   ═════════════════════════════════════════════════════════════════════ */
+
 .eb-preview-alert {
+  --alert-fill: #F6F9FD;
+  --alert-accent: #D7E0EF;
+  position: relative;
   box-sizing: border-box;
   width: 360px;
   max-width: 100%;
-  display: flex;
-  gap: 8px;
-  border-radius: 4px;
-  font-family: "HeyMeow Rnd", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--alert-fill);
+  font-family: inherit;
+  overflow: hidden;
 }
-.eb-preview-alert--banner {
-  padding: 12px 16px;
-  align-items: center;
-  box-shadow: 0 1px 3px 0 rgba(232, 238, 242, 0.79);
-}
+/* Neutral is what the root already sets — stated so every class the
+   markup emits resolves to a rule rather than to nothing. */
+.eb-preview-alert--neutral     { --alert-fill: #F6F9FD; --alert-accent: #D7E0EF; }
+.eb-preview-alert--information { --alert-fill: #E5F1FF; --alert-accent: #005CE5; }
+.eb-preview-alert--warning     { --alert-fill: #FFF9EB; --alert-accent: #EBB30A; }
+.eb-preview-alert--error       { --alert-fill: #F8E6E6; --alert-accent: #D61B2C; }
+.eb-preview-alert--success     { --alert-fill: #E7F8F0; --alert-accent: #27C990; }
+
 .eb-preview-alert--card {
-  padding: 4px 16px 16px 20px;
-  border-left: 6px solid var(--alert-border, transparent);
-  align-items: flex-start;
+  border: 1px solid var(--alert-accent);
+  border-radius: 4px;
+}
+/* The Banner's accent is a 6px bar rather than a stroke. */
+.eb-preview-alert--banner::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: var(--alert-accent);
 }
 
-/* Color variants — each sets bg + CSS custom props for inner elements */
-.eb-preview-alert--neutral {
-  background: #F6F9FD;
-  --alert-title: #0A2757;
-  --alert-desc: #6780A9;
-  --alert-icon: #0A2757;
-  --alert-link: #0A2757;
-  --alert-border: transparent;
-}
-.eb-preview-alert--information {
-  background: #E5F1FF;
-  --alert-title: #072592;
-  --alert-desc: #072592;
-  --alert-icon: #2340A9;
-  --alert-link: #072592;
-  --alert-border: #005CE5;
-}
-.eb-preview-alert--warning {
-  background: #FFF9EB;
-  --alert-title: #6C5009;
-  --alert-desc: #966F0B;
-  --alert-icon: #966F0B;
-  --alert-link: #966F0B;
-  --alert-border: #EBB30A;
-}
-.eb-preview-alert--error {
-  background: #F8E6E6;
-  --alert-title: #D61B2C;
-  --alert-desc: #D61B2C;
-  --alert-icon: #B50707;
-  --alert-link: #D61B2C;
-  --alert-border: #D61B2C;
-}
-.eb-preview-alert--success {
-  background: #E7F8F0;
-  --alert-title: #035E50;
-  --alert-desc: #035E50;
-  --alert-icon: #035E50;
-  --alert-link: #035E50;
-  --alert-border: #27C990;
-}
-
-/* Content column */
 .eb-preview-alert__content {
-  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 18px;
+}
+
+/* Both slots ship empty in all 30 variants — deliberately. Drawn as
+   their footprint so the space they reserve is visible. */
+.eb-preview-alert__leading,
+.eb-preview-alert__trailing {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border: 1px dashed var(--alert-accent);
+  border-radius: 99px;
+  opacity: 0.45;
+}
+.eb-preview-alert__trailing { border-radius: 4px; }
+
+.eb-preview-alert__body {
+  flex: 1 1 auto;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding-top: 2px;
+  gap: 4px;
 }
-.eb-preview-alert--card .eb-preview-alert__content { padding-top: 4px; }
+
 .eb-preview-alert__title {
-  color: var(--alert-title);
+  font-size: 18px;
   font-weight: 700;
+  line-height: 23px;
   letter-spacing: 0.25px;
-  margin: 0;
+  color: #0A2757;
 }
+/* Banner sets its title a step smaller — 16/20 against the card's 18/23. */
 .eb-preview-alert--banner .eb-preview-alert__title {
   font-size: 16px;
   line-height: 20px;
 }
-.eb-preview-alert--card .eb-preview-alert__title {
-  font-size: 18px;
-  line-height: 23px;
-  padding-top: 7px;
-}
+
+/* #445C85 clears AA on all five tints — 5.60:1 at worst, on Error. */
 .eb-preview-alert__desc {
-  color: var(--alert-desc);
-  font-family: "BarkAda", system-ui, sans-serif;
-  font-weight: 600;
   font-size: 12px;
+  font-weight: 600;
   line-height: 18px;
-  margin: 0;
-  opacity: 0.8;
-}
-.eb-preview-alert--neutral .eb-preview-alert__desc { opacity: 1; }
-
-/* Left-icon slot — today a placeholder circle (flagged as C6) */
-.eb-preview-alert__icon-left {
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  border-radius: 999px;
-  background: #C2C6CF;
+  letter-spacing: 0;
+  color: #445C85;
 }
 
-/* Right-icon slot — semantic status glyph */
-.eb-preview-alert__icon-right {
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  color: var(--alert-icon);
-}
-.eb-preview-alert--banner .eb-preview-alert__icon-right {
-  width: 24px;
-  height: 24px;
-}
+.eb-preview-alert--titleonly .eb-preview-alert__desc { display: none; }
+.eb-preview-alert--descriptiononly .eb-preview-alert__title { display: none; }
 
-/* Action (Learn More + chevron) — only in card variant */
 .eb-preview-alert__action {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
-  color: var(--alert-link);
-  font-family: "BarkAda", system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 18px;
-  margin-top: 8px;
-  padding-left: 3px;
-  opacity: 0.8;
+  gap: 4px;
+  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #005CE5;
 }
-.eb-preview-alert--neutral .eb-preview-alert__action { opacity: 1; }
 .eb-preview-alert__action-chevron {
-  width: 14px;
-  height: 14px;
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid #005CE5;
+  border-top: 2px solid #005CE5;
+  transform: rotate(45deg);
 }
+
+[data-theme="dark"] .eb-preview-alert__title { color: #E4EAF3; }
+[data-theme="dark"] .eb-preview-alert__desc { color: #C8CDD5; }
 
 /* =============================================================== */
 /* Counter — node 21:43333                                          */
@@ -5697,6 +5671,196 @@ pre.code-snippet .prp { color: #0369A1; }
 [data-theme="dark"] .eb-preview-adcarousel__cta { color: #62A0FA; }
 
 
+
+/* ═════════════════════════════════════════════════════════════════════
+   DATE PICKER FAMILY — live preview primitives
+   Cell · Header · Header Trigger · Calendar · field trigger.
+   Measurements mirror the 2026 Working File rebuild.
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* ── Cell (32×32 day, 59×32 month/year) ─────────────────────────── */
+.eb-preview-dpcell {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+  line-height: 14px;
+  color: #0A2757;
+}
+.eb-preview-dpcell--day { width: 32px; border-radius: 24px; }
+.eb-preview-dpcell--monthyear { width: 59px; border-radius: 8px; }
+
+.eb-preview-dpcell__label { position: relative; z-index: 2; }
+
+/* Range strip sits behind the cell and bleeds 10px past it. */
+.eb-preview-dpcell__range {
+  position: absolute;
+  top: 0;
+  height: 32px;
+  background: #E5F1FF;
+  z-index: 1;
+}
+.eb-preview-dpcell__range--start { left: 16px; width: 26px; }
+.eb-preview-dpcell__range--end { right: 16px; width: 26px; }
+.eb-preview-dpcell__range--middle { left: -10px; width: 52px; }
+
+.eb-preview-dpcell--today { box-shadow: inset 0 0 0 1px #005CE5; color: #005CE5; }
+.eb-preview-dpcell--selected { background: #005CE5; color: #FFFFFF; }
+.eb-preview-dpcell--rangemiddle { color: #005CE5; }
+.eb-preview-dpcell--prevnext { color: #6780A9; }
+.eb-preview-dpcell--disabled { color: #C2CFE5; }
+.eb-preview-dpcell--selected.eb-preview-dpcell--disabled { background: #9BC5FD; color: #FFFFFF; }
+.eb-preview-dpcell--today.eb-preview-dpcell--disabled { box-shadow: inset 0 0 0 1px #C2CFE5; color: #C2CFE5; }
+
+/* ── Weekday header cell ────────────────────────────────────────── */
+.eb-preview-dpwk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+
+/* ── Header Trigger ─────────────────────────────────────────────── */
+.eb-preview-dphdr {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 4px;
+  background: #F6F9FD;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+  white-space: nowrap;
+}
+.eb-preview-dphdr--pressed { background: #EEF2F9; }
+.eb-preview-dphdr--disabled { background: #FFFFFF; color: #C2CFE5; }
+.eb-preview-dphdr__caret { flex: 0 0 auto; display: block; }
+
+/* ── Calendar surface ───────────────────────────────────────────── */
+.eb-preview-dpcal {
+  width: 312px;
+  padding: 16px;
+  background: #FFFFFF;
+  border: 1px solid #E5EBF4;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+.eb-preview-dpcal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 24px;
+  margin-bottom: 8px;
+}
+.eb-preview-dpcal__chevron { flex: 0 0 auto; color: #005CE5; }
+.eb-preview-dpcal__center {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.eb-preview-dpcal__title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+.eb-preview-dpcal__row {
+  display: flex;
+  justify-content: space-between;
+  height: 32px;
+  margin-top: 8px;
+}
+/* Month and Year modes lay out as a 3-column wrap grid. */
+.eb-preview-dpcal__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 16px;
+  justify-items: center;
+  margin-top: 8px;
+}
+/* The list and its indicator share a stacking context so the indicator
+   floats over the right edge instead of adding height below the grid. */
+.eb-preview-dpcal__scrollarea { position: relative; }
+.eb-preview-dpcal__scrollbar {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  width: 4px;
+  height: 120px;
+  border-radius: 99px;
+  background: #E5EBF4;
+  pointer-events: none;
+}
+
+/* ── Field trigger ──────────────────────────────────────────────── */
+.eb-preview-dptrig { width: 312px; font-family: inherit; }
+.eb-preview-dptrig__label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+  color: #0A2757;
+}
+.eb-preview-dptrig__field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 12px;
+  border: 1px solid #D7E0EF;
+  border-radius: 6px;
+  background: #FFFFFF;
+  box-sizing: border-box;
+}
+.eb-preview-dptrig__value {
+  flex: 1 1 auto;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+  color: #90A8D0;
+}
+.eb-preview-dptrig--filled .eb-preview-dptrig__value { color: #0A2757; }
+.eb-preview-dptrig--pressed .eb-preview-dptrig__field { border-color: #005CE5; }
+.eb-preview-dptrig--disabled .eb-preview-dptrig__field { background: #EEF2F9; border-color: transparent; }
+.eb-preview-dptrig--disabled .eb-preview-dptrig__value { color: #90A8D0; }
+.eb-preview-dptrig--error .eb-preview-dptrig__field { border-color: #D81E1E; }
+.eb-preview-dptrig__subtext {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #445C85;
+}
+.eb-preview-dptrig__icon { flex: 0 0 auto; display: block; color: #005CE5; }
+
+[data-theme="dark"] .eb-preview-dpcal { background: #141B28; border-color: #2A3446; }
+[data-theme="dark"] .eb-preview-dpcell,
+[data-theme="dark"] .eb-preview-dpwk,
+[data-theme="dark"] .eb-preview-dpcal__title,
+[data-theme="dark"] .eb-preview-dphdr { color: #E4EAF3; }
+[data-theme="dark"] .eb-preview-dphdr { background: #1B2333; }
+[data-theme="dark"] .eb-preview-dptrig__field { background: #141B28; border-color: #2A3446; }
+[data-theme="dark"] .eb-preview-dptrig__label { color: #E4EAF3; }
+
+
 /* TOC scroll target offset — leave room for the sticky comp-tabs bar
    (sticky top:16px + ~52px bar + 28px breathing) */
 .sub-heading[id] { scroll-margin-top: 96px; }
@@ -6669,3 +6833,1302 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   overflow: hidden;
 }
 .eb-preview-stepper-dash__slot.active { background: #005CE5; }
+
+/* ═════════════════════════════════════════════════════════════════════
+   COUNTDOWN FAMILY — live preview primitives
+   Unit · Countdown (Per / One / Pill) · Promo.
+   Measurements mirror the 2026 Working File rebuild.
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* ── Unit (25×34 stacked, inline hugs) ──────────────────────────── */
+.eb-preview-cdunit {
+  display: inline-flex;
+  font-family: inherit;
+  color: #005CE5;
+}
+.eb-preview-cdunit--stacked {
+  flex-direction: column;
+  align-items: center;
+  width: 25px;
+}
+.eb-preview-cdunit--inline {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0;
+}
+.eb-preview-cdunit__time {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: inherit;
+}
+.eb-preview-cdunit__unit {
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 10px;
+  letter-spacing: 0.25px;
+  color: inherit;
+}
+/* Inline puts number and label on one line at a shared size. */
+.eb-preview-cdunit--inline .eb-preview-cdunit__time,
+.eb-preview-cdunit--inline .eb-preview-cdunit__unit {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 0.25px;
+}
+
+/* ── Colon separator — two dots, vertically centred ─────────────── */
+.eb-preview-cdcolon {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  flex: 0 0 auto;
+}
+.eb-preview-cdcolon span {
+  display: block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.eb-preview-cdcolon--sm span { width: 2px; height: 2px; }
+
+/* ── Countdown — shared ─────────────────────────────────────────── */
+.eb-preview-cd {
+  display: inline-flex;
+  align-items: center;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+/* One — a single bar holding all four units */
+.eb-preview-cd--one {
+  gap: 16px;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 6px;
+  background: #EEF2F9;
+  border: 1px solid #E5EBF4;
+  color: #9BC5FD;
+}
+/* Per — one box per unit */
+.eb-preview-cd--per { gap: 16px; color: #9BC5FD; }
+.eb-preview-cd__box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 50px;
+  border-radius: 8px;
+  background: #EEF2F9;
+  border: 1px solid #E5EBF4;
+}
+/* Pill — inline units behind a leading icon */
+.eb-preview-cd--pill {
+  gap: 8px;
+  height: 30px;
+  padding: 0 8px;
+  border-radius: 99px;
+  background: #EEF2F9;
+  border: 1px solid #E5EBF4;
+  color: #9BC5FD;
+}
+.eb-preview-cd__icon { flex: 0 0 auto; display: block; color: #005CE5; }
+.eb-preview-cd__units { display: inline-flex; align-items: center; gap: 6px; }
+
+/* onLight — the bold treatment, for placing on a white page */
+.eb-preview-cd--onlight.eb-preview-cd--one {
+  background: linear-gradient(90deg, #1972F9 0%, #005CE5 100%);
+  border-color: transparent;
+  color: #69A6FC;
+}
+.eb-preview-cd--onlight.eb-preview-cd--pill {
+  background: #1972F9;
+  border-color: transparent;
+  color: #9BC5FD;
+}
+.eb-preview-cd--onlight .eb-preview-cd__box { background: #1972F9; border-color: transparent; }
+.eb-preview-cd--onlight .eb-preview-cdunit { color: #FFFFFF; }
+.eb-preview-cd--onlight .eb-preview-cdunit__unit { color: #F6F9FD; opacity: 0.8; }
+.eb-preview-cd--onlight .eb-preview-cd__icon { color: #FFFFFF; }
+
+/* Expiring */
+.eb-preview-cd--expiring.eb-preview-cd--one,
+.eb-preview-cd--expiring.eb-preview-cd--pill {
+  background: #FCF0CA;
+  border-color: #EBB30A;
+  color: #CA970C;
+}
+.eb-preview-cd--expiring .eb-preview-cd__box { background: #FCF0CA; border-color: #EBB30A; }
+.eb-preview-cd--expiring { color: #CA970C; }
+.eb-preview-cd--expiring .eb-preview-cdunit,
+.eb-preview-cd--expiring .eb-preview-cdunit__unit { color: #966F0B; opacity: 1; }
+.eb-preview-cd--expiring .eb-preview-cd__icon { color: #966F0B; }
+
+/* Expired — terminal, deliberately recessive */
+.eb-preview-cd--expired.eb-preview-cd--one,
+.eb-preview-cd--expired.eb-preview-cd--pill {
+  background: #F6F9FD;
+  border-color: #C2CFE5;
+  color: #C2CFE5;
+}
+.eb-preview-cd--expired .eb-preview-cd__box { background: #F6F9FD; border-color: #C2CFE5; }
+.eb-preview-cd--expired { color: #C2CFE5; }
+.eb-preview-cd--expired .eb-preview-cdunit,
+.eb-preview-cd--expired .eb-preview-cdunit__unit { color: #C2CFE5; opacity: 1; }
+.eb-preview-cd--expired .eb-preview-cd__icon { color: #C2CFE5; }
+
+/* ── Promo ──────────────────────────────────────────────────────── */
+.eb-preview-cdpromo {
+  position: relative;
+  width: 360px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #FFFFFF;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-cdpromo__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 68px;
+  padding: 0 20px;
+}
+.eb-preview-cdpromo__title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.25px;
+  color: #071969;
+  white-space: pre-line;
+}
+.eb-preview-cdpromo__close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: block;
+  color: #7E96BE;
+}
+.eb-preview-cdpromo__action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  background: #005CE5;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  color: #FFFFFF;
+}
+.eb-preview-cdpromo--high { background: #1972F9; }
+.eb-preview-cdpromo--high .eb-preview-cdpromo__title { color: #FFFFFF; }
+.eb-preview-cdpromo--high .eb-preview-cdpromo__action { background: #2340A9; }
+.eb-preview-cdpromo--high .eb-preview-cdpromo__close { color: #F6F9FD; opacity: 0.8; }
+
+[data-theme="dark"] .eb-preview-cdpromo { background: #141B28; }
+[data-theme="dark"] .eb-preview-cdpromo__title { color: #E4EAF3; }
+[data-theme="dark"] .eb-preview-cd--one,
+[data-theme="dark"] .eb-preview-cd--pill,
+[data-theme="dark"] .eb-preview-cd__box { background: #1B2333; border-color: #2A3446; }
+[data-theme="dark"] .eb-preview-cdunit { color: #7FB2FF; }
+
+
+
+
+/* ═════════════════════════════════════════════════════════════════════
+   VOUCHER FAMILY — live preview primitives
+   Voucher (12 versions) · Voucher Details (2 versions).
+   Measurements mirror the 2026 Working File rebuild.
+   ═════════════════════════════════════════════════════════════════════ */
+
+.eb-preview-vch {
+  position: relative;
+  display: flex;
+  background: #FFFFFF;
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-vch--vertical { flex-direction: column; width: 162px; }
+.eb-preview-vch--horizontal { flex-direction: row; width: 312px; height: 124px; }
+.eb-preview-vch--horizontal.eb-preview-vch--large { width: 344px; }
+
+/* ── Asset — the ticket panel with its notch ────────────────────── */
+.eb-preview-vch__asset {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F6F9FD;
+  overflow: hidden;
+}
+.eb-preview-vch--vertical .eb-preview-vch__asset { width: 162px; height: 90px; }
+.eb-preview-vch--vertical.eb-preview-vch--large .eb-preview-vch__asset { height: 153px; }
+.eb-preview-vch--horizontal .eb-preview-vch__asset { width: 96px; height: 124px; }
+
+.eb-preview-vch__placeholder {
+  font-size: 8px;
+  font-weight: 700;
+  color: #0A2757;
+  text-align: center;
+}
+
+/* The notch is two circles punched from the panel edges. Vertical
+   punches left and right; horizontal punches top and bottom. */
+.eb-preview-vch__notch { position: absolute; background: #FFFFFF; border-radius: 50%; }
+.eb-preview-vch--vertical .eb-preview-vch__notch { width: 16px; height: 16px; bottom: -8px; }
+.eb-preview-vch--vertical .eb-preview-vch__notch--a { left: -8px; }
+.eb-preview-vch--vertical .eb-preview-vch__notch--b { right: -8px; }
+.eb-preview-vch--horizontal .eb-preview-vch__notch { width: 16px; height: 16px; left: -8px; }
+.eb-preview-vch--horizontal .eb-preview-vch__notch--a { top: -8px; }
+.eb-preview-vch--horizontal .eb-preview-vch__notch--b { bottom: -8px; }
+
+/* ── Content ────────────────────────────────────────────────────── */
+.eb-preview-vch__content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 12px;
+  background: #FFFFFF;
+  min-width: 0;
+}
+.eb-preview-vch__title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+.eb-preview-vch__desc {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 15px;
+  color: #445C85;
+}
+.eb-preview-vch__prices { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.eb-preview-vch__price {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  color: #005CE5;
+}
+.eb-preview-vch__original {
+  font-size: 12px;
+  font-weight: 500;
+  color: #C2CFE5;
+  text-decoration: line-through;
+}
+.eb-preview-vch__validity {
+  font-size: 8px;
+  font-weight: 500;
+  line-height: 12px;
+  color: #445C85;
+}
+
+/* ── Badges ─────────────────────────────────────────────────────── */
+.eb-preview-vch__badge {
+  align-self: flex-start;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: #005CE5;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+.eb-preview-vch__discount {
+  position: absolute;
+  top: 9px;
+  right: 0;
+  padding: 2px 8px;
+  border-radius: 4px 0 0 4px;
+  background: #0A2757;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 10px;
+  letter-spacing: 0.25px;
+  color: #FFFFFF;
+  z-index: 3;
+}
+/* Horizontal anchors its status badge over the asset panel. */
+.eb-preview-vch--horizontal .eb-preview-vch__badge--float {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  z-index: 3;
+}
+
+/* ── Used / Expired — the Filter overlay ────────────────────────── */
+.eb-preview-vch__filter {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.eb-preview-vch--used .eb-preview-vch__asset .eb-preview-vch__filter { background: rgba(2, 14, 34, 0.56); }
+.eb-preview-vch--expired .eb-preview-vch__asset .eb-preview-vch__filter { background: #C2CFE5; }
+.eb-preview-vch--used .eb-preview-vch__badge,
+.eb-preview-vch--expired .eb-preview-vch__badge { background: #6780A9; }
+.eb-preview-vch--expired .eb-preview-vch__title,
+.eb-preview-vch--expired .eb-preview-vch__desc,
+.eb-preview-vch--expired .eb-preview-vch__price,
+.eb-preview-vch--expired .eb-preview-vch__validity { color: #9BB0D0; }
+.eb-preview-vch--expired .eb-preview-vch__discount { background: #C2CFE5; }
+
+/* Horizontal carries a fixed action rail rather than a slot. */
+.eb-preview-vch__rail {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 28px;
+  height: 100%;
+  background: #0A2757;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+.eb-preview-vch__rail span {
+  writing-mode: vertical-rl;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+.eb-preview-vch--used .eb-preview-vch__rail,
+.eb-preview-vch--expired .eb-preview-vch__rail { background: #6780A9; }
+
+/* ── Voucher Details ────────────────────────────────────────────── */
+.eb-preview-vdet {
+  width: 336px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #FFFFFF;
+  border: 1px solid #E5EBF4;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-vdet__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 64px;
+  padding: 0 10px;
+  border-bottom: 1px solid #E5EBF4;
+}
+.eb-preview-vdet__logo {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #EEF2F9;
+}
+.eb-preview-vdet__merchant { flex: 1 1 auto; min-width: 0; }
+.eb-preview-vdet__hdr {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+.eb-preview-vdet__subhdr {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #6780A9;
+}
+.eb-preview-vdet__badge {
+  flex: 0 0 auto;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: #2340A9;
+  font-size: 10px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+.eb-preview-vdet__details { padding: 12px 16px; }
+.eb-preview-vdet__title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+.eb-preview-vdet__prices { display: flex; align-items: baseline; gap: 8px; margin-top: 8px; }
+.eb-preview-vdet__price {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  color: #005CE5;
+}
+.eb-preview-vdet__original {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+  color: #90A8D0;
+  text-decoration: line-through;
+}
+.eb-preview-vdet__validity {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #6780A9;
+}
+/* The strip is a notched divider: a hairline with a punch at each end. */
+.eb-preview-vdet__strip { position: relative; height: 16px; }
+.eb-preview-vdet__strip::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 50%;
+  border-top: 1px dashed #E5EBF4;
+}
+.eb-preview-vdet__strip i {
+  position: absolute;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #F6F9FD;
+  border: 1px solid #E5EBF4;
+}
+.eb-preview-vdet__strip i:first-child { left: -8px; }
+.eb-preview-vdet__strip i:last-child { right: -8px; }
+.eb-preview-vdet__body { padding: 12px 16px 16px; }
+.eb-preview-vdet__desc {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  color: #445C85;
+}
+.eb-preview-vdet__terms { margin-top: 12px; border-top: 1px solid #E5EBF4; padding-top: 12px; }
+.eb-preview-vdet__terms-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0A2757;
+}
+.eb-preview-vdet__terms-head--block { font-size: 14px; }
+.eb-preview-vdet__terms-list {
+  margin: 12px 0 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: #F6F9FD;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.eb-preview-vdet__terms-list li {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 18px;
+  color: #445C85;
+}
+.eb-preview-vdet__terms-list li::before { content: "✓"; color: #9BC5FD; flex: 0 0 auto; }
+.eb-preview-vdet__terms-text {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 20px;
+  color: #445C85;
+}
+.eb-preview-vdet__link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #005CE5;
+}
+
+[data-theme="dark"] .eb-preview-vch,
+[data-theme="dark"] .eb-preview-vch__content { background: #141B28; }
+[data-theme="dark"] .eb-preview-vch__title { color: #E4EAF3; }
+[data-theme="dark"] .eb-preview-vdet { background: #141B28; border-color: #2A3446; }
+[data-theme="dark"] .eb-preview-vdet__hdr,
+[data-theme="dark"] .eb-preview-vdet__title,
+[data-theme="dark"] .eb-preview-vdet__terms-head { color: #E4EAF3; }
+[data-theme="dark"] .eb-preview-vdet__terms-list { background: #1B2333; }
+
+
+
+
+/* ═════════════════════════════════════════════════════════════════════
+   SLIDER — live preview primitives
+   Track, draggable fill, knob, optional tooltip. 2026 Working File.
+   The value is the fill's width, so it is set by a modifier class
+   rather than an inline style.
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* The 26px clearance is reserved whether or not the bubble is showing,
+   so toggling hasTooltip does not move the track. */
+.eb-preview-sldr {
+  width: 365px;
+  max-width: 100%;
+  padding-top: 26px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.eb-preview-sldr__track {
+  position: relative;
+  height: 10px;
+  border-radius: 99px;
+  background: #E5EBF4;
+  cursor: pointer;
+  touch-action: none;         /* let the drag win over page scroll */
+}
+.eb-preview-sldr--disabled .eb-preview-sldr__track { cursor: not-allowed; }
+/* Default carries no overrides — the base rules are the default state.
+   Stated explicitly so every class in the markup resolves to something. */
+.eb-preview-sldr--default .eb-preview-sldr__track { background: #E5EBF4; }
+.eb-preview-sldr--pressed .eb-preview-sldr__track { background: #D7E0EF; }
+
+/* The fill carries the knob and the tooltip, so both ride its right
+   edge as the width changes — the same reason Tooltip sits inside
+   DraggableFill in Figma. */
+/* Width comes from --sldr-v so the drag can set any value, the same way
+   the slot lets DraggableFill be resized to any width in Figma. */
+.eb-preview-sldr__fill {
+  position: relative;
+  height: 10px;
+  border-radius: 99px;
+  background: #005CE5;
+  width: calc(var(--sldr-v, 10) * 1%);
+}
+.eb-preview-sldr--disabled .eb-preview-sldr__fill { background: #C2CFE5; }
+.eb-preview-sldr--pressed .eb-preview-sldr__fill { background: #2340A9; }
+
+/* Right-aligned to the fill's edge, matching KnobContainer's placement. */
+.eb-preview-sldr__knob {
+  position: absolute;
+  top: -4px;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid #E5EBF4;
+  box-sizing: border-box;
+  cursor: grab;
+}
+.eb-preview-sldr--pressed .eb-preview-sldr__knob { border-color: #ADBDDC; }
+.eb-preview-sldr--disabled .eb-preview-sldr__knob { cursor: not-allowed; }
+/* While dragging, the knob takes the pressed ring so the interaction
+   reads even when the State control is on Default. */
+.eb-preview-sldr--dragging .eb-preview-sldr__knob { cursor: grabbing; border-color: #ADBDDC; }
+
+/* 34 wide, centred on the knob whose centre sits 9px in from the edge.
+   bottom:19 puts the pointer's tip 1px clear of the knob's top edge —
+   the same 1px gap Figma has between Tooltip and KnobContainer. */
+.eb-preview-sldr__tooltip {
+  position: absolute;
+  bottom: 19px;
+  right: -8px;
+  width: 34px;
+  height: 22px;
+  border-radius: 4px;
+  background: #005CE5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.eb-preview-sldr--disabled .eb-preview-sldr__tooltip { background: #C2CFE5; }
+.eb-preview-sldr--pressed .eb-preview-sldr__tooltip { background: #2340A9; }
+
+/* The pointer below the bubble. */
+.eb-preview-sldr__tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -4px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #005CE5;
+}
+.eb-preview-sldr--disabled .eb-preview-sldr__tooltip::after { border-top-color: #C2CFE5; }
+.eb-preview-sldr--pressed .eb-preview-sldr__tooltip::after { border-top-color: #2340A9; }
+
+.eb-preview-sldr__pct {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #FFFFFF;
+}
+/* Disabled keeps the muted bubble and darkens the text — 9.27:1. */
+.eb-preview-sldr--disabled .eb-preview-sldr__pct { color: #0A2757; }
+
+[data-theme="dark"] .eb-preview-sldr__track { background: #2A3446; }
+[data-theme="dark"] .eb-preview-sldr--pressed .eb-preview-sldr__track { background: #333F54; }
+[data-theme="dark"] .eb-preview-sldr__knob { background: #E4EAF3; border-color: #2A3446; }
+
+
+/* ═════════════════════════════════════════════════════════════════════
+   LIST ITEM ASSET — live preview primitives
+   The leading marker in a list item. Eight versions on one Type axis.
+   Measurements mirror the 2026 Working File rebuild.
+   ═════════════════════════════════════════════════════════════════════ */
+
+.eb-preview-lia {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-lia__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* The marker box is the 20px alignment frame. Width varies by version —
+   16 for the icons, 12 for Numbered, 9 for Bullet and Square — which is
+   why markers are not mixed within one list. */
+.eb-preview-lia__marker {
+  position: relative;
+  flex: 0 0 auto;
+  width: 16px;
+  height: 20px;
+  box-sizing: border-box;
+}
+.eb-preview-lia__marker--narrow { width: 9px; }
+.eb-preview-lia__marker--number { width: 12px; }
+.eb-preview-lia__marker svg { display: block; }
+
+/* Bullet and Square sit 8 from the top — hand-set optical alignment
+   against the label's 20px line box, not geometric centring. */
+.eb-preview-lia__marker--bullet::before,
+.eb-preview-lia__marker--square::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 2px;
+  width: 5px;
+  height: 5px;
+  background: #90A8D0;
+}
+.eb-preview-lia__marker--bullet::before { border-radius: 50%; }
+.eb-preview-lia__marker--square::before { border-radius: 1px; }
+
+/* #number sits 4 from the top, same reasoning. */
+.eb-preview-lia__marker--number {
+  padding-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #90A8D0;
+}
+
+/* The slot ships empty by design — shown as its footprint so the
+   16 × 16 it reserves is visible rather than invisible. */
+.eb-preview-lia__marker--slot::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  border: 1px dashed #90A8D0;
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
+.eb-preview-lia__label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #445C85;
+}
+
+[data-theme="dark"] .eb-preview-lia__label { color: #C8CDD5; }
+
+/* ═════════════════════════════════════════════════════════════════════
+   LIST ITEM — live preview primitives
+   One row: leading marker, filling label, optional trailing slot.
+   Three ListLevel values set the indent. 2026 Working File rebuild.
+   ═════════════════════════════════════════════════════════════════════ */
+
+.eb-preview-litem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 294px;
+  max-width: 100%;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-litem__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 20px;
+}
+/* ListLevel is an indent and nothing else — the marker and the type are
+   identical at every level. */
+.eb-preview-litem__row--l1 { padding-left: 0; }
+.eb-preview-litem__row--l2 { padding-left: 16px; }
+.eb-preview-litem__row--l3 { padding-left: 32px; }
+
+/* The marker's width is set by whichever List Item Asset version sits in
+   the instance — which is why the label's start moves when it changes. */
+.eb-preview-litem__asset {
+  position: relative;
+  flex: 0 0 auto;
+  width: 16px;
+  height: 20px;
+  box-sizing: border-box;
+}
+.eb-preview-litem__asset--bullet,
+.eb-preview-litem__asset--square { width: 9px; }
+.eb-preview-litem__asset--numbered { width: 12px; }
+.eb-preview-litem__asset svg { display: block; }
+
+.eb-preview-litem__asset--bullet::before,
+.eb-preview-litem__asset--square::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 2px;
+  width: 5px;
+  height: 5px;
+  background: #90A8D0;
+}
+.eb-preview-litem__asset--bullet::before { border-radius: 50%; }
+.eb-preview-litem__asset--square::before { border-radius: 1px; }
+
+.eb-preview-litem__asset--numbered {
+  padding-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #90A8D0;
+}
+
+/* #label fills, so the indent comes out of its width rather than out of
+   the row's — which is what keeps every level the same total width. */
+.eb-preview-litem__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #445C85;
+}
+
+/* hasTrailing=false hides the container entirely; shown, it reserves a
+   16 × 16 slot that ships empty. */
+.eb-preview-litem__trailing {
+  position: relative;
+  flex: 0 0 auto;
+  width: 16px;
+  height: 20px;
+}
+.eb-preview-litem__trailing::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  border: 1px dashed #90A8D0;
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
+[data-theme="dark"] .eb-preview-litem__label { color: #C8CDD5; }
+
+
+/* ═════════════════════════════════════════════════════════════════════
+   MODAL FAMILY — live preview primitives
+   Modal · Modal - Transaction Receipt · Modal - Transaction Receipt Entry.
+   Measurements mirror the 2026 Working File rebuild.
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* ── Shared: the action area and its buttons ────────────────────── */
+.eb-preview-mdl__actions,
+.eb-preview-mtr__actions {
+  display: flex;
+  gap: 8px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+.eb-preview-mdl--vertical .eb-preview-mdl__actions,
+.eb-preview-mtr--vertical .eb-preview-mtr__actions { flex-direction: column; }
+.eb-preview-mdl--horizontal .eb-preview-mdl__actions,
+.eb-preview-mtr--horizontal .eb-preview-mtr__actions { flex-direction: row; }
+
+.eb-preview-mdl__btn,
+.eb-preview-mtr__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  border-radius: 99px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0.25px;
+  box-sizing: border-box;
+}
+.eb-preview-mdl--horizontal .eb-preview-mdl__btn,
+.eb-preview-mtr--horizontal .eb-preview-mtr__btn { flex: 1 1 0; min-width: 0; }
+.eb-preview-mdl__btn--filled,
+.eb-preview-mtr__btn--filled { background: #005CE5; color: #FFFFFF; }
+.eb-preview-mdl__btn--outlined,
+.eb-preview-mtr__btn--outlined {
+  border: 1.5px solid #005CE5;
+  color: #005CE5;
+  background: transparent;
+}
+
+/* ── Modal - Transaction Receipt Entry ──────────────────────────── */
+.eb-preview-mtre-shell {
+  width: 272px;
+  padding: 16px;
+  border-radius: 6px;
+  background: #FFFFFF;
+  border: 1px solid #E5EBF4;
+  box-sizing: content-box;
+  font-family: inherit;
+}
+.eb-preview-mtre { display: flex; width: 272px; box-sizing: border-box; }
+.eb-preview-mtre--stacked { flex-direction: column; gap: 4px; }
+.eb-preview-mtre--inline { flex-direction: row; align-items: baseline; gap: 0; }
+
+.eb-preview-mtre__label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #6780A9;
+}
+.eb-preview-mtre__value {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+/* Stacked gives the value room to wrap; inline keeps it on one line. */
+.eb-preview-mtre--stacked .eb-preview-mtre__value { line-height: 16px; }
+.eb-preview-mtre--inline .eb-preview-mtre__value {
+  line-height: 14px;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Label fills the slack, value hugs — a longer label pushes the value. */
+.eb-preview-mtre--inline .eb-preview-mtre__label { flex: 1 1 auto; min-width: 0; }
+.eb-preview-mtre--inline .eb-preview-mtre__value { flex: 0 1 auto; }
+
+/* ── Modal - Transaction Receipt ────────────────────────────────── */
+.eb-preview-mtr {
+  width: 320px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #F6F9FD;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-mtr__content {
+  padding: 24px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E5EBF4;
+  box-sizing: border-box;
+}
+.eb-preview-mtr__title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0;
+  color: #0A2757;
+}
+.eb-preview-mtr__description {
+  margin-top: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+.eb-preview-mtr__rows {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.eb-preview-mtr__row { display: flex; align-items: baseline; gap: 8px; }
+.eb-preview-mtr__row-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #6780A9;
+}
+.eb-preview-mtr__row-value {
+  flex: 0 1 auto;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+  text-align: right;
+  white-space: nowrap;
+}
+.eb-preview-mtr__reference {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 24px;
+  background: #F6F9FD;
+  box-sizing: border-box;
+}
+/* The copy glyph — two offset rounded squares, drawn rather than imported. */
+.eb-preview-mtr__copy {
+  position: relative;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+}
+.eb-preview-mtr__copy::before,
+.eb-preview-mtr__copy::after {
+  content: "";
+  position: absolute;
+  border-radius: 3px;
+  border: 2px solid #005CE5;
+}
+.eb-preview-mtr__copy::before {
+  left: 3px;
+  top: 6px;
+  width: 11px;
+  height: 13px;
+  opacity: 0.35;
+}
+.eb-preview-mtr__copy::after {
+  left: 9px;
+  top: 2px;
+  width: 11px;
+  height: 13px;
+  background: #FFFFFF;
+}
+
+/* ── Modal ──────────────────────────────────────────────────────── */
+.eb-preview-mdl {
+  width: 320px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #FFFFFF;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+/* 24 top, none at the bottom — Content stops at the description's baseline
+   and ⤷ ActionSlot supplies its own 24 below it, exactly as in Figma. */
+.eb-preview-mdl__content {
+  padding: 24px 24px 0;
+  text-align: center;
+  box-sizing: border-box;
+}
+.eb-preview-mdl__icon {
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 16px;
+  border-radius: 8px;
+  background: #EEF2F9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.eb-preview-mdl__icon span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #90A8D0;
+}
+/* hasIcon=false collapses the slot and the gap beneath it. */
+.eb-preview-mdl--no-icon .eb-preview-mdl__icon { display: none; }
+.eb-preview-mdl__title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0;
+  color: #0A2757;
+}
+/* BarkAda is the secondary face — longer copy at smaller sizes. */
+.eb-preview-mdl__description {
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #6780A9;
+}
+
+/* ── Dark theme ─────────────────────────────────────────────────── */
+[data-theme="dark"] .eb-preview-mtre-shell,
+[data-theme="dark"] .eb-preview-mdl,
+[data-theme="dark"] .eb-preview-mtr__content { background: #141B28; }
+[data-theme="dark"] .eb-preview-mtre-shell { border-color: #2A3446; }
+[data-theme="dark"] .eb-preview-mtr,
+[data-theme="dark"] .eb-preview-mtr__reference { background: #101725; }
+[data-theme="dark"] .eb-preview-mtr__content { border-bottom-color: #2A3446; }
+[data-theme="dark"] .eb-preview-mtre__value,
+[data-theme="dark"] .eb-preview-mtr__row-value,
+[data-theme="dark"] .eb-preview-mtr__title,
+[data-theme="dark"] .eb-preview-mtr__description,
+[data-theme="dark"] .eb-preview-mdl__title { color: #E4EAF3; }
+[data-theme="dark"] .eb-preview-mdl__icon { background: #1B2333; }
+[data-theme="dark"] .eb-preview-mtr__copy::after { background: #141B28; }
+
+
+/* ═════════════════════════════════════════════════════════════════════
+   SELECT FAMILY — live preview primitives
+   Select · Select Group · Select Item. 2026 Working File rebuild.
+   Select Field (the trigger) is out of scope, so the trigger here is
+   drawn to match rather than documented as its own component.
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* ── Select Item ────────────────────────────────────────────────── */
+.eb-preview-sitem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 320px;
+  max-width: 100%;
+  padding: 0 12px;
+  background: #FFFFFF;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-sitem--compact { min-height: 40px; }
+.eb-preview-sitem--default { min-height: 48px; }
+.eb-preview-sitem--comfortable { min-height: 56px; }
+/* Density sets padding around a hugging content block, so the row grows
+   when Supporting Text is switched on rather than overlapping it. */
+.eb-preview-sitem--supporting.eb-preview-sitem--comfortable { min-height: 60px; }
+
+.eb-preview-sitem--pressed { background: #F6F9FD; }
+
+.eb-preview-sitem__lead {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0A2757;
+}
+.eb-preview-sitem__lead--flag { width: 16px; }
+.eb-preview-sitem--selected .eb-preview-sitem__lead { color: #005CE5; }
+.eb-preview-sitem--disabled .eb-preview-sitem__lead { color: #C2CFE5; }
+.eb-preview-sitem__lead svg { display: block; }
+
+.eb-preview-sitem__content {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.eb-preview-sitem__primary {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+.eb-preview-sitem--selected .eb-preview-sitem__primary { color: #005CE5; }
+.eb-preview-sitem--disabled .eb-preview-sitem__primary { color: #C2CFE5; }
+/* Stays #6780A9 in every state, including disabled — flagged as a
+   recommendation, since it ends up darker than the label it supports. */
+.eb-preview-sitem__supporting {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.5px;
+  color: #6780A9;
+}
+
+.eb-preview-sitem__trail {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.eb-preview-sitem__badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #E5F1FF;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  color: #005CE5;
+}
+
+/* ── Select Group ───────────────────────────────────────────────── */
+.eb-preview-sgroup {
+  width: 320px;
+  max-width: 100%;
+  padding: 4px 0;
+  border-radius: 6px;
+  background: #FFFFFF;
+  border: 1px solid #E5EBF4;
+  font-family: inherit;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.eb-preview-sgroup__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+}
+.eb-preview-sgroup--compact .eb-preview-sgroup__row { height: 40px; }
+.eb-preview-sgroup--default .eb-preview-sgroup__row { height: 48px; }
+.eb-preview-sgroup--comfortable .eb-preview-sgroup__row { height: 56px; }
+
+/* The dividers are siblings inside the slot in Figma, which is why
+   BorderType=None simply has none. Reproduced here as a border so the
+   three options read the way they do in the file. */
+.eb-preview-sgroup--middleinset .eb-preview-sgroup__row + .eb-preview-sgroup__row {
+  border-top: 1px solid #E5EBF4;
+  margin: 0 12px;
+  padding: 0;
+}
+.eb-preview-sgroup--fullwidth .eb-preview-sgroup__row + .eb-preview-sgroup__row {
+  border-top: 1px solid #E5EBF4;
+}
+/* None needs no override — in Figma the divider nodes are simply absent
+   from those variants, which is why they are 24 shorter. Stated so every
+   class in the markup resolves to something. */
+.eb-preview-sgroup--none .eb-preview-sgroup__row + .eb-preview-sgroup__row {
+  border-top: 0;
+}
+
+.eb-preview-sgroup__lead {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.eb-preview-sgroup__lead svg { display: block; }
+.eb-preview-sgroup__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: #0A2757;
+}
+
+/* ── Select ─────────────────────────────────────────────────────── */
+.eb-preview-sel {
+  width: 366px;
+  max-width: 100%;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.eb-preview-sel__field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 12px;
+  border-radius: 6px;
+  background: #FFFFFF;
+  border: 1px solid #D7E0EF;
+  box-sizing: border-box;
+}
+.eb-preview-sel--expanded .eb-preview-sel__field { border-color: #005CE5; }
+.eb-preview-sel--error .eb-preview-sel__field { border-color: #D61B2C; }
+.eb-preview-sel--disabled .eb-preview-sel__field {
+  border-color: #E5EBF4;
+  background: #F6F9FD;
+}
+
+.eb-preview-sel__lead {
+  flex: 0 0 auto;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0A2757;
+}
+.eb-preview-sel__value {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.25px;
+  color: #90A8D0;
+}
+/* isFilled swaps the placeholder for a chosen value in the label colour. */
+.eb-preview-sel--filled .eb-preview-sel__value { color: #0A2757; }
+
+.eb-preview-sel__chevron {
+  position: relative;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+}
+.eb-preview-sel__chevron::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 6px;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid #005CE5;
+  border-bottom: 2px solid #005CE5;
+  transform: rotate(45deg);
+}
+.eb-preview-sel--expanded .eb-preview-sel__chevron::before {
+  top: 10px;
+  transform: rotate(225deg);
+}
+.eb-preview-sel--disabled .eb-preview-sel__chevron::before {
+  border-right-color: #C2CFE5;
+  border-bottom-color: #C2CFE5;
+}
+
+/* The menu overlays what sits beneath it rather than growing the
+   trigger — the same relationship the Figma variants have. */
+.eb-preview-sel__menu { margin-top: 4px; }
+.eb-preview-sel__menu .eb-preview-sgroup { width: 366px; }
+
+[data-theme="dark"] .eb-preview-sitem,
+[data-theme="dark"] .eb-preview-sgroup,
+[data-theme="dark"] .eb-preview-sel__field { background: #141B28; }
+[data-theme="dark"] .eb-preview-sgroup { border-color: #2A3446; }
+[data-theme="dark"] .eb-preview-sitem--pressed { background: #1B2333; }
+[data-theme="dark"] .eb-preview-sitem__primary,
+[data-theme="dark"] .eb-preview-sgroup__label { color: #E4EAF3; }

@@ -9,20 +9,20 @@ export const verticalVoucher: ComponentData = {
     "description": "A 162-wide vertical voucher tile combining a Voucher Asset image with title, description, price, validity, and status badges.",
     "badges": [
       {
-        "kind": "consolidate",
-        "label": "Consolidate"
+        "kind": "remove",
+        "label": "Remove"
       },
       {
-        "kind": "rework",
-        "label": "Requires Rework"
+        "kind": "na",
+        "label": "Not Applicable"
       }
     ],
     "navGroup": "Voucher",
     "navIconSvg": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n      <rect x=\"8\" y=\"3\" width=\"16\" height=\"26\" rx=\"2\" fill=\"#FFFFFF\" stroke=\"#C8CDD5\" stroke-width=\"1\"/>\n      <path d=\"M8 3h16a2 2 0 0 1 2 2v8H6V5a2 2 0 0 1 2-2Z\" fill=\"#E6E1EF\"/>\n      <rect x=\"19\" y=\"7\" width=\"7\" height=\"3.5\" rx=\"0.8\" fill=\"#1972F9\"/>\n      <text x=\"22.5\" y=\"9.8\" text-anchor=\"middle\" fill=\"white\" font-size=\"2.4\" font-weight=\"700\" font-family=\"system-ui\">35%</text>\n      <rect x=\"10\" y=\"15\" width=\"5\" height=\"2\" rx=\"0.5\" fill=\"#2340A9\"/>\n      <rect x=\"16\" y=\"15\" width=\"5\" height=\"2\" rx=\"0.5\" fill=\"#D61B2C\"/>\n      <rect x=\"10\" y=\"19\" width=\"10\" height=\"1.3\" rx=\"0.3\" fill=\"#0A2757\"/>\n      <rect x=\"10\" y=\"21\" width=\"8\" height=\"1\" rx=\"0.3\" fill=\"#445C85\"/>\n      <rect x=\"10\" y=\"24\" width=\"5\" height=\"1.2\" rx=\"0.3\" fill=\"#005CE5\"/>\n    </svg>",
     "verdict": {
-      "kind": "consolidate",
-      "title": "Replaced by Voucher Card Horizontal",
-      "text": "This component is consolidated into <a href=\"/components/voucher-card-horizontal\"><code>Voucher Card Horizontal</code></a> — the canonical sibling. Use <code>Voucher Card</code> with <code>orientation: vertical</code> and the <code>state</code> axis instead. Once Figma usages migrate, this record will be deleted."
+      "kind": "remove",
+      "title": "Superseded by Voucher",
+      "text": "Superseded by <a href=\"/components/voucher\">Voucher</a>, as <code>Orientation=Vertical</code> at node <code>5372:38309</code>. The two asset sizes bundled into one symbol are now the <code>AssetSize</code> setting, the flat unlabelled layer structure is named throughout, and the raster image with its hardcoded \"35% off\" is a real slot plus a Badge. Kept as a record of the assessment that drove the consolidation."
     }
   },
   "overview": {
@@ -109,122 +109,8 @@ export const verticalVoucher: ComponentData = {
         }
       }
     ],
-    "open": [
-      {
-        "headline": "Three parallel components for one concept.",
-        "body": "Vertical Voucher, Horizontal Voucher (<code>5121:4533</code>), and Voucher Card Horizontal (<code>5119:1786</code>) share the same anatomy — voucher asset image + title + description + price + validity + status badges — but ship as three separate components with divergent property shapes. This is a family-level consolidation, not a single-component fix.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "No state axis.",
-        "body": "Voucher Card Horizontal ships Default / Limited / Expiring / Used / Expired as a proper state variant that drives background, label colors, and badge treatment. Vertical Voucher has no state concept — a used or expired vertical voucher cannot be rendered in greyed-out treatment.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      },
-      {
-        "headline": "All text content is hardcoded placeholder.",
-        "body": "Title \"Buy Load Pre-seeded SKU Voucher Sample\", description \"This is the description of the voucher.\", price \"PHP 100.00\", original price \"PHP 150.00\", and validity \"Validity: Dec 25 2022 - Jan 5 2023\" are all frozen strings inside the symbol. Booleans toggle visibility but not content. Consumers cannot render a real voucher without detaching.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Two asset sizes bundled in one symbol.",
-        "body": "The symbol contains both the large (153h) and the small (100h) Voucher Asset instances stacked; <code>largeAsset</code> and <code>smallAsset</code> booleans turn them on/off. The default 465h render shows both. This is a single enum (<code>assetSize: large | small</code>) masquerading as two booleans with implied mutual exclusion.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Badges are row-level, not array-level.",
-        "body": "<code>prop1stRowBadges</code> and <code>prop2ndRowBadges</code> toggle rows of two hardcoded badges each (\"Limited\" + \"Expiring\" / \"Hot\" + \"Discounted\"). A real voucher with one \"Limited\" badge and nothing else cannot be rendered. Badges should be a composable array, not fixed rows.",
-        "tag": {
-          "criterion": "C2",
-          "label": "C2 · Variant & Property Naming"
-        }
-      },
-      {
-        "headline": "Layer structure is flat and unlabeled.",
-        "body": "<code>large asset</code>, <code>small asset</code>, <code>content</code>, <code>badges</code>, <code>badges</code> (duplicate), <code>price</code>. Two layers named <code>badges</code>, no semantic names for the title/description/validity text nodes. Consumers inspecting the Dev Mode output see anonymous text layers.",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "Voucher Asset nested image is raster with hardcoded \"35% off\" Badge.",
-        "body": "Inherits all the issues of Voucher Asset (<code>5119:1664</code>) — the discount amount is baked into the image-frame variant, not a property on the parent. A voucher offering \"50% off\" or \"BUY1 TAKE1\" cannot be rendered.",
-        "tag": {
-          "criterion": "C6",
-          "label": "C6 · Asset & Icon Quality"
-        }
-      },
-      {
-        "headline": "No native component maps to this shape.",
-        "body": "8 booleans with hardcoded content do not map to any reasonable native API. A proper <code>EBVoucherCard</code> takes title, price, validity, badges array, and image as parameters — not eight visibility toggles. Code Connect has no 1:1 target.",
-        "tag": {
-          "criterion": "C4",
-          "label": "C4 · Native Mappability"
-        }
-      },
-      {
-        "headline": "Code Connect cannot link an 8-boolean symbol with frozen strings.",
-        "body": "Even if a mapping existed, swapping the \"title\" string or the badge labels would require detaching the component. Linkability requires real string/array properties first.",
-        "tag": {
-          "criterion": "C7",
-          "label": "C7 · Code Connect Linkability"
-        }
-      }
-    ],
-    "recommendations": [
-      {
-        "headline": "Merge the three voucher cards into a single Voucher Card component.",
-        "body": "Vertical Voucher + Horizontal Voucher + Voucher Card Horizontal become one component with <code>orientation: vertical | horizontal</code> (swaps the layout axis) and <code>state: default | limited | expiring | used | expired</code> (borrowed from Voucher Card Horizontal). Target shape: 2 orientations × 5 states = 10 variants instead of three separate components with divergent schemas.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Promote every text string to a property.",
-        "body": "Add <code>title: String</code>, <code>description: String</code>, <code>price: String</code>, <code>originalPrice: String?</code>, <code>validity: String?</code>. Retire the <code>header</code> / <code>amount</code> / <code>description</code> / <code>validityPeriod</code> booleans — visibility falls out of whether the string is empty.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Replace the two asset-size booleans with one <code>assetSize</code> enum.",
-        "body": "<code>largeAsset</code> + <code>smallAsset</code> become <code>assetSize: large | small | none</code>. Nothing currently prevents both being on simultaneously (which is the default render). A single enum makes the choice explicit and mutually exclusive.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Adopt a Figma Slot for the voucher image.",
-        "body": "Replace the hardcoded Voucher Asset nested instance with a Slot that accepts any Voucher Asset variant (or a partner brand illustration). The discount badge should be composed on top of the slot, not baked into the asset.",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Replace fixed badge rows with a composable badges array.",
-        "body": "Drop <code>prop1stRowBadges</code> / <code>prop2ndRowBadges</code>. Expose a badges Slot that accepts 0..n Badge instances, wraps when it runs out of width. Consumers choose which badges apply (\"Limited\" alone, \"Hot\" + \"Discounted\" + \"New\", etc.).",
-        "tag": "Slot"
-      },
-      {
-        "headline": "Add the state axis missing from Vertical Voucher.",
-        "body": "Used and Expired vouchers render in greyed-out treatment with muted labels and a dim asset overlay — a pattern Voucher Card Horizontal already ships. Port the same 5-state treatment to the unified Voucher Card.",
-        "tag": "State"
-      },
-      {
-        "headline": "Rename duplicated <code>badges</code> layers.",
-        "body": "The two badge-row frames are both named <code>badges</code>. After the consolidation above they should collapse into a single <code>badges-slot</code> layer; until then, name them <code>badges-row-1</code> / <code>badges-row-2</code> to disambiguate.",
-        "tag": "Rename"
-      },
-      {
-        "headline": "Document that Voucher Card is the tap target.",
-        "body": "Vouchers are always tappable entry points to the voucher detail screen. The unified component should ship a pressed/focused state on the card frame; the handoff is an <code>onTap</code> closure, not an internal CTA button.",
-        "tag": "Docs"
-      }
-    ],
+    "open": [],
+    "recommendations": [],
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"vv-demo-preview\"><div style=\"display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;justify-content:center;\"><div style=\"display:flex;flex-direction:column;gap:6px;align-items:center;\"><div style=\"width:162px;background:#FFFFFF;border:1px solid #E6EAF2;border-radius:4px;overflow:hidden;box-shadow:0 1px 4px rgba(10,39,87,0.06);\"><svg width=\"162\" height=\"153\" viewBox=\"0 0 162 153\" style=\"display:block\"><defs><clipPath id=\"vv-clip-162-153-Food\"><path d=\"M0 0 H162 V70.5 A6 6 0 0 0 162 82.5 V153 H0 V82.5 A6 6 0 0 0 0 70.5 Z\"></path></clipPath><linearGradient id=\"vv-g-162-153-Food\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#D63A2F\"></stop><stop offset=\"1\" stop-color=\"#8C1A15\"></stop></linearGradient></defs><g clip-path=\"url(#vv-clip-162-153-Food)\"><rect width=\"162\" height=\"153\" fill=\"url(#vv-g-162-153-Food)\"></rect><text x=\"81\" y=\"66.5\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.92)\" font-size=\"11\" font-weight=\"700\" font-family=\"system-ui\">Food</text></g><line x1=\"6\" y1=\"76.5\" x2=\"156\" y2=\"76.5\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(114,64.5)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"20\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"14\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"11\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><svg width=\"162\" height=\"100\" viewBox=\"0 0 162 100\" style=\"display:block\"><defs><clipPath id=\"vv-clip-162-100-Food\"><path d=\"M0 0 H162 V44 A6 6 0 0 0 162 56 V100 H0 V56 A6 6 0 0 0 0 44 Z\"></path></clipPath><linearGradient id=\"vv-g-162-100-Food\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#D63A2F\"></stop><stop offset=\"1\" stop-color=\"#8C1A15\"></stop></linearGradient></defs><g clip-path=\"url(#vv-clip-162-100-Food)\"><rect width=\"162\" height=\"100\" fill=\"url(#vv-g-162-100-Food)\"></rect><text x=\"81\" y=\"40\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.92)\" font-size=\"11\" font-weight=\"700\" font-family=\"system-ui\">Food</text></g><line x1=\"6\" y1=\"50\" x2=\"156\" y2=\"50\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(114,38)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"20\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"14\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"11\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><div style=\"padding:8px 12px 12px 12px;display:flex;flex-direction:column;gap:4px;\"><div style=\"display:flex;gap:4px;\"><span style=\"background:#2340A9;color:#FFF;font-size:10px;font-weight:700;font-family:'Proxima Soft',system-ui;padding:3px 4px 1px 4px;border-radius:4px;letter-spacing:0.5px;\">Limited</span><span style=\"background:#D61B2C;color:#FFF;font-size:10px;font-weight:700;font-family:'Proxima Soft',system-ui;padding:3px 4px 1px 4px;border-radius:4px;letter-spacing:0.5px;\">Expiring</span></div><div style=\"display:flex;gap:4px;\"><span style=\"background:#B50707;color:#FFF;font-size:10px;font-weight:700;font-family:'Proxima Soft',system-ui;padding:3px 4px 1px 4px;border-radius:4px;letter-spacing:0.5px;\">Hot</span><span style=\"background:#1972F9;color:#FFF;font-size:10px;font-weight:700;font-family:'Proxima Soft',system-ui;padding:3px 4px 1px 4px;border-radius:4px;letter-spacing:0.5px;\">Discounted</span></div><div style=\"color:#0A2757;font-size:14px;font-weight:700;font-family:'Proxima Soft',system-ui;line-height:18px;letter-spacing:0.25px;\">Buy Load Pre-seeded SKU Voucher Sample</div><div style=\"color:#445C85;font-size:11px;font-weight:500;font-family:'BarkAda',system-ui;line-height:16px;\">This is the description of the voucher.</div><div style=\"display:flex;flex-direction:column;\"><div style=\"color:#005CE5;font-size:13px;font-weight:700;font-family:'Proxima Soft',system-ui;letter-spacing:0.25px;\">PHP 100.00</div><div style=\"color:#90A8D0;font-size:11px;font-weight:700;font-family:'Proxima Soft',system-ui;text-decoration:line-through;\">PHP 150.00</div></div><div style=\"color:#6780A9;font-size:8px;font-weight:500;font-family:'BarkAda',system-ui;letter-spacing:0;\">Validity: Dec 25 2022 - Jan 5 2023</div></div></div><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">Default (all props on)</div></div><div style=\"display:flex;flex-direction:column;gap:6px;align-items:center;\"><div style=\"width:162px;background:#FFFFFF;border:1px solid #E6EAF2;border-radius:4px;overflow:hidden;box-shadow:0 1px 4px rgba(10,39,87,0.06);\"><svg width=\"162\" height=\"153\" viewBox=\"0 0 162 153\" style=\"display:block\"><defs><clipPath id=\"vv-clip-162-153-Food\"><path d=\"M0 0 H162 V70.5 A6 6 0 0 0 162 82.5 V153 H0 V82.5 A6 6 0 0 0 0 70.5 Z\"></path></clipPath><linearGradient id=\"vv-g-162-153-Food\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#D63A2F\"></stop><stop offset=\"1\" stop-color=\"#8C1A15\"></stop></linearGradient></defs><g clip-path=\"url(#vv-clip-162-153-Food)\"><rect width=\"162\" height=\"153\" fill=\"url(#vv-g-162-153-Food)\"></rect><text x=\"81\" y=\"66.5\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.92)\" font-size=\"11\" font-weight=\"700\" font-family=\"system-ui\">Food</text></g><line x1=\"6\" y1=\"76.5\" x2=\"156\" y2=\"76.5\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(114,64.5)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"20\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"14\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"11\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><div style=\"padding:8px 12px 12px 12px;display:flex;flex-direction:column;gap:4px;\"><div style=\"display:flex;gap:4px;\"><span style=\"background:#2340A9;color:#FFF;font-size:10px;font-weight:700;font-family:'Proxima Soft',system-ui;padding:3px 4px 1px 4px;border-radius:4px;letter-spacing:0.5px;\">Limited</span><span style=\"background:#D61B2C;color:#FFF;font-size:10px;font-weight:700;font-family:'Proxima Soft',system-ui;padding:3px 4px 1px 4px;border-radius:4px;letter-spacing:0.5px;\">Expiring</span></div><div style=\"color:#0A2757;font-size:14px;font-weight:700;font-family:'Proxima Soft',system-ui;line-height:18px;letter-spacing:0.25px;\">Buy Load Pre-seeded SKU Voucher Sample</div><div style=\"color:#445C85;font-size:11px;font-weight:500;font-family:'BarkAda',system-ui;line-height:16px;\">This is the description of the voucher.</div><div style=\"display:flex;flex-direction:column;\"><div style=\"color:#005CE5;font-size:13px;font-weight:700;font-family:'Proxima Soft',system-ui;letter-spacing:0.25px;\">PHP 100.00</div><div style=\"color:#90A8D0;font-size:11px;font-weight:700;font-family:'Proxima Soft',system-ui;text-decoration:line-through;\">PHP 150.00</div></div><div style=\"color:#6780A9;font-size:8px;font-weight:500;font-family:'BarkAda',system-ui;letter-spacing:0;\">Validity: Dec 25 2022 - Jan 5 2023</div></div></div><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">Large asset only</div></div><div style=\"display:flex;flex-direction:column;gap:6px;align-items:center;\"><div style=\"width:162px;background:#FFFFFF;border:1px solid #E6EAF2;border-radius:4px;overflow:hidden;box-shadow:0 1px 4px rgba(10,39,87,0.06);\"><svg width=\"162\" height=\"100\" viewBox=\"0 0 162 100\" style=\"display:block\"><defs><clipPath id=\"vv-clip-162-100-Food\"><path d=\"M0 0 H162 V44 A6 6 0 0 0 162 56 V100 H0 V56 A6 6 0 0 0 0 44 Z\"></path></clipPath><linearGradient id=\"vv-g-162-100-Food\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#D63A2F\"></stop><stop offset=\"1\" stop-color=\"#8C1A15\"></stop></linearGradient></defs><g clip-path=\"url(#vv-clip-162-100-Food)\"><rect width=\"162\" height=\"100\" fill=\"url(#vv-g-162-100-Food)\"></rect><text x=\"81\" y=\"40\" text-anchor=\"middle\" fill=\"rgba(255,255,255,0.92)\" font-size=\"11\" font-weight=\"700\" font-family=\"system-ui\">Food</text></g><line x1=\"6\" y1=\"50\" x2=\"156\" y2=\"50\" stroke=\"#FFFFFF\" stroke-width=\"1\" stroke-dasharray=\"2 3\"></line><g transform=\"translate(114,38)\"><rect x=\"0\" y=\"0\" width=\"48\" height=\"20\" fill=\"#1972F9\" rx=\"0\"></rect><text x=\"24\" y=\"14\" text-anchor=\"middle\" fill=\"#FFFFFF\" font-size=\"11\" font-weight=\"700\" font-family=\"system-ui\">35% off</text></g></svg><div style=\"padding:8px 12px 12px 12px;display:flex;flex-direction:column;gap:4px;\"><div style=\"display:flex;gap:4px;\"><span style=\"background:#B50707;color:#FFF;font-size:10px;font-weight:700;font-family:'Proxima Soft',system-ui;padding:3px 4px 1px 4px;border-radius:4px;letter-spacing:0.5px;\">Hot</span><span style=\"background:#1972F9;color:#FFF;font-size:10px;font-weight:700;font-family:'Proxima Soft',system-ui;padding:3px 4px 1px 4px;border-radius:4px;letter-spacing:0.5px;\">Discounted</span></div><div style=\"color:#0A2757;font-size:14px;font-weight:700;font-family:'Proxima Soft',system-ui;line-height:18px;letter-spacing:0.25px;\">Buy Load Pre-seeded SKU Voucher Sample</div><div style=\"color:#445C85;font-size:11px;font-weight:500;font-family:'BarkAda',system-ui;line-height:16px;\">This is the description of the voucher.</div></div></div><div style=\"color:#666;font-size:10px;font-family:system-ui;font-weight:600;\">Small asset minimal</div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Migration</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Replaced by</span><span class=\"demo-panel-value\"><a href=\"/components/voucher-card-horizontal\">Voucher Card Horizontal</a></span></div></div></div></div>"
   },
   "style": {
