@@ -1,204 +1,99 @@
-/* Auto-extracted from assessment-src/components/dropdown.html.
- * Powers the live-preview dropdowns/toggles for the dropdown component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs dropdown
+/* Powers the live-preview controls for the dropdown (Select) component
+ * page. Rebuilt for the 2026 Working File (node 7947:111865).
+ *
+ * Select composes two other components: Select Field for the trigger and
+ * Select Group for the menu. Select Field is deliberately out of this
+ * review's scope — it also backs text fields — so the trigger here is
+ * drawn to match rather than presented as documented behaviour.
+ *
+ * The menu instance exists in all 24 Figma variants and is hidden unless
+ * State=Expanded, which is why the trigger's box stays 46 tall. The
+ * preview does the same: the menu overlays rather than growing the field.
  */
-/* ── Dropdown Component JS ──────────────────────────────────────── */
-var _ddDemo = { variant: 'Text', type: 'Collapsed' };
 
-var _ddColors = {
-  Text:   { collapsed: { border: '#D7E0EF', bw: '1' }, expanded: { border: '#005CE5', bw: '2' } },
-  Error:  { collapsed: { border: '#F4C7C9', bw: '2' }, expanded: { border: '#D61B2C', bw: '2' } },
-  Amount: { collapsed: { border: '#D7E0EF', bw: '1' }, expanded: { border: '#005CE5', bw: '2' } },
-  Mobile: { collapsed: { border: '#D7E0EF', bw: '1' }, expanded: { border: '#005CE5', bw: '2' } }
-};
+var _SEL_GEAR =
+  '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+  '<path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="#0A2757" stroke-width="1.6"/>' +
+  '<circle cx="12" cy="12" r="9" stroke="#0A2757" stroke-width="1.6"/></svg>';
 
-function _ddBuildSvg(variant, type) {
-  var c = _ddColors[variant] || _ddColors.Text;
-  var st = type === 'Expanded' ? c.expanded : c.collapsed;
-  var isExpanded = type === 'Expanded';
-  var isMobile = variant === 'Mobile';
-  var isAmount = variant === 'Amount';
-  var chevronColor = '#005CE5';
-  var labelColor = '#0A2757';
-  var placeholderColor = '#90A8D0';
-  var pesoColor = '#183462';
-  var itemColor = '#0A2757';
-  var itemBorder = '#E5EBF4';
-  var w = 366;
-  var triggerY = 22;
-  var s = '';
-
-  if (isMobile) {
-    /* Mobile variant — label row + select field + optional phone input */
-    var totalH = isExpanded ? 468 : 118;
-    s = '<svg width="' + w + '" height="' + totalH + '" viewBox="0 0 ' + w + ' ' + totalH + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
-    /* label row */
-    s += '<text x="2" y="12" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + labelColor + '">Label</text>';
-    /* info icon */
-    s += '<circle cx="52" cy="8" r="8" stroke="' + labelColor + '" stroke-width="1" fill="none" opacity=".4"/>';
-    s += '<text x="49" y="12" font-family="system-ui" font-size="10" fill="' + labelColor + '" opacity=".4">i</text>';
-    /* trigger field */
-    s += '<rect x="0.5" y="22.5" width="' + (w - 1) + '" height="45" rx="5.5" fill="white" stroke="' + st.border + '" stroke-width="' + st.bw + '"/>';
-    s += '<text x="12" y="48" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + placeholderColor + '">Select option</text>';
-    /* chevron */
-    if (isExpanded) {
-      s += '<path d="M339 50l5-5 5 5" stroke="' + chevronColor + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
-    } else {
-      s += '<path d="M339 42l5 5 5-5" stroke="' + chevronColor + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
-    }
-    /* phone input */
-    s += '<rect x="0.5" y="76.5" width="' + (w - 1) + '" height="37" rx="5.5" fill="white" stroke="#D7E0EF" stroke-width="1"/>';
-    s += '<text x="12" y="98" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + labelColor + '">+63</text>';
-    s += '<text x="52" y="98" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + placeholderColor + '">XXX XXX XXXX</text>';
-
-    if (isExpanded) {
-      /* dropdown list */
-      s += '<rect x="0" y="68" width="' + w + '" height="400" rx="6" fill="white" filter="url(#ddShadow)"/>';
-      for (var i = 0; i < 8; i++) {
-        var iy = 68 + (i * 50);
-        s += '<text x="12" y="' + (iy + 30) + '" font-family="Proxima Soft, system-ui" font-size="18" font-weight="600" fill="' + itemColor + '">Dropdown Item</text>';
-        if (i < 7) s += '<line x1="0" y1="' + (iy + 50) + '" x2="' + w + '" y2="' + (iy + 50) + '" stroke="' + itemBorder + '" stroke-width="1"/>';
-      }
-    }
-    s += '</svg>';
-  } else {
-    /* Text / Error / Amount variants */
-    var totalH = isExpanded ? 468 : 68;
-    s = '<svg width="' + w + '" height="' + totalH + '" viewBox="0 0 ' + w + ' ' + totalH + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
-    /* shadow filter */
-    s += '<defs><filter id="ddShadow" x="-4" y="64" width="' + (w + 8) + '" height="410" filterUnits="userSpaceOnUse"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#020E22" flood-opacity="0.16"/></filter></defs>';
-    /* header label */
-    s += '<text x="2" y="12" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + labelColor + '">Label</text>';
-    /* trigger field */
-    s += '<rect x="0.5" y="22.5" width="' + (w - 1) + '" height="45" rx="5.5" fill="white" stroke="' + st.border + '" stroke-width="' + st.bw + '"/>';
-    /* peso sign for Amount */
-    if (isAmount) {
-      s += '<text x="12" y="49" font-family="Proxima Soft, system-ui" font-size="15" font-weight="700" fill="' + pesoColor + '">&#8369;</text>';
-      s += '<text x="28" y="49" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + placeholderColor + '">Select option</text>';
-    } else {
-      s += '<text x="12" y="48" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + placeholderColor + '">Select option</text>';
-    }
-    /* chevron */
-    if (isExpanded) {
-      s += '<path d="M339 50l5-5 5 5" stroke="' + chevronColor + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
-    } else {
-      s += '<path d="M339 42l5 5 5-5" stroke="' + chevronColor + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
-    }
-    if (isExpanded) {
-      /* dropdown list */
-      s += '<rect x="0" y="68" width="' + w + '" height="400" rx="6" fill="white" filter="url(#ddShadow)"/>';
-      for (var i = 0; i < 8; i++) {
-        var iy = 68 + (i * 50);
-        s += '<text x="12" y="' + (iy + 30) + '" font-family="Proxima Soft, system-ui" font-size="18" font-weight="600" fill="' + itemColor + '">Dropdown Item</text>';
-        if (i < 7) s += '<line x1="0" y1="' + (iy + 50) + '" x2="' + w + '" y2="' + (iy + 50) + '" stroke="' + itemBorder + '" stroke-width="1"/>';
-      }
-    }
-    s += '</svg>';
+function _selMenu() {
+  var h = '<div class="eb-preview-sel__menu">';
+  h += '<div class="eb-preview-sgroup eb-preview-sgroup--middleinset eb-preview-sgroup--compact">';
+  for (var i = 0; i < 4; i++) {
+    h += '<div class="eb-preview-sgroup__row">';
+    h += '<span class="eb-preview-sgroup__lead">' + _SEL_GEAR + '</span>';
+    h += '<span class="eb-preview-sgroup__label">Text</span>';
+    h += '</div>';
   }
-  return s;
+  return h + '</div></div>';
 }
 
-function updateDropdownDemo() {
-  var el = document.getElementById('dd-demo-preview');
-  if (el) el.innerHTML = _ddBuildSvg(_ddDemo.variant, _ddDemo.type);
+function _selRender(o) {
+  var state = o.state || 'default';
+  var filled = !!o.filled;
+
+  var cls = 'eb-preview-sel';
+  if (state !== 'default') cls += ' eb-preview-sel--' + state;
+  if (filled) cls += ' eb-preview-sel--filled';
+
+  var h = '<div class="' + cls + '">';
+  h += '<div class="eb-preview-sel__field">';
+  /* Both currency types render the same mark at this size — the
+     difference is a custom SVG versus Proxima's own glyph. */
+  if (o.type === 'pesosignvector' || o.type === 'pesosigntext') {
+    h += '<span class="eb-preview-sel__lead">₱</span>';
+  }
+  h += '<span class="eb-preview-sel__value">' + (filled ? 'Savings account' : 'Select Option') + '</span>';
+  h += '<span class="eb-preview-sel__chevron"></span>';
+  h += '</div>';
+  if (state === 'expanded') h += _selMenu();
+  return h + '</div>';
 }
 
-/* ── Spec card state ──────────────────────────────────────────────── */
+function _selRead() {
+  var v = function (id, fb) { var el = document.getElementById(id); return el ? el.value : fb; };
+  return {
+    type: v('sel-ctrl-type', 'default'),
+    state: v('sel-ctrl-state', 'default'),
+    filled: v('sel-ctrl-isfilled', 'false') === 'true'
+  };
+}
+
+function _selUpdate() {
+  var el = document.getElementById('sel-demo-preview');
+  if (el) el.innerHTML = _selRender(_selRead());
+}
+
+/* ── Spec card state ─────────────────────────────────────────────── */
 var _specCards = {
-  text:   { variant: 'Text',   type: 'Collapsed' },
-  error:  { variant: 'Error',  type: 'Collapsed' },
-  amount: { variant: 'Amount', type: 'Collapsed' },
-  mobile: { variant: 'Mobile', type: 'Collapsed' }
+  default: { type: 'default', state: 'default', isfilled: 'false' }
 };
 window._specCards = _specCards;
 
-/* ── Code snippet builders ────────────────────────────────────────── */
-function buildSwiftSnippet(type, card) {
-  var v = (card && card.variant) || 'Text';
-  var t = (card && card.type) || 'Collapsed';
-  var lines = [];
-  lines.push('EBDropdown(selection: $selected, options: items)');
-  if (v === 'Error')  lines.push('    .ebState(.error)');
-  else if (v === 'Amount') lines.push('    .ebStyle(.amount)');
-  else if (v === 'Mobile') lines.push('    .ebStyle(.mobile)');
-  else lines.push('    .ebState(.default)');
-  if (t === 'Expanded') lines.push('    .ebExpanded(true)');
-  return lines.join('\n');
-}
-
-function buildComposeSnippet(type, card) {
-  var v = (card && card.variant) || 'Text';
-  var t = (card && card.type) || 'Collapsed';
-  var lines = [];
-  lines.push('EBDropdown(');
-  lines.push('    selected = selected,');
-  lines.push('    options = items,');
-  lines.push('    onSelectionChange = { },');
-  if (v === 'Error')  lines.push('    state = EBFieldState.Error,');
-  else if (v === 'Amount') lines.push('    style = EBDropdownStyle.Amount,');
-  else if (v === 'Mobile') lines.push('    style = EBDropdownStyle.Mobile,');
-  else lines.push('    state = EBFieldState.Default,');
-  if (t === 'Expanded') lines.push('    expanded = true,');
-  var last = lines[lines.length - 1];
-  if (last.charAt(last.length - 1) === ',') lines[lines.length - 1] = last.slice(0, -1);
-  lines.push(')');
-  return lines.join('\n');
-}
-
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
-}
-window.getSnippet = getSnippet;
-
-/* ── Spec card update ─────────────────────────────────────────────── */
-function updateSpecCard(cardStyle, prop, value) {
-  var card = _specCards[cardStyle];
+function updateSpecCard(cardKey, prop, value) {
+  var card = _specCards[cardKey];
   if (!card) return;
   card[prop] = value;
-
-  /* Update preview */
-  var el = document.getElementById('dd-' + cardStyle + '-preview');
-  if (el) el.innerHTML = _ddBuildSvg(card.variant, card.type);
-
-  /* Update properties text */
-  var spVariant = document.querySelector('[data-sp="' + cardStyle + '-variant"]');
-  var spType    = document.querySelector('[data-sp="' + cardStyle + '-type"]');
-  if (spVariant) spVariant.textContent = card.variant;
-  if (spType)    spType.textContent    = card.type;
-
-  /* Colors + Layout sections are server-rendered from dropdown.ts;
-     Plan A's `_patchSpecCardRows` handles type:Expanded overrides. */
-
-  /* Update DEV code */
-  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
-  if (devView) {
-    var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
-    if (codeEl) {
-      var code = getSnippet(cardStyle, lang, card);
-      codeEl.setAttribute('data-final', code);
-      codeEl.setAttribute('data-lang', lang);
-      codeEl.textContent = code;
-      if (typeof window.highlightSyntax === 'function') window.highlightSyntax(codeEl);
-    }
+  var host = document.getElementById('sel-spec-' + cardKey);
+  if (host) {
+    host.innerHTML = _selRender({
+      type: card.type,
+      state: card.state,
+      filled: card.isfilled === 'true'
+    });
   }
 }
+window.updateSpecCard = updateSpecCard;
 
-function _ddInitSpecCards() {
+function _selInit() {
+  _selUpdate();
   Object.keys(_specCards).forEach(function (k) {
-    updateSpecCard(k, 'variant', _specCards[k].variant);
+    updateSpecCard(k, 'state', _specCards[k].state);
   });
 }
 
-function _ddInit() {
-  updateDropdownDemo();
-  _ddInitSpecCards();
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', _ddInit);
-} else {
-  _ddInit();
-}
-document.addEventListener('astro:page-load', _ddInit);
+(function () {
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _selInit);
+  else _selInit();
+  document.addEventListener('astro:page-load', _selInit);
+})();
