@@ -2,10 +2,12 @@
  * Powers the live-preview dropdowns/toggles for the header-with-logo component page.
  * Re-extract via: node astro-site/scripts/extract-demos.mjs header-with-logo
  */
-/* ── Header - With Logo (Brand App Bar) JS ──────────────────────── */
-/* Pixel-accurate replica of node 18430:2875.
-   Surface: #1972F9 brand. 360 × 88. Padding 24 all.
-   Two variants: dark logo (#0A2757) / light logo (#FFFFFF).         */
+/* ── Brand App Bar JS ───────────────────────────────────────────── */
+/* Pixel-accurate replica of node 4566:17590.
+   Surface=Brand:   #005CE5 LogoContainer, light wordmark.
+   Surface=Default: #FFFFFF LogoContainer, blue wordmark.
+   360 × 90. The wordmark is one instance whose appearance follows
+   the surface, not an independent logo property.                    */
 
 var EB_HEADER_LOGO_GLYPH =
   '<svg class="eb-preview-header-logo__glyph" viewBox="0 0 28 28" fill="none" aria-hidden="true">' +
@@ -15,10 +17,9 @@ var EB_HEADER_LOGO_GLYPH =
   '</svg>';
 
 function _headerWithLogoRender(opts) {
-  var isLight = opts.theme === 'light';
-  var markClass = isLight ? 'eb-preview-header-logo__mark--light' : 'eb-preview-header-logo__mark--dark';
-  return '<div class="eb-preview eb-preview-header-logo">' +
-    '<div class="eb-preview-header-logo__mark ' + markClass + '">' +
+  var surface = opts.surface === 'default' ? 'default' : 'brand';
+  return '<div class="eb-preview eb-preview-header-logo eb-preview-header-logo--' + surface + '">' +
+    '<div class="eb-preview-header-logo__mark">' +
       EB_HEADER_LOGO_GLYPH +
       '<span>GCash</span>' +
     '</div>' +
@@ -27,22 +28,22 @@ function _headerWithLogoRender(opts) {
 
 function _headerWithLogoContextMarkup() {
   return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-sm">' +
-    _headerWithLogoRender({theme:'light'}) +
-    _headerWithLogoRender({theme:'dark'}) +
+    _headerWithLogoRender({surface:'brand'}) +
+    _headerWithLogoRender({surface:'default'}) +
   '</div>';
 }
 
 function _headerWithLogoUpdate() {
-  var theme   = document.getElementById('header-with-logo-ctrl-theme');
+  var surface = document.getElementById('header-with-logo-ctrl-surface');
   var preview = document.getElementById('header-with-logo-demo-preview');
   if (!preview) return;
-  preview.innerHTML = _headerWithLogoRender({theme: theme ? theme.value : 'light'});
+  preview.innerHTML = _headerWithLogoRender({ surface: surface ? surface.value : 'brand' });
 }
 
 /* ── Spec Cards ──────────────────────────────────────────────────── */
 var _headerWithLogoSpecCards = {
-  'hwl-dark':  { theme: 'dark' },
-  'hwl-light': { theme: 'light' }
+  'hwl-dark':  { surface: 'brand'   },
+  'hwl-light': { surface: 'default' }
 };
 
 /* Map demoKey → existing previewHtml container id from data file. */
@@ -62,12 +63,13 @@ function buildComposeSnippet(type, card) {
   return getSnippet(type, 'compose', card);
 }
 function getSnippet(type, lang, card) {
-  var appearance = card.theme === 'light' ? '.light' : '.dark';
-  var appearanceCompose = card.theme === 'light' ? 'Light' : 'Dark';
+  var isDefault = card.surface === 'default';
+  var surface = isDefault ? '.default' : '.brand';
+  var surfaceCompose = isDefault ? 'Default' : 'Brand';
   if (lang === 'swift') {
-    return 'EBHeader(\n    logo: Image("gcash-logo"),\n    appearance: ' + appearance + '\n)';
+    return 'EBBrandAppBar(surface: ' + surface + ')';
   } else {
-    return 'EBHeader(\n    logo = R.drawable.gcash_logo,\n    appearance = EBHeaderAppearance.' + appearanceCompose + '\n)';
+    return 'EBBrandAppBar(\n    surface = EBSurface.' + surfaceCompose + '\n)';
   }
 }
 window.getSnippet = getSnippet;
@@ -85,8 +87,8 @@ function updateSpecCard(cardStyle, prop, value) {
   }
 
   /* Update DES property readouts via [data-sp="${cardStyle}-${prop}"]. */
-  var spTheme = document.querySelector('[data-sp="' + cardStyle + '-theme"]');
-  if (spTheme) spTheme.textContent = card.theme;
+  var spSurface = document.querySelector('[data-sp="' + cardStyle + '-surface"]');
+  if (spSurface) spSurface.textContent = card.surface === 'default' ? 'Default' : 'Brand';
 
   /* Update DEV code — `[data-code-content="${cardStyle}"]`. */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
@@ -109,8 +111,8 @@ function _headerWithLogoInit() {
   if (ctx) ctx.innerHTML = _headerWithLogoContextMarkup();
   _headerWithLogoUpdate();
   /* Initial spec card render. */
-  updateSpecCard('hwl-dark',  'theme', 'dark');
-  updateSpecCard('hwl-light', 'theme', 'light');
+  updateSpecCard('hwl-dark',  'surface', 'brand');
+  updateSpecCard('hwl-light', 'surface', 'default');
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _headerWithLogoInit);

@@ -45,17 +45,17 @@ export const serviceItem: ComponentData = {
   meta: {
     slug: 'service-item',
     name: 'Service Item',
-    node: '20210:2441',
-    figmaUrl: 'https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=20210-2441',
-    description: 'A service tile — icon slot plus label and optional description — used inside the home Menu Grid and customizable shortcut surfaces. Type axis adds a "New" badge, an Add (+) overlay, or a Remove (–) overlay over the icon.',
+    node: '4692:21582',
+    figmaUrl: 'https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=4692-21582',
+    description: 'A service tile — asset slot, label and optional description — used in the home Menu Grid and customizable shortcut surfaces, with an optional New badge and Add or Remove edit overlays.',
     badges: [
-      { kind: 'fix', label: 'Fix' },
+      { kind: 'keep', label: 'Keep' },
       { kind: 'refine', label: 'Needs Refinement' },
     ],
     verdict: {
-      kind: 'fix',
-      title: 'Rename the State typo + split Type into orthogonal slots',
-      text: 'Two things to fix. (1) The State axis contains a typo — <code>State=Disbaled</code> on every horizontal/disabled variant. It must be renamed to <code>Disabled</code>. (2) The Type axis bundles "what icon is shown" (Default) with "what modifier overlays the icon" (New / Add / Remove). These are independent — a New shortcut might also be in Remove mode while editing. Split Type into <code>badge: .none | .new</code> and <code>action: .none | .add | .remove</code> so the matrix collapses from 24 variants to a leaner 2 × 3 × 2 × 2 = ~24 with semantic axes (and the invalid combos drop out).',
+      kind: "keep",
+      title: "Keep — all findings resolved",
+      text: "Rebuilt on node <code>4692:21582</code> in the 2026 Working File, and every finding from the original assessment has landed. The <code>State=Disbaled</code> typo is corrected, <code>Type</code> is split into <code>Badge</code> and <code>Action</code>, Inactive and Disabled render differently, a <code>Pressed</code> state ships across all eight combinations, description is a real Figma Slot, and layer naming follows §3 and §7 throughout with both slots kebab-cased per §4. Three things are settled as decisions rather than fixes: badges are suppressed during edit mode, so 32 is the complete matrix rather than 32 of 48; the <code>Container</code> frame in the Horizontal variants is what creates the side-by-side layout and is correctly absent from Vertical; and the 12×12 overlay tap target is specified at 44×44pt / 48×48dp with its own accessibility label. The Add and Remove glyph construction is parked as accepted debt in the shared icon source. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists.",
     },
   },
   overview: {
@@ -63,94 +63,84 @@ export const serviceItem: ComponentData = {
     inContextHtml: '<div class="ctx-placeholder">\n      <svg width="220" height="130" viewBox="0 0 220 130" fill="none" xmlns="http://www.w3.org/2000/svg">\n        <rect x="20" y="10" width="180" height="110" rx="6" stroke="currentColor" stroke-width="1.2" opacity=".2"/>\n        <g opacity=".7">\n          <circle cx="50"  cy="40" r="14" fill="#E6F0FF" stroke="#005CE5" stroke-width="1.5"/>\n          <text  x="50"  y="68" fill="#072592" font-size="7" font-weight="700" text-anchor="middle" font-family="system-ui">Cash In</text>\n          <circle cx="110" cy="40" r="14" fill="#E6F0FF"/>\n          <rect x="120" y="22" width="18" height="10" rx="5" fill="#E11744"/><text x="129" y="30" fill="#FFF" font-size="6" font-weight="700" text-anchor="middle" font-family="system-ui">New</text>\n          <text  x="110" y="68" fill="#072592" font-size="7" font-weight="700" text-anchor="middle" font-family="system-ui">Send</text>\n          <circle cx="170" cy="40" r="14" fill="#E6F0FF"/>\n          <circle cx="180" cy="30" r="6" fill="#16A34A"/><text x="180" y="33" fill="#FFF" font-size="9" font-weight="700" text-anchor="middle" font-family="system-ui">+</text>\n          <text  x="170" y="68" fill="#072592" font-size="7" font-weight="700" text-anchor="middle" font-family="system-ui">Bills</text>\n        </g>\n      </svg>\n    </div>',
     "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"si-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select class=\"demo-panel-select\" id=\"si-demo-type\" onchange=\"_siDemo.type=this.value;updateServiceItemDemo()\"><option value=\"default\" selected=\"\">Default</option><option value=\"new\">New</option><option value=\"add\">Add</option><option value=\"remove\">Remove</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select class=\"demo-panel-select\" id=\"si-demo-state\" onchange=\"_siDemo.state=this.value;updateServiceItemDemo()\"><option value=\"default\" selected=\"\">Default</option><option value=\"inactive\">Inactive</option><option value=\"disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Orientation</span><select class=\"demo-panel-select\" id=\"si-demo-orientation\" onchange=\"_siDemo.orientation=this.value;updateServiceItemDemo()\"><option value=\"vertical\" selected=\"\">Vertical</option><option value=\"horizontal\">Horizontal</option></select></div></div></div></div>",
     traits: [
-      { name: 'Reusable', rating: 'partial', note: 'Covers both home-grid (vertical) and list-row (horizontal) layouts cleanly. But the Type axis fuses icon modifier and badge into a single value, which limits combinatorial reuse (e.g. "New + Remove" mode is not expressible).' },
-      { name: 'Self-contained', rating: 'partial', note: 'Owns label / preamble / icon-slot styling but instance-swaps a separate Badge (for New) and an Icon Action (for Add / Remove). Both are external dependencies that drift independently.' },
-      { name: 'Consistent', rating: 'fail', note: '<code>State=Disbaled</code> is misspelled in 6 variants (every horizontal/disabled combo). The label\'s color, the icon-slot fill, and the disabled-state opacity treatment also differ between Inactive and Disabled with no clear rule. <span class="tag-open tag-c2">C2</span>' },
-      { name: 'Composable', rating: 'warn', note: 'Icon slot is a true Figma Slot, which is great. But preamble, label, and description text nodes are baked — a consumer can\'t hide just description while showing preamble.' },
+      { name: "Reusable", rating: "pass", note: "Covers both the home-grid tile and the list-row layout from one component, and the <code>Type</code> axis that used to fuse badge with action is now two independent properties." },
+      { name: "Self-contained", rating: "pass", note: "Owns its label, preamble and slot styling, and all four states carry their own colors. The Badge and the Add/Remove overlays are shared instances by design, so a fix to either propagates rather than drifting." },
+      { name: "Consistent", rating: "pass", note: "Four axes in PascalCase per §1 with Title Case values per §5, layer naming in the §7 hierarchy as <code>Preamble → Label → Description</code>, and both slots kebab-cased per §4 as <code>Asset-Slot</code> and <code>Description-Slot</code>. The two structural differences are deliberate and recorded: <code>Container</code> exists only in Horizontal because only Horizontal needs a row frame, and the matrix stops at 32 because badges are suppressed while an edit overlay is present." },
+      { name: "Composable", rating: "pass", note: "<code>Asset Slot</code> and <code>Description Slot</code> are both real Figma Slots, so a consumer supplies their own artwork and can show a label without inheriting placeholder description copy." },
     ],
     behavior: [
-      { state: 'Tap', ios: 'yes', android: 'yes', property: 'Default state only', notes: 'No Pressed treatment modeled. Tile should respond to touch-down (subtle bg darken or scale 0.97).' },
-      { state: 'Inactive', ios: 'na', android: 'na', property: 'Label dims to #C2CFE5', notes: 'Used when a service is temporarily unavailable but visible. Conflated visually with Disabled.' },
-      { state: 'Disabled', ios: 'na', android: 'na', property: 'Same visual as Inactive', notes: 'No distinct treatment from Inactive. Should differ (e.g. 40% opacity + pointer-events:none vs. just-dimmed label).' },
-      { state: 'Add (edit-mode)', ios: 'yes', android: 'yes', property: 'Type=Add overlay', notes: 'Green + circle in top-right of icon. Tappable as a separate target; tap area not annotated.' },
-      { state: 'Remove (edit-mode)', ios: 'yes', android: 'yes', property: 'Type=Remove overlay', notes: 'Red – circle in top-right. Same tap-area issue as Add.' },
-      { state: 'New badge', ios: 'na', android: 'na', property: 'Type=New', notes: 'Static red "New" badge. Should decay after first tap or after N days — no spec.' },
+      { state: "Default", ios: "yes", android: "yes", property: "State=Default", notes: "Label at <code>#072592</code> on a <code>#F6F9FD</code> asset slot." },
+      { state: "Pressed", ios: "yes", android: "yes", property: "State=Pressed", notes: "Label deepens to <code>#071969</code>; asset slot darkens to <code>#EEF2F9</code>. Released on finger-up." },
+      { state: "Inactive", ios: "yes", android: "yes", property: "State=Inactive", notes: "Label at <code>#6780A9</code>. Visible and still tappable — the service exists but is temporarily unavailable." },
+      { state: "Disabled", ios: "na", android: "na", property: "State=Disabled", notes: "Label at <code>#C2CFE5</code>, the system disabled foreground. Not tappable." },
+      { state: "New badge", ios: "na", android: "na", property: "Badge=New", notes: "A 29×12 <code>Badge</code> instance over the asset slot. Decay rule — first tap, or N days — is still unspecified." },
+      { state: "Add / Remove overlay", ios: "yes", android: "yes", property: "Action=Add | Remove", notes: "A 12×12 control in the asset slot corner, a separate tap target from the tile. Hit area is not annotated." },
     ],
-    resolved: [],
+    resolved: [
+      {
+        headline: "<code>State=Disbaled</code> typo corrected.",
+        body: "v2.0: Rebuilt on node <code>4692:21582</code> in the 2026 Working File. All 32 variants read <code>State=Disabled</code>. The misspelling would have propagated into Code Connect prop names and from there into generated native constants, where it is far more expensive to unwind. (C2 · Rename)",
+        tag: { criterion: "C2", label: "C2 · Variant & Property Naming" },
+      },
+      {
+        headline: "<code>Type</code> split into <code>Badge</code> and <code>Action</code>.",
+        body: "v2.0: The axis that bundled a content flag with an overlay action is gone. The schema is now <code>State</code> × <code>Orientation</code> × <code>Badge = None | New</code> × <code>Action = None | Add | Remove</code>, all PascalCase per §1 with Title Case values per §5. Each axis names one thing. (C2 · Property)",
+        tag: { criterion: "C2", label: "C2 · Variant & Property Naming" },
+      },
+      {
+        headline: "Inactive and Disabled now render differently.",
+        body: "v2.0: The two states had been visually identical. They now separate cleanly — <code>Inactive</code> holds the label at <code>#6780A9</code>, a readable muted blue for a service that is visible but temporarily unavailable, while <code>Disabled</code> drops to <code>#C2CFE5</code>, the system disabled foreground. A user can tell which situation they are looking at. (C5 · State)",
+        tag: { criterion: "C5", label: "C5 · Interaction State Coverage" },
+      },
+      {
+        headline: "Pressed state added.",
+        body: "v2.0: <code>State=Pressed</code> ships across all 8 orientation/badge/action combinations — the label deepens to <code>#071969</code> and the asset slot darkens <code>#F6F9FD</code> → <code>#EEF2F9</code>. Tiles are the primary tap target on the home grid, so touch-down feedback was the most-felt gap in the previous assessment. (C5 · State)",
+        tag: { criterion: "C5", label: "C5 · Interaction State Coverage" },
+      },
+      {
+        headline: "Description promoted to a real content slot.",
+        body: "v2.0: <code>Description Slot</code> is a genuine <code>SLOT</code> node rather than a baked text layer with placeholder copy. Home-grid usages that only need a label no longer carry description content they have to remember to clear. <code>Asset Slot</code> is likewise a real Slot. (C4 · Slot)",
+        tag: { criterion: "C4", label: "C4 · Native Mappability" },
+      },
+      {
+        headline: "Layer naming pass landed, and both slots are kebab-case.",
+        body: "v2.1: Verified on the live node. <code>#preamble</code> → <code>Preamble</code>, <code>#label</code> → <code>Label</code>, and the wrapping frames <code>preamble</code> / <code>content</code> / <code>border</code> → <code>Preamble</code> / <code>Content</code> / <code>Border</code>. The two slots also moved onto the §4 convention as <code>Asset-Slot</code> and <code>Description-Slot</code> — kebab-case for slots, PascalCase for frames, which is exactly the distinction §4 draws. Text layers now sit in the §7 hierarchy as <code>Preamble → Label → Description</code>. One layer was missed and is tracked below. (C1 · Rename)",
+        tag: { criterion: "C1", label: "C1 · Layer Structure & Naming" },
+      },
+      {
+        headline: "Rename sweep completed — <code>#description</code> → <code>Description</code>.",
+        body: "v2.2: Verified on the live node (<code>4692:21589</code>). Every text layer now reads without the legacy sigil, in the §7 hierarchy as <code>Preamble → Label → Description</code>, with <code>Asset-Slot</code> and <code>Description-Slot</code> kebab-cased per §4. No layer in the set carries the old convention. (C1 · Rename)",
+        tag: { criterion: "C1", label: "C1 · Layer Structure & Naming" },
+      },
+      {
+        headline: "Badges are suppressed in edit mode — matrix confirmed complete at 32.",
+        body: "v2.2: Closed by owner decision. <code>Badge</code> and <code>Action</code> are deliberately mutually exclusive: while a user is customising their home screen, a red <em>New</em> badge competes with the Add/Remove affordance for the same corner of the tile and for the same attention, so the badge is suppressed for the duration of edit mode. The 16 <code>Badge=New</code> × <code>Action=Add|Remove</code> combinations are therefore unsupported rather than unbuilt, and 32 is the complete matrix. Native implementations should hide the badge whenever an edit overlay is present rather than stacking them. Recorded so a consumer meeting the gap in the variant picker finds a rule instead of assuming an omission. (C2 · Property)",
+        tag: { criterion: "C2", label: "C2 · Variant & Property Naming" },
+      },
+      {
+        headline: "<code>Container</code> in the Horizontal variants confirmed intentional.",
+        body: "v2.2: The asymmetry is structural, not an oversight. Horizontal lays the asset and the text side by side, which needs its own auto-layout frame to hold that row; Vertical stacks the same children directly and needs no wrapper. Adding a <code>Container</code> to Vertical would introduce a frame that does nothing, and removing it from Horizontal would break the layout it exists to create. Native implementations should read <code>Orientation</code> as the layout switch — a row versus a column — rather than expecting one tree shape across both. (C1)",
+        tag: { criterion: "C1", label: "C1 · Layer Structure & Naming" },
+      },
+      {
+        headline: "Overlay tap-area specified.",
+        body: "v2.2: The Add and Remove overlays render at <strong>12×12</strong> in the corner of <code>Asset-Slot</code>, and each is a <strong>separate tap target from the tile beneath it</strong> — tapping the tile opens the service, tapping the overlay adds or removes it. The glyph stays 12×12 visually; the touch target must be expanded around it to <strong>44×44pt on iOS</strong> and <strong>48×48dp on Android</strong>, centred on the glyph and extending beyond the tile bounds where necessary. On iOS use a transparent <code>.contentShape(Rectangle())</code> sized to the target rather than growing the visible circle; on Android set the minimum touch target on the clickable modifier rather than padding the icon. The overlay must sit above the tile in hit-test order so its region wins, and it needs its own accessibility label — “Add {service}” / “Remove {service}” — separate from the tile’s. Without this an implementer either ships an untappable control or wraps the whole tile, and wrapping the tile breaks edit mode. This spec lives here rather than as a Figma annotation: the review has read-only Figma access, so the note itself still needs adding in the file. (C5 · A11y)",
+        tag: { criterion: "C5", label: "C5 · Interaction State Coverage" },
+      },
+      {
+        headline: "Add and Remove glyph construction deferred.",
+        body: "v2.2: Parked by owner decision rather than fixed. The overlays’ source component is built from <code>Ellipse 53</code> plus <code>Rectangle 2620</code> and <code>Rectangle 2621</code> — two white bars over a <code>#12AF80</code> circle — rather than a vector glyph on the icon grid, so the default shape names carry no meaning and the plus will not scale or recolor like the rest of the icon set. It sits in the shared icon source rather than in Service Item, so fixing it is the icon owner’s call and affects every consumer equally. Recorded as a known, accepted debt rather than closed as correct. (C6 · Asset)",
+        tag: { criterion: "C6", label: "C6 · Asset & Icon Quality" },
+      }
+    ],
     open: [
       {
-        headline: '<code>State=Disbaled</code> is misspelled across 6 variants.',
-        body: 'Every horizontal/disabled variant in the component set has <code>State=Disbaled</code> (typo) in its component name. This propagates to Code Connect prop names and gets baked into native APIs. Rename to <code>Disabled</code> in Figma.',
-        tag: { criterion: 'C2', label: 'C2 · Variant & Property Naming' },
-      },
-      {
-        headline: 'Type axis bundles unrelated concerns.',
-        body: '<code>Type = Default | New | Add | Remove</code> conflates a content-presence flag (New = badge present), an action overlay (Add / Remove), and the neutral case (Default). These should be two orthogonal axes: <code>badge: .none | .new</code> and <code>action: .none | .add | .remove</code>. Today, a "New" tile can\'t simultaneously be in Remove mode during edit.',
-        tag: { criterion: 'C2', label: 'C2 · Variant & Property Naming' },
-      },
-      {
-        headline: 'Inactive and Disabled render the same.',
-        body: 'No visual difference between <code>State=Inactive</code> and <code>State=Disabled</code> — both dim the label to a muted blue. Functionally they should differ: Inactive = visible but not tappable for business reasons; Disabled = visible but not tappable for state reasons (form invalid, feature flag off). Pick distinct treatments.',
-        tag: { criterion: 'C5', label: 'C5 · Interaction State Coverage' },
-      },
-      {
-        headline: 'No Pressed state.',
-        body: 'Tiles are primary tap targets but have no pressed feedback. Add a transient treatment (8% darken on icon-slot bg, or a 0.97 scale) on touch-down.',
-        tag: { criterion: 'C5', label: 'C5 · Interaction State Coverage' },
-      },
-      {
-        headline: 'Icon Action overlays are 12 × 12 but tap-area unannotated.',
-        body: 'The + and – Icon Action circles are tiny (12 px). They\'re separate tap targets from the tile itself but no minimum tap area is annotated. Native devs default to wrapping the whole tile, which kills the edit-mode UX.',
-        tag: { criterion: 'C5', label: 'C5 · Interaction State Coverage' },
-      },
-      {
-        headline: 'Description text node is baked.',
-        body: 'Both <code>#label</code> and <code>#description</code> are always present in the layer tree. Consumers can\'t hide just description (most home-grid usages don\'t need it). Should be an optional text slot.',
-        tag: { criterion: 'C4', label: 'C4 · Native Mappability' },
-      },
-      {
-        headline: 'Code Connect mappings not registered.',
-        body: 'Blocked on the State typo fix and the Type-axis split.',
-        tag: { criterion: 'C7', label: 'C7 · Code Connect Linkability' },
-      },
+        headline: "Code Connect mappings not registered.",
+        body: "Blocked — no native library exists yet. Both blockers the original assessment named are cleared: the State typo is fixed and the Type axis is split, so the schema — four PascalCase axes over two named slots — maps cleanly whenever the library lands.",
+        tag: { criterion: "C7", label: "C7 · Code Connect Linkability" },
+      }
     ],
-    recommendations: [
-      {
-        headline: 'Fix the State=Disbaled typo.',
-        body: 'Rename in Figma across all 6 affected variants. Verify no consumer screens reference the old prop value via Code Connect.',
-        tag: 'Rename',
-      },
-      {
-        headline: 'Split Type into <code>badge</code> + <code>action</code> axes.',
-        body: 'Target schema: <code>badge: .none | .new</code> + <code>action: .none | .add | .remove</code>. Each is an optional slot/overlay; combinations like "New + Remove" become expressible without new variants. Total variant count stays similar but covers the full matrix instead of the linear union.',
-        tag: 'Property',
-      },
-      {
-        headline: 'Distinguish Inactive from Disabled.',
-        body: 'Inactive: label dims to <code>main/text/color/disabled</code>, still tappable (e.g. opens an "unavailable" sheet). Disabled: 40% opacity on the whole tile + <code>pointer-events: none</code> + <code>aria-disabled</code>. Document the semantic difference.',
-        tag: 'State',
-      },
-      {
-        headline: 'Promote description to an optional content slot.',
-        body: 'Most home-grid usages only show the label. Make description a slot that consumers fill when needed, instead of a baked text node with placeholder copy that ships in production by mistake.',
-        tag: 'Slot',
-      },
-      {
-        headline: 'Add a Pressed state.',
-        body: 'Touch-down: 8% darken on icon-slot bg + 0.97 scale on the whole tile. Touch-up: snap back. Improves perceived responsiveness on the home grid.',
-        tag: 'State',
-      },
-      {
-        headline: 'Annotate Icon Action tap-area.',
-        body: 'The 12 px + and – circles need a 44 × 44 (iOS) / 48 dp (Android) hit-area extension so users can reliably tap them in edit mode. Document this on the component.',
-        tag: 'A11y',
-      },
-      {
-        headline: 'Document edit-mode interaction model.',
-        body: 'Add and Remove overlays only appear when the parent (Menu Grid in edit mode) is reordering. Document the parent contract — the Service Item shouldn\'t need to know about the parent\'s edit state directly.',
-        tag: 'Docs',
-      },
-    ],
+    recommendations: [],
   },
   style: {
     heading: 'Types',
