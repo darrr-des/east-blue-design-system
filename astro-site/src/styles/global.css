@@ -764,11 +764,15 @@ a.nav-comp:hover {
   margin-left: auto;
   margin-right: 1px;
 }
-.nav-comp-status.ready  { background: #16A34A; }
-.nav-comp-status.fix    { background: #D97706; }
-.nav-comp-status.refine { background: #D97706; }
-.nav-comp-status.rework { background: #DC2626; }
-.nav-comp-status.na     { background: var(--border-2); }
+/* Sidebar status dot — tracks the DS verdict only, never the Native Readiness
+   badge. `refine` and `ready` are Native statuses and deliberately have no rule
+   here: nearly every finished component carries `refine` while Code Connect is
+   blocked, so colouring on it marked most of the system as unfinished.
+   Mapping lives in Sidebar.astro → statusFromBadges(). */
+.nav-comp-status.rework { background: #DC2626; }  /* restructure */
+.nav-comp-status.fix    { background: #D97706; }  /* fix */
+.nav-comp-status.na     { background: var(--border-2); }  /* remove / consolidate / product-layer */
+/* keep → no dot rendered at all */
 
 
 /* ── Nav group (Form Elements, etc.) ─────────────────────────────── */
