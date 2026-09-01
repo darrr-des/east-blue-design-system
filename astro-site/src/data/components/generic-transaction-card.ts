@@ -26,13 +26,13 @@ export const genericTransactionCard: ComponentData = {
   "meta": {
     "slug": "generic-transaction-card",
     "name": "Generic Transaction Card",
-    "node": "18482:35753",
-    "figmaUrl": "https://www.figma.com/design/HwWDwPit2xJjDH4zszOZ5o/GCash-Design-System--Sticker-Sheets-v2?node-id=18482-35753",
+    "node": "5488:32955",
+    "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=5488-32955",
     "description": "A transaction-summary card with merchant info, amount, date, and tappable detail surface.",
     "badges": [
       {
-        "kind": "restructure",
-        "label": "Restructure"
+        "kind": "keep",
+        "label": "Keep"
       },
       {
         "kind": "refine",
@@ -41,9 +41,9 @@ export const genericTransactionCard: ComponentData = {
     ],
     "navGroup": "Card",
     "verdict": {
-      "kind": "restructure",
-      "title": "Restructure — type enum hides 5 different layouts",
-      "text": "The five <code>type</code> values are visually distinct layouts, not variants of the same pattern. Replace the enum with slot-based composition (<code>leadingMedia?</code>, <code>badge?</code>, <code>trailing = amount | menu | reference</code>, <code>loading</code>). Same fix pattern as Alert's <code>Full Width</code>. Also align heading weight with Generic Card (both should use Bold, not Semibold)."
+      "kind": "keep",
+      "title": "Keep — all findings resolved",
+      "text": "Rebuilt on node <code>5488:32955</code> in the 2026 Working File. The <code>type</code> enum that packed five layouts into one axis is replaced by real <code>Leading-Slot</code> and <code>Trailing-Slot</code> nodes; the single <code>state</code> axis is split into <code>State = Default | Pressed | Disabled</code> beside <code>Status = Default | Read | Skeleton</code> per §6, so read-and-pressed is expressible; the heading weight matches <a href=\"#\" onclick=\"showPanelById('generic-card');return false;\">Generic Card</a> at Proxima Soft Bold 18/23; and pressed and disabled both ship. Naming is complete across every variant including the skeleton — no <code>offset</code> frames, no <code>#</code> sigil, no spaces, no duplicate names, and slots kebab-cased per §4. The label overflow is resolved, with the 270px <code>LabelAmountRow</code> budget honoured as 172 + 98. All four DS Health traits pass; the only item still open is Code Connect, blocked until the native library exists."
     }
   },
   "overview": {
@@ -53,22 +53,22 @@ export const genericTransactionCard: ComponentData = {
       {
         "name": "Reusable",
         "rating": "pass",
-        "note": "Solid transaction-row primitive — covers the main patterns seen in Activity screens."
+        "note": "A generic transaction row — the leading and trailing slots let it carry an avatar, an icon or nothing, so one component covers the layouts the old <code>type</code> enum needed five variants for."
       },
       {
         "name": "Self-contained",
         "rating": "pass",
-        "note": "Owns tokens, composes Avatar + Badge correctly. Good structure internally."
+        "note": "Owns its surface, border and typography across all five states, and composes shared <code>Avatar</code> and <code>Badge</code> instances rather than redrawing them."
       },
       {
         "name": "Consistent",
-        "rating": "warn",
-        "note": "5 structurally different layouts hidden behind one <code>type</code> enum. Heading uses Semibold 600 while Generic Card uses Bold 700 — inconsistent across the card family."
+        "rating": "pass",
+        "note": "<code>State</code> and <code>Status</code> are separate PascalCase properties with Title Case values per §1 and §5, following the §6 split. Layer naming is clean across all five variants including the skeleton: slots kebab-cased per §4, text layers on the §3 vocabulary, every frame named for what it holds, and no duplicates, sigils, spaces or <code>offset</code> frames left anywhere."
       },
       {
         "name": "Composable",
-        "rating": "partial",
-        "note": "Today consumers must pick a <code>type</code> and live with its fixed slot composition. A slot-based API would let them mix freely (e.g. avatar + reference)."
+        "rating": "pass",
+        "note": "<code>leadingElement</code> and <code>trailingElement</code> are both real Figma Slots, and the avatar, badge and trailing icon are all shared instances — the composition problem the previous assessment raised is solved."
       }
     ],
     "behavior": [
@@ -115,76 +115,107 @@ export const genericTransactionCard: ComponentData = {
         "notes": "Rows typically drill into transaction detail — need pressed tint for tap feedback."
       }
     ],
-    "resolved": [],
-    "open": [
+    "resolved": [
       {
-        "headline": "<code>type</code> enum hides 5 structurally different layouts.",
-        "body": "Same anti-pattern as Alert's <code>Full Width</code> boolean. <code>default</code> / <code>more information</code> / <code>with avatar</code> / <code>no amount</code> are not variants of one pattern — they're four different slot compositions. Replace with a slot-based API (<code>leadingMedia</code>, <code>badge</code>, <code>trailing</code>, <code>loading</code>).",
-        "tag": {
-          "criterion": "C1",
-          "label": "C1 · Layer Structure & Naming"
-        }
-      },
-      {
-        "headline": "<code>no amount</code> and <code>more information</code> describe absence, not role.",
-        "body": "Value names should describe what the variant IS, not what it lacks. <code>no amount</code> becomes \"swap amount for a trailing badge\"; <code>more information</code> becomes \"show action menu.\" Once slot-based, the enum disappears entirely.",
+        "headline": "<code>type</code> enum replaced by slot-based composition.",
+        "body": "v2.0: Rebuilt on node <code>5488:32955</code> in the 2026 Working File. The axis that packed five structurally different layouts into one enum is gone — the leading and trailing positions are now real <code>SLOT</code> nodes, so an avatar, an icon or nothing at all is the consumer’s choice rather than a variant. The set drops from a layout enum to five states. This is the headline recommendation applied. (C2 · Property)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "Heading uses Semibold (600) while Generic Card uses Bold (700).",
-        "body": "Inconsistent title weight across the card family. Standardize — either both Bold or both Semibold.",
+        "headline": "<code>no amount</code> and <code>more information</code> values retired.",
+        "body": "v2.0: Both described what was absent rather than what the card was for, and both are gone with the enum that carried them. (C2 · Rename)",
         "tag": {
           "criterion": "C2",
           "label": "C2 · Variant & Property Naming"
         }
       },
       {
-        "headline": "No pressed / disabled states.",
-        "body": "Transaction rows drill into a detail screen on tap — need pressed tint. Also disabled state for pending/failed transactions that can't be reopened.",
+        "headline": "Heading weight aligned with Generic Card.",
+        "body": "v2.0: The label is now Proxima Soft Bold 700 at 18/23, matching <a href=\"#\" onclick=\"showPanelById('generic-card');return false;\">Generic Card</a>’s <code>Title</code> exactly. The two cards sit next to each other in lists, so a Semibold/Bold split between them read as an error rather than a distinction. (C3)",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
+        "headline": "Pressed and disabled states added.",
+        "body": "v2.0: <code>state=pressed</code> fills the surface <code>#F6F9FD</code> and <code>state=disabled</code> ships alongside it, closing the missing-states finding. The card is a primary tap target in transaction lists, so touch-down feedback was the most-felt gap. (C5)",
         "tag": {
           "criterion": "C5",
           "label": "C5 · Interaction State Coverage"
         }
       },
       {
+        "headline": "Axis split into <code>State</code> and <code>Status</code>.",
+        "body": "v2.1: Verified on the live node. <code>State = Default | Pressed | Disabled</code> now sits beside <code>Status = Default | Read | Skeleton</code>, so interaction, content status and loading are three separate concerns rather than five values competing for one axis. Read-and-pressed is expressible, which in a transaction list is the common case. Both properties are PascalCase per §1 with Title Case values per §5, matching the split <a href=\"#\" onclick=\"showPanelById('generic-card');return false;\">Generic Card</a> made and the rule in §6. (C2 · Property)",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Slots brought onto the family convention.",
+        "body": "v2.1: <code>⤷ leadingElement</code> and <code>⤷ trailingElement</code> are now <code>Leading-Slot</code> and <code>Trailing-Slot</code> — the literal arrow character is gone and both follow §4 kebab-case with the <code>-Slot</code> suffix used across <a href=\"#\" onclick=\"showPanelById('bottom-sheet');return false;\">Bottom Sheet</a>, <a href=\"#\" onclick=\"showPanelById('alert');return false;\">Alert</a> and Generic Card. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "The three <code>offset</code> frames named, and the typo fixed.",
+        "body": "v2.1: <code>offset</code> → <code>BadgeContainer</code>, <code>offset</code> → <code>AmountContainer</code>, and the misspelled <code>amout-offset</code> → <code>Amount</code>. A new <code>LabelAmountRow</code> now holds the label and amount columns as an explicit 270px row — 172 + 98 — so the horizontal structure is declared rather than implied by position. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Legacy sigil dropped and frames moved to PascalCase.",
+        "body": "v2.1: <code>#label</code> → <code>Label</code>, <code>#date</code> → <code>Date</code>, <code>#amount</code> → <code>Amount</code>, on the §3 vocabulary. The frames follow — <code>container</code> → <code>CardContainer</code>, <code>content-container</code> → <code>ContentContainer</code>, <code>transaction-detail</code> → <code>TransactionDetail</code> — and the space in <code>leading element</code> is closed as <code>LeadingElement</code>. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "Label overflow resolved.",
+        "body": "v2.2: Re-measured on the live node — <code>Label</code> (<code>5488:32986</code>) is now 172px, matching <code>TransactionDetail</code> exactly rather than running 33px past it. The <code>LabelAmountRow</code> budget of 270px is now honoured on both sides: 172 for the label column, 98 for the amount. Nothing overlaps, and a native implementation reading these bounds gets one consistent answer instead of two. (C4)",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "Skeleton brought onto the shared vocabulary.",
+        "body": "v2.2: The inner layers are renamed to match the default variant — <code>transaction-detail</code> → <code>TransactionDetail</code>, the last <code>offset</code> frame → <code>BadgeContainer</code>, and <code>tag</code> / <code>header</code> / <code>badge</code> → <code>Tag</code> / <code>Header</code> / <code>Badge</code>. No frame in the component is named <code>offset</code> any more, and the skeleton no longer needs a second vocabulary to read. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "<code>Amount</code> duplication resolved.",
+        "body": "v2.2: The trailing column now reads <code>AmountRow</code> → <code>AmountContainer</code> → <code>Amount</code> — three distinct names across three levels, with the text layer keeping the §3 vocabulary name and the wrappers describing what they hold. (C1 · Rename)",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      }
+    ],
+    "open": [
+      {
         "headline": "Code Connect mappings not registered.",
-        "body": "Blocked on the slot restructure.",
+        "body": "Blocked — no native library exists yet. Nothing in the schema or the layer tree blocks it: two PascalCase axes over two kebab-case slots, with no duplicate names, no legacy sigil, no spaces and no <code>offset</code> frames remaining.",
         "tag": {
           "criterion": "C7",
           "label": "C7 · Code Connect Linkability"
         }
       }
     ],
-    "recommendations": [
-      {
-        "headline": "Replace <code>type</code> with slot-based props.",
-        "body": "<code>leadingMedia?: Avatar | Icon | none</code>, <code>badge?: Badge</code>, <code>metadata: String</code>, <code>trailing: amount | menu | badge | reference</code>, <code>loading: Bool</code>. Eliminates the 5-type union and lets consumers compose any valid row without editing the master.",
-        "tag": "Property"
-      },
-      {
-        "headline": "Align heading weight with Generic Card.",
-        "body": "Pick one (Bold 700 is more common across the DS) and apply it to both components. Card family should read as one system, not two dialects.",
-        "tag": "Family"
-      },
-      {
-        "headline": "Promote skeleton to a cross-family convention.",
-        "body": "Generic Card + Generic Transaction Card both ship skeletons — document the pattern (<code>#E0E6F2</code> fill, rounded rect placeholders, no spinner) as the DS loading standard so future card/row primitives follow the same treatment.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Add pressed + disabled states.",
-        "body": "Pressed: subtle bg tint across the whole row. Disabled: muted label + amount opacity.",
-        "tag": "State"
-      },
-      {
-        "headline": "Reconcile with Generic Card.",
-        "body": "The two share ~80 % of the \"row with leading / trailing / meta\" shape. Consider a shared <code>EBRow</code> primitive with variants for \"with subtitle\" (Generic Card) and \"with metadata + amount\" (Generic Transaction Card).",
-        "tag": "Family"
-      }
-    ]
+    "recommendations": []
   },
   "style": {
     "heading": "Styles",

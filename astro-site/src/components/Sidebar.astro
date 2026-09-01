@@ -10,20 +10,29 @@ const pathname = Astro.url.pathname;
 
 type Item = (typeof componentManifest)[number];
 
-// Map each component's badges to a single status-dot color.
-// Red:    structural/blocking — rework, restructure, consolidate, remove, product-layer
-// Orange: minor — fix, refine
-// None:   keep, ready, na, or no badges
-function statusFromBadges(badges?: { kind: string }[]): 'rework' | 'fix' | null {
+// Map a component's DS verdict to a single status-dot colour.
+//
+// The dot tracks the DS verdict ONLY — not the Native Readiness badge that sits
+// beside it. Those are different axes: nearly every component that is verdict
+// `keep` still carries native `refine`, because Code Connect is blocked until the
+// native library exists. Colouring on `refine` therefore marked 49 of 70 finished
+// components as unfinished, which is what this mapping fixes.
+//
+//   red    restructure          — significant work outstanding
+//   orange fix                  — specific, scoped issues
+//   grey   remove / consolidate — retired or merged; the work lives elsewhere
+//          / product-layer
+//   none   keep                 — nothing outstanding but blocked C7
+const DS_VERDICTS = ['keep', 'fix', 'restructure', 'consolidate', 'product-layer', 'remove'] as const;
+type DotStatus = 'rework' | 'fix' | 'na';
+
+function statusFromBadges(badges?: { kind: string }[]): DotStatus | null {
   if (!badges || badges.length === 0) return null;
-  const kinds = new Set(badges.map((b) => b.kind));
-  if (kinds.has('rework') || kinds.has('restructure') || kinds.has('consolidate') || kinds.has('remove') || kinds.has('product-layer')) {
-    return 'rework';
-  }
-  if (kinds.has('fix') || kinds.has('refine')) {
-    return 'fix';
-  }
-  return null;
+  const verdict = badges.find((b) => (DS_VERDICTS as readonly string[]).includes(b.kind))?.kind;
+  if (verdict === 'restructure') return 'rework';
+  if (verdict === 'fix') return 'fix';
+  if (verdict === 'remove' || verdict === 'consolidate' || verdict === 'product-layer') return 'na';
+  return null; // keep, or no DS verdict badge
 }
 const groups = new Map<string, Item[]>();
 const standalone: Item[] = [];
