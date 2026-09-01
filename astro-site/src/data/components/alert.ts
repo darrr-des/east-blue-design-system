@@ -28,7 +28,7 @@ export const alert: ComponentData = {
     "name": "Alert",
     "node": "6663:104524",
     "figmaUrl": "https://www.figma.com/design/pbxY8a2xcIfVZKxwnud9Xe/GCash-Design-System--2026-Working-File?node-id=6663-104524",
-    "description": "A persistent status surface with intent, title, description, and an optional action — in Card or Banner style. 30 variants across <code>Type</code> (Neutral / Information / Warning / Error / Success) × <code>Style</code> (Card / Banner) × <code>Content</code> (Default / Header Only / Description Only), with a <code>Leading Container</code> icon slot and a <code>Dismiss Container</code> slot.",
+    "description": "A persistent status surface with intent, title, description, and an optional action — in Card or Banner style. 90 variants across <code>Type</code> (Neutral / Information / Warning / Error / Success) × <code>Style</code> (Card / Banner) × <code>Content</code> (Default / Header Only / Description Only) × <code>Size</code> (3 steps, <code>Large</code> down to <code>Small</code>), with a <code>Leading-Slot</code> icon slot and a <code>Trailing-Slot</code>.",
     "badges": [
       {
         "kind": "keep",
