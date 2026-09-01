@@ -14,33 +14,35 @@ type Item = (typeof componentManifest)[number];
 //
 // Two axes feed this. The DS verdict says whether the component belongs in the
 // system and is structurally sound; Native Readiness says whether a developer
-// can consume it yet. Colouring on the DS verdict alone hid the 50 components
-// that are `keep` but still carry an open Code Connect issue, so those read as
-// finished when they are not.
+// can consume it yet. The dot reflects both, because a component that is
+// `keep` but still `refine` is not finished — Code Connect is unregistered on
+// every one of them.
 //
-//   red    restructure                    — significant structural work
-//   orange fix, or `refine` with anything
-//          still open (usually Code Connect)
-//   grey   remove / consolidate           — retired; the work lives elsewhere
+//   red    restructure                  — significant structural work
+//   orange fix, or Native `refine`      — something is still outstanding
+//   grey   remove / consolidate         — retired; the work lives elsewhere
 //          / product-layer
-//   none   nothing outstanding
+//   none   keep + ready                 — nothing outstanding
+//
+// Checked against the data: of the 55 components carrying `refine`, none is
+// actually complete. Fifty list open issues; four more record C7 as `empty`
+// (Code Connect not mapped) with an empty open list; the last has no
+// scorecard at all. So `refine` alone is a sound signal, and testing the open
+// list as well would add a condition that changes no outcome.
 const DS_VERDICTS = ['keep', 'fix', 'restructure', 'consolidate', 'product-layer', 'remove'] as const;
 type DotStatus = 'rework' | 'fix' | 'na';
 
-function statusFromBadges(
-  badges?: { kind: string }[],
-  openIssues: number = 0,
-): DotStatus | null {
+function statusFromBadges(badges?: { kind: string }[]): DotStatus | null {
   if (!badges || badges.length === 0) return null;
   const verdict = badges.find((b) => (DS_VERDICTS as readonly string[]).includes(b.kind))?.kind;
   if (verdict === 'restructure') return 'rework';
   if (verdict === 'remove' || verdict === 'consolidate' || verdict === 'product-layer') return 'na';
   if (verdict === 'fix') return 'fix';
-  /* `keep` with an unresolved issue is not finished — Code Connect is the
-     usual one, and it is the reason most of the system reads `refine`. */
-  if (openIssues > 0 && badges.some((b) => b.kind === 'refine')) return 'fix';
+  if (badges.some((b) => b.kind === 'rework')) return 'rework';
+  if (badges.some((b) => b.kind === 'refine')) return 'fix';
   return null;
 }
+
 
 const groups = new Map<string, Item[]>();
 const standalone: Item[] = [];
@@ -153,8 +155,8 @@ const isStyles          = route === '/styles';
               <div class="nav-comp-body">
                 <div class="nav-comp-name">{row.item.name}</div>
               </div>
-              {statusFromBadges(row.item.badges, row.item.openIssues) && (
-                <span class={`nav-comp-status ${statusFromBadges(row.item.badges, row.item.openIssues)}`} aria-hidden="true" />
+              {statusFromBadges(row.item.badges) && (
+                <span class={`nav-comp-status ${statusFromBadges(row.item.badges)}`} aria-hidden="true" />
               )}
             </a>
           ) : (
@@ -181,8 +183,8 @@ const isStyles          = route === '/styles';
                       <div class="nav-comp-body">
                         <div class="nav-comp-name">{item.name}</div>
                       </div>
-                      {statusFromBadges(item.badges, item.openIssues) && (
-                        <span class={`nav-comp-status ${statusFromBadges(item.badges, item.openIssues)}`} aria-hidden="true" />
+                      {statusFromBadges(item.badges) && (
+                        <span class={`nav-comp-status ${statusFromBadges(item.badges)}`} aria-hidden="true" />
                       )}
                     </a>
                   ))}
