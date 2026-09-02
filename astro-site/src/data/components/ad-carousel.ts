@@ -202,6 +202,7 @@ export const adCarousel: ComponentData = {
             "label": "Properties",
             "slug": "props",
             "rows": [
+              { "key": "Title", "value": "Title" },
               { "key": "hasCTA", "value": "true", "prop": "hascta" },
               { "key": "⤷ CarouselSlot", "value": "Ad Space · Promo" }
             ]
@@ -275,6 +276,11 @@ export const adCarousel: ComponentData = {
       "description": "Figma properties mapped to the intended native parameters.",
       "rows": [
         {
+          "figma": "Title (text)",
+          "swift": "<code>title: String</code>",
+          "compose": "<code>title: String</code>"
+        },
+        {
           "figma": "hasCTA — true, false",
           "swift": "<code>action: EBAdCarouselAction?</code> — nil hides the button",
           "compose": "<code>action: (() -> Unit)? = null</code>"
@@ -283,11 +289,6 @@ export const adCarousel: ComponentData = {
           "figma": "⤷ CarouselSlot (slot)",
           "swift": "<code>@ViewBuilder content: () -> Content</code>",
           "compose": "<code>content: @Composable RowScope.() -> Unit</code>"
-        },
-        {
-          "figma": "#title (text)",
-          "swift": "<code>title: String</code>",
-          "compose": "<code>title: String</code>"
         }
       ]
     },
@@ -442,7 +443,7 @@ export const adCarousel: ComponentData = {
           "delta": { "kind": "resolved", "label": "C2 Resolved" }
         },
         {
-          "body": "<strong><code>#title</code> gained a text property.</strong> The panel previously exposed only <code>hasCTA</code> and <code>⤷ CarouselSlot</code>, so the heading could not be set from an instance while <a href=\"/components/ad-space\">Ad Space</a> exposed one for the same job. Design added it during this pass, default value <code>Text</code>.",
+          "body": "<strong><code>#title</code> gained a <code>Title</code> text property.</strong> The panel previously exposed only <code>hasCTA</code> and <code>⤷ CarouselSlot</code>, so the heading could not be set from an instance while <a href=\"/components/ad-space\">Ad Space</a> exposed one for the same job. Design added it during this pass, named to match Ad Space, default value <code>Title</code>. It sits first in the panel.",
           "delta": { "kind": "resolved", "label": "C2 Resolved" }
         },
         {
