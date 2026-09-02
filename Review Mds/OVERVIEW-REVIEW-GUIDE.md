@@ -1,4 +1,11 @@
-# Component Review Guide — East Blue Design System
+# Overview Review — command guide
+
+> **Trigger:** the reviewer types `Component Review`
+> **Scope:** the **Overview tab only** — open issues, recommendations, DS Health, and the badges those drive.
+
+Related: [Style](STYLE-REVIEW-GUIDE.md) · [Code](CODE-REVIEW-GUIDE.md) · [Changelog](CHANGELOG-REVIEW-GUIDE.md) · shared setup, house rules and pre-work in the [folder README](README.md).
+
+---
 
 A step-by-step guide for assessing a GCash DS component against its Figma source and updating its assessment on the site. Written for a reviewer picking this up fresh.
 
