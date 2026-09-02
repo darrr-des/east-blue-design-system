@@ -243,8 +243,8 @@ export const adCarousel: ComponentData = {
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>ads<span class=\"syn-punc\">) {</span> ad <span class=\"syn-kw\">in</span>\n        <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.promo</span><span class=\"syn-punc\">) {</span> ad<span class=\"syn-punc\">.</span>image <span class=\"syn-punc\">}</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">) {</span>\n    ads<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> ad <span class=\"syn-eq\">-&gt;</span>\n        <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Promo</span><span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Asset</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">) }</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>"
+        "swift": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    action<span class=\"syn-punc\">:</span> <span class=\"syn-type\">EBAdCarouselAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Show more\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-cmt\">/* action */</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>ads<span class=\"syn-punc\">) {</span> ad <span class=\"syn-kw\">in</span>\n        <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.promo</span><span class=\"syn-punc\">,</span> header<span class=\"syn-punc\">:</span> ad<span class=\"syn-punc\">.</span>headline<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">) }</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    action <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> <span class=\"syn-cmt\">/* action */</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    ads<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> ad <span class=\"syn-eq\">-&gt;</span>\n        <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Promo</span><span class=\"syn-punc\">,</span> header <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>headline<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">) }</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
     colorsTables: [
@@ -265,11 +265,11 @@ export const adCarousel: ComponentData = {
       "blocks": [
         {
           "label": "iOS — Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.1.0\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.1.1\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:ad-carousel:1.1.0\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:ad-carousel:1.1.1\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Import",
@@ -300,14 +300,14 @@ export const adCarousel: ComponentData = {
     },
     "usageSnippets": [
       {
-        "subheading": "Heading only (default)",
-        "swift": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Sponsored\"</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>ads<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.promo</span><span class=\"syn-punc\">) {</span> $0<span class=\"syn-punc\">.</span>image <span class=\"syn-punc\">} }</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Sponsored\"</span><span class=\"syn-punc\">) {</span>\n    ads<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">AdSpaceVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Promo</span><span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Asset</span><span class=\"syn-punc\">(</span>it<span class=\"syn-punc\">) } }</span>\n<span class=\"syn-punc\">}</span>"
+        "subheading": "With the button (default)",
+        "swift": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    action<span class=\"syn-punc\">:</span> <span class=\"syn-type\">EBAdCarouselAction</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Show more\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-cmt\">/* action */</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>ads<span class=\"syn-punc\">) {</span> ad <span class=\"syn-kw\">in</span>\n        <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.promo</span><span class=\"syn-punc\">,</span> header<span class=\"syn-punc\">:</span> ad<span class=\"syn-punc\">.</span>headline<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">) }</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    action <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> <span class=\"syn-cmt\">/* action */</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    ads<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> ad <span class=\"syn-eq\">-&gt;</span>\n        <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Promo</span><span class=\"syn-punc\">,</span> header <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>headline<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">) }</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>"
       },
       {
-        "subheading": "With the button (hasCTA=true)",
-        "swift": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Sponsored\"</span><span class=\"syn-punc\">,</span>\n    action<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">.</span><span class=\"syn-fn\">init</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Show more\"</span><span class=\"syn-punc\">) {</span> router<span class=\"syn-punc\">.</span><span class=\"syn-fn\">push</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.allAds</span><span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>ads<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.promo</span><span class=\"syn-punc\">) {</span> $0<span class=\"syn-punc\">.</span>image <span class=\"syn-punc\">} }</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Sponsored\"</span><span class=\"syn-punc\">,</span>\n    action <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> navController<span class=\"syn-punc\">.</span><span class=\"syn-fn\">navigate</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"ads\"</span><span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">) {</span>\n    ads<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">AdSpaceVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Promo</span><span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Asset</span><span class=\"syn-punc\">(</span>it<span class=\"syn-punc\">) } }</span>\n<span class=\"syn-punc\">}</span>"
+        "subheading": "Heading only (hasCTA=false)",
+        "swift": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>ads<span class=\"syn-punc\">) {</span> ad <span class=\"syn-kw\">in</span>\n        <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.promo</span><span class=\"syn-punc\">,</span> header<span class=\"syn-punc\">:</span> ad<span class=\"syn-punc\">.</span>headline<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">) }</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    ads<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> ad <span class=\"syn-eq\">-&gt;</span>\n        <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Promo</span><span class=\"syn-punc\">,</span> header <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>headline<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>creative<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">) }</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
     "accessibility": [
@@ -410,6 +410,31 @@ export const adCarousel: ComponentData = {
   },
   "changelog": [
     {
+      "version": "1.1.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Corrections to v1.1.0 — node 5703:38564",
+      "rows": [
+        {
+          "body": "<strong>The <code>Title</code> property now has a control.</strong> v1.1.0 recorded it as blocked on a shared renderer change; the renderer gained a <code>control: 'input'</code> kind later the same day, so the heading is editable from the spec-card panel. That row is superseded, not deleted.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The default snippet was labelled on the wrong state.</strong> Usage Snippets called <code>hasCTA=false</code> \"default\" while the Figma panel ships the button <strong>on</strong>. The two snippets are now \"With the button (default)\" and \"Heading only (hasCTA=false)\", in that order.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>One call, written three ways.</strong> The spec card's fallback used <code>ad.image</code>, the Code tab used <code>$0.image</code>, and the live <code>getSnippet</code> used <code>Image(ad.creative)</code>. All three now match the generated form.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The Overview behavior table still calls <code>hasCTA=false</code> the shipped default.</strong> The Figma panel shows it on. Overview is not this run's scope — logged for a Component Review pass.",
+          "delta": { "kind": "open", "label": "C2 Open" }
+        }
+      ]
+    },
+    {
       "version": "1.1.0",
       "date": "September 2026",
       "kind": "minor",
@@ -441,7 +466,7 @@ export const adCarousel: ComponentData = {
           "delta": { "kind": "resolved", "label": "Docs" }
         },
         {
-          "body": "<strong>Install coordinates corrected.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code> became <code>AY-Org/eb-ds-ios</code> and <code>com.eastblue.ds:ad-carousel:1.1.0</code>, and an Import block was added. Property Mapping was regrouped and Code Connect emptied.",
+          "body": "<strong>Install coordinates corrected.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code> became <code>AY-Org/eb-ds-ios</code> and <code>com.eastblue.ds:ad-carousel:1.1.1</code>, and an Import block was added. Property Mapping was regrouped and Code Connect emptied.",
           "delta": { "kind": "resolved", "label": "Docs" }
         },
         {
