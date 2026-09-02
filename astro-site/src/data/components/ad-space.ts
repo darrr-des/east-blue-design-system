@@ -31,9 +31,9 @@ const bannerControls: DemoControlSection[] = [
     rows: [
       boolRow('hasTitle'),
       boolRow('hasDescription'),
+      textRow('Title', 'title', 'Title'),
       textRow('Header', 'header', 'Header'),
       textRow('Description', 'description', 'Description Goes Here'),
-      textRow('Title', 'title', 'Title'),
     ],
   },
 ];
@@ -397,11 +397,11 @@ export const adSpace: ComponentData = {
       "blocks": [
         {
           "label": "iOS — Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"2.0.2\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"2.0.3\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:ad-space:2.0.2\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:ad-space:2.0.3\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Import",
@@ -429,6 +429,11 @@ export const adSpace: ComponentData = {
           "compose": "<code>description: String? = null</code>"
         },
         {
+          "figma": "Title (text) — Banner only",
+          "swift": "<code>title: String?</code>",
+          "compose": "<code>title: String?</code>"
+        },
+        {
           "figma": "Header (text) — Banner, Promo",
           "swift": "<code>header: String?</code>",
           "compose": "<code>header: String?</code>"
@@ -437,11 +442,6 @@ export const adSpace: ComponentData = {
           "figma": "Description (text) — Banner, Promo",
           "swift": "<code>description: String?</code>",
           "compose": "<code>description: String?</code>"
-        },
-        {
-          "figma": "Title (text) — Banner only",
-          "swift": "<code>title: String?</code>",
-          "compose": "<code>title: String?</code>"
         },
         {
           "figma": "⤷ AssetSlot (slot)",
@@ -578,6 +578,19 @@ export const adSpace: ComponentData = {
   },
   "changelog": [
     {
+      "version": "2.0.3",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Panel order follows the design — node 6507:74166",
+      "rows": [
+        {
+          "body": "<strong><code>Title</code> moved above <code>Header</code>.</strong> Design reordered the Figma property panel to match the order the three text layers actually appear in Banner. The demo panel and Property Mapping follow: <code>hasTitle</code>, <code>hasDescription</code>, <code>Title</code>, <code>Header</code>, <code>Description</code>. Promo is unaffected — it has no title.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
+    {
       "version": "2.0.2",
       "date": "September 2026",
       "kind": "patch",
@@ -634,7 +647,7 @@ export const adSpace: ComponentData = {
           "delta": { "kind": "resolved", "label": "Docs" }
         },
         {
-          "body": "<strong>Install coordinates corrected.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code> became <code>AY-Org/eb-ds-ios</code> and <code>com.eastblue.ds:ad-space:2.0.2</code>, matching the changelog head, and an Import block was added.",
+          "body": "<strong>Install coordinates corrected.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code> became <code>AY-Org/eb-ds-ios</code> and <code>com.eastblue.ds:ad-space:2.0.3</code>, matching the changelog head, and an Import block was added.",
           "delta": { "kind": "resolved", "label": "Docs" }
         },
         {

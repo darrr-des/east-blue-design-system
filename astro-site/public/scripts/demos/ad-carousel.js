@@ -66,7 +66,7 @@ function _adcUpdate() {
 
 /* ── Spec card state ─────────────────────────────────────────────── */
 var _specCards = {
-  default: { hascta: 'true', slot: 'promo', title: 'Title' }
+  default: { hascta: 'false', slot: 'promo', title: 'Title' }
 };
 window._specCards = _specCards;
 
