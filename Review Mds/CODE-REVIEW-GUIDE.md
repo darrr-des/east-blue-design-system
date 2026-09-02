@@ -49,6 +49,8 @@ Same table as the Style run — every property, its kind, its values, and whethe
 
 Also record the **total variant count** and the multiplier that produces it: `5 Type × 2 Style × 3 Content × 3 Size = 90`.
 
+> **The tools only show you half the properties.** `get_node_info` returns variant properties (they're in each variant's node name) but not `componentPropertyDefinitions` — **boolean, instance-swap and text properties are invisible to it**. Read the Figma property panel itself and copy every row, or Property Mapping will be "complete" against a worksheet that is itself missing properties. Full note in `STYLE-REVIEW-GUIDE.md` Phase 2.
+
 ### 2b. Current Code tab inventory
 
 | Section | State today | Note |
@@ -70,16 +72,57 @@ Then it proceeds to Phase 3 without waiting.
 
 Seven sections, in this order. **Code Connect is removed** — set `"codeConnect": []` and the section disappears from the page. C7 stays permanently blocked while there's no native library.
 
-## 3.1 Installation
+## 3.0 The three tiers — know what each section is made of
 
-SPM URL + Gradle dependency + the import lines, one block each.
+Every Code-tab section is one of three kinds of content. The tier decides what "correct" means and how the reviewer verifies it.
+
+| Tier | Sections | What "correct" means | Where to check it in Figma |
+|---|---|---|---|
+| **1 · Read from Figma** | Property Mapping (Figma column) · Variants Inventory · Criteria Scorecard | Transcribed exactly — names, values, counts, spelled as the panel has them | Select the component set → right-side **property panel** and the variant grid |
+| **2 · Designed API** | Property Mapping (SwiftUI + Compose columns) · Usage Snippets · Installation | Every parameter and enum case **traces 1:1 to a Figma property name and value**, follows the `EB{Component}` conventions, and matches the Style tab's DEV snippets | Compare each parameter to the property panel; for measurements and tokens, **Dev Mode → Code** on the node |
+| **3 · Platform knowledge** | Accessibility · Usage Guidelines | Real iOS + Android APIs, both platforms answered; guidelines specific to this component | Not in Figma — platform documentation |
+
+> **Figma's own Code panel is for cross-checking, never for copying.** Select the node → Dev Mode (the `</>` toggle) → **Code**, and pick SwiftUI or Compose. Use it to confirm property names, values, measurements and token bindings. Do **not** paste it into the docs — it describes how to *draw* the container, not how to *use* the component, and the house rules ban it.
+
+## 3.1 Show and tell — how every change is reported
+
+**Never report "updated." Report previous → new, with a Figma pointer on every row** so the reviewer can open the node and check the claim themselves.
+
+For Property Mapping, the update report is this table:
+
+| Figma Property | Previous mapping | New mapping | Check in Figma |
+|---|---|---|---|
+| Style — Card, Banner | one row per value: `Style=Card`, `Style=Banner` | `.ebStyle(.card / .banner)` · `style = EBAlertStyle.Card / Banner` | node `6663:104524` → property panel |
+| hasActionButton — true, false | *(missing — not documented)* | trailing closure `{ EBTextButton(…) }` · `action = { … }` | node `6663:104524` → property panel toggles |
+
+For Usage Snippets and Installation, show the previous block and the new block one after the other (or state *new — no previous version*), each labelled with the node the snippet was designed from.
+
+Rules:
+
+- **Every changed row appears** — including rows that were missing before (previous = *missing*) and rows removed (new = *removed*, with the reason).
+- **The pointer is a node ID plus where to look**: `node 6663:104524 → property panel` for names and values, `node 6663:104538 → Dev Mode → Code` for measurements and tokens.
+- **Unchanged rows are summarised in one line** ("5 rows unchanged"), not re-printed.
+- Tier 2 rows must also state what they trace to: a snippet that uses `.controlSize(.large)` traces to `Size=Large` — if the reviewer can't find the property in the panel, the mapping is wrong.
+
+
+## 3.2 Installation
+
+SPM URL + Gradle dependency + the import lines, one block each — using the **canonical planned coordinates** every component shares. Never invent a new org, repo or artifact scheme per component:
+
+| Block | Canonical form |
+|---|---|
+| SPM | `https://github.com/AY-Org/eb-ds-ios` |
+| Gradle | `com.eastblue.ds:<slug>:<version>` |
+| Import | `import EastBlueDS` (SwiftUI) · `import com.eastblue.ds.<slug>.*` (Compose) |
+
+**`<version>` is the component's latest changelog version.** Button currently ships `2.0.0` in its install blocks against a `4.1.0` changelog — that drift is exactly what this rule exists to catch.
 
 ```ts
 "installation": {
   "planned": true,
   "blocks": [
-    { "label": "Swift Package Manager", "code": "<code>…</code>" },
-    { "label": "Gradle", "code": "<code>…</code>" },
+    { "label": "iOS — Swift Package Manager", "code": "<code>…</code>" },
+    { "label": "Android — Gradle (Kotlin DSL)", "code": "<code>…</code>" },
     { "label": "Import", "code": "<code>…</code>" }
   ]
 }
@@ -87,7 +130,7 @@ SPM URL + Gradle dependency + the import lines, one block each.
 
 `"planned": true` renders the **Planned API** badge — keep it true while the native components don't exist.
 
-## 3.2 Property Mapping
+## 3.3 Property Mapping
 
 **Plain text, grouped by property.** One row per property with all its values on that row — never one row per value, never `Prop=Value` syntax.
 
@@ -110,10 +153,11 @@ SPM URL + Gradle dependency + the import lines, one block each.
 | One row per property | Matching the worksheet, in Figma's order |
 | Slots included, marked `(slot)` | Even though they're not in the demo panel |
 | Booleans read as booleans | `isDisabled — true, false` |
+| Text properties marked `(text)` | `Title (text)` → `title: String` · `title = "…"` |
 
 *Across the system, 164 rows in 44 components still use `Type=Collapsed` / `state = Default` form and need regrouping.*
 
-## 3.3 Usage Snippets
+## 3.4 Usage Snippets
 
 One `subheading` per driving-property value — the same list as the Style tab's spec cards — each with SwiftUI and Compose.
 
@@ -128,7 +172,7 @@ HStack(spacing: Constants.spaceSpace0) { … }    // ❌
 
 Names follow `EB{ComponentName}`.
 
-## 3.4 Accessibility
+## 3.5 Accessibility
 
 One row per requirement, with the iOS and Android answer. Cover at least:
 
@@ -142,7 +186,7 @@ One row per requirement, with the iOS and Android answer. Cover at least:
 
 Answer for **both** platforms. A single-platform row is a Partial.
 
-## 3.5 Usage Guidelines
+## 3.6 Usage Guidelines
 
 **Maximum four Do/Don't pairs.** Write them for *this* component — a guideline that would fit any component is filler.
 
@@ -159,7 +203,7 @@ Good pairs come from four places: **which variant to pick**, **how much content 
 
 *42 components have none today.*
 
-## 3.6 Criteria Scorecard
+## 3.7 Criteria Scorecard
 
 One row per criterion, **C1–C6**, with a status badge and a one-line note tied to what you actually found in this run.
 
@@ -176,7 +220,7 @@ C7 (Code Connect Linkability) stays as-is — Blocked / Not Mapped. Don't action
 
 Notes must match the Overview tab. If the scorecard says "all tokens bound" while an Open Issue says otherwise, the page contradicts itself.
 
-## 3.7 Variants Inventory
+## 3.8 Variants Inventory
 
 ```ts
 "variants": {
@@ -196,7 +240,7 @@ Notes must match the Overview tab. If the scorecard says "all tokens bound" whil
 - The collapse label states the row count.
 - ≤8 variants may use one flat table (omit `summary`).
 
-## 3.8 Code Connect
+## 3.9 Code Connect
 
 ```ts
 "codeConnect": []
@@ -220,7 +264,7 @@ grep -n '"figma"' src/data/components/<slug>.ts  # scan for "=" in the Figma cel
 
 Then open `http://localhost:4321/components/<slug>` on the Code tab and read every section.
 
-## 4b. The 13 checks
+## 4b. The 14 checks
 
 | # | Check | How to tell it passed |
 |---|---|---|
@@ -232,11 +276,12 @@ Then open `http://localhost:4321/components/<slug>` on the Code tab and read eve
 | 6 | Property Mapping is complete | Row count = worksheet property count, slots included |
 | 7 | Usage Snippets cover every value | One subheading per driving-property value |
 | 8 | Snippets are component API | No `HStack`/`Constants.` container code |
-| 9 | Accessibility covers both platforms | No empty iOS or Android cell |
-| 10 | Usage Guidelines ≤ 4, specific | Named property or number in each pair |
-| 11 | Scorecard C1–C6 scored, notes match Overview | No contradiction with Open Issues |
-| 12 | Variants total = Figma count | And the multiplier expression matches |
-| 13 | Code Connect empty | Section absent from the page |
+| 9 | Code tab matches the Style tab | Same API in both: names, parameters, enum cases — `EBAlert` here can't take `style:` if the DEV snippet uses `.ebStyle()` |
+| 10 | Accessibility covers both platforms | No empty iOS or Android cell |
+| 11 | Usage Guidelines ≤ 4, specific | Named property or number in each pair |
+| 12 | Scorecard C1–C6 scored, notes match Overview | No contradiction with Open Issues |
+| 13 | Variants total = Figma count | And the multiplier expression matches |
+| 14 | Code Connect empty | Section absent from the page |
 
 ## 4c. Report format
 
@@ -255,20 +300,22 @@ Status is one of **✅ Done · ⚠️ Partial · ❌ Missing · 🔴 Broken**.
 | 6  | Mapping complete | ⚠️ Partial | Leading-Slot and Trailing-Slot not mapped |
 | 7  | Snippets per value | ✅ Done | Card + Banner |
 | 8  | Component API code | ✅ Done | no Dev Mode code |
-| 9  | Accessibility both platforms | ❌ Missing | Announcement row has no Android value |
-| 10 | Guidelines ≤ 4, specific | ✅ Done | 4 pairs |
-| 11 | Scorecard C1–C6 | ✅ Done | matches Overview |
-| 12 | Variants total | 🔴 Broken | data says 30, Figma has 90 — inventory predates the rebuild |
-| 13 | Code Connect empty | ✅ Done | section gone |
+| 9  | Code ↔ Style tabs match | ✅ Done | same API surface |
+| 10 | Accessibility both platforms | ❌ Missing | Announcement row has no Android value |
+| 11 | Guidelines ≤ 4, specific | ✅ Done | 4 pairs |
+| 12 | Scorecard C1–C6 | ✅ Done | matches Overview |
+| 13 | Variants total | 🔴 Broken | data says 30, Figma has 90 — inventory predates the rebuild |
+| 14 | Code Connect empty | ✅ Done | section gone |
 
-**Result:** 9 done · 2 partial · 1 missing · 1 broken
+**Result:** 10 done · 2 partial · 1 missing · 1 broken
 **Blocked by pre-work:** none
-**Recommended next:** rebuild the Variants Inventory off node 6663:104524 (check 12), then map the two slots (6)
+**Recommended next:** rebuild the Variants Inventory off node 6663:104524 (check 13), then map the two slots (6)
 ```
 
 Rules for the report:
 
-- **All 13 rows, every time** — a passing check still gets a row.
+- **All 14 rows, every time** — a passing check still gets a row.
+- **Show and tell carries into validation**: a finding about changed content cites the previous value, the new value, and the Figma pointer (§3.1) — never just "mapping fixed".
 - **Detail names the thing.** Which row, which property, which platform.
 - **Stale ≠ missing.** Content that describes an older version of the component is 🔴 Broken, not Partial — it actively misleads.
 - **Separate "blocked" from "failed."** Anything waiting on maintainer pre-work is Partial + listed under *Blocked*.
