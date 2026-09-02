@@ -29,6 +29,8 @@ Every command has the same four phases:
 
 Phase 4 **never edits content** — it reports, and the reviewer decides what gets fixed.
 
+**Show and tell.** An update is never reported as "updated" — it is reported as **previous → new**, with a Figma pointer (node ID + where to look: property panel, or Dev Mode → Code) on every changed row, so the reviewer can open the node and check the claim themselves.
+
 **Recommended order for a full pass:** `Component Review` → `Style Review` → `Code Review` → `Changelog Review`. The first three produce the changes; the last records them.
 
 One component per run. One tab per run.
