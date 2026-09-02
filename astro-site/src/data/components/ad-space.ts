@@ -75,7 +75,7 @@ export const adSpace: ComponentData = {
   },
   "overview": {
     "inContextNote": "Each version has a home in the app: Receipt sits inside transaction and receipt flows, Banner runs inline in a feed or content column, and Promo is the dashboard tile that also fills the Ad Carousel rail.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ads-demo-preview\"><div class=\"eb-preview-adspace eb-preview-adspace--banner\"><div class=\"eb-preview-adspace__title\">Title</div><div class=\"eb-preview-adspace__asset\"><span class=\"eb-preview-adspace__asset-label\">Asset</span></div><div class=\"eb-preview-adspace__content\"><div class=\"eb-preview-adspace__header\">Header</div><div class=\"eb-preview-adspace__description\">Description Goes Here</div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Variant</span><select id=\"ads-ctrl-variant\" class=\"demo-panel-select\" onchange=\"_adsUpdate()\"><option value=\"receipt\">Receipt</option><option value=\"banner\" selected=\"\">Banner</option><option value=\"promo\">Promo</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">#title</span><input type=\"text\" id=\"ads-ctrl-title\" class=\"demo-panel-select demo-panel-input\" value=\"Title\" oninput=\"_adsUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">#header</span><input type=\"text\" id=\"ads-ctrl-header\" class=\"demo-panel-select demo-panel-input\" value=\"Header\" oninput=\"_adsUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">#description</span><input type=\"text\" id=\"ads-ctrl-description\" class=\"demo-panel-select demo-panel-input\" value=\"Description Goes Here\" oninput=\"_adsUpdate()\"></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"ads-demo-preview\"><div class=\"eb-preview-adspace eb-preview-adspace--banner\"><div class=\"eb-preview-adspace__title\">Title</div><div class=\"eb-preview-adspace__asset\"><span class=\"eb-preview-adspace__asset-label\">Asset</span></div><div class=\"eb-preview-adspace__content\"><div class=\"eb-preview-adspace__header\">Header</div><div class=\"eb-preview-adspace__description\">Description Goes Here</div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Variant</span><select id=\"ads-ctrl-variant\" class=\"demo-panel-select\" onchange=\"_adsUpdate()\"><option value=\"receipt\">Receipt</option><option value=\"banner\" selected=\"\">Banner</option><option value=\"promo\">Promo</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Title</span><input type=\"text\" id=\"ads-ctrl-title\" class=\"demo-panel-select demo-panel-input\" value=\"Title\" oninput=\"_adsUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Header</span><input type=\"text\" id=\"ads-ctrl-header\" class=\"demo-panel-select demo-panel-input\" value=\"Header\" oninput=\"_adsUpdate()\"></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Description</span><input type=\"text\" id=\"ads-ctrl-description\" class=\"demo-panel-select demo-panel-input\" value=\"Description Goes Here\" oninput=\"_adsUpdate()\"></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -397,11 +397,11 @@ export const adSpace: ComponentData = {
       "blocks": [
         {
           "label": "iOS — Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"2.0.3\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"2.0.4\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:ad-space:2.0.3\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:ad-space:2.0.4\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Import",
@@ -578,6 +578,19 @@ export const adSpace: ComponentData = {
   },
   "changelog": [
     {
+      "version": "2.0.4",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Overview panel uses the property names — node 6507:74166",
+      "rows": [
+        {
+          "body": "<strong>The Overview playground labelled the text controls with layer names.</strong> <code>#title</code>, <code>#header</code> and <code>#description</code> are what the layers are called; the properties are <code>Title</code>, <code>Header</code> and <code>Description</code>. The panel now uses the property names, matching the Style tab and Property Mapping.",
+          "delta": { "kind": "resolved", "label": "C2 Resolved" }
+        }
+      ]
+    },
+    {
       "version": "2.0.3",
       "date": "September 2026",
       "kind": "patch",
@@ -647,7 +660,7 @@ export const adSpace: ComponentData = {
           "delta": { "kind": "resolved", "label": "Docs" }
         },
         {
-          "body": "<strong>Install coordinates corrected.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code> became <code>AY-Org/eb-ds-ios</code> and <code>com.eastblue.ds:ad-space:2.0.3</code>, matching the changelog head, and an Import block was added.",
+          "body": "<strong>Install coordinates corrected.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code> became <code>AY-Org/eb-ds-ios</code> and <code>com.eastblue.ds:ad-space:2.0.4</code>, matching the changelog head, and an Import block was added.",
           "delta": { "kind": "resolved", "label": "Docs" }
         },
         {
