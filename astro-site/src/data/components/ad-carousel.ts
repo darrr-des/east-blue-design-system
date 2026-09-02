@@ -1,6 +1,9 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
 
-/* Demo controls for the Style tab's single spec card. */
+/* Demo controls for the Style tab's single spec card. The Figma property
+   panel holds exactly two entries: `hasCTA` and `⤷ CarouselSlot`. The slot
+   gets no control, so `hasCTA` is the panel. */
 const adCarouselControls: DemoControlSection[] = [
   {
     heading: 'Properties',
@@ -8,21 +11,12 @@ const adCarouselControls: DemoControlSection[] = [
       {
         label: 'hasCTA',
         prop: 'hascta',
+        control: 'toggle',
         options: [
           { value: 'false', label: 'false' },
           { value: 'true', label: 'true' }
         ],
-        defaultValue: 'false'
-      },
-      {
-        label: '⤷ CarouselSlot',
-        prop: 'slot',
-        options: [
-          { value: 'promo', label: 'Ad Space · Promo' },
-          { value: 'receipt', label: 'Ad Space · Receipt' },
-          { value: 'banner', label: 'Ad Space · Banner' }
-        ],
-        defaultValue: 'promo'
+        defaultValue: 'true'
       }
     ]
   }
@@ -201,22 +195,15 @@ export const adCarousel: ComponentData = {
         "demoControls": adCarouselControls,
         "title": "Ad Carousel",
         "node": "5703:38564",
-        "description": "One version. The heading row carries #title and an optional button; the slot below holds the cards and clips the last one.",
+        "description": "",
         "previewHtml": "<div id=\"adc-spec-default\"><div class=\"eb-preview-adcarousel\"><div class=\"eb-preview-adcarousel__header\"><div class=\"eb-preview-adcarousel__title\">Title</div></div><div class=\"eb-preview-adcarousel__rail\"><div class=\"eb-preview-adspace eb-preview-adspace--promo\"><div class=\"eb-preview-adspace__asset\"><span class=\"eb-preview-adspace__asset-label\">Asset</span></div><div class=\"eb-preview-adspace__content\"><div class=\"eb-preview-adspace__header\">Header</div><div class=\"eb-preview-adspace__description\">Description Goes Here</div></div></div><div class=\"eb-preview-adspace eb-preview-adspace--promo\"><div class=\"eb-preview-adspace__asset\"><span class=\"eb-preview-adspace__asset-label\">Asset</span></div><div class=\"eb-preview-adspace__content\"><div class=\"eb-preview-adspace__header\">Header</div><div class=\"eb-preview-adspace__description\">Description Goes Here</div></div></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "hasCTA", "value": "false", "prop": "hascta" },
-              { "key": "⤷ CarouselSlot", "value": "Ad Space · Promo", "prop": "slot",
-                "variants": {
-                  "slot:receipt": { "value": "Ad Space · Receipt" },
-                  "slot:banner": { "value": "Ad Space · Banner" }
-                }
-              },
-              { "key": "#title", "value": "Title" },
-              { "key": "Button", "value": "Button - XSmall instance" }
+              { "key": "hasCTA", "value": "true", "prop": "hascta" },
+              { "key": "⤷ CarouselSlot", "value": "Ad Space · Promo" }
             ]
           },
           {
@@ -224,54 +211,62 @@ export const adCarousel: ComponentData = {
             "slug": "colors",
             "rows": [
               { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
-              { "key": "#title", "value": "#072592", "token": "text/color-text-heading", "swatch": true },
-              { "key": "Button label", "value": "#005CE5", "token": "text/color-text-link", "swatch": true }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width", "value": "360", "mono": true },
-              { "key": "Height", "value": "288", "mono": true },
-              { "key": "Padding top", "value": "12", "mono": true },
-              { "key": "Side inset", "value": "24", "mono": true },
-              { "key": "Heading to rail", "value": "16", "mono": true },
-              { "key": "Card gap", "value": "16", "mono": true },
-              { "key": "Next card visible", "value": "96 (Promo)", "mono": true,
-                "variants": {
-                  "slot:receipt": { "value": "20 (Receipt)" },
-                  "slot:banner": { "value": "full width — no peek by design (Banner)" }
-                }
-              }
+              { "key": "#title", "value": "#072592", "token": "text/color-text-stronger", "swatch": true },
+              { "key": "CTA label", "value": "#005CE5", "token": "main/button/tertiary/brand/enabled/label", "swatch": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "#title style", "value": "Primary/Bold/Heading", "mono": true },
-              { "key": "Font", "value": "Proxima Soft Bold · 18 / 18 · +0.25", "mono": true },
-              { "key": "Button label", "value": "Proxima Soft Bold · 14 / 14 · +0.25", "mono": true }
+              { "key": "#title", "value": "Primary/Label/Large", "mono": true },
+              { "key": "CTA label", "value": "Primary/Label/Small", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "288px", "mono": true },
+              { "key": "Width", "value": "360px", "mono": true },
+              { "key": "Padding H", "value": "24px leading · 0 trailing (derived)", "mono": true },
+              { "key": "Padding V", "value": "12px (derived)", "mono": true },
+              { "key": "Gap", "value": "16px (derived)", "mono": true },
+              { "key": "Alignment", "value": "Leading (derived)", "mono": true }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>ads<span class=\"syn-punc\">) {</span> ad <span class=\"syn-kw\">in</span>\n        <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.promo</span><span class=\"syn-punc\">) {</span> ad<span class=\"syn-punc\">.</span>image <span class=\"syn-punc\">}</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>",
         "compose": "<span class=\"syn-type\">EBAdCarousel</span><span class=\"syn-punc\">(</span>title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">) {</span>\n    ads<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> ad <span class=\"syn-eq\">-&gt;</span>\n        <span class=\"syn-type\">EBAdSpace</span><span class=\"syn-punc\">(</span>variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">AdSpaceVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Promo</span><span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Asset</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">) }</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>"
       }
-    ]
+    ],
+    colorsTables: [
+      buildStatelessColorsTable({
+        title: 'Ad Carousel — Colors',
+        description: 'The frame paints a real white surface. The cards inside the rail carry their own colours — see Ad Space.',
+        rows: [
+          { role: 'Surface',    token: 'bg/color-bg-main',                          value: '#FFFFFF' },
+          { role: '#title',     token: 'text/color-text-stronger',                  value: '#072592' },
+          { role: 'CTA label',  token: 'main/button/tertiary/brand/enabled/label',  value: '#005CE5' },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {
       "planned": true,
       "blocks": [
         {
-          "label": "Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.1.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
-          "label": "Gradle",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:ad-carousel:1.1.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>adcarousel<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
       "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
@@ -280,19 +275,19 @@ export const adCarousel: ComponentData = {
       "description": "Figma properties mapped to the intended native parameters.",
       "rows": [
         {
-          "figma": "#title",
-          "swift": "title: String",
-          "compose": "title: String"
+          "figma": "hasCTA — true, false",
+          "swift": "<code>action: EBAdCarouselAction?</code> — nil hides the button",
+          "compose": "<code>action: (() -> Unit)? = null</code>"
         },
         {
-          "figma": "hasCTA",
-          "swift": "action: EBAdCarouselAction?",
-          "compose": "action: (() -> Unit)?"
+          "figma": "⤷ CarouselSlot (slot)",
+          "swift": "<code>@ViewBuilder content: () -> Content</code>",
+          "compose": "<code>content: @Composable RowScope.() -> Unit</code>"
         },
         {
-          "figma": "⤷ CarouselSlot",
-          "swift": "@ViewBuilder content: () -> Content",
-          "compose": "content: @Composable RowScope.() -> Unit"
+          "figma": "#title (text)",
+          "swift": "<code>title: String</code>",
+          "compose": "<code>title: String</code>"
         }
       ]
     },
@@ -364,7 +359,7 @@ export const adCarousel: ComponentData = {
         "criterion": "Token Coverage",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Colours are attested as token-bound but were not verifiable with read-only tools. Needs a Dev Mode confirmation."
+        "notes": "Confirmed by design: surface <code>bg/color-bg-main</code>, <code>#title</code> <code>text/color-text-stronger</code>, CTA label <code>main/button/tertiary/brand/enabled/label</code>."
       },
       {
         "id": "C4",
@@ -395,29 +390,10 @@ export const adCarousel: ComponentData = {
         "notes": "Blocked — the native library does not exist yet."
       }
     ],
-    "codeConnect": [
-      {
-        "aspect": "Property naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>hasCTA</code> (bool), <code>#title</code> (text), <code>⤷ CarouselSlot</code> (slot) map one to one."
-      },
-      {
-        "aspect": "Token coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Heading and button colours need a Dev Mode check before mapping."
-      },
-      {
-        "aspect": "Registration",
-        "status": "empty",
-        "statusLabel": "Not Mapped",
-        "notes": "Blocked until the native library exists."
-      }
-    ],
+    "codeConnect": [],
     "variants": {
-      "total": 2,
-      "description": "1 component × 2 hasCTA values = 2 states. Rail content is set through the slot, not through a variant.",
+      "total": 1,
+      "description": "A single component, not a component set — 1 variant. <code>hasCTA</code> is a boolean property and <code>⤷ CarouselSlot</code> is a slot, so neither multiplies the matrix. The two rows below are the states that boolean produces.",
       "columns": ["hasCTA", "Header", "Node"],
       "rows": [
         { "cells": ["false", "#title only", "5703:38564"] },
@@ -426,6 +402,59 @@ export const adCarousel: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Text property added, documentation pass — node 5703:38564",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt to the content guides.</strong> Four spec sections in order, card description cleared, and <code>Layout</code> cut to the canonical keys — <code>Side inset</code>, <code>Heading to rail</code>, <code>Card gap</code> and <code>Next card visible</code> came out in favour of <code>Padding H</code>, <code>Padding V</code>, <code>Gap</code> and <code>Alignment</code>.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Typography reduced to text style names.</strong> <code>#title</code> is <code>Primary/Label/Large</code> and the CTA label is <code>Primary/Label/Small</code>, replacing the previously documented <code>Primary/Bold/Heading</code> and its font rows.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Colour tokens confirmed by design.</strong> Surface <code>bg/color-bg-main</code>, <code>#title</code> <code>text/color-text-stronger</code>, CTA label <code>main/button/tertiary/brand/enabled/label</code>. The previous <code>text/color-text-heading</code> and <code>text/color-text-link</code> paths were unverified. Unlike <a href=\"/components/ad-space\">Ad Space</a>, the frame here paints a real white fill, so the surface row is correct as written.",
+          "delta": { "kind": "resolved", "label": "C3 Resolved" }
+        },
+        {
+          "body": "<strong>A colours table was added.</strong> The component had none.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The slot no longer has a demo control.</strong> <code>⤷ CarouselSlot</code> is a slot, so the panel drops it and <code>hasCTA</code> is the only control — a toggle, defaulting to <code>true</code> as the Figma panel does.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>DEV code is live.</strong> <code>getSnippet</code> in <code>demos/ad-carousel.js</code> rebuilds both snippets from the card's controls, so turning <code>hasCTA</code> off drops the <code>action</code> argument.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Install coordinates corrected.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code> became <code>AY-Org/eb-ds-ios</code> and <code>com.eastblue.ds:ad-carousel:1.1.0</code>, and an Import block was added. Property Mapping was regrouped and Code Connect emptied.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Variant count corrected to 1.</strong> Ad Carousel is a single component, not a component set. The inventory read <code>2</code> by counting <code>hasCTA</code>'s two states; a boolean property does not multiply the variant matrix.",
+          "delta": { "kind": "resolved", "label": "C2 Resolved" }
+        },
+        {
+          "body": "<strong><code>#title</code> gained a text property.</strong> The panel previously exposed only <code>hasCTA</code> and <code>⤷ CarouselSlot</code>, so the heading could not be set from an instance while <a href=\"/components/ad-space\">Ad Space</a> exposed one for the same job. Design added it during this pass, default value <code>Text</code>.",
+          "delta": { "kind": "resolved", "label": "C2 Resolved" }
+        },
+        {
+          "body": "<strong>The heading row holds its height.</strong> The live preview let the 26px CTA stretch the header; in Figma the <code>Header</code> frame stays 18px and the button overflows it, centred. The preview now matches.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The text property has no demo control.</strong> <code>SpecCard.astro</code> renders <code>select</code> and <code>toggle</code> only, so the heading cannot be edited from the panel. Blocked on a shared renderer change — the same gap logged on <a href=\"/components/ad-space\">Ad Space</a>.",
+          "delta": { "kind": "partial", "label": "Docs Partial" }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "August 2026",
