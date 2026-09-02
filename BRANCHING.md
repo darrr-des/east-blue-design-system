@@ -87,7 +87,7 @@ You already have a branch — you keep the same one. Merging `main` into it firs
 
 ### Step 3 — Do the work
 
-Edit files normally. For a component review, that's `astro-site/src/data/components/<slug>.ts` — see [COMPONENT-REVIEW-GUIDE.md](COMPONENT-REVIEW-GUIDE.md) for what to change.
+Edit files normally. For a component review, that's `astro-site/src/data/components/<slug>.ts` — see [Review Mds/OVERVIEW-REVIEW-GUIDE.md](Review%20Mds/OVERVIEW-REVIEW-GUIDE.md) for what to change.
 
 ### Step 4 — Build before you commit
 
