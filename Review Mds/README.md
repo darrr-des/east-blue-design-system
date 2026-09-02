@@ -196,6 +196,9 @@ Measured across all 95 components.
 | Property-mapping rows in `Prop=Value` form | 164 across 44 components | Regroup one row per property |
 | Components with no Usage Guidelines | 42 | Write up to four pairs |
 | Components with no Installation | 38 | |
+| Install blocks on the old `com.gcash.eastblue` coordinates | 21 | §3.2 canonical is `AY-Org/eb-ds-ios` + `com.eastblue.ds:<slug>:<version>` |
+| Install blocks with no Import line | 40 of 57 | |
+| Kotlin package scheme unsettled | 71 hyphenated slugs · 3 schemes shipped | See Open decisions 5 |
 | Components with Code Connect still populated | 38 | Set to `[]` |
 | Components with no Usage Snippets | 36 | |
 | Components with no Accessibility rows | 6 | |
@@ -220,3 +223,4 @@ Raise these with the owner before a full sweep:
 2. **Scorecard C7** — kept as a Blocked row, or dropped along with Code Connect?
 3. **Colors table per card vs per component** — one table per component is assumed; components with two unrelated color systems may need two.
 4. **`node` and `description`** — stay required in the schema after the header change, or become optional?
+5. **Kotlin package scheme** — `CODE-REVIEW-GUIDE.md` §3.2 says `import com.eastblue.ds.<slug>.*`, which is not a legal package for the **71 slugs containing a hyphen**. Three schemes are already shipped: per-slug (`…ds.accordion.*`), hyphen-dropped (`…ds.titlebar.*`, and `…ds.adspace.*` as of Ad Space), and **domain-grouped** — `…ds.form.*` covers eight field components, plus `…ds.feedback.*` and `…ds.chat.*`. Pick one and amend §3.2. Gradle artifact IDs are unaffected: hyphens are legal in Maven coordinates, so `com.eastblue.ds:ad-space:2.0.0` stands either way.
