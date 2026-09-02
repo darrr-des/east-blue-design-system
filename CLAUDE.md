@@ -17,6 +17,45 @@ Live: https://eb-ds.frostdesigngroup.com/
 
 ---
 
+## Rule Zero — Follow the Figma component
+
+**Document what Figma says. Never invent a value, a style, or a design.**
+
+Every specification on a component page — alignment, padding, height, width, radius, gap, colour, font family, font weight, text style, variant name — is **read off the Figma component and reproduced exactly**. This applies to the spec rows, the colour tables, the code snippets, and the rendered preview alike.
+
+You may not:
+
+- **Derive what you could read.** Compute alignment from bounding boxes when the Figma panel states it.
+- **Translate Figma's answer.** Write `360` when the panel says `Fill`.
+- **Answer a different question.** Record the text-stack gap when the row asks for the container's gap.
+- **Let the site's own styling stand in.** Render a preview in the documentation font instead of the component's `Proxima Soft` / `BarkAda`.
+- **Substitute a plausible value** for one you could not read.
+
+If a value cannot be read with the tools available, it is **not yours to guess** — leave it, and report it as Missing with the reason. A blank the designer fills in costs one message; a plausible wrong number ships to developers and is trusted.
+
+The preview must match the component. Check it against `export_node_as_image`, not against the layer tree — a layer that exists is not necessarily drawn.
+
+---
+
+## Review Commands — trigger phrases
+
+When the user types one of these phrases, open the matching guide and follow it exactly. Each guide runs in four phases: **intake → baseline → update → `Validate`**. The reviewer types `Validate` to start the validation pass, which reports every check as **Done / Partial / Missing / Broken** and never edits content.
+
+| Trigger | Guide | Scope |
+|---|---|---|
+| `Component Review` | [Review Mds/OVERVIEW-REVIEW-GUIDE.md](Review%20Mds/OVERVIEW-REVIEW-GUIDE.md) | Overview tab — issues, recommendations, DS Health |
+| `Style Review` | [Review Mds/STYLE-REVIEW-GUIDE.md](Review%20Mds/STYLE-REVIEW-GUIDE.md) | Style tab — spec cards, demo panel, four spec sections, colors table, DEV code |
+| `Code Review` / `Code Tab Review` | [Review Mds/CODE-REVIEW-GUIDE.md](Review%20Mds/CODE-REVIEW-GUIDE.md) | Code tab — installation through variants inventory |
+| `Changelog Review` | [Review Mds/CHANGELOG-REVIEW-GUIDE.md](Review%20Mds/CHANGELOG-REVIEW-GUIDE.md) | Changelog tab — the audit trail |
+
+All four live in the **`Review Mds/`** folder. Shared setup, house rules, maintainer pre-work, field map, and the current gap worklist: [Review Mds/README.md](Review%20Mds/README.md).
+
+- One component per run, one tab per run.
+- `Code Review` is a plain-text trigger for the component's Code tab — not the built-in `/code-review` diff review. When ambiguous, ask.
+- Full pass order: `Style Review` → `Code Review` → `Changelog Review`.
+
+---
+
 ## Figma Rule — Read-Only
 
 - **NEVER** modify Figma components, layers, properties, or tokens — not even to fix issues
@@ -74,6 +113,13 @@ east-blue-design-system/
 │   ├── .env.example
 │   ├── README.md                     Setup + integration guide
 │   └── package.json
+│
+├── Review Mds/                       Per-tab review command guides (trigger phrases above)
+│   ├── README.md                     Shared setup, house rules, pre-work, field map, worklist
+│   ├── OVERVIEW-REVIEW-GUIDE.md      `Component Review`
+│   ├── STYLE-REVIEW-GUIDE.md         `Style Review`
+│   ├── CODE-REVIEW-GUIDE.md          `Code Review`
+│   └── CHANGELOG-REVIEW-GUIDE.md     `Changelog Review`
 │
 ├── eb-ds-assessment-guide.md         Methodology — source of truth (rendered at /eb-ds-assessment-guide)
 ├── benchmark.html                    Component roster benchmark snapshot (legacy reference)
