@@ -4,33 +4,36 @@ import { buildStatelessColorsTable } from './_helpers';
 /* Ad Space is three versions on one `Variant` setting (node 6507:74166).
    Controls mirror the Figma property panel, in its order. `Variant` is the
    driving property so each card already is that value, and `⤷ AssetSlot`
-   is a slot — neither gets a control. The panel's three text properties
-   (`Title`, `Header`, `Description`) have no control either: SpecCard.astro
-   renders `select` and `toggle` only. */
+   is a slot — neither gets a control. Every other panel row appears here,
+   in Figma's order. */
+const boolRow = (name: string) => ({
+  label: name,
+  prop: name,
+  control: 'toggle' as const,
+  defaultValue: 'true',
+  options: [
+    { value: 'false', label: 'false' },
+    { value: 'true', label: 'true' },
+  ],
+});
+
+const textRow = (label: string, prop: string, value: string) => ({
+  label,
+  prop,
+  control: 'input' as const,
+  defaultValue: value,
+  options: [],
+});
+
 const bannerControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
-      {
-        label: 'hasTitle',
-        prop: 'hasTitle',
-        control: 'toggle',
-        defaultValue: 'true',
-        options: [
-          { value: 'false', label: 'false' },
-          { value: 'true', label: 'true' },
-        ],
-      },
-      {
-        label: 'hasDescription',
-        prop: 'hasDescription',
-        control: 'toggle',
-        defaultValue: 'true',
-        options: [
-          { value: 'false', label: 'false' },
-          { value: 'true', label: 'true' },
-        ],
-      },
+      boolRow('hasTitle'),
+      boolRow('hasDescription'),
+      textRow('Header', 'header', 'Header'),
+      textRow('Description', 'description', 'Description Goes Here'),
+      textRow('Title', 'title', 'Title'),
     ],
   },
 ];
@@ -39,16 +42,9 @@ const promoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
-      {
-        label: 'hasDescription',
-        prop: 'hasDescription',
-        control: 'toggle',
-        defaultValue: 'true',
-        options: [
-          { value: 'false', label: 'false' },
-          { value: 'true', label: 'true' },
-        ],
-      },
+      boolRow('hasDescription'),
+      textRow('Header', 'header', 'Header'),
+      textRow('Description', 'description', 'Description Goes Here'),
     ],
   },
 ];
@@ -401,11 +397,11 @@ export const adSpace: ComponentData = {
       "blocks": [
         {
           "label": "iOS — Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"2.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"2.0.2\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:ad-space:2.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:ad-space:2.0.2\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Import",
@@ -582,6 +578,23 @@ export const adSpace: ComponentData = {
   },
   "changelog": [
     {
+      "version": "2.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Text properties wired to the demo panel — node 6507:74166",
+      "rows": [
+        {
+          "body": "<strong>The three text properties now have controls.</strong> <code>Title</code>, <code>Header</code> and <code>Description</code> render as text inputs on Banner and Promo, in the Figma panel's order. Typing updates the preview and the string literal in both DEV snippets.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Spec-card panels can render text inputs.</strong> <code>SpecCard.astro</code> branched only to a toggle or a select, so a text property had nowhere to go. A <code>control: 'input'</code> kind was added to the shared schema and renderer — additive, and no existing row changes behaviour.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
+    {
       "version": "2.0.1",
       "date": "September 2026",
       "kind": "patch",
@@ -621,7 +634,7 @@ export const adSpace: ComponentData = {
           "delta": { "kind": "resolved", "label": "Docs" }
         },
         {
-          "body": "<strong>Install coordinates corrected.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code> became <code>AY-Org/eb-ds-ios</code> and <code>com.eastblue.ds:ad-space:2.0.0</code>, matching the changelog head, and an Import block was added.",
+          "body": "<strong>Install coordinates corrected.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code> became <code>AY-Org/eb-ds-ios</code> and <code>com.eastblue.ds:ad-space:2.0.2</code>, matching the changelog head, and an Import block was added.",
           "delta": { "kind": "resolved", "label": "Docs" }
         },
         {

@@ -66,7 +66,7 @@ function _adcUpdate() {
 
 /* ── Spec card state ─────────────────────────────────────────────── */
 var _specCards = {
-  default: { hascta: 'false', slot: 'promo' }
+  default: { hascta: 'true', slot: 'promo', title: 'Title' }
 };
 window._specCards = _specCards;
 
@@ -79,7 +79,7 @@ function updateSpecCard(cardKey, prop, value) {
     host.innerHTML = _adcRender({
       slot: card.slot,
       hasCTA: card.hascta === 'true',
-      title: 'Title'
+      title: card.title || 'Title'
     });
   }
 }
@@ -96,7 +96,7 @@ function _adcSnippet(card, lang) {
   var p = function (s) { return _adcSpan('syn-punc', s); };
   var swift = lang === 'swift';
   var eq = swift ? p(':') + ' ' : ' ' + _adcSpan('syn-eq', '=') + ' ';
-  var lines = ['title' + eq + _adcSpan('syn-str', '"Title"')];
+  var lines = ['title' + eq + _adcSpan('syn-str', '"' + _adcEscape(card.title || 'Title') + '"')];
   if (card.hascta === 'true') {
     lines.push(swift
       ? 'action' + eq + _adcSpan('syn-type', 'EBAdCarouselAction') + p('(') +

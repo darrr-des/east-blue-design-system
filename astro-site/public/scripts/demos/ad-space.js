@@ -92,16 +92,12 @@ function _adsInit() {
    gets no control — the card always shows what Figma ships by default. */
 var _specCards = {
   receipt: { asset: 'placeholder' },
-  banner:  { asset: 'placeholder', hasTitle: 'true', hasDescription: 'true' },
-  promo:   { asset: 'placeholder', hasDescription: 'true' }
+  banner:  { asset: 'placeholder', hasTitle: 'true', hasDescription: 'true',
+             title: 'Title', header: 'Header', description: 'Description Goes Here' },
+  promo:   { asset: 'placeholder', hasDescription: 'true',
+             header: 'Header', description: 'Description Goes Here' }
 };
 window._specCards = _specCards;
-
-var _adsCardCopy = {
-  receipt: {},
-  banner:  { title: 'Title', header: 'Header', description: 'Description Goes Here' },
-  promo:   { header: 'Header', description: 'Description Goes Here' }
-};
 
 /* A boolean prop is on unless a control has explicitly turned it off. */
 function _adsOn(card, prop) {
@@ -114,12 +110,11 @@ function updateSpecCard(cardKey, prop, value) {
   card[prop] = value;
   var host = document.getElementById('ads-spec-' + cardKey);
   if (!host) return;
-  var copy = _adsCardCopy[cardKey] || {};
   host.innerHTML = _adsRender({
     variant: cardKey,
-    title: _adsOn(card, 'hasTitle') ? copy.title : '',
-    header: copy.header,
-    description: _adsOn(card, 'hasDescription') ? copy.description : '',
+    title: _adsOn(card, 'hasTitle') ? card.title : '',
+    header: card.header,
+    description: _adsOn(card, 'hasDescription') ? card.description : '',
     asset: card.asset
   });
 }
@@ -133,14 +128,13 @@ function _adsSpan(cls, text) {
 }
 
 function _adsArgs(cardKey, card, sep) {
-  var copy = _adsCardCopy[cardKey] || {};
   var rest = [];
   var add = function (name, val) {
-    rest.push(name + sep + _adsSpan('syn-str', '"' + val + '"'));
+    rest.push(name + sep + _adsSpan('syn-str', '"' + _adsEscape(val) + '"'));
   };
-  if (copy.title && _adsOn(card, 'hasTitle')) add('title', copy.title);
-  if (copy.header) add('header', copy.header);
-  if (copy.description && _adsOn(card, 'hasDescription')) add('description', copy.description);
+  if (card.title && _adsOn(card, 'hasTitle')) add('title', card.title);
+  if (card.header) add('header', card.header);
+  if (card.description && _adsOn(card, 'hasDescription')) add('description', card.description);
   return rest;
 }
 

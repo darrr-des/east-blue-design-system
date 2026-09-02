@@ -1,13 +1,19 @@
 import type { ComponentData, DemoControlSection } from '../types';
 import { buildStatelessColorsTable } from './_helpers';
 
-/* Demo controls for the Style tab's single spec card. The Figma property
-   panel holds exactly two entries: `hasCTA` and `⤷ CarouselSlot`. The slot
-   gets no control, so `hasCTA` is the panel. */
+/* Demo controls mirror the Figma property panel, in its order:
+   `Title`, `hasCTA`, `⤷ CarouselSlot`. The slot gets no control. */
 const adCarouselControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
+      {
+        label: 'Title',
+        prop: 'title',
+        control: 'input',
+        options: [],
+        defaultValue: 'Title'
+      },
       {
         label: 'hasCTA',
         prop: 'hascta',
