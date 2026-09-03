@@ -78,8 +78,8 @@ export const carouselItem: ComponentData = {
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "navGroup": "Carousel",
@@ -167,6 +167,30 @@ export const carouselItem: ComponentData = {
     ],
     "resolved": [
       {
+        "headline": "The heading and description can be set on a copy.",
+        "body": "Only the preamble was a real setting. The headline and body text were plain layers, so anyone placing the card had to detach it to change the words. <code>Heading</code> and <code>Description</code> are now settings.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "The preamble setting is named after its layer.",
+        "body": "It was called <code>Text</code>, which said nothing about what it fills. Renamed to <code>Preamble</code>, matching <code>#preamble</code> and the rest of the Carousel family.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Every colour is a named colour.",
+        "body": "Both appearances carry their full token set, confirmed by design — including the surfaces, <code>bg/color-bg-brand</code> on Dark and <code>bg/color-bg-info-weakest</code> on Light. C3 moves to Ready.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
+      {
         "headline": "The three sibling components are now one.",
         "body": "v2.0: rebuilt on node <code>5776:37969</code>. Item, Center, and Side collapsed into a single <code>Carousel Item</code>, and what was carousel position is now a <code>Size</code> setting — <code>Default</code> (282 × 160) and <code>Small</code> (282 × 146).",
         "tag": {
@@ -243,34 +267,14 @@ export const carouselItem: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Note why <code>Size</code> uses <code>Default</code> and <code>Small</code>.",
-        "body": "The standard size scale is <code>XS · SM · MD · LG · XL</code>. This component deliberately uses <code>Default</code> and <code>Small</code> to put the emphasis on the default behaviour. Write the exception down so the next reviewer doesn't file it as drift.",
-        "tag": "Docs"
-      },
-      {
         "headline": "Settle the <code>Button_New</code> name.",
         "body": "The button instance inside every version is named <code>Button_New</code>, which reads like a migration artifact. Held for the final reviewer to decide — it belongs to the Button component, not this one.",
         "tag": "Rename"
       },
       {
-        "headline": "Decide whether Carousel Item needs a loading state.",
-        "body": "Carousel Card ships <code>isLoading</code> with skeletons; this component has none. Deferred for now. Settle it either way so the card family stays predictable.",
-        "tag": "State"
-      },
-      {
-        "headline": "Audit the colour token bindings.",
-        "body": "The review tooling reads raw hex and can't see which values are bound to variables, so C3 is recorded as unverified rather than passing. The description colour in particular is <code>#f6f9fd</code> at 80% opacity rather than a flat token value — worth confirming that's the intended binding.",
-        "tag": "Token"
-      },
-      {
         "headline": "Document the carousel container.",
         "body": "Peek behaviour, snap-to-centre, the page indicator, and auto-advance belong on a dedicated <code>EBCarousel</code> container — not on each item. On iOS that's <code>.scrollTransition</code>; on Android, <code>graphicsLayer</code> keyed off <code>HorizontalPager</code> page offset.",
         "tag": "Family"
-      },
-      {
-        "headline": "Announce as a link or button.",
-        "body": "The whole card is tappable — VoiceOver and TalkBack should read heading, description, and the button label as one actionable announcement.",
-        "tag": "A11y"
       },
       {
         "headline": "See siblings:",
@@ -279,6 +283,26 @@ export const carouselItem: ComponentData = {
       }
     ],
     "appliedRecommendations": [
+      {
+        "headline": "Decide whether Carousel Item needs a loading state.",
+        "body": "v2.1: Closed — decided against. Approved designs do not list a loading state for Carousel Item, and the recommendation came from an older asset. <a href=\"/components/carousel-card\">Carousel Card</a> ships skeletons as its own approved pattern; that is not a precedent for this component.",
+        "tag": "State"
+      },
+      {
+        "headline": "Announce as a link or button.",
+        "body": "v2.1: Applied — the whole card is the tap target, matching the behaviour already shipping in the app. The Accessibility table documents it for both platforms, along with page-change announcements for the surrounding carousel.",
+        "tag": "A11y"
+      },
+      {
+        "headline": "Note why <code>Size</code> uses <code>Default</code> and <code>Small</code>.",
+        "body": "v2.1: Applied — recorded in the v2.0.0 changelog entry: <code>Default</code> and <code>Small</code> are a deliberate exception to the <code>XS–XL</code> scale, kept so the emphasis stays on the default behaviour rather than on a size step.",
+        "tag": "Docs"
+      },
+      {
+        "headline": "Audit the colour token bindings.",
+        "body": "v2.1: Applied — design confirmed every binding on both appearances. Dark uses <code>bg/color-bg-brand</code> with <code>text/color-text-inverse</code> and <code>-inverse-weak</code>; Light uses <code>bg/color-bg-info-weakest</code> with <code>text/color-text</code>, <code>-strong</code>, <code>-weaker</code> and <code>-primary</code>. The text link icon binds to <code>border/color-border-primary</code> and its inverse.",
+        "tag": "Token"
+      },
       {
         "headline": "Consolidate Carousel - Item + Center + Side into a single <code>Carousel Item</code>.",
         "body": "v2.0: Applied — one component replaces three. Position became the <code>Size</code> setting.",
@@ -382,8 +406,8 @@ export const carouselItem: ComponentData = {
             ]
           }
         ],
-        "swift": "EBCarouselItem(\n    appearance: .dark,\n    heading: \"Heading\",\n    description: \"This is a description for this banner.\",\n    textLink: \"Button\"\n) {\n    Image(banner.asset)\n}",
-        "compose": "EBCarouselItem(\n    appearance = EBAppearance.Dark,\n    heading = \"Heading\",\n    description = \"This is a description for this banner.\",\n    textLink = \"Button\"\n) {\n    AsyncImage(model = banner.asset, contentDescription = null)\n}"
+        "swift": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span>\n    appearance<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.dark</span><span class=\"syn-punc\">,</span>\n    heading<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"This is a description for this banner.\"</span><span class=\"syn-punc\">,</span>\n    textLink<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Button\"</span><span class=\"syn-punc\">,</span>\n    leadingIcon<span class=\"syn-punc\">:</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>banner<span class=\"syn-punc\">.</span>asset<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span>\n    appearance <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAppearance</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Dark</span><span class=\"syn-punc\">,</span>\n    heading <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"This is a description for this banner.\"</span><span class=\"syn-punc\">,</span>\n    textLink <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Button\"</span><span class=\"syn-punc\">,</span>\n    leadingIcon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span>Icons<span class=\"syn-punc\">.</span>Filled<span class=\"syn-punc\">.</span>Star<span class=\"syn-punc\">,</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> banner<span class=\"syn-punc\">.</span>asset<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       },
       {
         "cardKey": "light",
@@ -448,8 +472,8 @@ export const carouselItem: ComponentData = {
             ]
           }
         ],
-        "swift": "EBCarouselItem(\n    appearance: .light,\n    heading: \"Heading\",\n    description: \"This is a description for this banner.\",\n    textLink: \"Button\"\n) {\n    Image(banner.asset)\n}",
-        "compose": "EBCarouselItem(\n    appearance = EBAppearance.Light,\n    heading = \"Heading\",\n    description = \"This is a description for this banner.\",\n    textLink = \"Button\"\n) {\n    AsyncImage(model = banner.asset, contentDescription = null)\n}"
+        "swift": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span>\n    appearance<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.light</span><span class=\"syn-punc\">,</span>\n    heading<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"This is a description for this banner.\"</span><span class=\"syn-punc\">,</span>\n    textLink<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Button\"</span><span class=\"syn-punc\">,</span>\n    leadingIcon<span class=\"syn-punc\">:</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>banner<span class=\"syn-punc\">.</span>asset<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span>\n    appearance <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAppearance</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Light</span><span class=\"syn-punc\">,</span>\n    heading <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"This is a description for this banner.\"</span><span class=\"syn-punc\">,</span>\n    textLink <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Button\"</span><span class=\"syn-punc\">,</span>\n    leadingIcon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span>Icons<span class=\"syn-punc\">.</span>Filled<span class=\"syn-punc\">.</span>Star<span class=\"syn-punc\">,</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> banner<span class=\"syn-punc\">.</span>asset<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
     colorsTables: [
@@ -484,58 +508,94 @@ export const carouselItem: ComponentData = {
   "code": {
     "installation": {
       "planned": true,
-      "blocks": []
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"2.1.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:carousel-item:2.1.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>carouselitem<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
     },
     "propertyMapping": {
+      "description": "Figma properties mapped to the intended native parameters, in the order the Figma property panel lists them. Note <code>Appearance</code> names the surface, not the text — <code>Dark</code> is a dark card with light copy.",
       "rows": [
         {
-          "figma": "<code>mode: Light Text | Dark Text</code>",
-          "swift": "<code>appearance: light | dark</code>",
-          "compose": "<code>.ebAppearance(.light)</code>"
+          "figma": "Size — Default, Small",
+          "swift": "<code>size: EBCarouselItemSize = .default</code>",
+          "compose": "<code>size: EBCarouselItemSize = Default</code>"
         },
         {
-          "figma": "<code>type: Default | with Icon | Headline Only</code>",
-          "swift": "<code>type: default | withIcon</code> + <code>hasDescription: Bool</code>",
-          "compose": "<code>leadingIcon: Image?</code>, <code>hasDescription: Bool</code>"
+          "figma": "isPressed — true, false",
+          "swift": "<code>isPressed: Bool = false</code> — driven by the press gesture",
+          "compose": "<code>isPressed: Boolean = false</code> — driven by the press gesture"
         },
         {
-          "figma": "<code>hasPreamble</code>",
-          "swift": "<code>preamble?: String</code>",
-          "compose": "<code>preamble: String?</code>"
+          "figma": "Appearance — Dark, Light",
+          "swift": "<code>appearance: EBAppearance</code> — <code>.dark</code> is a dark surface with light text",
+          "compose": "<code>appearance: EBAppearance</code> — <code>Dark</code> is a dark surface with light text"
         },
         {
-          "figma": "<code>hasTextLink</code>",
-          "swift": "<code>actionLabel?: String</code>",
-          "compose": "<code>actionLabel: String?</code>"
+          "figma": "TopElement — Icon, Preamble, None",
+          "swift": "<code>topElement: EBCarouselItemTop = .icon</code>",
+          "compose": "<code>topElement: EBCarouselItemTop = Icon</code>"
         },
         {
-          "figma": "(baked raster background)",
-          "swift": "<code>background: Image | Gradient</code> (slot)",
-          "compose": "<code>background: AnyView</code>"
+          "figma": "⤷ LeadingIcon (slot) — shown when TopElement is Icon",
+          "swift": "<code>@ViewBuilder leadingIcon: (() -> Icon)?</code>",
+          "compose": "<code>leadingIcon: (@Composable () -> Unit)? = null</code>"
         },
         {
-          "figma": "(drawn grey circle)",
-          "swift": "part of <code>leadingIcon</code> slot",
-          "compose": "<code>leadingIcon: Image?</code>"
+          "figma": "Preamble (text) — shown when TopElement is Preamble",
+          "swift": "<code>preamble: String?</code>",
+          "compose": "<code>preamble: String? = null</code>"
         },
         {
-          "figma": "(raster chevron)",
-          "swift": "<code>showChevron: Bool</code> (vector)",
-          "compose": "<code>showChevron: Bool = true</code>"
+          "figma": "Heading (text)",
+          "swift": "<code>heading: String</code>",
+          "compose": "<code>heading: String</code>"
         },
         {
-          "figma": "(not modeled)",
-          "swift": "<code>onTap: () -&gt; Void</code>",
-          "compose": "<code>onTap: (() -&gt; Void)?</code>"
+          "figma": "hasDescription — true, false",
+          "swift": "<code>description: String?</code> — nil hides it",
+          "compose": "<code>description: String? = null</code>"
         },
         {
-          "figma": "<strong>Carousel - Item</strong>",
-          "swift": "merge into <code>Carousel Item</code>",
-          "compose": "position is carousel-container-driven"
+          "figma": "Description (text)",
+          "swift": "<code>description: String?</code>",
+          "compose": "<code>description: String? = null</code>"
+        },
+        {
+          "figma": "Background (slot)",
+          "swift": "<code>@ViewBuilder background: () -> Background</code>",
+          "compose": "<code>background: @Composable BoxScope.() -> Unit</code>"
+        },
+        {
+          "figma": "hasTextLink — true, false",
+          "swift": "<code>textLink: String?</code> — nil hides the button",
+          "compose": "<code>textLink: String? = null</code>"
         }
       ]
     },
-    "usageSnippets": [],
+    "usageSnippets": [
+      {
+        "subheading": "Dark — light copy on a dark surface",
+        "swift": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span>\n    appearance<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.dark</span><span class=\"syn-punc\">,</span>\n    heading<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"This is a description for this banner.\"</span><span class=\"syn-punc\">,</span>\n    textLink<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Button\"</span><span class=\"syn-punc\">,</span>\n    leadingIcon<span class=\"syn-punc\">:</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>banner<span class=\"syn-punc\">.</span>asset<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span>\n    appearance <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAppearance</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Dark</span><span class=\"syn-punc\">,</span>\n    heading <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"This is a description for this banner.\"</span><span class=\"syn-punc\">,</span>\n    textLink <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Button\"</span><span class=\"syn-punc\">,</span>\n    leadingIcon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span>Icons<span class=\"syn-punc\">.</span>Filled<span class=\"syn-punc\">.</span>Star<span class=\"syn-punc\">,</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> banner<span class=\"syn-punc\">.</span>asset<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+      },
+      {
+        "subheading": "Light — dark copy on a pale surface",
+        "swift": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span>\n    appearance<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.light</span><span class=\"syn-punc\">,</span>\n    heading<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"This is a description for this banner.\"</span><span class=\"syn-punc\">,</span>\n    textLink<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Button\"</span><span class=\"syn-punc\">,</span>\n    leadingIcon<span class=\"syn-punc\">:</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>banner<span class=\"syn-punc\">.</span>asset<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span>\n    appearance <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAppearance</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Light</span><span class=\"syn-punc\">,</span>\n    heading <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"This is a description for this banner.\"</span><span class=\"syn-punc\">,</span>\n    textLink <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Button\"</span><span class=\"syn-punc\">,</span>\n    leadingIcon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span>Icons<span class=\"syn-punc\">.</span>Filled<span class=\"syn-punc\">.</span>Star<span class=\"syn-punc\">,</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> banner<span class=\"syn-punc\">.</span>asset<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+      }
+    ],
     "accessibility": [
       {
         "requirement": "Whole-card tap target",
@@ -563,7 +623,24 @@ export const carouselItem: ComponentData = {
         "android": "282×160 ≫ 48 dp ✓"
       }
     ],
-    "usageGuidelines": [],
+    "usageGuidelines": [
+      {
+        "doText": "Pick <code>Appearance</code> by the surface you want, not the text. <code>Dark</code> is a dark card with light copy.",
+        "dontText": "Don't map it from the old <code>mode</code> setting by memory. <code>mode=Light Text</code> is <code>Appearance=Dark</code> — the two are named for opposite things."
+      },
+      {
+        "doText": "Drop artwork into the <code>Background</code> slot from the product's own asset pipeline.",
+        "dontText": "Don't bake artwork into the component. The slot is why one card serves every campaign."
+      },
+      {
+        "doText": "Check the copy against the artwork you ship. The card tints the surface, not the image.",
+        "dontText": "Don't rely on the appearance alone for contrast — a busy photo can leave white text unreadable even on <code>Dark</code>."
+      },
+      {
+        "doText": "Use <code>Small</code> where the rail is tight; it keeps the same width and trims the description.",
+        "dontText": "Don't reach for it to fit longer copy. It gives the description less room, not more."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
@@ -582,9 +659,9 @@ export const carouselItem: ComponentData = {
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Not verified. The read-only review tooling reads raw hex and can't see variable bindings. No evidence of a problem, but a token audit is needed to close this out — the 80% opacity on the description colour is worth confirming."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Every colour is bound and confirmed by design. Dark sits on <code>bg/color-bg-brand</code>, Light on <code>bg/color-bg-info-weakest</code>, with the text roles on <code>text/color-text-*</code> and the link icon on <code>border/color-border-primary</code>."
       },
       {
         "id": "C4",
@@ -617,121 +694,147 @@ export const carouselItem: ComponentData = {
     ],
     "codeConnect": [],
     "variants": {
-      "total": 10,
-      "description": "<code>mode</code> (2) × <code>type</code> (3) × <code>hasTextLink</code> (2) × <code>hasPreamble</code> (2) = 24 combinatorial variants, but only <strong>10</strong> are modeled — the author pruned invalid combinations (e.g. <code>Headline Only</code> without Preamble, <code>with Icon</code> with TextLink). Each mode has 5 variants.",
-      "columns": [
-        "Mode",
-        "Type",
-        "hasTextLink",
-        "hasPreamble",
-        "Node",
-        "Dimensions"
-      ],
+      "total": 24,
+      "description": "2 <code>Size</code> × 2 <code>isPressed</code> × 2 <code>Appearance</code> × 3 <code>TopElement</code> = <strong>24 versions</strong>, all built — a complete grid with no gaps.",
+      "summary": {
+        "columns": ["Appearance", "Versions", "Count"],
+        "rows": [
+          { "cells": ["Dark", "2 Size × 3 TopElement × 2 isPressed", "12"] },
+          { "cells": ["Light", "2 Size × 3 TopElement × 2 isPressed", "12"] }
+        ]
+      },      "columns": ["Appearance", "Size", "TopElement", "isPressed", "Node"],
       "rows": [
-        {
-          "cells": [
-            "<strong>Light Text</strong>",
-            "Default",
-            "yes",
-            "no",
-            "<code>18543:2807</code>",
-            "282 × 160"
-          ]
-        },
-        {
-          "cells": [
-            "Light Text",
-            "with Icon",
-            "no",
-            "no",
-            "<code>18543:2818</code>",
-            "282 × 160"
-          ]
-        },
-        {
-          "cells": [
-            "Light Text",
-            "Default",
-            "yes",
-            "yes",
-            "<code>18543:2826</code>",
-            "282 × 160"
-          ]
-        },
-        {
-          "cells": [
-            "Light Text",
-            "Headline Only",
-            "yes",
-            "yes",
-            "<code>18543:2839</code>",
-            "282 × 160"
-          ]
-        },
-        {
-          "cells": [
-            "Light Text",
-            "Default",
-            "no",
-            "no",
-            "<code>18543:2850</code>",
-            "282 × 160"
-          ]
-        },
-        {
-          "cells": [
-            "<strong>Dark Text</strong>",
-            "Default",
-            "yes",
-            "no",
-            "<code>18543:2856</code>",
-            "282 × 160"
-          ]
-        },
-        {
-          "cells": [
-            "Dark Text",
-            "with Icon",
-            "no",
-            "no",
-            "<code>18543:2867</code>",
-            "282 × 160"
-          ]
-        },
-        {
-          "cells": [
-            "Dark Text",
-            "Default",
-            "yes",
-            "yes",
-            "<code>18543:2875</code>",
-            "282 × 160"
-          ]
-        },
-        {
-          "cells": [
-            "Dark Text",
-            "Headline Only",
-            "yes",
-            "yes",
-            "<code>18543:2888</code>",
-            "282 × 160"
-          ]
-        },
-        {
-          "cells": [
-            "Dark Text",
-            "Default",
-            "no",
-            "no",
-            "<code>18543:2899</code>",
-            "282 × 160"
-          ]
-        }
-      ]
+        { "cells": ["Dark", "Default", "Icon", "false", "5804:39914"] },
+        { "cells": ["Dark", "Default", "Icon", "true", "5821:44302"] },
+        { "cells": ["Dark", "Default", "Preamble", "false", "5804:42210"] },
+        { "cells": ["Dark", "Default", "Preamble", "true", "5821:44312"] },
+        { "cells": ["Dark", "Default", "None", "false", "5821:44670"] },
+        { "cells": ["Dark", "Default", "None", "true", "5821:44814"] },
+        { "cells": ["Dark", "Small", "Icon", "false", "5804:42531"] },
+        { "cells": ["Dark", "Small", "Icon", "true", "5821:43953"] },
+        { "cells": ["Dark", "Small", "Preamble", "false", "5804:42540"] },
+        { "cells": ["Dark", "Small", "Preamble", "true", "5821:43973"] },
+        { "cells": ["Dark", "Small", "None", "false", "5821:44680"] },
+        { "cells": ["Dark", "Small", "None", "true", "5821:44825"] },
+        { "cells": ["Light", "Default", "Icon", "false", "5804:41501"] },
+        { "cells": ["Light", "Default", "Icon", "true", "5821:43983"] },
+        { "cells": ["Light", "Default", "Preamble", "false", "5804:42291"] },
+        { "cells": ["Light", "Default", "Preamble", "true", "5821:44003"] },
+        { "cells": ["Light", "Default", "None", "false", "5821:44690"] },
+        { "cells": ["Light", "Default", "None", "true", "5821:44836"] },
+        { "cells": ["Light", "Small", "Icon", "false", "5804:42549"] },
+        { "cells": ["Light", "Small", "Icon", "true", "5821:43993"] },
+        { "cells": ["Light", "Small", "Preamble", "false", "5804:42558"] },
+        { "cells": ["Light", "Small", "Preamble", "true", "5821:44013"] },
+        { "cells": ["Light", "Small", "None", "false", "5821:44700"] },
+        { "cells": ["Light", "Small", "None", "true", "5821:44847"] }
+      ],
+      "collapseLabel": "View full Appearance × Size × TopElement breakdown (24 rows)"
     }
   },
   "changelog": [
+    {
+      "version": "2.1.0",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Text settings added, Style and Code tabs rebuilt — node 5776:37969",
+      "rows": [
+        {
+          "body": "<strong>The heading and description can be set on a copy.</strong> Only the preamble was a real setting, so anyone placing the card had to detach it to change the headline or body. <code>Heading</code> and <code>Description</code> are now settings. This is what makes the release a minor rather than a patch.",
+          "delta": { "kind": "resolved", "label": "C2 Resolved" }
+        },
+        {
+          "body": "<strong>The preamble setting is named after its layer.</strong> It was called <code>Text</code>, which said nothing about what it fills. Renamed to <code>Preamble</code>, matching <code>#preamble</code> and the rest of the Carousel family.",
+          "delta": { "kind": "resolved", "label": "C2 Resolved" }
+        },
+        {
+          "body": "<strong>The Style tab was documenting retired settings.</strong> Its two cards were \"Default · Light Text · hasTextLink=yes\" and \"Headline Only · has Preamble · has TextLink\" — three properties crammed into each title, and both leaning on the old <code>mode</code> and <code>type</code> vocabulary. They are now <code>Dark</code> and <code>Light</code>, the two values of the driving <code>Appearance</code> setting.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The appearance inversion is written down.</strong> <code>Appearance</code> names the surface where <code>mode</code> named the text, so the old <code>mode=Light Text</code> is the new <code>Appearance=Dark</code>. Both colour tables and the Property Mapping now say so, because reading it from memory gets it backwards.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Type styles are read from the component.</strong> Typography carries four style names — <code>Primary/Label/Fine</code>, <code>Primary/Headlines/Block</code>, <code>Secondary/Bold/Caption</code>, <code>Primary/Label/Small</code> — each resolved through the style database rather than written by hand. Both <code>Size</code> values were read; Small trims the description box but keeps the same styles.",
+          "delta": { "kind": "resolved", "label": "C3 Resolved" }
+        },
+        {
+          "body": "<strong>Every colour is a named colour, confirmed by design.</strong> Both appearances now carry their full token set, including the surfaces — <code>bg/color-bg-brand</code> on Dark and <code>bg/color-bg-info-weakest</code> on Light.",
+          "delta": { "kind": "resolved", "label": "C3 Resolved" }
+        },
+        {
+          "body": "<strong>The preview was drawing a component that does not exist.</strong> It showed a two-tone card with a grey image well and a peach gradient; the component is one flat colour edge to edge. Corrected against nodes <code>8942:79573</code> and <code>8942:79589</code>.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Pressed was dimming the text.</strong> The preview stacked the dim above the copy. In Figma the <code>Background</code> and <code>Overlay</code> are positioned beneath <code>content</code>, so a press dims the artwork only.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Text controls hide when their layer is not on screen.</strong> The preamble field only applies at <code>TopElement=Preamble</code> and the description field only when <code>hasDescription</code> is on. Both now appear and disappear with those settings.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The Code tab described the component before the rebuild.</strong> Property Mapping carried eight rows built on <code>mode</code>, <code>type</code> and <code>hasPreamble</code>, with the background, icon and chevron all listed as baked in. It now maps all eleven settings. Installation, Usage Snippets and Usage Guidelines were empty and are written.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The version count was wrong in two directions at once.</strong> The inventory read <code>10</code> while its own description claimed 24, using a multiplier built from settings that no longer exist. It now reads 24 — the real grid, with a summary and a full breakdown.",
+          "delta": { "kind": "resolved", "label": "C2 Resolved" }
+        }
+      ]
+    },
+{
+      "version": "2.0.0",
+      "date": "August 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt in the 2026 Working File — node 18543:2806 → 5776:37969",
+      "rows": [
+        {
+          "body": "<strong>Rebuilt on a new node.</strong> The component moved from <code>18543:2806</code> to <code>5776:37969</code>. The assessment was repointed at the time; this entry records the move itself, which had gone unwritten.",
+          "delta": { "kind": "resolved", "label": "Family" }
+        },
+        {
+          "body": "<strong>Three components became one.</strong> <code>Carousel - Item</code>, <code>Carousel Item - Center</code> and <code>Carousel Item - Side</code> all shipped the same schema and differed only in height. They collapsed into a single <code>Carousel Item</code>, and what had been carousel position became a <code>Size</code> setting — <code>Default</code> (282 × 160) and <code>Small</code> (282 × 146).",
+          "delta": { "kind": "resolved", "label": "C1 Resolved" }
+        },
+        {
+          "body": "<strong>Settings now follow the naming guidelines.</strong> The old mix of <code>hasPreamble</code>, <code>with Icon</code> and <code>Light Text</code> is gone. <code>Size</code>, <code>Appearance</code> and <code>TopElement</code> are PascalCase, <code>isPressed</code> is an <code>is</code>-prefixed boolean with lowercase <code>true</code> / <code>false</code>, and the slot reads <code>⤷ LeadingIcon</code>.",
+          "delta": { "kind": "resolved", "label": "C2 Resolved" }
+        },
+        {
+          "body": "<strong>A misleading setting was replaced.</strong> <code>type=Headline Only</code> actually rendered a preamble, a heading and a button. It became <code>TopElement = Icon | Preamble | None</code>, which names what really changes — the element above the heading.",
+          "delta": { "kind": "resolved", "label": "C2 Resolved" }
+        },
+        {
+          "body": "<strong>Text colour became a real appearance setting.</strong> <code>mode</code> only swapped layer colours. It is now <code>Appearance = Dark | Light</code>, picking the whole set at once. Note the inversion when reading old files: the former <code>mode=Light Text</code> is the new <code>Appearance=Dark</code>.",
+          "delta": { "kind": "resolved", "label": "C4 Resolved" }
+        },
+        {
+          "body": "<strong>The background became a swappable area.</strong> The artwork had been baked into every version, so any team wanting its own image had to detach. <code>Background</code> is a Figma Slot on all 24 versions.",
+          "delta": { "kind": "resolved", "label": "C4 Resolved" }
+        },
+        {
+          "body": "<strong>The chevron is a vector again.</strong> It had shipped as a raster <code>shape_full</code>, once per appearance. It is now a <code>Chevron Right Small</code> instance riding in the DS button's <code>Trailing Container</code> slot — one copy, crisp at any size.",
+          "delta": { "kind": "resolved", "label": "C6 Resolved" }
+        },
+        {
+          "body": "<strong>The icon placeholder became a slot.</strong> A drawn grey circle stood in for the leading icon. <code>⤷ LeadingIcon</code> is now an empty 24 × 24 slot, so any DS icon or Avatar drops straight in.",
+          "delta": { "kind": "resolved", "label": "C6 Resolved" }
+        },
+        {
+          "body": "<strong>The card gained a pressed state.</strong> A tappable banner had no way to show it was being pressed. <code>isPressed</code> now dims the card with an <code>Overlay</code> instance at <code>#020E22</code> / 24%, leaving text colours untouched.",
+          "delta": { "kind": "resolved", "label": "C5 Resolved" }
+        },
+        {
+          "body": "<strong>The version grid is complete.</strong> <code>Size</code> × <code>isPressed</code> × <code>Appearance</code> × <code>TopElement</code> gives 24 versions with no gaps, against 10 before. <code>Size=Default|Small</code> is a deliberate exception to the <code>XS–XL</code> scale, kept to put the emphasis on default behaviour.",
+          "delta": { "kind": "resolved", "label": "C2 Resolved" }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",
