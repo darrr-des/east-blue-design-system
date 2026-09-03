@@ -1,5 +1,50 @@
-import type { ComponentData } from '../types';
-import { buildStatelessColorsTable } from './_helpers';
+import type { ComponentData, DemoControlSection } from '../types';
+import { buildInteractiveColorsTable } from './_helpers';
+
+/* Controls mirror the Figma property panel, in its order. `Variant` is the
+   driving property so each card already is that value, and `Banner`,
+   `⤷ Violator` and `⤷ Icon` are slots — none of those gets a control.
+   Defaults are Figma's: isLoading false, isPressed false, hasViolator true. */
+const bool = (label: string, prop: string, on: string) => ({
+  label, prop,
+  control: 'toggle' as const,
+  defaultValue: on,
+  options: [
+    { value: 'false', label: 'false' },
+    { value: 'true', label: 'true' },
+  ],
+});
+
+const text = (label: string, prop: string, value: string) => ({
+  label, prop,
+  control: 'input' as const,
+  defaultValue: value,
+  options: [],
+});
+
+const baseRows = [
+  bool('isLoading', 'isLoading', 'false'),
+  bool('isPressed', 'isPressed', 'false'),
+  bool('hasViolator', 'hasViolator', 'true'),
+];
+
+/* Default and With Icon carry `#title` and `#description`. */
+const carouselCardControls: DemoControlSection[] = [
+  { heading: 'Properties', rows: baseRows.concat([
+    text('Title', 'title', 'Title'),
+    text('Description', 'description', 'Description here. Description here.'),
+  ]) },
+];
+
+/* Discount carries `#title` and `#amount` — no description layer. Its title
+   shows the two-line case Figma's shared placeholder cannot: the `Title`
+   property holds one value across every version. */
+const discountControls: DemoControlSection[] = [
+  { heading: 'Properties', rows: baseRows.concat([
+    text('Title', 'title', 'Label here\nLabel here'),
+    text('Amount', 'amount', 'PHP 200.00'),
+  ]) },
+];
 
 export const carouselCard: ComponentData = {
   "meta": {
@@ -14,8 +59,8 @@ export const carouselCard: ComponentData = {
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "navGroup": "Carousel",
@@ -63,21 +108,21 @@ export const carouselCard: ComponentData = {
         "ios": "yes",
         "android": "yes",
         "property": "Variant=With Icon",
-        "notes": "Default layout plus a 34 × 34 <code>⤷ Icon</code> slot at the bottom-left of the banner. The slot ships empty on a <code>#005ce5</code> circle — drop any DS icon in."
+        "notes": "Default layout plus a 34 × 34 <code>⤷ Icon</code> slot at the bottom-left of the banner. The slot ships empty on a <code>bg/color-bg-primary</code> circle — drop any DS icon in."
       },
       {
         "state": "Discount",
         "ios": "yes",
         "android": "yes",
         "property": "Variant=Discount",
-        "notes": "Taller banner (140 × 152) over a white content block with title and <code>#amount</code>. 140 × 226."
+        "notes": "Taller banner (140 × 152) over a white content block with title and <code>#amount</code>. The card hugs its content — 140 × 212 with the placeholder copy."
       },
       {
         "state": "Loading",
         "ios": "yes",
         "android": "yes",
         "property": "isLoading=true",
-        "notes": "Banner and text become flat <code>#eef2f9</code> blocks. Built for Default (212) and Discount (211); With Icon reuses the Default skeleton, since a skeleton hides the icon anyway."
+        "notes": "Banner and text become flat <code>#eef2f9</code> blocks. Each loading version is the same height as the card it replaces — Default 214, Discount 212 — so nothing jumps when the content arrives. With Icon reuses the Default skeleton, since a skeleton hides the icon anyway."
       },
       {
         "state": "Pressed",
@@ -95,6 +140,46 @@ export const carouselCard: ComponentData = {
       }
     ],
     "resolved": [
+      {
+        "headline": "The Discount card sizes to its own text now.",
+        "body": "Its height was pinned to a fixed number, so a longer title overflowed instead of pushing the card taller. It hugs its content now — 212 tall with the placeholder copy, more when the title runs to two lines.",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "The loading card is the same height as the real one.",
+        "body": "The skeletons were 212 and 211 where the loaded cards were 214 and 212, so the layout shifted the moment content arrived. Both now match the card they stand in for.",
+        "tag": {
+          "criterion": "C4",
+          "label": "C4 · Native Mappability"
+        }
+      },
+      {
+        "headline": "The invisible white backgrounds are gone.",
+        "body": "Every version carried a white fill switched off — nothing drew it, but it read as a surface to anyone inspecting the layers. All eight are clean.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "The title and description can be set on a copy.",
+        "body": "Only the price was a real setting. The heading and body text were plain layers, so anyone placing the card had to detach it to change the words. <code>Title</code> and <code>Description</code> are now settings, matching <code>Amount</code>.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "The banner dimmer is a plain colour on purpose.",
+        "body": "It is the one value not tied to a named colour. That is deliberate — the overlay is tuned per asset so the badge and text above it stay readable on any image. Not a gap.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
       {
         "headline": "The <code>type</code> setting no longer mixes content with loading state.",
         "body": "v2.0: rebuilt on node <code>5655:42547</code> as three independent settings — <code>Variant</code> (Default / With Icon / Discount), <code>isLoading</code>, and <code>isPressed</code>. Picking a content version no longer forces a loading choice.",
@@ -180,11 +265,6 @@ export const carouselCard: ComponentData = {
     ],
     "recommendations": [
       {
-        "headline": "Audit the colour token bindings.",
-        "body": "The review tooling reads raw hex and can't see which values are bound to variables, so C3 is recorded as unverified rather than passing. The one hex raised in review — the <code>#e6e1ef</code> dimmer — is an optional decorative overlay and is meant to be unbound. Run a token audit in Figma to confirm the rest and close C3 out.",
-        "tag": "Token"
-      },
-      {
         "headline": "Document the <code>⤷ Violator</code> slot.",
         "body": "The slot ships a blue <code>#1972f9</code> \"New\" badge on all three content versions by design. Nothing in the docs mentions it, so designers won't know they can swap or clear it.",
         "tag": "Docs"
@@ -211,6 +291,11 @@ export const carouselCard: ComponentData = {
       }
     ],
     "appliedRecommendations": [
+      {
+        "headline": "Audit the colour token bindings.",
+        "body": "v1.1: Applied — design confirmed every binding. Text roles use <code>text/color-text-strong</code>, <code>-weaker</code>, <code>-weak</code> and <code>-weakest</code>; Discount's title is <code>text/color-text</code> on a <code>bg/color-bg-main</code> surface; the icon circle is <code>bg/color-bg-primary</code>; the violator is <code>text/color-text-inverse</code> on <code>bg/brand-bg-primary</code>. The banner dimmer stays a plain colour by design.",
+        "tag": "Token"
+      },
       {
         "headline": "Consolidate Carousel Card + Carousel - Discount Card into a single <code>Carousel Card</code>.",
         "body": "v2.0: Applied — Discount is now a <code>Variant</code> value on this component rather than a separate one. The Carousel family drops from 5 components to 3.",
@@ -254,192 +339,232 @@ export const carouselCard: ComponentData = {
       {
         "cardKey": "default",
         "demoKey": "default",
-        "demoControls": [],
+        "demoControls": carouselCardControls,
         "title": "Default",
-        "node": "23:121312",
-        "description": "Banner image + title + 2-line description. The banner ships a placeholder PNG dimmed by a purple multiply layer — replace both with your real media.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"ccard-spec-1\"><div class=\"eb-preview eb-preview-ccard eb-preview-ccard--default\"><div class=\"eb-preview-ccard__banner\"><div class=\"eb-preview-ccard__banner-img\"></div><div class=\"eb-preview-ccard__banner-dimmer\"></div></div><div class=\"eb-preview-ccard__content\"><p class=\"eb-preview-ccard__title\">Title</p><p class=\"eb-preview-ccard__desc\">Description here.<br>Description here.</p></div></div></div>",
+        "node": "5653:42029",
+        "description": "",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"ccard-spec-1\"><div class=\"eb-preview eb-preview-ccard eb-preview-ccard--default\"><div class=\"eb-preview-ccard__banner\"><div class=\"eb-preview-ccard__banner-img\"></div><div class=\"eb-preview-ccard__banner-dimmer\"></div><div class=\"eb-preview-ccard__banner-shadow\"></div><div class=\"eb-preview-ccard__violator\">New</div></div><div class=\"eb-preview-ccard__content\"><p class=\"eb-preview-ccard__title\">Title</p><p class=\"eb-preview-ccard__desc\">Description here.<br>Description here.</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Type", "value": "default", "prop": "type" },
-              { "key": "Aspect", "value": "3:2 hero image" },
-              { "key": "Pagination", "value": "dots" }
+              { "key": "Variant", "value": "Default" },
+              { "key": "isLoading", "value": "false", "prop": "isLoading" },
+              { "key": "isPressed", "value": "false", "prop": "isPressed" },
+              { "key": "hasViolator", "value": "true", "prop": "hasViolator" },
+              { "key": "Title", "value": "Title", "prop": "title" },
+              { "key": "Description", "value": "Description here. Description here.", "prop": "description" },
+              { "key": "Banner", "value": "Asset placeholder" },
+              { "key": "⤷ Violator", "value": "Badge · New" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Heading", "value": "#2340A9", "token": "carousel/color/label-header" },
-              { "key": "Description", "value": "#6780A9", "token": "carousel/color/description" },
-              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" },
-              { "key": "Active dot", "value": "#005CE5", "token": "bg/color-bg-primary" },
-              { "key": "Inactive dot", "value": "#EEF2F9", "token": "bg/color-bg-strong" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Card width", "value": "140px", "mono": true },
-              { "key": "Banner size", "value": "140 × 140px", "mono": true },
-              { "key": "Banner radius", "value": "radius/radius-1 (4px)", "mono": true },
-              { "key": "Banner gap", "value": "12px", "mono": true },
-              { "key": "Title → desc gap", "value": "4px", "mono": true },
-              { "key": "Total height", "value": "215px", "mono": true }
+              { "key": "#title", "value": "#2340A9", "token": "text/color-text-strong", "swatch": true, "variants": { "isPressed:true": { "value": "#445C85", "token": "text/color-text-weak" } } },
+              { "key": "#description", "value": "#6780A9", "token": "text/color-text-weaker", "swatch": true, "variants": { "isPressed:true": { "value": "#90A8D0", "token": "text/color-text-weakest" } } },
+              { "key": "Violator label", "value": "#FFFFFF", "token": "text/color-text-inverse", "swatch": true },
+              { "key": "Violator background", "value": "#1972F9", "token": "bg/brand-bg-primary", "swatch": true },
+              { "key": "Banner dimmer", "value": "#E6E1EF · 40% · Multiply", "token": "— plain colour by design" }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Title style", "value": "Primary/Headlines/Block", "mono": true },
-              { "key": "Title font", "value": "Proxima Soft Bold · 18 / 23 · +0.25", "mono": true },
-              { "key": "Description style", "value": "Secondary/Bold/Caption", "mono": true },
-              { "key": "Description font", "value": "BarkAda Semibold · 12 / 18 · 0", "mono": true }
+              { "key": "#title", "value": "Primary/Headlines/Block", "mono": true },
+              { "key": "#description", "value": "Secondary/Bold/Caption", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "Hug · 214px at the shipped placeholder", "mono": true, "variants": { "isLoading:true": { "value": "214px" } } },
+              { "key": "Width", "value": "140px", "mono": true },
+              { "key": "Padding H", "value": "0px (derived)", "mono": true },
+              { "key": "Padding V", "value": "0px (derived)", "mono": true },
+              { "key": "Gap", "value": "12px (derived)", "mono": true },
+              { "key": "Alignment", "value": "Leading (derived)", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBCarousel</span><span class=\"syn-punc\">(</span>items<span class=\"syn-punc\">: </span>cards<span class=\"syn-punc\">) {</span> card <span class=\"syn-kw\">in</span>\n    <span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>card<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBCarousel</span><span class=\"syn-punc\">(</span>items <span class=\"syn-eq\">=</span> cards<span class=\"syn-punc\">) {</span> card <span class=\"syn-punc\">-></span>\n    <span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>card<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "swift": "EBCarouselCard(\n    title: \"Title\",\n    description: \"Description here. Description here.\",\n    violator: \"New\"\n)",
+        "compose": "EBCarouselCard(\n    title = \"Title\",\n    description = \"Description here. Description here.\",\n    violator = \"New\"\n)"
       },
       {
         "cardKey": "with-icon",
         "demoKey": "with-icon",
-        "demoControls": [],
-        "title": "With icon",
-        "node": "23:121322",
-        "description": "Default layout + a bottom-left icon badge on the banner. A gradient shadow along the lower third improves icon contrast against bright imagery.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"ccard-spec-2\"><div class=\"eb-preview eb-preview-ccard eb-preview-ccard--with-icon\"><div class=\"eb-preview-ccard__banner\"><div class=\"eb-preview-ccard__banner-img\"></div><div class=\"eb-preview-ccard__banner-dimmer\"></div><div class=\"eb-preview-ccard__banner-shadow\"></div><div class=\"eb-preview-ccard__banner-icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" width=\"16\" height=\"16\"><circle cx=\"12\" cy=\"12\" r=\"10\" fill=\"#C2C6CF\"></circle></svg></div></div><div class=\"eb-preview-ccard__content\"><p class=\"eb-preview-ccard__title\">Title</p><p class=\"eb-preview-ccard__desc\">Description here.<br>Description here.</p></div></div></div>",
+        "demoControls": carouselCardControls,
+        "title": "With Icon",
+        "node": "5655:42597",
+        "description": "",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"ccard-spec-2\"><div class=\"eb-preview eb-preview-ccard eb-preview-ccard--with-icon\"><div class=\"eb-preview-ccard__banner\"><div class=\"eb-preview-ccard__banner-img\"></div><div class=\"eb-preview-ccard__banner-dimmer\"></div><div class=\"eb-preview-ccard__banner-shadow\"></div><div class=\"eb-preview-ccard__banner-icon\"></div><div class=\"eb-preview-ccard__violator\">New</div></div><div class=\"eb-preview-ccard__content\"><p class=\"eb-preview-ccard__title\">Title</p><p class=\"eb-preview-ccard__desc\">Description here.<br>Description here.</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Type", "value": "with-icon", "prop": "type" },
-              { "key": "Has icon", "value": "Yes" },
-              { "key": "Has description", "value": "Yes" }
+              { "key": "Variant", "value": "With Icon" },
+              { "key": "isLoading", "value": "false", "prop": "isLoading" },
+              { "key": "isPressed", "value": "false", "prop": "isPressed" },
+              { "key": "hasViolator", "value": "true", "prop": "hasViolator" },
+              { "key": "Title", "value": "Title", "prop": "title" },
+              { "key": "Description", "value": "Description here. Description here.", "prop": "description" },
+              { "key": "Banner", "value": "Asset placeholder" },
+              { "key": "⤷ Violator", "value": "Badge · New" },
+              { "key": "⤷ Icon", "value": "empty slot · 34 × 34" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/card/bg" },
-              { "key": "Icon container bg", "value": "#E8F1FF", "token": "main/card/icon/bg" },
-              { "key": "Title", "value": "#0A2757", "token": "main/card/title" },
-              { "key": "Description", "value": "#3C4A5C", "token": "main/card/description" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width", "value": "280px", "mono": true },
-              { "key": "Min height", "value": "160px", "mono": true },
-              { "key": "Padding", "value": "20px", "mono": true },
-              { "key": "Corner radius", "value": "16px", "mono": true },
-              { "key": "Icon container", "value": "48 × 48px", "mono": true },
-              { "key": "Icon size", "value": "24 × 24px", "mono": true },
-              { "key": "Gap", "value": "12px", "mono": true }
+              { "key": "#title", "value": "#2340A9", "token": "text/color-text-strong", "swatch": true, "variants": { "isPressed:true": { "value": "#445C85", "token": "text/color-text-weak" } } },
+              { "key": "#description", "value": "#6780A9", "token": "text/color-text-weaker", "swatch": true, "variants": { "isPressed:true": { "value": "#90A8D0", "token": "text/color-text-weakest" } } },
+              { "key": "⤷ Icon fill", "value": "#005CE5", "token": "bg/color-bg-primary", "swatch": true },
+              { "key": "Violator label", "value": "#FFFFFF", "token": "text/color-text-inverse", "swatch": true },
+              { "key": "Violator background", "value": "#1972F9", "token": "bg/brand-bg-primary", "swatch": true },
+              { "key": "Banner dimmer", "value": "#E6E1EF · 40% · Multiply", "token": "— plain colour by design" }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Title style", "value": "Heading/Small", "mono": true },
-              { "key": "Description style", "value": "Body/Small", "mono": true }
+              { "key": "#title", "value": "Primary/Headlines/Block", "mono": true },
+              { "key": "#description", "value": "Secondary/Bold/Caption", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "Hug · 214px at the shipped placeholder", "mono": true, "variants": { "isLoading:true": { "value": "214px" } } },
+              { "key": "Width", "value": "140px", "mono": true },
+              { "key": "Padding H", "value": "0px (derived)", "mono": true },
+              { "key": "Padding V", "value": "0px (derived)", "mono": true },
+              { "key": "Gap", "value": "12px (derived)", "mono": true },
+              { "key": "Alignment", "value": "Leading (derived)", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Send money\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Free transfers to GCash users\"</span><span class=\"syn-punc\">,</span>\n    leadingIcon<span class=\"syn-punc\">: </span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"paperplane.fill\"</span><span class=\"syn-punc\">))</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Send money\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Free transfers to GCash users\"</span><span class=\"syn-punc\">,</span>\n    leadingIcon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-punc\">.</span>Send<span class=\"syn-punc\">, </span><span class=\"syn-kw\">null</span><span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "EBCarouselCard(\n    title: \"Title\",\n    description: \"Description here. Description here.\",\n    violator: \"New\",\n    icon: Image(systemName: \"star.fill\")\n)",
+        "compose": "EBCarouselCard(\n    title = \"Title\",\n    description = \"Description here. Description here.\",\n    violator = \"New\",\n    icon = { Icon(Icons.Filled.Star, null) }\n)"
       },
       {
-        "cardKey": "skeleton-loader",
-        "demoKey": "skeleton-loader",
-        "demoControls": [],
-        "title": "Skeleton loader",
-        "node": "23:121334",
-        "description": "Loading placeholder: banner becomes a flat light-gray block; title and description become bar placeholders. Card total height drops to 212 (vs 215 default) due to the 16 top gap in the content block.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"ccard-spec-3\"><div class=\"eb-preview eb-preview-ccard eb-preview-ccard--skeleton\"><div class=\"eb-preview-ccard__banner eb-preview-ccard__banner--skeleton\"></div><div class=\"eb-preview-ccard__content eb-preview-ccard__content--skeleton\"><div class=\"eb-preview-ccard__sk eb-preview-ccard__sk--title\"></div><div class=\"eb-preview-ccard__sk eb-preview-ccard__sk--desc\"></div><div class=\"eb-preview-ccard__sk eb-preview-ccard__sk--desc2\"></div></div></div></div>",
+        "cardKey": "discount",
+        "demoKey": "discount",
+        "demoControls": discountControls,
+        "title": "Discount",
+        "node": "5655:42551",
+        "description": "",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"ccard-spec-3\"><div class=\"eb-preview eb-preview-ccard eb-preview-ccard--discount\"><div class=\"eb-preview-ccard__banner\"><div class=\"eb-preview-ccard__banner-img\"></div><div class=\"eb-preview-ccard__banner-dimmer\"></div><div class=\"eb-preview-ccard__banner-shadow\"></div><div class=\"eb-preview-ccard__violator\">New</div></div><div class=\"eb-preview-ccard__content eb-preview-ccard__content--discount\"><p class=\"eb-preview-ccard__label\">Label here<br>Label here</p><p class=\"eb-preview-ccard__amount\">PHP 200.00</p></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Type", "value": "skeleton", "prop": "type" },
-              { "key": "State", "value": "Loading" },
-              { "key": "Has content", "value": "No" }
+              { "key": "Variant", "value": "Discount" },
+              { "key": "isLoading", "value": "false", "prop": "isLoading" },
+              { "key": "isPressed", "value": "false", "prop": "isPressed" },
+              { "key": "hasViolator", "value": "true", "prop": "hasViolator" },
+              { "key": "Title", "value": "Label here / Label here", "prop": "title" },
+              { "key": "Amount", "value": "PHP 200.00", "prop": "amount" },
+              { "key": "Banner", "value": "Asset placeholder" },
+              { "key": "⤷ Violator", "value": "Badge · New" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Skeleton bg", "value": "#EEF2F9", "token": "main/skeleton/bg" },
-              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/card/bg" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width", "value": "280px", "mono": true },
-              { "key": "Min height", "value": "160px", "mono": true },
-              { "key": "Padding", "value": "20px", "mono": true },
-              { "key": "Corner radius", "value": "16px", "mono": true },
-              { "key": "Bar 1 size", "value": "120 × 12px", "mono": true },
-              { "key": "Bar 2 size", "value": "180 × 8px", "mono": true }
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
+              { "key": "#title", "value": "#0A2757", "token": "text/color-text", "swatch": true, "variants": { "isPressed:true": { "value": "#445C85", "token": "text/color-text-weak" } } },
+              { "key": "#amount", "value": "#2340A9", "token": "text/color-text-strong", "swatch": true, "variants": { "isPressed:true": { "value": "#90A8D0", "token": "text/color-text-weakest" } } },
+              { "key": "Violator label", "value": "#FFFFFF", "token": "text/color-text-inverse", "swatch": true },
+              { "key": "Violator background", "value": "#1972F9", "token": "bg/brand-bg-primary", "swatch": true },
+              { "key": "Banner dimmer", "value": "#E6E1EF · 40% · Multiply", "token": "— plain colour by design" }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "—", "value": "No text in skeleton state" }
+              { "key": "#title", "value": "Primary/Multi-line Label/Small", "mono": true },
+              { "key": "#amount", "value": "Primary/Label/Fine", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "Hug · 212px at the shipped placeholder", "mono": true, "variants": { "isLoading:true": { "value": "212px" } } },
+              { "key": "Width", "value": "140px", "mono": true },
+              { "key": "Padding H", "value": "0px (derived)", "mono": true },
+              { "key": "Padding V", "value": "0px (derived)", "mono": true },
+              { "key": "Gap", "value": "0px (derived)", "mono": true },
+              { "key": "Alignment", "value": "Leading (derived)", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>isLoading<span class=\"syn-punc\">: </span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    isLoading <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "EBCarouselCard(\n    variant: .discount,\n    title: \"Label here\",\n    amount: \"PHP 200.00\",\n    violator: \"New\"\n)",
+        "compose": "EBCarouselCard(\n    variant = EBCarouselCardVariant.Discount,\n    title = \"Label here\",\n    amount = \"PHP 200.00\",\n    violator = \"New\"\n)"
       }
     ],
     colorsTables: [
-      // Card 1 — Default carousel slide
-      buildStatelessColorsTable({
-        title: 'Default — Colors',
-        description: 'Promotional carousel card with heading, description, and pagination dots.',
+      buildInteractiveColorsTable({
+        title: "Default — Colors",
+        description: "The card paints no surface of its own. Both text roles shift one step weaker when isPressed=true.",
         rows: [
-          { role: 'Surface',      token: 'bg/color-bg-main',           value: '#FFFFFF' },
-          { role: 'Heading',      token: 'carousel/color/label-header', value: '#2340A9' },
-          { role: 'Description',  token: 'carousel/color/description', value: '#6780A9' },
-          { role: 'Active dot',   token: 'bg/color-bg-primary',        value: '#005CE5' },
-          { role: 'Inactive dot', token: 'bg/color-bg-strong',         value: '#EEF2F9' },
+          { role: "#title", token: "text/color-text-strong · pressed text/color-text-weak",
+            default: "#2340A9", pressed: "#445C85", disabled: '–' },
+          { role: "#description", token: "text/color-text-weaker · pressed text/color-text-weakest",
+            default: "#6780A9", pressed: "#90A8D0", disabled: '–' },
+          { role: "Violator label", token: "text/color-text-inverse",
+            default: "#FFFFFF", pressed: "#FFFFFF", disabled: '–' },
+          { role: "Violator background", token: "bg/brand-bg-primary",
+            default: "#1972F9", pressed: "#1972F9", disabled: '–' },
+          { role: "Banner dimmer", token: "— plain colour by design",
+            default: "#E6E1EF · 40% · Multiply", pressed: "#E6E1EF · 40% · Multiply", disabled: '–' },
         ],
       }),
-      // Card 2 — Icon-led card
-      buildStatelessColorsTable({
-        title: 'With Icon — Colors',
-        description: 'Icon-led carousel card with a tinted icon container and stacked title/description.',
+      buildInteractiveColorsTable({
+        title: "With Icon — Colors",
+        description: "Same palette as Default, plus the circular ⤷ Icon slot behind whichever DS icon is dropped in.",
         rows: [
-          { role: 'Surface bg',         token: 'main/card/bg',          value: '#FFFFFF' },
-          { role: 'Icon container bg',  token: 'main/card/icon/bg',     value: '#E8F1FF' },
-          { role: 'Title',              token: 'main/card/title',       value: '#0A2757' },
-          { role: 'Description',        token: 'main/card/description', value: '#3C4A5C' },
+          { role: "#title", token: "text/color-text-strong · pressed text/color-text-weak",
+            default: "#2340A9", pressed: "#445C85", disabled: '–' },
+          { role: "#description", token: "text/color-text-weaker · pressed text/color-text-weakest",
+            default: "#6780A9", pressed: "#90A8D0", disabled: '–' },
+          { role: "⤷ Icon fill", token: "bg/color-bg-primary",
+            default: "#005CE5", pressed: "#005CE5", disabled: '–' },
+          { role: "Violator label", token: "text/color-text-inverse",
+            default: "#FFFFFF", pressed: "#FFFFFF", disabled: '–' },
+          { role: "Violator background", token: "bg/brand-bg-primary",
+            default: "#1972F9", pressed: "#1972F9", disabled: '–' },
+          { role: "Banner dimmer", token: "— plain colour by design",
+            default: "#E6E1EF · 40% · Multiply", pressed: "#E6E1EF · 40% · Multiply", disabled: '–' },
         ],
       }),
-      // Card 3 — Skeleton
-      buildStatelessColorsTable({
-        title: 'Skeleton — Colors',
-        description: 'Loading state — content slots become rounded grey rectangles on the card surface.',
+      buildInteractiveColorsTable({
+        title: "Discount — Colors",
+        description: "Discount carries a real white content surface so it can sit on non-white backgrounds. Its title uses a darker token than the other two versions, and is deliberately smaller so a two-line label fits.",
         rows: [
-          { role: 'Skeleton bg', token: 'main/skeleton/bg', value: '#EEF2F9' },
-          { role: 'Surface bg',  token: 'main/card/bg',     value: '#FFFFFF' },
+          { role: "Surface", token: "bg/color-bg-main",
+            default: "#FFFFFF", pressed: "#FFFFFF", disabled: '–' },
+          { role: "#title", token: "text/color-text · pressed text/color-text-weak",
+            default: "#0A2757", pressed: "#445C85", disabled: '–' },
+          { role: "#amount", token: "text/color-text-strong · pressed text/color-text-weakest",
+            default: "#2340A9", pressed: "#90A8D0", disabled: '–' },
+          { role: "Violator label", token: "text/color-text-inverse",
+            default: "#FFFFFF", pressed: "#FFFFFF", disabled: '–' },
+          { role: "Violator background", token: "bg/brand-bg-primary",
+            default: "#1972F9", pressed: "#1972F9", disabled: '–' },
+          { role: "Banner dimmer", token: "— plain colour by design",
+            default: "#E6E1EF · 40% · Multiply", pressed: "#E6E1EF · 40% · Multiply", disabled: '–' },
         ],
       }),
     ],
@@ -447,48 +572,94 @@ export const carouselCard: ComponentData = {
   "code": {
     "installation": {
       "planned": true,
-      "blocks": []
+      "blocks": [
+        {
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:carousel-card:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>carouselcard<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+        }
+      ],
+      "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
     },
     "propertyMapping": {
+      "description": "Figma properties mapped to the intended native parameters, in the order the Figma property panel lists them.",
       "rows": [
         {
-          "figma": "<code>type: default | with icon | skeleton loader</code>",
-          "swift": "<code>variant: default | with-icon</code> <span class=\"muted\">+</span> <code>isLoading: Boolean</code>",
-          "compose": "<code>variant: EBCarouselCardVariant</code> <span class=\"muted\">+</span> <code>isLoading: Bool</code>"
+          "figma": "Variant — Default, With Icon, Discount",
+          "swift": "<code>variant: EBCarouselCardVariant</code>",
+          "compose": "<code>variant = EBCarouselCardVariant.Default / WithIcon / Discount</code>"
         },
         {
-          "figma": "(hardcoded raster)",
-          "swift": "<code>image: Frame</code> (slot)",
-          "compose": "<code>image: () -&gt; Image</code>"
+          "figma": "isLoading — true, false",
+          "swift": "<code>isLoading: Bool = false</code>",
+          "compose": "<code>isLoading: Boolean = false</code>"
         },
         {
-          "figma": "(hardcoded text)",
+          "figma": "isPressed — true, false",
+          "swift": "<code>isPressed: Bool = false</code> — driven by the press gesture",
+          "compose": "<code>isPressed: Boolean = false</code> — driven by the press gesture"
+        },
+        {
+          "figma": "hasViolator — true, false",
+          "swift": "<code>showViolator: Bool = true</code>",
+          "compose": "<code>showViolator: Boolean = true</code>"
+        },
+        {
+          "figma": "⤷ Violator (slot)",
+          "swift": "<code>@ViewBuilder violator: () -> Violator</code>",
+          "compose": "<code>violator: @Composable () -> Unit</code>"
+        },
+        {
+          "figma": "⤷ Icon (slot) — With Icon only",
+          "swift": "<code>@ViewBuilder icon: (() -> Icon)?</code>",
+          "compose": "<code>icon: (@Composable () -> Unit)? = null</code>"
+        },
+        {
+          "figma": "Banner (slot)",
+          "swift": "<code>@ViewBuilder banner: () -> Banner</code>",
+          "compose": "<code>banner: @Composable BoxScope.() -> Unit</code>"
+        },
+        {
+          "figma": "Title (text)",
           "swift": "<code>title: String</code>",
           "compose": "<code>title: String</code>"
         },
         {
-          "figma": "(hardcoded text)",
-          "swift": "<code>description: String</code>",
-          "compose": "<code>description: String?</code>"
+          "figma": "Description (text) — Default, With Icon",
+          "swift": "<code>description: String?</code>",
+          "compose": "<code>description: String? = null</code>"
         },
         {
-          "figma": "(hardcoded circle)",
-          "swift": "<code>icon?: Icon</code> (slot)",
-          "compose": "<code>icon: EBIcon?</code>"
-        },
-        {
-          "figma": "(hardcoded purple multiply)",
-          "swift": "<code>overlay?: Color</code> (token)",
-          "compose": "<code>overlay: Color?</code>"
-        },
-        {
-          "figma": "(not modeled)",
-          "swift": "<code>onTap?: () -&gt; Void</code>",
-          "compose": "<code>onTap: (() -&gt; Void)?</code>"
+          "figma": "Amount (text) — Discount",
+          "swift": "<code>amount: String?</code>",
+          "compose": "<code>amount: String? = null</code>"
         }
       ]
     },
-    "usageSnippets": [],
+    "usageSnippets": [
+      {
+        "subheading": "Default — banner, title, description",
+        "swift": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.default</span><span class=\"syn-punc\">,</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Description here.\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCarouselCardVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Default</span><span class=\"syn-punc\">,</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description here.\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+      },
+      {
+        "subheading": "With Icon — adds the icon slot on the banner",
+        "swift": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.withIcon</span><span class=\"syn-punc\">,</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Description here.\"</span><span class=\"syn-punc\">,</span>\n    icon<span class=\"syn-punc\">:</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCarouselCardVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">WithIcon</span><span class=\"syn-punc\">,</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description here.\"</span><span class=\"syn-punc\">,</span>\n    icon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span>Icons<span class=\"syn-punc\">.</span>Filled<span class=\"syn-punc\">.</span>Star<span class=\"syn-punc\">,</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+      },
+      {
+        "subheading": "Discount — title and price, no description",
+        "swift": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.discount</span><span class=\"syn-punc\">,</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Label here\"</span><span class=\"syn-punc\">,</span>\n    amount<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"PHP 200.00\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCarouselCardVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Discount</span><span class=\"syn-punc\">,</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label here\"</span><span class=\"syn-punc\">,</span>\n    amount <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"PHP 200.00\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+      }
+    ],
     "accessibility": [
       {
         "requirement": "Card as a button",
@@ -507,8 +678,8 @@ export const carouselCard: ComponentData = {
       },
       {
         "requirement": "Min touch target",
-        "ios": "Card is 140×215 — comfortably above 44 pt ✓",
-        "android": "140 dp × 215 dp — above 48 dp ✓"
+        "ios": "Card is 140×214 — comfortably above 44 pt ✓",
+        "android": "140 dp × 214 dp — above 48 dp ✓"
       },
       {
         "requirement": "Loading state",
@@ -521,7 +692,24 @@ export const carouselCard: ComponentData = {
         "android": "<code>Modifier.focusable()</code> + border in <code>border/focus</code> token."
       }
     ],
-    "usageGuidelines": [],
+    "usageGuidelines": [
+      {
+        "doText": "Use <code>Discount</code> when the price is the point — a voucher, a deal, a promo tile.",
+        "dontText": "Don't use it for editorial cards. Its title is smaller so two lines of label fit, which makes headlines read as body text."
+      },
+      {
+        "doText": "Put campaign artwork in the <code>Banner</code> slot from the product's own asset pipeline.",
+        "dontText": "Don't add campaign images to the design system library — the slot exists so they never have to be."
+      },
+      {
+        "doText": "Let the card size to its own text. Title and description both wrap.",
+        "dontText": "Don't pin a height. All three versions hug their content, and a fixed height clips a longer title."
+      },
+      {
+        "doText": "Turn <code>hasViolator</code> off when there is nothing to flag.",
+        "dontText": "Don't repurpose the violator for a price or a discount — that is what <code>Amount</code> is for."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
@@ -540,9 +728,9 @@ export const carouselCard: ComponentData = {
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "The one raw hex flagged in review — the <code>#e6e1ef</code> dimmer — is an optional decorative overlay on the asset, so it is deliberately unbound. The read-only review tooling can't see variable bindings, so the wider set is recorded as unverified rather than failing; the token audit recommendation stays open to close it out."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Every colour is bound and confirmed by design: text roles on <code>text/color-text-*</code>, the icon circle on <code>bg/color-bg-primary</code>, the violator on <code>bg/brand-bg-primary</code>, Discount's surface on <code>bg/color-bg-main</code>. The <code>#e6e1ef</code> banner dimmer is a plain colour on purpose — it is tuned per asset so the badge and text above it stay readable."
       },
       {
         "id": "C4",
@@ -575,39 +763,18 @@ export const carouselCard: ComponentData = {
     ],
     "codeConnect": [],
     "variants": {
-      "total": 3,
-      "description": "<code>type</code> (3) = <strong>3 variants</strong>. <code>default</code> and <code>with icon</code> share the same overall dimensions (140 × 215); <code>skeleton loader</code> is 140 × 212 due to a different content padding.",
-      "columns": [
-        "type",
-        "Node",
-        "Dimensions",
-        "Anatomy"
-      ],
+      "total": 8,
+      "description": "3 <code>Variant</code> × 2 <code>isLoading</code> × 2 <code>isPressed</code> = 12 combinations, of which <strong>8 are built</strong>. <code>With Icon</code> has no loading version — a skeleton hides the icon, so it reuses Default's. The three loading-and-pressed pairings cannot occur.",
+      "columns": ["Variant", "isLoading", "isPressed", "Height", "Node"],
       "rows": [
-        {
-          "cells": [
-            "<strong>default</strong>",
-            "<code>23:121312</code>",
-            "140 × 215",
-            "Banner + title + 2-line description."
-          ]
-        },
-        {
-          "cells": [
-            "<strong>with icon</strong>",
-            "<code>23:121322</code>",
-            "140 × 215",
-            "Default + gradient shadow + bottom-left 30×30 icon badge on banner."
-          ]
-        },
-        {
-          "cells": [
-            "<strong>skeleton loader</strong>",
-            "<code>23:121334</code>",
-            "140 × 212",
-            "Flat banner + 3 bar placeholders (title 16, desc 10, desc 10 @ 97w)."
-          ]
-        }
+        { "cells": ["Default", "false", "false", "214", "5653:42029"] },
+        { "cells": ["With Icon", "false", "false", "214", "5655:42597"] },
+        { "cells": ["Discount", "false", "false", "212", "5655:42551"] },
+        { "cells": ["Default", "false", "true", "214", "5670:43340"] },
+        { "cells": ["With Icon", "false", "true", "214", "5670:43348"] },
+        { "cells": ["Discount", "false", "true", "212", "5670:43358"] },
+        { "cells": ["Default", "true", "false", "214", "5663:43019"] },
+        { "cells": ["Discount", "true", "false", "212", "5663:43020"] }
       ]
     }
   },

@@ -85,7 +85,10 @@ function _ccardRender(opts) {
   /* Content */
   if (isDiscount) {
     html += '<div class="eb-preview-ccard__content eb-preview-ccard__content--discount">';
-    html += '<p class="eb-preview-ccard__label">' + _ccardEscape(o.title) + '</p>';
+    /* Discount's label is the one place we show the two-line case that
+       Figma's shared placeholder cannot: the Title property carries one
+       value for every variant, so the component reads "Title" there. */
+    html += '<p class="eb-preview-ccard__label">' + _ccardEscape(o.title).split('\n').join('<br>') + '</p>';
     html += '<p class="eb-preview-ccard__amount">' + _ccardEscape(o.amount) + '</p>';
     html += '</div>';
   } else {
@@ -121,11 +124,17 @@ function _ccardUpdate() {
   var descRow = document.getElementById('ccard-row-desc');
   if (descRow) descRow.style.display = variant === 'discount' ? 'none' : '';
 
+  /* One title input serves all three versions, so an untouched "Title"
+     on Discount shows the two-line label instead — the case Figma's
+     shared placeholder cannot demonstrate. Typing overrides it. */
+  var titleVal = getVal('ccard-ctrl-title', 'Title');
+  if (variant === 'discount' && titleVal === 'Title') titleVal = 'Label here\nLabel here';
+
   preview.innerHTML = _ccardRender({
     variant:   variant,
     isLoading: getVal('ccard-ctrl-isloading', 'false'),
     isPressed: getVal('ccard-ctrl-ispressed', 'false'),
-    title:     getVal('ccard-ctrl-title', 'Title'),
+    title:     titleVal,
     desc:      getVal('ccard-ctrl-desc', 'Description here. Description here.'),
     amount:    getVal('ccard-ctrl-amount', 'PHP 200.00'),
     violator:  getVal('ccard-ctrl-violator', 'New')
@@ -133,42 +142,63 @@ function _ccardUpdate() {
 }
 
 /* ── Spec card state — drives per-card preview + DEV snippets ────────
-   Still keyed on the legacy card keys; _ccardRender maps them forward. */
+   One card per `Variant` value. `isLoading`, `isPressed`, `hasViolator`
+   and `Amount` are panel controls, defaulting to what Figma ships. */
 var _specCards = {
-  'default':         { type: 'default' },
-  'with-icon':       { type: 'with-icon' },
-  'skeleton-loader': { type: 'skeleton' }
+  'default':   { variant: 'default',   isLoading: 'false', isPressed: 'false', hasViolator: 'true', amount: 'PHP 200.00' },
+  'with-icon': { variant: 'with-icon', isLoading: 'false', isPressed: 'false', hasViolator: 'true', amount: 'PHP 200.00' },
+  'discount':  { variant: 'discount',  isLoading: 'false', isPressed: 'false', hasViolator: 'true', amount: 'PHP 200.00', title: 'Label here\nLabel here' }
 };
 window._specCards = _specCards;
 
 var _ccardPreviewIds = {
-  'default':         'ccard-spec-1',
-  'with-icon':       'ccard-spec-2',
-  'skeleton-loader': 'ccard-spec-3'
+  'default':   'ccard-spec-1',
+  'with-icon': 'ccard-spec-2',
+  'discount':  'ccard-spec-3'
 };
 
+/* `true` unless a control has explicitly turned it off. */
+function _ccardOn(card, prop, dflt) {
+  var v = card[prop];
+  if (v === undefined) return dflt;
+  return v === true || v === 'true';
+}
+
+/* Both snippets are built from the same argument list so the two
+   languages can never drift apart. */
+function _ccardArgs(card, sep) {
+  var variant = card.variant || 'default';
+  var args = [];
+  if (variant === 'discount') args.push('variant' + sep + '.discount');
+  if (variant === 'discount') {
+    args.push('title' + sep + '"Title"');
+    args.push('amount' + sep + '"' + (card.amount || 'PHP 200.00') + '"');
+  } else {
+    args.push('title' + sep + '"Title"');
+    args.push('description' + sep + '"Description here. Description here."');
+  }
+  if (_ccardOn(card, 'hasViolator', true)) args.push('violator' + sep + '"New"');
+  if (_ccardOn(card, 'isLoading', false)) args.push('isLoading' + sep + 'true');
+  if (_ccardOn(card, 'isPressed', false)) args.push('isPressed' + sep + 'true');
+  return args;
+}
+
 function buildSwiftSnippet(cardKey, card) {
-  var t = card.type || 'default';
-  if (t === 'skeleton') return 'EBCarouselCard(isLoading: true)';
-  if (t === 'discount') {
-    return 'EBCarouselCard(\n    variant: .discount,\n    title: "Title",\n    amount: "PHP 200.00"\n)';
+  var args = _ccardArgs(card, ': ');
+  if ((card.variant || 'default') === 'with-icon') {
+    args.push('icon: Image(systemName: "star.fill")');
   }
-  if (t === 'with-icon') {
-    return 'EBCarouselCard(\n    title: "Title",\n    description: "Description",\n    icon: Image(systemName: "star.fill")\n)';
-  }
-  return 'EBCarouselCard(\n    title: "Title",\n    description: "Description"\n)';
+  return 'EBCarouselCard(\n    ' + args.join(',\n    ') + '\n)';
 }
 
 function buildComposeSnippet(cardKey, card) {
-  var t = card.type || 'default';
-  if (t === 'skeleton') return 'EBCarouselCard(\n    isLoading = true\n)';
-  if (t === 'discount') {
-    return 'EBCarouselCard(\n    variant = EBCarouselCardVariant.Discount,\n    title = "Title",\n    amount = "PHP 200.00"\n)';
+  var args = _ccardArgs(card, ' = ').map(function (a) {
+    return a.replace('variant = .discount', 'variant = EBCarouselCardVariant.Discount');
+  });
+  if ((card.variant || 'default') === 'with-icon') {
+    args.push('icon = { Icon(Icons.Filled.Star, null) }');
   }
-  if (t === 'with-icon') {
-    return 'EBCarouselCard(\n    title = "Title",\n    description = "Description",\n    icon = { Icon(Icons.Filled.Star, null) }\n)';
-  }
-  return 'EBCarouselCard(\n    title = "Title",\n    description = "Description"\n)';
+  return 'EBCarouselCard(\n    ' + args.join(',\n    ') + '\n)';
 }
 
 function getSnippet(cardKey, lang, card) {
@@ -183,10 +213,17 @@ function updateSpecCard(cardStyle, prop, value) {
 
   var previewId = _ccardPreviewIds[cardStyle];
   var previewEl = previewId ? document.getElementById(previewId) : null;
-  if (previewEl) previewEl.innerHTML = _ccardRender({ type: card.type });
-
-  var spType = document.querySelector('[data-sp="' + cardStyle + '-type"]');
-  if (spType) spType.textContent = card.type;
+  if (previewEl) {
+    previewEl.innerHTML = _ccardRender({
+      variant:   card.variant,
+      isLoading: card.isLoading,
+      isPressed: card.isPressed,
+      title:     card.title,
+      desc:      card.description,
+      amount:    card.amount,
+      violator:  _ccardOn(card, 'hasViolator', true) ? 'New' : ''
+    });
+  }
 
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
   if (devView) {
@@ -208,16 +245,9 @@ function _ccardInit() {
   if (ctx) ctx.innerHTML = _ccardContextMarkup();
   _ccardUpdate();
 
-  var s1 = document.getElementById('ccard-spec-1');
-  if (s1) s1.innerHTML = _ccardRender({type:'default'});
-
-  var s2 = document.getElementById('ccard-spec-2');
-  if (s2) s2.innerHTML = _ccardRender({type:'with-icon'});
-
-  var s3 = document.getElementById('ccard-spec-3');
-  if (s3) s3.innerHTML = _ccardRender({type:'skeleton'});
-
-  Object.keys(_specCards).forEach(function(k){ updateSpecCard(k, 'type', _specCards[k].type); });
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'variant', _specCards[k].variant);
+  });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _ccardInit);
