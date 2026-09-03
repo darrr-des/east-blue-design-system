@@ -204,4 +204,10 @@ export const componentMap: Record<string, ComponentData> = {
  * which live on `meta`. Order follows componentMap's insertion order; every
  * consumer sorts for display anyway.
  */
-export const componentManifest = Object.values(componentMap).map((c) => c.meta);
+export const componentManifest = Object.values(componentMap).map((c) => ({
+  ...c.meta,
+  /* The sidebar status dot needs to know whether anything is still open, not
+     just what the badges say — a component can read `refine` while having
+     nothing left to do. Derived here so it cannot drift from the data file. */
+  openIssues: c.overview?.open?.length ?? 0,
+}));

@@ -552,9 +552,35 @@ The Button component is the baseline. Every component's Style tab spec cards mus
 
 ### Typography Section Rules
 
-- First row: DS text style reference name (e.g. `Primary/Label/Large`).
-- Following rows: Font, Size, Tracking, Line-height.
-- Multiple text layers (e.g. Accordion's Label + Description) get a subsection per layer.
+**Text style names only.** One row per text layer: the layer name on the left, the exact DS text style path on the right. Nothing else.
+
+```ts
+{ "key": "Title",       "value": "Primary/Headlines/Block", "mono": true },   // ✅
+{ "key": "Description", "value": "Secondary/Heavy/Large",   "mono": true }
+
+{ "key": "Font", "value": "Proxima Soft Bold" },                              // ❌ removed
+{ "key": "Size", "value": "18px" },                                          // ❌ removed
+{ "key": "Tracking", "value": "0.25" },                                      // ❌ removed
+{ "key": "Line-height", "value": "23px" }                                    // ❌ removed
+```
+
+No `Font`, `Size`, `Tracking` or `Line-height` rows. Those live in the text style and resolve from the token database — repeating them on the card is what goes stale, and it hides which variable mode the numbers describe.
+
+**Resolving the style name.** `astro-site/src/data/typography.ts` holds all 53 DS text styles with their Figma style keys. A shared-library style reports an opaque `textStyleId` (`S:4b5515…`); `resolveStyleId()` turns it into the style path. The hash in that id is the key the database stores.
+
+**Three outcomes per text layer:**
+
+| Layer reports | Row value | Open issue |
+|---|---|---|
+| `textStyleId` that resolves | the style name | — |
+| No `textStyleId` — raw values | `—` | Yes · `C3 · Token Coverage` |
+| `textStyleId` that doesn't resolve | `—` | Yes · `C3 · Token Coverage` |
+
+Exception: `Component/Balances/Label` exists in Figma but is excluded from the database (`EXCLUDED_STYLE_NAMES`) — a layer using it fails to resolve and is **not** an issue.
+
+Never write a font spec in place of a style name, and never guess a name from the font and size. A failed lookup is the finding.
+
+Full logic: [Review Mds/STYLE-REVIEW-GUIDE.md](Review%20Mds/STYLE-REVIEW-GUIDE.md).
 
 ### Layout Section Rules
 
