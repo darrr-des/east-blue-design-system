@@ -176,6 +176,14 @@ function getSnippet(cardKey, lang, card) {
   return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
 }
 window.getSnippet = getSnippet;
+/* Show or hide one control row on a spec card's panel. */
+function _citToggleRow(cardKey, prop, show) {
+  var row = document.querySelector(
+    '.demo-panel-row[data-panel-card="' + cardKey + '"][data-panel-prop="' + prop + '"]'
+  );
+  if (row) row.style.display = show ? '' : 'none';
+}
+
 function updateSpecCard(cardStyle, prop, value) {
   var card = _specCards[cardStyle];
   if (!card) return;
@@ -185,6 +193,11 @@ function updateSpecCard(cardStyle, prop, value) {
   var previewId = _citPreviewIds[cardStyle];
   var previewEl = previewId ? document.getElementById(previewId) : null;
   if (previewEl) previewEl.innerHTML = _citRender(card);
+
+  /* A text field is only useful when its layer is on screen: the preamble
+     needs TopElement=Preamble, the description needs hasDescription=true. */
+  _citToggleRow(cardStyle, 'preamble', card.topElement === 'preamble');
+  _citToggleRow(cardStyle, 'desc', card.hasDescription !== 'false');
 
   /* Update Properties readouts */
 

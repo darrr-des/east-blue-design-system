@@ -90,7 +90,7 @@ const updateKey = demoKey || cardKey;
               const offValue = isToggle ? (row.options[0]?.value ?? 'no')  : '';
               const isOn     = isToggle && row.defaultValue === onValue;
               return (
-                <div class="demo-panel-row">
+                <div class="demo-panel-row" data-panel-card={updateKey} data-panel-prop={row.prop}>
                   <span class="demo-panel-label">{row.label}</span>
                   {isInput ? (
                     <input
