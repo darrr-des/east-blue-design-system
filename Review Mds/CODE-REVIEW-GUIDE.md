@@ -112,8 +112,22 @@ SPM URL + Gradle dependency + the import lines, one block each — using the **c
 | Block | Canonical form |
 |---|---|
 | SPM | `https://github.com/AY-Org/eb-ds-ios` |
-| Gradle | `com.eastblue.ds:<slug>:<version>` |
-| Import | `import EastBlueDS` (SwiftUI) · `import com.eastblue.ds.<slug>.*` (Compose) |
+| Gradle | `com.eastblue.ds:<artifact>:<version>` |
+| Import | `import EastBlueDS` (SwiftUI) · `import com.eastblue.ds.<package>.*` (Compose) |
+
+**How the slug becomes each identifier** — the three forms follow different language rules, so derive each one explicitly. For `bottom-sheet`:
+
+| Position | Hyphen legal? | Rule | Result |
+|---|---|---|---|
+| Gradle `<artifact>` | ✅ yes — Maven convention | The slug as-is; components in a family ship under the family's existing bundle (`form-elements`) | `com.eastblue.ds:bottom-sheet:2.0.0` |
+| Kotlin `<package>` | ❌ **no — will not compile** | **Domain-grouped** (decided 2026-09-02): the component's family — `meta.navGroup` lowercased, spaces and hyphens removed. No family → the slug, hyphens stripped | `date-picker-cell` → `com.eastblue.ds.datepicker` · `bottom-sheet` (no family) → `com.eastblue.ds.bottomsheet` |
+| Type names | ❌ no | PascalCase per word | `EBBottomSheet`, `EBBottomSheetSize` |
+
+Domain examples from the current families: `Form Elements` → `form` *(already shipped on 9 components)* · `Date Picker` → `datepicker` · `Action List` → `actionlist` · `Ad Space` → `adspace` · `Toggle` → `toggle`. One package per family keeps imports stable when a family gains a component.
+
+**Known migration debt** (each caught by check 3 on that component's run): **22 components** still on the old `com.gcash.eastblue` coordinates · **41 of 57** install blocks missing the Import line · two orphan imports that predate the rule — `callout` on `.feedback.*` (no such family) and `chat-field` importing both `.form.*` and `.chat.*` (its family is Chat).
+
+Validation reads accordingly: a hyphen inside a Kotlin package segment or type name is 🔴 Broken — it's invalid syntax; a hyphen in a Gradle artifact ID is **correct** and must not be flagged.
 
 **`<version>` is the component's latest changelog version.** Button currently ships `2.0.0` in its install blocks against a `4.1.0` changelog — that drift is exactly what this rule exists to catch.
 

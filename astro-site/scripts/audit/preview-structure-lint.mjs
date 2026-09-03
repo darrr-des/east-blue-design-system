@@ -61,20 +61,41 @@ for (const slug of slugs) {
     }
   }
 
-  /* Pull the livePreviewHtml string. It's JSON-encoded, so wrappers appear
-     as `class=\"demo-layout\"` inside the source. */
-  const livePreviewMatch = raw.match(/"livePreviewHtml":\s*"((?:\\.|[^"\\])*)"/);
-  const livePreview = livePreviewMatch?.[1] || '';
+  /* Pull the livePreviewHtml string.
+     Data files come in two shapes: JSON-style from the migration
+     (`"livePreviewHtml": "…"`, where wrappers appear escaped as
+     `class=\"demo-layout\"`) and hand-written TS (`livePreviewHtml: '…'`,
+     unescaped). Matching only the first reported all three wrappers missing
+     on segmented-control-button, whose markup is in fact correct. */
+  const livePreviewMatch =
+    raw.match(/"livePreviewHtml"\s*:\s*"((?:\\.|[^"\\])*)"/) ||
+    raw.match(/(?<!")\blivePreviewHtml\s*:\s*'((?:\\.|[^'\\])*)'/) ||
+    raw.match(/(?<!")\blivePreviewHtml\s*:\s*"((?:\\.|[^"\\])*)"/);
+  /* Drop the JSON escaping so both shapes test the same way, and match the
+     class inside its attribute rather than assuming it stands alone —
+     `class="demo-preview eb-preview-scope"` is still a demo-preview. */
+  const livePreview = (livePreviewMatch?.[1] || '').replace(/\\"/g, '"');
   const missingLive = REQUIRED_LIVE
-    .filter((req) => !livePreview.includes(`class=\\"${req.class}\\"`))
+    .filter((req) => !new RegExp(`class="[^"]*\\b${req.class}\\b[^"]*"`).test(livePreview))
     .map((req) => req.class);
 
   /* Each spec card must have a non-empty previewHtml so the Style tab
      spec card actually renders a preview above the Properties section.
      Each spec card SHOULD also have demoControls so the preview is
-     interactive (matches the Overview demo panel). */
-  const cardCount = (raw.match(/"cardKey":/g) || []).length;
-  const previewHtmlCount = (raw.match(/"previewHtml":\s*"/g) || []).length;
+     interactive (matches the Overview demo panel).
+
+     A card that legitimately has no controls — every Figma property is
+     the driving property or a slot (STYLE-REVIEW-GUIDE §3.2) — declares
+     `"demoControls": []`. The empty array counts as present below (the
+     regex matches the `[`); only an ABSENT field is a gap. Don't
+     "tighten" the regex to require a non-empty array. */
+  /* Both quoting styles again. Counting only `"cardKey":` meant the four
+     hand-written TS files — segmented-control-button, segmented-control-group,
+     service-item, toggle-segmented-control — reported zero cards, so their
+     spec cards were never checked for previewHtml at all. `previewHtml` is
+     safe to match case-sensitively: `livePreviewHtml` carries a capital P. */
+  const cardCount = (raw.match(/(?:"cardKey"|(?<!")\bcardKey)\s*:/g) || []).length;
+  const previewHtmlCount = (raw.match(/(?:"previewHtml"|(?<!")\bpreviewHtml)\s*:\s*['"]/g) || []).length;
   const demoControlsCount = (raw.match(/demoControls:\s*[a-zA-Z\[]|"demoControls":\s*[\[a-zA-Z]/g) || []).length;
   const previewHtmlGap = cardCount - previewHtmlCount;
   const demoControlsGap = cardCount - demoControlsCount;
@@ -110,7 +131,7 @@ for (const r of results.fail) {
     console.log(`    Style-tab previewHtml gap: ${r.cardCount} card(s) but only ${r.previewHtmlCount} previewHtml — ${r.previewHtmlGap} card(s) render no preview above their Properties section.`);
   }
   if (r.demoControlsGap > 0) {
-    console.log(`    Style-tab demoControls gap: ${r.cardCount} card(s) but only ${r.demoControlsCount} demoControls — ${r.demoControlsGap} card(s) render a preview with no interactive controls.`);
+    console.log(`    Style-tab demoControls gap: ${r.cardCount} card(s) but only ${r.demoControlsCount} demoControls — ${r.demoControlsGap} card(s) render a preview with no interactive controls. If a card legitimately has none (driving property + slots only), declare '"demoControls": []'.`);
   }
 }
 

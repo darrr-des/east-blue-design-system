@@ -66,7 +66,7 @@ function _adcUpdate() {
 
 /* ── Spec card state ─────────────────────────────────────────────── */
 var _specCards = {
-  default: { hascta: 'false', slot: 'promo' }
+  default: { hascta: 'false', slot: 'promo', title: 'Title' }
 };
 window._specCards = _specCards;
 
@@ -79,11 +79,55 @@ function updateSpecCard(cardKey, prop, value) {
     host.innerHTML = _adcRender({
       slot: card.slot,
       hasCTA: card.hascta === 'true',
-      title: 'Title'
+      title: card.title || 'Title'
     });
   }
 }
 window.updateSpecCard = updateSpecCard;
+
+/* ── DEV code, live ──────────────────────────────────────────────────
+   Rebuilds the SwiftUI / Compose snippet from the card's current state
+   so the DEV tab tracks hasCTA. */
+function _adcSpan(cls, text) {
+  return '<span class="' + cls + '">' + text + '</span>';
+}
+
+function _adcSnippet(card, lang) {
+  var p = function (s) { return _adcSpan('syn-punc', s); };
+  var swift = lang === 'swift';
+  var eq = swift ? p(':') + ' ' : ' ' + _adcSpan('syn-eq', '=') + ' ';
+  var lines = ['title' + eq + _adcSpan('syn-str', '"' + _adcEscape(card.title || 'Title') + '"')];
+  if (card.hascta === 'true') {
+    lines.push(swift
+      ? 'action' + eq + _adcSpan('syn-type', 'EBAdCarouselAction') + p('(') +
+        _adcSpan('syn-str', '"Show more"') + p(')') + ' ' + p('{') + ' ' +
+        _adcSpan('syn-cmt', '/* action */') + ' ' + p('}')
+      : 'action' + eq + p('{') + ' ' + _adcSpan('syn-cmt', '/* action */') + ' ' + p('}'));
+  }
+  var body = p('{') + '\n    ' +
+    (swift
+      ? _adcSpan('syn-type', 'ForEach') + p('(') + 'ads' + p(') {') + ' ad ' + _adcSpan('syn-kw', 'in') +
+        '\n        ' + _adcSpan('syn-type', 'EBAdSpace') + p('(') + _adcSpan('syn-dot', '.promo') +
+        p(',') + ' header' + p(':') + ' ad' + p('.') + 'headline' + p(') {') + ' ' +
+        _adcSpan('syn-type', 'Image') + p('(') + 'ad' + p('.') + 'creative' + p(') }') + '\n    ' + p('}')
+      : 'ads' + p('.') + 'forEach ' + p('{') + ' ad ' + _adcSpan('syn-eq', '-&gt;') +
+        '\n        ' + _adcSpan('syn-type', 'EBAdSpace') + p('(') + 'variant ' + _adcSpan('syn-eq', '=') + ' ' +
+        _adcSpan('syn-type', 'AdSpaceVariant') + p('.') + _adcSpan('syn-dot', 'Promo') + p(',') +
+        ' header ' + _adcSpan('syn-eq', '=') + ' ad' + p('.') + 'headline' + p(') {') + ' ' +
+        _adcSpan('syn-type', 'AsyncImage') + p('(') + 'model ' + _adcSpan('syn-eq', '=') + ' ad' + p('.') +
+        'creative' + p(',') + ' contentDescription ' + _adcSpan('syn-eq', '=') + ' ' +
+        _adcSpan('syn-kw', 'null') + p(') }') + '\n    ' + p('}')) +
+    '\n' + p('}');
+  var head = _adcSpan('syn-type', 'EBAdCarousel') + p('(');
+  if (lines.length === 1) return head + lines[0] + p(')') + ' ' + body;
+  return head + '\n' + lines.map(function (l) { return '    ' + l; }).join(p(',') + '\n') +
+         '\n' + p(')') + ' ' + body;
+}
+
+function getSnippet(cardKey, lang, card) {
+  return _adcSnippet(card || _specCards[cardKey] || {}, lang);
+}
+window.getSnippet = getSnippet;
 
 function _adcInit() {
   _adcUpdate();

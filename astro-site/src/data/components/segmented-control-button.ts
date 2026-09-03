@@ -57,6 +57,11 @@ export const segmentedControlButton: ComponentData = {
         demoKey: 'default',
         title: 'Segment',
         node: '4111:10769',
+        /* No panel: this component has no demo script, so a control would
+           have nothing to drive. The empty array states that deliberately
+           per STYLE-REVIEW-GUIDE §3.2 — an absent field reads as an
+           unreviewed gap. The card renders the static preview frame. */
+        demoControls: [],
         description: 'A single ~91 × 40 segment. Active fills brand-blue with a white label; inactive carries a 1.5px brand-blue outline. Pressed and Disabled shift the shade.',
         sections: [
           { label: 'Properties', slug: 'props', rows: [
