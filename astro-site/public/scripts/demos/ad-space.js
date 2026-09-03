@@ -4,8 +4,9 @@
  * around a ⤷ AssetSlot; Banner and Promo add a Content block beneath,
  * and Banner alone carries a #title above the asset.
  *
- * The Style tab's spec cards render static previews from the data file,
- * so nothing here drives them.
+ * The Style tab's spec cards are driven from here: `updateSpecCard`
+ * repaints the preview and `getSnippet` rebuilds the DEV code, both
+ * from the card's current control state.
  */
 
 var _adsVariants = {
@@ -85,21 +86,23 @@ function _adsInit() {
 })();
 
 /* ── Style tab spec cards ────────────────────────────────────────────
-   One card per version. The only thing that varies inside a card is
-   what sits in the asset slot: the authoring placeholder, or real
-   product media. */
+   One card per version. Controls mirror the Figma property panel:
+   Banner exposes hasTitle + hasDescription, Promo exposes
+   hasDescription, Receipt has neither. ⤷ AssetSlot is a slot, so it
+   gets no control — the card always shows what Figma ships by default. */
 var _specCards = {
   receipt: { asset: 'placeholder' },
-  banner:  { asset: 'placeholder' },
-  promo:   { asset: 'placeholder' }
+  banner:  { asset: 'placeholder', hasTitle: 'true', hasDescription: 'true',
+             title: 'Title', header: 'Header', description: 'Description Goes Here' },
+  promo:   { asset: 'placeholder', hasDescription: 'true',
+             header: 'Header', description: 'Description Goes Here' }
 };
 window._specCards = _specCards;
 
-var _adsCardCopy = {
-  receipt: {},
-  banner:  { title: 'Title', header: 'Header', description: 'Description Goes Here' },
-  promo:   { header: 'Header', description: 'Description Goes Here' }
-};
+/* A boolean prop is on unless a control has explicitly turned it off. */
+function _adsOn(card, prop) {
+  return card[prop] !== 'false' && card[prop] !== false;
+}
 
 function updateSpecCard(cardKey, prop, value) {
   var card = _specCards[cardKey];
@@ -107,13 +110,64 @@ function updateSpecCard(cardKey, prop, value) {
   card[prop] = value;
   var host = document.getElementById('ads-spec-' + cardKey);
   if (!host) return;
-  var copy = _adsCardCopy[cardKey] || {};
   host.innerHTML = _adsRender({
     variant: cardKey,
-    title: copy.title,
-    header: copy.header,
-    description: copy.description,
+    title: _adsOn(card, 'hasTitle') ? card.title : '',
+    header: card.header,
+    description: _adsOn(card, 'hasDescription') ? card.description : '',
     asset: card.asset
   });
 }
 window.updateSpecCard = updateSpecCard;
+
+/* ── DEV code, live ──────────────────────────────────────────────────
+   Rebuilds the SwiftUI / Compose snippet from the card's current state
+   so the DEV tab tracks hasTitle and hasDescription. */
+function _adsSpan(cls, text) {
+  return '<span class="' + cls + '">' + text + '</span>';
+}
+
+function _adsArgs(cardKey, card, sep) {
+  var rest = [];
+  var add = function (name, val) {
+    rest.push(name + sep + _adsSpan('syn-str', '"' + _adsEscape(val) + '"'));
+  };
+  if (card.title && _adsOn(card, 'hasTitle')) add('title', card.title);
+  if (card.header) add('header', card.header);
+  if (card.description && _adsOn(card, 'hasDescription')) add('description', card.description);
+  return rest;
+}
+
+function _adsAssemble(variant, rest, body) {
+  var p = function (s) { return _adsSpan('syn-punc', s); };
+  var head = _adsSpan('syn-type', 'EBAdSpace') + p('(');
+  if (!rest.length) return head + variant + p(')') + ' ' + body;
+  var lines = [variant].concat(rest).map(function (l) { return '    ' + l; });
+  return head + '\n' + lines.join(p(',') + '\n') + '\n' + p(')') + ' ' + body;
+}
+
+function _adsSwift(cardKey, card) {
+  var p = function (s) { return _adsSpan('syn-punc', s); };
+  var body = p('{') + '\n    ' + _adsSpan('syn-type', 'Image') + p('(') + 'ad' + p('.') + 'creative' +
+             p(')') + p('.') + _adsSpan('syn-fn', 'resizable') + p('()') + '\n' + p('}');
+  var sep = p(':') + ' ';
+  return _adsAssemble(_adsSpan('syn-dot', '.' + cardKey), _adsArgs(cardKey, card, sep), body);
+}
+
+function _adsCompose(cardKey, card) {
+  var p = function (s) { return _adsSpan('syn-punc', s); };
+  var eq = _adsSpan('syn-eq', '=');
+  var cap = cardKey.charAt(0).toUpperCase() + cardKey.slice(1);
+  var body = p('{') + '\n    ' + _adsSpan('syn-type', 'AsyncImage') + p('(') + 'model ' + eq + ' ad' +
+             p('.') + 'creative' + p(',') + ' contentDescription ' + eq + ' ' +
+             _adsSpan('syn-kw', 'null') + p(')') + '\n' + p('}');
+  var variant = 'variant ' + eq + ' ' + _adsSpan('syn-type', 'AdSpaceVariant') + p('.') + _adsSpan('syn-dot', cap);
+  return _adsAssemble(variant, _adsArgs(cardKey, card, ' ' + eq + ' '), body);
+}
+
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift'
+    ? _adsSwift(cardKey, card || _specCards[cardKey] || {})
+    : _adsCompose(cardKey, card || _specCards[cardKey] || {});
+}
+window.getSnippet = getSnippet;

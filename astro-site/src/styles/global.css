@@ -5631,11 +5631,14 @@ pre.code-snippet .prp { color: #0369A1; }
   border-radius: 8px;
   overflow: hidden;
 }
+/* Header is a fixed 18px row. The 26px CTA overflows it, centred, exactly
+   as it does in Figma — the header height does not grow to fit the button. */
 .eb-preview-adcarousel__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  height: 18px;
   padding: 0 24px;
   margin-bottom: 16px;
 }
