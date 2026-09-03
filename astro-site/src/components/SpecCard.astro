@@ -85,13 +85,22 @@ const updateKey = demoKey || cardKey;
             <div class="demo-panel-heading">{section.heading}</div>
             {section.rows.map((row) => {
               const isToggle = row.control === 'toggle';
+              const isInput  = row.control === 'input';
               const onValue  = isToggle ? (row.options[1]?.value ?? 'yes') : '';
               const offValue = isToggle ? (row.options[0]?.value ?? 'no')  : '';
               const isOn     = isToggle && row.defaultValue === onValue;
               return (
                 <div class="demo-panel-row">
                   <span class="demo-panel-label">{row.label}</span>
-                  {isToggle ? (
+                  {isInput ? (
+                    <input
+                      type="text"
+                      class="demo-panel-select demo-panel-input"
+                      value={row.defaultValue ?? ''}
+                      placeholder={row.label}
+                      oninput={`updateSpecCard('${updateKey}', '${row.prop}', this.value)`}
+                    />
+                  ) : isToggle ? (
                     <label class={`demo-panel-toggle${isOn ? ' is-on' : ''}`}>
                       <input
                         type="checkbox"

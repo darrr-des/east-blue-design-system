@@ -7,31 +7,68 @@ const viewOnlyFieldDemoControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
+        label: 'TrailingContent',
+        prop: 'trailingContent',
+        defaultValue: 'None',
+        options: [
+          { value: 'None', label: 'None' },
+          { value: 'Badge', label: 'Badge' },
+          { value: 'Link', label: 'Link' },
+          { value: 'Icon', label: 'Icon' },
+        ],
+      },
+      {
         label: 'Size',
         prop: 'size',
-        defaultValue: 'Default',
+        defaultValue: 'LG',
         options: [
-          { value: 'Default', label: 'Default' },
-          { value: 'Large', label: 'Large' },
+          { value: 'SM', label: 'SM' },
+          { value: 'LG', label: 'LG' },
+        ],
+      },
+      {
+        label: 'Status',
+        prop: 'status',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'error', label: 'Error' },
+          { value: 'warning', label: 'Warning' },
         ],
       },
       {
         label: 'hasCheckmark',
-        prop: 'checkmark',
+        prop: 'hasCheckmark',
+        control: 'toggle',
         defaultValue: 'false',
         options: [
-          { value: 'false', label: 'false' },
-          { value: 'true', label: 'true' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
       {
         label: 'hasDescription',
-        prop: 'description',
+        prop: 'hasDescription',
+        control: 'toggle',
         defaultValue: 'true',
         options: [
-          { value: 'true', label: 'true' },
-          { value: 'false', label: 'false' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
+      },
+      {
+        label: 'Value',
+        prop: 'value',
+        control: 'input',
+        defaultValue: 'Text',
+        options: [],
+      },
+      {
+        label: 'Label',
+        prop: 'label',
+        control: 'input',
+        defaultValue: 'Label',
+        options: [],
       },
     ],
   },
@@ -245,492 +282,78 @@ export const viewOnlyField: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "vof-spec-default",
-        "demoKey": "default",
+        "cardKey": "vof-spec-main",
+        "demoKey": "main",
         "demoControls": viewOnlyFieldDemoControls,
-        "title": "Default",
-        "node": "18403:4521",
-        "description": "Label + value only. Used for plain read-only information display.",
+        "title": "View Only Field",
+        "node": "4996:25507",
+        "description": "",
+        "previewHtml": "<div id=\"view-only-field-spec-main\"><svg width=\"360\" height=\"72\" viewBox=\"0 0 360 72\" fill=\"none\" role=\"img\" aria-label=\"View Only Field, LG, default, trailing None\"><text x=\"0\" y=\"15\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-size=\"16\" font-weight=\"600\" letter-spacing=\"0.25\" fill=\"#6780A9\">Label</text><text class=\"vof-value\" x=\"0\" y=\"44\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-size=\"22\" font-weight=\"700\" fill=\"#0A2757\">Text</text><text x=\"0\" y=\"65\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#6780A9\">Message content</text></svg></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Size",
-                "value": "Default",
-                "prop": "size",
-                "mono": false
-              },
-              {
-                "key": "hasCheckmark",
-                "value": "false",
-                "prop": "checkmark",
-                "mono": false
-              },
-              {
-                "key": "hasDescription",
-                "value": "true",
-                "prop": "description",
-                "mono": false
-              }
+              { "key": "TrailingContent", "value": "None", "prop": "trailingContent" },
+              { "key": "Size", "value": "LG", "prop": "size" },
+              { "key": "Status", "value": "Default", "prop": "status" },
+              { "key": "hasCheckmark", "value": "False", "prop": "hasCheckmark" },
+              { "key": "hasDescription", "value": "True", "prop": "hasDescription" },
+              { "key": "Value", "value": "Text", "prop": "value" },
+              { "key": "Label", "value": "Label", "prop": "label" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/default/bg" },
-              { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border" },
-              { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label" },
-              { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder",
-                "variants": { "filled:true": { "hide": true } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
+              { "key": "Label", "value": "#6780A9", "token": "text/secondary" },
+              { "key": "Value", "value": "#0A2757", "token": "text/primary" },
+              { "key": "Description", "value": "#6780A9", "token": "text/secondary",
+                "variants": {
+                  "status:error": { "value": "#D61B2C", "token": "text/error" },
+                  "status:warning": { "value": "#CA970C", "token": "text/warning" }
+                } },
+              { "key": "Status icon", "value": "–", "token": "–",
+                "variants": {
+                  "status:error": { "value": "#D61B2C", "token": "icon/error" },
+                  "status:warning": { "value": "#CA970C", "token": "icon/warning" }
+                } },
+              { "key": "Checkmark", "value": "#025AE9", "token": "icon/interactive" },
+              { "key": "Trailing", "value": "–", "token": "–",
+                "variants": {
+                  "trailingContent:Badge": { "value": "#005CE5 on #E5F1FF", "token": "badge/interactive" },
+                  "trailingContent:Link": { "value": "#005CE5", "token": "text/interactive" },
+                  "trailingContent:Icon": { "value": "#005CE5", "token": "icon/interactive" }
+                } }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"•••• 1234\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"•••• 1234\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"vof-preview-default\"></div>"
-      },
-      {
-        "cardKey": "vof-spec-badge",
-        "demoKey": "badge",
-        "demoControls": viewOnlyFieldDemoControls,
-        "title": "with Badge",
-        "node": "18403:4533",
-        "description": "Label + value + Badge instance in the trailing slot. Uses Badge component (layout=overflow or similar) for status indicators.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "with Badge",
-                "mono": false
-              },
-              {
-                "key": "Size",
-                "value": "Default",
-                "prop": "size",
-                "mono": false
-              },
-              {
-                "key": "hasCheckmark",
-                "value": "false",
-                "prop": "checkmark",
-                "mono": false
-              },
-              {
-                "key": "hasDescription",
-                "value": "true",
-                "prop": "description",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/default/bg" },
-              { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border" },
-              { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label" },
-              { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder",
-                "variants": { "filled:true": { "hide": true } }
-              }
+              { "key": "Label", "value": "—", "mono": true },
+              { "key": "Value", "value": "—", "mono": true },
+              { "key": "Description", "value": "—", "mono": true }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Height", "value": "72px", "mono": true,
+                "variants": { "size:SM": { "value": "55px" } } },
+              { "key": "Width", "value": "360px (fill)", "mono": true },
+              { "key": "Radius", "value": "0px", "mono": true },
+              { "key": "Padding H", "value": "0px", "mono": true },
+              { "key": "Padding V", "value": "0px", "mono": true },
+              { "key": "Gap", "value": "4px", "mono": true },
+              { "key": "Alignment", "value": "—", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"•••• 1234\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"•••• 1234\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"vof-preview-badge\"></div>"
-      },
-      {
-        "cardKey": "vof-spec-textlink",
-        "demoKey": "textlink",
-        "demoControls": viewOnlyFieldDemoControls,
-        "title": "with Text Link",
-        "node": "18403:4547",
-        "description": "Label + value + contextual text link (e.g. \"What is this?\"). Used for helper/learn-more navigation.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "with Text Link",
-                "mono": false
-              },
-              {
-                "key": "Size",
-                "value": "Default",
-                "prop": "size",
-                "mono": false
-              },
-              {
-                "key": "hasCheckmark",
-                "value": "false",
-                "prop": "checkmark",
-                "mono": false
-              },
-              {
-                "key": "hasDescription",
-                "value": "true",
-                "prop": "description",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/default/bg" },
-              { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border" },
-              { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label" },
-              { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder",
-                "variants": { "filled:true": { "hide": true } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"•••• 1234\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"•••• 1234\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"vof-preview-textlink\"></div>"
-      },
-      {
-        "cardKey": "vof-spec-icon",
-        "demoKey": "icon",
-        "demoControls": viewOnlyFieldDemoControls,
-        "title": "with Icon",
-        "node": "18403:4561",
-        "description": "Label + value + 24×24 icon (typically Edit pencil) in the trailing slot. Icon typically navigates to an editable state.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "Variant",
-                "value": "with Icon",
-                "mono": false
-              },
-              {
-                "key": "Size",
-                "value": "Default",
-                "prop": "size",
-                "mono": false
-              },
-              {
-                "key": "hasCheckmark",
-                "value": "false",
-                "prop": "checkmark",
-                "mono": false
-              },
-              {
-                "key": "hasDescription",
-                "value": "true",
-                "prop": "description",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "labeled-field/default/bg" },
-              { "key": "Border", "value": "#D7E0EF", "token": "labeled-field/default/border" },
-              { "key": "Label", "value": "#0A2757", "token": "labeled-field/default/label" },
-              { "key": "Text", "value": "#0A2757", "token": "labeled-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "labeled-field/default/placeholder",
-                "variants": { "filled:true": { "hide": true } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"•••• 1234\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Account number\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"•••• 1234\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"vof-preview-icon\"></div>"
+        "swift": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.large</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBViewOnlyField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldSize</span><span class=\"syn-punc\">.</span>LG<span class=\"syn-punc\">,</span>\n    status <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldStatus</span><span class=\"syn-punc\">.</span>Default\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "colorsTables": [

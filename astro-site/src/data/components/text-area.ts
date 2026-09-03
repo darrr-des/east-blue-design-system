@@ -7,21 +7,43 @@ const textAreaDemoControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'isFilled',
-        prop: 'filled',
-        defaultValue: 'no',
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'default',
         options: [
-          { value: 'no', label: 'no' },
-          { value: 'yes', label: 'yes' },
+          { value: 'default', label: 'Default' },
+          { value: 'focused', label: 'Focused' },
+          { value: 'error', label: 'Error' },
+          { value: 'disabled', label: 'Disabled' },
         ],
       },
       {
-        label: 'isExpandable',
-        prop: 'expandable',
+        label: 'hasValue',
+        prop: 'hasValue',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasLabel',
+        prop: 'hasLabel',
+        control: 'toggle',
         defaultValue: 'true',
         options: [
-          { value: 'true', label: 'true' },
-          { value: 'false', label: 'false' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasSubtext',
+        prop: 'hasSubtext',
+        control: 'toggle',
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
     ],
@@ -254,529 +276,101 @@ export const textArea: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "ta-spec-default",
-        "demoKey": "default",
+        "cardKey": "ta-spec-main",
+        "demoKey": "main",
         "demoControls": textAreaDemoControls,
-        "title": "Default",
-        "node": "3070:21242",
-        "description": "Idle state with gray border. Resize-handle glyph sits in the bottom-right regardless of fill.",
+        "title": "Text Area",
+        "node": "4781:35856",
+        "description": "",
+        "previewHtml": "<div id=\"text-area-spec-main\"><svg width=\"358\" height=\"78\" viewBox=\"0 0 358 78\" fill=\"none\" role=\"img\" aria-label=\"Text Area, default, empty\"><text x=\"2\" y=\"11\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" letter-spacing=\"0.25\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"357\" height=\"33\" rx=\"6\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"44\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" letter-spacing=\"0.25\" fill=\"#90A8D0\">Write your message…</text><text x=\"2\" y=\"73\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#6780A9\">Message content</text><text x=\"356\" y=\"73\" text-anchor=\"end\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#6780A9\">0/100</text></svg></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "isFilled",
-                "value": "no",
-                "mono": false,
-                "prop": "filled"
-              },
-              {
-                "key": "isExpandable",
-                "value": "true",
-                "mono": false,
-                "prop": "expandable"
-              }
+              { "key": "State", "value": "Default", "prop": "state" },
+              { "key": "hasValue", "value": "False", "prop": "hasValue" },
+              { "key": "hasLabel", "value": "True", "prop": "hasLabel" },
+              { "key": "hasSubtext", "value": "True", "prop": "hasSubtext" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/default/bg",
-                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "input-field/disabled/bg" } }
-              },
-              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border",
+              { "key": "Field background", "value": "#FFFFFF", "token": "surface/default",
+                "variants": { "state:disabled": { "value": "#EEF2F9", "token": "surface/disabled" } } },
+              { "key": "Border", "value": "#D7E0EF", "token": "border/default",
                 "variants": {
-                  "state:Active":   { "value": "#005CE5", "token": "input-field/active/border" },
-                  "state:Error":    { "value": "#D61B2C", "token": "input-field/error/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/default/text",
-                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "input-field/disabled/text" } }
-              },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder",
-                "variants": {
-                  "state:Disabled": { "value": "#C2CFE5", "token": "input-field/disabled/placeholder" },
-                  "filled:true":    { "hide": true }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Min height",
-                "value": "120px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Resize",
-                "value": "vertical, snap to line height",
-                "mono": true
-              }
+                  "state:focused": { "value": "#005CE5", "token": "border/focused" },
+                  "state:error": { "value": "#D61B2C", "token": "border/error" },
+                  "state:disabled": { "value": "–", "token": "–" }
+                } },
+              { "key": "Value", "value": "#90A8D0", "token": "text/placeholder",
+                "variants": { "hasValue:true": { "value": "#0A2757", "token": "text/primary" },
+                              "state:disabled|hasValue:true": { "value": "#90A8D0", "token": "text/placeholder" } } },
+              { "key": "Label", "value": "#0A2757", "token": "text/primary" },
+              { "key": "Subtext", "value": "#6780A9", "token": "text/secondary" }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$note<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebMinLines</span><span class=\"syn-punc\">(</span>5<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> note<span class=\"syn-punc\">,</span>\n    minLines <span class=\"syn-eq\">=</span> 5<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"spec-default-preview\"><svg width=\"328\" height=\"62\" viewBox=\"0 0 328 62\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"61\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 56L322 48M318 56L322 52\" stroke=\"#90A8D0\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg></div>"
-      },
-      {
-        "cardKey": "ta-spec-active",
-        "demoKey": "active",
-        "demoControls": textAreaDemoControls,
-        "title": "Active (Focused)",
-        "node": "3070:21243",
-        "description": "Focused state with 2px blue border. Rename target: <code>focused</code>.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Active",
-                "mono": false
-              },
-              {
-                "key": "isFilled",
-                "value": "no",
-                "mono": false,
-                "prop": "filled"
-              },
-              {
-                "key": "isExpandable",
-                "value": "true",
-                "mono": false,
-                "prop": "expandable"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/active/bg",
-                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "input-field/disabled/bg" } }
-              },
-              { "key": "Border", "value": "#005CE5", "token": "input-field/active/border",
-                "variants": {
-                  "state:Default":  { "value": "#D7E0EF", "token": "input-field/default/border" },
-                  "state:Error":    { "value": "#D61B2C", "token": "input-field/error/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/active/text",
-                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "input-field/disabled/text" } }
-              },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/active/placeholder",
-                "variants": {
-                  "state:Disabled": { "value": "#C2CFE5", "token": "input-field/disabled/placeholder" },
-                  "filled:true":    { "hide": true }
-                }
-              }
+              { "key": "Label", "value": "—", "mono": true },
+              { "key": "Value", "value": "—", "mono": true },
+              { "key": "Subtext", "value": "—", "mono": true }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Min height",
-                "value": "120px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Resize",
-                "value": "vertical, snap to line height",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Height", "value": "34px", "mono": true,
+                "variants": { "hasValue:true": { "value": "50px" } } },
+              { "key": "Width", "value": "358px", "mono": true },
+              { "key": "Radius", "value": "6px", "mono": true },
+              { "key": "Padding H", "value": "12px / 8px", "mono": true },
+              { "key": "Padding V", "value": "10px / 8px", "mono": true },
+              { "key": "Gap", "value": "0px", "mono": true },
+              { "key": "Alignment", "value": "—", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$note<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.active</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebMinLines</span><span class=\"syn-punc\">(</span>5<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> note<span class=\"syn-punc\">,</span>\n    minLines <span class=\"syn-eq\">=</span> 5<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Active</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"spec-active-preview\"><svg width=\"328\" height=\"62\" viewBox=\"0 0 328 62\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"61\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"2\"></rect><text x=\"12\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 56L322 48M318 56L322 52\" stroke=\"#90A8D0\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg></div>"
-      },
-      {
-        "cardKey": "ta-spec-error",
-        "demoKey": "error",
-        "demoControls": textAreaDemoControls,
-        "title": "Error",
-        "node": "3070:21244",
-        "description": "Validation error state with 2px red border. No inline error-message slot — copy is the consumer's responsibility.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Error",
-                "mono": false
-              },
-              {
-                "key": "isFilled",
-                "value": "no",
-                "mono": false,
-                "prop": "filled"
-              },
-              {
-                "key": "isExpandable",
-                "value": "true",
-                "mono": false,
-                "prop": "expandable"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/error/bg",
-                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "input-field/disabled/bg" } }
-              },
-              { "key": "Border", "value": "#D61B2C", "token": "input-field/error/border",
-                "variants": {
-                  "state:Default":  { "value": "#D7E0EF", "token": "input-field/default/border" },
-                  "state:Active":   { "value": "#005CE5", "token": "input-field/active/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/error/text",
-                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "input-field/disabled/text" } }
-              },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/error/placeholder",
-                "variants": {
-                  "state:Disabled": { "value": "#C2CFE5", "token": "input-field/disabled/placeholder" },
-                  "filled:true":    { "hide": true }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Min height",
-                "value": "120px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Resize",
-                "value": "vertical, snap to line height",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$note<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebMinLines</span><span class=\"syn-punc\">(</span>5<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> note<span class=\"syn-punc\">,</span>\n    minLines <span class=\"syn-eq\">=</span> 5<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Error</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"spec-error-preview\"><svg width=\"328\" height=\"62\" viewBox=\"0 0 328 62\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"61\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D61B2C\" stroke-width=\"2\"></rect><text x=\"12\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 56L322 48M318 56L322 52\" stroke=\"#90A8D0\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg></div>"
-      },
-      {
-        "cardKey": "ta-spec-disabled",
-        "demoKey": "disabled",
-        "demoControls": textAreaDemoControls,
-        "title": "Disabled",
-        "node": "3070:21241",
-        "description": "Non-interactive state with gray fill and muted text. Border hidden.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Disabled",
-                "mono": false
-              },
-              {
-                "key": "isFilled",
-                "value": "no",
-                "mono": false,
-                "prop": "filled"
-              },
-              {
-                "key": "isExpandable",
-                "value": "true",
-                "mono": false,
-                "prop": "expandable"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#EEF2F9", "token": "input-field/disabled/bg",
-                "variants": {
-                  "state:Default": { "value": "#FFFFFF", "token": "input-field/default/bg" },
-                  "state:Active":  { "value": "#FFFFFF", "token": "input-field/active/bg" },
-                  "state:Error":   { "value": "#FFFFFF", "token": "input-field/error/bg" }
-                }
-              },
-              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border",
-                "variants": {
-                  "state:Active":   { "value": "#005CE5", "token": "input-field/active/border" },
-                  "state:Error":    { "value": "#D61B2C", "token": "input-field/error/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Text", "value": "#90A8D0", "token": "input-field/disabled/text",
-                "variants": {
-                  "state:Default": { "value": "#0A2757", "token": "input-field/default/text" },
-                  "state:Active":  { "value": "#0A2757", "token": "input-field/active/text" },
-                  "state:Error":   { "value": "#0A2757", "token": "input-field/error/text" }
-                }
-              },
-              { "key": "Placeholder", "value": "#C2CFE5", "token": "input-field/disabled/placeholder",
-                "variants": {
-                  "state:Default": { "value": "#90A8D0", "token": "input-field/default/placeholder" },
-                  "state:Active":  { "value": "#90A8D0", "token": "input-field/active/placeholder" },
-                  "state:Error":   { "value": "#90A8D0", "token": "input-field/error/placeholder" },
-                  "filled:true":   { "hide": true }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Min height",
-                "value": "120px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Resize",
-                "value": "vertical, snap to line height",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$note<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.disabled</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebMinLines</span><span class=\"syn-punc\">(</span>5<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> note<span class=\"syn-punc\">,</span>\n    minLines <span class=\"syn-eq\">=</span> 5<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Disabled</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"spec-disabled-preview\"><svg width=\"328\" height=\"62\" viewBox=\"0 0 328 62\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"61\" rx=\"5.5\" fill=\"#EEF2F9\"></rect><text x=\"12\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 56L322 48M318 56L322 52\" stroke=\"#C2CFE5\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg></div>"
+        "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>placeholder<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Write your message…\"</span><span class=\"syn-punc\">, </span>text<span class=\"syn-punc\">: </span>$message<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    placeholder <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Write your message…\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> message<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span>Default\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "colorsTables": [
       {
         "title": "Colors by State",
-        "description": "All four color roles are bound to <code>main/text-area/color/&#123;state&#125;/*</code> tokens. Every value mirrors the equivalent <code>main/input-field/color/*</code> token — motivation for consolidation.",
-        "columns": [
-          "DEFAULT",
-          "ACTIVE",
-          "ERROR",
-          "DISABLED"
-        ],
+        "description": "Read off node <code>4781:35856</code>. ROLE is the State value; the second column is the ELEMENT. Token paths are indicative — variable bindings are not readable through the Talk To Figma plugin.",
+        "columns": ["Token", "Value"],
         "rows": [
-          {
-            "role": "Border",
-            "token": "text-area/color/{state}/border",
-            "values": [
-              "#D7E0EF",
-              "#005CE5",
-              "#D61B2C",
-              "hidden"
-            ]
-          },
-          {
-            "role": "Background",
-            "token": "text-area/color/{state}/bg",
-            "values": [
-              "#FFFFFF",
-              "#FFFFFF",
-              "#FFFFFF",
-              "#EEF2F9"
-            ]
-          },
-          {
-            "role": "Text (filled)",
-            "token": "text-area/color/{state}/text",
-            "values": [
-              "#0A2757",
-              "#0A2757",
-              "#0A2757",
-              "#C2CFE5"
-            ]
-          },
-          {
-            "role": "Placeholder",
-            "token": "text-area/color/{state}/placeholder",
-            "values": [
-              "#C2CFE5",
-              "#C2CFE5",
-              "#C2CFE5",
-              "#C2CFE5"
-            ]
-          },
-          {
-            "role": "Resize glyph",
-            "token": "text-area/color/{state}/icon-resizer",
-            "values": [
-              "#D7E0EF",
-              "#D7E0EF",
-              "#D7E0EF",
-              "#D7E0EF"
-            ]
-          }
+          { "role": "Default", "token": "Field background", "values": ["surface/default", "#FFFFFF"] },
+          { "role": "—", "token": "Border", "values": ["border/default", "#D7E0EF"] },
+          { "role": "—", "token": "Value (empty)", "values": ["text/placeholder", "#90A8D0"] },
+          { "role": "—", "token": "Value (filled)", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Label", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Subtext", "values": ["text/secondary", "#6780A9"] },
+          { "role": "Focused", "token": "Field background", "values": ["surface/default", "#FFFFFF"] },
+          { "role": "—", "token": "Border", "values": ["border/focused", "#005CE5"] },
+          { "role": "—", "token": "Value (empty)", "values": ["text/placeholder", "#90A8D0"] },
+          { "role": "—", "token": "Value (filled)", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Label", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Subtext", "values": ["text/secondary", "#6780A9"] },
+          { "role": "Error", "token": "Field background", "values": ["surface/default", "#FFFFFF"] },
+          { "role": "—", "token": "Border", "values": ["border/error", "#D61B2C"] },
+          { "role": "—", "token": "Value (empty)", "values": ["text/placeholder", "#90A8D0"] },
+          { "role": "—", "token": "Value (filled)", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Label", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Subtext", "values": ["text/secondary", "#6780A9"] },
+          { "role": "Disabled", "token": "Field background", "values": ["surface/disabled", "#EEF2F9"] },
+          { "role": "—", "token": "Border", "values": ["–", "–"] },
+          { "role": "—", "token": "Value (empty)", "values": ["text/placeholder", "#90A8D0"] },
+          { "role": "—", "token": "Value (filled)", "values": ["text/placeholder", "#90A8D0"] },
+          { "role": "—", "token": "Label", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Subtext", "values": ["text/secondary", "#6780A9"] }
         ]
       }
     ]

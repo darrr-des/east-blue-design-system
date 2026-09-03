@@ -2475,6 +2475,12 @@ input.demo-panel-input.demo-panel-select,
   padding: 5px 10px;
   font-family: var(--font-body);
 }
+/* A control whose property does not apply to the current variant. Kept visible
+   rather than hidden, so the panel still mirrors Figma's property list. */
+.demo-panel-row.is-disabled .demo-panel-label { opacity: 0.45; }
+.demo-panel-toggle.is-disabled { opacity: 0.4; cursor: not-allowed; }
+.demo-panel-toggle.is-disabled input { cursor: not-allowed; }
+
 .demo-panel-input::placeholder {
   color: var(--muted);
   opacity: 0.7;

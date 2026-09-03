@@ -7,22 +7,63 @@ const amountTextFieldDemoControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'State',
-        prop: 'state',
-        defaultValue: 'Filled',
+        label: 'Size',
+        prop: 'size',
+        defaultValue: 'LG',
         options: [
-          { value: 'Default', label: 'Default' },
-          { value: 'Filled',  label: 'Filled' },
-          { value: 'Error',   label: 'Error' },
+          { value: 'LG', label: 'LG' },
+          { value: 'MD', label: 'MD' },
         ],
       },
       {
-        label: 'Label',
-        prop: 'label',
-        defaultValue: 'yes',
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'default',
         options: [
-          { value: 'yes', label: 'yes' },
-          { value: 'no',  label: 'no' },
+          { value: 'default', label: 'Default' },
+          { value: 'focused', label: 'Focused' },
+          { value: 'disabled', label: 'Disabled' },
+          { value: 'error', label: 'Error' },
+        ],
+      },
+      {
+        label: 'hasLabel',
+        prop: 'hasLabel',
+        control: 'toggle',
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasLeadingCurrency',
+        prop: 'hasLeadingCurrency',
+        control: 'toggle',
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasSubtext',
+        prop: 'hasSubtext',
+        control: 'toggle',
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasTrailingCurrency',
+        prop: 'hasTrailingCurrency',
+        control: 'toggle',
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
     ],
@@ -262,343 +303,71 @@ export const amountTextField: ComponentData = {
     "heading": "Variants",
     "specCards": [
       {
-        "cardKey": "amt-spec-large-filled",
-        "demoKey": "large-filled",
+        "cardKey": "atf-spec-main",
+        "demoKey": "main",
         "demoControls": amountTextFieldDemoControls,
-        "title": "Large · Filled",
-        "node": "152:48113",
-        "description": "53px amount headline, filled value, dark navy. No peso glyph — the Large tier is used as a hero-amount display.",
+        "title": "Amount Text Field",
+        "node": "4602:18144",
+        "description": "",
+        "previewHtml": "<div id=\"amount-text-field-spec-main\"><svg width=\"400\" height=\"184\" viewBox=\"0 0 400 184\" fill=\"none\" role=\"img\" aria-label=\"Amount Text Field, LG, default\"><text x=\"200\" y=\"38\" text-anchor=\"middle\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-size=\"18\" font-weight=\"600\" letter-spacing=\"0.25\" fill=\"#0A2757\">Add Your Label Here</text><text x=\"200\" y=\"111.02\" text-anchor=\"middle\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-size=\"53\" font-weight=\"600\" fill=\"#0A2757\">₱ 0.00 Php</text><line x1=\"24\" y1=\"128.5\" x2=\"376\" y2=\"128.5\" stroke=\"#E5EBF4\" stroke-width=\"1\"/><text x=\"200\" y=\"157\" text-anchor=\"middle\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" letter-spacing=\"0.25\" fill=\"#445C85\">Add your subtext here</text></svg></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Size",  "value": "Large" },
-              { "key": "State", "value": "Filled", "prop": "state" },
-              { "key": "Label", "value": "yes",    "prop": "label" }
-            ]
-          },
-          {
-            label: 'Colors',
-            slug: 'colors',
-            rows: [
-              { key: 'Border (underline)', value: '#445C85', token: 'amount-text-field/filled/border',       variants: { 'state:Default': { value: '#ADBDDC', token: 'amount-text-field/default/border' }, 'state:Filled': { value: '#445C85', token: 'amount-text-field/filled/border' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/border' } } },
-              { key: 'Label',              value: '#0A2757', token: 'amount-text-field/filled/label',        variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/label' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label' }, 'state:Error': { value: '#0A2757', token: 'amount-text-field/error/label' } } },
-              { key: 'Amount',             value: '#0A2757', token: 'amount-text-field/filled/label-amount', variants: { 'state:Default': { value: '#90A8D0', token: 'amount-text-field/default/label-amount' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label-amount' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/label-amount' } } },
-              { key: 'Subtext',            value: '#0A2757', token: 'amount-text-field/filled/subtext',      variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/subtext' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/subtext' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/subtext' } } },
-            ],
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width",          "value": "fill parent",        "mono": true },
-              { "key": "Height",         "value": "hug content",        "mono": true },
-              { "key": "Label height",   "value": "18px",               "mono": true },
-              { "key": "Amount size",    "value": "53px",               "mono": true },
-              { "key": "Peso glyph",     "value": "hidden (Large tier)", "mono": true },
-              { "key": "Underline",      "value": "1px bottom border",  "mono": true },
-              { "key": "Subtext height", "value": "14px / 16 line",     "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Label style",    "value": "Primary/Label/Light/Large",          "mono": true },
-              { "key": "Amount style",   "value": "Primary/Headlines/Epic",             "mono": true },
-              { "key": "Amount font",    "value": "Proxima Soft Semibold",              "mono": true },
-              { "key": "Amount size/lh", "value": "53px / 58px · 0",                    "mono": true },
-              { "key": "Subtext style",  "value": "Primary/Multi-line Label/Light/Small", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBAmountTextField</span><span class=\"syn-punc\">(</span>\n    value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>amount<span class=\"syn-punc\">,</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Amount\"</span>\n<span class=\"syn-punc\">)</span>\n.<span class=\"syn-fn\">ebAmountSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.large</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBAmountTextField</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> amount<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> amount <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span><span class=\"syn-punc\">,</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Amount\"</span><span class=\"syn-punc\">,</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAmountSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Large</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"amt-large-filled-preview\"><svg width=\"360\" height=\"184\" viewBox=\"0 0 360 184\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"180\" y=\"38\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\" fill-opacity=\"0.9\" letter-spacing=\"0.25\">Add Your Label Here</text><text x=\"180\" y=\"114\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"53\" font-weight=\"600\" fill=\"#0A2757\">500.00</text><line x1=\"24\" y1=\"134\" x2=\"336\" y2=\"134\" stroke=\"#445C85\" stroke-width=\"1\"></line><text x=\"180\" y=\"164\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.25\">Add your subtext here</text></svg></div>"
-      },
-      {
-        "cardKey": "amt-spec-large-default",
-        "demoKey": "large-default",
-        "demoControls": amountTextFieldDemoControls,
-        "title": "Large · Default",
-        "node": "152:48116",
-        "description": "Empty state at 53px, muted placeholder color. Used before the user types in hero amount screens.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Size",  "value": "Large" },
+              { "key": "Size", "value": "LG", "prop": "size" },
               { "key": "State", "value": "Default", "prop": "state" },
-              { "key": "Label", "value": "yes",     "prop": "label" }
+              { "key": "hasLabel", "value": "True", "prop": "hasLabel" },
+              { "key": "hasLeadingCurrency", "value": "True", "prop": "hasLeadingCurrency" },
+              { "key": "hasSubtext", "value": "True", "prop": "hasSubtext" },
+              { "key": "hasTrailingCurrency", "value": "True", "prop": "hasTrailingCurrency" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { key: 'Border (underline)', value: '#ADBDDC', token: 'amount-text-field/default/border',       variants: { 'state:Default': { value: '#ADBDDC', token: 'amount-text-field/default/border' }, 'state:Filled': { value: '#445C85', token: 'amount-text-field/filled/border' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/border' } } },
-              { key: 'Label',              value: '#0A2757', token: 'amount-text-field/default/label',        variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/label' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label' }, 'state:Error': { value: '#0A2757', token: 'amount-text-field/error/label' } } },
-              { key: 'Amount',             value: '#90A8D0', token: 'amount-text-field/default/label-amount', variants: { 'state:Default': { value: '#90A8D0', token: 'amount-text-field/default/label-amount' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label-amount' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/label-amount' } } },
-              { key: 'Subtext',            value: '#0A2757', token: 'amount-text-field/default/subtext',      variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/subtext' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/subtext' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/subtext' } } },
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width",          "value": "fill parent",        "mono": true },
-              { "key": "Height",         "value": "hug content",        "mono": true },
-              { "key": "Label height",   "value": "18px",               "mono": true },
-              { "key": "Amount size",    "value": "53px",               "mono": true },
-              { "key": "Peso glyph",     "value": "hidden (Large tier)", "mono": true },
-              { "key": "Underline",      "value": "1px bottom border",  "mono": true },
-              { "key": "Subtext height", "value": "14px / 16 line",     "mono": true }
+              { "key": "Label", "value": "#0A2757", "token": "text/primary" },
+              { "key": "Amount", "value": "#0A2757", "token": "text/primary",
+                "variants": {
+                  "state:disabled": { "value": "#C2CFE5", "token": "text/disabled" },
+                  "state:error": { "value": "#D61B2C", "token": "text/error" }
+                } },
+              { "key": "Bottom rule", "value": "#E5EBF4", "token": "border/subtle",
+                "variants": {
+                  "state:focused": { "value": "#183462", "token": "border/focused" },
+                  "state:error": { "value": "#D61B2C", "token": "border/error" }
+                } },
+              { "key": "Helper text", "value": "#445C85", "token": "text/secondary",
+                "variants": { "state:error": { "value": "#D61B2C", "token": "text/error" } } }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Label style",    "value": "Primary/Label/Light/Large",          "mono": true },
-              { "key": "Amount style",   "value": "Primary/Headlines/Epic",             "mono": true },
-              { "key": "Amount font",    "value": "Proxima Soft Semibold",              "mono": true },
-              { "key": "Amount size/lh", "value": "53px / 58px · 0",                    "mono": true },
-              { "key": "Subtext style",  "value": "Primary/Multi-line Label/Light/Small", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBAmountTextField</span><span class=\"syn-punc\">(</span>\n    value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>amount<span class=\"syn-punc\">,</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Amount\"</span>\n<span class=\"syn-punc\">)</span>\n.<span class=\"syn-fn\">ebAmountSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.large</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBAmountTextField</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> amount<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> amount <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span><span class=\"syn-punc\">,</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Amount\"</span><span class=\"syn-punc\">,</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAmountSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Large</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"amt-large-default-preview\"><svg width=\"360\" height=\"184\" viewBox=\"0 0 360 184\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"180\" y=\"38\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\" fill-opacity=\"0.9\" letter-spacing=\"0.25\">Add Your Label Here</text><text x=\"180\" y=\"114\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"53\" font-weight=\"600\" fill=\"#90A8D0\">0.00</text><line x1=\"24\" y1=\"134\" x2=\"336\" y2=\"134\" stroke=\"#ADBDDC\" stroke-width=\"1\"></line><text x=\"180\" y=\"164\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.25\">Add your subtext here</text></svg></div>"
-      },
-      {
-        "cardKey": "amt-spec-large-error",
-        "demoKey": "large-error",
-        "demoControls": amountTextFieldDemoControls,
-        "title": "Large · Error",
-        "node": "152:48120",
-        "description": "Validation error — amount, border, and subtext all tint red #D61B2C. Subtext is the error message slot.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Size",  "value": "Large" },
-              { "key": "State", "value": "Error", "prop": "state" },
-              { "key": "Label", "value": "yes",   "prop": "label" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { key: 'Border (underline)', value: '#D61B2C', token: 'amount-text-field/error/border',       variants: { 'state:Default': { value: '#ADBDDC', token: 'amount-text-field/default/border' }, 'state:Filled': { value: '#445C85', token: 'amount-text-field/filled/border' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/border' } } },
-              { key: 'Label',              value: '#0A2757', token: 'amount-text-field/error/label',        variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/label' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label' }, 'state:Error': { value: '#0A2757', token: 'amount-text-field/error/label' } } },
-              { key: 'Amount',             value: '#D61B2C', token: 'amount-text-field/error/label-amount', variants: { 'state:Default': { value: '#90A8D0', token: 'amount-text-field/default/label-amount' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label-amount' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/label-amount' } } },
-              { key: 'Subtext',            value: '#D61B2C', token: 'amount-text-field/error/subtext',      variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/subtext' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/subtext' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/subtext' } } },
+              { "key": "Label", "value": "—", "mono": true },
+              { "key": "Amount", "value": "—", "mono": true },
+              { "key": "Helper text", "value": "—", "mono": true }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Width",          "value": "fill parent",        "mono": true },
-              { "key": "Height",         "value": "hug content",        "mono": true },
-              { "key": "Label height",   "value": "18px",               "mono": true },
-              { "key": "Amount size",    "value": "53px",               "mono": true },
-              { "key": "Peso glyph",     "value": "hidden (Large tier)", "mono": true },
-              { "key": "Underline",      "value": "1px bottom border",  "mono": true },
-              { "key": "Subtext height", "value": "14px / 16 line",     "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Label style",    "value": "Primary/Label/Light/Large",          "mono": true },
-              { "key": "Amount style",   "value": "Primary/Headlines/Epic",             "mono": true },
-              { "key": "Amount font",    "value": "Proxima Soft Semibold",              "mono": true },
-              { "key": "Amount size/lh", "value": "53px / 58px · 0",                    "mono": true },
-              { "key": "Subtext style",  "value": "Primary/Multi-line Label/Light/Small", "mono": true }
+              { "key": "Height", "value": "184px", "mono": true,
+                "variants": { "size:MD": { "value": "164px" } } },
+              { "key": "Width", "value": "400px", "mono": true },
+              { "key": "Radius", "value": "0px", "mono": true },
+              { "key": "Padding H", "value": "24px", "mono": true },
+              { "key": "Padding V", "value": "24px", "mono": true },
+              { "key": "Gap", "value": "16px", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBAmountTextField</span><span class=\"syn-punc\">(</span>\n    value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>amount<span class=\"syn-punc\">,</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Amount\"</span><span class=\"syn-punc\">,</span>\n    subtext<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Enter a valid amount\"</span>\n<span class=\"syn-punc\">)</span>\n.<span class=\"syn-fn\">ebAmountSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.large</span><span class=\"syn-punc\">)</span>\n.<span class=\"syn-fn\">ebAmountState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBAmountTextField</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> amount<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> amount <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span><span class=\"syn-punc\">,</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Amount\"</span><span class=\"syn-punc\">,</span>\n    subtext <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Enter a valid amount\"</span><span class=\"syn-punc\">,</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAmountSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Large</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAmountState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Error</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"amt-large-error-preview\"><svg width=\"360\" height=\"184\" viewBox=\"0 0 360 184\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"180\" y=\"38\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\" fill-opacity=\"0.9\" letter-spacing=\"0.25\">Add Your Label Here</text><text x=\"180\" y=\"114\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"53\" font-weight=\"600\" fill=\"#D61B2C\">500.00</text><line x1=\"24\" y1=\"134\" x2=\"336\" y2=\"134\" stroke=\"#D61B2C\" stroke-width=\"1\"></line><text x=\"180\" y=\"164\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#D61B2C\" letter-spacing=\"0.25\">Add your subtext here</text></svg></div>"
-      },
-      {
-        "cardKey": "amt-spec-default-filled",
-        "demoKey": "default-filled",
-        "demoControls": amountTextFieldDemoControls,
-        "title": "Default · Filled",
-        "node": "152:48121",
-        "description": "35px amount with leading peso glyph. Standard send/pay screens. Peso glyph is currently a raster image (see C6 open issue).",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Size",  "value": "Default" },
-              { "key": "State", "value": "Filled", "prop": "state" },
-              { "key": "Label", "value": "yes",    "prop": "label" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { key: 'Border (underline)', value: '#445C85', token: 'amount-text-field/filled/border',        variants: { 'state:Default': { value: '#ADBDDC', token: 'amount-text-field/default/border' }, 'state:Filled': { value: '#445C85', token: 'amount-text-field/filled/border' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/border' } } },
-              { key: 'Label',              value: '#0A2757', token: 'amount-text-field/filled/label',         variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/label' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label' }, 'state:Error': { value: '#0A2757', token: 'amount-text-field/error/label' } } },
-              { key: 'Amount',             value: '#0A2757', token: 'amount-text-field/filled/label-amount',  variants: { 'state:Default': { value: '#90A8D0', token: 'amount-text-field/default/label-amount' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label-amount' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/label-amount' } } },
-              { key: 'Peso glyph',         value: '#0A2757', token: 'amount-text-field/filled/icon-currency', variants: { 'state:Default': { value: '#D7E0EF', token: 'amount-text-field/default/icon-currency' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/icon-currency' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/icon-currency' } } },
-              { key: 'Subtext',            value: '#0A2757', token: 'amount-text-field/filled/subtext',       variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/subtext' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/subtext' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/subtext' } } },
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width",          "value": "fill parent",       "mono": true },
-              { "key": "Height",         "value": "hug content",       "mono": true },
-              { "key": "Label height",   "value": "18px",              "mono": true },
-              { "key": "Amount size",    "value": "35px",              "mono": true },
-              { "key": "Peso glyph",     "value": "present (leading)", "mono": true },
-              { "key": "Underline",      "value": "1px bottom border", "mono": true },
-              { "key": "Subtext height", "value": "14px / 16 line",    "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Label style",    "value": "Primary/Label/Light/Large",          "mono": true },
-              { "key": "Amount style",   "value": "Primary/Headlines/Spotlight",        "mono": true },
-              { "key": "Amount font",    "value": "Proxima Soft Bold",                  "mono": true },
-              { "key": "Amount size/lh", "value": "35px / 38px · 0",                    "mono": true },
-              { "key": "Subtext style",  "value": "Primary/Multi-line Label/Light/Small", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBAmountTextField</span><span class=\"syn-punc\">(</span>\n    value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>amount<span class=\"syn-punc\">,</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Amount\"</span>\n<span class=\"syn-punc\">)</span>\n.<span class=\"syn-fn\">ebAmountSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBAmountTextField</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> amount<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> amount <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span><span class=\"syn-punc\">,</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Amount\"</span><span class=\"syn-punc\">,</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAmountSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"amt-default-filled-preview\"><svg width=\"360\" height=\"165\" viewBox=\"0 0 360 165\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"180\" y=\"38\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\" fill-opacity=\"0.9\" letter-spacing=\"0.25\">Add Your Label Here</text><text x=\"124\" y=\"100\" font-family=\"Proxima Soft, system-ui\" font-size=\"32\" font-weight=\"700\" fill=\"#0A2757\">₱</text><text x=\"150\" y=\"100\" font-family=\"Proxima Soft, system-ui\" font-size=\"35\" font-weight=\"700\" fill=\"#0A2757\">500.00</text><line x1=\"24\" y1=\"114\" x2=\"336\" y2=\"114\" stroke=\"#445C85\" stroke-width=\"1\"></line><text x=\"180\" y=\"144\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.25\">Add your subtext here</text></svg></div>"
-      },
-      {
-        "cardKey": "amt-spec-default-default",
-        "demoKey": "default-default",
-        "demoControls": amountTextFieldDemoControls,
-        "title": "Default · Default",
-        "node": "152:48114",
-        "description": "Empty state — both peso glyph and <code>0.00</code> render in the placeholder tint #90A8D0 / #D7E0EF.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Size",  "value": "Default" },
-              { "key": "State", "value": "Default", "prop": "state" },
-              { "key": "Label", "value": "yes",     "prop": "label" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { key: 'Border (underline)', value: '#ADBDDC', token: 'amount-text-field/default/border',        variants: { 'state:Default': { value: '#ADBDDC', token: 'amount-text-field/default/border' }, 'state:Filled': { value: '#445C85', token: 'amount-text-field/filled/border' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/border' } } },
-              { key: 'Label',              value: '#0A2757', token: 'amount-text-field/default/label',         variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/label' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label' }, 'state:Error': { value: '#0A2757', token: 'amount-text-field/error/label' } } },
-              { key: 'Amount',             value: '#90A8D0', token: 'amount-text-field/default/label-amount',  variants: { 'state:Default': { value: '#90A8D0', token: 'amount-text-field/default/label-amount' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label-amount' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/label-amount' } } },
-              { key: 'Peso glyph',         value: '#D7E0EF', token: 'amount-text-field/default/icon-currency', variants: { 'state:Default': { value: '#D7E0EF', token: 'amount-text-field/default/icon-currency' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/icon-currency' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/icon-currency' } } },
-              { key: 'Subtext',            value: '#0A2757', token: 'amount-text-field/default/subtext',       variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/subtext' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/subtext' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/subtext' } } },
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width",          "value": "fill parent",       "mono": true },
-              { "key": "Height",         "value": "hug content",       "mono": true },
-              { "key": "Label height",   "value": "18px",              "mono": true },
-              { "key": "Amount size",    "value": "35px",              "mono": true },
-              { "key": "Peso glyph",     "value": "present (leading)", "mono": true },
-              { "key": "Underline",      "value": "1px bottom border", "mono": true },
-              { "key": "Subtext height", "value": "14px / 16 line",    "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Label style",    "value": "Primary/Label/Light/Large",          "mono": true },
-              { "key": "Amount style",   "value": "Primary/Headlines/Spotlight",        "mono": true },
-              { "key": "Amount font",    "value": "Proxima Soft Bold",                  "mono": true },
-              { "key": "Amount size/lh", "value": "35px / 38px · 0",                    "mono": true },
-              { "key": "Subtext style",  "value": "Primary/Multi-line Label/Light/Small", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBAmountTextField</span><span class=\"syn-punc\">(</span>\n    value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>amount<span class=\"syn-punc\">,</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Amount\"</span>\n<span class=\"syn-punc\">)</span>\n.<span class=\"syn-fn\">ebAmountSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBAmountTextField</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> amount<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> amount <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span><span class=\"syn-punc\">,</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Amount\"</span><span class=\"syn-punc\">,</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAmountSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"amt-default-default-preview\"><svg width=\"360\" height=\"165\" viewBox=\"0 0 360 165\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"180\" y=\"38\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\" fill-opacity=\"0.9\" letter-spacing=\"0.25\">Add Your Label Here</text><text x=\"124\" y=\"100\" font-family=\"Proxima Soft, system-ui\" font-size=\"32\" font-weight=\"700\" fill=\"#D7E0EF\">₱</text><text x=\"150\" y=\"100\" font-family=\"Proxima Soft, system-ui\" font-size=\"35\" font-weight=\"700\" fill=\"#90A8D0\">0.00</text><line x1=\"24\" y1=\"114\" x2=\"336\" y2=\"114\" stroke=\"#ADBDDC\" stroke-width=\"1\"></line><text x=\"180\" y=\"144\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\" letter-spacing=\"0.25\">Add your subtext here</text></svg></div>"
-      },
-      {
-        "cardKey": "amt-spec-default-error",
-        "demoKey": "default-error",
-        "demoControls": amountTextFieldDemoControls,
-        "title": "Default · Error",
-        "node": "152:48118",
-        "description": "Validation failed — peso glyph, amount, border, and subtext all tint red #D61B2C.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Size",  "value": "Default" },
-              { "key": "State", "value": "Error", "prop": "state" },
-              { "key": "Label", "value": "yes",   "prop": "label" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { key: 'Border (underline)', value: '#D61B2C', token: 'amount-text-field/error/border',        variants: { 'state:Default': { value: '#ADBDDC', token: 'amount-text-field/default/border' }, 'state:Filled': { value: '#445C85', token: 'amount-text-field/filled/border' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/border' } } },
-              { key: 'Label',              value: '#0A2757', token: 'amount-text-field/error/label',         variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/label' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label' }, 'state:Error': { value: '#0A2757', token: 'amount-text-field/error/label' } } },
-              { key: 'Amount',             value: '#D61B2C', token: 'amount-text-field/error/label-amount',  variants: { 'state:Default': { value: '#90A8D0', token: 'amount-text-field/default/label-amount' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/label-amount' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/label-amount' } } },
-              { key: 'Peso glyph',         value: '#D61B2C', token: 'amount-text-field/error/icon-currency', variants: { 'state:Default': { value: '#D7E0EF', token: 'amount-text-field/default/icon-currency' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/icon-currency' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/icon-currency' } } },
-              { key: 'Subtext',            value: '#D61B2C', token: 'amount-text-field/error/subtext',       variants: { 'state:Default': { value: '#0A2757', token: 'amount-text-field/default/subtext' }, 'state:Filled': { value: '#0A2757', token: 'amount-text-field/filled/subtext' }, 'state:Error': { value: '#D61B2C', token: 'amount-text-field/error/subtext' } } },
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width",          "value": "fill parent",       "mono": true },
-              { "key": "Height",         "value": "hug content",       "mono": true },
-              { "key": "Label height",   "value": "18px",              "mono": true },
-              { "key": "Amount size",    "value": "35px",              "mono": true },
-              { "key": "Peso glyph",     "value": "present (leading)", "mono": true },
-              { "key": "Underline",      "value": "1px bottom border", "mono": true },
-              { "key": "Subtext height", "value": "14px / 16 line",    "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Label style",    "value": "Primary/Label/Light/Large",          "mono": true },
-              { "key": "Amount style",   "value": "Primary/Headlines/Spotlight",        "mono": true },
-              { "key": "Amount font",    "value": "Proxima Soft Bold",                  "mono": true },
-              { "key": "Amount size/lh", "value": "35px / 38px · 0",                    "mono": true },
-              { "key": "Subtext style",  "value": "Primary/Multi-line Label/Light/Small", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBAmountTextField</span><span class=\"syn-punc\">(</span>\n    value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>amount<span class=\"syn-punc\">,</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Amount\"</span><span class=\"syn-punc\">,</span>\n    subtext<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Enter a valid amount\"</span>\n<span class=\"syn-punc\">)</span>\n.<span class=\"syn-fn\">ebAmountSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n.<span class=\"syn-fn\">ebAmountState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBAmountTextField</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> amount<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> amount <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span><span class=\"syn-punc\">,</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Amount\"</span><span class=\"syn-punc\">,</span>\n    subtext <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Enter a valid amount\"</span><span class=\"syn-punc\">,</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAmountSize</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Default</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAmountState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Error</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"amt-default-error-preview\"><svg width=\"360\" height=\"165\" viewBox=\"0 0 360 165\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"180\" y=\"38\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"18\" font-weight=\"600\" fill=\"#0A2757\" fill-opacity=\"0.9\" letter-spacing=\"0.25\">Add Your Label Here</text><text x=\"124\" y=\"100\" font-family=\"Proxima Soft, system-ui\" font-size=\"32\" font-weight=\"700\" fill=\"#D61B2C\">₱</text><text x=\"150\" y=\"100\" font-family=\"Proxima Soft, system-ui\" font-size=\"35\" font-weight=\"700\" fill=\"#D61B2C\">500.00</text><line x1=\"24\" y1=\"114\" x2=\"336\" y2=\"114\" stroke=\"#D61B2C\" stroke-width=\"1\"></line><text x=\"180\" y=\"144\" text-anchor=\"middle\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#D61B2C\" letter-spacing=\"0.25\">Add your subtext here</text></svg></div>"
+        "swift": "<span class=\"syn-type\">EBAmountField</span><span class=\"syn-punc\">(</span>amount<span class=\"syn-punc\">: </span>$amount<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">controlSize</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.large</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBAmountField</span><span class=\"syn-punc\">(</span>\n    amount <span class=\"syn-eq\">=</span> amount<span class=\"syn-punc\">,</span>\n    onAmountChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    size <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBAmountSize</span><span class=\"syn-punc\">.</span>LG<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span>Default\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "colorsTables": [

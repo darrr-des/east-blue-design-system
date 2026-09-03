@@ -178,8 +178,11 @@ export interface DemoControlRow {
   /** Render style. Defaults to 'select' for backwards compatibility.
       'toggle' renders an on/off switch — useful for boolean props
       (show/hide, true/false, yes/no). When 'toggle', the row's first
-      option value = "off" and the second = "on". */
-  control?: 'select' | 'toggle';
+      option value = "off" and the second = "on".
+      'input' renders a free-text field — for Figma TEXT properties, whose
+      value the consumer types rather than picks. `options` is ignored;
+      `defaultValue` seeds the field. */
+  control?: 'select' | 'toggle' | 'input';
   options: DemoControlOption[];
   defaultValue?: string;               // initially selected option's value
 }

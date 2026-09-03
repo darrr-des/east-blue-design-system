@@ -1,7 +1,8 @@
 import type { ComponentData, DemoControlSection } from '../types';
 
-// Per-card demo controls — toggles between Default and Filled. Wired to a
-// future per-card update handler in `public/scripts/demos/search-field.js`.
+// Per-card demo controls — the four live states of node 4697:18836.
+// Wired to updateSpecCard(demoKey, 'state', value) in
+// public/scripts/demos/search-field.js.
 const searchFieldDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
@@ -12,7 +13,26 @@ const searchFieldDemoControls: DemoControlSection[] = [
         defaultValue: 'default',
         options: [
           { value: 'default', label: 'Default' },
-          { value: 'filled', label: 'Filled' },
+          { value: 'disabled', label: 'Disabled' },
+          { value: 'focused', label: 'Focused' },
+          { value: 'error', label: 'Error' },
+        ],
+      },
+      {
+        label: 'Label',
+        prop: 'label',
+        control: 'input',
+        defaultValue: 'Search',
+        options: [],
+      },
+      {
+        label: 'hasClearButton',
+        prop: 'hasClearButton',
+        control: 'toggle',
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
     ],
@@ -253,276 +273,85 @@ export const searchField: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "srf-spec-default",
-        "demoKey": "srf-default",
+        "cardKey": "srf-spec-main",
+        "demoKey": "main",
         "demoControls": searchFieldDemoControls,
-        "title": "Default",
-        "node": "50:78118",
-        "description": "Empty state. Placeholder label at 50% opacity (#90A8D0), leading search glyph at 80% opacity.",
+        "title": "Search Field",
+        "node": "4697:18836",
+        "description": "",
+        "previewHtml": "<div id=\"search-field-spec-main\"><svg width=\"360\" height=\"56\" viewBox=\"0 0 360 56\" fill=\"none\" role=\"img\" aria-label=\"Search field, default\"><rect x=\"0\" y=\"0\" width=\"360\" height=\"56\" fill=\"#FFFFFF\"/><line x1=\"0\" y1=\"0.5\" x2=\"360\" y2=\"0.5\" stroke=\"#E5EBF4\" stroke-width=\"1\"/><line x1=\"0\" y1=\"55.5\" x2=\"360\" y2=\"55.5\" stroke=\"#E5EBF4\" stroke-width=\"1\"/><g transform=\"translate(22,16)\" fill=\"none\" stroke=\"#445C85\" stroke-width=\"2\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><line x1=\"15.4\" y1=\"15.4\" x2=\"20.5\" y2=\"20.5\" stroke-linecap=\"round\"/></g><text x=\"54\" y=\"33\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\">Search</text></svg></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Variant", "value": "Default" },
-              { "key": "State",   "value": "Default", "prop": "state" }
+              { "key": "State", "value": "Default", "prop": "state" },
+              { "key": "Label", "value": "Search", "prop": "label" },
+              { "key": "hasClearButton", "value": "True", "prop": "hasClearButton" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg",          "value": "#FFFFFF", "token": "input-field/default/bg" },
-              { "key": "Border",      "value": "#D7E0EF", "token": "input-field/default/border" },
-              { "key": "Text",        "value": "#0A2757", "token": "input-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder",
-                "variants": { "state:filled": { "hide": true } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Field height",  "value": "48px", "mono": true },
-              { "key": "Padding H",     "value": "12px", "mono": true },
-              { "key": "Padding V",     "value": "14px", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
-              { "key": "Border",        "value": "1px solid", "mono": true },
-              { "key": "Icon size",     "value": "20 × 20", "mono": true }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Value font",  "value": "BarkAda Semibold · 14 / 14 · +0.25", "mono": true }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBSearchField</span><span class=\"syn-punc\">(</span>placeholder<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Search\"</span><span class=\"syn-punc\">, </span>text<span class=\"syn-punc\">: </span>$query<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSearchField</span><span class=\"syn-punc\">(</span>\n    placeholder <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Search\"</span><span class=\"syn-punc\">,</span>\n    query <span class=\"syn-eq\">=</span> query<span class=\"syn-punc\">,</span>\n    onQueryChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"360\" height=\"56\" viewBox=\"0 0 360 56\" fill=\"none\"><rect x=\"0\" y=\"0\" width=\"360\" height=\"56\" fill=\"#FFFFFF\"></rect><line x1=\"0\" y1=\"0.5\" x2=\"360\" y2=\"0.5\" stroke=\"rgba(246,249,253,0.8)\" stroke-width=\"1\"></line><line x1=\"0\" y1=\"55.5\" x2=\"360\" y2=\"55.5\" stroke=\"rgba(246,249,253,0.8)\" stroke-width=\"1\"></line><g transform=\"translate(22,16)\" opacity=\"0.8\"><circle cx=\"10\" cy=\"10\" r=\"7\" stroke=\"#6780A9\" stroke-width=\"2\" fill=\"none\"></circle><line x1=\"15.5\" y1=\"15.5\" x2=\"20.5\" y2=\"20.5\" stroke=\"#6780A9\" stroke-width=\"2\" stroke-linecap=\"round\"></line></g><text x=\"54\" y=\"32\" font-family=\"BarkAda, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" fill-opacity=\"0.5\">Search</text><circle cx=\"324\" cy=\"28\" r=\"12\" fill=\"#6780A9\"></circle></svg>"
-      },
-      {
-        "cardKey": "srf-spec-filled",
-        "demoKey": "srf-filled",
-        "demoControls": searchFieldDemoControls,
-        "title": "Filled",
-        "node": "50:78126",
-        "description": "State shown when a query has been entered. Text uses #0A2757 at full opacity.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              { "key": "Variant", "value": "Filled" },
-              { "key": "State",   "value": "Filled", "prop": "state" }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg",          "value": "#FFFFFF", "token": "input-field/default/bg" },
-              { "key": "Border",      "value": "#D7E0EF", "token": "input-field/default/border" },
-              { "key": "Text",        "value": "#0A2757", "token": "input-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder",
-                "variants": { "state:filled": { "hide": true } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Field height",  "value": "48px", "mono": true },
-              { "key": "Padding H",     "value": "12px", "mono": true },
-              { "key": "Padding V",     "value": "14px", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-2 (6px)", "mono": true },
-              { "key": "Border",        "value": "1px solid", "mono": true },
-              { "key": "Icon size",     "value": "20 × 20", "mono": true }
+              { "key": "Band", "value": "#FFFFFF", "token": "surface/default" },
+              { "key": "Border (top + bottom)", "value": "#E5EBF4", "token": "border/subtle" },
+              { "key": "Leading glyph", "value": "#445C85", "token": "icon/secondary",
+                "variants": { "state:disabled": { "value": "#C2CFE5", "token": "icon/disabled" } } },
+              { "key": "Label", "value": "#90A8D0", "token": "text/placeholder",
+                "variants": {
+                  "state:focused": { "value": "#0A2757", "token": "text/primary" },
+                  "state:error": { "value": "#0A2757", "token": "text/primary" },
+                  "state:disabled": { "value": "#C2CFE5", "token": "text/disabled" }
+                } },
+              { "key": "Trailing icon", "value": "–", "token": "–",
+                "variants": {
+                  "state:focused": { "value": "#025AE9", "token": "icon/interactive" },
+                  "state:error": { "value": "#D61B2C", "token": "icon/error" }
+                } }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Value style", "value": "Primary/Label/Light/Small", "mono": true },
-              { "key": "Value font",  "value": "BarkAda Semibold · 14 / 14 · +0.25", "mono": true }
+              { "key": "Label", "value": "—", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "56px", "mono": true },
+              { "key": "Width", "value": "360px (fill)", "mono": true },
+              { "key": "Radius", "value": "0px", "mono": true },
+              { "key": "Padding H", "value": "22px / 24px", "mono": true },
+              { "key": "Padding V", "value": "16px", "mono": true },
+              { "key": "Gap", "value": "8px", "mono": true },
+              { "key": "Alignment", "value": "—", "mono": true }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBSearchField</span><span class=\"syn-punc\">(</span>placeholder<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Search\"</span><span class=\"syn-punc\">, </span>text<span class=\"syn-punc\">: </span>$query<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSearchField</span><span class=\"syn-punc\">(</span>\n    placeholder <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Search\"</span><span class=\"syn-punc\">,</span>\n    query <span class=\"syn-eq\">=</span> query<span class=\"syn-punc\">,</span>\n    onQueryChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<svg width=\"360\" height=\"56\" viewBox=\"0 0 360 56\" fill=\"none\"><rect x=\"0\" y=\"0\" width=\"360\" height=\"56\" fill=\"#FFFFFF\"></rect><line x1=\"0\" y1=\"0.5\" x2=\"360\" y2=\"0.5\" stroke=\"rgba(246,249,253,0.8)\" stroke-width=\"1\"></line><line x1=\"0\" y1=\"55.5\" x2=\"360\" y2=\"55.5\" stroke=\"rgba(246,249,253,0.8)\" stroke-width=\"1\"></line><g transform=\"translate(22,16)\" opacity=\"0.8\"><circle cx=\"10\" cy=\"10\" r=\"7\" stroke=\"#6780A9\" stroke-width=\"2\" fill=\"none\"></circle><line x1=\"15.5\" y1=\"15.5\" x2=\"20.5\" y2=\"20.5\" stroke=\"#6780A9\" stroke-width=\"2\" stroke-linecap=\"round\"></line></g><text x=\"54\" y=\"32\" font-family=\"BarkAda, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\" fill-opacity=\"1\">Search</text><circle cx=\"324\" cy=\"28\" r=\"12\" fill=\"#6780A9\"></circle></svg>"
+        "compose": "<span class=\"syn-type\">EBSearchField</span><span class=\"syn-punc\">(</span>\n    placeholder <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Search\"</span><span class=\"syn-punc\">,</span>\n    query <span class=\"syn-eq\">=</span> query<span class=\"syn-punc\">,</span>\n    onQueryChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    hasClearButton <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span>Default\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "colorsTables": [
       {
         "title": "Colors by State",
-        "description": "Only a single variable mode (<code>default</code>) is bound on <code>main/search/*</code>. Focused, error, and disabled tokens do not exist yet.",
+        "description": "Read off node <code>4697:18836</code>. Colors come from the shared generic token scale — the component-scoped <code>main/search/*</code> namespace was abandoned. The band and its border are constant across all four states: focus is carried by the caret and the clear control, error by the trailing glyph. Token paths are indicative pending a variable-binding read, which the review tooling cannot perform.",
         "columns": [
           "DEFAULT",
-          "FILLED"
+          "FOCUSED",
+          "ERROR",
+          "DISABLED"
         ],
         "rows": [
-          {
-            "role": "Background",
-            "token": "main/search/color/default/bg",
-            "values": [
-              "#FFFFFF",
-              "#FFFFFF"
-            ]
-          },
-          {
-            "role": "Border (top + bottom)",
-            "token": "main/search/color/default/border",
-            "values": [
-              "#F6F9FD (80%)",
-              "#F6F9FD (80%)"
-            ]
-          },
-          {
-            "role": "Placeholder",
-            "token": "main/search/color/default/placeholder",
-            "values": [
-              "#90A8D0 (50%)",
-              "–"
-            ]
-          },
-          {
-            "role": "Text",
-            "token": "main/search/color/default/text",
-            "values": [
-              "–",
-              "#0A2757"
-            ]
-          },
-          {
-            "role": "Icon (leading)",
-            "token": "main/search/color/default/icon-leading",
-            "values": [
-              "#6780A9 (80%)",
-              "#6780A9 (80%)"
-            ]
-          },
-          {
-            "role": "Icon (trailing)",
-            "token": "main/search/color/default/icon-trailing",
-            "values": [
-              "#6780A9",
-              "#6780A9"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "columns": [
-          "Token"
-        ],
-        "rows": [
-          {
-            "role": "Container size",
-            "token": "360 × 56 px",
-            "values": [
-              "—"
-            ]
-          },
-          {
-            "role": "Padding (horizontal)",
-            "token": "22 px left / 24 px right",
-            "values": [
-              "— / space/space-24"
-            ]
-          },
-          {
-            "role": "Padding (vertical)",
-            "token": "16 px",
-            "values": [
-              "space/space-16"
-            ]
-          },
-          {
-            "role": "Gap (icon ↔ text)",
-            "token": "8 px",
-            "values": [
-              "space/space-8"
-            ]
-          },
-          {
-            "role": "Gap (trailing slot)",
-            "token": "12 px",
-            "values": [
-              "space/space-12"
-            ]
-          },
-          {
-            "role": "Corner radius",
-            "token": "0",
-            "values": [
-              "radius/radius-0"
-            ]
-          },
-          {
-            "role": "Border",
-            "token": "1 px top + bottom only",
-            "values": [
-              "—"
-            ]
-          },
-          {
-            "role": "Leading icon size",
-            "token": "24 × 24 px",
-            "values": [
-              "—"
-            ]
-          },
-          {
-            "role": "Trailing slot size",
-            "token": "24 × 24 px",
-            "values": [
-              "—"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Typography",
-        "columns": [],
-        "rows": [
-          {
-            "role": "DS text style",
-            "token": "Secondary/Bold/Base",
-            "values": []
-          },
-          {
-            "role": "Font family",
-            "token": "BarkAda",
-            "values": []
-          },
-          {
-            "role": "Weight",
-            "token": "Semibold (600)",
-            "values": []
-          },
-          {
-            "role": "Size",
-            "token": "14 px (font-size-20)",
-            "values": []
-          },
-          {
-            "role": "Line height",
-            "token": "20 px (leading-40)",
-            "values": []
-          },
-          {
-            "role": "Tracking",
-            "token": "0 (tracking-normal)",
-            "values": []
-          }
+          { "role": "Band", "token": "surface/default", "values": ["#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF"] },
+          { "role": "Border (top + bottom)", "token": "border/subtle", "values": ["#E5EBF4", "#E5EBF4", "#E5EBF4", "#E5EBF4"] },
+          { "role": "Leading glyph", "token": "icon/secondary · icon/disabled", "values": ["#445C85", "#445C85", "#445C85", "#C2CFE5"] },
+          { "role": "Value / placeholder", "token": "text/placeholder · text/primary · text/disabled", "values": ["#90A8D0", "#0A2757", "#0A2757", "#C2CFE5"] },
+          { "role": "Trailing icon", "token": "icon/interactive · icon/error", "values": ["–", "#025AE9", "#D61B2C", "–"] }
         ]
       }
     ]
@@ -721,16 +550,30 @@ export const searchField: ComponentData = {
       "rows": [
         {
           "cells": [
-            "default",
+            "Default",
             "360 × 56",
-            "50:78118"
+            "4697:18837"
           ]
         },
         {
           "cells": [
-            "filled",
+            "Focused",
             "360 × 56",
-            "50:78126"
+            "4706:18282"
+          ]
+        },
+        {
+          "cells": [
+            "Error",
+            "360 × 56",
+            "4706:18328"
+          ]
+        },
+        {
+          "cells": [
+            "Disabled",
+            "360 × 56",
+            "4706:18270"
           ]
         }
       ]
