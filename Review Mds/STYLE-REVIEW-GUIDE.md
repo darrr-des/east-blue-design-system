@@ -177,6 +177,7 @@ const alertDemoControls: DemoControlSection[] = [
 | Text properties use an input | `class="demo-panel-select demo-panel-input"` (see `alert.ts`) |
 | One control set per component | Define it once as a `const` and reuse it on every card |
 | `defaultValue` = Figma's default variant | Not just the first option |
+| **A card with nothing to control declares `"demoControls": []`** | When every property is the driving property or a slot, there is no panel — the empty array states that on purpose. An *absent* field reads as an unreviewed gap and fails `npm run lint`. With `[]`, the card renders the static preview frame instead of an empty panel |
 
 ## 3.3 Exactly four spec sections
 
@@ -210,18 +211,61 @@ Any other section is deleted. Any missing one is written.
 
 `value` starting with `#` renders the swatch dot automatically. If a color changes with a control, add `variants` (3.5) — don't add a row per state.
 
-**Typography** — text style names only, one row per text layer.
+**Typography** — text style names only, one row per text layer. The value is the **exact DS text style path**, spelled as the Figma style is named:
 
 ```ts
-{ "key": "Label",       "value": "Primary/Label/Large",   "mono": true },
+{ "key": "Label",       "value": "Primary/Label/Large",   "mono": true },   // ✅ the style name
 { "key": "Description", "value": "Secondary/Heavy/Large", "mono": true }
+
+{ "key": "Title", "value": "Proxima Soft Bold · 18 / 23" }                  // ❌ a font spec is NOT a style name
 ```
 
-Delete `Font`, `Size`, `Tracking`, `Line-height`. They live in the text style; repeating them is what goes stale.
+Delete `Font`, `Size`, `Tracking`, `Line-height`. They live in the text style; repeating them is what goes stale — and a font spec standing in for the style name fails validation the same as those rows do.
+
+**How to get the style name — the text style database.** `astro-site/src/data/typography.ts` holds all 53 DS text styles with their Figma style keys, so the name no longer has to come from the designer:
+
+1. `scan_text_nodes(<variant node>)` → every text layer with its id and path
+2. `get_styled_text_segments(<text node>, 'textStyleId')` → an opaque id, `S:4b55150fcb95a5ce58c6898f1c7c390b98202642,`
+3. `resolveStyleId(thatId)` → `Primary/Headlines/Block`
+
+The id looks unreadable because shared-library styles carry no name, but the hash inside it **is** the key the database stores. One lookup turns it into the style path.
+
+**The three outcomes.** Every text layer lands in exactly one:
+
+| What the layer reports | Typography row | Open issue |
+|---|---|---|
+| A `textStyleId` that resolves | the style name | — |
+| **No** `textStyleId` — raw font/size values | `—`, reported **Missing** | **Yes** — "Text not bound to a DS text style" |
+| A `textStyleId` that does **not** resolve | `—`, reported **Missing** | **Yes** — "References a text style that no longer exists" |
+
+Both issues tag `C3 · Token Coverage` — typography off-token is the same class of finding as a hardcoded hex. They look alike on the page but are different defects: raw values means someone typed a size in; an unresolvable id means the style was renamed or deleted and the component still points at the old one, which reads as correct until you check.
+
+**One exception.** `Component/Balances/Label` exists in Figma but is deliberately excluded from the database (`EXCLUDED_STYLE_NAMES`). A layer using it will fail to resolve and must **not** be raised as an issue. Check that list before writing one.
+
+Never substitute a font spec, and never guess a name from the font and size. If the lookup fails, that is the finding.
+
+**Resolve every variant, not just the default — text styles change per size.** This is the rule that most often gets missed, because the default variant looks complete. Read the style for *each* size (and any other axis that changes type) and record the others in `variants`. Worked example, Alert, all six read from Figma:
+
+```ts
+{ "key": "Title", "value": "Primary/Headlines/Block", "mono": true,
+  "variants": {
+    "size:medium": { "value": "Primary/Multi-line Label/Base" },
+    "size:small":  { "value": "Primary/Multi-line Label/Small" }
+  } },
+{ "key": "Description", "value": "Secondary/Bold/Base", "mono": true,
+  "variants": {
+    "size:medium": { "value": "Secondary/Bold/Caption" },
+    "size:small":  { "value": "Secondary/Bold/Small Caption" }
+  } }
+```
+
+A `—` on a non-default variant is **not** a finding about Figma — it usually means nobody read that variant. Resolve it before reporting anything Missing. On the Alert run, both spec cards had `—` for Description and for Title's medium/small, and all six turned out to be properly bound.
+
+**Flag a slot that changes type family across variants.** Once the names are in, read down the column. Alert's Title is `Primary/Headlines/Block` at Large but `Primary/Multi-line Label/*` at Medium and Small — one slot, one role, two different families. That is invisible while the rows say `—` and obvious once they don't. Raise it as an open issue tagged `C2 · Variant & Property Naming`; a slot should keep its family across sizes and vary only the step within it.
 
 > **Reading limits — Talk To Figma plugin.** Two things the plugin cannot return, found on the Alert run:
 >
-> - **Text style names.** DS text styles come from a shared library, so `get_styled_text_segments` returns an opaque `textStyleId` (`S:4b55…`) and `get_styles` comes back empty. Ask the designer for the exact names — never infer one from the font and size.
+> - ~~**Text style names.**~~ **Solved by the database.** Shared-library styles still return an opaque `textStyleId`, and `get_styles` still comes back empty in the working file — but `resolveStyleId()` turns that id into the style name (see above). Asking the designer is no longer the fallback; a failed lookup is a finding.
 > - **Auto-layout padding, gap and alignment.** Not exposed. Derive them from `absoluteBoundingBox` positions (child left minus parent left = padding left; gap between two stacked children = item spacing) and have the designer confirm. Say "derived" in the report.
 >
 > Figma Dev Mode MCP returns both directly — use it when it's authorized.
@@ -392,9 +436,12 @@ Then open `http://localhost:4321/components/<slug>` and click **every** control 
 | 9 | Exactly four sections, in order | Properties, Colors, Typography, Layout |
 | 10 | Layout uses only the 7 keys | No icon sizes, no shadows |
 | 11 | Typography is style names only | No Font / Size / Tracking / Line-height rows |
-| 12 | Colors rows follow the controls | Switch a control — hex and token both change |
-| 13 | Colors table is Role │ Element │ Token │ Value | Grouped by role, in card order |
-| 14 | DEV code is live on both tabs | SwiftUI and Compose both change with the controls |
+| 12 | Every typography row resolves | Each value is a real style name — no `—`, no font spec |
+| 13 | Every size variant read | Each size has its own style; a `—` on medium/small means unread, not Missing |
+| 14 | No slot changes type family across sizes | Read down the column — Headlines at one size, Label at another is a `C2` issue |
+| 15 | Colors rows follow the controls | Switch a control — hex and token both change |
+| 16 | Colors table is Role │ Element │ Token │ Value | Grouped by role, in card order |
+| 17 | DEV code is live on both tabs | SwiftUI and Compose both change with the controls |
 
 ## 4c. Report format
 
@@ -415,14 +462,17 @@ The AI prints one table. Status is one of **✅ Done · ⚠️ Partial · ❌ Mi
 | 8  | Controls move the preview | ✅ Done | 5 Type options verified |
 | 9  | Four sections | ✅ Done | correct order |
 | 10 | Layout 7 keys | ⚠️ Partial | "Right icon" and "Gap (icon ↔ content)" still present |
-| 11 | Typography style names | ✅ Done | 2 rows |
-| 12 | Colors follow controls | ✅ Done | 4 rows × 5 types |
-| 13 | Colors table shape | ⚠️ Partial | authored in interim shape — waiting on the Element column |
-| 14 | DEV code live | 🔴 Broken | no getSnippet in demos/alert.js — both tabs frozen |
+| 11 | Typography style names | ✅ Done | 2 rows, no font specs |
+| 12 | Typography rows resolve | ✅ Done | Title + Description both resolved from textStyleId |
+| 13 | Size variants read | ✅ Done | large / medium / small resolved on both cards |
+| 14 | Type family consistent | ❌ Missing | Title is Primary/Headlines/Block at large but Primary/Multi-line Label at medium + small |
+| 15 | Colors follow controls | ✅ Done | 4 rows × 5 types |
+| 16 | Colors table shape | ⚠️ Partial | authored in interim shape — waiting on the Element column |
+| 17 | DEV code live | 🔴 Broken | no getSnippet in demos/alert.js — both tabs frozen |
 
-**Result:** 9 done · 3 partial · 1 missing · 1 broken
-**Blocked by pre-work:** check 13 (Element column not shipped yet)
-**Recommended next:** add Content + Size controls (check 6), trim Layout (10), write getSnippet (14)
+**Result:** 11 done · 3 partial · 2 missing · 1 broken
+**Blocked by pre-work:** check 16 (Element column not shipped yet)
+**Recommended next:** add Content + Size controls (check 6), trim Layout (10), raise the Title family split as a `C2` issue (14), write getSnippet (17)
 ```
 
 Rules for the report:

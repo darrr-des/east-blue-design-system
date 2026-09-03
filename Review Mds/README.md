@@ -215,6 +215,14 @@ Most components will gain an entry from this content pass — the doc rewrite it
 
 ---
 
+# Decisions log
+
+**Decided 2026-09-02** (raised by the first Code Review runs):
+
+1. **Kotlin package scheme → domain-grouped.** Package = the component's family (`meta.navGroup`, lowercased, separators stripped); no family → hyphen-stripped slug. Gradle artifact IDs keep their hyphens. Full derivation table: `CODE-REVIEW-GUIDE.md` §3.2.
+2. **Cards with nothing to control declare `"demoControls": []`.** The empty array passes `npm run lint`; an absent field stays a gap. Rule: `STYLE-REVIEW-GUIDE.md` §3.2.
+3. **`control: 'input'`** (text properties in spec-card panels) — approved in principle; lands after the maintainer reviews the `types.ts` + `SpecCard.astro` diff on the reviewer's branch.
+
 # Open decisions
 
 Raise these with the owner before a full sweep:
