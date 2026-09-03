@@ -206,6 +206,10 @@ export const adSpace: ComponentData = {
       {
         "cardKey": "ads-spec-card-receipt",
         "demoKey": "receipt",
+        /* Receipt's only properties are the driving `Variant` and the
+           `⤷ AssetSlot` slot, both skipped per §3.2 — the empty panel is
+           intentional, declared so lint doesn't read it as a gap. */
+        "demoControls": [],
         "title": "Receipt",
         "node": "6518:74485",
         "description": "",
@@ -397,11 +401,11 @@ export const adSpace: ComponentData = {
       "blocks": [
         {
           "label": "iOS — Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"2.0.4\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"2.0.5\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:ad-space:2.0.4\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:ad-space:2.0.5\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Import",
@@ -578,6 +582,23 @@ export const adSpace: ComponentData = {
   },
   "changelog": [
     {
+      "version": "2.0.5",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Receipt's empty control panel is now declared — node 6507:74166",
+      "rows": [
+        {
+          "body": "<strong>Receipt declares <code>\"demoControls\": []</code>.</strong> Its only properties are the driving <code>Variant</code> and the <code>⤷ AssetSlot</code> slot, both skipped by the Style guide, so the card correctly has no controls. Omitting the key read as an oversight to the preview lint; declaring it states the intent.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Every typography row was re-read from Figma.</strong> The five text layers across Banner and Promo each return a text style id that resolves through the style database — <code>Primary/Label/Large</code> and <code>Secondary/Bold/Caption</code>, unchanged. The names had been supplied by hand before the database existed; they are now sourced from the component.",
+          "delta": { "kind": "resolved", "label": "C3 Resolved" }
+        }
+      ]
+    },
+    {
       "version": "2.0.4",
       "date": "September 2026",
       "kind": "patch",
@@ -660,7 +681,7 @@ export const adSpace: ComponentData = {
           "delta": { "kind": "resolved", "label": "Docs" }
         },
         {
-          "body": "<strong>Install coordinates corrected.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code> became <code>AY-Org/eb-ds-ios</code> and <code>com.eastblue.ds:ad-space:2.0.4</code>, matching the changelog head, and an Import block was added.",
+          "body": "<strong>Install coordinates corrected.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code> became <code>AY-Org/eb-ds-ios</code> and <code>com.eastblue.ds:ad-space:2.0.5</code>, matching the changelog head, and an Import block was added.",
           "delta": { "kind": "resolved", "label": "Docs" }
         },
         {
