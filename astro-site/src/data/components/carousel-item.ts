@@ -1,35 +1,64 @@
 import type { ComponentData, DemoControlSection } from '../types';
 import { buildStatelessColorsTable } from './_helpers';
 
-const carouselItemDemoControls: DemoControlSection[] = [
+/* Controls mirror the Figma property panel, in its order. `Appearance` is
+   the driving property so each card already is that value, and
+   `⤷ LeadingIcon` and `Background` are slots — none of those gets a
+   control. Defaults are Figma's: Size Default, isPressed false,
+   TopElement Icon, hasDescription true, hasTextLink true. */
+const carouselItemControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'Mode',
-        prop: 'mode',
-        defaultValue: 'light',
+        label: 'Size', prop: 'size', defaultValue: 'default',
         options: [
-          { value: 'light', label: 'Light Text' },
-          { value: 'dark',  label: 'Dark Text' },
+          { value: 'default', label: 'Default' },
+          { value: 'small', label: 'Small' },
         ],
       },
       {
-        label: 'hasPreamble',
-        prop: 'hasPreamble',
-        defaultValue: 'no',
+        label: 'isPressed', prop: 'isPressed', control: 'toggle' as const,
+        defaultValue: 'false',
         options: [
-          { value: 'no',  label: 'no' },
-          { value: 'yes', label: 'yes' },
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
         ],
       },
       {
-        label: 'hasTextLink',
-        prop: 'hasTextLink',
-        defaultValue: 'yes',
+        label: 'TopElement', prop: 'topElement', defaultValue: 'icon',
         options: [
-          { value: 'yes', label: 'yes' },
-          { value: 'no',  label: 'no' },
+          { value: 'icon', label: 'Icon' },
+          { value: 'preamble', label: 'Preamble' },
+          { value: 'none', label: 'None' },
+        ],
+      },
+      {
+        label: 'Preamble', prop: 'preamble', control: 'input' as const,
+        defaultValue: 'Preamble', options: [],
+      },
+      {
+        label: 'Heading', prop: 'heading', control: 'input' as const,
+        defaultValue: 'Heading', options: [],
+      },
+      {
+        label: 'hasDescription', prop: 'hasDescription', control: 'toggle' as const,
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
+        ],
+      },
+      {
+        label: 'Description', prop: 'desc', control: 'input' as const,
+        defaultValue: 'This is a description for this banner.', options: [],
+      },
+      {
+        label: 'hasTextLink', prop: 'hasTextLink', control: 'toggle' as const,
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' },
         ],
       },
     ],
@@ -291,131 +320,163 @@ export const carouselItem: ComponentData = {
     "heading": "Variants",
     "specCards": [
       {
-        "cardKey": "default-·-light-text-·-hastextlink=yes",
-        "demoKey": "cit-default",
-        "demoControls": carouselItemDemoControls,
-        "title": "Default · Light Text · hasTextLink=yes",
-        "node": "18543:2807",
-        "description": "The most common variant — heading + description + button link, inverse text over a dark background image. Used on promotional carousels when the photo has dark tones.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"cit-spec-1\"><div class=\"eb-preview eb-preview-cit eb-preview-cit--bg-dark\"><div class=\"eb-preview-cit__hero\"></div><div class=\"eb-preview-cit__content\"><div class=\"eb-preview-cit__heading\" style=\"color:#FFFFFF\">Heading</div><div class=\"eb-preview-cit__desc\" style=\"color:#FFFFFF\">This is a description for this banner.</div><div class=\"eb-preview-cit__link\" style=\"color:#FFFFFF\"><span>Button</span><svg class=\"eb-preview-cit__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 6l6 6-6 6\" stroke=\"#FFFFFF\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div></div>",
+        "cardKey": "dark",
+        "demoKey": "dark",
+        "demoControls": carouselItemControls,
+        "title": "Dark",
+        "node": "5804:39914",
+        "description": "",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"cit-spec-1\"><div class=\"eb-preview eb-preview-cit eb-preview-cit--bg-dark\"><div class=\"eb-preview-cit__hero\"></div><div class=\"eb-preview-cit__content\"><div class=\"eb-preview-cit__icon\"></div><div class=\"eb-preview-cit__heading\" style=\"color:#FFFFFF\">Heading</div><div class=\"eb-preview-cit__desc\" style=\"color:rgba(246,249,253,0.8)\">This is a description for this banner.</div><div class=\"eb-preview-cit__link\" style=\"color:#FFFFFF\"><span>Button</span></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Mode", "value": "Light Text", "prop": "mode" },
-              { "key": "Type", "value": "Default", "prop": "type" },
-              { "key": "hasPreamble", "value": "no", "prop": "hasPreamble" },
-              { "key": "hasTextLink", "value": "yes", "prop": "hasTextLink" }
+              { "key": "Appearance", "value": "Dark" },
+              { "key": "Size", "value": "Default", "prop": "size" },
+              { "key": "isPressed", "value": "false", "prop": "isPressed" },
+              { "key": "TopElement", "value": "Icon", "prop": "topElement" },
+              { "key": "Preamble", "value": "Preamble", "prop": "preamble" },
+              { "key": "Heading", "value": "Heading", "prop": "heading" },
+              { "key": "hasDescription", "value": "true", "prop": "hasDescription" },
+              { "key": "Description", "value": "This is a description for this banner.", "prop": "desc" },
+              { "key": "hasTextLink", "value": "true", "prop": "hasTextLink" },
+              { "key": "⤷ LeadingIcon", "value": "empty slot · 24 × 24" },
+              { "key": "Background", "value": "Asset placeholder" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Heading", "value": "#2340A9", "token": "carousel/color/label-header" },
-              { "key": "Description", "value": "#6780A9", "token": "carousel/color/description" },
-              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" },
-              { "key": "Active dot", "value": "#005CE5", "token": "bg/color-bg-primary" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Item width", "value": "328px (carousel-controlled)", "mono": true },
-              { "key": "Padding", "value": "16 horizontal · 16 vertical", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-1 (4px)", "mono": true }
+              { "key": "Surface", "value": "#1972F9", "token": "bg/color-bg-brand", "swatch": true },
+              { "key": "#preamble", "value": "#F6F9FD · 80%", "token": "text/color-text-inverse-weak" },
+              { "key": "#heading", "value": "#FFFFFF", "token": "text/color-text-inverse", "swatch": true },
+              { "key": "#description", "value": "#F6F9FD · 80%", "token": "text/color-text-inverse-weak" },
+              { "key": "Text link label", "value": "#FFFFFF", "token": "text/color-text-inverse", "swatch": true },
+              { "key": "Text link icon", "value": "#FFFFFF", "token": "border/color-border-primary-inverse", "swatch": true },
+              { "key": "Pressed overlay", "value": "#020E22 · 24%", "token": "— dim layer added by isPressed" }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Heading style", "value": "Primary/Headlines/Block", "mono": true },
-              { "key": "Heading font", "value": "Proxima Soft Bold · 18 / 23", "mono": true },
-              { "key": "Description style", "value": "Secondary/Bold/Caption", "mono": true },
-              { "key": "Description font", "value": "BarkAda Semibold · 12 / 18", "mono": true }
+              { "key": "#preamble", "value": "Primary/Label/Fine", "mono": true },
+              { "key": "#heading", "value": "Primary/Headlines/Block", "mono": true },
+              { "key": "#description", "value": "Secondary/Bold/Caption", "mono": true },
+              { "key": "Text link label", "value": "Primary/Label/Small", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "160px", "mono": true, "variants": { "size:small": { "value": "146px" } } },
+              { "key": "Width", "value": "282px", "mono": true },
+              { "key": "Radius", "value": "8px", "mono": true },
+              { "key": "Padding H", "value": "20px (derived)", "mono": true },
+              { "key": "Padding V", "value": "20px (derived)", "mono": true },
+              { "key": "Gap", "value": "0px (derived)", "mono": true },
+              { "key": "Alignment", "value": "Leading (derived)", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">, </span>description<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Description\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span>\n    heading <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description\"</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "EBCarouselItem(\n    appearance: .dark,\n    heading: \"Heading\",\n    description: \"This is a description for this banner.\",\n    textLink: \"Button\"\n) {\n    Image(banner.asset)\n}",
+        "compose": "EBCarouselItem(\n    appearance = EBAppearance.Dark,\n    heading = \"Heading\",\n    description = \"This is a description for this banner.\",\n    textLink = \"Button\"\n) {\n    AsyncImage(model = banner.asset, contentDescription = null)\n}"
       },
       {
-        "cardKey": "headline-only-·-has-preamble-·-has-textlink",
-        "demoKey": "cit-headline",
-        "demoControls": carouselItemDemoControls,
-        "title": "Headline Only · has Preamble · has TextLink",
-        "node": "18543:2839",
-        "description": "Preamble + headline only — no description line. Use when the headline itself is the full message. Name is misleading: the variant actually requires Preamble + Heading + Button, with description hidden.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"cit-spec-2\"><div class=\"eb-preview eb-preview-cit eb-preview-cit--bg-dark\"><div class=\"eb-preview-cit__hero\"></div><div class=\"eb-preview-cit__content\"><div class=\"eb-preview-cit__preamble\" style=\"color:rgba(246,249,253,0.8)\">Preamble</div><div class=\"eb-preview-cit__heading\" style=\"color:#FFFFFF\">Heading</div><div class=\"eb-preview-cit__link\" style=\"color:#FFFFFF\"><span>Button</span><svg class=\"eb-preview-cit__chev\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9 6l6 6-6 6\" stroke=\"#FFFFFF\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg></div></div></div></div>",
+        "cardKey": "light",
+        "demoKey": "light",
+        "demoControls": carouselItemControls,
+        "title": "Light",
+        "node": "5804:41501",
+        "description": "",
+        "previewHtml": "<div class=\"spec-preview-body\" id=\"cit-spec-2\"><div class=\"eb-preview eb-preview-cit eb-preview-cit--bg-light\"><div class=\"eb-preview-cit__hero\"></div><div class=\"eb-preview-cit__content\"><div class=\"eb-preview-cit__icon\"></div><div class=\"eb-preview-cit__heading\" style=\"color:#0A2757\">Heading</div><div class=\"eb-preview-cit__desc\" style=\"color:#6780A9\">This is a description for this banner.</div><div class=\"eb-preview-cit__link\" style=\"color:#005CE5\"><span>Button</span></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Mode", "value": "Light Text", "prop": "mode" },
-              { "key": "Type", "value": "Headline Only", "prop": "type" },
-              { "key": "hasPreamble", "value": "yes", "prop": "hasPreamble" },
-              { "key": "hasTextLink", "value": "yes", "prop": "hasTextLink" }
+              { "key": "Appearance", "value": "Light" },
+              { "key": "Size", "value": "Default", "prop": "size" },
+              { "key": "isPressed", "value": "false", "prop": "isPressed" },
+              { "key": "TopElement", "value": "Icon", "prop": "topElement" },
+              { "key": "Preamble", "value": "Preamble", "prop": "preamble" },
+              { "key": "Heading", "value": "Heading", "prop": "heading" },
+              { "key": "hasDescription", "value": "true", "prop": "hasDescription" },
+              { "key": "Description", "value": "This is a description for this banner.", "prop": "desc" },
+              { "key": "hasTextLink", "value": "true", "prop": "hasTextLink" },
+              { "key": "⤷ LeadingIcon", "value": "empty slot · 24 × 24" },
+              { "key": "Background", "value": "Asset placeholder" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Heading", "value": "#2340A9", "token": "carousel/color/label-header" },
-              { "key": "Description", "value": "#6780A9", "token": "carousel/color/description" },
-              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main" },
-              { "key": "Active dot", "value": "#005CE5", "token": "bg/color-bg-primary" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Item width", "value": "328px (carousel-controlled)", "mono": true },
-              { "key": "Padding", "value": "16 horizontal · 16 vertical", "mono": true },
-              { "key": "Border radius", "value": "radius/radius-1 (4px)", "mono": true }
+              { "key": "Surface", "value": "#E5F1FF", "token": "bg/color-bg-info-weakest", "swatch": true },
+              { "key": "#preamble", "value": "#072592 · 60%", "token": "text/color-text-strong" },
+              { "key": "#heading", "value": "#0A2757", "token": "text/color-text", "swatch": true },
+              { "key": "#description", "value": "#6780A9", "token": "text/color-text-weaker", "swatch": true },
+              { "key": "Text link label", "value": "#005CE5", "token": "text/color-text-primary", "swatch": true },
+              { "key": "Text link icon", "value": "#005CE5", "token": "border/color-border-primary", "swatch": true },
+              { "key": "Pressed overlay", "value": "#020E22 · 24%", "token": "— dim layer added by isPressed" }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Heading style", "value": "Primary/Headlines/Block", "mono": true },
-              { "key": "Heading font", "value": "Proxima Soft Bold · 18 / 23", "mono": true },
-              { "key": "Description style", "value": "Secondary/Bold/Caption", "mono": true },
-              { "key": "Description font", "value": "BarkAda Semibold · 12 / 18", "mono": true }
+              { "key": "#preamble", "value": "Primary/Label/Fine", "mono": true },
+              { "key": "#heading", "value": "Primary/Headlines/Block", "mono": true },
+              { "key": "#description", "value": "Secondary/Bold/Caption", "mono": true },
+              { "key": "Text link label", "value": "Primary/Label/Small", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "160px", "mono": true, "variants": { "size:small": { "value": "146px" } } },
+              { "key": "Width", "value": "282px", "mono": true },
+              { "key": "Radius", "value": "8px", "mono": true },
+              { "key": "Padding H", "value": "20px (derived)", "mono": true },
+              { "key": "Padding V", "value": "20px (derived)", "mono": true },
+              { "key": "Gap", "value": "0px (derived)", "mono": true },
+              { "key": "Alignment", "value": "Leading (derived)", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">, </span>preamble<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Preamble\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCarouselItem</span><span class=\"syn-punc\">(</span>\n    heading <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    preamble <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Preamble\"</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "EBCarouselItem(\n    appearance: .light,\n    heading: \"Heading\",\n    description: \"This is a description for this banner.\",\n    textLink: \"Button\"\n) {\n    Image(banner.asset)\n}",
+        "compose": "EBCarouselItem(\n    appearance = EBAppearance.Light,\n    heading = \"Heading\",\n    description = \"This is a description for this banner.\",\n    textLink = \"Button\"\n) {\n    AsyncImage(model = banner.asset, contentDescription = null)\n}"
       }
     ],
     colorsTables: [
-      // Card 1 — Default item
       buildStatelessColorsTable({
-        title: 'Default — Colors',
-        description: 'Single carousel slide with heading and description on a white surface.',
+        title: "Dark — Colors",
+        description: "Appearance=Dark is a dark surface with light text — the old mode=Light Text. Pressed reuses these colours and adds a dim layer over the whole card.",
         rows: [
-          { role: 'Heading',     token: 'carousel/color/label-header', value: '#2340A9' },
-          { role: 'Description', token: 'carousel/color/description',  value: '#6780A9' },
-          { role: 'Surface',     token: 'bg/color-bg-main',            value: '#FFFFFF' },
-          { role: 'Active dot',  token: 'bg/color-bg-primary',         value: '#005CE5' },
+          { role: "Surface", token: "bg/color-bg-brand", value: "#1972F9" },
+          { role: "#preamble", token: "text/color-text-inverse-weak", value: "#F6F9FD · 80%" },
+          { role: "#heading", token: "text/color-text-inverse", value: "#FFFFFF" },
+          { role: "#description", token: "text/color-text-inverse-weak", value: "#F6F9FD · 80%" },
+          { role: "Text link label", token: "text/color-text-inverse", value: "#FFFFFF" },
+          { role: "Text link icon", token: "border/color-border-primary-inverse", value: "#FFFFFF" },
+          { role: "Pressed overlay", token: "— dim layer added by isPressed", value: "#020E22 · 24%" },
         ],
       }),
-      // Card 2 — same colors, structural variant
       buildStatelessColorsTable({
-        title: 'Variant — Colors',
-        description: 'Same palette as Card 1 — variant differs in slot composition, not color.',
+        title: "Light — Colors",
+        description: "Appearance=Light is a pale surface with dark text — the old mode=Dark Text. Same pressed behaviour.",
         rows: [
-          { role: 'Heading',     token: 'carousel/color/label-header', value: '#2340A9' },
-          { role: 'Description', token: 'carousel/color/description',  value: '#6780A9' },
-          { role: 'Surface',     token: 'bg/color-bg-main',            value: '#FFFFFF' },
-          { role: 'Active dot',  token: 'bg/color-bg-primary',         value: '#005CE5' },
+          { role: "Surface", token: "bg/color-bg-info-weakest", value: "#E5F1FF" },
+          { role: "#preamble", token: "text/color-text-strong", value: "#072592 · 60%" },
+          { role: "#heading", token: "text/color-text", value: "#0A2757" },
+          { role: "#description", token: "text/color-text-weaker", value: "#6780A9" },
+          { role: "Text link label", token: "text/color-text-primary", value: "#005CE5" },
+          { role: "Text link icon", token: "border/color-border-primary", value: "#005CE5" },
+          { role: "Pressed overlay", token: "— dim layer added by isPressed", value: "#020E22 · 24%" },
         ],
       }),
     ],

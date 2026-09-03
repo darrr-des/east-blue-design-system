@@ -5308,6 +5308,22 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-cit--side,
 .eb-preview-csi-side { opacity: 0.8; transform: scale(0.97); transform-origin: center; }
 
+/* ── Carousel Item: match the component, not the placeholder ────────
+   The card is one flat colour — node 8942:79573 (Dark) / 8942:79589
+   (Light). These override the shared hero/gradient treatment for `cit`
+   only, leaving the `ccc` and `csi` previews alone. */
+.eb-preview-cit--bg-dark  { background: #1972F9; }
+.eb-preview-cit--bg-light { background: #E5F1FF; }
+
+/* The Background slot sits behind the content, so its placeholder shows
+   no fill of its own — only the "Replace me" tag marking where art goes. */
+.eb-preview-cit__hero { background: none; }
+
+/* Background and Overlay are absolutely positioned beneath the text, so a
+   press dims the artwork and never the copy. */
+.eb-preview-cit__dim { z-index: 1; }
+.eb-preview-cit__content { position: relative; z-index: 2; }
+
 /* Content stack (heading + preamble + desc + button) on the left */
 .eb-preview-cit__content,
 .eb-preview-ccc__content {

@@ -125,47 +125,57 @@ function _citUpdate() {
 }
 
 /* ── Spec card state — drives per-card preview + DEV snippets ──────── */
+/* ── Spec card state — one card per Appearance value ────────────────
+   Everything else is a panel control, defaulting to what Figma ships. */
 var _specCards = {
-  'cit-default':  { mode: 'light', type: 'default',  hasPreamble: 'no',  hasTextLink: 'yes' },
-  'cit-headline': { mode: 'light', type: 'headline', hasPreamble: 'yes', hasTextLink: 'yes' }
+  'dark':  { appearance: 'dark',  size: 'default', isPressed: 'false', topElement: 'icon', hasDescription: 'true', hasTextLink: 'true', preamble: 'Preamble' },
+  'light': { appearance: 'light', size: 'default', isPressed: 'false', topElement: 'icon', hasDescription: 'true', hasTextLink: 'true', preamble: 'Preamble' }
 };
 window._specCards = _specCards;
 
-/* Mapping demoKey → existing preview-body element id */
-var _citPreviewIds = {
-  'cit-default':  'cit-spec-1',
-  'cit-headline': 'cit-spec-2'
-};
+var _citPreviewIds = { 'dark': 'cit-spec-1', 'light': 'cit-spec-2' };
+/* One argument list, rendered into both languages, so the two cannot
+   drift apart. Mirrors the call documented on the Style and Code tabs. */
+function _citArgs(card, sep, lang) {
+  var app = (card.appearance || 'dark');
+  var args = [];
+  args.push('appearance' + sep + (lang === 'swift'
+    ? '.' + app
+    : 'EBAppearance.' + app.charAt(0).toUpperCase() + app.slice(1)));
+  if ((card.size || 'default') === 'small') {
+    args.push('size' + sep + (lang === 'swift' ? '.small' : 'EBCarouselItemSize.Small'));
+  }
+  if (card.topElement === 'preamble') {
+    args.push('preamble' + sep + '"' + (card.preamble || 'Preamble') + '"');
+  }
+  args.push('heading' + sep + '"Heading"');
+  if (card.hasDescription !== 'false') {
+    args.push('description' + sep + '"This is a description for this banner."');
+  }
+  if (card.hasTextLink !== 'false') args.push('textLink' + sep + '"Button"');
+  if (card.topElement === 'icon') {
+    args.push(lang === 'swift'
+      ? 'leadingIcon: Image(systemName: "star.fill")'
+      : 'leadingIcon = { Icon(Icons.Filled.Star, null) }');
+  }
+  if (card.isPressed === 'true') args.push('isPressed' + sep + 'true');
+  return args;
+}
 
 function buildSwiftSnippet(cardKey, card) {
-  var modeArg = card.mode === 'dark' ? '.dark' : '.light';
-  var lines = ['EBCarouselItem('];
-  lines.push('    heading: "Heading",');
-  if (card.hasPreamble === 'yes') lines.push('    preamble: "Preamble",');
-  if (card.type !== 'headline') lines.push('    description: "Description",');
-  if (card.type === 'icon') lines.push('    leadingIcon: Image(systemName: "star.fill"),');
-  lines.push('    appearance: ' + modeArg);
-  lines.push(')');
-  return lines.join('\n');
+  return 'EBCarouselItem(\n    ' + _citArgs(card, ': ', 'swift').join(',\n    ') +
+         '\n) {\n    Image(banner.asset)\n}';
 }
 
 function buildComposeSnippet(cardKey, card) {
-  var modeArg = card.mode === 'dark' ? 'EBAppearance.Dark' : 'EBAppearance.Light';
-  var lines = ['EBCarouselItem('];
-  lines.push('    heading = "Heading",');
-  if (card.hasPreamble === 'yes') lines.push('    preamble = "Preamble",');
-  if (card.type !== 'headline') lines.push('    description = "Description",');
-  if (card.type === 'icon') lines.push('    leadingIcon = { Icon(Icons.Filled.Star, null) },');
-  lines.push('    appearance = ' + modeArg);
-  lines.push(')');
-  return lines.join('\n');
+  return 'EBCarouselItem(\n    ' + _citArgs(card, ' = ', 'compose').join(',\n    ') +
+         '\n) {\n    AsyncImage(model = banner.asset, contentDescription = null)\n}';
 }
 
 function getSnippet(cardKey, lang, card) {
   return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
 }
 window.getSnippet = getSnippet;
-
 function updateSpecCard(cardStyle, prop, value) {
   var card = _specCards[cardStyle];
   if (!card) return;
@@ -177,19 +187,7 @@ function updateSpecCard(cardStyle, prop, value) {
   if (previewEl) previewEl.innerHTML = _citRender(card);
 
   /* Update Properties readouts */
-  ['mode', 'type', 'hasPreamble', 'hasTextLink'].forEach(function(p) {
-    var el = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
-    if (el) {
-      var disp = card[p];
-      if (p === 'mode') disp = (card.mode === 'dark') ? 'Dark Text' : 'Light Text';
-      else if (p === 'type') {
-        if (card.type === 'icon') disp = 'with Icon';
-        else if (card.type === 'headline') disp = 'Headline Only';
-        else disp = 'Default';
-      }
-      el.textContent = disp;
-    }
-  });
+
 
   /* Update DEV code */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
@@ -212,14 +210,10 @@ function _citInit() {
   if (ctx) ctx.innerHTML = _citContextMarkup();
   _citUpdate();
 
-  var s1 = document.getElementById('cit-spec-1');
-  if (s1) s1.innerHTML = _citRender({mode:'light', type:'default', hasPreamble:'no', hasTextLink:'yes'});
-
-  var s2 = document.getElementById('cit-spec-2');
-  if (s2) s2.innerHTML = _citRender({mode:'light', type:'headline', hasPreamble:'yes', hasTextLink:'yes', heading:'Add your title here. Add your title here.'});
-
-  /* Re-render DEV snippets via shared updater */
-  Object.keys(_specCards).forEach(function(k){ updateSpecCard(k, 'mode', _specCards[k].mode); });
+  /* Each card renders from its own state — no hardcoded legacy props. */
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'appearance', _specCards[k].appearance);
+  });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _citInit);
