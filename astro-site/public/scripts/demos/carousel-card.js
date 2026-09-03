@@ -166,17 +166,30 @@ function _ccardOn(card, prop, dflt) {
 
 /* Both snippets are built from the same argument list so the two
    languages can never drift apart. */
-function _ccardArgs(card, sep) {
+var _ccardVariantCase = {
+  swift:   { 'default': '.default', 'with-icon': '.withIcon', 'discount': '.discount' },
+  compose: { 'default': 'Default',  'with-icon': 'WithIcon',  'discount': 'Discount'  }
+};
+
+/* Mirrors the canonical call documented on the Style and Code tabs:
+   variant first, then content, then the optional flags, with the banner
+   slot passed as a trailing closure — it is a required parameter. */
+function _ccardArgs(card, sep, lang) {
   var variant = card.variant || 'default';
   var args = [];
-  if (variant === 'discount') args.push('variant' + sep + '.discount');
+  args.push('variant' + sep + (lang === 'swift'
+    ? _ccardVariantCase.swift[variant]
+    : 'EBCarouselCardVariant.' + _ccardVariantCase.compose[variant]));
+
+  var title = (card.title || 'Title').split('\n').join(' ');
+  args.push('title' + sep + '"' + title + '"');
+
   if (variant === 'discount') {
-    args.push('title' + sep + '"Title"');
     args.push('amount' + sep + '"' + (card.amount || 'PHP 200.00') + '"');
   } else {
-    args.push('title' + sep + '"Title"');
-    args.push('description' + sep + '"Description here. Description here."');
+    args.push('description' + sep + '"' + (card.description || 'Description here. Description here.') + '"');
   }
+
   if (_ccardOn(card, 'hasViolator', true)) args.push('violator' + sep + '"New"');
   if (_ccardOn(card, 'isLoading', false)) args.push('isLoading' + sep + 'true');
   if (_ccardOn(card, 'isPressed', false)) args.push('isPressed' + sep + 'true');
@@ -184,21 +197,20 @@ function _ccardArgs(card, sep) {
 }
 
 function buildSwiftSnippet(cardKey, card) {
-  var args = _ccardArgs(card, ': ');
+  var args = _ccardArgs(card, ': ', 'swift');
   if ((card.variant || 'default') === 'with-icon') {
     args.push('icon: Image(systemName: "star.fill")');
   }
-  return 'EBCarouselCard(\n    ' + args.join(',\n    ') + '\n)';
+  return 'EBCarouselCard(\n    ' + args.join(',\n    ') + '\n) {\n    Image(ad.banner)\n}';
 }
 
 function buildComposeSnippet(cardKey, card) {
-  var args = _ccardArgs(card, ' = ').map(function (a) {
-    return a.replace('variant = .discount', 'variant = EBCarouselCardVariant.Discount');
-  });
+  var args = _ccardArgs(card, ' = ', 'compose');
   if ((card.variant || 'default') === 'with-icon') {
     args.push('icon = { Icon(Icons.Filled.Star, null) }');
   }
-  return 'EBCarouselCard(\n    ' + args.join(',\n    ') + '\n)';
+  return 'EBCarouselCard(\n    ' + args.join(',\n    ') +
+         '\n) {\n    AsyncImage(model = ad.banner, contentDescription = null)\n}';
 }
 
 function getSnippet(cardKey, lang, card) {

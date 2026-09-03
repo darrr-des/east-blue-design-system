@@ -312,8 +312,8 @@ export const carouselCard: ComponentData = {
         "tag": "Slot"
       },
       {
-        "headline": "Add pressed + focused states.",
-        "body": "v2.0: Applied — <code>isPressed</code> dims the title and description. Focus was reviewed and dropped: this card ships on touch surfaces only.",
+        "headline": "Add a pressed state.",
+        "body": "v2.0: Applied — the card gained a pressed state. Focus is not part of the set: these are mobile components, so focus is handled natively rather than as a version.",
         "tag": "State"
       },
       {
@@ -391,8 +391,8 @@ export const carouselCard: ComponentData = {
             ]
           }
         ],
-        "swift": "EBCarouselCard(\n    title: \"Title\",\n    description: \"Description here. Description here.\",\n    violator: \"New\"\n)",
-        "compose": "EBCarouselCard(\n    title = \"Title\",\n    description = \"Description here. Description here.\",\n    violator = \"New\"\n)"
+        "swift": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.default</span><span class=\"syn-punc\">,</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Description here. Description here.\"</span><span class=\"syn-punc\">,</span>\n    violator<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"New\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCarouselCardVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Default</span><span class=\"syn-punc\">,</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description here. Description here.\"</span><span class=\"syn-punc\">,</span>\n    violator <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"New\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       },
       {
         "cardKey": "with-icon",
@@ -451,8 +451,8 @@ export const carouselCard: ComponentData = {
             ]
           }
         ],
-        "swift": "EBCarouselCard(\n    title: \"Title\",\n    description: \"Description here. Description here.\",\n    violator: \"New\",\n    icon: Image(systemName: \"star.fill\")\n)",
-        "compose": "EBCarouselCard(\n    title = \"Title\",\n    description = \"Description here. Description here.\",\n    violator = \"New\",\n    icon = { Icon(Icons.Filled.Star, null) }\n)"
+        "swift": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.withIcon</span><span class=\"syn-punc\">,</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Description here. Description here.\"</span><span class=\"syn-punc\">,</span>\n    violator<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"New\"</span><span class=\"syn-punc\">,</span>\n    icon<span class=\"syn-punc\">:</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCarouselCardVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">WithIcon</span><span class=\"syn-punc\">,</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description here. Description here.\"</span><span class=\"syn-punc\">,</span>\n    violator <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"New\"</span><span class=\"syn-punc\">,</span>\n    icon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span>Icons<span class=\"syn-punc\">.</span>Filled<span class=\"syn-punc\">.</span>Star<span class=\"syn-punc\">,</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       },
       {
         "cardKey": "discount",
@@ -510,8 +510,8 @@ export const carouselCard: ComponentData = {
             ]
           }
         ],
-        "swift": "EBCarouselCard(\n    variant: .discount,\n    title: \"Label here\",\n    amount: \"PHP 200.00\",\n    violator: \"New\"\n)",
-        "compose": "EBCarouselCard(\n    variant = EBCarouselCardVariant.Discount,\n    title = \"Label here\",\n    amount = \"PHP 200.00\",\n    violator = \"New\"\n)"
+        "swift": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.discount</span><span class=\"syn-punc\">,</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Label here\"</span><span class=\"syn-punc\">,</span>\n    amount<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"PHP 200.00\"</span><span class=\"syn-punc\">,</span>\n    violator<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"New\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCarouselCardVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Discount</span><span class=\"syn-punc\">,</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label here\"</span><span class=\"syn-punc\">,</span>\n    amount <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"PHP 200.00\"</span><span class=\"syn-punc\">,</span>\n    violator <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"New\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
     colorsTables: [
@@ -575,11 +575,11 @@ export const carouselCard: ComponentData = {
       "blocks": [
         {
           "label": "iOS — Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"2.1.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:carousel-card:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:carousel-card:2.1.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Import",
@@ -646,18 +646,18 @@ export const carouselCard: ComponentData = {
     "usageSnippets": [
       {
         "subheading": "Default — banner, title, description",
-        "swift": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.default</span><span class=\"syn-punc\">,</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Description here.\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCarouselCardVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Default</span><span class=\"syn-punc\">,</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description here.\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "swift": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.default</span><span class=\"syn-punc\">,</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Description here. Description here.\"</span><span class=\"syn-punc\">,</span>\n    violator<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"New\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCarouselCardVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Default</span><span class=\"syn-punc\">,</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description here. Description here.\"</span><span class=\"syn-punc\">,</span>\n    violator <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"New\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       },
       {
         "subheading": "With Icon — adds the icon slot on the banner",
-        "swift": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.withIcon</span><span class=\"syn-punc\">,</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Description here.\"</span><span class=\"syn-punc\">,</span>\n    icon<span class=\"syn-punc\">:</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCarouselCardVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">WithIcon</span><span class=\"syn-punc\">,</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description here.\"</span><span class=\"syn-punc\">,</span>\n    icon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span>Icons<span class=\"syn-punc\">.</span>Filled<span class=\"syn-punc\">.</span>Star<span class=\"syn-punc\">,</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "swift": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.withIcon</span><span class=\"syn-punc\">,</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Description here. Description here.\"</span><span class=\"syn-punc\">,</span>\n    violator<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"New\"</span><span class=\"syn-punc\">,</span>\n    icon<span class=\"syn-punc\">:</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCarouselCardVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">WithIcon</span><span class=\"syn-punc\">,</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description here. Description here.\"</span><span class=\"syn-punc\">,</span>\n    violator <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"New\"</span><span class=\"syn-punc\">,</span>\n    icon <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span>Icons<span class=\"syn-punc\">.</span>Filled<span class=\"syn-punc\">.</span>Star<span class=\"syn-punc\">,</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       },
       {
         "subheading": "Discount — title and price, no description",
-        "swift": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.discount</span><span class=\"syn-punc\">,</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Label here\"</span><span class=\"syn-punc\">,</span>\n    amount<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"PHP 200.00\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCarouselCardVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Discount</span><span class=\"syn-punc\">,</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label here\"</span><span class=\"syn-punc\">,</span>\n    amount <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"PHP 200.00\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "swift": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.discount</span><span class=\"syn-punc\">,</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Label here\"</span><span class=\"syn-punc\">,</span>\n    amount<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"PHP 200.00\"</span><span class=\"syn-punc\">,</span>\n    violator<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"New\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBCarouselCard</span><span class=\"syn-punc\">(</span>\n    variant <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBCarouselCardVariant</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Discount</span><span class=\"syn-punc\">,</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label here\"</span><span class=\"syn-punc\">,</span>\n    amount <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"PHP 200.00\"</span><span class=\"syn-punc\">,</span>\n    violator <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"New\"</span>\n<span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">AsyncImage</span><span class=\"syn-punc\">(</span>model <span class=\"syn-eq\">=</span> ad<span class=\"syn-punc\">.</span>banner<span class=\"syn-punc\">,</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
     "accessibility": [
@@ -779,6 +779,112 @@ export const carouselCard: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.1.0",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Text settings added, all three tabs rebuilt — node 5655:42547",
+      "rows": [
+        {
+          "body": "<strong>The title and description can be set on a copy.</strong> Only the price was a real setting, so anyone placing the card had to detach it to change the words. <code>Title</code> and <code>Description</code> are now settings alongside <code>Amount</code>. This is what makes the release a minor rather than a patch.",
+          "delta": { "kind": "resolved", "label": "C2 Resolved" }
+        },
+        {
+          "body": "<strong>The Discount card sizes to its own text.</strong> Its height was pinned to a fixed number, so a longer title overflowed instead of pushing the card taller. It hugs its content now.",
+          "delta": { "kind": "resolved", "label": "C4 Resolved" }
+        },
+        {
+          "body": "<strong>The loading card is the same height as the real one.</strong> The skeletons were 212 and 211 where the loaded cards were 214 and 212, so the layout shifted the moment content arrived. Both now match the card they stand in for.",
+          "delta": { "kind": "resolved", "label": "C4 Resolved" }
+        },
+        {
+          "body": "<strong>The invisible white backgrounds are gone.</strong> Every version carried a white fill switched off. Nothing drew it, but it read as a surface to anyone inspecting the layers.",
+          "delta": { "kind": "resolved", "label": "C1 Resolved" }
+        },
+        {
+          "body": "<strong>The banner dimmer is a plain colour on purpose.</strong> It is the one value not tied to a named colour, and that is deliberate — the overlay is tuned per asset so the badge and text above it stay readable. Recorded as a decision, not a gap.",
+          "delta": { "kind": "resolved", "label": "C3 Resolved" }
+        },
+        {
+          "body": "<strong>Every colour is now a named colour, confirmed by design.</strong> Text roles bind to <code>text/color-text-strong</code>, <code>-weaker</code>, <code>-weak</code> and <code>-weakest</code>; Discount sits on <code>bg/color-bg-main</code>; the icon circle is <code>bg/color-bg-primary</code>; the violator is <code>text/color-text-inverse</code> on <code>bg/brand-bg-primary</code>. The colour-token audit recommendation is applied and C3 moves to Ready.",
+          "delta": { "kind": "resolved", "label": "C3 Resolved" }
+        },
+        {
+          "body": "<strong>The Style tab was documenting the wrong versions.</strong> Its three cards were Default, With icon and Skeleton loader — but Skeleton is <code>isLoading</code>, a setting, not a version, and it displaced <code>Discount</code>, which had no card at all. The cards are now the three real versions, on the real nodes; the old <code>23:1213xx</code> ids exist nowhere in the set.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Type styles are read from the component, not written by hand.</strong> Typography rows now carry text style names only, each resolved from the component through the style database. <code>Heading/Small</code> and <code>Body/Small</code>, previously documented, are not design system styles at all.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Heights read as Hug.</strong> All three versions size to their content, and a fixed number went stale three times during this review alone. Layout also drops to the canonical keys — the old rows quoted a 280px card that was never this component.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The Code tab described a component that no longer existed.</strong> Property Mapping carried seven rows built on the retired <code>type</code> setting, with the banner and text listed as hardcoded. It now maps all ten settings. Installation, Usage Snippets and Usage Guidelines were empty and are written; the variant count was 3 and is 8.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>One call, written three ways.</strong> The spec card, the Code tab and the live snippet each showed a different argument list, and only one passed the required <code>Banner</code> slot. All three now render the same canonical call.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "August 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt in the 2026 Working File — node 23:121311 → 5655:42547",
+      "rows": [
+        {
+          "body": "<strong>Rebuilt on a new node.</strong> The component moved from <code>23:121311</code> to <code>5655:42547</code>. The assessment was repointed at the time; this entry records the move itself, which had gone unwritten.",
+          "delta": { "kind": "resolved", "label": "Family" }
+        },
+        {
+          "body": "<strong>Discount Card was merged in.</strong> <code>Carousel - Discount Card</code> became a <code>Variant</code> value rather than its own component, taking the Carousel family from five components to three.",
+          "delta": { "kind": "resolved", "label": "Family" }
+        },
+        {
+          "body": "<strong>One setting became three.</strong> <code>type</code> mixed content shape with loading state. It split into <code>Variant</code> (Default / With Icon / Discount), <code>isLoading</code> and <code>isPressed</code> — three independent settings, and the matrix went from 3 versions to 8.",
+          "delta": { "kind": "resolved", "label": "C2 Resolved" }
+        },
+        {
+          "body": "<strong>The banner and icon badge became real swappable areas.</strong> Both had been baked in. They are now Figma Slots, so product teams drop in their own media and icons without detaching.",
+          "delta": { "kind": "resolved", "label": "C6 Resolved" }
+        },
+        {
+          "body": "<strong>The card gained a pressed state.</strong> Previously there was no way to show the card being tapped.",
+          "delta": { "kind": "resolved", "label": "C5 Resolved" }
+        },
+        {
+          "body": "<strong>The spacing helper came out of the Discount card.</strong> A <code>_space_12</code> instance was faking a gap. Auto-layout spacing does the job and has a native equivalent.",
+          "delta": { "kind": "resolved", "label": "C1 Resolved" }
+        },
+        {
+          "body": "<strong>The loading version stopped using leftover layer names.</strong> It kept names from before the rebuild while the rest of the set had moved on.",
+          "delta": { "kind": "resolved", "label": "C1 Resolved" }
+        },
+        {
+          "body": "<strong>All eight versions name the content frame the same thing.</strong> It was called different things in different versions; every one now reads <code>content</code>.",
+          "delta": { "kind": "resolved", "label": "C1 Resolved" }
+        },
+        {
+          "body": "<strong>Discount's smaller title is intentional.</strong> It is deliberately a step down from the other two versions so a two-line label fits. Closed as by design, not a gap.",
+          "delta": { "kind": "resolved", "label": "C3 Resolved" }
+        },
+        {
+          "body": "<strong>The banner shadow is where it belongs.</strong> It sits inside the swappable asset rather than on the card, so replacing the media replaces the shadow with it.",
+          "delta": { "kind": "resolved", "label": "C6 Resolved" }
+        },
+        {
+          "body": "<strong>The banner placeholder is intentional.</strong> The purple dimmed image ships as an authoring aid and is replaced when real media is dropped in.",
+          "delta": { "kind": "resolved", "label": "C6 Resolved" }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",
