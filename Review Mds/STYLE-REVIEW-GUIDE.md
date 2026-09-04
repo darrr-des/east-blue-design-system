@@ -230,17 +230,36 @@ Delete `Font`, `Size`, `Tracking`, `Line-height`. They live in the text style; r
 
 The id looks unreadable because shared-library styles carry no name, but the hash inside it **is** the key the database stores. One lookup turns it into the style path.
 
-**The three outcomes.** Every text layer lands in exactly one:
+**A resolving id is not a match.** A layer can point at a real style and still have been overridden locally — same style name, different size. So resolution alone never earns a style name. Run the layer through `matchLayer()` in `typography.ts`, which resolves the id **and** compares the layer's own family / weight / size / line-height against the database:
 
-| What the layer reports | Typography row | Open issue |
-|---|---|---|
-| A `textStyleId` that resolves | the style name | — |
-| **No** `textStyleId` — raw font/size values | `—`, reported **Missing** | **Yes** — "Text not bound to a DS text style" |
-| A `textStyleId` that does **not** resolve | `—`, reported **Missing** | **Yes** — "References a text style that no longer exists" |
+```ts
+import { matchLayer } from '@/data/typography';
 
-Both issues tag `C3 · Token Coverage` — typography off-token is the same class of finding as a hardcoded hex. They look alike on the page but are different defects: raw values means someone typed a size in; an unresolvable id means the style was renamed or deleted and the component still points at the old one, which reads as correct until you check.
+matchLayer({
+  textStyleId: 'S:4b5515…202642,',
+  fontFamily: 'Proxima Soft', fontWeight: 'Bold',
+  fontSize: 18, lineHeight: 23,
+});
+// → { status: 'matched', value: 'Primary/Headlines/Block', issue: false, … }
+```
 
-**One exception.** `Component/Balances/Label` exists in Figma but is deliberately excluded from the database (`EXCLUDED_STYLE_NAMES`). A layer using it will fail to resolve and must **not** be raised as an issue. Check that list before writing one.
+**Only `matched` is a match.** Write the style name only when `status === 'matched'`. Every other status writes `—`, and every one except `excluded` raises a `C3 · Token Coverage` open issue:
+
+| `status` | Typography row | Open issue | What it means |
+|---|---|---|---|
+| `matched` | the style name | — | Id resolves and all four metrics agree |
+| `excluded` | `—` | **No** | In `EXCLUDED_STYLE_NAMES` — absent by design |
+| `unbound` | `—`, **Missing** | **Yes** | No `textStyleId`; raw values typed in |
+| `unresolved` | `—`, **Missing** | **Yes** | Id matches no key — renamed or deleted, still referenced |
+| `mismatch` | `—`, **Missing** | **Yes** | Points at a real style but the layer disagrees with it |
+
+All four issues tag `C3 · Token Coverage` — typography off-token is the same class of finding as a hardcoded hex. They look alike on the page but are different defects. `unbound` means someone typed a size in. `unresolved` means the component still points at a style that is gone. `mismatch` is the one that reads as correct until you check: the name is right, the numbers are not — `match.disagreements` names the fields.
+
+**Setup and metrics are searched, not assumed.** A file may sit on any of the three font setups and any of the three ramps, so a layer counts as matched if it agrees under **any** pair. Pin them — `matchLayer(reading, { setup: 'bau', metrics: 'default' })` — only when the file's modes are known.
+
+**Nothing unread is compared.** A `null` `leading` in the database means "not read", and a Figma `AUTO` line-height reports nothing. Neither is treated as agreement or as a defect — the comparison skips it. Never fill one in by eye to make a match.
+
+**One exception.** `Component/Balances/Label` exists in Figma but is deliberately excluded from the database (`EXCLUDED_STYLE_NAMES`). It returns `excluded` and must **not** be raised as an issue — but only when the style **name** is known, since a shared-library id carries no name. Pass `styleName` when `get_styles` or the panel gives it; without it an excluded style is indistinguishable from a deleted one and will come back `unresolved`.
 
 Never substitute a font spec, and never guess a name from the font and size. If the lookup fails, that is the finding.
 
@@ -438,6 +457,7 @@ Then open `http://localhost:4321/components/<slug>` and click **every** control 
 | 11 | Typography is style names only | No Font / Size / Tracking / Line-height rows |
 | 12 | Every typography row resolves | Each value is a real style name — no `—`, no font spec |
 | 13 | Every size variant read | Each size has its own style; a `—` on medium/small means unread, not Missing |
+| 18 | Every typography row is a `matched` | `matchLayer()` returns `matched`, not merely a resolving id — a `mismatch` is a `C3`, an `excluded` raises nothing |
 | 14 | No slot changes type family across sizes | Read down the column — Headlines at one size, Label at another is a `C2` issue |
 | 15 | Colors rows follow the controls | Switch a control — hex and token both change |
 | 16 | Colors table is Role │ Element │ Token │ Value | Grouped by role, in card order |
@@ -465,6 +485,7 @@ The AI prints one table. Status is one of **✅ Done · ⚠️ Partial · ❌ Mi
 | 11 | Typography style names | ✅ Done | 2 rows, no font specs |
 | 12 | Typography rows resolve | ✅ Done | Title + Description both resolved from textStyleId |
 | 13 | Size variants read | ✅ Done | large / medium / small resolved on both cards |
+| 18 | Typography rows are `matched` | ⚠️ Partial | ids resolve, but metrics unverified — re-run every layer through `matchLayer()` |
 | 14 | Type family consistent | ❌ Missing | Title is Primary/Headlines/Block at large but Primary/Multi-line Label at medium + small |
 | 15 | Colors follow controls | ✅ Done | 4 rows × 5 types |
 | 16 | Colors table shape | ⚠️ Partial | authored in interim shape — waiting on the Element column |

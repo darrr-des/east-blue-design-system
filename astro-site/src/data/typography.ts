@@ -536,6 +536,159 @@ export function resolveStyleId(textStyleId: string): TextStyle | undefined {
   return TEXT_STYLES.find((s) => s.key === key);
 }
 
+// ── Layer matching ─────────────────────────────────────────────────────
+/**
+ * The five ways a text layer can land. Only `matched` earns a style name in
+ * the Typography row; `excluded` is silent; the rest are `C3` findings.
+ *
+ *  `matched`     id resolves AND family / weight / size / line-height all
+ *                agree with the database under some (setup, metrics) pair.
+ *  `excluded`    the style is in EXCLUDED_STYLE_NAMES — absent from the
+ *                database by design, so its non-resolution is not a defect.
+ *  `unbound`     no `textStyleId` — someone typed raw values in.
+ *  `unresolved`  a `textStyleId` that no style key matches — the style was
+ *                renamed or deleted and the component still points at it.
+ *  `mismatch`    the id resolves, but the layer's own metrics disagree with
+ *                the style it claims. Reads as correct until you check.
+ */
+export type LayerMatchStatus =
+  | 'matched' | 'excluded' | 'unbound' | 'unresolved' | 'mismatch';
+
+/**
+ * What a reviewer reads off one text layer in Figma.
+ *
+ * Every field is optional because Figma may not report it — and an absent
+ * reading is never treated as agreement. `styleName` is the one field that
+ * cannot come from `textStyleId` alone: shared-library styles carry no name,
+ * so pass it when `get_styles` or the panel gives it, which is what lets an
+ * EXCLUDED style be told apart from a deleted one.
+ */
+export interface LayerReading {
+  /** `get_styled_text_segments(node, 'textStyleId')`, e.g. `S:4b5515…,`. */
+  textStyleId?: string | null;
+  /** `fontName.family`, e.g. `Proxima Soft`. */
+  fontFamily?: string | null;
+  /** `fontName.style`, e.g. `Bold`. */
+  fontWeight?: string | null;
+  fontSize?: number | null;
+  /** Resolved px. `null` when Figma reports AUTO — not comparable. */
+  lineHeight?: number | null;
+  /** Style name when known, so EXCLUDED_STYLE_NAMES can be checked. */
+  styleName?: string | null;
+}
+
+export interface LayerMatch {
+  status: LayerMatchStatus;
+  /** The Typography row value: the style name, or `—`. */
+  value: string;
+  /** Whether this layer must raise a `C3 · Token Coverage` open issue. */
+  issue: boolean;
+  /** One line naming what happened, for the review report. */
+  reason: string;
+  /** The style the id resolved to, when it resolved at all. */
+  style?: TextStyle;
+  /** The (setup, metrics) pair under which it agreed. */
+  setup?: FontSetup;
+  metrics?: MetricMode;
+  /** Fields that disagreed — populated only for `mismatch`. */
+  disagreements: string[];
+}
+
+/** Fields the database records as `null` are "not read", so not comparable. */
+function compare(
+  reading: LayerReading,
+  resolved: ResolvedTextStyle,
+): string[] {
+  const out: string[] = [];
+  if (reading.fontFamily != null && reading.fontFamily !== resolved.fontFamily) {
+    out.push(`family ${reading.fontFamily} ≠ ${resolved.fontFamily}`);
+  }
+  if (reading.fontWeight != null && reading.fontWeight !== resolved.fontWeight) {
+    out.push(`weight ${reading.fontWeight} ≠ ${resolved.fontWeight}`);
+  }
+  if (reading.fontSize != null && reading.fontSize !== resolved.fontSize) {
+    out.push(`size ${reading.fontSize} ≠ ${resolved.fontSize}`);
+  }
+  if (reading.lineHeight != null && resolved.lineHeight != null
+      && reading.lineHeight !== resolved.lineHeight) {
+    out.push(`line-height ${reading.lineHeight} ≠ ${resolved.lineHeight}`);
+  }
+  return out;
+}
+
+/**
+ * Decide whether one text layer is genuinely on a DS text style.
+ *
+ * A resolving `textStyleId` is necessary but NOT sufficient: a layer can point
+ * at a real style and still have been overridden locally, which is why this
+ * compares the layer's own family / weight / size / line-height against the
+ * database before calling it a match. Only `matched` may be written as a style
+ * name in the Typography row — every other status is `—`, and every one except
+ * `excluded` raises a `C3 · Token Coverage` open issue.
+ *
+ * Setup and metrics are searched, not assumed: a file may sit on any of the
+ * three font setups and any of the three ramps, so the layer counts as matched
+ * if it agrees under ANY pair. Pin them when the file's modes are known.
+ *
+ * Fields neither side reports are skipped rather than guessed — a `null`
+ * `leading` in the database means "not read", and inventing a comparison
+ * against it would manufacture a finding.
+ */
+export function matchLayer(
+  reading: LayerReading,
+  pin?: { setup?: FontSetup; metrics?: MetricMode },
+): LayerMatch {
+  const excluded = reading.styleName != null
+    && (EXCLUDED_STYLE_NAMES as readonly string[]).includes(reading.styleName);
+  if (excluded) {
+    return {
+      status: 'excluded', value: '—', issue: false, disagreements: [],
+      reason: `${reading.styleName} is excluded from the database by design — raises nothing.`,
+    };
+  }
+
+  const id = reading.textStyleId?.trim();
+  if (!id) {
+    return {
+      status: 'unbound', value: '—', issue: true, disagreements: [],
+      reason: 'No textStyleId — the layer carries raw font values, not a DS text style.',
+    };
+  }
+
+  const style = resolveStyleId(id);
+  if (!style) {
+    return {
+      status: 'unresolved', value: '—', issue: true, disagreements: [],
+      reason: `textStyleId ${id} matches no style key — renamed or deleted, and still referenced.`,
+    };
+  }
+
+  const setups: FontSetup[] = pin?.setup ? [pin.setup] : ['bau', 'kakaibabe', 'hiraya'];
+  const modes: MetricMode[] = pin?.metrics ? [pin.metrics] : ['default', 'proxibark', 'meowbark'];
+
+  let closest: { setup: FontSetup; metrics: MetricMode; diffs: string[] } | null = null;
+  for (const setup of setups) {
+    for (const metrics of modes) {
+      const diffs = compare(reading, resolveTextStyle(style, setup, metrics));
+      if (diffs.length === 0) {
+        return {
+          status: 'matched', value: style.name, issue: false, disagreements: [],
+          reason: `Resolved to ${style.name} and agrees under ${setup} / ${metrics}.`,
+          style, setup, metrics,
+        };
+      }
+      if (!closest || diffs.length < closest.diffs.length) closest = { setup, metrics, diffs };
+    }
+  }
+
+  return {
+    status: 'mismatch', value: '—', issue: true, style,
+    setup: closest!.setup, metrics: closest!.metrics,
+    disagreements: closest!.diffs,
+    reason: `Points at ${style.name} but the layer disagrees: ${closest!.diffs.join('; ')}.`,
+  };
+}
+
 /**
  * The size ramp each font setup was built against.
  *
