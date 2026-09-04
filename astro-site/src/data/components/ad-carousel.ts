@@ -410,6 +410,19 @@ export const adCarousel: ComponentData = {
   },
   "changelog": [
     {
+      "version": "1.1.4",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Preview typeface corrected — node 6507:74166",
+      "rows": [
+        {
+          "body": "<strong>The preview rendered Primary text in the wrong typeface.</strong> Every <code>Primary/*</code> layer is Proxima Soft and every <code>Secondary/*</code> layer is BarkAda, but the preview never said so: the root declared no <code>font-family</code> at all, which resolves through <code>.eb-preview-scope</code> to <code>body</code> — the documentation font, BarkAda. Both text layers here are Primary — <code>#title</code> at <code>Primary/Label/Large</code> and the CTA label at <code>Primary/Label/Small</code> — so the whole preview was in the wrong face. There is no Secondary text on this component, so the root declaration settles it.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
+    {
       "version": "1.1.3",
       "date": "September 2026",
       "kind": "patch",

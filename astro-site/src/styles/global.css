@@ -5567,7 +5567,7 @@ pre.code-snippet .prp { color: #0369A1; }
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
 }
 .eb-preview-adspace--receipt { width: 300px; }
 .eb-preview-adspace--banner  { width: 320px; }
@@ -5623,6 +5623,7 @@ pre.code-snippet .prp { color: #0369A1; }
   color: #005CE5;
 }
 .eb-preview-adspace__description {
+  font-family: 'BarkAda', system-ui, sans-serif;
   font-size: 12px;
   font-weight: 600;
   line-height: 18px;
@@ -5640,6 +5641,7 @@ pre.code-snippet .prp { color: #0369A1; }
    Header (#title + optional CTA) over a clipped rail of Ad Space cards.
    ═════════════════════════════════════════════════════════════════════ */
 .eb-preview-adcarousel {
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   width: 360px;
   padding: 12px 0;
   background: #FFFFFF;

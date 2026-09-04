@@ -582,6 +582,19 @@ export const adSpace: ComponentData = {
   },
   "changelog": [
     {
+      "version": "2.0.6",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Preview typeface corrected — node 6507:74166",
+      "rows": [
+        {
+          "body": "<strong>The preview rendered Primary text in the wrong typeface.</strong> Every <code>Primary/*</code> layer is Proxima Soft and every <code>Secondary/*</code> layer is BarkAda, but the preview never said so: the root declared <code>font-family: inherit</code>, which resolves through <code>.eb-preview-scope</code> to <code>body</code> — the documentation font, BarkAda. <code>#title</code> and <code>#header</code> are <code>Primary/Label/Large</code> and were drawing in BarkAda. <code>#description</code> looked right only by accident — it is <code>Secondary/Bold/Caption</code>, and BarkAda is what Secondary resolves to, so the fallback happened to land on the correct face. The root now declares Proxima Soft and the description declares BarkAda, so both are right by intent rather than by luck.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
+    {
       "version": "2.0.5",
       "date": "September 2026",
       "kind": "patch",
