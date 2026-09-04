@@ -128,6 +128,15 @@ Its values become the cards, in Figma's order. Every other property becomes a **
 
 **Check the preview against an export, not against the layer tree.** Run `export_node_as_image` on the default variant and compare it to the rendered preview side by side. A layer that exists in the tree is not necessarily drawn — Alert's leading slot and its action button are both present in every variant and hidden in all of them, and the old preview drew both. The tree tells you what exists; the export tells you what ships.
 
+**The tree order is not the paint order.** An absolutely-positioned layer sits wherever its position puts it, regardless of where the panel lists it — so reading the layer list top-to-bottom gets the stacking backwards. Caught twice on the Carousel run:
+
+| Component | Layer | Panel says | Actually paints |
+|---|---|---|---|
+| Carousel Item | `Overlay` | last, so on top | **beneath** `content` — a press dims the artwork, never the copy |
+| Date Picker Cell | `Range highlight start` | before `Container`, so beneath | **beneath** — correct here, but the preview had rebuilt it as a child of the cell, which forced it on top |
+
+Both shipped previews that were wrong in a way no amount of tree-reading would reveal. The export settles it: if the preview stacks differently from the image, the preview is wrong.
+
 **Give the preview a server-rendered default.** `previewHtml` must contain the component's default state inside the host div, not an empty shell — the demo script overwrites it on load, but the static markup is what shows before JS runs, when JS fails, and when a viewer has a stale cached demo script:
 
 ```ts

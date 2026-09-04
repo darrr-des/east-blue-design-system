@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildInteractiveColorsTable } from './_helpers';
 
 /* One card per Kind. Role and Selection are the axes worth exercising;
    isDisabled rides along on both. */
@@ -31,11 +32,19 @@ const dayControls: DemoControlSection[] = [
       {
         label: 'isDisabled',
         prop: 'disabled',
+        control: 'toggle' as const,
         defaultValue: 'false',
         options: [
           { value: 'false', label: 'false' },
           { value: 'true', label: 'true' }
         ]
+      },
+      {
+        label: "Day",
+        prop: "index",
+        control: 'input' as const,
+        defaultValue: "1",
+        options: []
       }
     ]
   }
@@ -66,11 +75,19 @@ const monthYearControls: DemoControlSection[] = [
       {
         label: 'isDisabled',
         prop: 'disabled',
+        control: 'toggle' as const,
         defaultValue: 'false',
         options: [
           { value: 'false', label: 'false' },
           { value: 'true', label: 'true' }
         ]
+      },
+      {
+        label: "Text",
+        prop: "label",
+        control: 'input' as const,
+        defaultValue: "Label",
+        options: []
       }
     ]
   }
@@ -284,50 +301,53 @@ export const datePickerCell: ComponentData = {
         "cardKey": "dpc-spec-card-day",
         "demoKey": "day",
         "demoControls": dayControls,
-        "title": "Kind=Day",
+        "title": "Day",
         "node": "5943:41826",
-        "description": "The calendar grid cell. Circular, 32×32, and the only kind that takes the range selections.",
+        "description": "",
         "previewHtml": "<div id=\"dpc-spec-day\"><span class=\"eb-preview-dpcell eb-preview-dpcell--day\"><span class=\"eb-preview-dpcell__label\">1</span></span></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
+              { "key": "Kind", "value": "Day" },
               { "key": "Role", "value": "Default", "prop": "role" },
               { "key": "Selection", "value": "None", "prop": "selection" },
               { "key": "isDisabled", "value": "false", "prop": "disabled" },
-              { "key": "Versions", "value": "10 of 16" }
+              { "key": "Day", "value": "1", "prop": "index" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Text — default", "value": "#0A2757", "token": "text/color-text-heading", "swatch": true },
-              { "key": "Text — today", "value": "#005CE5", "token": "text/color-text-link", "swatch": true },
-              { "key": "Text — prev-next", "value": "#6780A9", "token": "text/color-text-weaker", "swatch": true },
-              { "key": "Text — disabled", "value": "#C2CFE5", "token": "text/color-text-weakest", "swatch": true },
-              { "key": "Selected fill", "value": "#005CE5", "token": "main/date-picker/cell/selected", "swatch": true },
-              { "key": "Range strip", "value": "#E5F1FF", "token": "main/date-picker/cell/range", "swatch": true }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Dimensions", "value": "32 × 32", "mono": true },
-              { "key": "Corner radius", "value": "24", "mono": true },
-              { "key": "Today ring", "value": "1px inset", "mono": true },
-              { "key": "Range bleed", "value": "10 each side", "mono": true },
-              { "key": "Touch target", "value": "32 — below the 44/48 minimum", "mono": true }
+              { "key": "Container surface", "value": "#FFFFFF", "token": "bg/color-bg-primary-inverse", "swatch": true },
+              { "key": "#text", "value": "#0A2757", "token": "text/color-text", "swatch": true, "variants": { "disabled:true": { "value": "#C2CFE5", "token": "text/color-text-disabled" } } },
+              { "key": "#text — Today", "value": "#005CE5", "token": "text/color-text-primary", "swatch": true, "variants": { "disabled:true": { "value": "#9BC5FD", "token": "text/color-text-primary-disabled" } } },
+              { "key": "Border — Today", "value": "#005CE5", "token": "border/color-border-primary", "swatch": true, "variants": { "disabled:true": { "value": "#9BC5FD", "token": "border/color-border-primary-disabled" } } },
+              { "key": "Container — Selected", "value": "#005CE5", "token": "bg/color-bg-primary", "swatch": true, "variants": { "disabled:true": { "value": "#9BC5FD", "token": "bg/color-bg-primary-disabled" } } },
+              { "key": "#text — Selected", "value": "#FFFFFF", "token": "text/color-text-inverse", "swatch": true },
+              { "key": "Range highlight", "value": "#E5F1FF", "token": "bg/color-bg-info-weakest", "swatch": true },
+              { "key": "#text — Prev-Next", "value": "#6780A9", "token": "text/color-text-weaker", "swatch": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Text style", "value": "Primary/SemiBold/Body", "mono": true },
-              { "key": "Font", "value": "Proxima Soft SemiBold · 14 / 14 · +0.25", "mono": true }
+              { "key": "#text", "value": "Primary/Label/Light/Small", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "32px", "mono": true },
+              { "key": "Width", "value": "32px", "mono": true },
+              { "key": "Radius", "value": "24px", "mono": true },
+              { "key": "Padding H", "value": "6px (derived)", "mono": true },
+              { "key": "Padding V", "value": "9px (derived)", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
             ]
           }
         ],
@@ -338,54 +358,100 @@ export const datePickerCell: ComponentData = {
         "cardKey": "dpc-spec-card-monthyear",
         "demoKey": "monthyear",
         "demoControls": monthYearControls,
-        "title": "Kind=MonthYear",
+        "title": "MonthYear",
         "node": "6442:73668",
-        "description": "The header view cell. Wider and squarer than the day cell, and deliberately without the range selections — these pick a single month or year.",
+        "description": "",
         "previewHtml": "<div id=\"dpc-spec-monthyear\"><span class=\"eb-preview-dpcell eb-preview-dpcell--monthyear\"><span class=\"eb-preview-dpcell__label\">Label</span></span></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
+              { "key": "Kind", "value": "MonthYear" },
               { "key": "Role", "value": "Default", "prop": "role" },
               { "key": "Selection", "value": "None", "prop": "selection" },
               { "key": "isDisabled", "value": "false", "prop": "disabled" },
-              { "key": "Versions", "value": "6 of 16" }
+              { "key": "Text", "value": "Label", "prop": "label" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Text — default", "value": "#0A2757", "token": "text/color-text-heading", "swatch": true },
-              { "key": "Text — today", "value": "#005CE5", "token": "text/color-text-link", "swatch": true },
-              { "key": "Text — disabled", "value": "#C2CFE5", "token": "text/color-text-weakest", "swatch": true },
-              { "key": "Selected fill", "value": "#005CE5", "token": "main/date-picker/cell/selected", "swatch": true }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Dimensions", "value": "59 × 32", "mono": true },
-              { "key": "Corner radius", "value": "8", "mono": true },
-              { "key": "Today ring", "value": "1px inset", "mono": true },
-              { "key": "Range selections", "value": "none — by design", "mono": true }
+              { "key": "Container surface", "value": "#FFFFFF", "token": "bg/color-bg-primary-inverse", "swatch": true },
+              { "key": "#text", "value": "#0A2757", "token": "text/color-text", "swatch": true, "variants": { "disabled:true": { "value": "#C2CFE5", "token": "text/color-text-disabled" } } },
+              { "key": "#text — Today", "value": "#005CE5", "token": "text/color-text-primary", "swatch": true, "variants": { "disabled:true": { "value": "#9BC5FD", "token": "text/color-text-primary-disabled" } } },
+              { "key": "Border — Today", "value": "#005CE5", "token": "border/color-border-primary", "swatch": true, "variants": { "disabled:true": { "value": "#9BC5FD", "token": "border/color-border-primary-disabled" } } },
+              { "key": "Container — Selected", "value": "#005CE5", "token": "bg/color-bg-primary", "swatch": true, "variants": { "disabled:true": { "value": "#9BC5FD", "token": "bg/color-bg-primary-disabled" } } },
+              { "key": "#text — Selected", "value": "#FFFFFF", "token": "text/color-text-inverse", "swatch": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Text style", "value": "Primary/SemiBold/Body", "mono": true },
-              { "key": "Font", "value": "Proxima Soft SemiBold · 14 / 14 · +0.25", "mono": true }
+              { "key": "#text", "value": "Primary/Label/Light/Small", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "32px", "mono": true },
+              { "key": "Width", "value": "59px", "mono": true },
+              { "key": "Radius", "value": "8px", "mono": true },
+              { "key": "Padding H", "value": "12px (derived)", "mono": true },
+              { "key": "Padding V", "value": "9px (derived)", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
             ]
           }
         ],
         "swift": "<span class=\"syn-type\">EBPickerCell</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-dot\">.monthYear</span><span class=\"syn-punc\">,</span>\n    role<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.today</span><span class=\"syn-punc\">,</span>\n    selection<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.none</span>\n<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"2026\"</span><span class=\"syn-punc\">) }</span>",
         "compose": "<span class=\"syn-type\">EBPickerCell</span><span class=\"syn-punc\">(</span>\n    kind <span class=\"syn-eq\">=</span> <span class=\"syn-type\">PickerCellKind</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">MonthYear</span><span class=\"syn-punc\">,</span>\n    role <span class=\"syn-eq\">=</span> <span class=\"syn-type\">PickerCellRole</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Today</span>\n<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"2026\"</span><span class=\"syn-punc\">) }</span>"
       }
-    ]
+    ],
+    colorsTables: [
+      buildInteractiveColorsTable({
+        title: "Day — Colors",
+        description: "The cell has no pressed state, so that column is blank throughout. Range and Prev-Next exist only on Day and have no disabled version.",
+        rows: [
+          { role: "Container surface", token: "bg/color-bg-primary-inverse",
+            default: "#FFFFFF", pressed: '–', disabled: "#FFFFFF" },
+          { role: "#text", token: "text/color-text · disabled text/color-text-disabled",
+            default: "#0A2757", pressed: '–', disabled: "#C2CFE5" },
+          { role: "#text — Today", token: "text/color-text-primary · disabled text/color-text-primary-disabled",
+            default: "#005CE5", pressed: '–', disabled: "#9BC5FD" },
+          { role: "Border — Today", token: "border/color-border-primary · disabled border/color-border-primary-disabled",
+            default: "#005CE5", pressed: '–', disabled: "#9BC5FD" },
+          { role: "Container — Selected", token: "bg/color-bg-primary · disabled bg/color-bg-primary-disabled",
+            default: "#005CE5", pressed: '–', disabled: "#9BC5FD" },
+          { role: "#text — Selected", token: "text/color-text-inverse",
+            default: "#FFFFFF", pressed: '–', disabled: "#FFFFFF" },
+          { role: "Range highlight", token: "bg/color-bg-info-weakest",
+            default: "#E5F1FF", pressed: '–', disabled: "–" },
+          { role: "#text — Prev-Next", token: "text/color-text-weaker",
+            default: "#6780A9", pressed: '–', disabled: "–" },
+        ],
+      }),
+      buildInteractiveColorsTable({
+        title: "MonthYear — Colors",
+        description: "Identical palette to Day — the two kinds differ in width and corner radius, never in colour. MonthYear has no Range or Prev-Next version.",
+        rows: [
+          { role: "Container surface", token: "bg/color-bg-primary-inverse",
+            default: "#FFFFFF", pressed: '–', disabled: "#FFFFFF" },
+          { role: "#text", token: "text/color-text · disabled text/color-text-disabled",
+            default: "#0A2757", pressed: '–', disabled: "#C2CFE5" },
+          { role: "#text — Today", token: "text/color-text-primary · disabled text/color-text-primary-disabled",
+            default: "#005CE5", pressed: '–', disabled: "#9BC5FD" },
+          { role: "Border — Today", token: "border/color-border-primary · disabled border/color-border-primary-disabled",
+            default: "#005CE5", pressed: '–', disabled: "#9BC5FD" },
+          { role: "Container — Selected", token: "bg/color-bg-primary · disabled bg/color-bg-primary-disabled",
+            default: "#005CE5", pressed: '–', disabled: "#9BC5FD" },
+          { role: "#text — Selected", token: "text/color-text-inverse",
+            default: "#FFFFFF", pressed: '–', disabled: "#FFFFFF" },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {

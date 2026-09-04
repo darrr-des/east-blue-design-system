@@ -128,3 +128,50 @@ function _dpcInit() {
   else _dpcInit();
   document.addEventListener('astro:page-load', _dpcInit);
 })();
+
+/* ── DEV code, live ──────────────────────────────────────────────────
+   One argument list rendered into both languages, so the two cannot
+   drift. Mirrors the call documented on the Style and Code tabs. */
+function _dpcArgs(cardKey, card, sep, lang) {
+  var swift = lang === 'swift';
+  var args = [];
+  args.push('kind' + sep + (swift
+    ? '.' + (cardKey === 'monthyear' ? 'monthYear' : 'day')
+    : 'EBDatePickerCellKind.' + (cardKey === 'monthyear' ? 'MonthYear' : 'Day')));
+
+  args.push(cardKey === 'monthyear'
+    ? 'label' + sep + '"' + (card.label || 'Label') + '"'
+    : 'index' + sep + (card.index || '1'));
+
+  var role = card.role || 'default';
+  if (role !== 'default') {
+    var roleCase = role === 'prev-next' ? 'prevNext' : 'today';
+    args.push('role' + sep + (swift
+      ? '.' + roleCase
+      : 'EBDatePickerCellRole.' + roleCase.charAt(0).toUpperCase() + roleCase.slice(1)));
+  }
+
+  var sel = card.selection || 'none';
+  if (sel !== 'none') {
+    var selCase = sel.replace(/-([a-z])/g, function (_, c) { return c.toUpperCase(); });
+    args.push('selection' + sep + (swift
+      ? '.' + selCase
+      : 'EBDatePickerCellSelection.' + selCase.charAt(0).toUpperCase() + selCase.slice(1)));
+  }
+
+  if (card.disabled === 'true') args.push('isDisabled' + sep + 'true');
+  return args;
+}
+
+function buildSwiftSnippet(cardKey, card) {
+  return 'EBDatePickerCell(\n    ' + _dpcArgs(cardKey, card, ': ', 'swift').join(',\n    ') + '\n)';
+}
+
+function buildComposeSnippet(cardKey, card) {
+  return 'EBDatePickerCell(\n    ' + _dpcArgs(cardKey, card, ' = ', 'compose').join(',\n    ') + '\n)';
+}
+
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
+}
+window.getSnippet = getSnippet;
