@@ -5768,15 +5768,18 @@ pre.code-snippet .prp { color: #0369A1; }
 
 /* ── Weekday header cell ────────────────────────────────────────── */
 .eb-preview-dpwk {
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 32px;
   height: 32px;
   border-radius: 24px;
+  background: #FFFFFF;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.25px;
+  line-height: 14px;
   color: #0A2757;
 }
 
