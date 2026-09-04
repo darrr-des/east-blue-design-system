@@ -5782,12 +5782,12 @@ pre.code-snippet .prp { color: #0369A1; }
 
 /* ── Header Trigger ─────────────────────────────────────────────── */
 .eb-preview-dphdr {
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  height: 24px;
-  padding: 0 8px;
+  gap: 8px;
+  padding: 4px 8px;
   border-radius: 4px;
   background: #F6F9FD;
   font-size: 16px;
@@ -5800,6 +5800,8 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-dphdr--pressed { background: #EEF2F9; }
 .eb-preview-dphdr--disabled { background: #FFFFFF; color: #C2CFE5; }
 .eb-preview-dphdr__caret { flex: 0 0 auto; display: block; }
+.eb-preview-dphdr__caret { color: #445C85; }
+.eb-preview-dphdr--disabled .eb-preview-dphdr__caret { color: #C2CFE5; }
 
 /* ── Calendar surface ───────────────────────────────────────────── */
 .eb-preview-dpcal {

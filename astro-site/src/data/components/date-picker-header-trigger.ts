@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildInteractiveColorsTable } from './_helpers';
 
 const triggerControls: DemoControlSection[] = [
   {
@@ -17,11 +18,19 @@ const triggerControls: DemoControlSection[] = [
       {
         label: 'hasCaret',
         prop: 'caret',
+        control: 'toggle',
         defaultValue: 'true',
         options: [
-          { value: 'true', label: 'true' },
-          { value: 'false', label: 'false' }
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' }
         ]
+      },
+      {
+        label: 'Label',
+        prop: 'text',
+        control: 'input',
+        defaultValue: 'Label',
+        options: []
       }
     ]
   }
@@ -40,8 +49,8 @@ export const datePickerHeaderTrigger: ComponentData = {
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "navGroup": "Date Picker",
@@ -108,6 +117,14 @@ export const datePickerHeaderTrigger: ComponentData = {
     ],
     "resolved": [
       {
+        "headline": "The 24px chip is deliberate.",
+        "body": "The calendar header is a fixed strip, and a taller chip would push the grid down. The drawn chip stays 24px while the tap target is expanded natively to 44 pt on iOS and 48 dp on Android, which the Accessibility table sets out for both platforms. Confirmed with design — the same reasoning that settled the 32 × 32 cell. Growing the drawn chip is logged as a recommendation for a future redesign.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
         "headline": "Two booleans became one State setting.",
         "body": "<code>isDisabled</code> and <code>isPressed</code> sat side by side, which allowed a pressed-and-disabled combination that means nothing. They are now <code>State = Default | Pressed | Disabled</code> — the shape the naming guidelines ask for, and the one <a href=\"/components/date-picker\">Date Picker</a> already used.",
         "tag": {
@@ -152,34 +169,49 @@ export const datePickerHeaderTrigger: ComponentData = {
     "recommendations": [
       {
         "headline": "Give the chip a taller tap area.",
-        "body": "It is 24px tall against 44 on iOS and 48 on Android — shorter even than the 32px day cell. Keep the drawn chip at 24 and extend a transparent tap area around it, so the header layout is unchanged.",
+        "body": "The drawn chip is 24px against 44 on iOS and 48 on Android — shorter even than the 32px day cell. The target is expanded natively today, which is the accepted trade for now, but an expanded target the user cannot see still misleads: two chips sit 8px apart while both claim 44. Worth growing the drawn chip whenever the calendar header is next reworked. Not a blocker for this release.",
+        "tag": "A11y"
+      },
+    ],
+    "appliedRecommendations": [
+      {
+        "headline": "Announce the chip as a button that opens a picker.",
+        "body": "v1.1: Applied — the Accessibility table now carries a Role / trait row (<code>.accessibilityAddTraits(.isButton)</code> · <code>Modifier.semantics { role = Role.Button }</code>) alongside a label row that names the value and the action together, \"August, select month\" rather than \"August\". Both platforms answered.",
         "tag": "A11y"
       },
       {
         "headline": "Rename the component to <code>Date Picker - Header Trigger</code> in Figma.",
-        "body": "It is still <code>Header Trigger</code> at node <code>6779:105937</code>, which is generic enough to collide with other headers. The <code>Date Picker - </code> prefix scopes it to this family.",
+        "body": "v1.1: Applied — node <code>6779:105937</code> now reads <code>Date Picker - Header Trigger</code>, so the chip groups with Cell, Header, Calendar and the picker itself in the assets panel. The recommendation described it as still named <code>Header Trigger</code>; that has not been true since the rename.",
         "tag": "Rename"
       },
-      {
-        "headline": "Announce the chip as a button that opens a picker.",
-        "body": "The label alone reads as text. Expose it as a button whose accessibility label names both the current value and what tapping does — \"August, select month\" rather than \"August\".",
-        "tag": "A11y"
-      }
-    ],
-    "appliedRecommendations": []
+    ]
   },
   "style": {
     "heading": "States",
-    "description": "Three states across two caret options. The caret adds 24px of width and mutes with the label when disabled.",
+    "description": "One chip, three states, with or without a caret. Default and Pressed differ only in surface; Disabled turns the surface white and mutes the content.",
+    "colorsTables": [
+      buildInteractiveColorsTable({
+        title: "Colors by State",
+        description: "Three states, six versions. The caret is a stroke, not a fill, which is why it carries border tokens rather than icon ones. Disabled swaps the surface to white and mutes the label and caret to the same value from two different tokens.",
+        rows: [
+          { role: "Container surface", token: "bg/color-bg · pressed bg/color-bg-strong · disabled bg/color-bg-primary-inverse",
+            default: "#F6F9FD", pressed: "#EEF2F9", disabled: "#FFFFFF" },
+          { role: "#text", token: "text/color-text · disabled text/color-text-disabled",
+            default: "#0A2757", pressed: "#0A2757", disabled: "#C2CFE5" },
+          { role: "Chevron Down", token: "border/color-border-strongest · disabled border/color-border-disabled",
+            default: "#445C85", pressed: "#445C85", disabled: "#C2CFE5" }
+        ]
+      })
+    ],
     "specCards": [
       {
         "cardKey": "dpht-spec-card-default",
         "demoKey": "default",
         "demoControls": triggerControls,
-        "title": "Date Picker - Header Trigger",
+        "title": "Header Trigger",
         "node": "6779:105937",
-        "description": "Six versions. Default and Pressed differ only in surface; Disabled keeps the surface and mutes the content.",
-        "previewHtml": "<div id=\"dpht-spec-default\"><span class=\"eb-preview-dphdr\"><span>Month</span></span></div>",
+        "description": "",
+        "previewHtml": "<div id=\"dpht-spec-default\"><span class=\"eb-preview-dphdr\"><span>Label</span></span></div>",
         "sections": [
           {
             "label": "Properties",
@@ -187,7 +219,7 @@ export const datePickerHeaderTrigger: ComponentData = {
             "rows": [
               { "key": "State", "value": "Default", "prop": "state" },
               { "key": "hasCaret", "value": "true", "prop": "caret" },
-              { "key": "#text", "value": "Month" },
+              { "key": "Label", "value": "Label", "prop": "text" },
               { "key": "Versions", "value": "6" }
             ]
           },
@@ -195,37 +227,34 @@ export const datePickerHeaderTrigger: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface — default", "value": "#F6F9FD", "token": "bg/color-bg-subtle", "swatch": true },
-              { "key": "Surface — pressed", "value": "#EEF2F9", "token": "bg/color-bg-subtle-pressed", "swatch": true },
-              { "key": "Surface — disabled", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
-              { "key": "Text", "value": "#0A2757", "token": "text/color-text-heading", "swatch": true },
-              { "key": "Text — disabled", "value": "#C2CFE5", "token": "text/color-text-weakest", "swatch": true }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Height", "value": "24", "mono": true },
-              { "key": "Width", "value": "57 without caret · 81 with", "mono": true },
-              { "key": "Padding H", "value": "8", "mono": true },
-              { "key": "Gap to caret", "value": "4", "mono": true },
-              { "key": "Corner radius", "value": "4", "mono": true },
-              { "key": "Caret", "value": "16 × 16", "mono": true },
-              { "key": "Touch target", "value": "24 — below the 44/48 minimum", "mono": true }
+              { "key": "Container surface", "value": "#F6F9FD", "token": "bg/color-bg", "swatch": true, "variants": { "state:pressed": { "value": "#EEF2F9", "token": "bg/color-bg-strong" }, "state:disabled": { "value": "#FFFFFF", "token": "bg/color-bg-primary-inverse" } } },
+              { "key": "#text", "value": "#0A2757", "token": "text/color-text", "swatch": true, "variants": { "state:disabled": { "value": "#C2CFE5", "token": "text/color-text-disabled" } } },
+              { "key": "Chevron Down", "value": "#445C85", "token": "border/color-border-strongest", "swatch": true, "variants": { "state:disabled": { "value": "#C2CFE5", "token": "border/color-border-disabled" } } }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Text style", "value": "Primary/Bold/Subheading", "mono": true },
-              { "key": "Font", "value": "Proxima Soft Bold · 16 / 16 · +0.25", "mono": true }
+              { "key": "#text", "value": "Primary/Label/Base", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "Hug (24px)", "mono": true },
+              { "key": "Width", "value": "Hug (81px)", "mono": true, "variants": { "caret:false": { "value": "Hug (57px)" } } },
+              { "key": "Radius", "value": "4px", "mono": true },
+              { "key": "Padding H", "value": "8px", "mono": true },
+              { "key": "Padding V", "value": "4px", "mono": true },
+              { "key": "Gap", "value": "8px", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBPickerHeaderTrigger</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-str\">\"Month\"</span><span class=\"syn-punc\">,</span>\n    showsCaret<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">) {</span> picker<span class=\"syn-punc\">.</span>mode <span class=\"syn-eq\">=</span> <span class=\"syn-dot\">.month</span> <span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBPickerHeaderTrigger</span><span class=\"syn-punc\">(</span>\n    text <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Month\"</span><span class=\"syn-punc\">,</span>\n    showsCaret <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span><span class=\"syn-punc\">,</span>\n    onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> mode <span class=\"syn-eq\">=</span> <span class=\"syn-dot\">Month</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBDatePickerHeaderTrigger</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    hasCaret<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePickerHeaderTrigger</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    hasCaret <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
       }
     ]
   },
@@ -234,41 +263,67 @@ export const datePickerHeaderTrigger: ComponentData = {
       "planned": true,
       "blocks": [
         {
-          "label": "Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"2.1.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
-          "label": "Gradle",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:date-picker:2.1.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>datepicker<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet."
+      "footnote": "Planned API — the native library does not exist yet. The artifact is the Date Picker family, not this component: Cell, Header, Header Trigger, Calendar and the picker itself all ship in <code>com.eastblue.ds:date-picker</code> and import <code>com.eastblue.ds.datepicker.*</code>."
     },
     "propertyMapping": {
-      "description": "Figma properties mapped to the intended native parameters.",
+      "description": "Figma properties mapped to the intended native parameters, in the order the Figma property panel lists them. State is the one property that is not a single parameter: Default and Disabled are a flag, while Pressed is what the platform reports while a finger is down.",
       "rows": [
-        { "figma": "State", "swift": "derived — .disabled(true) / press gesture", "compose": "enabled / interactionSource" },
-        { "figma": "hasCaret", "swift": "showsCaret: Bool", "compose": "showsCaret: Boolean" },
-        { "figma": "#text", "swift": "String", "compose": "text: String" }
+        {
+          "figma": "State — Default, Pressed, Disabled",
+          "swift": "<code>isDisabled: Bool = false</code> — Pressed is the momentary press state, not a parameter",
+          "compose": "<code>enabled: Boolean = true</code> — Pressed comes from the <code>InteractionSource</code>"
+        },
+        {
+          "figma": "hasCaret — true, false",
+          "swift": "<code>hasCaret: Bool = true</code>",
+          "compose": "<code>hasCaret: Boolean = true</code>"
+        },
+        {
+          "figma": "Label (text)",
+          "swift": "<code>label: String</code>",
+          "compose": "<code>label: String</code>"
+        }
       ]
     },
     "usageSnippets": [
       {
-        "subheading": "The month and year chips",
-        "swift": "<span class=\"syn-type\">HStack</span><span class=\"syn-punc\">(</span>spacing<span class=\"syn-punc\">:</span> <span class=\"syn-num\">4</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBPickerHeaderTrigger</span><span class=\"syn-punc\">(</span>monthName<span class=\"syn-punc\">) {</span> mode <span class=\"syn-eq\">=</span> <span class=\"syn-dot\">.month</span> <span class=\"syn-punc\">}</span>\n    <span class=\"syn-type\">EBPickerHeaderTrigger</span><span class=\"syn-punc\">(</span>yearName<span class=\"syn-punc\">) {</span> mode <span class=\"syn-eq\">=</span> <span class=\"syn-dot\">.year</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">Row</span><span class=\"syn-punc\">(</span>horizontalArrangement <span class=\"syn-eq\">=</span> <span class=\"syn-type\">Arrangement</span><span class=\"syn-punc\">.</span><span class=\"syn-fn\">spacedBy</span><span class=\"syn-punc\">(</span><span class=\"syn-num\">4</span><span class=\"syn-punc\">.</span>dp<span class=\"syn-punc\">)) {</span>\n    <span class=\"syn-type\">EBPickerHeaderTrigger</span><span class=\"syn-punc\">(</span>monthName<span class=\"syn-punc\">) {</span> mode <span class=\"syn-eq\">=</span> <span class=\"syn-dot\">Month</span> <span class=\"syn-punc\">}</span>\n    <span class=\"syn-type\">EBPickerHeaderTrigger</span><span class=\"syn-punc\">(</span>yearName<span class=\"syn-punc\">) {</span> mode <span class=\"syn-eq\">=</span> <span class=\"syn-dot\">Year</span> <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>"
+        "subheading": "Header Trigger — a month or year chip",
+        "swift": "<span class=\"syn-type\">EBDatePickerHeaderTrigger</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    hasCaret<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePickerHeaderTrigger</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    hasCaret <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "accessibility": [
       {
-        "requirement": "Exposed as a button",
-        "ios": "<code>Button</code> with <code>.accessibilityLabel(\"August, select month\")</code>",
+        "requirement": "Label",
+        "ios": "Button with <code>.accessibilityLabel(\"August, select month\")</code>",
         "android": "<code>Modifier.clickable(onClickLabel = \"Select month\")</code>"
       },
       {
-        "requirement": "Tap area meets the minimum",
+        "requirement": "Role / trait",
+        "ios": "<code>.accessibilityAddTraits(.isButton)</code>",
+        "android": "<code>Modifier.semantics { role = Role.Button }</code>"
+      },
+      {
+        "requirement": "Minimum target",
         "ios": "<code>.frame(minHeight: 44)</code> around the 24pt chip",
-        "android": "<code>Modifier.minimumInteractiveComponentSize()</code>"
+        "android": "<code>Modifier.minimumInteractiveComponentSize()</code> — 48dp"
+      },
+      {
+        "requirement": "Dynamic type",
+        "ios": "Supported, scales to AX5 — the chip hugs, so width grows with the label",
+        "android": "<code>sp</code> units, scales with the system font scale"
       },
       {
         "requirement": "Caret is decorative",
@@ -291,30 +346,95 @@ export const datePickerHeaderTrigger: ComponentData = {
       { "id": "C2", "criterion": "Variant & Property Naming", "status": "ready", "statusLabel": "Ready", "notes": "<code>State</code> replaced two booleans; <code>hasCaret</code> follows the boolean prefix convention with lowercase values." },
       { "id": "C3", "criterion": "Token Coverage", "status": "ready", "statusLabel": "Ready", "notes": "Three surfaces and two text colours, all standard tokens." },
       { "id": "C4", "criterion": "Native Mappability", "status": "ready", "statusLabel": "Ready", "notes": "A labelled button with an optional trailing icon." },
-      { "id": "C5", "criterion": "Interaction State Coverage", "status": "refine", "statusLabel": "Needs Refinement", "notes": "All three states present and the caret added. Outstanding: the 24px tap area." },
+      { "id": "C5", "criterion": "Interaction State Coverage", "status": "ready", "statusLabel": "Ready", "notes": "All three states are built across both caret options, and there is no Focused state by design — these are mobile components. The 24px chip is a deliberate visual size; the tap target is expanded natively to 44 pt / 48 dp, as the Accessibility table sets out." },
       { "id": "C6", "criterion": "Asset & Icon Quality", "status": "ready", "statusLabel": "Ready", "notes": "The caret is a <code>Chevron Down</code> icon instance that recolours per state." },
       { "id": "C7", "criterion": "Code Connect Linkability", "status": "empty", "statusLabel": "Not Mapped", "notes": "Blocked — the native library does not exist yet." }
     ],
-    "codeConnect": [
-      { "aspect": "Property naming", "status": "ready", "statusLabel": "Ready", "notes": "<code>State</code> and <code>hasCaret</code> map cleanly." },
-      { "aspect": "Token coverage", "status": "ready", "statusLabel": "Ready", "notes": "All surfaces and text bound." },
-      { "aspect": "Registration", "status": "empty", "statusLabel": "Not Mapped", "notes": "Blocked until the native library exists." }
-    ],
+    "codeConnect": [],
     "variants": {
       "total": 6,
-      "description": "3 State × 2 hasCaret = 6 versions.",
-      "columns": ["State", "hasCaret", "Surface", "Width"],
+      "description": "3 <code>State</code> × 2 <code>hasCaret</code> = 6 variants — the matrix is complete, every combination is built.",
+      "columns": ["State", "hasCaret", "Surface", "Width", "Node"],
       "rows": [
-        { "cells": ["Default", "false", "#F6F9FD", "57"] },
-        { "cells": ["Pressed", "false", "#EEF2F9", "57"] },
-        { "cells": ["Disabled", "false", "#FFFFFF", "57"] },
-        { "cells": ["Default", "true", "#F6F9FD", "81"] },
-        { "cells": ["Pressed", "true", "#EEF2F9", "81"] },
-        { "cells": ["Disabled", "true", "#FFFFFF", "81"] }
+        { "cells": ["Default", "false", "#F6F9FD", "57", "6493:75116"] },
+        { "cells": ["Pressed", "false", "#EEF2F9", "57", "6493:73968"] },
+        { "cells": ["Disabled", "false", "#FFFFFF", "57", "6493:73974"] },
+        { "cells": ["Default", "true", "#F6F9FD", "81", "7409:160301"] },
+        { "cells": ["Pressed", "true", "#EEF2F9", "81", "7409:160304"] },
+        { "cells": ["Disabled", "true", "#FFFFFF", "81", "7409:160307"] }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Renamed to the family, Style and Code tabs rebuilt — node 6779:105937",
+      "rows": [
+        {
+          "body": "<strong>The component has its family name.</strong> The August assessment recorded it as <code>Header Trigger</code> and recommended the <code>Date Picker - </code> prefix. Node <code>6779:105937</code> now reads <code>Date Picker - Header Trigger</code>, so the chip groups with Cell, Header, Calendar and the picker in the assets panel. This is what makes the release a minor rather than a patch.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "<strong>The 24px chip is a decision, not a gap.</strong> The calendar header is a fixed strip and a taller chip would push the grid down, so the drawn chip stays 24px while the tap target expands natively to 44 pt / 48 dp. Same reasoning that settled the 32 × 32 cell. C5 moves to Ready; growing the drawn chip stays on the list as a recommendation for a future redesign.",
+          "delta": { "kind": "resolved", "label": "C5 resolved" }
+        },
+        {
+          "body": "<strong>The chip announces itself as a button.</strong> The recommendation asked for a button role and a label naming both the value and the action. Accessibility now carries a Role / trait row and a label row reading \"August, select month\" rather than \"August\", answered for iOS and Android.",
+          "delta": { "kind": "resolved", "label": "A11y" }
+        },
+        {
+          "body": "<strong>The documented type style did not exist.</strong> Typography read <code>Primary/Bold/Subheading</code>, which is not a style in the database. The layer resolves to <code>Primary/Label/Base</code>. The <code>Font</code> row spelling out Proxima Soft Bold · 16 / 16 · +0.25 is gone — that lives in the text style.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>The caret had no documented colour.</strong> Two of the three roles were on the page and the chevron was on none of them. It is a stroke, not a fill, which is why it carries <code>border/color-border-strongest</code> and <code>border/color-border-disabled</code> rather than an icon token. A Colors by State table now covers all three roles across all three states.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>The surface tokens named the wrong steps.</strong> They read <code>bg/color-bg-subtle</code>, <code>bg/color-bg-subtle-pressed</code> and <code>bg/color-bg-main</code>; the bindings are <code>bg/color-bg</code>, <code>bg/color-bg-strong</code> and <code>bg/color-bg-primary-inverse</code>. The hex values were right throughout — only the token paths were wrong, which is the worse half to get wrong.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>The preview rendered in the wrong typeface.</strong> <code>.eb-preview-dphdr</code> declared no font, so it inherited the documentation font — BarkAda — through <code>.eb-preview-scope</code> and <code>body</code>, while the component is Proxima Soft Bold. Proxima Soft was loaded the whole time; the preview simply never asked for it.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The caret drew in the label colour.</strong> It inherited <code>currentColor</code>, so Default and Pressed rendered <code>#0A2757</code> instead of <code>#445C85</code>. Disabled looked correct only by coincidence — the text and border disabled tokens both land on <code>#C2CFE5</code>.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Gap was documented as 4px; the panel says 8.</strong> The auto-layout panel confirms 8, and the arithmetic agrees: 8 + 41 + 8 + 16 + 8 reproduces the 81px caret width exactly. The caret path and stroke-width were redrawn from Figma’s own <code>M4.5 6.5L8 10L11.5 6.5</code> at 2, replacing an approximation at 1.6.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Layout was not on the seven-key list.</strong> It carried <code>Corner radius</code>, <code>Gap to caret</code>, <code>Caret</code> and <code>Touch target</code> while missing <code>Padding V</code> and <code>Alignment</code>. Now Height · Width · Radius · Padding H · Padding V · Gap · Alignment, each read off the auto-layout panel, with Width switching to <code>Hug (57px)</code> when the caret is off.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The install block pointed at coordinates that will never exist.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code>, with no Import line at all. Under the family rule the artifact is <code>com.eastblue.ds:date-picker</code> — the whole Date Picker family, not this component — imported as <code>com.eastblue.ds.datepicker.*</code>.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Usage Snippets documented the header, not the chip.</strong> They showed <code>HStack(spacing: 4)</code> and <code>Row(horizontalArrangement = …)</code> assembling two triggers — how to draw a header, not how to use this component. One snippet per driving value now, built from the same definition as the spec card and the live preview.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The component had two names and a parameter that traced to nothing.</strong> Spec cards said <code>EBPickerHeaderTrigger</code>, and the mapping offered <code>showsCaret</code> for a property Figma calls <code>hasCaret</code>. All surfaces now read <code>EBDatePickerHeaderTrigger</code> with <code>hasCaret</code> and <code>label</code>, each tracing 1:1 to a property in the panel.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Property Mapping named a layer where a property belongs.</strong> The third row read <code>#text</code>; the Figma property is <code>Label</code>. Rows are now prose grouped by property with their values listed, and the Variants Inventory gained the node ID for each of the six versions.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Code Connect was populated on a component with nothing registered.</strong> Three rows claimed readiness against a native library that does not exist. The section is gone; C7 stays Not Mapped.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "August 2026",
