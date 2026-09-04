@@ -7082,10 +7082,10 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 .eb-preview-cdpromo {
   position: relative;
   width: 360px;
-  border-radius: 8px;
+  border-radius: 0;
   overflow: hidden;
   background: #FFFFFF;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
 }
 .eb-preview-cdpromo__container {
@@ -7094,7 +7094,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   justify-content: space-between;
   gap: 16px;
   height: 68px;
-  padding: 0 20px;
+  padding: 12px 24px 12px 20px;
 }
 .eb-preview-cdpromo__title {
   font-size: 16px;
@@ -7104,6 +7104,10 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   color: #071969;
   white-space: pre-line;
 }
+/* The instance overrides Countdown's One layout: 173 wide with 8px side
+   padding and an 8px gap, against One's own 16/16. Figma measures padding
+   from the outer edge, so each CSS value is one less than the panel. */
+.eb-preview-cdpromo__timer { flex: 0 0 173px; width: 173px; gap: 8px; padding: 3px 7px 5px; }
 .eb-preview-cdpromo__close {
   position: absolute;
   top: 4px;
@@ -7121,6 +7125,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   font-weight: 700;
   letter-spacing: 0.25px;
   color: #FFFFFF;
+  padding: 5px 8px;
 }
 .eb-preview-cdpromo--high { background: #1972F9; }
 .eb-preview-cdpromo--high .eb-preview-cdpromo__title { color: #FFFFFF; }
