@@ -38,7 +38,11 @@ function _dpcRender(opts) {
   if (selection === 'range-middle') cls.push('eb-preview-dpcell--rangemiddle');
   if (disabled) cls.push('eb-preview-dpcell--disabled');
 
-  var label = kind === 'day' ? '1' : 'Label';
+  /* Figma's own defaults, used until a control supplies a value. */
+  var fallback = kind === 'day' ? '1' : 'Label';
+  var label = opts.text === undefined || opts.text === null || opts.text === ''
+    ? fallback
+    : opts.text;
   return '<span class="' + cls.join(' ') + '">' +
     _dpcRange(selection) +
     '<span class="eb-preview-dpcell__label">' + _dpcEscape(label) + '</span>' +
@@ -54,6 +58,8 @@ function _dpcUpdate() {
   var roleSel = byId("dpc-ctrl-role");
   var selSel = byId("dpc-ctrl-selection");
   var disSel = byId("dpc-ctrl-disabled");
+  var dayInput = byId("dpc-ctrl-day");
+  var textInput = byId("dpc-ctrl-text");
 
   var kind = kindSel ? kindSel.value : "day";
 
@@ -76,6 +82,13 @@ function _dpcUpdate() {
   var isMonthYear = kind === "monthyear";
   allow(roleSel, isMonthYear ? ["default", "today"] : ["default", "today", "prev-next"]);
 
+  /* Each cell carries one value. Day and Text are alternatives in Figma,
+     so only the one belonging to the current Kind is offered. */
+  var dayRow = byId("dpc-row-day");
+  var textRow = byId("dpc-row-text");
+  if (dayRow) dayRow.hidden = isMonthYear;
+  if (textRow) textRow.hidden = !isMonthYear;
+
   var role = roleSel ? roleSel.value : "default";
   var selections = ["none", "selected"];
   if (!isMonthYear && role !== "prev-next") {
@@ -85,19 +98,21 @@ function _dpcUpdate() {
   }
   allow(selSel, selections);
 
+  var textEl = isMonthYear ? textInput : dayInput;
   preview.innerHTML = _dpcRender({
     kind: kind,
     role: role,
     selection: selSel ? selSel.value : "none",
-    disabled: disSel ? disSel.value === "true" : false
+    disabled: disSel ? disSel.value === "true" : false,
+    text: textEl ? textEl.value : undefined
   });
 }
 window._dpcUpdate = _dpcUpdate;
 
 /* ── Style tab spec cards ────────────────────────────────────────── */
 var _specCards = {
-  day: { role: 'default', selection: 'none', disabled: 'false' },
-  monthyear: { role: 'default', selection: 'none', disabled: 'false' }
+  day: { role: 'default', selection: 'none', disabled: 'false', day: '1' },
+  monthyear: { role: 'default', selection: 'none', disabled: 'false', text: 'Label' }
 };
 window._specCards = _specCards;
 
@@ -111,7 +126,10 @@ function updateSpecCard(cardKey, prop, value) {
     kind: cardKey,
     role: card.role,
     selection: card.selection,
-    disabled: card.disabled === 'true'
+    disabled: card.disabled === 'true',
+    /* Day carries `day`, MonthYear carries `text` — the Figma property
+       names, and the same two keys _dpcArgs reads for the DEV snippet. */
+    text: cardKey === 'monthyear' ? card.text : card.day
   });
 }
 window.updateSpecCard = updateSpecCard;
@@ -140,8 +158,8 @@ function _dpcArgs(cardKey, card, sep, lang) {
     : 'EBDatePickerCellKind.' + (cardKey === 'monthyear' ? 'MonthYear' : 'Day')));
 
   args.push(cardKey === 'monthyear'
-    ? 'text' + sep + '"' + (card.label || 'Label') + '"'
-    : 'day' + sep + (card.index || '1'));
+    ? 'text' + sep + '"' + (card.text || 'Label') + '"'
+    : 'day' + sep + (card.day || '1'));
 
   var role = card.role || 'default';
   if (role !== 'default') {

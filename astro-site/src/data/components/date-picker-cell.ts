@@ -41,7 +41,7 @@ const dayControls: DemoControlSection[] = [
       },
       {
         label: "Day",
-        prop: "index",
+        prop: "day",
         control: 'input' as const,
         defaultValue: "1",
         options: []
@@ -84,7 +84,7 @@ const monthYearControls: DemoControlSection[] = [
       },
       {
         label: "Text",
-        prop: "label",
+        prop: "text",
         control: 'input' as const,
         defaultValue: "Label",
         options: []
@@ -119,7 +119,7 @@ export const datePickerCell: ComponentData = {
   },
   "overview": {
     "inContextNote": "Day cells fill the seven-column calendar grid; month and year cells fill the three-column header views. The same component serves both, which is what keeps selection, today and disabled looking identical wherever they appear.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"dpc-demo-preview\"><span class=\"eb-preview-dpcell eb-preview-dpcell--day\"><span class=\"eb-preview-dpcell__label\">1</span></span></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Kind</span><select id=\"dpc-ctrl-kind\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"day\" selected=\"\">Day</option><option value=\"monthyear\">MonthYear</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Role</span><select id=\"dpc-ctrl-role\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"today\">Today</option><option value=\"prev-next\">Prev-Next</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Selection</span><select id=\"dpc-ctrl-selection\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"none\" selected=\"\">None</option><option value=\"selected\">Selected</option><option value=\"range-start\">Range-Start</option><option value=\"range-middle\">Range-Middle</option><option value=\"range-end\">Range-End</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isDisabled</span><select id=\"dpc-ctrl-disabled\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"dpc-demo-preview\"><span class=\"eb-preview-dpcell eb-preview-dpcell--day\"><span class=\"eb-preview-dpcell__label\">1</span></span></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Kind</span><select id=\"dpc-ctrl-kind\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"day\" selected=\"\">Day</option><option value=\"monthyear\">MonthYear</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Role</span><select id=\"dpc-ctrl-role\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"today\">Today</option><option value=\"prev-next\">Prev-Next</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Selection</span><select id=\"dpc-ctrl-selection\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"none\" selected=\"\">None</option><option value=\"selected\">Selected</option><option value=\"range-start\">Range-Start</option><option value=\"range-middle\">Range-Middle</option><option value=\"range-end\">Range-End</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isDisabled</span><select id=\"dpc-ctrl-disabled\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div><div class=\"demo-panel-row\" id=\"dpc-row-day\"><span class=\"demo-panel-label\">Day</span><input id=\"dpc-ctrl-day\" class=\"demo-panel-select demo-panel-input\" type=\"text\" value=\"1\" oninput=\"_dpcUpdate()\" /></div><div class=\"demo-panel-row\" id=\"dpc-row-text\" hidden><span class=\"demo-panel-label\">Text</span><input id=\"dpc-ctrl-text\" class=\"demo-panel-select demo-panel-input\" type=\"text\" value=\"Label\" oninput=\"_dpcUpdate()\" /></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -320,7 +320,7 @@ export const datePickerCell: ComponentData = {
               { "key": "Role", "value": "Default", "prop": "role" },
               { "key": "Selection", "value": "None", "prop": "selection" },
               { "key": "isDisabled", "value": "false", "prop": "disabled" },
-              { "key": "Day", "value": "1", "prop": "index" }
+              { "key": "Day", "value": "1", "prop": "day" }
             ]
           },
           {
@@ -377,7 +377,7 @@ export const datePickerCell: ComponentData = {
               { "key": "Role", "value": "Default", "prop": "role" },
               { "key": "Selection", "value": "None", "prop": "selection" },
               { "key": "isDisabled", "value": "false", "prop": "disabled" },
-              { "key": "Text", "value": "Label", "prop": "label" }
+              { "key": "Text", "value": "Label", "prop": "text" }
             ]
           },
           {
@@ -469,14 +469,14 @@ export const datePickerCell: ComponentData = {
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:date-picker-cell:2.1.0\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:date-picker:2.1.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Import",
           "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>datepicker<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. In practice most teams never call this directly; it is the cell the calendar grid renders."
+      "footnote": "Planned API — the native library does not exist yet. The artifact is the Date Picker family, not this component: Cell, Header, Header Trigger, Calendar and the picker itself all ship in <code>com.eastblue.ds:date-picker</code> and import <code>com.eastblue.ds.datepicker.*</code>. In practice most teams never call this directly; it is the cell the calendar grid renders."
     },
     "propertyMapping": {
       "description": "Figma properties mapped to the intended native parameters, in the order the Figma property panel lists them. Each cell shows one value — the day number or the month/year label — so the two text properties are alternatives, never both at once.",
@@ -646,6 +646,35 @@ export const datePickerCell: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.1.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Family artifact and preview font — node 5943:41825",
+      "rows": [
+        {
+          "body": "<strong>The Gradle artifact named this component, not its family.</strong> It read <code>com.eastblue.ds:date-picker-cell</code>, which was correct when v2.1.0 shipped and stopped being correct the same week: §3.2 now rules that an artifact is a family, never a component. Cell, Header, Header Trigger, Calendar and the picker itself all install <code>com.eastblue.ds:date-picker</code>. The Kotlin import was already on the family package and did not move.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The preview rendered in the wrong typeface.</strong> <code>.eb-preview-dpcell</code> declared <code>font-family: inherit</code>, which reads as a deliberate choice in a diff but resolves through <code>.eb-preview-scope</code> to <code>body</code> — the documentation font, BarkAda. The cell is Proxima Soft. The font was loaded the whole time; the preview simply never asked for it. Found on Header Trigger and swept back here.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The text properties did not move the preview.</strong> Typing into Day or Text updated the DEV snippet but not the cell, on both tabs: the renderer hardcoded <code>kind === 'day' ? '1' : 'Label'</code> and never read the value the control had already stored. It now takes the text and falls back to Figma’s defaults only when the field is empty.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The Overview had no way to set the text at all.</strong> Its panel offered Kind, Role, Selection and isDisabled and stopped there. Day and Text rows now sit after isDisabled in Figma’s panel order, and only the one belonging to the current Kind is shown — each cell carries one value, so the two are alternatives, never both.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The control keys still used the pre-rename names.</strong> Day’s control was keyed <code>index</code> and MonthYear’s <code>label</code> — the property names Figma used before v2.1.0 renamed them to <code>Day</code> and <code>Text</code>. Nothing user-facing was wrong, but the data file and the demo script disagreed with the Code tab. All nine references now read <code>day</code> and <code>text</code>.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
     {
       "version": "2.1.0",
       "date": "September 2026",

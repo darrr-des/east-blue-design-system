@@ -5712,7 +5712,7 @@ pre.code-snippet .prp { color: #0369A1; }
   align-items: center;
   justify-content: center;
   height: 32px;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.25px;
