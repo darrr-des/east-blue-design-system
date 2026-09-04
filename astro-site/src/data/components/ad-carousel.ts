@@ -265,15 +265,15 @@ export const adCarousel: ComponentData = {
       "blocks": [
         {
           "label": "iOS — Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.1.2\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.1.3\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:ad-carousel:1.1.2\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:ad-carousel:1.1.3\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Import",
-          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>adcarousel<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>adspace<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
       "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
@@ -410,6 +410,19 @@ export const adCarousel: ComponentData = {
   },
   "changelog": [
     {
+      "version": "1.1.3",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Kotlin import corrected to the family package",
+      "rows": [
+        {
+          "body": "<strong>The Kotlin import named the component, not its family.</strong> It read <code>com.eastblue.ds.adcarousel.*</code>. Under the packaging rule settled on 2 September the package is the family — <code>Ad Space</code> — so it is <code>com.eastblue.ds.adspace.*</code>. One package per family keeps imports stable when a family gains a component. The Gradle artifact keeps the slug and is unchanged.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
+    {
       "version": "1.1.2",
       "date": "September 2026",
       "kind": "patch",
@@ -483,7 +496,7 @@ export const adCarousel: ComponentData = {
           "delta": { "kind": "resolved", "label": "Docs" }
         },
         {
-          "body": "<strong>Install coordinates corrected.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code> became <code>AY-Org/eb-ds-ios</code> and <code>com.eastblue.ds:ad-carousel:1.1.2</code>, and an Import block was added. Property Mapping was regrouped and Code Connect emptied.",
+          "body": "<strong>Install coordinates corrected.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code> became <code>AY-Org/eb-ds-ios</code> and <code>com.eastblue.ds:ad-carousel:1.1.3</code>, and an Import block was added. Property Mapping was regrouped and Code Connect emptied.",
           "delta": { "kind": "resolved", "label": "Docs" }
         },
         {

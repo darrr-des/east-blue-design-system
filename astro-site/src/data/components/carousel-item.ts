@@ -511,15 +511,15 @@ export const carouselItem: ComponentData = {
       "blocks": [
         {
           "label": "iOS — Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"2.1.0\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"2.1.1\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:carousel-item:2.1.0\"</span><span class=\"syn-punc\">)</span>"
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:carousel-item:2.1.1\"</span><span class=\"syn-punc\">)</span>"
         },
         {
           "label": "Import",
-          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>carouselitem<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>carousel<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
       "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
@@ -733,6 +733,19 @@ export const carouselItem: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.1.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Kotlin import corrected to the family package",
+      "rows": [
+        {
+          "body": "<strong>The Kotlin import named the component, not its family.</strong> It read <code>com.eastblue.ds.carouselitem.*</code>. Under the packaging rule settled on 2 September the package is the family — <code>Carousel</code> — so it is <code>com.eastblue.ds.carousel.*</code>. One package per family keeps imports stable when a family gains a component. The Gradle artifact keeps the slug and is unchanged.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
     {
       "version": "2.1.0",
       "date": "September 2026",
