@@ -140,8 +140,8 @@ function _dpcArgs(cardKey, card, sep, lang) {
     : 'EBDatePickerCellKind.' + (cardKey === 'monthyear' ? 'MonthYear' : 'Day')));
 
   args.push(cardKey === 'monthyear'
-    ? 'label' + sep + '"' + (card.label || 'Label') + '"'
-    : 'index' + sep + (card.index || '1'));
+    ? 'text' + sep + '"' + (card.label || 'Label') + '"'
+    : 'day' + sep + (card.index || '1'));
 
   var role = card.role || 'default';
   if (role !== 'default') {
