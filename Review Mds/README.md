@@ -196,9 +196,9 @@ Measured across all 95 components.
 | Property-mapping rows in `Prop=Value` form | 164 across 44 components | Regroup one row per property |
 | Components with no Usage Guidelines | 42 | Write up to four pairs |
 | Components with no Installation | 38 | |
-| Install blocks on the old `com.gcash.eastblue` coordinates | 21 | §3.2 canonical is `AY-Org/eb-ds-ios` + `com.eastblue.ds:<slug>:<version>` |
+| Install blocks on the old `com.gcash.eastblue` coordinates | 21 | §3.2 canonical is `AY-Org/eb-ds-ios` + `com.eastblue.ds:<family>:<version>` |
 | Install blocks with no Import line | 40 of 57 | |
-| Kotlin package scheme unsettled | 71 hyphenated slugs · 3 schemes shipped | See Open decisions 5 |
+| Install blocks on a non-family artifact or package | 9 artifacts · 4 imports | Decided — Decisions log 1 + 4; the list is in `CODE-REVIEW-GUIDE.md` §3.2 migration debt |
 | Components with Code Connect still populated | 38 | Set to `[]` |
 | Components with no Usage Snippets | 36 | |
 | Components with no Accessibility rows | 6 | |
@@ -223,6 +223,10 @@ Most components will gain an entry from this content pass — the doc rewrite it
 2. **Cards with nothing to control declare `"demoControls": []`.** The empty array passes `npm run lint`; an absent field stays a gap. Rule: `STYLE-REVIEW-GUIDE.md` §3.2.
 3. **`control: 'input'`** (text properties in spec-card panels) — approved in principle; lands after the maintainer reviews the `types.ts` + `SpecCard.astro` diff on the reviewer's branch.
 
+**Decided 2026-09-04** (raised by Kurteous off the Date Picker, Ad Space and Carousel families):
+
+4. **One Gradle artifact per family.** Option A over B: artifact and package both derive from `meta.navGroup` (`Date Picker` → `com.eastblue.ds:date-picker` + `com.eastblue.ds.datepicker`), no family → the slug. An artifact is a family, never a component, so the lead is a class inside it and nothing collides; members can't be adopted individually, and that is accepted. `<version>` of a family artifact is the highest changelog version across its members. Family table, derivation and the migration list: `CODE-REVIEW-GUIDE.md` §3.2.
+
 # Open decisions
 
 Raise these with the owner before a full sweep:
@@ -231,6 +235,6 @@ Raise these with the owner before a full sweep:
 2. **Scorecard C7** — kept as a Blocked row, or dropped along with Code Connect?
 3. **Colors table per card vs per component** — one table per component is assumed; components with two unrelated color systems may need two.
 4. **`node` and `description`** — stay required in the schema after the header change, or become optional?
-5. **Kotlin package scheme** — `CODE-REVIEW-GUIDE.md` §3.2 says `import com.eastblue.ds.<slug>.*`, which is not a legal package for the **71 slugs containing a hyphen**. Three schemes are already shipped: per-slug (`…ds.accordion.*`), hyphen-dropped (`…ds.titlebar.*`, and `…ds.adspace.*` as of Ad Space), and **domain-grouped** — `…ds.form.*` covers eight field components, plus `…ds.feedback.*` and `…ds.chat.*`. Pick one and amend §3.2. Gradle artifact IDs are unaffected: hyphens are legal in Maven coordinates, so `com.eastblue.ds:ad-space:2.0.0` stands either way.
+5. ~~**Kotlin package scheme**~~ — ✅ **Decided.** Domain-grouped packages (Decisions log 1, 2026-09-02) and one artifact per family so artifact and package derive from the same `navGroup` (Decisions log 4, 2026-09-04). §3.2 now carries the family table.
 6. **Lint fails a card that correctly has no controls** — `npm run lint` reports a "Style-tab demoControls gap" whenever a spec card has no `demoControls`. But `STYLE-REVIEW-GUIDE.md` §3.2 says to skip the driving property and skip slots, which legitimately leaves a card with none: Ad Space's **Receipt** has only `Variant` (driving) and `⤷ AssetSlot` (slot), and design confirmed that empty panel is intentional. The rule predates §3.2 and will now fire on every component reviewed to it. Relax the rule, or give the data an opt-out flag.
 7. **`control: 'input'` on spec-card panels** — shipped 2026-09-02 so Figma text properties could be represented at all; `SpecCard.astro` previously branched only to a toggle or a select, so a text property rendered as an empty dropdown. Additive and opt-in, and `demo-panel-input` already existed in `global.css`. It touches two maintainer-only files (`src/data/types.ts`, `src/components/SpecCard.astro`) and needs the maintainer's sign-off or a revert.
