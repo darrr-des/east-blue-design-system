@@ -5814,7 +5814,10 @@ pre.code-snippet .prp { color: #0369A1; }
   border: 1px solid #E5EBF4;
   border-radius: 8px;
   box-sizing: border-box;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
 }
+.eb-preview-dpcal__spacer { flex: 0 0 auto; width: 24px; }
+.eb-preview-dpcal__trigger { flex: 0 0 114px; justify-content: center; }
 .eb-preview-dpcal__header {
   display: flex;
   align-items: center;
@@ -5847,9 +5850,10 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-dpcal__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  row-gap: 16px;
+  row-gap: 32px;
   justify-items: center;
   margin-top: 8px;
+  column-gap: 16px;
 }
 /* The list and its indicator share a stacking context so the indicator
    floats over the right edge instead of adding height below the grid. */
@@ -5859,9 +5863,9 @@ pre.code-snippet .prp { color: #0369A1; }
   top: 8px;
   right: 0;
   width: 4px;
-  height: 120px;
+  height: 80px;
   border-radius: 99px;
-  background: #E5EBF4;
+  background: #0A2757;
   pointer-events: none;
 }
 
