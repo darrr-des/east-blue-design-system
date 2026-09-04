@@ -1,5 +1,6 @@
-/* Powers the live preview and spec card on the countdown page.
- * Countdown (node 5630:36052) is Style × State × Surface — 18 versions.
+/* Powers the live preview and spec cards on the countdown page.
+ * Countdown (node 5630:36052) is Style × State × Surface — 18 versions —
+ * plus five booleans and a leading-icon slot that do not multiply the set.
  *
  *   Per   329 × 50   one filled box per unit, stacked units
  *   One   237 × 44   all four units in a single bar, stacked units
@@ -11,10 +12,10 @@
  */
 
 var _cdUnits = [
-  { key: 'days', long: 'days', short: 'd' },
-  { key: 'hrs', long: 'hrs', short: 'h' },
-  { key: 'mins', long: 'mins', short: 'm' },
-  { key: 'secs', long: 'secs', short: 's' }
+  { key: 'days', prop: 'hasdays', long: 'days', short: 'd' },
+  { key: 'hrs', prop: 'hashrs', long: 'hrs', short: 'h' },
+  { key: 'mins', prop: 'hasmins', long: 'mins', short: 'm' },
+  { key: 'secs', prop: 'hassecs', long: 'secs', short: 's' }
 ];
 
 var _cdAlarmIcon =
@@ -37,6 +38,11 @@ function _cdColon(small) {
     '<span></span><span></span></span>';
 }
 
+/* A unit is shown unless its boolean is explicitly off. */
+function _cdShown(card) {
+  return _cdUnits.filter(function (u) { return card[u.prop] !== 'false'; });
+}
+
 function _cdRender(opts) {
   var style = opts.style || 'per';
   var state = opts.state || 'default';
@@ -51,10 +57,11 @@ function _cdRender(opts) {
 
   var h = '<div class="' + cls.join(' ') + '">';
 
-  if (style === 'pill') h += _cdAlarmIcon;
+  /* hasLeadingIcon belongs to Pill; the other styles never draw one. */
+  if (style === 'pill' && opts.hasicon !== 'false') h += _cdAlarmIcon;
 
   var body = '';
-  _cdUnits.forEach(function (u, i) {
+  _cdShown(opts).forEach(function (u, i) {
     if (i > 0) body += _cdColon(inline);
     var cell = _cdUnitMarkup(u, inline);
     /* Per wraps each unit in its own filled box; the others don't. */
@@ -69,16 +76,34 @@ function _cdUpdate() {
   var byId = function (id) { return document.getElementById(id); };
   var preview = byId('cd-demo-preview');
   if (!preview) return;
+  var val = function (id, fallback) { var el = byId(id); return el ? el.value : fallback; };
+  var style = val('cd-ctrl-style', 'per');
+
+  /* The leading icon only exists on Pill. */
+  var iconRow = byId('cd-row-hasicon');
+  if (iconRow) iconRow.hidden = style !== 'pill';
+
   preview.innerHTML = _cdRender({
-    style: byId('cd-ctrl-style') ? byId('cd-ctrl-style').value : 'per',
-    state: byId('cd-ctrl-state') ? byId('cd-ctrl-state').value : 'default',
-    surface: byId('cd-ctrl-surface') ? byId('cd-ctrl-surface').value : 'oncolor'
+    style: style,
+    state: val('cd-ctrl-state', 'default'),
+    surface: val('cd-ctrl-surface', 'oncolor'),
+    hasdays: val('cd-ctrl-hasdays', 'true'),
+    hashrs: val('cd-ctrl-hashrs', 'true'),
+    hasmins: val('cd-ctrl-hasmins', 'true'),
+    hassecs: val('cd-ctrl-hassecs', 'true'),
+    hasicon: val('cd-ctrl-hasicon', 'true')
   });
 }
 window._cdUpdate = _cdUpdate;
 
-/* ── Style tab spec card ─────────────────────────────────────────── */
-var _specCards = { countdown: { style: 'per', state: 'default', surface: 'oncolor' } };
+/* ── Style tab spec cards — one per Style ────────────────────────── */
+function _cdCard(style) {
+  return {
+    style: style, state: 'default', surface: 'oncolor',
+    hasdays: 'true', hashrs: 'true', hasmins: 'true', hassecs: 'true', hasicon: 'true'
+  };
+}
+var _specCards = { per: _cdCard('per'), pill: _cdCard('pill'), one: _cdCard('one') };
 window._specCards = _specCards;
 
 function updateSpecCard(cardKey, prop, value) {
@@ -89,6 +114,43 @@ function updateSpecCard(cardKey, prop, value) {
   if (host) host.innerHTML = _cdRender(card);
 }
 window.updateSpecCard = updateSpecCard;
+
+/* ── DEV code, live ──────────────────────────────────────────────────
+   One definition behind the spec-card fallback and both language tabs. */
+function getSnippet(cardKey, lang) {
+  var card = _specCards[cardKey] || _specCards['per'];
+  var swift = lang !== 'compose';
+  var sep = swift ? '<span class="syn-punc">:</span> ' : ' <span class="syn-eq">=</span> ';
+  var cap = function (x) { return x.charAt(0).toUpperCase() + x.slice(1); };
+  var enumArg = function (type, value, cased) {
+    return swift
+      ? '<span class="syn-dot">.' + value + '</span>'
+      : '<span class="syn-type">' + type + '</span><span class="syn-punc">.</span>' +
+        '<span class="syn-dot">' + cased + '</span>';
+  };
+
+  var args = ['until' + sep + 'saleEnds'];
+  args.push('style' + sep + enumArg('EBCountdownStyle', card.style, cap(card.style)));
+  args.push('surface' + sep + enumArg('EBCountdownSurface',
+    card.surface === 'onlight' ? 'onLight' : 'onColor',
+    card.surface === 'onlight' ? 'OnLight' : 'OnColor'));
+
+  /* Only name the units that are switched off — four booleans in every
+     snippet would bury the two arguments that matter. */
+  var off = _cdUnits.filter(function (u) { return card[u.prop] === 'false'; });
+  off.forEach(function (u) {
+    var name = 'has' + cap(u.key === 'hrs' ? 'hours' : u.key === 'mins' ? 'minutes' : u.key === 'secs' ? 'seconds' : 'days');
+    args.push(name + sep + '<span class="syn-kw">false</span>');
+  });
+  if (card.style === 'pill' && card.hasicon === 'false') {
+    args.push('hasLeadingIcon' + sep + '<span class="syn-kw">false</span>');
+  }
+
+  return '<span class="syn-type">EBCountdown</span><span class="syn-punc">(</span>\n    ' +
+    args.join('<span class="syn-punc">,</span>\n    ') +
+    '\n<span class="syn-punc">)</span>';
+}
+window.getSnippet = getSnippet;
 
 function _cdInit() {
   _cdUpdate();

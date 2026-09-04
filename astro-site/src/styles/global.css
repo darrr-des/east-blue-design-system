@@ -6905,7 +6905,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 /* ── Unit (25×34 stacked, inline hugs) ──────────────────────────── */
 .eb-preview-cdunit {
   display: inline-flex;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   color: #005CE5;
 }
 .eb-preview-cdunit--stacked {
@@ -6931,6 +6931,8 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   letter-spacing: 0.25px;
   color: inherit;
 }
+.eb-preview-cdunit--inline .eb-preview-cdunit__time { font-weight: 600; font-size: 16px; line-height: 16px; letter-spacing: 0.25px; }
+.eb-preview-cdunit--inline .eb-preview-cdunit__unit { font-size: 16px; line-height: 16px; }
 /* Inline puts number and label on one line at a shared size. */
 .eb-preview-cdunit--inline .eb-preview-cdunit__time,
 .eb-preview-cdunit--inline .eb-preview-cdunit__unit {
@@ -6961,7 +6963,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 .eb-preview-cd {
   display: inline-flex;
   align-items: center;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
 }
 
@@ -6969,11 +6971,13 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 .eb-preview-cd--one {
   gap: 16px;
   height: 44px;
-  padding: 0 16px;
+  /* Figma is 16 / 4 / 6 from the outer edge; the 1px border sits inside that, so the padding is one less on every side. */
+  padding: 3px 15px 5px;
   border-radius: 6px;
   background: #EEF2F9;
   border: 1px solid #E5EBF4;
   color: #9BC5FD;
+  width: 237px;
 }
 /* Per — one box per unit */
 .eb-preview-cd--per { gap: 16px; color: #9BC5FD; }
@@ -6986,19 +6990,21 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   border-radius: 8px;
   background: #EEF2F9;
   border: 1px solid #E5EBF4;
+  padding: 7px;
 }
 /* Pill — inline units behind a leading icon */
 .eb-preview-cd--pill {
   gap: 8px;
   height: 30px;
-  padding: 0 8px;
+  /* Figma is 8 left, 10 right, measured from the outer edge — the border takes 1px of each. */
+  padding: 3px 9px 4px 7px;
   border-radius: 99px;
   background: #EEF2F9;
   border: 1px solid #E5EBF4;
   color: #9BC5FD;
 }
 .eb-preview-cd__icon { flex: 0 0 auto; display: block; color: #005CE5; }
-.eb-preview-cd__units { display: inline-flex; align-items: center; gap: 6px; }
+.eb-preview-cd__units { display: inline-flex; align-items: center; gap: 4px; }
 
 /* onLight — the bold treatment, for placing on a white page */
 .eb-preview-cd--onlight.eb-preview-cd--one {
@@ -7041,6 +7047,36 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 .eb-preview-cd--expired .eb-preview-cdunit,
 .eb-preview-cd--expired .eb-preview-cdunit__unit { color: #C2CFE5; opacity: 1; }
 .eb-preview-cd--expired .eb-preview-cd__icon { color: #C2CFE5; }
+
+/* onLight × Expiring and Expired.
+   The surface rule and the state rules carry the same specificity, so the
+   state one wins on source order and the brand surface was falling through
+   to the onColor palette. These name the combination explicitly. */
+.eb-preview-cd--expiring.eb-preview-cd--onlight.eb-preview-cd--one,
+.eb-preview-cd--expiring.eb-preview-cd--onlight.eb-preview-cd--pill { background: #F7D96E; border-color: #EBB30A; }
+.eb-preview-cd--expiring.eb-preview-cd--onlight .eb-preview-cd__box { background: #F7D96E; border-color: #EBB30A; }
+.eb-preview-cd--expired.eb-preview-cd--onlight.eb-preview-cd--one,
+.eb-preview-cd--expired.eb-preview-cd--onlight.eb-preview-cd--pill { background: #E5F1FF; border-color: #C2CFE5; }
+.eb-preview-cd--expired.eb-preview-cd--onlight .eb-preview-cd__box { background: #E5F1FF; border-color: #C2CFE5; }
+
+/* Expiring text runs four warning steps, not one: the number darkens on
+   the brand surface, and Pill takes its own step on both surfaces. */
+.eb-preview-cd--expiring.eb-preview-cd--onlight .eb-preview-cdunit__time { color: #453408; }
+.eb-preview-cd--expiring.eb-preview-cd--pill .eb-preview-cdunit,
+.eb-preview-cd--expiring.eb-preview-cd--pill .eb-preview-cdunit__unit { color: #6C5009; }
+.eb-preview-cd--expiring.eb-preview-cd--pill.eb-preview-cd--onlight .eb-preview-cdunit,
+.eb-preview-cd--expiring.eb-preview-cd--pill.eb-preview-cd--onlight .eb-preview-cdunit__unit { color: #453408; }
+
+/* The stacked unit label carries a 70% layer opacity on the pale surface. */
+.eb-preview-cd--expiring:not(.eb-preview-cd--onlight):not(.eb-preview-cd--pill) .eb-preview-cdunit__unit,
+.eb-preview-cd--expired:not(.eb-preview-cd--onlight):not(.eb-preview-cd--pill) .eb-preview-cdunit__unit { opacity: 0.7; }
+
+/* The separator lifts on the brand surface, differently per style. */
+.eb-preview-cd--onlight.eb-preview-cd--pill { color: #FFFFFF; }
+/* The pill draws its separator in the text colour; Per and One keep
+   bg/color-bg-warning at Expiring. */
+.eb-preview-cd--expiring.eb-preview-cd--pill { color: #6C5009; }
+.eb-preview-cd--expiring.eb-preview-cd--pill.eb-preview-cd--onlight { color: #453408; }
 
 /* ── Promo ──────────────────────────────────────────────────────── */
 .eb-preview-cdpromo {
