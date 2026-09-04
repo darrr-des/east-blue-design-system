@@ -515,56 +515,82 @@ export const uploadFile: ComponentData = {
     "propertyMapping": {
       "rows": [
         {
-          "figma": "state=Default/Uploading/Uploaded/Upload error",
-          "swift": "state: EBUploadState",
-          "compose": "state: .default / .uploading / .uploaded / .error"
+          "figma": "Status = Default | Uploading | Error | Uploaded",
+          "swift": "status: EBUploadStatus",
+          "compose": "status = EBUploadStatus.Default"
         },
         {
-          "figma": "state=Uploaded with thumbnail",
-          "swift": "state=uploaded + hasThumbnail",
-          "compose": ".hasThumbnail(true)"
+          "figma": "State = Default | Disabled | Focused",
+          "swift": ".disabled(true) · @FocusState",
+          "compose": "enabled = false · interactionSource"
         },
         {
-          "figma": "hasLabel=yes/no",
+          "figma": "hasLabel <em>(boolean)</em>",
           "swift": "label: String?",
           "compose": "label: String?"
         },
         {
-          "figma": "—",
+          "figma": "hasThumbnail <em>(boolean)</em>",
+          "swift": "showThumbnail: Bool",
+          "compose": "showThumbnail: Boolean"
+        },
+        {
+          "figma": "hasLeadingIcon <em>(boolean)</em>",
+          "swift": "showAttachIcon: Bool",
+          "compose": "showAttachIcon: Boolean"
+        },
+        {
+          "figma": "hasSubtext <em>(boolean)</em>",
+          "swift": "subtext: String?",
+          "compose": "subtext: String?"
+        },
+        {
+          "figma": "Thumbnail-Slot <em>(instance swap)</em>",
+          "swift": "@ViewBuilder thumbnail",
+          "compose": "thumbnail: @Composable () -&gt; Unit"
+        },
+        {
+          "figma": "— <em>no Figma property</em>",
           "swift": "fileName: String?",
           "compose": "fileName: String?"
         },
         {
-          "figma": "—",
-          "swift": "progress: Double",
-          "compose": "progress: Double (0.0–1.0)"
+          "figma": "— <em>no Figma property</em>",
+          "swift": "progress: Double (0.0–1.0)",
+          "compose": "progress: Float"
         },
         {
-          "figma": "thumbnail placeholder",
-          "swift": "Figma Slot → ViewBuilder",
-          "compose": "@ViewBuilder thumbnail"
-        },
-        {
-          "figma": "—",
-          "swift": "disabled: Bool",
-          "compose": ".disabled(true)"
-        },
-        {
-          "figma": "—",
+          "figma": "— <em>no Figma property</em>",
           "swift": "onSelect / onRemove",
           "compose": "onSelect / onRemove"
         }
-      ],
-      "filePaths": {
-        "swift": "ios/Components/UploadFile/EBUploadFile.swift",
-        "compose": "android/components/uploadfile/EBUploadFile.kt"
-      }
+      ]
     },
     "usageSnippets": [
       {
-        "subheading": "Usage",
-        "swift": "<span class=\"cmt\">// Default — empty state</span>\n<span class=\"typ\">EBUploadFile</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Proof of ID\"</span>, <span class=\"prp\">onSelect</span>: { url <span class=\"kw\">in</span>\n    <span class=\"cmt\">// handle picked file</span>\n})\n\n<span class=\"cmt\">// Uploading</span>\n<span class=\"typ\">EBUploadFile</span>(<span class=\"prp\">fileName</span>: <span class=\"str\">\"GCash_File.png\"</span>, <span class=\"prp\">progress</span>: <span class=\"kw\">0.2</span>)\n    .<span class=\"fn\">ebState</span>(.<span class=\"prp\">uploading</span>)\n\n<span class=\"cmt\">// Uploaded with thumbnail (Figma Slot)</span>\n<span class=\"typ\">EBUploadFile</span>(<span class=\"prp\">fileName</span>: <span class=\"str\">\"ID_proof.jpg\"</span>, <span class=\"prp\">onRemove</span>: { ... }) {\n    <span class=\"typ\">AsyncImage</span>(url: imageURL)\n        .<span class=\"fn\">aspectRatio</span>(contentMode: .fill)\n        .<span class=\"fn\">clipShape</span>(<span class=\"typ\">RoundedRectangle</span>(cornerRadius: <span class=\"kw\">4</span>))\n}\n.<span class=\"fn\">ebState</span>(.<span class=\"prp\">uploaded</span>)\n\n<span class=\"cmt\">// Error</span>\n<span class=\"typ\">EBUploadFile</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Upload receipt\"</span>,\n    <span class=\"prp\">errorMessage</span>: <span class=\"str\">\"Maximum file size: 20MB\"</span>)\n    .<span class=\"fn\">ebState</span>(.<span class=\"prp\">error</span>)",
-        "compose": "<span class=\"cmt\">// Default — empty state</span>\n<span class=\"typ\">EBUploadFile</span>(\n    label = <span class=\"str\">\"Proof of ID\"</span>,\n    onSelect = { uri -&gt; /* handle picked file */ }\n)\n\n<span class=\"cmt\">// Uploading</span>\n<span class=\"typ\">EBUploadFile</span>(\n    state = <span class=\"typ\">EBUploadState</span>.<span class=\"prp\">Uploading</span>,\n    fileName = <span class=\"str\">\"GCash_File.png\"</span>,\n    progress = <span class=\"kw\">0.2f</span>\n)\n\n<span class=\"cmt\">// Uploaded with thumbnail (Figma Slot)</span>\n<span class=\"typ\">EBUploadFile</span>(\n    state = <span class=\"typ\">EBUploadState</span>.<span class=\"prp\">Uploaded</span>,\n    fileName = <span class=\"str\">\"ID_proof.jpg\"</span>,\n    onRemove = { /* ... */ }\n) {\n    <span class=\"typ\">AsyncImage</span>(\n        model = imageUrl,\n        contentDescription = null,\n        modifier = <span class=\"typ\">Modifier</span>.<span class=\"fn\">clip</span>(<span class=\"typ\">RoundedCornerShape</span>(<span class=\"kw\">4</span>.dp))\n    )\n}\n\n<span class=\"cmt\">// Error</span>\n<span class=\"typ\">EBUploadFile</span>(\n    state = <span class=\"typ\">EBUploadState</span>.<span class=\"prp\">Error</span>,\n    label = <span class=\"str\">\"Upload receipt\"</span>,\n    errorMessage = <span class=\"str\">\"Maximum file size: 20MB\"</span>\n)"
+        "subheading": "Empty field",
+        "swift": "<span class=\"typ\">EBUploadField</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Label\"</span>, <span class=\"prp\">file</span>: $file)\n    .<span class=\"fn\">ebStatus</span>(<span class=\"dot\">.default</span>)\n    .<span class=\"fn\">ebSubtext</span>(<span class=\"str\">\"Accepted format: JPEG, PNG, or PDF, Up to 3 MB\"</span>)",
+        "compose": "<span class=\"typ\">EBUploadField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">file</span> = file,\n    <span class=\"prp\">status</span> = <span class=\"typ\">EBUploadStatus</span>.Default,\n    <span class=\"prp\">subtext</span> = <span class=\"str\">\"Accepted format: JPEG, PNG, or PDF, Up to 3 MB\"</span>\n)"
+      },
+      {
+        "subheading": "Uploading — indeterminate progress",
+        "swift": "<span class=\"typ\">EBUploadField</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Label\"</span>, <span class=\"prp\">file</span>: $file)\n    .<span class=\"fn\">ebStatus</span>(<span class=\"dot\">.uploading</span>)",
+        "compose": "<span class=\"typ\">EBUploadField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">file</span> = file,\n    <span class=\"prp\">status</span> = <span class=\"typ\">EBUploadStatus</span>.Uploading\n)"
+      },
+      {
+        "subheading": "Uploaded — with a thumbnail",
+        "swift": "<span class=\"typ\">EBUploadField</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Label\"</span>, <span class=\"prp\">file</span>: $file)\n    .<span class=\"fn\">ebStatus</span>(<span class=\"dot\">.uploaded</span>)\n    .<span class=\"fn\">ebThumbnail</span> { <span class=\"typ\">Image</span>(uiImage: preview) }\n    .<span class=\"fn\">onRemove</span> { file = <span class=\"kw\">nil</span> }",
+        "compose": "<span class=\"typ\">EBUploadField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">file</span> = file,\n    <span class=\"prp\">status</span> = <span class=\"typ\">EBUploadStatus</span>.Uploaded,\n    <span class=\"prp\">thumbnail</span> = { <span class=\"typ\">Image</span>(preview, <span class=\"kw\">null</span>) },\n    <span class=\"prp\">onRemove</span> = { file = <span class=\"kw\">null</span> }\n)"
+      },
+      {
+        "subheading": "Error",
+        "swift": "<span class=\"typ\">EBUploadField</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Label\"</span>, <span class=\"prp\">file</span>: $file)\n    .<span class=\"fn\">ebStatus</span>(<span class=\"dot\">.error</span>)\n    .<span class=\"fn\">ebSubtext</span>(<span class=\"str\">\"Maximum file size: 20MB\"</span>)",
+        "compose": "<span class=\"typ\">EBUploadField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">file</span> = file,\n    <span class=\"prp\">status</span> = <span class=\"typ\">EBUploadStatus</span>.Error,\n    <span class=\"prp\">subtext</span> = <span class=\"str\">\"Maximum file size: 20MB\"</span>\n)"
+      },
+      {
+        "subheading": "Disabled",
+        "swift": "<span class=\"typ\">EBUploadField</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Label\"</span>, <span class=\"prp\">file</span>: $file)\n    .<span class=\"fn\">disabled</span>(<span class=\"kw\">true</span>)",
+        "compose": "<span class=\"typ\">EBUploadField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">file</span> = file,\n    <span class=\"prp\">enabled</span> = <span class=\"kw\">false</span>\n)"
       }
     ],
     "accessibility": [
@@ -619,100 +645,435 @@ export const uploadFile: ComponentData = {
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Semantic: <code>input-field</code>, <code>Attach</code>, <code>Trash</code>, <code>Icon Placeholder</code>, <code>upload-file-progress</code>, <code>Subtext Message</code>."
+        "notes": "<code>UploadField</code> → <code>FileRow</code> → <code>Thumbnail-Slot</code> · <code>FileName</code> · <code>TrailingAction</code>, with a real <code>Trash</code> instance. Two internal container frames — <code>Attach File - Input</code> and <code>input-field</code> — keep their original names as a recorded exception; nothing binds to them."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>hasLabel</code> yes/no, <code>state</code> has \"Upload error\" with space, <code>\"Uploaded with thumbnail\"</code> is orthogonal."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Status = Default | Uploading | Error | Uploaded</code> × <code>State = Default | Disabled | Focused</code>, the two-axis split §6 prescribes, plus four <code>has</code> booleans in lowerCamelCase per §2. The old single axis with <code>\"Upload error\"</code> and <code>\"Uploaded with thumbnail\"</code> is gone."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Library-wide <code>boder</code> token typo. Thumbnail bg hardcoded."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The <code>boder</code> typo is corrected and the thumbnail placeholder is confirmed token-bound at <code>#EEF2F9</code>. Both are attested rather than verified — token names and variable bindings are not readable through the review tooling."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Maps to PhotosPicker / DocumentPicker (iOS), GetContent / PickVisualMedia (Android)."
+        "notes": "Maps to PhotosPicker / DocumentPicker on iOS and GetContent / PickVisualMedia on Android. <code>Thumbnail-Slot</code> is a real Figma Slot, so the preview binds to a ViewBuilder rather than a fixed image."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No disabled, pressed, or focused states."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>State</code> ships Default, Disabled and Focused on <code>Status=Default</code> and <code>Uploaded</code>. <code>Uploading</code> and <code>Error</code> carry <code>State=Default</code> only — documented as unreachable rather than undrawn: a transfer in flight is not interactive, and a disabled field cannot have failed an upload it never started."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Thumbnail is a placeholder; Lottie dependency needs documentation."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The <code>Attach</code> and <code>Trash</code> glyphs are shared icon instances. The thumbnail is a Slot with a token-bound placeholder. The Lottie dependency behind <code>Uploading</code> is documented, including its failure fallback."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Blocked by C2 cleanup."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Blocked — no native library exists yet. Nothing in the schema blocks it: two cleanly named enums, four booleans and one named slot."
       }
     ],
-    "codeConnect": [],
+    "codeConnect": [
+      {
+        "aspect": "Property naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Status</code> and <code>State</code> map onto native enums; the four <code>has</code> booleans map onto optional arguments."
+      },
+      {
+        "aspect": "State coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Eight variants covering every reachable combination. The four unbuilt pairings are documented as unreachable, so a generated binding will not expect them."
+      },
+      {
+        "aspect": "Slot binding",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Thumbnail-Slot</code> is a real Figma Slot, which Code Connect can bind to a ViewBuilder / composable parameter."
+      },
+      {
+        "aspect": "Native component file",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Proposed target: <code>EBUploadField</code>. Not yet written — blocked on the native library, same as C7."
+      }
+    ],
     "variants": {
-      "total": 10,
-      "description": "5 <code>state</code> × 2 <code>hasLabel</code> = <strong>10 variants</strong>. Clean matrix — every combination exists.",
+      "total": 8,
+      "description": "<code>Status</code> (4) × <code>State</code> (3) describes twelve combinations; eight are built. <code>Uploading</code> and <code>Error</code> ship <code>State=Default</code> only — the four missing pairings are unreachable by design rather than unfinished. The four <code>has</code> booleans are component properties, not variant axes, so they do not multiply the count. <code>Uploading</code> is 19px taller for the progress row.",
       "columns": [
+        "Status",
         "State",
-        "hasLabel",
-        "Count"
+        "Dimensions",
+        "Node ID"
       ],
       "rows": [
         {
           "cells": [
-            "<strong>Default</strong>",
-            "yes + no",
-            "2"
+            "Default",
+            "Default",
+            "304 × 148",
+            "4850:26409"
           ]
         },
         {
           "cells": [
-            "<strong>Uploading</strong>",
-            "yes + no",
-            "2"
+            "Default",
+            "Disabled",
+            "304 × 148",
+            "6526:105079"
           ]
         },
         {
           "cells": [
-            "<strong>Uploaded</strong>",
-            "yes + no",
-            "2"
+            "Default",
+            "Focused",
+            "304 × 148",
+            "6572:111764"
           ]
         },
         {
           "cells": [
-            "<strong>Upload error</strong>",
-            "yes + no",
-            "2"
+            "Uploading",
+            "Default",
+            "304 × 167",
+            "4868:26884"
           ]
         },
         {
           "cells": [
-            "<strong>Uploaded with thumbnail</strong>",
-            "yes + no",
-            "2"
+            "Error",
+            "Default",
+            "304 × 148",
+            "4850:26460"
+          ]
+        },
+        {
+          "cells": [
+            "Uploaded",
+            "Default",
+            "304 × 148",
+            "4868:26932"
+          ]
+        },
+        {
+          "cells": [
+            "Uploaded",
+            "Disabled",
+            "304 × 148",
+            "6572:111324"
+          ]
+        },
+        {
+          "cells": [
+            "Uploaded",
+            "Focused",
+            "304 × 148",
+            "6572:111782"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.6",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Style + Code tabs rebuilt against node 4853:26511",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt as a single card</strong> — one spec card driven by a panel mirroring the Figma property panel: <code>Status</code> and <code>State</code> as selects, and <code>hasLabel</code>, <code>hasThumbnail</code>, <code>hasLeadingIcon</code>, <code>hasSubtext</code> as toggles. The four booleans were invisible to <code>get_node_info</code>, which returns variant properties only. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>State control constrained to real variants</strong> — selecting <code>Uploading</code> or <code>Error</code> disables Focused and Disabled, marking them “not built”, so the panel cannot produce the four combinations Figma does not contain. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Booleans reflow rather than hide</strong> — turning off the thumbnail collapses 52px and shifts the file name left; the leading icon collapses 28px; the label and subtext blocks remove their rows and the card shrinks. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Disabled label corrected</strong> — the preview had muted it. Verified on <code>6526:105079</code>: the label stays <code>#0A2757</code> in Disabled while the field contents mute. The thumbnail placeholder is <code>#F6F9FD</code> there, not the value first drawn. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Property mapping corrected</strong> — the retired single <code>state</code> axis, <code>\"Uploaded with thumbnail\"</code> and <code>hasLabel=yes/no</code> are gone. Now maps <code>Status</code>, <code>State</code>, the four booleans and <code>Thumbnail-Slot</code>, plus the file name, progress and callbacks. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        },
+        {
+          "body": "<strong>Variants inventory corrected</strong> — from <code>total: 10</code> on a “5 state × 2 hasLabel” matrix to the real 8, with the four unreachable pairings explained. <code>codeConnect</code> was an empty array and is now filled. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.5",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Naming completed and remaining items closed",
+      "rows": [
+        {
+          "body": "<strong>Layer naming complete across all eight variants.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Container frame names accepted as-is</strong> — <code>Attach File - Input</code> and <code>input-field</code> are internal structural frames that nothing binds to; renaming carried more churn than the consistency was worth. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Unsupported variant combinations documented</strong> — <code>Uploading</code> and <code>Error</code> have no Focused or Disabled because a transfer in flight is not interactive and a disabled field cannot have failed an upload it never started. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong><code>boder</code> token typo corrected</strong> — fixed before Code Connect could bind generated native constants to the misspelling. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Thumbnail placeholder confirmed token-bound</strong> at the shared surface value. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Lottie dependency documented</strong> — indeterminate by design, replaced rather than stopped on completion, and falling back to the platform progress indicator if it fails to load. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.4",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "State property split onto two axes",
+      "rows": [
+        {
+          "body": "<strong><code>State</code> restructured onto two axes</strong> — <code>Status = Default | Uploading | Error | Uploaded</code> beside <code>State = Default | Focused | Disabled</code>, the split §6 of the Property Naming Guidelines prescribes. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Thumbnail is a real Figma Slot</strong> — a genuine <code>SLOT</code> node, kebab-case per §4, so a consumer swaps their own preview in without detaching. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Label and subtext scaffolding reuses the shared components</strong> — <code>FormGroup Header</code> and <code>Subtext Message</code> instances rather than redrawn locally. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>File row layer naming cleaned up</strong> — <code>FileRow</code>, <code>FileNameWrapper</code>, <code>FileName</code>, <code>TrailingAction</code>, with a real <code>Trash</code> instance. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong><code>Focused</code> state added.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Token namespace resolved</strong> — generic tokens applied. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Progress-bar GIF confirmed preview-only</strong> — a Figma preview device, not a shipped asset. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.3",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Progress-bar naming",
+      "rows": [
+        {
+          "body": "<strong>Progress-bar layer names cleaned up.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.2",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Structure normalised",
+      "rows": [
+        {
+          "body": "<strong><code>State</code> split onto its own axis.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Disabled + Uploaded variant authored.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Thumbnail converted to a Figma Slot.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Error progress bar removed</strong> — a failed upload has no progress to show. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong><code>label</code> wrapper renamed <code>FileRow</code>.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong><code>Pressed</code> ruled out of scope</strong> — the field opens a system picker; the picker owns the press feedback. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.1",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Axis renamed and variants filled in",
+      "rows": [
+        {
+          "body": "<strong>Axis renamed <code>State</code> → <code>Status</code></strong> — the values describe what the system is reporting, not how the user is interacting. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Disabled variant added.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Error variant structure normalised.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt on node 4853:26511 — 2026 Working File",
+      "rows": [
+        {
+          "body": "<strong>Property naming cleaned up</strong> — <code>\"Upload error\"</code> with a space and the orthogonal <code>\"Uploaded with thumbnail\"</code> both retired from the value list. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Label and subtext scaffolding reused</strong> from the shared Form Elements components. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

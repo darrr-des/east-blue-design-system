@@ -339,19 +339,19 @@ export const searchField: ComponentData = {
     "colorsTables": [
       {
         "title": "Colors by State",
-        "description": "Read off node <code>4697:18836</code>. Colors come from the shared generic token scale — the component-scoped <code>main/search/*</code> namespace was abandoned. The band and its border are constant across all four states: focus is carried by the caret and the clear control, error by the trailing glyph. Token paths are indicative pending a variable-binding read, which the review tooling cannot perform.",
-        "columns": [
-          "DEFAULT",
-          "FOCUSED",
-          "ERROR",
-          "DISABLED"
-        ],
+        "description": "Read off node <code>4697:18836</code>. Colors come from the shared generic token scale. The band and its border are constant across all four states: focus is carried by the caret and the clear control, error by the trailing glyph. Token paths are indicative pending a variable-binding read, which the review tooling cannot perform.",
+        "columns": ["Token", "Value"],
         "rows": [
-          { "role": "Band", "token": "surface/default", "values": ["#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF"] },
-          { "role": "Border (top + bottom)", "token": "border/subtle", "values": ["#E5EBF4", "#E5EBF4", "#E5EBF4", "#E5EBF4"] },
-          { "role": "Leading glyph", "token": "icon/secondary · icon/disabled", "values": ["#445C85", "#445C85", "#445C85", "#C2CFE5"] },
-          { "role": "Value / placeholder", "token": "text/placeholder · text/primary · text/disabled", "values": ["#90A8D0", "#0A2757", "#0A2757", "#C2CFE5"] },
-          { "role": "Trailing icon", "token": "icon/interactive · icon/error", "values": ["–", "#025AE9", "#D61B2C", "–"] }
+          { "role": "Default", "token": "Band", "values": ["surface/default", "#FFFFFF"] },
+          { "role": "—", "token": "Border (top + bottom)", "values": ["border/subtle", "#E5EBF4"] },
+          { "role": "—", "token": "Leading glyph", "values": ["icon/secondary", "#445C85"] },
+          { "role": "—", "token": "Label", "values": ["text/placeholder", "#90A8D0"] },
+          { "role": "Disabled", "token": "Leading glyph", "values": ["icon/disabled", "#C2CFE5"] },
+          { "role": "—", "token": "Label", "values": ["text/disabled", "#C2CFE5"] },
+          { "role": "Focused", "token": "Label", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Trailing icon (Close)", "values": ["icon/interactive", "#025AE9"] },
+          { "role": "Error", "token": "Label", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Trailing icon (Error)", "values": ["icon/error", "#D61B2C"] }
         ]
       }
     ]
@@ -378,51 +378,47 @@ export const searchField: ComponentData = {
     "propertyMapping": {
       "rows": [
         {
-          "figma": "state = default / filled",
-          "swift": "text: Binding&lt;String&gt;",
-          "compose": "query: String"
+          "figma": "State = Default | Disabled | Focused | Error",
+          "swift": ".ebState(.default) · .disabled(true) · @FocusState",
+          "compose": "state = EBFieldState.Default · enabled = false · interactionSource"
         },
         {
-          "figma": "— (missing)",
-          "swift": ".focused() / @FocusState",
-          "compose": "interactionSource"
-        },
-        {
-          "figma": "— (missing)",
-          "swift": ".disabled(true)",
-          "compose": "enabled = false"
-        },
-        {
-          "figma": "swapIcon (trailing)",
-          "swift": "trailingIcon: Image?",
-          "compose": "trailingIcon: @Composable"
-        },
-        {
-          "figma": "label",
-          "swift": "prompt: Text",
+          "figma": "Label <em>(text)</em>",
+          "swift": "EBSearchField(placeholder:)",
           "compose": "placeholder: String"
+        },
+        {
+          "figma": "hasClearButton <em>(boolean)</em>",
+          "swift": ".ebClearButton(_ show: Bool)",
+          "compose": "hasClearButton: Boolean"
+        },
+        {
+          "figma": "— <em>no Figma property</em>",
+          "swift": "text: Binding&lt;String&gt;",
+          "compose": "query: String + onQueryChange: (String) -&gt; Unit"
         }
-      ],
-      "filePaths": {
-        "swift": "ios/Components/FormElements/EBSearchField.swift",
-        "compose": "android/components/form/EBSearchField.kt"
-      }
+      ]
     },
     "usageSnippets": [
       {
-        "subheading": "Standalone Search Field",
-        "swift": "<span class=\"typ\">EBSearchField</span>(<span class=\"str\">\"Search\"</span>, <span class=\"prp\">text</span>: $query,\n    <span class=\"prp\">onSubmit</span>: { runSearch(query) },\n    <span class=\"prp\">onClear</span>: { query = <span class=\"str\">\"\"</span> })",
-        "compose": "<span class=\"typ\">EBSearchField</span>(\n    <span class=\"prp\">query</span> = query,\n    <span class=\"prp\">onQueryChange</span> = { query = it },\n    <span class=\"prp\">onSearch</span> = { runSearch(query) },\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Search\"</span>\n)"
+        "subheading": "Standalone search field",
+        "swift": "<span class=\"typ\">EBSearchField</span>(<span class=\"str\">\"Search\"</span>, <span class=\"prp\">text</span>: $query)\n    .<span class=\"fn\">ebState</span>(<span class=\"dot\">.default</span>)\n    .<span class=\"prp\">onSubmit</span> { runSearch(query) }",
+        "compose": "<span class=\"typ\">EBSearchField</span>(\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Search\"</span>,\n    <span class=\"prp\">query</span> = query,\n    <span class=\"prp\">onQueryChange</span> = { query = it },\n    <span class=\"prp\">onSearch</span> = { runSearch(query) }\n)"
       },
       {
-        "subheading": "Preferred: .searchable on a container",
-        "swift": "<span class=\"typ\">NavigationStack</span> {\n    <span class=\"typ\">List</span>(results) { row <span class=\"kw\">in</span> <span class=\"typ\">Text</span>(row.title) }\n}\n.<span class=\"fn\">searchable</span>(<span class=\"prp\">text</span>: $query, <span class=\"prp\">prompt</span>: <span class=\"str\">\"Search\"</span>)",
-        "compose": "<span class=\"typ\">SearchBar</span>(\n    <span class=\"prp\">query</span> = query,\n    <span class=\"prp\">onQueryChange</span> = { query = it },\n    <span class=\"prp\">onSearch</span> = { runSearch(query) },\n    <span class=\"prp\">active</span> = active,\n    <span class=\"prp\">onActiveChange</span> = { active = it },\n    <span class=\"prp\">placeholder</span> = { <span class=\"typ\">Text</span>(<span class=\"str\">\"Search\"</span>) },\n    <span class=\"prp\">leadingIcon</span> = { <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.Default.Search, <span class=\"kw\">null</span>) }\n) { <span class=\"cmt\">/* results */</span> }"
+        "subheading": "Without the clear button",
+        "swift": "<span class=\"typ\">EBSearchField</span>(<span class=\"str\">\"Search\"</span>, <span class=\"prp\">text</span>: $query)\n    .<span class=\"fn\">ebClearButton</span>(<span class=\"kw\">false</span>)",
+        "compose": "<span class=\"typ\">EBSearchField</span>(\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Search\"</span>,\n    <span class=\"prp\">query</span> = query,\n    <span class=\"prp\">onQueryChange</span> = { query = it },\n    <span class=\"prp\">hasClearButton</span> = <span class=\"kw\">false</span>\n)"
       },
       {
-        "subheading": "Alternative: compose from EBInputField",
-        "swift": "<span class=\"typ\">EBInputField</span>(<span class=\"str\">\"Search\"</span>, <span class=\"prp\">text</span>: $query)\n    .<span class=\"fn\">ebLeadingIcon</span>(<span class=\"typ\">Image</span>(<span class=\"str\">\"search\"</span>))\n    .<span class=\"fn\">ebTrailingIcon</span>(query.isEmpty ? <span class=\"kw\">nil</span> : <span class=\"typ\">Image</span>(<span class=\"str\">\"close\"</span>)) { query = <span class=\"str\">\"\"</span> }\n    .<span class=\"fn\">ebRole</span>(.search)",
-        "compose": "<span class=\"typ\">EBInputField</span>(\n    <span class=\"prp\">value</span> = query,\n    <span class=\"prp\">onValueChange</span> = { query = it },\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Search\"</span>,\n    <span class=\"prp\">leadingIcon</span> = { <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.Default.Search, <span class=\"kw\">null</span>) },\n    <span class=\"prp\">trailingIcon</span> = <span class=\"kw\">if</span> (query.isNotEmpty()) {\n        { <span class=\"typ\">IconButton</span>({ query = <span class=\"str\">\"\"</span> }) { <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.Default.Close, <span class=\"str\">\"Clear search\"</span>) } }\n    } <span class=\"kw\">else</span> <span class=\"kw\">null</span>\n)"
+        "subheading": "Error state",
+        "swift": "<span class=\"typ\">EBSearchField</span>(<span class=\"str\">\"Search\"</span>, <span class=\"prp\">text</span>: $query)\n    .<span class=\"fn\">ebState</span>(<span class=\"dot\">.error</span>)",
+        "compose": "<span class=\"typ\">EBSearchField</span>(\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Search\"</span>,\n    <span class=\"prp\">query</span> = query,\n    <span class=\"prp\">onQueryChange</span> = { query = it },\n    <span class=\"prp\">state</span> = <span class=\"typ\">EBFieldState</span>.Error\n)"
+      },
+      {
+        "subheading": "Disabled",
+        "swift": "<span class=\"typ\">EBSearchField</span>(<span class=\"str\">\"Search\"</span>, <span class=\"prp\">text</span>: $query)\n    .<span class=\"fn\">disabled</span>(<span class=\"kw\">true</span>)",
+        "compose": "<span class=\"typ\">EBSearchField</span>(\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Search\"</span>,\n    <span class=\"prp\">query</span> = query,\n    <span class=\"prp\">onQueryChange</span> = { query = it },\n    <span class=\"prp\">enabled</span> = <span class=\"kw\">false</span>\n)"
       }
     ],
     "accessibility": [
@@ -540,10 +536,10 @@ export const searchField: ComponentData = {
       }
     ],
     "variants": {
-      "total": 2,
-      "description": "A single <code>state</code> axis with two values. Both variants are 360 × 56 px.",
+      "total": 4,
+      "description": "A single <code>State</code> axis with four values, all 360 × 56. <code>Label</code> (text) and <code>hasClearButton</code> (boolean) are component properties rather than variant axes, so they do not multiply the count — 4 variants cover the set.",
       "columns": [
-        "state",
+        "State",
         "Dimensions",
         "Node ID"
       ],
@@ -553,6 +549,13 @@ export const searchField: ComponentData = {
             "Default",
             "360 × 56",
             "4697:18837"
+          ]
+        },
+        {
+          "cells": [
+            "Disabled",
+            "360 × 56",
+            "4706:18270"
           ]
         },
         {
@@ -568,18 +571,219 @@ export const searchField: ComponentData = {
             "360 × 56",
             "4706:18328"
           ]
-        },
-        {
-          "cells": [
-            "Disabled",
-            "360 × 56",
-            "4706:18270"
-          ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.5",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Style + Code tabs rebuilt against node 4697:18836",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt as a single card</strong> — one spec card driven by a panel mirroring the Figma property panel: <code>State</code> (select), <code>Label</code> (text input), <code>hasClearButton</code> (toggle). Replaces four fixed cards. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong><code>hasClearButton</code> constrained to real variants</strong> — the toggle is enabled only on <code>Focused</code>, the one variant carrying a <code>Close</code> control. <code>Default</code> and <code>Disabled</code> have no <code>TrailingIcon</code> layer, and <code>Error</code> holds the error glyph. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Specs re-measured from the node</strong> — band 56 (was 48), leading glyph 24 × 24 (was 20 × 20), border <code>#E5EBF4</code> (was <code>#D7E0EF</code>), value BarkAda 14 / 20 tracking 0 (was 14 / 14 · +0.25). Banded top + bottom border confirmed by export. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Property mapping corrected</strong> — the retired <code>state = default / filled</code> axis and a non-existent <code>swapIcon</code> row are gone, along with two rows whose Figma column read <code>— (missing)</code>. Now maps the three real properties plus the value binding. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        },
+        {
+          "body": "<strong>Usage snippets and variants inventory updated</strong> — four snippets replacing two, and the inventory corrected from <code>total: 2</code> to 4, noting that <code>Label</code> and <code>hasClearButton</code> are component properties rather than variant axes. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.4",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Documentation pass — remaining recommendations closed",
+      "rows": [
+        {
+          "body": "<strong>Filled-but-unfocused state documented</strong> rather than added as a variant — the clear affordance is driven by value presence in code; <code>State</code> stays a pure interaction axis of four. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "State"
+          }
+        },
+        {
+          "body": "<strong>State / Status exception recorded at family level</strong> — written into §6 of the Property Naming Guidelines, so text-entry components may carry <code>Error</code> on <code>State</code> without each one re-arguing it. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Native search semantics documented</strong> — iOS <code>.searchable(text:)</code> is a container modifier, not a standalone view; Android splits between M3 <code>SearchBar</code> and a <code>TextField</code>. Enter / Escape contract recorded. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Accessibility documented</strong> — search role/trait, a “Clear search” label for the trailing control, and 44 × 44pt / 48 × 48dp touch targets despite the 24 × 24 glyph. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "A11y"
+          }
+        },
+        {
+          "body": "<strong>Container chrome confirmed constant</strong> — the border stays <code>#E5EBF4</code> in all four states; focus is carried by the caret and clear control, error by the trailing glyph. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.3",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Owner decisions recorded",
+      "rows": [
+        {
+          "body": "<strong>Banded border confirmed intentional</strong> — a full-width element above content, not a field inside a form stack. A rounded-rect stroke would imply an inline form field it is not. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong><code>State=Error</code> exception documented</strong> — <code>Error</code> stays on the <code>State</code> axis as a deliberate exception, keeping the set at 4 variants. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Token namespace resolved</strong> — the component-scoped namespace was abandoned in favour of the shared generic tokens, so the single-sub-mode problem disappears. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Confirmed a standalone primitive</strong> — stays its own component rather than folding into Input Field as a composed variant. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>Search icon delegated</strong> — the glyph is an instance of the shared icon library, so the <code>shape_full</code> boolean is the icon owner’s call and affects every consumer equally. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Trailing slot corrected",
+      "rows": [
+        {
+          "body": "<strong>Clear button removed from the empty state</strong> — <code>TrailingIcon</code> deleted from <code>State=Default</code>, so an empty field no longer offers a clear affordance with nothing to clear. <code>Value</code> widened 250 → 282. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>Disabled trailing icon resolved</strong> — removed rather than muted; a disabled field has nothing to clear either, and the full-strength blue had read as tappable. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Layer naming",
+      "rows": [
+        {
+          "body": "<strong>Layer naming cleaned up</strong> — <code>search-field</code> → <code>Container</code>, <code>#search</code> → <code>Value</code>, <code>icon-container</code> → <code>TrailingIcon</code> across all four variants, and the Error variant’s placeholder junk text replaced with realistic sample content. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt on node 4697:18836 — 2026 Working File",
+      "rows": [
+        {
+          "body": "<strong>State coverage completed</strong> — <code>State = Default | Focused | Error | Disabled</code> ships all four interaction states, replacing the two-value <code>default/filled</code> axis. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Leading glyph is a vector instance</strong> — the raster <code>&lt;img&gt;</code> replaced with a <code>Search Small</code> icon instance, restoring token-based recolouring. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>Trailing slot holds real icons</strong> — the <code>Placeholder</code> scaffolding is gone; <code>TrailingIcon</code> carries <code>Close</code> and <code>Error</code> instances. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong><code>state</code> axis no longer conflates content with interaction</strong> — <code>filled</code> dropped rather than split into a boolean; content-filled is derived from value presence. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",
