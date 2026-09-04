@@ -225,7 +225,11 @@ Most components will gain an entry from this content pass — the doc rewrite it
 
 **Decided 2026-09-04** (raised by Kurteous off the Date Picker, Ad Space and Carousel families):
 
-4. **One Gradle artifact per family.** Option A over B: artifact and package both derive from `meta.navGroup` (`Date Picker` → `com.eastblue.ds:date-picker` + `com.eastblue.ds.datepicker`), no family → the slug. An artifact is a family, never a component, so the lead is a class inside it and nothing collides; members can't be adopted individually, and that is accepted. `<version>` of a family artifact is the highest changelog version across its members. Family table, derivation and the migration list: `CODE-REVIEW-GUIDE.md` §3.2.
+4. **One Gradle artifact per family.** Option A over B: artifact and package both derive from `meta.navGroup` (`Date Picker` → `com.eastblue.ds:date-picker` + `com.eastblue.ds.datepicker`), no family → the slug. An artifact is a family, never a component, so the lead is a class inside it and nothing collides; members can't be adopted individually, and that is accepted. Family table, derivation and the migration list: `CODE-REVIEW-GUIDE.md` §3.2.
+
+**Decided 2026-09-04** (raised by the Date Picker Code Review run):
+
+5. **Artifact version is independent of the doc changelogs.** Every install block pins `1.0.0` while `"planned": true`; it moves only when a real library ships. Supersedes the family-version rule in item 4. Rule: `CODE-REVIEW-GUIDE.md` §3.2.
 
 # Open decisions
 

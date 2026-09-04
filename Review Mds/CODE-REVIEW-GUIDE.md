@@ -163,20 +163,13 @@ SwiftUI is unaffected: `import EastBlueDS` is one module for the whole system, s
 
 **Known migration debt** (each caught by check 3 on that component's run):
 
-- **21 components** still on the old `com.gcash.eastblue` coordinates · **41 of 57** install blocks missing the Import line.
+- **17 install blocks** still on the old `com.gcash.eastblue` coordinates · **68 of 91** missing the Import line. (Counted over install blocks, not files — five more files mention the old coordinates in changelog prose, which is history and stays.)
 - **Nine install blocks on a non-family artifact.** The three Action List components on `:list` — that is the *List* family's artifact, so two families currently share one · `ad-carousel` on `:ad-carousel` and `upload-file` on `:upload-file` (per-component, predate this ruling) · `title-bar` on `:titlebar` (artifact IDs keep the hyphen) · `callout` on `:feedback` and `chat-field` on `:form-elements` (no such family for either) · `subtext-message` on `:form-elements` with no `navGroup` — it either joins Form Elements or moves to `:subtext-message`; the owner's call.
 - **Four orphan imports.** `callout` on `.feedback.*`, `chat-field` importing both `.form.*` and `.chat.*` (its family is Chat), `subtext-message` on `.form.*`, `action-list-counter` on `.components.*`.
 
 Validation reads accordingly: a hyphen inside a Kotlin package segment or type name is 🔴 Broken — it's invalid syntax; a hyphen in a Gradle artifact ID is **correct** and must not be flagged. A family member citing anything but its family's coordinates — `com.eastblue.ds:date-picker-cell`, or `:list` on an Action List component — is 🔴 Broken too: it names an artifact that will never exist, or another family's.
 
-**`<version>` is the artifact's latest changelog version.** For a solo component that is its own changelog. For a family it is the **highest version across the members' changelogs** — one artifact has one version, and it moves whenever any member does. Date Picker is `2.0.0` (three members there, five at `1.0.0`), so every Date Picker install block cites `com.eastblue.ds:date-picker:2.0.0`, including `date-picker-header`'s at `1.0.0`. Read it off the data rather than by hand:
-
-```bash
-grep -lE "navGroup['\"]?: ?['\"]Date Picker['\"]" src/data/components/*.ts \
-  | xargs grep -hoE -m1 "version['\"]?: ?['\"][0-9.]+" | grep -oE '[0-9.]+$' | sort -V | tail -1
-```
-
-Button currently ships `2.0.0` in its install blocks against a `4.1.0` changelog — that drift is exactly what this rule exists to catch.
+**`<version>` is the library's release number, not the page's.** While `"planned": true`, every install block pins `1.0.0`, for solo components and family members alike. Page changelogs never drive it: a doc fix on `date-picker-cell` is not a release of `com.eastblue.ds:date-picker`. The number moves once, when a real library ships, and then the guide gets a rule for who re-pins a family. Button's `2.0.0` against a `4.1.0` changelog is the drift this rule ends: neither number is the library's, and the block should read `1.0.0`.
 
 ```ts
 "installation": {
@@ -331,7 +324,7 @@ Then open `http://localhost:4321/components/<slug>` on the Code tab and read eve
 |---|---|---|
 | 1 | Build passes | `npm run build` exits clean |
 | 2 | Section order | Installation → Property Mapping → Usage Snippets → Accessibility → Usage Guidelines → Scorecard → Variants |
-| 3 | Installation complete | SPM + Gradle + import, coordinates from the family table, version = the family's highest changelog, Planned API badge showing |
+| 3 | Installation complete | SPM + Gradle + import, coordinates from the family table, version 1.0.0 while Planned API, Planned API badge showing |
 | 4 | Property Mapping is prose | No `=` in any Figma cell |
 | 5 | Property Mapping is grouped | One row per property, all values on that row |
 | 6 | Property Mapping is complete | Row count = worksheet property count, slots included |
