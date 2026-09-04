@@ -2333,7 +2333,7 @@ p.rb-banner-desc {
 .demo-btn-subtle.disabled { opacity: 0.4; }
 /* Destructive variant overrides */
 .demo-btn-primary.destructive { background: #D81E1E; }
-.demo-btn-outlined.destructive { color: #D81E1E; border-color: #D81E1E; }
+.demo-btn-outlined.destructive { color: #D81E1E; border-color: #D61B2C; }
 .demo-btn-text.destructive { color: #D81E1E; }
 /* Size modifiers — override vertical padding + font-size */
 .demo-btn.size-medium { padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 20px !important; padding-right: 20px !important; }
@@ -5870,7 +5870,7 @@ pre.code-snippet .prp { color: #0369A1; }
 }
 
 /* ── Field trigger ──────────────────────────────────────────────── */
-.eb-preview-dptrig { width: 312px; font-family: inherit; }
+.eb-preview-dptrig { width: 312px; font-family: 'Proxima Soft', system-ui, sans-serif; }
 .eb-preview-dptrig__label {
   font-size: 14px;
   font-weight: 600;
@@ -5899,8 +5899,10 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-dptrig--pressed .eb-preview-dptrig__field { border-color: #005CE5; }
 .eb-preview-dptrig--disabled .eb-preview-dptrig__field { background: #EEF2F9; border-color: transparent; }
 .eb-preview-dptrig--disabled .eb-preview-dptrig__value { color: #90A8D0; }
+.eb-preview-dptrig--disabled .eb-preview-dptrig__icon { color: #9BC5FD; }
 .eb-preview-dptrig--error .eb-preview-dptrig__field { border-color: #D81E1E; }
 .eb-preview-dptrig__subtext {
+  font-family: 'BarkAda', system-ui, sans-serif;
   margin-top: 4px;
   font-size: 12px;
   font-weight: 600;

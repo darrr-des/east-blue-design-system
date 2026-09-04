@@ -76,6 +76,40 @@ function updateSpecCard(cardKey, prop, value) {
 }
 window.updateSpecCard = updateSpecCard;
 
+/* ── DEV code, live ──────────────────────────────────────────────────
+   The field takes a binding, so the snippet changes with State rather
+   than with the value: Disabled and Error are modifiers on the call. */
+function _dpArgs(card, lang) {
+  var swift = lang !== 'compose';
+  var sep = swift ? '<span class="syn-punc">:</span> ' : ' <span class="syn-eq">=</span> ';
+  var args = ['label' + sep + '<span class="syn-str">"Label"</span>'];
+  args.push(swift
+    ? 'selection' + sep + '<span class="syn-punc">$</span>date'
+    : 'selected' + sep + 'date');
+  if (!swift) args.push('onSelect' + sep + '<span class="syn-punc">{</span> date <span class="syn-eq">=</span> it <span class="syn-punc">}</span>');
+  if (!swift && card.state === 'disabled') args.push('enabled' + sep + '<span class="syn-kw">false</span>');
+  if (card.state === 'error') {
+    args.push('errorText' + sep + '<span class="syn-str">"Input your subtext here."</span>');
+  }
+  return args;
+}
+
+function getSnippet(cardKey, lang) {
+  var card = _specCards[cardKey] || _specCards['field'];
+  var swift = lang !== 'compose';
+  var call = '<span class="syn-type">EBDatePicker</span><span class="syn-punc">(</span>\n    ' +
+    _dpArgs(card, lang).join('<span class="syn-punc">,</span>\n    ') +
+    '\n<span class="syn-punc">)</span>';
+  /* Disabled is a modifier in SwiftUI; Compose takes it as a parameter above. */
+  if (swift && card.state === 'disabled') {
+    call += '\n<span class="syn-punc">.</span><span class="syn-fn">disabled</span>' +
+      '<span class="syn-punc">(</span><span class="syn-kw">true</span><span class="syn-punc">)</span>';
+  }
+  return call;
+}
+window.getSnippet = getSnippet;
+
+
 function _dpInit() {
   _dpUpdate();
   Object.keys(_specCards).forEach(function (k) {
