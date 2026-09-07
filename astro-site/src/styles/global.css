@@ -8049,20 +8049,37 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
    ═════════════════════════════════════════════════════════════════════ */
 
 /* ── Select Item ────────────────────────────────────────────────── */
+/* Holds the row and, when the sparse grid is hit, the note explaining it.
+   Fixed to the row's own width so the note wraps under the row rather
+   than beside it — the preview frames centre their children, so two
+   siblings would sit side by side and stretch the frame. */
+.eb-preview-sitem-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 320px;
+  max-width: 100%;
+}
+
+/* Both text layers are Primary/Multi-line Label/* — Proxima Soft, with no
+   Secondary layer, so the root is the only face declaration needed.
+   Vertical padding varies with density (8 / 12 / 16), which is what turns
+   a fixed 24px content block into a 40, 48 or 56 tall row — the heights
+   are a consequence of the padding rather than set independently. */
 .eb-preview-sitem {
   display: flex;
   align-items: center;
   gap: 8px;
   width: 320px;
   max-width: 100%;
-  padding: 0 12px;
+  padding: 8px 12px;
   background: #FFFFFF;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
 }
-.eb-preview-sitem--compact { min-height: 40px; }
-.eb-preview-sitem--default { min-height: 48px; }
-.eb-preview-sitem--comfortable { min-height: 56px; }
+.eb-preview-sitem--compact { padding-top: 8px; padding-bottom: 8px; min-height: 40px; }
+.eb-preview-sitem--default { padding-top: 12px; padding-bottom: 12px; min-height: 48px; }
+.eb-preview-sitem--comfortable { padding-top: 16px; padding-bottom: 16px; min-height: 56px; }
 /* Density sets padding around a hugging content block, so the row grows
    when Supporting Text is switched on rather than overlapping it. */
 .eb-preview-sitem--supporting.eb-preview-sitem--comfortable { min-height: 60px; }
@@ -8080,7 +8097,13 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   font-weight: 600;
   color: #0A2757;
 }
+/* The leading mark's width is whatever the nested instance is, not a
+   fixed slot: 24 for an icon, 16 for a flag, 15 for the drawn peso sign
+   and 10 for the typed one. The label starts after that plus the 8px gap,
+   so it does not begin at the same x in every Type. */
 .eb-preview-sitem__lead--flag { width: 16px; }
+.eb-preview-sitem__lead--peso-vector { width: 15px; }
+.eb-preview-sitem__lead--peso-text { width: 10px; }
 .eb-preview-sitem--selected .eb-preview-sitem__lead { color: #005CE5; }
 .eb-preview-sitem--disabled .eb-preview-sitem__lead { color: #C2CFE5; }
 .eb-preview-sitem__lead svg { display: block; }
