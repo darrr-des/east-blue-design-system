@@ -7589,11 +7589,13 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
    Measurements mirror the 2026 Working File rebuild.
    ═════════════════════════════════════════════════════════════════════ */
 
+/* #number is Primary/Label/Light/Small — the only type in the component,
+   so the root names Proxima Soft and nothing overrides it. */
 .eb-preview-lia {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
 }
 .eb-preview-lia__row {
@@ -7655,7 +7657,10 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   opacity: 0.7;
 }
 
+/* Sample copy, not a layer of this component — it stands in for a List
+   Item label, so it takes that label's face rather than the marker's. */
 .eb-preview-lia__label {
+  font-family: 'BarkAda', system-ui, sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -7670,13 +7675,16 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
    Three ListLevel values set the indent. 2026 Working File rebuild.
    ═════════════════════════════════════════════════════════════════════ */
 
+/* Proxima Soft at the root so the marker renders in it — the numbered
+   marker is Primary/Label/Light/Small, inherited from List Item - Asset.
+   #label is the one Secondary layer and names BarkAda for itself below. */
 .eb-preview-litem {
   display: flex;
   flex-direction: column;
   gap: 4px;
   width: 294px;
   max-width: 100%;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
 }
 .eb-preview-litem__row {
@@ -7747,6 +7755,8 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 .eb-preview-litem__label {
   flex: 1 1 auto;
   min-width: 0;
+  /* Secondary/Bold/Base — the one BarkAda layer in this component. */
+  font-family: 'BarkAda', system-ui, sans-serif;
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
@@ -7828,7 +7838,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   background: #FFFFFF;
   border: 1px solid #E5EBF4;
   box-sizing: content-box;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
 }
 .eb-preview-mtre { display: flex; width: 272px; box-sizing: border-box; }
 .eb-preview-mtre--stacked { flex-direction: column; gap: 4px; }
@@ -7866,7 +7876,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   border-radius: 6px;
   overflow: hidden;
   background: #F6F9FD;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
 }
 .eb-preview-mtr__content {
@@ -7916,11 +7926,15 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   text-align: right;
   white-space: nowrap;
 }
+/* 24 / 16 / 24 / 0 off the auto-layout panel, and gap 0 — the strip has
+   no bottom padding, so the reference sits tight against the action area
+   rather than floating between the card and the buttons. The 40px height
+   is the Copy icon's 24 plus that 16 top. */
 .eb-preview-mtr__reference {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 13px 24px;
+  gap: 0;
+  padding: 16px 24px 0;
   background: #F6F9FD;
   box-sizing: border-box;
 }

@@ -864,6 +864,19 @@ export const listItemAsset: ComponentData = {
   },
   "changelog": [
     {
+      "version": "2.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Preview typeface corrected — node 5698:43260",
+      "rows": [
+        {
+          "body": "<strong>The preview drew in the documentation font.</strong> <code>.eb-preview-lia</code> declared <code>font-family: inherit</code>, which resolves to the site’s <code>--font-body</code> — BarkAda. <code>#number</code> carries <code>Primary/Label/Light/Small</code> and is Proxima Soft in Figma, so the one piece of type in the component was rendered in the wrong face. The root now names Proxima Soft. The sample label beside each marker is not a layer of this component — it stands in for a List Item label — so it takes BarkAda, which is what that label actually is.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
+    {
       "version": "2.0.1",
       "date": "September 2026",
       "kind": "patch",

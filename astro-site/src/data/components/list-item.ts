@@ -589,6 +589,19 @@ export const listItem: ComponentData = {
   },
   "changelog": [
     {
+      "version": "2.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Preview typeface corrected — node 5728:37276",
+      "rows": [
+        {
+          "body": "<strong>The preview drew in the documentation font, and one layer was right only by accident.</strong> <code>.eb-preview-litem</code> declared <code>font-family: inherit</code>, which resolves to BarkAda. <code>#label</code> is <code>Secondary/Bold/Base</code> and genuinely is BarkAda, so it happened to look correct — but the marker inherited the same face, and the numbered marker is <code>Primary/Label/Light/Small</code>, which is Proxima Soft. The root now names Proxima Soft and <code>#label</code> names BarkAda for itself, so each layer states its own face rather than depending on what it inherits.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
+    {
       "version": "2.0.1",
       "date": "September 2026",
       "kind": "patch",
