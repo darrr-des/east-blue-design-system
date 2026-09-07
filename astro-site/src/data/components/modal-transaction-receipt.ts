@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildColorsTable } from './_helpers';
 
 /* Demo controls for the Style tab's single spec card. */
 const receiptControls: DemoControlSection[] = [
@@ -6,13 +7,24 @@ const receiptControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'ActionOrientation',
-        prop: 'actions',
+        label: 'hasDescription',
+        prop: 'hasdescription',
+        control: 'toggle' as const,
+        defaultValue: 'true',
         options: [
-          { value: 'vertical', label: 'Vertical' },
-          { value: 'horizontal', label: 'Horizontal' }
-        ],
-        defaultValue: 'vertical'
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' }
+        ]
+      },
+      {
+        label: 'hasReferenceNo',
+        prop: 'hasreferenceno',
+        control: 'toggle' as const,
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' }
+        ]
       }
     ]
   }
@@ -219,94 +231,151 @@ export const modalTransactionReceipt: ComponentData = {
     "appliedRecommendations": []
   },
   "style": {
-    "heading": "Structure",
+    "heading": "ActionOrientation",
+    "description": "One setting, and it reaches only the action area: the card, the transaction rows and the reference strip are identical in both. Vertical stacks two full-width buttons and stands 434 tall; Horizontal puts them side by side and stands 376. Both slots carry the same 24px padding and 8px gap — only the flow differs, which is the whole of the 58px height difference.",
+    "colorsTables": [
+      buildColorsTable({
+        title: "Colors by Orientation",
+        description: "Ten roles, identical in both orientations — the action area changes shape, not colour. The last four belong to the <code>appearance/*</code> set, which is the Button’s own variable mode rather than anything this modal sets: the buttons arrive through <code>⤷ ActionSlot</code> and bring their palette with them. The transaction rows are the same: they are <a href=\"/components/modal-transaction-receipt-entry\">Modal - Transaction Receipt Entry</a> instances, so their label and value colours are that component’s.",
+        columns: ["Value"],
+        rows: [
+          { role: "Surface", token: "bg/color-bg", values: ["#F6F9FD"] },
+          { role: "Content card", token: "bg/color-bg-main", values: ["#FFFFFF"] },
+          { role: "Card hairline", token: "border/color-border-weak", values: ["#E5EBF4"] },
+          { role: "#title · #description · every #value", token: "text/color-text", values: ["#0A2757"] },
+          { role: "Every #label", token: "text/color-text-weaker", values: ["#6780A9"] },
+          { role: "Copy icon", token: "border/color-border-primary", values: ["#005CE5"] },
+          { role: "ActionSlot · filled fill", token: "appearance/container/fill", values: ["#005CE5"] },
+          { role: "ActionSlot · filled label", token: "appearance/label/color", values: ["#FFFFFF"] },
+          { role: "ActionSlot · outlined stroke", token: "appearance/stroke/color", values: ["#005CE5"] },
+          { role: "ActionSlot · outlined label", token: "appearance/label/on-surface/color", values: ["#005CE5"] }
+        ]
+      })
+    ],
     "specCards": [
       {
-        "cardKey": "mtr-spec-card-default",
-        "demoKey": "default",
+        "cardKey": "mtr-spec-card-horizontal",
+        "demoKey": "horizontal",
         "demoControls": receiptControls,
-        "title": "Modal - Transaction Receipt",
-        "node": "5879:41048",
-        "description": "A white card on a grey surface, a grey reference strip beneath it, and the action area last. Only the action area changes between the two variants.",
-        "previewHtml": "<div id=\"mtr-spec-default\"><div class=\"eb-preview-mtr eb-preview-mtr--vertical\"><div class=\"eb-preview-mtr__content\"><div class=\"eb-preview-mtr__title\">Put the title here</div><div class=\"eb-preview-mtr__description\">First line of text goes here<br>Second line of text goes here</div><div class=\"eb-preview-mtr__rows\"><div class=\"eb-preview-mtr__row\"><span class=\"eb-preview-mtr__row-label\">Label</span><span class=\"eb-preview-mtr__row-value\">Put content here</span></div><div class=\"eb-preview-mtr__row\"><span class=\"eb-preview-mtr__row-label\">Label</span><span class=\"eb-preview-mtr__row-value\">Put content here</span></div><div class=\"eb-preview-mtr__row\"><span class=\"eb-preview-mtr__row-label\">Label</span><span class=\"eb-preview-mtr__row-value\">Put content here</span></div></div></div><div class=\"eb-preview-mtr__reference\"><span class=\"eb-preview-mtr__row-label\">Reference Number</span><span class=\"eb-preview-mtr__row-value\">165A25912345</span><span class=\"eb-preview-mtr__copy\"></span></div><div class=\"eb-preview-mtr__actions\"><div class=\"eb-preview-mtr__btn eb-preview-mtr__btn--filled\">Label</div><div class=\"eb-preview-mtr__btn eb-preview-mtr__btn--outlined\">Label</div></div></div></div>",
+        "title": "Horizontal",
+        "node": "5945:180029",
+        "description": "",
+        "previewHtml": "<div id=\"mtr-spec-horizontal\"><div class=\"eb-preview-mtr eb-preview-mtr--horizontal\"><div class=\"eb-preview-mtr__content\"><div class=\"eb-preview-mtr__title\">Put the title here</div><div class=\"eb-preview-mtr__description\">First line of text goes here<br>Second line of text goes here</div><div class=\"eb-preview-mtr__rows\"><div class=\"eb-preview-mtr__row\"><span class=\"eb-preview-mtr__row-label\">Label</span><span class=\"eb-preview-mtr__row-value\">Put content here</span></div><div class=\"eb-preview-mtr__row\"><span class=\"eb-preview-mtr__row-label\">Label</span><span class=\"eb-preview-mtr__row-value\">Put content here</span></div><div class=\"eb-preview-mtr__row\"><span class=\"eb-preview-mtr__row-label\">Label</span><span class=\"eb-preview-mtr__row-value\">Put content here</span></div></div></div><div class=\"eb-preview-mtr__reference\"><span class=\"eb-preview-mtr__row-label\">Reference Number</span><span class=\"eb-preview-mtr__row-value\">165A25912345</span><span class=\"eb-preview-mtr__copy\"></span></div><div class=\"eb-preview-mtr__actions\"><div class=\"eb-preview-mtr__btn eb-preview-mtr__btn--outlined\">Label</div><div class=\"eb-preview-mtr__btn eb-preview-mtr__btn--filled\">Label</div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "ActionOrientation", "value": "Vertical", "prop": "actions",
-                "variants": {
-                  "actions:horizontal": { "value": "Horizontal" }
-                }
-              },
-              { "key": "⤷ TransactionSlot", "value": "3 × Entry (Inline)" },
-              { "key": "⤷ ActionSlot", "value": "2 × Button_New" },
-              { "key": "#title", "value": "Put the title here" },
-              { "key": "#description", "value": "Two lines of supporting copy" },
-              { "key": "Copy", "value": "24 × 24 icon instance" }
+              { "key": "ActionOrientation", "value": "Horizontal" },
+              { "key": "hasDescription", "value": "true", "prop": "hasdescription" },
+              { "key": "hasReferenceNo", "value": "true", "prop": "hasreferenceno" },
+              { "key": "⤷ ActionSlot (slot)", "value": "2 items · horizontal flow, 320 × 98, 24px padding, 8px gap — the two buttons sit side by side" },
+              { "key": "⤷ TransactionSlot (slot)", "value": "2 items · holds 3 Modal - Transaction Receipt Entry instances at Layout=Inline" },
+              { "key": "Reference strip", "value": "320 × 40 · horizontal, 24px sides, 16px top and none at the bottom, gap 0 — the 40 is the Copy icon’s 24 plus that 16" },
+              { "key": "Action order", "value": "Outlined left, filled right — the platform convention for a side-by-side pair" },
+              { "key": "Versions", "value": "2" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#F6F9FD", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "Card", "value": "#FFFFFF", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "Card hairline", "value": "#E5EBF4", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "#title", "value": "#0A2757", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "#description", "value": "#0A2757", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "Row #label", "value": "#6780A9", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "Row #value", "value": "#0A2757", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "Button filled bg", "value": "#005CE5", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "Button outlined border", "value": "#005CE5", "token": "library variable · name pending Dev Mode read", "swatch": true }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width", "value": "320", "mono": true },
-              { "key": "Height", "value": "434", "mono": true,
-                "variants": {
-                  "actions:horizontal": { "value": "376" }
-                }
-              },
-              { "key": "Corner radius", "value": "6", "mono": true },
-              { "key": "Card height", "value": "238", "mono": true },
-              { "key": "Card inset", "value": "24", "mono": true },
-              { "key": "#title to #description", "value": "16", "mono": true },
-              { "key": "Container to slot", "value": "12", "mono": true },
-              { "key": "Row pitch", "value": "36 — 24 tall, 12 gap", "mono": true },
-              { "key": "Reference", "value": "320 × 40 — holds ReferenceNumber + Copy", "mono": true },
-              { "key": "Action area", "value": "320 × 156", "mono": true,
-                "variants": {
-                  "actions:horizontal": { "value": "320 × 98" }
-                }
-              },
-              { "key": "Button size", "value": "272 × 50", "mono": true,
-                "variants": {
-                  "actions:horizontal": { "value": "132 × 50" }
-                }
-              },
-              { "key": "Button gap", "value": "8", "mono": true },
-              { "key": "Button radius", "value": "99", "mono": true }
+              { "key": "Surface", "value": "#F6F9FD", "token": "bg/color-bg", "swatch": true },
+              { "key": "Content card", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
+              { "key": "Card hairline", "value": "#E5EBF4", "token": "border/color-border-weak", "swatch": true },
+              { "key": "#title · #description · every #value", "value": "#0A2757", "token": "text/color-text", "swatch": true },
+              { "key": "Every #label", "value": "#6780A9", "token": "text/color-text-weaker", "swatch": true },
+              { "key": "Copy icon", "value": "#005CE5", "token": "border/color-border-primary", "swatch": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Text styles", "value": "shared library styles · names pending Dev Mode read", "mono": true },
-              { "key": "#title", "value": "Proxima Soft Bold · 22 / 26 · 0", "mono": true },
-              { "key": "#description", "value": "Proxima Soft SemiBold · 16 / 20 · +0.25", "mono": true },
-              { "key": "Row #label / #value", "value": "Proxima Soft SemiBold · 14 / 14 · +0.25", "mono": true },
-              { "key": "Reference row", "value": "Proxima Soft SemiBold · 14 / 14 · +0.25", "mono": true },
-              { "key": "Button #label", "value": "Proxima Soft Bold · 18 / 18 · +0.25", "mono": true }
+              { "key": "#title", "value": "Primary/Headlines/Section", "mono": true },
+              { "key": "#description", "value": "Primary/Multi-line Label/Light/Base", "mono": true },
+              { "key": "Reference #label · #value", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "ActionSlot #label", "value": "Primary/Label/Large", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "376 — Hug", "mono": true },
+              { "key": "Width", "value": "320", "mono": true },
+              { "key": "Radius", "value": "6", "mono": true },
+              { "key": "Padding H", "value": "0", "mono": true },
+              { "key": "Padding V", "value": "0", "mono": true },
+              { "key": "Gap", "value": "0", "mono": true },
+              { "key": "Alignment", "value": "Top left", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBTransactionReceiptModal</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Payment successful\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Your payment has been sent.\"</span><span class=\"syn-punc\">,</span>\n    reference<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"165A25912345\"</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>entries<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">EBTransactionReceiptEntry</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> $0<span class=\"syn-punc\">.</span>label<span class=\"syn-punc\">,</span> value<span class=\"syn-punc\">:</span> $0<span class=\"syn-punc\">.</span>value<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBTransactionReceiptModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Payment successful\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Your payment has been sent.\"</span><span class=\"syn-punc\">,</span>\n    reference <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"165A25912345\"</span>\n<span class=\"syn-punc\">) {</span>\n    entries<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBTransactionReceiptEntry</span><span class=\"syn-punc\">(</span>it<span class=\"syn-punc\">.</span>label<span class=\"syn-punc\">,</span> it<span class=\"syn-punc\">.</span>value<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">}</span>"
+        "swift": "<span class=\"syn-type\">EBTransactionReceiptModal</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.horizontal</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBTransactionReceiptModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Horizontal</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "mtr-spec-card-vertical",
+        "demoKey": "vertical",
+        "demoControls": receiptControls,
+        "title": "Vertical",
+        "node": "5879:41046",
+        "description": "",
+        "previewHtml": "<div id=\"mtr-spec-vertical\"><div class=\"eb-preview-mtr eb-preview-mtr--vertical\"><div class=\"eb-preview-mtr__content\"><div class=\"eb-preview-mtr__title\">Put the title here</div><div class=\"eb-preview-mtr__description\">First line of text goes here<br>Second line of text goes here</div><div class=\"eb-preview-mtr__rows\"><div class=\"eb-preview-mtr__row\"><span class=\"eb-preview-mtr__row-label\">Label</span><span class=\"eb-preview-mtr__row-value\">Put content here</span></div><div class=\"eb-preview-mtr__row\"><span class=\"eb-preview-mtr__row-label\">Label</span><span class=\"eb-preview-mtr__row-value\">Put content here</span></div><div class=\"eb-preview-mtr__row\"><span class=\"eb-preview-mtr__row-label\">Label</span><span class=\"eb-preview-mtr__row-value\">Put content here</span></div></div></div><div class=\"eb-preview-mtr__reference\"><span class=\"eb-preview-mtr__row-label\">Reference Number</span><span class=\"eb-preview-mtr__row-value\">165A25912345</span><span class=\"eb-preview-mtr__copy\"></span></div><div class=\"eb-preview-mtr__actions\"><div class=\"eb-preview-mtr__btn eb-preview-mtr__btn--filled\">Label</div><div class=\"eb-preview-mtr__btn eb-preview-mtr__btn--outlined\">Label</div></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "ActionOrientation", "value": "Vertical" },
+              { "key": "hasDescription", "value": "true", "prop": "hasdescription" },
+              { "key": "hasReferenceNo", "value": "true", "prop": "hasreferenceno" },
+              { "key": "⤷ ActionSlot (slot)", "value": "2 items · vertical flow, 320 × 156, 24px padding, 8px gap — the two buttons stack" },
+              { "key": "⤷ TransactionSlot (slot)", "value": "2 items · holds 3 Modal - Transaction Receipt Entry instances at Layout=Inline" },
+              { "key": "Reference strip", "value": "320 × 40 · horizontal, 24px sides, 16px top and none at the bottom, gap 0 — the 40 is the Copy icon’s 24 plus that 16" },
+              { "key": "Action order", "value": "Filled on top, outlined beneath" },
+              { "key": "Versions", "value": "2" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Surface", "value": "#F6F9FD", "token": "bg/color-bg", "swatch": true },
+              { "key": "Content card", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
+              { "key": "Card hairline", "value": "#E5EBF4", "token": "border/color-border-weak", "swatch": true },
+              { "key": "#title · #description · every #value", "value": "#0A2757", "token": "text/color-text", "swatch": true },
+              { "key": "Every #label", "value": "#6780A9", "token": "text/color-text-weaker", "swatch": true },
+              { "key": "Copy icon", "value": "#005CE5", "token": "border/color-border-primary", "swatch": true }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "#title", "value": "Primary/Headlines/Section", "mono": true },
+              { "key": "#description", "value": "Primary/Multi-line Label/Light/Base", "mono": true },
+              { "key": "Reference #label · #value", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "ActionSlot #label", "value": "Primary/Label/Large", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "434 — Hug", "mono": true },
+              { "key": "Width", "value": "320", "mono": true },
+              { "key": "Radius", "value": "6", "mono": true },
+              { "key": "Padding H", "value": "0", "mono": true },
+              { "key": "Padding V", "value": "0", "mono": true },
+              { "key": "Gap", "value": "0", "mono": true },
+              { "key": "Alignment", "value": "Top left", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBTransactionReceiptModal</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.vertical</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBTransactionReceiptModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Vertical</span>\n<span class=\"syn-punc\">)</span>"
       }
     ]
   },
@@ -315,61 +384,60 @@ export const modalTransactionReceipt: ComponentData = {
       "planned": true,
       "blocks": [
         {
-          "label": "Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
-          "label": "Gradle",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:modal:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>modal<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
+      "footnote": "Planned API — the native library does not exist yet. The artifact is the Modal family: Modal, this receipt and <a href=\"/components/modal-transaction-receipt-entry\">Modal - Transaction Receipt Entry</a> all ship in <code>com.eastblue.ds:modal</code> and import <code>com.eastblue.ds.modal.*</code>."
     },
     "propertyMapping": {
-      "description": "Figma properties mapped to the intended native parameters.",
+      "description": "Five properties, in the order the Figma property panel lists them. Three native parameters have no row because Figma has no property behind them — <code>title</code>, <code>description</code> and the reference <code>value</code> are text layers, so a designer sets them by overriding the layer. Each boolean keeps its own parameter alongside the content it gates rather than the content being inferred from a nil, so every Figma property traces 1:1 for Code Connect. <code>hasReferenceNo</code> keeps Figma's spelling for the same reason. <code>actionOrientation</code> is a parameter in both languages rather than a SwiftUI modifier: it changes the layout of the action area, not the component's appearance.",
       "rows": [
         {
-          "figma": "ActionOrientation",
-          "swift": ".ebActionOrientation(.vertical / .horizontal)",
-          "compose": "actionOrientation: EBActionOrientation"
+          "figma": "ActionOrientation — Horizontal, Vertical",
+          "swift": "<code>actionOrientation: EBActionOrientation</code>",
+          "compose": "<code>actionOrientation: EBActionOrientation</code>"
         },
         {
-          "figma": "#title",
-          "swift": "title: String",
-          "compose": "title: String"
+          "figma": "⤷ ActionSlot (slot)",
+          "swift": "<code>@ViewBuilder actions: () -> Actions</code>",
+          "compose": "<code>actions: @Composable () -> Unit</code>"
         },
         {
-          "figma": "#description",
-          "swift": "description: String?",
-          "compose": "description: String?"
+          "figma": "hasDescription — true, false",
+          "swift": "<code>hasDescription: Bool = true</code>",
+          "compose": "<code>hasDescription: Boolean = true</code>"
         },
         {
-          "figma": "⤷ TransactionSlot",
-          "swift": "@ViewBuilder entries: () -> Content",
-          "compose": "entries: @Composable ColumnScope.() -> Unit"
+          "figma": "hasReferenceNo — true, false",
+          "swift": "<code>hasReferenceNo: Bool = true</code>",
+          "compose": "<code>hasReferenceNo: Boolean = true</code>"
         },
         {
-          "figma": "ReferenceNumber · #value",
-          "swift": "reference: String?",
-          "compose": "reference: String?"
-        },
-        {
-          "figma": "⤷ ActionSlot",
-          "swift": "@ViewBuilder actions: () -> Actions",
-          "compose": "actions: @Composable () -> Unit"
+          "figma": "⤷ TransactionSlot (slot)",
+          "swift": "<code>@ViewBuilder entries: () -> Content</code>",
+          "compose": "<code>entries: @Composable ColumnScope.() -> Unit</code>"
         }
       ]
     },
     "usageSnippets": [
       {
-        "subheading": "Vertical actions (default)",
-        "swift": "<span class=\"syn-type\">EBTransactionReceiptModal</span><span class=\"syn-punc\">(</span>title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Payment successful\"</span><span class=\"syn-punc\">,</span> reference<span class=\"syn-punc\">:</span> ref<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>entries<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">EBTransactionReceiptEntry</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> $0<span class=\"syn-punc\">.</span>label<span class=\"syn-punc\">,</span> value<span class=\"syn-punc\">:</span> $0<span class=\"syn-punc\">.</span>value<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">} </span>actions<span class=\"syn-punc\">: {</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Done\"</span><span class=\"syn-punc\">) {</span> dismiss<span class=\"syn-punc\">() }</span>\n    <span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Share\"</span><span class=\"syn-punc\">) {</span> share<span class=\"syn-punc\">() }</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBTransactionReceiptModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Payment successful\"</span><span class=\"syn-punc\">,</span>\n    reference <span class=\"syn-eq\">=</span> ref<span class=\"syn-punc\">,</span>\n    entries <span class=\"syn-eq\">= {</span> entries<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBTransactionReceiptEntry</span><span class=\"syn-punc\">(</span>it<span class=\"syn-punc\">.</span>label<span class=\"syn-punc\">,</span> it<span class=\"syn-punc\">.</span>value<span class=\"syn-punc\">) } }</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Done\"</span><span class=\"syn-punc\">,</span> onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">::</span>dismiss<span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Share\"</span><span class=\"syn-punc\">,</span> onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">::</span>share<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "subheading": "Horizontal — two short actions side by side",
+        "swift": "<span class=\"syn-type\">EBTransactionReceiptModal</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Payment successful\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.horizontal</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBTransactionReceiptModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Payment successful\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Horizontal</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "Horizontal actions",
-        "swift": "<span class=\"syn-type\">EBTransactionReceiptModal</span><span class=\"syn-punc\">(</span>title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Payment successful\"</span><span class=\"syn-punc\">,</span> reference<span class=\"syn-punc\">:</span> ref<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>entries<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">EBTransactionReceiptEntry</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> $0<span class=\"syn-punc\">.</span>label<span class=\"syn-punc\">,</span> value<span class=\"syn-punc\">:</span> $0<span class=\"syn-punc\">.</span>value<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">.</span><span class=\"syn-fn\">ebActionOrientation</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.horizontal</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTransactionReceiptModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Payment successful\"</span><span class=\"syn-punc\">,</span>\n    reference <span class=\"syn-eq\">=</span> ref<span class=\"syn-punc\">,</span>\n    actionOrientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Horizontal</span>\n<span class=\"syn-punc\">) {</span> <span class=\"syn-punc\">/* </span>actions<span class=\"syn-punc\"> */ }</span>"
+        "subheading": "Vertical — two full-width actions stacked",
+        "swift": "<span class=\"syn-type\">EBTransactionReceiptModal</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Payment successful\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.vertical</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBTransactionReceiptModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Payment successful\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Vertical</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "accessibility": [
@@ -430,28 +498,28 @@ export const modalTransactionReceipt: ComponentData = {
         "criterion": "Variant & Property Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "<code>ActionOrientation</code> closed its space, and both slots picked up the <code>⤷</code> prefix. Nothing outstanding on this axis."
+        "notes": "<code>ActionOrientation</code> closed its space and both slots picked up the <code>⤷</code> prefix. <code>hasReferenceNo.</code> lost its trailing period this pass — it would not have survived as a native identifier in either language, and the name now traces 1:1. Nothing outstanding on this axis."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Fills resolve to library variables and text carries shared library styles — verified on the component's own nodes. The title's 0 tracking is part of its bound style."
+        "notes": "Every colour is bound and named. Six belong to this component — <code>bg/color-bg</code>, <code>bg/color-bg-main</code>, <code>border/color-border-weak</code>, <code>text/color-text</code>, <code>text/color-text-weaker</code> and <code>border/color-border-primary</code>. The other four are the <code>appearance/*</code> set, which is the Button’s own variable mode arriving through <code>⤷ ActionSlot</code> rather than anything this modal sets. All five text layers resolve to shared library styles."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "A column of text, a repeated row, a strip and an action area. Both slots map to view builders, and the button component is now shared with Modal."
+        "notes": "A column of text, a repeated row, a strip and an action area. Both slots map to view builders and the transaction rows are <a href=\"/components/modal-transaction-receipt-entry\">Modal - Transaction Receipt Entry</a> instances, so the composition maps as cleanly as the primitive does. The one gap is that the three strings are text layers rather than properties — see C7."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Button states come from Button_New. The copy control has no confirmation state, and the reference row's 40px height falls short of the 44/48 tap minimum."
+        "notes": "Button states come from Button_New, and the transaction rows are display-only. What is missing is the copy control’s confirmation state — nothing in the component says a tap succeeded. The reference strip’s 40px height also falls short of the 44/48 tap minimum; the component ships live, so that is raised as a Design Recommendation rather than scored here."
       },
       {
         "id": "C6",
@@ -465,29 +533,10 @@ export const modalTransactionReceipt: ComponentData = {
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked — the native library does not exist yet."
+        "notes": "Blocked — the native library does not exist yet. Worth noting for when it is not: <code>title</code>, <code>description</code> and the reference value are text layers rather than component properties, so Code Connect will have nothing to bind those three strings to. The five properties that do exist all trace 1:1."
       }
     ],
-    "codeConnect": [
-      {
-        "aspect": "Property naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>ActionOrientation</code>, <code>⤷ TransactionSlot</code> and <code>⤷ ActionSlot</code> all map one to one with no rename at the boundary."
-      },
-      {
-        "aspect": "Token coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Bindings are in place; only the human-readable names are outstanding."
-      },
-      {
-        "aspect": "Registration",
-        "status": "empty",
-        "statusLabel": "Not Mapped",
-        "notes": "Blocked until the native library exists."
-      }
-    ],
+    "codeConnect": [],
     "variants": {
       "total": 2,
       "description": "1 component set × 2 ActionOrientation values = 2 variants. Everything above the action area is identical between them; row count comes from the slot, not from a variant.",
@@ -499,6 +548,83 @@ export const modalTransactionReceipt: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "hasReferenceNo renamed; Style and Code tabs rebuilt — node 5879:41048",
+      "rows": [
+        {
+          "body": "<strong><code>hasReferenceNo.</code> lost its trailing period.</strong> The name would not have survived as a native identifier in either language, so the mapping would have had to rename it and break the 1:1 trace Code Connect needs. It is <code>hasReferenceNo</code> in Figma and in both platform signatures now, spelled the same in all three.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "<strong>One card became two.</strong> <code>ActionOrientation</code> is the driving property, so Horizontal and Vertical each get a card, in the panel’s order. The single card was titled with the component’s own name and specified Vertical only.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Two properties were undocumented.</strong> The Figma panel carries <code>hasDescription</code> and <code>hasReferenceNo</code>, both defaulting to True; neither was on the page. Nothing changed in Figma for these two — <code>get_node_info</code> cannot read property definitions, and this is the fifth component in this run of reviews where the panel held more than the tree could show.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "<strong>Layout described the children rather than the component.</strong> Thirteen rows including <code>Card inset</code>, <code>Row pitch</code>, <code>Button gap</code> and <code>Button radius</code>. The seven canonical keys now come off the container’s own auto-layout panel: 434 or 376 tall and hugging, 320 wide, radius 6, no padding, no gap, top left.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The 58px between the two variants is one thing, not several.</strong> Both action slots carry the same 24px padding and 8px gap; only the flow changes. Vertical stacks two 272-wide buttons for 156; Horizontal puts two 132-wide buttons side by side for 98. Recorded on each card’s Properties row, where the old page implied two unrelated action-area specs.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The reference strip had invented padding.</strong> The preview drew <code>13px 24px</code> — symmetric, and not what the panel says. It is 24 at the sides, 16 on top and <em>none</em> at the bottom, with a gap of 0, which is why the strip had been floating away from the action area. Its 40px height is the Copy icon’s 24 plus that 16.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Five text styles were an IOU.</strong> The page carried five font specs and \"shared library styles · names pending Dev Mode read\". <code>#title</code> is <code>Primary/Headlines/Section</code>, <code>#description</code> is <code>Primary/Multi-line Label/Light/Base</code>, the reference row is <code>Primary/Label/Light/Small</code>, and the action label is <code>Primary/Label/Large</code>.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>All ten colours are named, and four of them are not this component’s.</strong> Six belong here — <code>bg/color-bg</code>, <code>bg/color-bg-main</code>, <code>border/color-border-weak</code>, <code>text/color-text</code>, <code>text/color-text-weaker</code>, <code>border/color-border-primary</code>. The other four are the <code>appearance/*</code> set, which is the Button’s own variable mode arriving through <code>⤷ ActionSlot</code>. The transaction rows are the same story: they are <a href=\"/components/modal-transaction-receipt-entry\">Entry</a> instances, so their colours are that component’s.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>The preview drew in the documentation font.</strong> <code>.eb-preview-mtr</code> declared <code>font-family: inherit</code>, which resolves to the site’s <code>--font-body</code> — BarkAda. Every text layer here carries a <code>Primary/*</code> style and is Proxima Soft in Figma, so the whole card was rendering in the wrong face. The root now names Proxima Soft; no per-layer override is needed, because nothing in this component is Secondary.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Both previews are server-rendered.</strong> The static markup on each card now holds the component’s real default state, generated by the same renderer the demo uses, so what ships before JavaScript runs matches what runs after it.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The install block pointed at coordinates that will never exist.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code>, with no Import line. It now cites the Modal family artifact <code>com.eastblue.ds:modal:1.0.0</code> and imports <code>com.eastblue.ds.modal.*</code>.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Property Mapping missed two properties and mapped three things that are not properties.</strong> Six rows became five: the two booleans gained rows, and <code>#title</code>, <code>#description</code> and the reference value came out — all three are text layers. They are named in the description instead, since they still have to be parameters natively.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The two tabs declared different APIs.</strong> The mapping had <code>.ebActionOrientation(...)</code> — a SwiftUI modifier — against its own Compose column’s parameter, while the Style tab used a parameter in both. Settled on the parameter: <code>actionOrientation</code> changes the layout of the action area, not the component’s appearance. The same disagreement was found and settled the same way on the Entry primitive.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>A snippet claimed a default that could not be read.</strong> \"Vertical actions (default)\"; the property panel lists Horizontal first, so naming Vertical the default was a guess. Both snippets are keyed plainly to the values now and ordered to match the panel and the cards.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Three strings have nothing to bind to.</strong> Because <code>title</code>, <code>description</code> and the reference value are text layers rather than component properties, Code Connect will have no anchor for them when the native library lands. The five properties that do exist all trace 1:1. Recorded against C7, which was already open on registration.",
+          "delta": { "kind": "open", "label": "C7 open" }
+        },
+        {
+          "body": "<strong>C5 is narrowed to one item.</strong> Its note bundled the copy control’s missing confirmation state with the reference strip’s 40px height. The height falls short of the 44/48 tap minimum, but the component ships live, so that is raised as a Design Recommendation rather than scored. The confirmation state is a genuine missing interaction state and holds C5 open.",
+          "delta": { "kind": "open", "label": "C5 open" }
+        },
+        {
+          "body": "<strong>Code Connect emptied, and DEV code is live for the first time.</strong> The demo script had no <code>getSnippet</code>, so both language tabs were frozen on a static string; they now track both booleans.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "August 2026",

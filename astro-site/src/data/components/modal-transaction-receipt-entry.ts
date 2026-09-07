@@ -426,6 +426,19 @@ export const modalTransactionReceiptEntry: ComponentData = {
   },
   "changelog": [
     {
+      "version": "1.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Preview typeface corrected — node 5947:181504",
+      "rows": [
+        {
+          "body": "<strong>The preview drew in the documentation font.</strong> <code>.eb-preview-mtre-shell</code> declared <code>font-family: inherit</code>, which resolves to the site’s <code>--font-body</code> — BarkAda. Both text layers carry <code>Primary/*</code> styles and are Proxima Soft in Figma, so every label and value on the page was rendered in the wrong face. The root now names Proxima Soft; no per-layer override is needed, because nothing in this component is Secondary.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
+    {
       "version": "1.0.1",
       "date": "September 2026",
       "kind": "patch",
