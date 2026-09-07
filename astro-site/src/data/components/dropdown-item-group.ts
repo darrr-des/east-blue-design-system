@@ -193,18 +193,20 @@ export const dropdownItemGroup: ComponentData = {
         "body": "It is a real subsection header sitting hidden in every variant. Revealing it currently means finding a hidden layer inside a slot. A boolean on the group — or shipping it as an option inside the slot's default content — would make it discoverable rather than folklore.",
         "tag": "Property"
       },
-      {
-        "headline": "Publish the token names once Dev Mode is read.",
-        "body": "The card's fill, hairline and the row colours resolve to library variables, but the read-only tools return variable IDs rather than names, so the spec tables carry hex values only.",
-        "tag": "Token"
-      },
+
       {
         "headline": "See siblings:",
         "body": "<a href=\"/components/dropdown-item\">Select Item</a> fills the slot, and <a href=\"/components/dropdown\">Select</a> is the control that opens this surface. <a href=\"/components/select-field\">Select Field</a> is the trigger, deliberately outside this family's scope.",
         "tag": "Family"
       }
     ],
-    "appliedRecommendations": []
+    "appliedRecommendations": [
+      {
+        "headline": "Publish the token names once Dev Mode is read.",
+        "body": "v2.0.1: Applied — all four colours the group paints are named. <code>bg/color-bg-main</code> on the card, <code>border/color-border-weak</code> on both its hairline and the dividers, and <code>border/color-border</code> on the hidden scrollbar. Read against the rest of the system rather than from Dev Mode, which still returns variable IDs instead of names. Everything inside a row belongs to <a href=\"/components/dropdown-item\">Select Item</a>, which is why those are named rather than valued.",
+        "tag": "Token"
+      }
+    ]
   },
   "style": {
     "heading": "BorderType",
@@ -574,6 +576,19 @@ export const dropdownItemGroup: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Token-names recommendation closed — node 7947:111630",
+      "rows": [
+        {
+          "body": "<strong>The token-names recommendation was already satisfied and still read as outstanding.</strong> v2.0.1 named all four colours the group paints and C3 moved to Ready, but the recommendation asking for them stayed in the open list — the page asking for something it had already published. Moved to Applied, where the entry records that they were read against the rest of the system rather than from Dev Mode, which still returns variable IDs instead of names.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
     {
       "version": "2.0.1",
       "date": "September 2026",

@@ -162,9 +162,17 @@ window.updateSpecCard = updateSpecCard;
 /* ── DEV code, live ───────────────────────────────────────────────── */
 /* isSelected is only emitted alongside State=Default, matching the
    variant set — there is no selected-and-pressed to call for. */
+/* Compose takes the Figma value verbatim; Swift lowerCamels it. The two
+   multi-word Types are the only ones that differ, and getting them wrong
+   left this page the odd one out in a family where Select and Select
+   Group both lowerCamel. */
 var _SITEM_CASED = {
   icon: 'Icon', pesosignvector: 'PesoSignVector',
   flag: 'Flag', pesosigntext: 'PesoSignText'
+};
+var _SITEM_SWIFT = {
+  icon: 'icon', pesosignvector: 'pesoSignVector',
+  flag: 'flag', pesosigntext: 'pesoSignText'
 };
 
 function getSnippet(cardKey, lang) {
@@ -182,7 +190,7 @@ function getSnippet(cardKey, lang) {
     'label' + sep + '<span class="syn-str">"Text"</span>',
     'type' + sep + (compose
       ? '<span class="syn-type">EBSelectItemType</span><span class="syn-punc">.</span><span class="syn-dot">' + _SITEM_CASED[card.type] + '</span>'
-      : '<span class="syn-dot">.' + card.type + '</span>'),
+      : '<span class="syn-dot">.' + _SITEM_SWIFT[card.type] + '</span>'),
     'density' + sep + enumVal('EBDensity', card.density)
   ];
   if (card.isselected === 'true' && card.state === 'default') {

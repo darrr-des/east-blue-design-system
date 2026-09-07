@@ -404,7 +404,7 @@ export const dropdownItem: ComponentData = {
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pesosignvector</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.compact</span>\n<span class=\"syn-punc\">)</span>",
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pesoSignVector</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.compact</span>\n<span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectItemType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PesoSignVector</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Compact</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
@@ -528,7 +528,7 @@ export const dropdownItem: ComponentData = {
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pesosigntext</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.compact</span>\n<span class=\"syn-punc\">)</span>",
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pesoSignText</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.compact</span>\n<span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectItemType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PesoSignText</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Compact</span>\n<span class=\"syn-punc\">)</span>"
       }
     ]
@@ -595,7 +595,7 @@ export const dropdownItem: ComponentData = {
       },
       {
         "subheading": "PesoSignVector — an amount row, drawn mark",
-        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Send money\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pesosignvector</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.default</span><span class=\"syn-punc\">,</span>\n    hasTrailing<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>",
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Send money\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pesoSignVector</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.default</span><span class=\"syn-punc\">,</span>\n    hasTrailing<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Send money\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectItemType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PesoSignVector</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Default</span><span class=\"syn-punc\">,</span>\n    hasTrailing <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
@@ -605,7 +605,7 @@ export const dropdownItem: ComponentData = {
       },
       {
         "subheading": "PesoSignText — an amount row, typed mark",
-        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Cash in\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pesosigntext</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.comfortable</span><span class=\"syn-punc\">,</span>\n    isSelected<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>",
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Cash in\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pesoSignText</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.comfortable</span><span class=\"syn-punc\">,</span>\n    isSelected<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>",
         "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Cash in\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectItemType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PesoSignText</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Comfortable</span><span class=\"syn-punc\">,</span>\n    isSelected <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
@@ -719,6 +719,19 @@ export const dropdownItem: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "3.0.3",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Swift enum casing aligned to the family — node 7947:111969",
+      "rows": [
+        {
+          "body": "<strong>The Swift enum cases were all-lowercase.</strong> <code>.pesosignvector</code> and <code>.pesosigntext</code> where Swift lowerCamels a multi-word case. The page was self-consistent, so nothing on it failed, but it left this component the odd one out in a family where <a href=\"/components/dropdown\">Select</a> and <a href=\"/components/dropdown-item-group\">Select Group</a> both lowerCamel — the kind of drift each page validates clean and only a family read catches. Now <code>.pesoSignVector</code> and <code>.pesoSignText</code> on both tabs; Compose still takes the Figma value verbatim. The Style cards are generated from <code>getSnippet</code> now rather than hand-written, so the two tabs cannot drift apart again.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        }
+      ]
+    },
     {
       "version": "3.0.2",
       "date": "September 2026",
