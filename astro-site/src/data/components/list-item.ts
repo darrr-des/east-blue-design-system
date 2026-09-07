@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildColorsTable } from './_helpers';
 
 /* Demo controls for the Style tab's single spec card. ListLevel and
    hasTrailing are the component's own properties; the asset type is a
@@ -8,42 +9,45 @@ const listItemControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'ListLevel',
-        prop: 'level',
+        label: 'hasLeading',
+        prop: 'hasleading',
+        control: 'toggle' as const,
+        defaultValue: 'true',
         options: [
-          { value: '1', label: '1' },
-          { value: '2', label: '2' },
-          { value: '3', label: '3' }
-        ],
-        defaultValue: '1'
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' }
+        ]
       },
       {
         label: 'hasTrailing',
         prop: 'hastrailing',
+        control: 'toggle' as const,
+        defaultValue: 'false',
         options: [
           { value: 'false', label: 'false' },
           { value: 'true', label: 'true' }
-        ],
-        defaultValue: 'false'
+        ]
       }
     ]
   },
   {
-    heading: 'List Item - Asset',
+    heading: 'Nested instances',
     rows: [
       {
-        label: 'Type',
+        label: 'List Item - Asset',
         prop: 'asset',
+        control: 'select' as const,
+        defaultValue: 'bullet',
         options: [
+          { value: 'pending', label: 'Pending' },
+          { value: 'pending-notice', label: 'PendingNotice' },
+          { value: 'check', label: 'Check' },
+          { value: 'check-positive', label: 'CheckPositive' },
           { value: 'bullet', label: 'Bullet' },
           { value: 'square', label: 'Square' },
           { value: 'numbered', label: 'Numbered' },
-          { value: 'check', label: 'Check' },
-          { value: 'check-positive', label: 'CheckPositive' },
-          { value: 'pending', label: 'Pending' },
-          { value: 'pending-notice', label: 'PendingNotice' }
-        ],
-        defaultValue: 'bullet'
+          { value: 'slot', label: 'Slot' }
+        ]
       }
     ]
   }
@@ -75,7 +79,7 @@ export const listItem: ComponentData = {
   },
   "overview": {
     "inContextNote": "Shown as three rows so the indent reads against the left edge — a single row tells you nothing about what ListLevel does. Lists appear on terms pages, onboarding steps and task checklists.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"li-demo-preview\"><div class=\"eb-preview-litem\"><div class=\"eb-preview-litem__row eb-preview-litem__row--l1\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">List body with level-1 style</span></div><div class=\"eb-preview-litem__row eb-preview-litem__row--l1\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">Second row in the same list</span></div><div class=\"eb-preview-litem__row eb-preview-litem__row--l1\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">Third row in the same list</span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">ListLevel</span><select id=\"li-ctrl-level\" class=\"demo-panel-select\" onchange=\"_liUpdate()\"><option value=\"1\" selected=\"\">1</option><option value=\"2\">2</option><option value=\"3\">3</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTrailing</span><select id=\"li-ctrl-hastrailing\" class=\"demo-panel-select\" onchange=\"_liUpdate()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">List Item - Asset</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select id=\"li-ctrl-asset\" class=\"demo-panel-select\" onchange=\"_liUpdate()\"><option value=\"bullet\" selected=\"\">Bullet</option><option value=\"square\">Square</option><option value=\"numbered\">Numbered</option><option value=\"check\">Check</option><option value=\"check-positive\">CheckPositive</option><option value=\"pending\">Pending</option><option value=\"pending-notice\">PendingNotice</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"li-demo-preview\"><div class=\"eb-preview-litem\"><div class=\"eb-preview-litem__row eb-preview-litem__row--l1\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">List body with level-1 style</span></div><div class=\"eb-preview-litem__row eb-preview-litem__row--l2\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">List body with level-2 style</span></div><div class=\"eb-preview-litem__row eb-preview-litem__row--l3\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">List body with level-3 style</span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">ListLevel</span><select id=\"li-ctrl-level\" class=\"demo-panel-select\" onchange=\"_liUpdate()\"><option value=\"1\">1</option><option value=\"2\">2</option><option value=\"3\" selected>3</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasLeading</span><select id=\"li-ctrl-hasleading\" class=\"demo-panel-select\" onchange=\"_liUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected>true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTrailing</span><select id=\"li-ctrl-hastrailing\" class=\"demo-panel-select\" onchange=\"_liUpdate()\"><option value=\"false\" selected>false</option><option value=\"true\">true</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Nested instances</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">List Item - Asset</span><select id=\"li-ctrl-asset\" class=\"demo-panel-select\" onchange=\"_liUpdate()\"><option value=\"pending\">Pending</option><option value=\"pending-notice\">PendingNotice</option><option value=\"check\">Check</option><option value=\"check-positive\">CheckPositive</option><option value=\"bullet\" selected>Bullet</option><option value=\"square\">Square</option><option value=\"numbered\">Numbered</option><option value=\"slot\">Slot</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -240,121 +244,182 @@ export const listItem: ComponentData = {
     "appliedRecommendations": []
   },
   "style": {
-    "heading": "Structure",
+    "heading": "ListLevel",
+    "description": "Three levels, and the only thing that changes between them is the left padding — 0, 16, 32. Type, colour, height and gap are identical, and the row fills its container at every level, so the indent comes out of the label's width rather than out of the row's. <code>hasLeading</code> and <code>hasTrailing</code> switch the two slots independently at any level.",
+    "colorsTables": [
+      buildColorsTable({
+        title: "Colors by Level",
+        description: "The row paints one thing — its label. The marker's colour belongs to whichever <a href=\"/components/list-item-asset\">List Item - Asset</a> version is placed, which is why it is named here rather than given a value, and the surface is whatever the list sits on. Depth is carried by the indent alone: all three levels are identical in colour and in type.",
+        columns: ["Value"],
+        rows: [
+          { role: "#label", token: "text/color-text-weak", values: ["#445C85"] },
+          { role: "Marker", token: "set by the List Item - Asset version placed", values: ["—"] },
+          { role: "Surface", token: "none — inherits the list background", values: ["—"] }
+        ]
+      })
+    ],
     "specCards": [
       {
-        "cardKey": "li-spec-card-default",
-        "demoKey": "default",
+        "cardKey": "li-spec-card-l1",
+        "demoKey": "l1",
         "demoControls": listItemControls,
-        "title": "List Item",
-        "node": "5728:37276",
-        "description": "Three versions on one axis. Only the indent changes between them — the marker, the type and the row height are identical at every level.",
-        "previewHtml": "<div id=\"li-spec-default\"><div class=\"eb-preview-litem\"><div class=\"eb-preview-litem__row eb-preview-litem__row--l1\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">List body with level-1 style</span></div><div class=\"eb-preview-litem__row eb-preview-litem__row--l1\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">Second row in the same list</span></div><div class=\"eb-preview-litem__row eb-preview-litem__row--l1\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">Third row in the same list</span></div></div></div>",
+        "title": "1",
+        "node": "5800:39052",
+        "description": "",
+        "previewHtml": "<div id=\"li-spec-l1\"><div class=\"eb-preview-litem\"><div class=\"eb-preview-litem__row eb-preview-litem__row--l1\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">List body with level-1 style</span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "ListLevel", "value": "1", "prop": "level",
-                "variants": {
-                  "level:2": { "value": "2" },
-                  "level:3": { "value": "3" }
-                }
-              },
-              { "key": "hasTrailing", "value": "false", "prop": "hastrailing",
-                "variants": {
-                  "hastrailing:true": { "value": "true" }
-                }
-              },
-              { "key": "Leading marker", "value": "List Item - Asset instance — Bullet", "prop": "asset",
-                "variants": {
-                  "asset:square": { "value": "List Item - Asset instance — Square" },
-                  "asset:numbered": { "value": "List Item - Asset instance — Numbered" },
-                  "asset:check": { "value": "List Item - Asset instance — Check" },
-                  "asset:check-positive": { "value": "List Item - Asset instance — CheckPositive" },
-                  "asset:pending": { "value": "List Item - Asset instance — Pending" },
-                  "asset:pending-notice": { "value": "List Item - Asset instance — PendingNotice" }
-                }
-              },
-              { "key": "#label", "value": "fills the remaining width" },
-              { "key": "⤷ TrailingSlot", "value": "hidden",
-                "variants": {
-                  "hastrailing:true": { "value": "16 × 16 — empty by design" }
-                }
-              },
-              { "key": "Node", "value": "5800:39052", "mono": true,
-                "variants": {
-                  "level:2": { "value": "5800:39056" },
-                  "level:3": { "value": "5800:39060" }
-                }
-              }
+              { "key": "ListLevel", "value": "1" },
+              { "key": "hasLeading", "value": "true", "prop": "hasleading" },
+              { "key": "hasTrailing", "value": "false", "prop": "hastrailing" },
+              { "key": "⤷ TrailingSlot (slot)", "value": "3 items — ships empty in all three versions" },
+              { "key": "Leading marker", "value": "List Item - Asset, placed as Bullet" },
+              { "key": "Versions", "value": "3" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "#label", "value": "#445C85", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "Marker", "value": "#90A8D0", "token": "set by the List Item - Asset version", "swatch": true,
-                "variants": {
-                  "asset:check-positive": { "value": "#27C990" },
-                  "asset:pending-notice": { "value": "#CA970C" }
-                }
-              },
-              { "key": "Surface", "value": "none — inherits the list background", "token": "–" },
-              { "key": "Trailing", "value": "set by the swapped asset", "token": "–" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width", "value": "294 — fills its container", "mono": true },
-              { "key": "Height", "value": "20", "mono": true },
-              { "key": "Indent", "value": "0", "mono": true,
-                "variants": {
-                  "level:2": { "value": "16" },
-                  "level:3": { "value": "32" }
-                }
-              },
-              { "key": "#label width", "value": "277", "mono": true,
-                "variants": {
-                  "level:2": { "value": "261" },
-                  "level:3": { "value": "245" }
-                }
-              },
-              { "key": "Marker to label gap", "value": "8", "mono": true },
-              { "key": "Marker width", "value": "9 — Bullet", "mono": true,
-                "variants": {
-                  "asset:square": { "value": "9 — Square" },
-                  "asset:numbered": { "value": "12 — Numbered, hugs" },
-                  "asset:check": { "value": "16 — Check" },
-                  "asset:check-positive": { "value": "16 — CheckPositive" },
-                  "asset:pending": { "value": "16 — Pending" },
-                  "asset:pending-notice": { "value": "16 — PendingNotice" }
-                }
-              },
-              { "key": "TrailingContainer", "value": "16 × 20 — hidden", "mono": true,
-                "variants": {
-                  "hastrailing:true": { "value": "16 × 20" }
-                }
-              },
-              { "key": "Padding", "value": "0 — the container stacking the rows owns the gap", "mono": true }
+              { "key": "#label", "value": "#445C85", "token": "text/color-text-weak", "swatch": true },
+              { "key": "Marker", "value": "Set by the List Item - Asset version placed" },
+              { "key": "Surface", "value": "None — inherits the list background" }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Text style", "value": "shared library style · name pending Dev Mode read", "mono": true },
-              { "key": "#label", "value": "BarkAda SemiBold · 14 / 20 · 0", "mono": true },
-              { "key": "Face", "value": "BarkAda — the secondary face, for longer copy at smaller sizes", "mono": true },
-              { "key": "Per level", "value": "identical at all three levels — depth is the indent", "mono": true }
+              { "key": "#label", "value": "Secondary/Bold/Base", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "20 — Hug", "mono": true },
+              { "key": "Width", "value": "294 — Fill", "mono": true },
+              { "key": "Radius", "value": "0", "mono": true },
+              { "key": "Padding H", "value": "0 left · 0 right", "mono": true },
+              { "key": "Padding V", "value": "0", "mono": true },
+              { "key": "Gap", "value": "8", "mono": true },
+              { "key": "Alignment", "value": "Top left", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-str\">\"List body with level-1 style\"</span><span class=\"syn-punc\">,</span>\n    level<span class=\"syn-punc\">:</span> 1<span class=\"syn-punc\">,</span>\n    marker<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.bullet</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"List body with level-1 style\"</span><span class=\"syn-punc\">,</span>\n    level <span class=\"syn-eq\">=</span> 1<span class=\"syn-punc\">,</span>\n    marker <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Bullet</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-str\">\"List body\"</span><span class=\"syn-punc\">,</span>\n    level<span class=\"syn-punc\">:</span> <span class=\"syn-val\">1</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"List body\"</span><span class=\"syn-punc\">,</span>\n    level <span class=\"syn-eq\">=</span> <span class=\"syn-val\">1</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "li-spec-card-l2",
+        "demoKey": "l2",
+        "demoControls": listItemControls,
+        "title": "2",
+        "node": "5800:39056",
+        "description": "",
+        "previewHtml": "<div id=\"li-spec-l2\"><div class=\"eb-preview-litem\"><div class=\"eb-preview-litem__row eb-preview-litem__row--l1\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">List body with level-1 style</span></div><div class=\"eb-preview-litem__row eb-preview-litem__row--l2\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">List body with level-2 style</span></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "ListLevel", "value": "2" },
+              { "key": "hasLeading", "value": "true", "prop": "hasleading" },
+              { "key": "hasTrailing", "value": "false", "prop": "hastrailing" },
+              { "key": "⤷ TrailingSlot (slot)", "value": "3 items — ships empty in all three versions" },
+              { "key": "Leading marker", "value": "List Item - Asset, placed as Bullet" },
+              { "key": "Versions", "value": "3" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "#label", "value": "#445C85", "token": "text/color-text-weak", "swatch": true },
+              { "key": "Marker", "value": "Set by the List Item - Asset version placed" },
+              { "key": "Surface", "value": "None — inherits the list background" }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "#label", "value": "Secondary/Bold/Base", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "20 — Hug", "mono": true },
+              { "key": "Width", "value": "294 — Fill", "mono": true },
+              { "key": "Radius", "value": "0", "mono": true },
+              { "key": "Padding H", "value": "16 left · 0 right", "mono": true },
+              { "key": "Padding V", "value": "0", "mono": true },
+              { "key": "Gap", "value": "8", "mono": true },
+              { "key": "Alignment", "value": "Top left", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-str\">\"List body\"</span><span class=\"syn-punc\">,</span>\n    level<span class=\"syn-punc\">:</span> <span class=\"syn-val\">2</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"List body\"</span><span class=\"syn-punc\">,</span>\n    level <span class=\"syn-eq\">=</span> <span class=\"syn-val\">2</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "li-spec-card-l3",
+        "demoKey": "l3",
+        "demoControls": listItemControls,
+        "title": "3",
+        "node": "5800:39060",
+        "description": "",
+        "previewHtml": "<div id=\"li-spec-l3\"><div class=\"eb-preview-litem\"><div class=\"eb-preview-litem__row eb-preview-litem__row--l1\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">List body with level-1 style</span></div><div class=\"eb-preview-litem__row eb-preview-litem__row--l2\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">List body with level-2 style</span></div><div class=\"eb-preview-litem__row eb-preview-litem__row--l3\"><span class=\"eb-preview-litem__asset eb-preview-litem__asset--bullet\"></span><span class=\"eb-preview-litem__label\">List body with level-3 style</span></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "ListLevel", "value": "3" },
+              { "key": "hasLeading", "value": "true", "prop": "hasleading" },
+              { "key": "hasTrailing", "value": "false", "prop": "hastrailing" },
+              { "key": "⤷ TrailingSlot (slot)", "value": "3 items — ships empty in all three versions" },
+              { "key": "Leading marker", "value": "List Item - Asset, placed as Bullet" },
+              { "key": "Versions", "value": "3" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "#label", "value": "#445C85", "token": "text/color-text-weak", "swatch": true },
+              { "key": "Marker", "value": "Set by the List Item - Asset version placed" },
+              { "key": "Surface", "value": "None — inherits the list background" }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "#label", "value": "Secondary/Bold/Base", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "20 — Hug", "mono": true },
+              { "key": "Width", "value": "294 — Fill", "mono": true },
+              { "key": "Radius", "value": "0", "mono": true },
+              { "key": "Padding H", "value": "32 left · 0 right", "mono": true },
+              { "key": "Padding V", "value": "0", "mono": true },
+              { "key": "Gap", "value": "8", "mono": true },
+              { "key": "Alignment", "value": "Top left", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-str\">\"List body\"</span><span class=\"syn-punc\">,</span>\n    level<span class=\"syn-punc\">:</span> <span class=\"syn-val\">3</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"List body\"</span><span class=\"syn-punc\">,</span>\n    level <span class=\"syn-eq\">=</span> <span class=\"syn-val\">3</span>\n<span class=\"syn-punc\">)</span>"
       }
     ]
   },
@@ -363,61 +428,60 @@ export const listItem: ComponentData = {
       "planned": true,
       "blocks": [
         {
-          "label": "Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
-          "label": "Gradle",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:list:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>list<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
+      "footnote": "Planned API — the native library does not exist yet. The artifact is the List family: List, List Item and List Item - Asset all ship in <code>com.eastblue.ds:list</code> and import <code>com.eastblue.ds.list.*</code>."
     },
     "propertyMapping": {
-      "description": "Figma properties mapped to the intended native parameters.",
+      "description": "Four properties: one enum-shaped variant, two booleans and a slot. Two native parameters have no row because Figma has no property behind them — <code>label</code> is the <code>#label</code> text layer, and <code>marker</code> is the nested <a href=\"/components/list-item-asset\">List Item - Asset</a> instance, which Figma lists under Nested instances rather than Properties. <strong><code>level</code> is an <code>Int</code>, not a three-value enum.</strong> The Figma variant stops at 3 because a variant has to enumerate its values; a real list nests as deep as its content does, and capping the native API at three would bake a tooling limit into the platform. Same shape as <code>hasWeek6 → weeks: Int</code> on Date Picker - Calendar.",
       "rows": [
         {
-          "figma": "ListLevel",
-          "swift": "level: Int",
-          "compose": "level: Int"
+          "figma": "ListLevel — 1, 2, 3",
+          "swift": "<code>level: Int = 1</code>",
+          "compose": "<code>level: Int = 1</code>"
         },
         {
-          "figma": "#label",
-          "swift": "label: String",
-          "compose": "label: String"
+          "figma": "hasLeading — true, false",
+          "swift": "<code>hasLeading: Bool = true</code>",
+          "compose": "<code>hasLeading: Boolean = true</code>"
         },
         {
-          "figma": "hasTrailing",
-          "swift": "trailing: (() -> Trailing)?",
-          "compose": "trailing: (@Composable () -> Unit)?"
+          "figma": "hasTrailing — true, false",
+          "swift": "<code>hasTrailing: Bool = false</code>",
+          "compose": "<code>hasTrailing: Boolean = false</code>"
         },
         {
-          "figma": "⤷ TrailingSlot",
-          "swift": "@ViewBuilder trailing: () -> Trailing",
-          "compose": "trailing: @Composable () -> Unit"
-        },
-        {
-          "figma": "List Item - Asset instance",
-          "swift": "marker: EBListItemAssetType",
-          "compose": "marker: EBListItemAssetType"
+          "figma": "⤷ TrailingSlot (slot)",
+          "swift": "<code>@ViewBuilder trailing: () -> Trailing</code> — shown when <code>hasTrailing</code>",
+          "compose": "<code>trailing: @Composable (() -> Unit)?</code> — shown when <code>hasTrailing</code>"
         }
       ]
     },
     "usageSnippets": [
       {
-        "subheading": "A flat bulleted list",
-        "swift": "<span class=\"syn-type\">VStack</span><span class=\"syn-punc\">(</span>alignment<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.leading</span><span class=\"syn-punc\">,</span> spacing<span class=\"syn-punc\">:</span> 4<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>terms<span class=\"syn-punc\">,</span> id<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">\\.self</span><span class=\"syn-punc\">) {</span>\n        <span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>$0<span class=\"syn-punc\">,</span> marker<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.bullet</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">Column</span><span class=\"syn-punc\">(</span>verticalArrangement <span class=\"syn-eq\">=</span> <span class=\"syn-type\">Arrangement</span><span class=\"syn-punc\">.</span><span class=\"syn-fn\">spacedBy</span><span class=\"syn-punc\">(</span>4<span class=\"syn-punc\">.</span>dp<span class=\"syn-punc\">)) {</span>\n    terms<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span>\n        <span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> it<span class=\"syn-punc\">,</span> marker <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Bullet</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>"
+        "subheading": "1 — a flat list",
+        "swift": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Delivery fee\"</span><span class=\"syn-punc\">,</span> level<span class=\"syn-punc\">:</span> <span class=\"syn-val\">1</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Delivery fee\"</span><span class=\"syn-punc\">,</span> level <span class=\"syn-eq\">=</span> <span class=\"syn-val\">1</span><span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "Nesting by level",
-        "swift": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Top level\"</span><span class=\"syn-punc\">,</span> level<span class=\"syn-punc\">:</span> 1<span class=\"syn-punc\">)</span>\n<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Nested once\"</span><span class=\"syn-punc\">,</span> level<span class=\"syn-punc\">:</span> 2<span class=\"syn-punc\">)</span>\n<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Nested twice\"</span><span class=\"syn-punc\">,</span> level<span class=\"syn-punc\">:</span> 3<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Top level\"</span><span class=\"syn-punc\">,</span> level <span class=\"syn-eq\">=</span> 1<span class=\"syn-punc\">)</span>\n<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Nested once\"</span><span class=\"syn-punc\">,</span> level <span class=\"syn-eq\">=</span> 2<span class=\"syn-punc\">)</span>\n<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Nested twice\"</span><span class=\"syn-punc\">,</span> level <span class=\"syn-eq\">=</span> 3<span class=\"syn-punc\">)</span>"
+        "subheading": "2 — one level in",
+        "swift": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Service charge\"</span><span class=\"syn-punc\">,</span> level<span class=\"syn-punc\">:</span> <span class=\"syn-val\">2</span><span class=\"syn-punc\">,</span> marker<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.square</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Service charge\"</span><span class=\"syn-punc\">,</span> level <span class=\"syn-eq\">=</span> <span class=\"syn-val\">2</span><span class=\"syn-punc\">,</span> marker <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Square</span><span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "With trailing content",
-        "swift": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Delivery fee\"</span><span class=\"syn-punc\">,</span> marker<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.checkPositive</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"info.circle\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Delivery fee\"</span><span class=\"syn-punc\">,</span>\n    marker <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">CheckPositive</span>\n<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Icons</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Outlined</span><span class=\"syn-punc\">.</span>Info<span class=\"syn-punc\">,</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">) }</span>"
+        "subheading": "3 — as deep as the variants go",
+        "swift": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Processing\"</span><span class=\"syn-punc\">,</span> level<span class=\"syn-punc\">:</span> <span class=\"syn-val\">3</span><span class=\"syn-punc\">,</span> marker<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.checkPositive</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"chevron.right\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBListItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Processing\"</span><span class=\"syn-punc\">,</span> level <span class=\"syn-eq\">=</span> <span class=\"syn-val\">3</span><span class=\"syn-punc\">,</span> marker <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">CheckPositive</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span>\n    <span class=\"syn-fn\">Icon</span><span class=\"syn-punc\">(</span>EBIcons<span class=\"syn-punc\">.</span>ChevronRight<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
     "accessibility": [
@@ -473,7 +537,7 @@ export const listItem: ComponentData = {
         "criterion": "Variant & Property Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "<code>ListLevel</code> is PascalCase and <code>hasTrailing</code> follows the boolean prefix convention, staying off the variant name so the set holds three versions rather than six."
+        "notes": "<code>ListLevel</code> is PascalCase, and <code>hasLeading</code> and <code>hasTrailing</code> both follow the boolean prefix convention while staying off the variant name, so the set holds at three. The one caveat is that <code>ListLevel</code> has to enumerate at all — see C4."
       },
       {
         "id": "C3",
@@ -487,7 +551,7 @@ export const listItem: ComponentData = {
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "A marker, a filling label and an optional trailing slot. <code>ListLevel</code> maps to a leading inset rather than three separate views, and the fill setting means the row stretches natively."
+        "notes": "Maps to a single row view or composable. <code>level</code> is an <code>Int</code> natively rather than the three-value enum Figma shows: a variant has to enumerate, but a list nests as deep as its content does, and capping the API at three would bake a tooling limit into the platform. One constraint inherited from the marker: <a href=\"/components/list-item-asset\">List Item - Asset</a> is 9, 12 or 16 wide by version, so swapping the marker moves where the label starts. That is raised as a Design Recommendation on that component, not scored here."
       },
       {
         "id": "C5",
@@ -511,26 +575,7 @@ export const listItem: ComponentData = {
         "notes": "Blocked — the native library does not exist yet."
       }
     ],
-    "codeConnect": [
-      {
-        "aspect": "Property naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>ListLevel</code>, <code>hasTrailing</code>, <code>#label</code> and <code>⤷ TrailingSlot</code> map one to one with no rename at the boundary."
-      },
-      {
-        "aspect": "Token coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Bindings are in place; only the human-readable names are outstanding."
-      },
-      {
-        "aspect": "Registration",
-        "status": "empty",
-        "statusLabel": "Not Mapped",
-        "notes": "Blocked until the native library exists."
-      }
-    ],
+    "codeConnect": [],
     "variants": {
       "total": 3,
       "description": "1 component set × 3 ListLevel values = 3 variants. hasTrailing is a boolean component property, so it toggles the trailing slot without doubling the set, and the marker is a nested instance rather than an axis.",
@@ -543,6 +588,83 @@ export const listItem: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs rebuilt to the content guides — node 5728:37276",
+      "rows": [
+        {
+          "body": "<strong>One card became three.</strong> <code>ListLevel</code> is the driving property, so each of its values gets a card. The single card was titled with the component’s own name and specified level 1 only.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong><code>hasLeading</code> was undocumented.</strong> The Figma panel carries it, defaulting to True; neither the node tree nor this page had it at all. Nothing changed in Figma — <code>get_node_info</code> cannot read property definitions, and this is the fourth component in a row where the panel held more than the tree could show.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "<strong>The previews showed three rows all at the same level, which demonstrated nothing.</strong> The indent is the only thing <code>ListLevel</code> changes, and an indent is only legible against what it is indented from. Each card now renders the ladder down to its own level — level 1 alone, level 2 under a level 1, level 3 under both — which is also how the nesting actually works.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The four spec sections were in the wrong order.</strong> Properties, Colors, <em>Layout, Typography</em>; the order is Properties, Colors, Typography, Layout.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Layout had none of the seven keys.</strong> It carried <code>Indent</code>, <code>#label width</code>, <code>Marker to label gap</code>, <code>Marker width</code> and <code>TrailingContainer</code>. All seven are now read off the auto-layout panel: <code>20 — Hug</code>, <code>294 — Fill</code>, padding 0/16/32 left by level, gap 8, top left.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Typography was three font specs and an IOU.</strong> <code>BarkAda SemiBold · 14 / 20 · 0</code>, a <code>Face</code> row, a <code>Per level</code> row, and \"shared library style · name pending Dev Mode read\". <code>#label</code> resolves to <code>Secondary/Bold/Base</code>.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>The label colour is named, and the two it does not own are declared as such.</strong> <code>#label</code> is <code>text/color-text-weak</code> at <code>#445C85</code>. The marker’s colour belongs to whichever <a href=\"/components/list-item-asset\">List Item - Asset</a> version is placed and the surface to the list beneath, so the new Colors by Level table says so rather than inventing values for them.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>The live preview was missing a control and would have flashed.</strong> Its panel had no <code>hasLeading</code>, so the renderer was reading a control that did not exist and silently falling back to true; and its server-rendered markup did not match what the script produces, so it would have been replaced on load. Both the live preview and all three cards are now generated by the same renderer.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The nested-instance control was missing Slot.</strong> <a href=\"/components/list-item-asset\">List Item - Asset</a> has eight Type values and the dropdown listed seven. Slot draws as the same 16 × 16 dashed footprint the trailing slot uses, which is honest — they are the same thing, a reserved box the consumer fills.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The control panel mirrors Figma’s two blocks.</strong> <code>Properties</code> holds the two booleans; <code>Nested instances</code> holds List Item - Asset. Figma lists them separately because the marker belongs to that component rather than to this row, and reproducing the split says something true about ownership.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The install block pointed at coordinates that will never exist.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code>, with no Import line. It now cites the List family artifact <code>com.eastblue.ds:list:1.0.0</code> and imports <code>com.eastblue.ds.list.*</code>, matching List Item - Asset.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Property Mapping missed one property and mapped two things that are not properties.</strong> <code>hasLeading</code> had no row; <code>#label</code> is a text layer and the List Item - Asset instance is a nested instance, which Figma lists under Nested instances rather than Properties. Four rows now, one per panel property, with <code>label</code> and <code>marker</code> named in the description instead.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong><code>level</code> is an <code>Int</code>, not a three-value enum.</strong> The Figma variant stops at 3 because a variant has to enumerate its values; a real list nests as deep as its content does, and capping the native API at three would bake a tooling limit into the platform. Recorded in the mapping description and in C4, alongside the <code>hasWeek6 → weeks: Int</code> precedent from Date Picker - Calendar.",
+          "delta": { "kind": "resolved", "label": "C4 resolved" }
+        },
+        {
+          "body": "<strong>The Code tab contradicted the Style tab.</strong> Code emitted <code>EBListItem(\"Top level\", level: 1)</code> and the Style tab <code>EBListItem(level: 1, label: \"List body\")</code>. The Style tab moved: an unlabelled leading string matches <code>EBButton(\"Save Changes\")</code>, which is the house convention. Kotlin names the parameter, having no equivalent idiom.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Usage Snippets were keyed to use-cases, not to the property.</strong> \"A flat bulleted list\", \"Nesting by level\", \"With trailing content\". One per <code>ListLevel</code> value now, with <code>marker</code> and the trailing slot riding along on levels 2 and 3 rather than taking subheadings of their own.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Swapping the marker moves where the label starts.</strong> <a href=\"/components/list-item-asset\">List Item - Asset</a> is 9, 12 or 16 wide depending on its version, so a list mixing Bullet with Slot has its labels 7px apart. Recorded in C4 as an inherited constraint, pointing at the Design Recommendation being raised on that component rather than scored again here.",
+          "delta": { "kind": "open", "label": "Docs" }
+        },
+        {
+          "body": "<strong>DEV code is live for the first time, and Code Connect is emptied.</strong> The demo script had no <code>getSnippet</code>, so both language tabs were frozen on a static string.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
     {
       "version": "2.0.0",
       "date": "August 2026",

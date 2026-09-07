@@ -7727,6 +7727,21 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   color: #90A8D0;
 }
 
+/* Type=Slot keeps the 16px box and ships empty, so it draws as its own
+   footprint — the same treatment the trailing slot gets below, because
+   they are the same thing: a reserved 16 × 16 the consumer fills. */
+.eb-preview-litem__asset--slot::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  border: 1px dashed #90A8D0;
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
 /* #label fills, so the indent comes out of its width rather than out of
    the row's — which is what keeps every level the same total width. */
 .eb-preview-litem__label {
