@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildColorsTable } from './_helpers';
 
 /* Demo controls for the Style tab's single spec card. One axis, eight
    values — the control values are lowercase to match the variant keys. */
@@ -262,131 +263,418 @@ export const listItemAsset: ComponentData = {
     "appliedRecommendations": []
   },
   "style": {
-    "heading": "Structure",
+    "heading": "Type",
+    "description": "Eight versions on one axis. The box is 20 tall in every one; what changes is the marker inside it and how wide that marker needs the box to be — 16 for the icons and the slot, 12 for a number, 9 for a dot or a square. Mixing widths within one list is what makes labels fail to line up.",
+    "colorsTables": [
+      buildColorsTable({
+        title: "Colors by Type",
+        description: "One colour per version, and only one — the marker paints nothing behind it, so the list surface shows through. Status is carried entirely by the fill: the same clock path is neutral or warning, and the same checkmark is neutral or success.",
+        columns: ["Value"],
+        rows: [
+          { role: "Pending", token: "text/color-text-weakest", values: ["#90A8D0"] },
+          { role: "PendingNotice", token: "text/color-text-warning", values: ["#CA970C"] },
+          { role: "Check", token: "text/color-text-weakest", values: ["#90A8D0"] },
+          { role: "CheckPositive", token: "border/color-border-success", values: ["#27C990"] },
+          { role: "Bullet", token: "text/color-text-weakest", values: ["#90A8D0"] },
+          { role: "Square", token: "text/color-text-weakest", values: ["#90A8D0"] },
+          { role: "Numbered", token: "text/color-text-weakest", values: ["#90A8D0"] },
+          { role: "Slot", token: "none — supplied by the instance", values: ["—"] }
+        ]
+      })
+    ],
     "specCards": [
       {
-        "cardKey": "lia-spec-card-default",
-        "demoKey": "default",
-        "demoControls": listItemAssetControls,
-        "title": "List Item - Asset",
-        "node": "5698:43260",
-        "description": "Eight versions on one axis. The 20px box is the alignment frame; what varies is the marker inside it and how wide the version needs to be.",
-        "previewHtml": "<div id=\"lia-spec-default\"><div class=\"eb-preview-lia\"><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker\"><svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M7.99707 2.80078C11.9735 2.80078 15.1973 6.02453 15.1973 10.001C15.1973 13.9774 11.9735 17.2012 7.99707 17.2012C4.02062 17.2012 0.796875 13.9774 0.796875 10.001C0.796875 6.02453 4.02062 2.80078 7.99707 2.80078ZM7.99707 5.20117C5.3461 5.20117 3.19727 7.35001 3.19727 10.001C3.19727 12.6519 5.3461 14.8008 7.99707 14.8008C10.648 14.8008 12.7969 12.6519 12.7969 10.001C12.7969 7.35001 10.648 5.20117 7.99707 5.20117ZM7.69629 6.90234C8.35903 6.90234 8.89648 7.4398 8.89648 8.10254V9.60547L10.0449 10.7539C10.5136 11.2225 10.5136 11.9825 10.0449 12.4512C9.57629 12.9198 8.81629 12.9198 8.34766 12.4512L6.84766 10.9512C6.62261 10.7261 6.49609 10.4208 6.49609 10.1025V8.10254C6.49609 7.4398 7.03355 6.90234 7.69629 6.90234Z\" fill=\"#90A8D0\"/></svg></span><span class=\"eb-preview-lia__label\">List item label</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker\"><svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M7.99707 2.80078C11.9735 2.80078 15.1973 6.02453 15.1973 10.001C15.1973 13.9774 11.9735 17.2012 7.99707 17.2012C4.02062 17.2012 0.796875 13.9774 0.796875 10.001C0.796875 6.02453 4.02062 2.80078 7.99707 2.80078ZM7.99707 5.20117C5.3461 5.20117 3.19727 7.35001 3.19727 10.001C3.19727 12.6519 5.3461 14.8008 7.99707 14.8008C10.648 14.8008 12.7969 12.6519 12.7969 10.001C12.7969 7.35001 10.648 5.20117 7.99707 5.20117ZM7.69629 6.90234C8.35903 6.90234 8.89648 7.4398 8.89648 8.10254V9.60547L10.0449 10.7539C10.5136 11.2225 10.5136 11.9825 10.0449 12.4512C9.57629 12.9198 8.81629 12.9198 8.34766 12.4512L6.84766 10.9512C6.62261 10.7261 6.49609 10.4208 6.49609 10.1025V8.10254C6.49609 7.4398 7.03355 6.90234 7.69629 6.90234Z\" fill=\"#90A8D0\"/></svg></span><span class=\"eb-preview-lia__label\">Second line of the list</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker\"><svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M7.99707 2.80078C11.9735 2.80078 15.1973 6.02453 15.1973 10.001C15.1973 13.9774 11.9735 17.2012 7.99707 17.2012C4.02062 17.2012 0.796875 13.9774 0.796875 10.001C0.796875 6.02453 4.02062 2.80078 7.99707 2.80078ZM7.99707 5.20117C5.3461 5.20117 3.19727 7.35001 3.19727 10.001C3.19727 12.6519 5.3461 14.8008 7.99707 14.8008C10.648 14.8008 12.7969 12.6519 12.7969 10.001C12.7969 7.35001 10.648 5.20117 7.99707 5.20117ZM7.69629 6.90234C8.35903 6.90234 8.89648 7.4398 8.89648 8.10254V9.60547L10.0449 10.7539C10.5136 11.2225 10.5136 11.9825 10.0449 12.4512C9.57629 12.9198 8.81629 12.9198 8.34766 12.4512L6.84766 10.9512C6.62261 10.7261 6.49609 10.4208 6.49609 10.1025V8.10254C6.49609 7.4398 7.03355 6.90234 7.69629 6.90234Z\" fill=\"#90A8D0\"/></svg></span><span class=\"eb-preview-lia__label\">Third line of the list</span></div></div></div>",
+        "cardKey": "lia-spec-card-pending",
+        "demoKey": "pending",
+        "demoControls": [],
+        "title": "Pending",
+        "node": "5698:43261",
+        "description": "",
+        "previewHtml": "<div id=\"lia-spec-pending\"><div class=\"eb-preview-lia\"><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker\"><svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><path d=\"M7.99707 2.80078C11.9735 2.80078 15.1973 6.02453 15.1973 10.001C15.1973 13.9774 11.9735 17.2012 7.99707 17.2012C4.02062 17.2012 0.796875 13.9774 0.796875 10.001C0.796875 6.02453 4.02062 2.80078 7.99707 2.80078ZM7.99707 5.20117C5.3461 5.20117 3.19727 7.35001 3.19727 10.001C3.19727 12.6519 5.3461 14.8008 7.99707 14.8008C10.648 14.8008 12.7969 12.6519 12.7969 10.001C12.7969 7.35001 10.648 5.20117 7.99707 5.20117ZM7.69629 6.90234C8.35903 6.90234 8.89648 7.4398 8.89648 8.10254V9.60547L10.0449 10.7539C10.5136 11.2225 10.5136 11.9825 10.0449 12.4512C9.57629 12.9198 8.81629 12.9198 8.34766 12.4512L6.84766 10.9512C6.62261 10.7261 6.49609 10.4208 6.49609 10.1025V8.10254C6.49609 7.4398 7.03355 6.90234 7.69629 6.90234Z\" fill=\"#90A8D0\"/></svg></span><span class=\"eb-preview-lia__label\">List item label</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker\"><svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><path d=\"M7.99707 2.80078C11.9735 2.80078 15.1973 6.02453 15.1973 10.001C15.1973 13.9774 11.9735 17.2012 7.99707 17.2012C4.02062 17.2012 0.796875 13.9774 0.796875 10.001C0.796875 6.02453 4.02062 2.80078 7.99707 2.80078ZM7.99707 5.20117C5.3461 5.20117 3.19727 7.35001 3.19727 10.001C3.19727 12.6519 5.3461 14.8008 7.99707 14.8008C10.648 14.8008 12.7969 12.6519 12.7969 10.001C12.7969 7.35001 10.648 5.20117 7.99707 5.20117ZM7.69629 6.90234C8.35903 6.90234 8.89648 7.4398 8.89648 8.10254V9.60547L10.0449 10.7539C10.5136 11.2225 10.5136 11.9825 10.0449 12.4512C9.57629 12.9198 8.81629 12.9198 8.34766 12.4512L6.84766 10.9512C6.62261 10.7261 6.49609 10.4208 6.49609 10.1025V8.10254C6.49609 7.4398 7.03355 6.90234 7.69629 6.90234Z\" fill=\"#90A8D0\"/></svg></span><span class=\"eb-preview-lia__label\">Second line of the list</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker\"><svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><path d=\"M7.99707 2.80078C11.9735 2.80078 15.1973 6.02453 15.1973 10.001C15.1973 13.9774 11.9735 17.2012 7.99707 17.2012C4.02062 17.2012 0.796875 13.9774 0.796875 10.001C0.796875 6.02453 4.02062 2.80078 7.99707 2.80078ZM7.99707 5.20117C5.3461 5.20117 3.19727 7.35001 3.19727 10.001C3.19727 12.6519 5.3461 14.8008 7.99707 14.8008C10.648 14.8008 12.7969 12.6519 12.7969 10.001C12.7969 7.35001 10.648 5.20117 7.99707 5.20117ZM7.69629 6.90234C8.35903 6.90234 8.89648 7.4398 8.89648 8.10254V9.60547L10.0449 10.7539C10.5136 11.2225 10.5136 11.9825 10.0449 12.4512C9.57629 12.9198 8.81629 12.9198 8.34766 12.4512L6.84766 10.9512C6.62261 10.7261 6.49609 10.4208 6.49609 10.1025V8.10254C6.49609 7.4398 7.03355 6.90234 7.69629 6.90234Z\" fill=\"#90A8D0\"/></svg></span><span class=\"eb-preview-lia__label\">Third line of the list</span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Type", "value": "Pending", "prop": "type",
-                "variants": {
-                  "type:pending-notice": { "value": "PendingNotice" },
-                  "type:check": { "value": "Check" },
-                  "type:check-positive": { "value": "CheckPositive" },
-                  "type:bullet": { "value": "Bullet" },
-                  "type:square": { "value": "Square" },
-                  "type:numbered": { "value": "Numbered" },
-                  "type:slot": { "value": "Slot" }
-                }
-              },
-              { "key": "Marker", "value": "Pending icon instance",
-                "variants": {
-                  "type:pending-notice": { "value": "Pending icon instance" },
-                  "type:check": { "value": "Checkmark icon instance" },
-                  "type:check-positive": { "value": "Checkmark icon instance" },
-                  "type:bullet": { "value": "Circle — ELLIPSE 5 × 5" },
-                  "type:square": { "value": "Square — RECTANGLE 5 × 5, radius 1" },
-                  "type:numbered": { "value": "#number — text" },
-                  "type:slot": { "value": "⤷ IconSlot — empty by design" }
-                }
-              },
-              { "key": "Node", "value": "5698:43261", "mono": true,
-                "variants": {
-                  "type:pending-notice": { "value": "5698:43263" },
-                  "type:check": { "value": "5698:43265" },
-                  "type:check-positive": { "value": "5698:43267" },
-                  "type:bullet": { "value": "5698:43269" },
-                  "type:square": { "value": "5698:43273" },
-                  "type:numbered": { "value": "5698:43275" },
-                  "type:slot": { "value": "5698:43280" }
-                }
-              },
-              { "key": "Overridable", "value": "no",
-                "variants": {
-                  "type:numbered": { "value": "#number — set per item" },
-                  "type:slot": { "value": "⤷ IconSlot — swap the asset" }
-                }
-              }
+              { "key": "Type", "value": "Pending" },
+              { "key": "Marker", "value": "16 × 16 clock icon" },
+              { "key": "Versions", "value": "8" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Marker", "value": "#90A8D0", "token": "library variable · name pending Dev Mode read", "swatch": true,
-                "variants": {
-                  "type:pending-notice": { "value": "#CA970C" },
-                  "type:check-positive": { "value": "#27C990" },
-                  "type:slot": { "value": "inherited from the swapped asset", "swatch": false }
-                }
-              },
-              { "key": "Role", "value": "neutral marker",
-                "variants": {
-                  "type:pending-notice": { "value": "notice — pending needs attention" },
-                  "type:check-positive": { "value": "positive — done and successful" },
-                  "type:slot": { "value": "set by the consumer" }
-                }
-              },
-              { "key": "Background", "value": "none — inherits the list surface", "token": "–" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width", "value": "16", "mono": true,
-                "variants": {
-                  "type:bullet": { "value": "9" },
-                  "type:square": { "value": "9" },
-                  "type:numbered": { "value": "12 — hugs #number" }
-                }
-              },
-              { "key": "Height", "value": "20", "mono": true },
-              { "key": "Marker size", "value": "16 × 16", "mono": true,
-                "variants": {
-                  "type:bullet": { "value": "5 × 5" },
-                  "type:square": { "value": "5 × 5" },
-                  "type:numbered": { "value": "9 × 14" }
-                }
-              },
-              { "key": "Top offset", "value": "2 — centred", "mono": true,
-                "variants": {
-                  "type:bullet": { "value": "8 — optical" },
-                  "type:square": { "value": "8 — optical" },
-                  "type:numbered": { "value": "4 — optical" }
-                }
-              },
-              { "key": "Corner radius", "value": "–", "mono": true,
-                "variants": {
-                  "type:bullet": { "value": "full — ellipse" },
-                  "type:square": { "value": "1" }
-                }
-              },
-              { "key": "Padding", "value": "0 — List Item owns the gap to the label", "mono": true }
+              { "key": "Marker", "value": "#90A8D0", "token": "text/color-text-weakest", "swatch": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Applies to", "value": "Numbered only — every other version is a shape", "mono": true },
-              { "key": "Text style", "value": "shared library style · name pending Dev Mode read", "mono": true },
-              { "key": "#number", "value": "Proxima Soft SemiBold · 14 / 14 · +0.25", "mono": true },
-              { "key": "Ships as", "value": "\"1.\" — overridden per item", "mono": true }
+              { "key": "Text", "value": "None — the marker is a shape, not type" }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "20 — Hug", "mono": true },
+              { "key": "Width", "value": "16 — Hug", "mono": true },
+              { "key": "Radius", "value": "0", "mono": true },
+              { "key": "Padding H", "value": "0", "mono": true },
+              { "key": "Padding V", "value": "2", "mono": true },
+              { "key": "Gap", "value": "8", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.pending</span><span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cm\">// Numbered carries its index; Slot takes any 16×16 view.</span>\n<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.numbered</span><span class=\"syn-punc\">(</span>3<span class=\"syn-punc\">))</span>",
-        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Pending</span><span class=\"syn-punc\">)</span>\n\n<span class=\"syn-cm\">// Numbered carries its index; Slot takes any 16×16 composable.</span>\n<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Numbered</span><span class=\"syn-punc\">,</span> number <span class=\"syn-eq\">=</span> 3<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pending</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Pending</span><span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "lia-spec-card-pending-notice",
+        "demoKey": "pending-notice",
+        "demoControls": [],
+        "title": "PendingNotice",
+        "node": "5698:43263",
+        "description": "",
+        "previewHtml": "<div id=\"lia-spec-pending-notice\"><div class=\"eb-preview-lia\"><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker\"><svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><path d=\"M7.99707 2.80078C11.9735 2.80078 15.1973 6.02453 15.1973 10.001C15.1973 13.9774 11.9735 17.2012 7.99707 17.2012C4.02062 17.2012 0.796875 13.9774 0.796875 10.001C0.796875 6.02453 4.02062 2.80078 7.99707 2.80078ZM7.99707 5.20117C5.3461 5.20117 3.19727 7.35001 3.19727 10.001C3.19727 12.6519 5.3461 14.8008 7.99707 14.8008C10.648 14.8008 12.7969 12.6519 12.7969 10.001C12.7969 7.35001 10.648 5.20117 7.99707 5.20117ZM7.69629 6.90234C8.35903 6.90234 8.89648 7.4398 8.89648 8.10254V9.60547L10.0449 10.7539C10.5136 11.2225 10.5136 11.9825 10.0449 12.4512C9.57629 12.9198 8.81629 12.9198 8.34766 12.4512L6.84766 10.9512C6.62261 10.7261 6.49609 10.4208 6.49609 10.1025V8.10254C6.49609 7.4398 7.03355 6.90234 7.69629 6.90234Z\" fill=\"#CA970C\"/></svg></span><span class=\"eb-preview-lia__label\">List item label</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker\"><svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><path d=\"M7.99707 2.80078C11.9735 2.80078 15.1973 6.02453 15.1973 10.001C15.1973 13.9774 11.9735 17.2012 7.99707 17.2012C4.02062 17.2012 0.796875 13.9774 0.796875 10.001C0.796875 6.02453 4.02062 2.80078 7.99707 2.80078ZM7.99707 5.20117C5.3461 5.20117 3.19727 7.35001 3.19727 10.001C3.19727 12.6519 5.3461 14.8008 7.99707 14.8008C10.648 14.8008 12.7969 12.6519 12.7969 10.001C12.7969 7.35001 10.648 5.20117 7.99707 5.20117ZM7.69629 6.90234C8.35903 6.90234 8.89648 7.4398 8.89648 8.10254V9.60547L10.0449 10.7539C10.5136 11.2225 10.5136 11.9825 10.0449 12.4512C9.57629 12.9198 8.81629 12.9198 8.34766 12.4512L6.84766 10.9512C6.62261 10.7261 6.49609 10.4208 6.49609 10.1025V8.10254C6.49609 7.4398 7.03355 6.90234 7.69629 6.90234Z\" fill=\"#CA970C\"/></svg></span><span class=\"eb-preview-lia__label\">Second line of the list</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker\"><svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><path d=\"M7.99707 2.80078C11.9735 2.80078 15.1973 6.02453 15.1973 10.001C15.1973 13.9774 11.9735 17.2012 7.99707 17.2012C4.02062 17.2012 0.796875 13.9774 0.796875 10.001C0.796875 6.02453 4.02062 2.80078 7.99707 2.80078ZM7.99707 5.20117C5.3461 5.20117 3.19727 7.35001 3.19727 10.001C3.19727 12.6519 5.3461 14.8008 7.99707 14.8008C10.648 14.8008 12.7969 12.6519 12.7969 10.001C12.7969 7.35001 10.648 5.20117 7.99707 5.20117ZM7.69629 6.90234C8.35903 6.90234 8.89648 7.4398 8.89648 8.10254V9.60547L10.0449 10.7539C10.5136 11.2225 10.5136 11.9825 10.0449 12.4512C9.57629 12.9198 8.81629 12.9198 8.34766 12.4512L6.84766 10.9512C6.62261 10.7261 6.49609 10.4208 6.49609 10.1025V8.10254C6.49609 7.4398 7.03355 6.90234 7.69629 6.90234Z\" fill=\"#CA970C\"/></svg></span><span class=\"eb-preview-lia__label\">Third line of the list</span></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "Type", "value": "PendingNotice" },
+              { "key": "Marker", "value": "16 × 16 clock icon — the same path as Pending" },
+              { "key": "Versions", "value": "8" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Marker", "value": "#CA970C", "token": "text/color-text-warning", "swatch": true }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "Text", "value": "None — the marker is a shape, not type" }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "20 — Hug", "mono": true },
+              { "key": "Width", "value": "16 — Hug", "mono": true },
+              { "key": "Radius", "value": "0", "mono": true },
+              { "key": "Padding H", "value": "0", "mono": true },
+              { "key": "Padding V", "value": "2", "mono": true },
+              { "key": "Gap", "value": "8", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pendingNotice</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PendingNotice</span><span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "lia-spec-card-check",
+        "demoKey": "check",
+        "demoControls": [],
+        "title": "Check",
+        "node": "5698:43265",
+        "description": "",
+        "previewHtml": "<div id=\"lia-spec-check\"><div class=\"eb-preview-lia\"><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker\"><svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><path d=\"M3 10L6.5 13L13 7\" stroke=\"#90A8D0\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span><span class=\"eb-preview-lia__label\">List item label</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker\"><svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><path d=\"M3 10L6.5 13L13 7\" stroke=\"#90A8D0\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span><span class=\"eb-preview-lia__label\">Second line of the list</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker\"><svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><path d=\"M3 10L6.5 13L13 7\" stroke=\"#90A8D0\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span><span class=\"eb-preview-lia__label\">Third line of the list</span></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "Type", "value": "Check" },
+              { "key": "Marker", "value": "16 × 16 checkmark, 3px stroke" },
+              { "key": "Versions", "value": "8" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Marker", "value": "#90A8D0", "token": "text/color-text-weakest", "swatch": true }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "Text", "value": "None — the marker is a shape, not type" }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "20 — Hug", "mono": true },
+              { "key": "Width", "value": "16 — Hug", "mono": true },
+              { "key": "Radius", "value": "0", "mono": true },
+              { "key": "Padding H", "value": "0", "mono": true },
+              { "key": "Padding V", "value": "2", "mono": true },
+              { "key": "Gap", "value": "8", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.check</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Check</span><span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "lia-spec-card-check-positive",
+        "demoKey": "check-positive",
+        "demoControls": [],
+        "title": "CheckPositive",
+        "node": "5698:43267",
+        "description": "",
+        "previewHtml": "<div id=\"lia-spec-check-positive\"><div class=\"eb-preview-lia\"><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker\"><svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><path d=\"M3 10L6.5 13L13 7\" stroke=\"#27C990\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span><span class=\"eb-preview-lia__label\">List item label</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker\"><svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><path d=\"M3 10L6.5 13L13 7\" stroke=\"#27C990\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span><span class=\"eb-preview-lia__label\">Second line of the list</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker\"><svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\"><path d=\"M3 10L6.5 13L13 7\" stroke=\"#27C990\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span><span class=\"eb-preview-lia__label\">Third line of the list</span></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "Type", "value": "CheckPositive" },
+              { "key": "Marker", "value": "16 × 16 checkmark — the same path as Check" },
+              { "key": "Versions", "value": "8" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Marker", "value": "#27C990", "token": "border/color-border-success", "swatch": true }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "Text", "value": "None — the marker is a shape, not type" }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "20 — Hug", "mono": true },
+              { "key": "Width", "value": "16 — Hug", "mono": true },
+              { "key": "Radius", "value": "0", "mono": true },
+              { "key": "Padding H", "value": "0", "mono": true },
+              { "key": "Padding V", "value": "2", "mono": true },
+              { "key": "Gap", "value": "8", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.checkPositive</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">CheckPositive</span><span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "lia-spec-card-bullet",
+        "demoKey": "bullet",
+        "demoControls": [],
+        "title": "Bullet",
+        "node": "5698:43269",
+        "description": "",
+        "previewHtml": "<div id=\"lia-spec-bullet\"><div class=\"eb-preview-lia\"><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker eb-preview-lia__marker--narrow eb-preview-lia__marker--bullet\"></span><span class=\"eb-preview-lia__label\">List item label</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker eb-preview-lia__marker--narrow eb-preview-lia__marker--bullet\"></span><span class=\"eb-preview-lia__label\">Second line of the list</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker eb-preview-lia__marker--narrow eb-preview-lia__marker--bullet\"></span><span class=\"eb-preview-lia__label\">Third line of the list</span></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "Type", "value": "Bullet" },
+              { "key": "Marker", "value": "5 × 5 circle" },
+              { "key": "Versions", "value": "8" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Marker", "value": "#90A8D0", "token": "text/color-text-weakest", "swatch": true }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "Text", "value": "None — the marker is a shape, not type" }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "20 — Hug", "mono": true },
+              { "key": "Width", "value": "9 — Hug", "mono": true },
+              { "key": "Radius", "value": "999 — the dot is a circle", "mono": true },
+              { "key": "Padding H", "value": "4 left · 0 right", "mono": true },
+              { "key": "Padding V", "value": "8 top · 7 bottom", "mono": true },
+              { "key": "Gap", "value": "8", "mono": true },
+              { "key": "Alignment", "value": "Left", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.bullet</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Bullet</span><span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "lia-spec-card-square",
+        "demoKey": "square",
+        "demoControls": [],
+        "title": "Square",
+        "node": "5698:43273",
+        "description": "",
+        "previewHtml": "<div id=\"lia-spec-square\"><div class=\"eb-preview-lia\"><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker eb-preview-lia__marker--narrow eb-preview-lia__marker--square\"></span><span class=\"eb-preview-lia__label\">List item label</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker eb-preview-lia__marker--narrow eb-preview-lia__marker--square\"></span><span class=\"eb-preview-lia__label\">Second line of the list</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker eb-preview-lia__marker--narrow eb-preview-lia__marker--square\"></span><span class=\"eb-preview-lia__label\">Third line of the list</span></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "Type", "value": "Square" },
+              { "key": "Marker", "value": "5 × 5 square, 1px corner radius" },
+              { "key": "Versions", "value": "8" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Marker", "value": "#90A8D0", "token": "text/color-text-weakest", "swatch": true }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "Text", "value": "None — the marker is a shape, not type" }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "20 — Hug", "mono": true },
+              { "key": "Width", "value": "9 — Hug", "mono": true },
+              { "key": "Radius", "value": "1 on the 5 × 5 square", "mono": true },
+              { "key": "Padding H", "value": "4 left · 0 right", "mono": true },
+              { "key": "Padding V", "value": "8 top · 7 bottom", "mono": true },
+              { "key": "Gap", "value": "8", "mono": true },
+              { "key": "Alignment", "value": "Left", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.square</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Square</span><span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "lia-spec-card-numbered",
+        "demoKey": "numbered",
+        "demoControls": [],
+        "title": "Numbered",
+        "node": "5698:43275",
+        "description": "",
+        "previewHtml": "<div id=\"lia-spec-numbered\"><div class=\"eb-preview-lia\"><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker eb-preview-lia__marker--number\">1.</span><span class=\"eb-preview-lia__label\">List item label</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker eb-preview-lia__marker--number\">2.</span><span class=\"eb-preview-lia__label\">Second line of the list</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker eb-preview-lia__marker--number\">3.</span><span class=\"eb-preview-lia__label\">Third line of the list</span></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "Type", "value": "Numbered" },
+              { "key": "Marker", "value": "#number — a text layer, so the count is editable" },
+              { "key": "Versions", "value": "8" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Marker", "value": "#90A8D0", "token": "text/color-text-weakest", "swatch": true }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "#number", "value": "Primary/Label/Light/Small", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "20 — Hug", "mono": true },
+              { "key": "Width", "value": "12 — Hug", "mono": true },
+              { "key": "Radius", "value": "0", "mono": true },
+              { "key": "Padding H", "value": "3 left · 0 right", "mono": true },
+              { "key": "Padding V", "value": "4 top · 2 bottom", "mono": true },
+              { "key": "Gap", "value": "8", "mono": true },
+              { "key": "Alignment", "value": "Left", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.numbered</span><span class=\"syn-punc\">,</span> number<span class=\"syn-punc\">:</span> <span class=\"syn-val\">3</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Numbered</span><span class=\"syn-punc\">,</span> number <span class=\"syn-eq\">=</span> <span class=\"syn-val\">3</span><span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "lia-spec-card-slot",
+        "demoKey": "slot",
+        "demoControls": [],
+        "title": "Slot",
+        "node": "5698:43280",
+        "description": "",
+        "previewHtml": "<div id=\"lia-spec-slot\"><div class=\"eb-preview-lia\"><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker eb-preview-lia__marker--slot\"></span><span class=\"eb-preview-lia__label\">List item label</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker eb-preview-lia__marker--slot\"></span><span class=\"eb-preview-lia__label\">Second line of the list</span></div><div class=\"eb-preview-lia__row\"><span class=\"eb-preview-lia__marker eb-preview-lia__marker--slot\"></span><span class=\"eb-preview-lia__label\">Third line of the list</span></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "Type", "value": "Slot" },
+              { "key": "Marker", "value": "⤷ IconSlot — 16 × 16, ships empty" },
+              { "key": "⤷ IconSlot (slot)", "value": "1 item — the instance supplies the marker" },
+              { "key": "Versions", "value": "8" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Marker", "value": "None — the swapped instance carries its own colour" }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "Text", "value": "None — the marker is a shape, not type" }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "20 — Hug", "mono": true },
+              { "key": "Width", "value": "16 — Hug", "mono": true },
+              { "key": "Radius", "value": "0", "mono": true },
+              { "key": "Padding H", "value": "0", "mono": true },
+              { "key": "Padding V", "value": "2", "mono": true },
+              { "key": "Gap", "value": "8", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.slot</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">) }</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Slot</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-fn\">Icon</span><span class=\"syn-punc\">(</span>EBIcons<span class=\"syn-punc\">.</span>Star<span class=\"syn-punc\">) }</span>"
       }
     ]
   },
@@ -395,51 +683,75 @@ export const listItemAsset: ComponentData = {
       "planned": true,
       "blocks": [
         {
-          "label": "Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
-          "label": "Gradle",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:list:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>list<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
+      "footnote": "Planned API — the native library does not exist yet. The artifact is the List family: List, List Item and List Item - Asset all ship in <code>com.eastblue.ds:list</code> and import <code>com.eastblue.ds.list.*</code>."
     },
     "propertyMapping": {
-      "description": "Figma properties mapped to the intended native parameters.",
+      "description": "Two properties: one enum and one slot. <code>#number</code> is deliberately absent — it is a text layer inside the Numbered variant, not a component property, so a designer setting a list to <code>3.</code> is overriding the layer rather than a value Code Connect can bind. Natively it has to be a parameter regardless, so the API carries <code>number</code> alongside the enum and the two are wired together at the call site.",
       "rows": [
         {
-          "figma": "Type",
-          "swift": "EBListItemAssetType",
-          "compose": "type: EBListItemAssetType"
+          "figma": "Type — Pending, PendingNotice, Check, CheckPositive, Bullet, Square, Numbered, Slot",
+          "swift": "<code>type: EBListItemAssetType</code>",
+          "compose": "<code>type: EBListItemAssetType</code>"
         },
         {
-          "figma": "#number",
-          "swift": ".numbered(Int)",
-          "compose": "number: Int?"
-        },
-        {
-          "figma": "⤷ IconSlot",
-          "swift": "@ViewBuilder icon: () -> Icon",
-          "compose": "icon: @Composable () -> Unit"
+          "figma": "⤷ IconSlot (slot)",
+          "swift": "<code>@ViewBuilder icon: () -> Icon</code> — Slot only",
+          "compose": "<code>icon: @Composable (() -> Unit)?</code> — Slot only"
         }
       ]
     },
     "usageSnippets": [
       {
-        "subheading": "Status markers",
-        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.check</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.checkPositive</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.pending</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.pendingNotice</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Check</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">CheckPositive</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Pending</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PendingNotice</span><span class=\"syn-punc\">)</span>"
+        "subheading": "Pending — a step still running",
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pending</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Pending</span><span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "An ordered list",
-        "swift": "<span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">Array</span><span class=\"syn-punc\">(</span>steps<span class=\"syn-punc\">.</span>enumerated<span class=\"syn-punc\">()),</span> id<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">\\.offset</span><span class=\"syn-punc\">) {</span> i<span class=\"syn-punc\">,</span> step <span class=\"syn-kw\">in</span>\n    <span class=\"syn-type\">HStack</span><span class=\"syn-punc\">(</span>alignment<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.top</span><span class=\"syn-punc\">) {</span>\n        <span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.numbered</span><span class=\"syn-punc\">(</span>i <span class=\"syn-eq\">+</span> 1<span class=\"syn-punc\">))</span>\n        <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span>step<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "steps<span class=\"syn-punc\">.</span>forEachIndexed <span class=\"syn-punc\">{</span> i<span class=\"syn-punc\">,</span> step <span class=\"syn-eq\">-&gt;</span>\n    <span class=\"syn-type\">Row</span><span class=\"syn-punc\">(</span>verticalAlignment <span class=\"syn-eq\">=</span> <span class=\"syn-type\">Alignment</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Top</span><span class=\"syn-punc\">) {</span>\n        <span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Numbered</span><span class=\"syn-punc\">,</span> number <span class=\"syn-eq\">=</span> i <span class=\"syn-eq\">+</span> 1<span class=\"syn-punc\">)</span>\n        <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span>step<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>"
+        "subheading": "PendingNotice — running, and it needs attention",
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pendingNotice</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PendingNotice</span><span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "A marker the enum does not cover",
-        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.slot</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"star\"</span><span class=\"syn-punc\">).</span><span class=\"syn-fn\">resizable</span><span class=\"syn-punc\">().</span><span class=\"syn-fn\">frame</span><span class=\"syn-punc\">(</span>width<span class=\"syn-punc\">:</span> 16<span class=\"syn-punc\">,</span> height<span class=\"syn-punc\">:</span> 16<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Slot</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span>painterResource<span class=\"syn-punc\">(</span><span class=\"syn-type\">R</span><span class=\"syn-punc\">.</span>drawable<span class=\"syn-punc\">.</span>star<span class=\"syn-punc\">),</span> contentDescription <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "subheading": "Check — done, stated plainly",
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.check</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Check</span><span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "CheckPositive — done, and worth celebrating",
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.checkPositive</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">CheckPositive</span><span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "Bullet — an unordered list",
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.bullet</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Bullet</span><span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "Square — an unordered list, one level down",
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.square</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Square</span><span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "Numbered — an ordered list",
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.numbered</span><span class=\"syn-punc\">,</span> number<span class=\"syn-punc\">:</span> <span class=\"syn-val\">3</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Numbered</span><span class=\"syn-punc\">,</span> number <span class=\"syn-eq\">=</span> <span class=\"syn-val\">3</span><span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "Slot — a marker the enum does not cover",
+        "swift": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.slot</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span>systemName<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"star.fill\"</span><span class=\"syn-punc\">) }</span>",
+        "compose": "<span class=\"syn-type\">EBListItemAsset</span><span class=\"syn-punc\">(</span>type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBListItemAssetType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Slot</span><span class=\"syn-punc\">)</span> <span class=\"syn-punc\">{</span> <span class=\"syn-fn\">Icon</span><span class=\"syn-punc\">(</span>EBIcons<span class=\"syn-punc\">.</span>Star<span class=\"syn-punc\">) }</span>"
       }
     ],
     "accessibility": [
@@ -502,14 +814,14 @@ export const listItemAsset: ComponentData = {
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Marker colours resolve to library variables — verified on the component's own nodes. Names need a Dev Mode read before they can be printed in the spec tables."
+        "notes": "Every marker colour is bound and named: <code>text/color-text-weakest</code> for the six neutral versions, <code>text/color-text-warning</code> for PendingNotice, <code>border/color-border-success</code> for CheckPositive. Slot paints nothing — the swapped instance carries its own colour."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "An enum with one associated value for the index and one slot. Maps to a single view or composable with no web-only pattern in the way."
+        "notes": "An enum and a slot map to a single view or composable with no web-only pattern in the way. One constraint to carry across: the marker box is 16, 12 or 9 wide depending on the version, so a list that mixes them starts its labels at different x positions. That is the component as built and shipped; raising it belongs in Design Recommendations, not here."
       },
       {
         "id": "C5",
@@ -530,29 +842,10 @@ export const listItemAsset: ComponentData = {
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked — the native library does not exist yet."
+        "notes": "Blocked — the native library does not exist yet. Worth noting for when it is not: <code>#number</code> is a text layer rather than a component property, so there is nothing for Code Connect to bind the index to."
       }
     ],
-    "codeConnect": [
-      {
-        "aspect": "Property naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>Type</code>, <code>#number</code> and <code>⤷ IconSlot</code> map one to one with no rename at the boundary now the spaces are gone."
-      },
-      {
-        "aspect": "Token coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Bindings are in place; only the human-readable names are outstanding."
-      },
-      {
-        "aspect": "Registration",
-        "status": "empty",
-        "statusLabel": "Not Mapped",
-        "notes": "Blocked until the native library exists."
-      }
-    ],
+    "codeConnect": [],
     "variants": {
       "total": 8,
       "description": "1 component set × 8 Type values = 8 variants. Four are status markers in two tones, three are list decorations, and the last is the escape hatch.",
@@ -570,6 +863,79 @@ export const listItemAsset: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs rebuilt to the content guides — node 5698:43260",
+      "rows": [
+        {
+          "body": "<strong>One card became eight.</strong> <code>Type</code> is the driving property, so each of its values gets a card — Pending, PendingNotice, Check, CheckPositive, Bullet, Square, Numbered, Slot, in the panel’s order. The single card was titled with the component’s own name and described <code>Type=Pending</code> only, so seven versions had no specification at all.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Layout had none of the seven keys.</strong> It carried <code>Marker size</code>, <code>Top offset</code>, <code>Corner radius</code> and a single <code>Padding</code>, with no Gap or Alignment. All seven are now read off the Figma auto-layout panel rather than derived from bounding boxes.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The marker box comes in three sizes, not one.</strong> The icons and the slot are 16 × 20 with 0/2 padding, centred; Bullet and Square are 9 × 20 with 4/0 and 8/7, left; Numbered is 12 × 20 with 3/0 and 4/2, left. The decorations hang left and sit low against a 20px label line — optical alignment, hand-set, and now documented as such rather than read as an inconsistency.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Typography was a font spec and an IOU.</strong> The rows read <code>Proxima Soft SemiBold · 14 / 14 · +0.25</code> and \"shared library style · name pending Dev Mode read\". <code>#number</code> resolves to <code>Primary/Label/Light/Small</code>. The seven versions with no text layer now say so, rather than showing an em dash that would read as a failed lookup.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>Every marker colour is named.</strong> <code>text/color-text-weakest</code> for the six neutral versions, <code>text/color-text-warning</code> for PendingNotice, <code>border/color-border-success</code> for CheckPositive. A Colors by Type table carries all eight; the page had no colours table before.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>Two fills were invisible to the node tree.</strong> Pending returns a <code>shape_full</code> with its fill; Check and CheckPositive return only the icon’s hidden guide layer, because their checkmark is a <em>stroked path</em> rather than a filled shape. Exporting the variant as SVG returns the vector with <code>stroke=\"#27C990\"</code> on it, which reads what <code>get_node_info</code> cannot and confirmed the token bindings independently.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Properties listed things that are not properties.</strong> <code>Node</code> duplicated the card’s own node field, and <code>Overridable</code> and <code>Ships as</code> described the component rather than specifying it. <code>⤷ IconSlot</code> now appears on the Slot card, where it exists.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>All eight cards declare an empty control panel.</strong> <code>Type</code> is the driving property and <code>⤷ IconSlot</code> is a slot, so there is genuinely nothing to control — the explicit empty array is what the guides settled for this case.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The install block pointed at coordinates that will never exist.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code>, with no Import line. It now cites the List family artifact <code>com.eastblue.ds:list:1.0.0</code> and imports <code>com.eastblue.ds.list.*</code>.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Property Mapping mapped a layer as though it were a property.</strong> Three rows for two properties — the third was <code>#number</code>, which the Figma panel does not expose. Two rows now, each carrying all its values, with <code>#number</code> explained in the description instead.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong><code>#number</code> is a text layer, not a component property.</strong> Setting a list to <code>3.</code> means overriding the layer, so there is nothing for Code Connect to bind the index to when the native library lands. Recorded against C7, which was already open on registration.",
+          "delta": { "kind": "open", "label": "C7 open" }
+        },
+        {
+          "body": "<strong>The Code tab contradicted the Style tab.</strong> The mapping declared <code>.numbered(Int)</code> — an enum with an associated value — while the Style tab’s DEV code emitted a plain <code>.numbered</code>. Settled toward a separate <code>number</code> parameter; all eight calls are now byte-identical across the two tabs.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Usage Snippets were keyed to use-cases, not to the property.</strong> They read \"Status markers\", \"An ordered list\" and \"A marker the enum does not cover\". One per <code>Type</code> value now, eight in total.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>C3’s note had gone stale.</strong> It read \"names need a Dev Mode read before they can be printed in the spec tables\" — true when written, and no longer: all three token names are in the tables.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The box width is a composition constraint, and it is logged as one.</strong> A list mixing Bullet with Numbered starts its labels 3px apart, because the marker box is 9 wide in one row and 12 in the next. The component ships live, so this is recorded in C4’s note as a documented fact and belongs in Design Recommendations rather than as a defect against a component in production.",
+          "delta": { "kind": "open", "label": "Docs" }
+        },
+        {
+          "body": "<strong>DEV code is live for the first time, and Code Connect is emptied.</strong> The demo script had no <code>getSnippet</code>, so both language tabs were frozen on a static string; they now render eight distinct SwiftUI and Compose calls. Code Connect’s three readiness rows described a registration that cannot happen yet.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
     {
       "version": "2.0.0",
       "date": "August 2026",
