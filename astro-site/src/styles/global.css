@@ -7968,12 +7968,16 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 }
 
 /* ── Modal ──────────────────────────────────────────────────────── */
+/* Modal genuinely mixes both faces: #title is Primary/Headlines/Section
+   and #description is Secondary/Default/Base. The root names Proxima
+   Soft and the description names BarkAda, so each layer states its own
+   face instead of one of them being right by inheritance. */
 .eb-preview-mdl {
   width: 320px;
   border-radius: 6px;
   overflow: hidden;
   background: #FFFFFF;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
 }
 /* 24 top, none at the bottom — Content stops at the description's baseline
@@ -8011,6 +8015,8 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 /* BarkAda is the secondary face — longer copy at smaller sizes. */
 .eb-preview-mdl__description {
   margin-top: 16px;
+  /* Secondary/Default/Base — BarkAda Medium, the one Secondary layer. */
+  font-family: 'BarkAda', system-ui, sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
