@@ -528,66 +528,67 @@ export const viewOnlyField: ComponentData = {
     "propertyMapping": {
       "rows": [
         {
-          "figma": "variant=Default",
-          "swift": "(default — no trailing)",
-          "compose": "trailing = null"
+          "figma": "TrailingContent = None | Badge | Link | Icon",
+          "swift": "trailing: EBTrailingContent",
+          "compose": "trailingContent = EBTrailingContent.None"
         },
         {
-          "figma": "variant=with Badge <span class=\"tag-open tag-c2\">rename</span>",
-          "swift": "trailing: { EBBadge(...) }",
-          "compose": "trailing = { EBBadge(...) }"
+          "figma": "Size = SM | LG",
+          "swift": ".controlSize(.small / .large)",
+          "compose": "size = EBFieldSize.SM / LG"
         },
         {
-          "figma": "variant=with Text Link <span class=\"tag-open tag-c2\">rename</span>",
-          "swift": "trailing: { Button(\"...\") {} }",
-          "compose": "trailing = { TextButton(...) }"
+          "figma": "Status = Default | Error | Warning",
+          "swift": ".ebStatus(.error / .warning)",
+          "compose": "status = EBFieldStatus.Default"
         },
         {
-          "figma": "variant=with Icon <span class=\"tag-open tag-c2\">rename</span>",
-          "swift": "trailing: { Image(...) }",
-          "compose": "trailing = { Icon(...) }"
+          "figma": "hasCheckmark <em>(boolean, default False)</em>",
+          "swift": "showCheckmark: Bool",
+          "compose": "hasCheckmark: Boolean = false"
         },
         {
-          "figma": "Size=Default <span class=\"tag-open tag-c2\">rename</span>",
-          "swift": ".controlSize(.regular)",
-          "compose": "size = EBFieldSize.Regular"
-        },
-        {
-          "figma": "Size=Large",
-          "swift": ".controlSize(.large)",
-          "compose": "size = EBFieldSize.Large"
-        },
-        {
-          "figma": "hasCheckmark (boolean)",
-          "swift": "isVerified: Bool",
-          "compose": "isVerified: Boolean"
-        },
-        {
-          "figma": "hasDescription (boolean)",
+          "figma": "hasDescription <em>(boolean, default True)</em>",
           "swift": "description: String?",
           "compose": "description: String?"
+        },
+        {
+          "figma": "Value <em>(text)</em>",
+          "swift": "value: String",
+          "compose": "value: String"
+        },
+        {
+          "figma": "Label <em>(text)</em>",
+          "swift": "label: String",
+          "compose": "label: String"
         }
-      ],
-      "filePaths": {
-        "swift": "ios/Components/FormElements/EBViewOnlyField.swift",
-        "compose": "android/components/form/EBViewOnlyField.kt"
-      }
+      ]
     },
     "usageSnippets": [
       {
-        "subheading": "Default",
-        "swift": "<span class=\"typ\">EBViewOnlyField</span>(\n    <span class=\"prp\">label</span>: <span class=\"str\">\"Mobile Number\"</span>,\n    <span class=\"prp\">value</span>: <span class=\"str\">\"+63 917 123 4567\"</span>,\n    <span class=\"prp\">description</span>: <span class=\"str\">\"This is your verified number\"</span>\n)",
-        "compose": "<span class=\"typ\">EBViewOnlyField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Mobile Number\"</span>,\n    <span class=\"prp\">value</span> = <span class=\"str\">\"+63 917 123 4567\"</span>,\n    <span class=\"prp\">description</span> = <span class=\"str\">\"This is your verified number\"</span>\n)"
+        "subheading": "Plain field",
+        "swift": "<span class=\"typ\">EBViewOnlyField</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Label\"</span>, <span class=\"prp\">value</span>: <span class=\"str\">\"Text\"</span>)\n    .<span class=\"fn\">controlSize</span>(<span class=\"dot\">.large</span>)",
+        "compose": "<span class=\"typ\">EBViewOnlyField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">value</span> = <span class=\"str\">\"Text\"</span>,\n    <span class=\"prp\">size</span> = <span class=\"typ\">EBFieldSize</span>.LG\n)"
       },
       {
-        "subheading": "with Badge",
-        "swift": "<span class=\"typ\">EBViewOnlyField</span>(\n    <span class=\"prp\">label</span>: <span class=\"str\">\"Account Status\"</span>,\n    <span class=\"prp\">value</span>: <span class=\"str\">\"Active\"</span>,\n    <span class=\"prp\">trailing</span>: {\n        <span class=\"typ\">EBBadge</span>(<span class=\"str\">\"Change\"</span>, <span class=\"prp\">state</span>: .<span class=\"prp\">information</span>, <span class=\"prp\">level</span>: .<span class=\"prp\">light</span>)\n    }\n)",
-        "compose": "<span class=\"typ\">EBViewOnlyField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Account Status\"</span>,\n    <span class=\"prp\">value</span> = <span class=\"str\">\"Active\"</span>,\n    <span class=\"prp\">trailing</span> = {\n        <span class=\"typ\">EBBadge</span>(\n            <span class=\"prp\">text</span> = <span class=\"str\">\"Change\"</span>,\n            <span class=\"prp\">state</span> = <span class=\"typ\">BadgeState</span>.<span class=\"prp\">Information</span>,\n            <span class=\"prp\">level</span> = <span class=\"typ\">BadgeLevel</span>.<span class=\"prp\">Light</span>\n        )\n    }\n)"
+        "subheading": "With a trailing badge",
+        "swift": "<span class=\"typ\">EBViewOnlyField</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Label\"</span>, <span class=\"prp\">value</span>: <span class=\"str\">\"Text\"</span>)\n    .<span class=\"fn\">ebTrailing</span>(<span class=\"dot\">.badge</span>)",
+        "compose": "<span class=\"typ\">EBViewOnlyField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">value</span> = <span class=\"str\">\"Text\"</span>,\n    <span class=\"prp\">trailingContent</span> = <span class=\"typ\">EBTrailingContent</span>.Badge\n)"
       },
       {
-        "subheading": "with Icon (Edit)",
-        "swift": "<span class=\"typ\">EBViewOnlyField</span>(\n    <span class=\"prp\">label</span>: <span class=\"str\">\"Email Address\"</span>,\n    <span class=\"prp\">value</span>: <span class=\"str\">\"dhar@frostdesigngroup.com\"</span>,\n    <span class=\"prp\">trailing</span>: {\n        <span class=\"typ\">Button</span>(<span class=\"prp\">action</span>: { <span class=\"cmt\">/* navigate to edit */</span> }) {\n            <span class=\"typ\">Image</span>(<span class=\"prp\">systemName</span>: <span class=\"str\">\"pencil\"</span>)\n        }\n    }\n)",
-        "compose": "<span class=\"typ\">EBViewOnlyField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Email Address\"</span>,\n    <span class=\"prp\">value</span> = <span class=\"str\">\"dhar@frostdesigngroup.com\"</span>,\n    <span class=\"prp\">trailing</span> = {\n        <span class=\"typ\">IconButton</span>(<span class=\"prp\">onClick</span> = { <span class=\"cmt\">/* navigate to edit */</span> }) {\n            <span class=\"typ\">Icon</span>(<span class=\"typ\">Icons</span>.<span class=\"prp\">Default</span>.<span class=\"prp\">Edit</span>, <span class=\"prp\">contentDescription</span> = <span class=\"str\">\"Edit\"</span>)\n        }\n    }\n)"
+        "subheading": "Verified — with the checkmark",
+        "swift": "<span class=\"typ\">EBViewOnlyField</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Label\"</span>, <span class=\"prp\">value</span>: <span class=\"str\">\"Text\"</span>)\n    .<span class=\"fn\">ebCheckmark</span>(<span class=\"kw\">true</span>)",
+        "compose": "<span class=\"typ\">EBViewOnlyField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">value</span> = <span class=\"str\">\"Text\"</span>,\n    <span class=\"prp\">hasCheckmark</span> = <span class=\"kw\">true</span>\n)"
+      },
+      {
+        "subheading": "Error",
+        "swift": "<span class=\"typ\">EBViewOnlyField</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Label\"</span>, <span class=\"prp\">value</span>: <span class=\"str\">\"Text\"</span>)\n    .<span class=\"fn\">ebStatus</span>(<span class=\"dot\">.error</span>)",
+        "compose": "<span class=\"typ\">EBViewOnlyField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">value</span> = <span class=\"str\">\"Text\"</span>,\n    <span class=\"prp\">status</span> = <span class=\"typ\">EBFieldStatus</span>.Error\n)"
+      },
+      {
+        "subheading": "Warning, without a description",
+        "swift": "<span class=\"typ\">EBViewOnlyField</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Label\"</span>, <span class=\"prp\">value</span>: <span class=\"str\">\"Text\"</span>)\n    .<span class=\"fn\">ebStatus</span>(<span class=\"dot\">.warning</span>)\n    .<span class=\"fn\">ebDescription</span>(<span class=\"kw\">nil</span>)",
+        "compose": "<span class=\"typ\">EBViewOnlyField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">value</span> = <span class=\"str\">\"Text\"</span>,\n    <span class=\"prp\">status</span> = <span class=\"typ\">EBFieldStatus</span>.Warning,\n    <span class=\"prp\">description</span> = <span class=\"kw\">null</span>\n)"
       }
     ],
     "accessibility": [
@@ -628,130 +629,531 @@ export const viewOnlyField: ComponentData = {
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Semantic names: <code>container</code>, <code>content-container</code>, <code>text-container</code>, <code>badge-container</code>, <code>text-link-container</code>, <code>icon-container</code>. Clean hierarchy."
+        "notes": "<code>FieldRow</code> wraps <code>Label</code> and <code>Value</code> on the §3 vocabulary, with the trailing containers kebab-cased per §4 — <code>badge-container</code>, <code>text-link-container</code>, <code>icon-container</code>. The wrapper frame names are a recorded intentional exception."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Property <code>variant</code> is overloaded (4 trailing content types as one enum). <code>Size=Default</code> isn't a size name — should be <code>Regular</code>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The overloaded <code>variant</code> enum is now <code>TrailingContent = None | Badge | Link | Icon</code>, <code>Size</code> uses the standard <code>SM | LG</code> scale, and the axis carrying Error and Warning was renamed <code>State</code> → <code>Status</code> in v2.5 — correct for a display-only component, which has no interaction states for a <code>State</code> axis to describe."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All colors bound to design tokens. Space, typography, and badge tokens all present."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Colors read cleanly off the node, including the amber <code>#CA970C</code> warning pair. Bindings themselves are not readable through the review tooling, so the token paths on the Style tab are indicative and need a Dev Mode confirmation."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Maps cleanly to SwiftUI VStack / Compose Column with label + value + optional trailing closure."
+        "notes": "Maps to a SwiftUI <code>VStack</code> / Compose <code>Column</code> of label + value, with the trailing content as an optional closure. No border or fill — it is a display row, so there is no framework chrome to fight."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Display-only component — no interaction states expected. Trailing actions (icon/text link) handle their own tap states."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "Display-only. Nothing here is focused, pressed or disabled, which is why the axis carries <code>Status</code> rather than <code>State</code>. The trailing badge, link and icon own their own tap states."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Checkmark uses a raster IMG from Figma CDN. Edit icon is a clean vector. Replace checkmark with an icon component instance."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The checkmark is a vector — a 13 × 13 filled circle at <code>#025AE9</code> with the tick knocked out — replacing the raster CDN image. The edit icon and the status glyphs are shared instances."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "No CLI mappings registered yet."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Blocked — no native library exists yet. Nothing in the schema blocks it: three cleanly named enums, two booleans and two text properties."
       }
     ],
-    "codeConnect": [],
+    "codeConnect": [
+      {
+        "aspect": "Property naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>TrailingContent</code>, <code>Size</code> and <code>Status</code> map onto native enums; the two booleans and two text properties map onto plain parameters."
+      },
+      {
+        "aspect": "State coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "All 24 combinations exist — 4 × 2 × 3 with no gaps."
+      },
+      {
+        "aspect": "Asset linkability",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Checkmark, edit icon and status glyphs are all vector instances, bindable as asset parameters."
+      },
+      {
+        "aspect": "Native component file",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Proposed target: <code>EBViewOnlyField</code>. Not yet written — blocked on the native library, same as C7."
+      }
+    ],
     "variants": {
-      "total": 8,
-      "description": "4 <code>variant</code> values × 2 <code>Size</code> values. Two booleans (<code>hasCheckmark</code>, <code>hasDescription</code>) apply to all variants.",
+      "total": 24,
+      "description": "<code>TrailingContent</code> (4) × <code>Size</code> (2) × <code>Status</code> (3) = <strong>24 variants</strong> — the full matrix, no gaps. <code>hasCheckmark</code>, <code>hasDescription</code>, <code>Value</code> and <code>Label</code> are component properties rather than variant axes, so they do not multiply the count. SM is 55px in Default and 56px in Error and Warning, where the status glyph sets the row height.",
+      "summary": {
+        "columns": [
+          "TrailingContent",
+          "Size",
+          "Status",
+          "Count"
+        ],
+        "rows": [
+        {
+          "cells": [
+            "None",
+            "SM · LG",
+            "Default · Error · Warning",
+            "6"
+          ]
+        },
+        {
+          "cells": [
+            "Badge",
+            "SM · LG",
+            "Default · Error · Warning",
+            "6"
+          ]
+        },
+        {
+          "cells": [
+            "Link",
+            "SM · LG",
+            "Default · Error · Warning",
+            "6"
+          ]
+        },
+        {
+          "cells": [
+            "Icon",
+            "SM · LG",
+            "Default · Error · Warning",
+            "6"
+          ]
+        }
+        ]
+      },
+      "collapseLabel": "View full TrailingContent × Size × Status breakdown (24 rows)",
       "columns": [
-        "variant",
+        "TrailingContent",
         "Size",
-        "Height",
+        "Status",
+        "Dimensions",
         "Node ID"
       ],
       "rows": [
         {
           "cells": [
+            "None",
+            "SM",
             "Default",
+            "360 × 55",
+            "4996:25508"
+          ]
+        },
+        {
+          "cells": [
+            "None",
+            "LG",
             "Default",
-            "57",
-            "18403:4521"
+            "360 × 72",
+            "4996:25562"
           ]
         },
         {
           "cells": [
-            "with Badge",
+            "None",
+            "SM",
+            "Error",
+            "360 × 56",
+            "5001:33489"
+          ]
+        },
+        {
+          "cells": [
+            "None",
+            "LG",
+            "Error",
+            "360 × 72",
+            "5001:33543"
+          ]
+        },
+        {
+          "cells": [
+            "None",
+            "SM",
+            "Warning",
+            "360 × 56",
+            "5001:34115"
+          ]
+        },
+        {
+          "cells": [
+            "None",
+            "LG",
+            "Warning",
+            "360 × 72",
+            "5001:34169"
+          ]
+        },
+        {
+          "cells": [
+            "Badge",
+            "SM",
             "Default",
-            "57",
-            "18403:4533"
+            "360 × 55",
+            "4996:25520"
           ]
         },
         {
           "cells": [
-            "with Text Link",
+            "Badge",
+            "LG",
             "Default",
-            "57",
-            "18403:4547"
+            "360 × 72",
+            "4996:25574"
           ]
         },
         {
           "cells": [
-            "with Icon",
+            "Badge",
+            "SM",
+            "Error",
+            "360 × 56",
+            "5001:33475"
+          ]
+        },
+        {
+          "cells": [
+            "Badge",
+            "LG",
+            "Error",
+            "360 × 72",
+            "5001:33529"
+          ]
+        },
+        {
+          "cells": [
+            "Badge",
+            "SM",
+            "Warning",
+            "360 × 56",
+            "5001:34101"
+          ]
+        },
+        {
+          "cells": [
+            "Badge",
+            "LG",
+            "Warning",
+            "360 × 72",
+            "5001:34155"
+          ]
+        },
+        {
+          "cells": [
+            "Link",
+            "SM",
             "Default",
-            "57",
-            "18403:4561"
+            "360 × 55",
+            "4996:25534"
           ]
         },
         {
           "cells": [
+            "Link",
+            "LG",
             "Default",
-            "Large",
-            "71",
-            "18403:4575"
+            "360 × 72",
+            "4996:25588"
           ]
         },
         {
           "cells": [
-            "with Badge",
-            "Large",
-            "71",
-            "18403:4587"
+            "Link",
+            "SM",
+            "Error",
+            "360 × 56",
+            "5001:33461"
           ]
         },
         {
           "cells": [
-            "with Text Link",
-            "Large",
-            "71",
-            "18403:4601"
+            "Link",
+            "LG",
+            "Error",
+            "360 × 72",
+            "5001:33501"
           ]
         },
         {
           "cells": [
-            "with Icon",
-            "Large",
-            "71",
-            "18403:4615"
+            "Link",
+            "SM",
+            "Warning",
+            "360 × 56",
+            "5001:34087"
+          ]
+        },
+        {
+          "cells": [
+            "Link",
+            "LG",
+            "Warning",
+            "360 × 72",
+            "5001:34141"
+          ]
+        },
+        {
+          "cells": [
+            "Icon",
+            "SM",
+            "Default",
+            "360 × 55",
+            "4996:25548"
+          ]
+        },
+        {
+          "cells": [
+            "Icon",
+            "LG",
+            "Default",
+            "360 × 72",
+            "4996:25602"
+          ]
+        },
+        {
+          "cells": [
+            "Icon",
+            "SM",
+            "Error",
+            "360 × 56",
+            "5001:33447"
+          ]
+        },
+        {
+          "cells": [
+            "Icon",
+            "LG",
+            "Error",
+            "360 × 72",
+            "5001:33515"
+          ]
+        },
+        {
+          "cells": [
+            "Icon",
+            "SM",
+            "Warning",
+            "360 × 56",
+            "5001:34073"
+          ]
+        },
+        {
+          "cells": [
+            "Icon",
+            "LG",
+            "Warning",
+            "360 × 72",
+            "5001:34127"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.6",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Style + Code tabs rebuilt against node 4996:25507",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt as a single card</strong> — one spec card driven by a panel mirroring the Figma property panel: <code>TrailingContent</code>, <code>Size</code> and <code>Status</code> as selects, <code>hasCheckmark</code> and <code>hasDescription</code> as toggles, and <code>Value</code> and <code>Label</code> as text inputs. The booleans and text properties were invisible to <code>get_node_info</code>, which returns variant properties only. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Text-property input added to the shared spec card</strong> — <code>SpecCard.astro</code> handled selects and toggles but had no control for a Figma TEXT property, so <code>Value</code> and <code>Label</code> had nowhere to go. Added <code>control: 'input'</code> to the schema and the renderer. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Checkmark corrected twice</strong> — first drawn as a green stroked tick, which was invented rather than read. It is <code>#025AE9</code> and filled. The form was then still wrong: exporting the boolean child alone renders a plain circle, and only the <code>check</code> group shows the white tick knocked out of it. Alignment corrected too — 8px after the value, vertically centred in the value box, measured from the real text width at runtime rather than a per-character estimate. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Property mapping corrected</strong> — the overloaded <code>variant=Default</code> row and <code>Size=Large</code> are gone. Now maps all seven properties: three enums, two booleans and two text properties. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        },
+        {
+          "body": "<strong>Variants inventory corrected</strong> — from <code>total: 8</code> on a “4 variant × 2 Size” matrix to the real <strong>24</strong> (<code>TrailingContent</code> × <code>Size</code> × <code>Status</code>), with a grouped summary and a collapsible full breakdown per the inventory conventions. <code>codeConnect</code> was an empty array and is now filled. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        },
+        {
+          "body": "<strong>Scorecard rewritten</strong> — C2 still called <code>variant</code> overloaded and <code>Size=Default</code> a non-size, C6 still reported a raster checkmark from the Figma CDN. All resolved in v2.0. C5 is now Not Applicable rather than Ready: a display-only component has no interaction states to cover. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.5",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Axis renamed and nested copy exposed",
+      "rows": [
+        {
+          "body": "<strong><code>State</code> axis renamed <code>Status</code></strong> — the axis carried three statuses and no interaction values on a component that can never be focused, pressed or disabled, so the §6 form-field exception did not reach it. Same 24 variants, one property renamed. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong><code>Subtext Message</code> copy exposed via nested instance properties</strong> — the message and its trailing label can be set from the parent without detaching. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.4",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Matrix verified",
+      "rows": [
+        {
+          "body": "<strong>Variant matrix verified complete at 24</strong> — <code>TrailingContent</code> (4) × <code>Size</code> (2) × <code>Status</code> (3) with no gaps, SM at 55–56px and LG at 72px throughout. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.2",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Text layers named and wrappers confirmed",
+      "rows": [
+        {
+          "body": "<strong>Text layers renamed <code>Label</code> and <code>Value</code></strong> — onto the §3 vocabulary. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong><code>Label</code> and <code>Value</code> confirmed exposed as text properties</strong> — a consumer sets the copy without detaching. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Wrapper frame names confirmed intentional</strong> — the kebab-cased trailing containers follow §4, which reserves that casing for slots and content wrappers. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.1",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Status values added",
+      "rows": [
+        {
+          "body": "<strong>Error and Warning states added and made selectable</strong> — each pairing its own glyph with its message colour: a filled red circle at <code>#D61B2C</code>, an amber triangle at <code>#CA970C</code>. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong><code>container</code> renamed <code>FieldRow</code>.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt on node 4996:25507 — 2026 Working File",
+      "rows": [
+        {
+          "body": "<strong>Overloaded <code>variant</code> property renamed</strong> — four trailing content types packed into one enum called <code>variant</code> are now <code>TrailingContent = None | Badge | Link | Icon</code>, which says what the axis controls. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Size values aligned to the standard scale</strong> — <code>Size=Default</code> was never a size name; the axis is now <code>SM | LG</code>. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Checkmark converted to a vector</strong> — replacing the raster image served from the Figma CDN. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>Composes the shared <code>Subtext Message</code> instance</strong> rather than redrawing the description row. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

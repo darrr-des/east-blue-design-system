@@ -502,56 +502,72 @@ export const amountTextField: ComponentData = {
     "propertyMapping": {
       "rows": [
         {
-          "figma": "size = Large / Default",
+          "figma": "Size = LG | MD",
           "swift": ".controlSize(.large / .regular)",
-          "compose": "size = EBAmountSize.Large / Default"
+          "compose": "size = EBAmountSize.LG / MD"
         },
         {
-          "figma": "state = Default",
-          "swift": "—",
-          "compose": "—"
+          "figma": "State = Default | Focused | Disabled | Error",
+          "swift": "@FocusState · .disabled(true) · .ebError(true)",
+          "compose": "interactionSource · enabled = false · isError = true"
         },
         {
-          "figma": "state = Filled",
-          "swift": "Derived from <code>value &gt; 0</code>",
-          "compose": "Derived from <code>value &gt; 0</code>"
-        },
-        {
-          "figma": "state = Error",
-          "swift": ".ebError(true)",
-          "compose": "isError = true"
-        },
-        {
-          "figma": "label = yes / no",
+          "figma": "hasLabel <em>(boolean)</em>",
           "swift": "label: String?",
           "compose": "label: String?"
         },
         {
-          "figma": "subtext (copy)",
-          "swift": "subtext: String?",
-          "compose": "subtext: String?"
+          "figma": "hasLeadingCurrency <em>(boolean)</em>",
+          "swift": "showCurrencySymbol: Bool",
+          "compose": "showCurrencySymbol: Boolean"
+        },
+        {
+          "figma": "hasTrailingCurrency <em>(boolean)</em>",
+          "swift": "showCurrencyCode: Bool",
+          "compose": "showCurrencyCode: Boolean"
+        },
+        {
+          "figma": "hasSubtext <em>(boolean)</em>",
+          "swift": "helperText: String?",
+          "compose": "helperText: String?"
+        },
+        {
+          "figma": "— <em>no Figma property</em>",
+          "swift": "amount: Binding&lt;Decimal&gt;",
+          "compose": "amount: String + onAmountChange: (String) -&gt; Unit"
+        },
+        {
+          "figma": "— <em>no Figma property</em>",
+          "swift": ".keyboardType(.decimalPad)",
+          "compose": "keyboardType = KeyboardType.Decimal"
         }
-      ],
-      "filePaths": {
-        "swift": "ios/Components/FormElements/EBAmountTextField.swift",
-        "compose": "android/components/form/EBAmountTextField.kt"
-      }
+      ]
     },
     "usageSnippets": [
       {
-        "subheading": "Default (size=Default)",
-        "swift": "<span class=\"typ\">EBAmountTextField</span>(<span class=\"prp\">value</span>: $amount, <span class=\"prp\">label</span>: <span class=\"str\">\"Add Your Label Here\"</span>, <span class=\"prp\">subtext</span>: <span class=\"str\">\"Add your subtext here\"</span>)\n    .<span class=\"fn\">keyboardType</span>(.<span class=\"prp\">decimalPad</span>)",
-        "compose": "<span class=\"typ\">EBAmountTextField</span>(\n    <span class=\"prp\">value</span> = amount,\n    <span class=\"prp\">onValueChange</span> = { amount = it },\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Add Your Label Here\"</span>,\n    <span class=\"prp\">subtext</span> = <span class=\"str\">\"Add your subtext here\"</span>,\n    <span class=\"prp\">keyboardOptions</span> = <span class=\"typ\">KeyboardOptions</span>(<span class=\"prp\">keyboardType</span> = <span class=\"typ\">KeyboardType</span>.<span class=\"prp\">Decimal</span>)\n)"
+        "subheading": "Large — hero amount",
+        "swift": "<span class=\"typ\">EBAmountField</span>(<span class=\"prp\">amount</span>: $amount)\n    .<span class=\"fn\">controlSize</span>(<span class=\"dot\">.large</span>)\n    .<span class=\"fn\">ebLabel</span>(<span class=\"str\">\"Add Your Label Here\"</span>)\n    .<span class=\"fn\">ebHelperText</span>(<span class=\"str\">\"Add your subtext here\"</span>)",
+        "compose": "<span class=\"typ\">EBAmountField</span>(\n    <span class=\"prp\">amount</span> = amount,\n    <span class=\"prp\">onAmountChange</span> = { amount = it },\n    <span class=\"prp\">size</span> = <span class=\"typ\">EBAmountSize</span>.LG,\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Add Your Label Here\"</span>,\n    <span class=\"prp\">helperText</span> = <span class=\"str\">\"Add your subtext here\"</span>\n)"
       },
       {
-        "subheading": "Large (hero amount)",
-        "swift": "<span class=\"typ\">EBAmountTextField</span>(<span class=\"prp\">value</span>: $amount)\n    .<span class=\"fn\">ebAmountSize</span>(.<span class=\"prp\">large</span>)\n    .<span class=\"fn\">keyboardType</span>(.<span class=\"prp\">decimalPad</span>)",
-        "compose": "<span class=\"typ\">EBAmountTextField</span>(\n    <span class=\"prp\">value</span> = amount,\n    <span class=\"prp\">onValueChange</span> = { amount = it },\n    <span class=\"prp\">size</span> = <span class=\"typ\">EBAmountSize</span>.<span class=\"prp\">Large</span>,\n    <span class=\"prp\">keyboardOptions</span> = <span class=\"typ\">KeyboardOptions</span>(<span class=\"prp\">keyboardType</span> = <span class=\"typ\">KeyboardType</span>.<span class=\"prp\">Decimal</span>)\n)"
+        "subheading": "Medium",
+        "swift": "<span class=\"typ\">EBAmountField</span>(<span class=\"prp\">amount</span>: $amount)\n    .<span class=\"fn\">controlSize</span>(<span class=\"dot\">.regular</span>)",
+        "compose": "<span class=\"typ\">EBAmountField</span>(\n    <span class=\"prp\">amount</span> = amount,\n    <span class=\"prp\">onAmountChange</span> = { amount = it },\n    <span class=\"prp\">size</span> = <span class=\"typ\">EBAmountSize</span>.MD\n)"
+      },
+      {
+        "subheading": "Amount only — no currency symbol or code",
+        "swift": "<span class=\"typ\">EBAmountField</span>(<span class=\"prp\">amount</span>: $amount)\n    .<span class=\"fn\">ebCurrencySymbol</span>(<span class=\"kw\">false</span>)\n    .<span class=\"fn\">ebCurrencyCode</span>(<span class=\"kw\">false</span>)",
+        "compose": "<span class=\"typ\">EBAmountField</span>(\n    <span class=\"prp\">amount</span> = amount,\n    <span class=\"prp\">onAmountChange</span> = { amount = it },\n    <span class=\"prp\">showCurrencySymbol</span> = <span class=\"kw\">false</span>,\n    <span class=\"prp\">showCurrencyCode</span> = <span class=\"kw\">false</span>\n)"
       },
       {
         "subheading": "Error",
-        "swift": "<span class=\"typ\">EBAmountTextField</span>(<span class=\"prp\">value</span>: $amount, <span class=\"prp\">subtext</span>: <span class=\"str\">\"How much do you want to save?\"</span>)\n    .<span class=\"fn\">ebError</span>(<span class=\"kw\">true</span>)",
-        "compose": "<span class=\"typ\">EBAmountTextField</span>(\n    <span class=\"prp\">value</span> = amount,\n    <span class=\"prp\">onValueChange</span> = { amount = it },\n    <span class=\"prp\">subtext</span> = <span class=\"str\">\"How much do you want to save?\"</span>,\n    <span class=\"prp\">isError</span> = <span class=\"kw\">true</span>\n)"
+        "swift": "<span class=\"typ\">EBAmountField</span>(<span class=\"prp\">amount</span>: $amount)\n    .<span class=\"fn\">ebState</span>(<span class=\"dot\">.error</span>)\n    .<span class=\"fn\">ebHelperText</span>(<span class=\"str\">\"Amount exceeds your balance\"</span>)",
+        "compose": "<span class=\"typ\">EBAmountField</span>(\n    <span class=\"prp\">amount</span> = amount,\n    <span class=\"prp\">onAmountChange</span> = { amount = it },\n    <span class=\"prp\">state</span> = <span class=\"typ\">EBFieldState</span>.Error,\n    <span class=\"prp\">helperText</span> = <span class=\"str\">\"Amount exceeds your balance\"</span>\n)"
+      },
+      {
+        "subheading": "Disabled",
+        "swift": "<span class=\"typ\">EBAmountField</span>(<span class=\"prp\">amount</span>: $amount)\n    .<span class=\"fn\">disabled</span>(<span class=\"kw\">true</span>)",
+        "compose": "<span class=\"typ\">EBAmountField</span>(\n    <span class=\"prp\">amount</span> = amount,\n    <span class=\"prp\">onAmountChange</span> = { amount = it },\n    <span class=\"prp\">enabled</span> = <span class=\"kw\">false</span>\n)"
       }
     ],
     "accessibility": [
@@ -595,189 +611,374 @@ export const amountTextField: ComponentData = {
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Two layers named <code>#label</code> and three named <code>#amount</code> in every variant — the property surface can't distinguish them."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Every variant carries the same five semantic names — <code>Label</code>, <code>AmountRow</code> wrapping <code>CurrencySymbol</code> · <code>Value</code> · <code>CurrencyCode</code>, and <code>HelperText</code>. The duplicate <code>#label</code> and <code>#amount</code> layers are gone, so each text layer exposes as a single property across the set."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "<code>label=yes/no</code> is gone and the state axis matches Input Field. Remaining: <code>Active</code> should be <code>Focused</code>, <code>Error</code> is a Status on the State axis, and <code>Large|Medium</code> diverges from <code>LG|MD</code>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Size = LG | MD</code> × <code>State = Default | Focused | Disabled | Error</code>, PascalCase per §1 with Title Case values per §5, on the standard sizing vocabulary. <code>Active</code> → <code>Focused</code> and <code>Large|Medium</code> → <code>LG|MD</code> both landed; <code>label=yes/no</code> is now the <code>hasLabel</code> boolean. <code>Error</code> on the <code>State</code> axis is the documented §6 form-field exception."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All colors bind to <code>main/amount-text-field/{state}/{role}</code>. Typography uses DS text styles."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Colors moved from the component-scoped namespace to the shared generic scale. Bindings are not readable through the review tooling, so the token paths on the Style tab are indicative and need a Dev Mode confirmation."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Maps to <code>TextField</code> + <code>.keyboardType(.decimalPad)</code> / <code>OutlinedTextField</code> + <code>KeyboardType.Decimal</code>. Display-style underline anatomy needs custom styling vs default framework chrome."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Maps to <code>TextField</code> + <code>.keyboardType(.decimalPad)</code> on iOS and <code>OutlinedTextField</code> + <code>KeyboardType.Decimal</code> on Android. The <code>AmountRow</code> stroke renders as a single bottom rule rather than a box, so native draws an underline rather than framework chrome."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "All four states ship in both sizes. Remaining: label and supporting text don't mute in Disabled."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "All four states ship in both sizes — the rule moves <code>#E5EBF4</code> → <code>#183462</code> focused → <code>#D61B2C</code> error, and Disabled mutes the amount to <code>#C2CFE5</code>. The label deliberately stays <code>#0A2757</code> in Disabled: it identifies the field regardless of whether it can be edited."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Peso glyph is now a text glyph, not a raster reference — colors with the rest of the amount."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "The component carries no icons. The peso glyph is a text character in the same style as the amount, so it colours with it rather than needing a vector asset."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked — no native library exists yet. The structural blockers are cleared."
+        "notes": "Blocked — no native library exists yet. Nothing in the schema blocks it: two cleanly named enums and four booleans, with no duplicate layer names."
       }
     ],
     "codeConnect": [
       {
         "aspect": "Property naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>label=yes/no</code> blocks Boolean mapping"
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Size</code> and <code>State</code> map onto native enums; the four <code>has</code> booleans map onto optional arguments and visibility flags."
       },
       {
         "aspect": "State coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Missing Active / Disabled"
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "All eight combinations exist — <code>Size</code> (2) × <code>State</code> (4) with no gaps."
       },
       {
         "aspect": "Asset linkability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Raster peso glyph not mappable to a vector asset param"
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "No vector assets to link. The peso glyph is text."
       },
       {
         "aspect": "Native component file",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "EBAmountTextField.swift / EBAmountTextField.kt not yet created"
+        "notes": "Proposed target: <code>EBAmountField</code>. Not yet written — blocked on the native library, same as C7."
       }
     ],
     "variants": {
-      "total": 12,
-      "description": "2 <code>size</code> × 3 <code>state</code> × 2 <code>label</code> = <strong>12 variants</strong>.",
+      "total": 8,
+      "description": "<code>Size</code> (2) × <code>State</code> (4) — all eight combinations exist. The four <code>has</code> booleans are component properties rather than variant axes, so they do not multiply the count. LG is 20px taller than MD, and its amount runs 53/58 Semibold against MD’s 35/38 Bold — a weight change as well as a size change.",
       "columns": [
-        "size",
-        "state",
-        "label",
+        "Size",
+        "State",
+        "Dimensions",
         "Node ID"
       ],
       "rows": [
         {
           "cells": [
-            "Large",
-            "Filled",
-            "yes",
-            "152:48113"
-          ]
-        },
-        {
-          "cells": [
-            "Large",
+            "LG",
             "Default",
-            "yes",
-            "152:48116"
+            "400 × 184",
+            "4602:18143"
           ]
         },
         {
           "cells": [
-            "Large",
+            "LG",
+            "Focused",
+            "400 × 184",
+            "4602:18139"
+          ]
+        },
+        {
+          "cells": [
+            "LG",
+            "Disabled",
+            "400 × 184",
+            "4602:18140"
+          ]
+        },
+        {
+          "cells": [
+            "LG",
             "Error",
-            "yes",
-            "152:48120"
+            "400 × 184",
+            "4602:18142"
           ]
         },
         {
           "cells": [
-            "Large",
-            "Filled",
-            "no",
-            "152:48111"
-          ]
-        },
-        {
-          "cells": [
-            "Large",
+            "MD",
             "Default",
-            "no",
-            "152:48115"
+            "400 × 164",
+            "4602:18141"
           ]
         },
         {
           "cells": [
-            "Large",
+            "MD",
+            "Focused",
+            "400 × 164",
+            "4602:18138"
+          ]
+        },
+        {
+          "cells": [
+            "MD",
+            "Disabled",
+            "400 × 164",
+            "4602:18137"
+          ]
+        },
+        {
+          "cells": [
+            "MD",
             "Error",
-            "no",
-            "152:48110"
-          ]
-        },
-        {
-          "cells": [
-            "Default",
-            "Filled",
-            "yes",
-            "152:48121"
-          ]
-        },
-        {
-          "cells": [
-            "Default",
-            "Default",
-            "yes",
-            "152:48114"
-          ]
-        },
-        {
-          "cells": [
-            "Default",
-            "Error",
-            "yes",
-            "152:48118"
-          ]
-        },
-        {
-          "cells": [
-            "Default",
-            "Filled",
-            "no",
-            "152:48117"
-          ]
-        },
-        {
-          "cells": [
-            "Default",
-            "Default",
-            "no",
-            "152:48119"
-          ]
-        },
-        {
-          "cells": [
-            "Default",
-            "Error",
-            "no",
-            "152:48112"
+            "400 × 164",
+            "4602:18136"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.6",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Style + Code tabs rebuilt against node 4602:18144",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt as a single card</strong> — one spec card driven by a panel mirroring the Figma property panel: <code>Size</code> and <code>State</code> as selects, and <code>hasLabel</code>, <code>hasLeadingCurrency</code>, <code>hasSubtext</code>, <code>hasTrailingCurrency</code> as toggles. The four booleans were invisible to <code>get_node_info</code>, which returns variant properties only. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>The stroke is a bottom rule, not a box</strong> — <code>AmountRow</code> carries a stroke that reads as a bordered container in the layer data but renders as a single line under the amount. Corrected by checking against an export. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Currency toggles recentre the amount</strong> — dropping <code>₱</code> or <code>Php</code> re-centres what remains rather than leaving a gap, matching the centred auto-layout. Turning off the label or subtext collapses its block and the card shrinks from 184px. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Property mapping corrected</strong> — <code>size = Large / Default</code>, <code>state = Filled</code> and <code>label = yes / no</code> are gone. Now maps <code>Size</code>, <code>State</code> and the four booleans, plus the amount binding and the decimal keyboard. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        },
+        {
+          "body": "<strong>Variants inventory corrected</strong> — from <code>total: 12</code> on a “2 size × 3 state × 2 label” matrix to the real 8, noting that LG runs 53/58 Semibold against MD’s 35/38 Bold — a weight change as well as a size change. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        },
+        {
+          "body": "<strong>Scorecard and Code Connect rewritten</strong> — C1 still reported duplicate <code>#label</code> / <code>#amount</code> layers, C2 the <code>Active</code> and <code>Large|Medium</code> naming, C5 an unmuted Disabled label. All resolved in v2.2–v2.3. C6 is now Not Applicable: the peso glyph is text, not an asset. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.5",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Composition and locale settled",
+      "rows": [
+        {
+          "body": "<strong>Local <code>Label</code> and <code>HelperText</code> confirmed intentional</strong> — the shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances are built for left-aligned form rows and would need overriding in every variant of this centred, large-type field. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>Locale and keyboard behaviour documented</strong> — locale drives the symbol, the code and the separators together; format through the platform currency formatter rather than concatenating. Decimal pad on both platforms, two fraction digits, and pasted input stripped to digits rather than rejected. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.4",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Naming verified and error treatment recorded",
+      "rows": [
+        {
+          "body": "<strong>Layer naming verified complete</strong> across all eight variants — no legacy prefix, no duplicate siblings, no cross-variant mismatch. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Error state colours the full amount row and its helper text</strong> — border, symbol, value, code and helper all move to <code>#D61B2C</code>, the stronger of the two treatments in Form Elements. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.3",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Naming completed and scope confirmed",
+      "rows": [
+        {
+          "body": "<strong>Layer and property naming completed.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Disabled treatment confirmed intentional</strong> — the label and helper text sit outside the enclosed input, so they keep their colour while the amount mutes. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Currency slots ruled unnecessary</strong> — the symbol and code are text, so a slot would add indirection without adding capability. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Confirmed a standalone component</strong> rather than a composed variant of Input Field. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.2",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Layer names and sizing scale",
+      "rows": [
+        {
+          "body": "<strong>Amount layers renamed to describe their content</strong> — <code>CurrencySymbol</code>, <code>Value</code> and <code>CurrencyCode</code> replacing three layers that shared one name. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Size values aligned to the standard scale</strong> — <code>Large|Medium</code> → <code>LG|MD</code>. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Fractional widths corrected.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Exception confirmed",
+      "rows": [
+        {
+          "body": "<strong><code>State=Error</code> exception confirmed</strong> — covered by the §6 form-field exception in the Property Naming Guidelines, so <code>Error</code> stays on the <code>State</code> axis. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt on node 4602:18144 — 2026 Working File",
+      "rows": [
+        {
+          "body": "<strong>Peso glyph is no longer a raster image</strong> — now a text character in the same style as the amount, so it colours with it. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6"
+          }
+        },
+        {
+          "body": "<strong>Active and Disabled states added</strong> — the axis now carries all four interaction states. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Large variant now carries the peso glyph.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong><code>label=yes/no</code> property removed</strong> — replaced by the <code>hasLabel</code> boolean with real True/False values. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",
