@@ -183,7 +183,7 @@ function getSnippet(cardKey, lang) {
     'type' + sep + (compose
       ? '<span class="syn-type">EBSelectItemType</span><span class="syn-punc">.</span><span class="syn-dot">' + _SITEM_CASED[card.type] + '</span>'
       : '<span class="syn-dot">.' + card.type + '</span>'),
-    'density' + sep + enumVal('EBSelectItemDensity', card.density)
+    'density' + sep + enumVal('EBDensity', card.density)
   ];
   if (card.isselected === 'true' && card.state === 'default') {
     args.push('isSelected' + sep + '<span class="syn-kw">true</span>');

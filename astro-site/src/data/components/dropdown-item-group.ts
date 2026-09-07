@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildColorsTable } from './_helpers';
 
 /* Demo controls for the Style tab's single spec card. Both axes shape the
    slot's default content rather than being applied to whatever fills it —
@@ -8,24 +9,15 @@ const selectGroupControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'BorderType',
-        prop: 'border',
-        options: [
-          { value: 'middleinset', label: 'MiddleInset' },
-          { value: 'fullwidth', label: 'FullWidth' },
-          { value: 'none', label: 'None' }
-        ],
-        defaultValue: 'middleinset'
-      },
-      {
         label: 'Density',
         prop: 'density',
+        control: 'select' as const,
+        defaultValue: 'compact',
         options: [
           { value: 'compact', label: 'Compact' },
           { value: 'default', label: 'Default' },
           { value: 'comfortable', label: 'Comfortable' }
-        ],
-        defaultValue: 'compact'
+        ]
       }
     ]
   }
@@ -57,7 +49,7 @@ export const dropdownItemGroup: ComponentData = {
   },
   "overview": {
     "inContextNote": "The surface that appears under a Select when it expands. On its own it is never shown — it is either filled by a Select or filled by hand with Select Items.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"sgroup-demo-preview\"><div class=\"eb-preview-sgroup eb-preview-sgroup--middleinset eb-preview-sgroup--compact\"><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">BorderType</span><select id=\"sgroup-ctrl-border\" class=\"demo-panel-select\" onchange=\"_sgroupUpdate()\"><option value=\"middleinset\" selected=\"\">MiddleInset</option><option value=\"fullwidth\">FullWidth</option><option value=\"none\">None</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Density</span><select id=\"sgroup-ctrl-density\" class=\"demo-panel-select\" onchange=\"_sgroupUpdate()\"><option value=\"compact\" selected=\"\">Compact</option><option value=\"default\">Default</option><option value=\"comfortable\">Comfortable</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"sgroup-demo-preview\"><div class=\"eb-preview-sgroup eb-preview-sgroup--middleinset eb-preview-sgroup--compact\"><div class=\"eb-preview-sgroup__row eb-preview-sgroup__row--selected\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">BorderType</span><select id=\"sgroup-ctrl-border\" class=\"demo-panel-select\" onchange=\"_sgroupUpdate()\"><option value=\"middleinset\" selected=\"\">MiddleInset</option><option value=\"fullwidth\">FullWidth</option><option value=\"none\">None</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Density</span><select id=\"sgroup-ctrl-density\" class=\"demo-panel-select\" onchange=\"_sgroupUpdate()\"><option value=\"compact\" selected=\"\">Compact</option><option value=\"default\">Default</option><option value=\"comfortable\">Comfortable</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -215,96 +207,199 @@ export const dropdownItemGroup: ComponentData = {
     "appliedRecommendations": []
   },
   "style": {
-    "heading": "Structure",
+    "heading": "BorderType",
+    "description": "Three ways to separate the rows, and that is the whole of it — <code>MiddleInset</code> insets its hairline 12px each side, <code>FullWidth</code> runs edge to edge, and <code>None</code> has no divider layers at all. That last one is why <code>None</code> is 24px shorter at every density: six gaps × the 4px frame each divider sits in. <code>Density</code> sets the row height and nothing else. Everything inside a row is a <a href=\"/components/dropdown-item\">Select Item</a>, placed with <code>hasTrailing=false</code>, which is why no badge appears in a real list.",
+    "colorsTables": [
+      buildColorsTable({
+        title: "Colors by BorderType",
+        description: "The group paints four things: its own surface and border, the dividers between rows, and a scrollbar — though the scrollbar is hidden by default and only appears when a list overflows. Everything inside a row belongs to <a href=\"/components/dropdown-item\">Select Item</a> — its label, its leading mark and its selected treatment are that component’s, which is why they are named here rather than given values. The divider is the only role that changes across the three versions, and <code>None</code> simply has none.",
+        columns: ["None", "MiddleInset", "FullWidth"],
+        rows: [
+          { role: "Container", token: "bg/color-bg-main", values: ["#FFFFFF", "#FFFFFF", "#FFFFFF"] },
+          { role: "Container border", token: "border/color-border-weak", values: ["#E5EBF4", "#E5EBF4", "#E5EBF4"] },
+          { role: "Divider", token: "border/color-border-weak", values: ["—", "#E5EBF4", "#E5EBF4"] },
+          { role: "Scrollbar", token: "border/color-border", values: ["#D7E0EF", "#D7E0EF", "#D7E0EF"] },
+          { role: "Rows", token: "set by the Select Item instances placed", values: ["—", "—", "—"] }
+        ]
+      })
+    ],
     "specCards": [
       {
-        "cardKey": "sgroup-spec-card-default",
-        "demoKey": "default",
+        "cardKey": "sgroup-spec-card-none",
+        "demoKey": "none",
         "demoControls": selectGroupControls,
-        "title": "Select Group",
-        "node": "7947:111630",
-        "description": "A card wrapping ⤷ SelectionSlot. The preview shows five rows rather than the seven the component ships, so the card fits the page.",
-        "previewHtml": "<div id=\"sgroup-spec-default\"><div class=\"eb-preview-sgroup eb-preview-sgroup--middleinset eb-preview-sgroup--compact\"><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"></span><span class=\"eb-preview-sgroup__label\">Text</span></div></div></div>",
+        "title": "None",
+        "node": "7947:111687",
+        "description": "",
+        "previewHtml": "<div id=\"sgroup-spec-none\"><div class=\"eb-preview-sgroup eb-preview-sgroup--none eb-preview-sgroup--compact\"><div class=\"eb-preview-sgroup__row eb-preview-sgroup__row--selected\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "BorderType", "value": "MiddleInset", "prop": "border",
-                "variants": {
-                  "border:fullwidth": { "value": "FullWidth" },
-                  "border:none": { "value": "None — divider nodes absent" }
-                }
-              },
-              { "key": "Density", "value": "Compact", "prop": "density",
-                "variants": {
-                  "density:default": { "value": "Default" },
-                  "density:comfortable": { "value": "Comfortable" }
-                }
-              },
-              { "key": "⤷ SelectionSlot", "value": "7 × Select Item + hidden Label" },
-              { "key": "Dividers", "value": "6 × Horizontal / Divider, siblings in the slot",
-                "variants": {
-                  "border:none": { "value": "none — absent from the variant" }
-                }
-              },
-              { "key": "Scrollbar", "value": "hidden — native draws its own" }
+              { "key": "BorderType", "value": "None" },
+              { "key": "Density", "value": "Compact", "prop": "density" },
+              { "key": "⤷ SelectionSlot (slot)", "value": "9 items — holds the rows, the dividers and a scrollbar" },
+              { "key": "Divider", "value": "No divider layers at all — the rows sit directly against each other" },
+              { "key": "Rows", "value": "7 Select Item instances, the first selected, all with hasTrailing=false" },
+              { "key": "Label header", "value": "A Label instance at the top of the slot, hidden by default — the option is there for when a group needs a heading, which most do not" },
+              { "key": "Scrollbar", "value": "A 12 × 312 frame holding a 4px bar, hidden by default — available when a list overflows, which most do not" },
+              { "key": "Versions", "value": "9" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Card", "value": "#FFFFFF", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "Card hairline", "value": "#E5EBF4", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "Divider", "value": "#E5EBF4", "token": "library variable · name pending Dev Mode read", "swatch": true,
-                "variants": {
-                  "border:none": { "value": "–", "swatch": false }
-                }
-              },
-              { "key": "Row", "value": "set by Select Item", "token": "–" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width", "value": "320", "mono": true },
-              { "key": "Height", "value": "312", "mono": true,
-                "variants": {
-                  "border:none": { "value": "288" },
-                  "density:default": { "value": "368" },
-                  "density:comfortable": { "value": "424" },
-                  "border:none|density:default": { "value": "344" },
-                  "border:none|density:comfortable": { "value": "400" }
-                }
-              },
-              { "key": "Corner radius", "value": "6", "mono": true },
-              { "key": "Padding", "value": "4 top and bottom", "mono": true },
-              { "key": "Row height", "value": "40", "mono": true,
-                "variants": {
-                  "density:default": { "value": "48" },
-                  "density:comfortable": { "value": "56" }
-                }
-              },
-              { "key": "Divider height", "value": "4", "mono": true },
-              { "key": "Rows shipped", "value": "7", "mono": true },
-              { "key": "Scrollbar", "value": "12 wide, full height, hidden", "mono": true }
+              { "key": "Container", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
+              { "key": "Container border", "value": "#E5EBF4", "token": "border/color-border-weak", "swatch": true },
+              { "key": "Divider", "value": "None — this version draws no dividers" },
+              { "key": "Scrollbar", "value": "#D7E0EF", "token": "border/color-border", "swatch": true },
+              { "key": "Rows", "value": "Set by the Select Item instances placed — see that component" }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Applies to", "value": "none of its own — the rows carry the type", "mono": true },
-              { "key": "Row text", "value": "see Select Item — Proxima Soft SemiBold 16 / 20", "mono": true },
-              { "key": "Label header", "value": "hidden by default; a subsection heading when shown", "mono": true },
-              { "key": "Text styles", "value": "shared library styles · names pending Dev Mode read", "mono": true }
+              { "key": "Row label", "value": "Primary/Multi-line Label/Light/Base", "mono": true },
+              { "key": "Label header (hidden)", "value": "Primary/Label/Light/Small", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "288 — Hug", "mono": true, "variants": { "density:default": { "value": "344 — Hug" }, "density:comfortable": { "value": "400 — Hug" } } },
+              { "key": "Width", "value": "320 — Fill", "mono": true },
+              { "key": "Radius", "value": "6", "mono": true },
+              { "key": "Padding H", "value": "0", "mono": true },
+              { "key": "Padding V", "value": "4", "mono": true },
+              { "key": "Gap", "value": "0", "mono": true },
+              { "key": "Alignment", "value": "Top left", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>\n    borderType<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.middleInset</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.compact</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>options<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>$0<span class=\"syn-punc\">.</span>label<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>\n    borderType <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBorderType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">MiddleInset</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Compact</span>\n<span class=\"syn-punc\">) {</span>\n    options<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>it<span class=\"syn-punc\">.</span>label<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">}</span>"
+        "swift": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>\n    borderType<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.none</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.compact</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span> isSelected<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>\n    borderType <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBorderType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">None</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Compact</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span> isSelected <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+      },
+      {
+        "cardKey": "sgroup-spec-card-middleinset",
+        "demoKey": "middleinset",
+        "demoControls": selectGroupControls,
+        "title": "MiddleInset",
+        "node": "7947:111631",
+        "description": "",
+        "previewHtml": "<div id=\"sgroup-spec-middleinset\"><div class=\"eb-preview-sgroup eb-preview-sgroup--middleinset eb-preview-sgroup--compact\"><div class=\"eb-preview-sgroup__row eb-preview-sgroup__row--selected\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "BorderType", "value": "MiddleInset" },
+              { "key": "Density", "value": "Compact", "prop": "density" },
+              { "key": "⤷ SelectionSlot (slot)", "value": "9 items — holds the rows, the dividers and a scrollbar" },
+              { "key": "Divider", "value": "A 320 × 4 frame holding a hairline from x=12 to x=308" },
+              { "key": "Rows", "value": "7 Select Item instances, the first selected, all with hasTrailing=false" },
+              { "key": "Label header", "value": "A Label instance at the top of the slot, hidden by default — the option is there for when a group needs a heading, which most do not" },
+              { "key": "Scrollbar", "value": "A 12 × 312 frame holding a 4px bar, hidden by default — available when a list overflows, which most do not" },
+              { "key": "Versions", "value": "9" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Container", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
+              { "key": "Container border", "value": "#E5EBF4", "token": "border/color-border-weak", "swatch": true },
+              { "key": "Divider", "value": "#E5EBF4", "token": "border/color-border-weak", "swatch": true },
+              { "key": "Scrollbar", "value": "#D7E0EF", "token": "border/color-border", "swatch": true },
+              { "key": "Rows", "value": "Set by the Select Item instances placed — see that component" }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "Row label", "value": "Primary/Multi-line Label/Light/Base", "mono": true },
+              { "key": "Label header (hidden)", "value": "Primary/Label/Light/Small", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "312 — Hug", "mono": true, "variants": { "density:default": { "value": "368 — Hug" }, "density:comfortable": { "value": "424 — Hug" } } },
+              { "key": "Width", "value": "320 — Fill", "mono": true },
+              { "key": "Radius", "value": "6", "mono": true },
+              { "key": "Padding H", "value": "0", "mono": true },
+              { "key": "Padding V", "value": "4", "mono": true },
+              { "key": "Gap", "value": "0", "mono": true },
+              { "key": "Alignment", "value": "Top left", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>\n    borderType<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.middleInset</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.compact</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span> isSelected<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>\n    borderType <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBorderType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">MiddleInset</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Compact</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span> isSelected <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+      },
+      {
+        "cardKey": "sgroup-spec-card-fullwidth",
+        "demoKey": "fullwidth",
+        "demoControls": selectGroupControls,
+        "title": "FullWidth",
+        "node": "7947:111659",
+        "description": "",
+        "previewHtml": "<div id=\"sgroup-spec-fullwidth\"><div class=\"eb-preview-sgroup eb-preview-sgroup--fullwidth eb-preview-sgroup--compact\"><div class=\"eb-preview-sgroup__row eb-preview-sgroup__row--selected\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div><div class=\"eb-preview-sgroup__row\"><span class=\"eb-preview-sgroup__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sgroup__label\">Text</span></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "BorderType", "value": "FullWidth" },
+              { "key": "Density", "value": "Compact", "prop": "density" },
+              { "key": "⤷ SelectionSlot (slot)", "value": "9 items — holds the rows, the dividers and a scrollbar" },
+              { "key": "Divider", "value": "A 320 × 4 frame holding a hairline from x=0 to x=320" },
+              { "key": "Rows", "value": "7 Select Item instances, the first selected, all with hasTrailing=false" },
+              { "key": "Label header", "value": "A Label instance at the top of the slot, hidden by default — the option is there for when a group needs a heading, which most do not" },
+              { "key": "Scrollbar", "value": "A 12 × 312 frame holding a 4px bar, hidden by default — available when a list overflows, which most do not" },
+              { "key": "Versions", "value": "9" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Container", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
+              { "key": "Container border", "value": "#E5EBF4", "token": "border/color-border-weak", "swatch": true },
+              { "key": "Divider", "value": "#E5EBF4", "token": "border/color-border-weak", "swatch": true },
+              { "key": "Scrollbar", "value": "#D7E0EF", "token": "border/color-border", "swatch": true },
+              { "key": "Rows", "value": "Set by the Select Item instances placed — see that component" }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "Row label", "value": "Primary/Multi-line Label/Light/Base", "mono": true },
+              { "key": "Label header (hidden)", "value": "Primary/Label/Light/Small", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "312 — Hug", "mono": true, "variants": { "density:default": { "value": "368 — Hug" }, "density:comfortable": { "value": "424 — Hug" } } },
+              { "key": "Width", "value": "320 — Fill", "mono": true },
+              { "key": "Radius", "value": "6", "mono": true },
+              { "key": "Padding H", "value": "0", "mono": true },
+              { "key": "Padding V", "value": "4", "mono": true },
+              { "key": "Gap", "value": "0", "mono": true },
+              { "key": "Alignment", "value": "Top left", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>\n    borderType<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.fullWidth</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.compact</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span> isSelected<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>\n    borderType <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBorderType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">FullWidth</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Compact</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span> isSelected <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       }
     ]
   },
@@ -313,41 +408,55 @@ export const dropdownItemGroup: ComponentData = {
       "planned": true,
       "blocks": [
         {
-          "label": "Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
-          "label": "Gradle",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:select:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>select<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
+      "footnote": "Planned API — the native library does not exist yet. The artifact is the Select family: <a href=\"/components/dropdown\">Select</a>, this component and <a href=\"/components/dropdown-item\">Select Item</a> all ship in <code>com.eastblue.ds:select</code> and import <code>com.eastblue.ds.select.*</code>."
     },
     "propertyMapping": {
-      "description": "Figma properties mapped to the intended native parameters. Both properties are variants of the slot's default content in Figma but genuine list-level parameters in code — the divergence is deliberate and documented.",
+      "description": "Three properties. Two native parameters have no row because neither is one: <code>header</code> would drive the <code>Label</code> layer at the top of the slot, and the scrollbar is a hidden frame — both ship hidden as options held in reserve, and on both platforms the scrollbar is drawn by the platform rather than by the component. <strong>The one thing that does not map cleanly is how the two properties reach the rows.</strong> In Figma <code>BorderType</code> and <code>Density</code> shape the slot’s <em>default content</em>; a component property cannot reach inside a slot, so replacing the rows leaves both properties with nothing to act on. Natively they apply to whatever fills the slot, which is the behaviour the page documents and the better one — but it means the Figma component and the native component differ in mechanism, not just in syntax.",
       "rows": [
-        { "figma": "BorderType", "swift": "borderType: EBBorderType", "compose": "borderType: EBBorderType" },
-        { "figma": "Density", "swift": "density: EBDensity", "compose": "density: EBDensity" },
-        { "figma": "⤷ SelectionSlot", "swift": "@ViewBuilder content: () -> Content", "compose": "content: @Composable ColumnScope.() -> Unit" },
-        { "figma": "Label (hidden)", "swift": "header: String?", "compose": "header: String?" },
-        { "figma": "Scrollbar", "swift": "— platform draws its own", "compose": "— platform draws its own" }
+        {
+          "figma": "BorderType — None, MiddleInset, FullWidth",
+          "swift": "<code>borderType: EBBorderType</code>",
+          "compose": "<code>borderType: EBBorderType</code>"
+        },
+        {
+          "figma": "Density — Compact, Default, Comfortable",
+          "swift": "<code>density: EBDensity = .compact</code>",
+          "compose": "<code>density: EBDensity = Compact</code>"
+        },
+        {
+          "figma": "⤷ SelectionSlot (slot)",
+          "swift": "<code>@ViewBuilder content: () -> Content</code>",
+          "compose": "<code>content: @Composable ColumnScope.() -> Unit</code>"
+        }
       ]
     },
     "usageSnippets": [
       {
-        "subheading": "Inset dividers (default)",
-        "swift": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>borderType<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.middleInset</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>accounts<span class=\"syn-punc\">) {</span> account <span class=\"syn-kw\">in</span>\n        <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>account<span class=\"syn-punc\">.</span>name<span class=\"syn-punc\">,</span> isSelected<span class=\"syn-punc\">:</span> account <span class=\"syn-eq\">==</span> selected<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>borderType <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBorderType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">MiddleInset</span><span class=\"syn-punc\">) {</span>\n    accounts<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span>\n        <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>it<span class=\"syn-punc\">.</span>name<span class=\"syn-punc\">,</span> selected <span class=\"syn-eq\">=</span> it <span class=\"syn-eq\">==</span> selected<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">}</span>"
+        "subheading": "None — a plain list, no separators",
+        "swift": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>borderType<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.none</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Savings\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Checking\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>borderType <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBorderType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">None</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Savings\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Checking\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       },
       {
-        "subheading": "No dividers, comfortable rows",
-        "swift": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>borderType<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.none</span><span class=\"syn-punc\">,</span> density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.comfortable</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>countries<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>$0<span class=\"syn-punc\">.</span>name<span class=\"syn-punc\">,</span> leading<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.flag</span><span class=\"syn-punc\">(</span>$0<span class=\"syn-punc\">.</span>code<span class=\"syn-punc\">)) }</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>\n    borderType <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBorderType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">None</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Comfortable</span>\n<span class=\"syn-punc\">) {</span> countries<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>it<span class=\"syn-punc\">.</span>name<span class=\"syn-punc\">) } }</span>"
+        "subheading": "MiddleInset — separators that stop short of the edges",
+        "swift": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>borderType<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.middleInset</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Savings\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Checking\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>borderType <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBorderType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">MiddleInset</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Savings\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Checking\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       },
       {
-        "subheading": "With a subsection header",
-        "swift": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>header<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Recent\"</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">ForEach</span><span class=\"syn-punc\">(</span>recent<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>$0<span class=\"syn-punc\">.</span>label<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>header <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Recent\"</span><span class=\"syn-punc\">) {</span>\n    recent<span class=\"syn-punc\">.</span>forEach <span class=\"syn-punc\">{</span> <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>it<span class=\"syn-punc\">.</span>label<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">}</span>"
+        "subheading": "FullWidth — separators edge to edge, comfortable rows",
+        "swift": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>borderType<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.fullWidth</span><span class=\"syn-punc\">,</span> density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.comfortable</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Philippines\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Singapore\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBSelectGroup</span><span class=\"syn-punc\">(</span>borderType <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBBorderType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">FullWidth</span><span class=\"syn-punc\">,</span> density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Comfortable</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Philippines\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Singapore\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
     "accessibility": [
@@ -415,14 +524,14 @@ export const dropdownItemGroup: ComponentData = {
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "The card fill, hairline and divider resolve to library variables. Names need a Dev Mode read before they can be printed."
+        "notes": "Every colour is bound and named: <code>bg/color-bg-main</code> on the card, <code>border/color-border-weak</code> on both its hairline and the dividers, and <code>border/color-border</code> on the hidden scrollbar. Everything inside a row belongs to <a href=\"/components/dropdown-item\">Select Item</a>, which is why the rows are named rather than valued here."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "A card wrapping a list maps directly. The one divergence — properties shaping default content rather than applying to the slot — is a Figma limit, documented rather than worked around."
+        "notes": "A card wrapping a list maps directly. The one divergence is mechanical rather than cosmetic: in Figma <code>BorderType</code> and <code>Density</code> shape the slot’s default content, so replacing the rows leaves both with nothing to act on; natively they apply to whatever fills the slot. The native behaviour is the better one, and it is what the mapping documents — but the two components differ in mechanism, so a Code Connect binding will not be a straight pass-through."
       },
       {
         "id": "C5",
@@ -436,7 +545,7 @@ export const dropdownItemGroup: ComponentData = {
         "criterion": "Asset & Icon Quality",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "No artwork of its own. The Scrollbar is a hand-drawn rectangle, hidden and confirmed intentional."
+        "notes": "No artwork of its own. The <code>Label</code> header and the <code>Scrollbar</code> are both hidden by default and confirmed intentional — options for when a group needs a heading or a list overflows, which most do not."
       },
       {
         "id": "C7",
@@ -446,26 +555,7 @@ export const dropdownItemGroup: ComponentData = {
         "notes": "Blocked — the native library does not exist yet."
       }
     ],
-    "codeConnect": [
-      {
-        "aspect": "Property naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>BorderType</code>, <code>Density</code> and <code>⤷ SelectionSlot</code> map one to one now the values are joined."
-      },
-      {
-        "aspect": "Token coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Bindings are in place; only the human-readable names are outstanding."
-      },
-      {
-        "aspect": "Registration",
-        "status": "empty",
-        "statusLabel": "Not Mapped",
-        "notes": "Blocked until the native library exists."
-      }
-    ],
+    "codeConnect": [],
     "variants": {
       "total": 9,
       "description": "3 BorderType × 3 Density = 9. Row count is not an axis — the slot ships seven and takes whatever replaces them.",
@@ -484,6 +574,87 @@ export const dropdownItemGroup: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs rebuilt to the content guides — node 7947:111630",
+      "rows": [
+        {
+          "body": "<strong>One card became three.</strong> <code>BorderType</code> is the driving property, so None, MiddleInset and FullWidth each get a card. <code>Density</code> stays a control, and <code>⤷ SelectionSlot</code> is a slot, which leaves the panel with one control for a component of nine variants.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The three border treatments are read from the artwork rather than described.</strong> <code>MiddleInset</code> is a 320 × 4 frame holding a hairline from x=12 to x=308; <code>FullWidth</code> runs 0 to 320; <code>None</code> has no divider layers at all. That last one is the whole of the 24px height difference — six gaps × the 4px frame each divider sits in — which had read as an unexplained number.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Vertical padding was documented as 0 and is 4.</strong> Every height now reconstructs from the seven Layout keys alone: 7 rows × 40, plus six 4px divider frames where the version has them, plus 4 above and 4 below. 288 and 312 at Compact. The old rows were 8px short of their own stated heights, which is the check that caught it. <code>Width</code> also read a bare <code>320</code> where the panel says <strong>Fill</strong> — 320 is only what it resolves to here.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The leading mark was a circle where the gear teeth belong.</strong> The preview drew an outer circle and an inner circle. It is now the artwork exported from the Leading Element at node 7947:111971 — a stroked gear outline over a 40%-opacity inner dot — in <code>currentColor</code>, so the selected row’s blue reaches it through one declaration instead of three brittle selectors. <a href=\"/components/dropdown-item\">Select Item</a> now draws the same block, so both pages render this nested instance identically.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The preview shows the first row selected, as Figma ships it.</strong> That is what the component draws, and it shows how a Select Item’s selected treatment reads inside the group — label and leading mark both stepping to <code>text/color-text-primary</code> while the row keeps its surface.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Both text styles resolve.</strong> The row label is <code>Primary/Multi-line Label/Light/Base</code> and the hidden group header is <code>Primary/Label/Light/Small</code>, replacing font specs and a \"names pending Dev Mode read\" IOU.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>All four colours the group paints are named.</strong> <code>bg/color-bg-main</code> on the card, <code>border/color-border-weak</code> on both its hairline and the dividers, <code>border/color-border</code> on the scrollbar. Everything inside a row belongs to <a href=\"/components/dropdown-item\">Select Item</a>, so the rows are named rather than valued — and a Colors by BorderType table now carries the lot.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>Two hidden layers are recorded as deliberate, not missing.</strong> The <code>Label</code> header and the <code>Scrollbar</code> both ship hidden — options for when a group needs a heading or a list overflows, which most do not. Written into the Properties rows, the colours table and C6, because a documented scrollbar colour that never appears reads as a defect otherwise.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The preview drew in the documentation font.</strong> <code>.eb-preview-sgroup</code> declared <code>font-family: inherit</code>, which resolves to BarkAda; every visible layer is a Select Item row and the hidden header is <code>Primary/*</code>, all Proxima Soft. Caught by the typeface check rather than by eye.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The preview drew five rows where the component holds seven.</strong> Every height on the Layout section is built from seven — 7 × 40 plus 4 above and 4 below is 288 at None, and the six divider frames make it 312 for the other two — so a five-row preview quietly contradicted the numbers printed beside it. Found while composing the same instance into <a href=\"/components/dropdown\">Select</a>, whose Expanded versions draw the group at its full 312.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Each divider is a 4px frame, not a 1px line.</strong> The preview drew a 1px CSS border between rows, leaving it 18px short of the 312 it documents — and the inset was faked with a margin that stripped the horizontal padding from every row after the first, so only the selected row had a full-width surface. Both are now drawn the way Figma builds them: a 4px gap carrying a hairline, inset 12 either side at <code>MiddleInset</code> and edge to edge at <code>FullWidth</code>. This is the same 24px that separates <code>None</code> from the other two, and the preview now reconstructs it rather than asserting it.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The install block pointed at coordinates that will never exist.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code>, with no Import line. It now cites the Select family artifact <code>com.eastblue.ds:select:1.0.0</code> and imports <code>com.eastblue.ds.select.*</code>.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Property Mapping listed two hidden layers as properties.</strong> <code>Label (hidden)</code> and <code>Scrollbar</code> are not in the panel. Three rows now, one per property, with <code>header</code> and the scrollbar explained in the description — the scrollbar because on both platforms it is drawn by the platform rather than by the component.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Every snippet called <code>EBSelectItem</code> a way its own page does not.</strong> One used an unlabelled leading string, one used <code>leading:</code> — the parameter renamed to <code>type:</code> during <a href=\"/components/dropdown-item\">Select Item</a>’s own pass — and one passed <code>header:</code> to the group. A parent quoting a stale child API is invisible until the child is fixed, and nothing checks for it: each page validates fine alone.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Usage Snippets were keyed to use-cases, and one was not a BorderType at all.</strong> \"Inset dividers (default)\", \"No dividers, comfortable rows\" and \"With a subsection header\". One per value now, and the unverifiable \"(default)\" is gone — the panel lists None first.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>C3 was still holding an IOU.</strong> Its note read \"names need a Dev Mode read before they can be printed\"; all four tokens are named. C6 now records both hidden layers as intentional, and C4 keeps the mechanism divergence in sharper terms.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The properties reach the rows differently in Figma and natively, and that is carried forward as a known divergence.</strong> In Figma <code>BorderType</code> and <code>Density</code> shape the slot’s <em>default content</em> — a component property cannot reach inside a slot, so replacing the rows leaves both with nothing to act on. Natively they apply to whatever fills the slot, which is the better behaviour and the one the page documents. It is not fixable in Figma, so a Code Connect binding will not be a straight pass-through.",
+          "delta": { "kind": "open", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Code Connect emptied, and DEV code is live for the first time.</strong> The demo script had no <code>getSnippet</code>, so both language tabs were frozen on a static string; they now show the slot as a trailing closure, which is the honest shape given the rows arrive through it rather than as a parameter.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
     {
       "version": "2.0.0",
       "date": "August 2026",

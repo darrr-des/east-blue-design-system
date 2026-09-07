@@ -8154,6 +8154,10 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 }
 
 /* ── Select Group ───────────────────────────────────────────────── */
+/* Every visible layer here is a Select Item row, and both of that
+   component's text layers are Primary/* — Proxima Soft. The group's own
+   hidden Label header is Primary/Label/Light/Small, the same face, so
+   the root is the only declaration needed. */
 .eb-preview-sgroup {
   width: 320px;
   max-width: 100%;
@@ -8161,7 +8165,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   border-radius: 6px;
   background: #FFFFFF;
   border: 1px solid #E5EBF4;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -8175,20 +8179,37 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 .eb-preview-sgroup--default .eb-preview-sgroup__row { height: 48px; }
 .eb-preview-sgroup--comfortable .eb-preview-sgroup__row { height: 56px; }
 
-/* The dividers are siblings inside the slot in Figma, which is why
-   BorderType=None simply has none. Reproduced here as a border so the
-   three options read the way they do in the file. */
-.eb-preview-sgroup--middleinset .eb-preview-sgroup__row + .eb-preview-sgroup__row {
-  border-top: 1px solid #E5EBF4;
-  margin: 0 12px;
-  padding: 0;
-}
+/* Each divider is a 4px frame in Figma holding a 1px hairline, not a 1px
+   border — the difference is the whole of the 24px that separates None
+   from the other two. Drawn as a 4px gap with the line in it, so seven
+   rows reconstruct 288 at None and 312 at MiddleInset and FullWidth.
+   A pseudo-element rather than an inset margin, so every row keeps the
+   full-width box its selected surface needs. */
+.eb-preview-sgroup--middleinset .eb-preview-sgroup__row + .eb-preview-sgroup__row,
 .eb-preview-sgroup--fullwidth .eb-preview-sgroup__row + .eb-preview-sgroup__row {
-  border-top: 1px solid #E5EBF4;
+  position: relative;
+  margin-top: 4px;
 }
-/* None needs no override — in Figma the divider nodes are simply absent
-   from those variants, which is why they are 24 shorter. Stated so every
-   class in the markup resolves to something. */
+.eb-preview-sgroup--middleinset .eb-preview-sgroup__row + .eb-preview-sgroup__row::before,
+.eb-preview-sgroup--fullwidth .eb-preview-sgroup__row + .eb-preview-sgroup__row::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  height: 1px;
+  background: #E5EBF4;
+}
+/* MiddleInset stops the hairline 12 short of each edge; FullWidth runs it
+   edge to edge. */
+.eb-preview-sgroup--middleinset .eb-preview-sgroup__row + .eb-preview-sgroup__row::before {
+  left: 12px;
+  right: 12px;
+}
+.eb-preview-sgroup--fullwidth .eb-preview-sgroup__row + .eb-preview-sgroup__row::before {
+  left: 0;
+  right: 0;
+}
+/* None needs no divider — in Figma those nodes are simply absent from the
+   variant. Stated so every class in the markup resolves to something. */
 .eb-preview-sgroup--none .eb-preview-sgroup__row + .eb-preview-sgroup__row {
   border-top: 0;
 }
@@ -8211,38 +8232,66 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   letter-spacing: 0.25px;
   color: #0A2757;
 }
+/* Figma ships the group with its first row selected. The row is a Select
+   Item instance, so the treatment is that component's: label and leading
+   mark both step to text/color-text-primary, and the row keeps its
+   surface — selection is carried by colour, not by a fill. The icon is
+   drawn in currentColor, so setting the row's colour reaches it. */
+.eb-preview-sgroup__lead { color: #0A2757; }
+.eb-preview-sgroup__row--selected .eb-preview-sgroup__lead { color: #005CE5; }
+.eb-preview-sgroup__row--selected .eb-preview-sgroup__label { color: #005CE5; }
 
 /* ── Select ─────────────────────────────────────────────────────── */
+/* Both text layers are Primary/Label/Light/* — Proxima Soft. `inherit`
+   would have resolved to --font-body, which is BarkAda. */
 .eb-preview-sel {
   width: 366px;
   max-width: 100%;
-  font-family: inherit;
+  font-family: "Proxima Soft", "Proxima Nova", system-ui, sans-serif;
   box-sizing: border-box;
 }
+/* The Auto layout panel, verbatim: W Fill (366) · H 46 · gap 0 ·
+   padding 12 horizontal, 6 vertical · left, centre. The stroke is an
+   inside stroke in Figma — it overlays rather than shrinking the content
+   box — so it is drawn with an inset shadow. A real border would have
+   eaten 4 of the 34px content height in the two 2px states and squeezed
+   the 32px chevron. */
 .eb-preview-sel__field {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0;
   height: 46px;
-  padding: 0 12px;
+  padding: 6px 12px;
   border-radius: 6px;
   background: #FFFFFF;
-  border: 1px solid #D7E0EF;
+  box-shadow: inset 0 0 0 1px #D7E0EF;
   box-sizing: border-box;
 }
-.eb-preview-sel--expanded .eb-preview-sel__field { border-color: #005CE5; }
-.eb-preview-sel--error .eb-preview-sel__field { border-color: #D61B2C; }
+/* Expanded and Error carry a 2px stroke; Default and Disabled carry 1. */
+.eb-preview-sel--expanded .eb-preview-sel__field { box-shadow: inset 0 0 0 2px #005CE5; }
+.eb-preview-sel--error .eb-preview-sel__field { box-shadow: inset 0 0 0 2px #D61B2C; }
 .eb-preview-sel--disabled .eb-preview-sel__field {
-  border-color: #E5EBF4;
+  box-shadow: inset 0 0 0 1px #E5EBF4;
   background: #F6F9FD;
 }
 
+/* The leading slot is the mark's own width plus a flat 8 before the text:
+   23 for the vector at 15 wide, 18 for the glyph at 10. It takes
+   text/color-text, and text/color-text-disabled with the rest of the
+   field — both marks were corrected in Figma this pass. */
 .eb-preview-sel__lead {
   flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
   font-size: 16px;
   font-weight: 600;
+  line-height: 1;
   color: #0A2757;
 }
+.eb-preview-sel__lead--vector { width: 15px; }
+.eb-preview-sel__lead--text { width: 10px; }
+.eb-preview-sel__lead svg { display: block; }
 .eb-preview-sel__value {
   flex: 1 1 auto;
   min-width: 0;
@@ -8252,34 +8301,27 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   letter-spacing: 0.25px;
   color: #90A8D0;
 }
-/* isFilled swaps the placeholder for a chosen value in the label colour. */
+/* isFilled swaps the placeholder for a chosen value in the label colour.
+   Disabled overrides both to text/color-text-disabled. */
 .eb-preview-sel--filled .eb-preview-sel__value { color: #0A2757; }
+.eb-preview-sel--disabled .eb-preview-sel__value,
+.eb-preview-sel--disabled.eb-preview-sel--filled .eb-preview-sel__value { color: #C2CFE5; }
 
+/* 32 × 32, the size of the instance Figma places — and the size the tap
+   target is measured against. The artwork carries the shape; this only
+   sizes the box and sets the colour it inherits. */
 .eb-preview-sel__chevron {
-  position: relative;
   flex: 0 0 auto;
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
+  color: #005CE5;
 }
-.eb-preview-sel__chevron::before {
-  content: "";
-  position: absolute;
-  left: 4px;
-  top: 6px;
-  width: 9px;
-  height: 9px;
-  border-right: 2px solid #005CE5;
-  border-bottom: 2px solid #005CE5;
-  transform: rotate(45deg);
-}
-.eb-preview-sel--expanded .eb-preview-sel__chevron::before {
-  top: 10px;
-  transform: rotate(225deg);
-}
-.eb-preview-sel--disabled .eb-preview-sel__chevron::before {
-  border-right-color: #C2CFE5;
-  border-bottom-color: #C2CFE5;
-}
+.eb-preview-sel__chevron svg { display: block; }
+/* border/color-border-primary-disabled, not the text disabled grey. */
+.eb-preview-sel--disabled .eb-preview-sel__chevron { color: #9BC5FD; }
+/* The currency mark dims with the field — currentColor carries it to
+   both the drawn vector and the glyph. */
+.eb-preview-sel--disabled .eb-preview-sel__lead { color: #C2CFE5; }
 
 /* The menu overlays what sits beneath it rather than growing the
    trigger — the same relationship the Figma variants have. */
