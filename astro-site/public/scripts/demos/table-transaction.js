@@ -91,28 +91,35 @@ function updateTableTransactionDemo() {
 
 /* ── Spec cards ─────────────────────────────────────────────────── */
 var _specCards = {
-  header:  { role: 'header',  state: 'default', cols: '3', asset: 'yes' },
-  content: { role: 'content', state: 'default', cols: '3' }
+  header:  { role: 'header',  state: 'default', hasLabel: 'true', hasBorder: 'true', label: 'Label', cols: '3', asset: 'yes' },
+  content: { role: 'content', state: 'default', hasLabel: 'true', hasBorder: 'true', label: 'Label', cols: '3' }
 };
 window._specCards = _specCards;
 
 function buildSwiftSnippet(cardKey, card) {
-  var role = card.role === 'content' ? '.content' : '.header';
+  var isHeader = card.role !== 'content';
+  var tail = [];
+  if (!isHeader && card.hasLabel !== 'false') tail.push('    label: "' + card.label + '"');
+  tail.push('    ' + (isHeader ? 'columns: columns' : 'amounts: amounts'));
+  if (card.hasBorder === 'false') tail.push('    showsDivider: false');
   var lines = ['EBTableTransactionRow('];
-  lines.push('    role: ' + role + ',');
-  if (card.role === 'content') lines.push('    label: "Label",');
-  lines.push(card.role === 'content' ? '    amounts: amounts' : '    columns: columns');
-  lines.push(card.state === 'disabled' ? ')\n.disabled(true)' : ')');
+  lines.push('    role: ' + (isHeader ? '.header' : '.content') + ',');
+  tail.forEach(function (line, i) { lines.push(line + (i < tail.length - 1 ? ',' : '')); });
+  lines.push(')');
+  if (card.state === 'disabled') lines.push('.disabled(true)');
   return lines.join('\n');
 }
 
 function buildComposeSnippet(cardKey, card) {
-  var role = card.role === 'content' ? 'EBTableRowRole.Content' : 'EBTableRowRole.Header';
+  var isHeader = card.role !== 'content';
+  var tail = [];
+  if (!isHeader && card.hasLabel !== 'false') tail.push('    label = "' + card.label + '"');
+  tail.push('    ' + (isHeader ? 'columns = columns' : 'amounts = amounts'));
+  if (card.hasBorder === 'false') tail.push('    showsDivider = false');
+  if (card.state === 'disabled') tail.push('    enabled = false');
   var lines = ['EBTableTransactionRow('];
-  lines.push('    role = ' + role + ',');
-  if (card.role === 'content') lines.push('    label = "Label",');
-  lines.push((card.role === 'content' ? '    amounts = amounts' : '    columns = columns') + (card.state === 'disabled' ? ',' : ''));
-  if (card.state === 'disabled') lines.push('    enabled = false');
+  lines.push('    role = EBTableRowRole.' + (isHeader ? 'Header' : 'Content') + ',');
+  tail.forEach(function (line, i) { lines.push(line + (i < tail.length - 1 ? ',' : '')); });
   lines.push(')');
   return lines.join('\n');
 }
@@ -134,12 +141,8 @@ function updateSpecCard(cardStyle, prop, value) {
     else spEl.textContent = value;
   }
 
-  var cardKey = cardStyle === 'header' ? 'header-row' : 'content-row';
-  var fullCardEl = document.getElementById('spec-card-' + cardKey);
-  if (fullCardEl) {
-    var preview = fullCardEl.querySelector('.spec-card-preview');
-    if (preview) preview.innerHTML = _ttxnBuild(card);
-  }
+  var host = document.getElementById('table-transaction-spec-' + cardStyle);
+  if (host) host.innerHTML = _ttxnBuild(card);
 
   var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
   if (codeEl) {
@@ -154,7 +157,7 @@ function updateSpecCard(cardStyle, prop, value) {
 function _ttxnInit() {
   updateTableTransactionDemo();
   ['header', 'content'].forEach(function (k) {
-    updateSpecCard(k, 'cols', _specCards[k].cols);
+    updateSpecCard(k, 'state', _specCards[k].state);
   });
 }
 

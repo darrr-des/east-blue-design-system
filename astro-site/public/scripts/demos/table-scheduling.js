@@ -27,7 +27,7 @@ function _tschedNormalise(opts) {
     month:  o.month  || 'MM',
     day:    o.day    || 'DD',
     year:   o.year   || 'YYYY',
-    total:  o.total  || 'X,XXX.XX',
+    total:  o.amount || o.total || 'X,XXX.XX',
     label:  o.label  || 'Label'
   };
 }
@@ -56,7 +56,7 @@ function _tschedBuild(opts) {
     s += '<div class="eb-preview-tsched__cells">';
     for (var i = 0; i < o.cells; i++) {
       s += '<div class="eb-preview-tsched__cell">';
-      s += '<span class="eb-preview-tsched__cell-label">' + _tschedEscape(o.label) + '</span>';
+      s += '<span class="eb-preview-tsched__cell-label">Label</span>';
       s += '<span class="eb-preview-tsched__cell-amount">' +
            (o.hasCurrency ? '<span>₱</span>' : '') +
            '<span>X,XXX.XX</span></span>';
@@ -89,25 +89,41 @@ function updateTableSchedulingDemo() {
 
 /* ── Spec cards ─────────────────────────────────────────────────── */
 var _specCards = {
-  'default': { state: 'default', cells: '2' }
+  'default':  { state: 'default',  hasAmountRow: 'true', hasBorder: 'true', cells: '2', month: 'MM', day: 'DD', year: 'YYYY', amount: 'X,XXX.XX', label: 'Label' },
+  'disabled': { state: 'disabled', hasAmountRow: 'true', hasBorder: 'true', cells: '2', month: 'MM', day: 'DD', year: 'YYYY', amount: 'X,XXX.XX', label: 'Label' }
 };
 window._specCards = _specCards;
 
 function buildSwiftSnippet(cardKey, card) {
+  var when = card.month + ' / ' + card.day + ' / ' + card.year;
+  var tail = [];
+  if (card.hasAmountRow !== 'false') {
+    tail.push('    label: "' + card.label + '"');
+    tail.push('    breakdown: breakdown');
+  }
+  if (card.hasBorder === 'false') tail.push('    showsDivider: false');
   var lines = ['EBTableSchedulingRow('];
-  lines.push('    date: "03 / 15 / 2026",');
-  lines.push('    total: "1,250.00",');
-  lines.push('    details: details');
-  lines.push(card.state === 'disabled' ? ')\n.disabled(true)' : ')');
+  lines.push('    date: dueDate,            // ' + when);
+  lines.push('    amount: "' + card.amount + '"' + (tail.length ? ',' : ''));
+  tail.forEach(function (line, i) { lines.push(line + (i < tail.length - 1 ? ',' : '')); });
+  lines.push(')');
+  if (card.state === 'disabled') lines.push('.disabled(true)');
   return lines.join('\n');
 }
 
 function buildComposeSnippet(cardKey, card) {
+  var when = card.month + ' / ' + card.day + ' / ' + card.year;
+  var tail = [];
+  if (card.hasAmountRow !== 'false') {
+    tail.push('    label = "' + card.label + '"');
+    tail.push('    breakdown = breakdown');
+  }
+  if (card.hasBorder === 'false') tail.push('    showsDivider = false');
+  if (card.state === 'disabled') tail.push('    enabled = false');
   var lines = ['EBTableSchedulingRow('];
-  lines.push('    date = "03 / 15 / 2026",');
-  lines.push('    total = "1,250.00",');
-  lines.push('    details = details' + (card.state === 'disabled' ? ',' : ''));
-  if (card.state === 'disabled') lines.push('    enabled = false');
+  lines.push('    date = dueDate,            // ' + when);
+  lines.push('    amount = "' + card.amount + '"' + (tail.length ? ',' : ''));
+  tail.forEach(function (line, i) { lines.push(line + (i < tail.length - 1 ? ',' : '')); });
   lines.push(')');
   return lines.join('\n');
 }
@@ -129,10 +145,8 @@ function updateSpecCard(cardStyle, prop, value) {
     else spEl.textContent = value;
   }
 
-  document.querySelectorAll('[id^="spec-card-"]').forEach(function (c) {
-    var preview = c.querySelector('.spec-card-preview');
-    if (preview) preview.innerHTML = _tschedBuild(card);
-  });
+  var host = document.getElementById('table-scheduling-spec-' + cardStyle);
+  if (host) host.innerHTML = _tschedBuild(card);
 
   var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
   if (codeEl) {
@@ -147,7 +161,7 @@ function updateSpecCard(cardStyle, prop, value) {
 function _tschedInit() {
   updateTableSchedulingDemo();
   Object.keys(_specCards).forEach(function (k) {
-    updateSpecCard(k, 'cells', _specCards[k].cells);
+    updateSpecCard(k, 'state', _specCards[k].state);
   });
 }
 

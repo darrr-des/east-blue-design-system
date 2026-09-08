@@ -257,13 +257,13 @@ export const table: ComponentData = {
         "body": "Rows are 360 wide because they currently sit inside a fixed component group. The intent is to move to fill. Worth tracking so it doesn't get forgotten once those screens are edited.",
         "tag": "Composition"
       },
-      {
-        "headline": "Introduce a shared label/value token set with Inline Text.",
-        "body": "A table label and an Inline Text label play the same role — a thing and its value. The two have since drifted in opposite directions: Table Row draws from the system-wide <code>text/*</code> and <code>bg/*</code> colours, while Inline Text is still documented on its own <code>inline-text/color/*</code> set. Confirm which of the two is current in Figma, then settle both on one.",
-        "tag": "Token"
-      }
     ],
     "appliedRecommendations": [
+      {
+        "headline": "Introduce a shared label/value token set with Inline Text.",
+        "body": "v2.2.1: Closed — there is no longer a set to share. This row already draws from the system-wide <code>text/*</code> colours, and the <code>inline-text/color/*</code> tokens the recommendation wanted to converge on have been retired from the file. What is left belongs to Inline Text's own page, which still documents them.",
+        "tag": "Token"
+      },
       {
         "headline": "Give disabled rows their own background.",
         "body": "v2.2: No change needed — the row already does what the second half of this asked for. The recommendation said disabled reuses the Header <code>#F6F9FD</code>, so a disabled row and a header row read alike in a stack. Exporting the set shows otherwise: a disabled Content row is still white and a disabled Header row is still <code>#F6F9FD</code>. Disabled changes text colour and nothing else. The claim described our own preview, which had an invented background rule, rather than the component.",
@@ -812,9 +812,9 @@ export const table: ComponentData = {
           "compose": "<code>leadingIcon: @Composable (() -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "Table Cell → Role — Header, Content, Empty",
-          "swift": "<code>Column.role: .header / .content</code>",
-          "compose": "<code>role = EBTableCellRole.Header / Content</code>"
+          "figma": "Table Cell → Role — Header, Content, Transaction, Empty",
+          "swift": "<code>Column.role: .header / .content / .transaction</code>",
+          "compose": "<code>role = EBTableCellRole.Header / Content / Transaction</code>"
         },
         {
           "figma": "Table Cell → Text (text)",
@@ -992,6 +992,29 @@ export const table: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.2.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Corrections after shared facts moved · node 5734:37611",
+      "rows": [
+        {
+          "body": "<strong><code>Table Cell</code> gained a fourth role.</strong> Property Mapping listed <code>Header, Content, Empty</code>; the primitive now also publishes <code>Role=Transaction</code> (nodes <code>9567:96672</code> and <code>9567:96676</code>), added during the Table Transaction review so that row could stop overriding the cell's text style. Nothing about <code>Table Row</code> changed — a component it references did, which is why its own checks all passed while the page went stale.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>The Inline Text token recommendation is closed.</strong> It asked this row's label and value colours to converge with Inline Text's own set. Both sides moved instead: this row is on the system-wide <code>text/*</code> colours, and the <code>inline-text/color/*</code> tokens no longer exist. Nothing to reconcile from here.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Token"
+          }
+        }
+      ]
+    },
     {
       "version": "2.2.0",
       "date": "September 2026",
