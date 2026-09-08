@@ -83,29 +83,33 @@ function updateTableDemo() {
 
 /* ── Table Spec Cards ───────────────────────────────────────────── */
 var _specCards = {
-  header:  { role: 'header',  state: 'default', cols: '3', asset: 'yes' },
-  content: { role: 'content', state: 'default', cols: '3', asset: 'yes' }
+  header:  { role: 'header',  state: 'default', hasBorder: 'true', cols: '3', asset: 'yes' },
+  content: { role: 'content', state: 'default', hasBorder: 'true', cols: '3', asset: 'yes' }
 };
 window._specCards = _specCards;
 
 function buildSwiftSnippet(type, card) {
-  var role = card.role === 'content' ? '.content' : '.header';
+  var isContent = card.role === 'content';
   var lines = ['EBTableRow('];
-  lines.push('    role: ' + role + ',');
-  lines.push('    label: "' + (card.role === 'content' ? 'Row Title' : 'Header') + '",');
-  lines.push('    columns: columns');
-  if (card.state === 'disabled') lines.push(') \n.disabled(true)');
-  else lines.push(')');
+  lines.push('    role: ' + (isContent ? '.content' : '.header') + ',');
+  lines.push('    label: "' + (isContent ? 'Row Title' : 'Header') + '",');
+  lines.push('    columns: columns' + (card.hasBorder === 'false' ? ',' : ''));
+  if (card.hasBorder === 'false') lines.push('    showsDivider: false');
+  lines.push(')');
+  if (card.state === 'disabled') lines.push('.disabled(true)');
   return lines.join('\n');
 }
 
 function buildComposeSnippet(type, card) {
-  var role = card.role === 'content' ? 'EBTableRowRole.Content' : 'EBTableRowRole.Header';
+  var isContent = card.role === 'content';
+  var tail = [];
+  if (card.hasBorder === 'false') tail.push('    showsDivider = false');
+  if (card.state === 'disabled') tail.push('    enabled = false');
   var lines = ['EBTableRow('];
-  lines.push('    role = ' + role + ',');
-  lines.push('    label = "' + (card.role === 'content' ? 'Row Title' : 'Header') + '",');
-  lines.push('    columns = columns' + (card.state === 'disabled' ? ',' : ''));
-  if (card.state === 'disabled') lines.push('    enabled = false');
+  lines.push('    role = EBTableRowRole.' + (isContent ? 'Content' : 'Header') + ',');
+  lines.push('    label = "' + (isContent ? 'Row Title' : 'Header') + '",');
+  lines.push('    columns = columns' + (tail.length ? ',' : ''));
+  tail.forEach(function (line, i) { lines.push(line + (i < tail.length - 1 ? ',' : '')); });
   lines.push(')');
   return lines.join('\n');
 }
@@ -127,12 +131,8 @@ function updateSpecCard(cardStyle, prop, value) {
     else spEl.textContent = value;
   }
 
-  var cardKey = cardStyle === 'header' ? 'header-row' : 'content-row';
-  var fullCardEl = document.getElementById('spec-card-' + cardKey);
-  if (fullCardEl) {
-    var preview = fullCardEl.querySelector('.spec-card-preview');
-    if (preview) preview.innerHTML = _tableBuildRow(card);
-  }
+  var host = document.getElementById('table-preview-' + cardStyle);
+  if (host) host.innerHTML = _tableBuildRow(card);
 
   var codeEl = document.querySelector('[data-code-content="' + cardStyle + '"]');
   if (codeEl) {
@@ -145,12 +145,8 @@ function updateSpecCard(cardStyle, prop, value) {
 }
 
 function _tableInitSpecCards() {
-  var h = document.getElementById('table-preview-header');
-  if (h) h.innerHTML = _tableBuildRow({ role: 'header', cols: '3' });
-  var c = document.getElementById('table-preview-content');
-  if (c) c.innerHTML = _tableBuildRow({ role: 'content', cols: '3' });
   ['header', 'content'].forEach(function (k) {
-    updateSpecCard(k, 'cols', _specCards[k].cols);
+    updateSpecCard(k, 'state', _specCards[k].state);
   });
 }
 
