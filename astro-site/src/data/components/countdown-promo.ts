@@ -157,7 +157,13 @@ export const countdownPromo: ComponentData = {
         }
       }
     ],
-    "open": [],
+    "open": [
+      {
+        "headline": "The action bar is a Button pushed out of shape.",
+        "body": "The <code>⤷ ActionSlot</code> holds a <strong>Button - XSmall</strong> overridden away from what Button is: 24px tall against Button’s 26, square against its 99px pill, filling 360 where Button hugs, and on the High card painted <code>#2340A9</code> — Button’s <em>pressed</em> fill — as a resting state. A developer handed <code>action: EBButton?</code> would render a 26px enabled-blue pill, not the full-bleed bar the design shows, so the slot cannot be mapped as it stands. Two ways out, and it needs a decision rather than a fix: either Button gains a full-bleed appearance that this can use, or Promo’s action stops being a Button and becomes its own treatment.",
+        "tag": { "criterion": "C4", "label": "C4 · Native Mappability" }
+      }
+    ],
     "recommendations": [
       {
         "headline": "Replace the placeholder copy before handoff.",
@@ -450,6 +456,19 @@ export const countdownPromo: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "The action-slot mapping gap is on the record — node 5630:36047",
+      "rows": [
+        {
+          "body": "<strong>C4 was flagged with nothing behind it.</strong> The scorecard had read Needs Refinement since the reassessment, and the reason sat only in its own note — so the page showed an amber badge that nothing in Open Issues explained. The finding is now where a reader meets it: the <code>⤷ ActionSlot</code> holds a <strong>Button - XSmall</strong> overridden away from what Button is — 24px tall against 26, square against the 99px pill, filling 360 where Button hugs, and painted with Button’s <em>pressed</em> fill as a resting state. It needs a decision rather than a fix: either Button gains a full-bleed appearance, or Promo’s action stops being a Button.",
+          "delta": { "kind": "open", "label": "C4 open" }
+        }
+      ]
+    },
     {
       "version": "1.0.1",
       "date": "September 2026",

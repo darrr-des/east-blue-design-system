@@ -193,6 +193,11 @@ export const modalTransactionReceipt: ComponentData = {
     ],
     "open": [
       {
+        "headline": "Copying the reference number says nothing happened.",
+        "body": "The copy control has no confirmation state. Nothing in the component tells the user the tap worked — no toast, no icon swap, no label change — so the only feedback is the press itself, which is gone the moment the finger lifts. Copying an identifier is the one action on this screen where a user needs to know it landed, because the result is invisible until they paste it somewhere else. Which feedback to use is a product call; that there is none today is the gap.",
+        "tag": { "criterion": "C5", "label": "C5 · Interaction State Coverage" }
+      },
+      {
         "headline": "Code Connect mappings not registered.",
         "body": "Blocked — the native library does not exist yet, so there is nothing to map onto. The component side is ready: <code>ActionOrientation</code>, <code>⤷ TransactionSlot</code> and <code>⤷ ActionSlot</code> map one to one now the property name and both slot names are settled.",
         "tag": {
@@ -212,11 +217,7 @@ export const modalTransactionReceipt: ComponentData = {
         "body": "It duplicates Modal - Transaction Receipt Entry's Inline styling by hand, deliberately. That means any change to the primitive's type or colour has to be mirrored here, and nothing in Figma will warn you. Worth a note on the component so the next person to touch the primitive knows to check this row.",
         "tag": "Docs"
       },
-      {
-        "headline": "Confirm the copy control has a confirmation.",
-        "body": "Copying a reference number with no feedback leaves the user unsure it worked. Whether that is a toast, a swap to a check icon, or a haptic is a product decision, but it should be settled before handoff — the component shows no state for it today.",
-        "tag": "State"
-      },
+
       {
         "headline": "Publish the token names once Dev Mode is read.",
         "body": "Fills across the component resolve to library variables and the text carries shared library styles — verified on the reference row's own nodes — but the read-only tools return IDs rather than names, so the spec tables carry hex values only.",
@@ -548,6 +549,23 @@ export const modalTransactionReceipt: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "1.1.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "The missing copy confirmation is on the record — node 5879:41048",
+      "rows": [
+        {
+          "body": "<strong>C5 was flagged with nothing behind it.</strong> The scorecard had read Needs Refinement and the reason sat only in its own note. The gap is now an Open Issue: the copy control has no confirmation state, so nothing tells the user the tap worked. Copying an identifier is the one action here where that matters, because the result stays invisible until it is pasted somewhere else.",
+          "delta": { "kind": "open", "label": "C5 open" }
+        },
+        {
+          "body": "<strong>The same finding had been sitting in two lists.</strong> A <code>State</code> recommendation asked for the confirmation to be settled while the scorecard called it missing. One finding, one place — it is an Open Issue, and the half worth keeping from the recommendation, that which feedback to use is a product call, folded into it.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
     {
       "version": "1.1.0",
       "date": "September 2026",
