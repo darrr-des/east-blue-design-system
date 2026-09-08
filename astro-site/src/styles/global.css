@@ -7148,61 +7148,166 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
    Measurements mirror the 2026 Working File rebuild.
    ═════════════════════════════════════════════════════════════════════ */
 
+/* Voucher is genuinely mixed. Three of its five text layers are
+   Secondary/* — description, original price and validity — so BarkAda is
+   the root; #title and #price are Primary/* and name Proxima Soft
+   themselves. `inherit` happened to give the majority the right face and
+   the other two the wrong one, which is why nobody spotted it. */
 .eb-preview-vch {
   position: relative;
   display: flex;
   background: #FFFFFF;
   border-radius: 4px;
   overflow: hidden;
-  font-family: inherit;
+  font-family: "BarkAda", system-ui, sans-serif;
   box-sizing: border-box;
 }
+/* Both orientations round at 4, but at different levels of the tree.
+   Vertical sets it on the component and clips. Horizontal sets it one
+   level in, on Content, and only on the left corners — the right side
+   stays square where the artwork meets it. Matching the values was
+   possible; matching the structure was not, so the preview reproduces
+   what each one actually draws. */
 .eb-preview-vch--vertical { flex-direction: column; width: 162px; }
-.eb-preview-vch--horizontal { flex-direction: row; width: 312px; height: 124px; }
+.eb-preview-vch--horizontal {
+  flex-direction: row;
+  height: 124px;
+  border-radius: 0;
+  overflow: visible;
+}
+.eb-preview-vch--horizontal .eb-preview-vch__content { border-radius: 4px 0 0 4px; }
+.eb-preview-vch--horizontal.eb-preview-vch--small { width: 312px; }
 .eb-preview-vch--horizontal.eb-preview-vch--large { width: 344px; }
 
 /* ── Asset — the ticket panel with its notch ────────────────────── */
+/* The panel holds the artwork and, in horizontal, the claim rail beside
+   it. It must not clip: the two notches overhang its edges. */
 .eb-preview-vch__asset {
   position: relative;
   flex: 0 0 auto;
   display: flex;
+  overflow: visible;
+}
+/* `isolation` keeps the state filter's blend inside the artwork instead
+   of reaching the card behind it. */
+.eb-preview-vch__art {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 0;
   background: #F6F9FD;
   overflow: hidden;
+  isolation: isolate;
 }
-.eb-preview-vch--vertical .eb-preview-vch__asset { width: 162px; height: 90px; }
+/* AssetSize only resizes the artwork panel; the content box never moves.
+   Vertical grows it 90 → 153 tall, which is the whole of the 278 → 341
+   card height. Horizontal grows it 96 → 128 wide against a fixed 216
+   content box, which is the whole of the 312 → 344 card width. Both
+   sizes are declared rather than left to a default, so every class the
+   preview emits resolves to a rule. */
+.eb-preview-vch--vertical .eb-preview-vch__asset { width: 162px; }
+.eb-preview-vch--vertical.eb-preview-vch--small .eb-preview-vch__asset { height: 90px; }
 .eb-preview-vch--vertical.eb-preview-vch--large .eb-preview-vch__asset { height: 153px; }
-.eb-preview-vch--horizontal .eb-preview-vch__asset { width: 96px; height: 124px; }
+.eb-preview-vch--horizontal .eb-preview-vch__asset { height: 124px; }
+.eb-preview-vch--horizontal.eb-preview-vch--small .eb-preview-vch__asset { width: 96px; }
+.eb-preview-vch--horizontal.eb-preview-vch--large .eb-preview-vch__asset { width: 128px; }
+/* The panel says Fill, not 216. It resolves to 216 in both sizes because
+   the artwork takes 96 or 128 out of 312 or 344 — but pinning the number
+   would be writing down the answer instead of the rule. */
+.eb-preview-vch--horizontal .eb-preview-vch__content { flex: 1 1 auto; }
 
+/* Wraps rather than overflowing — the artwork area is 68 wide at Small
+   horizontal, which is narrower than the label on one line. */
 .eb-preview-vch__placeholder {
-  font-size: 8px;
+  padding: 0 6px;
+  font-size: 7px;
   font-weight: 700;
+  line-height: 10px;
   color: #0A2757;
   text-align: center;
 }
 
 /* The notch is two circles punched from the panel edges. Vertical
    punches left and right; horizontal punches top and bottom. */
-.eb-preview-vch__notch { position: absolute; background: #FFFFFF; border-radius: 50%; }
-.eb-preview-vch--vertical .eb-preview-vch__notch { width: 16px; height: 16px; bottom: -8px; }
+/* A bite out of the card rather than a white dot, so it takes the frame's
+   ground. Vertical punches the two side edges where the artwork meets the
+   content; horizontal punches top and bottom at the seam between the
+   artwork and the claim rail — 28 in from the panel's right edge. */
+.eb-preview-vch__notch {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #F8F9FB;
+  border-radius: 50%;
+  z-index: 4;
+}
+/* Vertical's stub tears above the artwork's bottom edge, not at it. The
+   Stub Cutout mask puts the circle centres on y 58.56 of a 90 panel —
+   31.44 up from the bottom, and 32.06 at Large, so it is anchored to the
+   bottom rather than scaling with the panel. */
+.eb-preview-vch--vertical .eb-preview-vch__notch { bottom: 23.5px; }
 .eb-preview-vch--vertical .eb-preview-vch__notch--a { left: -8px; }
 .eb-preview-vch--vertical .eb-preview-vch__notch--b { right: -8px; }
-.eb-preview-vch--horizontal .eb-preview-vch__notch { width: 16px; height: 16px; left: -8px; }
+.eb-preview-vch--horizontal .eb-preview-vch__notch { right: 20px; }
 .eb-preview-vch--horizontal .eb-preview-vch__notch--a { top: -8px; }
 .eb-preview-vch--horizontal .eb-preview-vch__notch--b { bottom: -8px; }
+[data-theme="dark"] .eb-preview-vch__notch { background: #1A1A1A; }
+
+/* The perforation between the notches, read off the Stub Cutout mask:
+   a 1px line on the notch centreline, running from 9.4 to 9.4 in from the
+   ends, in ~4px dashes with ~2px gaps. Subtracted from the panel in
+   Figma, so it takes the same ground the notches do — a repeating
+   gradient draws the identical picture without a mask. */
+.eb-preview-vch__asset::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+}
+.eb-preview-vch--vertical .eb-preview-vch__asset::after {
+  left: 9.4px;
+  right: 9.4px;
+  bottom: 31.5px;
+  height: 1px;
+  background-image: repeating-linear-gradient(to right, #F8F9FB 0 4px, transparent 4px 6px);
+}
+.eb-preview-vch--horizontal .eb-preview-vch__asset::after {
+  top: 9.4px;
+  bottom: 9.4px;
+  right: 27.5px;
+  width: 1px;
+  background-image: repeating-linear-gradient(to bottom, #F8F9FB 0 4px, transparent 4px 6px);
+}
+[data-theme="dark"] .eb-preview-vch--vertical .eb-preview-vch__asset::after {
+  background-image: repeating-linear-gradient(to right, #1A1A1A 0 4px, transparent 4px 6px);
+}
+[data-theme="dark"] .eb-preview-vch--horizontal .eb-preview-vch__asset::after {
+  background-image: repeating-linear-gradient(to bottom, #1A1A1A 0 4px, transparent 4px 6px);
+}
 
 /* ── Content ────────────────────────────────────────────────────── */
+/* The component itself is 0 padding and 0 gap — the artwork butts against
+   this box. The 12/8 inset is the Content frame's own, in both
+   orientations. What distributes the rows differs: Vertical's Content
+   sets Gap=Auto directly; Horizontal's sets Gap=0 and its Container child
+   sets Auto. Either way the validity line lands on the bottom edge rather
+   than a fixed distance from the price — no fixed gap exists to document,
+   which is what space-between reproduces. */
 .eb-preview-vch__content {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 6px;
   padding: 8px 12px;
   background: #FFFFFF;
   min-width: 0;
 }
+/* Primary/Multi-line Label/Base — Proxima Soft. */
 .eb-preview-vch__title {
+  font-family: "Proxima Soft", "Proxima Nova", system-ui, sans-serif;
   font-size: 16px;
   font-weight: 700;
   line-height: 20px;
@@ -7215,13 +7320,27 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   line-height: 15px;
   color: #445C85;
 }
-.eb-preview-vch__prices { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+/* The Price Container runs differently per orientation: vertical stacks
+   the two prices with no gap at all, horizontal sets them side by side
+   at 4. Both read from the frame, not chosen. */
+.eb-preview-vch__prices { display: flex; min-width: 0; }
+.eb-preview-vch--vertical .eb-preview-vch__prices { flex-direction: column; gap: 0; }
+.eb-preview-vch--horizontal .eb-preview-vch__prices {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+/* Primary/Label/Small — Proxima Soft. */
 .eb-preview-vch__price {
+  font-family: "Proxima Soft", "Proxima Nova", system-ui, sans-serif;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.25px;
   color: #005CE5;
 }
+/* text/color-text-disabled in every version — both orientations bind the
+   same variable. */
 .eb-preview-vch__original {
   font-size: 12px;
   font-weight: 500;
@@ -7262,12 +7381,23 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   color: #FFFFFF;
   z-index: 3;
 }
-/* Horizontal anchors its status badge over the asset panel. */
+/* BadgeSlot sits at the artwork's top-LEFT in horizontal — flush with the
+   panel's leading edge, 4 down. Square on the side that meets the content
+   panel, rounded on the other three. */
 .eb-preview-vch--horizontal .eb-preview-vch__badge--float {
   position: absolute;
   top: 4px;
-  right: 8px;
+  left: 0;
+  border-radius: 0 4px 4px 0;
   z-index: 3;
+}
+
+/* Details binds the title to the price row at a fixed 4; everything else
+   in the content stack is distributed rather than gapped. */
+.eb-preview-vch__details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 /* ── Used / Expired — the Filter overlay ────────────────────────── */
@@ -7277,28 +7407,68 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   z-index: 2;
   pointer-events: none;
 }
-.eb-preview-vch--used .eb-preview-vch__asset .eb-preview-vch__filter { background: rgba(2, 14, 34, 0.56); }
-.eb-preview-vch--expired .eb-preview-vch__asset .eb-preview-vch__filter { background: #C2CFE5; }
+/* Neither filter is a flat overlay — both are blended groups at 0.6, and
+   that is why Expired keeps the artwork readable where a solid fill
+   erased it. Used darkens with #020E22 at 56%; Expired screens #C2CFE5,
+   and screen can only lighten, so nothing underneath is covered. */
+.eb-preview-vch--used .eb-preview-vch__asset .eb-preview-vch__filter {
+  background: rgba(2, 14, 34, 0.56);
+  mix-blend-mode: darken;
+  opacity: 0.6;
+}
+.eb-preview-vch--expired .eb-preview-vch__asset .eb-preview-vch__filter {
+  background: #C2CFE5;
+  mix-blend-mode: screen;
+  opacity: 0.6;
+}
+/* Both dimmed states are one base with one variable: bg/color-bg-main
+   under bg/color-bg-overlay at 40% for Used, and -overlay-weak at 24%
+   for Expired. Drawn as the two fills Figma stacks rather than as their
+   flattened #9A9FA7 and #C2C5CA, so the mechanism is what the preview
+   asserts and either token can move without this going stale. */
 .eb-preview-vch--used .eb-preview-vch__badge,
-.eb-preview-vch--expired .eb-preview-vch__badge { background: #6780A9; }
-.eb-preview-vch--expired .eb-preview-vch__title,
+.eb-preview-vch--used .eb-preview-vch__discount,
+.eb-preview-vch--used .eb-preview-vch__rail,
+.eb-preview-vch--expired .eb-preview-vch__badge,
+.eb-preview-vch--expired .eb-preview-vch__discount,
+.eb-preview-vch--expired .eb-preview-vch__rail {
+  background-color: #FFFFFF;
+}
+.eb-preview-vch--used .eb-preview-vch__badge,
+.eb-preview-vch--used .eb-preview-vch__discount,
+.eb-preview-vch--used .eb-preview-vch__rail {
+  background-image: linear-gradient(rgba(2, 14, 34, 0.4), rgba(2, 14, 34, 0.4));
+}
+.eb-preview-vch--expired .eb-preview-vch__badge,
+.eb-preview-vch--expired .eb-preview-vch__discount,
+.eb-preview-vch--expired .eb-preview-vch__rail {
+  background-image: linear-gradient(rgba(2, 14, 34, 0.24), rgba(2, 14, 34, 0.24));
+}
+/* State walks every text layer one step down the weak ramp, and does it
+   twice for Expired: text → weak → weaker for the title, weak → weaker →
+   weakest for the rest. #originalPrice is the exception — already at
+   disabled in Default, so it has nowhere left to go. The page had a
+   single invented #9BB0D0 standing in for all of it. */
+.eb-preview-vch--used .eb-preview-vch__title { color: #445C85; }
+.eb-preview-vch--used .eb-preview-vch__desc,
+.eb-preview-vch--used .eb-preview-vch__price,
+.eb-preview-vch--used .eb-preview-vch__validity { color: #6780A9; }
+.eb-preview-vch--expired .eb-preview-vch__title { color: #6780A9; }
 .eb-preview-vch--expired .eb-preview-vch__desc,
 .eb-preview-vch--expired .eb-preview-vch__price,
-.eb-preview-vch--expired .eb-preview-vch__validity { color: #9BB0D0; }
-.eb-preview-vch--expired .eb-preview-vch__discount { background: #C2CFE5; }
+.eb-preview-vch--expired .eb-preview-vch__validity { color: #90A8D0; }
+/* Expired used to give the discount pill its own grey; it now dims with
+   the status badge, above. */
 
-/* Horizontal carries a fixed action rail rather than a slot. */
+/* The rail is a sibling of the artwork inside the asset panel, 28 wide,
+   with the card's radius on its outer edge. */
 .eb-preview-vch__rail {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 28px;
-  height: 100%;
+  flex: 0 0 28px;
   background: #0A2757;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 3;
+  border-radius: 0 4px 4px 0;
 }
 .eb-preview-vch__rail span {
   writing-mode: vertical-rl;
@@ -7308,8 +7478,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   color: #FFFFFF;
   white-space: nowrap;
 }
-.eb-preview-vch--used .eb-preview-vch__rail,
-.eb-preview-vch--expired .eb-preview-vch__rail { background: #6780A9; }
+/* The rail's dimmed states are set with the badges above, per state. */
 
 /* ── Voucher Details ────────────────────────────────────────────── */
 .eb-preview-vdet {
