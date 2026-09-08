@@ -7481,13 +7481,17 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 /* The rail's dimmed states are set with the badges above, per state. */
 
 /* ── Voucher Details ────────────────────────────────────────────── */
+/* Five of the seven layers this component owns are Primary/* — the
+   merchant name, the title, both prices and the validity — so Proxima
+   Soft is the root. The Secondary/* ones name BarkAda for themselves
+   below: the branch line, the description, and the whole terms block. */
 .eb-preview-vdet {
   width: 336px;
   border-radius: 8px;
   overflow: hidden;
   background: #FFFFFF;
   border: 1px solid #E5EBF4;
-  font-family: inherit;
+  font-family: "Proxima Soft", "Proxima Nova", system-ui, sans-serif;
   box-sizing: border-box;
 }
 .eb-preview-vdet__header {
@@ -7505,7 +7509,17 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   border-radius: 50%;
   background: #EEF2F9;
 }
-.eb-preview-vdet__merchant { flex: 1 1 auto; min-width: 0; }
+/* Merchant Details is a 202 × 38 column: 4 above the name, then the name
+   at 16 and the branch line at 18 with no gap between them. They were
+   inline spans, so they ran side by side. */
+.eb-preview-vdet__merchant {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-top: 4px;
+}
 .eb-preview-vdet__hdr {
   font-size: 16px;
   font-weight: 700;
@@ -7519,13 +7533,30 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   line-height: 18px;
   color: #6780A9;
 }
+
+/* The Secondary/* layers. The branch line is Secondary/Bold/Caption; the
+   description and every line of terms — accordion list, block message
+   and link alike — are Secondary/Bold/Base. All BarkAda. */
+.eb-preview-vdet__subhdr,
+.eb-preview-vdet__desc,
+.eb-preview-vdet__terms-list,
+.eb-preview-vdet__terms-head--block,
+.eb-preview-vdet__terms-text,
+.eb-preview-vdet__link {
+  font-family: "BarkAda", system-ui, sans-serif;
+}
+/* Hug × Hug at 52 × 16: 4 either side of a 44-wide label, 2 above and
+   below a 12/12 line. The panel reads 3/1 vertically, which sits the
+   text a pixel high; 2/2 balances it and keeps the same 16. */
 .eb-preview-vdet__badge {
   flex: 0 0 auto;
-  padding: 2px 8px;
+  padding: 2px 4px;
   border-radius: 4px;
   background: #2340A9;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
+  line-height: 12px;
+  letter-spacing: 0.5px;
   color: #FFFFFF;
 }
 .eb-preview-vdet__details { padding: 12px 16px; }
@@ -7536,16 +7567,27 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   letter-spacing: 0.25px;
   color: #0A2757;
 }
-.eb-preview-vdet__prices { display: flex; align-items: baseline; gap: 8px; margin-top: 8px; }
+/* Price Container is 18 tall holding two 16/16 texts, 4 apart. Neither
+   text declared a line-height, so each inherited the page's and rendered
+   25.6 — the container was 7 too tall before anything else was wrong. */
+.eb-preview-vdet__prices {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 18px;
+  margin-top: 8px;
+}
 .eb-preview-vdet__price {
   font-size: 16px;
   font-weight: 700;
+  line-height: 16px;
   letter-spacing: 0.25px;
   color: #005CE5;
 }
 .eb-preview-vdet__original {
   font-size: 16px;
   font-weight: 600;
+  line-height: 16px;
   letter-spacing: 0.25px;
   color: #90A8D0;
   text-decoration: line-through;
@@ -7579,52 +7621,90 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 }
 .eb-preview-vdet__strip i:first-child { left: -8px; }
 .eb-preview-vdet__strip i:last-child { right: -8px; }
-.eb-preview-vdet__body { padding: 12px 16px 16px; }
+/* Body itself has no padding — the Description insets its own text and
+   both terms treatments run the full 336. */
+.eb-preview-vdet__body { padding: 0; }
 .eb-preview-vdet__desc {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 21px;
+  padding: 8px 12px 12px;
   color: #445C85;
 }
-.eb-preview-vdet__terms { margin-top: 12px; border-top: 1px solid #E5EBF4; padding-top: 12px; }
+
+/* Every Secondary/Bold/Base layer, set once. The description, the block
+   message, the accordion's row labels and the link all resolve to the
+   same style, so they must render identically — they were 14/21 at
+   weight 500, 13/20, 13/18 and 13 bold respectively. */
+.eb-preview-vdet__desc,
+.eb-preview-vdet__terms-head--block,
+.eb-preview-vdet__terms-text,
+.eb-preview-vdet__terms-list li,
+.eb-preview-vdet__link {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+/* Both terms treatments sit flush under the Description at full width —
+   the block draws its own border, the accordion brings its own. */
+.eb-preview-vdet__terms { margin-top: 0; }
+/* Accordion: a 62-tall header row with the component's own hairline. */
 .eb-preview-vdet__terms-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 62px;
+  padding: 0 16px;
+  border-top: 1px solid #E5EBF4;
+  border-bottom: 1px solid #E5EBF4;
   font-size: 16px;
   font-weight: 700;
+  line-height: 20px;
   color: #0A2757;
 }
-.eb-preview-vdet__terms-head--block { font-size: 14px; }
+/* The chevron sits in a 32 × 32 box, like every other one in the system. */
+.eb-preview-vdet__terms-head svg { display: block; }
+.eb-preview-vdet__terms-head > svg { flex: 0 0 32px; color: #005CE5; }
+/* 16 all round, rows 6 apart — measured off the item positions inside
+   the 170-tall list, not estimated. Each row is a 16-wide tick in a
+   20-tall box, then 8, then the label. */
 .eb-preview-vdet__terms-list {
-  margin: 12px 0 0;
-  padding: 12px;
-  border-radius: 8px;
+  margin: 0;
+  padding: 16px;
   background: #F6F9FD;
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 .eb-preview-vdet__terms-list li {
   display: flex;
+  align-items: flex-start;
   gap: 8px;
-  font-size: 13px;
-  line-height: 18px;
   color: #445C85;
 }
-.eb-preview-vdet__terms-list li::before { content: "✓"; color: #9BC5FD; flex: 0 0 auto; }
+.eb-preview-vdet__tick {
+  flex: 0 0 16px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  color: #90A8D0;
+}
+.eb-preview-vdet__term { flex: 1 1 auto; min-width: 0; }
+
+/* TextBlock: its own bordered frame, 16 inside, rows 12 apart. */
+.eb-preview-vdet__terms-head--block {
+  display: block;
+  height: auto;
+  padding: 16px 16px 0;
+  border-top: 1px solid #E5EBF4;
+  border-bottom: 0;
+}
 .eb-preview-vdet__terms-text {
-  margin-top: 8px;
-  font-size: 13px;
-  line-height: 20px;
+  padding: 12px 16px 0;
   color: #445C85;
 }
 .eb-preview-vdet__link {
-  display: inline-block;
-  margin-top: 8px;
-  font-size: 13px;
-  font-weight: 700;
+  display: block;
+  padding: 12px 16px 16px;
   color: #005CE5;
 }
 
