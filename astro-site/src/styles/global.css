@@ -2411,6 +2411,14 @@ p.rb-banner-desc {
   font-size: 13px;
   color: var(--muted);
 }
+/* For a panel row whose value is set by interacting with the preview
+   rather than by a control — Slider's value, which is a drag. */
+.demo-panel-note {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--muted);
+  opacity: 0.8;
+}
 .demo-panel-select {
   width: 100%;
   min-width: 0;
@@ -7729,11 +7737,13 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 
 /* The 26px clearance is reserved whether or not the bubble is showing,
    so toggling hasTooltip does not move the track. */
+/* One text layer, #percentage, and it is Primary/Label/Small — Proxima
+   Soft. `inherit` would have resolved to BarkAda. */
 .eb-preview-sldr {
   width: 365px;
   max-width: 100%;
   padding-top: 26px;
-  font-family: inherit;
+  font-family: "Proxima Soft", "Proxima Nova", system-ui, sans-serif;
   box-sizing: border-box;
 }
 
@@ -7766,7 +7776,11 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 .eb-preview-sldr--disabled .eb-preview-sldr__fill { background: #C2CFE5; }
 .eb-preview-sldr--pressed .eb-preview-sldr__fill { background: #2340A9; }
 
-/* Right-aligned to the fill's edge, matching KnobContainer's placement. */
+/* Right-aligned to the fill's edge, matching KnobContainer's placement.
+   18 outer: the artwork is an r=8 white circle inside an r=8.5 stroke,
+   so the 1px ring sits outside the 16 fill. It also carries a drop
+   shadow the node tree does not expose — dy 2, blur 2, black at 10% —
+   which only the SVG export shows. */
 .eb-preview-sldr__knob {
   position: absolute;
   top: -4px;
@@ -7776,6 +7790,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   border-radius: 50%;
   background: #FFFFFF;
   border: 1px solid #E5EBF4;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   cursor: grab;
 }

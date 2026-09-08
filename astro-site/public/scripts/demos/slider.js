@@ -12,7 +12,9 @@
 
 /* Value lives per-container so a control change re-renders at the width
    you last dragged to, rather than snapping back to the default. */
-var _sldrValue = { demo: 10, spec: 10 };
+/* One entry per container — the live preview plus a card per State — so
+   dragging one card does not move the others. */
+var _sldrValue = { demo: 10, default: 10, disabled: 10, pressed: 10 };
 
 function _sldrRender(opts) {
   var state = opts.state || 'default';
@@ -106,8 +108,12 @@ function _sldrUpdate() {
 }
 
 /* ── Spec card state ─────────────────────────────────────────────── */
+/* One card per State value, in the panel's order. hasTooltip stays a
+   control — three cards describing six versions. */
 var _specCards = {
-  default: { state: 'default', hastooltip: 'true' }
+  default: { state: 'default', hastooltip: 'true' },
+  disabled: { state: 'disabled', hastooltip: 'true' },
+  pressed: { state: 'pressed', hastooltip: 'true' }
 };
 window._specCards = _specCards;
 
@@ -118,15 +124,50 @@ function updateSpecCard(cardKey, prop, value) {
   var host = document.getElementById('sldr-spec-' + cardKey);
   if (host) {
     host.innerHTML = _sldrRender({
-      key: 'spec',
+      key: cardKey,
       state: card.state,
       hasTooltip: card.hastooltip === 'true',
-      value: _sldrValue.spec
+      value: _sldrValue[cardKey]
     });
-    _sldrApply('spec');
+    _sldrApply(cardKey);
   }
 }
 window.updateSpecCard = updateSpecCard;
+
+/* ── DEV code, live ───────────────────────────────────────────────── */
+/* State is not a parameter. Pressed is what the platform does while a
+   finger is down, and Disabled is each platform's own idiom — the same
+   shape settled across the rest of the system. The value is a binding
+   rather than a property, which is the whole reason the Figma component
+   needs a slot to fake it. */
+function getSnippet(cardKey, lang) {
+  var card = _specCards[cardKey] || _specCards['default'];
+  var compose = lang === 'compose';
+  var sep = compose ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
+  var T = function (t) { return '<span class="syn-type">' + t + '</span>'; };
+  var P = function (t) { return '<span class="syn-punc">' + t + '</span>'; };
+  var K = function (t) { return '<span class="syn-kw">' + t + '</span>'; };
+  var Fn = function (t) { return '<span class="syn-fn">' + t + '</span>'; };
+  var N = function (t) { return '<span class="syn-num">' + t + '</span>'; };
+
+  var args = compose
+    ? ['value' + sep + 'amount',
+       'onValueChange' + sep + P('{') + ' amount ' + '<span class="syn-eq">=</span>' + ' it ' + P('}'),
+       'valueRange' + sep + N('0f') + P('..') + N('100f'),
+       'showsTooltip' + sep + K(card.hastooltip === 'true' ? 'true' : 'false')]
+    : ['value' + sep + P('$') + 'amount',
+       'in' + sep + N('0') + P('...') + N('100'),
+       'showsTooltip' + sep + K(card.hastooltip === 'true' ? 'true' : 'false')];
+
+  if (compose && card.state === 'disabled') args.push('enabled' + sep + K('false'));
+
+  var call = T('EBSlider') + P('(') + '\n    ' + args.join(P(',') + '\n    ') + '\n' + P(')');
+  if (!compose && card.state === 'disabled') {
+    call += '\n' + P('.') + Fn('disabled') + P('(') + K('true') + P(')');
+  }
+  return call;
+}
+window.getSnippet = getSnippet;
 
 function _sldrInit() {
   _sldrUpdate();
