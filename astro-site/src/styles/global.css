@@ -250,6 +250,32 @@ body {
   outline: none;
 }
 
+/* ── Subtext Message preview ─────────────────────────────────────────
+   The message and trailing label are SVG <text>. Family, weight and
+   tracking are the component's own — BarkAda SemiBold at 0 tracking,
+   read off the #message / #label layers of set 26715:17362. Size and
+   fill vary per variant and are set as SVG attributes by
+   public/scripts/demos/subtext-message.js. */
+.stm-text {
+  font-family: 'BarkAda', system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* ── Radio Button – With Label preview ───────────────────────────────
+   The label is SVG <text> so the preview stays a single scalable node.
+   Family, weight and tracking are the component's own — read off the
+   #label layers of set 26184:2712 — not the documentation font. Size
+   and fill vary per variant and are set as SVG attributes by
+   public/scripts/demos/radio-button-with-label.js. */
+.rbl-label {
+  font-family: 'Proxima Soft', system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+}
+.spec-card-preview svg,
+.demo-preview svg { max-width: 100%; height: auto; }
+
 /* ── Mobile Top Bar ──────────────────────────────────────────────────── */
 .topbar {
   display: none;
