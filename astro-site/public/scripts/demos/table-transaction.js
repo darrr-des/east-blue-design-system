@@ -6,6 +6,10 @@
  * Table Amount Cell instances in the content row.
  */
 
+/* Peso Sign - Proxima, exported from Figma. Not the Unicode ₱ — the DS
+   mark is its own outline, and the 15 is not the 13 scaled. */
+var _PESO13 = '<svg class="eb-peso" width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3.7998 1.83594C3.84465 1.83595 3.88852 1.84042 3.93164 1.84668L6.7666 1.84863C8.04707 1.84929 9.12165 2.71892 9.43848 3.89941H10.2432C10.6294 3.89964 10.9422 4.21333 10.9424 4.59961C10.9424 4.98607 10.6296 5.29958 10.2432 5.2998H9.44727C9.14305 6.49949 8.05979 7.38858 6.76562 7.38867H4.71387V9.7998C4.71369 10.3042 4.30425 10.7138 3.7998 10.7139C3.29527 10.7139 2.88592 10.3043 2.88574 9.7998V5.2998H2.32129C1.93469 5.2998 1.62109 4.98621 1.62109 4.59961C1.6213 4.21319 1.93482 3.89941 2.32129 3.89941H2.88574V2.75C2.88574 2.24535 3.29516 1.83594 3.7998 1.83594ZM4.71387 5.81738H6.76562C7.17397 5.81732 7.53373 5.61193 7.75 5.2998H4.71387V5.81738ZM4.71387 3.89941H7.72266C7.50428 3.60886 7.15805 3.42029 6.7666 3.41992L4.71387 3.41895V3.89941Z" fill="currentColor"/></svg>';
+
 function _ttxnEscape(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
@@ -49,7 +53,7 @@ function _ttxnBuild(opts) {
     } else {
       /* Table Amount Cell — its own #label is hidden here, so only the
          peso-prefixed value renders. The row's single #label covers them all. */
-      s += '<span class="eb-preview-ttxn__cell-amount"><span>₱</span><span>X,XXX.XX</span></span>';
+      s += '<span class="eb-preview-ttxn__cell-amount">' + _PESO13 + '<span>X,XXX.XX</span></span>';
     }
     s += '</div>';
   }

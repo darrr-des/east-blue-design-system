@@ -5066,7 +5066,8 @@ pre.code-snippet .prp { color: #0369A1; }
   min-width: 120px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
+  padding-top: 5px;
 }
 .eb-preview-trow__label-text {
   font-family: 'Proxima Soft', system-ui, sans-serif;
@@ -5176,7 +5177,9 @@ pre.code-snippet .prp { color: #0369A1; }
 }
 .eb-preview-ttxn__cell-amount {
   display: flex;
-  align-items: baseline;
+  box-sizing: border-box;
+  height: 14px;
+  align-items: center;
   gap: 2px;
   font-weight: 600;
   font-size: 12px;
@@ -5188,6 +5191,9 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-ttxn--disabled .eb-preview-ttxn__cell-label,
 .eb-preview-ttxn--disabled .eb-preview-ttxn__cell-sub,
 .eb-preview-ttxn--disabled .eb-preview-ttxn__cell-amount { color: #C2CFE5; }
+
+/* Peso Sign - Proxima, inlined from Figma; fill follows the text colour. */
+.eb-peso { flex: none; }
 
 /* ── Table Scheduling (360 wide, State — node 5868:40468) ────────── */
 .eb-preview-tsched {
@@ -5205,10 +5211,16 @@ pre.code-snippet .prp { color: #0369A1; }
   display: flex;
   align-items: center;
   gap: 2px;
+  height: 18px;
 }
 .eb-preview-tsched__date {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
   width: 108px;
   min-width: 108px;
+  height: 18px;
+  padding-bottom: 2px;
   font-weight: 600;
   font-size: 12px;
   line-height: 12px;
@@ -5216,17 +5228,27 @@ pre.code-snippet .prp { color: #0369A1; }
   color: #0A2757;
 }
 .eb-preview-tsched__peso {
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 14px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  height: 18px;
+  padding-top: 2px;
   color: #005CE5;
 }
 .eb-preview-tsched__total {
+  box-sizing: border-box;
+  display: block;
+  height: 16px;
+  padding: 2px 0 0 2px;
+  color: #005CE5;
+}
+.eb-preview-tsched__total-text {
+  display: block;
+  height: 14px;
   font-weight: 700;
   font-size: 14px;
   line-height: 14px;
   letter-spacing: 0.25px;
-  color: #005CE5;
 }
 .eb-preview-tsched__details { display: flex; align-items: flex-start; gap: 16px; }
 .eb-preview-tsched__row-label {
@@ -5257,7 +5279,9 @@ pre.code-snippet .prp { color: #0369A1; }
 }
 .eb-preview-tsched__cell-amount {
   display: flex;
-  align-items: baseline;
+  box-sizing: border-box;
+  height: 14px;
+  align-items: center;
   gap: 2px;
   font-weight: 600;
   font-size: 12px;
