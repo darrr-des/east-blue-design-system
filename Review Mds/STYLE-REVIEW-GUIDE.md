@@ -258,11 +258,11 @@ matchLayer({
 |---|---|---|---|
 | `matched` | the style name | — | Id resolves and all four metrics agree |
 | `excluded` | `—` | **No** | In `EXCLUDED_STYLE_NAMES` — absent by design |
-| `unbound` | `—`, **Missing** | **Yes** | No `textStyleId`; raw values typed in |
+| `no-text-style-id` | `—`, **Missing** | **Yes** | No `textStyleId`; raw values typed in |
 | `unresolved` | `—`, **Missing** | **Yes** | Id matches no key — renamed or deleted, still referenced |
-| `mismatch` | `—`, **Missing** | **Yes** | Points at a real style but the layer disagrees with it |
+| `values-differ` | `—`, **Missing** | **Yes** | Points at a real style but the layer disagrees with it |
 
-All four issues tag `C3 · Token Coverage` — typography off-token is the same class of finding as a hardcoded hex. They look alike on the page but are different defects. `unbound` means someone typed a size in. `unresolved` means the component still points at a style that is gone. `mismatch` is the one that reads as correct until you check: the name is right, the numbers are not — `match.disagreements` names the fields.
+All four issues tag `C3 · Token Coverage` — typography off-token is the same class of finding as a hardcoded hex. They look alike on the page but are different defects. `no-text-style-id` means someone typed a size in. `unresolved` means the component still points at a style that is gone. `values-differ` is the one that reads as correct until you check: the name is right, the numbers are not — `match.disagreements` names the fields.
 
 **Setup and metrics are searched, not assumed.** A file may sit on any of the three font setups and any of the three ramps, so a layer counts as matched if it agrees under **any** pair. Pin them — `matchLayer(reading, { setup: 'bau', metrics: 'default' })` — only when the file's modes are known.
 
@@ -450,7 +450,7 @@ grep -n "font-family: inherit" src/styles/global.css        # check 18 — this 
 
 Then open `http://localhost:4321/components/<slug>` and click **every** control on **every** card.
 
-## 4b. The 18 checks
+## 4b. The 19 checks
 
 | # | Check | How to tell it passed |
 |---|---|---|
@@ -467,7 +467,7 @@ Then open `http://localhost:4321/components/<slug>` and click **every** control 
 | 11 | Typography is style names only | No Font / Size / Tracking / Line-height rows |
 | 12 | Every typography row resolves | Each value is a real style name — no `—`, no font spec |
 | 13 | Every size variant read | Each size has its own style; a `—` on medium/small means unread, not Missing |
-| 18 | Every typography row is a `matched` | `matchLayer()` returns `matched`, not merely a resolving id — a `mismatch` is a `C3`, an `excluded` raises nothing |
+| 19 | Every typography row is a `matched` | `matchLayer()` returns `matched`, not merely a resolving id — a `values-differ` is a `C3`, an `excluded` raises nothing |
 | 14 | No slot changes type family across sizes | Read down the column — Headlines at one size, Label at another is a `C2` issue |
 | 15 | Colors rows follow the controls | Switch a control — hex and token both change |
 | 16 | Colors table is Role │ Element │ Token │ Value | Grouped by role, in card order |
@@ -512,7 +512,7 @@ The AI prints one table. Status is one of **✅ Done · ⚠️ Partial · ❌ Mi
 | 11 | Typography style names | ✅ Done | 2 rows, no font specs |
 | 12 | Typography rows resolve | ✅ Done | Title + Description both resolved from textStyleId |
 | 13 | Size variants read | ✅ Done | large / medium / small resolved on both cards |
-| 18 | Typography rows are `matched` | ⚠️ Partial | ids resolve, but metrics unverified — re-run every layer through `matchLayer()` |
+| 19 | Typography rows are `matched` | ⚠️ Partial | ids resolve, but metrics unverified — re-run every layer through `matchLayer()` |
 | 14 | Type family consistent | ❌ Missing | Title is Primary/Headlines/Block at large but Primary/Multi-line Label at medium + small |
 | 15 | Colors follow controls | ✅ Done | 4 rows × 5 types |
 | 16 | Colors table shape | ⚠️ Partial | authored in interim shape — waiting on the Element column |

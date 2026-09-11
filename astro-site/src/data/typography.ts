@@ -545,14 +545,14 @@ export function resolveStyleId(textStyleId: string): TextStyle | undefined {
  *                agree with the database under some (setup, metrics) pair.
  *  `excluded`    the style is in EXCLUDED_STYLE_NAMES — absent from the
  *                database by design, so its non-resolution is not a defect.
- *  `unbound`     no `textStyleId` — someone typed raw values in.
+ *  `no-text-style-id`     no `textStyleId` — someone typed raw values in.
  *  `unresolved`  a `textStyleId` that no style key matches — the style was
  *                renamed or deleted and the component still points at it.
- *  `mismatch`    the id resolves, but the layer's own metrics disagree with
+ *  `values-differ`    the id resolves, but the layer's own metrics disagree with
  *                the style it claims. Reads as correct until you check.
  */
 export type LayerMatchStatus =
-  | 'matched' | 'excluded' | 'unbound' | 'unresolved' | 'mismatch';
+  | 'matched' | 'excluded' | 'no-text-style-id' | 'unresolved' | 'values-differ';
 
 /**
  * What a reviewer reads off one text layer in Figma.
@@ -590,7 +590,7 @@ export interface LayerMatch {
   /** The (setup, metrics) pair under which it agreed. */
   setup?: FontSetup;
   metrics?: MetricMode;
-  /** Fields that disagreed — populated only for `mismatch`. */
+  /** Fields that disagreed — populated only for `values-differ`. */
   disagreements: string[];
 }
 
@@ -650,7 +650,7 @@ export function matchLayer(
   const id = reading.textStyleId?.trim();
   if (!id) {
     return {
-      status: 'unbound', value: '—', issue: true, disagreements: [],
+      status: 'no-text-style-id', value: '—', issue: true, disagreements: [],
       reason: 'No textStyleId — the layer carries raw font values, not a DS text style.',
     };
   }
@@ -682,7 +682,7 @@ export function matchLayer(
   }
 
   return {
-    status: 'mismatch', value: '—', issue: true, style,
+    status: 'values-differ', value: '—', issue: true, style,
     setup: closest!.setup, metrics: closest!.metrics,
     disagreements: closest!.diffs,
     reason: `Points at ${style.name} but the layer disagrees: ${closest!.diffs.join('; ')}.`,
