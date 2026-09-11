@@ -1,19 +1,17 @@
 import type { ComponentData, DemoControlSection } from '../types';
-import { buildStatelessColorsTable } from './_helpers';
 
-// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
-// in `public/scripts/demos/header-with-logo.js`.
-const headerWithLogoDemoControls: DemoControlSection[] = [
+// Panel mirrors the property panel of set 4566:17590 — one variant axis.
+const brandAppBarDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
         label: 'Surface',
         prop: 'surface',
-        defaultValue: 'brand',
+        defaultValue: 'default',
         options: [
-          { value: 'brand', label: 'Brand' },
           { value: 'default', label: 'Default' },
+          { value: 'brand', label: 'Brand' },
         ],
       },
     ],
@@ -167,23 +165,27 @@ export const headerWithLogo: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "dark-logo-variant",
-        "demoKey": "hwl-dark",
-        "demoControls": headerWithLogoDemoControls,
-        "title": "Dark logo variant",
-        "node": "18430:2876",
-        "description": "Dark GCash mark on brand surface. Used where extra contrast is needed or on lighter brand tints.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-with-logo-spec-1\"><div class=\"eb-preview eb-preview-header-logo eb-preview-header-logo--brand\"><div class=\"eb-preview-header-logo__mark\"><svg class=\"eb-preview-header-logo__glyph\" viewBox=\"0 0 28 28\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"14\" cy=\"14\" r=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"></circle><path d=\"M14 6 A8 8 0 1 1 8.5 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"></path><circle cx=\"19\" cy=\"9\" r=\"1.5\" fill=\"currentColor\"></circle></svg><span>GCash</span></div></div></div>",
+        "cardKey": "bab-spec-main",
+        "demoKey": "main",
+        "title": "Brand App Bar",
+        "node": "4566:17590",
+        "description": "",
+        "previewHtml": "<div id=\"brand-app-bar-spec-main\" class=\"spec-preview-body\"><svg width=\"360\" height=\"90\" viewBox=\"0 0 360 90\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"360\" height=\"90\" fill=\"#FFFFFF\"/><g transform=\"translate(125,24)\"><path d=\"M83.4939 8.33081H81.7797C81.6157 8.33106 81.4586 8.39694 81.3426 8.51401C81.2267 8.63108 81.1615 8.78979 81.1612 8.95535V10.7544C80.9931 9.62986 79.5731 8.12988 77.1442 8.12988C73.6971 8.12988 71.1953 10.8657 71.1953 14.628C71.1953 18.3902 73.7335 21.2383 77.1003 21.2383C79.2004 21.2383 80.5008 20.0119 81.1575 19.3176V20.4128C81.1577 20.5784 81.223 20.7371 81.3389 20.8542C81.4548 20.9712 81.612 21.0371 81.7759 21.0374H83.4902C83.6543 21.0374 83.8117 20.9716 83.9278 20.8545C84.0439 20.7374 84.1093 20.5786 84.1095 20.4128V8.95535C84.1093 8.79028 84.0444 8.63199 83.9291 8.515C83.8138 8.39801 83.6574 8.33181 83.4939 8.33081ZM81.1584 14.6732C81.1584 17.26 79.4059 18.6138 77.6758 18.6138C75.4132 18.6138 74.1922 16.56 74.1922 14.628C74.1922 12.6959 75.3889 10.7544 77.6758 10.7544C79.4087 10.7544 81.1612 12.0997 81.1612 14.6732H81.1584Z\" fill=\"#002CB8\"/><path d=\"M91.817 13.478C90.4419 13.094 89.2536 12.7619 89.2536 11.8591C89.2536 11.1129 89.9271 10.6846 91.1023 10.6846C92.1888 10.6846 92.9268 11.1686 93.1267 12.012C93.1587 12.1485 93.2355 12.2701 93.3445 12.3571C93.4535 12.4441 93.5884 12.4913 93.7274 12.4912H95.437C95.5259 12.491 95.6137 12.4713 95.6943 12.4335C95.7749 12.3957 95.8465 12.3408 95.9041 12.2723C95.9623 12.2042 96.0052 12.1241 96.0301 12.0377C96.0549 11.9513 96.061 11.8604 96.0479 11.7714C95.6985 9.49121 93.8815 8.12988 91.1901 8.12988C88.3577 8.12988 86.3015 9.70913 86.3015 11.8846C86.3015 14.6468 88.7986 15.3223 90.8053 15.8648C92.1813 16.2374 93.3706 16.5582 93.3706 17.4166C93.3706 18.1968 92.5942 18.6808 91.3452 18.6808C90.2728 18.6808 89.3993 18.1336 89.1704 17.3185C89.1358 17.185 89.0584 17.0667 88.9502 16.9823C88.8421 16.8978 88.7093 16.8518 88.5725 16.8516H86.7724C86.6811 16.8516 86.5909 16.8719 86.5083 16.911C86.4256 16.9502 86.3525 17.0071 86.2941 17.078C86.2367 17.1468 86.1952 17.2275 86.1724 17.3145C86.1496 17.4014 86.1462 17.4924 86.1623 17.5808C86.5528 19.7346 88.7024 21.2383 91.3938 21.2383C94.259 21.2383 96.26 19.6572 96.26 17.3883C96.175 14.6959 93.7582 14.0204 91.817 13.478Z\" fill=\"#002CB8\"/><path d=\"M104.958 8.33682C103.557 8.33682 102.277 8.8085 101.387 9.65001V4.73682C101.386 4.57126 101.321 4.41257 101.205 4.2955C101.089 4.17843 100.932 4.11255 100.768 4.1123H99.0755C98.9115 4.11255 98.7544 4.17843 98.6384 4.2955C98.5225 4.41257 98.4573 4.57126 98.457 4.73682V20.4103C98.4573 20.5759 98.5225 20.7346 98.6384 20.8517C98.7544 20.9687 98.9115 21.0346 99.0755 21.0349H100.768C100.932 21.0346 101.089 20.9687 101.205 20.8517C101.321 20.7346 101.386 20.5759 101.387 20.4103V14.166C101.387 12.1292 102.431 10.7519 104.251 10.7519C106.071 10.7519 107.094 12.1292 107.094 14.166V20.4103C107.094 20.5759 107.159 20.7346 107.275 20.8517C107.391 20.9687 107.548 21.0346 107.712 21.0349H109.382C109.546 21.0349 109.704 20.9691 109.82 20.852C109.936 20.7349 110.001 20.5761 110.002 20.4103V13.7868C110.002 10.4764 108.018 8.33682 104.958 8.33682Z\" fill=\"#002CB8\"/><path d=\"M69.4634 16.894L68.0136 16.0591C67.9195 16.0054 67.8133 15.9772 67.7053 15.977C67.6025 15.9764 67.5013 16.002 67.4109 16.0514C67.3206 16.1009 67.2442 16.1727 67.1887 16.2601C66.8128 16.8461 66.2993 17.3293 65.694 17.6666C64.9267 18.0982 64.0611 18.32 63.1829 18.31C61.6228 18.31 60.3429 17.8063 59.3798 16.8119C58.4166 15.8176 57.9253 14.5346 57.9253 13.0006C57.9253 11.4667 58.4148 10.1846 59.3798 9.18933C60.3448 8.19406 61.6218 7.69122 63.1829 7.69122C64.0574 7.67989 64.9194 7.90184 65.6818 8.33462C66.2894 8.6776 66.8065 9.16291 67.1896 9.7497C67.2452 9.83557 67.3211 9.90601 67.4105 9.95462C67.5 10.0032 67.6 10.0285 67.7016 10.028C67.8112 10.028 67.9188 9.99875 68.0136 9.9431L69.4681 9.09405C69.5416 9.0511 69.6056 8.99332 69.656 8.92435C69.7065 8.85538 69.7424 8.77668 69.7614 8.69311C69.7806 8.61094 69.7828 8.52569 69.768 8.44261C69.7532 8.35954 69.7217 8.2804 69.6755 8.21008C69.018 7.2225 68.1363 6.40804 67.1037 5.83463C65.9047 5.15945 64.5529 4.80971 63.1801 4.81954C60.8446 4.81954 58.8735 5.61293 57.3311 7.17802C55.7888 8.7431 55.0078 10.7035 55.0078 13.0063C55.0078 15.3091 55.7897 17.2704 57.3311 18.8346C58.8725 20.3987 60.8418 21.1931 63.1801 21.1931C64.5608 21.2042 65.9203 20.85 67.1233 20.1657C68.1522 19.5898 69.0284 18.7716 69.6774 17.7808C69.7234 17.7102 69.7546 17.6308 69.7687 17.5475C69.7829 17.4642 69.7797 17.3789 69.7596 17.2968C69.7403 17.2127 69.7041 17.1335 69.6531 17.0642C69.6022 16.9949 69.5376 16.937 69.4634 16.894Z\" fill=\"#002CB8\"/><path d=\"M46.0441 11.7131C45.9428 11.7131 45.8424 11.7333 45.7488 11.7724C45.6552 11.8116 45.5701 11.869 45.4985 11.9413C45.4268 12.0137 45.37 12.0996 45.3312 12.1941C45.2924 12.2887 45.2725 12.39 45.2725 12.4924V13.614C45.2725 13.8207 45.3538 14.0189 45.4985 14.1651C45.6432 14.3112 45.8395 14.3933 46.0441 14.3933H50.4133C49.9135 17.3819 46.8073 18.3904 45.4556 18.3904C43.8852 18.3904 42.5596 17.8602 41.5198 16.8159C40.5277 15.8206 40.0251 14.5461 40.0251 13.0282C40.0251 11.5103 40.5249 10.2273 41.5114 9.21784C42.4979 8.20841 43.7731 7.69708 45.3042 7.69708C46.2039 7.68521 47.0914 7.9071 47.8817 8.34143C48.4602 8.65609 48.9629 9.09578 49.3539 9.62915C49.4267 9.72631 49.5212 9.80479 49.6296 9.85822C49.738 9.91166 49.8574 9.93854 49.978 9.93669C50.1129 9.93756 50.2457 9.90241 50.3629 9.8348L51.5287 9.15745C51.623 9.10299 51.705 9.0292 51.7694 8.94081C51.8337 8.85242 51.879 8.7514 51.9024 8.64425C51.9251 8.54042 51.9259 8.43295 51.9048 8.32878C51.8837 8.22461 51.8412 8.12608 51.78 8.03955C51.1284 7.12668 50.2821 6.37324 49.3035 5.83483C48.0798 5.15537 46.7034 4.80577 45.307 4.81974C42.9977 4.81974 41.0331 5.62068 39.4693 7.19991C37.9055 8.77915 37.1133 10.7329 37.1133 13.0065C37.1133 15.2952 37.9064 17.2517 39.4702 18.8244C41.0341 20.397 43.0416 21.1933 45.4378 21.1933C47.4333 21.1933 49.7472 20.2112 51.1952 18.7489C52.4657 17.465 53.0263 15.6357 53.1823 14.6131H53.1888L53.214 14.3697C53.2448 14.0952 53.2682 13.3678 53.2841 12.7433C53.2876 12.6093 53.2644 12.4759 53.2161 12.351C53.1677 12.2262 53.095 12.1124 53.0024 12.0164C52.9097 11.9203 52.799 11.844 52.6766 11.7919C52.5543 11.7399 52.4229 11.7131 52.2901 11.7131H46.0441Z\" fill=\"#002CB8\"/><path d=\"M27.5698 12.9957C27.5748 15.3289 27.0325 17.63 25.9872 19.7108C25.8188 20.0426 25.7792 20.426 25.8763 20.7858C25.9735 21.1455 26.2003 21.4556 26.5123 21.6551C26.6855 21.7653 26.8795 21.8378 27.082 21.8681C27.2845 21.8983 27.491 21.8857 27.6884 21.8309C27.8857 21.7762 28.0697 21.6805 28.2284 21.55C28.3872 21.4195 28.5173 21.2571 28.6105 21.073C29.8715 18.5712 30.5269 15.803 30.5227 12.9957C30.5271 10.1934 29.874 7.42992 28.617 4.9316C28.5239 4.74744 28.3939 4.5849 28.2351 4.45433C28.0764 4.32376 27.8924 4.22803 27.695 4.17327C27.4976 4.1185 27.291 4.10588 27.0885 4.13623C26.886 4.16658 26.692 4.23923 26.5188 4.34953C26.207 4.5487 25.9802 4.85836 25.8829 5.21775C25.7855 5.57714 25.8248 5.96028 25.9929 6.29196C27.0344 8.36979 27.5747 10.6668 27.5698 12.9957Z\" fill=\"#6FBAF7\"/><path d=\"M22.7926 13.0008C22.7953 14.4473 22.4867 15.8772 21.8883 17.1914C21.7387 17.5209 21.713 17.8943 21.8162 18.2415C21.9194 18.5888 22.1442 18.8862 22.4488 19.0782C22.6268 19.1911 22.8267 19.2644 23.035 19.2931C23.2434 19.3218 23.4554 19.3053 23.6569 19.2447C23.8584 19.1841 24.0448 19.0807 24.2036 18.9415C24.3624 18.8023 24.49 18.6305 24.5778 18.4376C25.3523 16.7321 25.7507 14.8771 25.7455 13.0008C25.749 11.1298 25.3512 9.28023 24.5797 7.57917C24.4921 7.38593 24.3646 7.21382 24.2058 7.07435C24.047 6.93488 23.8605 6.83124 23.6589 6.77042C23.4572 6.7096 23.245 6.69298 23.0365 6.72166C22.828 6.75034 22.6279 6.82365 22.4497 6.93671C22.146 7.12941 21.9221 7.42717 21.8198 7.77436C21.7175 8.12156 21.7438 8.49447 21.8939 8.82349C22.4884 10.1341 22.795 11.5592 22.7926 13.0008Z\" fill=\"#6FBAF7\"/><path d=\"M12.8741 23.0179C11.5708 23.0216 10.2797 22.7642 9.07562 22.2606C7.87152 21.757 6.7783 21.0171 5.85927 20.0839C4.93512 19.1558 4.20242 18.0519 3.70356 16.8359C3.2047 15.62 2.9496 14.3162 2.95301 13C2.9495 11.6838 3.20455 10.38 3.70341 9.16401C4.20227 7.94804 4.93504 6.84409 5.85927 5.91606C6.7783 4.98284 7.87152 4.24301 9.07562 3.73939C10.2797 3.23577 11.5708 2.97839 12.8741 2.98212C15.0675 2.97249 17.2009 3.70553 18.9332 5.06417C19.2165 5.28711 19.5706 5.39797 19.9291 5.37591C20.2876 5.35385 20.6257 5.20041 20.8801 4.94438C21.0284 4.79486 21.1434 4.61506 21.2174 4.41704C21.2914 4.21902 21.3227 4.00731 21.3092 3.7961C21.2957 3.58488 21.2376 3.37903 21.139 3.19229C21.0403 3.00555 20.9033 2.84222 20.7372 2.71325C18.4876 0.951382 15.7209 -0.00329846 12.8741 5.15667e-05C11.1829 -0.00477511 9.50749 0.329279 7.94498 0.982851C6.38248 1.63642 4.96389 2.59653 3.77136 3.80759C2.57208 5.01188 1.62125 6.44441 0.973896 8.02229C0.326547 9.60017 -0.00445712 11.2921 4.53223e-05 13C-0.0005819 14.7073 0.332092 16.3979 0.979051 17.9752C1.62601 19.5526 2.57456 20.9856 3.77043 22.1924C4.96319 23.4034 6.38195 24.3635 7.9446 25.017C9.50724 25.6706 11.1827 26.0047 12.8741 25.9999C15.729 26.009 18.5047 25.0525 20.7586 23.283C20.921 23.1548 21.0546 22.9933 21.1505 22.809C21.2464 22.6248 21.3024 22.4221 21.3149 22.2144C21.3273 22.0066 21.2959 21.7986 21.2227 21.604C21.1496 21.4094 21.0363 21.2328 20.8904 21.0858L20.8595 21.0547C20.6093 20.8023 20.2766 20.6505 19.9237 20.6278C19.5707 20.605 19.2216 20.7129 18.9417 20.9311C17.205 22.2882 15.07 23.0225 12.8741 23.0179Z\" fill=\"#007CFF\"/><path d=\"M20.5882 11.9344C20.3093 11.6531 19.9313 11.4951 19.5372 11.4947L14.3683 11.5013C13.9742 11.5018 13.5964 11.6603 13.3179 11.9419C13.0394 12.2235 12.883 12.6052 12.883 13.0032C12.883 13.4016 13.0397 13.7836 13.3186 14.0652C13.5975 14.3469 13.9758 14.5051 14.3702 14.5051H14.3795L17.836 14.5004C17.5054 15.6072 16.8209 16.5722 15.8896 17.2445C14.9583 17.9168 13.8327 18.2586 12.6887 18.2164C11.3409 18.1611 10.0675 17.5778 9.13831 16.5904C8.20916 15.603 7.69732 14.2889 7.7113 12.9268C7.72996 11.5541 8.28303 10.2439 9.25087 9.27978C10.2187 8.31565 11.5235 7.77505 12.883 7.77494C13.8564 7.77242 14.8105 8.04922 15.6342 8.57306C15.921 8.7525 16.2596 8.8286 16.5948 8.78904C16.9299 8.74947 17.242 8.59655 17.4801 8.35514C17.6369 8.19686 17.7566 8.00503 17.8302 7.79382C17.9038 7.58261 17.9295 7.35741 17.9053 7.13483C17.8812 6.91225 17.8079 6.69799 17.6908 6.50785C17.5737 6.31771 17.4158 6.15655 17.2288 6.03627C15.4613 4.9042 13.3052 4.49666 11.1192 4.95798C9.5882 5.28545 8.18522 6.05736 7.0826 7.17889C5.97997 8.30042 5.22572 9.72273 4.91248 11.2712C4.66011 12.4709 4.67612 13.7124 4.95935 14.9051C5.24257 16.0978 5.78587 17.2116 6.5496 18.1652C7.31333 19.1189 8.27823 19.8884 9.37391 20.4175C10.4696 20.9467 11.6684 21.2222 12.883 21.2239C15.0426 21.2214 17.1131 20.3539 18.6401 18.8117C20.1671 17.2694 21.0259 15.1785 21.0282 12.9976C21.0265 12.5983 20.8683 12.2161 20.5882 11.9344Z\" fill=\"#002CB8\"/></g></svg></div>",
+        "demoControls": brandAppBarDemoControls,
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "logo",
-                "value": "dark",
-                "mono": true,
+                "key": "Surface",
+                "value": "Default",
                 "prop": "surface"
+              },
+              {
+                "key": "Nested instance",
+                "value": "GCash Logo — 110 × 26, its properties are not exposed on the bar",
+                "mono": true
               }
             ]
           },
@@ -191,10 +193,51 @@ export const headerWithLogo: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "header/color/default/bg" },
-              { "key": "Title", "value": "#0A2757", "token": "header/color/default/label-header" },
-              { "key": "Description", "value": "#6780A9", "token": "header/color/default/description" },
-              { "key": "Border", "value": "#E5EBF4", "token": "header/color/default/border" }
+              {
+                "key": "Surface",
+                "value": "#FFFFFF",
+                "token": "—",
+                "variants": {
+                  "surface:brand": {
+                    "value": "#005CE5"
+                  }
+                }
+              },
+              {
+                "key": "Logo wordmark",
+                "value": "#002CB8",
+                "token": "—",
+                "variants": {
+                  "surface:brand": {
+                    "value": "#FFFFFF"
+                  }
+                }
+              },
+              {
+                "key": "Logo outer ring",
+                "value": "#007CFF",
+                "token": "—",
+                "variants": {
+                  "surface:brand": {
+                    "value": "#002CB8"
+                  }
+                }
+              },
+              {
+                "key": "Logo arcs",
+                "value": "#6FBAF7",
+                "token": "—"
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "Text layers",
+                "value": "None — the GCash wordmark is vector paths, not text"
+              }
             ]
           },
           {
@@ -202,136 +245,128 @@ export const headerWithLogo: ComponentData = {
             "slug": "layout",
             "rows": [
               {
-                "key": "Width",
-                "value": "Fill",
-                "mono": true
-              },
-              {
                 "key": "Height",
-                "value": "88 (hug)",
+                "value": "90px",
                 "mono": true
               },
               {
-                "key": "Logo size",
-                "value": "~120 × 32",
+                "key": "Width",
+                "value": "360px",
+                "mono": true
+              },
+              {
+                "key": "Radius",
+                "value": "None",
+                "mono": true
+              },
+              {
+                "key": "Padding H",
+                "value": "0 — LogoContainer fills the bar edge to edge",
+                "mono": true
+              },
+              {
+                "key": "Padding V",
+                "value": "0 — LogoContainer fills the bar top to bottom",
+                "mono": true
+              },
+              {
+                "key": "Logo",
+                "value": "110 × 26",
+                "mono": true
+              },
+              {
+                "key": "Logo position",
+                "value": "125px each side · 24px from the top · 40px from the bottom",
                 "mono": true
               },
               {
                 "key": "Alignment",
-                "value": "center",
+                "value": "Center horizontally, top-anchored at 24 — derived from bounding boxes",
                 "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "N/A",
-                "value": "Logo is SVG/vector, not text",
-                "mono": false
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBLogoHeader</span><span class=\"syn-punc\">(</span>logo<span class=\"syn-punc\">: </span>gcashWordmark<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebActions</span><span class=\"syn-punc\">(</span><span class=\"syn-punc\">[ ... ]</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBLogoHeader</span><span class=\"syn-punc\">(</span>\n    logo <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">GCashLogo</span><span class=\"syn-punc\">() }</span><span class=\"syn-punc\">,</span>\n    actions <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ ... }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "light-logo-variant",
-        "demoKey": "hwl-light",
-        "demoControls": headerWithLogoDemoControls,
-        "title": "Light logo variant",
-        "node": "18430:2887",
-        "description": "Light GCash mark on brand surface. The default variant for most branded screens.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-with-logo-spec-2\"><div class=\"eb-preview eb-preview-header-logo eb-preview-header-logo--brand\"><div class=\"eb-preview-header-logo__mark\"><svg class=\"eb-preview-header-logo__glyph\" viewBox=\"0 0 28 28\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"14\" cy=\"14\" r=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"></circle><path d=\"M14 6 A8 8 0 1 1 8.5 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"></path><circle cx=\"19\" cy=\"9\" r=\"1.5\" fill=\"currentColor\"></circle></svg><span>GCash</span></div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "logo",
-                "value": "light",
-                "mono": true,
-                "prop": "surface"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/header/light/bg" },
-              { "key": "Logo color", "value": "#005CE5", "token": "main/header/logo/brand" },
-              { "key": "Icon color", "value": "#0A2757", "token": "main/header/light/icon" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Height",
-                "value": "56",
-                "mono": true
-              },
-              {
-                "key": "Padding (h)",
-                "value": "16",
-                "mono": true
-              },
-              {
-                "key": "Logo size",
-                "value": "88 × 24",
-                "mono": true
-              },
-              {
-                "key": "Icon size",
-                "value": "24 × 24",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "N/A",
-                "value": "Logo only — no text",
-                "mono": false
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span>\n    logo<span class=\"syn-punc\">: </span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"gcash-logo\"</span><span class=\"syn-punc\">),</span>\n    appearance<span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>light\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span>\n    logo <span class=\"syn-eq\">=</span> <span class=\"syn-type\">R</span><span class=\"syn-punc\">.</span>drawable<span class=\"syn-punc\">.</span>gcash_logo<span class=\"syn-punc\">,</span>\n    appearance <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBHeaderAppearance</span><span class=\"syn-punc\">.</span>Light\n<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBBrandAppBar</span><span class=\"syn-punc\">()</span>\n    <span class=\"syn-punc\">.</span>ebSurface<span class=\"syn-punc\">(.</span>default<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBBrandAppBar</span><span class=\"syn-punc\">(</span>\n    surface <span class=\"syn-eq\">=</span> EBAppBarSurface<span class=\"syn-punc\">.</span>Default\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    colorsTables: [
-      // Card 1 — Dark logo variant
-      buildStatelessColorsTable({
-        title: 'Dark Logo — Colors',
-        description: 'GCash logo placed inside a dark logo container — used on light surfaces.',
-        rows: [
-          { role: 'Surface bg',     token: 'main/header-with-logo/light/bg',           value: '#FFFFFF' },
-          { role: 'Logo container', token: 'main/header-with-logo/dark/logo-bg',       value: '#0A2757' },
-          { role: 'Logo mark',      token: 'main/header-with-logo/dark/logo-mark',     value: '#FFFFFF' },
+    "colorsTables": [
+      {
+        "title": "Colors by Surface",
+        "description": "Read off <code>get_node_info</code> and <code>get_svg</code> on both variants of set <code>4566:17590</code>. The bar owns only its background; the three logo colours belong to the nested <code>GCash Logo</code> and are listed so a developer can see what the surface swap costs. <strong>The logo swaps exactly two of its three colours</strong> — the pale arcs stay <code>#6FBAF7</code> on both. Token paths could not be read; the plugin returns no variable bindings.",
+        "columns": [
+          "Token",
+          "Value"
         ],
-      }),
-      // Card 2 — Light logo variant
-      buildStatelessColorsTable({
-        title: 'Light Logo — Colors',
-        description: 'GCash logo placed inside a light logo container — used on brand-blue surfaces.',
-        rows: [
-          { role: 'Surface bg',     token: 'main/header-with-logo/dark/bg',            value: '#1972F9' },
-          { role: 'Logo container', token: 'main/header-with-logo/light/logo-bg',      value: '#FFFFFF' },
-          { role: 'Logo mark',      token: 'main/header-with-logo/light/logo-mark',    value: '#1972F9' },
-        ],
-      }),
-    ],
+        "rows": [
+          {
+            "role": "Default",
+            "token": "Surface",
+            "values": [
+              "—",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Logo wordmark and inner glyph",
+            "values": [
+              "—",
+              "#002CB8"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Logo outer ring",
+            "values": [
+              "—",
+              "#007CFF"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Logo arcs",
+            "values": [
+              "—",
+              "#6FBAF7"
+            ]
+          },
+          {
+            "role": "Brand",
+            "token": "Surface",
+            "values": [
+              "—",
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Logo wordmark and inner glyph",
+            "values": [
+              "—",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Logo outer ring",
+            "values": [
+              "—",
+              "#002CB8"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Logo arcs",
+            "values": [
+              "—",
+              "#6FBAF7"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "code": {
     "installation": {

@@ -7,17 +7,38 @@ const radioButtonWithLabelDemoControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'size',
-        prop: 'size',
+        label: 'Style',
+        prop: 'style',
         defaultValue: 'default',
         options: [
-          { value: 'default', label: 'default' },
-          { value: 'large', label: 'large' },
+          { value: 'default', label: 'Default' },
+          { value: 'check', label: 'Check' },
         ],
       },
       {
-        label: 'isError',
-        prop: 'isError',
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'pressed', label: 'Pressed' },
+          { value: 'disabled', label: 'Disabled' },
+        ],
+      },
+      {
+        label: 'Size',
+        prop: 'size',
+        defaultValue: 'large',
+        options: [
+          { value: 'small', label: 'Small' },
+          { value: 'medium', label: 'Medium' },
+          { value: 'large', label: 'Large' },
+        ],
+      },
+      {
+        label: 'isSelected',
+        prop: 'isSelected',
+        control: 'toggle',
         defaultValue: 'false',
         options: [
           { value: 'false', label: 'false' },
@@ -25,8 +46,9 @@ const radioButtonWithLabelDemoControls: DemoControlSection[] = [
         ],
       },
       {
-        label: 'selected',
-        prop: 'selected',
+        label: 'isError',
+        prop: 'isError',
+        control: 'toggle',
         defaultValue: 'false',
         options: [
           { value: 'false', label: 'false' },
@@ -209,121 +231,47 @@ export const radioButtonWithLabel: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "default",
-        "demoKey": "default",
+        "cardKey": "rbl-spec-main",
+        "demoKey": "main",
+        "title": "Radio Button - With Label",
+        "node": "26184:2712",
+        "description": "",
+        "previewHtml": "<div id=\"radio-button-with-label-spec-main\" class=\"spec-preview-body\"><svg width=\"243\" height=\"90\" viewBox=\"0 0 81 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><g transform=\"translate(0,3)\"><circle cx=\"12\" cy=\"12\" r=\"10.5\" stroke=\"#D7E0EF\" stroke-width=\"3\"/></g><text class=\"rbl-label\" x=\"36\" y=\"16\" font-size=\"18\" fill=\"#0A2757\" dominant-baseline=\"central\">Label</text></svg></div>",
         "demoControls": radioButtonWithLabelDemoControls,
-        "title": "Default",
-        "node": "18482:35674",
-        "description": "Small radio + 14 / 16 label. Default unselected state.",
-        "previewHtml": "<div id=\"rbl-spec-default-preview\" style=\"display:flex;align-items:flex-start;justify-content:center;padding:24px;background:#F4F6FA;border-radius:8px;min-height:80px;\"><div style=\"display:inline-flex;gap:12px;align-items:center;padding:4px 0;\"><div style=\"display:flex;align-items:center;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"none\" stroke=\"#D7E0EF\" stroke-width=\"2\"></circle></svg></div><div style=\"color:#445C85;font-family:'Proxima Soft', system-ui;font-weight:600;font-size:14px;line-height:16px;letter-spacing:0.25px;\">Label</div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Variant",
+                "key": "Style",
                 "value": "Default",
-                "mono": false,
-                "prop": "size"
+                "prop": "style"
               },
               {
                 "key": "State",
                 "value": "Default",
-                "mono": false,
-                "prop": "isError"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Border", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border",
-                "variants": {
-                  "selected:true": { "hide": true },
-                  "isError:true":  { "hide": true }
-                }
-              },
-              { "key": "Fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg",
-                "variants": { "selected:false": { "hide": true } }
-              },
-              { "key": "Label", "value": "#445C85", "token": "radio-button/color/default/unselected/text" },
-              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border",
-                "variants": { "isError:false": { "hide": true } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Outer ring",
-                "value": "24 × 24",
-                "mono": true
+                "prop": "state"
               },
               {
-                "key": "Inner dot",
-                "value": "12 × 12",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "12 vertical · 0 horizontal",
-                "mono": true
-              },
-              {
-                "key": "Gap (radio ↔ label)",
-                "value": "12px",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Multi-line Label/Light/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 16 / 20 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBRadioRow</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">: </span>option<span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">, </span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBRadioRow</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> option<span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    onSelect <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "large",
-        "demoKey": "large",
-        "demoControls": radioButtonWithLabelDemoControls,
-        "title": "Large",
-        "node": "18482:35686",
-        "description": "16 / 20 label (Proxima Soft Semibold). Still uses the 16 × 16 radio — should be 20 × 20.",
-        "previewHtml": "<div id=\"rbl-spec-large-preview\" style=\"display:flex;align-items:flex-start;justify-content:center;padding:24px;background:#F4F6FA;border-radius:8px;min-height:80px;\"><div style=\"display:inline-flex;gap:12px;align-items:center;padding:4px 0;\"><div style=\"display:flex;align-items:center;\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"10\" cy=\"10\" r=\"9\" fill=\"none\" stroke=\"#D7E0EF\" stroke-width=\"2\"></circle></svg></div><div style=\"color:#445C85;font-family:'Proxima Soft', system-ui;font-weight:600;font-size:16px;line-height:20px;letter-spacing:0.25px;\">Label</div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Variant",
+                "key": "Size",
                 "value": "Large",
-                "mono": false,
                 "prop": "size"
               },
               {
-                "key": "State",
-                "value": "Default",
-                "mono": false,
+                "key": "isSelected",
+                "value": "false",
+                "prop": "isSelected"
+              },
+              {
+                "key": "isError",
+                "value": "false",
                 "prop": "isError"
+              },
+              {
+                "key": "Nested instance",
+                "value": "Radio Button · 26184:2588",
+                "mono": true
               }
             ]
           },
@@ -331,44 +279,112 @@ export const radioButtonWithLabel: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Border", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border",
+              {
+                "key": "Ring",
+                "value": "#D7E0EF",
+                "token": "main/radio-button/color/default/unselected/border",
                 "variants": {
-                  "selected:true": { "hide": true },
-                  "isError:true":  { "hide": true }
+                  "style:check": {
+                    "hide": true
+                  },
+                  "style:default|state:pressed": {
+                    "value": "#ADBDDC"
+                  },
+                  "style:default|state:disabled": {
+                    "value": "#D7E0EF @ 40%"
+                  },
+                  "style:default|isSelected:true": {
+                    "value": "#005CE5"
+                  },
+                  "style:default|state:pressed|isSelected:true": {
+                    "value": "#2340A9"
+                  },
+                  "style:default|state:disabled|isSelected:true": {
+                    "value": "#9BC5FD"
+                  },
+                  "style:default|isError:true": {
+                    "value": "#D61B2C"
+                  },
+                  "style:default|state:pressed|isError:true": {
+                    "value": "#B50707"
+                  },
+                  "style:default|isSelected:true|isError:true": {
+                    "value": "#D61B2C"
+                  },
+                  "style:default|state:pressed|isSelected:true|isError:true": {
+                    "value": "#B50707"
+                  }
                 }
               },
-              { "key": "Fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg",
-                "variants": { "selected:false": { "hide": true } }
-              },
-              { "key": "Label", "value": "#445C85", "token": "radio-button/color/default/unselected/text" },
-              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border",
-                "variants": { "isError:false": { "hide": true } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
               {
-                "key": "Outer ring",
-                "value": "24 × 24",
-                "mono": true
-              },
-              {
-                "key": "Inner dot",
-                "value": "12 × 12",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "12 vertical · 0 horizontal",
-                "mono": true
+                "key": "Dot",
+                "value": "#005CE5",
+                "token": "main/radio-button/color/default/selected/bg",
+                "variants": {
+                  "style:check": {
+                    "hide": true
+                  },
+                  "isSelected:false": {
+                    "hide": true
+                  },
+                  "style:default|state:pressed|isSelected:true": {
+                    "value": "#2340A9"
+                  },
+                  "style:default|state:disabled|isSelected:true": {
+                    "value": "#9BC5FD"
+                  },
+                  "style:default|isSelected:true|isError:true": {
+                    "value": "#D61B2C"
+                  },
+                  "style:default|state:pressed|isSelected:true|isError:true": {
+                    "value": "#B50707"
+                  }
+                }
               },
               {
-                "key": "Gap (radio ↔ label)",
-                "value": "12px",
-                "mono": true
+                "key": "Disc",
+                "value": "#005CE5",
+                "token": "main/radio-button/color/default/selected/bg",
+                "variants": {
+                  "style:default": {
+                    "hide": true
+                  },
+                  "style:check|state:pressed": {
+                    "value": "#2340A9"
+                  },
+                  "style:check|state:disabled": {
+                    "value": "#9BC5FD"
+                  }
+                }
+              },
+              {
+                "key": "Checkmark",
+                "value": "#FFFFFF",
+                "token": "main/radio-button/color/default/selected/icon",
+                "variants": {
+                  "style:default": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Label",
+                "value": "#0A2757",
+                "token": "—",
+                "variants": {
+                  "state:disabled": {
+                    "value": "#C2CFE5"
+                  },
+                  "state:default|isSelected:true": {
+                    "value": "#445C85"
+                  },
+                  "state:default|isError:true": {
+                    "value": "#445C85"
+                  },
+                  "state:default|style:check": {
+                    "value": "#445C85"
+                  }
+                }
               }
             ]
           },
@@ -377,64 +393,17 @@ export const radioButtonWithLabel: ComponentData = {
             "slug": "typo",
             "rows": [
               {
-                "key": "Label style",
-                "value": "Primary/Multi-line Label/Light/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 16 / 20 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBRadioRow</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">: </span>option<span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">, </span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBRadioRow</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> option<span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    onSelect <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "default-—-error",
-        "demoKey": "default-error",
-        "demoControls": radioButtonWithLabelDemoControls,
-        "title": "Default — error",
-        "node": "18482:35680",
-        "description": "Default size with red radio border. Label text color unchanged.",
-        "previewHtml": "<div id=\"rbl-spec-default-error-preview\" style=\"display:flex;align-items:flex-start;justify-content:center;padding:24px;background:#F4F6FA;border-radius:8px;min-height:80px;\"><div style=\"display:inline-flex;gap:12px;align-items:center;padding:4px 0;\"><div style=\"display:flex;align-items:center;\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"none\" stroke=\"#D61B2C\" stroke-width=\"2\"></circle></svg></div><div style=\"color:#445C85;font-family:'Proxima Soft', system-ui;font-weight:600;font-size:14px;line-height:16px;letter-spacing:0.25px;\">Label</div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Variant",
-                "value": "Default — error",
-                "mono": false,
-                "prop": "size"
-              },
-              {
-                "key": "State",
-                "value": "Error",
-                "mono": false,
-                "prop": "isError"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Border", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border",
+                "key": "Label",
+                "value": "Primary/Multi-line Label/Light/Large",
+                "mono": true,
                 "variants": {
-                  "selected:true": { "hide": true },
-                  "isError:true":  { "hide": true }
+                  "size:medium": {
+                    "value": "Primary/Multi-line Label/Light/Base"
+                  },
+                  "size:small": {
+                    "value": "Primary/Multi-line Label/Light/Small"
+                  }
                 }
-              },
-              { "key": "Fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg",
-                "variants": { "selected:false": { "hide": true } }
-              },
-              { "key": "Label", "value": "#445C85", "token": "radio-button/color/default/unselected/text" },
-              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border",
-                "variants": { "isError:false": { "hide": true } }
               }
             ]
           },
@@ -443,209 +412,206 @@ export const radioButtonWithLabel: ComponentData = {
             "slug": "layout",
             "rows": [
               {
-                "key": "Outer ring",
-                "value": "24 × 24",
-                "mono": true
-              },
-              {
-                "key": "Inner dot",
-                "value": "12 × 12",
-                "mono": true
-              },
-              {
-                "key": "Padding",
-                "value": "12 vertical · 0 horizontal",
-                "mono": true
-              },
-              {
-                "key": "Gap (radio ↔ label)",
-                "value": "12px",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Multi-line Label/Light/Base",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 16 / 20 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBRadioRow</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">: </span>option<span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">, </span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBRadioRow</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> option<span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    onSelect <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "large-—-error",
-        "demoKey": "large-error",
-        "demoControls": radioButtonWithLabelDemoControls,
-        "title": "Large — error",
-        "node": "18482:35692",
-        "description": "Large size with red radio border.",
-        "previewHtml": "<div id=\"rbl-spec-large-error-preview\" style=\"display:flex;align-items:flex-start;justify-content:center;padding:24px;background:#F4F6FA;border-radius:8px;min-height:80px;\"><div style=\"display:inline-flex;gap:12px;align-items:center;padding:4px 0;\"><div style=\"display:flex;align-items:center;\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"10\" cy=\"10\" r=\"9\" fill=\"none\" stroke=\"#D61B2C\" stroke-width=\"2\"></circle></svg></div><div style=\"color:#445C85;font-family:'Proxima Soft', system-ui;font-weight:600;font-size:16px;line-height:20px;letter-spacing:0.25px;\">Label</div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Variant",
-                "value": "Large — error",
-                "mono": false,
-                "prop": "size"
-              },
-              {
-                "key": "State",
-                "value": "Error",
-                "mono": false,
-                "prop": "isError"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Border", "value": "#D7E0EF", "token": "radio-button/color/default/unselected/border",
+                "key": "Height",
+                "value": "Hug · 30px",
+                "mono": true,
                 "variants": {
-                  "selected:true": { "hide": true },
-                  "isError:true":  { "hide": true }
+                  "size:medium": {
+                    "value": "Hug · 28px"
+                  },
+                  "size:small": {
+                    "value": "Hug · 23px"
+                  }
                 }
               },
-              { "key": "Fill", "value": "#005CE5", "token": "radio-button/color/default/selected/bg",
-                "variants": { "selected:false": { "hide": true } }
-              },
-              { "key": "Label", "value": "#445C85", "token": "radio-button/color/default/unselected/text" },
-              { "key": "Error border", "value": "#D61B2C", "token": "radio-button/color/error/unselected/border",
-                "variants": { "isError:false": { "hide": true } }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
               {
-                "key": "Outer ring",
-                "value": "24 × 24",
+                "key": "Width",
+                "value": "Hug · 81px at \"Label\"",
+                "mono": true,
+                "variants": {
+                  "size:medium": {
+                    "value": "Hug · 72px at \"Label\""
+                  },
+                  "size:small": {
+                    "value": "Hug · 63px at \"Label\""
+                  }
+                }
+              },
+              {
+                "key": "Padding H",
+                "value": "0",
                 "mono": true
               },
               {
-                "key": "Inner dot",
-                "value": "12 × 12",
+                "key": "Padding V",
+                "value": "0",
                 "mono": true
               },
               {
-                "key": "Padding",
-                "value": "12 vertical · 0 horizontal",
-                "mono": true
-              },
-              {
-                "key": "Gap (radio ↔ label)",
+                "key": "Gap",
                 "value": "12px",
                 "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Multi-line Label/Light/Base",
-                "mono": true
               },
               {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 16 / 20 · +0.25",
+                "key": "Radio",
+                "value": "24 × 24",
+                "mono": true,
+                "variants": {
+                  "size:medium": {
+                    "value": "20 × 20"
+                  },
+                  "size:small": {
+                    "value": "16 × 16"
+                  }
+                }
+              },
+              {
+                "key": "Alignment",
+                "value": "Center — derived from bounding boxes; auto-layout alignment is not exposed",
                 "mono": true
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBRadioRow</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">: </span>option<span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$selected<span class=\"syn-punc\">, </span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBRadioRow</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Option label\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> option<span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> selected<span class=\"syn-punc\">,</span>\n    onSelect <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBRadioRow</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>isSelected<span class=\"syn-punc\">: </span>$isSelected<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span>controlSize<span class=\"syn-punc\">(.</span>large<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBRadioRow</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> false<span class=\"syn-punc\">,</span>\n    onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> selected <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">!</span>selected <span class=\"syn-punc\">},</span>\n    size <span class=\"syn-eq\">=</span> EBRadioSize<span class=\"syn-punc\">.</span>Large<span class=\"syn-punc\">,</span>\n    enabled <span class=\"syn-eq\">=</span> true\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "colorsTables": [
       {
-        "title": "Typography",
+        "title": "Colors by Style and State",
+        "description": "Nested-radio fills are the reads from set <code>26184:2588</code>; label fills are read off this set’s own <code>#label</code> layers. Token paths could not be verified — the Talk To Figma plugin returns no variable bindings — so every row here carries <code>—</code> except the four the previous record asserted and whose hex still agrees.",
         "columns": [
-          "Spec"
-        ],
-        "rows": [
-          {
-            "role": "default",
-            "token": "Primary/Multi-line Label/Light/Small",
-            "values": [
-              "Proxima Soft Semibold · 14 / 16 · +0.25"
-            ]
-          },
-          {
-            "role": "large",
-            "token": "Primary/Multi-line Label/Light/Base",
-            "values": [
-              "Proxima Soft Semibold · 16 / 20 · +0.25"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "columns": [
+          "Token",
           "Value"
         ],
         "rows": [
           {
-            "role": "Radio → label gap",
-            "token": "space/space-12",
+            "role": "Radio · unselected",
+            "token": "Ring · default",
             "values": [
-              "12px"
+              "main/radio-button/color/default/unselected/border",
+              "#D7E0EF"
             ]
           },
           {
-            "role": "Radio icon offset padding (top)",
-            "token": "space/space-4",
+            "role": "—",
+            "token": "Ring · pressed",
             "values": [
-              "4px"
+              "—",
+              "#ADBDDC"
             ]
           },
           {
-            "role": "Text container padding (default)",
-            "token": "space/space-4",
+            "role": "—",
+            "token": "Ring · disabled",
             "values": [
-              "4px vertical"
+              "—",
+              "#D7E0EF @ 40%"
             ]
           },
           {
-            "role": "Text container padding (large)",
-            "token": "—",
+            "role": "Radio · selected",
+            "token": "Ring + Dot · default",
             "values": [
-              "3t / 5b"
+              "main/radio-button/color/default/selected/bg",
+              "#005CE5"
             ]
           },
           {
-            "role": "Default width (demo instance)",
-            "token": "—",
+            "role": "—",
+            "token": "Ring + Dot · pressed",
             "values": [
-              "63px"
+              "—",
+              "#2340A9"
             ]
           },
           {
-            "role": "Large width (demo instance)",
-            "token": "—",
+            "role": "—",
+            "token": "Ring + Dot · disabled",
             "values": [
-              "69px"
+              "—",
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Radio · error",
+            "token": "Ring (+ Dot) · default",
+            "values": [
+              "main/radio-button/color/error/unselected/border",
+              "#D61B2C"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Ring (+ Dot) · pressed",
+            "values": [
+              "—",
+              "#B50707"
+            ]
+          },
+          {
+            "role": "Radio · Check",
+            "token": "Disc · default",
+            "values": [
+              "main/radio-button/color/default/selected/bg",
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Disc · pressed",
+            "values": [
+              "—",
+              "#2340A9"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Disc · disabled",
+            "values": [
+              "—",
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Checkmark",
+            "values": [
+              "main/radio-button/color/default/selected/icon",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Label",
+            "token": "State=Default · unselected, no error",
+            "values": [
+              "—",
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "State=Default · selected, error, or Check",
+            "values": [
+              "—",
+              "#445C85"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "State=Pressed · every combination",
+            "values": [
+              "—",
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "State=Disabled · every combination",
+            "values": [
+              "—",
+              "#C2CFE5"
             ]
           }
         ]

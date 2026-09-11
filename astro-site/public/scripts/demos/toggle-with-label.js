@@ -1,233 +1,169 @@
-/* Auto-extracted from assessment-src/components/toggle-with-label.html.
- * Powers the live-preview dropdowns/toggles for the toggle-with-label component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs toggle-with-label
+/* Toggle - With Label — Style tab demo.
+ * Rebuilt from Figma component set 26510:37680 (GCash DS Sticker Sheets v2).
+ * The nested Toggle's colours and geometry are the same reads that drive
+ * public/scripts/demos/toggle.js (set 26510:37625); the row metrics and the
+ * label are read off this set's own layers.
+ *
+ * Panel (set 26510:37680):
+ *   State      ◇ variant · Default, Disabled, Pressed
+ *   Size       ◇ variant · Large, Medium, Small
+ *   isSelected ◇ variant · false, true
+ *   hasSubtext ◉ boolean · False
+ *
+ * 3 × 3 × 2 = 18 variants. `hasSubtext` reveals the nested Subtext Message
+ * without adding a variant, so nothing is unreachable and there is nothing
+ * to constrain.
  */
-/* ── Toggle - With Label JS ─────────────────────────────────────── */
-/* Live Preview is interactive:
-   • Click/key-activate the toggle to flip it (mirrors the inner
-     Toggle's Figma variant swap).
-   • Label + description are editable via text inputs in the panel.
-   • Disabled blocks toggle interaction (matches inner Toggle).
-   • Error state shows red message; underlying Toggle stays default
-     since Figma's Toggle doesn't ship an Error variant today.        */
 
-function _twlToggle(selected, state, interactive) {
-  var classes = ['eb-preview','eb-preview-toggle','eb-preview-toggle--medium',
-                 selected === 'true' ? 'eb-preview-toggle--on' : 'eb-preview-toggle--off'];
-  if (state === 'disabled') classes.push('eb-preview-toggle--disabled');
-  if (interactive && state !== 'disabled') classes.push('eb-preview-toggle--interactive');
+/* ── Row metrics, per Size ───────────────────────────────────────────
+   The row is 180 wide at every size. `label` is a Fill frame that runs
+   from the left edge to the toggle, so the two are flush — there is no
+   gap; this is a space-between row. */
+var TWL_W = 180;
+var TWL_GEO = {
+  large:  { row: 24, labelW: 132, labelH: 16, font: 16, tw: 48, th: 24, knob: 10, off: 12, on: 36, r: 12 },
+  medium: { row: 20, labelW: 140, labelH: 16, font: 16, tw: 40, th: 20, knob: 8,  off: 10, on: 30, r: 10 },
+  small:  { row: 16, labelW: 148, labelH: 14, font: 14, tw: 32, th: 16, knob: 6,  off: 8,  on: 24, r: 8  }
+};
+var TWL_PAD_B = 12;   /* room for the toggle's knob shadow */
+/* Subtext Message sits flush below the row — 180 x 22, its 18px text band
+   inset 2 from the left and 4 from the top. Identical at every Size and
+   every State: neither the copy nor the colour changes. */
+var TWL_SUB_H = 22;
+var TWL_SUB_FONT = 12;
+var TWL_SUB_TEXT = 'Please Try Again';
+var TWL_TEXT_X = 2;   /* #label inset inside the label frame */
 
-  var attrs = 'role="switch" aria-checked="' + selected + '"';
-  attrs += ' tabindex="' + (state === 'disabled' ? '-1' : '0') + '"';
-  if (state === 'disabled') attrs += ' aria-disabled="true"';
-  if (interactive && state !== 'disabled') {
-    attrs += ' onclick="event.stopPropagation();_twlFlip();"';
-    attrs += ' onkeydown="if(event.key===\' \'||event.key===\'Enter\'){event.preventDefault();_twlFlip();}"';
+/* ── Colours ─────────────────────────────────────────────────────────
+   The track values are the atom's, unchanged. The label is #445C85 in
+   all 18 variants — it does not mute when State=Disabled. */
+var TWL_TRACK = {
+  'default|false':  '#D7E0EF',
+  'pressed|false':  '#C2CFE5',
+  'disabled|false': '#EEF2F9',
+  'default|true':   '#005CE5',
+  'pressed|true':   '#2340A9',
+  'disabled|true':  '#9BC5FD'
+};
+var TWL_LABEL = '#445C85';
+var TWL_KNOB = '#FFFFFF';
+var TWL_SUBTEXT = '#6780A9';
+
+/* Knob shadow — the atom's filter chain, transcribed from Figma:
+   erode 8 → offset y 8 → blur 12 → #020E22 at 16%. */
+function _twlFilter(id, w, h) {
+  return '<defs><filter id="' + id + '" x="0" y="0" width="' + w + '" height="' + h +
+    '" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">' +
+    '<feFlood flood-opacity="0" result="BackgroundImageFix"/>' +
+    '<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>' +
+    '<feMorphology radius="8" operator="erode" in="SourceAlpha" result="shadow"/>' +
+    '<feOffset dy="8"/>' +
+    '<feGaussianBlur stdDeviation="6"/>' +
+    '<feComposite in2="hardAlpha" operator="out"/>' +
+    '<feColorMatrix type="matrix" values="0 0 0 0 0.00784314 0 0 0 0 0.054902 0 0 0 0 0.133333 0 0 0 0.16 0"/>' +
+    '<feBlend mode="normal" in2="BackgroundImageFix" result="shadow"/>' +
+    '<feBlend mode="normal" in="SourceGraphic" in2="shadow" result="shape"/>' +
+    '</filter></defs>';
+}
+
+/* ── Renderer ───────────────────────────────────────────────────────── */
+function _twlRender(card, scale) {
+  scale = scale || 1;
+  var g = TWL_GEO[card.size] || TWL_GEO.large;
+  var hasSub = card.hasSubtext === 'true';
+  var H = g.row + (hasSub ? TWL_SUB_H : 0) + TWL_PAD_B;
+  var tx = TWL_W - g.tw;                                   /* toggle is flush right */
+  var cx = tx + (card.isSelected === 'true' ? g.on : g.off);
+  var id = 'twlshadow-' + card.size + '-' + (card.isSelected === 'true' ? 'on' : 'off') + (hasSub ? '-sub' : '');
+
+  var out = '<svg width="' + (TWL_W * scale) + '" height="' + (H * scale) +
+            '" viewBox="0 0 ' + TWL_W + ' ' + H +
+            '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+  out += _twlFilter(id, TWL_W, H);
+
+  /* #label — vertically centred in the row at every size. */
+  out += '<text class="twl-label" x="' + TWL_TEXT_X + '" y="' + (g.row / 2) +
+         '" font-size="' + g.font + '" font-weight="600" fill="' + TWL_LABEL +
+         '" dominant-baseline="central">Label</text>';
+
+  /* nested Toggle instance */
+  out += '<rect x="' + tx + '" width="' + g.tw + '" height="' + g.th + '" rx="' + g.r +
+         '" fill="' + (TWL_TRACK[card.state + '|' + card.isSelected] || TWL_TRACK['default|false']) + '"/>';
+  out += '<g filter="url(#' + id + ')">';
+  out += '<circle cx="' + cx + '" cy="' + (g.th / 2) + '" r="' + g.knob + '" fill="' + TWL_KNOB + '"/>';
+  out += '</g>';
+
+  if (hasSub) {
+    out += '<text class="twl-subtext" x="' + TWL_TEXT_X + '" y="' + (g.row + 13) +
+           '" font-size="' + TWL_SUB_FONT + '" font-weight="600" fill="' + TWL_SUBTEXT +
+           '" dominant-baseline="central">' + TWL_SUB_TEXT + '</text>';
   }
-  return '<span class="' + classes.join(' ') + '" ' + attrs + '>' +
-    '<span class="eb-preview-toggle__knob"></span>' +
-  '</span>';
+
+  return out + '</svg>';
 }
 
-function _twlFlip() {
-  var sel = document.getElementById('toggle-with-label-ctrl-selected');
-  if (!sel) return;
-  sel.value = (sel.value === 'true') ? 'false' : 'true';
-  _toggleWithLabelUpdate();
-}
-
-function _twlRender(opts) {
-  var label     = (opts.label !== undefined) ? opts.label : 'Push notifications';
-  // Desc: explicit empty string = no description row. Legacy "yes"/"no"
-  // support kept for the In-Context stack below.
-  var desc;
-  if (opts.desc === 'yes')      desc = 'Get alerts when money moves';
-  else if (opts.desc === 'no')  desc = '';
-  else                          desc = opts.desc || '';
-
-  var placement   = opts.placement || 'trailing';
-  var selected    = opts.selected  || 'true';
-  var required    = opts.required === 'yes';
-  var helper      = opts.helper    || 'none';
-  var state       = opts.state     || 'default';
-  var interactive = opts.interactive !== false;
-
-  var labels = '<div class="eb-preview-setting-row__labels">' +
-    '<div class="eb-preview-setting-row__label"><span>' + (label || '\u00A0') + '</span>' +
-    (required ? '<span class="eb-preview-setting-row__required">*</span>' : '') +
-    '</div>' +
-    (desc ? '<div class="eb-preview-setting-row__desc">' + desc + '</div>' : '') +
-  '</div>';
-  var toggleEl = _twlToggle(selected, state, interactive);
-
-  var rowClass = 'eb-preview eb-preview-setting-row' + (placement === 'leading' ? ' eb-preview-setting-row--leading' : '');
-  var row = '<div class="' + rowClass + '">' + labels + toggleEl + '</div>';
-
-  var footer = '';
-  if (helper === 'helper') {
-    footer = '<div class="eb-preview-setting-helper">Helper text goes here.</div>';
-  } else if (helper === 'error') {
-    footer = '<div class="eb-preview-setting-helper eb-preview-setting-helper--error">You must accept to continue.</div>';
-  }
-
-  return row + footer;
-}
-
-function _twlContextMarkup() {
-  // Realistic "Notification settings" form — grouped by section,
-  // multiple toggle-with-label rows, matching how this component is
-  // actually used in product.
-  var row = function (opts) {
-    return _twlRender({
-      label:       opts.label,
-      desc:        opts.desc || '',
-      selected:    opts.on ? 'true' : 'false',
-      placement:   'trailing',
-      state:       opts.state || 'default',
-      interactive: false
-    });
-  };
-
-  return '<div class="eb-preview eb-preview-form-card">' +
-    '<div class="eb-preview-form-card__header">' +
-      '<p class="eb-preview-form-card__title">Notification settings</p>' +
-      '<p class="eb-preview-form-card__subtitle">Choose how GCash keeps you informed.</p>' +
-    '</div>' +
-    '<div class="eb-preview-form-card__section">' +
-      '<p class="eb-preview-form-card__section-title">Account activity</p>' +
-      '<div class="eb-preview-form-card__rows">' +
-        row({label:'Push notifications',  desc:'Get alerts when money moves', on:true}) +
-        row({label:'Email alerts',        desc:'Daily summary and receipts',  on:false}) +
-        row({label:'SMS notifications',   desc:'',                            on:false}) +
-      '</div>' +
-    '</div>' +
-    '<div class="eb-preview-form-card__section">' +
-      '<p class="eb-preview-form-card__section-title">Security</p>' +
-      '<div class="eb-preview-form-card__rows">' +
-        row({label:'Biometric login',           desc:'Use Face ID to sign in',             on:true}) +
-        row({label:'Two-factor authentication', desc:'Extra verification on new devices',  on:true}) +
-        row({label:'Quick balance on lock',     desc:'Requires biometric login',           on:false, state:'disabled'}) +
-      '</div>' +
-    '</div>' +
-  '</div>';
-}
-
-function _toggleWithLabelUpdate() {
-  var label     = document.getElementById('toggle-with-label-ctrl-label');
-  var desc      = document.getElementById('toggle-with-label-ctrl-desc');
-  var placement = document.getElementById('toggle-with-label-ctrl-placement');
-  var selected  = document.getElementById('toggle-with-label-ctrl-selected');
-  var required  = document.getElementById('toggle-with-label-ctrl-required');
-  var helper    = document.getElementById('toggle-with-label-ctrl-helper');
-  var state     = document.getElementById('toggle-with-label-ctrl-state');
-  var preview   = document.getElementById('toggle-with-label-demo-preview');
-  if (!preview) return;
-  preview.innerHTML = _twlRender({
-    label:       label ? label.value : 'Push notifications',
-    desc:        desc ? desc.value : '',
-    placement:   placement ? placement.value : 'trailing',
-    selected:    selected ? selected.value : 'true',
-    required:    required ? required.value : 'no',
-    helper:      helper ? helper.value : 'none',
-    state:       state ? state.value : 'default',
-    interactive: true
-  });
-}
-
-/* ── Toggle - With Label Spec Cards (canonical wiring) ────────── */
+/* ── Per-card state ─────────────────────────────────────────────────── */
 var _specCards = {
-  today:    { placement: 'trailing', selected: 'true',  state: 'default', label: 'Label',                desc: '' },
-  trailing: { placement: 'trailing', selected: 'true',  state: 'default', label: 'Push notifications',   desc: 'yes' },
-  leading:  { placement: 'leading',  selected: 'false', state: 'default', label: 'Remember me',          desc: ''   }
+  main: { state: 'default', size: 'large', isSelected: 'false', hasSubtext: 'false' }
 };
 window._specCards = _specCards;
 
-var _twlSpecPreviewId = {
-  today:    'toggle-with-label-spec-today',
-  trailing: 'toggle-with-label-spec-trailing',
-  leading:  'toggle-with-label-spec-leading'
-};
-
-function _twlRenderSpec(cardKey) {
-  var card = _specCards[cardKey];
-  if (!card) return;
-  var host = document.getElementById(_twlSpecPreviewId[cardKey]);
-  if (!host) return;
-  if (cardKey === 'today') {
-    host.innerHTML =
-      '<div class="eb-preview eb-preview-setting-row">' +
-        '<div class="eb-preview-setting-row__labels">' +
-          '<div class="eb-preview-setting-row__label">' + card.label + '</div>' +
-        '</div>' +
-        _twlToggle(card.selected, card.state, false) +
-      '</div>';
-  } else {
-    host.innerHTML = _twlRender({
-      label:       card.label,
-      desc:        card.desc,
-      placement:   card.placement,
-      selected:    card.selected,
-      state:       card.state,
-      interactive: false
-    });
-  }
-}
-
-function buildSwiftSnippet(type, card) {
-  var apiName = (type === 'today') ? 'EBToggle' : 'EBToggleRow';
-  if (apiName === 'EBToggle') {
-    return 'EBToggle(isOn: $enabled, label: "' + card.label + '")';
-  }
-  var lines = [];
-  lines.push('EBToggleRow(');
-  lines.push('    label: "' + card.label + '",');
-  lines.push('    isOn: $enabled,');
-  lines.push('    placement: .' + card.placement);
-  if (card.state === 'disabled') lines.push(') .disabled(true)');
-  else                            lines.push(')');
+/* ── DEV code ───────────────────────────────────────────────────────── */
+function buildSwiftSnippet(cardStyle, card) {
+  var size = { large: '.large', medium: '.regular', small: '.small' }[card.size] || '.large';
+  var lines = ['EBToggleRow("Label", isOn: $isOn)'];
+  lines.push('    .controlSize(' + size + ')');
+  if (card.state === 'disabled') lines.push('    .disabled(true)');
+  if (card.state === 'pressed') lines.push('    // State=Pressed is the touch-down frame — nothing to set.');
   return lines.join('\n');
 }
 
-function buildComposeSnippet(type, card) {
-  var apiName = (type === 'today') ? 'EBToggle' : 'EBToggleRow';
-  var lines = [];
-  lines.push(apiName + '(');
-  lines.push('    label = "' + card.label + '",');
-  lines.push('    checked = ' + card.selected + ',');
-  lines.push('    onCheckedChange = { /* update */ }' + (apiName === 'EBToggleRow' ? ',' : ''));
-  if (apiName === 'EBToggleRow') {
-    var place = card.placement === 'leading' ? 'Leading' : 'Trailing';
-    lines.push('    placement = EBTogglePlacement.' + place + (card.state === 'disabled' ? ',' : ''));
-    if (card.state === 'disabled') lines.push('    enabled = false');
-  }
+function buildComposeSnippet(cardStyle, card) {
+  var size = { large: 'Large', medium: 'Medium', small: 'Small' }[card.size] || 'Large';
+  var lines = ['EBToggleRow('];
+  lines.push('    label = "Label",');
+  lines.push('    checked = ' + card.isSelected + ',');
+  lines.push('    onCheckedChange = { checked = it },');
+  lines.push('    size = EBToggleSize.' + size + ',');
+  lines.push('    enabled = ' + (card.state === 'disabled' ? 'false' : 'true'));
   lines.push(')');
+  if (card.state === 'pressed') lines.push('// State=Pressed comes from interactionSource, not a parameter.');
   return lines.join('\n');
 }
 
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+function getSnippet(cardStyle, lang, card) {
+  return lang === 'swift'
+    ? buildSwiftSnippet(cardStyle, card)
+    : buildComposeSnippet(cardStyle, card);
 }
 window.getSnippet = getSnippet;
+
+/* ── Control handler ────────────────────────────────────────────────── */
+var TWL_PREVIEW_SCALE = 2;
 
 function updateSpecCard(cardStyle, prop, value) {
   var card = _specCards[cardStyle];
   if (!card) return;
   card[prop] = value;
 
-  /* Re-render preview */
-  _twlRenderSpec(cardStyle);
+  var host = document.getElementById('toggle-with-label-spec-' + cardStyle);
+  if (host) host.innerHTML = _twlRender(card, TWL_PREVIEW_SCALE);
 
-  /* Sync prop readouts */
-  ['placement','selected','state'].forEach(function (p) {
-    var el = document.querySelector('[data-sp="' + cardStyle + '-' + p + '"]');
-    if (el) el.textContent = card[p];
+  /* Properties readout. Colors / Typography / Layout `variants` are applied
+     by the shared patcher in assessment.js — do not rebuild those here. */
+  var TWL_BOOL = { isSelected: 1 };
+  ['state', 'size', 'isSelected', 'hasSubtext'].forEach(function (k) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + k + '"]');
+    if (!el) return;
+    var v = String(card[k]);
+    el.textContent = TWL_BOOL[k] ? v : v.charAt(0).toUpperCase() + v.slice(1);
+    if (k === 'hasSubtext') el.textContent = v === 'true' ? 'True' : 'False';
   });
 
-  /* Update DEV code */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
   if (devView) {
     var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
     var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
     if (codeEl) {
       var code = getSnippet(cardStyle, lang, card);
@@ -240,18 +176,50 @@ function updateSpecCard(cardStyle, prop, value) {
 }
 window.updateSpecCard = updateSpecCard;
 
+/* ── Overview tab live preview ──────────────────────────────────────── */
+/* The Overview panel still ships the pre-rebuild control set — label text,
+   description, required, helper and a `placement` axis Figma does not have.
+   Map the three that exist onto the real axes and draw the component. */
+function _toggleWithLabelUpdate() {
+  var el = document.getElementById('toggle-with-label-demo-preview');
+  if (!el) return;
+  var g = function (id) { var n = document.getElementById(id); return n ? n.value : null; };
+  el.innerHTML = _twlRender({
+    state: (g('toggle-with-label-ctrl-state') || 'default').toLowerCase() === 'disabled' ? 'disabled' : 'default',
+    size: 'large',
+    isSelected: /^(true|yes)$/i.test(g('toggle-with-label-ctrl-selected') || '') ? 'true' : 'false',
+    hasSubtext: 'false'
+  }, 2);
+}
+window._toggleWithLabelUpdate = _toggleWithLabelUpdate;
+
+function _twlFlip() {
+  var sel = document.getElementById('toggle-with-label-ctrl-selected');
+  if (sel) sel.value = /^(true|yes)$/i.test(sel.value) ? 'false' : 'true';
+  _toggleWithLabelUpdate();
+}
+window._twlFlip = _twlFlip;
+
+/* In-context preview — a short stack of rows at the three sizes. */
+function _twlContextMarkup() {
+  return '<div class="twl-context">' +
+    _twlRender({ state: 'default',  size: 'large',  isSelected: 'true',  hasSubtext: 'false' }, 1) +
+    _twlRender({ state: 'default',  size: 'medium', isSelected: 'false', hasSubtext: 'true'  }, 1) +
+    _twlRender({ state: 'disabled', size: 'small',  isSelected: 'true',  hasSubtext: 'false' }, 1) +
+    '</div>';
+}
+window._twlContextMarkup = _twlContextMarkup;
+
+/* ── First paint ────────────────────────────────────────────────────── */
 function _twlInit() {
   var ctx = document.getElementById('toggle-with-label-context-preview');
   if (ctx) ctx.innerHTML = _twlContextMarkup();
   _toggleWithLabelUpdate();
-
   Object.keys(_specCards).forEach(function (k) {
-    _twlRenderSpec(k);
+    var host = document.getElementById('toggle-with-label-spec-' + k);
+    if (host) host.innerHTML = _twlRender(_specCards[k], TWL_PREVIEW_SCALE);
   });
 }
-
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _twlInit);
 else _twlInit();
-
-/* ── Re-init after Astro view-transition swaps ─────────────── */
 document.addEventListener('astro:page-load', _twlInit);

@@ -1,118 +1,150 @@
-/* Auto-extracted from assessment-src/components/subtext-message.html.
- * Powers the live-preview dropdowns/toggles for the subtext-message component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs subtext-message
+/* Subtext Message — Style tab demo.
+ * Rebuilt from Figma component set 26715:17362 (GCash DS Sticker Sheets v2).
+ * Colours, sizes and the icon path are read off get_node_info / get_svg on
+ * the matching variant — nothing here is derived or invented except where
+ * a comment says "derived".
+ *
+ * Panel (set 26715:17362):
+ *   Status · Default, Success, Error, Disabled   (variant)
+ *   Size · Small, Default                        (variant)
+ *   hasLeadingIcon · True                        (boolean)
+ *   Icon · Checkmark (Circular)                  (instance swap — a slot, no control)
+ *   hasTrailingLabel · False                     (boolean)
+ *
+ * 4 Status × 2 Size = 8 variants, all built. The two booleans are
+ * orthogonal and add no variants, so there is nothing to constrain.
  */
-/* ── Subtext Message Component JS ──────────────────────────────────── */
-var _stmDemo = { variant: 'Primary', size: 'Small', leadingLabel: 'false', trailingIcon: 'true' };
 
-var _stmColors = {
-  Primary: { label: '#6780A9', icon: null },
-  Success: { label: '#048570', icon: '#12AF80' },
-  Error:   { label: '#D61B2C', icon: '#D61B2C' }
+/* ── Geometry — all measured on Status=Default at both sizes ────────── */
+/*  All eight variants are 189 × 22. Only the type scale changes with Size. */
+var STM_GEO = {
+  small:   { font: 10, leading: 15 },
+  default: { font: 12, leading: 18 }
+};
+var STM_BOX  = { w: 189, h: 22 };
+var STM_PADL = 2;    /* component left edge → leading-icon */
+var STM_ICON = 16;   /* leading-icon frame; the glyph inside is 12 × 12 */
+var STM_ICONY = 5;   /* icon top offset — 5 top / 1 bottom, i.e. NOT centred */
+var STM_GAP  = 4;    /* leading-icon → content */
+var STM_TEXTY = 13;  /* content-box centre; identical at both sizes */
+
+/* ── Colours, keyed by Status ────────────────────────────────────────
+   Default and Success paint the icon a different colour from the text;
+   Error and Disabled use one colour for both. */
+var STM_COLOR = {
+  'default':  { icon: '#7E96BE', text: '#6780A9' },
+  'success':  { icon: '#12AF80', text: '#048570' },
+  'error':    { icon: '#D61B2C', text: '#D61B2C' },
+  'disabled': { icon: '#C2CFE5', text: '#C2CFE5' }
 };
 
-function _stmBuildSvg(variant, size, leadingLabel, trailingIcon) {
-  var c = _stmColors[variant] || _stmColors.Primary;
-  var fontSize = (size === 'Base') ? 12 : 10;
-  var lineHeight = (size === 'Base') ? 18 : 15;
-  var height = lineHeight + 8;
-  var hasIcon = (variant !== 'Primary') && (trailingIcon === 'true');
-  var hasLabel = (variant === 'Primary' || variant === 'Success' || variant === 'Error') && (leadingLabel === 'true');
-  var message = (variant === 'Primary') ? 'Message content' : (variant === 'Success') ? 'Valid message content' : 'Invalid message content';
-  var width = 260;
-  var x = 2;
-  var s = '<svg width="' + width + '" height="' + height + '" viewBox="0 0 ' + width + ' ' + height + '" fill="none">';
+/* Checkmark (Circular) — the default Icon swap, from get_svg on 26715:17365.
+   A filled disc with the tick knocked out, drawn in a 16 × 16 box. */
+var STM_ICON_PATH = 'M8 2C11.3137 2 14 4.68629 14 8C14 11.3137 11.3137 14 8 14C4.68629 14 2 11.3137 2 8C2 4.68629 4.68629 2 8 2ZM11.4238 6.07617C11.1895 5.84186 10.8095 5.84186 10.5752 6.07617L6.99902 9.65137L5.42383 8.07617C5.18952 7.84187 4.81049 7.84188 4.57617 8.07617C4.34187 8.31048 4.34188 8.68951 4.57617 8.92383L6.5752 10.9238C6.68772 11.0364 6.84086 11.0996 7 11.0996C7.15905 11.0996 7.31136 11.0363 7.42383 10.9238L11.4238 6.92383C11.658 6.68954 11.658 6.31046 11.4238 6.07617Z';
+
+/* ── Renderer ───────────────────────────────────────────────────────── */
+function _stmRender(card, scale) {
+  scale = scale || 1;
+  var g = STM_GEO[card.size] || STM_GEO.small;
+  var col = STM_COLOR[card.status] || STM_COLOR['default'];
+  var hasIcon = card.hasLeadingIcon === 'true';
+  var hasLabel = card.hasTrailingLabel === 'true';
+  var W = STM_BOX.w, H = STM_BOX.h;
+
+  var out = '<svg width="' + (W * scale) + '" height="' + (H * scale) +
+            '" viewBox="0 0 ' + W + ' ' + H + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+
+  /* content x: measured at 24 with the icon on. With the icon off the
+     layer is hidden and content collapses to the left padding — derived,
+     since Figma ships the component with hasLeadingIcon=true. */
+  var textX = hasIcon ? (STM_PADL + STM_ICON + STM_GAP) : STM_PADL;
+
   if (hasIcon) {
-    s += '<g transform="translate(' + x + ',' + ((height - 16) / 2) + ')">';
-    s += '<circle cx="8" cy="8" r="7" fill="' + c.icon + '"/>';
-    if (variant === 'Success') {
-      s += '<path d="M5 8.3l2.1 2.1L11.2 6" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
-    } else {
-      s += '<path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>';
-    }
-    s += '</g>';
-    x += 16 + 4;
+    out += '<g transform="translate(' + STM_PADL + ',' + STM_ICONY + ')">';
+    out += '<path d="' + STM_ICON_PATH + '" fill="' + col.icon + '"/>';
+    out += '</g>';
   }
-  var textY = (height / 2) + (fontSize / 3);
-  s += '<text x="' + x + '" y="' + textY + '" font-family="BarkAda, system-ui, sans-serif" font-size="' + fontSize + '" font-weight="600" fill="' + c.label + '" letter-spacing="0">' + message + '</text>';
+
+  out += '<text class="stm-text" x="' + textX + '" y="' + STM_TEXTY +
+         '" font-size="' + g.font + '" fill="' + col.text +
+         '" dominant-baseline="central">Message content</text>';
+
   if (hasLabel) {
-    var labelX = width - 40;
-    var labelColor = (variant === 'Success') ? '#048570' : (variant === 'Error') ? '#D61B2C' : '#6780A9';
-    s += '<text x="' + labelX + '" y="' + textY + '" font-family="BarkAda, system-ui, sans-serif" font-size="' + fontSize + '" font-weight="600" fill="' + labelColor + '" letter-spacing="0">Label</text>';
+    out += '<text class="stm-text" x="' + W + '" y="' + STM_TEXTY +
+           '" font-size="' + g.font + '" fill="' + col.text +
+           '" text-anchor="end" dominant-baseline="central">Label</text>';
   }
-  s += '</svg>';
-  return s;
+
+  return out + '</svg>';
 }
 
-function updateSubtextMessageDemo() {
-  var el = document.getElementById('stm-demo-preview');
-  if (el) el.innerHTML = _stmBuildSvg(_stmDemo.variant, _stmDemo.size, _stmDemo.leadingLabel, _stmDemo.trailingIcon);
-}
-
-/* ── Subtext Message Spec Cards ───────────────────────────────────── */
-var _stmSpecCards = {
-  primary: { variant: 'Primary', size: 'Small', leadingLabel: 'false', trailingIcon: 'false' },
-  success: { variant: 'Success', size: 'Small', leadingLabel: 'false', trailingIcon: 'true' },
-  error:   { variant: 'Error',   size: 'Small', leadingLabel: 'false', trailingIcon: 'true' }
+/* ── Per-card state — Figma's defaults for all four controls ────────── */
+var _specCards = {
+  main: { status: 'default', size: 'small', hasLeadingIcon: 'true', hasTrailingLabel: 'false' }
 };
-
-/* Expose for shared utilities — `switchCodeTab` reads this when the
-   user clicks SwiftUI / Compose so it can rebuild the snippet. */
-var _specCards = _stmSpecCards;
 window._specCards = _specCards;
 
-function buildSwiftSnippet(type, card) {
-  var intentMap = { Primary: '.primary', Success: '.success', Error: '.error' };
-  var sizeMap = { Base: '.regular', Small: '.small' };
-  var intent = intentMap[card.variant] || '.primary';
-  var sz = sizeMap[card.size] || '.small';
-  var lines = [];
-  lines.push('EBSubtextMessage("Helper text")');
-  lines.push('    .ebIntent(' + intent + ')');
-  lines.push('    .controlSize(' + sz + ')');
+/* ── DEV code — component API, live on both tabs ────────────────────── */
+function buildSwiftSnippet(cardStyle, card) {
+  var status = { 'default': '.default', success: '.success', error: '.error', disabled: '.disabled' }[card.status];
+  var lines = ['EBSubtextMessage("Message content")'];
+  lines.push('    .ebStatus(' + status + ')');
+  if (card.size === 'default') lines.push('    .controlSize(.regular)');
+  else lines.push('    .controlSize(.small)');
+  if (card.hasLeadingIcon === 'true') lines.push('    .ebLeadingIcon(Image("checkmark-circular"))');
+  if (card.hasTrailingLabel === 'true') lines.push('    .ebTrailingLabel("Label")');
   return lines.join('\n');
 }
 
-function buildComposeSnippet(type, card) {
-  var intentMap = { Primary: 'Primary', Success: 'Success', Error: 'Error' };
-  var sizeMap = { Base: 'Base', Small: 'Small' };
-  var intent = intentMap[card.variant] || 'Primary';
-  var sz = sizeMap[card.size] || 'Small';
-  var lines = [];
-  lines.push('EBSubtextMessage(');
-  lines.push('    label = "Helper text",');
-  lines.push('    intent = EBSubtextIntent.' + intent + ',');
-  lines.push('    size = EBSubtextSize.' + sz);
+function buildComposeSnippet(cardStyle, card) {
+  var status = { 'default': 'Default', success: 'Success', error: 'Error', disabled: 'Disabled' }[card.status];
+  var size = card.size === 'default' ? 'Default' : 'Small';
+  var lines = ['EBSubtextMessage('];
+  lines.push('    message = "Message content",');
+  lines.push('    status = EBSubtextStatus.' + status + ',');
+  lines.push('    size = EBSubtextSize.' + size + ',');
+  if (card.hasLeadingIcon === 'true') lines.push('    leadingIcon = { Icon(EBIcons.CheckmarkCircular, null) },');
+  if (card.hasTrailingLabel === 'true') lines.push('    trailingLabel = "Label",');
+  lines[lines.length - 1] = lines[lines.length - 1].replace(/,$/, '');
   lines.push(')');
   return lines.join('\n');
 }
 
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+function getSnippet(cardStyle, lang, card) {
+  return lang === 'swift'
+    ? buildSwiftSnippet(cardStyle, card)
+    : buildComposeSnippet(cardStyle, card);
 }
 window.getSnippet = getSnippet;
 
+/* ── Control handler ────────────────────────────────────────────────── */
+var STM_PREVIEW_SCALE = 2;
+
 function updateSpecCard(cardStyle, prop, value) {
-  var card = _stmSpecCards[cardStyle];
+  var card = _specCards[cardStyle];
   if (!card) return;
   card[prop] = value;
 
-  /* Update preview SVG — find the <svg> inside the card's preview pane */
-  var cardEl = document.getElementById('spec-card-stm-spec-' + cardStyle);
-  if (cardEl) {
-    var preview = cardEl.querySelector('.spec-card-preview');
-    if (preview) preview.innerHTML = _stmBuildSvg(card.variant, card.size, card.leadingLabel, card.trailingIcon);
-  }
+  var host = document.getElementById('subtext-message-spec-' + cardStyle);
+  if (host) host.innerHTML = _stmRender(card, STM_PREVIEW_SCALE);
 
-  /* Update Properties readouts — data-sp="${cardStyle}-${prop}" */
-  var spEl = document.querySelector('[data-sp="' + cardStyle + '-' + prop + '"]');
-  if (spEl) spEl.textContent = value;
+  /* Properties readout. Colors / Typography / Layout `variants` are applied
+     by the shared patcher in assessment.js — do not rebuild those here.
+     Booleans keep Figma's own True / False capitalisation. */
+  var STM_BOOL = { hasLeadingIcon: 1, hasTrailingLabel: 1 };
+  ['status', 'size', 'hasLeadingIcon', 'hasTrailingLabel'].forEach(function (k) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + k + '"]');
+    if (!el) return;
+    var v = String(card[k]);
+    el.textContent = STM_BOOL[k]
+      ? (v === 'true' ? 'True' : 'False')
+      : v.charAt(0).toUpperCase() + v.slice(1);
+  });
 
-  /* Update DEV code — locate via [data-code-content="${cardStyle}"] */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
   if (devView) {
     var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
     var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
     if (codeEl) {
       var code = getSnippet(cardStyle, lang, card);
@@ -123,23 +155,34 @@ function updateSpecCard(cardStyle, prop, value) {
     }
   }
 }
+window.updateSpecCard = updateSpecCard;
 
-function _stmInitSpecCards() {
-  Object.keys(_stmSpecCards).forEach(function (k) {
-    updateSpecCard(k, 'size', _stmSpecCards[k].size);
-  });
+/* ── Overview tab live preview ──────────────────────────────────────── */
+/* The Overview panel still ships the pre-rebuild control set. Map what
+   it has onto the real axes so the preview draws the Figma component. */
+function updateSubtextMessageDemo() {
+  var el = document.getElementById('stm-demo-preview');
+  if (!el) return;
+  var g = function (id) { var n = document.getElementById(id); return n ? n.value : null; };
+  var variant = (g('stm-demo-variant') || g('stm-demo-intent') || 'default').toLowerCase();
+  var card = {
+    status: STM_COLOR[variant] ? variant : (variant === 'primary' ? 'default' : 'default'),
+    size: (g('stm-demo-size') || 'small').toLowerCase() === 'base' ? 'default' : 'small',
+    hasLeadingIcon: 'true',
+    hasTrailingLabel: 'false'
+  };
+  el.innerHTML = _stmRender(card, 2);
 }
+window.updateSubtextMessageDemo = updateSubtextMessageDemo;
 
+/* ── First paint ────────────────────────────────────────────────────── */
 function _stmInit() {
   updateSubtextMessageDemo();
-  _stmInitSpecCards();
+  Object.keys(_specCards).forEach(function (k) {
+    var host = document.getElementById('subtext-message-spec-' + k);
+    if (host) host.innerHTML = _stmRender(_specCards[k], STM_PREVIEW_SCALE);
+  });
 }
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', _stmInit);
-} else {
-  _stmInit();
-}
-
-/* ── Re-init after Astro view-transition swaps ─────────────── */
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _stmInit);
+else _stmInit();
 document.addEventListener('astro:page-load', _stmInit);

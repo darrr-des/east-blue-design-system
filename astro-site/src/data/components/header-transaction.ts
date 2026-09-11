@@ -1,24 +1,26 @@
 import type { ComponentData, DemoControlSection } from '../types';
-import { buildStatelessColorsTable } from './_helpers';
 
-// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
-// in `public/scripts/demos/header-transaction.js`.
-const headerTransactionDemoControls: DemoControlSection[] = [
+// Panel mirrors the only variant axis of set 4368:12856. The retired
+// `email` control is dropped — the set has no such property.
+const detailHeroDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'email',
-        prop: 'email',
-        defaultValue: 'no',
+        label: 'Surface',
+        prop: 'surface',
+        defaultValue: 'default',
         options: [
-          { value: 'no', label: 'no' },
-          { value: 'yes', label: 'yes' },
+          { value: 'default', label: 'Default' },
+          { value: 'brand', label: 'Brand' },
         ],
       },
     ],
   },
 ];
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/header-transaction.js`.
 
 export const headerTransaction: ComponentData = {
   "meta": {
@@ -198,23 +200,32 @@ export const headerTransaction: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "no-email",
-        "demoKey": "ht-no",
-        "demoControls": headerTransactionDemoControls,
-        "title": "No email",
-        "node": "18430:2906",
-        "description": "The minimal variant — avatar + title + divider + description. Used when the profile/transaction has no extra metadata to show.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-transaction-spec-1\"><div class=\"eb-preview eb-preview-header-tx\"><div class=\"eb-preview-header-tx__avatar\" aria-hidden=\"true\"></div><p class=\"eb-preview-header-tx__title\">Add Label Here</p><div class=\"eb-preview-header-tx__separator\"></div><p class=\"eb-preview-header-tx__desc\">Add description here.<br>Add description here.</p></div></div>",
+        "cardKey": "dh-spec-main",
+        "demoKey": "main",
+        "title": "Detail Hero",
+        "node": "4368:12856",
+        "description": "",
+        "previewHtml": "<div id=\"detail-hero-spec-main\" class=\"spec-preview-body\"><svg width=\"360\" height=\"218\" viewBox=\"0 0 360 218\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"360\" height=\"218\" fill=\"#FFFFFF\"/><rect x=\"24\" y=\"24\" width=\"32\" height=\"32\" rx=\"16\" fill=\"#C2CFE5\"/><text class=\"dh-title\" x=\"24\" y=\"77\" font-size=\"22\" font-weight=\"700\" fill=\"#0A2757\" dominant-baseline=\"central\">Add Label Here</text><line x1=\"24\" y1=\"102\" x2=\"336\" y2=\"102\" stroke=\"#E5EBF4\" stroke-opacity=\"1\" stroke-width=\"1\"/><text class=\"dh-proxima\" x=\"24\" y=\"125\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\" fill-opacity=\"1\" dominant-baseline=\"central\">label:</text><text class=\"dh-proxima\" x=\"24\" y=\"143\" font-size=\"14\" font-weight=\"700\" fill=\"#0A2757\" dominant-baseline=\"central\">add text here</text><text class=\"dh-barkada\" x=\"24\" y=\"167\" font-size=\"12\" font-weight=\"600\" fill=\"#6780A9\" fill-opacity=\"1\" dominant-baseline=\"central\">Add description here.</text><text class=\"dh-barkada\" x=\"24\" y=\"185\" font-size=\"12\" font-weight=\"600\" fill=\"#6780A9\" fill-opacity=\"1\" dominant-baseline=\"central\">Add description here.</text></svg></div>",
+        "demoControls": detailHeroDemoControls,
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "email",
-                "value": "no",
-                "mono": true,
-                "prop": "email"
+                "key": "Surface",
+                "value": "Default",
+                "prop": "surface"
+              },
+              {
+                "key": "Placeholder",
+                "value": "Icon slot · 32 × 32",
+                "mono": true
+              },
+              {
+                "key": "Spacers",
+                "value": "_space_8 · _space_12 · _space_16 — spacer instances, not auto-layout gaps",
+                "mono": true
               }
             ]
           },
@@ -222,40 +233,70 @@ export const headerTransaction: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "header/color/default/bg" },
-              { "key": "Title", "value": "#0A2757", "token": "header/color/default/label-header" },
-              { "key": "Description", "value": "#6780A9", "token": "header/color/default/description" },
-              { "key": "Border", "value": "#E5EBF4", "token": "header/color/default/border" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
               {
-                "key": "Width",
-                "value": "Fill",
-                "mono": true
+                "key": "Surface",
+                "value": "#FFFFFF",
+                "token": "—",
+                "variants": {
+                  "surface:brand": {
+                    "value": "#1972F9"
+                  }
+                }
               },
               {
-                "key": "Height",
-                "value": "220 (hug)",
-                "mono": true
+                "key": "Title",
+                "value": "#0A2757",
+                "token": "—",
+                "variants": {
+                  "surface:brand": {
+                    "value": "#FFFFFF"
+                  }
+                }
               },
               {
-                "key": "Padding",
-                "value": "space/space-24",
-                "mono": true
+                "key": "Separator",
+                "value": "#E5EBF4",
+                "token": "—",
+                "variants": {
+                  "surface:brand": {
+                    "value": "#F6F9FD @ 24%"
+                  }
+                }
               },
               {
-                "key": "Avatar size",
-                "value": "48 × 48",
-                "mono": true
+                "key": "Sender label",
+                "value": "#6780A9",
+                "token": "—",
+                "variants": {
+                  "surface:brand": {
+                    "value": "#F6F9FD @ 72%"
+                  }
+                }
               },
               {
-                "key": "Gap (stacked)",
-                "value": "space/space-12",
-                "mono": true
+                "key": "Sender value",
+                "value": "#0A2757",
+                "token": "—",
+                "variants": {
+                  "surface:brand": {
+                    "value": "#FFFFFF"
+                  }
+                }
+              },
+              {
+                "key": "Description",
+                "value": "#6780A9",
+                "token": "—",
+                "variants": {
+                  "surface:brand": {
+                    "value": "#F6F9FD @ 72%"
+                  }
+                }
+              },
+              {
+                "key": "Placeholder",
+                "value": "#C2CFE5",
+                "token": "—"
               }
             ]
           },
@@ -265,49 +306,24 @@ export const headerTransaction: ComponentData = {
             "rows": [
               {
                 "key": "Title",
-                "value": "Heading/L · Proxima Soft Bold 22/26",
+                "value": "Primary/Headlines/Section",
+                "mono": true
+              },
+              {
+                "key": "Sender label",
+                "value": "Primary/Label/Light/Small",
+                "mono": true
+              },
+              {
+                "key": "Sender value",
+                "value": "Primary/Label/Small",
                 "mono": true
               },
               {
                 "key": "Description",
-                "value": "Body/S · BarkAda Semibold 12/18",
+                "value": "Secondary/Bold/Caption",
                 "mono": true
               }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBTransactionHeader</span><span class=\"syn-punc\">(</span>merchantLogo<span class=\"syn-punc\">: </span>logo<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebMerchantName</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"GCash\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebAmount</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"PHP 1,500.00\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDate</span><span class=\"syn-punc\">(</span>date<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTransactionHeader</span><span class=\"syn-punc\">(</span>\n    merchantLogo <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ logo }</span><span class=\"syn-punc\">,</span>\n    merchantName <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"GCash\"</span><span class=\"syn-punc\">,</span>\n    amount <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"PHP 1,500.00\"</span><span class=\"syn-punc\">,</span>\n    date <span class=\"syn-eq\">=</span> date\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "with-email-row",
-        "demoKey": "ht-yes",
-        "demoControls": headerTransactionDemoControls,
-        "title": "With email row",
-        "node": "18430:2898",
-        "description": "Adds an inline <code>email: value</code> row between the divider and the description. Used on recipient profile cards.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-transaction-spec-2\"><div class=\"eb-preview eb-preview-header-tx\"><div class=\"eb-preview-header-tx__avatar\" aria-hidden=\"true\"></div><p class=\"eb-preview-header-tx__title\">Add Label Here</p><div class=\"eb-preview-header-tx__separator\"></div><p class=\"eb-preview-header-tx__meta\"><span class=\"eb-preview-header-tx__meta-key\">email:</span><span class=\"eb-preview-header-tx__meta-value\">email@gmail.com</span></p><p class=\"eb-preview-header-tx__desc\">Add description here.<br>Add description here.</p></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "email",
-                "value": "yes",
-                "mono": true,
-                "prop": "email"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface bg", "value": "#0A2757", "token": "main/header/dark/bg" },
-              { "key": "Title color", "value": "#FFFFFF", "token": "main/header/dark/title" },
-              { "key": "Email color", "value": "#C2CFE5", "token": "main/header/dark/subtitle" },
-              { "key": "Icon color", "value": "#FFFFFF", "token": "main/header/dark/icon" }
             ]
           },
           {
@@ -315,79 +331,178 @@ export const headerTransaction: ComponentData = {
             "slug": "layout",
             "rows": [
               {
-                "key": "Min height",
-                "value": "88",
+                "key": "Height",
+                "value": "218px — fixed on both variants",
                 "mono": true
               },
               {
-                "key": "Padding (h)",
-                "value": "16",
+                "key": "Width",
+                "value": "360px",
                 "mono": true
               },
               {
-                "key": "Padding (v)",
-                "value": "16",
+                "key": "Radius",
+                "value": "None",
                 "mono": true
               },
               {
-                "key": "Icon size",
-                "value": "24 × 24",
+                "key": "Padding H",
+                "value": "24px",
+                "mono": true
+              },
+              {
+                "key": "Padding V",
+                "value": "24px",
                 "mono": true
               },
               {
                 "key": "Gap",
-                "value": "12",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Title style",
-                "value": "Heading/Small · Bold",
+                "value": "8 · 12 · 16 · 8 — top to bottom",
                 "mono": true
               },
               {
-                "key": "Email style",
-                "value": "Caption/Regular",
+                "key": "Content",
+                "value": "312px",
+                "mono": true
+              },
+              {
+                "key": "Placeholder",
+                "value": "32 × 32",
+                "mono": true
+              },
+              {
+                "key": "Separator",
+                "value": "312 wide — weight not readable",
+                "mono": true
+              },
+              {
+                "key": "Alignment",
+                "value": "Leading · top-anchored",
                 "mono": true
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBTransactionHeader</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Send to bank\"</span><span class=\"syn-punc\">,</span>\n    email<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"user@example.com\"</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTransactionHeader</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Send to bank\"</span><span class=\"syn-punc\">,</span>\n    email <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"user@example.com\"</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBDetailHero</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Add Label Here\"</span><span class=\"syn-punc\">,</span>\n    label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"label:\"</span><span class=\"syn-punc\">,</span>\n    value<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"add text here\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Add description here.\"</span>\n<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span>ebSurface<span class=\"syn-punc\">(.</span>default<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDetailHero</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add Label Here\"</span><span class=\"syn-punc\">,</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"label:\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"add text here\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add description here.\"</span><span class=\"syn-punc\">,</span>\n    surface <span class=\"syn-eq\">=</span> EBHeroSurface<span class=\"syn-punc\">.</span>Default\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    colorsTables: [
-      // Card 1 — No email row
-      buildStatelessColorsTable({
-        title: 'No Email — Colors',
-        description: 'Transaction-screen header on brand surface, with avatar + title + description split by a divider.',
-        rows: [
-          { role: 'Surface bg',  token: 'main/header-transaction/bg',          value: '#1972F9' },
-          { role: 'Title',       token: 'main/header-transaction/title',       value: '#FFFFFF' },
-          { role: 'Description', token: 'main/header-transaction/description', value: '#FFFFFF @ 80%' },
-          { role: 'Divider',     token: 'main/header-transaction/divider',     value: '#FFFFFF @ 24%' },
+    "colorsTables": [
+      {
+        "title": "Colors by Surface",
+        "description": "Read off <code>get_node_info</code> on both variants of set <code>4368:12856</code> and confirmed against <code>export_node_as_image</code>. <strong>Brand is <code>#1972F9</code> here but <code>#005CE5</code> on Brand App Bar</strong> — two components, two brand blues. The avatar placeholder stays <code>#C2CFE5</code> on both surfaces. Token paths could not be read; the plugin returns no variable bindings.",
+        "columns": [
+          "Token",
+          "Value"
         ],
-      }),
-      // Card 2 — With email row
-      buildStatelessColorsTable({
-        title: 'With Email — Colors',
-        description: 'Same brand surface as Card 1 plus a sender-details cluster (name + email) above the description.',
-        rows: [
-          { role: 'Surface bg',   token: 'main/header-transaction/bg',          value: '#1972F9' },
-          { role: 'Title',        token: 'main/header-transaction/title',       value: '#FFFFFF' },
-          { role: 'Sender label', token: 'main/header-transaction/sender',     value: '#FFFFFF' },
-          { role: 'Sender email', token: 'main/header-transaction/email',      value: '#FFFFFF @ 80%' },
-          { role: 'Description',  token: 'main/header-transaction/description', value: '#FFFFFF @ 80%' },
-          { role: 'Divider',      token: 'main/header-transaction/divider',     value: '#FFFFFF @ 24%' },
-        ],
-      }),
-    ],
+        "rows": [
+          {
+            "role": "Default",
+            "token": "Surface",
+            "values": [
+              "—",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Title",
+            "values": [
+              "—",
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Separator",
+            "values": [
+              "—",
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Sender label",
+            "values": [
+              "—",
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Sender value",
+            "values": [
+              "—",
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Description",
+            "values": [
+              "—",
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Brand",
+            "token": "Surface",
+            "values": [
+              "—",
+              "#1972F9"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Title",
+            "values": [
+              "—",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Separator",
+            "values": [
+              "—",
+              "#F6F9FD @ 24%"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Sender label",
+            "values": [
+              "—",
+              "#F6F9FD @ 72%"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Sender value",
+            "values": [
+              "—",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Description",
+            "values": [
+              "—",
+              "#F6F9FD @ 72%"
+            ]
+          },
+          {
+            "role": "Both",
+            "token": "Placeholder",
+            "values": [
+              "—",
+              "#C2CFE5"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "code": {
     "installation": {

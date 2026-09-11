@@ -1,110 +1,154 @@
-/* Auto-extracted from assessment-src/components/text-area.html.
- * Powers the live-preview dropdowns/toggles for the text-area component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs text-area
+/* Text Area — live preview + spec cards.
+ * Mirrors node 4781:35856 (2026 Working File):
+ *   State    = Default | Focused | Error | Disabled   → the four cards
+ *   hasValue = False | True                            → the panel control
+ *
+ * Fonts are set explicitly to the component's own families — Proxima Soft for
+ * the label and value, BarkAda for the subtext — never inherited from the
+ * documentation site.
  */
-/* ── Text Area Component JS ──────────────────────────────────────── */
-var _taDemo = { state: 'default', filled: 'no', expandable: 'true' };
 
-var _taColors = {
-  default:  { border: '#D7E0EF', bg: '#FFFFFF', borderW: 1 },
-  active:   { border: '#005CE5', bg: '#FFFFFF', borderW: 2 },
-  error:    { border: '#D61B2C', bg: '#FFFFFF', borderW: 2 },
-  disabled: { border: 'none',    bg: '#EEF2F9', borderW: 0 }
-};
-var _taTextColors = {
-  default:  { filled: '#0A2757', empty: '#90A8D0' },
-  active:   { filled: '#0A2757', empty: '#90A8D0' },
-  error:    { filled: '#0A2757', empty: '#90A8D0' },
-  disabled: { filled: '#B0C0DC', empty: '#C2CFE5' }
+var TA_STATES = {
+  default:  { bg: '#FFFFFF', border: '#D7E0EF' },
+  focused:  { bg: '#FFFFFF', border: '#005CE5' },
+  error:    { bg: '#FFFFFF', border: '#D61B2C' },
+  disabled: { bg: '#EEF2F9', border: null }
 };
 
-function _taBuildSvg(state, filled, expandable) {
-  var c = _taColors[state] || _taColors.default;
-  var tc = _taTextColors[state] || _taTextColors.default;
-  var filledYes = (filled === 'yes');
-  var h = filledYes ? 96 : 62;
-  var textColor = filledYes ? tc.filled : tc.empty;
-  var borderAttr = c.border === 'none' ? '' : ' stroke="' + c.border + '" stroke-width="' + c.borderW + '"';
-  var s = '<svg width="328" height="' + h + '" viewBox="0 0 328 ' + h + '" fill="none">';
-  s += '<rect x="0.5" y="0.5" width="327" height="' + (h - 1) + '" rx="5.5" fill="' + c.bg + '"' + borderAttr + '/>';
-  if (filledYes) {
-    s += '<text x="12" y="32" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + textColor + '" letter-spacing="0.25">This a text area. This a text area.</text>';
-    s += '<text x="12" y="50" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + textColor + '" letter-spacing="0.25">This a text area. This a text area.</text>';
-  } else {
-    s += '<text x="12" y="36" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + textColor + '" letter-spacing="0.25">Placeholder</text>';
+var TA_PROXIMA = "'Proxima Soft', system-ui, sans-serif";
+var TA_BARKADA = "BarkAda, system-ui, sans-serif";
+
+function _taBuildSvg(o) {
+  var S = TA_STATES[o.state] || TA_STATES.default;
+  var filled = (o.hasValue === 'true' || o.hasValue === true);
+
+  /* Geometry read off 4781:35856 and checked against export_node_as_image.
+     Header block 22 · field 34 (empty) / 50 (filled) · subtext block 22.
+     Field padding 12 left, 10 top; Value line-height 16.
+     Filled Value is 338 × 32 — two lines, not one.
+     hasLabel and hasSubtext are component properties: hiding either collapses
+     its block and the card shrinks, the way it does in Figma. */
+  var fieldH = filled ? 50 : 34;
+  var topY = o.hasLabel ? 22 : 0;
+  var H = topY + fieldH + (o.hasSubtext ? 22 : 0);
+
+  var valColor = (o.state === 'disabled') ? '#90A8D0' : (filled ? '#0A2757' : '#90A8D0');
+  var lines = filled
+    ? ['This a text area. This a text area.', 'This a text area. This a text area.']
+    : ['Write your message…'];
+  var count = filled ? '71/100' : '0/100';
+  /* Focused and Error carry a heavier rule than Default — read off the export;
+     strokeWeight is not exposed by the plugin. */
+  var sw = (o.state === 'focused' || o.state === 'error') ? 2 : 1;
+  var inset = sw / 2;
+
+  var out = '<svg width="358" height="' + H + '" viewBox="0 0 358 ' + H + '" fill="none" role="img" aria-label="Text Area, ' + o.state + ', ' + (filled ? 'with value' : 'empty') + '">';
+  if (o.hasLabel) {
+    /* Label keeps #0A2757 in every state, Disabled included. */
+    out += '<text x="2" y="11" font-family="' + TA_PROXIMA + '" font-size="14" font-weight="600" letter-spacing="0.25" fill="#0A2757">Label</text>';
   }
-  if (expandable === 'true') {
-    var gc = state === 'disabled' ? '#C2CFE5' : '#90A8D0';
-    var bx = 322; /* 6px from right edge */
-    var by = h - 6; /* 6px from bottom edge */
-    s += '<path d="M' + (bx - 8) + ' ' + by + 'L' + bx + ' ' + (by - 8) + 'M' + (bx - 4) + ' ' + by + 'L' + bx + ' ' + (by - 4) + '" stroke="' + gc + '" stroke-width="1.2" stroke-linecap="round"/>';
+  out += '<rect x="' + inset + '" y="' + (topY + inset) + '" width="' + (358 - sw) + '" height="' + (fieldH - sw) + '" rx="6" fill="' + S.bg + '"'
+       + (S.border ? ' stroke="' + S.border + '" stroke-width="' + sw + '"' : '') + '></rect>';
+  for (var i = 0; i < lines.length; i++) {
+    out += '<text x="12" y="' + (topY + 10 + 12 + i * 16) + '" font-family="' + TA_PROXIMA + '" font-size="14" font-weight="600" letter-spacing="0.25" fill="' + valColor + '">' + lines[i] + '</text>';
   }
-  s += '</svg>';
-  return s;
+  if (o.hasSubtext) {
+    var sy = topY + fieldH + 17;
+    out += '<text x="2" y="' + sy + '" font-family="' + TA_BARKADA + '" font-size="12" font-weight="600" fill="#6780A9">Message content</text>';
+    out += '<text x="356" y="' + sy + '" text-anchor="end" font-family="' + TA_BARKADA + '" font-size="12" font-weight="600" fill="#6780A9">' + count + '</text>';
+  }
+  out += '</svg>';
+  return out;
+}
+
+/* ── Live preview (Overview tab) ─────────────────────────────────── */
+/* `_taDemo` is the source of truth: the Overview's livePreviewHtml sets its
+   fields directly from inline onchange handlers. That markup predates the
+   Figma rename, so it still writes `filled` and the state value `active`.
+   Normalise here rather than editing the Overview — this run is Style-tab
+   scope — so those controls keep working while the names catch up.
+   `expandable` is accepted and ignored: no such property exists on 4781:35856. */
+var _taDemo = { state: 'default', hasValue: 'false' };
+
+function _taNormalise() {
+  var st = _taDemo.state === 'active' ? 'focused' : _taDemo.state;
+  var hv = _taDemo.hasValue;
+  if (hv === undefined && _taDemo.filled !== undefined) {
+    hv = (_taDemo.filled === 'yes' || _taDemo.filled === 'true') ? 'true' : 'false';
+  }
+  return { state: TA_STATES[st] ? st : 'default', hasValue: hv === 'true' ? 'true' : 'false' };
 }
 
 function updateTextAreaDemo() {
-  var el = document.getElementById('ta-demo-preview');
-  if (el) el.innerHTML = _taBuildSvg(_taDemo.state, _taDemo.filled, _taDemo.expandable);
+  var st = document.getElementById('ta-ctrl-state');
+  var hv = document.getElementById('ta-ctrl-hasValue');
+  if (st) _taDemo.state = st.value;
+  if (hv) _taDemo.hasValue = hv.value;
+  var n = _taNormalise();
+  var el = document.getElementById('ta-demo-preview') || document.getElementById('text-area-demo-preview');
+  if (el) el.innerHTML = _taBuildSvg({ state: n.state, hasValue: n.hasValue, hasLabel: true, hasSubtext: true });
 }
+window.updateTextAreaDemo = updateTextAreaDemo;
 
-/* ── Spec Cards (canonical) ──────────────────────────────────────── */
+/* ── Spec cards (Style tab) — keys equal each card's demoKey ─────── */
 var _specCards = {
-  default:  { state: 'default',  filled: 'no', expandable: 'true' },
-  active:   { state: 'active',   filled: 'no', expandable: 'true' },
-  error:    { state: 'error',    filled: 'no', expandable: 'true' },
-  disabled: { state: 'disabled', filled: 'no', expandable: 'true' }
+  main: { state: 'default', hasValue: 'false', hasLabel: true, hasSubtext: true }
 };
 window._specCards = _specCards;
 
-function buildSwiftSnippet(type, card) {
-  var stateMap = { default: '.default', active: '.active', error: '.error', disabled: '.disabled' };
-  var s = 'EBTextArea(label: "Note", value: $note)';
-  s += '\n    .ebState(' + (stateMap[card.state] || '.default') + ')';
-  s += '\n    .ebMinLines(5)';
-  if (card.filled === 'yes') s += '\n    .ebText("This a text area.")';
-  if (card.state === 'disabled') s += '\n    .disabled(true)';
-  return s;
+function buildSwiftSnippet(cardKey, card) {
+  var lines = ['EBTextArea(placeholder: "Write your message…", text: $message)'];
+  lines.push('    .ebState(.' + (card.state || 'default') + ')');
+  if (card.hasValue === 'true') lines.push('    .ebText("This a text area. This a text area.")');
+  if (card.state === 'disabled') lines.push('    .disabled(true)');
+  return lines.join('\n');
 }
 
-function buildComposeSnippet(type, card) {
-  var stateMap = { default: 'Default', active: 'Active', error: 'Error', disabled: 'Disabled' };
+function buildComposeSnippet(cardKey, card) {
+  var st = card.state || 'default';
+  var name = st.charAt(0).toUpperCase() + st.slice(1);
   var lines = ['EBTextArea('];
-  lines.push('    label = "Note",');
-  lines.push('    value = note,');
-  lines.push('    minLines = 5,');
-  lines.push('    state = EBFieldState.' + (stateMap[card.state] || 'Default'));
+  lines.push('    placeholder = "Write your message…",');
+  lines.push('    value = ' + (card.hasValue === 'true' ? '"This a text area. This a text area."' : 'message') + ',');
+  lines.push('    onValueChange = { },');
+  lines.push('    state = EBFieldState.' + name);
   lines.push(')');
   return lines.join('\n');
 }
 
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
 }
 window.getSnippet = getSnippet;
 
 function updateSpecCard(cardStyle, prop, value) {
   var card = _specCards[cardStyle];
   if (!card) return;
-  card[prop] = value;
+  card[prop] = (value === 'true' && (prop === 'hasLabel' || prop === 'hasSubtext')) ? true
+             : (value === 'false' && (prop === 'hasLabel' || prop === 'hasSubtext')) ? false
+             : value;
 
-  /* Update preview */
-  var previewRoot = document.getElementById('spec-' + cardStyle + '-preview');
-  if (previewRoot) {
-    previewRoot.innerHTML = _taBuildSvg(card.state, card.filled, card.expandable);
-  }
+  /* Repaint the preview. The host div id is `text-area-spec-<demoKey>`. */
+  var host = document.getElementById('text-area-spec-' + cardStyle);
+  if (host) host.innerHTML = _taBuildSvg(card);
 
-  /* Update Properties readouts */
-  var spFilled = document.querySelector('[data-sp="' + cardStyle + '-filled"]');
-  if (spFilled) spFilled.textContent = card.filled;
-  var spExp = document.querySelector('[data-sp="' + cardStyle + '-expandable"]');
-  if (spExp) spExp.textContent = card.expandable;
+  /* Property readout. The Colors/Layout `variants` maps are applied by the
+     shared patcher in assessment.js — this script must not rebuild those
+     sections, or it would wipe them. */
+  ['state', 'hasValue', 'hasLabel', 'hasSubtext'].forEach(function (k) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + k + '"]');
+    if (!el) return;
+    var v = card[k];
+    el.textContent = (typeof v === 'boolean') ? (v ? 'True' : 'False')
+      : (v === 'true') ? 'True' : (v === 'false') ? 'False'
+      : String(v).charAt(0).toUpperCase() + String(v).slice(1);
+  });
 
-  /* Update DEV code */
+  /* DEV code — both tabs. */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
   if (devView) {
     var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
     var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
     if (codeEl) {
       var code = getSnippet(cardStyle, lang, card);
@@ -115,19 +159,15 @@ function updateSpecCard(cardStyle, prop, value) {
     }
   }
 }
+window.updateSpecCard = updateSpecCard;
 
 function _taInit() {
-  if (document.getElementById('ta-demo-preview')) updateTextAreaDemo();
-  Object.keys(_specCards).forEach(function(k) {
-    updateSpecCard(k, 'filled', _specCards[k].filled);
+  updateTextAreaDemo();
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'state', _specCards[k].state);
   });
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', _taInit);
-} else {
-  _taInit();
-}
-
-/* Re-init after Astro view-transition swaps */
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _taInit);
+else _taInit();
 document.addEventListener('astro:page-load', _taInit);

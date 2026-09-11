@@ -1,24 +1,26 @@
 import type { ComponentData, DemoControlSection } from '../types';
-import { buildStatelessColorsTable } from './_helpers';
 
-// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
-// in `public/scripts/demos/header-centered.js`.
-const headerCenteredDemoControls: DemoControlSection[] = [
+// Panel mirrors the only variant axis of set 4368:12839. The tab previously
+// had no panel at all — two cards named for the surfaces instead.
+const pageBannerDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
         label: 'Surface',
         prop: 'surface',
-        defaultValue: 'brand',
+        defaultValue: 'default',
         options: [
-          { value: 'brand', label: 'Brand' },
           { value: 'default', label: 'Default' },
+          { value: 'brand', label: 'Brand' },
         ],
       },
     ],
   },
 ];
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/header-centered.js`.
 
 export const headerCentered: ComponentData = {
   "meta": {
@@ -182,29 +184,27 @@ export const headerCentered: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "dark-/-brand-surface",
-        "demoKey": "hc-dark",
-        "demoControls": headerCenteredDemoControls,
-        "title": "Dark / brand surface",
-        "node": "18430:2859",
-        "description": "White title on brand-blue surface. The \"hero\" variant — used for primary feature banners.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-centered-spec-1\"><div class=\"eb-preview eb-preview-header-centered eb-preview-header-centered--dark\"><p class=\"eb-preview-header-centered__title\">Label</p><p class=\"eb-preview-header-centered__sublabel\"><span class=\"eb-preview-header-centered__sublabel-key\">Label:</span><span class=\"eb-preview-header-centered__sublabel-value\">&nbsp;Add Content</span></p></div></div>",
+        "cardKey": "pb-spec-main",
+        "demoKey": "main",
+        "title": "Page Banner",
+        "node": "4368:12839",
+        "description": "",
+        "previewHtml": "<div id=\"page-banner-spec-main\" class=\"spec-preview-body\"><svg width=\"360\" height=\"104\" viewBox=\"0 0 360 104\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"360\" height=\"104\" fill=\"#FFFFFF\"/><rect y=\"103\" width=\"360\" height=\"1\" fill=\"#E5EBF4\" fill-opacity=\"1\"/><text class=\"pb-title\" x=\"180\" y=\"37\" font-size=\"22\" font-weight=\"700\" fill=\"#0A2757\" text-anchor=\"middle\" dominant-baseline=\"central\">Label</text><text class=\"pb-barkada\" x=\"120.5\" y=\"60\" font-size=\"14\" font-weight=\"600\" fill=\"#6780A9\" fill-opacity=\"1\" dominant-baseline=\"central\">Label:</text><text class=\"pb-barkada\" x=\"158.5\" y=\"60\" font-size=\"14\" font-weight=\"600\" fill=\"#0A2757\" dominant-baseline=\"central\">Add Content</text></svg></div>",
+        "demoControls": pageBannerDemoControls,
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "type",
-                "value": "dark",
-                "mono": true,
+                "key": "Surface",
+                "value": "Default",
                 "prop": "surface"
               },
               {
-                "key": "description",
-                "value": "yes",
-                "mono": true,
-                "prop": "desc"
+                "key": "Content",
+                "value": "Title over a SubtitleRow of Label + Value",
+                "mono": true
               }
             ]
           },
@@ -212,36 +212,55 @@ export const headerCentered: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Brand bg", "value": "#1972F9", "token": "header/color/brand/bg" },
-              { "key": "Brand title", "value": "#FFFFFF", "token": "header/color/brand/label-header" },
-              { "key": "Brand preamble", "value": "#FFFFFF", "token": "header/color/brand/label-preamble" },
-              { "key": "Brand label", "value": "#F6F9FDB8 (72% alpha)", "token": "header/color/brand/label" },
-              { "key": "Brand border", "value": "#F6F9FD3D (24% alpha)", "token": "header/color/brand/border" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
               {
-                "key": "Width",
-                "value": "Fill",
-                "mono": true
+                "key": "Surface",
+                "value": "#FFFFFF",
+                "token": "—",
+                "variants": {
+                  "surface:brand": {
+                    "value": "#1972F9"
+                  }
+                }
               },
               {
-                "key": "Height",
-                "value": "104 (hug)",
-                "mono": true
+                "key": "Border",
+                "value": "#E5EBF4",
+                "token": "—",
+                "variants": {
+                  "surface:brand": {
+                    "value": "#F6F9FD @ 24%"
+                  }
+                }
               },
               {
-                "key": "Padding",
-                "value": "space/space-24 space/space-16",
-                "mono": true
+                "key": "Title",
+                "value": "#0A2757",
+                "token": "—",
+                "variants": {
+                  "surface:brand": {
+                    "value": "#FFFFFF"
+                  }
+                }
               },
               {
-                "key": "Gap",
-                "value": "space/space-4",
-                "mono": true
+                "key": "Subtitle label",
+                "value": "#6780A9",
+                "token": "—",
+                "variants": {
+                  "surface:brand": {
+                    "value": "#F6F9FD @ 72%"
+                  }
+                }
+              },
+              {
+                "key": "Subtitle value",
+                "value": "#0A2757",
+                "token": "—",
+                "variants": {
+                  "surface:brand": {
+                    "value": "#FFFFFF"
+                  }
+                }
               }
             ]
           },
@@ -251,59 +270,19 @@ export const headerCentered: ComponentData = {
             "rows": [
               {
                 "key": "Title",
-                "value": "Heading/L · Proxima Soft Bold 22",
+                "value": "Primary/Headlines/Section",
                 "mono": true
               },
               {
-                "key": "Description",
-                "value": "Body/S · BarkAda Semibold 14",
+                "key": "Subtitle label",
+                "value": "Secondary/Bold/Base",
                 "mono": true
               },
               {
-                "key": "Alignment",
-                "value": "center",
+                "key": "Subtitle value",
+                "value": "Secondary/Bold/Base",
                 "mono": true
               }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBCenteredHeader</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Page title\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStyle</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.brand</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description body copy\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBCenteredHeader</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Page title\"</span><span class=\"syn-punc\">,</span>\n    style <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBHeaderStyle</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Brand</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description body copy\"</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "light-/-default-surface",
-        "demoKey": "hc-light",
-        "demoControls": headerCenteredDemoControls,
-        "title": "Light / default surface",
-        "node": "18430:2865",
-        "description": "Dark title on default surface. Used for modal sheet titles and subdued banners.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-centered-spec-2\"><div class=\"eb-preview eb-preview-header-centered eb-preview-header-centered--light\"><p class=\"eb-preview-header-centered__title\">Label</p><p class=\"eb-preview-header-centered__sublabel\"><span class=\"eb-preview-header-centered__sublabel-key\">Label:</span><span class=\"eb-preview-header-centered__sublabel-value\">&nbsp;Add Content</span></p></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "type",
-                "value": "light",
-                "mono": true,
-                "prop": "surface"
-              },
-              {
-                "key": "description",
-                "value": "yes",
-                "mono": true,
-                "prop": "desc"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface bg", "value": "#FFFFFF", "token": "main/header/light/bg" },
-              { "key": "Title color", "value": "#0A2757", "token": "main/header/light/title" },
-              { "key": "Icon color", "value": "#0A2757", "token": "main/header/light/icon" }
             ]
           },
           {
@@ -312,81 +291,148 @@ export const headerCentered: ComponentData = {
             "rows": [
               {
                 "key": "Height",
-                "value": "56",
+                "value": "104px — fixed on both variants",
                 "mono": true
               },
               {
-                "key": "Padding (h)",
-                "value": "16",
+                "key": "Width",
+                "value": "360px",
                 "mono": true
               },
               {
-                "key": "Icon size",
-                "value": "24 × 24",
+                "key": "Radius",
+                "value": "None",
                 "mono": true
               },
               {
-                "key": "Title gap",
-                "value": "8",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Style",
-                "value": "Heading/Small · Bold",
+                "key": "Padding H",
+                "value": "24px",
                 "mono": true
               },
               {
-                "key": "Font",
-                "value": "Proxima Soft",
+                "key": "Padding V",
+                "value": "24px top · 34px bottom",
                 "mono": true
               },
               {
-                "key": "Size",
-                "value": "18",
+                "key": "Gap",
+                "value": "0 — Title and SubtitleRow abut",
                 "mono": true
               },
               {
-                "key": "Line-height",
-                "value": "24",
+                "key": "Content",
+                "value": "312 × 46",
+                "mono": true
+              },
+              {
+                "key": "Border",
+                "value": "1px, bottom edge only",
+                "mono": true
+              },
+              {
+                "key": "Alignment",
+                "value": "Center — Title and SubtitleRow are both centred",
                 "mono": true
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Account\"</span><span class=\"syn-punc\">,</span>\n    appearance<span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>light<span class=\"syn-punc\">,</span>\n    centered<span class=\"syn-punc\">: </span><span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Account\"</span><span class=\"syn-punc\">,</span>\n    appearance <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBHeaderAppearance</span><span class=\"syn-punc\">.</span>Light<span class=\"syn-punc\">,</span>\n    centered <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBPageBanner</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Label:\"</span><span class=\"syn-punc\">,</span>\n    value<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Add Content\"</span>\n<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span>ebSurface<span class=\"syn-punc\">(.</span>default<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBPageBanner</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label:\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add Content\"</span><span class=\"syn-punc\">,</span>\n    surface <span class=\"syn-eq\">=</span> EBBannerSurface<span class=\"syn-punc\">.</span>Default\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    colorsTables: [
-      // Card 1 — Dark / brand surface
-      buildStatelessColorsTable({
-        title: 'Dark — Colors',
-        description: 'Brand-blue centered header used at the top of branded screens.',
-        rows: [
-          { role: 'Surface bg',  token: 'main/header-centered/dark/bg',     value: '#1972F9' },
-          { role: 'Border',      token: 'main/header-centered/dark/border', value: '#F6F9FD @ 24%' },
-          { role: 'Heading',     token: 'main/header-centered/dark/heading', value: '#FFFFFF' },
-          { role: 'Description', token: 'main/header-centered/dark/description', value: '#FFFFFF @ 80%' },
+    "colorsTables": [
+      {
+        "title": "Colors by Surface",
+        "description": "Read off <code>get_node_info</code> and <code>get_svg</code> on both variants of set <code>4368:12839</code>. <strong>The border is a 1px bottom edge, not an outline</strong> — the stroke is declared on the node but Figma exports it as a masked band along the bottom only, the same pattern as Segmented Control Button. Brand is <code>#1972F9</code>, matching Detail Hero but not Brand App Bar’s <code>#005CE5</code>. Token paths could not be read; the plugin returns no variable bindings.",
+        "columns": [
+          "Token",
+          "Value"
         ],
-      }),
-      // Card 2 — Light / default surface
-      buildStatelessColorsTable({
-        title: 'Light — Colors',
-        description: 'White centered header used on neutral surfaces.',
-        rows: [
-          { role: 'Surface bg',  token: 'main/header-centered/light/bg',     value: '#FFFFFF' },
-          { role: 'Border',      token: 'main/header-centered/light/border', value: '#E5EBF4' },
-          { role: 'Heading',     token: 'text/primary/headline/section',     value: '#0A2757' },
-          { role: 'Description', token: 'text/primary/body/secondary',       value: '#6780A9' },
-        ],
-      }),
-    ],
+        "rows": [
+          {
+            "role": "Default",
+            "token": "Surface",
+            "values": [
+              "—",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Border · bottom",
+            "values": [
+              "—",
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Title",
+            "values": [
+              "—",
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Subtitle label",
+            "values": [
+              "—",
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Subtitle value",
+            "values": [
+              "—",
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "Brand",
+            "token": "Surface",
+            "values": [
+              "—",
+              "#1972F9"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Border · bottom",
+            "values": [
+              "—",
+              "#F6F9FD @ 24%"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Title",
+            "values": [
+              "—",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Subtitle label",
+            "values": [
+              "—",
+              "#F6F9FD @ 72%"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Subtitle value",
+            "values": [
+              "—",
+              "#FFFFFF"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "code": {
     "installation": {

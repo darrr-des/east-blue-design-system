@@ -1,147 +1,156 @@
-/* Auto-extracted from assessment-src/components/amount-text-field.html.
- * Powers the live-preview dropdowns/toggles for the amount-text-field component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs amount-text-field
+/* Amount Text Field — live preview + spec cards.
+ * Mirrors node 4602:18144 (2026 Working File). Property panel:
+ *   Size   ◇ LG, MD
+ *   State  ◇ Default, Focused, Disabled, Error
+ *   hasLabel · hasLeadingCurrency · hasSubtext · hasTrailingCurrency  (booleans)
+ *
+ * Geometry read off the node and checked against export_node_as_image:
+ *   Component 400 wide · LG 184 tall · MD 164 tall
+ *   Label      24 top, 352 wide, 18 tall, centred
+ *   AmountRow  58 top, 352 wide, LG 70 / MD 50 — a BOTTOM RULE only,
+ *              not a box: the stroke renders as a single line under the amount
+ *   HelperText LG 144 / MD 124, 352 wide, 16 tall, centred
+ *   Amount type LG 53/58 Semibold · MD 35/38 Bold
  */
-/* ── Amount Text Field Component JS ─────────────────────────────────── */
-var _amtDemo = { size: 'Large', state: 'Filled', label: 'yes' };
 
-/* Per-state color tables, keyed on state */
-var _amtColors = {
-  Default: { border: '#ADBDDC', amount: '#90A8D0', peso: '#D7E0EF', label: '#0A2757', subtext: '#0A2757', value: '0.00' },
-  Filled:  { border: '#445C85', amount: '#0A2757', peso: '#0A2757', label: '#0A2757', subtext: '#0A2757', value: '500.00' },
-  Error:   { border: '#D61B2C', amount: '#D61B2C', peso: '#D61B2C', label: '#0A2757', subtext: '#D61B2C', value: '500.00' }
+var ATF_PX = "'Proxima Soft', system-ui, sans-serif";
+
+var ATF_STATES = {
+  'default':  { rule: '#E5EBF4', amount: '#0A2757', helper: '#445C85', value: '0.00' },
+  'focused':  { rule: '#183462', amount: '#0A2757', helper: '#445C85', value: '1000.00' },
+  'disabled': { rule: '#E5EBF4', amount: '#C2CFE5', helper: '#445C85', value: '0.00' },
+  'error':    { rule: '#D61B2C', amount: '#D61B2C', helper: '#D61B2C', value: '0.00' }
 };
 
-function _amtBuildSvg(size, state, label) {
-  var c = _amtColors[state] || _amtColors.Default;
-  var hasLabel = (label === 'yes');
-  var subtextCopy = (state === 'Error' && label === 'no' && size === 'Default')
-    ? 'How much do you want to save?' : 'Add your subtext here';
+var ATF_SIZE = {
+  LG: { h: 184, rowH: 70, rowTop: 58, helperTop: 144, fs: 53, fw: 600, adv: 0.60 },
+  MD: { h: 164, rowH: 50, rowTop: 58, helperTop: 124, fs: 35, fw: 700, adv: 0.60 }
+};
 
-  var W = 360;
-  var H = hasLabel ? (size === 'Large' ? 184 : 165) : (size === 'Large' ? 150 : 131);
-  var s = '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+function _atfEscape(t) {
+  return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
 
+function _atfBuildSvg(o) {
+  var S = ATF_STATES[o.state] || ATF_STATES['default'];
+  var Z = ATF_SIZE[o.size] || ATF_SIZE.LG;
+
+  /* Hiding a block collapses it and everything below moves up, the way the
+     Figma auto-layout does. Gaps are 16 above and below the amount row. */
   var y = 24;
+  var labelY = null;
+  if (o.hasLabel) { labelY = y + 14; y += 18 + 16; }
+  var rowTop = y;
+  y += Z.rowH + 16;
+  var helperY = null;
+  if (o.hasSubtext) { helperY = y + 13; y += 16; }
+  var H = y + 24;
 
-  if (hasLabel) {
-    s += '<text x="' + (W/2) + '" y="' + (y + 14) + '" text-anchor="middle" font-family="Proxima Soft, system-ui" font-size="18" font-weight="600" fill="' + c.label + '" fill-opacity="0.9" letter-spacing="0.25">Add Your Label Here</text>';
-    y += 40;
+  /* Amount group is centred as a whole, so hiding either currency part
+     re-centres what remains rather than leaving a gap. */
+  var parts = [];
+  if (o.hasLeadingCurrency)  parts.push('₱');
+  parts.push(S.value);
+  if (o.hasTrailingCurrency) parts.push('Php');
+  var text = parts.join(' ');
+  var baseline = rowTop + Z.rowH / 2 + Z.fs * 0.34;
+
+  var out = '<svg width="400" height="' + H + '" viewBox="0 0 400 ' + H + '" fill="none" role="img" aria-label="Amount Text Field, ' + o.size + ', ' + o.state + '">';
+  if (labelY !== null) {
+    /* Label keeps #0A2757 in every state, Disabled included. */
+    out += '<text x="200" y="' + labelY + '" text-anchor="middle" font-family="' + ATF_PX + '" font-size="18" font-weight="600" letter-spacing="0.25" fill="#0A2757">Add Your Label Here</text>';
   }
-
-  if (size === 'Large') {
-    s += '<text x="' + (W/2) + '" y="' + (y + 50) + '" text-anchor="middle" font-family="Proxima Soft, system-ui" font-size="53" font-weight="600" fill="' + c.amount + '">' + c.value + '</text>';
-    y += 70;
-  } else {
-    var amountText = c.value;
-    var groupCx = W/2;
-    s += '<text x="' + (groupCx - 56) + '" y="' + (y + 36) + '" font-family="Proxima Soft, system-ui" font-size="32" font-weight="700" fill="' + c.peso + '">₱</text>';
-    s += '<text x="' + (groupCx - 30) + '" y="' + (y + 36) + '" font-family="Proxima Soft, system-ui" font-size="35" font-weight="700" fill="' + c.amount + '">' + amountText + '</text>';
-    y += 50;
+  out += '<text x="200" y="' + baseline + '" text-anchor="middle" font-family="' + ATF_PX + '" font-size="' + Z.fs + '" font-weight="' + Z.fw + '" fill="' + S.amount + '">' + _atfEscape(text) + '</text>';
+  /* Bottom rule — the AmountRow stroke renders as a single line, not a box. */
+  out += '<line x1="24" y1="' + (rowTop + Z.rowH + 0.5) + '" x2="376" y2="' + (rowTop + Z.rowH + 0.5) + '" stroke="' + S.rule + '" stroke-width="1"/>';
+  if (helperY !== null) {
+    out += '<text x="200" y="' + helperY + '" text-anchor="middle" font-family="' + ATF_PX + '" font-size="14" font-weight="600" letter-spacing="0.25" fill="' + S.helper + '">Add your subtext here</text>';
   }
-
-  s += '<line x1="24" y1="' + y + '" x2="' + (W - 24) + '" y2="' + y + '" stroke="' + c.border + '" stroke-width="1"/>';
-  y += 20;
-
-  s += '<text x="' + (W/2) + '" y="' + (y + 10) + '" text-anchor="middle" font-family="Proxima Soft, system-ui" font-size="14" font-weight="600" fill="' + c.subtext + '" letter-spacing="0.25">' + subtextCopy + '</text>';
-
-  s += '</svg>';
-  return s;
+  out += '</svg>';
+  return out;
 }
 
-function updateAmountFieldDemo() {
-  var el = document.getElementById('amt-demo-preview');
-  if (el) el.innerHTML = _amtBuildSvg(_amtDemo.size, _amtDemo.state, _amtDemo.label);
-}
+/* ── Live preview (Overview tab) ─────────────────────────────────── */
+var _atfDemo = { size: 'LG', state: 'default' };
 
-/* ── Spec card state (per-card, drives previews + DEV code) ──────── */
-/* demoKey → state (size derives from key prefix). */
+function updateAmountTextFieldDemo() {
+  var el = document.getElementById('atf-demo-preview') || document.getElementById('amount-text-field-demo-preview');
+  if (!el) return;
+  /* Legacy Overview markup used a single `state` enum carrying Filled. */
+  var st = _atfDemo.state;
+  if (st === 'Filled' || st === 'filled') st = 'focused';
+  if (!ATF_STATES[st]) st = String(st).toLowerCase();
+  if (!ATF_STATES[st]) st = 'default';
+  el.innerHTML = _atfBuildSvg({
+    size: _atfDemo.size, state: st,
+    hasLabel: true, hasLeadingCurrency: true, hasSubtext: true, hasTrailingCurrency: true
+  });
+}
+window.updateAmountTextFieldDemo = updateAmountTextFieldDemo;
+
+/* ── Spec card (Style tab) ───────────────────────────────────────── */
 var _specCards = {
-  'large-filled':    { size: 'Large',   state: 'Filled',  label: 'yes' },
-  'large-default':   { size: 'Large',   state: 'Default', label: 'yes' },
-  'large-error':     { size: 'Large',   state: 'Error',   label: 'yes' },
-  'default-filled':  { size: 'Default', state: 'Filled',  label: 'yes' },
-  'default-default': { size: 'Default', state: 'Default', label: 'yes' },
-  'default-error':   { size: 'Default', state: 'Error',   label: 'yes' }
+  main: { size: 'LG', state: 'default', hasLabel: true, hasLeadingCurrency: true, hasSubtext: true, hasTrailingCurrency: true }
 };
 window._specCards = _specCards;
 
-/* Spec Colors per state — moved into amount-text-field.ts `variants`
-   on each Color row (Plan A). Helper no longer needed. */
+var ATF_BOOLS = ['hasLabel', 'hasLeadingCurrency', 'hasSubtext', 'hasTrailingCurrency'];
 
-/* ── Code snippet builders ──────────────────────────────────────── */
-function buildSwiftSnippet(type, card) {
-  var sizeMap = { Large: '.large', Default: '.default' };
-  var sz = sizeMap[card.size] || '.default';
-  var lines = [];
-  if (card.state === 'Error') {
-    lines.push('EBAmountTextField(');
-    lines.push('    value: $amount,');
-    lines.push('    label: "Amount",');
-    lines.push('    subtext: "Enter a valid amount"');
-    lines.push(')');
-    lines.push('.ebAmountSize(' + sz + ')');
-    lines.push('.ebAmountState(.error)');
-  } else {
-    lines.push('EBAmountTextField(');
-    lines.push('    value: $amount,');
-    lines.push('    label: "Amount"');
-    lines.push(')');
-    lines.push('.ebAmountSize(' + sz + ')');
-  }
+function buildSwiftSnippet(cardKey, card) {
+  var lines = ['EBAmountField(amount: $amount)'];
+  lines.push('    .controlSize(.' + (card.size === 'MD' ? 'regular' : 'large') + ')');
+  lines.push('    .ebState(.' + card.state + ')');
+  if (card.hasLabel)   lines.push('    .ebLabel("Add Your Label Here")');
+  if (card.hasSubtext) lines.push('    .ebHelperText("Add your subtext here")');
+  if (!card.hasLeadingCurrency)  lines.push('    .ebCurrencySymbol(false)');
+  if (!card.hasTrailingCurrency) lines.push('    .ebCurrencyCode(false)');
   return lines.join('\n');
 }
 
-function buildComposeSnippet(type, card) {
-  var sizeMap = { Large: 'Large', Default: 'Default' };
-  var sz = sizeMap[card.size] || 'Default';
-  var lines = [];
-  lines.push('EBAmountTextField(');
-  lines.push('    value = amount,');
-  lines.push('    onValueChange = { amount = it },');
-  lines.push('    label = "Amount",');
-  if (card.state === 'Error') {
-    lines.push('    subtext = "Enter a valid amount",');
-    lines.push('    size = EBAmountSize.' + sz + ',');
-    lines.push('    state = EBAmountState.Error');
-  } else {
-    lines.push('    size = EBAmountSize.' + sz);
-  }
-  lines.push(')');
-  return lines.join('\n');
+function buildComposeSnippet(cardKey, card) {
+  function cap(x) { return x.charAt(0).toUpperCase() + x.slice(1); }
+  return [
+    'EBAmountField(',
+    '    amount = amount,',
+    '    onAmountChange = { },',
+    '    size = EBAmountSize.' + card.size + ',',
+    '    state = EBFieldState.' + cap(card.state) + ',',
+    '    label = ' + (card.hasLabel ? '"Add Your Label Here"' : 'null') + ',',
+    '    helperText = ' + (card.hasSubtext ? '"Add your subtext here"' : 'null') + ',',
+    '    showCurrencySymbol = ' + (card.hasLeadingCurrency ? 'true' : 'false') + ',',
+    '    showCurrencyCode = ' + (card.hasTrailingCurrency ? 'true' : 'false'),
+    ')'
+  ].join('\n');
 }
 
-function getSnippet(type, lang, card) {
-  return lang === 'swift' ? buildSwiftSnippet(type, card) : buildComposeSnippet(type, card);
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
 }
 window.getSnippet = getSnippet;
 
 function updateSpecCard(cardStyle, prop, value) {
   var card = _specCards[cardStyle];
   if (!card) return;
-  card[prop] = value;
+  card[prop] = (ATF_BOOLS.indexOf(prop) !== -1)
+    ? (value === 'true' || value === true)
+    : value;
 
-  /* Update preview wrapper #amt-{cardStyle}-preview */
-  var preview = document.getElementById('amt-' + cardStyle + '-preview');
-  if (preview) {
-    preview.innerHTML = _amtBuildSvg(card.size, card.state, card.label);
-  }
+  var host = document.getElementById('amount-text-field-spec-' + cardStyle);
+  if (host) host.innerHTML = _atfBuildSvg(card);
 
-  /* Update Properties text */
-  var spState = document.querySelector('[data-sp="' + cardStyle + '-state"]');
-  var spLabel = document.querySelector('[data-sp="' + cardStyle + '-label"]');
-  if (spState) spState.textContent = card.state;
-  if (spLabel) spLabel.textContent = card.label;
+  ['size', 'state'].concat(ATF_BOOLS).forEach(function (k) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + k + '"]');
+    if (!el) return;
+    var v = card[k];
+    el.textContent = (typeof v === 'boolean') ? (v ? 'True' : 'False')
+      : (k === 'state') ? String(v).charAt(0).toUpperCase() + String(v).slice(1)
+      : String(v);
+  });
 
-  /* Colors section is server-rendered from amount-text-field.ts;
-     Plan A's `_patchSpecCardRows` handles state-keyed overrides.
-     Demo no longer rebuilds it. */
-
-  /* Update DEV code — always */
   var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
   if (devView) {
     var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
     var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
     if (codeEl) {
       var code = getSnippet(cardStyle, lang, card);
@@ -152,46 +161,15 @@ function updateSpecCard(cardStyle, prop, value) {
     }
   }
 }
+window.updateSpecCard = updateSpecCard;
 
-/* Legacy alias */
-function updateAmountFieldSpecCard(id, size, state, label) {
-  return updateSpecCard(id, 'state', state);
-}
-
-function _amtInitSpecCards() {
-  Object.keys(_specCards).forEach(function(k) {
-    updateSpecCard(k, 'state', _specCards[k].state);
+function _atfInit() {
+  updateAmountTextFieldDemo();
+  Object.keys(_specCards).forEach(function (k) {
+    updateSpecCard(k, 'size', _specCards[k].size);
   });
 }
 
-function _amtInit() {
-  updateAmountFieldDemo();
-  _amtInitSpecCards();
-}
-
-(function () {
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _amtInit);
-  else _amtInit();
-  document.addEventListener('astro:page-load', _amtInit);
-})();
-
-/* ── Legacy aliases ────────────────────────────────────────────── */
-function toggleAmtSpecMode(cardKey, toggleEl) {
-  var labels = toggleEl.querySelectorAll('.spec-mode-label');
-  var isDes = labels[0].classList.contains('active');
-  labels[0].classList.toggle('active', !isDes);
-  labels[1].classList.toggle('active', isDes);
-  var desEl = document.querySelector('[data-view="' + cardKey + '-des"]');
-  var devEl = document.querySelector('[data-view="' + cardKey + '-dev"]');
-  if (desEl) desEl.style.display = isDes ? 'none' : '';
-  if (devEl) devEl.style.display = isDes ? '' : 'none';
-}
-function switchAmtCodeTab(tabBtn, lang, cardKey) {
-  var block = tabBtn.closest('.spec-card-code');
-  if (!block) return;
-  block.querySelectorAll('.spec-code-tab').forEach(function(t){ t.classList.remove('active'); });
-  tabBtn.classList.add('active');
-  block.querySelectorAll('.spec-code-block').forEach(function(pre){
-    pre.style.display = pre.getAttribute('data-lang') === lang ? '' : 'none';
-  });
-}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _atfInit);
+else _atfInit();
+document.addEventListener('astro:page-load', _atfInit);

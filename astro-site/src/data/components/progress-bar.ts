@@ -1,5 +1,4 @@
 import type { ComponentData, DemoControlSection } from '../types';
-import { buildStatelessColorsTable } from './_helpers';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/progress-bar.js`.
@@ -8,29 +7,21 @@ const progressBarDemoControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'State',
-        prop: 'state',
-        defaultValue: 'determinate',
-        options: [
-          { value: 'determinate', label: 'determinate' },
-          { value: 'indeterminate', label: 'indeterminate' },
-          { value: 'success', label: 'success' },
-          { value: 'error', label: 'error' },
-        ],
-      },
-      {
         label: 'Progress',
         prop: 'progress',
-        defaultValue: '60',
+        defaultValue: '0',
         options: [
-          { value: '0', label: '0%' },
-          { value: '15', label: '15%' },
-          { value: '30', label: '30%' },
-          { value: '45', label: '45%' },
-          { value: '60', label: '60%' },
-          { value: '75', label: '75%' },
-          { value: '90', label: '90%' },
-          { value: '100', label: '100%' },
+          { value: '0', label: '0' },
+          { value: '10', label: '10' },
+          { value: '20', label: '20' },
+          { value: '30', label: '30' },
+          { value: '40', label: '40' },
+          { value: '50', label: '50' },
+          { value: '60', label: '60' },
+          { value: '70', label: '70' },
+          { value: '80', label: '80' },
+          { value: '90', label: '90' },
+          { value: '100', label: '100' },
         ],
       },
     ],
@@ -221,39 +212,27 @@ export const progressBar: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "determinate",
-        "demoKey": "determinate",
+        "cardKey": "pb-spec-main",
+        "demoKey": "main",
+        "title": "Progress Bar",
+        "node": "4244:187349",
+        "description": "",
+        "previewHtml": "<div id=\"progress-bar-spec-main\" class=\"spec-preview-body\"><svg width=\"313\" height=\"5\" viewBox=\"0 0 313 5\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M2.5 2.5L310.5 2.5\" stroke=\"#9BC5FD\" stroke-width=\"5\" stroke-linecap=\"round\"/></svg></div>",
         "demoControls": progressBarDemoControls,
-        "title": "Determinate",
-        "node": "27:64947",
-        "description": "Linear fill with a light-blue track and a brand-blue fill. The 11 Figma variants step through <code>percentage = 0, 10, 20, …, 100</code> — each variant swaps a pre-sized raster pair. The target implementation renders a single component with a continuous <code>progress</code> value.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"progress-bar-spec-1\"><div class=\"eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-xs\" style=\"padding:12px 0;\"><div class=\"eb-preview eb-preview-progress-bar\" role=\"progressbar\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:280px;\"><span class=\"eb-preview-progress-bar__track\"></span><span class=\"eb-preview-progress-bar__fill\" style=\"width:60.0%;background:#005CE5;\"></span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Mode",
-                "value": "determinate",
-                "mono": false,
-                "prop": "state"
-              },
-              {
                 "key": "Progress",
-                "value": "60%",
-                "mono": false,
+                "value": "0",
                 "prop": "progress"
               },
               {
-                "key": "Range",
-                "value": "0–100%",
-                "mono": false
-              },
-              {
-                "key": "Track style",
-                "value": "rounded",
-                "mono": false
+                "key": "Layers",
+                "value": "fill-container — 308 wide, no children; both zones are strokes on the component",
+                "mono": true
               }
             ]
           },
@@ -261,63 +240,20 @@ export const progressBar: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Track", "value": "#D2E5FF", "token": "progress-bar/color/border-track" },
-              { "key": "Fill", "value": "#005CE5", "token": "progress-bar/color/border" }
-            ]
-          },
-          {
-            "label": "Properties (today)",
-            "rows": [
               {
-                "key": "percentage",
-                "value": "0 | 10 | 20 | … | 100",
-                "mono": true
+                "key": "Track",
+                "value": "#9BC5FD",
+                "token": "—"
               },
               {
-                "key": "Fill implementation",
-                "value": "raster &lt;img&gt;",
-                "mono": true
-              },
-              {
-                "key": "Track implementation",
-                "value": "raster &lt;img&gt;",
-                "mono": true
-              },
-              {
-                "key": "Width",
-                "value": "312 (fixed)",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Total width",
-                "value": "312",
-                "mono": true
-              },
-              {
-                "key": "Horizontal padding",
-                "value": "2",
-                "mono": true
-              },
-              {
-                "key": "Inner track width",
-                "value": "308",
-                "mono": true
-              },
-              {
-                "key": "Stroke height",
-                "value": "4 (raster-baked)",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "0 (radius/radius-0)",
-                "mono": true
+                "key": "Fill",
+                "value": "#005CE5",
+                "token": "—",
+                "variants": {
+                  "progress:0": {
+                    "hide": true
+                  }
+                }
               }
             ]
           },
@@ -326,37 +262,122 @@ export const progressBar: ComponentData = {
             "slug": "typo",
             "rows": [
               {
-                "key": "No text",
-                "value": "—",
+                "key": "Text layers",
+                "value": "None — the bar renders no text; a percentage label is the consumer’s"
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "5px — the stroke width; the component’s own bounding box is 0 tall",
                 "mono": true
               },
               {
-                "key": "Label pairing",
-                "value": "external",
+                "key": "Width",
+                "value": "312px",
                 "mono": true
               },
               {
-                "key": "Progress Bar is a graphic-only primitive; labels and percentage text are the consumer's responsibility.",
-                "value": "",
-                "mono": false
+                "key": "Radius",
+                "value": "Round caps — 2.5px, half the stroke",
+                "mono": true
+              },
+              {
+                "key": "Padding H",
+                "value": "2px — the path runs 2.5 in from each end, so the caps land flush",
+                "mono": true
+              },
+              {
+                "key": "Padding V",
+                "value": "0",
+                "mono": true
+              },
+              {
+                "key": "Track",
+                "value": "308px",
+                "mono": true
+              },
+              {
+                "key": "Fill",
+                "value": "0 — Progress=0 ships no fill path at all",
+                "mono": true,
+                "variants": {
+                  "progress:10": {
+                    "value": "30.8px — 308 × 10%"
+                  },
+                  "progress:20": {
+                    "value": "61.6px — 308 × 20%"
+                  },
+                  "progress:30": {
+                    "value": "92.4px — 308 × 30%"
+                  },
+                  "progress:40": {
+                    "value": "123.2px — 308 × 40%"
+                  },
+                  "progress:50": {
+                    "value": "154px — 308 × 50%"
+                  },
+                  "progress:60": {
+                    "value": "184.8px — 308 × 60%"
+                  },
+                  "progress:70": {
+                    "value": "215.6px — 308 × 70%"
+                  },
+                  "progress:80": {
+                    "value": "246.4px — 308 × 80%"
+                  },
+                  "progress:90": {
+                    "value": "277.2px — 308 × 90%"
+                  },
+                  "progress:100": {
+                    "value": "308px — 308 × 100%"
+                  }
+                }
+              },
+              {
+                "key": "Alignment",
+                "value": "Leading — the fill grows from the left cap",
+                "mono": true
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBProgressBar</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">: </span>0.6<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBProgressBar</span><span class=\"syn-punc\">(</span>progress <span class=\"syn-eq\">=</span> 0.6f<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBProgressBar</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">: </span>0.0<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBProgressBar</span><span class=\"syn-punc\">(</span>progress <span class=\"syn-eq\">=</span> 0.0f<span class=\"syn-punc\">)</span>"
       }
     ],
-    colorsTables: [
-      buildStatelessColorsTable({
-        title: 'Track + Fill — Colors',
-        description: 'Two-zone bar: a static track and an animated fill segment driven by the percentage variant.',
-        rows: [
-          { role: 'Track', token: 'progress-bar/color/border-track', value: '#D2E5FF' },
-          { role: 'Fill',  token: 'progress-bar/color/border',       value: '#005CE5' },
+    "colorsTables": [
+      {
+        "title": "Colors by Zone",
+        "description": "Read off <code>get_svg</code> on each variant of set <code>4244:187349</code> and confirmed against <code>export_node_as_image</code>. <strong>Both zones are stroked paths, not filled rectangles</strong> — which is why the component’s bounding box is 312 × 0 and why the bar’s height is its stroke width. Neither colour changes with <code>Progress</code>. Token paths could not be read; the Talk To Figma plugin returns no variable bindings.",
+        "columns": [
+          "Token",
+          "Value"
         ],
-      }),
-    ],
+        "rows": [
+          {
+            "role": "Track",
+            "token": "Stroke · full 308 length, all 11 variants",
+            "values": [
+              "—",
+              "#9BC5FD"
+            ]
+          },
+          {
+            "role": "Fill",
+            "token": "Stroke · 308 × Progress, absent at 0",
+            "values": [
+              "—",
+              "#005CE5"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "code": {
     "installation": {

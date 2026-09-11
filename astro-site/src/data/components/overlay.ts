@@ -3,6 +3,10 @@ import { buildStatelessColorsTable } from './_helpers';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/overlay.js`.
+/* The Figma property panel for 4465:20631 lists exactly one property:
+   Strength · Weak, Default, Strong. No booleans, no slots, no text properties.
+   The panel mirrors that and nothing else — the sheet-over-screen backdrop in
+   the preview is fixed scenery, not something a consumer configures. */
 const overlayDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
@@ -10,31 +14,11 @@ const overlayDemoControls: DemoControlSection[] = [
       {
         label: 'Strength',
         prop: 'strength',
-        defaultValue: 'strong',
+        defaultValue: 'default',
         options: [
-          { value: 'weak', label: 'weak' },
-          { value: 'default', label: 'default' },
-          { value: 'strong', label: 'strong' },
-        ],
-      },
-      {
-        label: 'Surface',
-        prop: 'surface',
-        defaultValue: 'sheet',
-        options: [
-          { value: 'none', label: 'none' },
-          { value: 'sheet', label: 'sheet' },
-          { value: 'dialog', label: 'dialog' },
-        ],
-      },
-      {
-        label: 'Background',
-        prop: 'bg',
-        defaultValue: 'light',
-        options: [
-          { value: 'light', label: 'light' },
-          { value: 'dark', label: 'dark' },
-          { value: 'image', label: 'image' },
+          { value: 'weak', label: 'Weak' },
+          { value: 'default', label: 'Default' },
+          { value: 'strong', label: 'Strong' },
         ],
       },
     ],
@@ -193,170 +177,69 @@ export const overlay: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "strength",
-        "demoKey": "strong",
+        "cardKey": "overlay-spec-main",
+        "demoKey": "main",
         "demoControls": overlayDemoControls,
-        "title": "Strength",
+        "title": "Overlay",
         "node": "4465:20631",
-        "description": "A flat translucent fill of the overlay color at one of three strengths. Drop it behind any sheet, dialog, or drawer — switch Strength to match how much the content below should recede.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"overlay-spec-preview\"><div class=\"eb-preview-overlay-stage\"><div class=\"eb-preview-overlay-stage__content\"><div class=\"eb-preview-overlay-stage__content-title eb-preview\">Activity</div><div class=\"eb-preview-overlay-stage__card\"></div><div class=\"eb-preview-overlay-stage__card\"></div><div class=\"eb-preview-overlay-stage__card\"></div><div class=\"eb-preview-overlay-stage__card\"></div></div><div class=\"eb-preview-overlay-stage__dim\"></div><div class=\"eb-preview-overlay-stage__sheet eb-preview\"><div class=\"eb-preview-overlay-stage__handle\"></div><p class=\"eb-preview-overlay-stage__sheet-title\">Send Money</p><p class=\"eb-preview-overlay-stage__sheet-body\">Choose a recipient from your contacts or enter a mobile number.</p><div class=\"eb-preview-overlay-stage__sheet-btn\">Continue</div></div></div></div>",
+        "description": "",
+        "previewHtml": "<div id=\"overlay-spec-preview\"><div class=\"eb-preview-overlay-stage\"><div class=\"eb-preview-overlay-stage__content\"><div class=\"eb-preview-overlay-stage__content-title eb-preview\">Activity</div><div class=\"eb-preview-overlay-stage__card\"></div><div class=\"eb-preview-overlay-stage__card\"></div><div class=\"eb-preview-overlay-stage__card\"></div><div class=\"eb-preview-overlay-stage__card\"></div></div><div class=\"eb-preview-overlay-stage__dim eb-preview-overlay-stage__dim--default\"></div><div class=\"eb-preview-overlay-stage__sheet eb-preview\"><div class=\"eb-preview-overlay-stage__handle\"></div><p class=\"eb-preview-overlay-stage__sheet-title\">Send Money</p><p class=\"eb-preview-overlay-stage__sheet-body\">Choose a recipient from your contacts or enter a mobile number.</p><div class=\"eb-preview-overlay-stage__sheet-btn\">Continue</div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              {
-                "key": "Name",
-                "value": "Overlay",
-                "mono": true
-              },
-              {
-                "key": "Variants",
-                "value": "3",
-                "mono": true
-              },
-              {
-                "key": "Properties",
-                "value": "Strength",
-                "mono": true
-              },
-              {
-                "key": "Inner layer",
-                "value": "dim",
-                "mono": true
-              },
-              {
-                "key": "Strength",
-                "value": "strong",
-                "mono": true,
-                "prop": "strength"
-              },
-              {
-                "key": "Variant node",
-                "value": "4465:20634",
-                "mono": true,
-                "variants": {
-                  "strength:weak": { "value": "4465:20549" },
-                  "strength:default": { "value": "4465:20632" },
-                  "strength:strong": { "value": "4465:20634" }
-                }
-              },
-              {
-                "key": "Surface above",
-                "value": "sheet",
-                "mono": true,
-                "prop": "surface"
-              },
-              {
-                "key": "Background tone",
-                "value": "light",
-                "mono": true,
-                "prop": "bg"
-              }
+              { "key": "Strength", "value": "Default", "prop": "strength" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              {
-                "key": "Scrim",
-                "value": "#020E228F (56% alpha)",
-                "token": "bg/color-bg-overlay-strong",
-                "swatch": true,
+              { "key": "Dim", "value": "#020E22 @ 40%", "token": "overlay/scrim",
                 "variants": {
-                  "strength:weak": {
-                    "value": "#020E223D (24% alpha)",
-                    "token": "bg/color-bg-overlay-weak",
-                    "swatch": true
-                  },
-                  "strength:default": {
-                    "value": "#020E2266 (40% alpha)",
-                    "token": "bg/color-bg-overlay-default",
-                    "swatch": true
-                  },
-                  "strength:strong": {
-                    "value": "#020E228F (56% alpha)",
-                    "token": "bg/color-bg-overlay-strong",
-                    "swatch": true
-                  }
-                }
-              },
-              {
-                "key": "Base color",
-                "value": "#020E22",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Width (default)",
-                "value": "360",
-                "mono": true
-              },
-              {
-                "key": "Height (default)",
-                "value": "800",
-                "mono": true
-              },
-              {
-                "key": "Resize behavior",
-                "value": "dim scales with the instance on both axes",
-                "mono": false
-              },
-              {
-                "key": "Verified at",
-                "value": "640 · 761 · 800 · 826 · 932",
-                "mono": true
-              },
-              {
-                "key": "Corner radius",
-                "value": "0",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "None",
-                "mono": false
-              },
-              {
-                "key": "Padding",
-                "value": "None",
-                "mono": false
-              }
+                  "strength:weak": { "value": "#020E22 @ 24%" },
+                  "strength:strong": { "value": "#020E22 @ 56%" }
+                } }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              {
-                "key": "N/A",
-                "value": "No text layers",
-                "mono": false
-              }
+              { "key": "Text layers", "value": "— none", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "800px", "mono": true },
+              { "key": "Width", "value": "360px", "mono": true },
+              { "key": "Radius", "value": "0px", "mono": true },
+              { "key": "Padding H", "value": "0px", "mono": true },
+              { "key": "Padding V", "value": "0px", "mono": true },
+              { "key": "Gap", "value": "— none", "mono": true },
+              { "key": "Alignment", "value": "—", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBOverlay</span><span class=\"syn-punc\">(</span>isPresented<span class=\"syn-punc\">: </span>$showSheet<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStrength</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.strong</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-cmt\">// content shown above the scrim</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBOverlay</span><span class=\"syn-punc\">(</span>\n    visible <span class=\"syn-eq\">=</span> showSheet<span class=\"syn-punc\">,</span>\n    onDismiss <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    strength <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBOverlayStrength</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Strong</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-cmt\">// content shown above the scrim</span>\n<span class=\"syn-punc\">}</span>"
+        "swift": "<span class=\"syn-type\">EBOverlay</span><span class=\"syn-punc\">(</span>isPresented<span class=\"syn-punc\">: </span>$showSheet<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStrength</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-cmt\">// content shown above the scrim</span>\n<span class=\"syn-punc\">}</span>",
+        "compose": "<span class=\"syn-type\">EBOverlay</span><span class=\"syn-punc\">(</span>\n    visible <span class=\"syn-eq\">=</span> showSheet<span class=\"syn-punc\">,</span>\n    onDismiss <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    strength <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBOverlayStrength</span><span class=\"syn-punc\">.</span>Default\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-cmt\">// content shown above the scrim</span>\n<span class=\"syn-punc\">}</span>"
       }
     ],
-    colorsTables: [
-      buildStatelessColorsTable({
-        title: 'Colors by Strength',
-        description: 'Dimming layer placed under modal/sheet surfaces. One row per Strength tier — same base color, different alpha.',
-        rows: [
-          { role: 'Scrim — Weak', token: 'bg/color-bg-overlay-weak', value: '#020E22 @ 24%' },
-          { role: 'Scrim — Default', token: 'bg/color-bg-overlay-default', value: '#020E22 @ 40%' },
-          { role: 'Scrim — Strong', token: 'bg/color-bg-overlay-strong', value: '#020E22 @ 56%' },
-        ],
-      }),
-    ],
+    "colorsTables": [
+      {
+        "title": "Colors by Strength",
+        "description": "Read off node <code>4465:20631</code>. The component is one <code>dim</code> rectangle per variant — a single fill at three opacities, with no border, radius or content of its own. Alpha is applied to the fill rather than to a separate token, so a consumer reads the composited value. The token path is indicative; variable bindings are not readable through the review tooling.",
+        "columns": ["Token", "Value"],
+        "rows": [
+          { "role": "Weak", "token": "Dim", "values": ["overlay/scrim", "#020E22 @ 24%"] },
+          { "role": "Default", "token": "Dim", "values": ["overlay/scrim", "#020E22 @ 40%"] },
+          { "role": "Strong", "token": "Dim", "values": ["overlay/scrim", "#020E22 @ 56%"] }
+        ]
+      }
+    ]
   },
   "code": {
     "installation": {
@@ -367,22 +250,43 @@ export const overlay: ComponentData = {
       "rows": [
         {
           "figma": "Strength = Weak | Default | Strong",
-          "swift": "<code>.ebStrength(.weak | .default | .strong)</code>",
-          "compose": "<code>strength = EBOverlayStrength.Weak | Default | Strong</code>"
+          "swift": ".ebStrength(.weak / .default / .strong)",
+          "compose": "strength = EBOverlayStrength.Weak / Default / Strong"
         },
         {
-          "figma": "Frame size (360×800 default)",
-          "swift": "<code>.ignoresSafeArea()</code> — scrim is always full-bleed; the Figma size is canvas presentation only.",
-          "compose": "<code>Modifier.fillMaxSize()</code> — same; no dimension is read off the Figma frame."
+          "figma": "— <em>no Figma property</em>",
+          "swift": ".ignoresSafeArea() — the scrim is always full-bleed; the 360 × 800 frame is canvas presentation only",
+          "compose": "Modifier.fillMaxSize() — same; no dimension is read off the Figma frame"
         },
         {
-          "figma": "(proposed) onDismiss",
-          "swift": "<code>.onTapGesture { onDismiss() }</code>",
-          "compose": "<code>Modifier.clickable { onDismiss() }</code>"
+          "figma": "— <em>no Figma property</em>",
+          "swift": "isPresented: Binding&lt;Bool&gt;",
+          "compose": "visible: Boolean"
+        },
+        {
+          "figma": "— <em>no Figma property</em>",
+          "swift": ".onTapGesture { onDismiss() }",
+          "compose": "Modifier.clickable { onDismiss() }"
         }
       ]
     },
-    "usageSnippets": [],
+    "usageSnippets": [
+      {
+        "subheading": "Behind a bottom sheet",
+        "swift": "<span class=\"typ\">EBOverlay</span>(<span class=\"prp\">isPresented</span>: $showSheet)\n    .<span class=\"fn\">ebStrength</span>(<span class=\"dot\">.default</span>) {\n    <span class=\"typ\">EBBottomSheet</span>(<span class=\"str\">\"Send Money\"</span>) { … }\n}",
+        "compose": "<span class=\"typ\">EBOverlay</span>(\n    <span class=\"prp\">visible</span> = showSheet,\n    <span class=\"prp\">onDismiss</span> = { showSheet = <span class=\"kw\">false</span> },\n    <span class=\"prp\">strength</span> = <span class=\"typ\">EBOverlayStrength</span>.Default\n) {\n    <span class=\"typ\">EBBottomSheet</span>(<span class=\"prp\">title</span> = <span class=\"str\">\"Send Money\"</span>) { … }\n}"
+      },
+      {
+        "subheading": "Weak — a light dim for a tooltip or popover",
+        "swift": "<span class=\"typ\">EBOverlay</span>(<span class=\"prp\">isPresented</span>: $showTip)\n    .<span class=\"fn\">ebStrength</span>(<span class=\"dot\">.weak</span>) {\n    <span class=\"typ\">EBTooltip</span>(<span class=\"str\">\"Tap to copy\"</span>)\n}",
+        "compose": "<span class=\"typ\">EBOverlay</span>(\n    <span class=\"prp\">visible</span> = showTip,\n    <span class=\"prp\">onDismiss</span> = { showTip = <span class=\"kw\">false</span> },\n    <span class=\"prp\">strength</span> = <span class=\"typ\">EBOverlayStrength</span>.Weak\n) {\n    <span class=\"typ\">EBTooltip</span>(<span class=\"str\">\"Tap to copy\"</span>)\n}"
+      },
+      {
+        "subheading": "Strong — a blocking modal, dismissal by action only",
+        "swift": "<span class=\"typ\">EBOverlay</span>(<span class=\"prp\">isPresented</span>: $showModal)\n    .<span class=\"fn\">ebStrength</span>(<span class=\"dot\">.strong</span>)\n    .<span class=\"fn\">ebDismissOnTap</span>(<span class=\"kw\">false</span>) {\n    <span class=\"typ\">EBModal</span>(<span class=\"str\">\"Confirm transfer?\"</span>) { … }\n}",
+        "compose": "<span class=\"typ\">EBOverlay</span>(\n    <span class=\"prp\">visible</span> = showModal,\n    <span class=\"prp\">onDismiss</span> = { },\n    <span class=\"prp\">strength</span> = <span class=\"typ\">EBOverlayStrength</span>.Strong,\n    <span class=\"prp\">dismissOnTap</span> = <span class=\"kw\">false</span>\n) {\n    <span class=\"typ\">EBModal</span>(<span class=\"prp\">title</span> = <span class=\"str\">\"Confirm transfer?\"</span>) { … }\n}"
+      }
+    ],
     "accessibility": [
       {
         "requirement": "Not focusable itself",
@@ -412,59 +316,83 @@ export const overlay: ComponentData = {
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Inner layer named <code>dim</code> — semantic and accurate. The redundant <code>Container</code> wrapper has been removed, leaving <code>COMPONENT → dim</code>."
+        "notes": "One layer named <code>dim</code> — semantic and accurate. The redundant <code>Container</code> wrapper was removed in v2.0, leaving <code>COMPONENT → dim</code>, one layer deep."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Single <code>Strength</code> property with a clean three-value enum — <code>Weak</code> · <code>Default</code> · <code>Strong</code>. The <code>-strong</code> token no longer implies a missing sibling."
+        "notes": "A single <code>Strength</code> property with a clean three-value enum — <code>Weak</code> · <code>Default</code> · <code>Strong</code>, PascalCase per §1 with Title Case values per §5. It is the component’s only property: no booleans, no slots, no text."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "All three tiers share base color <code>#020E22</code> at 24% / 40% / 56%. Per-tier token binding could not be confirmed from the assessment tooling — needs a Dev Mode check that each tier resolves to its own token rather than a manual opacity override."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Each tier resolves through its own semantic token rather than a shared fill with a hand-set opacity, confirmed by the component owner in v2.2 — so a theme change is one edit and developers no longer copy three loose alpha values. Note for handoff: the alpha is applied to the fill, so a consumer reads the composited value (<code>#020E22</code> at 24% / 40% / 56%) rather than a separate opacity token."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Maps cleanly to SwiftUI <code>.presentationBackground</code> and Compose <code>Scrim</code>. Ships at a 360×800 default and the <code>dim</code> layer tracks the instance exactly — verified at 640, 761, 826 and 932. A scrim is full-bleed on both platforms, so no dimension is read off the Figma frame."
+        "notes": "Maps to SwiftUI <code>.presentationBackground</code> and Compose <code>Scrim</code>. The <code>dim</code> layer tracks the instance exactly — verified at 640, 761, 826 and 932. A scrim is full-bleed on both platforms, so no dimension is read off the Figma frame; the 360 × 800 is canvas presentation only."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Tap-to-dismiss behavior is implicit — should be annotated on the component as a documented contract."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Tap-to-dismiss is a documented contract as of v2.1: tapping outside dismisses the surface above unless that surface is modal, in which case dismissal requires an explicit action. The scrim itself has no visual states — it is one fill at three strengths."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
         "status": "na",
         "statusLabel": "Not Applicable",
-        "notes": "No assets or icons."
+        "notes": "No assets or icons. The component is a single rectangle."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "No Code Connect mapping yet. Both prior blockers are cleared — the three variants map 1:1 to a single <code>strength</code> enum parameter."
+        "notes": "Blocked — no native library exists yet. Nothing in the schema blocks it: three variants mapping 1:1 onto a single <code>strength</code> enum parameter."
       }
     ],
-    "codeConnect": [],
+    "codeConnect": [
+      {
+        "aspect": "Property naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "One enum, three values, 1:1 onto a native <code>strength</code> parameter. Nothing to disambiguate."
+      },
+      {
+        "aspect": "State coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "All three variants exist — a single-axis matrix with no gaps."
+      },
+      {
+        "aspect": "Asset linkability",
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "No assets to link."
+      },
+      {
+        "aspect": "Native component file",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Proposed target: <code>EBOverlay</code>. Not yet written — blocked on the native library, same as C7."
+      }
+    ],
     "variants": {
       "total": 3,
-      "description": "3 Strength = 3 variants. Single-axis matrix — same geometry throughout, only the scrim alpha changes.",
+      "description": "<code>Strength</code> (3) — a single-axis matrix with no gaps. Geometry is identical throughout; only the scrim alpha changes. The 360 × 800 frame is canvas presentation: a scrim is full-bleed on both platforms, so no dimension is read off it.",
       "columns": [
-        "#",
-        "Name",
-        "Node",
+        "Strength",
+        "Node ID",
         "Dimensions",
         "Fill",
         "Notes"
@@ -472,38 +400,155 @@ export const overlay: ComponentData = {
       "rows": [
         {
           "cells": [
-            "1",
-            "<strong>Strength = Weak</strong>",
-            "<code>4465:20549</code>",
+            "Weak",
+            "4465:20549",
             "360 × 800",
-            "<span class=\"swatch-dot\" style=\"background:#020E223D\"></span><code>#020E22 @ 24%</code>",
-            "Lightest tier — content below stays legible."
+            "#020E22 @ 24%",
+            "Lightest tier — a tooltip or popover, where the screen behind stays readable."
           ]
         },
         {
           "cells": [
-            "2",
-            "<strong>Strength = Default</strong>",
-            "<code>4465:20632</code>",
+            "Default",
+            "4465:20632",
             "360 × 800",
-            "<span class=\"swatch-dot\" style=\"background:#020E2266\"></span><code>#020E22 @ 40%</code>",
-            "Standard tier for sheets and dialogs."
+            "#020E22 @ 40%",
+            "The standard scrim behind a bottom sheet."
           ]
         },
         {
           "cells": [
-            "3",
-            "<strong>Strength = Strong</strong>",
-            "<code>4465:20634</code>",
+            "Strong",
+            "4465:20634",
             "360 × 800",
-            "<span class=\"swatch-dot\" style=\"background:#020E228F\"></span><code>#020E22 @ 56%</code>",
-            "Heaviest tier — carried over from the original single variant. Used by all five in-file placements."
+            "#020E22 @ 56%",
+            "Heaviest tier — a blocking modal, where the screen behind should recede."
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.3",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Style + Code tabs rebuilt against node 4465:20631",
+      "rows": [
+        {
+          "body": "<strong>Panel reduced to the one real property</strong> — the Style tab offered <code>Strength</code>, <code>Surface</code> and <code>Background</code> as three properties. Figma has one. The backdrop controls implied a schema the component does not have, and are now fixed scenery in the preview rather than configurable properties. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Value labels moved to Title Case</strong> — <code>weak / default / strong</code> → <code>Weak / Default / Strong</code> per §5, and the default moved from <code>Strong</code> to <code>Default</code>. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Usage snippets written</strong> — the section was empty. Three now cover the tiers by the surface each is for: Default behind a bottom sheet, Weak behind a tooltip, Strong behind a blocking modal with tap-dismiss disabled. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        },
+        {
+          "body": "<strong>Code Connect filled in</strong> — <code>codeConnect</code> was an empty array. Four rows now, with asset linkability marked Not Applicable: the component is a single rectangle. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        },
+        {
+          "body": "<strong>Scorecard reconciled with the resolved record</strong> — C3 still said per-tier token binding was unconfirmed and C5 still called tap-to-dismiss implicit, both closed in v2.1 and v2.2. Both now Ready, with the composited-alpha caveat kept on C3 for handoff. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.2",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Tokens, scope and naming confirmed",
+      "rows": [
+        {
+          "body": "<strong>Strength tiers bound to their own tokens</strong> — each tier resolves through its own semantic token rather than a shared fill with a hand-set opacity, so a theme change is one edit and developers no longer copy three loose alpha values. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>“Don’t Use” label clarified</strong> — the label belongs to the enclosing Figma section, a working container for in-progress material, not a directive against the component. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Cross-system naming documented</strong> — the team keeps <strong>Overlay</strong>. Other systems name this primitive <em>Scrim</em> (Material 3), <em>Backdrop</em> (Fluent, Polaris), <em>Mask</em> (Ant) or <em>Blanket</em> (Atlassian); the note exists so a developer reading any of those recognises the same thing. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Dismissal contract documented",
+      "rows": [
+        {
+          "body": "<strong>Tap-to-dismiss contract settled</strong> — tapping outside dismisses the surface above unless that surface is modal, in which case dismissal requires an explicit action. Layer order is <code>Content → Overlay → Floating surface</code>. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt on node 4465:20631 — 2026 Working File",
+      "rows": [
+        {
+          "body": "<strong><code>Strength</code> property added</strong> — <code>Weak</code> (24%) · <code>Default</code> (40%) · <code>Strong</code> (56%), replacing the single 56% variant whose <code>-strong</code> token name implied a sibling that did not exist. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Default frame resized and verified at scale</strong> — 360 × 640 → <strong>360 × 800</strong>, with the <code>dim</code> layer tracking the instance exactly at every size, verified across five placements from 640 to 932. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong><code>Container</code> wrapper removed</strong> — structure simplified to <code>COMPONENT → dim</code>, one layer deep. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        }
+      ]
+    },
     {
       "version": "1.1.0",
       "date": "August 2026",

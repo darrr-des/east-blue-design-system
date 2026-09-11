@@ -7,21 +7,43 @@ const textAreaDemoControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'isFilled',
-        prop: 'filled',
-        defaultValue: 'no',
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'default',
         options: [
-          { value: 'no', label: 'no' },
-          { value: 'yes', label: 'yes' },
+          { value: 'default', label: 'Default' },
+          { value: 'focused', label: 'Focused' },
+          { value: 'error', label: 'Error' },
+          { value: 'disabled', label: 'Disabled' },
         ],
       },
       {
-        label: 'isExpandable',
-        prop: 'expandable',
+        label: 'hasValue',
+        prop: 'hasValue',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasLabel',
+        prop: 'hasLabel',
+        control: 'toggle',
         defaultValue: 'true',
         options: [
-          { value: 'true', label: 'true' },
-          { value: 'false', label: 'false' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasSubtext',
+        prop: 'hasSubtext',
+        control: 'toggle',
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
     ],
@@ -254,529 +276,101 @@ export const textArea: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "ta-spec-default",
-        "demoKey": "default",
+        "cardKey": "ta-spec-main",
+        "demoKey": "main",
         "demoControls": textAreaDemoControls,
-        "title": "Default",
-        "node": "3070:21242",
-        "description": "Idle state with gray border. Resize-handle glyph sits in the bottom-right regardless of fill.",
+        "title": "Text Area",
+        "node": "4781:35856",
+        "description": "",
+        "previewHtml": "<div id=\"text-area-spec-main\"><svg width=\"358\" height=\"78\" viewBox=\"0 0 358 78\" fill=\"none\" role=\"img\" aria-label=\"Text Area, default, empty\"><text x=\"2\" y=\"11\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" letter-spacing=\"0.25\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"357\" height=\"33\" rx=\"6\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"44\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" letter-spacing=\"0.25\" fill=\"#90A8D0\">Write your message…</text><text x=\"2\" y=\"73\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#6780A9\">Message content</text><text x=\"356\" y=\"73\" text-anchor=\"end\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#6780A9\">0/100</text></svg></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false
-              },
-              {
-                "key": "isFilled",
-                "value": "no",
-                "mono": false,
-                "prop": "filled"
-              },
-              {
-                "key": "isExpandable",
-                "value": "true",
-                "mono": false,
-                "prop": "expandable"
-              }
+              { "key": "State", "value": "Default", "prop": "state" },
+              { "key": "hasValue", "value": "False", "prop": "hasValue" },
+              { "key": "hasLabel", "value": "True", "prop": "hasLabel" },
+              { "key": "hasSubtext", "value": "True", "prop": "hasSubtext" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/default/bg",
-                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "input-field/disabled/bg" } }
-              },
-              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border",
+              { "key": "Field background", "value": "#FFFFFF", "token": "surface/default",
+                "variants": { "state:disabled": { "value": "#EEF2F9", "token": "surface/disabled" } } },
+              { "key": "Border", "value": "#D7E0EF", "token": "border/default",
                 "variants": {
-                  "state:Active":   { "value": "#005CE5", "token": "input-field/active/border" },
-                  "state:Error":    { "value": "#D61B2C", "token": "input-field/error/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/default/text",
-                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "input-field/disabled/text" } }
-              },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder",
-                "variants": {
-                  "state:Disabled": { "value": "#C2CFE5", "token": "input-field/disabled/placeholder" },
-                  "filled:true":    { "hide": true }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Min height",
-                "value": "120px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Resize",
-                "value": "vertical, snap to line height",
-                "mono": true
-              }
+                  "state:focused": { "value": "#005CE5", "token": "border/focused" },
+                  "state:error": { "value": "#D61B2C", "token": "border/error" },
+                  "state:disabled": { "value": "–", "token": "–" }
+                } },
+              { "key": "Value", "value": "#90A8D0", "token": "text/placeholder",
+                "variants": { "hasValue:true": { "value": "#0A2757", "token": "text/primary" },
+                              "state:disabled|hasValue:true": { "value": "#90A8D0", "token": "text/placeholder" } } },
+              { "key": "Label", "value": "#0A2757", "token": "text/primary" },
+              { "key": "Subtext", "value": "#6780A9", "token": "text/secondary" }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$note<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebMinLines</span><span class=\"syn-punc\">(</span>5<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> note<span class=\"syn-punc\">,</span>\n    minLines <span class=\"syn-eq\">=</span> 5<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"spec-default-preview\"><svg width=\"328\" height=\"62\" viewBox=\"0 0 328 62\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"61\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D7E0EF\" stroke-width=\"1\"></rect><text x=\"12\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 56L322 48M318 56L322 52\" stroke=\"#90A8D0\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg></div>"
-      },
-      {
-        "cardKey": "ta-spec-active",
-        "demoKey": "active",
-        "demoControls": textAreaDemoControls,
-        "title": "Active (Focused)",
-        "node": "3070:21243",
-        "description": "Focused state with 2px blue border. Rename target: <code>focused</code>.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Active",
-                "mono": false
-              },
-              {
-                "key": "isFilled",
-                "value": "no",
-                "mono": false,
-                "prop": "filled"
-              },
-              {
-                "key": "isExpandable",
-                "value": "true",
-                "mono": false,
-                "prop": "expandable"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/active/bg",
-                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "input-field/disabled/bg" } }
-              },
-              { "key": "Border", "value": "#005CE5", "token": "input-field/active/border",
-                "variants": {
-                  "state:Default":  { "value": "#D7E0EF", "token": "input-field/default/border" },
-                  "state:Error":    { "value": "#D61B2C", "token": "input-field/error/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/active/text",
-                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "input-field/disabled/text" } }
-              },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/active/placeholder",
-                "variants": {
-                  "state:Disabled": { "value": "#C2CFE5", "token": "input-field/disabled/placeholder" },
-                  "filled:true":    { "hide": true }
-                }
-              }
+              { "key": "Label", "value": "—", "mono": true },
+              { "key": "Value", "value": "—", "mono": true },
+              { "key": "Subtext", "value": "—", "mono": true }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Min height",
-                "value": "120px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Resize",
-                "value": "vertical, snap to line height",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
+              { "key": "Height", "value": "34px", "mono": true,
+                "variants": { "hasValue:true": { "value": "50px" } } },
+              { "key": "Width", "value": "358px", "mono": true },
+              { "key": "Radius", "value": "6px", "mono": true },
+              { "key": "Padding H", "value": "12px / 8px", "mono": true },
+              { "key": "Padding V", "value": "10px / 8px", "mono": true },
+              { "key": "Gap", "value": "0px", "mono": true },
+              { "key": "Alignment", "value": "—", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$note<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.active</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebMinLines</span><span class=\"syn-punc\">(</span>5<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> note<span class=\"syn-punc\">,</span>\n    minLines <span class=\"syn-eq\">=</span> 5<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Active</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"spec-active-preview\"><svg width=\"328\" height=\"62\" viewBox=\"0 0 328 62\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"61\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#005CE5\" stroke-width=\"2\"></rect><text x=\"12\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 56L322 48M318 56L322 52\" stroke=\"#90A8D0\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg></div>"
-      },
-      {
-        "cardKey": "ta-spec-error",
-        "demoKey": "error",
-        "demoControls": textAreaDemoControls,
-        "title": "Error",
-        "node": "3070:21244",
-        "description": "Validation error state with 2px red border. No inline error-message slot — copy is the consumer's responsibility.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Error",
-                "mono": false
-              },
-              {
-                "key": "isFilled",
-                "value": "no",
-                "mono": false,
-                "prop": "filled"
-              },
-              {
-                "key": "isExpandable",
-                "value": "true",
-                "mono": false,
-                "prop": "expandable"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/error/bg",
-                "variants": { "state:Disabled": { "value": "#EEF2F9", "token": "input-field/disabled/bg" } }
-              },
-              { "key": "Border", "value": "#D61B2C", "token": "input-field/error/border",
-                "variants": {
-                  "state:Default":  { "value": "#D7E0EF", "token": "input-field/default/border" },
-                  "state:Active":   { "value": "#005CE5", "token": "input-field/active/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/error/text",
-                "variants": { "state:Disabled": { "value": "#90A8D0", "token": "input-field/disabled/text" } }
-              },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/error/placeholder",
-                "variants": {
-                  "state:Disabled": { "value": "#C2CFE5", "token": "input-field/disabled/placeholder" },
-                  "filled:true":    { "hide": true }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Min height",
-                "value": "120px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Resize",
-                "value": "vertical, snap to line height",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$note<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebMinLines</span><span class=\"syn-punc\">(</span>5<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> note<span class=\"syn-punc\">,</span>\n    minLines <span class=\"syn-eq\">=</span> 5<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Error</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"spec-error-preview\"><svg width=\"328\" height=\"62\" viewBox=\"0 0 328 62\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"61\" rx=\"5.5\" fill=\"#FFFFFF\" stroke=\"#D61B2C\" stroke-width=\"2\"></rect><text x=\"12\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#90A8D0\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 56L322 48M318 56L322 52\" stroke=\"#90A8D0\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg></div>"
-      },
-      {
-        "cardKey": "ta-spec-disabled",
-        "demoKey": "disabled",
-        "demoControls": textAreaDemoControls,
-        "title": "Disabled",
-        "node": "3070:21241",
-        "description": "Non-interactive state with gray fill and muted text. Border hidden.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Disabled",
-                "mono": false
-              },
-              {
-                "key": "isFilled",
-                "value": "no",
-                "mono": false,
-                "prop": "filled"
-              },
-              {
-                "key": "isExpandable",
-                "value": "true",
-                "mono": false,
-                "prop": "expandable"
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#EEF2F9", "token": "input-field/disabled/bg",
-                "variants": {
-                  "state:Default": { "value": "#FFFFFF", "token": "input-field/default/bg" },
-                  "state:Active":  { "value": "#FFFFFF", "token": "input-field/active/bg" },
-                  "state:Error":   { "value": "#FFFFFF", "token": "input-field/error/bg" }
-                }
-              },
-              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border",
-                "variants": {
-                  "state:Active":   { "value": "#005CE5", "token": "input-field/active/border" },
-                  "state:Error":    { "value": "#D61B2C", "token": "input-field/error/border" },
-                  "state:Disabled": { "hide": true }
-                }
-              },
-              { "key": "Text", "value": "#90A8D0", "token": "input-field/disabled/text",
-                "variants": {
-                  "state:Default": { "value": "#0A2757", "token": "input-field/default/text" },
-                  "state:Active":  { "value": "#0A2757", "token": "input-field/active/text" },
-                  "state:Error":   { "value": "#0A2757", "token": "input-field/error/text" }
-                }
-              },
-              { "key": "Placeholder", "value": "#C2CFE5", "token": "input-field/disabled/placeholder",
-                "variants": {
-                  "state:Default": { "value": "#90A8D0", "token": "input-field/default/placeholder" },
-                  "state:Active":  { "value": "#90A8D0", "token": "input-field/active/placeholder" },
-                  "state:Error":   { "value": "#90A8D0", "token": "input-field/error/placeholder" },
-                  "filled:true":   { "hide": true }
-                }
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Min height",
-                "value": "120px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "14px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Border",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Resize",
-                "value": "vertical, snap to line height",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Value style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Value font",
-                "value": "Proxima Soft Semibold · 14 / 14 · +0.25",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span>$note<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.disabled</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebMinLines</span><span class=\"syn-punc\">(</span>5<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Note\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> note<span class=\"syn-punc\">,</span>\n    minLines <span class=\"syn-eq\">=</span> 5<span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Disabled</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"spec-disabled-preview\"><svg width=\"328\" height=\"62\" viewBox=\"0 0 328 62\" fill=\"none\"><rect x=\"0.5\" y=\"0.5\" width=\"327\" height=\"61\" rx=\"5.5\" fill=\"#EEF2F9\"></rect><text x=\"12\" y=\"36\" font-family=\"Proxima Soft, system-ui\" font-size=\"14\" font-weight=\"600\" fill=\"#C2CFE5\" letter-spacing=\"0.25\">Placeholder</text><path d=\"M314 56L322 48M318 56L322 52\" stroke=\"#C2CFE5\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg></div>"
+        "swift": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>placeholder<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Write your message…\"</span><span class=\"syn-punc\">, </span>text<span class=\"syn-punc\">: </span>$message<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBTextArea</span><span class=\"syn-punc\">(</span>\n    placeholder <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Write your message…\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> message<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span>Default\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "colorsTables": [
       {
         "title": "Colors by State",
-        "description": "All four color roles are bound to <code>main/text-area/color/&#123;state&#125;/*</code> tokens. Every value mirrors the equivalent <code>main/input-field/color/*</code> token — motivation for consolidation.",
-        "columns": [
-          "DEFAULT",
-          "ACTIVE",
-          "ERROR",
-          "DISABLED"
-        ],
+        "description": "Read off node <code>4781:35856</code>. ROLE is the State value; the second column is the ELEMENT. Token paths are indicative — variable bindings are not readable through the Talk To Figma plugin.",
+        "columns": ["Token", "Value"],
         "rows": [
-          {
-            "role": "Border",
-            "token": "text-area/color/{state}/border",
-            "values": [
-              "#D7E0EF",
-              "#005CE5",
-              "#D61B2C",
-              "hidden"
-            ]
-          },
-          {
-            "role": "Background",
-            "token": "text-area/color/{state}/bg",
-            "values": [
-              "#FFFFFF",
-              "#FFFFFF",
-              "#FFFFFF",
-              "#EEF2F9"
-            ]
-          },
-          {
-            "role": "Text (filled)",
-            "token": "text-area/color/{state}/text",
-            "values": [
-              "#0A2757",
-              "#0A2757",
-              "#0A2757",
-              "#C2CFE5"
-            ]
-          },
-          {
-            "role": "Placeholder",
-            "token": "text-area/color/{state}/placeholder",
-            "values": [
-              "#C2CFE5",
-              "#C2CFE5",
-              "#C2CFE5",
-              "#C2CFE5"
-            ]
-          },
-          {
-            "role": "Resize glyph",
-            "token": "text-area/color/{state}/icon-resizer",
-            "values": [
-              "#D7E0EF",
-              "#D7E0EF",
-              "#D7E0EF",
-              "#D7E0EF"
-            ]
-          }
+          { "role": "Default", "token": "Field background", "values": ["surface/default", "#FFFFFF"] },
+          { "role": "—", "token": "Border", "values": ["border/default", "#D7E0EF"] },
+          { "role": "—", "token": "Value (empty)", "values": ["text/placeholder", "#90A8D0"] },
+          { "role": "—", "token": "Value (filled)", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Label", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Subtext", "values": ["text/secondary", "#6780A9"] },
+          { "role": "Focused", "token": "Field background", "values": ["surface/default", "#FFFFFF"] },
+          { "role": "—", "token": "Border", "values": ["border/focused", "#005CE5"] },
+          { "role": "—", "token": "Value (empty)", "values": ["text/placeholder", "#90A8D0"] },
+          { "role": "—", "token": "Value (filled)", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Label", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Subtext", "values": ["text/secondary", "#6780A9"] },
+          { "role": "Error", "token": "Field background", "values": ["surface/default", "#FFFFFF"] },
+          { "role": "—", "token": "Border", "values": ["border/error", "#D61B2C"] },
+          { "role": "—", "token": "Value (empty)", "values": ["text/placeholder", "#90A8D0"] },
+          { "role": "—", "token": "Value (filled)", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Label", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Subtext", "values": ["text/secondary", "#6780A9"] },
+          { "role": "Disabled", "token": "Field background", "values": ["surface/disabled", "#EEF2F9"] },
+          { "role": "—", "token": "Border", "values": ["–", "–"] },
+          { "role": "—", "token": "Value (empty)", "values": ["text/placeholder", "#90A8D0"] },
+          { "role": "—", "token": "Value (filled)", "values": ["text/placeholder", "#90A8D0"] },
+          { "role": "—", "token": "Label", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Subtext", "values": ["text/secondary", "#6780A9"] }
         ]
       }
     ]
@@ -803,71 +397,57 @@ export const textArea: ComponentData = {
     "propertyMapping": {
       "rows": [
         {
-          "figma": "(text content)",
+          "figma": "State = Default | Focused | Error | Disabled",
+          "swift": ".ebState(.default) · @FocusState · .ebError(true) · .disabled(true)",
+          "compose": "state = EBFieldState.Default · interactionSource · isError = true · enabled = false"
+        },
+        {
+          "figma": "hasValue = False | True",
+          "swift": "— derived from whether <code>text</code> is empty",
+          "compose": "— derived from whether <code>value</code> is empty"
+        },
+        {
+          "figma": "hasLabel <em>(boolean)</em>",
+          "swift": ".ebLabel(_ text: String?)",
+          "compose": "label: String?"
+        },
+        {
+          "figma": "hasSubtext <em>(boolean)</em>",
+          "swift": ".ebSubtext(_ text: String?)",
+          "compose": "subtext: String?"
+        },
+        {
+          "figma": "— <em>no Figma property</em>",
           "swift": "text: Binding&lt;String&gt;",
-          "compose": "value: String"
+          "compose": "value: String + onValueChange: (String) -&gt; Unit"
         },
         {
-          "figma": "isFilled (yes/no)",
-          "swift": "—",
-          "compose": "—"
-        },
-        {
-          "figma": "(multi-line default)",
+          "figma": "— <em>no Figma property</em>",
           "swift": "axis: .vertical",
           "compose": "singleLine = false"
-        },
-        {
-          "figma": "(auto-grow range)",
-          "swift": ".lineLimit(3...6)",
-          "compose": "maxLines = 6"
-        },
-        {
-          "figma": "state = default",
-          "swift": "—",
-          "compose": "—"
-        },
-        {
-          "figma": "state = active",
-          "swift": "@FocusState",
-          "compose": "interactionSource"
-        },
-        {
-          "figma": "state = error",
-          "swift": ".ebError(true)",
-          "compose": "isError = true"
-        },
-        {
-          "figma": "state = disabled",
-          "swift": ".disabled(true)",
-          "compose": "enabled = false"
-        },
-        {
-          "figma": "isExpandable",
-          "swift": "—",
-          "compose": "—"
         }
-      ],
-      "filePaths": {
-        "swift": "ios/Components/FormElements/EBInputField.swift",
-        "compose": "android/components/form/EBInputField.kt"
-      }
+      ]
     },
     "usageSnippets": [
       {
-        "subheading": "Multi-line (default)",
-        "swift": "<span class=\"typ\">EBInputField</span>(<span class=\"str\">\"Tell us more\"</span>, <span class=\"prp\">text</span>: $value, <span class=\"prp\">axis</span>: .<span class=\"kw\">vertical</span>)\n    .<span class=\"fn\">lineLimit</span>(<span class=\"num\">3</span>...<span class=\"num\">6</span>)",
-        "compose": "<span class=\"typ\">EBInputField</span>(\n    <span class=\"prp\">value</span> = text,\n    <span class=\"prp\">onValueChange</span> = { text = it },\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Tell us more\"</span>,\n    <span class=\"prp\">singleLine</span> = <span class=\"kw\">false</span>,\n    <span class=\"prp\">maxLines</span> = <span class=\"num\">6</span>\n)"
+        "subheading": "Multi-line text area",
+        "swift": "<span class=\"typ\">EBTextArea</span>(<span class=\"str\">\"Write your message…\"</span>, <span class=\"prp\">text</span>: $message)\n    .<span class=\"fn\">ebState</span>(<span class=\"dot\">.default</span>)\n    .<span class=\"fn\">ebLabel</span>(<span class=\"str\">\"Label\"</span>)\n    .<span class=\"fn\">ebSubtext</span>(<span class=\"str\">\"Message content\"</span>)",
+        "compose": "<span class=\"typ\">EBTextArea</span>(\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Write your message…\"</span>,\n    <span class=\"prp\">value</span> = message,\n    <span class=\"prp\">onValueChange</span> = { message = it },\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">subtext</span> = <span class=\"str\">\"Message content\"</span>\n)"
+      },
+      {
+        "subheading": "Without label or subtext",
+        "swift": "<span class=\"typ\">EBTextArea</span>(<span class=\"str\">\"Write your message…\"</span>, <span class=\"prp\">text</span>: $message)",
+        "compose": "<span class=\"typ\">EBTextArea</span>(\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Write your message…\"</span>,\n    <span class=\"prp\">value</span> = message,\n    <span class=\"prp\">onValueChange</span> = { message = it },\n    <span class=\"prp\">label</span> = <span class=\"kw\">null</span>,\n    <span class=\"prp\">subtext</span> = <span class=\"kw\">null</span>\n)"
       },
       {
         "subheading": "Error",
-        "swift": "<span class=\"typ\">EBInputField</span>(<span class=\"str\">\"Tell us more\"</span>, <span class=\"prp\">text</span>: $value, <span class=\"prp\">axis</span>: .<span class=\"kw\">vertical</span>)\n    .<span class=\"fn\">lineLimit</span>(<span class=\"num\">3</span>...<span class=\"num\">6</span>)\n    .<span class=\"fn\">ebError</span>(<span class=\"kw\">true</span>)",
-        "compose": "<span class=\"typ\">EBInputField</span>(\n    <span class=\"prp\">value</span> = text,\n    <span class=\"prp\">onValueChange</span> = { text = it },\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Tell us more\"</span>,\n    <span class=\"prp\">singleLine</span> = <span class=\"kw\">false</span>,\n    <span class=\"prp\">maxLines</span> = <span class=\"num\">6</span>,\n    <span class=\"prp\">isError</span> = <span class=\"kw\">true</span>\n)"
+        "swift": "<span class=\"typ\">EBTextArea</span>(<span class=\"str\">\"Write your message…\"</span>, <span class=\"prp\">text</span>: $message)\n    .<span class=\"fn\">ebState</span>(<span class=\"dot\">.error</span>)",
+        "compose": "<span class=\"typ\">EBTextArea</span>(\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Write your message…\"</span>,\n    <span class=\"prp\">value</span> = message,\n    <span class=\"prp\">onValueChange</span> = { message = it },\n    <span class=\"prp\">state</span> = <span class=\"typ\">EBFieldState</span>.Error\n)"
       },
       {
         "subheading": "Disabled",
-        "swift": "<span class=\"typ\">EBInputField</span>(<span class=\"str\">\"Tell us more\"</span>, <span class=\"prp\">text</span>: $value, <span class=\"prp\">axis</span>: .<span class=\"kw\">vertical</span>)\n    .<span class=\"fn\">lineLimit</span>(<span class=\"num\">3</span>...<span class=\"num\">6</span>)\n    .<span class=\"fn\">disabled</span>(<span class=\"kw\">true</span>)",
-        "compose": "<span class=\"typ\">EBInputField</span>(\n    <span class=\"prp\">value</span> = text,\n    <span class=\"prp\">onValueChange</span> = { text = it },\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Tell us more\"</span>,\n    <span class=\"prp\">singleLine</span> = <span class=\"kw\">false</span>,\n    <span class=\"prp\">maxLines</span> = <span class=\"num\">6</span>,\n    <span class=\"prp\">enabled</span> = <span class=\"kw\">false</span>\n)"
+        "swift": "<span class=\"typ\">EBTextArea</span>(<span class=\"str\">\"Write your message…\"</span>, <span class=\"prp\">text</span>: $message)\n    .<span class=\"fn\">disabled</span>(<span class=\"kw\">true</span>)",
+        "compose": "<span class=\"typ\">EBTextArea</span>(\n    <span class=\"prp\">placeholder</span> = <span class=\"str\">\"Write your message…\"</span>,\n    <span class=\"prp\">value</span> = message,\n    <span class=\"prp\">onValueChange</span> = { message = it },\n    <span class=\"prp\">enabled</span> = <span class=\"kw\">false</span>\n)"
       }
     ],
     "accessibility": [
@@ -898,159 +478,366 @@ export const textArea: ComponentData = {
         "dontText": "Use for short structured inputs (name, phone, code) — Input Field's single-line default is more appropriate and faster to fill."
       },
       {
+        "doText": "Turn `hasSubtext` off when there is nothing useful to say — an empty subtext row still reserves 22px and pushes the layout down.",
+        "dontText": "Turn `hasLabel` off to save space in a form — a field without a visible label leaves screen-reader users with only the placeholder, which disappears on focus."
+      },
+      {
         "doText": "Pair with a visible label above the field and a helper-text row below for character counts or format hints.",
-        "dontText": "Rely on the desktop resize handle on mobile — mobile fields auto-grow within lineLimit/maxLines and the handle has no native behavior."
+        "dontText": "Expect the field to be manually resizable — the desktop resize handle was removed in v2.2 because it had no touch equivalent. The field grows with its content within the platform's lineLimit / maxLines."
       }
     ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Duplicate token namespace <code>main/text-area/*</code> mirrors <code>main/input-field/*</code> exactly. Text layer structure is clean."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Local layers follow the §3 vocabulary — <code>ValueContainer</code> → <code>Value</code> — and the nested duplicate <code>text-container</code> is gone. The remaining <code>#label</code> and <code>#subtext</code> layers belong to the shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances and are their owner’s to rename."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>isFilled=yes/no</code> (same anti-pattern Input Field already resolved). <code>state=active</code> should be <code>focused</code>."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>State = Default | Focused | Error | Disabled</code> × <code>hasValue = False | True</code>, PascalCase per §1 with Title Case values per §5. <code>isFilled</code> → <code>hasValue</code> and <code>Active</code> → <code>Focused</code> both landed. <code>Error</code> on the <code>State</code> axis is the documented §6 form-field exception, not a divergence."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All colors bound to <code>main/text-area/color/*</code>. Spacing and radius tokens resolved."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The component-scoped namespace was replaced by the shared generic token scale. Bindings themselves are not readable through the review tooling, so the token paths on the Style tab are indicative and need a Dev Mode confirmation."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Exists as a distinct component but native platforms treat multi-line as a single TextField with <code>axis: .vertical</code> / <code>singleLine=false</code>. Desktop resize handle has no native equivalent."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Confirmed a standalone component. Native platforms model it as a text field with <code>axis: .vertical</code> / <code>singleLine = false</code> rather than a separate primitive, which the property mapping now states. The desktop-only resize handle was removed — it had no touch equivalent."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "All 4 interaction states present. Missing slots: label, helper/error text, character count."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "All four interaction states ship, each with its own border treatment — 1px <code>#D7E0EF</code> default, 2px <code>#005CE5</code> focused, 2px <code>#D61B2C</code> error, no border on disabled. Label, subtext and the character counter are all present as shared instances."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Resize glyph is a raster PNG referenced four times (once per state) instead of a single vector instance."
+        "status": "na",
+        "statusLabel": "Not Applicable",
+        "notes": "The component carries no icons. The raster resize glyph that previously appeared once per state was removed with the resize affordance in v2.2."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked by the consolidation decision and property renames."
+        "notes": "Blocked — no native library exists yet. Nothing in the schema blocks it: two cleanly named variant axes and two booleans, with no duplicate layer names and no legacy prefixes."
       }
     ],
     "codeConnect": [
       {
         "aspect": "Property naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>isFilled=yes/no</code> cannot map to native booleans"
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>State</code> and <code>hasValue</code> map directly onto native parameters; <code>hasLabel</code> and <code>hasSubtext</code> map to optional <code>label</code> / <code>subtext</code> arguments."
       },
       {
         "aspect": "Component identity",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Native platforms have no standalone TextArea primitive; consolidation into Input Field is required first"
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Confirmed standalone rather than a composed variant of Input Field. Native has no dedicated TextArea primitive, so <code>EBTextArea</code> wraps a text field with vertical axis — a wrapper, not a consolidation."
       },
       {
         "aspect": "Native component file",
         "status": "refine",
         "statusLabel": "Needs Refinement",
-        "notes": "Proposed target: <code>EBInputField</code> with multi-line flag"
+        "notes": "Proposed target: <code>EBTextArea</code>. Not yet written — blocked on the native library, same as C7."
       }
     ],
     "variants": {
       "total": 8,
-      "description": "4 <code>state</code> values × 2 <code>isFilled</code> values.",
+      "description": "<code>State</code> (4) × <code>hasValue</code> (2) — all eight combinations exist. The filled variants are 16px taller because the value wraps to two lines. <code>hasLabel</code> and <code>hasSubtext</code> are component properties rather than variant axes, so they do not multiply the count.",
       "columns": [
-        "state",
-        "isFilled",
-        "Height",
+        "State",
+        "hasValue",
+        "Dimensions",
         "Node ID"
       ],
       "rows": [
         {
           "cells": [
-            "default",
-            "yes",
-            "62px",
-            "3070:21242"
+            "Default",
+            "False",
+            "358 × 78",
+            "4781:35853"
           ]
         },
         {
           "cells": [
-            "default",
-            "no",
-            "46px",
-            "3070:21239"
+            "Default",
+            "True",
+            "358 × 94",
+            "4781:35851"
           ]
         },
         {
           "cells": [
-            "active",
-            "yes",
-            "62px",
-            "3070:21243"
+            "Focused",
+            "False",
+            "358 × 78",
+            "4781:35850"
           ]
         },
         {
           "cells": [
-            "active",
-            "no",
-            "46px",
-            "3070:21238"
+            "Focused",
+            "True",
+            "358 × 94",
+            "4781:35852"
           ]
         },
         {
           "cells": [
-            "error",
-            "yes",
-            "62px",
-            "3070:21244"
+            "Error",
+            "False",
+            "358 × 78",
+            "4781:35849"
           ]
         },
         {
           "cells": [
-            "error",
-            "no",
-            "46px",
-            "3070:21240"
+            "Error",
+            "True",
+            "358 × 94",
+            "4781:35855"
           ]
         },
         {
           "cells": [
-            "disabled",
-            "yes",
-            "62px",
-            "3070:21241"
+            "Disabled",
+            "False",
+            "358 × 78",
+            "4781:35848"
           ]
         },
         {
           "cells": [
-            "disabled",
-            "no",
-            "46px",
-            "3070:21237"
+            "Disabled",
+            "True",
+            "358 × 94",
+            "4781:35854"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.6",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Style + Code tabs rebuilt against node 4781:35856",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt as a single card</strong> — one spec card driven by a panel mirroring the Figma property panel: <code>State</code> and <code>hasValue</code> as selects (both are variant properties), <code>hasLabel</code> and <code>hasSubtext</code> as toggles. Replaces four fixed cards. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Filled state renders two lines</strong> — the preview had drawn one. <code>Value</code> is 338 × 32 at line-height 16, so switching <code>hasValue</code> now grows the field <em>and</em> wraps the content, as it does in Figma. Caught by checking against an export rather than the layer tree. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Focused and Error carry a 2px rule</strong> against Default’s 1px — read off the export, since <code>strokeWeight</code> is not exposed by the plugin. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Property mapping corrected</strong> — <code>isFilled</code>, <code>isExpandable</code> and <code>state = active</code> are gone; <code>isExpandable</code> never existed on the component. Now maps <code>State</code>, <code>hasValue</code>, <code>hasLabel</code> and <code>hasSubtext</code> plus the value binding and the multi-line behaviour. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        },
+        {
+          "body": "<strong>Variants inventory corrected</strong> — the <code>isFilled</code> axis renamed to <code>hasValue</code>, and heights corrected from a single 62px to 78px empty / 94px filled. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.5",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Layer naming and two family rules",
+      "rows": [
+        {
+          "body": "<strong>Local layer names cleaned up</strong> — <code>text-container</code> → <code>ValueContainer</code>, <code>#text-label</code> → <code>Value</code>, so the entered text exposes as a single <code>Value</code> property. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong><code>hasValue</code> settled as a family rule</strong> — an explicit boolean where the filled state changes geometry (78 → 94 here), derived in code where it changes only colour, as on Search Field. Added to the §2 approved boolean catalog. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Error-state subtext colouring settled</strong> — the validation message carries the error colour; Text Area’s subtext is the shared <code>Subtext Message</code> instance, so that belongs to the shared component rather than here. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.4",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Sample content corrected",
+      "rows": [
+        {
+          "body": "<strong>Sample content matches <code>hasValue</code></strong> in all eight variants. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Character counter corrected</strong> — reads <code>0/100</code> empty and <code>71/100</code> filled, matching the 71-character sample exactly. Previously the count and the content disagreed, making the counter look decorative rather than bound. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.3",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Boolean renamed and duplicate removed",
+      "rows": [
+        {
+          "body": "<strong>Boolean renamed <code>isFilled</code> → <code>hasValue</code></strong> — <code>has</code> is the §2 prefix for a content-presence flag. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Nested duplicate <code>text-container</code> removed.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.2",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Desktop affordance and tokens",
+      "rows": [
+        {
+          "body": "<strong>Desktop resize handle removed</strong> — a pointer-only affordance with no touch equivalent. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>Token namespace resolved</strong> — generic tokens applied in place of the component-scoped namespace. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Scope and exception confirmed",
+      "rows": [
+        {
+          "body": "<strong>Confirmed a standalone component</strong> rather than a composed variant of Input Field. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong><code>State=Error</code> exception confirmed</strong> — covered by the §6 form-field exception in the Property Naming Guidelines. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt on node 4781:35856 — 2026 Working File",
+      "rows": [
+        {
+          "body": "<strong>Boolean values migrated to True/False</strong> from the old yes/no pair. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong><code>State=Active</code> renamed <code>Focused</code></strong> — matching the sibling fields. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Label and supporting-text slots added</strong> — both now shared <code>FormGroup Header</code> and <code>Subtext Message</code> instances rather than redrawn locally. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>Character-count affordance added.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

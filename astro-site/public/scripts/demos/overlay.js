@@ -65,14 +65,14 @@ function _overlayUpdate() {
   preview.innerHTML = _overlayStageMarkup({
     bg: bg ? bg.value : 'light',
     surface: surface ? surface.value : 'sheet',
-    strength: strength ? strength.value : 'strong',
+    strength: strength ? strength.value : 'default',
     dim: true
   });
 }
 
 /* ── Overlay Spec Cards (canonical) ──────────────────────────────── */
 var _overlaySpecCards = {
-  strong: { surface: 'sheet', bg: 'light', strength: 'strong' }
+  main: { strength: 'default' }
 };
 var _specCards = _overlaySpecCards;
 window._specCards = _specCards;
@@ -86,7 +86,7 @@ function buildComposeSnippet(type, card) {
   return getSnippet(type, 'compose', card);
 }
 function getSnippet(type, lang, card) {
-  var s = (card && card.strength) || 'strong';
+  var s = (card && card.strength) || 'default';
   var swiftCase = s;                                    // .weak / .default / .strong
   var composeCase = s.charAt(0).toUpperCase() + s.slice(1); // Weak / Default / Strong
   if (lang === 'swift') {
@@ -101,13 +101,18 @@ function updateSpecCard(cardStyle, prop, value) {
   if (!card) return;
   card[prop] = value;
 
+  /* Only Strength is a Figma property — Surface and Background are preview
+     aids, so they have no row in the Properties section to mirror. */
+  var spStrength = document.querySelector('[data-sp="' + cardStyle + '-strength"]');
+  if (spStrength) spStrength.textContent = card.strength.charAt(0).toUpperCase() + card.strength.slice(1);
+
   /* Update the stage preview inside the spec card */
   var specPreview = document.getElementById('overlay-spec-preview');
   if (specPreview) {
     specPreview.innerHTML = _overlayStageMarkup({
-      bg: card.bg || 'light',
-      surface: card.surface || 'sheet',
-      strength: card.strength || 'strong',
+      bg: 'light',
+      surface: 'sheet',
+      strength: card.strength || 'default',
       dim: true
     });
   }

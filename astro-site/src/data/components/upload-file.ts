@@ -7,41 +7,64 @@ const uploadFileDemoControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'state',
-        prop: 'state',
+        label: 'Status',
+        prop: 'status',
+        defaultValue: 'default',
         options: [
           { value: 'default', label: 'Default' },
           { value: 'uploading', label: 'Uploading' },
+          { value: 'error', label: 'Error' },
           { value: 'uploaded', label: 'Uploaded' },
-          { value: 'thumbnail', label: 'Uploaded with thumbnail' },
-          { value: 'error', label: 'Upload error' },
+        ],
+      },
+      {
+        label: 'State',
+        prop: 'state',
+        defaultValue: 'default',
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'disabled', label: 'Disabled' },
+          { value: 'focused', label: 'Focused' },
         ],
       },
       {
         label: 'hasLabel',
         prop: 'hasLabel',
-        defaultValue: 'no',
+        control: 'toggle',
+        defaultValue: 'true',
         options: [
-          { value: 'no', label: 'no' },
-          { value: 'yes', label: 'yes' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
       {
         label: 'hasThumbnail',
         prop: 'hasThumbnail',
-        defaultValue: 'false',
+        control: 'toggle',
+        defaultValue: 'true',
         options: [
-          { value: 'false', label: 'false' },
-          { value: 'true', label: 'true' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
       {
-        label: 'disabled',
-        prop: 'disabled',
-        defaultValue: 'false',
+        label: 'hasLeadingIcon',
+        prop: 'hasLeadingIcon',
+        control: 'toggle',
+        defaultValue: 'true',
         options: [
-          { value: 'false', label: 'false' },
-          { value: 'true', label: 'true' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasSubtext',
+        prop: 'hasSubtext',
+        control: 'toggle',
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
     ],
@@ -360,783 +383,117 @@ export const uploadFile: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "default-—-empty-state",
-        "demoKey": "default",
+        "cardKey": "uf-spec-main",
+        "demoKey": "main",
         "demoControls": uploadFileDemoControls,
-        "title": "Default — empty state",
-        "node": "18482:35065",
-        "description": "Empty state with paperclip + \"Attach file / photo\" placeholder text. 2px border, white bg. Subtext below lists accepted formats.",
-        "previewHtml": "<div id=\"uf-preview-default\"></div>",
+        "title": "Upload File",
+        "node": "4853:26511",
+        "description": "",
+        "previewHtml": "<div id=\"upload-file-spec-main\"><svg width=\"304\" height=\"148\" viewBox=\"0 0 304 148\" fill=\"none\" role=\"img\" aria-label=\"Upload File, default, default\"><text x=\"2\" y=\"11\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-size=\"14\" font-weight=\"600\" letter-spacing=\"0.25\" fill=\"#0A2757\">Label</text><rect x=\"0.5\" y=\"22.5\" width=\"303\" height=\"99\" rx=\"6\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\" stroke-width=\"1\"></rect><rect x=\"20\" y=\"50\" width=\"44\" height=\"44\" rx=\"4\" fill=\"#EEF2F9\"></rect><g transform=\"translate(72,60)\" fill=\"none\" stroke=\"#445C85\" stroke-width=\"1.8\" stroke-linecap=\"round\"><path d=\"M14.5 6.5 L7.5 13.5 a3.2 3.2 0 0 0 4.5 4.5 L19 11 a5.2 5.2 0 0 0-7.3-7.3 L5 10.4\"/></g><text x=\"100\" y=\"78\" font-family=\"'Proxima Soft', system-ui, sans-serif\" font-size=\"18\" font-weight=\"600\" letter-spacing=\"0.25\" fill=\"#90A8D0\">Attach file / photo</text><text x=\"2\" y=\"143\" font-family=\"BarkAda, system-ui, sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#6780A9\">Accepted format: JPEG, PNG, or PDF, Up to 3 MB</text></svg></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              {
-                "key": "state",
-                "value": "Default",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "Variant",
-                "value": "Default — empty state",
-                "mono": false
-              },
-              {
-                "key": "hasLabel",
-                "value": "no",
-                "prop": "hasLabel",
-                "mono": false
-              },
-              {
-                "key": "hasThumbnail",
-                "value": "false",
-                "prop": "hasThumbnail",
-                "mono": true
-              },
-              {
-                "key": "disabled",
-                "value": "false",
-                "prop": "disabled",
-                "mono": true
-              }
+              { "key": "Status", "value": "Default", "prop": "status" },
+              { "key": "State", "value": "Default", "prop": "state" },
+              { "key": "hasLabel", "value": "True", "prop": "hasLabel" },
+              { "key": "hasThumbnail", "value": "True", "prop": "hasThumbnail" },
+              { "key": "hasLeadingIcon", "value": "True", "prop": "hasLeadingIcon" },
+              { "key": "hasSubtext", "value": "True", "prop": "hasSubtext" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/default/bg" },
-              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border" },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Upload icon",
-                "value": "20 × 20",
-                "mono": true
-              }
+              { "key": "Field background", "value": "#FFFFFF", "token": "surface/default",
+                "variants": { "state:disabled": { "value": "#EEF2F9", "token": "surface/disabled" } } },
+              { "key": "Border", "value": "#E5EBF4", "token": "border/subtle",
+                "variants": {
+                  "state:focused": { "value": "#005CE5", "token": "border/focused" },
+                  "state:disabled": { "value": "–", "token": "–" },
+                  "status:error": { "value": "#D61B2C", "token": "border/error" }
+                } },
+              { "key": "File name", "value": "#90A8D0", "token": "text/placeholder",
+                "variants": {
+                  "status:uploading": { "value": "#005CE5", "token": "text/interactive" },
+                  "status:error": { "value": "#005CE5", "token": "text/interactive" },
+                  "status:uploaded": { "value": "#005CE5", "token": "text/interactive" }
+                } },
+              { "key": "Thumbnail placeholder", "value": "#EEF2F9", "token": "surface/subtle",
+                "variants": { "state:disabled": { "value": "#F6F9FD", "token": "surface/subtle-disabled" } } },
+              { "key": "Attach icon", "value": "—", "token": "—" },
+              { "key": "Trash icon", "value": "–", "token": "–",
+                "variants": { "status:uploaded": { "value": "#005CE5", "token": "icon/interactive" } } },
+              { "key": "Label", "value": "#0A2757", "token": "text/primary" },
+              { "key": "Subtext", "value": "#6780A9", "token": "text/secondary",
+                "variants": { "status:error": { "value": "#D61B2C", "token": "text/error" } } }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBUploadField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Attach file\"</span><span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$file<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBUploadField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Attach file\"</span><span class=\"syn-punc\">,</span>\n    file <span class=\"syn-eq\">=</span> file<span class=\"syn-punc\">,</span>\n    onFileChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "uploading-—-lottie-progress",
-        "demoKey": "uploading",
-        "demoControls": uploadFileDemoControls,
-        "title": "Uploading — Lottie progress",
-        "node": "18482:35084",
-        "description": "Shows file name + 5px-tall Lottie progress bar + percentage. Height grows to 91px to accommodate the progress row.",
-        "previewHtml": "<div id=\"uf-preview-uploading\"></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Uploading",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "Variant",
-                "value": "Uploading — Lottie progress",
-                "mono": false
-              },
-              {
-                "key": "hasLabel",
-                "value": "no",
-                "prop": "hasLabel",
-                "mono": false
-              },
-              {
-                "key": "hasThumbnail",
-                "value": "false",
-                "prop": "hasThumbnail",
-                "mono": true
-              },
-              {
-                "key": "disabled",
-                "value": "false",
-                "prop": "disabled",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/default/bg" },
-              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border" },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" }
+              { "key": "Label", "value": "—", "mono": true },
+              { "key": "File name", "value": "—", "mono": true },
+              { "key": "Subtext", "value": "—", "mono": true }
             ]
           },
           {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Upload icon",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14",
-                "mono": true
-              }
+              { "key": "Height", "value": "100px", "mono": true,
+                "variants": { "status:uploading": { "value": "119px" } } },
+              { "key": "Width", "value": "304px", "mono": true },
+              { "key": "Radius", "value": "6px", "mono": true },
+              { "key": "Padding H", "value": "16px", "mono": true },
+              { "key": "Padding V", "value": "24px", "mono": true },
+              { "key": "Gap", "value": "4px", "mono": true },
+              { "key": "Alignment", "value": "—", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBUploadField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Attach file\"</span><span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$file<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBUploadField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Attach file\"</span><span class=\"syn-punc\">,</span>\n    file <span class=\"syn-eq\">=</span> file<span class=\"syn-punc\">,</span>\n    onFileChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "uploaded-—-file-name-+-trash",
-        "demoKey": "uploaded",
-        "demoControls": uploadFileDemoControls,
-        "title": "Uploaded — file name + trash",
-        "node": "18482:35119",
-        "description": "File name (<code>GCash_File.png</code>) + trailing trash icon for removal.",
-        "previewHtml": "<div id=\"uf-preview-uploaded\"></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Uploaded",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "Variant",
-                "value": "Uploaded — file name + trash",
-                "mono": false
-              },
-              {
-                "key": "hasLabel",
-                "value": "no",
-                "prop": "hasLabel",
-                "mono": false
-              },
-              {
-                "key": "hasThumbnail",
-                "value": "false",
-                "prop": "hasThumbnail",
-                "mono": true
-              },
-              {
-                "key": "disabled",
-                "value": "false",
-                "prop": "disabled",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/default/bg" },
-              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border" },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Upload icon",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBUploadField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Attach file\"</span><span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$file<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBUploadField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Attach file\"</span><span class=\"syn-punc\">,</span>\n    file <span class=\"syn-eq\">=</span> file<span class=\"syn-punc\">,</span>\n    onFileChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "uploaded-with-thumbnail-—-preview-+-name",
-        "demoKey": "thumbnail",
-        "demoControls": uploadFileDemoControls,
-        "title": "Uploaded with thumbnail — preview + name",
-        "node": "18482:35163",
-        "description": "52×52 thumbnail preview + truncated file name (<code>New_GCash_Fi….jpeg</code>) + trash. Recommended to split into <code>state=uploaded</code> + <code>hasThumbnail: true</code>.",
-        "previewHtml": "<div id=\"uf-preview-thumbnail\"></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Uploaded with thumbnail",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "Variant",
-                "value": "Uploaded with thumbnail — preview + name",
-                "mono": false
-              },
-              {
-                "key": "hasLabel",
-                "value": "no",
-                "prop": "hasLabel",
-                "mono": false
-              },
-              {
-                "key": "hasThumbnail",
-                "value": "true",
-                "prop": "hasThumbnail",
-                "mono": true
-              },
-              {
-                "key": "disabled",
-                "value": "false",
-                "prop": "disabled",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/default/bg" },
-              { "key": "Border", "value": "#D7E0EF", "token": "input-field/default/border" },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/default/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/default/placeholder" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Upload icon",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBUploadField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Attach file\"</span><span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$file<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBUploadField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Attach file\"</span><span class=\"syn-punc\">,</span>\n    file <span class=\"syn-eq\">=</span> file<span class=\"syn-punc\">,</span>\n    onFileChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Default</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "upload-error-—-red-border-+-error-subtext",
-        "demoKey": "error",
-        "demoControls": uploadFileDemoControls,
-        "title": "Upload error — red border + error subtext",
-        "node": "18482:35142",
-        "description": "Red 2px border + red error subtext (\"Maximum file size: 20MB\").",
-        "previewHtml": "<div id=\"uf-preview-error\"></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "state",
-                "value": "Error",
-                "mono": false,
-                "prop": "state"
-              },
-              {
-                "key": "Variant",
-                "value": "Upload error — red border + error subtext",
-                "mono": false
-              },
-              {
-                "key": "hasLabel",
-                "value": "no",
-                "prop": "hasLabel",
-                "mono": false
-              },
-              {
-                "key": "hasThumbnail",
-                "value": "false",
-                "prop": "hasThumbnail",
-                "mono": true
-              },
-              {
-                "key": "disabled",
-                "value": "false",
-                "prop": "disabled",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Bg", "value": "#FFFFFF", "token": "input-field/error/bg" },
-              { "key": "Border", "value": "#D61B2C", "token": "input-field/error/border" },
-              { "key": "Text", "value": "#0A2757", "token": "input-field/error/text" },
-              { "key": "Placeholder", "value": "#90A8D0", "token": "input-field/error/placeholder" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Field height",
-                "value": "48px",
-                "mono": true
-              },
-              {
-                "key": "Padding H",
-                "value": "12px",
-                "mono": true
-              },
-              {
-                "key": "Border radius",
-                "value": "radius/radius-2 (6px)",
-                "mono": true
-              },
-              {
-                "key": "Upload icon",
-                "value": "20 × 20",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Label style",
-                "value": "Primary/Label/Light/Small",
-                "mono": true
-              },
-              {
-                "key": "Label font",
-                "value": "Proxima Soft Semibold · 14 / 14",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBUploadField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Attach file\"</span><span class=\"syn-punc\">, </span>selection<span class=\"syn-punc\">: </span>$file<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebState</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.error</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBUploadField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Attach file\"</span><span class=\"syn-punc\">,</span>\n    file <span class=\"syn-eq\">=</span> file<span class=\"syn-punc\">,</span>\n    onFileChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ }</span><span class=\"syn-punc\">,</span>\n    state <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFieldState</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">.Error</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBUploadField</span><span class=\"syn-punc\">(</span>label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>file<span class=\"syn-punc\">: </span>$file<span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebStatus</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.default</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBUploadField</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    file <span class=\"syn-eq\">=</span> file<span class=\"syn-punc\">,</span>\n    status <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBUploadStatus</span><span class=\"syn-punc\">.</span>Default\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "colorsTables": [
       {
-        "title": "Colors by State",
-        "columns": [
-          "Token",
-          "Value"
-        ],
+        "title": "Colors by Status",
+        "description": "Read off node <code>4853:26511</code> and checked against an export. ROLE is the Status value; the second column is the ELEMENT. Focused replaces the border with <code>#005CE5</code> at 2px and Disabled drops it entirely for an <code>#EEF2F9</code> fill — both are State, not Status. Token paths are indicative; variable bindings are not readable through the plugin.",
+        "columns": ["Token", "Value"],
         "rows": [
-          {
-            "role": "Default",
-            "token": "bg",
-            "values": [
-              "main/upload-file/color/default/bg",
-              "#FFFFFF"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "border",
-            "values": [
-              "main/upload-file/color/default/boder typo",
-              "#E5EBF4"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "leading icon",
-            "values": [
-              "main/upload-file/color/default/icon-leading",
-              "#6780A9"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "trailing icon",
-            "values": [
-              "main/upload-file/color/default/icon-trailing",
-              "#005CE5"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "label",
-            "values": [
-              "main/upload-file/color/default/label",
-              "#0A2757"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "file name",
-            "values": [
-              "main/upload-file/color/default/label-name",
-              "#005CE5"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "progress label",
-            "values": [
-              "main/upload-file/color/default/progress-label",
-              "#0A2757"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "thumbnail bg",
-            "values": [
-              "— (hardcoded #0057E4 @ 5%) not tokenized",
-              "—"
-            ]
-          },
-          {
-            "role": "Error",
-            "token": "bg",
-            "values": [
-              "main/upload-file/color/error/bg",
-              "#FFFFFF"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "border",
-            "values": [
-              "main/upload-file/color/error/boder typo",
-              "#D61B2C"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "leading icon",
-            "values": [
-              "main/upload-file/color/error/icon-leading",
-              "#6780A9"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "label",
-            "values": [
-              "main/upload-file/color/error/label",
-              "#0A2757"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "file name",
-            "values": [
-              "main/upload-file/color/error/label-name",
-              "#005CE5"
-            ]
-          },
-          {
-            "role": "—",
-            "token": "error subtext",
-            "values": [
-              "main/subtext-message/error/label",
-              "#D61B2C"
-            ]
-          },
-          {
-            "role": "Subtext",
-            "token": "default label",
-            "values": [
-              "main/subtext-message/primary/label",
-              "#6780A9"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "columns": [
-          "Value"
-        ],
-        "rows": [
-          {
-            "role": "Container width",
-            "token": "—",
-            "values": [
-              "304px"
-            ]
-          },
-          {
-            "role": "Input height (default/uploaded/error)",
-            "token": "—",
-            "values": [
-              "72px"
-            ]
-          },
-          {
-            "role": "Input height (uploading)",
-            "token": "—",
-            "values": [
-              "91px (adds progress row)"
-            ]
-          },
-          {
-            "role": "Border width",
-            "token": "—",
-            "values": [
-              "2px"
-            ]
-          },
-          {
-            "role": "Corner radius",
-            "token": "radius/radius-2",
-            "values": [
-              "6px"
-            ]
-          },
-          {
-            "role": "Horizontal padding",
-            "token": "—",
-            "values": [
-              "16px (12L / 16R for thumbnail)"
-            ]
-          },
-          {
-            "role": "Vertical padding",
-            "token": "—",
-            "values": [
-              "24px"
-            ]
-          },
-          {
-            "role": "Icon → name gap",
-            "token": "space/space-4",
-            "values": [
-              "4px"
-            ]
-          },
-          {
-            "role": "Thumbnail size",
-            "token": "—",
-            "values": [
-              "52 × 52"
-            ]
-          },
-          {
-            "role": "Thumbnail → name gap",
-            "token": "space/space-8",
-            "values": [
-              "8px"
-            ]
-          },
-          {
-            "role": "Label → input gap",
-            "token": "space/space-8",
-            "values": [
-              "8px"
-            ]
-          },
-          {
-            "role": "Input → subtext gap",
-            "token": "space/space-8",
-            "values": [
-              "8px"
-            ]
-          },
-          {
-            "role": "Progress bar height",
-            "token": "—",
-            "values": [
-              "5px"
-            ]
-          },
-          {
-            "role": "Progress bar width",
-            "token": "—",
-            "values": [
-              "250px"
-            ]
-          },
-          {
-            "role": "Leading / trailing icon size",
-            "token": "—",
-            "values": [
-              "24 × 24"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Typography",
-        "columns": [
-          "Spec"
-        ],
-        "rows": [
-          {
-            "role": "Label",
-            "token": "Primary/Label/Light/Small",
-            "values": [
-              "Proxima Soft Semibold · 14 / 14 · +0.25"
-            ]
-          },
-          {
-            "role": "File name / placeholder",
-            "token": "Primary/Label/Light/Large",
-            "values": [
-              "Proxima Soft Semibold · 18 / 18 · +0.25"
-            ]
-          },
-          {
-            "role": "Subtext",
-            "token": "Secondary/Bold/Caption",
-            "values": [
-              "BarkAda Semibold · 12 / 18"
-            ]
-          },
-          {
-            "role": "Progress percentage",
-            "token": "Secondary/Bold/Small Caption",
-            "values": [
-              "BarkAda Semibold · 10 / 15"
-            ]
-          }
+          { "role": "Default", "token": "Field background", "values": ["surface/default", "#FFFFFF"] },
+          { "role": "—", "token": "Border", "values": ["border/subtle", "#E5EBF4"] },
+          { "role": "—", "token": "File name", "values": ["text/placeholder", "#90A8D0"] },
+          { "role": "—", "token": "Thumbnail placeholder", "values": ["surface/subtle", "#EEF2F9"] },
+          { "role": "—", "token": "Attach icon", "values": ["—", "—"] },
+          { "role": "—", "token": "Label", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Subtext", "values": ["text/secondary", "#6780A9"] },
+          { "role": "Uploading", "token": "Field background", "values": ["surface/default", "#FFFFFF"] },
+          { "role": "—", "token": "Border", "values": ["border/subtle", "#E5EBF4"] },
+          { "role": "—", "token": "File name", "values": ["text/interactive", "#005CE5"] },
+          { "role": "—", "token": "Thumbnail placeholder", "values": ["surface/subtle", "#EEF2F9"] },
+          { "role": "—", "token": "Attach icon", "values": ["—", "—"] },
+          { "role": "—", "token": "Label", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Subtext", "values": ["text/secondary", "#6780A9"] },
+          { "role": "Error", "token": "Field background", "values": ["surface/default", "#FFFFFF"] },
+          { "role": "—", "token": "Border", "values": ["border/error", "#D61B2C"] },
+          { "role": "—", "token": "File name", "values": ["text/interactive", "#005CE5"] },
+          { "role": "—", "token": "Thumbnail placeholder", "values": ["surface/subtle", "#EEF2F9"] },
+          { "role": "—", "token": "Attach icon", "values": ["—", "—"] },
+          { "role": "—", "token": "Label", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Subtext", "values": ["text/error", "#D61B2C"] },
+          { "role": "Uploaded", "token": "Field background", "values": ["surface/default", "#FFFFFF"] },
+          { "role": "—", "token": "Border", "values": ["border/subtle", "#E5EBF4"] },
+          { "role": "—", "token": "File name", "values": ["text/interactive", "#005CE5"] },
+          { "role": "—", "token": "Thumbnail placeholder", "values": ["surface/subtle", "#EEF2F9"] },
+          { "role": "—", "token": "Attach icon", "values": ["—", "—"] },
+          { "role": "—", "token": "Trash icon", "values": ["icon/interactive", "#005CE5"] },
+          { "role": "—", "token": "Label", "values": ["text/primary", "#0A2757"] },
+          { "role": "—", "token": "Subtext", "values": ["text/secondary", "#6780A9"] }
         ]
       }
     ]
@@ -1158,56 +515,82 @@ export const uploadFile: ComponentData = {
     "propertyMapping": {
       "rows": [
         {
-          "figma": "state=Default/Uploading/Uploaded/Upload error",
-          "swift": "state: EBUploadState",
-          "compose": "state: .default / .uploading / .uploaded / .error"
+          "figma": "Status = Default | Uploading | Error | Uploaded",
+          "swift": "status: EBUploadStatus",
+          "compose": "status = EBUploadStatus.Default"
         },
         {
-          "figma": "state=Uploaded with thumbnail",
-          "swift": "state=uploaded + hasThumbnail",
-          "compose": ".hasThumbnail(true)"
+          "figma": "State = Default | Disabled | Focused",
+          "swift": ".disabled(true) · @FocusState",
+          "compose": "enabled = false · interactionSource"
         },
         {
-          "figma": "hasLabel=yes/no",
+          "figma": "hasLabel <em>(boolean)</em>",
           "swift": "label: String?",
           "compose": "label: String?"
         },
         {
-          "figma": "—",
+          "figma": "hasThumbnail <em>(boolean)</em>",
+          "swift": "showThumbnail: Bool",
+          "compose": "showThumbnail: Boolean"
+        },
+        {
+          "figma": "hasLeadingIcon <em>(boolean)</em>",
+          "swift": "showAttachIcon: Bool",
+          "compose": "showAttachIcon: Boolean"
+        },
+        {
+          "figma": "hasSubtext <em>(boolean)</em>",
+          "swift": "subtext: String?",
+          "compose": "subtext: String?"
+        },
+        {
+          "figma": "Thumbnail-Slot <em>(instance swap)</em>",
+          "swift": "@ViewBuilder thumbnail",
+          "compose": "thumbnail: @Composable () -&gt; Unit"
+        },
+        {
+          "figma": "— <em>no Figma property</em>",
           "swift": "fileName: String?",
           "compose": "fileName: String?"
         },
         {
-          "figma": "—",
-          "swift": "progress: Double",
-          "compose": "progress: Double (0.0–1.0)"
+          "figma": "— <em>no Figma property</em>",
+          "swift": "progress: Double (0.0–1.0)",
+          "compose": "progress: Float"
         },
         {
-          "figma": "thumbnail placeholder",
-          "swift": "Figma Slot → ViewBuilder",
-          "compose": "@ViewBuilder thumbnail"
-        },
-        {
-          "figma": "—",
-          "swift": "disabled: Bool",
-          "compose": ".disabled(true)"
-        },
-        {
-          "figma": "—",
+          "figma": "— <em>no Figma property</em>",
           "swift": "onSelect / onRemove",
           "compose": "onSelect / onRemove"
         }
-      ],
-      "filePaths": {
-        "swift": "ios/Components/UploadFile/EBUploadFile.swift",
-        "compose": "android/components/uploadfile/EBUploadFile.kt"
-      }
+      ]
     },
     "usageSnippets": [
       {
-        "subheading": "Usage",
-        "swift": "<span class=\"cmt\">// Default — empty state</span>\n<span class=\"typ\">EBUploadFile</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Proof of ID\"</span>, <span class=\"prp\">onSelect</span>: { url <span class=\"kw\">in</span>\n    <span class=\"cmt\">// handle picked file</span>\n})\n\n<span class=\"cmt\">// Uploading</span>\n<span class=\"typ\">EBUploadFile</span>(<span class=\"prp\">fileName</span>: <span class=\"str\">\"GCash_File.png\"</span>, <span class=\"prp\">progress</span>: <span class=\"kw\">0.2</span>)\n    .<span class=\"fn\">ebState</span>(.<span class=\"prp\">uploading</span>)\n\n<span class=\"cmt\">// Uploaded with thumbnail (Figma Slot)</span>\n<span class=\"typ\">EBUploadFile</span>(<span class=\"prp\">fileName</span>: <span class=\"str\">\"ID_proof.jpg\"</span>, <span class=\"prp\">onRemove</span>: { ... }) {\n    <span class=\"typ\">AsyncImage</span>(url: imageURL)\n        .<span class=\"fn\">aspectRatio</span>(contentMode: .fill)\n        .<span class=\"fn\">clipShape</span>(<span class=\"typ\">RoundedRectangle</span>(cornerRadius: <span class=\"kw\">4</span>))\n}\n.<span class=\"fn\">ebState</span>(.<span class=\"prp\">uploaded</span>)\n\n<span class=\"cmt\">// Error</span>\n<span class=\"typ\">EBUploadFile</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Upload receipt\"</span>,\n    <span class=\"prp\">errorMessage</span>: <span class=\"str\">\"Maximum file size: 20MB\"</span>)\n    .<span class=\"fn\">ebState</span>(.<span class=\"prp\">error</span>)",
-        "compose": "<span class=\"cmt\">// Default — empty state</span>\n<span class=\"typ\">EBUploadFile</span>(\n    label = <span class=\"str\">\"Proof of ID\"</span>,\n    onSelect = { uri -&gt; /* handle picked file */ }\n)\n\n<span class=\"cmt\">// Uploading</span>\n<span class=\"typ\">EBUploadFile</span>(\n    state = <span class=\"typ\">EBUploadState</span>.<span class=\"prp\">Uploading</span>,\n    fileName = <span class=\"str\">\"GCash_File.png\"</span>,\n    progress = <span class=\"kw\">0.2f</span>\n)\n\n<span class=\"cmt\">// Uploaded with thumbnail (Figma Slot)</span>\n<span class=\"typ\">EBUploadFile</span>(\n    state = <span class=\"typ\">EBUploadState</span>.<span class=\"prp\">Uploaded</span>,\n    fileName = <span class=\"str\">\"ID_proof.jpg\"</span>,\n    onRemove = { /* ... */ }\n) {\n    <span class=\"typ\">AsyncImage</span>(\n        model = imageUrl,\n        contentDescription = null,\n        modifier = <span class=\"typ\">Modifier</span>.<span class=\"fn\">clip</span>(<span class=\"typ\">RoundedCornerShape</span>(<span class=\"kw\">4</span>.dp))\n    )\n}\n\n<span class=\"cmt\">// Error</span>\n<span class=\"typ\">EBUploadFile</span>(\n    state = <span class=\"typ\">EBUploadState</span>.<span class=\"prp\">Error</span>,\n    label = <span class=\"str\">\"Upload receipt\"</span>,\n    errorMessage = <span class=\"str\">\"Maximum file size: 20MB\"</span>\n)"
+        "subheading": "Empty field",
+        "swift": "<span class=\"typ\">EBUploadField</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Label\"</span>, <span class=\"prp\">file</span>: $file)\n    .<span class=\"fn\">ebStatus</span>(<span class=\"dot\">.default</span>)\n    .<span class=\"fn\">ebSubtext</span>(<span class=\"str\">\"Accepted format: JPEG, PNG, or PDF, Up to 3 MB\"</span>)",
+        "compose": "<span class=\"typ\">EBUploadField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">file</span> = file,\n    <span class=\"prp\">status</span> = <span class=\"typ\">EBUploadStatus</span>.Default,\n    <span class=\"prp\">subtext</span> = <span class=\"str\">\"Accepted format: JPEG, PNG, or PDF, Up to 3 MB\"</span>\n)"
+      },
+      {
+        "subheading": "Uploading — indeterminate progress",
+        "swift": "<span class=\"typ\">EBUploadField</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Label\"</span>, <span class=\"prp\">file</span>: $file)\n    .<span class=\"fn\">ebStatus</span>(<span class=\"dot\">.uploading</span>)",
+        "compose": "<span class=\"typ\">EBUploadField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">file</span> = file,\n    <span class=\"prp\">status</span> = <span class=\"typ\">EBUploadStatus</span>.Uploading\n)"
+      },
+      {
+        "subheading": "Uploaded — with a thumbnail",
+        "swift": "<span class=\"typ\">EBUploadField</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Label\"</span>, <span class=\"prp\">file</span>: $file)\n    .<span class=\"fn\">ebStatus</span>(<span class=\"dot\">.uploaded</span>)\n    .<span class=\"fn\">ebThumbnail</span> { <span class=\"typ\">Image</span>(uiImage: preview) }\n    .<span class=\"fn\">onRemove</span> { file = <span class=\"kw\">nil</span> }",
+        "compose": "<span class=\"typ\">EBUploadField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">file</span> = file,\n    <span class=\"prp\">status</span> = <span class=\"typ\">EBUploadStatus</span>.Uploaded,\n    <span class=\"prp\">thumbnail</span> = { <span class=\"typ\">Image</span>(preview, <span class=\"kw\">null</span>) },\n    <span class=\"prp\">onRemove</span> = { file = <span class=\"kw\">null</span> }\n)"
+      },
+      {
+        "subheading": "Error",
+        "swift": "<span class=\"typ\">EBUploadField</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Label\"</span>, <span class=\"prp\">file</span>: $file)\n    .<span class=\"fn\">ebStatus</span>(<span class=\"dot\">.error</span>)\n    .<span class=\"fn\">ebSubtext</span>(<span class=\"str\">\"Maximum file size: 20MB\"</span>)",
+        "compose": "<span class=\"typ\">EBUploadField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">file</span> = file,\n    <span class=\"prp\">status</span> = <span class=\"typ\">EBUploadStatus</span>.Error,\n    <span class=\"prp\">subtext</span> = <span class=\"str\">\"Maximum file size: 20MB\"</span>\n)"
+      },
+      {
+        "subheading": "Disabled",
+        "swift": "<span class=\"typ\">EBUploadField</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Label\"</span>, <span class=\"prp\">file</span>: $file)\n    .<span class=\"fn\">disabled</span>(<span class=\"kw\">true</span>)",
+        "compose": "<span class=\"typ\">EBUploadField</span>(\n    <span class=\"prp\">label</span> = <span class=\"str\">\"Label\"</span>,\n    <span class=\"prp\">file</span> = file,\n    <span class=\"prp\">enabled</span> = <span class=\"kw\">false</span>\n)"
       }
     ],
     "accessibility": [
@@ -1262,100 +645,435 @@ export const uploadFile: ComponentData = {
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Semantic: <code>input-field</code>, <code>Attach</code>, <code>Trash</code>, <code>Icon Placeholder</code>, <code>upload-file-progress</code>, <code>Subtext Message</code>."
+        "notes": "<code>UploadField</code> → <code>FileRow</code> → <code>Thumbnail-Slot</code> · <code>FileName</code> · <code>TrailingAction</code>, with a real <code>Trash</code> instance. Two internal container frames — <code>Attach File - Input</code> and <code>input-field</code> — keep their original names as a recorded exception; nothing binds to them."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "<code>hasLabel</code> yes/no, <code>state</code> has \"Upload error\" with space, <code>\"Uploaded with thumbnail\"</code> is orthogonal."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Status = Default | Uploading | Error | Uploaded</code> × <code>State = Default | Disabled | Focused</code>, the two-axis split §6 prescribes, plus four <code>has</code> booleans in lowerCamelCase per §2. The old single axis with <code>\"Upload error\"</code> and <code>\"Uploaded with thumbnail\"</code> is gone."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "Library-wide <code>boder</code> token typo. Thumbnail bg hardcoded."
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "The <code>boder</code> typo is corrected and the thumbnail placeholder is confirmed token-bound at <code>#EEF2F9</code>. Both are attested rather than verified — token names and variable bindings are not readable through the review tooling."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Maps to PhotosPicker / DocumentPicker (iOS), GetContent / PickVisualMedia (Android)."
+        "notes": "Maps to PhotosPicker / DocumentPicker on iOS and GetContent / PickVisualMedia on Android. <code>Thumbnail-Slot</code> is a real Figma Slot, so the preview binds to a ViewBuilder rather than a fixed image."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "rework",
-        "statusLabel": "Requires Rework",
-        "notes": "No disabled, pressed, or focused states."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>State</code> ships Default, Disabled and Focused on <code>Status=Default</code> and <code>Uploaded</code>. <code>Uploading</code> and <code>Error</code> carry <code>State=Default</code> only — documented as unreachable rather than undrawn: a transfer in flight is not interactive, and a disabled field cannot have failed an upload it never started."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Thumbnail is a placeholder; Lottie dependency needs documentation."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "The <code>Attach</code> and <code>Trash</code> glyphs are shared icon instances. The thumbnail is a Slot with a token-bound placeholder. The Lottie dependency behind <code>Uploading</code> is documented, including its failure fallback."
       },
       {
         "id": "C7",
         "criterion": "Code Connect Linkability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Blocked by C2 cleanup."
+        "status": "empty",
+        "statusLabel": "Not Mapped",
+        "notes": "Blocked — no native library exists yet. Nothing in the schema blocks it: two cleanly named enums, four booleans and one named slot."
       }
     ],
-    "codeConnect": [],
+    "codeConnect": [
+      {
+        "aspect": "Property naming",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Status</code> and <code>State</code> map onto native enums; the four <code>has</code> booleans map onto optional arguments."
+      },
+      {
+        "aspect": "State coverage",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Eight variants covering every reachable combination. The four unbuilt pairings are documented as unreachable, so a generated binding will not expect them."
+      },
+      {
+        "aspect": "Slot binding",
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "<code>Thumbnail-Slot</code> is a real Figma Slot, which Code Connect can bind to a ViewBuilder / composable parameter."
+      },
+      {
+        "aspect": "Native component file",
+        "status": "refine",
+        "statusLabel": "Needs Refinement",
+        "notes": "Proposed target: <code>EBUploadField</code>. Not yet written — blocked on the native library, same as C7."
+      }
+    ],
     "variants": {
-      "total": 10,
-      "description": "5 <code>state</code> × 2 <code>hasLabel</code> = <strong>10 variants</strong>. Clean matrix — every combination exists.",
+      "total": 8,
+      "description": "<code>Status</code> (4) × <code>State</code> (3) describes twelve combinations; eight are built. <code>Uploading</code> and <code>Error</code> ship <code>State=Default</code> only — the four missing pairings are unreachable by design rather than unfinished. The four <code>has</code> booleans are component properties, not variant axes, so they do not multiply the count. <code>Uploading</code> is 19px taller for the progress row.",
       "columns": [
+        "Status",
         "State",
-        "hasLabel",
-        "Count"
+        "Dimensions",
+        "Node ID"
       ],
       "rows": [
         {
           "cells": [
-            "<strong>Default</strong>",
-            "yes + no",
-            "2"
+            "Default",
+            "Default",
+            "304 × 148",
+            "4850:26409"
           ]
         },
         {
           "cells": [
-            "<strong>Uploading</strong>",
-            "yes + no",
-            "2"
+            "Default",
+            "Disabled",
+            "304 × 148",
+            "6526:105079"
           ]
         },
         {
           "cells": [
-            "<strong>Uploaded</strong>",
-            "yes + no",
-            "2"
+            "Default",
+            "Focused",
+            "304 × 148",
+            "6572:111764"
           ]
         },
         {
           "cells": [
-            "<strong>Upload error</strong>",
-            "yes + no",
-            "2"
+            "Uploading",
+            "Default",
+            "304 × 167",
+            "4868:26884"
           ]
         },
         {
           "cells": [
-            "<strong>Uploaded with thumbnail</strong>",
-            "yes + no",
-            "2"
+            "Error",
+            "Default",
+            "304 × 148",
+            "4850:26460"
+          ]
+        },
+        {
+          "cells": [
+            "Uploaded",
+            "Default",
+            "304 × 148",
+            "4868:26932"
+          ]
+        },
+        {
+          "cells": [
+            "Uploaded",
+            "Disabled",
+            "304 × 148",
+            "6572:111324"
+          ]
+        },
+        {
+          "cells": [
+            "Uploaded",
+            "Focused",
+            "304 × 148",
+            "6572:111782"
           ]
         }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.6",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Style + Code tabs rebuilt against node 4853:26511",
+      "rows": [
+        {
+          "body": "<strong>Style tab rebuilt as a single card</strong> — one spec card driven by a panel mirroring the Figma property panel: <code>Status</code> and <code>State</code> as selects, and <code>hasLabel</code>, <code>hasThumbnail</code>, <code>hasLeadingIcon</code>, <code>hasSubtext</code> as toggles. The four booleans were invisible to <code>get_node_info</code>, which returns variant properties only. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>State control constrained to real variants</strong> — selecting <code>Uploading</code> or <code>Error</code> disables Focused and Disabled, marking them “not built”, so the panel cannot produce the four combinations Figma does not contain. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Booleans reflow rather than hide</strong> — turning off the thumbnail collapses 52px and shifts the file name left; the leading icon collapses 28px; the label and subtext blocks remove their rows and the card shrinks. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Disabled label corrected</strong> — the preview had muted it. Verified on <code>6526:105079</code>: the label stays <code>#0A2757</code> in Disabled while the field contents mute. The thumbnail placeholder is <code>#F6F9FD</code> there, not the value first drawn. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Style"
+          }
+        },
+        {
+          "body": "<strong>Property mapping corrected</strong> — the retired single <code>state</code> axis, <code>\"Uploaded with thumbnail\"</code> and <code>hasLabel=yes/no</code> are gone. Now maps <code>Status</code>, <code>State</code>, the four booleans and <code>Thumbnail-Slot</code>, plus the file name, progress and callbacks. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        },
+        {
+          "body": "<strong>Variants inventory corrected</strong> — from <code>total: 10</code> on a “5 state × 2 hasLabel” matrix to the real 8, with the four unreachable pairings explained. <code>codeConnect</code> was an empty array and is now filled. <span class=\"tag-fixed\">Documented</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "Code"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.5",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Naming completed and remaining items closed",
+      "rows": [
+        {
+          "body": "<strong>Layer naming complete across all eight variants.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Container frame names accepted as-is</strong> — <code>Attach File - Input</code> and <code>input-field</code> are internal structural frames that nothing binds to; renaming carried more churn than the consistency was worth. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Unsupported variant combinations documented</strong> — <code>Uploading</code> and <code>Error</code> have no Focused or Disabled because a transfer in flight is not interactive and a disabled field cannot have failed an upload it never started. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong><code>boder</code> token typo corrected</strong> — fixed before Code Connect could bind generated native constants to the misspelling. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Thumbnail placeholder confirmed token-bound</strong> at the shared surface value. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Lottie dependency documented</strong> — indeterminate by design, replaced rather than stopped on completion, and falling back to the platform progress indicator if it fails to load. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.4",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "State property split onto two axes",
+      "rows": [
+        {
+          "body": "<strong><code>State</code> restructured onto two axes</strong> — <code>Status = Default | Uploading | Error | Uploaded</code> beside <code>State = Default | Focused | Disabled</code>, the split §6 of the Property Naming Guidelines prescribes. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Thumbnail is a real Figma Slot</strong> — a genuine <code>SLOT</code> node, kebab-case per §4, so a consumer swaps their own preview in without detaching. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Label and subtext scaffolding reuses the shared components</strong> — <code>FormGroup Header</code> and <code>Subtext Message</code> instances rather than redrawn locally. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        },
+        {
+          "body": "<strong>File row layer naming cleaned up</strong> — <code>FileRow</code>, <code>FileNameWrapper</code>, <code>FileName</code>, <code>TrailingAction</code>, with a real <code>Trash</code> instance. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong><code>Focused</code> state added.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Token namespace resolved</strong> — generic tokens applied. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3"
+          }
+        },
+        {
+          "body": "<strong>Progress-bar GIF confirmed preview-only</strong> — a Figma preview device, not a shipped asset. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.3",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Progress-bar naming",
+      "rows": [
+        {
+          "body": "<strong>Progress-bar layer names cleaned up.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.2",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Structure normalised",
+      "rows": [
+        {
+          "body": "<strong><code>State</code> split onto its own axis.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Disabled + Uploaded variant authored.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Thumbnail converted to a Figma Slot.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong>Error progress bar removed</strong> — a failed upload has no progress to show. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong><code>label</code> wrapper renamed <code>FileRow</code>.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        },
+        {
+          "body": "<strong><code>Pressed</code> ruled out of scope</strong> — the field opens a system picker; the picker owns the press feedback. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.1",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Axis renamed and variants filled in",
+      "rows": [
+        {
+          "body": "<strong>Axis renamed <code>State</code> → <code>Status</code></strong> — the values describe what the system is reporting, not how the user is interacting. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Disabled variant added.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5"
+          }
+        },
+        {
+          "body": "<strong>Error variant structure normalised.</strong> <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0",
+      "date": "September 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "Rebuilt on node 4853:26511 — 2026 Working File",
+      "rows": [
+        {
+          "body": "<strong>Property naming cleaned up</strong> — <code>\"Upload error\"</code> with a space and the orthogonal <code>\"Uploaded with thumbnail\"</code> both retired from the value list. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2"
+          }
+        },
+        {
+          "body": "<strong>Label and subtext scaffolding reused</strong> from the shared Form Elements components. <span class=\"tag-fixed\">Resolved</span>",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

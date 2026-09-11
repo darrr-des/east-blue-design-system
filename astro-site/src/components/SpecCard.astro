@@ -97,6 +97,7 @@ const updateKey = demoKey || cardKey;
                       type="text"
                       class="demo-panel-select demo-panel-input"
                       value={row.defaultValue ?? ''}
+                      placeholder={row.label}
                       oninput={`updateSpecCard('${updateKey}', '${row.prop}', this.value)`}
                     />
                   ) : isToggle ? (
