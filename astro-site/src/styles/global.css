@@ -250,6 +250,77 @@ body {
   outline: none;
 }
 
+/* ── Page Banner preview ─────────────────────────────────────────────
+   Title is Proxima Soft at 0 tracking; the subtitle label and value are
+   BarkAda at 0. Both read off the layers of set 4368:12839. */
+.pb-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0; }
+.pb-barkada { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Detail Hero preview ─────────────────────────────────────────────
+   Title carries 0 tracking, the sender label and value 0.25, and the
+   description is BarkAda at 0 — all read off the layers of set
+   4368:12856. Size, weight, fill and opacity are SVG attributes set by
+   public/scripts/demos/header-transaction.js. */
+.dh-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0; }
+.dh-proxima { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.dh-barkada { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Section Header preview ──────────────────────────────────────────
+   Preamble, title and trailing label are Proxima Soft at 0.25 tracking;
+   the description is BarkAda at 0. Both read off the layers of set
+   4363:11467. Size, weight and fill are SVG attributes set by
+   public/scripts/demos/header.js. */
+.sh-proxima, .sh-proxima-title { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.sh-proxima-title { letter-spacing: 0; }
+.sh-barkada { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Footer preview ──────────────────────────────────────────────────
+   Disclaimer and preamble are SVG <text> in BarkAda, the component's own
+   face, read off the layers of set 4227:11068. The logo boxes are drawn as
+   dashed placeholders at their measured size because the real footer logos
+   are RECTANGLE nodes with IMAGE fills — raster, not vector, so there is
+   nothing to reproduce faithfully. */
+.ft-text { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+.ft-placeholder { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
+/* ── Progress Bar preview ────────────────────────────────────────────
+   The in-context preview stacks the eleven built steps. The bar itself is
+   pure SVG with no text, so it needs no font rules. */
+.pb-context { display: flex; flex-direction: column; gap: 10px; }
+
+/* ── Segmented Control preview ───────────────────────────────────────
+   Segment labels are SVG <text> in the component's own face — Proxima Soft
+   at 0.25 tracking, read off the label layers of set 26628:50765. Size,
+   weight and fill are set as SVG attributes by
+   public/scripts/demos/toggle-segmented-control.js. */
+.tsc-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+
+/* ── Toggle - With Label preview ─────────────────────────────────────
+   The row label is SVG <text> in the component's own face — Proxima Soft
+   at 0.25 tracking, read off the #label layers of set 26510:37680. Size,
+   weight and fill are set as SVG attributes by
+   public/scripts/demos/toggle-with-label.js. */
+.twl-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.twl-context { display: flex; flex-direction: column; gap: 8px; }
+
+/* ── Segmented Control Button preview ────────────────────────────────
+   The segment label is SVG <text> in the component's own face — Proxima
+   Soft at 0.25 tracking, read off the label layers of set 26628:50752.
+   Size, weight and fill are set as SVG attributes by
+   public/scripts/demos/segmented-control-button.js. */
+.scb-label { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.scb-demo-row { display: inline-flex; align-items: center; }
+
+/* ── Segmented Control - Group preview ───────────────────────────────
+   Header, segment and subtext are SVG <text>. Families and tracking are
+   the component's own — Proxima Soft at 0.25 tracking for the header,
+   segment labels and avatar initials, BarkAda at 0 for the subtext —
+   read off the layers of set 26628:50778. Size, weight and fill vary per
+   element and are set as SVG attributes by
+   public/scripts/demos/segmented-control-group.js. */
+.scg-proxima { font-family: 'Proxima Soft', system-ui, sans-serif; letter-spacing: 0.25px; }
+.scg-barkada { font-family: 'BarkAda', system-ui, sans-serif; letter-spacing: 0; }
+
 /* ── Subtext Message preview ─────────────────────────────────────────
    The message and trailing label are SVG <text>. Family, weight and
    tracking are the component's own — BarkAda SemiBold at 0 tracking,
@@ -4107,7 +4178,16 @@ input.demo-panel-input.demo-panel-select,
 .spec-prop {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* Top-aligned, not centred: when a long value wraps to two lines, a
+     centred key floats between them instead of sitting beside the first
+     line. Single-line rows are unaffected — both sides are the same
+     font-size, so their first lines land together either way. */
+  align-items: flex-start;
+  /* A long value used to run under the key: flex items default to
+     min-width:auto, so neither side could shrink and the value simply
+     overflowed the row. The gap keeps them apart and the min-width:0 on
+     each child lets the value wrap instead. */
+  gap: var(--space-4);
   padding: var(--space-2) var(--space-4);
   border-bottom: 1px solid var(--row-border);
 }
@@ -4116,6 +4196,9 @@ input.demo-panel-input.demo-panel-select,
   font-size: var(--text-md);
   font-weight: 500;
   color: #959cab;
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 .spec-prop-val {
   font-family: var(--font-body);
@@ -4123,6 +4206,9 @@ input.demo-panel-input.demo-panel-select,
   font-weight: 500;
   color: var(--text);
   text-align: right;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 .spec-prop-val.mono {
   font-family: var(--font-body);
@@ -4136,7 +4222,7 @@ input.demo-panel-input.demo-panel-select,
    inline beside it. */
 .spec-prop.has-token {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-3);
 }
 .spec-prop.has-token > .spec-prop-key {
@@ -4149,8 +4235,10 @@ input.demo-panel-input.demo-panel-select,
 .spec-prop.has-token > .spec-prop-val {
   display: inline-flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 8px;
-  flex: 0 0 auto;
+  flex: 1 1 auto;
+  min-width: 0;
   padding: 0;
   background: none;
   border-radius: 0;
@@ -4162,7 +4250,10 @@ input.demo-panel-input.demo-panel-select,
 }
 /* Larger swatch (16px square, 4px radius). Subtle 1px inset border so
    #FFFFFF / very pale colors don't disappear on the white surface. */
+/* Only a colour row carries a hex, and a hex is never worth breaking. */
+.spec-prop.has-token > .spec-prop-val > .spec-prop-hex { white-space: nowrap; }
 .spec-prop.has-token > .spec-prop-val .spec-swatch {
+  flex: 0 0 auto;
   width: 16px;
   height: 16px;
   border-radius: 4px;

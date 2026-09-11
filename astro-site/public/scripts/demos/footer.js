@@ -1,376 +1,210 @@
-/* Auto-extracted from assessment-src/components/footer.html.
- * Powers the live-preview dropdowns/toggles for the footer component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs footer
+/* Footer — Style tab demo.
+ * Rebuilt from Figma component set 4227:11068 (GCash DS 2026 Working File).
+ * Every size, offset and colour below is read off get_node_info on the
+ * matching variant. Nothing is derived from a layout rule, because there
+ * isn't one — see the note on FT_VARIANTS.
+ *
+ * Panel (set 4227:11068):
+ *   Alignment   · Center, Left
+ *   LogoType    · None, Single, Group
+ *   Label       · True, False
+ *   Description · None, Default, Link
+ *
+ * 2 x 3 x 2 x 3 = 36 theoretical. SEVEN ship. Every axis value appears
+ * somewhere, but most combinations do not exist, so the panel snaps to the
+ * nearest built variant rather than offering a layout Figma has never drawn.
  */
-/* ── Footer JS ──────────────────────────────────────────────────────
-   Lightweight stylised replica of 7 shipped variants.
-   Specs: 360px wide, #FFFFFF bg, BarkAda SemiBold 12/18 disclaimer,
-   Proxima Soft Bold 12/12 label, #6780A9 description, #005CE5 link,
-   #90A8D0 label.                                                     */
 
-/* Real Figma exports — saved as PNGs in public/assets/footer/.
-   Dimensions match the Figma source nodes 1:1. */
-var EB_FOOTER_GCASH_SVG =
-  '<img class="eb-preview-footer__logo eb-preview-footer__logo--gcash" src="/assets/footer/gcash.png" width="97" height="32" alt="GCash"/>';
+var FT_W = 360;
 
-var EB_FOOTER_FUSE_SVG =
-  '<img class="eb-preview-footer__logo eb-preview-footer__logo--fuse" src="/assets/footer/fuse.png" width="72" height="18" alt="Fuse"/>';
+/* ── Colours ─────────────────────────────────────────────────────────
+   The Disclaimer takes THREE different fills across the seven variants.
+   They are recorded per variant rather than per Description value,
+   because they do not follow that axis. */
+var FT_BG = '#FFFFFF';
+var FT_PREAMBLE = '#6780A9';
+var FT_LOGO_BG = '#EEF2F9';     /* placeholder — the real logos are raster */
+var FT_LOGO_EDGE = '#C2CFE5';
 
-var EB_FOOTER_CIMB_SVG =
-  '<img class="eb-preview-footer__logo eb-preview-footer__logo--cimb" src="/assets/footer/cimb.png" width="88" height="17" alt="CIMB Bank"/>';
+/* ── The seven built variants, measured one by one ───────────────────
+   `blocks` are absolute offsets inside the 360-wide frame: {t} text,
+   {l} raster-logo placeholder. x/y/w/h are exactly what Figma reports. */
+var FT_VARIANTS = [
+  { key: 'left|group|false|default', node: '4227:11075', h: 150,
+    blocks: [
+      { t: 1, x: 24, y: 24,  w: 312, h: 54, fill: '#6780A9', align: 'left', lines: 3,
+        text: 'I acknowledge receipt of this statement prior to the consummation of the credit transaction by availing of this loan.' },
+      { l: 1, x: 86, y: 94,  w: 188, h: 32 }
+    ] },
+  { key: 'left|single|false|none', node: '4227:11069', h: 182,
+    blocks: [
+      { l: 1, x: 24, y: 24,  w: 73,  h: 59 },
+      { t: 1, x: 113, y: 24, w: 223, h: 126, fill: '#10346F', align: 'left', lines: 7,
+        text: 'Fuse Lending, Inc. SEC Reg. No. CS201617622, Cert. of Authority to Operate Lending Company, (CA) No. 1897 — Learn about the Product Information & Support: GLoan on Help Center' }
+    ] },
+  { key: 'left|group|false|link', node: '4227:11085', h: 120,
+    blocks: [
+      { t: 1, x: 24, y: 12,  w: 312, h: 36, fill: '#7085A9', align: 'left', lines: 2,
+        text: 'Learn about the Product Information & Support: GCredit on Help Center' },
+      { l: 1, x: 24, y: 64,  w: 312, h: 32 }
+    ] },
+  { key: 'left|single|false|link', node: '4227:11089', h: 116,
+    blocks: [
+      { l: 1, x: 24, y: 24,  w: 312, h: 16 },
+      { t: 1, x: 24, y: 56,  w: 312, h: 36, fill: '#7085A9', align: 'left', lines: 2,
+        text: 'Learn about the Product Information & Support: GCredit on Help Center' }
+    ] },
+  { key: 'center|group|true|none', node: '4227:11093', h: 95,
+    blocks: [
+      { t: 1, x: 24, y: 16,  w: 312, h: 15, fill: FT_PREAMBLE, align: 'center', lines: 1, size: 10, leading: 15,
+        text: 'In partnership with' },
+      { l: 1, x: 77, y: 47,  w: 206, h: 32 }
+    ] },
+  { key: 'center|none|false|link', node: '4227:11079', h: 108,
+    blocks: [
+      { t: 1, x: 83, y: 24,  w: 194, h: 36, fill: '#10346F', align: 'center', lines: 2,
+        text: 'Get information and product support. Find GSave in the Help Center' }
+    ] },
+  { key: 'center|group|false|none', node: '4227:11082', h: 80,
+    blocks: [
+      { l: 1, x: 24, y: 24,  w: 312, h: 32 }
+    ] }
+];
 
-var EB_FOOTER_PDAX_SVG =
-  '<img class="eb-preview-footer__logo eb-preview-footer__logo--pdax" src="/assets/footer/pdax.png" width="97" height="29" alt="PDAX"/>';
+var FT_AXES = ['alignment', 'logotype', 'label', 'description'];
 
-var EB_FOOTER_BAYAD_SVG =
-  '<img class="eb-preview-footer__logo eb-preview-footer__logo--bayad" src="/assets/footer/bayad.png" width="58" height="16" alt="Bayad Partner"/>';
-
-function _footerVariant1() {
-  return '<div class="eb-preview eb-preview-footer" data-variant="1">'
-    + '<div class="eb-preview-footer__row">'
-    +   '<div class="eb-preview-footer__powered-col">'
-    +     '<span class="eb-preview-footer__label">Powered by</span>'
-    +     EB_FOOTER_FUSE_SVG
-    +   '</div>'
-    +   '<div class="eb-preview-footer__body">'
-    +     '<p class="eb-preview-footer__desc">Fuse Lending, Inc. SEC Reg. No. CS201617622,</p>'
-    +     '<p class="eb-preview-footer__desc">Cert. of Authority to Operate Lending Company, (CA) No. 1897</p>'
-    +     '<p class="eb-preview-footer__desc eb-preview-footer__desc--spaced">Learn about the Product Information & Support:</p>'
-    +     '<a class="eb-preview-footer__link" href="#" onclick="return false;">GLoan on Help Center</a>'
-    +   '</div>'
-    + '</div>'
-    + '</div>';
+function _ftKey(card) {
+  return FT_AXES.map(function (a) { return card[a]; }).join('|');
 }
 
-function _footerVariant2() {
-  return '<div class="eb-preview eb-preview-footer" data-variant="2">'
-    + '<p class="eb-preview-footer__desc">I acknowledge receipt of this statement prior to the consummation of the credit transaction by availing of this loan.</p>'
-    + '<div class="eb-preview-footer__logos eb-preview-footer__logos--left">'
-    +   EB_FOOTER_GCASH_SVG + EB_FOOTER_FUSE_SVG
-    + '</div>'
-    + '</div>';
-}
-
-function _footerVariant3() {
-  return '<div class="eb-preview eb-preview-footer eb-preview-footer--center" data-variant="3">'
-    + '<p class="eb-preview-footer__desc">Get information and product support.</p>'
-    + '<a class="eb-preview-footer__link" href="#" onclick="return false;">Find GSave in the Help Center</a>'
-    + '</div>';
-}
-
-function _footerVariant4() {
-  return '<div class="eb-preview eb-preview-footer eb-preview-footer--center" data-variant="4">'
-    + '<div class="eb-preview-footer__logos eb-preview-footer__logos--center">'
-    +   EB_FOOTER_GCASH_SVG + EB_FOOTER_FUSE_SVG
-    + '</div>'
-    + '</div>';
-}
-
-function _footerVariant5() {
-  return '<div class="eb-preview eb-preview-footer" data-variant="5">'
-    + '<p class="eb-preview-footer__desc">Learn about the Product Information & Support:</p>'
-    + '<a class="eb-preview-footer__link" href="#" onclick="return false;">GCredit on Help Center</a>'
-    + '<div class="eb-preview-footer__logos eb-preview-footer__logos--left">'
-    +   EB_FOOTER_GCASH_SVG + EB_FOOTER_CIMB_SVG
-    + '</div>'
-    + '</div>';
-}
-
-function _footerVariant6() {
-  return '<div class="eb-preview eb-preview-footer" data-variant="6">'
-    + '<div class="eb-preview-footer__powered-row">'
-    +   '<span class="eb-preview-footer__label">Powered by</span>'
-    +   EB_FOOTER_BAYAD_SVG
-    + '</div>'
-    + '<p class="eb-preview-footer__desc">Learn about the Product Information & Support:</p>'
-    + '<a class="eb-preview-footer__link" href="#" onclick="return false;">GCredit on Help Center</a>'
-    + '</div>';
-}
-
-function _footerVariant7() {
-  return '<div class="eb-preview eb-preview-footer eb-preview-footer--center" data-variant="7">'
-    + '<p class="eb-preview-footer__tiny">In partnership with</p>'
-    + '<div class="eb-preview-footer__logos eb-preview-footer__logos--center">'
-    +   EB_FOOTER_GCASH_SVG + EB_FOOTER_PDAX_SVG
-    + '</div>'
-    + '</div>';
-}
-
-var _footerRenderers = {
-  '1': _footerVariant1,
-  '2': _footerVariant2,
-  '3': _footerVariant3,
-  '4': _footerVariant4,
-  '5': _footerVariant5,
-  '6': _footerVariant6,
-  '7': _footerVariant7
-};
-
-/* Compose a footer markup from orthogonal props (used by spec cards
-   when the user toggles alignment / description / partnerLogos away
-   from the variant's defaults). */
-function _footerComposed(opts) {
-  var alignment    = opts.alignment    || 'left';
-  var description  = opts.description  || 'none';
-  var partnerLogos = opts.partnerLogos || 'none';
-
-  var alignClass = alignment === 'center' ? ' eb-preview-footer--center' : '';
-  var html = '<div class="eb-preview eb-preview-footer' + alignClass + '" data-variant="composed">';
-
-  if (partnerLogos === 'powered-by') {
-    html += '<div class="eb-preview-footer__powered-row">'
-         +    '<span class="eb-preview-footer__label">Powered by</span>'
-         +    EB_FOOTER_FUSE_SVG
-         +  '</div>';
-  }
-
-  if (description === 'default') {
-    html += '<p class="eb-preview-footer__desc">I acknowledge receipt of this statement prior to the consummation of the credit transaction by availing of this loan.</p>';
-  } else if (description === 'with-link') {
-    html += '<p class="eb-preview-footer__desc">Learn about the Product Information &amp; Support:</p>'
-         +  '<a class="eb-preview-footer__link" href="#" onclick="return false;">Help Center</a>';
-  }
-
-  if (partnerLogos === 'gcash-x' || partnerLogos === 'grouped') {
-    var logosAlign = alignment === 'center' ? 'center' : 'left';
-    if (partnerLogos === 'grouped') {
-      html += '<p class="eb-preview-footer__tiny">In partnership with</p>';
+/* Nearest built variant that honours the axis the user just changed. */
+function _ftResolve(card, changed) {
+  var exact = FT_VARIANTS.filter(function (v) { return v.key === _ftKey(card); })[0];
+  if (exact) return exact;
+  var parts = _ftKey(card).split('|');
+  var best = null, bestScore = -1;
+  FT_VARIANTS.forEach(function (v) {
+    var vp = v.key.split('|');
+    if (changed) {
+      var i = FT_AXES.indexOf(changed);
+      if (vp[i] !== parts[i]) return;          /* must keep what was just set */
     }
-    html += '<div class="eb-preview-footer__logos eb-preview-footer__logos--' + logosAlign + '">'
-         +    EB_FOOTER_GCASH_SVG
-         +    (partnerLogos === 'grouped' ? EB_FOOTER_PDAX_SVG : EB_FOOTER_FUSE_SVG)
-         +  '</div>';
-  }
-
-  html += '</div>';
-  return html;
+    var score = 0;
+    for (var j = 0; j < vp.length; j++) if (vp[j] === parts[j]) score++;
+    if (score > bestScore) { bestScore = score; best = v; }
+  });
+  return best || FT_VARIANTS[0];
 }
 
-/* Render a footer card. If only `variant` is set (or props match the
-   variant defaults), use the canonical variant renderer. Otherwise,
-   compose from orthogonal props. */
-function _footerRenderCard(card) {
-  var v = card.variant || '1';
-  var defaults = _footerVariantDefaults[v] || {};
-  var matchesDefaults =
-    (card.alignment    === undefined || card.alignment    === defaults.alignment) &&
-    (card.description  === undefined || card.description  === defaults.description) &&
-    (card.partnerLogos === undefined || card.partnerLogos === defaults.partnerLogos);
-  if (matchesDefaults && _footerRenderers[v]) {
-    return _footerRenderers[v]();
-  }
-  return _footerComposed(card);
+/* ── Renderer ───────────────────────────────────────────────────────── */
+function _ftWrap(text, lines) {
+  if (lines <= 1) return [text];
+  var words = text.split(' '), per = Math.ceil(words.length / lines), out = [];
+  for (var i = 0; i < words.length; i += per) out.push(words.slice(i, i + per).join(' '));
+  return out.slice(0, lines);
 }
 
-var _footerMeta = {
-  '1': {alignment: 'left',   description: 'none'},
-  '2': {alignment: 'left',   description: 'default (acknowledgement)'},
-  '3': {alignment: 'center', description: 'with link'},
-  '4': {alignment: 'center', description: 'none'},
-  '5': {alignment: 'left',   description: 'with link'},
-  '6': {alignment: 'left',   description: 'with link'},
-  '7': {alignment: 'center', description: 'none (label)'}
-};
+function _ftRender(variant, scale) {
+  scale = scale || 1;
+  var H = variant.h;
+  var out = '<svg width="' + (FT_W * scale) + '" height="' + (H * scale) +
+            '" viewBox="0 0 ' + FT_W + ' ' + H +
+            '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+  out += '<rect width="' + FT_W + '" height="' + H + '" fill="' + FT_BG + '"/>';
 
-function _footerContextMarkup() {
-  return '<div class="eb-preview-stack eb-preview-stack--gap-lg">' +
-    _footerVariant1() +
-    _footerVariant5() +
-    _footerVariant7() +
-  '</div>';
-}
-
-function _footerSetSelect(id, value) {
-  var el = document.getElementById(id);
-  if (!el) return;
-  for (var i = 0; i < el.options.length; i++) {
-    if (el.options[i].value === value) { el.selectedIndex = i; return; }
-  }
-}
-
-function _footerUpdate(changedProp) {
-  var vSel  = document.getElementById('footer-ctrl-variant');
-  var aSel  = document.getElementById('footer-ctrl-alignment');
-  var dSel  = document.getElementById('footer-ctrl-description');
-  var pSel  = document.getElementById('footer-ctrl-partner');
-  var v = vSel ? vSel.value : '1';
-
-  /* When variant changes, snap the other 3 selects to that variant's defaults. */
-  if (changedProp === 'variant') {
-    var d = _footerVariantDefaults[v];
-    if (d) {
-      _footerSetSelect('footer-ctrl-alignment',   d.alignment);
-      _footerSetSelect('footer-ctrl-description', d.description);
-      _footerSetSelect('footer-ctrl-partner',     d.partnerLogos);
+  variant.blocks.forEach(function (b) {
+    if (b.l) {
+      /* The footer logos are RECTANGLE nodes with IMAGE fills — raster, not
+         vector — so the box is drawn at its measured size as a placeholder
+         rather than redrawn by hand. */
+      out += '<rect x="' + b.x + '" y="' + b.y + '" width="' + b.w + '" height="' + b.h +
+             '" rx="2" fill="' + FT_LOGO_BG + '" stroke="' + FT_LOGO_EDGE +
+             '" stroke-dasharray="3 3"/>';
+      out += '<text class="ft-placeholder" x="' + (b.x + b.w / 2) + '" y="' + (b.y + b.h / 2) +
+             '" font-size="9" fill="' + FT_LOGO_EDGE +
+             '" text-anchor="middle" dominant-baseline="central">raster logo ' + b.w + ' × ' + b.h + '</text>';
+      return;
     }
-  }
+    var size = b.size || 12, leading = b.leading || 18;
+    var anchor = b.align === 'center' ? 'middle' : 'start';
+    var tx = b.align === 'center' ? (b.x + b.w / 2) : b.x;
+    _ftWrap(b.text, b.lines).forEach(function (line, i) {
+      out += '<text class="ft-text" x="' + tx + '" y="' + (b.y + leading * i + leading / 2) +
+             '" font-size="' + size + '" font-weight="600" fill="' + b.fill +
+             '" text-anchor="' + anchor + '" dominant-baseline="central">' + line + '</text>';
+    });
+  });
 
-  var card = {
-    variant:      v,
-    alignment:    aSel ? aSel.value : 'left',
-    description:  dSel ? dSel.value : 'none',
-    partnerLogos: pSel ? pSel.value : 'none'
-  };
-  /* Re-read after the variant-snap so the rendered card reflects the new selects. */
-  if (changedProp === 'variant') {
-    card.alignment    = (document.getElementById('footer-ctrl-alignment')   || {}).value || card.alignment;
-    card.description  = (document.getElementById('footer-ctrl-description') || {}).value || card.description;
-    card.partnerLogos = (document.getElementById('footer-ctrl-partner')     || {}).value || card.partnerLogos;
-  }
-
-  var preview = document.getElementById('footer-demo-preview');
-  if (preview) preview.innerHTML = _footerRenderCard(card);
+  return out + '</svg>';
 }
 
-/* ── Footer Spec Card (single dynamic) ──────────────────────────── */
-/* Variant defaults (used as snap targets when the user changes Variant). */
-var _footerVariantDefaults = {
-  '1': { alignment: 'left',   description: 'none',      partnerLogos: 'powered-by' },
-  '2': { alignment: 'left',   description: 'default',   partnerLogos: 'gcash-x' },
-  '3': { alignment: 'center', description: 'with-link', partnerLogos: 'none' },
-  '4': { alignment: 'center', description: 'none',      partnerLogos: 'gcash-x' },
-  '5': { alignment: 'left',   description: 'with-link', partnerLogos: 'gcash-x' },
-  '6': { alignment: 'left',   description: 'with-link', partnerLogos: 'powered-by' },
-  '7': { alignment: 'center', description: 'none',      partnerLogos: 'grouped' }
+/* ── Per-card state ─────────────────────────────────────────────────── */
+var _specCards = {
+  main: { alignment: 'center', logotype: 'group', label: 'false', description: 'none' }
 };
-
-var _footerSpecCards = {
-  'default': { variant: '1', alignment: 'left', description: 'none', partnerLogos: 'powered-by' }
-};
-
-var _specCards = _footerSpecCards;
 window._specCards = _specCards;
 
-function buildSwiftSnippet(type, card) {
-  return _getFooterSnippet(type, 'swift', card);
+/* ── DEV code ───────────────────────────────────────────────────────── */
+function _ftCap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+function buildSwiftSnippet(cardKey, card) {
+  return 'EBFooter(\n' +
+    '    alignment: .' + card.alignment + ',\n' +
+    '    logoType: .' + card.logotype + ',\n' +
+    '    showLabel: ' + card.label + ',\n' +
+    '    description: .' + card.description + '\n)';
 }
-function buildComposeSnippet(type, card) {
-  return _getFooterSnippet(type, 'compose', card);
+function buildComposeSnippet(cardKey, card) {
+  return 'EBFooter(\n' +
+    '    alignment = EBFooterAlignment.' + _ftCap(card.alignment) + ',\n' +
+    '    logoType = EBFooterLogoType.' + _ftCap(card.logotype) + ',\n' +
+    '    showLabel = ' + card.label + ',\n' +
+    '    description = EBFooterDescription.' + _ftCap(card.description) + '\n)';
 }
-function getSnippet(type, lang, card) {
-  return _getFooterSnippet(type, lang, card);
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
 }
 window.getSnippet = getSnippet;
 
-function _footerCardMatchesVariantDefaults(card) {
-  var v = card && card.variant;
-  if (!v) return false;
-  var d = _footerVariantDefaults[v];
-  if (!d) return false;
-  return card.alignment === d.alignment
-      && card.description === d.description
-      && card.partnerLogos === d.partnerLogos;
+/* ── Control handler ────────────────────────────────────────────────── */
+var FT_PREVIEW_SCALE = 1;
+
+function _ftSyncSelects(cardStyle, card) {
+  FT_AXES.forEach(function (a) {
+    var sel = document.querySelector(
+      '[onchange*="updateSpecCard(\'' + cardStyle + '\', \'' + a + '\'"]');
+    if (sel) sel.value = card[a];
+  });
 }
 
-function _getFooterSnippet(cardKey, lang, card) {
-  var v = (card && card.variant) || cardKey.replace('v', '');
-
-  /* Canonical per-variant snippets when no overrides applied. */
-  if (_footerCardMatchesVariantDefaults(card)) {
-    if (lang === 'swift') {
-      if (v === '1') return 'EBFooter("Powered by Fuse")\n    .ebDisclaimer("Regulatory disclaimer copy")\n    .ebHelpLink("Help center", destination: url)';
-      if (v === '2') return 'EBFooter(disclaimer: "Acknowledgement disclaimer copy")\n    .ebPartnerLogos([gcashLogo, partnerLogo])\n    .ebAlignment(.leading)';
-      if (v === '3') return 'EBFooter()\n    .ebDescription("Get information and product support.")\n    .ebHelpLink("Help center", destination: url)\n    .ebAlignment(.center)';
-      if (v === '4') return 'EBFooter()\n    .ebPartnerLogos([gcashLogo, partnerLogo])\n    .ebAlignment(.center)';
-      if (v === '5') return 'EBFooter()\n    .ebHelpLink("Help center", destination: url)\n    .ebPartnerLogos([gcashLogo, partnerLogo])\n    .ebAlignment(.leading)';
-      if (v === '6') return 'EBFooter("Powered by Bayad Partners")\n    .ebHelpLink("Help center", destination: url)';
-      return 'EBFooter("In partnership with")\n    .ebPartnerLogos([gcashLogo, pdaxLogo])\n    .ebAlignment(.center)';
-    }
-    if (v === '1') return 'EBFooter(\n    poweredBy = "Powered by Fuse",\n    disclaimer = "Regulatory disclaimer copy",\n    helpLink = EBFooterLink("Help center", url)\n)';
-    if (v === '2') return 'EBFooter(\n    disclaimer = "Acknowledgement disclaimer copy",\n    partnerLogos = logos,\n    alignment = EBFooterAlignment.Leading\n)';
-    if (v === '3') return 'EBFooter(\n    description = "Get information and product support.",\n    helpLink = EBFooterLink("Help center", url),\n    alignment = EBFooterAlignment.Center\n)';
-    if (v === '4') return 'EBFooter(\n    partnerLogos = logos,\n    alignment = EBFooterAlignment.Center\n)';
-    if (v === '5') return 'EBFooter(\n    helpLink = EBFooterLink("Help center", url),\n    partnerLogos = logos,\n    alignment = EBFooterAlignment.Leading\n)';
-    if (v === '6') return 'EBFooter(\n    poweredBy = "Powered by Bayad Partners",\n    helpLink = EBFooterLink("Help center", url)\n)';
-    return 'EBFooter(\n    title = "In partnership with",\n    partnerLogos = logos,\n    alignment = EBFooterAlignment.Center\n)';
-  }
-
-  /* Composed snippet — overrides applied. Build from current props. */
-  var alignment    = (card && card.alignment)    || 'left';
-  var description  = (card && card.description)  || 'none';
-  var partnerLogos = (card && card.partnerLogos) || 'none';
-
-  if (lang === 'swift') {
-    var s = 'EBFooter()';
-    if (partnerLogos === 'powered-by') s += '\n    .ebPoweredBy("Powered by Fuse")';
-    if (description === 'default')     s += '\n    .ebDisclaimer("Acknowledgement disclaimer copy")';
-    if (description === 'with-link')   s += '\n    .ebHelpLink("Help center", destination: url)';
-    if (partnerLogos === 'gcash-x')    s += '\n    .ebPartnerLogos([gcashLogo, partnerLogo])';
-    if (partnerLogos === 'grouped')    s += '\n    .ebPartnerLogos([gcashLogo, pdaxLogo])';
-    s += '\n    .ebAlignment(.' + (alignment === 'center' ? 'center' : 'leading') + ')';
-    return s;
-  }
-  var lines = ['EBFooter('];
-  var args = [];
-  if (partnerLogos === 'powered-by') args.push('    poweredBy = "Powered by Fuse"');
-  if (description === 'default')     args.push('    disclaimer = "Acknowledgement disclaimer copy"');
-  if (description === 'with-link')   args.push('    helpLink = EBFooterLink("Help center", url)');
-  if (partnerLogos === 'gcash-x' || partnerLogos === 'grouped') args.push('    partnerLogos = logos');
-  args.push('    alignment = EBFooterAlignment.' + (alignment === 'center' ? 'Center' : 'Leading'));
-  lines.push(args.join(',\n'));
-  lines.push(')');
-  return lines.join('\n');
-}
-
-function updateSpecCard(cardKey, prop, value) {
-  var card = _footerSpecCards[cardKey];
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
   if (!card) return;
-  /* When the user picks a new variant, snap the other axes to that
-     variant's defaults so the preview shows the canonical layout. */
-  if (prop === 'variant') {
-    var defaults = _footerVariantDefaults[value];
-    if (defaults) {
-      card.alignment    = defaults.alignment;
-      card.description  = defaults.description;
-      card.partnerLogos = defaults.partnerLogos;
-    }
-  }
   card[prop] = value;
 
-  /* Update the rendered preview body */
-  var card$ = document.getElementById('spec-card-' + cardKey);
-  if (card$) {
-    var preview = card$.querySelector('.spec-card-preview, .spec-preview-body, .spec-preview-frame');
-    if (preview) {
-      preview.innerHTML = _footerRenderCard(card);
-    }
-    /* When `variant` changes, also resync the per-card panel selects so
-       the alignment / description / partnerLogos dropdowns reflect the
-       newly selected variant's defaults. */
-    if (prop === 'variant') {
-      var rows = card$.querySelectorAll('.demo-figma-panel .demo-panel-row');
-      rows.forEach(function (row) {
-        var label = row.querySelector('.demo-panel-label');
-        var sel   = row.querySelector('select');
-        if (!label || !sel) return;
-        var key = (label.textContent || '').trim().toLowerCase();
-        var p =
-          key === 'alignment'    ? 'alignment' :
-          key === 'description'  ? 'description' :
-          key === 'partner logos' ? 'partnerLogos' :
-          null;
-        if (!p || card[p] == null) return;
-        for (var i = 0; i < sel.options.length; i++) {
-          if (sel.options[i].value === card[p]) { sel.selectedIndex = i; break; }
-        }
-      });
-    }
-  }
+  /* Snap to the nearest built variant — 29 of the 36 combinations do not
+     exist, and drawing one would be inventing a layout. */
+  var v = _ftResolve(card, prop);
+  v.key.split('|').forEach(function (val, i) { card[FT_AXES[i]] = val; });
+  _ftSyncSelects(cardStyle, card);
 
-  /* Update Properties readouts — data-sp="<demoKey>-<prop>" */
-  ['variant', 'alignment', 'description', 'partnerLogos'].forEach(function (p) {
-    var spEl = document.querySelector('[data-sp="' + cardKey + '-' + p + '"]');
-    if (spEl) spEl.textContent = card[p];
+  var host = document.getElementById('footer-spec-' + cardStyle);
+  if (host) host.innerHTML = _ftRender(v, FT_PREVIEW_SCALE);
+
+  FT_AXES.forEach(function (a) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + a + '"]');
+    if (el) el.textContent = a === 'label' ? card[a] : _ftCap(card[a]);
   });
+  var nodeEl = document.querySelector('[data-sp="' + cardStyle + '-variantNode"]');
+  if (nodeEl) nodeEl.textContent = v.node + ' · 360 × ' + v.h;
 
-  /* Update DEV code */
-  var devView = document.querySelector('[data-view="' + cardKey + '-dev"]');
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
   if (devView) {
     var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardKey + '"]');
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
     if (codeEl) {
-      var code = getSnippet(cardKey, lang, card);
+      var code = getSnippet(cardStyle, lang, card);
       codeEl.setAttribute('data-final', code);
       codeEl.setAttribute('data-lang', lang);
       codeEl.textContent = code;
@@ -378,45 +212,24 @@ function updateSpecCard(cardKey, prop, value) {
     }
   }
 }
+window.updateSpecCard = updateSpecCard;
 
-function _footerInit() {
-  var ctx = document.getElementById('footer-context-preview');
-  if (ctx) ctx.innerHTML = _footerContextMarkup();
-  /* Pass 'variant' so the other 3 selects snap to V1's canonical defaults
-     (powered-by + disclaimer + link). Without this, the overview preview
-     renders empty because the HTML default partnerLogos='none' doesn't
-     match V1's expected 'powered-by'. */
-  _footerUpdate('variant');
-  /* Render the single spec card and resync its dropdowns to defaults. */
-  updateSpecCard('default', 'variant', _footerSpecCards['default'].variant);
-  var card$ = document.getElementById('spec-card-default');
-  if (card$) {
-    var card = _footerSpecCards['default'];
-    var rows = card$.querySelectorAll('.demo-figma-panel .demo-panel-row');
-    rows.forEach(function (row) {
-      var label = row.querySelector('.demo-panel-label');
-      var sel   = row.querySelector('select');
-      if (!label || !sel) return;
-      var key = (label.textContent || '').trim().toLowerCase();
-      var p =
-        key === 'variant'       ? 'variant' :
-        key === 'alignment'     ? 'alignment' :
-        key === 'description'   ? 'description' :
-        key === 'partner logos' ? 'partnerLogos' :
-        null;
-      if (!p || card[p] == null) return;
-      for (var i = 0; i < sel.options.length; i++) {
-        if (sel.options[i].value === card[p]) { sel.selectedIndex = i; break; }
-      }
-    });
-  }
+/* ── Overview tab live preview ──────────────────────────────────────── */
+function _footerUpdate() {
+  var el = document.getElementById('footer-demo-preview');
+  if (el) el.innerHTML = _ftRender(FT_VARIANTS[6], 1);
 }
+window._footerUpdate = _footerUpdate;
 
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _footerInit);
-else _footerInit();
-
-/* Re-init after Astro view-transition swaps */
-(function(){
-  function reinit(){ if (typeof _footerInit === 'function') _footerInit(); }
-  document.addEventListener('astro:page-load', reinit);
-})();
+/* ── First paint ────────────────────────────────────────────────────── */
+function _ftInit() {
+  _footerUpdate();
+  Object.keys(_specCards).forEach(function (k) {
+    var v = _ftResolve(_specCards[k], null);
+    var host = document.getElementById('footer-spec-' + k);
+    if (host) host.innerHTML = _ftRender(v, FT_PREVIEW_SCALE);
+  });
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _ftInit);
+else _ftInit();
+document.addEventListener('astro:page-load', _ftInit);

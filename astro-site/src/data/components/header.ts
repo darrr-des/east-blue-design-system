@@ -1,51 +1,68 @@
 import type { ComponentData, DemoControlSection } from '../types';
-import { buildStatelessColorsTable } from './_helpers';
 
-// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
-// in `public/scripts/demos/header.js`.
-const headerDemoControls: DemoControlSection[] = [
+// Panel mirrors the property panel of set 4363:11467, in its order.
+// Image-Slot is a SLOT, so it takes no control.
+const sectionHeaderDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'preamble',
-        prop: 'preamble',
+        label: 'TrailingMedia',
+        prop: 'trailingmedia',
+        defaultValue: 'none',
         options: [
-          { value: 'no', label: 'no' },
-          { value: 'yes', label: 'yes' },
+          { value: 'none', label: 'None' },
+          { value: 'link', label: 'Link' },
+          { value: 'icon', label: 'Icon' },
+          { value: 'edit', label: 'Edit' },
         ],
       },
       {
-        label: 'description',
-        prop: 'description',
+        label: 'hasLeadingMedia',
+        prop: 'hasLeadingMedia',
+        control: 'toggle',
+        defaultValue: 'false',
         options: [
-          { value: 'no', label: 'no' },
-          { value: 'yes', label: 'yes' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
       {
-        label: 'leading',
-        prop: 'leading',
+        label: 'hasPreamble',
+        prop: 'hasPreamble',
+        control: 'toggle',
+        defaultValue: 'true',
         options: [
-          { value: 'none', label: 'none' },
-          { value: 'icon', label: 'icon' },
-          { value: 'illustration', label: 'illustration' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
       {
-        label: 'trailing',
-        prop: 'trailing',
+        label: 'hasDescription',
+        prop: 'hasDescription',
+        control: 'toggle',
+        defaultValue: 'true',
         options: [
-          { value: 'none', label: 'none' },
-          { value: 'illustration', label: 'illustration' },
-          { value: 'link', label: 'link' },
-          { value: 'edit', label: 'edit' },
-          { value: 'counter', label: 'counter' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
+        ],
+      },
+      {
+        label: 'hasCounter',
+        prop: 'hasCounter',
+        control: 'toggle',
+        defaultValue: 'true',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
     ],
   },
 ];
+
+// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
+// in `public/scripts/demos/header.js`.
 
 export const header: ComponentData = {
   "meta": {
@@ -216,40 +233,46 @@ export const header: ComponentData = {
     "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "title-only-(baseline)",
-        "demoKey": "title-only",
-        "demoControls": headerDemoControls,
-        "title": "Title only (baseline)",
-        "node": "18430:2932",
-        "description": "The simplest variant — a bare title. This is the baseline the other 15 variants layer slots onto.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-spec-1\"><div class=\"eb-preview eb-preview-header\"><div class=\"eb-preview-header__content\"><p class=\"eb-preview-header__title\">Heading</p></div></div></div>",
+        "cardKey": "sh-spec-main",
+        "demoKey": "main",
+        "title": "Section Header",
+        "node": "4363:11467",
+        "description": "",
+        "previewHtml": "<div id=\"section-header-spec-main\" class=\"spec-preview-body\"><svg width=\"360\" height=\"100\" viewBox=\"0 0 360 100\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"0.5\" y=\"0.5\" width=\"359\" height=\"99\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\"/><text class=\"sh-proxima\" x=\"24\" y=\"27\" font-size=\"14\" font-weight=\"700\" fill=\"#005CE5\" dominant-baseline=\"central\">Preamble</text><text class=\"sh-proxima-title\" x=\"24\" y=\"49\" font-size=\"22\" font-weight=\"700\" fill=\"#0A2757\" dominant-baseline=\"central\">Heading</text><rect x=\"121\" y=\"37\" width=\"24\" height=\"24\" rx=\"12\" fill=\"#EEF2F9\"/><text class=\"sh-proxima\" x=\"133\" y=\"49\" font-size=\"12\" font-weight=\"700\" fill=\"#6780A9\" text-anchor=\"middle\" dominant-baseline=\"central\">9</text><text class=\"sh-barkada\" x=\"24\" y=\"71\" font-size=\"12\" font-weight=\"600\" fill=\"#6780A9\" dominant-baseline=\"central\">Description goes here</text></svg></div>",
+        "demoControls": sectionHeaderDemoControls,
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "preamble",
-                "value": "no",
-                "prop": "preamble",
-                "mono": true
+                "key": "TrailingMedia",
+                "value": "None",
+                "prop": "trailingmedia"
               },
               {
-                "key": "description",
-                "value": "no",
-                "prop": "description",
-                "mono": true
+                "key": "hasLeadingMedia",
+                "value": "False",
+                "prop": "hasLeadingMedia"
               },
               {
-                "key": "leading",
-                "value": "none",
-                "prop": "leading",
-                "mono": true
+                "key": "hasPreamble",
+                "value": "True",
+                "prop": "hasPreamble"
               },
               {
-                "key": "trailing",
-                "value": "none",
-                "prop": "trailing",
+                "key": "hasDescription",
+                "value": "True",
+                "prop": "hasDescription"
+              },
+              {
+                "key": "hasCounter",
+                "value": "True",
+                "prop": "hasCounter"
+              },
+              {
+                "key": "Image-Slot (slot)",
+                "value": "SLOT · 4 items — inside LeadingMedia",
                 "mono": true
               }
             ]
@@ -258,133 +281,65 @@ export const header: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "header/color/default/bg" },
-              { "key": "Title", "value": "#0A2757", "token": "header/color/default/label-header" },
-              { "key": "Preamble", "value": "#005CE5", "token": "header/color/default/label-preamble" },
-              { "key": "Description", "value": "#6780A9", "token": "header/color/default/description" },
-              { "key": "Link", "value": "#005CE5", "token": "header/color/default/label-link" },
-              { "key": "Icon", "value": "#005CE5", "token": "header/color/default/icon" }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
               {
-                "key": "Title style",
-                "value": "Heading/L — BarkAda 18/24",
-                "mono": true
+                "key": "Surface",
+                "value": "#FFFFFF",
+                "token": "—"
               },
               {
-                "key": "Color",
-                "value": "text/primary · #0A2757",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Width",
-                "value": "Fill",
-                "mono": true
+                "key": "Border",
+                "value": "#E5EBF4",
+                "token": "—"
               },
               {
-                "key": "Height",
-                "value": "58 (hug)",
-                "mono": true
+                "key": "Preamble",
+                "value": "#005CE5",
+                "token": "—",
+                "variants": {
+                  "hasPreamble:false": {
+                    "hide": true
+                  }
+                }
               },
               {
-                "key": "Padding",
-                "value": "0",
-                "mono": true
+                "key": "Title",
+                "value": "#0A2757",
+                "token": "—"
               },
               {
-                "key": "Gap (stacked slots)",
-                "value": "space/space-4",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Page title\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span>title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Page title\"</span><span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "full-stack-(preamble-+-title-+-description)",
-        "demoKey": "full-stack",
-        "demoControls": headerDemoControls,
-        "title": "Full stack (preamble + title + description)",
-        "node": "18430:2920",
-        "description": "All three text slots filled. This is the canonical \"announce a section\" pattern.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-spec-2\"><div class=\"eb-preview eb-preview-header\"><div class=\"eb-preview-header__content\"><p class=\"eb-preview-header__preamble\">Preamble</p><p class=\"eb-preview-header__title\">Heading</p><p class=\"eb-preview-header__desc\">Description goes here</p></div></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "preamble",
-                "value": "yes",
-                "prop": "preamble",
-                "mono": true
+                "key": "Description",
+                "value": "#6780A9",
+                "token": "—",
+                "variants": {
+                  "hasDescription:false": {
+                    "hide": true
+                  }
+                }
               },
               {
-                "key": "description",
-                "value": "yes",
-                "prop": "description",
-                "mono": true
+                "key": "Counter background",
+                "value": "#EEF2F9",
+                "token": "—",
+                "variants": {
+                  "hasCounter:false": {
+                    "hide": true
+                  }
+                }
               },
               {
-                "key": "leading",
-                "value": "none",
-                "prop": "leading",
-                "mono": true
+                "key": "Trailing media",
+                "value": "#005CE5",
+                "token": "—",
+                "variants": {
+                  "trailingmedia:none": {
+                    "hide": true
+                  }
+                }
               },
               {
-                "key": "trailing",
-                "value": "none",
-                "prop": "trailing",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "header/color/default/bg" },
-              { "key": "Preamble", "value": "#005CE5", "token": "header/color/default/label-preamble" },
-              { "key": "Title", "value": "#0A2757", "token": "header/color/default/label-header" },
-              { "key": "Description", "value": "#6780A9", "token": "header/color/default/description" },
-              { "key": "Icon", "value": "#005CE5", "token": "header/color/default/icon" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Padding",
-                "value": "24 horizontal · 16 vertical",
-                "mono": true
-              },
-              {
-                "key": "Title size",
-                "value": "22 / 26",
-                "mono": true
-              },
-              {
-                "key": "Preamble size",
-                "value": "14 / 14",
-                "mono": true
-              },
-              {
-                "key": "Description size",
-                "value": "12 / 18",
-                "mono": true
+                "key": "Media placeholder",
+                "value": "#D7E0EF",
+                "token": "—"
               }
             ]
           },
@@ -394,72 +349,29 @@ export const header: ComponentData = {
             "rows": [
               {
                 "key": "Preamble",
-                "value": "Label/S caps · 12/16 · text/brand",
-                "mono": true
+                "value": "Primary/Label/Small",
+                "mono": true,
+                "variants": {
+                  "hasPreamble:false": {
+                    "hide": true
+                  }
+                }
               },
               {
                 "key": "Title",
-                "value": "Heading/L · 18/24 · text/primary",
+                "value": "Primary/Headlines/Section",
                 "mono": true
               },
               {
                 "key": "Description",
-                "value": "Body/S · 12/16 · text/secondary",
-                "mono": true
+                "value": "Secondary/Bold/Caption",
+                "mono": true,
+                "variants": {
+                  "hasDescription:false": {
+                    "hide": true
+                  }
+                }
               }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Page title\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebPreamble</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"PREAMBLE\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDescription</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description body copy\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Page title\"</span><span class=\"syn-punc\">,</span>\n    preamble <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"PREAMBLE\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description body copy\"</span>\n<span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "title-+-trailing-link",
-        "demoKey": "trailing-link",
-        "demoControls": headerDemoControls,
-        "title": "Title + trailing link",
-        "node": "18430:2984",
-        "description": "Title on the left, \"View All\" link on the right. Common list-section pattern.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-spec-3\"><div class=\"eb-preview eb-preview-header eb-preview-header--center\"><div class=\"eb-preview-header__content\"><p class=\"eb-preview-header__title\">Heading</p></div><span class=\"eb-preview-header__trailing\"><span class=\"eb-preview-header__link\">View All</span></span></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "preamble",
-                "value": "no",
-                "prop": "preamble",
-                "mono": true
-              },
-              {
-                "key": "description",
-                "value": "no",
-                "prop": "description",
-                "mono": true
-              },
-              {
-                "key": "leading",
-                "value": "none",
-                "prop": "leading",
-                "mono": true
-              },
-              {
-                "key": "trailing",
-                "value": "link",
-                "prop": "trailing",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "header/color/default/bg" },
-              { "key": "Title", "value": "#0A2757", "token": "header/color/default/label-header" },
-              { "key": "Description", "value": "#6780A9", "token": "header/color/default/description" },
-              { "key": "Border", "value": "#E5EBF4", "token": "header/color/default/border" }
             ]
           },
           {
@@ -467,100 +379,20 @@ export const header: ComponentData = {
             "slug": "layout",
             "rows": [
               {
-                "key": "Padding H",
-                "value": "24px",
+                "key": "Height",
+                "value": "100px — fixed, all 8 variants",
                 "mono": true
               },
               {
-                "key": "Padding V",
-                "value": "16px",
+                "key": "Width",
+                "value": "360px",
                 "mono": true
               },
               {
-                "key": "Border bottom",
-                "value": "1px solid",
+                "key": "Radius",
+                "value": "None",
                 "mono": true
               },
-              {
-                "key": "Title size",
-                "value": "22 / 26",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Section",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft Bold · 22 / 26",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Page title\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span>title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Page title\"</span><span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "title-+-trailing-edit",
-        "demoKey": "trailing-edit",
-        "demoControls": headerDemoControls,
-        "title": "Title + trailing edit",
-        "node": "18430:2989",
-        "description": "Title left, pencil icon + \"Edit details\" link right. Used on profile/settings sections.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-spec-4\"><div class=\"eb-preview eb-preview-header eb-preview-header--center\"><div class=\"eb-preview-header__content\"><p class=\"eb-preview-header__title\">Heading</p></div><span class=\"eb-preview-header__trailing\"><svg class=\"eb-preview-header__edit-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 20h9\"></path><path d=\"M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z\"></path></svg><span class=\"eb-preview-header__link\">Edit details</span></span></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "preamble",
-                "value": "no",
-                "prop": "preamble",
-                "mono": true
-              },
-              {
-                "key": "description",
-                "value": "no",
-                "prop": "description",
-                "mono": true
-              },
-              {
-                "key": "leading",
-                "value": "none",
-                "prop": "leading",
-                "mono": true
-              },
-              {
-                "key": "trailing",
-                "value": "edit",
-                "prop": "trailing",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "header/color/default/bg" },
-              { "key": "Title", "value": "#0A2757", "token": "header/color/default/label-header" },
-              { "key": "Description", "value": "#6780A9", "token": "header/color/default/description" },
-              { "key": "Border", "value": "#E5EBF4", "token": "header/color/default/border" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
               {
                 "key": "Padding H",
                 "value": "24px",
@@ -568,191 +400,175 @@ export const header: ComponentData = {
               },
               {
                 "key": "Padding V",
-                "value": "16px",
+                "value": "24px top · 16px bottom",
                 "mono": true
               },
               {
-                "key": "Border bottom",
-                "value": "1px solid",
+                "key": "Gap",
+                "value": "16px between blocks · 2px Preamble → row",
                 "mono": true
               },
               {
-                "key": "Title size",
-                "value": "22 / 26",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Section",
-                "mono": true
+                "key": "Content",
+                "value": "312px",
+                "mono": true,
+                "prop": "contentWidth",
+                "variants": {
+                  "trailingmedia:none|hasLeadingMedia:true": {
+                    "value": "250px"
+                  },
+                  "trailingmedia:link|hasLeadingMedia:false": {
+                    "value": "235px"
+                  },
+                  "trailingmedia:link|hasLeadingMedia:true": {
+                    "value": "173px"
+                  },
+                  "trailingmedia:icon|hasLeadingMedia:false": {
+                    "value": "264px"
+                  },
+                  "trailingmedia:icon|hasLeadingMedia:true": {
+                    "value": "202px"
+                  },
+                  "trailingmedia:edit|hasLeadingMedia:false": {
+                    "value": "184px"
+                  },
+                  "trailingmedia:edit|hasLeadingMedia:true": {
+                    "value": "122px"
+                  }
+                }
               },
               {
-                "key": "Title font",
-                "value": "Proxima Soft Bold · 22 / 26",
-                "mono": true
-              }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Page title\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span>title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Page title\"</span><span class=\"syn-punc\">)</span>"
-      },
-      {
-        "cardKey": "title-+-trailing-counter",
-        "demoKey": "trailing-counter",
-        "demoControls": headerDemoControls,
-        "title": "Title + trailing counter",
-        "node": "18430:2996",
-        "description": "Title left, numeric counter pill right. Used on inbox/notifications.",
-        "previewHtml": "<div class=\"spec-preview-body\" id=\"header-spec-5\"><div class=\"eb-preview eb-preview-header eb-preview-header--center\"><div class=\"eb-preview-header__content\"><p class=\"eb-preview-header__title\">Heading</p></div><span class=\"eb-preview-header__counter\">0</span></div></div>",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "preamble",
-                "value": "no",
-                "prop": "preamble",
-                "mono": true
+                "key": "Leading media",
+                "value": "46 × 46",
+                "mono": true,
+                "variants": {
+                  "hasLeadingMedia:false": {
+                    "hide": true
+                  }
+                }
               },
               {
-                "key": "description",
-                "value": "no",
-                "prop": "description",
-                "mono": true
+                "key": "Trailing media",
+                "value": "—",
+                "mono": true,
+                "variants": {
+                  "trailingmedia:link": {
+                    "value": "61 × 22 — \"View All\""
+                  },
+                  "trailingmedia:icon": {
+                    "value": "32 × 48 — Icon-Slot, 32 × 32 inside"
+                  },
+                  "trailingmedia:edit": {
+                    "value": "112 × 24 — icon 24 + gap 4 + label"
+                  }
+                }
               },
               {
-                "key": "leading",
-                "value": "none",
-                "prop": "leading",
-                "mono": true
+                "key": "Counter",
+                "value": "24 × 24 · 12px after the title",
+                "mono": true,
+                "variants": {
+                  "hasCounter:false": {
+                    "hide": true
+                  }
+                }
               },
               {
-                "key": "trailing",
-                "value": "counter",
-                "prop": "trailing",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "header/color/default/bg" },
-              { "key": "Title", "value": "#0A2757", "token": "header/color/default/label-header" },
-              { "key": "Description", "value": "#6780A9", "token": "header/color/default/description" },
-              { "key": "Border", "value": "#E5EBF4", "token": "header/color/default/border" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              {
-                "key": "Padding H",
-                "value": "24px",
-                "mono": true
-              },
-              {
-                "key": "Padding V",
-                "value": "16px",
-                "mono": true
-              },
-              {
-                "key": "Border bottom",
-                "value": "1px solid",
-                "mono": true
-              },
-              {
-                "key": "Title size",
-                "value": "22 / 26",
-                "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
-              {
-                "key": "Title style",
-                "value": "Primary/Headlines/Section",
-                "mono": true
-              },
-              {
-                "key": "Title font",
-                "value": "Proxima Soft Bold · 22 / 26",
+                "key": "Alignment",
+                "value": "Leading · vertically centred — see the note below",
                 "mono": true
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Page title\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBHeader</span><span class=\"syn-punc\">(</span>title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Page title\"</span><span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBSectionHeader</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span>ebPreamble<span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Preamble\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span>ebDescription<span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Description goes here\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span>ebCounter<span class=\"syn-punc\">(</span>9<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSectionHeader</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Heading\"</span><span class=\"syn-punc\">,</span>\n    preamble <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Preamble\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Description goes here\"</span><span class=\"syn-punc\">,</span>\n    counter <span class=\"syn-eq\">=</span> 9<span class=\"syn-punc\">,</span>\n    trailingMedia <span class=\"syn-eq\">=</span> EBTrailingMedia<span class=\"syn-punc\">.</span>None\n<span class=\"syn-punc\">)</span>"
       }
     ],
-    colorsTables: [
-      // Card 1 — Title only (baseline)
-      buildStatelessColorsTable({
-        title: 'Title — Colors',
-        description: 'Baseline header: just the heading on a white surface. Card stroke is invisible by default.',
-        rows: [
-          { role: 'Surface bg', token: 'main/header/surface',           value: '#FFFFFF' },
-          { role: 'Heading',    token: 'text/primary/headline/section', value: '#0A2757' },
+    "colorsTables": [
+      {
+        "title": "Colors by Element",
+        "description": "Read off <code>get_node_info</code> on the variants of set <code>4363:11467</code>. None of these change with <code>TrailingMedia</code> or <code>hasLeadingMedia</code> — the two variant axes move geometry only. <strong>On vertical alignment:</strong> Figma top-anchors the leading media, the content stack and the trailing media at <code>y=24</code>, which leaves 24 above and 16 below a full 60-tall stack. The preview centres each block on the row axis instead — balanced at every boolean combination, and 4px lower than the component when everything is switched on. Both media placeholders are <code>#D7E0EF</code> fills inside slots, so what ships in production is the consumer’s. Token paths could not be read; the plugin returns no variable bindings.",
+        "columns": [
+          "Token",
+          "Value"
         ],
-      }),
-      // Card 2 — Full stack (preamble + heading + description)
-      buildStatelessColorsTable({
-        title: 'Full Stack — Colors',
-        description: 'Tier-three layout with eyebrow preamble, heading, and supporting description.',
-        rows: [
-          { role: 'Surface bg', token: 'main/header/surface',           value: '#FFFFFF' },
-          { role: 'Preamble',   token: 'text/accent/eyebrow',           value: '#005CE5' },
-          { role: 'Heading',    token: 'text/primary/headline/section', value: '#0A2757' },
-          { role: 'Description', token: 'text/primary/body/secondary',  value: '#6780A9' },
-        ],
-      }),
-      // Card 3 — Title + trailing link
-      buildStatelessColorsTable({
-        title: 'Title + Link — Colors',
-        description: 'Heading followed by a trailing hyperlink (e.g. "See all").',
-        rows: [
-          { role: 'Surface bg', token: 'main/header/surface',           value: '#FFFFFF' },
-          { role: 'Heading',    token: 'text/primary/headline/section', value: '#0A2757' },
-          { role: 'Link label', token: 'text/accent/link',              value: '#005CE5' },
-        ],
-      }),
-      // Card 4 — Title + trailing edit
-      buildStatelessColorsTable({
-        title: 'Title + Edit — Colors',
-        description: 'Heading followed by an edit affordance (icon + hyperlink label).',
-        rows: [
-          { role: 'Surface bg', token: 'main/header/surface',           value: '#FFFFFF' },
-          { role: 'Heading',    token: 'text/primary/headline/section', value: '#0A2757' },
-          { role: 'Edit icon',  token: 'icon/accent',                   value: '#005CE5' },
-          { role: 'Edit label', token: 'text/accent/link',              value: '#005CE5' },
-        ],
-      }),
-      // Card 5 — Title + trailing counter
-      buildStatelessColorsTable({
-        title: 'Title + Counter — Colors',
-        description: 'Heading followed by a count chip (e.g. unread badge, item total).',
-        rows: [
-          { role: 'Surface bg',     token: 'main/header/surface',           value: '#FFFFFF' },
-          { role: 'Heading',        token: 'text/primary/headline/section', value: '#0A2757' },
-          { role: 'Counter chip bg', token: 'main/counter/surface',         value: '#EEF2F9' },
-          { role: 'Counter value',  token: 'text/primary/body/secondary',   value: '#6780A9' },
-        ],
-      }),
-    ],
+        "rows": [
+          {
+            "role": "Container",
+            "token": "Surface",
+            "values": [
+              "—",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Border · 1px",
+            "values": [
+              "—",
+              "#E5EBF4"
+            ]
+          },
+          {
+            "role": "Content",
+            "token": "Preamble",
+            "values": [
+              "—",
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Title",
+            "values": [
+              "—",
+              "#0A2757"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Description",
+            "values": [
+              "—",
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Counter",
+            "token": "Background",
+            "values": [
+              "—",
+              "#EEF2F9"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Value",
+            "values": [
+              "—",
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Trailing",
+            "token": "Link and Edit label · Edit icon",
+            "values": [
+              "—",
+              "#005CE5"
+            ]
+          },
+          {
+            "role": "Slots",
+            "token": "Leading and trailing placeholder",
+            "values": [
+              "—",
+              "#D7E0EF"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "code": {
     "installation": {

@@ -1,50 +1,49 @@
 import type { ComponentData, DemoControlSection } from '../types';
-import { buildStatelessColorsTable } from './_helpers';
 
-// Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
-// in `public/scripts/demos/footer.js`.
+// Panel mirrors the property panel of set 4227:11068, in its order. Only 7
+// of the 36 combinations are built, so the demo script snaps to the nearest
+// built variant rather than drawing a layout Figma has never made.
 const footerDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'Variant',
-        prop: 'variant',
+        label: 'Alignment',
+        prop: 'alignment',
+        defaultValue: 'center',
         options: [
-          { value: '1', label: '1 · Powered-by + disclaimer + link' },
-          { value: '2', label: '2 · Acknowledgement + GCash×Partner' },
-          { value: '3', label: '3 · Help-center link (center)' },
-          { value: '4', label: '4 · GCash×Partner only (center)' },
-          { value: '5', label: '5 · Link + GCash×Partner' },
-          { value: '6', label: '6 · Powered-by Bayad + link' },
-          { value: '7', label: '7 · In partnership with' },
+          { value: 'center', label: 'Center' },
+          { value: 'left', label: 'Left' },
         ],
       },
       {
-        label: 'Alignment',
-        prop: 'alignment',
+        label: 'LogoType',
+        prop: 'logotype',
+        defaultValue: 'group',
         options: [
-          { value: 'left', label: 'left' },
-          { value: 'center', label: 'center' },
+          { value: 'none', label: 'None' },
+          { value: 'single', label: 'Single' },
+          { value: 'group', label: 'Group' },
+        ],
+      },
+      {
+        label: 'Label',
+        prop: 'label',
+        control: 'toggle',
+        defaultValue: 'false',
+        options: [
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
       {
         label: 'Description',
         prop: 'description',
+        defaultValue: 'none',
         options: [
-          { value: 'none', label: 'none' },
-          { value: 'default', label: 'default' },
-          { value: 'with-link', label: 'with link' },
-        ],
-      },
-      {
-        label: 'Partner Logos',
-        prop: 'partnerLogos',
-        options: [
-          { value: 'none', label: 'none' },
-          { value: 'gcash-x', label: 'GCash × partner' },
-          { value: 'grouped', label: 'grouped' },
-          { value: 'powered-by', label: 'powered-by row' },
+          { value: 'none', label: 'None' },
+          { value: 'default', label: 'Default' },
+          { value: 'link', label: 'Link' },
         ],
       },
     ],
@@ -227,78 +226,281 @@ export const footer: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Types",
+    "heading": "Styles",
     "specCards": [
       {
-        "cardKey": "default",
-        "demoKey": "default",
+        "cardKey": "ft-spec-main",
+        "demoKey": "main",
+        "title": "Footer",
+        "node": "4227:11068",
+        "description": "",
+        "previewHtml": "<div id=\"footer-spec-main\" class=\"spec-preview-body\"><svg width=\"360\" height=\"80\" viewBox=\"0 0 360 80\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"360\" height=\"80\" fill=\"#FFFFFF\"/><rect x=\"24\" y=\"24\" width=\"312\" height=\"32\" rx=\"2\" fill=\"#EEF2F9\" stroke=\"#C2CFE5\" stroke-dasharray=\"3 3\"/><text class=\"ft-placeholder\" x=\"180\" y=\"40\" font-size=\"9\" fill=\"#C2CFE5\" text-anchor=\"middle\" dominant-baseline=\"central\">raster logo 312 × 32</text></svg></div>",
         "demoControls": footerDemoControls,
-        "title": "Default",
-        "node": "21:215191",
-        "description": "Page-bottom region. Flip the Variant control to walk through every shipped layout (1–7), then override Alignment / Description / Partner Logos to compose your own.",
-        "previewHtml": "<div id=\"footer-spec-preview\"></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Variant",         "value": "1",          "prop": "variant",      "mono": true },
-              { "key": "Alignment",       "value": "left",       "prop": "alignment",    "mono": true },
-              { "key": "Description",     "value": "none",       "prop": "description",  "mono": true },
-              { "key": "Partner logos",   "value": "powered-by", "prop": "partnerLogos", "mono": true }
+              {
+                "key": "Alignment",
+                "value": "Center",
+                "prop": "alignment"
+              },
+              {
+                "key": "LogoType",
+                "value": "Group",
+                "prop": "logotype"
+              },
+              {
+                "key": "Label",
+                "value": "false",
+                "prop": "label"
+              },
+              {
+                "key": "Description",
+                "value": "None",
+                "prop": "description"
+              },
+              {
+                "key": "Resolved variant",
+                "value": "4227:11082 · 360 × 80",
+                "mono": true,
+                "prop": "variantNode",
+                "variants": {
+                  "alignment:left|logotype:group|label:false|description:default": {
+                    "value": "4227:11075 · 360 × 150"
+                  },
+                  "alignment:left|logotype:single|label:false|description:none": {
+                    "value": "4227:11069 · 360 × 182"
+                  },
+                  "alignment:left|logotype:group|label:false|description:link": {
+                    "value": "4227:11085 · 360 × 120"
+                  },
+                  "alignment:left|logotype:single|label:false|description:link": {
+                    "value": "4227:11089 · 360 × 116"
+                  },
+                  "alignment:center|logotype:group|label:true|description:none": {
+                    "value": "4227:11093 · 360 × 95"
+                  },
+                  "alignment:center|logotype:none|label:false|description:link": {
+                    "value": "4227:11079 · 360 × 108"
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface",     "value": "#FFFFFF", "token": "footer/color/bg" },
-              { "key": "Label",       "value": "#90A8D0", "token": "footer/color/label" },
-              { "key": "Description", "value": "#6780A9", "token": "footer/color/description" },
-              { "key": "Link",        "value": "#005CE5", "token": "footer/color/label-link" }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width",          "value": "360",       "mono": true },
-              { "key": "Padding",        "value": "24 all sides", "mono": true },
-              { "key": "Row gap (V1/V6)","value": "16",        "mono": true },
-              { "key": "Logo→logo gap",  "value": "16",        "mono": true },
-              { "key": "Logo size",      "value": "18 tall (asset)",  "mono": true }
+              {
+                "key": "Surface",
+                "value": "#FFFFFF",
+                "token": "—"
+              },
+              {
+                "key": "Preamble",
+                "value": "#6780A9",
+                "token": "—"
+              },
+              {
+                "key": "Disclaimer",
+                "value": "—",
+                "token": "—",
+                "variants": {
+                  "alignment:left|logotype:group|label:false|description:default": {
+                    "value": "#6780A9"
+                  },
+                  "alignment:left|logotype:single|label:false|description:none": {
+                    "value": "#10346F"
+                  },
+                  "alignment:left|logotype:group|label:false|description:link": {
+                    "value": "#7085A9"
+                  },
+                  "alignment:left|logotype:single|label:false|description:link": {
+                    "value": "#7085A9"
+                  },
+                  "alignment:center|logotype:none|label:false|description:link": {
+                    "value": "#10346F"
+                  },
+                  "alignment:center|logotype:group|label:true|description:none": {
+                    "hide": true
+                  },
+                  "alignment:center|logotype:group|label:false|description:none": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Logos",
+                "value": "Raster — no colour to bind",
+                "token": "—"
+              }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Label (Powered by)", "value": "Proxima Soft Bold · 12 / 12 · +0.5 · #90A8D0", "mono": true },
-              { "key": "Disclaimer",         "value": "BarkAda Semibold · 12 / 18 · #6780A9",          "mono": true },
-              { "key": "Link",               "value": "BarkAda Semibold · 12 / 18 · #005CE5",          "mono": true }
+              {
+                "key": "Preamble",
+                "value": "Secondary/Bold/Small Caption",
+                "mono": true
+              },
+              {
+                "key": "Disclaimer",
+                "value": "BarkAda SemiBold · 12 / 18 — no text style bound",
+                "mono": true
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "80px",
+                "mono": true,
+                "variants": {
+                  "alignment:left|logotype:group|label:false|description:default": {
+                    "value": "150px"
+                  },
+                  "alignment:left|logotype:single|label:false|description:none": {
+                    "value": "182px"
+                  },
+                  "alignment:left|logotype:group|label:false|description:link": {
+                    "value": "120px"
+                  },
+                  "alignment:left|logotype:single|label:false|description:link": {
+                    "value": "116px"
+                  },
+                  "alignment:center|logotype:group|label:true|description:none": {
+                    "value": "95px"
+                  },
+                  "alignment:center|logotype:none|label:false|description:link": {
+                    "value": "108px"
+                  }
+                }
+              },
+              {
+                "key": "Width",
+                "value": "360px",
+                "mono": true
+              },
+              {
+                "key": "Radius",
+                "value": "None",
+                "mono": true
+              },
+              {
+                "key": "Padding H",
+                "value": "24px",
+                "mono": true
+              },
+              {
+                "key": "Padding V",
+                "value": "24px top and bottom — 16px on the two variants that show a preamble or a Link description",
+                "mono": true
+              },
+              {
+                "key": "Gap",
+                "value": "16px between every stacked block",
+                "mono": true
+              },
+              {
+                "key": "Content",
+                "value": "312px — 360 less 24 either side",
+                "mono": true
+              },
+              {
+                "key": "Alignment",
+                "value": "Leading — derived; the logo group is centred even at Alignment=Left",
+                "mono": true
+              }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBFooter</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Powered by Fuse\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebDisclaimer</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Regulatory disclaimer copy\"</span><span class=\"syn-punc\">)</span>\n    .<span class=\"syn-fn\">ebHelpLink</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Help center\"</span><span class=\"syn-punc\">, </span>destination<span class=\"syn-punc\">: </span>url<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBFooter</span><span class=\"syn-punc\">(</span>\n    poweredBy <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Powered by Fuse\"</span><span class=\"syn-punc\">,</span>\n    disclaimer <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Regulatory disclaimer copy\"</span><span class=\"syn-punc\">,</span>\n    helpLink <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBFooterLink</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Help center\"</span><span class=\"syn-punc\">, </span>url<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBFooter</span><span class=\"syn-punc\">(</span>\n    alignment<span class=\"syn-punc\">: .</span>center<span class=\"syn-punc\">,</span>\n    logoType<span class=\"syn-punc\">: .</span>group<span class=\"syn-punc\">,</span>\n    showLabel<span class=\"syn-punc\">: </span>false<span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">: .</span>none\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBFooter</span><span class=\"syn-punc\">(</span>\n    alignment <span class=\"syn-eq\">=</span> EBFooterAlignment<span class=\"syn-punc\">.</span>Center<span class=\"syn-punc\">,</span>\n    logoType <span class=\"syn-eq\">=</span> EBFooterLogoType<span class=\"syn-punc\">.</span>Group<span class=\"syn-punc\">,</span>\n    showLabel <span class=\"syn-eq\">=</span> false<span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> EBFooterDescription<span class=\"syn-punc\">.</span>None\n<span class=\"syn-punc\">)</span>"
       }
-
     ],
-    colorsTables: (() => {
-      // All seven footer cards share the same palette; only structural roles differ.
-      const rows = [
-        { role: 'Surface',     token: 'footer/color/bg',          value: '#FFFFFF' },
-        { role: 'Label',       token: 'footer/color/label',       value: '#90A8D0' },
-        { role: 'Description', token: 'footer/color/description', value: '#6780A9' },
-        { role: 'Link',        token: 'footer/color/label-link',  value: '#005CE5' },
-      ];
-      const variants = [1, 2, 3, 4, 5, 6, 7];
-      return variants.map((i) => buildStatelessColorsTable({
-        title: `Variant ${i} — Colors`,
-        description: 'Footer chrome palette: white surface with muted helper labels and an accent link.',
-        rows,
-      }));
-    })(),
+    "colorsTables": [
+      {
+        "title": "Colors by Variant",
+        "description": "Read off <code>get_node_info</code> on each of the seven built variants of set <code>4227:11068</code>. <strong>The Disclaimer takes three different fills and they do not follow the <code>Description</code> axis</strong> — <code>Description=None</code> is <code>#10346F</code> on one variant and shows no disclaimer at all on another. The logos are <code>RECTANGLE</code> nodes with <code>IMAGE</code> fills, so they have no bindable colour. Token paths could not be read; the plugin returns no variable bindings.",
+        "columns": [
+          "Token",
+          "Value"
+        ],
+        "rows": [
+          {
+            "role": "Surface",
+            "token": "All seven variants",
+            "values": [
+              "—",
+              "#FFFFFF"
+            ]
+          },
+          {
+            "role": "Preamble",
+            "token": "Center · Group · Label=True",
+            "values": [
+              "—",
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "Disclaimer",
+            "token": "Left · Group · Description=Default",
+            "values": [
+              "—",
+              "#6780A9"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Left · Group · Description=Link",
+            "values": [
+              "—",
+              "#7085A9"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Left · Single · Description=Link",
+            "values": [
+              "—",
+              "#7085A9"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Left · Single · Description=None",
+            "values": [
+              "—",
+              "#10346F"
+            ]
+          },
+          {
+            "role": "—",
+            "token": "Center · None · Description=Link",
+            "values": [
+              "—",
+              "#10346F"
+            ]
+          },
+          {
+            "role": "Logos",
+            "token": "Raster IMAGE fills — nothing to bind",
+            "values": [
+              "–",
+              "– n/a"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "code": {
     "installation": {

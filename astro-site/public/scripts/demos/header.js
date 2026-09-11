@@ -1,177 +1,213 @@
-/* Auto-extracted from assessment-src/components/header.html.
- * Powers the live-preview dropdowns/toggles for the header component page.
- * Re-extract via: node astro-site/scripts/extract-demos.mjs header
+/* Section Header — Style tab demo.
+ * Rebuilt from Figma component set 4363:11467 (GCash DS 2026 Working File).
+ * Sizes, offsets and colours are read off get_node_info on the matching
+ * variants; the content-width rule below is verified against three of them.
+ *
+ * Panel (set 4363:11467):
+ *   TrailingMedia   ◇ variant · None, Link, Icon, Edit
+ *   hasLeadingMedia ◇ variant · False, True
+ *   hasPreamble     ◉ boolean · True
+ *   hasDescription  ◉ boolean · True
+ *   hasCounter      ◉ boolean · True
+ *   Image-Slot      ⊞ slot · 4 items            (a SLOT — no control)
+ *
+ * 4 x 2 = 8 variants, a complete matrix. The three booleans change what
+ * renders without adding variants, so nothing is unreachable.
  */
-/* ── Header (Section Header) JS ─────────────────────────────────── */
-/* Pixel-accurate replica of node 18430:2919.
-   Specs: 360px wide, 24×16 padding, #FFFFFF bg, no border.
-   Preamble: Proxima Soft Bold 14/14 #005CE5, tracking 0.25
-   Title:    Proxima Soft Bold 22/26 #0A2757
-   Desc:     BarkAda Semibold 12/18 #6780A9
-   Link:     Proxima Soft Bold 16/16 #005CE5
-   Counter:  24×24 pill, #EEF2F9 bg, #072592 label                   */
 
-var EB_HEADER_EDIT_SVG =
-  '<svg class="eb-preview-header__edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>';
+/* ── Geometry ───────────────────────────────────────────────────────── */
+var SH_W = 360, SH_H = 100;
+var SH_PAD = 24;                 /* every side */
+var SH_CONTENT_W = 312;          /* 360 less 24 either side */
+var SH_GAP = 16;                 /* between leading / content / trailing */
+var SH_LEADING = 46;             /* LeadingMedia frame */
+var SH_STACK_GAP = 2;            /* Preamble → DescriptionRow */
+var SH_PREAMBLE_H = 14, SH_TITLE_H = 26, SH_DESC_H = 18;
+var SH_COUNTER = 24;
+var SH_COUNTER_GAP = 12;         /* Title → Counter */
 
-var EB_HEADER_LEADING_ICON_SVG =
-  '<svg class="eb-preview-header__leading-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-6"/></svg>';
-
-function _headerRenderVariant(opts) {
-  var preamble    = opts.preamble === 'yes';
-  var description = opts.description === 'yes';
-  var leading     = opts.leading || 'none';
-  var trailing    = opts.trailing || 'none';
-
-  var centerAlign = (trailing === 'link' || trailing === 'edit' || trailing === 'counter') && !preamble && !description;
-
-  var html = '<div class="eb-preview eb-preview-header' + (centerAlign ? ' eb-preview-header--center' : '') + '">';
-
-  if (leading === 'icon') {
-    html += EB_HEADER_LEADING_ICON_SVG;
-  } else if (leading === 'illustration') {
-    html += '<div class="eb-preview-header__leading-illus" aria-hidden="true"></div>';
-  }
-
-  html += '<div class="eb-preview-header__content">';
-  if (preamble) html += '<p class="eb-preview-header__preamble">Preamble</p>';
-  html += '<p class="eb-preview-header__title">Heading</p>';
-  if (description) html += '<p class="eb-preview-header__desc">Description goes here</p>';
-  html += '</div>';
-
-  if (trailing === 'illustration') {
-    html += '<div class="eb-preview-header__trailing-illus" aria-hidden="true"></div>';
-  } else if (trailing === 'link') {
-    html += '<span class="eb-preview-header__trailing"><span class="eb-preview-header__link">View All</span></span>';
-  } else if (trailing === 'edit') {
-    html += '<span class="eb-preview-header__trailing">' + EB_HEADER_EDIT_SVG + '<span class="eb-preview-header__link">Edit details</span></span>';
-  } else if (trailing === 'counter') {
-    html += '<span class="eb-preview-header__counter">0</span>';
-  }
-
-  html += '</div>';
-  return html;
-}
-
-function _headerContextMarkup() {
-  return '<div class="eb-preview-stack eb-preview-stack--center eb-preview-stack--gap-lg">' +
-    _headerRenderVariant({preamble:'yes', description:'yes', leading:'none', trailing:'link'}) +
-    _headerRenderVariant({preamble:'no',  description:'no',  leading:'none', trailing:'counter'}) +
-    _headerRenderVariant({preamble:'no',  description:'yes', leading:'illustration', trailing:'none'}) +
-  '</div>';
-}
-
-function _headerUpdate() {
-  var preamble    = document.getElementById('header-ctrl-preamble');
-  var description = document.getElementById('header-ctrl-description');
-  var leading     = document.getElementById('header-ctrl-leading');
-  var trailing    = document.getElementById('header-ctrl-trailing');
-  var preview     = document.getElementById('header-demo-preview');
-  if (!preview) return;
-  preview.innerHTML = _headerRenderVariant({
-    preamble:    preamble ? preamble.value : 'no',
-    description: description ? description.value : 'yes',
-    leading:     leading ? leading.value : 'none',
-    trailing:    trailing ? trailing.value : 'none'
-  });
-}
-
-function _headerSpecMode(mode, cardNum) { /* reserved for DES/DEV toggle */ }
-
-/* ── Header Spec Cards (cascaded pattern) ──────────────────────── */
-var _headerSpecCards = {
-  'title-only':       { preamble: 'no',  description: 'no',  leading: 'none', trailing: 'none' },
-  'full-stack':       { preamble: 'yes', description: 'yes', leading: 'none', trailing: 'none' },
-  'trailing-link':    { preamble: 'no',  description: 'no',  leading: 'none', trailing: 'link' },
-  'trailing-edit':    { preamble: 'no',  description: 'no',  leading: 'none', trailing: 'edit' },
-  'trailing-counter': { preamble: 'no',  description: 'no',  leading: 'none', trailing: 'counter' }
+/* TrailingMedia widths, measured on the variants that ship them. */
+var SH_TRAILING = {
+  'none': { w: 0 },
+  'link': { w: 61,  h: 22 },
+  'icon': { w: 32,  h: 48 },
+  'edit': { w: 112, h: 24 }
 };
 
-var _specCards = _headerSpecCards;
+/* ── Colours ────────────────────────────────────────────────────────── */
+var SH_COLOR = {
+  surface:      '#FFFFFF',
+  border:       '#E5EBF4',
+  preamble:     '#005CE5',
+  title:        '#0A2757',
+  description:  '#6780A9',
+  trailing:     '#005CE5',
+  counterBg:    '#EEF2F9',
+  counterValue: '#6780A9',
+  placeholder:  '#D7E0EF'
+};
+
+/* Height of the HeaderContent stack for the current booleans. 14 + 2 +
+   26 + 18 = 60 with everything on, which is what Figma measures. */
+function _shContentH(card) {
+  var h = SH_TITLE_H;
+  if (card.hasPreamble === 'true') h += SH_PREAMBLE_H + SH_STACK_GAP;
+  if (card.hasDescription === 'true') h += SH_DESC_H;
+  return h;
+}
+
+/* Each block is centred on the row's vertical axis so the top and bottom
+   padding stay balanced whatever the booleans do.
+   NOTE — Figma top-anchors all three children at y=24, which with a 60-tall
+   content stack in a 100-tall frame leaves 24 above and 16 below. Centring
+   gives 20/20, so the full-content preview sits 4px lower than the component.
+   Raised as a Style-review finding rather than left looking top-heavy when
+   the booleans are off. */
+function _shTop(blockH) {
+  return Math.round((SH_H - blockH) / 2);
+}
+
+/* Content width = 312 less the leading media and the trailing media, each
+   with a 16 gap. Checked against Icon+leading (202), Link+leading (173)
+   and Edit without leading (184). */
+function _shContentW(card) {
+  var w = SH_CONTENT_W;
+  if (card.hasLeadingMedia === 'true') w -= SH_LEADING + SH_GAP;
+  var t = SH_TRAILING[card.trailingmedia] || SH_TRAILING['none'];
+  if (t.w) w -= t.w + SH_GAP;
+  return w;
+}
+
+/* ── Renderer ───────────────────────────────────────────────────────── */
+function _shRender(card, scale) {
+  scale = scale || 1;
+  var cw = _shContentW(card);
+  var x = SH_PAD;
+  var out = '<svg width="' + (SH_W * scale) + '" height="' + (SH_H * scale) +
+            '" viewBox="0 0 ' + SH_W + ' ' + SH_H +
+            '" fill="none" xmlns="http://www.w3.org/2000/svg">';
+  out += '<rect x="0.5" y="0.5" width="' + (SH_W - 1) + '" height="' + (SH_H - 1) +
+         '" fill="' + SH_COLOR.surface + '" stroke="' + SH_COLOR.border + '"/>';
+
+  /* LeadingMedia — an Image-Slot holding a circular placeholder. */
+  if (card.hasLeadingMedia === 'true') {
+    out += '<rect x="' + x + '" y="' + _shTop(SH_LEADING) + '" width="' + SH_LEADING + '" height="' + SH_LEADING +
+           '" rx="' + (SH_LEADING / 2) + '" fill="' + SH_COLOR.placeholder + '"/>';
+    x += SH_LEADING + SH_GAP;
+  }
+
+  /* HeaderContent — Preamble over a DescriptionRow, top-anchored at 24. */
+  var y = _shTop(_shContentH(card));
+  if (card.hasPreamble === 'true') {
+    out += '<text class="sh-proxima" x="' + x + '" y="' + (y + SH_PREAMBLE_H / 2) +
+           '" font-size="14" font-weight="700" fill="' + SH_COLOR.preamble +
+           '" dominant-baseline="central">Preamble</text>';
+    y += SH_PREAMBLE_H + SH_STACK_GAP;
+  }
+  out += '<text class="sh-proxima-title" x="' + x + '" y="' + (y + SH_TITLE_H / 2) +
+         '" font-size="22" font-weight="700" fill="' + SH_COLOR.title +
+         '" dominant-baseline="central">Heading</text>';
+  if (card.hasCounter === 'true') {
+    var cx = x + 85 + SH_COUNTER_GAP;          /* 85 is the measured "Heading" width */
+    out += '<rect x="' + cx + '" y="' + (y + 1) + '" width="' + SH_COUNTER + '" height="' + SH_COUNTER +
+           '" rx="' + (SH_COUNTER / 2) + '" fill="' + SH_COLOR.counterBg + '"/>';
+    out += '<text class="sh-proxima" x="' + (cx + SH_COUNTER / 2) + '" y="' + (y + 1 + SH_COUNTER / 2) +
+           '" font-size="12" font-weight="700" fill="' + SH_COLOR.counterValue +
+           '" text-anchor="middle" dominant-baseline="central">9</text>';
+  }
+  y += SH_TITLE_H;
+  if (card.hasDescription === 'true') {
+    out += '<text class="sh-barkada" x="' + x + '" y="' + (y + SH_DESC_H / 2) +
+           '" font-size="12" font-weight="600" fill="' + SH_COLOR.description +
+           '" dominant-baseline="central">Description goes here</text>';
+  }
+
+  /* TrailingMedia — right-aligned inside the 24 padding. */
+  var t = SH_TRAILING[card.trailingmedia];
+  if (t && t.w) {
+    var tx = SH_W - SH_PAD - t.w;
+    if (card.trailingmedia === 'icon') {
+      out += '<rect x="' + tx + '" y="' + _shTop(32) + '" width="32" height="32" rx="16" fill="' +
+             SH_COLOR.placeholder + '"/>';
+    } else if (card.trailingmedia === 'link') {
+      out += '<text class="sh-proxima" x="' + tx + '" y="' + (_shTop(16) + 8) +
+             '" font-size="16" font-weight="700" fill="' + SH_COLOR.trailing +
+             '" dominant-baseline="central">View All</text>';
+    } else if (card.trailingmedia === 'edit') {
+      out += '<rect x="' + tx + '" y="' + _shTop(24) + '" width="24" height="24" rx="4" fill="' +
+             SH_COLOR.trailing + '" opacity="0.15"/>';
+      out += '<text class="sh-proxima" x="' + (tx + 28) + '" y="' + (_shTop(24) + 12) +
+             '" font-size="16" font-weight="700" fill="' + SH_COLOR.trailing +
+             '" dominant-baseline="central">Edit details</text>';
+    }
+  }
+  return out + '</svg>';
+}
+
+/* ── Per-card state ─────────────────────────────────────────────────── */
+var _specCards = {
+  main: { trailingmedia: 'none', hasLeadingMedia: 'false',
+          hasPreamble: 'true', hasDescription: 'true', hasCounter: 'true' }
+};
 window._specCards = _specCards;
 
-function _getHeaderSnippet(cardKey, lang, card) {
-  var c = card || _headerSpecCards[cardKey] || {};
-  var hasPreamble = c.preamble === 'yes';
-  var hasDesc     = c.description === 'yes';
-  var leading     = c.leading || 'none';
-  var trailing    = c.trailing || 'none';
+/* ── DEV code ───────────────────────────────────────────────────────── */
+function _shCap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
-  if (lang === 'swift') {
-    var s = 'EBHeader("Page title")';
-    if (hasPreamble) s += '\n    .ebPreamble("PREAMBLE")';
-    if (hasDesc)     s += '\n    .ebDescription("Description body copy")';
-    if (leading === 'icon')         s += '\n    .ebLeadingMedia(.icon(Image(systemName: "chart.bar")))';
-    else if (leading === 'illustration') s += '\n    .ebLeadingMedia(.illustration(Image("section")))';
-    if (trailing === 'link')        s += '\n    .ebTrailing(.link("View All"))';
-    else if (trailing === 'edit')   s += '\n    .ebTrailing(.edit("Edit details"))';
-    else if (trailing === 'counter')s += '\n    .ebTrailing(.counter(0))';
-    else if (trailing === 'illustration') s += '\n    .ebTrailing(.illustration(Image("trail")))';
-    return s;
-  }
-  var lines = ['EBHeader('];
-  lines.push('    title = "Page title"' + (hasPreamble || hasDesc || leading !== 'none' || trailing !== 'none' ? ',' : ''));
-  if (hasPreamble) lines.push('    preamble = "PREAMBLE"' + ((hasDesc || leading !== 'none' || trailing !== 'none') ? ',' : ''));
-  if (hasDesc)     lines.push('    description = "Description body copy"' + ((leading !== 'none' || trailing !== 'none') ? ',' : ''));
-  if (leading === 'icon')         lines.push('    leadingMedia = EBLeadingMedia.Icon(Icons.Default.BarChart)' + (trailing !== 'none' ? ',' : ''));
-  else if (leading === 'illustration') lines.push('    leadingMedia = EBLeadingMedia.Illustration(painterResource(R.drawable.section))' + (trailing !== 'none' ? ',' : ''));
-  if (trailing === 'link')        lines.push('    trailing = EBHeaderTrailing.Link("View All")');
-  else if (trailing === 'edit')   lines.push('    trailing = EBHeaderTrailing.Edit("Edit details")');
-  else if (trailing === 'counter')lines.push('    trailing = EBHeaderTrailing.Counter(0)');
-  else if (trailing === 'illustration') lines.push('    trailing = EBHeaderTrailing.Illustration(painterResource(R.drawable.trail))');
+function buildSwiftSnippet(cardKey, card) {
+  var lines = ['EBSectionHeader("Heading")'];
+  if (card.hasPreamble === 'true') lines.push('    .ebPreamble("Preamble")');
+  if (card.hasDescription === 'true') lines.push('    .ebDescription("Description goes here")');
+  if (card.hasCounter === 'true') lines.push('    .ebCounter(9)');
+  if (card.hasLeadingMedia === 'true') lines.push('    .ebLeadingMedia { EBAvatar(user) }');
+  if (card.trailingmedia !== 'none') lines.push('    .ebTrailingMedia(.' + card.trailingmedia + ')');
+  return lines.join('\n');
+}
+function buildComposeSnippet(cardKey, card) {
+  var lines = ['EBSectionHeader('];
+  lines.push('    title = "Heading",');
+  if (card.hasPreamble === 'true') lines.push('    preamble = "Preamble",');
+  if (card.hasDescription === 'true') lines.push('    description = "Description goes here",');
+  if (card.hasCounter === 'true') lines.push('    counter = 9,');
+  if (card.hasLeadingMedia === 'true') lines.push('    leadingMedia = { EBAvatar(user) },');
+  lines.push('    trailingMedia = EBTrailingMedia.' + _shCap(card.trailingmedia));
   lines.push(')');
   return lines.join('\n');
 }
-
-function buildSwiftSnippet(type, card)   { return _getHeaderSnippet(type, 'swift', card); }
-function buildComposeSnippet(type, card) { return _getHeaderSnippet(type, 'compose', card); }
-function getSnippet(type, lang, card)    { return _getHeaderSnippet(type, lang, card); }
+function getSnippet(cardKey, lang, card) {
+  return lang === 'swift' ? buildSwiftSnippet(cardKey, card) : buildComposeSnippet(cardKey, card);
+}
 window.getSnippet = getSnippet;
 
-/* Map a demoKey to its underlying spec-card cardKey via the inner preview id. */
-var _headerDemoKeyToSpecId = {
-  'title-only':       'header-spec-1',
-  'full-stack':       'header-spec-2',
-  'trailing-link':    'header-spec-3',
-  'trailing-edit':    'header-spec-4',
-  'trailing-counter': 'header-spec-5'
-};
+/* ── Control handler ────────────────────────────────────────────────── */
+var SH_PREVIEW_SCALE = 1;
+var SH_PROPS = ['trailingmedia', 'hasLeadingMedia', 'hasPreamble', 'hasDescription', 'hasCounter'];
 
-function _headerCardKeyFor(demoKey) {
-  var inner = document.getElementById(_headerDemoKeyToSpecId[demoKey]);
-  if (!inner) return null;
-  var card$ = inner.closest('.spec-card');
-  if (!card$) return null;
-  return (card$.id || '').replace(/^spec-card-/, '');
-}
-
-function updateSpecCard(cardKey, prop, value) {
-  var card = _headerSpecCards[cardKey];
+function updateSpecCard(cardStyle, prop, value) {
+  var card = _specCards[cardStyle];
   if (!card) return;
   card[prop] = value;
 
-  /* Update preview body */
-  var ck = _headerCardKeyFor(cardKey);
-  var card$ = ck ? document.getElementById('spec-card-' + ck) : null;
-  if (card$) {
-    var preview = card$.querySelector('.spec-card-preview, .spec-preview-body, .spec-preview-frame');
-    if (preview) preview.innerHTML = _headerRenderVariant(card);
-  }
+  var host = document.getElementById('section-header-spec-' + cardStyle);
+  if (host) host.innerHTML = _shRender(card, SH_PREVIEW_SCALE);
 
-  /* Update Properties readouts — data-sp="<demoKey>-<prop>" */
-  ['preamble', 'description', 'leading', 'trailing'].forEach(function(p) {
-    var spEl = document.querySelector('[data-sp="' + cardKey + '-' + p + '"]');
-    if (spEl) spEl.textContent = card[p];
+  SH_PROPS.forEach(function (k) {
+    var el = document.querySelector('[data-sp="' + cardStyle + '-' + k + '"]');
+    if (!el) return;
+    el.textContent = k === 'trailingmedia'
+      ? _shCap(card[k])
+      : (card[k] === 'true' ? 'True' : 'False');
   });
+  var w = document.querySelector('[data-sp="' + cardStyle + '-contentWidth"]');
+  if (w) w.textContent = _shContentW(card) + 'px';
 
-  /* Update DEV code */
-  var devView = document.querySelector('[data-view="' + cardKey + '-dev"]');
+  var devView = document.querySelector('[data-view="' + cardStyle + '-dev"]');
   if (devView) {
     var activeTab = devView.querySelector('.spec-code-tab.active');
-    var lang = activeTab && activeTab.textContent.toLowerCase().indexOf('swift') !== -1 ? 'swift' : 'compose';
-    var codeEl = devView.querySelector('[data-code-content="' + cardKey + '"]');
+    var lang = activeTab && /swift/i.test(activeTab.textContent) ? 'swift' : 'compose';
+    var codeEl = devView.querySelector('[data-code-content="' + cardStyle + '"]');
     if (codeEl) {
-      var code = getSnippet(cardKey, lang, card);
+      var code = getSnippet(cardStyle, lang, card);
       codeEl.setAttribute('data-final', code);
       codeEl.setAttribute('data-lang', lang);
       codeEl.textContent = code;
@@ -179,49 +215,23 @@ function updateSpecCard(cardKey, prop, value) {
     }
   }
 }
+window.updateSpecCard = updateSpecCard;
 
-function _headerInit() {
-  var ctx = document.getElementById('header-context-preview');
-  if (ctx) ctx.innerHTML = _headerContextMarkup();
+/* ── Overview tab live preview ──────────────────────────────────────── */
+function _headerUpdate() {
+  var el = document.getElementById('header-demo-preview');
+  if (el) el.innerHTML = _shRender(_specCards.main, 1);
+}
+window._headerUpdate = _headerUpdate;
+
+/* ── First paint ────────────────────────────────────────────────────── */
+function _shInit() {
   _headerUpdate();
-  var cards = [
-    { id: 'header-spec-1', opts: {preamble:'no',  description:'no',  leading:'none', trailing:'none'} },
-    { id: 'header-spec-2', opts: {preamble:'yes', description:'yes', leading:'none', trailing:'none'} },
-    { id: 'header-spec-3', opts: {preamble:'no',  description:'no',  leading:'none', trailing:'link'} },
-    { id: 'header-spec-4', opts: {preamble:'no',  description:'no',  leading:'none', trailing:'edit'} },
-    { id: 'header-spec-5', opts: {preamble:'no',  description:'no',  leading:'none', trailing:'counter'} }
-  ];
-  cards.forEach(function(c) {
-    var el = document.getElementById(c.id);
-    if (el) el.innerHTML = _headerRenderVariant(c.opts);
-  });
-
-  /* Sync each spec card's per-prop dropdowns to the card's defaults. */
-  Object.keys(_headerSpecCards).forEach(function(k) {
-    var ck = _headerCardKeyFor(k);
-    if (!ck) return;
-    var card$ = document.getElementById('spec-card-' + ck);
-    if (!card$) return;
-    var card = _headerSpecCards[k];
-    var selects = card$.querySelectorAll('.demo-figma-panel .demo-panel-row');
-    selects.forEach(function(row) {
-      var label = row.querySelector('.demo-panel-label');
-      var sel   = row.querySelector('select');
-      if (!label || !sel) return;
-      var prop = label.textContent.trim();
-      var v = card[prop];
-      if (v == null) return;
-      for (var i = 0; i < sel.options.length; i++) {
-        if (sel.options[i].value === v) { sel.selectedIndex = i; break; }
-      }
-    });
+  Object.keys(_specCards).forEach(function (k) {
+    var host = document.getElementById('section-header-spec-' + k);
+    if (host) host.innerHTML = _shRender(_specCards[k], SH_PREVIEW_SCALE);
   });
 }
-
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _headerInit);
-else _headerInit();
-
-(function(){
-  function reinit(){ if (typeof _headerInit === 'function') _headerInit(); }
-  document.addEventListener('astro:page-load', reinit);
-})();
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _shInit);
+else _shInit();
+document.addEventListener('astro:page-load', _shInit);
