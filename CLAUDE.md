@@ -566,17 +566,18 @@ The Button component is the baseline. Every component's Style tab spec cards mus
 
 No `Font`, `Size`, `Tracking` or `Line-height` rows. Those live in the text style and resolve from the token database — repeating them on the card is what goes stale, and it hides which variable mode the numbers describe.
 
-**Resolving the style name.** `astro-site/src/data/typography.ts` holds all 53 DS text styles with their Figma style keys. A shared-library style reports an opaque `textStyleId` (`S:4b5515…`); `resolveStyleId()` turns it into the style path. The hash in that id is the key the database stores.
+**Resolving the style — name + value.** `astro-site/src/data/typography.ts` holds all 53 DS text styles with their Figma style keys. A shared-library style reports an opaque `textStyleId` (`S:4b5515…`); `matchLayer(reading, pin?)` resolves it to the style path **and** checks the layer's own family / weight / size / line-height against what that style resolves to. A match is both halves. A name that resolves while the values disagree is **not** a match — the style is bound but overridden.
 
-**Three outcomes per text layer:**
+**Four outcomes per text layer** (`matchLayer().status`):
 
-| Layer reports | Row value | Open issue |
-|---|---|---|
-| `textStyleId` that resolves | the style name | — |
-| No `textStyleId` — raw values | `—` | Yes · `C3 · Token Coverage` |
-| `textStyleId` that doesn't resolve | `—` | Yes · `C3 · Token Coverage` |
+| `status` | Layer reports | Row value | Open issue |
+|---|---|---|---|
+| `matched` | id resolves **and** values agree | the style name | — |
+| `no-text-style-id` | raw values, nothing bound | `—` | Yes · `C3 · Token Coverage` |
+| `unresolved` | an id the database doesn't know | `—` | Yes · `C3 · Token Coverage` |
+| `values-differ` | id resolves, values disagree | `—` | Yes · `C3 · Token Coverage` — list each mismatch |
 
-Exception: `Component/Balances/Label` exists in Figma but is excluded from the database (`EXCLUDED_STYLE_NAMES`) — a layer using it fails to resolve and is **not** an issue.
+Exception: `Component/Balances/Label` exists in Figma but is excluded from the database — `matchLayer` returns `excluded`, write `—`, raise nothing. Pass the Type Config and Type Primitives modes the file is actually on; the same style resolves to different numbers under others.
 
 Never write a font spec in place of a style name, and never guess a name from the font and size. A failed lookup is the finding.
 
