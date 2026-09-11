@@ -119,17 +119,57 @@ SPM URL + Gradle dependency + the import lines, one block each — using the **c
 
 | Position | Hyphen legal? | Rule | Result |
 |---|---|---|---|
-| Gradle `<artifact>` | ✅ yes — Maven convention | The slug as-is; components in a family ship under the family's existing bundle (`form-elements`) | `com.eastblue.ds:bottom-sheet:2.0.0` |
+| Gradle `<artifact>` | ✅ yes — Maven convention | **The family's artifact** (decided 2026-09-04): `meta.navGroup` lowercased, spaces → hyphens. No family → the slug as-is | `date-picker-cell` → `com.eastblue.ds:date-picker:2.0.0` · `bottom-sheet` (no family) → `com.eastblue.ds:bottom-sheet:2.0.0` |
 | Kotlin `<package>` | ❌ **no — will not compile** | **Domain-grouped** (decided 2026-09-02): the component's family — `meta.navGroup` lowercased, spaces and hyphens removed. No family → the slug, hyphens stripped | `date-picker-cell` → `com.eastblue.ds.datepicker` · `bottom-sheet` (no family) → `com.eastblue.ds.bottomsheet` |
 | Type names | ❌ no | PascalCase per word | `EBBottomSheet`, `EBBottomSheetSize` |
 
-Domain examples from the current families: `Form Elements` → `form` *(already shipped on 9 components)* · `Date Picker` → `datepicker` · `Action List` → `actionlist` · `Ad Space` → `adspace` · `Toggle` → `toggle`. One package per family keeps imports stable when a family gains a component.
+### One artifact per family
 
-**Known migration debt** (each caught by check 3 on that component's run): **22 components** still on the old `com.gcash.eastblue` coordinates · **41 of 57** install blocks missing the Import line · two orphan imports that predate the rule — `callout` on `.feedback.*` (no such family) and `chat-field` importing both `.form.*` and `.chat.*` (its family is Chat).
+**An artifact is a family, never a component.** Every member of a family ships in one Gradle artifact and one Kotlin package, both derived from the same `meta.navGroup`: `date-picker`, `date-picker-cell` and `date-picker-header` all install `com.eastblue.ds:date-picker` and import `com.eastblue.ds.datepicker.*`. A component with no `navGroup` is a family of one. Members can't be adopted individually — that is the trade-off, and it is accepted: a calendar cell is never added to an app without its calendar. What it buys: no split package (one artifact per package keeps R8 and JPMS quiet), one dependency line for the app team, and identical install blocks across a family, so "which artifact do I add?" has one answer.
 
-Validation reads accordingly: a hyphen inside a Kotlin package segment or type name is 🔴 Broken — it's invalid syntax; a hyphen in a Gradle artifact ID is **correct** and must not be flagged.
+**The lead is a class, not the artifact.** `com.eastblue.ds:date-picker` is the Date Picker *family*; the `date-picker` component is `EBDatePicker` inside it. Where a lead's slug equals its family key, the coordinates coincide by construction and always mean the family.
 
-**`<version>` is the component's latest changelog version.** Button currently ships `2.0.0` in its install blocks against a `4.1.0` changelog — that drift is exactly what this rule exists to catch.
+**`navGroup` is the family key, and the only one.** If an artifact reads wrong for its members — `select` for the three `dropdown-*` slugs — the fix is the `navGroup` on those components, never a per-component override in the install block.
+
+Family → coordinates, read off `meta.navGroup` today (21 families covering 74 components; the 21 solo components use their slug):
+
+| Family (`navGroup`) | Gradle artifact | Kotlin package | Members |
+|---|---|---|---|
+| Action List | `action-list` | `actionlist` | 3 |
+| Ad Space | `ad-space` | `adspace` | 2 |
+| Avatar | `avatar` | `avatar` | 2 |
+| Card | `card` | `card` | 2 |
+| Carousel | `carousel` | `carousel` | 2 |
+| Chat | `chat` | `chat` | 1 |
+| Countdown | `countdown` | `countdown` | 3 |
+| Date Picker | `date-picker` | `datepicker` | 8 |
+| Form Elements | `form-elements` | `form` † | 9 |
+| Header | `header` | `header` | 5 |
+| List | `list` | `list` | 3 |
+| Modal | `modal` | `modal` | 3 |
+| Radio | `radio` | `radio` | 2 |
+| Select | `select` | `select` | 3 |
+| Stepper | `stepper` | `stepper` | 3 |
+| Table | `table` | `table` | 3 |
+| Tabs | `tabs` | `tabs` | 2 |
+| Toast | `toast` | `toast` | 2 |
+| Toggle | `toggle` | `toggle` | 5 |
+| Tooltip | `tooltip` | `tooltip` | 4 |
+| Voucher | `voucher` | `voucher` | 7 |
+
+† `form`, not `formelements` — the one grandfathered package, shipped on nine components before the rule existed. Everything else in the table is mechanical, and a family that gains a component gains no new coordinates.
+
+SwiftUI is unaffected: `import EastBlueDS` is one module for the whole system, so a family has no iOS-side expression.
+
+**Known migration debt** (each caught by check 3 on that component's run):
+
+- **17 install blocks** still on the old `com.gcash.eastblue` coordinates · **68 of 91** missing the Import line. (Counted over install blocks, not files — five more files mention the old coordinates in changelog prose, which is history and stays.)
+- **Nine install blocks on a non-family artifact.** The three Action List components on `:list` — that is the *List* family's artifact, so two families currently share one · `ad-carousel` on `:ad-carousel` and `upload-file` on `:upload-file` (per-component, predate this ruling) · `title-bar` on `:titlebar` (artifact IDs keep the hyphen) · `callout` on `:feedback` and `chat-field` on `:form-elements` (no such family for either) · `subtext-message` on `:form-elements` with no `navGroup` — it either joins Form Elements or moves to `:subtext-message`; the owner's call.
+- **Four orphan imports.** `callout` on `.feedback.*`, `chat-field` importing both `.form.*` and `.chat.*` (its family is Chat), `subtext-message` on `.form.*`, `action-list-counter` on `.components.*`.
+
+Validation reads accordingly: a hyphen inside a Kotlin package segment or type name is 🔴 Broken — it's invalid syntax; a hyphen in a Gradle artifact ID is **correct** and must not be flagged. A family member citing anything but its family's coordinates — `com.eastblue.ds:date-picker-cell`, or `:list` on an Action List component — is 🔴 Broken too: it names an artifact that will never exist, or another family's.
+
+**`<version>` is the library's release number, not the page's.** While `"planned": true`, every install block pins `1.0.0`, for solo components and family members alike. Page changelogs never drive it: a doc fix on `date-picker-cell` is not a release of `com.eastblue.ds:date-picker`. The number moves once, when a real library ships, and then the guide gets a rule for who re-pins a family. Button's `2.0.0` against a `4.1.0` changelog is the drift this rule ends: neither number is the library's, and the block should read `1.0.0`.
 
 ```ts
 "installation": {
@@ -284,7 +324,7 @@ Then open `http://localhost:4321/components/<slug>` on the Code tab and read eve
 |---|---|---|
 | 1 | Build passes | `npm run build` exits clean |
 | 2 | Section order | Installation → Property Mapping → Usage Snippets → Accessibility → Usage Guidelines → Scorecard → Variants |
-| 3 | Installation complete | SPM + Gradle + import, Planned API badge showing |
+| 3 | Installation complete | SPM + Gradle + import, coordinates from the family table, version 1.0.0 while Planned API, Planned API badge showing |
 | 4 | Property Mapping is prose | No `=` in any Figma cell |
 | 5 | Property Mapping is grouped | One row per property, all values on that row |
 | 6 | Property Mapping is complete | Row count = worksheet property count, slots included |

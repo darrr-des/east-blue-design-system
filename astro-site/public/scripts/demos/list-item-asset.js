@@ -82,10 +82,58 @@ function _liaUpdate() {
 }
 
 /* ── Spec card state ─────────────────────────────────────────────── */
-var _specCards = {
-  default: { type: 'pending' }
-};
+/* One card per Type value, keyed by the demoKey in the data file. Neither
+   property is a control — Type is the driving property and IconSlot is a
+   slot — so the cards carry no panel and the state never changes after
+   init. It still lives here so getSnippet and the renderer share one
+   definition rather than two that can drift. */
+var _LIA_TYPES = ['pending', 'pending-notice', 'check', 'check-positive',
+                  'bullet', 'square', 'numbered', 'slot'];
+
+var _specCards = {};
+_LIA_TYPES.forEach(function (t) { _specCards[t] = { type: t }; });
 window._specCards = _specCards;
+
+var _LIA_CASED = {
+  'pending': 'Pending', 'pending-notice': 'PendingNotice', 'check': 'Check',
+  'check-positive': 'CheckPositive', 'bullet': 'Bullet', 'square': 'Square',
+  'numbered': 'Numbered', 'slot': 'Slot'
+};
+
+/* ── DEV code, live ───────────────────────────────────────────────── */
+/* Numbered takes the index and Slot takes the icon, so those two calls are
+   longer than the other six. #number is not a Figma property — it is a text
+   layer — but it still has to be a parameter natively, which is why it
+   appears here and not in the Property Mapping table. */
+function getSnippet(cardKey, lang) {
+  var card = _specCards[cardKey] || _specCards['pending'];
+  var cased = _LIA_CASED[card.type] || 'Pending';
+  var compose = lang === 'compose';
+  var sep = compose ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
+  var value = compose
+    ? '<span class="syn-type">EBListItemAssetType</span><span class="syn-punc">.</span>' +
+      '<span class="syn-dot">' + cased + '</span>'
+    : '<span class="syn-dot">.' + cased.charAt(0).toLowerCase() + cased.slice(1) + '</span>';
+
+  var args = 'type' + sep + value;
+  if (card.type === 'numbered') {
+    args += '<span class="syn-punc">,</span> number' + sep + '<span class="syn-val">3</span>';
+  }
+
+  var call = '<span class="syn-type">EBListItemAsset</span><span class="syn-punc">(</span>' +
+    args + '<span class="syn-punc">)</span>';
+
+  if (card.type === 'slot') {
+    call += compose
+      ? ' <span class="syn-punc">{</span> <span class="syn-fn">Icon</span>' +
+        '<span class="syn-punc">(</span>EBIcons<span class="syn-punc">.</span>Star<span class="syn-punc">) }</span>'
+      : ' <span class="syn-punc">{</span> <span class="syn-type">Image</span>' +
+        '<span class="syn-punc">(</span>systemName<span class="syn-punc">:</span> ' +
+        '<span class="syn-str">"star.fill"</span><span class="syn-punc">) }</span>';
+  }
+  return call;
+}
+window.getSnippet = getSnippet;
 
 function updateSpecCard(cardKey, prop, value) {
   var card = _specCards[cardKey];

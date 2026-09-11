@@ -2430,7 +2430,7 @@ p.rb-banner-desc {
 .demo-btn-subtle.disabled { opacity: 0.4; }
 /* Destructive variant overrides */
 .demo-btn-primary.destructive { background: #D81E1E; }
-.demo-btn-outlined.destructive { color: #D81E1E; border-color: #D81E1E; }
+.demo-btn-outlined.destructive { color: #D81E1E; border-color: #D61B2C; }
 .demo-btn-text.destructive { color: #D81E1E; }
 /* Size modifiers — override vertical padding + font-size */
 .demo-btn.size-medium { padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 20px !important; padding-right: 20px !important; }
@@ -2507,6 +2507,14 @@ p.rb-banner-desc {
   white-space: nowrap;
   font-size: 13px;
   color: var(--muted);
+}
+/* For a panel row whose value is set by interacting with the preview
+   rather than by a control — Slider's value, which is a drag. */
+.demo-panel-note {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--muted);
+  opacity: 0.8;
 }
 .demo-panel-select {
   width: 100%;
@@ -5166,13 +5174,14 @@ pre.code-snippet .prp { color: #0369A1; }
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 10px 24px;
-  font-family: var(--font-body);
+  padding: 0 24px;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   border-bottom: 1px solid #E5EBF4;
 }
-.eb-preview-trow--header   { min-height: 68px; background: #F6F9FD; }
-.eb-preview-trow--content  { min-height: 70px; background: #FFFFFF; }
-.eb-preview-trow--disabled { background: #F6F9FD; }
+.eb-preview-trow--header  { min-height: 68px; padding: 8px 24px 12px; background: #F6F9FD; }
+.eb-preview-trow--content { min-height: 70px; padding: 12px 24px;     background: #FFFFFF; }
+/* State=Disabled changes text colour only — the export shows a disabled
+   Content row still white and a disabled Header row still #F6F9FD. */
 
 /* Table Label — fixed 120 leading column */
 .eb-preview-trow__label {
@@ -5180,7 +5189,8 @@ pre.code-snippet .prp { color: #0369A1; }
   min-width: 120px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
+  padding-top: 5px;
 }
 .eb-preview-trow__label-text {
   font-family: 'Proxima Soft', system-ui, sans-serif;
@@ -5196,7 +5206,7 @@ pre.code-snippet .prp { color: #0369A1; }
   width: 24px;
   height: 24px;
   border-radius: 999px;
-  background: #C8D3E5;
+  background: #D7E0EF;
 }
 
 /* Optional supporting line — 10px token, dims with the rest when disabled */
@@ -5216,6 +5226,7 @@ pre.code-snippet .prp { color: #0369A1; }
   display: flex;
   gap: 0;
 }
+.eb-preview-trow--header .eb-preview-trow__cols { padding-top: 6px; }
 .eb-preview-trow__cell {
   flex: 1 1 0;
   min-width: 0;
@@ -5227,7 +5238,7 @@ pre.code-snippet .prp { color: #0369A1; }
   width: 24px;
   height: 24px;
   border-radius: 999px;
-  background: #C8D3E5;
+  background: #D7E0EF;
 }
 .eb-preview-trow__cell-text { color: #0A2757; }
 .eb-preview-trow--header .eb-preview-trow__cell-text {
@@ -5249,16 +5260,14 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-ttxn {
   box-sizing: border-box;
   width: 360px;
-  padding: 12px 24px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  justify-content: center;
   border-bottom: 1px solid #E5EBF4;
   font-family: 'Proxima Soft', system-ui, sans-serif;
 }
-.eb-preview-ttxn--header  { height: 66px; background: #F6F9FD; }
-.eb-preview-ttxn--content { height: 68px; background: #FFFFFF; }
+.eb-preview-ttxn--header  { min-height: 66px; padding: 12px 24px; background: #F6F9FD; }
+.eb-preview-ttxn--content { min-height: 68px; padding: 16px 24px; background: #FFFFFF; }
 
 .eb-preview-ttxn__label {
   font-weight: 600;
@@ -5273,7 +5282,7 @@ pre.code-snippet .prp { color: #0369A1; }
   width: 24px;
   height: 24px;
   border-radius: 999px;
-  background: #C8D3E5;
+  background: #D7E0EF;
 }
 .eb-preview-ttxn__cell-label {
   font-weight: 600;
@@ -5291,7 +5300,9 @@ pre.code-snippet .prp { color: #0369A1; }
 }
 .eb-preview-ttxn__cell-amount {
   display: flex;
-  align-items: baseline;
+  box-sizing: border-box;
+  height: 14px;
+  align-items: center;
   gap: 2px;
   font-weight: 600;
   font-size: 12px;
@@ -5303,6 +5314,9 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-ttxn--disabled .eb-preview-ttxn__cell-label,
 .eb-preview-ttxn--disabled .eb-preview-ttxn__cell-sub,
 .eb-preview-ttxn--disabled .eb-preview-ttxn__cell-amount { color: #C2CFE5; }
+
+/* Peso Sign - Proxima, inlined from Figma; fill follows the text colour. */
+.eb-peso { flex: none; }
 
 /* ── Table Scheduling (360 wide, State — node 5868:40468) ────────── */
 .eb-preview-tsched {
@@ -5320,10 +5334,16 @@ pre.code-snippet .prp { color: #0369A1; }
   display: flex;
   align-items: center;
   gap: 2px;
+  height: 18px;
 }
 .eb-preview-tsched__date {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
   width: 108px;
   min-width: 108px;
+  height: 18px;
+  padding-bottom: 2px;
   font-weight: 600;
   font-size: 12px;
   line-height: 12px;
@@ -5331,19 +5351,29 @@ pre.code-snippet .prp { color: #0369A1; }
   color: #0A2757;
 }
 .eb-preview-tsched__peso {
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 14px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  height: 18px;
+  padding-top: 2px;
   color: #005CE5;
 }
 .eb-preview-tsched__total {
+  box-sizing: border-box;
+  display: block;
+  height: 16px;
+  padding: 2px 0 0 2px;
+  color: #005CE5;
+}
+.eb-preview-tsched__total-text {
+  display: block;
+  height: 14px;
   font-weight: 700;
   font-size: 14px;
   line-height: 14px;
   letter-spacing: 0.25px;
-  color: #005CE5;
 }
-.eb-preview-tsched__details { display: flex; align-items: flex-start; }
+.eb-preview-tsched__details { display: flex; align-items: flex-start; gap: 16px; }
 .eb-preview-tsched__row-label {
   width: 95px;
   min-width: 95px;
@@ -5353,8 +5383,16 @@ pre.code-snippet .prp { color: #0369A1; }
   letter-spacing: 0.5px;
   color: #6780A9;
 }
-.eb-preview-tsched__cells { flex: 1 1 auto; min-width: 0; display: flex; gap: 8px; }
-.eb-preview-tsched__cell { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.eb-preview-tsched__cells {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: 8px;
+  padding-right: 16px;
+}
+.eb-preview-tsched__cell { flex: 0 0 72px; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
 .eb-preview-tsched__cell-label {
   font-weight: 600;
   font-size: 12px;
@@ -5364,7 +5402,9 @@ pre.code-snippet .prp { color: #0369A1; }
 }
 .eb-preview-tsched__cell-amount {
   display: flex;
-  align-items: baseline;
+  box-sizing: border-box;
+  height: 14px;
+  align-items: center;
   gap: 2px;
   font-weight: 600;
   font-size: 12px;
@@ -5430,6 +5470,22 @@ pre.code-snippet .prp { color: #0369A1; }
 /* Side variant scaling cue — slightly dim/opacify so the visual tells the story */
 .eb-preview-cit--side,
 .eb-preview-csi-side { opacity: 0.8; transform: scale(0.97); transform-origin: center; }
+
+/* ── Carousel Item: match the component, not the placeholder ────────
+   The card is one flat colour — node 8942:79573 (Dark) / 8942:79589
+   (Light). These override the shared hero/gradient treatment for `cit`
+   only, leaving the `ccc` and `csi` previews alone. */
+.eb-preview-cit--bg-dark  { background: #1972F9; }
+.eb-preview-cit--bg-light { background: #E5F1FF; }
+
+/* The Background slot sits behind the content, so its placeholder shows
+   no fill of its own — only the "Replace me" tag marking where art goes. */
+.eb-preview-cit__hero { background: none; }
+
+/* Background and Overlay are absolutely positioned beneath the text, so a
+   press dims the artwork and never the copy. */
+.eb-preview-cit__dim { z-index: 1; }
+.eb-preview-cit__content { position: relative; z-index: 2; }
 
 /* Content stack (heading + preamble + desc + button) on the left */
 .eb-preview-cit__content,
@@ -5674,7 +5730,7 @@ pre.code-snippet .prp { color: #0369A1; }
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
 }
 .eb-preview-adspace--receipt { width: 300px; }
 .eb-preview-adspace--banner  { width: 320px; }
@@ -5730,6 +5786,7 @@ pre.code-snippet .prp { color: #0369A1; }
   color: #005CE5;
 }
 .eb-preview-adspace__description {
+  font-family: 'BarkAda', system-ui, sans-serif;
   font-size: 12px;
   font-weight: 600;
   line-height: 18px;
@@ -5747,6 +5804,7 @@ pre.code-snippet .prp { color: #0369A1; }
    Header (#title + optional CTA) over a clipped rail of Ad Space cards.
    ═════════════════════════════════════════════════════════════════════ */
 .eb-preview-adcarousel {
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   width: 360px;
   padding: 12px 0;
   background: #FFFFFF;
@@ -5819,60 +5877,85 @@ pre.code-snippet .prp { color: #0369A1; }
   align-items: center;
   justify-content: center;
   height: 32px;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.25px;
   line-height: 14px;
   color: #0A2757;
 }
-.eb-preview-dpcell--day { width: 32px; border-radius: 24px; }
-.eb-preview-dpcell--monthyear { width: 59px; border-radius: 8px; }
+.eb-preview-dpcell--day { width: 32px; }
+.eb-preview-dpcell--monthyear { width: 59px; }
+
+/* The Container is its own layer so the range strip can sit beneath it,
+   exactly as in Figma — "Range highlight start" is a sibling drawn before
+   Container, not a child of it. */
+.eb-preview-dpcell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #FFFFFF;
+}
+.eb-preview-dpcell--day::before { border-radius: 24px; }
+.eb-preview-dpcell--monthyear::before { border-radius: 8px; }
 
 .eb-preview-dpcell__label { position: relative; z-index: 2; }
 
-/* Range strip sits behind the cell and bleeds 10px past it. */
+/* Range strip sits behind the Container and bleeds past the cell so the
+   bar reads as continuous across neighbouring days. */
 .eb-preview-dpcell__range {
   position: absolute;
   top: 0;
   height: 32px;
   background: #E5F1FF;
-  z-index: 1;
+  z-index: 0;
 }
 .eb-preview-dpcell__range--start { left: 16px; width: 26px; }
 .eb-preview-dpcell__range--end { right: 16px; width: 26px; }
 .eb-preview-dpcell__range--middle { left: -10px; width: 52px; }
 
-.eb-preview-dpcell--today { box-shadow: inset 0 0 0 1px #005CE5; color: #005CE5; }
-.eb-preview-dpcell--selected { background: #005CE5; color: #FFFFFF; }
+.eb-preview-dpcell--today::before { box-shadow: inset 0 0 0 1px #005CE5; }
+.eb-preview-dpcell--today { color: #005CE5; }
+.eb-preview-dpcell--selected::before { background: #005CE5; }
+.eb-preview-dpcell--selected { color: #FFFFFF; }
+
+/* Range-Middle draws no Container — the highlight runs under the text. */
+.eb-preview-dpcell--rangemiddle::before { background: transparent; }
 .eb-preview-dpcell--rangemiddle { color: #005CE5; }
+
 .eb-preview-dpcell--prevnext { color: #6780A9; }
 .eb-preview-dpcell--disabled { color: #C2CFE5; }
-.eb-preview-dpcell--selected.eb-preview-dpcell--disabled { background: #9BC5FD; color: #FFFFFF; }
-.eb-preview-dpcell--today.eb-preview-dpcell--disabled { box-shadow: inset 0 0 0 1px #C2CFE5; color: #C2CFE5; }
+.eb-preview-dpcell--selected.eb-preview-dpcell--disabled::before { background: #9BC5FD; }
+.eb-preview-dpcell--selected.eb-preview-dpcell--disabled { color: #FFFFFF; }
+.eb-preview-dpcell--today.eb-preview-dpcell--disabled::before { box-shadow: inset 0 0 0 1px #9BC5FD; }
+.eb-preview-dpcell--today.eb-preview-dpcell--disabled { color: #9BC5FD; }
 
 /* ── Weekday header cell ────────────────────────────────────────── */
 .eb-preview-dpwk {
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 32px;
   height: 32px;
   border-radius: 24px;
+  background: #FFFFFF;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.25px;
+  line-height: 14px;
   color: #0A2757;
 }
 
 /* ── Header Trigger ─────────────────────────────────────────────── */
 .eb-preview-dphdr {
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  height: 24px;
-  padding: 0 8px;
+  gap: 8px;
+  padding: 4px 8px;
   border-radius: 4px;
   background: #F6F9FD;
   font-size: 16px;
@@ -5885,6 +5968,8 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-dphdr--pressed { background: #EEF2F9; }
 .eb-preview-dphdr--disabled { background: #FFFFFF; color: #C2CFE5; }
 .eb-preview-dphdr__caret { flex: 0 0 auto; display: block; }
+.eb-preview-dphdr__caret { color: #445C85; }
+.eb-preview-dphdr--disabled .eb-preview-dphdr__caret { color: #C2CFE5; }
 
 /* ── Calendar surface ───────────────────────────────────────────── */
 .eb-preview-dpcal {
@@ -5894,7 +5979,10 @@ pre.code-snippet .prp { color: #0369A1; }
   border: 1px solid #E5EBF4;
   border-radius: 8px;
   box-sizing: border-box;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
 }
+.eb-preview-dpcal__spacer { flex: 0 0 auto; width: 24px; }
+.eb-preview-dpcal__trigger { flex: 0 0 114px; justify-content: center; }
 .eb-preview-dpcal__header {
   display: flex;
   align-items: center;
@@ -5927,9 +6015,10 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-dpcal__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  row-gap: 16px;
+  row-gap: 32px;
   justify-items: center;
   margin-top: 8px;
+  column-gap: 16px;
 }
 /* The list and its indicator share a stacking context so the indicator
    floats over the right edge instead of adding height below the grid. */
@@ -5939,14 +6028,14 @@ pre.code-snippet .prp { color: #0369A1; }
   top: 8px;
   right: 0;
   width: 4px;
-  height: 120px;
+  height: 80px;
   border-radius: 99px;
-  background: #E5EBF4;
+  background: #0A2757;
   pointer-events: none;
 }
 
 /* ── Field trigger ──────────────────────────────────────────────── */
-.eb-preview-dptrig { width: 312px; font-family: inherit; }
+.eb-preview-dptrig { width: 312px; font-family: 'Proxima Soft', system-ui, sans-serif; }
 .eb-preview-dptrig__label {
   font-size: 14px;
   font-weight: 600;
@@ -5975,8 +6064,10 @@ pre.code-snippet .prp { color: #0369A1; }
 .eb-preview-dptrig--pressed .eb-preview-dptrig__field { border-color: #005CE5; }
 .eb-preview-dptrig--disabled .eb-preview-dptrig__field { background: #EEF2F9; border-color: transparent; }
 .eb-preview-dptrig--disabled .eb-preview-dptrig__value { color: #90A8D0; }
+.eb-preview-dptrig--disabled .eb-preview-dptrig__icon { color: #9BC5FD; }
 .eb-preview-dptrig--error .eb-preview-dptrig__field { border-color: #D81E1E; }
 .eb-preview-dptrig__subtext {
+  font-family: 'BarkAda', system-ui, sans-serif;
   margin-top: 4px;
   font-size: 12px;
   font-weight: 600;
@@ -6977,7 +7068,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 /* ── Unit (25×34 stacked, inline hugs) ──────────────────────────── */
 .eb-preview-cdunit {
   display: inline-flex;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   color: #005CE5;
 }
 .eb-preview-cdunit--stacked {
@@ -7003,6 +7094,8 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   letter-spacing: 0.25px;
   color: inherit;
 }
+.eb-preview-cdunit--inline .eb-preview-cdunit__time { font-weight: 600; font-size: 16px; line-height: 16px; letter-spacing: 0.25px; }
+.eb-preview-cdunit--inline .eb-preview-cdunit__unit { font-size: 16px; line-height: 16px; }
 /* Inline puts number and label on one line at a shared size. */
 .eb-preview-cdunit--inline .eb-preview-cdunit__time,
 .eb-preview-cdunit--inline .eb-preview-cdunit__unit {
@@ -7033,7 +7126,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 .eb-preview-cd {
   display: inline-flex;
   align-items: center;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
 }
 
@@ -7041,11 +7134,13 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 .eb-preview-cd--one {
   gap: 16px;
   height: 44px;
-  padding: 0 16px;
+  /* Figma is 16 / 4 / 6 from the outer edge; the 1px border sits inside that, so the padding is one less on every side. */
+  padding: 3px 15px 5px;
   border-radius: 6px;
   background: #EEF2F9;
   border: 1px solid #E5EBF4;
   color: #9BC5FD;
+  width: 237px;
 }
 /* Per — one box per unit */
 .eb-preview-cd--per { gap: 16px; color: #9BC5FD; }
@@ -7058,19 +7153,21 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   border-radius: 8px;
   background: #EEF2F9;
   border: 1px solid #E5EBF4;
+  padding: 7px;
 }
 /* Pill — inline units behind a leading icon */
 .eb-preview-cd--pill {
   gap: 8px;
   height: 30px;
-  padding: 0 8px;
+  /* Figma is 8 left, 10 right, measured from the outer edge — the border takes 1px of each. */
+  padding: 3px 9px 4px 7px;
   border-radius: 99px;
   background: #EEF2F9;
   border: 1px solid #E5EBF4;
   color: #9BC5FD;
 }
 .eb-preview-cd__icon { flex: 0 0 auto; display: block; color: #005CE5; }
-.eb-preview-cd__units { display: inline-flex; align-items: center; gap: 6px; }
+.eb-preview-cd__units { display: inline-flex; align-items: center; gap: 4px; }
 
 /* onLight — the bold treatment, for placing on a white page */
 .eb-preview-cd--onlight.eb-preview-cd--one {
@@ -7114,14 +7211,44 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 .eb-preview-cd--expired .eb-preview-cdunit__unit { color: #C2CFE5; opacity: 1; }
 .eb-preview-cd--expired .eb-preview-cd__icon { color: #C2CFE5; }
 
+/* onLight × Expiring and Expired.
+   The surface rule and the state rules carry the same specificity, so the
+   state one wins on source order and the brand surface was falling through
+   to the onColor palette. These name the combination explicitly. */
+.eb-preview-cd--expiring.eb-preview-cd--onlight.eb-preview-cd--one,
+.eb-preview-cd--expiring.eb-preview-cd--onlight.eb-preview-cd--pill { background: #F7D96E; border-color: #EBB30A; }
+.eb-preview-cd--expiring.eb-preview-cd--onlight .eb-preview-cd__box { background: #F7D96E; border-color: #EBB30A; }
+.eb-preview-cd--expired.eb-preview-cd--onlight.eb-preview-cd--one,
+.eb-preview-cd--expired.eb-preview-cd--onlight.eb-preview-cd--pill { background: #E5F1FF; border-color: #C2CFE5; }
+.eb-preview-cd--expired.eb-preview-cd--onlight .eb-preview-cd__box { background: #E5F1FF; border-color: #C2CFE5; }
+
+/* Expiring text runs four warning steps, not one: the number darkens on
+   the brand surface, and Pill takes its own step on both surfaces. */
+.eb-preview-cd--expiring.eb-preview-cd--onlight .eb-preview-cdunit__time { color: #453408; }
+.eb-preview-cd--expiring.eb-preview-cd--pill .eb-preview-cdunit,
+.eb-preview-cd--expiring.eb-preview-cd--pill .eb-preview-cdunit__unit { color: #6C5009; }
+.eb-preview-cd--expiring.eb-preview-cd--pill.eb-preview-cd--onlight .eb-preview-cdunit,
+.eb-preview-cd--expiring.eb-preview-cd--pill.eb-preview-cd--onlight .eb-preview-cdunit__unit { color: #453408; }
+
+/* The stacked unit label carries a 70% layer opacity on the pale surface. */
+.eb-preview-cd--expiring:not(.eb-preview-cd--onlight):not(.eb-preview-cd--pill) .eb-preview-cdunit__unit,
+.eb-preview-cd--expired:not(.eb-preview-cd--onlight):not(.eb-preview-cd--pill) .eb-preview-cdunit__unit { opacity: 0.7; }
+
+/* The separator lifts on the brand surface, differently per style. */
+.eb-preview-cd--onlight.eb-preview-cd--pill { color: #FFFFFF; }
+/* The pill draws its separator in the text colour; Per and One keep
+   bg/color-bg-warning at Expiring. */
+.eb-preview-cd--expiring.eb-preview-cd--pill { color: #6C5009; }
+.eb-preview-cd--expiring.eb-preview-cd--pill.eb-preview-cd--onlight { color: #453408; }
+
 /* ── Promo ──────────────────────────────────────────────────────── */
 .eb-preview-cdpromo {
   position: relative;
   width: 360px;
-  border-radius: 8px;
+  border-radius: 0;
   overflow: hidden;
   background: #FFFFFF;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
 }
 .eb-preview-cdpromo__container {
@@ -7130,7 +7257,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   justify-content: space-between;
   gap: 16px;
   height: 68px;
-  padding: 0 20px;
+  padding: 12px 24px 12px 20px;
 }
 .eb-preview-cdpromo__title {
   font-size: 16px;
@@ -7140,6 +7267,10 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   color: #071969;
   white-space: pre-line;
 }
+/* The instance overrides Countdown's One layout: 173 wide with 8px side
+   padding and an 8px gap, against One's own 16/16. Figma measures padding
+   from the outer edge, so each CSS value is one less than the panel. */
+.eb-preview-cdpromo__timer { flex: 0 0 173px; width: 173px; gap: 8px; padding: 3px 7px 5px; }
 .eb-preview-cdpromo__close {
   position: absolute;
   top: 4px;
@@ -7157,6 +7288,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   font-weight: 700;
   letter-spacing: 0.25px;
   color: #FFFFFF;
+  padding: 5px 8px;
 }
 .eb-preview-cdpromo--high { background: #1972F9; }
 .eb-preview-cdpromo--high .eb-preview-cdpromo__title { color: #FFFFFF; }
@@ -7179,61 +7311,166 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
    Measurements mirror the 2026 Working File rebuild.
    ═════════════════════════════════════════════════════════════════════ */
 
+/* Voucher is genuinely mixed. Three of its five text layers are
+   Secondary/* — description, original price and validity — so BarkAda is
+   the root; #title and #price are Primary/* and name Proxima Soft
+   themselves. `inherit` happened to give the majority the right face and
+   the other two the wrong one, which is why nobody spotted it. */
 .eb-preview-vch {
   position: relative;
   display: flex;
   background: #FFFFFF;
   border-radius: 4px;
   overflow: hidden;
-  font-family: inherit;
+  font-family: "BarkAda", system-ui, sans-serif;
   box-sizing: border-box;
 }
+/* Both orientations round at 4, but at different levels of the tree.
+   Vertical sets it on the component and clips. Horizontal sets it one
+   level in, on Content, and only on the left corners — the right side
+   stays square where the artwork meets it. Matching the values was
+   possible; matching the structure was not, so the preview reproduces
+   what each one actually draws. */
 .eb-preview-vch--vertical { flex-direction: column; width: 162px; }
-.eb-preview-vch--horizontal { flex-direction: row; width: 312px; height: 124px; }
+.eb-preview-vch--horizontal {
+  flex-direction: row;
+  height: 124px;
+  border-radius: 0;
+  overflow: visible;
+}
+.eb-preview-vch--horizontal .eb-preview-vch__content { border-radius: 4px 0 0 4px; }
+.eb-preview-vch--horizontal.eb-preview-vch--small { width: 312px; }
 .eb-preview-vch--horizontal.eb-preview-vch--large { width: 344px; }
 
 /* ── Asset — the ticket panel with its notch ────────────────────── */
+/* The panel holds the artwork and, in horizontal, the claim rail beside
+   it. It must not clip: the two notches overhang its edges. */
 .eb-preview-vch__asset {
   position: relative;
   flex: 0 0 auto;
   display: flex;
+  overflow: visible;
+}
+/* `isolation` keeps the state filter's blend inside the artwork instead
+   of reaching the card behind it. */
+.eb-preview-vch__art {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 0;
   background: #F6F9FD;
   overflow: hidden;
+  isolation: isolate;
 }
-.eb-preview-vch--vertical .eb-preview-vch__asset { width: 162px; height: 90px; }
+/* AssetSize only resizes the artwork panel; the content box never moves.
+   Vertical grows it 90 → 153 tall, which is the whole of the 278 → 341
+   card height. Horizontal grows it 96 → 128 wide against a fixed 216
+   content box, which is the whole of the 312 → 344 card width. Both
+   sizes are declared rather than left to a default, so every class the
+   preview emits resolves to a rule. */
+.eb-preview-vch--vertical .eb-preview-vch__asset { width: 162px; }
+.eb-preview-vch--vertical.eb-preview-vch--small .eb-preview-vch__asset { height: 90px; }
 .eb-preview-vch--vertical.eb-preview-vch--large .eb-preview-vch__asset { height: 153px; }
-.eb-preview-vch--horizontal .eb-preview-vch__asset { width: 96px; height: 124px; }
+.eb-preview-vch--horizontal .eb-preview-vch__asset { height: 124px; }
+.eb-preview-vch--horizontal.eb-preview-vch--small .eb-preview-vch__asset { width: 96px; }
+.eb-preview-vch--horizontal.eb-preview-vch--large .eb-preview-vch__asset { width: 128px; }
+/* The panel says Fill, not 216. It resolves to 216 in both sizes because
+   the artwork takes 96 or 128 out of 312 or 344 — but pinning the number
+   would be writing down the answer instead of the rule. */
+.eb-preview-vch--horizontal .eb-preview-vch__content { flex: 1 1 auto; }
 
+/* Wraps rather than overflowing — the artwork area is 68 wide at Small
+   horizontal, which is narrower than the label on one line. */
 .eb-preview-vch__placeholder {
-  font-size: 8px;
+  padding: 0 6px;
+  font-size: 7px;
   font-weight: 700;
+  line-height: 10px;
   color: #0A2757;
   text-align: center;
 }
 
 /* The notch is two circles punched from the panel edges. Vertical
    punches left and right; horizontal punches top and bottom. */
-.eb-preview-vch__notch { position: absolute; background: #FFFFFF; border-radius: 50%; }
-.eb-preview-vch--vertical .eb-preview-vch__notch { width: 16px; height: 16px; bottom: -8px; }
+/* A bite out of the card rather than a white dot, so it takes the frame's
+   ground. Vertical punches the two side edges where the artwork meets the
+   content; horizontal punches top and bottom at the seam between the
+   artwork and the claim rail — 28 in from the panel's right edge. */
+.eb-preview-vch__notch {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #F8F9FB;
+  border-radius: 50%;
+  z-index: 4;
+}
+/* Vertical's stub tears above the artwork's bottom edge, not at it. The
+   Stub Cutout mask puts the circle centres on y 58.56 of a 90 panel —
+   31.44 up from the bottom, and 32.06 at Large, so it is anchored to the
+   bottom rather than scaling with the panel. */
+.eb-preview-vch--vertical .eb-preview-vch__notch { bottom: 23.5px; }
 .eb-preview-vch--vertical .eb-preview-vch__notch--a { left: -8px; }
 .eb-preview-vch--vertical .eb-preview-vch__notch--b { right: -8px; }
-.eb-preview-vch--horizontal .eb-preview-vch__notch { width: 16px; height: 16px; left: -8px; }
+.eb-preview-vch--horizontal .eb-preview-vch__notch { right: 20px; }
 .eb-preview-vch--horizontal .eb-preview-vch__notch--a { top: -8px; }
 .eb-preview-vch--horizontal .eb-preview-vch__notch--b { bottom: -8px; }
+[data-theme="dark"] .eb-preview-vch__notch { background: #1A1A1A; }
+
+/* The perforation between the notches, read off the Stub Cutout mask:
+   a 1px line on the notch centreline, running from 9.4 to 9.4 in from the
+   ends, in ~4px dashes with ~2px gaps. Subtracted from the panel in
+   Figma, so it takes the same ground the notches do — a repeating
+   gradient draws the identical picture without a mask. */
+.eb-preview-vch__asset::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+}
+.eb-preview-vch--vertical .eb-preview-vch__asset::after {
+  left: 9.4px;
+  right: 9.4px;
+  bottom: 31.5px;
+  height: 1px;
+  background-image: repeating-linear-gradient(to right, #F8F9FB 0 4px, transparent 4px 6px);
+}
+.eb-preview-vch--horizontal .eb-preview-vch__asset::after {
+  top: 9.4px;
+  bottom: 9.4px;
+  right: 27.5px;
+  width: 1px;
+  background-image: repeating-linear-gradient(to bottom, #F8F9FB 0 4px, transparent 4px 6px);
+}
+[data-theme="dark"] .eb-preview-vch--vertical .eb-preview-vch__asset::after {
+  background-image: repeating-linear-gradient(to right, #1A1A1A 0 4px, transparent 4px 6px);
+}
+[data-theme="dark"] .eb-preview-vch--horizontal .eb-preview-vch__asset::after {
+  background-image: repeating-linear-gradient(to bottom, #1A1A1A 0 4px, transparent 4px 6px);
+}
 
 /* ── Content ────────────────────────────────────────────────────── */
+/* The component itself is 0 padding and 0 gap — the artwork butts against
+   this box. The 12/8 inset is the Content frame's own, in both
+   orientations. What distributes the rows differs: Vertical's Content
+   sets Gap=Auto directly; Horizontal's sets Gap=0 and its Container child
+   sets Auto. Either way the validity line lands on the bottom edge rather
+   than a fixed distance from the price — no fixed gap exists to document,
+   which is what space-between reproduces. */
 .eb-preview-vch__content {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 6px;
   padding: 8px 12px;
   background: #FFFFFF;
   min-width: 0;
 }
+/* Primary/Multi-line Label/Base — Proxima Soft. */
 .eb-preview-vch__title {
+  font-family: "Proxima Soft", "Proxima Nova", system-ui, sans-serif;
   font-size: 16px;
   font-weight: 700;
   line-height: 20px;
@@ -7246,13 +7483,27 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   line-height: 15px;
   color: #445C85;
 }
-.eb-preview-vch__prices { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+/* The Price Container runs differently per orientation: vertical stacks
+   the two prices with no gap at all, horizontal sets them side by side
+   at 4. Both read from the frame, not chosen. */
+.eb-preview-vch__prices { display: flex; min-width: 0; }
+.eb-preview-vch--vertical .eb-preview-vch__prices { flex-direction: column; gap: 0; }
+.eb-preview-vch--horizontal .eb-preview-vch__prices {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+/* Primary/Label/Small — Proxima Soft. */
 .eb-preview-vch__price {
+  font-family: "Proxima Soft", "Proxima Nova", system-ui, sans-serif;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.25px;
   color: #005CE5;
 }
+/* text/color-text-disabled in every version — both orientations bind the
+   same variable. */
 .eb-preview-vch__original {
   font-size: 12px;
   font-weight: 500;
@@ -7293,12 +7544,23 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   color: #FFFFFF;
   z-index: 3;
 }
-/* Horizontal anchors its status badge over the asset panel. */
+/* BadgeSlot sits at the artwork's top-LEFT in horizontal — flush with the
+   panel's leading edge, 4 down. Square on the side that meets the content
+   panel, rounded on the other three. */
 .eb-preview-vch--horizontal .eb-preview-vch__badge--float {
   position: absolute;
   top: 4px;
-  right: 8px;
+  left: 0;
+  border-radius: 0 4px 4px 0;
   z-index: 3;
+}
+
+/* Details binds the title to the price row at a fixed 4; everything else
+   in the content stack is distributed rather than gapped. */
+.eb-preview-vch__details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 /* ── Used / Expired — the Filter overlay ────────────────────────── */
@@ -7308,28 +7570,68 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   z-index: 2;
   pointer-events: none;
 }
-.eb-preview-vch--used .eb-preview-vch__asset .eb-preview-vch__filter { background: rgba(2, 14, 34, 0.56); }
-.eb-preview-vch--expired .eb-preview-vch__asset .eb-preview-vch__filter { background: #C2CFE5; }
+/* Neither filter is a flat overlay — both are blended groups at 0.6, and
+   that is why Expired keeps the artwork readable where a solid fill
+   erased it. Used darkens with #020E22 at 56%; Expired screens #C2CFE5,
+   and screen can only lighten, so nothing underneath is covered. */
+.eb-preview-vch--used .eb-preview-vch__asset .eb-preview-vch__filter {
+  background: rgba(2, 14, 34, 0.56);
+  mix-blend-mode: darken;
+  opacity: 0.6;
+}
+.eb-preview-vch--expired .eb-preview-vch__asset .eb-preview-vch__filter {
+  background: #C2CFE5;
+  mix-blend-mode: screen;
+  opacity: 0.6;
+}
+/* Both dimmed states are one base with one variable: bg/color-bg-main
+   under bg/color-bg-overlay at 40% for Used, and -overlay-weak at 24%
+   for Expired. Drawn as the two fills Figma stacks rather than as their
+   flattened #9A9FA7 and #C2C5CA, so the mechanism is what the preview
+   asserts and either token can move without this going stale. */
 .eb-preview-vch--used .eb-preview-vch__badge,
-.eb-preview-vch--expired .eb-preview-vch__badge { background: #6780A9; }
-.eb-preview-vch--expired .eb-preview-vch__title,
+.eb-preview-vch--used .eb-preview-vch__discount,
+.eb-preview-vch--used .eb-preview-vch__rail,
+.eb-preview-vch--expired .eb-preview-vch__badge,
+.eb-preview-vch--expired .eb-preview-vch__discount,
+.eb-preview-vch--expired .eb-preview-vch__rail {
+  background-color: #FFFFFF;
+}
+.eb-preview-vch--used .eb-preview-vch__badge,
+.eb-preview-vch--used .eb-preview-vch__discount,
+.eb-preview-vch--used .eb-preview-vch__rail {
+  background-image: linear-gradient(rgba(2, 14, 34, 0.4), rgba(2, 14, 34, 0.4));
+}
+.eb-preview-vch--expired .eb-preview-vch__badge,
+.eb-preview-vch--expired .eb-preview-vch__discount,
+.eb-preview-vch--expired .eb-preview-vch__rail {
+  background-image: linear-gradient(rgba(2, 14, 34, 0.24), rgba(2, 14, 34, 0.24));
+}
+/* State walks every text layer one step down the weak ramp, and does it
+   twice for Expired: text → weak → weaker for the title, weak → weaker →
+   weakest for the rest. #originalPrice is the exception — already at
+   disabled in Default, so it has nowhere left to go. The page had a
+   single invented #9BB0D0 standing in for all of it. */
+.eb-preview-vch--used .eb-preview-vch__title { color: #445C85; }
+.eb-preview-vch--used .eb-preview-vch__desc,
+.eb-preview-vch--used .eb-preview-vch__price,
+.eb-preview-vch--used .eb-preview-vch__validity { color: #6780A9; }
+.eb-preview-vch--expired .eb-preview-vch__title { color: #6780A9; }
 .eb-preview-vch--expired .eb-preview-vch__desc,
 .eb-preview-vch--expired .eb-preview-vch__price,
-.eb-preview-vch--expired .eb-preview-vch__validity { color: #9BB0D0; }
-.eb-preview-vch--expired .eb-preview-vch__discount { background: #C2CFE5; }
+.eb-preview-vch--expired .eb-preview-vch__validity { color: #90A8D0; }
+/* Expired used to give the discount pill its own grey; it now dims with
+   the status badge, above. */
 
-/* Horizontal carries a fixed action rail rather than a slot. */
+/* The rail is a sibling of the artwork inside the asset panel, 28 wide,
+   with the card's radius on its outer edge. */
 .eb-preview-vch__rail {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 28px;
-  height: 100%;
+  flex: 0 0 28px;
   background: #0A2757;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 3;
+  border-radius: 0 4px 4px 0;
 }
 .eb-preview-vch__rail span {
   writing-mode: vertical-rl;
@@ -7339,17 +7641,20 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   color: #FFFFFF;
   white-space: nowrap;
 }
-.eb-preview-vch--used .eb-preview-vch__rail,
-.eb-preview-vch--expired .eb-preview-vch__rail { background: #6780A9; }
+/* The rail's dimmed states are set with the badges above, per state. */
 
 /* ── Voucher Details ────────────────────────────────────────────── */
+/* Five of the seven layers this component owns are Primary/* — the
+   merchant name, the title, both prices and the validity — so Proxima
+   Soft is the root. The Secondary/* ones name BarkAda for themselves
+   below: the branch line, the description, and the whole terms block. */
 .eb-preview-vdet {
   width: 336px;
   border-radius: 8px;
   overflow: hidden;
   background: #FFFFFF;
   border: 1px solid #E5EBF4;
-  font-family: inherit;
+  font-family: "Proxima Soft", "Proxima Nova", system-ui, sans-serif;
   box-sizing: border-box;
 }
 .eb-preview-vdet__header {
@@ -7367,7 +7672,17 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   border-radius: 50%;
   background: #EEF2F9;
 }
-.eb-preview-vdet__merchant { flex: 1 1 auto; min-width: 0; }
+/* Merchant Details is a 202 × 38 column: 4 above the name, then the name
+   at 16 and the branch line at 18 with no gap between them. They were
+   inline spans, so they ran side by side. */
+.eb-preview-vdet__merchant {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-top: 4px;
+}
 .eb-preview-vdet__hdr {
   font-size: 16px;
   font-weight: 700;
@@ -7381,13 +7696,30 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   line-height: 18px;
   color: #6780A9;
 }
+
+/* The Secondary/* layers. The branch line is Secondary/Bold/Caption; the
+   description and every line of terms — accordion list, block message
+   and link alike — are Secondary/Bold/Base. All BarkAda. */
+.eb-preview-vdet__subhdr,
+.eb-preview-vdet__desc,
+.eb-preview-vdet__terms-list,
+.eb-preview-vdet__terms-head--block,
+.eb-preview-vdet__terms-text,
+.eb-preview-vdet__link {
+  font-family: "BarkAda", system-ui, sans-serif;
+}
+/* Hug × Hug at 52 × 16: 4 either side of a 44-wide label, 2 above and
+   below a 12/12 line. The panel reads 3/1 vertically, which sits the
+   text a pixel high; 2/2 balances it and keeps the same 16. */
 .eb-preview-vdet__badge {
   flex: 0 0 auto;
-  padding: 2px 8px;
+  padding: 2px 4px;
   border-radius: 4px;
   background: #2340A9;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
+  line-height: 12px;
+  letter-spacing: 0.5px;
   color: #FFFFFF;
 }
 .eb-preview-vdet__details { padding: 12px 16px; }
@@ -7398,16 +7730,27 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   letter-spacing: 0.25px;
   color: #0A2757;
 }
-.eb-preview-vdet__prices { display: flex; align-items: baseline; gap: 8px; margin-top: 8px; }
+/* Price Container is 18 tall holding two 16/16 texts, 4 apart. Neither
+   text declared a line-height, so each inherited the page's and rendered
+   25.6 — the container was 7 too tall before anything else was wrong. */
+.eb-preview-vdet__prices {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 18px;
+  margin-top: 8px;
+}
 .eb-preview-vdet__price {
   font-size: 16px;
   font-weight: 700;
+  line-height: 16px;
   letter-spacing: 0.25px;
   color: #005CE5;
 }
 .eb-preview-vdet__original {
   font-size: 16px;
   font-weight: 600;
+  line-height: 16px;
   letter-spacing: 0.25px;
   color: #90A8D0;
   text-decoration: line-through;
@@ -7441,52 +7784,90 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 }
 .eb-preview-vdet__strip i:first-child { left: -8px; }
 .eb-preview-vdet__strip i:last-child { right: -8px; }
-.eb-preview-vdet__body { padding: 12px 16px 16px; }
+/* Body itself has no padding — the Description insets its own text and
+   both terms treatments run the full 336. */
+.eb-preview-vdet__body { padding: 0; }
 .eb-preview-vdet__desc {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 21px;
+  padding: 8px 12px 12px;
   color: #445C85;
 }
-.eb-preview-vdet__terms { margin-top: 12px; border-top: 1px solid #E5EBF4; padding-top: 12px; }
+
+/* Every Secondary/Bold/Base layer, set once. The description, the block
+   message, the accordion's row labels and the link all resolve to the
+   same style, so they must render identically — they were 14/21 at
+   weight 500, 13/20, 13/18 and 13 bold respectively. */
+.eb-preview-vdet__desc,
+.eb-preview-vdet__terms-head--block,
+.eb-preview-vdet__terms-text,
+.eb-preview-vdet__terms-list li,
+.eb-preview-vdet__link {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+/* Both terms treatments sit flush under the Description at full width —
+   the block draws its own border, the accordion brings its own. */
+.eb-preview-vdet__terms { margin-top: 0; }
+/* Accordion: a 62-tall header row with the component's own hairline. */
 .eb-preview-vdet__terms-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 62px;
+  padding: 0 16px;
+  border-top: 1px solid #E5EBF4;
+  border-bottom: 1px solid #E5EBF4;
   font-size: 16px;
   font-weight: 700;
+  line-height: 20px;
   color: #0A2757;
 }
-.eb-preview-vdet__terms-head--block { font-size: 14px; }
+/* The chevron sits in a 32 × 32 box, like every other one in the system. */
+.eb-preview-vdet__terms-head svg { display: block; }
+.eb-preview-vdet__terms-head > svg { flex: 0 0 32px; color: #005CE5; }
+/* 16 all round, rows 6 apart — measured off the item positions inside
+   the 170-tall list, not estimated. Each row is a 16-wide tick in a
+   20-tall box, then 8, then the label. */
 .eb-preview-vdet__terms-list {
-  margin: 12px 0 0;
-  padding: 12px;
-  border-radius: 8px;
+  margin: 0;
+  padding: 16px;
   background: #F6F9FD;
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 .eb-preview-vdet__terms-list li {
   display: flex;
+  align-items: flex-start;
   gap: 8px;
-  font-size: 13px;
-  line-height: 18px;
   color: #445C85;
 }
-.eb-preview-vdet__terms-list li::before { content: "✓"; color: #9BC5FD; flex: 0 0 auto; }
+.eb-preview-vdet__tick {
+  flex: 0 0 16px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  color: #90A8D0;
+}
+.eb-preview-vdet__term { flex: 1 1 auto; min-width: 0; }
+
+/* TextBlock: its own bordered frame, 16 inside, rows 12 apart. */
+.eb-preview-vdet__terms-head--block {
+  display: block;
+  height: auto;
+  padding: 16px 16px 0;
+  border-top: 1px solid #E5EBF4;
+  border-bottom: 0;
+}
 .eb-preview-vdet__terms-text {
-  margin-top: 8px;
-  font-size: 13px;
-  line-height: 20px;
+  padding: 12px 16px 0;
   color: #445C85;
 }
 .eb-preview-vdet__link {
-  display: inline-block;
-  margin-top: 8px;
-  font-size: 13px;
-  font-weight: 700;
+  display: block;
+  padding: 12px 16px 16px;
   color: #005CE5;
 }
 
@@ -7511,11 +7892,13 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 
 /* The 26px clearance is reserved whether or not the bubble is showing,
    so toggling hasTooltip does not move the track. */
+/* One text layer, #percentage, and it is Primary/Label/Small — Proxima
+   Soft. `inherit` would have resolved to BarkAda. */
 .eb-preview-sldr {
   width: 365px;
   max-width: 100%;
   padding-top: 26px;
-  font-family: inherit;
+  font-family: "Proxima Soft", "Proxima Nova", system-ui, sans-serif;
   box-sizing: border-box;
 }
 
@@ -7548,7 +7931,11 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 .eb-preview-sldr--disabled .eb-preview-sldr__fill { background: #C2CFE5; }
 .eb-preview-sldr--pressed .eb-preview-sldr__fill { background: #2340A9; }
 
-/* Right-aligned to the fill's edge, matching KnobContainer's placement. */
+/* Right-aligned to the fill's edge, matching KnobContainer's placement.
+   18 outer: the artwork is an r=8 white circle inside an r=8.5 stroke,
+   so the 1px ring sits outside the 16 fill. It also carries a drop
+   shadow the node tree does not expose — dy 2, blur 2, black at 10% —
+   which only the SVG export shows. */
 .eb-preview-sldr__knob {
   position: absolute;
   top: -4px;
@@ -7558,6 +7945,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   border-radius: 50%;
   background: #FFFFFF;
   border: 1px solid #E5EBF4;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   cursor: grab;
 }
@@ -7620,11 +8008,13 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
    Measurements mirror the 2026 Working File rebuild.
    ═════════════════════════════════════════════════════════════════════ */
 
+/* #number is Primary/Label/Light/Small — the only type in the component,
+   so the root names Proxima Soft and nothing overrides it. */
 .eb-preview-lia {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
 }
 .eb-preview-lia__row {
@@ -7686,7 +8076,10 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   opacity: 0.7;
 }
 
+/* Sample copy, not a layer of this component — it stands in for a List
+   Item label, so it takes that label's face rather than the marker's. */
 .eb-preview-lia__label {
+  font-family: 'BarkAda', system-ui, sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -7701,13 +8094,16 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
    Three ListLevel values set the indent. 2026 Working File rebuild.
    ═════════════════════════════════════════════════════════════════════ */
 
+/* Proxima Soft at the root so the marker renders in it — the numbered
+   marker is Primary/Label/Light/Small, inherited from List Item - Asset.
+   #label is the one Secondary layer and names BarkAda for itself below. */
 .eb-preview-litem {
   display: flex;
   flex-direction: column;
   gap: 4px;
   width: 294px;
   max-width: 100%;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
 }
 .eb-preview-litem__row {
@@ -7758,11 +8154,28 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   color: #90A8D0;
 }
 
+/* Type=Slot keeps the 16px box and ships empty, so it draws as its own
+   footprint — the same treatment the trailing slot gets below, because
+   they are the same thing: a reserved 16 × 16 the consumer fills. */
+.eb-preview-litem__asset--slot::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  border: 1px dashed #90A8D0;
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
 /* #label fills, so the indent comes out of its width rather than out of
    the row's — which is what keeps every level the same total width. */
 .eb-preview-litem__label {
   flex: 1 1 auto;
   min-width: 0;
+  /* Secondary/Bold/Base — the one BarkAda layer in this component. */
+  font-family: 'BarkAda', system-ui, sans-serif;
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
@@ -7844,7 +8257,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   background: #FFFFFF;
   border: 1px solid #E5EBF4;
   box-sizing: content-box;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
 }
 .eb-preview-mtre { display: flex; width: 272px; box-sizing: border-box; }
 .eb-preview-mtre--stacked { flex-direction: column; gap: 4px; }
@@ -7882,7 +8295,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   border-radius: 6px;
   overflow: hidden;
   background: #F6F9FD;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
 }
 .eb-preview-mtr__content {
@@ -7932,11 +8345,15 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   text-align: right;
   white-space: nowrap;
 }
+/* 24 / 16 / 24 / 0 off the auto-layout panel, and gap 0 — the strip has
+   no bottom padding, so the reference sits tight against the action area
+   rather than floating between the card and the buttons. The 40px height
+   is the Copy icon's 24 plus that 16 top. */
 .eb-preview-mtr__reference {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 13px 24px;
+  gap: 0;
+  padding: 16px 24px 0;
   background: #F6F9FD;
   box-sizing: border-box;
 }
@@ -7970,12 +8387,16 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 }
 
 /* ── Modal ──────────────────────────────────────────────────────── */
+/* Modal genuinely mixes both faces: #title is Primary/Headlines/Section
+   and #description is Secondary/Default/Base. The root names Proxima
+   Soft and the description names BarkAda, so each layer states its own
+   face instead of one of them being right by inheritance. */
 .eb-preview-mdl {
   width: 320px;
   border-radius: 6px;
   overflow: hidden;
   background: #FFFFFF;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
 }
 /* 24 top, none at the bottom — Content stops at the description's baseline
@@ -8013,6 +8434,8 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 /* BarkAda is the secondary face — longer copy at smaller sizes. */
 .eb-preview-mdl__description {
   margin-top: 16px;
+  /* Secondary/Default/Base — BarkAda Medium, the one Secondary layer. */
+  font-family: 'BarkAda', system-ui, sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -8045,20 +8468,37 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
    ═════════════════════════════════════════════════════════════════════ */
 
 /* ── Select Item ────────────────────────────────────────────────── */
+/* Holds the row and, when the sparse grid is hit, the note explaining it.
+   Fixed to the row's own width so the note wraps under the row rather
+   than beside it — the preview frames centre their children, so two
+   siblings would sit side by side and stretch the frame. */
+.eb-preview-sitem-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 320px;
+  max-width: 100%;
+}
+
+/* Both text layers are Primary/Multi-line Label/* — Proxima Soft, with no
+   Secondary layer, so the root is the only face declaration needed.
+   Vertical padding varies with density (8 / 12 / 16), which is what turns
+   a fixed 24px content block into a 40, 48 or 56 tall row — the heights
+   are a consequence of the padding rather than set independently. */
 .eb-preview-sitem {
   display: flex;
   align-items: center;
   gap: 8px;
   width: 320px;
   max-width: 100%;
-  padding: 0 12px;
+  padding: 8px 12px;
   background: #FFFFFF;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
 }
-.eb-preview-sitem--compact { min-height: 40px; }
-.eb-preview-sitem--default { min-height: 48px; }
-.eb-preview-sitem--comfortable { min-height: 56px; }
+.eb-preview-sitem--compact { padding-top: 8px; padding-bottom: 8px; min-height: 40px; }
+.eb-preview-sitem--default { padding-top: 12px; padding-bottom: 12px; min-height: 48px; }
+.eb-preview-sitem--comfortable { padding-top: 16px; padding-bottom: 16px; min-height: 56px; }
 /* Density sets padding around a hugging content block, so the row grows
    when Supporting Text is switched on rather than overlapping it. */
 .eb-preview-sitem--supporting.eb-preview-sitem--comfortable { min-height: 60px; }
@@ -8076,7 +8516,13 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   font-weight: 600;
   color: #0A2757;
 }
+/* The leading mark's width is whatever the nested instance is, not a
+   fixed slot: 24 for an icon, 16 for a flag, 15 for the drawn peso sign
+   and 10 for the typed one. The label starts after that plus the 8px gap,
+   so it does not begin at the same x in every Type. */
 .eb-preview-sitem__lead--flag { width: 16px; }
+.eb-preview-sitem__lead--peso-vector { width: 15px; }
+.eb-preview-sitem__lead--peso-text { width: 10px; }
 .eb-preview-sitem--selected .eb-preview-sitem__lead { color: #005CE5; }
 .eb-preview-sitem--disabled .eb-preview-sitem__lead { color: #C2CFE5; }
 .eb-preview-sitem__lead svg { display: block; }
@@ -8127,6 +8573,10 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 }
 
 /* ── Select Group ───────────────────────────────────────────────── */
+/* Every visible layer here is a Select Item row, and both of that
+   component's text layers are Primary/* — Proxima Soft. The group's own
+   hidden Label header is Primary/Label/Light/Small, the same face, so
+   the root is the only declaration needed. */
 .eb-preview-sgroup {
   width: 320px;
   max-width: 100%;
@@ -8134,7 +8584,7 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   border-radius: 6px;
   background: #FFFFFF;
   border: 1px solid #E5EBF4;
-  font-family: inherit;
+  font-family: 'Proxima Soft', system-ui, sans-serif;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -8148,20 +8598,37 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
 .eb-preview-sgroup--default .eb-preview-sgroup__row { height: 48px; }
 .eb-preview-sgroup--comfortable .eb-preview-sgroup__row { height: 56px; }
 
-/* The dividers are siblings inside the slot in Figma, which is why
-   BorderType=None simply has none. Reproduced here as a border so the
-   three options read the way they do in the file. */
-.eb-preview-sgroup--middleinset .eb-preview-sgroup__row + .eb-preview-sgroup__row {
-  border-top: 1px solid #E5EBF4;
-  margin: 0 12px;
-  padding: 0;
-}
+/* Each divider is a 4px frame in Figma holding a 1px hairline, not a 1px
+   border — the difference is the whole of the 24px that separates None
+   from the other two. Drawn as a 4px gap with the line in it, so seven
+   rows reconstruct 288 at None and 312 at MiddleInset and FullWidth.
+   A pseudo-element rather than an inset margin, so every row keeps the
+   full-width box its selected surface needs. */
+.eb-preview-sgroup--middleinset .eb-preview-sgroup__row + .eb-preview-sgroup__row,
 .eb-preview-sgroup--fullwidth .eb-preview-sgroup__row + .eb-preview-sgroup__row {
-  border-top: 1px solid #E5EBF4;
+  position: relative;
+  margin-top: 4px;
 }
-/* None needs no override — in Figma the divider nodes are simply absent
-   from those variants, which is why they are 24 shorter. Stated so every
-   class in the markup resolves to something. */
+.eb-preview-sgroup--middleinset .eb-preview-sgroup__row + .eb-preview-sgroup__row::before,
+.eb-preview-sgroup--fullwidth .eb-preview-sgroup__row + .eb-preview-sgroup__row::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  height: 1px;
+  background: #E5EBF4;
+}
+/* MiddleInset stops the hairline 12 short of each edge; FullWidth runs it
+   edge to edge. */
+.eb-preview-sgroup--middleinset .eb-preview-sgroup__row + .eb-preview-sgroup__row::before {
+  left: 12px;
+  right: 12px;
+}
+.eb-preview-sgroup--fullwidth .eb-preview-sgroup__row + .eb-preview-sgroup__row::before {
+  left: 0;
+  right: 0;
+}
+/* None needs no divider — in Figma those nodes are simply absent from the
+   variant. Stated so every class in the markup resolves to something. */
 .eb-preview-sgroup--none .eb-preview-sgroup__row + .eb-preview-sgroup__row {
   border-top: 0;
 }
@@ -8184,38 +8651,66 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   letter-spacing: 0.25px;
   color: #0A2757;
 }
+/* Figma ships the group with its first row selected. The row is a Select
+   Item instance, so the treatment is that component's: label and leading
+   mark both step to text/color-text-primary, and the row keeps its
+   surface — selection is carried by colour, not by a fill. The icon is
+   drawn in currentColor, so setting the row's colour reaches it. */
+.eb-preview-sgroup__lead { color: #0A2757; }
+.eb-preview-sgroup__row--selected .eb-preview-sgroup__lead { color: #005CE5; }
+.eb-preview-sgroup__row--selected .eb-preview-sgroup__label { color: #005CE5; }
 
 /* ── Select ─────────────────────────────────────────────────────── */
+/* Both text layers are Primary/Label/Light/* — Proxima Soft. `inherit`
+   would have resolved to --font-body, which is BarkAda. */
 .eb-preview-sel {
   width: 366px;
   max-width: 100%;
-  font-family: inherit;
+  font-family: "Proxima Soft", "Proxima Nova", system-ui, sans-serif;
   box-sizing: border-box;
 }
+/* The Auto layout panel, verbatim: W Fill (366) · H 46 · gap 0 ·
+   padding 12 horizontal, 6 vertical · left, centre. The stroke is an
+   inside stroke in Figma — it overlays rather than shrinking the content
+   box — so it is drawn with an inset shadow. A real border would have
+   eaten 4 of the 34px content height in the two 2px states and squeezed
+   the 32px chevron. */
 .eb-preview-sel__field {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0;
   height: 46px;
-  padding: 0 12px;
+  padding: 6px 12px;
   border-radius: 6px;
   background: #FFFFFF;
-  border: 1px solid #D7E0EF;
+  box-shadow: inset 0 0 0 1px #D7E0EF;
   box-sizing: border-box;
 }
-.eb-preview-sel--expanded .eb-preview-sel__field { border-color: #005CE5; }
-.eb-preview-sel--error .eb-preview-sel__field { border-color: #D61B2C; }
+/* Expanded and Error carry a 2px stroke; Default and Disabled carry 1. */
+.eb-preview-sel--expanded .eb-preview-sel__field { box-shadow: inset 0 0 0 2px #005CE5; }
+.eb-preview-sel--error .eb-preview-sel__field { box-shadow: inset 0 0 0 2px #D61B2C; }
 .eb-preview-sel--disabled .eb-preview-sel__field {
-  border-color: #E5EBF4;
+  box-shadow: inset 0 0 0 1px #E5EBF4;
   background: #F6F9FD;
 }
 
+/* The leading slot is the mark's own width plus a flat 8 before the text:
+   23 for the vector at 15 wide, 18 for the glyph at 10. It takes
+   text/color-text, and text/color-text-disabled with the rest of the
+   field — both marks were corrected in Figma this pass. */
 .eb-preview-sel__lead {
   flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
   font-size: 16px;
   font-weight: 600;
+  line-height: 1;
   color: #0A2757;
 }
+.eb-preview-sel__lead--vector { width: 15px; }
+.eb-preview-sel__lead--text { width: 10px; }
+.eb-preview-sel__lead svg { display: block; }
 .eb-preview-sel__value {
   flex: 1 1 auto;
   min-width: 0;
@@ -8225,34 +8720,27 @@ img.eb-preview-footer__logo { display: block; height: auto; max-width: 100%; }
   letter-spacing: 0.25px;
   color: #90A8D0;
 }
-/* isFilled swaps the placeholder for a chosen value in the label colour. */
+/* isFilled swaps the placeholder for a chosen value in the label colour.
+   Disabled overrides both to text/color-text-disabled. */
 .eb-preview-sel--filled .eb-preview-sel__value { color: #0A2757; }
+.eb-preview-sel--disabled .eb-preview-sel__value,
+.eb-preview-sel--disabled.eb-preview-sel--filled .eb-preview-sel__value { color: #C2CFE5; }
 
+/* 32 × 32, the size of the instance Figma places — and the size the tap
+   target is measured against. The artwork carries the shape; this only
+   sizes the box and sets the colour it inherits. */
 .eb-preview-sel__chevron {
-  position: relative;
   flex: 0 0 auto;
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
+  color: #005CE5;
 }
-.eb-preview-sel__chevron::before {
-  content: "";
-  position: absolute;
-  left: 4px;
-  top: 6px;
-  width: 9px;
-  height: 9px;
-  border-right: 2px solid #005CE5;
-  border-bottom: 2px solid #005CE5;
-  transform: rotate(45deg);
-}
-.eb-preview-sel--expanded .eb-preview-sel__chevron::before {
-  top: 10px;
-  transform: rotate(225deg);
-}
-.eb-preview-sel--disabled .eb-preview-sel__chevron::before {
-  border-right-color: #C2CFE5;
-  border-bottom-color: #C2CFE5;
-}
+.eb-preview-sel__chevron svg { display: block; }
+/* border/color-border-primary-disabled, not the text disabled grey. */
+.eb-preview-sel--disabled .eb-preview-sel__chevron { color: #9BC5FD; }
+/* The currency mark dims with the field — currentColor carries it to
+   both the drawn vector and the glyph. */
+.eb-preview-sel--disabled .eb-preview-sel__lead { color: #C2CFE5; }
 
 /* The menu overlays what sits beneath it rather than growing the
    trigger — the same relationship the Figma variants have. */

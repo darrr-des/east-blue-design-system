@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildColorsTable } from './_helpers';
 
 /* Demo controls for the Style tab's single spec card. */
 const modalControls: DemoControlSection[] = [
@@ -6,22 +7,24 @@ const modalControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'ActionOrientation',
-        prop: 'actions',
+        label: 'hasDescription',
+        prop: 'hasdescription',
+        control: 'toggle' as const,
+        defaultValue: 'true',
         options: [
-          { value: 'vertical', label: 'Vertical' },
-          { value: 'horizontal', label: 'Horizontal' }
-        ],
-        defaultValue: 'vertical'
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' }
+        ]
       },
       {
         label: 'hasIcon',
         prop: 'hasicon',
+        control: 'toggle' as const,
+        defaultValue: 'true',
         options: [
-          { value: 'true', label: 'true' },
-          { value: 'false', label: 'false' }
-        ],
-        defaultValue: 'true'
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' }
+        ]
       }
     ]
   }
@@ -220,109 +223,143 @@ export const modal: ComponentData = {
     "appliedRecommendations": []
   },
   "style": {
-    "heading": "Structure",
+    "heading": "ActionOrientation",
+    "description": "One setting, reaching only the action area: the Content box is 320 × 214 in both, and the whole 58px difference is the slot stacking its two buttons instead of placing them side by side. Modal is the one component in this family that genuinely uses both faces — <code>#title</code> is Proxima Soft and <code>#description</code> is BarkAda, which the type rows name rather than leaving to inheritance.",
+    "colorsTables": [
+      buildColorsTable({
+        title: "Colors by Orientation",
+        description: "Eight roles, identical in both orientations — the action area changes shape, not colour. Four belong to this component; the other four are the <code>appearance/*</code> set, which is the Button’s own variable mode arriving through <code>⤷ ActionSlot</code> rather than anything the modal sets. The 92 × 92 circle in the icon slot is a placeholder: real usage swaps it, and the illustration brings its own colour.",
+        columns: ["Value"],
+        rows: [
+          { role: "Surface", token: "bg/color-bg-main", values: ["#FFFFFF"] },
+          { role: "#title", token: "text/color-text", values: ["#0A2757"] },
+          { role: "#description", token: "text/color-text-weaker", values: ["#6780A9"] },
+          { role: "IconSlot placeholder", token: "border/color-border", values: ["#D7E0EF"] },
+          { role: "ActionSlot · filled fill", token: "appearance/container/fill", values: ["#005CE5"] },
+          { role: "ActionSlot · filled label", token: "appearance/label/color", values: ["#FFFFFF"] },
+          { role: "ActionSlot · outlined stroke", token: "appearance/stroke/color", values: ["#005CE5"] },
+          { role: "ActionSlot · outlined label", token: "appearance/label/on-surface/color", values: ["#005CE5"] }
+        ]
+      })
+    ],
     "specCards": [
       {
-        "cardKey": "mdl-spec-card-default",
-        "demoKey": "default",
+        "cardKey": "mdl-spec-card-vertical",
+        "demoKey": "vertical",
         "demoControls": modalControls,
-        "title": "Modal",
-        "node": "5879:41278",
-        "description": "An illustration slot, a centred title and description, and the action area. Only the action area changes between the two variants; hasIcon collapses the slot.",
-        "previewHtml": "<div id=\"mdl-spec-default\"><div class=\"eb-preview-mdl eb-preview-mdl--vertical\"><div class=\"eb-preview-mdl__content\"><div class=\"eb-preview-mdl__icon\"><span>Icon</span></div><div class=\"eb-preview-mdl__title\">Put the title here</div><div class=\"eb-preview-mdl__description\">Add description here.<br>Add description here.</div></div><div class=\"eb-preview-mdl__actions\"><div class=\"eb-preview-mdl__btn eb-preview-mdl__btn--filled\">Label</div><div class=\"eb-preview-mdl__btn eb-preview-mdl__btn--outlined\">Label</div></div></div></div>",
+        "title": "Vertical",
+        "node": "5879:41275",
+        "description": "",
+        "previewHtml": "<div id=\"mdl-spec-vertical\"><div class=\"eb-preview-mdl eb-preview-mdl--vertical\"><div class=\"eb-preview-mdl__content\"><div class=\"eb-preview-mdl__icon\"><span>Icon</span></div><div class=\"eb-preview-mdl__title\">Put the title here</div><div class=\"eb-preview-mdl__description\">Add description here.<br>Add description here.</div></div><div class=\"eb-preview-mdl__actions\"><div class=\"eb-preview-mdl__btn eb-preview-mdl__btn--filled\">Label</div><div class=\"eb-preview-mdl__btn eb-preview-mdl__btn--outlined\">Label</div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "ActionOrientation", "value": "Vertical", "prop": "actions",
-                "variants": {
-                  "actions:horizontal": { "value": "Horizontal" }
-                }
-              },
-              { "key": "hasIcon", "value": "true", "prop": "hasicon",
-                "variants": {
-                  "hasicon:false": { "value": "false" }
-                }
-              },
-              { "key": "⤷ IconSlot", "value": "Placeholder instance",
-                "variants": {
-                  "hasicon:false": { "value": "collapsed" }
-                }
-              },
-              { "key": "⤷ ActionSlot", "value": "2 × Button_New" },
-              { "key": "#title", "value": "Put the title here" },
-              { "key": "#description", "value": "Add description here." }
+              { "key": "ActionOrientation", "value": "Vertical" },
+              { "key": "hasDescription", "value": "true", "prop": "hasdescription" },
+              { "key": "hasIcon", "value": "true", "prop": "hasicon" },
+              { "key": "⤷ IconSlot (slot)", "value": "2 items · 92 × 92, filled by a Placeholder circle in the published variants" },
+              { "key": "⤷ ActionSlot (slot)", "value": "2 items · vertical flow, 320 × 156, 24px padding, 8px gap — the two buttons stack" },
+              { "key": "Content box", "value": "320 × 214 · vertical, 24px sides, 24px top and none at the bottom, gap 16, top centre" },
+              { "key": "Action order", "value": "Filled on top, outlined beneath" },
+              { "key": "Versions", "value": "2" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "#title", "value": "#0A2757", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "#description", "value": "#6780A9", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "Button filled bg", "value": "#005CE5", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "Button filled label", "value": "#FFFFFF", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "Button outlined border", "value": "#005CE5", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "Button outlined label", "value": "#005CE5", "token": "library variable · name pending Dev Mode read", "swatch": true }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width", "value": "320", "mono": true },
-              { "key": "Height", "value": "370", "mono": true,
-                "variants": {
-                  "actions:horizontal": { "value": "312" },
-                  "hasicon:false": { "value": "262" },
-                  "actions:horizontal|hasicon:false": { "value": "204" }
-                }
-              },
-              { "key": "Corner radius", "value": "6", "mono": true },
-              { "key": "Content height", "value": "214", "mono": true,
-                "variants": {
-                  "hasicon:false": { "value": "106" }
-                }
-              },
-              { "key": "Side inset", "value": "24", "mono": true },
-              { "key": "Padding top", "value": "24", "mono": true },
-              { "key": "⤷ IconSlot", "value": "92 × 92, centred", "mono": true,
-                "variants": {
-                  "hasicon:false": { "value": "collapsed" }
-                }
-              },
-              { "key": "Icon to #title", "value": "16", "mono": true },
-              { "key": "#title to #description", "value": "16", "mono": true },
-              { "key": "Action area", "value": "320 × 156", "mono": true,
-                "variants": {
-                  "actions:horizontal": { "value": "320 × 98" }
-                }
-              },
-              { "key": "Button size", "value": "272 × 50", "mono": true,
-                "variants": {
-                  "actions:horizontal": { "value": "132 × 50" }
-                }
-              },
-              { "key": "Button gap", "value": "8", "mono": true },
-              { "key": "Button radius", "value": "99", "mono": true }
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
+              { "key": "#title", "value": "#0A2757", "token": "text/color-text", "swatch": true },
+              { "key": "#description", "value": "#6780A9", "token": "text/color-text-weaker", "swatch": true },
+              { "key": "IconSlot placeholder", "value": "#D7E0EF", "token": "border/color-border", "swatch": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Text styles", "value": "shared library styles · names pending Dev Mode read", "mono": true },
-              { "key": "#title", "value": "Proxima Soft Bold · 22 / 26 · 0", "mono": true },
-              { "key": "#description", "value": "BarkAda Medium · 14 / 20 · 0", "mono": true },
-              { "key": "Button #label", "value": "Proxima Soft Bold · 18 / 18 · +0.25", "mono": true },
-              { "key": "Alignment", "value": "title and description centred", "mono": true }
+              { "key": "#title", "value": "Primary/Headlines/Section", "mono": true },
+              { "key": "#description", "value": "Secondary/Default/Base", "mono": true },
+              { "key": "ActionSlot #label", "value": "Primary/Label/Large", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "370 — Hug", "mono": true },
+              { "key": "Width", "value": "320 — Fill", "mono": true },
+              { "key": "Radius", "value": "6", "mono": true },
+              { "key": "Padding H", "value": "0", "mono": true },
+              { "key": "Padding V", "value": "0", "mono": true },
+              { "key": "Gap", "value": "0", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Add description here.\"</span><span class=\"syn-punc\">,</span>\n    icon<span class=\"syn-punc\">:</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"success\"</span><span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Confirm\"</span><span class=\"syn-punc\">) {</span> confirm<span class=\"syn-punc\">() }</span>\n    <span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Cancel\"</span><span class=\"syn-punc\">) {</span> dismiss<span class=\"syn-punc\">() }</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Add description here.\"</span><span class=\"syn-punc\">,</span>\n    icon <span class=\"syn-eq\">= {</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">R</span><span class=\"syn-punc\">.</span>drawable<span class=\"syn-punc\">.</span>success<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Confirm\"</span><span class=\"syn-punc\">,</span> onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">::</span>confirm<span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Cancel\"</span><span class=\"syn-punc\">,</span> onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">::</span>dismiss<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.vertical</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Vertical</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "mdl-spec-card-horizontal",
+        "demoKey": "horizontal",
+        "demoControls": modalControls,
+        "title": "Horizontal",
+        "node": "5879:41276",
+        "description": "",
+        "previewHtml": "<div id=\"mdl-spec-horizontal\"><div class=\"eb-preview-mdl eb-preview-mdl--horizontal\"><div class=\"eb-preview-mdl__content\"><div class=\"eb-preview-mdl__icon\"><span>Icon</span></div><div class=\"eb-preview-mdl__title\">Put the title here</div><div class=\"eb-preview-mdl__description\">Add description here.<br>Add description here.</div></div><div class=\"eb-preview-mdl__actions\"><div class=\"eb-preview-mdl__btn eb-preview-mdl__btn--outlined\">Label</div><div class=\"eb-preview-mdl__btn eb-preview-mdl__btn--filled\">Label</div></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "ActionOrientation", "value": "Horizontal" },
+              { "key": "hasDescription", "value": "true", "prop": "hasdescription" },
+              { "key": "hasIcon", "value": "true", "prop": "hasicon" },
+              { "key": "⤷ IconSlot (slot)", "value": "2 items · 92 × 92, filled by a Placeholder circle in the published variants" },
+              { "key": "⤷ ActionSlot (slot)", "value": "2 items · horizontal flow, 320 × 98, 24px padding, 8px gap — the two buttons sit side by side" },
+              { "key": "Content box", "value": "320 × 214 · vertical, 24px sides, 24px top and none at the bottom, gap 16, top centre" },
+              { "key": "Action order", "value": "Outlined left, filled right" },
+              { "key": "Versions", "value": "2" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
+              { "key": "#title", "value": "#0A2757", "token": "text/color-text", "swatch": true },
+              { "key": "#description", "value": "#6780A9", "token": "text/color-text-weaker", "swatch": true },
+              { "key": "IconSlot placeholder", "value": "#D7E0EF", "token": "border/color-border", "swatch": true }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "#title", "value": "Primary/Headlines/Section", "mono": true },
+              { "key": "#description", "value": "Secondary/Default/Base", "mono": true },
+              { "key": "ActionSlot #label", "value": "Primary/Label/Large", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "312 — Hug", "mono": true },
+              { "key": "Width", "value": "320 — Fill", "mono": true },
+              { "key": "Radius", "value": "6", "mono": true },
+              { "key": "Padding H", "value": "0", "mono": true },
+              { "key": "Padding V", "value": "0", "mono": true },
+              { "key": "Gap", "value": "0", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.horizontal</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Put the title here\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Horizontal</span>\n<span class=\"syn-punc\">)</span>"
       }
     ]
   },
@@ -331,66 +368,60 @@ export const modal: ComponentData = {
       "planned": true,
       "blocks": [
         {
-          "label": "Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
-          "label": "Gradle",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:modal:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>modal<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
+      "footnote": "Planned API — the native library does not exist yet. The artifact is the Modal family: this component, <a href=\"/components/modal-transaction-receipt\">Modal - Transaction Receipt</a> and <a href=\"/components/modal-transaction-receipt-entry\">its Entry</a> all ship in <code>com.eastblue.ds:modal</code> and import <code>com.eastblue.ds.modal.*</code>."
     },
     "propertyMapping": {
-      "description": "Figma properties mapped to the intended native parameters.",
+      "description": "Five properties, in the order the Figma property panel lists them. <code>title</code> and <code>description</code> have no rows because <code>#title</code> and <code>#description</code> are text layers rather than component properties — a designer sets them by overriding the layer. Each boolean keeps its own parameter beside the slot it gates rather than the slot being inferred from a nil, so every Figma property traces 1:1 for Code Connect. <code>actionOrientation</code> is a parameter in both languages rather than a SwiftUI modifier: it changes the layout of the action area, not the component’s appearance.",
       "rows": [
         {
-          "figma": "ActionOrientation",
-          "swift": ".ebActionOrientation(.vertical / .horizontal)",
-          "compose": "actionOrientation: EBActionOrientation"
+          "figma": "ActionOrientation — Vertical, Horizontal",
+          "swift": "<code>actionOrientation: EBActionOrientation</code>",
+          "compose": "<code>actionOrientation: EBActionOrientation</code>"
         },
         {
-          "figma": "hasIcon",
-          "swift": "icon: Image?",
-          "compose": "icon: (@Composable () -> Unit)?"
+          "figma": "hasDescription — true, false",
+          "swift": "<code>hasDescription: Bool = true</code>",
+          "compose": "<code>hasDescription: Boolean = true</code>"
         },
         {
-          "figma": "#title",
-          "swift": "title: String",
-          "compose": "title: String"
+          "figma": "hasIcon — true, false",
+          "swift": "<code>hasIcon: Bool = true</code>",
+          "compose": "<code>hasIcon: Boolean = true</code>"
         },
         {
-          "figma": "#description",
-          "swift": "description: String?",
-          "compose": "description: String?"
+          "figma": "⤷ IconSlot (slot)",
+          "swift": "<code>@ViewBuilder icon: () -> Icon</code> — shown when <code>hasIcon</code>",
+          "compose": "<code>icon: @Composable (() -> Unit)?</code> — shown when <code>hasIcon</code>"
         },
         {
-          "figma": "⤷ IconSlot",
-          "swift": "icon: Image?",
-          "compose": "icon: (@Composable () -> Unit)?"
-        },
-        {
-          "figma": "⤷ ActionSlot",
-          "swift": "@ViewBuilder actions: () -> Actions",
-          "compose": "actions: @Composable () -> Unit"
+          "figma": "⤷ ActionSlot (slot)",
+          "swift": "<code>@ViewBuilder actions: () -> Actions</code>",
+          "compose": "<code>actions: @Composable () -> Unit</code>"
         }
       ]
     },
     "usageSnippets": [
       {
-        "subheading": "Vertical actions with an illustration (default)",
-        "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Delete this card?\"</span><span class=\"syn-punc\">,</span> icon<span class=\"syn-punc\">:</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"warning\"</span><span class=\"syn-punc\">)) {</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Delete\"</span><span class=\"syn-punc\">,</span> role<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.destructive</span><span class=\"syn-punc\">) {</span> delete<span class=\"syn-punc\">() }</span>\n    <span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Keep\"</span><span class=\"syn-punc\">) {</span> dismiss<span class=\"syn-punc\">() }</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Delete this card?\"</span><span class=\"syn-punc\">,</span>\n    icon <span class=\"syn-eq\">= {</span> <span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">R</span><span class=\"syn-punc\">.</span>drawable<span class=\"syn-punc\">.</span>warning<span class=\"syn-punc\">) }</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Delete\"</span><span class=\"syn-punc\">,</span> colors <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBButtonDefaults</span><span class=\"syn-punc\">.</span><span class=\"syn-fn\">destructiveColors</span><span class=\"syn-punc\">())</span>\n    <span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Keep\"</span><span class=\"syn-punc\">,</span> onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">::</span>dismiss<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "subheading": "Vertical — two full-width actions stacked",
+        "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Delete this recipient?\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"You can add them again at any time.\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.vertical</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Delete this recipient?\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"You can add them again at any time.\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Vertical</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "No illustration (hasIcon=false)",
-        "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Session expired\"</span><span class=\"syn-punc\">,</span> description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Sign in again to continue.\"</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Sign in\"</span><span class=\"syn-punc\">) {</span> signIn<span class=\"syn-punc\">() }</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Session expired\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Sign in again to continue.\"</span><span class=\"syn-punc\">,</span>\n    icon <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">null</span>\n<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Sign in\"</span><span class=\"syn-punc\">,</span> onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">::</span>signIn<span class=\"syn-punc\">) }</span>"
-      },
-      {
-        "subheading": "Horizontal actions",
-        "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Discard changes?\"</span><span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Cancel\"</span><span class=\"syn-punc\">) {</span> dismiss<span class=\"syn-punc\">() }</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Discard\"</span><span class=\"syn-punc\">) {</span> discard<span class=\"syn-punc\">() }</span>\n<span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">.</span><span class=\"syn-fn\">ebActionOrientation</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.horizontal</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Discard changes?\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Horizontal</span>\n<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBOutlinedButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Cancel\"</span><span class=\"syn-punc\">,</span> onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">::</span>dismiss<span class=\"syn-punc\">)</span>\n    <span class=\"syn-type\">EBButton</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Discard\"</span><span class=\"syn-punc\">,</span> onClick <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">::</span>discard<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>"
+        "subheading": "Horizontal — two short actions side by side",
+        "swift": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Delete this recipient?\"</span><span class=\"syn-punc\">,</span>\n    description<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"You can add them again at any time.\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.horizontal</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBModal</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Delete this recipient?\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"You can add them again at any time.\"</span><span class=\"syn-punc\">,</span>\n    actionOrientation <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBActionOrientation</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Horizontal</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "accessibility": [
@@ -458,14 +489,14 @@ export const modal: ComponentData = {
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Fills resolve to library variables and text carries shared library styles — verified on the component's own nodes. The BarkAda description is confirmed as the secondary-face rule, not drift."
+        "notes": "Every colour is bound and named. Four belong to this component — <code>bg/color-bg-main</code>, <code>text/color-text</code>, <code>text/color-text-weaker</code> and <code>border/color-border</code> on the 92 × 92 placeholder. The other four are the <code>appearance/*</code> set, the Button’s own variable mode arriving through <code>⤷ ActionSlot</code>. All three text layers resolve, and Modal is the one component in this family that uses both faces: <code>Primary/Headlines/Section</code> for the title, <code>Secondary/Default/Base</code> for the description."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "The receipt layouts have been extracted, so what is left maps cleanly to a dialog with two view-builder slots. Both modals now share one button component."
+        "notes": "Maps cleanly to a dialog with two view-builder slots. The whole family shares one action pattern — two Button_New instances in a <code>⤷ ActionSlot</code> with 24px padding and an 8px gap, flipping between 156 tall stacked and 98 side by side — so the same <code>actionOrientation</code> parameter serves this component and <a href=\"/components/modal-transaction-receipt\">Modal - Transaction Receipt</a> alike. The one gap is that the two strings are text layers rather than properties; see C7."
       },
       {
         "id": "C5",
@@ -486,40 +517,94 @@ export const modal: ComponentData = {
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked — the native library does not exist yet."
+        "notes": "Blocked — the native library does not exist yet. Worth noting for when it is not: <code>#title</code> and <code>#description</code> are text layers rather than component properties, so Code Connect will have nothing to bind those two strings to. The five properties that do exist all trace 1:1."
       }
     ],
-    "codeConnect": [
-      {
-        "aspect": "Property naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>ActionOrientation</code>, <code>hasIcon</code>, both <code>⤷</code> slots and the two text layers map one to one with no rename at the boundary."
-      },
-      {
-        "aspect": "Token coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Bindings are in place; only the human-readable names are outstanding."
-      },
-      {
-        "aspect": "Registration",
-        "status": "empty",
-        "statusLabel": "Not Mapped",
-        "notes": "Blocked until the native library exists."
-      }
-    ],
+    "codeConnect": [],
     "variants": {
       "total": 2,
-      "description": "1 component set × 2 ActionOrientation values = 2 variants. hasIcon is a boolean component property, so it toggles the illustration without doubling the set.",
+      "description": "1 component set × 2 <code>ActionOrientation</code> values = 2 variants. <code>hasDescription</code> and <code>hasIcon</code> are boolean component properties, so they switch the description and the illustration without multiplying the set, and both slots take their content by swap rather than by variant.",
       "columns": ["ActionOrientation", "Size", "Action area", "Buttons", "Node"],
       "rows": [
-        { "cells": ["Vertical", "320 × 370", "320 × 156", "2 × 272 × 50, primary on top", "5879:41275"] },
-        { "cells": ["Horizontal", "320 × 312", "320 × 98", "2 × 132 × 50, primary on right", "5879:41276"] }
+        { "cells": ["Vertical", "320 × 370", "320 × 156", "2 × 272 × 50, filled on top", "5879:41275"] },
+        { "cells": ["Horizontal", "320 × 312", "320 × 98", "2 × 132 × 50, filled on the right", "5879:41276"] }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "2.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs rebuilt to the content guides — node 5879:41278",
+      "rows": [
+        {
+          "body": "<strong>One card became two.</strong> <code>ActionOrientation</code> is the driving property, so Vertical and Horizontal each get a card, in this panel’s order — which runs the opposite way to <a href=\"/components/modal-transaction-receipt\">Modal - Transaction Receipt</a>’s, so the two pages list their cards differently on purpose.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong><code>hasDescription</code> was undocumented.</strong> <code>hasIcon</code> was already on the page; the second boolean was not, though the Figma panel carries both defaulting to True. Nothing changed in Figma — <code>get_node_info</code> cannot read property definitions.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "<strong>Layout is read from two panels rather than derived.</strong> The Container gives the seven canonical keys — 370 or 312 tall and hugging, 320 and filling, radius 6, no padding, no gap, centred. The Content box has its own: 320 × 214, vertical, 24 at the sides and top with none at the bottom, gap 16, top centre. That sits in Properties, since it describes a child rather than the component.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Modal uses both faces, and now says so.</strong> <code>#title</code> is <code>Primary/Headlines/Section</code> and <code>#description</code> is <code>Secondary/Default/Base</code> — Proxima Soft over BarkAda. The action label is <code>Primary/Label/Large</code>. The page had carried font specs and a \"names pending Dev Mode read\" IOU.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>All eight colours are named, and half of them are not this component’s.</strong> Four belong here: <code>bg/color-bg-main</code>, <code>text/color-text</code>, <code>text/color-text-weaker</code>, and <code>border/color-border</code> on the 92 × 92 placeholder — read by exporting the icon slot as a vector, which returns the circle with its fill. The other four are the <code>appearance/*</code> set, the Button’s own variable mode arriving through <code>⤷ ActionSlot</code>.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>The preview drew its title in the wrong face.</strong> <code>.eb-preview-mdl</code> declared <code>font-family: inherit</code>, which resolves to the site’s <code>--font-body</code> — BarkAda. That made <code>#description</code> look right by accident and <code>#title</code> silently wrong. The root now names Proxima Soft and the description names BarkAda, so each layer states its own face. Modal is the component that proves this cannot be a find-and-replace: a blanket sweep to Proxima Soft would have broken its description.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Both previews are server-rendered.</strong> Each card’s static markup now holds the component’s real default state, generated by the same renderer the demo uses, so what ships before JavaScript runs matches what runs after it.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The install block pointed at coordinates that will never exist.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code>, with no Import line. It now cites the Modal family artifact <code>com.eastblue.ds:modal:1.0.0</code> and imports <code>com.eastblue.ds.modal.*</code>, completing the family on one artifact.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Two properties mapped to the same parameter.</strong> <code>hasIcon</code> and <code>⤷ IconSlot</code> both read <code>icon: Image?</code>, which collapses the switch and the content it reveals into one thing and leaves the boolean with nothing of its own to trace to. The boolean now gates a <code>@ViewBuilder icon</code>, matching how the receipt handles <code>hasReferenceNo</code> and its strip.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Property Mapping missed a property and mapped two things that are not properties.</strong> <code>hasDescription</code> had no row, and <code>#title</code> and <code>#description</code> are text layers. Six rows became five, one per panel property, with both strings named in the description instead.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Two strings have nothing to bind to.</strong> Because <code>#title</code> and <code>#description</code> are text layers rather than component properties, Code Connect will have no anchor for them when the native library lands. The five properties that do exist all trace 1:1. Recorded against C7, which was already open on registration.",
+          "delta": { "kind": "open", "label": "C7 open" }
+        },
+        {
+          "body": "<strong>The two tabs declared different APIs.</strong> The mapping had <code>.ebActionOrientation(...)</code> — a SwiftUI modifier — against its own Compose column’s parameter. Settled on the parameter, the third time in this family and for the same reason: it changes the layout of the action area, not the component’s appearance.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Usage Snippets had three subheadings for two values.</strong> The third, \"No illustration (hasIcon=false)\", was keyed to a boolean rather than to the driving property, and the first claimed a default the panel does not state. Two now, one per <code>ActionOrientation</code> value.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The variants table named a button that does not exist.</strong> It read \"primary on top\" and \"primary on right\"; <code>primary</code> is not a term this component’s API uses. Checked against the nodes — the outlined button sits left and the filled right — and reworded to <code>filled</code>, which is what the button actually is.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The family shares one action pattern, and C4 now records it.</strong> Two Button_New instances in a <code>⤷ ActionSlot</code> with 24px padding and an 8px gap, flipping between 156 tall stacked and 98 side by side — identical in this component and in the receipt, which is what lets one <code>actionOrientation</code> parameter serve both. C3’s note also named no tokens before; it now carries all four.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Code Connect emptied, and DEV code is live for the first time.</strong> The demo script had no <code>getSnippet</code>, so both language tabs were frozen on a static string; they now track both booleans.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
     {
       "version": "2.0.0",
       "date": "August 2026",
