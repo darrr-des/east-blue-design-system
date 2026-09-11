@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildInteractiveColorsTable } from './_helpers';
 
 /* One card per Kind. Role and Selection are the axes worth exercising;
    isDisabled rides along on both. */
@@ -31,11 +32,19 @@ const dayControls: DemoControlSection[] = [
       {
         label: 'isDisabled',
         prop: 'disabled',
+        control: 'toggle' as const,
         defaultValue: 'false',
         options: [
           { value: 'false', label: 'false' },
           { value: 'true', label: 'true' }
         ]
+      },
+      {
+        label: "Day",
+        prop: "day",
+        control: 'input' as const,
+        defaultValue: "1",
+        options: []
       }
     ]
   }
@@ -66,11 +75,19 @@ const monthYearControls: DemoControlSection[] = [
       {
         label: 'isDisabled',
         prop: 'disabled',
+        control: 'toggle' as const,
         defaultValue: 'false',
         options: [
           { value: 'false', label: 'false' },
           { value: 'true', label: 'true' }
         ]
+      },
+      {
+        label: "Text",
+        prop: "text",
+        control: 'input' as const,
+        defaultValue: "Label",
+        options: []
       }
     ]
   }
@@ -89,8 +106,8 @@ export const datePickerCell: ComponentData = {
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "navGroup": "Date Picker",
@@ -102,7 +119,7 @@ export const datePickerCell: ComponentData = {
   },
   "overview": {
     "inContextNote": "Day cells fill the seven-column calendar grid; month and year cells fill the three-column header views. The same component serves both, which is what keeps selection, today and disabled looking identical wherever they appear.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"dpc-demo-preview\"><span class=\"eb-preview-dpcell eb-preview-dpcell--day\"><span class=\"eb-preview-dpcell__label\">1</span></span></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Kind</span><select id=\"dpc-ctrl-kind\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"day\" selected=\"\">Day</option><option value=\"monthyear\">MonthYear</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Role</span><select id=\"dpc-ctrl-role\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"today\">Today</option><option value=\"prev-next\">Prev-Next</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Selection</span><select id=\"dpc-ctrl-selection\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"none\" selected=\"\">None</option><option value=\"selected\">Selected</option><option value=\"range-start\">Range-Start</option><option value=\"range-middle\">Range-Middle</option><option value=\"range-end\">Range-End</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isDisabled</span><select id=\"dpc-ctrl-disabled\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"dpc-demo-preview\"><span class=\"eb-preview-dpcell eb-preview-dpcell--day\"><span class=\"eb-preview-dpcell__label\">1</span></span></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Kind</span><select id=\"dpc-ctrl-kind\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"day\" selected=\"\">Day</option><option value=\"monthyear\">MonthYear</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Role</span><select id=\"dpc-ctrl-role\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"today\">Today</option><option value=\"prev-next\">Prev-Next</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Selection</span><select id=\"dpc-ctrl-selection\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"none\" selected=\"\">None</option><option value=\"selected\">Selected</option><option value=\"range-start\">Range-Start</option><option value=\"range-middle\">Range-Middle</option><option value=\"range-end\">Range-End</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isDisabled</span><select id=\"dpc-ctrl-disabled\" class=\"demo-panel-select\" onchange=\"_dpcUpdate()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div><div class=\"demo-panel-row\" id=\"dpc-row-day\"><span class=\"demo-panel-label\">Day</span><input id=\"dpc-ctrl-day\" class=\"demo-panel-select demo-panel-input\" type=\"text\" value=\"1\" oninput=\"_dpcUpdate()\" /></div><div class=\"demo-panel-row\" id=\"dpc-row-text\" hidden><span class=\"demo-panel-label\">Text</span><input id=\"dpc-ctrl-text\" class=\"demo-panel-select demo-panel-input\" type=\"text\" value=\"Label\" oninput=\"_dpcUpdate()\" /></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -178,6 +195,14 @@ export const datePickerCell: ComponentData = {
     ],
     "resolved": [
       {
+        "headline": "The 32 × 32 cell is deliberate.",
+        "body": "A seven-column grid at 312px leaves 32px per cell, so the drawn circle stays 32 × 32 by design. The tap target is not the circle: it expands natively to 44 pt on iOS and 48 dp on Android, which the Accessibility table sets out for both platforms. Confirmed with design — the intended trade for now, not a gap. Sizing the cell to its target is logged as a recommendation for a future redesign.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
         "headline": "Two cell components became one.",
         "body": "<code>Date Picker - Item</code> and <code>Month and Year Picker - Item</code> are gone. Both are now <code>Kind</code> values on this component, which is what stopped the two from drifting apart on state coverage, ring thickness and selection colour.",
         "tag": {
@@ -243,25 +268,12 @@ export const datePickerCell: ComponentData = {
       }
     ],
     "open": [
-      {
-        "headline": "The cell is 32 × 32, below the minimum touch target.",
-        "body": "iOS asks for 44 × 44 and Android for 48 × 48. A seven-column grid at 312px wide leaves 32px per cell, so the fix is either a taller row with the same visual circle, or a transparent tap area extending past the drawn cell. The second keeps the design and satisfies both platforms.",
-        "tag": {
-          "criterion": "C5",
-          "label": "C5 · Interaction State Coverage"
-        }
-      }
     ],
     "recommendations": [
       {
-        "headline": "Take Prev-Next one more step up the token scale.",
-        "body": "The move to the stronger token lands at roughly 4.0:1 against white. Normal-size text needs 4.5:1 — 14px SemiBold does not qualify as large text, which needs 18.66px bold or 24px regular. One more step settles it.",
-        "tag": "Token"
-      },
-      {
-        "headline": "Give the row the range strip, not the cell.",
-        "body": "Each range version bleeds a rectangle 10px past its own bounds to meet the neighbouring cell. It works, but it means the cell knows about its siblings. Native calendars draw range continuity at the row, and moving it there would let the cell stop overflowing.",
-        "tag": "Composition"
+        "headline": "Size the cell to the touch target in a future redesign.",
+        "body": "The 32 × 32 cell is deliberate today — the seven-column grid leaves 32px, and the tap target is expanded natively to 44 pt / 48 dp. But an expanded target the user cannot see still misleads: two adjacent days sit 32px apart while both claim 44. Worth revisiting whenever the calendar’s grid is next opened up, so the drawn cell and the tappable one are the same thing. Not a blocker for this release.",
+        "tag": "A11y"
       },
       {
         "headline": "Rename the component to <code>Date Picker - Cell</code> in Figma.",
@@ -274,7 +286,18 @@ export const datePickerCell: ComponentData = {
         "tag": "Docs"
       }
     ],
-    "appliedRecommendations": []
+    "appliedRecommendations": [
+      {
+        "headline": "Give the row the range strip, not the cell.",
+        "body": "v2.1: Closed — decided against. The strip stays on the cell and bleeds past its edge on purpose: it meets the neighbouring cell so the highlight reads as one continuous bar across the row. Moving it to the row would mean the row deciding which days are in range, which is the cell's job.",
+        "tag": "Composition"
+      },
+      {
+        "headline": "Take Prev-Next one more step up the token scale.",
+        "body": "v2.1: Applied — Prev-Next sits on <code>text/color-text-weaker</code>. That is the next step available that does not read as disabled, chosen over a higher-contrast value on purpose: going further would make an adjacent-month day look unavailable.",
+        "tag": "Token"
+      },
+    ]
   },
   "style": {
     "heading": "Kinds",
@@ -284,144 +307,222 @@ export const datePickerCell: ComponentData = {
         "cardKey": "dpc-spec-card-day",
         "demoKey": "day",
         "demoControls": dayControls,
-        "title": "Kind=Day",
+        "title": "Day",
         "node": "5943:41826",
-        "description": "The calendar grid cell. Circular, 32×32, and the only kind that takes the range selections.",
+        "description": "",
         "previewHtml": "<div id=\"dpc-spec-day\"><span class=\"eb-preview-dpcell eb-preview-dpcell--day\"><span class=\"eb-preview-dpcell__label\">1</span></span></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
+              { "key": "Kind", "value": "Day" },
               { "key": "Role", "value": "Default", "prop": "role" },
               { "key": "Selection", "value": "None", "prop": "selection" },
               { "key": "isDisabled", "value": "false", "prop": "disabled" },
-              { "key": "Versions", "value": "10 of 16" }
+              { "key": "Day", "value": "1", "prop": "day" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Text — default", "value": "#0A2757", "token": "text/color-text-heading", "swatch": true },
-              { "key": "Text — today", "value": "#005CE5", "token": "text/color-text-link", "swatch": true },
-              { "key": "Text — prev-next", "value": "#6780A9", "token": "text/color-text-weaker", "swatch": true },
-              { "key": "Text — disabled", "value": "#C2CFE5", "token": "text/color-text-weakest", "swatch": true },
-              { "key": "Selected fill", "value": "#005CE5", "token": "main/date-picker/cell/selected", "swatch": true },
-              { "key": "Range strip", "value": "#E5F1FF", "token": "main/date-picker/cell/range", "swatch": true }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Dimensions", "value": "32 × 32", "mono": true },
-              { "key": "Corner radius", "value": "24", "mono": true },
-              { "key": "Today ring", "value": "1px inset", "mono": true },
-              { "key": "Range bleed", "value": "10 each side", "mono": true },
-              { "key": "Touch target", "value": "32 — below the 44/48 minimum", "mono": true }
+              { "key": "Container surface", "value": "#FFFFFF", "token": "bg/color-bg-primary-inverse", "swatch": true },
+              { "key": "#text", "value": "#0A2757", "token": "text/color-text", "swatch": true, "variants": { "disabled:true": { "value": "#C2CFE5", "token": "text/color-text-disabled" } } },
+              { "key": "#text — Today", "value": "#005CE5", "token": "text/color-text-primary", "swatch": true, "variants": { "disabled:true": { "value": "#9BC5FD", "token": "text/color-text-primary-disabled" } } },
+              { "key": "Border — Today", "value": "#005CE5", "token": "border/color-border-primary", "swatch": true, "variants": { "disabled:true": { "value": "#9BC5FD", "token": "border/color-border-primary-disabled" } } },
+              { "key": "Container — Selected", "value": "#005CE5", "token": "bg/color-bg-primary", "swatch": true, "variants": { "disabled:true": { "value": "#9BC5FD", "token": "bg/color-bg-primary-disabled" } } },
+              { "key": "#text — Selected", "value": "#FFFFFF", "token": "text/color-text-inverse", "swatch": true },
+              { "key": "Range highlight", "value": "#E5F1FF", "token": "bg/color-bg-info-weakest", "swatch": true },
+              { "key": "#text — Prev-Next", "value": "#6780A9", "token": "text/color-text-weaker", "swatch": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Text style", "value": "Primary/SemiBold/Body", "mono": true },
-              { "key": "Font", "value": "Proxima Soft SemiBold · 14 / 14 · +0.25", "mono": true }
+              { "key": "#text", "value": "Primary/Label/Light/Small", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "32px", "mono": true },
+              { "key": "Width", "value": "32px", "mono": true },
+              { "key": "Radius", "value": "24px", "mono": true },
+              { "key": "Padding H", "value": "6px (derived)", "mono": true },
+              { "key": "Padding V", "value": "9px (derived)", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBPickerCell</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-dot\">.day</span><span class=\"syn-punc\">,</span>\n    role<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.default</span><span class=\"syn-punc\">,</span>\n    selection<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.none</span>\n<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"1\"</span><span class=\"syn-punc\">) }</span>",
-        "compose": "<span class=\"syn-type\">EBPickerCell</span><span class=\"syn-punc\">(</span>\n    kind <span class=\"syn-eq\">=</span> <span class=\"syn-type\">PickerCellKind</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Day</span><span class=\"syn-punc\">,</span>\n    role <span class=\"syn-eq\">=</span> <span class=\"syn-type\">PickerCellRole</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Default</span><span class=\"syn-punc\">,</span>\n    selection <span class=\"syn-eq\">=</span> <span class=\"syn-type\">PickerCellSelection</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">None</span>\n<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"1\"</span><span class=\"syn-punc\">) }</span>"
+        "swift": "<span class=\"syn-type\">EBDatePickerCell</span><span class=\"syn-punc\">(</span>\n    kind<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.day</span><span class=\"syn-punc\">,</span>\n    day<span class=\"syn-punc\">:</span> 1\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePickerCell</span><span class=\"syn-punc\">(</span>\n    kind <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDatePickerCellKind</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Day</span><span class=\"syn-punc\">,</span>\n    day <span class=\"syn-eq\">=</span> 1\n<span class=\"syn-punc\">)</span>"
       },
       {
         "cardKey": "dpc-spec-card-monthyear",
         "demoKey": "monthyear",
         "demoControls": monthYearControls,
-        "title": "Kind=MonthYear",
+        "title": "MonthYear",
         "node": "6442:73668",
-        "description": "The header view cell. Wider and squarer than the day cell, and deliberately without the range selections — these pick a single month or year.",
+        "description": "",
         "previewHtml": "<div id=\"dpc-spec-monthyear\"><span class=\"eb-preview-dpcell eb-preview-dpcell--monthyear\"><span class=\"eb-preview-dpcell__label\">Label</span></span></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
+              { "key": "Kind", "value": "MonthYear" },
               { "key": "Role", "value": "Default", "prop": "role" },
               { "key": "Selection", "value": "None", "prop": "selection" },
               { "key": "isDisabled", "value": "false", "prop": "disabled" },
-              { "key": "Versions", "value": "6 of 16" }
+              { "key": "Text", "value": "Label", "prop": "text" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Text — default", "value": "#0A2757", "token": "text/color-text-heading", "swatch": true },
-              { "key": "Text — today", "value": "#005CE5", "token": "text/color-text-link", "swatch": true },
-              { "key": "Text — disabled", "value": "#C2CFE5", "token": "text/color-text-weakest", "swatch": true },
-              { "key": "Selected fill", "value": "#005CE5", "token": "main/date-picker/cell/selected", "swatch": true }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Dimensions", "value": "59 × 32", "mono": true },
-              { "key": "Corner radius", "value": "8", "mono": true },
-              { "key": "Today ring", "value": "1px inset", "mono": true },
-              { "key": "Range selections", "value": "none — by design", "mono": true }
+              { "key": "Container surface", "value": "#FFFFFF", "token": "bg/color-bg-primary-inverse", "swatch": true },
+              { "key": "#text", "value": "#0A2757", "token": "text/color-text", "swatch": true, "variants": { "disabled:true": { "value": "#C2CFE5", "token": "text/color-text-disabled" } } },
+              { "key": "#text — Today", "value": "#005CE5", "token": "text/color-text-primary", "swatch": true, "variants": { "disabled:true": { "value": "#9BC5FD", "token": "text/color-text-primary-disabled" } } },
+              { "key": "Border — Today", "value": "#005CE5", "token": "border/color-border-primary", "swatch": true, "variants": { "disabled:true": { "value": "#9BC5FD", "token": "border/color-border-primary-disabled" } } },
+              { "key": "Container — Selected", "value": "#005CE5", "token": "bg/color-bg-primary", "swatch": true, "variants": { "disabled:true": { "value": "#9BC5FD", "token": "bg/color-bg-primary-disabled" } } },
+              { "key": "#text — Selected", "value": "#FFFFFF", "token": "text/color-text-inverse", "swatch": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Text style", "value": "Primary/SemiBold/Body", "mono": true },
-              { "key": "Font", "value": "Proxima Soft SemiBold · 14 / 14 · +0.25", "mono": true }
+              { "key": "#text", "value": "Primary/Label/Light/Small", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "32px", "mono": true },
+              { "key": "Width", "value": "59px", "mono": true },
+              { "key": "Radius", "value": "8px", "mono": true },
+              { "key": "Padding H", "value": "12px (derived)", "mono": true },
+              { "key": "Padding V", "value": "9px (derived)", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBPickerCell</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-dot\">.monthYear</span><span class=\"syn-punc\">,</span>\n    role<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.today</span><span class=\"syn-punc\">,</span>\n    selection<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.none</span>\n<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"2026\"</span><span class=\"syn-punc\">) }</span>",
-        "compose": "<span class=\"syn-type\">EBPickerCell</span><span class=\"syn-punc\">(</span>\n    kind <span class=\"syn-eq\">=</span> <span class=\"syn-type\">PickerCellKind</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">MonthYear</span><span class=\"syn-punc\">,</span>\n    role <span class=\"syn-eq\">=</span> <span class=\"syn-type\">PickerCellRole</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Today</span>\n<span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"2026\"</span><span class=\"syn-punc\">) }</span>"
+        "swift": "<span class=\"syn-type\">EBDatePickerCell</span><span class=\"syn-punc\">(</span>\n    kind<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.monthYear</span><span class=\"syn-punc\">,</span>\n    text<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Label\"</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePickerCell</span><span class=\"syn-punc\">(</span>\n    kind <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDatePickerCellKind</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">MonthYear</span><span class=\"syn-punc\">,</span>\n    text <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>\n<span class=\"syn-punc\">)</span>"
       }
-    ]
+    ],
+    colorsTables: [
+      buildInteractiveColorsTable({
+        title: "Day — Colors",
+        description: "The cell has no pressed state, so that column is blank throughout. Range and Prev-Next exist only on Day and have no disabled version.",
+        rows: [
+          { role: "Container surface", token: "bg/color-bg-primary-inverse",
+            default: "#FFFFFF", pressed: '–', disabled: "#FFFFFF" },
+          { role: "#text", token: "text/color-text · disabled text/color-text-disabled",
+            default: "#0A2757", pressed: '–', disabled: "#C2CFE5" },
+          { role: "#text — Today", token: "text/color-text-primary · disabled text/color-text-primary-disabled",
+            default: "#005CE5", pressed: '–', disabled: "#9BC5FD" },
+          { role: "Border — Today", token: "border/color-border-primary · disabled border/color-border-primary-disabled",
+            default: "#005CE5", pressed: '–', disabled: "#9BC5FD" },
+          { role: "Container — Selected", token: "bg/color-bg-primary · disabled bg/color-bg-primary-disabled",
+            default: "#005CE5", pressed: '–', disabled: "#9BC5FD" },
+          { role: "#text — Selected", token: "text/color-text-inverse",
+            default: "#FFFFFF", pressed: '–', disabled: "#FFFFFF" },
+          { role: "Range highlight", token: "bg/color-bg-info-weakest",
+            default: "#E5F1FF", pressed: '–', disabled: "–" },
+          { role: "#text — Prev-Next", token: "text/color-text-weaker",
+            default: "#6780A9", pressed: '–', disabled: "–" },
+        ],
+      }),
+      buildInteractiveColorsTable({
+        title: "MonthYear — Colors",
+        description: "Identical palette to Day — the two kinds differ in width and corner radius, never in colour. MonthYear has no Range or Prev-Next version.",
+        rows: [
+          { role: "Container surface", token: "bg/color-bg-primary-inverse",
+            default: "#FFFFFF", pressed: '–', disabled: "#FFFFFF" },
+          { role: "#text", token: "text/color-text · disabled text/color-text-disabled",
+            default: "#0A2757", pressed: '–', disabled: "#C2CFE5" },
+          { role: "#text — Today", token: "text/color-text-primary · disabled text/color-text-primary-disabled",
+            default: "#005CE5", pressed: '–', disabled: "#9BC5FD" },
+          { role: "Border — Today", token: "border/color-border-primary · disabled border/color-border-primary-disabled",
+            default: "#005CE5", pressed: '–', disabled: "#9BC5FD" },
+          { role: "Container — Selected", token: "bg/color-bg-primary · disabled bg/color-bg-primary-disabled",
+            default: "#005CE5", pressed: '–', disabled: "#9BC5FD" },
+          { role: "#text — Selected", token: "text/color-text-inverse",
+            default: "#FFFFFF", pressed: '–', disabled: "#FFFFFF" },
+        ],
+      }),
+    ],
   },
   "code": {
     "installation": {
       "planned": true,
       "blocks": [
         {
-          "label": "Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
-          "label": "Gradle",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:date-picker:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>datepicker<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. In practice most teams will never call this directly; it is the cell that Date Picker - Calendar draws."
+      "footnote": "Planned API — the native library does not exist yet. The artifact is the Date Picker family, not this component: Cell, Header, Header Trigger, Calendar and the picker itself all ship in <code>com.eastblue.ds:date-picker</code> and import <code>com.eastblue.ds.datepicker.*</code>. In practice most teams never call this directly; it is the cell the calendar grid renders."
     },
     "propertyMapping": {
-      "description": "Figma properties mapped to the intended native parameters.",
+      "description": "Figma properties mapped to the intended native parameters, in the order the Figma property panel lists them. Each cell shows one value — the day number or the month/year label — so the two text properties are alternatives, never both at once.",
       "rows": [
-        { "figma": "Kind", "swift": "PickerCellKind (.day / .monthYear)", "compose": "kind: PickerCellKind" },
-        { "figma": "Role", "swift": "PickerCellRole (.default / .today / .prevNext)", "compose": "role: PickerCellRole" },
-        { "figma": "Selection", "swift": "PickerCellSelection (.none / .selected / .rangeStart / .rangeMiddle / .rangeEnd)", "compose": "selection: PickerCellSelection" },
-        { "figma": "isDisabled", "swift": ".disabled(true)", "compose": "enabled = false" },
-        { "figma": "#text", "swift": "@ViewBuilder label", "compose": "label: @Composable () -> Unit" }
+        {
+          "figma": "Kind — Day, MonthYear",
+          "swift": "<code>kind: EBDatePickerCellKind</code>",
+          "compose": "<code>kind = EBDatePickerCellKind.Day / MonthYear</code>"
+        },
+        {
+          "figma": "Role — Default, Today, Prev-Next",
+          "swift": "<code>role: EBDatePickerCellRole = .default</code>",
+          "compose": "<code>role: EBDatePickerCellRole = Default</code>"
+        },
+        {
+          "figma": "Selection — None, Selected, Range-Start, Range-Middle, Range-End",
+          "swift": "<code>selection: EBDatePickerCellSelection = .none</code>",
+          "compose": "<code>selection: EBDatePickerCellSelection = None</code>"
+        },
+        {
+          "figma": "isDisabled — true, false",
+          "swift": "<code>isDisabled: Bool = false</code>",
+          "compose": "<code>isDisabled: Boolean = false</code>"
+        },
+        {
+          "figma": "Day (text) — shown when Kind is Day",
+          "swift": "<code>day: Int</code>",
+          "compose": "<code>day: Int</code>"
+        },
+        {
+          "figma": "Text (text) — shown when Kind is MonthYear",
+          "swift": "<code>text: String</code>",
+          "compose": "<code>text: String</code>"
+        }
       ]
     },
     "usageSnippets": [
       {
-        "subheading": "A selected day",
-        "swift": "<span class=\"syn-type\">EBPickerCell</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.day</span><span class=\"syn-punc\">,</span> selection<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.selected</span><span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"14\"</span><span class=\"syn-punc\">) }</span>",
-        "compose": "<span class=\"syn-type\">EBPickerCell</span><span class=\"syn-punc\">(</span>kind <span class=\"syn-eq\">=</span> <span class=\"syn-dot\">Day</span><span class=\"syn-punc\">,</span> selection <span class=\"syn-eq\">=</span> <span class=\"syn-dot\">Selected</span><span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"14\"</span><span class=\"syn-punc\">) }</span>"
+        "subheading": "Day — a single date in the grid",
+        "swift": "<span class=\"syn-type\">EBDatePickerCell</span><span class=\"syn-punc\">(</span>\n    kind<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.day</span><span class=\"syn-punc\">,</span>\n    day<span class=\"syn-punc\">:</span> 1\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePickerCell</span><span class=\"syn-punc\">(</span>\n    kind <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDatePickerCellKind</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Day</span><span class=\"syn-punc\">,</span>\n    day <span class=\"syn-eq\">=</span> 1\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "A day inside a selected range",
-        "swift": "<span class=\"syn-type\">EBPickerCell</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.day</span><span class=\"syn-punc\">,</span> selection<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.rangeMiddle</span><span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"15\"</span><span class=\"syn-punc\">) }</span>",
-        "compose": "<span class=\"syn-type\">EBPickerCell</span><span class=\"syn-punc\">(</span>kind <span class=\"syn-eq\">=</span> <span class=\"syn-dot\">Day</span><span class=\"syn-punc\">,</span> selection <span class=\"syn-eq\">=</span> <span class=\"syn-dot\">RangeMiddle</span><span class=\"syn-punc\">) {</span> <span class=\"syn-type\">Text</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"15\"</span><span class=\"syn-punc\">) }</span>"
+        "subheading": "MonthYear — a month or year in the picker",
+        "swift": "<span class=\"syn-type\">EBDatePickerCell</span><span class=\"syn-punc\">(</span>\n    kind<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.monthYear</span><span class=\"syn-punc\">,</span>\n    text<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Label\"</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePickerCell</span><span class=\"syn-punc\">(</span>\n    kind <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDatePickerCellKind</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">MonthYear</span><span class=\"syn-punc\">,</span>\n    text <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "accessibility": [
@@ -478,23 +579,23 @@ export const datePickerCell: ComponentData = {
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Prev-Next moved up a step but still lands near 4.0:1. A <code>main/date-picker/cell/*</code> namespace is proposed for the selection and range fills."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Every colour is bound and confirmed by design. Prev-Next uses <code>text/color-text-weaker</code> — the next step available that does not read as disabled, chosen deliberately over a higher-contrast value."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Maps to a cell on both platforms, but the range strip bleeds past the cell to fake row continuity, which native draws at the row."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Maps to a cell on both platforms. The range strip bleeds past the cell on purpose: it meets the neighbouring cell so the highlight reads as one continuous bar across the row."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "States are complete for the intended set — no Focused (mobile only), Selected carries pressed. Outstanding: the 32×32 touch target."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "States are complete for the intended set — no Focused, since these are mobile components, and Selected carries the pressed meaning. The 32 × 32 cell is a deliberate visual size; the tap target is expanded natively to 44 pt / 48 dp, as the Accessibility table sets out."
       },
       {
         "id": "C6",
@@ -511,43 +612,138 @@ export const datePickerCell: ComponentData = {
         "notes": "Blocked — the native library does not exist yet."
       }
     ],
-    "codeConnect": [
-      {
-        "aspect": "Property naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Four settings, all mapping one to one onto enums and a boolean."
-      },
-      {
-        "aspect": "Token coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Cell fills need their own namespace before mapping."
-      },
-      {
-        "aspect": "Registration",
-        "status": "empty",
-        "statusLabel": "Not Mapped",
-        "notes": "Blocked until the native library exists."
-      }
-    ],
+    "codeConnect": [],
     "variants": {
       "total": 16,
-      "description": "Kind × Role × Selection × isDisabled. The axes permit 60 combinations; 16 are real, because MonthYear has no range or Prev-Next and the range versions have no disabled state.",
-      "columns": ["Kind", "Role", "Selection", "isDisabled", "Count"],
+      "description": "2 <code>Kind</code> × 3 <code>Role</code> × 5 <code>Selection</code> × 2 <code>isDisabled</code> permits 60 combinations; <strong>16 are built</strong>. The matrix is sparse on purpose — MonthYear takes no range and no Prev-Next, range cells have no disabled version, and Prev-Next takes no selection.",
+      "summary": {
+        "columns": ["Kind", "Versions", "Count"],
+        "rows": [
+          { "cells": ["Day", "Default · Today · Prev-Next, with the full Selection range", "10"] },
+          { "cells": ["MonthYear", "Default · Today, None and Selected only", "6"] }
+        ]
+      },
+      "columns": ["Kind", "Role", "Selection", "isDisabled", "Node"],
       "rows": [
-        { "cells": ["Day", "Default", "None", "false · true", "2"] },
-        { "cells": ["Day", "Default", "Selected", "false · true", "2"] },
-        { "cells": ["Day", "Default", "Range-Start / Middle / End", "false", "3"] },
-        { "cells": ["Day", "Today", "None", "false · true", "2"] },
-        { "cells": ["Day", "Prev-Next", "None", "false", "1"] },
-        { "cells": ["MonthYear", "Default", "None", "false · true", "2"] },
-        { "cells": ["MonthYear", "Default", "Selected", "false · true", "2"] },
-        { "cells": ["MonthYear", "Today", "None", "false · true", "2"] }
-      ]
+        { "cells": ["Day", "Default", "None", "false", "5943:41826"] },
+        { "cells": ["Day", "Default", "None", "true", "5943:41829"] },
+        { "cells": ["Day", "Today", "None", "false", "5943:41832"] },
+        { "cells": ["Day", "Today", "None", "true", "5943:41835"] },
+        { "cells": ["Day", "Default", "Selected", "false", "5943:41838"] },
+        { "cells": ["Day", "Default", "Selected", "true", "5943:41843"] },
+        { "cells": ["Day", "Default", "Range-Start", "false", "6442:72593"] },
+        { "cells": ["Day", "Default", "Range-Middle", "false", "5943:41848"] },
+        { "cells": ["Day", "Default", "Range-End", "false", "6442:72603"] },
+        { "cells": ["Day", "Prev-Next", "None", "false", "5943:41853"] },
+        { "cells": ["MonthYear", "Default", "None", "false", "6442:73668"] },
+        { "cells": ["MonthYear", "Default", "None", "true", "6442:73665"] },
+        { "cells": ["MonthYear", "Today", "None", "false", "6442:73671"] },
+        { "cells": ["MonthYear", "Today", "None", "true", "6442:73674"] },
+        { "cells": ["MonthYear", "Default", "Selected", "false", "6442:73662"] },
+        { "cells": ["MonthYear", "Default", "Selected", "true", "6442:73677"] }
+      ],
+      "collapseLabel": "View full Kind × Role × Selection breakdown (16 rows)"
     }
   },
   "changelog": [
+    {
+      "version": "2.1.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Family artifact and preview font — node 5943:41825",
+      "rows": [
+        {
+          "body": "<strong>The Gradle artifact named this component, not its family.</strong> It read <code>com.eastblue.ds:date-picker-cell</code>, which was correct when v2.1.0 shipped and stopped being correct the same week: §3.2 now rules that an artifact is a family, never a component. Cell, Header, Header Trigger, Calendar and the picker itself all install <code>com.eastblue.ds:date-picker</code>. The Kotlin import was already on the family package and did not move.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The preview rendered in the wrong typeface.</strong> <code>.eb-preview-dpcell</code> declared <code>font-family: inherit</code>, which reads as a deliberate choice in a diff but resolves through <code>.eb-preview-scope</code> to <code>body</code> — the documentation font, BarkAda. The cell is Proxima Soft. The font was loaded the whole time; the preview simply never asked for it. Found on Header Trigger and swept back here.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The text properties did not move the preview.</strong> Typing into Day or Text updated the DEV snippet but not the cell, on both tabs: the renderer hardcoded <code>kind === 'day' ? '1' : 'Label'</code> and never read the value the control had already stored. It now takes the text and falls back to Figma’s defaults only when the field is empty.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The Overview had no way to set the text at all.</strong> Its panel offered Kind, Role, Selection and isDisabled and stopped there. Day and Text rows now sit after isDisabled in Figma’s panel order, and only the one belonging to the current Kind is shown — each cell carries one value, so the two are alternatives, never both.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The control keys still used the pre-rename names.</strong> Day’s control was keyed <code>index</code> and MonthYear’s <code>label</code> — the property names Figma used before v2.1.0 renamed them to <code>Day</code> and <code>Text</code>. Nothing user-facing was wrong, but the data file and the demo script disagreed with the Code tab. All nine references now read <code>day</code> and <code>text</code>.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
+    {
+      "version": "2.1.0",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Text settings added, Style and Code tabs rebuilt — node 5943:41825",
+      "rows": [
+        {
+          "body": "<strong>The day and the label can be set on a copy.</strong> The cell had one text layer and no way to fill it from an instance. It now carries two text settings — <code>Day</code> for the date number and <code>Text</code> for the month or year — named after what each shows rather than the generic <code>Index</code> and <code>Label</code> they started as. This is what makes the release a minor rather than a patch.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "<strong>One text setting was considered and rejected.</strong> A single <code>Value</code> property would serve both kinds, but Figma gives a text property one placeholder for every version — and \"Value\" overflows a 32 × 32 day cell. Two properties is the deliberate trade.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "<strong>The documented type style did not exist.</strong> Typography read <code>Primary/SemiBold/Body</code>, which is not a style in the database. The layer resolves to <code>Primary/Label/Light/Small</code>.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>Every colour is a named colour, confirmed by design.</strong> Two colours tables were written from nothing — the token paths had never been on the page. Prev-Next stays on <code>text/color-text-weaker</code> deliberately: the next step up would read as disabled.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>The invisible white fills are gone.</strong> Every version carried a white fill switched off on the component frame. Nothing drew it, but it read as a surface to anyone inspecting the layers.",
+          "delta": { "kind": "resolved", "label": "C1 resolved" }
+        },
+        {
+          "body": "<strong>Default cells had no background in the preview.</strong> The preview painted a background only for Selected, so every Default cell rendered transparent while Figma's <code>Container</code> paints white on all sixteen versions.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The range strip painted over the selected circle.</strong> The preview had rebuilt the strip as a child of the cell, and a parent's background always sits behind its children — so no stacking order could fix it. The Container is now its own layer with the strip beneath, matching Figma, where the highlight is a sibling drawn before Container.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Disabled Today used the wrong blue.</strong> The preview drew its border and text in <code>#C2CFE5</code>, which is Default's disabled text. Today's disabled state is <code>#9BC5FD</code> on both.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Card titles carried raw Figma syntax.</strong> They read <code>Kind=Day</code> and <code>Kind=MonthYear</code>. Titles are the bare value.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The component had two names.</strong> The spec cards called it <code>EBPickerCell</code> while the Code tab and the live snippet called it <code>EBDatePickerCell</code>, and the argument names disagreed too — <code>index</code> against <code>day</code>. All three surfaces now build from one definition.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Install coordinates corrected.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components</code> became <code>AY-Org/eb-ds-ios</code> and <code>com.eastblue.ds:date-picker-cell:2.1.0</code>, with the Kotlin import on the family package <code>com.eastblue.ds.datepicker</code>.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Usage Snippets were split by state, not by version.</strong> They showed \"a selected day\" and \"a day inside a range\"; they now show <code>Day</code> and <code>MonthYear</code>, the two values of the driving setting. Property Mapping gained the two text settings, and the Variants Inventory gained the full sixteen-row breakdown behind its summary.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The 32 × 32 cell is a decision, not a gap.</strong> The seven-column grid leaves 32px per cell, so the drawn circle stays 32 × 32; the tap target expands natively to 44 pt and 48 dp, which the Accessibility table sets out. Confirmed with design and moved out of Open Issues — C5 moves to Ready. Sizing the cell to its target is now a recommendation for a future redesign, not an open defect.",
+          "delta": { "kind": "resolved", "label": "C5 resolved" }
+        },
+        {
+          "body": "<strong>Prev-Next’s token was already at the right step.</strong> The recommendation to raise it further is applied and closed: <code>text/color-text-weaker</code> is the last step before an adjacent-month day starts reading as unavailable. C3 moves to Ready.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>The range strip stays on the cell.</strong> The recommendation to move it to the row is closed, decided against — the strip bleeds past the cell on purpose so the highlight meets its neighbour and reads as one bar across the row. C4 moves to Ready.",
+          "delta": { "kind": "resolved", "label": "C4 resolved" }
+        }
+      ]
+    },
     {
       "version": "2.0.0",
       "date": "August 2026",

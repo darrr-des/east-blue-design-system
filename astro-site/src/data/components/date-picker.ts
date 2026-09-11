@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildInteractiveColorsTable } from './_helpers';
 
 const fieldControls: DemoControlSection[] = [
   {
@@ -18,6 +19,7 @@ const fieldControls: DemoControlSection[] = [
       {
         label: 'isFilled',
         prop: 'filled',
+        control: 'toggle' as const,
         defaultValue: 'false',
         options: [
           { value: 'false', label: 'false' },
@@ -41,8 +43,8 @@ export const datePicker: ComponentData = {
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "navGroup": "Date Picker",
@@ -123,6 +125,14 @@ export const datePicker: ComponentData = {
     ],
     "resolved": [
       {
+        "headline": "The calendar glyph paints once.",
+        "body": "The icon carried a <code>#025AE9</code> fill under a <code>#005CE5</code> stroke that never rendered — two near-identical blues where one was needed. Cleared in Figma during this run; the glyph is now a single <code>border/color-border-primary</code> fill.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
         "headline": "The field is a Dropdown, not a redraw.",
         "body": "Every version wraps one <code>Dropdown - Generic</code> instance. The old component drew its own field, which is why it drifted from the rest of the form family on border colour, height and label placement.",
         "tag": {
@@ -191,27 +201,50 @@ export const datePicker: ComponentData = {
         "body": "Composing Dropdown brings a <code>peso-sign</code> prefix and a <code>flag-container</code> holding a raster Philippines flag. Both are currently switched off by hand. Hand-hidden layers reappear the moment someone swaps the instance — if Dropdown exposed booleans for them, a date field could turn them off declaratively.",
         "tag": "Property"
       },
+    ],
+    "appliedRecommendations": [
       {
-        "headline": "Take the <code>[Option 02]</code> suffix off the name.",
-        "body": "The component is still <code>Date Picker Trigger [Option 02]</code> at node <code>7201:112099</code>. Option 01 was set aside; this one becomes <code>Date Picker</code>. Rename <a href=\"/components/date-picker-calendar\">the calendar</a> first, since it currently holds that name.",
-        "tag": "Rename"
+        "headline": "Document that the picker is a wrapper, not a reimplementation.",
+        "body": "v2.1: Applied — a Usage Guideline pairs \"present the platform's date picker inside this field's styling\" with \"don't rebuild the calendar from the Figma grid — locale and accessibility come free from the platform\", and the install footnote says plainly that this is the component an app places while the other four are what it renders.",
+        "tag": "Docs"
       },
       {
         "headline": "Announce the field as a date control.",
-        "body": "Expose the current value as a spoken date rather than a formatted string, state that activating it opens a calendar, and tie the Error subtext to the field so it is read on focus rather than sitting as loose text.",
+        "body": "v2.1: Applied — Accessibility answers all three parts for both platforms: the field is announced as a date control with its value spoken as a date, activating it is described as opening a calendar, and the Error subtext is tied to the field so it is read on focus rather than left as loose text. A fourth row covers Disabled being announced rather than only greyed.",
         "tag": "A11y"
       },
       {
-        "headline": "Document that the picker is a wrapper, not a reimplementation.",
-        "body": "Both platforms ship a date picker with locale, keyboard and accessibility built in. The Code tab should state that the intent is to present the platform picker inside this field's styling, so nobody rebuilds the calendar from the Figma grid.",
-        "tag": "Docs"
-      }
-    ],
-    "appliedRecommendations": []
+        "headline": "Take the <code>[Option 02]</code> suffix off the name.",
+        "body": "v2.1: Applied — node <code>7201:112099</code> reads <code>Date Picker</code>. Both halves of the recommendation landed: the calendar was renamed to <code>Date Picker - Calendar</code> first, freeing the name for the component that actually takes it. As family lead this is the one member whose name carries no prefix, which is what §3.2 expects.",
+        "tag": "Rename"
+      },
+    ]
   },
   "style": {
     "heading": "States",
-    "description": "Four states across a filled flag. Default, Pressed and Disabled are all 68 tall; only Error grows to carry its subtext.",
+    "description": "Eight versions across four states and a filled flag. The field is one <code>Dropdown - Generic</code> instance: the label sits above, the value and calendar icon inside, and Error adds a subtext row that takes the card from 68px to 94px.",
+    "colorsTables": [
+      buildInteractiveColorsTable({
+        title: "Colors by State",
+        description: "Four states across two fill flags. Every colour here belongs to the <code>Dropdown - Generic</code> instance the component is built from — this component paints nothing of its own. Error is the fourth column, shown in the notes rather than as a column of its own. The two disabled <code>#value</code> colours are deliberate and not a mistake: a disabled field that already holds a date keeps the darker <code>text/color-text-weakest</code> so the value stays legible, while an empty disabled field drops to the lighter <code>text/color-text-disabled</code>.",
+        rows: [
+          { role: "Field surface", token: "bg/color-bg-main · disabled bg/color-bg-strong",
+            default: "#FFFFFF", pressed: "#FFFFFF", disabled: "#EEF2F9" },
+          { role: "Field border", token: "border/color-border · pressed border/color-border-primary · error border/color-border-error",
+            default: "#D7E0EF", pressed: "#005CE5", disabled: "–" },
+          { role: "#label", token: "text/color-text",
+            default: "#0A2757", pressed: "#0A2757", disabled: "#0A2757" },
+          { role: "#value — placeholder", token: "text/color-text-weakest · disabled text/color-text-disabled",
+            default: "#90A8D0", pressed: "#90A8D0", disabled: "#C2CFE5" },
+          { role: "#value — filled", token: "text/color-text · disabled text/color-text-weakest",
+            default: "#0A2757", pressed: "#0A2757", disabled: "#90A8D0" },
+          { role: "Calendar icon", token: "border/color-border-primary · disabled border/color-border-primary-disabled",
+            default: "#005CE5", pressed: "#005CE5", disabled: "#9BC5FD" },
+          { role: "#subtext — Error only", token: "text/color-text-weak",
+            default: "#445C85", pressed: "–", disabled: "–" }
+        ]
+      })
+    ],
     "specCards": [
       {
         "cardKey": "dp-spec-card-field",
@@ -219,7 +252,7 @@ export const datePicker: ComponentData = {
         "demoControls": fieldControls,
         "title": "Date Picker",
         "node": "7201:112099",
-        "description": "One Dropdown - Generic instance per version. The calendar icon sits in the field's trailing slot.",
+        "description": "",
         "previewHtml": "<div id=\"dp-spec-field\"></div>",
         "sections": [
           {
@@ -228,8 +261,6 @@ export const datePicker: ComponentData = {
             "rows": [
               { "key": "State", "value": "Default", "prop": "state" },
               { "key": "isFilled", "value": "false", "prop": "filled" },
-              { "key": "#label", "value": "Label" },
-              { "key": "#value", "value": "Select option", "variants": { "filled:true": { "value": "the chosen date" } } },
               { "key": "Versions", "value": "8" }
             ]
           },
@@ -237,42 +268,39 @@ export const datePicker: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Field — default", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
-              { "key": "Border — default", "value": "#D7E0EF", "token": "border/color-border-field", "swatch": true },
-              { "key": "Border — pressed", "value": "#005CE5", "token": "border/color-border-focus", "swatch": true },
-              { "key": "Field — disabled", "value": "#EEF2F9", "token": "bg/color-bg-disabled", "swatch": true },
-              { "key": "Border — error", "value": "#D81E1E", "token": "border/color-border-error", "swatch": true },
-              { "key": "#label", "value": "#0A2757", "token": "text/color-text-heading", "swatch": true },
-              { "key": "#value — placeholder", "value": "#90A8D0", "token": "text/color-text-placeholder", "swatch": true },
-              { "key": "Calendar icon", "value": "#025AE9", "token": "icon/color-icon-link", "swatch": true }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width", "value": "312", "mono": true },
-              { "key": "Height", "value": "68", "mono": true, "variants": { "state:error": { "value": "94 — subtext adds 26" } } },
-              { "key": "Label row", "value": "312 × 22", "mono": true },
-              { "key": "Field", "value": "312 × 46", "mono": true },
-              { "key": "Corner radius", "value": "6", "mono": true },
-              { "key": "Calendar icon", "value": "32 × 32", "mono": true },
-              { "key": "Description frame", "value": "366 — overflows the 312 field", "mono": true }
+              { "key": "Field surface", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true, "variants": { "state:disabled": { "value": "#EEF2F9", "token": "bg/color-bg-strong" } } },
+              { "key": "Field border", "value": "#D7E0EF", "token": "border/color-border", "swatch": true, "variants": { "state:pressed": { "value": "#005CE5", "token": "border/color-border-primary" }, "state:error": { "value": "#D61B2C", "token": "border/color-border-error" }, "state:disabled": { "value": "–", "token": "none — the disabled field has no stroke" } } },
+              { "key": "#label", "value": "#0A2757", "token": "text/color-text", "swatch": true },
+              { "key": "#value", "value": "#90A8D0", "token": "text/color-text-weakest", "swatch": true, "variants": { "filled:true": { "value": "#0A2757", "token": "text/color-text" }, "state:disabled": { "value": "#C2CFE5", "token": "text/color-text-disabled" }, "state:disabled|filled:true": { "value": "#90A8D0", "token": "text/color-text-weakest" } } },
+              { "key": "Calendar icon", "value": "#005CE5", "token": "border/color-border-primary", "swatch": true, "variants": { "state:disabled": { "value": "#9BC5FD", "token": "border/color-border-primary-disabled" } } },
+              { "key": "#subtext — Error", "value": "#445C85", "token": "text/color-text-weak", "swatch": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "#label style", "value": "Primary/SemiBold/Subheading", "mono": true },
-              { "key": "#label font", "value": "Proxima Soft SemiBold · 16 / 16 · +0.25", "mono": true },
-              { "key": "#value font", "value": "Proxima Soft SemiBold · 14 / 14 · +0.25", "mono": true },
-              { "key": "Subtext", "value": "BarkAda SemiBold · 12 / 18", "mono": true }
+              { "key": "#label", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "#value", "value": "Primary/Label/Light/Small", "mono": true },
+              { "key": "#subtext — Error", "value": "Secondary/Bold/Caption", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "68px", "mono": true, "variants": { "state:error": { "value": "94px" } } },
+              { "key": "Width", "value": "312px", "mono": true },
+              { "key": "Radius", "value": "6px", "mono": true },
+              { "key": "Padding H", "value": "12px (derived)", "mono": true },
+              { "key": "Padding V", "value": "14px top · 16px bottom (derived)", "mono": true },
+              { "key": "Gap", "value": "0px — label, field and subtext stack flush", "mono": true },
+              { "key": "Alignment", "value": "Left", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selection<span class=\"syn-punc\">:</span> $date<span class=\"syn-punc\">,</span>\n    placeholder<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Select option\"</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span>\n    placeholder <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Select option\"</span><span class=\"syn-punc\">,</span>\n    onSelect <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> date <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selection<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>date\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span>\n    onSelect <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> date <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>"
       }
     ]
   },
@@ -281,43 +309,50 @@ export const datePicker: ComponentData = {
       "planned": true,
       "blocks": [
         {
-          "label": "Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
-          "label": "Gradle",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:date-picker:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>datepicker<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. The intent is a styled field that presents the platform's own date picker, not a reimplementation of the calendar."
+      "footnote": "Planned API — the native library does not exist yet. The artifact is the Date Picker family, not this component: Cell, Header, Header Trigger, Calendar and the picker itself all ship in <code>com.eastblue.ds:date-picker</code> and import <code>com.eastblue.ds.datepicker.*</code>. This is the component an app actually places; the other four are what it renders."
     },
     "propertyMapping": {
-      "description": "Figma properties mapped to the intended native parameters.",
+      "description": "Two properties, and neither is a plain parameter. <code>State</code> splits across a modifier and a message; <code>isFilled</code> is not passed at all — it follows from whether the binding holds a date, which is why the Figma panel has no text property for the value. The label, the placeholder and the calendar icon belong to the <code>Dropdown - Generic</code> instance this component is built from.",
       "rows": [
-        { "figma": "State=Default / Pressed", "swift": "derived from focus and presentation", "compose": "interactionSource" },
-        { "figma": "State=Disabled", "swift": ".disabled(true)", "compose": "enabled = false" },
-        { "figma": "State=Error", "swift": "errorMessage: String?", "compose": "errorMessage: String?" },
-        { "figma": "isFilled", "swift": "derived — selection != nil", "compose": "derived — selected != null" },
-        { "figma": "#label", "swift": "label: String", "compose": "label: String" },
-        { "figma": "#value", "swift": "selection: Date? / placeholder: String", "compose": "selected: LocalDate? / placeholder: String" },
-        { "figma": "Calendar icon", "swift": "fixed trailing icon", "compose": "fixed trailing icon" }
+        {
+          "figma": "State — Default, Pressed, Disabled, Error",
+          "swift": "<code>.disabled(true)</code> for Disabled · <code>errorText: String?</code> for Error. Default and Pressed are not parameters — the platform reports the press",
+          "compose": "<code>enabled: Boolean = true</code> for Disabled · <code>errorText: String?</code> for Error. Pressed comes from the <code>InteractionSource</code>"
+        },
+        {
+          "figma": "isFilled — true, false",
+          "swift": "<code>selection: Binding&lt;Date?&gt;</code> — derived, the field is filled when the binding holds a date",
+          "compose": "<code>selected: LocalDate?</code> — derived the same way, with <code>onSelect</code> to set it"
+        }
       ]
     },
     "usageSnippets": [
       {
         "subheading": "A date field",
-        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Date of birth\"</span><span class=\"syn-punc\">,</span> selection<span class=\"syn-punc\">:</span> $birthday<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Date of birth\"</span><span class=\"syn-punc\">,</span> selected <span class=\"syn-eq\">=</span> birthday<span class=\"syn-punc\">,</span> onSelect <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> birthday <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">})</span>"
+        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selection<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>date\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span>\n    onSelect <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> date <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "Showing a validation error",
-        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-str\">\"Start date\"</span><span class=\"syn-punc\">,</span>\n    selection<span class=\"syn-punc\">:</span> $start<span class=\"syn-punc\">,</span>\n    errorMessage<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Pick a date in the future\"</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Start date\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> start<span class=\"syn-punc\">,</span>\n    errorMessage <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Pick a date in the future\"</span>\n<span class=\"syn-punc\">)</span>"
+        "subheading": "Disabled — a modifier on iOS, a parameter on Android",
+        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selection<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>date\n<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">.</span><span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span>\n    onSelect <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> date <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span><span class=\"syn-punc\">,</span>\n    enabled <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "Disabled",
-        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Settlement date\"</span><span class=\"syn-punc\">,</span> selection<span class=\"syn-punc\">:</span> $date<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span><span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Settlement date\"</span><span class=\"syn-punc\">,</span> selected <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span> enabled <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span><span class=\"syn-punc\">)</span>"
+        "subheading": "Error — the subtext row appears",
+        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selection<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>date<span class=\"syn-punc\">,</span>\n    errorText<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Input your subtext here.\"</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span>\n    onSelect <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> date <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span><span class=\"syn-punc\">,</span>\n    errorText <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Input your subtext here.\"</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "accessibility": [
@@ -357,19 +392,15 @@ export const datePicker: ComponentData = {
       }
     ],
     "scorecard": [
-      { "id": "C1", "criterion": "Layer Structure & Naming", "status": "refine", "statusLabel": "Needs Refinement", "notes": "One Dropdown instance per version, and the disabled height is fixed. Outstanding: Dropdown's <code>description</code> frame is 366 wide inside a 312 field." },
+      { "id": "C1", "criterion": "Layer Structure & Naming", "status": "ready", "statusLabel": "Ready", "notes": "One <code>Dropdown - Generic</code> instance per version and nothing drawn by hand, which is the point of the component. Two quirks are inherited from that instance rather than introduced here: its description frame is 366px wide inside a 312px field, and it carries a hidden currency prefix and country flag that a date field never uses. Both belong to Dropdown." },
       { "id": "C2", "criterion": "Variant & Property Naming", "status": "ready", "statusLabel": "Ready", "notes": "<code>State</code> × <code>isFilled</code> is orthogonal and complete, with lowercase booleans." },
       { "id": "C3", "criterion": "Token Coverage", "status": "ready", "statusLabel": "Ready", "notes": "Field, border, text and icon colours all follow the shared form tokens through Dropdown." },
       { "id": "C4", "criterion": "Native Mappability", "status": "ready", "statusLabel": "Ready", "notes": "A form field with a trailing icon that presents a picker — the standard pattern on both platforms." },
       { "id": "C5", "criterion": "Interaction State Coverage", "status": "ready", "statusLabel": "Ready", "notes": "Default, Pressed, Disabled and Error, each across both filled states." },
-      { "id": "C6", "criterion": "Asset & Icon Quality", "status": "refine", "statusLabel": "Needs Refinement", "notes": "The calendar glyph is a vector. Inherited from Dropdown: a hidden raster flag and a currency prefix that a date field will never use." },
+      { "id": "C6", "criterion": "Asset & Icon Quality", "status": "ready", "statusLabel": "Ready", "notes": "The calendar glyph is a vector instance, now a single <code>border/color-border-primary</code> fill after the stray stroke was cleared. It is still a <code>BOOLEAN_OPERATION</code> and the hidden flag beside it is a raster — both live in the shared icon and the Dropdown instance, not in this component." },
       { "id": "C7", "criterion": "Code Connect Linkability", "status": "empty", "statusLabel": "Not Mapped", "notes": "Blocked — the native library does not exist yet." }
     ],
-    "codeConnect": [
-      { "aspect": "Property naming", "status": "ready", "statusLabel": "Ready", "notes": "<code>State</code> and <code>isFilled</code> map onto an enum and a derived boolean." },
-      { "aspect": "Token coverage", "status": "ready", "statusLabel": "Ready", "notes": "Inherited from Dropdown, which is already tokenised." },
-      { "aspect": "Registration", "status": "empty", "statusLabel": "Not Mapped", "notes": "Blocked until the native library exists." }
-    ],
+    "codeConnect": [],
     "variants": {
       "total": 8,
       "description": "4 State × 2 isFilled = 8 versions, complete with no gaps.",
@@ -387,6 +418,71 @@ export const datePicker: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.1.0",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Renamed to Date Picker, Style and Code tabs rebuilt — node 7201:112099",
+      "rows": [
+        {
+          "body": "<strong>The component has the family name.</strong> It was <code>Date Picker Trigger [Option 02]</code> — a working title and a discarded alternative carried into the file. Renaming the calendar to <code>Date Picker - Calendar</code> freed the name for the component that actually takes it. This is what makes the release a minor rather than a patch.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "<strong>The calendar glyph paints once.</strong> It carried a <code>#025AE9</code> fill under a <code>#005CE5</code> stroke that never rendered — two near-identical blues where one was needed. Cleared in Figma during this run.",
+          "delta": { "kind": "resolved", "label": "C6 resolved" }
+        },
+        {
+          "body": "<strong>The documented type style did not exist.</strong> Typography read <code>Primary/SemiBold/Subheading</code>, which is not in the database, alongside three font-spec rows. Both <code>#label</code> and <code>#value</code> resolve to <code>Primary/Label/Light/Small</code>, and the Error subtext to <code>Secondary/Bold/Caption</code> — genuinely BarkAda, since that is what the Secondary family is.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>Seven of eight colour tokens named the wrong steps</strong>, and the error border was recorded as <code>#D81E1E</code> when the node says <code>#D61B2C</code> — a value borrowed from the button destructive palette. The bindings are <code>bg/color-bg-main</code>, <code>bg/color-bg-strong</code>, <code>border/color-border</code>, <code>border/color-border-primary</code>, <code>border/color-border-error</code>, <code>text/color-text</code>, <code>text/color-text-weakest</code> and <code>border/color-border-primary-disabled</code>.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>The disabled value colours were both wrong, and the cause was the schema.</strong> The row carried two single-property overrides, <code>filled:true</code> and <code>state:disabled</code>; with both active neither wins predictably, so Disabled+filled painted <code>#0A2757</code> and Disabled+empty painted a value read in error. A compound <code>state:disabled|filled:true</code> key settles it. The two colours are deliberate: a disabled field holding a date keeps the darker <code>text/color-text-weakest</code> so the value stays legible, while an empty one drops to <code>text/color-text-disabled</code>.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>Layout had none of the seven keys</strong> — <code>Label row</code>, <code>Field</code>, <code>Corner radius</code>, <code>Calendar icon</code> and a <code>Description frame</code> row describing an overflow. Now Height · Width · Radius · Padding H · Padding V · Gap · Alignment, with Height switching to 94px in Error. <code>Gap</code> is <code>0px</code>: label, field and subtext stack flush, which is worth stating because the render suggests otherwise.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Three preview corrections.</strong> The error border drew <code>#D81E1E</code> against Figma's <code>#D61B2C</code>; the disabled calendar icon stayed full-strength blue where Figma dims it to <code>#9BC5FD</code>; and the whole field rendered in the documentation font, since the preview declared <code>font-family: inherit</code>. The subtext now declares BarkAda explicitly, because there it is correct.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The DEV code block was frozen.</strong> This was the only component in the family without a <code>getSnippet</code>, so the snippet stood still while the controls moved. It now follows both settings, and the two languages differ where they should: Disabled is a trailing <code>.disabled(true)</code> modifier in SwiftUI and an <code>enabled = false</code> argument in Compose.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong><code>isFilled</code> was a dropdown where the guide asks for a toggle.</strong> The values were already ordered off-then-on; only <code>control: 'toggle'</code> was missing, which <code>hasCaret</code> and <code>hasWeek6</code> both carry.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The install block pointed at coordinates that will never exist.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code>, with no Import line — the last of these in the family. It now cites <code>com.eastblue.ds:date-picker:1.0.0</code> and imports <code>com.eastblue.ds.datepicker.*</code>.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Property Mapping had seven rows for two properties.</strong> Three of them split <code>State</code> by value in <code>Prop=Value</code> form, which the guide forbids outright, and three more named layers rather than properties. Two rows now, and both say something a developer can act on: <code>State</code> splits across a modifier and a message, and <code>isFilled</code> is never passed — it follows from whether the binding holds a date, which is exactly why the Figma panel has no text property for the value.",
+          "delta": { "kind": "resolved", "label": "C4 resolved" }
+        },
+        {
+          "body": "<strong>Usage Snippets disagreed with the Style tab.</strong> They passed the label positionally, <code>EBDatePicker(\"Date of birth\", …)</code>, where the card and the live snippet use <code>label:</code>. Three snippets remain but are re-keyed to what changes the call — the base field, Disabled and Error. Default and Pressed produce identical code, so a fourth would have been noise.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Two scorecard rows were held open for another component's faults.</strong> C1 and C6 cited Dropdown's 366px description frame, its hidden currency prefix and country flag, and the raster inside that flag. All still true, all still recorded — but as inherited from the instance rather than as defects of this component, so the page no longer asks someone to fix them here. C1 and C6 move to Ready, and Code Connect is emptied.",
+          "delta": { "kind": "resolved", "label": "C6 resolved" }
+        },
+        {
+          "body": "<strong>Three of five recommendations close.</strong> The rename landed, the accessibility announcements are documented for both platforms, and the wrapper-not-reimplementation point is stated in the guidelines and the install footnote. The two that remain are Dropdown's: its description frame overflowing the field by 54px, and its unused slots being hidden by hand rather than driven by a property.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
     {
       "version": "2.0.0",
       "date": "August 2026",

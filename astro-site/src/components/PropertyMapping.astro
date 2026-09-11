@@ -4,7 +4,10 @@ interface Props { slug: string; data: PMType; }
 const { slug, data } = Astro.props;
 ---
 <div class="sub-heading" id={`${slug}-prop-mapping`}>Property Mapping</div>
-{data.description && <p>{data.description}</p>}
+{/* set:html, like every other description field on the page — and like
+    this component's own rows three lines below. Data files have always
+    written <code> and <strong> here; without this the tags print. */}
+{data.description && <p set:html={data.description} />}
 <div class="table-wrap">
   <table>
     <thead><tr><th>Figma Property</th><th>SwiftUI</th><th>Compose</th></tr></thead>

@@ -47,31 +47,36 @@ function _liAsset(type) {
     case 'check-positive': return ['', _liCheck('#27C990')];
     case 'pending':        return ['', _liPending('#90A8D0')];
     case 'pending-notice': return ['', _liPending('#CA970C')];
+    /* Slot reserves its 16 × 16 and ships empty, so it draws as a
+       footprint — the same placeholder the trailing slot uses. */
+    case 'slot':           return ['--slot', ''];
     default:               return ['--bullet', ''];
   }
 }
 
-var _liLabels = [
-  'List body with level-1 style',
-  'Second row in the same list',
-  'Third row in the same list'
-];
-
+/* Each preview renders the ladder down to its own level: level 1 alone,
+   level 2 under a level 1, level 3 under both. The indent is the only
+   thing ListLevel changes, and an indent is only legible against the
+   thing it is indented from — three rows all at the same level showed
+   nothing. It is also how the nesting actually works: a level-3 item
+   only exists underneath a level-2. */
 function _liRender(opts) {
-  var level = opts.level || '1';
+  var level = parseInt(opts.level || '1', 10);
   var asset = _liAsset(opts.asset || 'bullet');
   var cls = asset[0] ? ' eb-preview-litem__asset' + asset[0] : '';
 
-  /* Level 1's sample copy names its level; the other two rows are generic
-     so the preview reads as one list rather than three separate levels. */
-  var first = 'List body with level-' + level + ' style';
-
   var h = '<div class="eb-preview-litem">';
-  for (var i = 0; i < _liLabels.length; i++) {
-    var inner = asset[1] === null ? (i + 1) + '.' : asset[1];
-    h += '<div class="eb-preview-litem__row eb-preview-litem__row--l' + level + '">';
-    h += '<span class="eb-preview-litem__asset' + cls + '">' + inner + '</span>';
-    h += '<span class="eb-preview-litem__label">' + (i === 0 ? first : _liLabels[i]) + '</span>';
+  for (var l = 1; l <= level; l++) {
+    /* Numbered restarts at each level, the way a nested ordered list does. */
+    var inner = asset[1] === null ? '1.' : asset[1];
+    h += '<div class="eb-preview-litem__row eb-preview-litem__row--l' + l + '">';
+    /* hasLeading=false drops the marker entirely, so the label starts at
+       the indent. The row keeps its 8px gap rule either way — with one
+       child there is nothing for it to apply to. */
+    if (opts.hasLeading !== false) {
+      h += '<span class="eb-preview-litem__asset' + cls + '">' + inner + '</span>';
+    }
+    h += '<span class="eb-preview-litem__label">List body with level-' + l + ' style</span>';
     if (opts.hasTrailing) h += '<span class="eb-preview-litem__trailing"></span>';
     h += '</div>';
   }
@@ -85,13 +90,18 @@ function _liUpdate() {
   preview.innerHTML = _liRender({
     level: getVal('li-ctrl-level', '1'),
     asset: getVal('li-ctrl-asset', 'bullet'),
+    hasLeading: getVal('li-ctrl-hasleading', 'true') === 'true',
     hasTrailing: getVal('li-ctrl-hastrailing', 'false') === 'true'
   });
 }
 
 /* ── Spec card state ─────────────────────────────────────────────── */
+/* One card per ListLevel value, keyed by the demoKey in the data file.
+   Defaults are Figma's: hasLeading True, hasTrailing False. */
 var _specCards = {
-  default: { level: '1', asset: 'bullet', hastrailing: 'false' }
+  'l1': { level: '1', asset: 'bullet', hasleading: 'true', hastrailing: 'false' },
+  'l2': { level: '2', asset: 'bullet', hasleading: 'true', hastrailing: 'false' },
+  'l3': { level: '3', asset: 'bullet', hasleading: 'true', hastrailing: 'false' }
 };
 window._specCards = _specCards;
 
@@ -104,11 +114,41 @@ function updateSpecCard(cardKey, prop, value) {
     host.innerHTML = _liRender({
       level: card.level,
       asset: card.asset,
+      hasLeading: card.hasleading === 'true',
       hasTrailing: card.hastrailing === 'true'
     });
   }
 }
 window.updateSpecCard = updateSpecCard;
+
+/* ── DEV code, live ───────────────────────────────────────────────── */
+/* ListLevel is an Int natively rather than a three-value enum: the Figma
+   variant caps at 3 because a variant has to enumerate, but a real list
+   nests as deep as its content does. */
+function getSnippet(cardKey, lang) {
+  var card = _specCards[cardKey] || _specCards['l1'];
+  var compose = lang === 'compose';
+  var sep = compose ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
+  /* The label leads unlabelled in Swift, matching EBButton("Save Changes");
+     Kotlin names it, since it has no equivalent convention. */
+  var args = compose
+    ? ['label' + sep + '<span class="syn-str">"List body"</span>',
+       'level' + sep + '<span class="syn-val">' + card.level + '</span>']
+    : ['<span class="syn-str">"List body"</span>',
+       'level' + sep + '<span class="syn-val">' + card.level + '</span>'];
+  if (card.hasleading === 'false') {
+    args.push('hasLeading' + sep + '<span class="syn-kw">false</span>');
+  }
+  if (card.hastrailing === 'true') {
+    args.push('trailing' + sep + (compose
+      ? '<span class="syn-punc">{</span> <span class="syn-fn">Icon</span><span class="syn-punc">(</span>EBIcons<span class="syn-punc">.</span>ChevronRight<span class="syn-punc">) }</span>'
+      : '<span class="syn-punc">{</span> <span class="syn-type">Image</span><span class="syn-punc">(</span>systemName<span class="syn-punc">:</span> <span class="syn-str">"chevron.right"</span><span class="syn-punc">) }</span>'));
+  }
+  return '<span class="syn-type">EBListItem</span><span class="syn-punc">(</span>\n    ' +
+    args.join('<span class="syn-punc">,</span>\n    ') +
+    '\n<span class="syn-punc">)</span>';
+}
+window.getSnippet = getSnippet;
 
 function _liInit() {
   _liUpdate();

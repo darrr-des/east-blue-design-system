@@ -1,17 +1,18 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildStatelessColorsTable } from './_helpers';
 
-const calendarControls: DemoControlSection[] = [
+const dayControls: DemoControlSection[] = [
   {
     heading: 'Properties',
     rows: [
       {
-        label: 'Mode',
-        prop: 'mode',
-        defaultValue: 'day',
+        label: 'hasWeek6',
+        prop: 'week6',
+        control: 'toggle' as const,
+        defaultValue: 'true',
         options: [
-          { value: 'day', label: 'Day' },
-          { value: 'month', label: 'Month' },
-          { value: 'year', label: 'Year' }
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' }
         ]
       }
     ]
@@ -31,8 +32,8 @@ export const datePickerCalendar: ComponentData = {
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "navGroup": "Date Picker",
@@ -44,7 +45,7 @@ export const datePickerCalendar: ComponentData = {
   },
   "overview": {
     "inContextNote": "Appears as an overlay above the field once a date picker is opened. Day mode is the default; tapping the month or year chip in its header switches to the corresponding list, and the back chevron returns.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"dpcal-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Mode</span><select id=\"dpcal-ctrl-mode\" class=\"demo-panel-select\" onchange=\"_dpcalUpdate()\"><option value=\"day\" selected=\"\">Day</option><option value=\"month\">Month</option><option value=\"year\">Year</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"dpcal-demo-preview\"></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Mode</span><select id=\"dpcal-ctrl-mode\" class=\"demo-panel-select\" onchange=\"_dpcalUpdate()\"><option value=\"day\" selected=\"\">Day</option><option value=\"month\">Month</option><option value=\"year\">Year</option></select></div><div class=\"demo-panel-row\" id=\"dpcal-row-week6\"><span class=\"demo-panel-label\">hasWeek6</span><select id=\"dpcal-ctrl-week6\" class=\"demo-panel-select\" onchange=\"_dpcalUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected>true</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -98,6 +99,22 @@ export const datePickerCalendar: ComponentData = {
       }
     ],
     "resolved": [
+      {
+        "headline": "The row-count setting is named for what it does.",
+        "body": "It was <code>week 6</code> — lowercase, with a space, and named as a noun rather than a state. It is now <code>hasWeek6</code>, matching <code>hasCaret</code> on Header Trigger. A dropdown of 4, 5 and 6 was considered and rejected: Figma has no enum that is not a variant, so it would have turned three components into nine. The boolean stays, and the native side counts rows instead.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "The Title frame no longer paints twice.",
+        "body": "The Month and Year header carried a white fill on an already-white card and an <code>#E5EBF4</code> stroke switched off. Neither drew anything, but both read as surfaces when inspecting the layers. Cleared in Figma during this run — the fourth and last of these leftovers in the family.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
       {
         "headline": "The calendar is assembled, not redrawn.",
         "body": "Every cell in every mode is a <a href=\"/components/date-picker-cell\">Date Picker - Cell</a> instance, and the weekday strip is seven <a href=\"/components/date-picker-header\">Date Picker - Header</a> instances. The old surface drew its own cells, which is why cell states were undefined on the grid.",
@@ -157,54 +174,67 @@ export const datePickerCalendar: ComponentData = {
     ],
     "open": [],
     "recommendations": [
-      {
-        "headline": "Drop the drawn scroll indicator before handoff.",
-        "body": "Year mode carries a <code>Scrollbar</code> instance. Both platforms draw their own scroll indicators, with their own show and fade behaviour, so this maps to nothing in code. Keeping it as a visual spec note is the current decision — mark it clearly as annotation so nobody builds it.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Document that the chevrons change meaning by mode.",
-        "body": "In Day mode they page through months. In Month and Year the left chevron goes back and the right one is a hidden spacer keeping the title centred. Same layers, two behaviours — worth stating in the Code tab so the mapping is obvious.",
-        "tag": "Docs"
-      },
-      {
-        "headline": "Rename the component to <code>Date Picker - Calendar</code> in Figma.",
-        "body": "It is still called <code>Date Picker</code> at node <code>6769:105110</code>, which now collides with the field trigger taking that name. Rename this one first, then the trigger.",
-        "tag": "Rename"
-      },
+    ],
+    "appliedRecommendations": [
       {
         "headline": "Take the row, not the cell, for range continuity.",
-        "body": "Range strips currently bleed out of each cell to meet its neighbours. If the row owned that highlight, the cells would stop overflowing and the grid would map more directly onto a native row.",
+        "body": "v2.1: Closed — decided against, matching the same call on Date Picker - Cell. The strip bleeds past the cell on purpose so the highlight meets its neighbour and reads as one bar across the row; moving it to the row would mean the row deciding which days are in range, which is the cell's job.",
         "tag": "Composition"
       },
       {
         "headline": "Expose the grid as a grid to assistive tech.",
-        "body": "Announce rows and columns so a screen reader user can move by week as well as by day, and hide the decorative weekday strip.",
+        "body": "v2.1: Applied — Accessibility carries both halves of the ask: the grid is announced as a grid so a screen reader user can move by week as well as by day, and the decorative weekday strip is hidden.",
         "tag": "A11y"
-      }
-    ],
-    "appliedRecommendations": []
+      },
+      {
+        "headline": "Document that the chevrons change meaning by mode.",
+        "body": "v2.1: Applied — Accessibility spells both behaviours out for each platform: \"Previous month\" and \"Next month\" in Day, \"Back\" in Month and Year. Month and Year carry no right chevron at all, which the Style tab now renders correctly.",
+        "tag": "Docs"
+      },
+      {
+        "headline": "Drop the drawn scroll indicator before handoff.",
+        "body": "v2.1: Applied — a Usage Guideline now pairs \"let the platform draw scroll indicators in Year mode\" with \"don't build the drawn scrollbar from the Figma file\", and the scorecard records that the Scrollbar is a shared component instance mapping to the platform indicator, not a rectangle to reproduce.",
+        "tag": "Docs"
+      },
+      {
+        "headline": "Rename the component to <code>Date Picker - Calendar</code> in Figma.",
+        "body": "v2.1: Applied — node <code>6769:105110</code> reads <code>Date Picker - Calendar</code>. The recommendation also asked that the field trigger be renamed after this one; that is still outstanding on <code>date-picker</code> (node <code>7201:112099</code>) and carries over to its own review.",
+        "tag": "Rename"
+      },
+    ]
   },
   "style": {
     "heading": "Modes",
-    "description": "Three modes on one Mode setting. The header changes behaviour between them; the content area changes from a seven-column grid to a three-column list.",
+    "description": "Three modes on one 312px card. Day shows a month grid, Month a twelve-cell list, Year a scrolling list — each assembled from family instances rather than redrawn.",
+    "colorsTables": [
+      buildStatelessColorsTable({
+        title: "Colors",
+        description: "The calendar paints only three things of its own — the card, its border and the two chevrons. Everything inside is a Date Picker - Cell, - Header or - Header Trigger instance carrying its own colours; the scrollbar in Year mode is a shared Scrollbar component. No states: the surface never changes.",
+        rows: [
+          { role: "Card surface",         token: "bg/color-bg-primary-inverse", value: "#FFFFFF" },
+          { role: "Card border",          token: "border/color-border-weak",    value: "#E5EBF4" },
+          { role: "Chevron Left / Right", token: "border/color-border-primary", value: "#005CE5" },
+          { role: "Scrollbar thumb — Year", token: "text/color-text",           value: "#0A2757" }
+        ]
+      })
+    ],
     "specCards": [
       {
-        "cardKey": "dpcal-spec-card-modes",
-        "demoKey": "modes",
-        "demoControls": calendarControls,
-        "title": "Date Picker - Calendar",
-        "node": "6769:105110",
-        "description": "Day mode is the default. Month and Year are reached from the header chips and return via the back chevron.",
-        "previewHtml": "<div id=\"dpcal-spec-modes\"></div>",
+        "cardKey": "day",
+        "demoKey": "day",
+        "demoControls": dayControls,
+        "title": "Day",
+        "node": "6769:105099",
+        "description": "",
+        "previewHtml": "<div id=\"dpcal-spec-day\"></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Mode", "value": "Day", "prop": "mode" },
-              { "key": "Cells", "value": "42", "variants": { "mode:month": { "value": "12" }, "mode:year": { "value": "18" } } },
-              { "key": "Header centre", "value": "2 Header Trigger instances", "variants": { "mode:month": { "value": "Title — static text" }, "mode:year": { "value": "Title — static text" } } },
+              { "key": "Mode", "value": "Day" },
+              { "key": "hasWeek6", "value": "true", "prop": "week6" },
+              { "key": "Rows", "value": "1 weekday + 6 week", "variants": { "week6:false": { "value": "1 weekday + 5 week" } } },
               { "key": "Versions", "value": "3" }
             ]
           },
@@ -212,39 +242,140 @@ export const datePickerCalendar: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true },
-              { "key": "Border", "value": "#E5EBF4", "token": "border/color-border-subtle", "swatch": true },
-              { "key": "Title", "value": "#0A2757", "token": "text/color-text-heading", "swatch": true },
-              { "key": "Chevrons", "value": "#005CE5", "token": "icon/color-icon-link", "swatch": true },
-              { "key": "Scroll indicator", "value": "#E5EBF4", "token": "annotation only — not built", "swatch": true }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width", "value": "312", "mono": true },
-              { "key": "Height", "value": "336", "mono": true, "variants": { "mode:month": { "value": "296" }, "mode:year": { "value": "296" } } },
-              { "key": "Padding", "value": "16", "mono": true },
-              { "key": "Header height", "value": "24", "mono": true },
-              { "key": "Header to content", "value": "8", "mono": true },
-              { "key": "Row height", "value": "32", "mono": true },
-              { "key": "Row gap", "value": "8", "mono": true, "variants": { "mode:month": { "value": "16" }, "mode:year": { "value": "16" } } },
-              { "key": "Corner radius", "value": "8", "mono": true }
+              { "key": "Card surface", "value": "#FFFFFF", "token": "bg/color-bg-primary-inverse", "swatch": true },
+              { "key": "Card border", "value": "#E5EBF4", "token": "border/color-border-weak", "swatch": true },
+              { "key": "Chevron Left / Right", "value": "#005CE5", "token": "border/color-border-primary", "swatch": true }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Header title", "value": "Primary/Bold/Subheading", "mono": true },
-              { "key": "Font", "value": "Proxima Soft Bold · 16 / 16 · +0.25", "mono": true },
-              { "key": "Cell text", "value": "supplied by Date Picker - Cell", "mono": true }
+              { "key": "Header Trigger · #text", "value": "Primary/Label/Base", "mono": true },
+              { "key": "Header · #text", "value": "Primary/Label/Small", "mono": true },
+              { "key": "Cell · #text", "value": "Primary/Label/Light/Small", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "336px", "mono": true, "variants": { "week6:false": { "value": "296px" } } },
+              { "key": "Width", "value": "312px", "mono": true },
+              { "key": "Radius", "value": "8px", "mono": true },
+              { "key": "Padding H", "value": "16px", "mono": true },
+              { "key": "Padding V", "value": "16px", "mono": true },
+              { "key": "Gap", "value": "8px", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    selection<span class=\"syn-punc\">:</span> $date<span class=\"syn-punc\">,</span>\n    mode<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.day</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    selected <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span>\n    mode <span class=\"syn-eq\">=</span> <span class=\"syn-type\">CalendarMode</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Day</span><span class=\"syn-punc\">,</span>\n    onSelect <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> date <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    mode<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.day</span><span class=\"syn-punc\">,</span>\n    weeks<span class=\"syn-punc\">:</span> 6\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    mode <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDatePickerCalendarMode</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Day</span><span class=\"syn-punc\">,</span>\n    weeks <span class=\"syn-eq\">=</span> 6\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "month",
+        "demoKey": "month",
+        "demoControls": [],
+        "title": "Month",
+        "node": "6769:105109",
+        "description": "",
+        "previewHtml": "<div id=\"dpcal-spec-month\"></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "Mode", "value": "Month" },
+              { "key": "Cells", "value": "12 — 3 columns × 4 rows" },
+              { "key": "Versions", "value": "3" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Card surface", "value": "#FFFFFF", "token": "bg/color-bg-primary-inverse", "swatch": true },
+              { "key": "Card border", "value": "#E5EBF4", "token": "border/color-border-weak", "swatch": true },
+              { "key": "Chevron Left / Right", "value": "#005CE5", "token": "border/color-border-primary", "swatch": true }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "Title · #text", "value": "Primary/Label/Base", "mono": true },
+              { "key": "Cell · #text", "value": "Primary/Label/Light/Small", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "296px", "mono": true },
+              { "key": "Width", "value": "312px", "mono": true },
+              { "key": "Radius", "value": "8px", "mono": true },
+              { "key": "Padding H", "value": "16px", "mono": true },
+              { "key": "Padding V", "value": "16px", "mono": true },
+              { "key": "Gap", "value": "8px header → content · 32px between rows, 16px between columns", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    mode<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.month</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    mode <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDatePickerCalendarMode</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Month</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "year",
+        "demoKey": "year",
+        "demoControls": [],
+        "title": "Year",
+        "node": "6769:105100",
+        "description": "",
+        "previewHtml": "<div id=\"dpcal-spec-year\"></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "Mode", "value": "Year" },
+              { "key": "Cells", "value": "18 — 3 columns × 6 rows, scrolled" },
+              { "key": "Versions", "value": "3" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Card surface", "value": "#FFFFFF", "token": "bg/color-bg-primary-inverse", "swatch": true },
+              { "key": "Card border", "value": "#E5EBF4", "token": "border/color-border-weak", "swatch": true },
+              { "key": "Chevron Left / Right", "value": "#005CE5", "token": "border/color-border-primary", "swatch": true }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "Title · #text", "value": "Primary/Label/Base", "mono": true },
+              { "key": "Cell · #text", "value": "Primary/Label/Light/Small", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "296px", "mono": true },
+              { "key": "Width", "value": "312px", "mono": true },
+              { "key": "Radius", "value": "8px", "mono": true },
+              { "key": "Padding H", "value": "16px", "mono": true },
+              { "key": "Padding V", "value": "16px", "mono": true },
+              { "key": "Gap", "value": "8px header → content · 32px between rows, 16px between columns", "mono": true },
+              { "key": "Alignment", "value": "Center", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    mode<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.year</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    mode <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDatePickerCalendarMode</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Year</span>\n<span class=\"syn-punc\">)</span>"
       }
     ]
   },
@@ -253,36 +384,50 @@ export const datePickerCalendar: ComponentData = {
       "planned": true,
       "blocks": [
         {
-          "label": "Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
-          "label": "Gradle",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:date-picker:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>datepicker<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. Both platforms ship a calendar with locale, keyboard and accessibility support built in; the intent is a tokenised wrapper over those, not a reimplementation."
+      "footnote": "Planned API — the native library does not exist yet. The artifact is the Date Picker family, not this component: Cell, Header, Header Trigger, Calendar and the picker itself all ship in <code>com.eastblue.ds:date-picker</code> and import <code>com.eastblue.ds.datepicker.*</code>."
     },
     "propertyMapping": {
-      "description": "Figma properties mapped to the intended native parameters.",
+      "description": "Two properties. Everything else on this component is a nested instance rather than a setting: the header chevrons, the two Header Trigger chips, the weekday row and every date cell are Date Picker instances that carry their own properties. <code>hasWeek6</code> is the one place Figma and the platform disagree in shape — Figma toggles a row, the platform counts them, because a February that starts on the first day of the week needs four.",
       "rows": [
-        { "figma": "Mode", "swift": "CalendarMode (.day / .month / .year)", "compose": "mode: CalendarMode" },
-        { "figma": "Header chevrons", "swift": "onPrevious / onNext / dismiss", "compose": "onPrevious / onNext / onBack" },
-        { "figma": "Header Trigger ×2", "swift": "month and year selectors", "compose": "month and year selectors" },
-        { "figma": "Content cells", "swift": "EBPickerCell per date", "compose": "EBPickerCell per date" },
-        { "figma": "Scrollbar", "swift": "— platform indicator", "compose": "— platform indicator" }
+        {
+          "figma": "Mode — Day, Month, Year",
+          "swift": "<code>mode: EBDatePickerCalendarMode</code>",
+          "compose": "<code>mode: EBDatePickerCalendarMode</code>"
+        },
+        {
+          "figma": "hasWeek6 — true, false",
+          "swift": "<code>weeks: Int = 6</code> — the boolean is a row count on both platforms, clamped to 4...6",
+          "compose": "<code>weeks: Int = 6</code> — same, clamped to 4..6"
+        }
       ]
     },
     "usageSnippets": [
       {
-        "subheading": "As the overlay of a date field",
-        "swift": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">:</span> $date<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>selection<span class=\"syn-punc\">:</span> $date<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">}</span>",
-        "compose": "<span class=\"syn-type\">EBDatePicker</span><span class=\"syn-punc\">(</span>selected <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">) {</span>\n    <span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>selected <span class=\"syn-eq\">=</span> date<span class=\"syn-punc\">,</span> onSelect <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> date <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">})</span>\n<span class=\"syn-punc\">}</span>"
+        "subheading": "Day — the month grid",
+        "swift": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    mode<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.day</span><span class=\"syn-punc\">,</span>\n    weeks<span class=\"syn-punc\">:</span> 6\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    mode <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDatePickerCalendarMode</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Day</span><span class=\"syn-punc\">,</span>\n    weeks <span class=\"syn-eq\">=</span> 6\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "Selecting a range",
-        "swift": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    range<span class=\"syn-punc\">:</span> $dateRange<span class=\"syn-punc\">,</span>\n    mode<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.day</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    range <span class=\"syn-eq\">=</span> dateRange<span class=\"syn-punc\">,</span>\n    mode <span class=\"syn-eq\">=</span> <span class=\"syn-type\">CalendarMode</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Day</span>\n<span class=\"syn-punc\">)</span>"
+        "subheading": "Month — the twelve-month list",
+        "swift": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    mode<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.month</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    mode <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDatePickerCalendarMode</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Month</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "Year — the scrolling year list",
+        "swift": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    mode<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.year</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBDatePickerCalendar</span><span class=\"syn-punc\">(</span>\n    mode <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDatePickerCalendarMode</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Year</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "accessibility": [
@@ -305,6 +450,11 @@ export const datePickerCalendar: ComponentData = {
         "requirement": "Chevrons are labelled by what they do",
         "ios": "\"Previous month\" and \"Next month\" in Day; \"Back\" in Month and Year",
         "android": "Same, via <code>contentDescription</code>"
+      },
+      {
+        "requirement": "Dynamic type",
+        "ios": "Supported, scales to AX5 — the 312pt card is fixed, so the grid keeps its columns and the cells truncate rather than reflow",
+        "android": "<code>sp</code> units; the 312dp card behaves the same way"
       }
     ],
     "usageGuidelines": [
@@ -324,17 +474,13 @@ export const datePickerCalendar: ComponentData = {
     "scorecard": [
       { "id": "C1", "criterion": "Layer Structure & Naming", "status": "ready", "statusLabel": "Ready", "notes": "<code>Header</code> → <code>Content</code> → <code>Row</code>, with every cell an instance. Grid content is correct." },
       { "id": "C2", "criterion": "Variant & Property Naming", "status": "ready", "statusLabel": "Ready", "notes": "<code>Mode = Day | Year | Month</code> matches native terminology." },
-      { "id": "C3", "criterion": "Token Coverage", "status": "refine", "statusLabel": "Needs Refinement", "notes": "Surface and border are bound; a <code>main/date-picker/surface/*</code> namespace is still worth proposing for the card itself." },
-      { "id": "C4", "criterion": "Native Mappability", "status": "refine", "statusLabel": "Needs Refinement", "notes": "The header carries two behaviours, disambiguated by <code>Mode</code> and by the centre layer's name. The drawn scrollbar maps to nothing." },
-      { "id": "C5", "criterion": "Interaction State Coverage", "status": "refine", "statusLabel": "Needs Refinement", "notes": "States come from the cell. Inherits the cell's 32×32 and the header trigger's 24px touch targets." },
+      { "id": "C3", "criterion": "Token Coverage", "status": "ready", "statusLabel": "Ready", "notes": "All four roles the calendar paints itself are bound and confirmed by design: the card surface, its border, the two chevrons and the Year scrollbar. Everything inside carries the tokens of the instance that draws it." },
+      { "id": "C4", "criterion": "Native Mappability", "status": "ready", "statusLabel": "Ready", "notes": "The card maps to a calendar view on both platforms. The scrollbar is a shared Scrollbar component, not a drawn rectangle, and maps to the platform indicator. <code>hasWeek6</code> is the one shape difference: Figma toggles a row, the platform counts them, so it maps to <code>weeks: Int</code> clamped to 4...6." },
+      { "id": "C5", "criterion": "Interaction State Coverage", "status": "ready", "statusLabel": "Ready", "notes": "Every state comes from the cell, which is the only interactive part. The 32 × 32 cell and the 24px header chip are deliberate visual sizes with tap targets expanded natively to 44 pt / 48 dp, as settled on those components." },
       { "id": "C6", "criterion": "Asset & Icon Quality", "status": "ready", "statusLabel": "Ready", "notes": "Chevrons are icon instances; the rasters are gone." },
       { "id": "C7", "criterion": "Code Connect Linkability", "status": "empty", "statusLabel": "Not Mapped", "notes": "Blocked — the native library does not exist yet." }
     ],
-    "codeConnect": [
-      { "aspect": "Property naming", "status": "ready", "statusLabel": "Ready", "notes": "<code>Mode</code> is the only setting and maps to an enum." },
-      { "aspect": "Token coverage", "status": "refine", "statusLabel": "Needs Refinement", "notes": "Surface namespace still to be proposed." },
-      { "aspect": "Registration", "status": "empty", "statusLabel": "Not Mapped", "notes": "Blocked until the native library exists." }
-    ],
+    "codeConnect": [],
     "variants": {
       "total": 3,
       "description": "1 Mode setting × 3 values. Everything else varies by the instances placed inside.",
@@ -347,6 +493,67 @@ export const datePickerCalendar: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.1.0",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "hasWeek6 renamed, Style and Code tabs rebuilt — node 6769:105110",
+      "rows": [
+        {
+          "body": "<strong>The row-count setting is named for what it does.</strong> <code>week 6</code> became <code>hasWeek6</code> — lowercase, a space, and a noun where a state belonged. A <code>Weeks = 4, 5, 6</code> dropdown was weighed and rejected: Figma has no enum that is not a variant, so it would have taken the set from three components to nine. This is what makes the release a minor rather than a patch.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "<strong>The Title frame no longer paints twice.</strong> The Month and Year header carried a white fill on an already-white card plus an <code>#E5EBF4</code> stroke switched off. The fourth and last of these leftovers in the family, cleared in Figma during this run.",
+          "delta": { "kind": "resolved", "label": "C1 resolved" }
+        },
+        {
+          "body": "<strong>One card became three.</strong> The Style tab had a single card switching its rows by <code>variants</code>; <code>Mode</code> is the driving property, so Day, Month and Year each get their own card. <code>hasWeek6</code> is the only control left, on the Day card alone.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The documented type style did not exist.</strong> Typography read <code>Primary/Bold/Subheading</code>, which is not in the database, alongside a font spec and a <code>\"Cell text: supplied by Date Picker - Cell\"</code> cross-reference. Each card now lists the text layers visible in that mode with the instance that owns them: <code>Primary/Label/Base</code> for the Title and header chips, <code>Primary/Label/Small</code> for the weekday row, <code>Primary/Label/Light/Small</code> for the cells.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>Four of five colour tokens named the wrong steps</strong> — <code>bg/color-bg-main</code>, <code>border/color-border-subtle</code>, <code>text/color-text-heading</code> and <code>icon/color-icon-link</code>. The bindings are <code>bg/color-bg-primary-inverse</code>, <code>border/color-border-weak</code>, <code>text/color-text</code> and <code>border/color-border-primary</code>. The fifth was worse: the scroll indicator was recorded as <code>#E5EBF4</code> with the token <code>\"annotation only — not built\"</code>, when it is built and its thumb is <code>#0A2757</code>.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>Layout had none of the seven keys</strong> — <code>Padding</code>, <code>Header height</code>, <code>Header to content</code>, <code>Row height</code>, <code>Row gap</code> and <code>Corner radius</code>. All three cards now carry Height · Width · Radius · Padding H · Padding V · Gap · Alignment, with Day switching to 296px when <code>hasWeek6</code> is off — the same height as Month and Year.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Five preview corrections.</strong> The chevrons were a 16px approximation at stroke 1.8 against Figma's 24px at 2; the two header chips were drawn without their carets; the Month and Year grid used a 16px row gap and no column gap where Figma has 32 and 16; the scrollbar was <code>#E5EBF4</code> at 120px against <code>#0A2757</code> at 80px; and the card declared no font-family, so it rendered in the documentation font rather than Proxima Soft.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The install block pointed at coordinates that will never exist.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code>, with no Import line. It now cites the family artifact <code>com.eastblue.ds:date-picker:1.0.0</code> and imports <code>com.eastblue.ds.datepicker.*</code>.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Property Mapping listed layers as properties.</strong> Four of its five rows were nested instances — the chevrons, the two Header Trigger chips, the cells and the scrollbar — while <code>hasWeek6</code> was missing entirely. Two rows now, for the two real properties. <code>hasWeek6</code> maps to <code>weeks: Int</code> clamped to 4...6: Figma toggles a row, the platform counts them, because a February starting on the first day of the week needs four.",
+          "delta": { "kind": "resolved", "label": "C4 resolved" }
+        },
+        {
+          "body": "<strong>Usage Snippets were keyed to scenarios, not to the driving property.</strong> They showed \"as the overlay of a date field\" and \"selecting a range\", and between them used three spellings of one enum — <code>CalendarMode</code>, <code>mode: CalendarMode</code> and <code>EBDatePickerCalendarMode</code>. One snippet per Mode now, built from the same definition as the spec cards and the live preview.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Two scorecard notes had gone stale.</strong> C3 said only the surface and border were bound; all four roles are bound and confirmed. C4 said the drawn scrollbar maps to nothing; it is a shared Scrollbar component that maps to the platform indicator. C5 inherited the 32 × 32 cell and 24px chip as open concerns, both since settled as deliberate. C3, C4 and C5 all move to Ready.",
+          "delta": { "kind": "resolved", "label": "C5 resolved" }
+        },
+        {
+          "body": "<strong>Code Connect was populated on a component with nothing registered.</strong> Three rows claimed readiness against a native library that does not exist. The section is gone; C7 stays Not Mapped. Accessibility gained a Dynamic Type row, and a <code>getSnippet</code> keeps the DEV code live.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>All five recommendations are closed.</strong> The rename landed; the scroll indicator, the chevrons' two behaviours and the grid semantics are documented for both platforms; and the range-continuity ask is closed as decided against, matching the same call on Date Picker - Cell. The one thing carried forward is the second half of the rename note — the field trigger at node <code>7201:112099</code> still takes the <code>Date Picker</code> name.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
     {
       "version": "2.0.0",
       "date": "August 2026",

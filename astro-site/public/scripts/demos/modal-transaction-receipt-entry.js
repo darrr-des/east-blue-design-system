@@ -36,8 +36,14 @@ function _mtreUpdate() {
 }
 
 /* ── Spec card state ─────────────────────────────────────────────── */
+/* One card per Layout value, in the Figma panel's order. Neither card
+   carries a control: Layout is the driving property and the two text
+   layers are not component properties, so there is nothing left to
+   switch. The state still lives here so getSnippet and the renderer
+   share one definition. */
 var _specCards = {
-  default: { layout: 'stacked' }
+  stacked: { layout: 'stacked' },
+  inline: { layout: 'inline' }
 };
 window._specCards = _specCards;
 
@@ -55,6 +61,31 @@ function updateSpecCard(cardKey, prop, value) {
   }
 }
 window.updateSpecCard = updateSpecCard;
+
+/* ── DEV code, live ───────────────────────────────────────────────── */
+/* label and value are text layers rather than Figma properties, but both
+   have to be parameters natively — a receipt entry with no content is
+   not a thing. */
+function getSnippet(cardKey, lang) {
+  var card = _specCards[cardKey] || _specCards['stacked'];
+  var compose = lang === 'compose';
+  var sep = compose ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
+  var cased = card.layout === 'inline' ? 'Inline' : 'Stacked';
+  var layoutValue = compose
+    ? '<span class="syn-type">EBEntryLayout</span><span class="syn-punc">.</span>' +
+      '<span class="syn-dot">' + cased + '</span>'
+    : '<span class="syn-dot">.' + card.layout + '</span>';
+
+  var args = [
+    'label' + sep + '<span class="syn-str">"Label"</span>',
+    'value' + sep + '<span class="syn-str">"Put content here"</span>',
+    'layout' + sep + layoutValue
+  ];
+  return '<span class="syn-type">EBTransactionReceiptEntry</span><span class="syn-punc">(</span>\n    ' +
+    args.join('<span class="syn-punc">,</span>\n    ') +
+    '\n<span class="syn-punc">)</span>';
+}
+window.getSnippet = getSnippet;
 
 function _mtreInit() {
   _mtreUpdate();

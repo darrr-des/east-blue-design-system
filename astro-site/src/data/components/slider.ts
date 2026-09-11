@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildColorsTable } from './_helpers';
 
 /* Demo controls for the Style tab's single spec card. State and
    hasTooltip are the component's two axes; Value is not a property at
@@ -8,23 +9,14 @@ const sliderControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'State',
-        prop: 'state',
-        options: [
-          { value: 'default', label: 'Default' },
-          { value: 'disabled', label: 'Disabled' },
-          { value: 'pressed', label: 'Pressed' }
-        ],
-        defaultValue: 'default'
-      },
-      {
         label: 'hasTooltip',
         prop: 'hastooltip',
+        control: 'toggle',
+        defaultValue: 'true',
         options: [
-          { value: 'true', label: 'true' },
-          { value: 'false', label: 'false' }
-        ],
-        defaultValue: 'true'
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' }
+        ]
       }
     ]
   }
@@ -43,8 +35,8 @@ export const slider: ComponentData = {
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "verdict": {
@@ -55,7 +47,7 @@ export const slider: ComponentData = {
   },
   "overview": {
     "inContextNote": "The preview is draggable — grab the knob or press anywhere on the track, the same continuous model the slot gives you in Figma. Used where a value is approximate rather than typed — amount estimation, settings, filters. Contexts are illustrative; final screens will reference actual GCash patterns.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"sldr-demo-preview\"><div class=\"eb-preview-sldr eb-preview-sldr--default\" data-sldr=\"demo\"><div class=\"eb-preview-sldr__track\"><div class=\"eb-preview-sldr__fill\"><div class=\"eb-preview-sldr__tooltip\"><span class=\"eb-preview-sldr__pct\">10%</span></div><div class=\"eb-preview-sldr__knob\"></div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"sldr-ctrl-state\" class=\"demo-panel-select\" onchange=\"_sldrUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"disabled\">Disabled</option><option value=\"pressed\">Pressed</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTooltip</span><select id=\"sldr-ctrl-hastooltip\" class=\"demo-panel-select\" onchange=\"_sldrUpdate()\"><option value=\"true\" selected=\"\">true</option><option value=\"false\">false</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"sldr-demo-preview\"><div class=\"eb-preview-sldr eb-preview-sldr--default\" data-sldr=\"demo\"><div class=\"eb-preview-sldr__track\"><div class=\"eb-preview-sldr__fill\"><div class=\"eb-preview-sldr__tooltip\"><span class=\"eb-preview-sldr__pct\">10%</span></div><div class=\"eb-preview-sldr__knob\"></div></div></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"sldr-ctrl-state\" class=\"demo-panel-select\" onchange=\"_sldrUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"disabled\">Disabled</option><option value=\"pressed\">Pressed</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTooltip</span><select id=\"sldr-ctrl-hastooltip\" class=\"demo-panel-select\" onchange=\"_sldrUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected=\"\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Value</span><span class=\"demo-panel-note\">drag the knob</span></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -233,14 +225,10 @@ export const slider: ComponentData = {
     "recommendations": [
       {
         "headline": "Give the disabled knob a treatment.",
-        "body": "It is <code>#FFFFFF</code> with an <code>#E5EBF4</code> ring in Default, Disabled and Pressed alike — except Pressed, which earned <code>#ADBDDC</code>. So in the disabled row the knob is the one element still looking active, sitting on a muted fill under a muted tooltip. Matching the pressed ring, or dropping the knob's fill to the track colour, would finish the state.",
+        "body": "The knob is identical in Default and Disabled — same <code>bg/color-bg-main</code> fill, same <code>border/color-border-weak</code> ring — while the track and the tooltip both shift. Confirmed deliberate: those two carry the signal, and the thumb is left alone on purpose. Worth revisiting only if the slider ever appears without its tooltip in a disabled state, since the track alone is a subtler cue than the pair.",
         "tag": "State"
       },
-      {
-        "headline": "Confirm focus is out of scope.",
-        "body": "The May assessment asked for a Focused state alongside Pressed and Disabled, and it is still absent. The precedent set on Date Picker was that focus does not apply to a mobile-only system and pressed carries the interaction — worth confirming that holds here so the gap is recorded as a decision rather than an omission.",
-        "tag": "State"
-      },
+
       {
         "headline": "Make the sample value match the fill.",
         "body": "<code>#percentage</code> reads \"10%\" while <code>DraggableFill</code> is 62 of 365, about 17%. Harmless in isolation, but a component that ships showing one number at a different position teaches the wrong relationship to whoever copies it.",
@@ -267,46 +255,62 @@ export const slider: ComponentData = {
         "tag": "Token"
       }
     ],
-    "appliedRecommendations": []
+    "appliedRecommendations": [
+      {
+        "headline": "Confirm focus is out of scope.",
+        "body": "v2.0.1: Applied — confirmed out of scope. The component is mobile only, so there is no focus state to specify and none is missing. Recorded here rather than left as an open question, because \"no focus variant\" reads as an omission until someone says otherwise.",
+        "tag": "State"
+      }
+    ]
   },
   "style": {
     "heading": "Structure",
+    "colorsTables": [
+      buildColorsTable({
+        title: "Colors by State",
+        description: "Every colour the component paints, and all of it is the component’s own — the <code>⤷ Track</code> slot exists so the fill can be dragged in Figma, not to hand its contents to another component. Only the knob holds still across the three states; the track, the fill, the ring, the bubble and its label all move. One naming oddity worth knowing rather than fixing here: Pressed paints <code>bg/color-bg-primary-hover</code>, a hover token doing a pressed job on a surface that has no hover.",
+        columns: ["Default", "Disabled", "Pressed"],
+        rows: [
+          { role: "Track", token: "border/color-border-weak · -weak · border/color-border", values: ["#E5EBF4","#E5EBF4","#D7E0EF"] },
+          { role: "DraggableFill", token: "bg/color-bg-primary · -disabled · -primary-hover", values: ["#005CE5","#C2CFE5","#2340A9"] },
+          { role: "Knob", token: "bg/color-bg-main", values: ["#FFFFFF","#FFFFFF","#FFFFFF"] },
+          { role: "Knob ring", token: "border/color-border-weak · -weak · border/color-border-strong", values: ["#E5EBF4","#E5EBF4","#ADBDDC"] },
+          { role: "Tooltip", token: "bg/color-bg-primary · -disabled · -primary-hover", values: ["#005CE5","#C2CFE5","#2340A9"] },
+          { role: "#percentage", token: "text/color-text-inverse · text/color-text · -inverse", values: ["#FFFFFF","#0A2757","#FFFFFF"] }
+        ]
+      })
+    ],
     "specCards": [
       {
         "cardKey": "sldr-spec-card-default",
         "demoKey": "default",
         "demoControls": sliderControls,
-        "title": "Slider",
-        "node": "6802:105580",
-        "description": "Six variants across two axes. The value is not one of them — it is the width of DraggableFill, which the slot makes editable on an instance.",
-        "previewHtml": "<div id=\"sldr-spec-default\"><div class=\"eb-preview-sldr eb-preview-sldr--default\" data-sldr=\"spec\"><div class=\"eb-preview-sldr__track\"><div class=\"eb-preview-sldr__fill\"><div class=\"eb-preview-sldr__tooltip\"><span class=\"eb-preview-sldr__pct\">10%</span></div><div class=\"eb-preview-sldr__knob\"></div></div></div></div></div>",
+        "title": "Default",
+        "node": "6764:106099",
+        "description": "",
+        "previewHtml": "<div id=\"sldr-spec-default\"><div class=\"eb-preview-sldr eb-preview-sldr--default\" data-sldr=\"default\"><div class=\"eb-preview-sldr__track\"><div class=\"eb-preview-sldr__fill\"><div class=\"eb-preview-sldr__tooltip\"><span class=\"eb-preview-sldr__pct\">10%</span></div><div class=\"eb-preview-sldr__knob\"></div></div></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "State", "value": "Default", "prop": "state",
+              {
+                "key": "State",
+                "value": "Default"
+              },
+              {
+                "key": "hasTooltip",
+                "value": "true",
+                "prop": "hastooltip",
                 "variants": {
-                  "state:disabled": { "value": "Disabled" },
-                  "state:pressed": { "value": "Pressed" }
+                  "hastooltip:false": {
+                    "value": "false"
+                  }
                 }
               },
-              { "key": "hasTooltip", "value": "true", "prop": "hastooltip",
-                "variants": {
-                  "hastooltip:false": { "value": "false" }
-                }
-              },
-              { "key": "⤷ Track", "value": "slot — also the unfilled rail" },
-              { "key": "DraggableFill", "value": "resized on the instance — drag the preview" },
-              { "key": "#percentage", "value": "10%" },
-              { "key": "Node", "value": "6764:106099", "mono": true,
-                "variants": {
-                  "state:disabled": { "value": "6802:105593" },
-                  "state:pressed": { "value": "7085:108663" },
-                  "hastooltip:false": { "value": "6802:105581" },
-                  "state:disabled|hastooltip:false": { "value": "7085:108656" },
-                  "state:pressed|hastooltip:false": { "value": "7085:108670" }
-                }
+              {
+                "key": "⤷ Track (slot)",
+                "value": "6 items"
               }
             ]
           },
@@ -314,34 +318,57 @@ export const slider: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "⤷ Track", "value": "#E5EBF4", "token": "library variable · name pending Dev Mode read", "swatch": true,
-                "variants": {
-                  "state:pressed": { "value": "#D7E0EF" }
-                }
+              {
+                "key": "Track",
+                "value": "#E5EBF4",
+                "token": "border/color-border-weak",
+                "swatch": true
               },
-              { "key": "DraggableFill", "value": "#005CE5", "token": "library variable · name pending Dev Mode read", "swatch": true,
-                "variants": {
-                  "state:disabled": { "value": "#C2CFE5" },
-                  "state:pressed": { "value": "#2340A9" }
-                }
+              {
+                "key": "DraggableFill",
+                "value": "#005CE5",
+                "token": "bg/color-bg-primary",
+                "swatch": true
               },
-              { "key": "Knob", "value": "#FFFFFF", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "Knob ring", "value": "#E5EBF4", "token": "library variable · name pending Dev Mode read", "swatch": true,
-                "variants": {
-                  "state:pressed": { "value": "#ADBDDC" }
-                }
+              {
+                "key": "Knob",
+                "value": "#FFFFFF",
+                "token": "bg/color-bg-main",
+                "swatch": true
               },
-              { "key": "Tooltip bubble", "value": "#005CE5", "token": "library variable · name pending Dev Mode read", "swatch": true,
-                "variants": {
-                  "state:disabled": { "value": "#C2CFE5" },
-                  "state:pressed": { "value": "#2340A9" }
-                }
+              {
+                "key": "Knob ring",
+                "value": "#E5EBF4",
+                "token": "border/color-border-weak",
+                "swatch": true
               },
-              { "key": "#percentage", "value": "#FFFFFF — 5.73:1", "token": "library variable · name pending Dev Mode read", "swatch": true,
+              {
+                "key": "Tooltip",
+                "value": "#005CE5",
+                "token": "bg/color-bg-primary",
+                "swatch": true
+              },
+              {
+                "key": "#percentage",
+                "value": "#FFFFFF",
+                "token": "text/color-text-inverse",
+                "swatch": true,
                 "variants": {
-                  "state:disabled": { "value": "#0A2757 — 9.27:1" },
-                  "state:pressed": { "value": "#FFFFFF — 8.83:1" }
+                  "hastooltip:false": {
+                    "hide": true
+                  }
                 }
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "#percentage",
+                "value": "Primary/Label/Small",
+                "mono": true
               }
             ]
           },
@@ -349,36 +376,318 @@ export const slider: ComponentData = {
             "label": "Layout",
             "slug": "layout",
             "rows": [
-              { "key": "Width", "value": "365 — fills its container", "mono": true },
-              { "key": "Height", "value": "26", "mono": true },
-              { "key": "Track height", "value": "10", "mono": true },
-              { "key": "Track radius", "value": "99", "mono": true },
-              { "key": "DraggableFill width", "value": "0–365 — drag the preview to set it", "mono": true },
-              { "key": "Figma sample", "value": "62 of 365 (≈17%) while #percentage reads 10%", "mono": true },
-              { "key": "Knob", "value": "16 × 16 in an 18 × 18 container", "mono": true },
-              { "key": "Knob position", "value": "right-aligned to the fill's edge", "mono": true },
-              { "key": "Tooltip", "value": "34 × 26, centred on the knob", "mono": true,
+              {
+                "key": "Height",
+                "value": "26",
+                "mono": true
+              },
+              {
+                "key": "Width",
+                "value": "365",
+                "mono": true
+              },
+              {
+                "key": "Radius",
+                "value": "99 — on the track and the fill",
+                "mono": true
+              },
+              {
+                "key": "Padding H",
+                "value": "0",
+                "mono": true
+              },
+              {
+                "key": "Padding V",
+                "value": "8",
+                "mono": true
+              },
+              {
+                "key": "Gap",
+                "value": "0",
+                "mono": true
+              },
+              {
+                "key": "Alignment",
+                "value": "Center",
+                "mono": true
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>amount<span class=\"syn-punc\">,</span>\n    in<span class=\"syn-punc\">:</span> <span class=\"syn-num\">0</span><span class=\"syn-punc\">...</span><span class=\"syn-num\">100</span><span class=\"syn-punc\">,</span>\n    showsTooltip<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> amount<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> amount <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span><span class=\"syn-punc\">,</span>\n    valueRange <span class=\"syn-eq\">=</span> <span class=\"syn-num\">0f</span><span class=\"syn-punc\">..</span><span class=\"syn-num\">100f</span><span class=\"syn-punc\">,</span>\n    showsTooltip <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "sldr-spec-card-disabled",
+        "demoKey": "disabled",
+        "demoControls": sliderControls,
+        "title": "Disabled",
+        "node": "6802:105593",
+        "description": "",
+        "previewHtml": "<div id=\"sldr-spec-disabled\"><div class=\"eb-preview-sldr eb-preview-sldr--disabled\" data-sldr=\"disabled\"><div class=\"eb-preview-sldr__track\"><div class=\"eb-preview-sldr__fill\"><div class=\"eb-preview-sldr__tooltip\"><span class=\"eb-preview-sldr__pct\">10%</span></div><div class=\"eb-preview-sldr__knob\"></div></div></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "State",
+                "value": "Disabled"
+              },
+              {
+                "key": "hasTooltip",
+                "value": "true",
+                "prop": "hastooltip",
                 "variants": {
-                  "hastooltip:false": { "value": "hidden — the knob stays" }
+                  "hastooltip:false": {
+                    "value": "false"
+                  }
                 }
               },
-              { "key": "Tooltip offset", "value": "23 above the component — overflows by design", "mono": true },
-              { "key": "Bubble radius", "value": "4", "mono": true }
+              {
+                "key": "⤷ Track (slot)",
+                "value": "6 items"
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Track",
+                "value": "#E5EBF4",
+                "token": "border/color-border-weak",
+                "swatch": true
+              },
+              {
+                "key": "DraggableFill",
+                "value": "#C2CFE5",
+                "token": "bg/color-bg-disabled",
+                "swatch": true
+              },
+              {
+                "key": "Knob",
+                "value": "#FFFFFF",
+                "token": "bg/color-bg-main",
+                "swatch": true
+              },
+              {
+                "key": "Knob ring",
+                "value": "#E5EBF4",
+                "token": "border/color-border-weak",
+                "swatch": true
+              },
+              {
+                "key": "Tooltip",
+                "value": "#C2CFE5",
+                "token": "bg/color-bg-disabled",
+                "swatch": true
+              },
+              {
+                "key": "#percentage",
+                "value": "#0A2757",
+                "token": "text/color-text",
+                "swatch": true,
+                "variants": {
+                  "hastooltip:false": {
+                    "hide": true
+                  }
+                }
+              }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Applies to", "value": "#percentage only — everything else is a shape", "mono": true },
-              { "key": "Text style", "value": "shared library style · name pending Dev Mode read", "mono": true },
-              { "key": "#percentage", "value": "Proxima Soft Bold · 14 / 14 · +0.25", "mono": true },
-              { "key": "Alignment", "value": "centred in the bubble", "mono": true }
+              {
+                "key": "#percentage",
+                "value": "Primary/Label/Small",
+                "mono": true
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "26",
+                "mono": true
+              },
+              {
+                "key": "Width",
+                "value": "365",
+                "mono": true
+              },
+              {
+                "key": "Radius",
+                "value": "99 — on the track and the fill",
+                "mono": true
+              },
+              {
+                "key": "Padding H",
+                "value": "0",
+                "mono": true
+              },
+              {
+                "key": "Padding V",
+                "value": "8",
+                "mono": true
+              },
+              {
+                "key": "Gap",
+                "value": "0",
+                "mono": true
+              },
+              {
+                "key": "Alignment",
+                "value": "Center",
+                "mono": true
+              }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>amount<span class=\"syn-punc\">,</span> <span class=\"syn-kw\">in</span><span class=\"syn-punc\">:</span> 0<span class=\"syn-punc\">...</span>100<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span><span class=\"syn-fn\">ebShowsTooltip</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> amount<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">= {</span> amount <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">},</span>\n    valueRange <span class=\"syn-eq\">=</span> 0f<span class=\"syn-punc\">..</span>100f<span class=\"syn-punc\">,</span>\n    showTooltip <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>amount<span class=\"syn-punc\">,</span>\n    in<span class=\"syn-punc\">:</span> <span class=\"syn-num\">0</span><span class=\"syn-punc\">...</span><span class=\"syn-num\">100</span><span class=\"syn-punc\">,</span>\n    showsTooltip<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">.</span><span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> amount<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> amount <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span><span class=\"syn-punc\">,</span>\n    valueRange <span class=\"syn-eq\">=</span> <span class=\"syn-num\">0f</span><span class=\"syn-punc\">..</span><span class=\"syn-num\">100f</span><span class=\"syn-punc\">,</span>\n    showsTooltip <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span><span class=\"syn-punc\">,</span>\n    enabled <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "sldr-spec-card-pressed",
+        "demoKey": "pressed",
+        "demoControls": sliderControls,
+        "title": "Pressed",
+        "node": "7085:108663",
+        "description": "",
+        "previewHtml": "<div id=\"sldr-spec-pressed\"><div class=\"eb-preview-sldr eb-preview-sldr--pressed\" data-sldr=\"pressed\"><div class=\"eb-preview-sldr__track\"><div class=\"eb-preview-sldr__fill\"><div class=\"eb-preview-sldr__tooltip\"><span class=\"eb-preview-sldr__pct\">10%</span></div><div class=\"eb-preview-sldr__knob\"></div></div></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "State",
+                "value": "Pressed"
+              },
+              {
+                "key": "hasTooltip",
+                "value": "true",
+                "prop": "hastooltip",
+                "variants": {
+                  "hastooltip:false": {
+                    "value": "false"
+                  }
+                }
+              },
+              {
+                "key": "⤷ Track (slot)",
+                "value": "6 items"
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Track",
+                "value": "#D7E0EF",
+                "token": "border/color-border",
+                "swatch": true
+              },
+              {
+                "key": "DraggableFill",
+                "value": "#2340A9",
+                "token": "bg/color-bg-primary-hover",
+                "swatch": true
+              },
+              {
+                "key": "Knob",
+                "value": "#FFFFFF",
+                "token": "bg/color-bg-main",
+                "swatch": true
+              },
+              {
+                "key": "Knob ring",
+                "value": "#ADBDDC",
+                "token": "border/color-border-strong",
+                "swatch": true
+              },
+              {
+                "key": "Tooltip",
+                "value": "#2340A9",
+                "token": "bg/color-bg-primary-hover",
+                "swatch": true
+              },
+              {
+                "key": "#percentage",
+                "value": "#FFFFFF",
+                "token": "text/color-text-inverse",
+                "swatch": true,
+                "variants": {
+                  "hastooltip:false": {
+                    "hide": true
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "#percentage",
+                "value": "Primary/Label/Small",
+                "mono": true
+              }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              {
+                "key": "Height",
+                "value": "26",
+                "mono": true
+              },
+              {
+                "key": "Width",
+                "value": "365",
+                "mono": true
+              },
+              {
+                "key": "Radius",
+                "value": "99 — on the track and the fill",
+                "mono": true
+              },
+              {
+                "key": "Padding H",
+                "value": "0",
+                "mono": true
+              },
+              {
+                "key": "Padding V",
+                "value": "8",
+                "mono": true
+              },
+              {
+                "key": "Gap",
+                "value": "0",
+                "mono": true
+              },
+              {
+                "key": "Alignment",
+                "value": "Center",
+                "mono": true
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>amount<span class=\"syn-punc\">,</span>\n    in<span class=\"syn-punc\">:</span> <span class=\"syn-num\">0</span><span class=\"syn-punc\">...</span><span class=\"syn-num\">100</span><span class=\"syn-punc\">,</span>\n    showsTooltip<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> amount<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> amount <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span><span class=\"syn-punc\">,</span>\n    valueRange <span class=\"syn-eq\">=</span> <span class=\"syn-num\">0f</span><span class=\"syn-punc\">..</span><span class=\"syn-num\">100f</span><span class=\"syn-punc\">,</span>\n    showsTooltip <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
       }
     ]
   },
@@ -387,66 +696,55 @@ export const slider: ComponentData = {
       "planned": true,
       "blocks": [
         {
-          "label": "Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
-          "label": "Gradle",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:slider:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>slider<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
+      "footnote": "Planned API — the native library does not exist yet. Slider has no <code>navGroup</code>, so it is a family of one and the artifact takes its slug: <code>com.eastblue.ds:slider</code>, imported as <code>com.eastblue.ds.slider.*</code>."
     },
     "propertyMapping": {
-      "description": "Figma properties mapped to the intended native parameters. Range, step and bounds have no Figma representation — the designer resizes the fill — so they are specified here rather than in the component.",
+      "description": "Three properties, and the interesting one is the slot. <strong>The value is the whole reason <code>⤷ Track</code> exists.</strong> A slider’s value is continuous, and Figma has no property type for that — so rather than enumerate it as eleven variants at 10% steps, the component makes the track a slot and lets <code>DraggableFill</code> be resized inside it. The slot is not content anyone swaps; it is a value control wearing a slot’s clothes. Natively it maps to the binding, which is where a value belongs, so the thing that looks least like an API in Figma is the one that maps most directly. <code>range</code>, <code>step</code>, <code>min</code> and <code>max</code> have no Figma form at all and are the native API’s own — they get no row here, because a row would imply Figma says something about them.",
       "rows": [
         {
-          "figma": "DraggableFill width",
-          "swift": "value: Binding<Double>",
-          "compose": "value: Float + onValueChange"
+          "figma": "State — Default, Disabled, Pressed",
+          "swift": "<em>not a parameter</em> — Pressed is the drag itself; Disabled is <code>.disabled(true)</code>",
+          "compose": "<em>not a parameter</em> — Disabled is <code>enabled = false</code>"
         },
         {
-          "figma": "State",
-          "swift": "driven by interaction · .disabled(true)",
-          "compose": "driven by interaction · enabled = false"
+          "figma": "hasTooltip — true, false",
+          "swift": "<code>showsTooltip: Bool = true</code>",
+          "compose": "<code>showsTooltip: Boolean = true</code>"
         },
         {
-          "figma": "hasTooltip",
-          "swift": ".ebShowsTooltip(Bool)",
-          "compose": "showTooltip: Boolean"
-        },
-        {
-          "figma": "#percentage",
-          "swift": "tooltipFormat: (Double) -> String",
-          "compose": "tooltipFormat: (Float) -> String"
-        },
-        {
-          "figma": "— no Figma equivalent",
-          "swift": "in: ClosedRange<Double>, step: Double",
-          "compose": "valueRange: ClosedFloatingPointRange<Float>, steps: Int"
-        },
-        {
-          "figma": "⤷ Track / DraggableFill",
-          "swift": "trackColor / activeTrackColor",
-          "compose": "SliderColors.inactiveTrackColor / activeTrackColor"
+          "figma": "⤷ Track (slot)",
+          "swift": "<em>not a slot</em> — <code>value: Binding&lt;Double&gt;</code>, <code>in: ClosedRange&lt;Double&gt;</code>",
+          "compose": "<em>not a slot</em> — <code>value: Float</code>, <code>onValueChange</code>, <code>valueRange</code>"
         }
       ]
     },
     "usageSnippets": [
       {
-        "subheading": "With the tooltip (default)",
-        "swift": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>amount<span class=\"syn-punc\">,</span> <span class=\"syn-kw\">in</span><span class=\"syn-punc\">:</span> 0<span class=\"syn-punc\">...</span>100<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span><span class=\"syn-fn\">ebShowsTooltip</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span><span class=\"syn-fn\">padding</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.top</span><span class=\"syn-punc\">,</span> 26<span class=\"syn-punc\">)</span>  <span class=\"syn-cm\">// clearance for the bubble</span>",
-        "compose": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> amount<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">= {</span> amount <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">},</span>\n    showTooltip <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span><span class=\"syn-punc\">,</span>\n    modifier <span class=\"syn-eq\">=</span> <span class=\"syn-type\">Modifier</span><span class=\"syn-punc\">.</span><span class=\"syn-fn\">padding</span><span class=\"syn-punc\">(</span>top <span class=\"syn-eq\">=</span> 26<span class=\"syn-punc\">.</span>dp<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span>"
+        "subheading": "Default — the standard call",
+        "swift": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>amount<span class=\"syn-punc\">,</span>\n    in<span class=\"syn-punc\">:</span> <span class=\"syn-num\">0</span><span class=\"syn-punc\">...</span><span class=\"syn-num\">100</span><span class=\"syn-punc\">,</span>\n    showsTooltip<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> amount<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> amount <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span><span class=\"syn-punc\">,</span>\n    valueRange <span class=\"syn-eq\">=</span> <span class=\"syn-num\">0f</span><span class=\"syn-punc\">..</span><span class=\"syn-num\">100f</span><span class=\"syn-punc\">,</span>\n    showsTooltip <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "Without the tooltip",
-        "swift": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>volume<span class=\"syn-punc\">,</span> <span class=\"syn-kw\">in</span><span class=\"syn-punc\">:</span> 0<span class=\"syn-punc\">...</span>1<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span><span class=\"syn-fn\">ebShowsTooltip</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">false</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> volume<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">= {</span> volume <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">},</span>\n    showTooltip <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>"
+        "subheading": "Disabled — each platform’s own idiom",
+        "swift": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>amount<span class=\"syn-punc\">,</span>\n    in<span class=\"syn-punc\">:</span> <span class=\"syn-num\">0</span><span class=\"syn-punc\">...</span><span class=\"syn-num\">100</span><span class=\"syn-punc\">,</span>\n    showsTooltip<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">.</span><span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> amount<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> amount <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span><span class=\"syn-punc\">,</span>\n    valueRange <span class=\"syn-eq\">=</span> <span class=\"syn-num\">0f</span><span class=\"syn-punc\">..</span><span class=\"syn-num\">100f</span><span class=\"syn-punc\">,</span>\n    showsTooltip <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span><span class=\"syn-punc\">,</span>\n    enabled <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "Stepped and disabled",
-        "swift": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>tenor<span class=\"syn-punc\">,</span> <span class=\"syn-kw\">in</span><span class=\"syn-punc\">:</span> 3<span class=\"syn-punc\">...</span>24<span class=\"syn-punc\">,</span> step<span class=\"syn-punc\">:</span> 3<span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">.</span><span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span><span class=\"syn-kw\">true</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> tenor<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">= {</span> tenor <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">},</span>\n    valueRange <span class=\"syn-eq\">=</span> 3f<span class=\"syn-punc\">..</span>24f<span class=\"syn-punc\">,</span>\n    steps <span class=\"syn-eq\">=</span> 6<span class=\"syn-punc\">,</span>\n    enabled <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>"
+        "subheading": "Pressed — no call of its own",
+        "swift": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value<span class=\"syn-punc\">:</span> <span class=\"syn-punc\">$</span>amount<span class=\"syn-punc\">,</span>\n    in<span class=\"syn-punc\">:</span> <span class=\"syn-num\">0</span><span class=\"syn-punc\">...</span><span class=\"syn-num\">100</span><span class=\"syn-punc\">,</span>\n    showsTooltip<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">// Pressed is the drag — there is nothing to pass</span>",
+        "compose": "<span class=\"syn-type\">EBSlider</span><span class=\"syn-punc\">(</span>\n    value <span class=\"syn-eq\">=</span> amount<span class=\"syn-punc\">,</span>\n    onValueChange <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{</span> amount <span class=\"syn-eq\">=</span> it <span class=\"syn-punc\">}</span><span class=\"syn-punc\">,</span>\n    valueRange <span class=\"syn-eq\">=</span> <span class=\"syn-num\">0f</span><span class=\"syn-punc\">..</span><span class=\"syn-num\">100f</span><span class=\"syn-punc\">,</span>\n    showsTooltip <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">// Pressed is the drag — there is nothing to pass</span>"
       }
     ],
     "accessibility": [
@@ -482,7 +780,7 @@ export const slider: ComponentData = {
         "dontText": "Don't use one where an exact figure matters; a field is faster and more accurate."
       },
       {
-        "doText": "Leave 26px of clearance above when the tooltip is on.",
+        "doText": "Leave 23px of clearance above when the tooltip is on.",
         "dontText": "Don't place it directly under other content — the bubble sits outside the component's box."
       },
       {
@@ -514,21 +812,21 @@ export const slider: ComponentData = {
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Fills resolve to library variables — verified on the component's own nodes. All three tooltip states now clear 4.5:1, the disabled one at 9.27:1."
+        "notes": "Every colour resolves to a system token, and the nine on the page are exactly the nine the file’s selection list carries. Five of the six roles move with State; only the knob’s fill holds still. One naming oddity is recorded rather than raised: Pressed paints <code>bg/color-bg-primary-hover</code>, the next step above <code>bg/color-bg-primary</code>, because no pressed token exists yet."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "A continuous value, a track, a thumb and an optional bubble map directly onto both platforms' slider primitives. Range and step have no Figma form and are specified in the property mapping."
+        "notes": "A continuous value, a track, a thumb and an optional bubble map onto both platforms’ slider primitives. The slot is the one thing that looks unusual in Figma and is the most ordinary natively: it exists because Figma cannot express a continuous value, and it maps to the binding. <code>range</code>, <code>step</code>, <code>min</code> and <code>max</code> have no Figma form and belong to the native API."
       },
       {
         "id": "C5",
         "criterion": "Interaction State Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Pressed and Disabled both exist now. The knob is unchanged in Disabled while Pressed gives it a ring, and focus is still unspecified — both carried as recommendations."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Default, Pressed and Disabled all exist, and the two things this criterion used to hang on are decisions rather than gaps. The knob is deliberately unchanged in Disabled — the track and the tooltip both shift, and that carries the signal without touching the thumb. Focus is out of scope: the component is mobile only. Pressed is the one state that reaches the knob, giving it a <code>border/color-border-strong</code> ring."
       },
       {
         "id": "C6",
@@ -545,26 +843,7 @@ export const slider: ComponentData = {
         "notes": "Blocked — the native library does not exist yet."
       }
     ],
-    "codeConnect": [
-      {
-        "aspect": "Property naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "<code>State</code>, <code>hasTooltip</code> and <code>#percentage</code> map cleanly. <code>DraggableFill</code> maps to the active track rather than one-to-one, which is deliberate."
-      },
-      {
-        "aspect": "Token coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Bindings are in place; only the human-readable names are outstanding."
-      },
-      {
-        "aspect": "Registration",
-        "status": "empty",
-        "statusLabel": "Not Mapped",
-        "notes": "Blocked until the native library exists."
-      }
-    ],
+    "codeConnect": [],
     "variants": {
       "total": 6,
       "description": "3 State values × 2 hasTooltip values = 6 variants. The value is not an axis — it is the width of DraggableFill, resized through the slot.",
@@ -580,6 +859,63 @@ export const slider: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs rebuilt to the content guides — node 6802:105580",
+      "rows": [
+        {
+          "body": "<strong>The unchanged disabled knob is deliberate.</strong> The knob is identical in Default and Disabled — same <code>bg/color-bg-main</code> fill, same <code>border/color-border-weak</code> ring — while the track and the tooltip both shift. Confirmed that those two carry the signal and the thumb is left alone on purpose. It stays as a recommendation to revisit only if a disabled slider ever ships without its tooltip, since the track alone is the subtler cue.",
+          "delta": { "kind": "resolved", "label": "C5 resolved" }
+        },
+        {
+          "body": "<strong>Focus is out of scope, and now says so.</strong> The component is mobile only, so there is no focus state to specify and none is missing. Recorded rather than left as an open question, because \"no focus variant\" reads as an omission until someone says otherwise. With both of these settled, C5 moves to Ready.",
+          "delta": { "kind": "resolved", "label": "C5 resolved" }
+        },
+        {
+          "body": "<strong>One card became three.</strong> A single card covered all six versions. <code>State</code> is the driving property, so Default, Disabled and Pressed each get a card and <code>hasTooltip</code> becomes the only control.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Colour was documented as one state when it moves across three.</strong> Five of the six roles change with <code>State</code> — track, fill, knob ring, tooltip and its label — and only the knob’s fill holds still. A Colors by State table now carries all fifteen values against the nine tokens the file actually uses. The preview already had every one of them right; it was the page that only described one column.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>The knob was missing its drop shadow.</strong> <code>dy 2</code>, blur 2, black at 10% — an effect that appears in neither the layer tree nor <code>get_node_info</code>, only in the SVG export’s filter. Third artwork detail this batch that the node tree does not expose.",
+          "delta": { "kind": "resolved", "label": "C6 resolved" }
+        },
+        {
+          "body": "<strong>The preview drew in the documentation font.</strong> <code>.eb-preview-sldr</code> declared <code>font-family: inherit</code>, which resolves to BarkAda. The one text layer is <code>Primary/Label/Small</code>, so the root names Proxima Soft.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Property Mapping had three properties in six rows.</strong> <code>DraggableFill width</code> is the value, <code>— no Figma equivalent</code> was a placeholder for range and step, and one row bundled <code>⤷ Track</code> with <code>DraggableFill</code>. Three rows now, matching the panel exactly. Range, step, min and max get no row at all: they have no Figma form, and a row would imply Figma says something about them.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The slot is documented as what it is.</strong> A slider’s value is continuous and Figma has no property type for that, so rather than enumerate eleven variants at 10% steps the component makes the track a slot and resizes <code>DraggableFill</code> inside it. It is not content anyone swaps — it is a value control wearing a slot’s clothes, and natively it maps straight onto the binding. The thing that looks least like an API in Figma turns out to map most directly.",
+          "delta": { "kind": "resolved", "label": "C4 resolved" }
+        },
+        {
+          "body": "<strong>The install block pointed at coordinates that will never exist.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code>, with no Import line. Slider has no <code>navGroup</code>, so it is a family of one and the artifact takes its slug: <code>com.eastblue.ds:slider:1.0.0</code>.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>A CSS convenience had been written up as a Figma measurement.</strong> The usage guideline said to leave 26px of clearance above the tooltip. Figma measures <strong>23</strong> — 26 was the preview’s own <code>padding-top</code>. Corrected, and worth naming as a class of error: a number that only ever existed in the documentation, handed to developers as though the component said it.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Usage Snippets were keyed to use-cases, and Code Connect is emptied.</strong> One per <code>State</code> now, including an honest <em>Pressed — no call of its own</em>: two of the three states have no API expression, and saying so beats inventing one.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The Property Mapping intro had been printing its own markup.</strong> That paragraph was the only description field on the page rendered as escaped text rather than HTML, while the same component’s table rows three lines below already rendered it. Fixed in <code>PropertyMapping.astro</code>, which repaired the intro on <strong>17 component pages</strong> — twelve of them broken long before this review. Nothing in any data file changed: writing <code>&lt;code&gt;</code> there was always the convention, and the renderer simply was not honouring it.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
     {
       "version": "2.0.0",
       "date": "August 2026",

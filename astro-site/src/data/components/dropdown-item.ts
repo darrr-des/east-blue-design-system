@@ -1,4 +1,5 @@
 import type { ComponentData, DemoControlSection } from '../types';
+import { buildColorsTable } from './_helpers';
 
 /* Demo controls for the Style tab's single spec card. Four axes, but the
    State × isSelected grid is deliberately sparse — see the resolved list. */
@@ -7,44 +8,56 @@ const selectItemControls: DemoControlSection[] = [
     heading: 'Properties',
     rows: [
       {
-        label: 'Type',
-        prop: 'type',
+        label: "Density",
+        prop: "density",
+        control: 'select' as const,
+        defaultValue: "compact",
         options: [
-          { value: 'icon', label: 'Icon' },
-          { value: 'pesosignvector', label: 'PesoSignVector' },
-          { value: 'flag', label: 'Flag' },
-          { value: 'pesosigntext', label: 'PesoSignText' }
-        ],
-        defaultValue: 'icon'
+          { value: "compact", label: "Compact" },
+          { value: "default", label: "Default" },
+          { value: "comfortable", label: "Comfortable" }
+        ]
       },
       {
-        label: 'Density',
-        prop: 'density',
+        label: "State",
+        prop: "state",
+        control: 'select' as const,
+        defaultValue: "default",
         options: [
-          { value: 'compact', label: 'Compact' },
-          { value: 'default', label: 'Default' },
-          { value: 'comfortable', label: 'Comfortable' }
-        ],
-        defaultValue: 'compact'
+          { value: "default", label: "Default" },
+          { value: "pressed", label: "Pressed" },
+          { value: "disabled", label: "Disabled" }
+        ]
       },
       {
-        label: 'State',
-        prop: 'state',
-        options: [
-          { value: 'default', label: 'Default' },
-          { value: 'pressed', label: 'Pressed' },
-          { value: 'disabled', label: 'Disabled' }
-        ],
-        defaultValue: 'default'
-      },
-      {
-        label: 'isSelected',
-        prop: 'isselected',
+        label: "isSelected",
+        prop: "isselected",
+        control: 'toggle' as const,
+        defaultValue: "false",
         options: [
           { value: 'false', label: 'false' },
           { value: 'true', label: 'true' }
-        ],
-        defaultValue: 'false'
+        ]
+      },
+      {
+        label: "hasLeading",
+        prop: "hasleading",
+        control: 'toggle' as const,
+        defaultValue: "true",
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' }
+        ]
+      },
+      {
+        label: "hasTrailing",
+        prop: "hastrailing",
+        control: 'toggle' as const,
+        defaultValue: "true",
+        options: [
+          { value: 'false', label: 'false' },
+          { value: 'true', label: 'true' }
+        ]
       }
     ]
   }
@@ -76,7 +89,7 @@ export const dropdownItem: ComponentData = {
   },
   "overview": {
     "inContextNote": "Rows appear inside a Select Group, which is what a Select opens. On its own the row is never shown — the preview here is a single row at the size the group would give it.",
-    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"sitem-demo-preview\"><div class=\"eb-preview-sitem eb-preview-sitem--compact\"><span class=\"eb-preview-sitem__lead eb-preview-sitem__lead--icon\"></span><span class=\"eb-preview-sitem__content\"><span class=\"eb-preview-sitem__primary\">Text</span></span><span class=\"eb-preview-sitem__trail\"></span></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select id=\"sitem-ctrl-type\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"icon\" selected=\"\">Icon</option><option value=\"pesosignvector\">PesoSignVector</option><option value=\"flag\">Flag</option><option value=\"pesosigntext\">PesoSignText</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Density</span><select id=\"sitem-ctrl-density\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"compact\" selected=\"\">Compact</option><option value=\"default\">Default</option><option value=\"comfortable\">Comfortable</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"sitem-ctrl-state\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"default\" selected=\"\">Default</option><option value=\"pressed\">Pressed</option><option value=\"disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isSelected</span><select id=\"sitem-ctrl-isselected\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"false\" selected=\"\">false</option><option value=\"true\">true</option></select></div></div><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Content</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Supporting Text</span><select id=\"sitem-ctrl-supporting\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"false\" selected=\"\">hidden</option><option value=\"true\">shown</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Badge</span><select id=\"sitem-ctrl-badge\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"false\" selected=\"\">hidden</option><option value=\"true\">shown</option></select></div></div></div></div>",
+    "livePreviewHtml": "<div class=\"demo-layout\"><div class=\"demo-preview\" id=\"sitem-demo-preview\"><div class=\"eb-preview-sitem-stack\"><div class=\"eb-preview-sitem eb-preview-sitem--compact\"><span class=\"eb-preview-sitem__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sitem__content\"><span class=\"eb-preview-sitem__primary\">Text</span></span><span class=\"eb-preview-sitem__trail\"><span class=\"eb-preview-sitem__badge\">Label</span></span></div></div></div><div class=\"demo-figma-panel\"><div class=\"demo-panel-section\"><div class=\"demo-panel-heading\">Properties</div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Type</span><select id=\"sitem-ctrl-type\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"icon\" selected>Icon</option><option value=\"pesosignvector\">PesoSignVector</option><option value=\"flag\">Flag</option><option value=\"pesosigntext\">PesoSignText</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">Density</span><select id=\"sitem-ctrl-density\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"compact\" selected>Compact</option><option value=\"default\">Default</option><option value=\"comfortable\">Comfortable</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">State</span><select id=\"sitem-ctrl-state\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"default\" selected>Default</option><option value=\"pressed\">Pressed</option><option value=\"disabled\">Disabled</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">isSelected</span><select id=\"sitem-ctrl-isselected\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"false\" selected>false</option><option value=\"true\">true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasLeading</span><select id=\"sitem-ctrl-hasleading\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected>true</option></select></div><div class=\"demo-panel-row\"><span class=\"demo-panel-label\">hasTrailing</span><select id=\"sitem-ctrl-hastrailing\" class=\"demo-panel-select\" onchange=\"_sitemUpdate()\"><option value=\"false\">false</option><option value=\"true\" selected>true</option></select></div></div></div></div>",
     "traits": [
       {
         "name": "Reusable",
@@ -246,115 +259,277 @@ export const dropdownItem: ComponentData = {
     "appliedRecommendations": []
   },
   "style": {
-    "heading": "Structure",
+    "heading": "Type",
+    "description": "Four leading marks on one row shape. <code>Density</code> sets the height — 40, 48 or 56 — and changes nothing else; <code>State</code> and <code>isSelected</code> move the row fill and the label colour between them. The grid is deliberately sparse: <code>isSelected=true</code> exists only alongside <code>State=Default</code>, which is what holds the set at <strong>48 variants rather than the 72</strong> a full matrix would give. <code>hasTrailing</code> ships <strong>true</strong> on purpose: the badge advertises that the slot exists at a glance. In practice both consumers — <a href=\"/components/dropdown-item-group\">Select Group</a> and <a href=\"/components/dropdown\">Select</a> — set it false, so a row in a real list shows no badge.",
+    "colorsTables": [
+      buildColorsTable({
+        title: "Colors by State",
+        description: "Six roles. The row and the label are the only two that move: Pressed tints the row, Disabled fades the label, and isSelected turns it brand blue — which is why selected-and-pressed does not exist as a variant. Supporting Text is listed because the layer is there, but it ships hidden, so nothing on the page currently draws it. The badge is a Badge instance, so its two colours are that component’s rather than this one’s.",
+        columns: ["Default", "Pressed", "Disabled", "Selected"],
+        rows: [
+          { role: "Row", token: "bg/color-bg-main · bg/color-bg",
+            values: ["#FFFFFF", "#F6F9FD", "#FFFFFF", "#FFFFFF"] },
+          { role: "Primary Text", token: "text/color-text · -disabled · -primary",
+            values: ["#0A2757", "#0A2757", "#C2CFE5", "#005CE5"] },
+          { role: "Supporting Text (hidden)", token: "text/color-text-weaker",
+            values: ["#6780A9", "#6780A9", "#6780A9", "#6780A9"] },
+          { role: "Leading Element", token: "bg/color-bg-inverse",
+            values: ["#0A2757", "#0A2757", "#0A2757", "#0A2757"] },
+          { role: "Trailing Element · badge fill", token: "bg/color-bg-secondary",
+            values: ["#E5F1FF", "#E5F1FF", "#E5F1FF", "#E5F1FF"] },
+          { role: "Trailing Element · badge label", token: "text/color-text-primary · -primary-disabled",
+            values: ["#005CE5", "#005CE5", "#9BC5FD", "#005CE5"] }
+        ]
+      })
+    ],
     "specCards": [
       {
-        "cardKey": "sitem-spec-card-default",
-        "demoKey": "default",
+        "cardKey": "sitem-spec-card-icon",
+        "demoKey": "icon",
         "demoControls": selectItemControls,
-        "title": "Select Item",
-        "node": "7947:111969",
-        "description": "Four axes, 48 variants. Leading, content and trailing are each their own component, so the row composes rather than drawing their internals.",
-        "previewHtml": "<div id=\"sitem-spec-default\"><div class=\"eb-preview-sitem eb-preview-sitem--compact\"><span class=\"eb-preview-sitem__lead eb-preview-sitem__lead--icon\"></span><span class=\"eb-preview-sitem__content\"><span class=\"eb-preview-sitem__primary\">Text</span></span><span class=\"eb-preview-sitem__trail\"></span></div></div>",
+        "title": "Icon",
+        "node": "7947:111970",
+        "description": "",
+        "previewHtml": "<div id=\"sitem-spec-icon\"><div class=\"eb-preview-sitem-stack\"><div class=\"eb-preview-sitem eb-preview-sitem--compact\"><span class=\"eb-preview-sitem__lead\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path opacity=\"0.4\" fill=\"currentColor\" d=\"M9.50559 13.6667C9.17595 13.1734 9 12.5933 9 12C9 11.2043 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2043 9 12 9C12.5933 9 13.1734 9.17595 13.6667 9.50559C14.1601 9.83524 14.5446 10.3038 14.7716 10.8519C14.9987 11.4001 15.0581 12.0033 14.9424 12.5853C14.8266 13.1672 14.5409 13.7018 14.1213 14.1213C13.7018 14.5409 13.1672 14.8266 12.5853 14.9424C12.0033 15.0581 11.4001 14.9987 10.8519 14.7716C10.3038 14.5446 9.83524 14.1601 9.50559 13.6667Z\"/><path stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.4381 4.43509L9.75227 6.18166L7.82609 7.15937L5.91309 6.86386C5.64498 6.82244 5.37767 6.94298 5.23121 7.17133L4.26827 8.67264C4.10823 8.92217 4.12665 9.2463 4.31394 9.47608L5.62569 11.0855V12.9277L4.38072 14.5147C4.20104 14.7438 4.18556 15.0613 4.34209 15.3067L5.23305 16.7036C5.3786 16.9319 5.64477 17.0531 5.91247 17.0131L7.82632 16.7273L9.77673 17.8182L10.3204 19.5227C10.4111 19.807 10.6752 20 10.9737 20H12.9257C13.2069 20 13.4596 19.8284 13.5632 19.567L14.2565 17.8182L16.1739 16.8161L18.0544 17.1081C18.3327 17.1513 18.6091 17.0199 18.7514 16.7768L19.6656 15.2148C19.8106 14.967 19.7859 14.655 19.6036 14.4332L18.3757 12.9383V11.0188L19.6641 9.48956C19.8626 9.25397 19.8796 8.91492 19.7057 8.66064L18.6908 7.17677C18.5343 6.94789 18.2553 6.83582 17.984 6.89279L16.1741 7.27273L14.2565 6.18166L13.5632 4.43299C13.4596 4.17163 13.2069 4 12.9258 4H11.0764C10.7944 4 10.5411 4.17262 10.4381 4.43509Z\"/></svg></span><span class=\"eb-preview-sitem__content\"><span class=\"eb-preview-sitem__primary\">Text</span></span><span class=\"eb-preview-sitem__trail\"><span class=\"eb-preview-sitem__badge\">Label</span></span></div></div></div>",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
-              { "key": "Type", "value": "Icon", "prop": "type",
-                "variants": {
-                  "type:pesosignvector": { "value": "PesoSignVector — custom ₱ SVG" },
-                  "type:flag": { "value": "Flag — Flags Library - 16px" },
-                  "type:pesosigntext": { "value": "PesoSignText — Proxima's ₱ glyph" }
-                }
-              },
-              { "key": "Density", "value": "Compact", "prop": "density",
-                "variants": {
-                  "density:default": { "value": "Default" },
-                  "density:comfortable": { "value": "Comfortable" }
-                }
-              },
-              { "key": "State", "value": "Default", "prop": "state",
-                "variants": {
-                  "state:pressed": { "value": "Pressed" },
-                  "state:disabled": { "value": "Disabled" }
-                }
-              },
-              { "key": "isSelected", "value": "false", "prop": "isselected",
-                "variants": {
-                  "isselected:true": { "value": "true" }
-                }
-              },
-              { "key": "Leading Element", "value": "24 × 24 instance",
-                "variants": {
-                  "type:flag": { "value": "16 × 24 instance" }
-                }
-              },
-              { "key": "Content Element", "value": "Primary Text · Supporting Text (hidden)" },
-              { "key": "Trailing Element", "value": "Badge (hidden)" }
+              { "key": "Type", "value": "Icon" },
+              { "key": "Density", "value": "Compact", "prop": "density" },
+              { "key": "State", "value": "Default", "prop": "state" },
+              { "key": "isSelected", "value": "false", "prop": "isselected" },
+              { "key": "hasLeading", "value": "true", "prop": "hasleading" },
+              { "key": "hasTrailing", "value": "true — shown here to advertise the slot; both consumers set it false", "prop": "hastrailing" },
+              { "key": "Leading Element", "value": "A 24 × 24 icon instance — Settings in the published variants" },
+              { "key": "Content Element", "value": "Primary Text over a Supporting Text layer that ships hidden — not a property" },
+              { "key": "Trailing Element", "value": "A Badge instance, 40 × 16, radius 4" },
+              { "key": "Versions", "value": "48" }
             ]
           },
           {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Row", "value": "#FFFFFF", "token": "library variable · name pending Dev Mode read", "swatch": true,
-                "variants": {
-                  "state:pressed": { "value": "#F6F9FD" }
-                }
-              },
-              { "key": "Primary Text", "value": "#0A2757", "token": "library variable · name pending Dev Mode read", "swatch": true,
-                "variants": {
-                  "state:disabled": { "value": "#C2CFE5" },
-                  "isselected:true": { "value": "#005CE5" }
-                }
-              },
-              { "key": "Supporting Text", "value": "#6780A9 — unchanged in every state", "token": "library variable · name pending Dev Mode read", "swatch": true },
-              { "key": "Leading Element", "value": "follows the label colour", "token": "–" },
-              { "key": "Badge", "value": "#E5F1FF bg · #005CE5 label", "token": "library variable · name pending Dev Mode read", "swatch": true }
-            ]
-          },
-          {
-            "label": "Layout",
-            "slug": "layout",
-            "rows": [
-              { "key": "Width", "value": "320 — fills the group", "mono": true },
-              { "key": "Height", "value": "40", "mono": true,
-                "variants": {
-                  "density:default": { "value": "48" },
-                  "density:comfortable": { "value": "56" }
-                }
-              },
-              { "key": "Height with Supporting Text", "value": "grows — the row hugs its content", "mono": true,
-                "variants": {
-                  "density:comfortable": { "value": "60" }
-                }
-              },
-              { "key": "Side inset", "value": "12", "mono": true },
-              { "key": "Leading Element", "value": "24 × 24", "mono": true,
-                "variants": {
-                  "type:flag": { "value": "16 × 24" }
-                }
-              },
-              { "key": "Content Element", "value": "216 × 24", "mono": true },
-              { "key": "Trailing Element", "value": "40 × 24", "mono": true },
-              { "key": "Corner radius", "value": "0 — the group clips the first and last rows", "mono": true }
+              { "key": "Row", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true, "variants": { "state:pressed": { "value": "#F6F9FD", "token": "bg/color-bg" } } },
+              { "key": "Primary Text", "value": "#0A2757", "token": "text/color-text", "swatch": true, "variants": { "state:disabled": { "value": "#C2CFE5", "token": "text/color-text-disabled" }, "isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" }, "state:default|isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" } } },
+              { "key": "Supporting Text", "value": "#6780A9", "token": "text/color-text-weaker", "swatch": true },
+              { "key": "Leading Element", "value": "#0A2757", "token": "bg/color-bg-inverse", "swatch": true, "variants": { "state:disabled": { "value": "#C2CFE5", "token": "text/color-text-disabled" }, "isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" }, "state:default|isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" } } },
+              { "key": "Trailing Element · badge fill", "value": "#E5F1FF", "token": "bg/color-bg-secondary", "swatch": true },
+              { "key": "Trailing Element · badge label", "value": "#005CE5", "token": "text/color-text-primary", "swatch": true, "variants": { "state:disabled": { "value": "#9BC5FD", "token": "text/color-text-primary-disabled" } } }
             ]
           },
           {
             "label": "Typography",
             "slug": "typo",
             "rows": [
-              { "key": "Text styles", "value": "shared library styles · names pending Dev Mode read", "mono": true },
-              { "key": "Primary Text", "value": "Proxima Soft SemiBold · 16 / 20 · +0.25", "mono": true },
-              { "key": "Supporting Text", "value": "Proxima Soft SemiBold · 12 / 14 · +0.5", "mono": true },
-              { "key": "Badge #value", "value": "Proxima Soft Bold · 12 / 12 · +0.5", "mono": true },
-              { "key": "Per density", "value": "identical at all three — density changes padding, not type", "mono": true }
+              { "key": "Primary Text", "value": "Primary/Multi-line Label/Light/Base", "mono": true },
+              { "key": "Supporting Text", "value": "Primary/Multi-line Label/Light/Fine", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "40 — Hug", "mono": true, "variants": { "density:default": { "value": "48 — Hug" }, "density:comfortable": { "value": "56 — Hug" } } },
+              { "key": "Width", "value": "320", "mono": true },
+              { "key": "Radius", "value": "0 — the group clips the first and last rows", "mono": true },
+              { "key": "Padding H", "value": "12", "mono": true },
+              { "key": "Padding V", "value": "8", "mono": true, "variants": { "density:default": { "value": "12" }, "density:comfortable": { "value": "16" } } },
+              { "key": "Gap", "value": "8", "mono": true },
+              { "key": "Alignment", "value": "Left, centred", "mono": true }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    leading<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.icon</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"settings\"</span><span class=\"syn-punc\">),</span>\n    isSelected<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">.</span><span class=\"syn-fn\">ebDensity</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.compact</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    leading <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectLeading</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">R</span><span class=\"syn-punc\">.</span>drawable<span class=\"syn-punc\">.</span>settings<span class=\"syn-punc\">),</span>\n    selected <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Compact</span>\n<span class=\"syn-punc\">)</span>"
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.icon</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.compact</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectItemType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Icon</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Compact</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "sitem-spec-card-pesosignvector",
+        "demoKey": "pesosignvector",
+        "demoControls": selectItemControls,
+        "title": "PesoSignVector",
+        "node": "7947:112018",
+        "description": "",
+        "previewHtml": "<div id=\"sitem-spec-pesosignvector\"><div class=\"eb-preview-sitem-stack\"><div class=\"eb-preview-sitem eb-preview-sitem--compact\"><span class=\"eb-preview-sitem__lead eb-preview-sitem__lead--peso-vector\"><svg width=\"15\" height=\"24\" viewBox=\"0 0 15 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M8.23438 6.44531C9.85278 6.44534 11.2144 7.54183 11.6191 9.03223H12.1533C12.6311 9.0324 13.0185 9.41968 13.0186 9.89746C13.0186 10.3753 12.6311 10.7625 12.1533 10.7627H11.6475C11.2821 12.3099 9.8932 13.4619 8.23438 13.4619H5.75293V16.498C5.75271 17.0778 5.28289 17.5479 4.70312 17.5479C4.12345 17.5478 3.65354 17.0777 3.65332 16.498V10.7627H3.05273C2.57485 10.7626 2.1875 10.3754 2.1875 9.89746C2.18755 9.41961 2.57488 9.03229 3.05273 9.03223H3.65332V7.49805C3.65332 6.93887 4.09045 6.48214 4.6416 6.4502C4.67527 6.44658 4.70951 6.44532 4.74414 6.44531H8.23438ZM5.75293 10.7627V11.5576H8.23438C8.82481 11.5576 9.33957 11.2377 9.61816 10.7627H5.75293ZM5.75293 9.03223H9.54688C9.2565 8.6196 8.77714 8.34962 8.23438 8.34961H5.75293V9.03223Z\" fill=\"currentColor\"/></svg></span><span class=\"eb-preview-sitem__content\"><span class=\"eb-preview-sitem__primary\">Text</span></span><span class=\"eb-preview-sitem__trail\"><span class=\"eb-preview-sitem__badge\">Label</span></span></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "Type", "value": "PesoSignVector" },
+              { "key": "Density", "value": "Compact", "prop": "density" },
+              { "key": "State", "value": "Default", "prop": "state" },
+              { "key": "isSelected", "value": "false", "prop": "isselected" },
+              { "key": "hasLeading", "value": "true", "prop": "hasleading" },
+              { "key": "hasTrailing", "value": "true — shown here to advertise the slot; both consumers set it false", "prop": "hastrailing" },
+              { "key": "Leading Element", "value": "A drawn ₱ — 15 wide, its own artwork rather than the font’s glyph" },
+              { "key": "Content Element", "value": "Primary Text over a Supporting Text layer that ships hidden — not a property" },
+              { "key": "Trailing Element", "value": "A Badge instance, 40 × 16, radius 4" },
+              { "key": "Versions", "value": "48" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Row", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true, "variants": { "state:pressed": { "value": "#F6F9FD", "token": "bg/color-bg" } } },
+              { "key": "Primary Text", "value": "#0A2757", "token": "text/color-text", "swatch": true, "variants": { "state:disabled": { "value": "#C2CFE5", "token": "text/color-text-disabled" }, "isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" }, "state:default|isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" } } },
+              { "key": "Supporting Text", "value": "#6780A9", "token": "text/color-text-weaker", "swatch": true },
+              { "key": "Leading Element", "value": "#0A2757", "token": "bg/color-bg-inverse", "swatch": true, "variants": { "state:disabled": { "value": "#C2CFE5", "token": "text/color-text-disabled" }, "isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" }, "state:default|isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" } } },
+              { "key": "Trailing Element · badge fill", "value": "#E5F1FF", "token": "bg/color-bg-secondary", "swatch": true },
+              { "key": "Trailing Element · badge label", "value": "#005CE5", "token": "text/color-text-primary", "swatch": true, "variants": { "state:disabled": { "value": "#9BC5FD", "token": "text/color-text-primary-disabled" } } }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "Primary Text", "value": "Primary/Multi-line Label/Light/Base", "mono": true },
+              { "key": "Supporting Text", "value": "Primary/Multi-line Label/Light/Fine", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "40 — Hug", "mono": true, "variants": { "density:default": { "value": "48 — Hug" }, "density:comfortable": { "value": "56 — Hug" } } },
+              { "key": "Width", "value": "320", "mono": true },
+              { "key": "Radius", "value": "0 — the group clips the first and last rows", "mono": true },
+              { "key": "Padding H", "value": "12", "mono": true },
+              { "key": "Padding V", "value": "8", "mono": true, "variants": { "density:default": { "value": "12" }, "density:comfortable": { "value": "16" } } },
+              { "key": "Gap", "value": "8", "mono": true },
+              { "key": "Alignment", "value": "Left, centred", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pesoSignVector</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.compact</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectItemType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PesoSignVector</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Compact</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "sitem-spec-card-flag",
+        "demoKey": "flag",
+        "demoControls": selectItemControls,
+        "title": "Flag",
+        "node": "7947:112022",
+        "description": "",
+        "previewHtml": "<div id=\"sitem-spec-flag\"><div class=\"eb-preview-sitem-stack\"><div class=\"eb-preview-sitem eb-preview-sitem--compact\"><span class=\"eb-preview-sitem__lead eb-preview-sitem__lead--flag\"><svg width=\"16\" height=\"12\" viewBox=\"0 0 16 12\" fill=\"none\" aria-hidden=\"true\"><rect x=\"0.5\" y=\"0.5\" width=\"15\" height=\"11\" rx=\"1.5\" fill=\"#FFFFFF\" stroke=\"#E5EBF4\"/><rect x=\"1\" y=\"1\" width=\"14\" height=\"1.4\" fill=\"#F15A5B\"/><rect x=\"1\" y=\"3.8\" width=\"14\" height=\"1.4\" fill=\"#F15A5B\"/><rect x=\"1\" y=\"6.6\" width=\"14\" height=\"1.4\" fill=\"#F15A5B\"/><rect x=\"1\" y=\"9.4\" width=\"14\" height=\"1.4\" fill=\"#F15A5B\"/><rect x=\"1\" y=\"1\" width=\"6\" height=\"5\" fill=\"#434389\"/></svg></span><span class=\"eb-preview-sitem__content\"><span class=\"eb-preview-sitem__primary\">Text</span></span><span class=\"eb-preview-sitem__trail\"><span class=\"eb-preview-sitem__badge\">Label</span></span></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "Type", "value": "Flag" },
+              { "key": "Density", "value": "Compact", "prop": "density" },
+              { "key": "State", "value": "Default", "prop": "state" },
+              { "key": "isSelected", "value": "false", "prop": "isselected" },
+              { "key": "hasLeading", "value": "true", "prop": "hasleading" },
+              { "key": "hasTrailing", "value": "true — shown here to advertise the slot; both consumers set it false", "prop": "hastrailing" },
+              { "key": "Leading Element", "value": "A Flags Library instance — a vector, which is what closed the raster finding" },
+              { "key": "Content Element", "value": "Primary Text over a Supporting Text layer that ships hidden — not a property" },
+              { "key": "Trailing Element", "value": "A Badge instance, 40 × 16, radius 4" },
+              { "key": "Versions", "value": "48" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Row", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true, "variants": { "state:pressed": { "value": "#F6F9FD", "token": "bg/color-bg" } } },
+              { "key": "Primary Text", "value": "#0A2757", "token": "text/color-text", "swatch": true, "variants": { "state:disabled": { "value": "#C2CFE5", "token": "text/color-text-disabled" }, "isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" }, "state:default|isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" } } },
+              { "key": "Supporting Text", "value": "#6780A9", "token": "text/color-text-weaker", "swatch": true },
+              { "key": "Leading Element", "value": "#0A2757", "token": "bg/color-bg-inverse", "swatch": true, "variants": { "state:disabled": { "value": "#C2CFE5", "token": "text/color-text-disabled" }, "isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" }, "state:default|isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" } } },
+              { "key": "Trailing Element · badge fill", "value": "#E5F1FF", "token": "bg/color-bg-secondary", "swatch": true },
+              { "key": "Trailing Element · badge label", "value": "#005CE5", "token": "text/color-text-primary", "swatch": true, "variants": { "state:disabled": { "value": "#9BC5FD", "token": "text/color-text-primary-disabled" } } }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "Primary Text", "value": "Primary/Multi-line Label/Light/Base", "mono": true },
+              { "key": "Supporting Text", "value": "Primary/Multi-line Label/Light/Fine", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "40 — Hug", "mono": true, "variants": { "density:default": { "value": "48 — Hug" }, "density:comfortable": { "value": "56 — Hug" } } },
+              { "key": "Width", "value": "320", "mono": true },
+              { "key": "Radius", "value": "0 — the group clips the first and last rows", "mono": true },
+              { "key": "Padding H", "value": "12", "mono": true },
+              { "key": "Padding V", "value": "8", "mono": true, "variants": { "density:default": { "value": "12" }, "density:comfortable": { "value": "16" } } },
+              { "key": "Gap", "value": "8", "mono": true },
+              { "key": "Alignment", "value": "Left, centred", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.flag</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.compact</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectItemType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Flag</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Compact</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "cardKey": "sitem-spec-card-pesosigntext",
+        "demoKey": "pesosigntext",
+        "demoControls": selectItemControls,
+        "title": "PesoSignText",
+        "node": "7947:120575",
+        "description": "",
+        "previewHtml": "<div id=\"sitem-spec-pesosigntext\"><div class=\"eb-preview-sitem-stack\"><div class=\"eb-preview-sitem eb-preview-sitem--compact\"><span class=\"eb-preview-sitem__lead eb-preview-sitem__lead--peso-text\">₱</span><span class=\"eb-preview-sitem__content\"><span class=\"eb-preview-sitem__primary\">Text</span></span><span class=\"eb-preview-sitem__trail\"><span class=\"eb-preview-sitem__badge\">Label</span></span></div></div></div>",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              { "key": "Type", "value": "PesoSignText" },
+              { "key": "Density", "value": "Compact", "prop": "density" },
+              { "key": "State", "value": "Default", "prop": "state" },
+              { "key": "isSelected", "value": "false", "prop": "isselected" },
+              { "key": "hasLeading", "value": "true", "prop": "hasleading" },
+              { "key": "hasTrailing", "value": "true — shown here to advertise the slot; both consumers set it false", "prop": "hastrailing" },
+              { "key": "Leading Element", "value": "Proxima Soft’s own ₱ set as type — 10 wide, so the label starts 5px further left than the vector’s" },
+              { "key": "Content Element", "value": "Primary Text over a Supporting Text layer that ships hidden — not a property" },
+              { "key": "Trailing Element", "value": "A Badge instance, 40 × 16, radius 4" },
+              { "key": "Versions", "value": "48" }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              { "key": "Row", "value": "#FFFFFF", "token": "bg/color-bg-main", "swatch": true, "variants": { "state:pressed": { "value": "#F6F9FD", "token": "bg/color-bg" } } },
+              { "key": "Primary Text", "value": "#0A2757", "token": "text/color-text", "swatch": true, "variants": { "state:disabled": { "value": "#C2CFE5", "token": "text/color-text-disabled" }, "isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" }, "state:default|isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" } } },
+              { "key": "Supporting Text", "value": "#6780A9", "token": "text/color-text-weaker", "swatch": true },
+              { "key": "Leading Element", "value": "#0A2757", "token": "bg/color-bg-inverse", "swatch": true, "variants": { "state:disabled": { "value": "#C2CFE5", "token": "text/color-text-disabled" }, "isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" }, "state:default|isselected:true": { "value": "#005CE5", "token": "text/color-text-primary" } } },
+              { "key": "Trailing Element · badge fill", "value": "#E5F1FF", "token": "bg/color-bg-secondary", "swatch": true },
+              { "key": "Trailing Element · badge label", "value": "#005CE5", "token": "text/color-text-primary", "swatch": true, "variants": { "state:disabled": { "value": "#9BC5FD", "token": "text/color-text-primary-disabled" } } }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              { "key": "Primary Text", "value": "Primary/Multi-line Label/Light/Base", "mono": true },
+              { "key": "Supporting Text", "value": "Primary/Multi-line Label/Light/Fine", "mono": true }
+            ]
+          },
+          {
+            "label": "Layout",
+            "slug": "layout",
+            "rows": [
+              { "key": "Height", "value": "40 — Hug", "mono": true, "variants": { "density:default": { "value": "48 — Hug" }, "density:comfortable": { "value": "56 — Hug" } } },
+              { "key": "Width", "value": "320", "mono": true },
+              { "key": "Radius", "value": "0 — the group clips the first and last rows", "mono": true },
+              { "key": "Padding H", "value": "12", "mono": true },
+              { "key": "Padding V", "value": "8", "mono": true, "variants": { "density:default": { "value": "12" }, "density:comfortable": { "value": "16" } } },
+              { "key": "Gap", "value": "8", "mono": true },
+              { "key": "Alignment", "value": "Left, centred", "mono": true }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pesoSignText</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.compact</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Text\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectItemType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PesoSignText</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Compact</span>\n<span class=\"syn-punc\">)</span>"
       }
     ]
   },
@@ -363,43 +538,75 @@ export const dropdownItem: ComponentData = {
       "planned": true,
       "blocks": [
         {
-          "label": "Swift Package Manager",
-          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/gcash/east-blue-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "iOS — Swift Package Manager",
+          "code": "<span class=\"syn-punc\">.</span><span class=\"syn-fn\">package</span><span class=\"syn-punc\">(</span>url<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span><span class=\"syn-punc\">,</span> from<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"1.0.0\"</span><span class=\"syn-punc\">)</span>"
         },
         {
-          "label": "Gradle",
-          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.gcash.eastblue:components:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+          "label": "Android — Gradle (Kotlin DSL)",
+          "code": "<span class=\"syn-fn\">implementation</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"com.eastblue.ds:select:1.0.0\"</span><span class=\"syn-punc\">)</span>"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>select<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ],
-      "footnote": "Planned API — the native library does not exist yet. Snippets show the intended shape, not shipped code."
+      "footnote": "Planned API — the native library does not exist yet. The artifact is the Select family: <a href=\"/components/dropdown\">Select</a>, <a href=\"/components/dropdown-item-group\">Select Group</a> and this component all ship in <code>com.eastblue.ds:select</code> and import <code>com.eastblue.ds.select.*</code>."
     },
     "propertyMapping": {
-      "description": "Figma properties mapped to the intended native parameters.",
+      "description": "Six properties, in the order the Figma property panel lists them. Three native parameters have no row: <code>label</code> and <code>supporting</code> are the two text layers inside Content Element, and the trailing content is a nested Badge instance — none is a component property, so Code Connect will have nothing to bind them to. <code>State</code> is the one property that is not a parameter either: Pressed is what the platform already does while a finger is down, and Disabled is each platform’s own idiom rather than an enum case. <code>Type</code> chooses the leading mark, and each mark brings its own width — 24, 16, 15 or 10 — which is deliberate; the row hugs whatever it is given rather than reserving a fixed slot.",
       "rows": [
-        { "figma": "Type", "swift": "leading: EBSelectLeading", "compose": "leading: EBSelectLeading" },
-        { "figma": "Density", "swift": ".ebDensity(.compact / .default / .comfortable)", "compose": "density: EBDensity" },
-        { "figma": "State", "swift": "driven by interaction · .disabled(true)", "compose": "driven by interaction · enabled = false" },
-        { "figma": "isSelected", "swift": "isSelected: Bool", "compose": "selected: Boolean" },
-        { "figma": "Primary Text", "swift": "label: String", "compose": "label: String" },
-        { "figma": "Supporting Text", "swift": "supporting: String?", "compose": "supporting: String?" },
-        { "figma": "Trailing Element", "swift": "@ViewBuilder trailing: () -> Trailing", "compose": "trailing: (@Composable () -> Unit)?" }
+        {
+          "figma": "Type — Icon, PesoSignVector, Flag, PesoSignText",
+          "swift": "<code>type: EBSelectItemType</code>",
+          "compose": "<code>type: EBSelectItemType</code>"
+        },
+        {
+          "figma": "Density — Compact, Default, Comfortable",
+          "swift": "<code>density: EBDensity = .compact</code>",
+          "compose": "<code>density: EBDensity = Compact</code>"
+        },
+        {
+          "figma": "State — Default, Pressed, Disabled",
+          "swift": "<em>not a parameter</em> — Pressed is the press itself; Disabled is <code>.disabled(true)</code>",
+          "compose": "<em>not a parameter</em> — Disabled is <code>enabled = false</code>"
+        },
+        {
+          "figma": "isSelected — true, false",
+          "swift": "<code>isSelected: Bool = false</code>",
+          "compose": "<code>isSelected: Boolean = false</code>"
+        },
+        {
+          "figma": "hasLeading — true, false",
+          "swift": "<code>hasLeading: Bool = true</code>",
+          "compose": "<code>hasLeading: Boolean = true</code>"
+        },
+        {
+          "figma": "hasTrailing — true, false",
+          "swift": "<code>hasTrailing: Bool = true</code>",
+          "compose": "<code>hasTrailing: Boolean = true</code>"
+        }
       ]
     },
     "usageSnippets": [
       {
-        "subheading": "A plain row",
-        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Savings account\"</span><span class=\"syn-punc\">,</span> leading<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.icon</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"wallet\"</span><span class=\"syn-punc\">))</span>",
-        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Savings account\"</span><span class=\"syn-punc\">,</span>\n    leading <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectLeading</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-type\">R</span><span class=\"syn-punc\">.</span>drawable<span class=\"syn-punc\">.</span>wallet<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span>"
+        "subheading": "Icon — a settings row",
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Notifications\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.icon</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.compact</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Notifications\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectItemType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Icon</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Compact</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "Selected, with supporting text",
-        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-str\">\"GCash wallet\"</span><span class=\"syn-punc\">,</span>\n    supporting<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Available balance PHP 1,240.00\"</span><span class=\"syn-punc\">,</span>\n    leading<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pesoSignVector</span><span class=\"syn-punc\">,</span>\n    isSelected<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"GCash wallet\"</span><span class=\"syn-punc\">,</span>\n    supporting <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Available balance PHP 1,240.00\"</span><span class=\"syn-punc\">,</span>\n    leading <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectLeading</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PesoSignVector</span><span class=\"syn-punc\">,</span>\n    selected <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
+        "subheading": "PesoSignVector — an amount row, drawn mark",
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Send money\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pesoSignVector</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.default</span><span class=\"syn-punc\">,</span>\n    hasTrailing<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Send money\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectItemType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PesoSignVector</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Default</span><span class=\"syn-punc\">,</span>\n    hasTrailing <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">false</span>\n<span class=\"syn-punc\">)</span>"
       },
       {
-        "subheading": "A country row",
-        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Philippines\"</span><span class=\"syn-punc\">,</span> leading<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.flag</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"PH\"</span><span class=\"syn-punc\">))</span>\n    <span class=\"syn-punc\">.</span><span class=\"syn-fn\">ebDensity</span><span class=\"syn-punc\">(</span><span class=\"syn-dot\">.comfortable</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Philippines\"</span><span class=\"syn-punc\">,</span>\n    leading <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectLeading</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Flag</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"PH\"</span><span class=\"syn-punc\">),</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Comfortable</span>\n<span class=\"syn-punc\">)</span>"
+        "subheading": "Flag — a country row",
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Philippines\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.flag</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.default</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Philippines\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectItemType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Flag</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Default</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "PesoSignText — an amount row, typed mark",
+        "swift": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label<span class=\"syn-punc\">:</span> <span class=\"syn-str\">\"Cash in\"</span><span class=\"syn-punc\">,</span>\n    type<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.pesoSignText</span><span class=\"syn-punc\">,</span>\n    density<span class=\"syn-punc\">:</span> <span class=\"syn-dot\">.comfortable</span><span class=\"syn-punc\">,</span>\n    isSelected<span class=\"syn-punc\">:</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBSelectItem</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Cash in\"</span><span class=\"syn-punc\">,</span>\n    type <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBSelectItemType</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">PesoSignText</span><span class=\"syn-punc\">,</span>\n    density <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBDensity</span><span class=\"syn-punc\">.</span><span class=\"syn-dot\">Comfortable</span><span class=\"syn-punc\">,</span>\n    isSelected <span class=\"syn-eq\">=</span> <span class=\"syn-kw\">true</span>\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "accessibility": [
@@ -467,14 +674,14 @@ export const dropdownItem: ComponentData = {
         "criterion": "Token Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Fills resolve to library variables. Supporting Text's <code>#6780A9</code> is 4.01:1 on white, just under AA for 12px — carried as a recommendation."
+        "notes": "Every colour is bound and named: <code>bg/color-bg-main</code> and <code>bg/color-bg</code> on the row, <code>text/color-text</code> stepping to <code>-disabled</code> and <code>-primary</code> on the label, <code>bg/color-bg-inverse</code> on the leading mark — which tracks the label rather than staying fixed — and the badge’s <code>bg/color-bg-secondary</code> with <code>text/color-text-primary</code> stepping to <code>-primary-disabled</code>. Supporting Text is bound to <code>text/color-text-weaker</code> but ships hidden, so its 4.01:1 on white is not a live contrast concern; it becomes one the day the layer is switched on."
       },
       {
         "id": "C4",
         "criterion": "Native Mappability",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Disabled is a state rather than a type, so the axes map cleanly onto a selectable list row on both platforms."
+        "notes": "Four axes map onto a selectable list row on both platforms. <code>State</code> is the one that is not a parameter: Pressed is what the platform already does under a finger, and Disabled is each platform’s own idiom. The leading mark’s width varies by <code>Type</code> — 24, 16, 15 or 10 — which is deliberate, so the native row should hug what it is given rather than reserve a fixed slot. <code>hasTrailing</code> defaulting to true is deliberate too: the badge shows that the slot exists, and both consumers turn it off, so the native default should follow the primitive rather than the usage. The gap is that neither text layer nor the trailing instance is a Figma property; see C7."
       },
       {
         "id": "C5",
@@ -495,42 +702,146 @@ export const dropdownItem: ComponentData = {
         "criterion": "Code Connect Linkability",
         "status": "empty",
         "statusLabel": "Not Mapped",
-        "notes": "Blocked — the native library does not exist yet."
+        "notes": "Blocked — the native library does not exist yet. Worth noting for when it is not: <code>Primary Text</code>, <code>Supporting Text</code> and the trailing Badge are layers and a nested instance rather than component properties, so Code Connect will have nothing to bind the row’s two strings or its trailing content to. The six properties that do exist all trace 1:1."
       }
     ],
-    "codeConnect": [
-      {
-        "aspect": "Property naming",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "All four axes map one to one with no rename at the boundary now the multi-word values are joined."
-      },
-      {
-        "aspect": "Token coverage",
-        "status": "ready",
-        "statusLabel": "Ready",
-        "notes": "Bindings are in place; only the human-readable names are outstanding."
-      },
-      {
-        "aspect": "Registration",
-        "status": "empty",
-        "statusLabel": "Not Mapped",
-        "notes": "Blocked until the native library exists."
-      }
-    ],
+    "codeConnect": [],
     "variants": {
       "total": 48,
-      "description": "4 Type × 3 Density × 4 of the 6 State × isSelected combinations = 48. Selected-and-pressed and selected-and-disabled are intentionally omitted, which is what keeps it from being 72.",
-      "columns": ["Type", "Leading element", "State × isSelected", "Heights", "Count"],
+      "description": "4 <code>Type</code> × 3 <code>Density</code> × 4 of the 6 <code>State</code> × <code>isSelected</code> combinations = <strong>48</strong>. Selected-and-pressed and selected-and-disabled are intentionally omitted, which is what keeps it from being 72. <code>hasLeading</code> and <code>hasTrailing</code> are boolean properties, so they switch the two nested instances without multiplying the set.",
+      "columns": ["Type", "Leading element", "Width", "State × isSelected", "Heights", "Count"],
       "rows": [
-        { "cells": ["Icon", "24 × 24 icon instance", "Default ×2, Pressed, Disabled", "40 / 48 / 56", "12"] },
-        { "cells": ["PesoSignVector", "custom ₱ SVG matched to the font", "Default ×2, Pressed, Disabled", "40 / 48 / 56", "12"] },
-        { "cells": ["Flag", "Flags Library - 16px vector", "Default ×2, Pressed, Disabled", "40 / 48 / 56", "12"] },
-        { "cells": ["PesoSignText", "Proxima's native ₱ glyph", "Default ×2, Pressed, Disabled", "40 / 48 / 56", "12"] }
+        { "cells": ["Icon", "A 24 × 24 icon instance", "24", "Default ×2, Pressed, Disabled", "40 / 48 / 56", "12"] },
+        { "cells": ["PesoSignVector", "Drawn ₱ artwork — one bar through the P", "15", "Default ×2, Pressed, Disabled", "40 / 48 / 56", "12"] },
+        { "cells": ["Flag", "Flags Library instance — a vector", "16", "Default ×2, Pressed, Disabled", "40 / 48 / 56", "12"] },
+        { "cells": ["PesoSignText", "Proxima Soft’s own ₱, set as type", "10", "Default ×2, Pressed, Disabled", "40 / 48 / 56", "12"] }
       ]
     }
   },
   "changelog": [
+    {
+      "version": "3.0.3",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Swift enum casing aligned to the family — node 7947:111969",
+      "rows": [
+        {
+          "body": "<strong>The Swift enum cases were all-lowercase.</strong> <code>.pesosignvector</code> and <code>.pesosigntext</code> where Swift lowerCamels a multi-word case. The page was self-consistent, so nothing on it failed, but it left this component the odd one out in a family where <a href=\"/components/dropdown\">Select</a> and <a href=\"/components/dropdown-item-group\">Select Group</a> both lowerCamel — the kind of drift each page validates clean and only a family read catches. Now <code>.pesoSignVector</code> and <code>.pesoSignText</code> on both tabs; Compose still takes the Figma value verbatim. The Style cards are generated from <code>getSnippet</code> now rather than hand-written, so the two tabs cannot drift apart again.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        }
+      ]
+    },
+    {
+      "version": "3.0.2",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Density unified to EBDensity across the family — node 7947:111969",
+      "rows": [
+        {
+          "body": "<strong>The family named one concept two ways.</strong> This page mapped <code>Density</code> to <code>EBSelectItemDensity</code> while <a href=\"/components/dropdown-item-group\">Select Group</a> mapped the identical three values to <code>EBDensity</code>. Neither page was wrong on its own, which is why no check caught it — it only shows when the two are read together. It matters because the group’s density has to reach its rows: in Figma that is what makes the group 288 tall at Compact and 400 at Comfortable, so natively the group passes density down. Two enums with identical cases would need a conversion at that hand-off, and would drift the day a case is added to one and not the other. Unified to <code>EBDensity</code>, which Select will need as a third consumer. <code>EBSelectItemType</code> keeps its prefix: Icon, PesoSignVector, Flag and PesoSignText mean nothing outside this component.",
+          "delta": { "kind": "resolved", "label": "C4 resolved" }
+        }
+      ]
+    },
+    {
+      "version": "3.0.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Style and Code tabs rebuilt to the content guides — node 7947:111969",
+      "rows": [
+        {
+          "body": "<strong><code>hasTrailing</code> defaults to true on purpose, and the page now says why.</strong> Both consumers — <a href=\"/components/dropdown-item-group\">Select Group</a> and <a href=\"/components/dropdown\">Select</a> — set it false, so no row in a real list shows a badge. That reads like a wrong default until you know the intent: the primitive shows the badge so the trailing slot is visible at a glance, and consumers turn it off. Recorded in the Style tab’s description, on every card’s Properties row and in C4, because the reasoning is not recoverable from the file and the next reviewer would otherwise file it as a finding.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Two controls in the live preview did nothing.</strong> The panel still offered <code>supporting</code> and <code>badge</code> from before the restructure, while the reader had moved to <code>hasLeading</code> and <code>hasTrailing</code> — so both were inert and neither reported an error. The panel now mirrors Figma’s six properties in order. The generator that writes it fails the build if the panel declares a control the script does not read, or the script reads one the panel does not declare.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The sparse-grid note broke the preview’s layout.</strong> Both preview frames centre their children, so the row and the note explaining an impossible combination sat side by side and stretched the frame. They now stack in a column fixed to the row’s own width, so the note wraps underneath in the live preview and the spec cards alike.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>One card became four.</strong> <code>Type</code> is the driving property, so Icon, PesoSignVector, Flag and PesoSignText each get a card. The other three axes — <code>Density</code>, <code>State</code>, <code>isSelected</code> — are controls on every card rather than cards of their own, which is what keeps four cards describing 48 variants.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Two properties were undocumented.</strong> The Figma panel carries <code>hasLeading</code> and <code>hasTrailing</code>, both defaulting to True; neither was on the page. Nothing changed in Figma — <code>get_node_info</code> cannot read property definitions.",
+          "delta": { "kind": "resolved", "label": "C2 resolved" }
+        },
+        {
+          "body": "<strong>PesoSignVector was drawing the font’s glyph instead of its own artwork.</strong> The preview returned the literal <code>₱</code> character for both peso versions, with a note arguing the difference was invisible at that size. It is not: the vector is 15 wide against the text glyph’s 10, with a single bar through the P where Proxima draws two. The real path is now in the preview, exported from node 7947:112019 and drawn in <code>currentColor</code>. The two versions exist precisely because they are not interchangeable, and the preview had been erasing the distinction it was there to document.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The leading mark’s colour was recorded as fixed; it tracks the label.</strong> Exporting the same node in three states gives <code>#0A2757</code>, <code>#C2CFE5</code> disabled and <code>#005CE5</code> selected. The row now carries the same variants Primary Text does. The previous page said \"follows the label colour\", which was right — this pass had replaced a true qualitative note with a precise wrong one before catching it.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>Vertical padding varies with density and was documented flat.</strong> It is 8, 12 and 16 across Compact, Default and Comfortable — which is what turns a fixed 24px content block into a 40, 48 or 56 tall row. The heights are a consequence of the padding rather than set independently. The preview’s CSS was worse: <code>padding: 0 12px</code>, with the heights faked by <code>min-height</code>, so it looked right and described the component wrongly.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Both text styles resolve.</strong> <code>Primary Text</code> is <code>Primary/Multi-line Label/Light/Base</code> and <code>Supporting Text</code> is <code>.../Fine</code>, replacing three font specs and a \"names pending Dev Mode read\" IOU.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>All six colour roles are named, and four of them move.</strong> The row flips to <code>bg/color-bg</code> when pressed; Primary Text and the leading mark step through <code>text/color-text</code>, <code>-disabled</code> and <code>-primary</code>; the badge label steps to <code>-primary-disabled</code>. The badge fill is <code>bg/color-bg-secondary</code> at <code>#E5F1FF</code> — comparing that against <a href=\"/components/countdown\">Countdown</a>, which had the same token recorded at <code>#EEF2F9</code>, is what surfaced a wrong token name on that page.",
+          "delta": { "kind": "resolved", "label": "C3 resolved" }
+        },
+        {
+          "body": "<strong>Supporting Text is a hidden layer, not a property.</strong> The panel offered a <code>supporting</code> toggle Figma does not have. The layer is documented — bound to <code>text/color-text-weaker</code>, with its own text style — and marked as shipping hidden, so nothing on the page currently draws it.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The preview drew in the documentation font.</strong> <code>.eb-preview-sitem</code> declared <code>font-family: inherit</code>, which resolves to BarkAda; both text layers are <code>Primary/*</code> and are Proxima Soft in Figma. The root now names Proxima Soft. This is the first component caught by the typeface check rather than by eye.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The install block pointed at coordinates that will never exist.</strong> <code>gcash/east-blue-ios</code> and <code>com.gcash.eastblue:components:1.0.0</code>, with no Import line. It now cites the Select family artifact <code>com.eastblue.ds:select:1.0.0</code> and imports <code>com.eastblue.ds.select.*</code>.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Property Mapping missed two properties and mapped three things that are not properties.</strong> <code>hasLeading</code> and <code>hasTrailing</code> had no rows; <code>Primary Text</code>, <code>Supporting Text</code> and <code>Trailing Element</code> are two text layers and a nested instance. Seven rows became six, one per panel property.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The two tabs disagreed three separate ways.</strong> <code>Type</code> mapped to <code>leading: EBSelectLeading</code> against the Style tab’s <code>type: EBSelectItemType</code>; <code>Density</code> had a SwiftUI modifier against a Compose parameter; and <code>State</code> was \"not a parameter\" in the mapping while the Style tab emitted <code>state: .disabled</code>. More disagreements than any other component in this run of reviews.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong><code>State</code> is not a parameter, and the Style tab moved to match.</strong> The mapping had it right: Pressed is what the platform already does under a finger, and Disabled is each platform’s own idiom — <code>.disabled(true)</code> in SwiftUI, <code>enabled = false</code> in Compose. Third component in the system where a Figma <code>State</code> axis exists only because a designer has to pick one to see it, after Countdown and Select Item’s own sibling.",
+          "delta": { "kind": "resolved", "label": "C4 resolved" }
+        },
+        {
+          "body": "<strong>Usage Snippets were keyed to use-cases, not to the property.</strong> \"A plain row\", \"Selected, with supporting text\" and \"A country row\". One per <code>Type</code> value now, four in total, with density, selection and <code>hasTrailing</code> demonstrated across them.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>C3’s contrast note read as a live defect and is not one.</strong> It flagged Supporting Text at 4.01:1 on white; the layer ships hidden, so nothing draws it. Reworded to say it is bound, hidden, and becomes a contrast concern the day it is switched on — which is the useful form of that warning.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>The variants table claimed something unread and lacked something useful.</strong> PesoSignVector was described as \"matched to the font\", which cannot be verified and is visibly untrue at 15 against 10. A Width column now carries all four leading widths — 24, 16, 15, 10.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Two design decisions are recorded as deliberate rather than left to be re-raised.</strong> The leading mark’s width varies by <code>Type</code>, so the row hugs what it is given rather than reserving a fixed slot; and the two peso versions coexist while a transition finishes, with one to be deprecated later. Both are confirmed intentional and noted in C4 and the mapping description so a later reviewer does not file them as findings.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        },
+        {
+          "body": "<strong>Three pieces of content have nothing to bind to.</strong> <code>Primary Text</code>, <code>Supporting Text</code> and the trailing Badge are layers and a nested instance rather than component properties, so Code Connect will have no anchor for the row’s two strings or its trailing content. The six properties that do exist all trace 1:1. Recorded against C7, which was already open on registration.",
+          "delta": { "kind": "open", "label": "C7 open" }
+        },
+        {
+          "body": "<strong>Code Connect emptied, and DEV code is live for the first time.</strong> The demo script had no <code>getSnippet</code>, so both language tabs were frozen on a static string; they now produce four distinct calls and respect the sparse grid — <code>isSelected</code> is only emitted alongside <code>State=Default</code>.",
+          "delta": { "kind": "resolved", "label": "Docs" }
+        }
+      ]
+    },
     {
       "version": "3.0.0",
       "date": "August 2026",

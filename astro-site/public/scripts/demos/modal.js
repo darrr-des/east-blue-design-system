@@ -35,7 +35,9 @@ function _mdlRender(opts) {
      hasIcon does not reflow the rest of the dialog on re-render. */
   h += '<div class="eb-preview-mdl__icon"><span>Icon</span></div>';
   h += '<div class="eb-preview-mdl__title">' + _mdlEscape(opts.title || 'Put the title here') + '</div>';
-  h += '<div class="eb-preview-mdl__description">' + _mdlDescription(opts.description) + '</div>';
+  if (opts.hasDescription !== false) {
+    h += '<div class="eb-preview-mdl__description">' + _mdlDescription(opts.description) + '</div>';
+  }
   h += '</div>';
 
   /* Primary on top when stacked, primary on the right when inline. */
@@ -59,14 +61,18 @@ function _mdlUpdate() {
   preview.innerHTML = _mdlRender({
     actions: getVal('mdl-ctrl-actions', 'vertical'),
     hasIcon: getVal('mdl-ctrl-hasicon', 'true') === 'true',
+    hasDescription: getVal('mdl-ctrl-hasdesc', 'true') === 'true',
     title: getVal('mdl-ctrl-title', 'Put the title here'),
     description: getVal('mdl-ctrl-desc', 'Add description here. Add description here.')
   });
 }
 
 /* ── Spec card state ─────────────────────────────────────────────── */
+/* One card per ActionOrientation value, in the Figma panel's order.
+   Both booleans default True, as they do in Figma. */
 var _specCards = {
-  default: { actions: 'vertical', hasicon: 'true' }
+  vertical: { actions: 'vertical', hasicon: 'true', hasdescription: 'true' },
+  horizontal: { actions: 'horizontal', hasicon: 'true', hasdescription: 'true' }
 };
 window._specCards = _specCards;
 
@@ -78,11 +84,43 @@ function updateSpecCard(cardKey, prop, value) {
   if (host) {
     host.innerHTML = _mdlRender({
       actions: card.actions,
-      hasIcon: card.hasicon === 'true'
+      hasIcon: card.hasicon === 'true',
+      hasDescription: card.hasdescription !== 'false'
     });
   }
 }
 window.updateSpecCard = updateSpecCard;
+
+/* ── DEV code, live ───────────────────────────────────────────────── */
+/* title and description are text layers rather than Figma properties,
+   but both have to be parameters natively. hasDescription and hasIcon
+   are real properties and appear only when switched off, which keeps
+   the default call short. */
+function getSnippet(cardKey, lang) {
+  var card = _specCards[cardKey] || _specCards['vertical'];
+  var compose = lang === 'compose';
+  var sep = compose ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
+  var cased = card.actions === 'horizontal' ? 'Horizontal' : 'Vertical';
+  var orientation = compose
+    ? '<span class="syn-type">EBActionOrientation</span><span class="syn-punc">.</span>' +
+      '<span class="syn-dot">' + cased + '</span>'
+    : '<span class="syn-dot">.' + card.actions + '</span>';
+
+  var args = [
+    'title' + sep + '<span class="syn-str">"Put the title here"</span>',
+    'actionOrientation' + sep + orientation
+  ];
+  if (card.hasdescription === 'false') {
+    args.push('hasDescription' + sep + '<span class="syn-kw">false</span>');
+  }
+  if (card.hasicon === 'false') {
+    args.push('hasIcon' + sep + '<span class="syn-kw">false</span>');
+  }
+  return '<span class="syn-type">EBModal</span><span class="syn-punc">(</span>\n    ' +
+    args.join('<span class="syn-punc">,</span>\n    ') +
+    '\n<span class="syn-punc">)</span>';
+}
+window.getSnippet = getSnippet;
 
 function _mdlInit() {
   _mdlUpdate();
