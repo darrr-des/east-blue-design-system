@@ -2,9 +2,10 @@ import type { ComponentData, DemoControlSection } from '../types';
 
 // Per-card demo controls — wired to `updateSpecCard(card, prop, value)`
 // in `public/scripts/demos/table.js`.
-// Column count is not a property — the Columns Slot holds however many
-// Table Cell instances you drop in, so `cols` just varies what the preview
-// renders. `asset` toggles the Placeholder inside each cell's Asset Slot.
+// The Figma panel lists Role, State, ⤷ ColumnSlot, hasBorder. Role drives
+// the cards and ⤷ ColumnSlot is a slot, so State and hasBorder are the
+// only controls — column count is not a property. Every published
+// variant holds three Table Cell instances in the slot.
 const tableRowDemoControls: DemoControlSection[] = [
   {
     heading: 'Properties',
@@ -19,30 +20,18 @@ const tableRowDemoControls: DemoControlSection[] = [
         ],
       },
       {
-        label: 'Table Cells',
-        prop: 'cols',
-        defaultValue: '3',
+        label: 'hasBorder',
+        prop: 'hasBorder',
+        control: 'toggle',
+        defaultValue: 'true',
         options: [
-          { value: '2', label: '2' },
-          { value: '3', label: '3' },
-          { value: '4', label: '4' },
-        ],
-      },
-      {
-        label: '⤷ Asset Slot',
-        prop: 'asset',
-        defaultValue: 'yes',
-        options: [
-          { value: 'yes', label: 'filled' },
-          { value: 'no', label: 'empty' },
+          { value: 'false', label: 'False' },
+          { value: 'true', label: 'True' },
         ],
       },
     ],
   },
 ];
-
-const tableHeaderDemoControls = tableRowDemoControls;
-const tableContentDemoControls = tableRowDemoControls;
 
 export const table: ComponentData = {
   "meta": {
@@ -57,15 +46,15 @@ export const table: ComponentData = {
         "label": "Keep"
       },
       {
-        "kind": "refine",
-        "label": "Needs Refinement"
+        "kind": "ready",
+        "label": "Ready"
       }
     ],
     "navGroup": "Table",
     "verdict": {
       "kind": "keep",
       "title": "Keep — rebuilt as one composable row",
-      "text": "The old three-component setup (Table + Table - Item + Table - Label) is gone, and with it the <code>no. of columns</code> variant matrix. <code>Table Row</code> now composes <code>Table Label</code> and <code>Table Cell</code> as real instances through slots, so column count is whatever you put in the <code>Columns Slot</code> rather than a property to pick from. Settings are <code>Role</code> (Header / Content) and <code>State</code> (Default / Disabled) — 4 versions in place of 3 components and 14 variants. Rows are display-only by design, so there is no pressed or selected state. The follow-up pass cleared the rest: <code>#description</code> moved to the 10px token, the disabled state now dims every text layer, and all three slots settled on <code>⤷ …Slot</code>. Code Connect stays unmapped because the native library doesn't exist yet."
+      "text": "The old three-component setup (Table + Table - Item + Table - Label) is gone, and with it the <code>no. of columns</code> variant matrix. <code>Table Row</code> now composes <code>Table Label</code> and <code>Table Cell</code> as real instances through slots, so column count is whatever you put in the <code>Columns Slot</code> rather than a property to pick from. Settings are <code>Role</code> (Header / Content) and <code>State</code> (Default / Disabled) — 4 versions in place of 3 components and 14 variants. Rows are display-only by design, so there is no pressed or selected state. Two follow-up passes cleared the rest. The first moved <code>#description</code> to the 10px token, dimmed every text layer when disabled, and settled all three swappable areas on <code>⤷ …Slot</code>. The second went through the two primitives: one setting name across all three components, text layers named after the properties that fill them, disabled built into <code>Table Label</code> and <code>Table Cell</code> rather than painted on by hand, and an empty version that is finally empty. Every colour is bound. Code Connect stays unmapped because the native library doesn't exist yet."
     }
   },
   "overview": {
@@ -86,7 +75,7 @@ export const table: ComponentData = {
       {
         "name": "Consistent",
         "rating": "pass",
-        "note": "<code>Role</code> and <code>State</code> are PascalCase variant properties with Title Case values, and <code>State=Default | Disabled</code> is a valid subset of the standard interaction set. The <code>no. of columns</code> property, with its period, is gone."
+        "note": "<code>Role</code> and <code>State</code> are PascalCase settings with Title Case values, and Default / Disabled is a valid subset of the standard interaction set. All three components in the family now use the same two names, and every text property matches the layer it fills. The <code>no. of columns</code> property, with its period, is gone."
       },
       {
         "name": "Composable",
@@ -100,21 +89,21 @@ export const table: ComponentData = {
         "ios": "yes",
         "android": "yes",
         "property": "Role=Header",
-        "notes": "360 × 68 on a <code>#F6F9FD</code> ground. Label is Proxima Soft Bold 14 / 14; each cell's text is Bold 14 too."
+        "notes": "360 × 68 on a <code>#F6F9FD</code> ground. Label and cell text both use <code>Primary/Label/Small</code>, so the whole row is Proxima Soft."
       },
       {
         "state": "Content",
         "ios": "yes",
         "android": "yes",
         "property": "Role=Content",
-        "notes": "360 × 70, transparent ground. Label drops to Bold 12 / 12 and cell text becomes BarkAda Regular 12 / 18."
+        "notes": "360 × 70 on white. The label drops to <code>Primary/Label/Fine</code> and the cell text becomes <code>Secondary/Light/Caption</code> — the one place the row uses BarkAda."
       },
       {
         "state": "Disabled",
         "ios": "yes",
         "android": "yes",
         "property": "State=Disabled",
-        "notes": "Every text layer — label, description, and all cells — dims to <code>#C2CFE5</code>. The row takes a <code>#F6F9FD</code> ground, the same colour a Header row uses."
+        "notes": "Every text layer dims to <code>text/color-text-disabled</code>. The background does not change — a disabled Content row stays white and a disabled Header row stays <code>#F6F9FD</code>. Both primitives carry their own disabled version, so the row swaps to them."
       },
       {
         "state": "Pressed",
@@ -132,6 +121,46 @@ export const table: ComponentData = {
       }
     ],
     "resolved": [
+      {
+        "headline": "One name for one setting, across all three components.",
+        "body": "v2.2: <code>Table Cell</code> called its setting <code>Type</code> while <code>Table Row</code> and <code>Table Label</code> called the same thing <code>Role</code>. All three say <code>Role</code> now. It matters beyond tidiness: <code>Role=Header</code> is what becomes an accessibility heading on both platforms, so the name is describing a real role.",
+        "tag": {
+          "criterion": "C2",
+          "label": "C2 · Variant & Property Naming"
+        }
+      },
+      {
+        "headline": "Every text layer is named after the property that fills it.",
+        "body": "v2.2: the cell's text layer was <code>#description</code> — a name copied from <code>Table Label</code>, promising a second line the cell never had. It is <code>#text</code> now, filled by a new <code>Text</code> property. <code>Table Label</code>'s <code>#label</code> became <code>#title</code> to match its <code>Title</code> property. Property name and layer name agree everywhere.",
+        "tag": {
+          "criterion": "C1",
+          "label": "C1 · Layer Structure & Naming"
+        }
+      },
+      {
+        "headline": "The empty version is actually empty.",
+        "body": "v2.2: <code>Role=Empty</code> on <code>Table Cell</code> held a stray blue checkmark — a copy of another component parked in the set, drawing an unflattened shape on an unbound <code>#025ae9</code>. Both primitives now draw nothing for <code>Role=Empty</code>, which is what a column with no value for that row should look like.",
+        "tag": {
+          "criterion": "C6",
+          "label": "C6 · Asset & Icon Quality"
+        }
+      },
+      {
+        "headline": "The disabled look lives in the primitives, not in each copy.",
+        "body": "v2.2: <code>Table Label</code> and <code>Table Cell</code> each publish their own Disabled version, so a disabled row swaps to them. Before, every copy had its colours painted over by hand — which meant the disabled look did not travel if either primitive were used anywhere else.",
+        "tag": {
+          "criterion": "C5",
+          "label": "C5 · Interaction State Coverage"
+        }
+      },
+      {
+        "headline": "Every colour is bound to a named system colour.",
+        "body": "v2.2: checked against Figma's selection colours. The set paints six colours and the panel lists exactly six names — <code>bg/color-bg</code>, <code>bg/color-bg-main</code>, <code>border/color-border-weak</code>, <code>border/color-border</code>, <code>text/color-text</code> and <code>text/color-text-disabled</code>. The icon placeholder was documented as a hardcoded <code>#C2C6CF</code>; it is <code>border/color-border</code> at <code>#D7E0EF</code>. <code>Table Label</code>'s description sits on <code>text/color-text-weaker</code>.",
+        "tag": {
+          "criterion": "C3",
+          "label": "C3 · Token Coverage"
+        }
+      },
       {
         "headline": "One row replaces three components.",
         "body": "v2.0: rebuilt on node <code>5734:37611</code> as <code>Table Row</code>. <code>Table Label</code> and <code>Table Cell</code> are now placed as real instances inside slots instead of being published and ignored. 3 components and 14 variants become 1 component and 4.",
@@ -214,11 +243,6 @@ export const table: ComponentData = {
         "tag": "A11y"
       },
       {
-        "headline": "Give disabled rows their own background.",
-        "body": "Disabled currently uses <code>#F6F9FD</code>, the same ground as a Header row, so the two read alike in a stack. Either give disabled a distinct tint or let it keep the row's own background and carry the state through text colour alone.",
-        "tag": "Token"
-      },
-      {
         "headline": "Write the slot naming convention into the guidelines.",
         "body": "The Table family now uses <code>⤷ …Slot</code> — <code>⤷ ColumnSlot</code>, <code>⤷ AssetSlot</code>, <code>⤷ CurrencySlot</code>. The carousel components use <code>⤷</code> without the suffix (<code>⤷ LeadingIcon</code>, <code>⤷ Violator</code>) and no prefix at all on top-level slots (<code>Banner</code>, <code>Background</code>). Both are internally consistent; the library needs one rule so new slot-based components stop diverging.",
         "tag": "Docs"
@@ -233,18 +257,23 @@ export const table: ComponentData = {
         "body": "Rows are 360 wide because they currently sit inside a fixed component group. The intent is to move to fill. Worth tracking so it doesn't get forgotten once those screens are edited.",
         "tag": "Composition"
       },
+    ],
+    "appliedRecommendations": [
       {
-        "headline": "Audit the colour token bindings.",
-        "body": "The review tooling reads raw hex and can't see variable bindings, so C3 is recorded as unverified rather than passing. Confirm <code>#F6F9FD</code>, <code>#E5EBF4</code>, <code>#0A2757</code>, <code>#6780A9</code>, and the <code>#C2CFE5</code> disabled colour are all bound.",
+        "headline": "Introduce a shared label/value token set with Inline Text.",
+        "body": "v2.2.1: Closed — there is no longer a set to share. This row already draws from the system-wide <code>text/*</code> colours, and the <code>inline-text/color/*</code> tokens the recommendation wanted to converge on have been retired from the file. What is left belongs to Inline Text's own page, which still documents them.",
         "tag": "Token"
       },
       {
-        "headline": "Introduce a shared label/value token set with Inline Text.",
-        "body": "A table label and an Inline Text label play the same role — a thing and its value. Aligning <code>main/table/color/label</code> with <code>main/inline-text/*</code> reduces drift and helps cross-component theming.",
+        "headline": "Give disabled rows their own background.",
+        "body": "v2.2: No change needed — the row already does what the second half of this asked for. The recommendation said disabled reuses the Header <code>#F6F9FD</code>, so a disabled row and a header row read alike in a stack. Exporting the set shows otherwise: a disabled Content row is still white and a disabled Header row is still <code>#F6F9FD</code>. Disabled changes text colour and nothing else. The claim described our own preview, which had an invented background rule, rather than the component.",
         "tag": "Token"
-      }
-    ],
-    "appliedRecommendations": [
+      },
+      {
+        "headline": "Audit the colour token bindings.",
+        "body": "v2.2: Applied — done from Figma's selection-colours panel, which the old tooling could not read. Six colours, six names, no gaps. Details in the Resolved tab.",
+        "tag": "Token"
+      },
       {
         "headline": "Collapse the three-component family into one row primitive.",
         "body": "v2.0: Applied — <code>Table Row</code> with a <code>Columns Slot</code> and a <code>Role</code> variant, exactly as proposed. 3 components and 14 variants become 1 component and 4.",
@@ -288,31 +317,45 @@ export const table: ComponentData = {
     ]
   },
   "style": {
-    "heading": "Types",
+    "heading": "Roles",
     "specCards": [
       {
         "cardKey": "header-row",
         "demoKey": "header",
-        "demoControls": tableHeaderDemoControls,
-        "title": "Header row",
+        "demoControls": tableRowDemoControls,
+        "title": "Header",
         "node": "5734:37630",
-        "description": "360 × 68 on a <code>#F6F9FD</code> ground with a bottom border. <code>Table Label</code> on the left at Proxima Soft Bold 14; each <code>Table Cell</code> stacks a 24 × 24 <code>⤷ Asset Slot</code> above Bold 14 text.",
+        "description": "",
         "sections": [
           {
             "label": "Properties",
             "slug": "props",
             "rows": [
               {
-                "key": "Columns",
-                "value": "4",
-                "prop": "cols",
-                "mono": false
+                "key": "Role",
+                "value": "Header"
               },
               {
-                "key": "Icon",
-                "value": "no",
-                "prop": "icon",
-                "mono": false
+                "key": "State",
+                "value": "Default",
+                "variants": {
+                  "state:disabled": {
+                    "value": "Disabled"
+                  }
+                }
+              },
+              {
+                "key": "⤷ ColumnSlot",
+                "value": "3 × Table Cell"
+              },
+              {
+                "key": "hasBorder",
+                "value": "True",
+                "variants": {
+                  "hasBorder:false": {
+                    "value": "False"
+                  }
+                }
               }
             ]
           },
@@ -320,12 +363,63 @@ export const table: ComponentData = {
             "label": "Colors",
             "slug": "colors",
             "rows": [
-              { "key": "Surface bg", "value": "#F6F9FD", "token": "table/color/bg-subtle" },
-              { "key": "Border", "value": "#E5EBF4", "token": "table/color/border" },
-              { "key": "Label", "value": "#0A2757", "token": "table/color/label" },
-              { "key": "Column", "value": "#0A2757", "token": "table/color/label" },
-              { "key": "Icon placeholder", "value": "#C2C6CF", "token": "— (hardcoded)",
-                "variants": { "icon:no": { "hide": true } }
+              {
+                "key": "Background",
+                "value": "#F6F9FD",
+                "token": "bg/color-bg"
+              },
+              {
+                "key": "Border",
+                "value": "#E5EBF4",
+                "token": "border/color-border-weak",
+                "variants": {
+                  "hasBorder:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Label",
+                "value": "#0A2757",
+                "token": "text/color-text",
+                "variants": {
+                  "state:disabled": {
+                    "value": "#C2CFE5",
+                    "token": "text/color-text-disabled"
+                  }
+                }
+              },
+              {
+                "key": "Cell text",
+                "value": "#0A2757",
+                "token": "text/color-text",
+                "variants": {
+                  "state:disabled": {
+                    "value": "#C2CFE5",
+                    "token": "text/color-text-disabled"
+                  }
+                }
+              },
+              {
+                "key": "Cell asset",
+                "value": "#D7E0EF",
+                "token": "border/color-border"
+              }
+            ]
+          },
+          {
+            "label": "Typography",
+            "slug": "typo",
+            "rows": [
+              {
+                "key": "#label",
+                "value": "Primary/Label/Small",
+                "mono": true
+              },
+              {
+                "key": "Table Cell #text",
+                "value": "Primary/Label/Small",
+                "mono": true
               }
             ]
           },
@@ -335,9 +429,18 @@ export const table: ComponentData = {
             "rows": [
               {
                 "key": "Height",
-                "value": "37",
-                "mono": true,
-                "variants": { "icon:yes": { "value": "65" } }
+                "value": "Hug · 68",
+                "mono": true
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true
+              },
+              {
+                "key": "Radius",
+                "value": "0",
+                "mono": true
               },
               {
                 "key": "Padding H",
@@ -350,10 +453,107 @@ export const table: ComponentData = {
                 "mono": true
               },
               {
-                "key": "Icon size",
-                "value": "24 × 24",
-                "mono": true,
-                "variants": { "icon:no": { "hide": true } }
+                "key": "Gap",
+                "value": "16",
+                "mono": true
+              },
+              {
+                "key": "Alignment",
+                "value": "Left · Center",
+                "mono": true
+              }
+            ]
+          }
+        ],
+        "swift": "<span class=\"syn-type\">EBTableRow</span><span class=\"syn-punc\">(</span>\n    role<span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>header<span class=\"syn-punc\">,</span>\n    label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Header\"</span><span class=\"syn-punc\">,</span>\n    columns<span class=\"syn-punc\">: </span>columns\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBTableRow</span><span class=\"syn-punc\">(</span>\n    role <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTableRowRole</span><span class=\"syn-punc\">.</span>Header<span class=\"syn-punc\">,</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Header\"</span><span class=\"syn-punc\">,</span>\n    columns <span class=\"syn-eq\">=</span> columns\n<span class=\"syn-punc\">)</span>",
+        "previewHtml": "<div id=\"table-preview-header\"><div class=\"eb-preview eb-preview-trow eb-preview-trow--header\"><div class=\"eb-preview-trow__label\"><span class=\"eb-preview-trow__label-text\">Header</span></div><div class=\"eb-preview-trow__cols\"><div class=\"eb-preview-trow__cell\"><div class=\"eb-preview-trow__cell-asset\"></div><span class=\"eb-preview-trow__cell-text\">Title</span></div><div class=\"eb-preview-trow__cell\"><div class=\"eb-preview-trow__cell-asset\"></div><span class=\"eb-preview-trow__cell-text\">Title</span></div><div class=\"eb-preview-trow__cell\"><div class=\"eb-preview-trow__cell-asset\"></div><span class=\"eb-preview-trow__cell-text\">Title</span></div></div></div></div>"
+      },
+      {
+        "cardKey": "content-row",
+        "demoKey": "content",
+        "demoControls": tableRowDemoControls,
+        "title": "Content",
+        "node": "5734:37657",
+        "description": "",
+        "sections": [
+          {
+            "label": "Properties",
+            "slug": "props",
+            "rows": [
+              {
+                "key": "Role",
+                "value": "Content"
+              },
+              {
+                "key": "State",
+                "value": "Default",
+                "variants": {
+                  "state:disabled": {
+                    "value": "Disabled"
+                  }
+                }
+              },
+              {
+                "key": "⤷ ColumnSlot",
+                "value": "3 × Table Cell"
+              },
+              {
+                "key": "hasBorder",
+                "value": "True",
+                "variants": {
+                  "hasBorder:false": {
+                    "value": "False"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "label": "Colors",
+            "slug": "colors",
+            "rows": [
+              {
+                "key": "Background",
+                "value": "#FFFFFF",
+                "token": "bg/color-bg-main"
+              },
+              {
+                "key": "Border",
+                "value": "#E5EBF4",
+                "token": "border/color-border-weak",
+                "variants": {
+                  "hasBorder:false": {
+                    "hide": true
+                  }
+                }
+              },
+              {
+                "key": "Label",
+                "value": "#0A2757",
+                "token": "text/color-text",
+                "variants": {
+                  "state:disabled": {
+                    "value": "#C2CFE5",
+                    "token": "text/color-text-disabled"
+                  }
+                }
+              },
+              {
+                "key": "Cell text",
+                "value": "#0A2757",
+                "token": "text/color-text",
+                "variants": {
+                  "state:disabled": {
+                    "value": "#C2CFE5",
+                    "token": "text/color-text-disabled"
+                  }
+                }
+              },
+              {
+                "key": "Cell asset",
+                "value": "#D7E0EF",
+                "token": "border/color-border"
               }
             ]
           },
@@ -362,60 +562,15 @@ export const table: ComponentData = {
             "slug": "typo",
             "rows": [
               {
-                "key": "Header style",
-                "value": "Primary/Label/Light/Base",
+                "key": "#label",
+                "value": "Primary/Label/Fine",
                 "mono": true
               },
               {
-                "key": "Header font",
-                "value": "Proxima Soft Semibold · 16 / 16 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Body style",
-                "value": "Primary/Label/Small",
-                "mono": true
-              },
-              {
-                "key": "Body font",
-                "value": "Proxima Soft Bold · 14 / 14 · +0.25",
+                "key": "Table Cell #text",
+                "value": "Secondary/Light/Caption",
                 "mono": true
               }
-            ]
-          }
-        ],
-        "swift": "<span class=\"syn-type\">EBTable.Header</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">, </span>description<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Section description\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTableHeader</span><span class=\"syn-punc\">(</span>\n    title <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">,</span>\n    description <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Section description\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"table-preview-header\"></div>"
-      },
-      {
-        "cardKey": "content-row",
-        "demoKey": "content",
-        "demoControls": tableContentDemoControls,
-        "title": "Content row",
-        "node": "5734:37657",
-        "description": "360 × 70 on a transparent ground. <code>Table Label</code> drops to Proxima Soft Bold 12, and each <code>Table Cell</code> renders BarkAda Regular 12 / 18 beneath its <code>⤷ Asset Slot</code>.",
-        "sections": [
-          {
-            "label": "Properties",
-            "slug": "props",
-            "rows": [
-              {
-                "key": "Columns",
-                "value": "4",
-                "prop": "cols",
-                "mono": false
-              }
-            ]
-          },
-          {
-            "label": "Colors",
-            "slug": "colors",
-            "rows": [
-              { "key": "Surface bg", "value": "#FFFFFF", "token": "table/color/bg" },
-              { "key": "Border", "value": "#E5EBF4", "token": "table/color/border" },
-              { "key": "Label", "value": "#0A2757", "token": "table/color/label" },
-              { "key": "Description", "value": "#6780A9", "token": "table/color/description" }
             ]
           },
           {
@@ -424,7 +579,17 @@ export const table: ComponentData = {
             "rows": [
               {
                 "key": "Height",
-                "value": "56",
+                "value": "Hug · 70",
+                "mono": true
+              },
+              {
+                "key": "Width",
+                "value": "360",
+                "mono": true
+              },
+              {
+                "key": "Radius",
+                "value": "0",
                 "mono": true
               },
               {
@@ -436,223 +601,144 @@ export const table: ComponentData = {
                 "key": "Padding V",
                 "value": "12",
                 "mono": true
-              }
-            ]
-          },
-          {
-            "label": "Typography",
-            "slug": "typo",
-            "rows": [
+              },
               {
-                "key": "Header style",
-                "value": "Primary/Label/Light/Base",
+                "key": "Gap",
+                "value": "16",
                 "mono": true
               },
               {
-                "key": "Header font",
-                "value": "Proxima Soft Semibold · 16 / 16 · +0.25",
-                "mono": true
-              },
-              {
-                "key": "Body style",
-                "value": "Primary/Label/Small",
-                "mono": true
-              },
-              {
-                "key": "Body font",
-                "value": "Proxima Soft Bold · 12 / 12 · +0.5",
+                "key": "Alignment",
+                "value": "Left · Center",
                 "mono": true
               }
             ]
           }
         ],
-        "swift": "<span class=\"syn-type\">EBTable.Row</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">, </span>value<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Value\"</span><span class=\"syn-punc\">)</span>",
-        "compose": "<span class=\"syn-type\">EBTableRow</span><span class=\"syn-punc\">(</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Label\"</span><span class=\"syn-punc\">,</span>\n    value <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Value\"</span>\n<span class=\"syn-punc\">)</span>",
-        "previewHtml": "<div id=\"table-preview-content\"></div>"
+        "swift": "<span class=\"syn-type\">EBTableRow</span><span class=\"syn-punc\">(</span>\n    role<span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>content<span class=\"syn-punc\">,</span>\n    label<span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Row Title\"</span><span class=\"syn-punc\">,</span>\n    columns<span class=\"syn-punc\">: </span>columns\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-type\">EBTableRow</span><span class=\"syn-punc\">(</span>\n    role <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTableRowRole</span><span class=\"syn-punc\">.</span>Content<span class=\"syn-punc\">,</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Row Title\"</span><span class=\"syn-punc\">,</span>\n    columns <span class=\"syn-eq\">=</span> columns\n<span class=\"syn-punc\">)</span>",
+        "previewHtml": "<div id=\"table-preview-content\"><div class=\"eb-preview eb-preview-trow eb-preview-trow--content\"><div class=\"eb-preview-trow__label\"><span class=\"eb-preview-trow__label-text\">Row Title</span></div><div class=\"eb-preview-trow__cols\"><div class=\"eb-preview-trow__cell\"><div class=\"eb-preview-trow__cell-asset\"></div><span class=\"eb-preview-trow__cell-text\">Data</span></div><div class=\"eb-preview-trow__cell\"><div class=\"eb-preview-trow__cell-asset\"></div><span class=\"eb-preview-trow__cell-text\">Data</span></div><div class=\"eb-preview-trow__cell\"><div class=\"eb-preview-trow__cell-asset\"></div><span class=\"eb-preview-trow__cell-text\">Data</span></div></div></div></div>"
       }
     ],
     "colorsTables": [
       {
-        "title": "Colors by State",
+        "title": "Colors by Role",
+        "description": "Every paint in the set is bound. The six tokens here are exactly the six the Figma selection-colors panel lists for node <code>5734:37611</code> — nothing is off-token, including the cell asset placeholder.",
         "columns": [
-          "Default",
-          "Pressed",
-          "Disabled"
-        ],
-        "rows": [
-          {
-            "role": "Header bg",
-            "token": "main/table/color/bg-subtle",
-            "values": [
-              "#F6F9FD",
-              "–",
-              "–"
-            ]
-          },
-          {
-            "role": "Content bg",
-            "token": "main/table/color/bg",
-            "values": [
-              "#FFFFFF",
-              "–",
-              "–"
-            ]
-          },
-          {
-            "role": "Row border",
-            "token": "main/table/color/border",
-            "values": [
-              "#E5EBF4",
-              "–",
-              "–"
-            ]
-          },
-          {
-            "role": "Label / column text",
-            "token": "main/table/color/label",
-            "values": [
-              "#0A2757",
-              "–",
-              "–"
-            ]
-          },
-          {
-            "role": "Description text",
-            "token": "main/table/color/description",
-            "values": [
-              "#6780A9",
-              "–",
-              "–"
-            ]
-          },
-          {
-            "role": "Header icon placeholder",
-            "token": "— (hardcoded)",
-            "values": [
-              "#C2C6CF",
-              "–",
-              "–"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Layout",
-        "columns": [
+          "Token",
           "Value"
         ],
         "rows": [
           {
-            "role": "Row width (fixed)",
-            "token": "—",
+            "role": "Header",
+            "token": "Background",
             "values": [
-              "360px"
+              "bg/color-bg",
+              "#F6F9FD"
             ]
           },
           {
-            "role": "Header height (icon=no)",
-            "token": "—",
+            "role": "—",
+            "token": "Border",
             "values": [
-              "37px"
+              "border/color-border-weak",
+              "#E5EBF4"
             ]
           },
           {
-            "role": "Header height (icon=yes)",
-            "token": "—",
+            "role": "—",
+            "token": "Label",
             "values": [
-              "65px"
+              "text/color-text",
+              "#0A2757"
             ]
           },
           {
-            "role": "Content row height",
-            "token": "—",
+            "role": "—",
+            "token": "Cell text",
             "values": [
-              "56px"
+              "text/color-text",
+              "#0A2757"
             ]
           },
           {
-            "role": "Horizontal padding",
-            "token": "space/space-24",
+            "role": "—",
+            "token": "Cell asset",
             "values": [
-              "24px"
+              "border/color-border",
+              "#D7E0EF"
             ]
           },
           {
-            "role": "Header pt / pb",
-            "token": "space/space-8, space/space-12",
+            "role": "Content",
+            "token": "Background",
             "values": [
-              "8 / 12px"
+              "bg/color-bg-main",
+              "#FFFFFF"
             ]
           },
           {
-            "role": "Content py",
-            "token": "—",
+            "role": "—",
+            "token": "Border",
             "values": [
-              "12px"
+              "border/color-border-weak",
+              "#E5EBF4"
             ]
           },
           {
-            "role": "Column gap",
-            "token": "—",
+            "role": "—",
+            "token": "Label",
             "values": [
-              "16px"
+              "text/color-text",
+              "#0A2757"
             ]
           },
           {
-            "role": "Label width",
-            "token": "—",
+            "role": "—",
+            "token": "Cell text",
             "values": [
-              "99px min"
+              "text/color-text",
+              "#0A2757"
             ]
           },
           {
-            "role": "Header icon size",
-            "token": "—",
+            "role": "—",
+            "token": "Cell asset",
             "values": [
-              "24 × 24px"
+              "border/color-border",
+              "#D7E0EF"
             ]
           },
           {
-            "role": "Icon → column gap",
-            "token": "space/space-2",
+            "role": "Disabled",
+            "token": "Label",
             "values": [
-              "2px"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Typography",
-        "columns": [
-          "Spec"
-        ],
-        "rows": [
-          {
-            "role": "Header label",
-            "token": "Primary/Label/Small",
-            "values": [
-              "Proxima Soft Bold · 14 / 14 · +0.25"
+              "text/color-text-disabled",
+              "#C2CFE5"
             ]
           },
           {
-            "role": "Header column",
-            "token": "Primary/Multi-line Label/Light/Fine",
+            "role": "—",
+            "token": "Cell text",
             "values": [
-              "Proxima Soft Semibold · 12 / 14 · +0.5"
+              "text/color-text-disabled",
+              "#C2CFE5"
             ]
           },
           {
-            "role": "Content label",
-            "token": "Primary/Label/Fine",
+            "role": "—",
+            "token": "Background",
             "values": [
-              "Proxima Soft Bold · 12 / 12 · +0.5"
+              "— unchanged",
+              "–"
             ]
           },
           {
-            "role": "Content description",
-            "token": "Secondary/Bold/Small Caption",
+            "role": "—",
+            "token": "Cell asset",
             "values": [
-              "BarkAda Semibold · 10 / 15 · 0"
+              "— unchanged",
+              "–"
             ]
           }
         ]
@@ -665,63 +751,83 @@ export const table: ComponentData = {
       "blocks": [
         {
           "label": "iOS — Swift Package Manager",
-          "code": "<span class=\"cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
+          "code": "<span class=\"syn-cmt\">// In Xcode: File → Add Package Dependencies</span>\n<span class=\"syn-str\">\"https://github.com/AY-Org/eb-ds-ios\"</span>"
         },
         {
           "label": "Android — Gradle (Kotlin DSL)",
-          "code": "<span class=\"fn\">dependencies</span> {\n    <span class=\"fn\">implementation</span>(<span class=\"str\">\"com.eastblue.ds:table:1.0.0\"</span>)\n}"
+          "code": "<span class=\"syn-fn\">dependencies</span> {\n    <span class=\"syn-fn\">implementation</span>(<span class=\"syn-str\">\"com.eastblue.ds:table:1.0.0\"</span>)\n}"
+        },
+        {
+          "label": "Import",
+          "code": "<span class=\"syn-kw\">import</span> <span class=\"syn-type\">EastBlueDS</span>\n<span class=\"syn-kw\">import</span> com<span class=\"syn-punc\">.</span>eastblue<span class=\"syn-punc\">.</span>ds<span class=\"syn-punc\">.</span>table<span class=\"syn-punc\">.</span><span class=\"syn-punc\">*</span>"
         }
       ]
     },
     "propertyMapping": {
+      "description": "Table Row publishes four properties — <code>Role</code>, <code>State</code>, <code>⤷ ColumnSlot</code> and <code>hasBorder</code>. The rows beneath them map the two nested primitives, <code>Table Label</code> and <code>Table Cell</code>, which ship inside every row and have no page of their own. Both carry their own <code>Role</code> / <code>Type</code> and <code>State</code> variants, driven by the row rather than set independently, so neither takes a parameter here. All three components name the axis <code>Role</code> and expose their text as properties. Both primitives also publish <code>Role=Empty</code> — a variant that draws nothing, for a column that has no value on this row. It takes no parameter of its own: natively it is an absent <code>Column</code> entry, or one whose text is empty.",
       "rows": [
         {
-          "figma": "<code>Role = Header | Content</code>",
+          "figma": "Role — Header, Content",
           "swift": "<code>role: .header / .content</code>",
           "compose": "<code>role = EBTableRowRole.Header / Content</code>"
         },
         {
-          "figma": "<code>State = Default | Disabled</code>",
+          "figma": "State — Default, Disabled",
           "swift": "<code>.disabled(true)</code>",
           "compose": "<code>enabled = false</code>"
         },
         {
-          "figma": "<code>hasBorder: Boolean</code>",
-          "swift": "<code>showsDivider: Bool = true</code>",
-          "compose": "<code>showsDivider: Boolean = true</code>"
-        },
-        {
-          "figma": "<code>⤷ ColumnSlot</code> (N × <code>Table Cell</code>)",
+          "figma": "⤷ ColumnSlot (slot) — Table Cell instances",
           "swift": "<code>columns: [Column]</code>",
           "compose": "<code>columns: List&lt;Column&gt;</code>"
         },
         {
-          "figma": "<code>Table Label → Title</code> <span class=\"muted\">(text)</span>",
+          "figma": "hasBorder — true, false",
+          "swift": "<code>showsDivider: Bool = true</code>",
+          "compose": "<code>showsDivider: Boolean = true</code>"
+        },
+        {
+          "figma": "Table Label → Title (text)",
           "swift": "<code>title: String</code>",
           "compose": "<code>title: String</code>"
         },
         {
-          "figma": "<code>Table Label → hasDescription</code>",
-          "swift": "<code>description: String?</code> <span class=\"muted\">— nil hides it</span>",
+          "figma": "Table Label → Description (text)",
+          "swift": "<code>description: String?</code>",
           "compose": "<code>description: String? = null</code>"
         },
         {
-          "figma": "<code>Table Label → hasAsset</code>",
-          "swift": "<code>leadingIcon: AnyView?</code> <span class=\"muted\">— nil hides it</span>",
+          "figma": "Table Label → hasDescription — true, false",
+          "swift": "<code>description == nil</code> <span class=\"muted\">— nil hides the line</span>",
+          "compose": "<code>description == null</code>"
+        },
+        {
+          "figma": "Table Label → hasAsset — true, false",
+          "swift": "<code>leadingIcon == nil</code> <span class=\"muted\">— nil hides the slot</span>",
+          "compose": "<code>leadingIcon == null</code>"
+        },
+        {
+          "figma": "Table Label → ⤷ AssetSlot (slot)",
+          "swift": "<code>leadingIcon: AnyView?</code>",
           "compose": "<code>leadingIcon: @Composable (() -&gt; Unit)? = null</code>"
         },
         {
-          "figma": "<code>Table Label → ⤷ AssetSlot</code>",
-          "swift": "<code>leadingIcon: AnyView?</code>",
-          "compose": "<code>leadingIcon: @Composable (() -&gt; Unit)?</code>"
+          "figma": "Table Cell → Role — Header, Content, Transaction, Empty",
+          "swift": "<code>Column.role: .header / .content / .transaction</code>",
+          "compose": "<code>role = EBTableCellRole.Header / Content / Transaction</code>"
         },
         {
-          "figma": "<code>Table Cell → #description</code>",
+          "figma": "Table Cell → Text (text)",
           "swift": "<code>Column.text: String</code>",
           "compose": "<code>Column.text: String</code>"
         },
         {
-          "figma": "<code>Table Cell → ⤷ AssetSlot</code>",
+          "figma": "Table Cell → hasAsset — true, false",
+          "swift": "<code>Column.asset == nil</code> <span class=\"muted\">— nil hides the slot</span>",
+          "compose": "<code>Column.asset == null</code>"
+        },
+        {
+          "figma": "Table Cell → ⤷ AssetSlot (slot)",
           "swift": "<code>Column.asset: AnyView?</code>",
           "compose": "<code>Column.asset: @Composable (() -&gt; Unit)?</code>"
         }
@@ -733,9 +839,14 @@ export const table: ComponentData = {
     },
     "usageSnippets": [
       {
-        "subheading": "Usage",
-        "swift": "<span class=\"cmt\">// Option A — dedicated row primitive (if Table stays in DS)</span>\n<span class=\"typ\">VStack</span>(<span class=\"prp\">spacing</span>: <span class=\"kw\">0</span>) {\n    <span class=\"typ\">EBTableRow</span>(\n        <span class=\"prp\">role</span>: .<span class=\"prp\">header</span>,\n        <span class=\"prp\">label</span>: <span class=\"str\">\"Header\"</span>,\n        <span class=\"prp\">columns</span>: [<span class=\"str\">\"Column\"</span>, <span class=\"str\">\"Column\"</span>, <span class=\"str\">\"Column\"</span>]\n    )\n    <span class=\"typ\">ForEach</span>(rows) { row <span class=\"kw\">in</span>\n        <span class=\"typ\">EBTableRow</span>(\n            <span class=\"prp\">role</span>: .<span class=\"prp\">content</span>,\n            <span class=\"prp\">label</span>: row.<span class=\"prp\">label</span>,\n            <span class=\"prp\">columns</span>: row.<span class=\"prp\">values</span>\n        )\n    }\n}\n\n<span class=\"cmt\">// Option B — compose with Inline Text (recommended for mobile)</span>\n<span class=\"typ\">VStack</span>(<span class=\"prp\">spacing</span>: <span class=\"kw\">12</span>) {\n    <span class=\"typ\">EBInlineText</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Amount\"</span>,      <span class=\"prp\">value</span>: <span class=\"str\">\"₱1,000.00\"</span>)\n    <span class=\"typ\">EBInlineText</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Reference\"</span>,   <span class=\"prp\">value</span>: <span class=\"str\">\"0000 0123 4567\"</span>)\n    <span class=\"typ\">EBInlineText</span>(<span class=\"prp\">label</span>: <span class=\"str\">\"Date\"</span>,        <span class=\"prp\">value</span>: <span class=\"str\">\"Apr 22, 2026\"</span>)\n}",
-        "compose": "<span class=\"cmt\">// Option A — dedicated row primitive (if Table stays in DS)</span>\n<span class=\"typ\">Column</span> {\n    <span class=\"typ\">EBTableRow</span>(\n        role = <span class=\"typ\">EBTableRowRole</span>.<span class=\"prp\">Header</span>,\n        label = <span class=\"str\">\"Header\"</span>,\n        columns = listOf(<span class=\"str\">\"Column\"</span>, <span class=\"str\">\"Column\"</span>, <span class=\"str\">\"Column\"</span>)\n    )\n    rows.<span class=\"fn\">forEach</span> { row -&gt;\n        <span class=\"typ\">EBTableRow</span>(\n            role = <span class=\"typ\">EBTableRowRole</span>.<span class=\"prp\">Content</span>,\n            label = row.label,\n            columns = row.values\n        )\n    }\n}\n\n<span class=\"cmt\">// Option B — compose with Inline Text (recommended for mobile)</span>\n<span class=\"typ\">Column</span>(verticalArrangement = <span class=\"typ\">Arrangement</span>.<span class=\"fn\">spacedBy</span>(<span class=\"kw\">12</span>.dp)) {\n    <span class=\"typ\">EBInlineText</span>(label = <span class=\"str\">\"Amount\"</span>,      value = <span class=\"str\">\"₱1,000.00\"</span>)\n    <span class=\"typ\">EBInlineText</span>(label = <span class=\"str\">\"Reference\"</span>,   value = <span class=\"str\">\"0000 0123 4567\"</span>)\n    <span class=\"typ\">EBInlineText</span>(label = <span class=\"str\">\"Date\"</span>,        value = <span class=\"str\">\"Apr 22, 2026\"</span>)\n}"
+        "subheading": "Header",
+        "swift": "<span class=\"syn-cmt\">// One Header row at the top of the table.</span>\n<span class=\"syn-type\">EBTableRow</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">role</span><span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>header<span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">label</span><span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Header\"</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">columns</span><span class=\"syn-punc\">: [</span>\n        <span class=\"syn-type\">Column</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">, </span><span class=\"syn-param\">asset</span><span class=\"syn-punc\">: </span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"wallet\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">,</span>\n        <span class=\"syn-type\">Column</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">, </span><span class=\"syn-param\">asset</span><span class=\"syn-punc\">: </span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"bank\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">,</span>\n        <span class=\"syn-type\">Column</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">, </span><span class=\"syn-param\">asset</span><span class=\"syn-punc\">: </span><span class=\"syn-type\">Image</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"card\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">]</span>\n<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-cmt\">// One Header row at the top of the table.</span>\n<span class=\"syn-type\">EBTableRow</span><span class=\"syn-punc\">(</span>\n    role <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTableRowRole</span><span class=\"syn-punc\">.</span>Header<span class=\"syn-punc\">,</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Header\"</span><span class=\"syn-punc\">,</span>\n    columns <span class=\"syn-eq\">=</span> <span class=\"syn-fn\">listOf</span><span class=\"syn-punc\">(</span>\n        <span class=\"syn-type\">Column</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">, </span>asset <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"wallet\"</span><span class=\"syn-punc\">) }</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">,</span>\n        <span class=\"syn-type\">Column</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">, </span>asset <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"bank\"</span><span class=\"syn-punc\">) }</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">,</span>\n        <span class=\"syn-type\">Column</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Title\"</span><span class=\"syn-punc\">, </span>asset <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">{ </span><span class=\"syn-type\">Icon</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"card\"</span><span class=\"syn-punc\">) }</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">)</span>"
+      },
+      {
+        "subheading": "Content",
+        "swift": "<span class=\"syn-cmt\">// Column count must match the Header row above it.</span>\n<span class=\"syn-type\">EBTableRow</span><span class=\"syn-punc\">(</span>\n    <span class=\"syn-param\">role</span><span class=\"syn-punc\">: </span><span class=\"syn-punc\">.</span>content<span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">label</span><span class=\"syn-punc\">: </span><span class=\"syn-str\">\"Row Title\"</span><span class=\"syn-punc\">,</span>\n    <span class=\"syn-param\">columns</span><span class=\"syn-punc\">: [</span>\n        <span class=\"syn-type\">Column</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Data\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">,</span>\n        <span class=\"syn-type\">Column</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Data\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">,</span>\n        <span class=\"syn-type\">Column</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Data\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">]</span>\n<span class=\"syn-punc\">)</span>\n<span class=\"syn-punc\">.</span><span class=\"syn-fn\">disabled</span><span class=\"syn-punc\">(</span>isUnavailable<span class=\"syn-punc\">)</span>",
+        "compose": "<span class=\"syn-cmt\">// Column count must match the Header row above it.</span>\n<span class=\"syn-type\">EBTableRow</span><span class=\"syn-punc\">(</span>\n    role <span class=\"syn-eq\">=</span> <span class=\"syn-type\">EBTableRowRole</span><span class=\"syn-punc\">.</span>Content<span class=\"syn-punc\">,</span>\n    label <span class=\"syn-eq\">=</span> <span class=\"syn-str\">\"Row Title\"</span><span class=\"syn-punc\">,</span>\n    columns <span class=\"syn-eq\">=</span> <span class=\"syn-fn\">listOf</span><span class=\"syn-punc\">(</span>\n        <span class=\"syn-type\">Column</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Data\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">,</span>\n        <span class=\"syn-type\">Column</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Data\"</span><span class=\"syn-punc\">)</span><span class=\"syn-punc\">,</span>\n        <span class=\"syn-type\">Column</span><span class=\"syn-punc\">(</span><span class=\"syn-str\">\"Data\"</span><span class=\"syn-punc\">)</span>\n    <span class=\"syn-punc\">)</span><span class=\"syn-punc\">,</span>\n    enabled <span class=\"syn-eq\">=</span> <span class=\"syn-punc\">!</span>isUnavailable\n<span class=\"syn-punc\">)</span>"
       }
     ],
     "accessibility": [
@@ -760,28 +871,45 @@ export const table: ComponentData = {
         "android": "Wrap in <code>Modifier.clickable</code> with <code>role = Role.Button</code>."
       }
     ],
-    "usageGuidelines": [],
+    "usageGuidelines": [
+      {
+        "doText": "Give every row in one table the same number of Table Cell instances.",
+        "dontText": "Don't put 3 cells in the Header and 4 in the rows beneath it — the ⤷ ColumnSlot divides its 176px evenly and nothing aligns the two."
+      },
+      {
+        "doText": "Use Role=Header once, at the top of the table.",
+        "dontText": "Don't reach for Header mid-table to emphasise a row — it reads as a second table starting."
+      },
+      {
+        "doText": "Put the row's subject in Table Label and its data in the cells.",
+        "dontText": "Don't fold a fourth data point into the label to save a column — the label is 120px and fixed."
+      },
+      {
+        "doText": "Use Inline Text when a row carries a single value.",
+        "dontText": "Don't use Table Row for a two-column label/value list — three cells share 176px, so each gets about 59px."
+      }
+    ],
     "scorecard": [
       {
         "id": "C1",
         "criterion": "Layer Structure & Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "One <code>Table Row</code> composing <code>Table Label</code> and <code>Table Cell</code> instances through slots, all named <code>⤷ …Slot</code>."
+        "notes": "One <code>Table Row</code> composing <code>Table Label</code> and <code>Table Cell</code> through slots, all named <code>⤷ …Slot</code>. The cell's text layer is <code>#text</code> — it was <code>#description</code>, a name copied from <code>Table Label</code> that promised a second line the cell never had."
       },
       {
         "id": "C2",
         "criterion": "Variant & Property Naming",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "<code>Role</code> and <code>State</code> are PascalCase with Title Case values. The <code>no. of columns</code> property and its period are gone."
+        "notes": "All three components name the axis <code>Role</code> with Title Case values, and both primitives expose their text as properties — <code>Title</code> and <code>Description</code> on <code>Table Label</code>, <code>Text</code> on <code>Table Cell</code>, each matching its layer name. <code>Role=Empty</code> draws nothing on both, as the name says. The <code>no. of columns</code> property and its period are long gone."
       },
       {
         "id": "C3",
         "criterion": "Token Coverage",
-        "status": "refine",
-        "statusLabel": "Needs Refinement",
-        "notes": "Not verified — the read-only tooling can't see variable bindings. <code>#description</code> now sits on the shared 10px token; moving it to 12px is an open recommendation."
+        "status": "ready",
+        "statusLabel": "Ready",
+        "notes": "Verified against the selection-colors panel: the set paints six colours and the panel lists exactly six tokens — <code>bg/color-bg</code>, <code>bg/color-bg-main</code>, <code>border/color-border-weak</code>, <code>border/color-border</code>, <code>text/color-text</code>, <code>text/color-text-disabled</code>. <code>Table Label</code>'s <code>#description</code> is on <code>text/color-text-weaker</code>."
       },
       {
         "id": "C4",
@@ -795,14 +923,14 @@ export const table: ComponentData = {
         "criterion": "Interaction State Coverage",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "Display-only by design, so pressed and selected are not needed. <code>State=Disabled</code> dims every text layer to <code>#C2CFE5</code>. It still reuses the Header background — tracked as a recommendation."
+        "notes": "Display-only by design, so pressed and selected are not needed. <code>State=Disabled</code> dims every text layer to <code>text/color-text-disabled</code> and leaves the row's own background alone. Both primitives publish their own Disabled variant, so the row swaps to them rather than overriding fills per instance."
       },
       {
         "id": "C6",
         "criterion": "Asset & Icon Quality",
         "status": "ready",
         "statusLabel": "Ready",
-        "notes": "24 × 24 <code>Asset Slot</code> on both <code>Table Label</code> and <code>Table Cell</code>, holding a swappable <code>Placeholder</code> instance."
+        "notes": "24 × 24 <code>⤷ AssetSlot</code> on both primitives, holding a swappable <code>Placeholder</code> instance drawn on <code>border/color-border</code>."
       },
       {
         "id": "C7",
@@ -815,7 +943,7 @@ export const table: ComponentData = {
     "codeConnect": [],
     "variants": {
       "total": 4,
-      "description": "<code>Role</code> (2) × <code>State</code> (2) = <strong>4 published versions</strong>, listed below. Three booleans sit on top of them without adding variants — <code>hasBorder</code> on the row, and <code>hasAsset</code> and <code>hasDescription</code> on the nested <code>Table Label</code> — so the real combination count is 32. Column count isn't a version either: the <code>⤷ ColumnSlot</code> takes however many <code>Table Cell</code> instances you drop in. This replaces the old three-component family, which published 9 + 3 + 2 variants between them.",
+      "description": "<code>Role</code> (2) × <code>State</code> (2) = <strong>4 published variants</strong>. <code>hasBorder</code> sits on top of them without adding any, so Table Row has 8 combinations behind 4 versions. Column count is not a version either — the <code>⤷ ColumnSlot</code> takes however many <code>Table Cell</code> instances you drop in — three in every published variant, each one <code>Role=Header</code> or <code>Role=Content</code> to match the row. This replaces the old three-component family, which published 9 + 3 + 2 variants between them.",
       "columns": [
         "Role",
         "State",
@@ -847,7 +975,7 @@ export const table: ComponentData = {
             "<strong>Content</strong>",
             "Default",
             "360 × 70",
-            "transparent",
+            "<code>#FFFFFF</code>",
             "<code>5734:37657</code>"
           ]
         },
@@ -856,7 +984,7 @@ export const table: ComponentData = {
             "Content",
             "Disabled",
             "360 × 70",
-            "<code>#F6F9FD</code>",
+            "<code>#FFFFFF</code>",
             "<code>5761:37773</code>"
           ]
         }
@@ -864,6 +992,189 @@ export const table: ComponentData = {
     }
   },
   "changelog": [
+    {
+      "version": "2.2.1",
+      "date": "September 2026",
+      "kind": "patch",
+      "kindLabel": "Patch",
+      "header": "Corrections after shared facts moved · node 5734:37611",
+      "rows": [
+        {
+          "body": "<strong><code>Table Cell</code> gained a fourth role.</strong> Property Mapping listed <code>Header, Content, Empty</code>; the primitive now also publishes <code>Role=Transaction</code> (nodes <code>9567:96672</code> and <code>9567:96676</code>), added during the Table Transaction review so that row could stop overriding the cell's text style. Nothing about <code>Table Row</code> changed — a component it references did, which is why its own checks all passed while the page went stale.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>The Inline Text token recommendation is closed.</strong> It asked this row's label and value colours to converge with Inline Text's own set. Both sides moved instead: this row is on the system-wide <code>text/*</code> colours, and the <code>inline-text/color/*</code> tokens no longer exist. Nothing to reconcile from here.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Token"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.2.0",
+      "date": "September 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Primitives aligned; Style, Code and Overview rebuilt to the content guides · node 5734:37611",
+      "rows": [
+        {
+          "body": "<strong>One name for one setting, across all three components.</strong> <code>Table Cell</code> called its setting <code>Type</code> while <code>Table Row</code> and <code>Table Label</code> called the same thing <code>Role</code>. All three say <code>Role</code> now. It matters beyond tidiness: <code>Role=Header</code> is what becomes an accessibility heading on both platforms.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Every text layer is named after the property that fills it.</strong> The cell's text layer was <code>#description</code>, a name copied from <code>Table Label</code> that promised a second line the cell never had — it is <code>#text</code> now, filled by a new <code>Text</code> property. <code>Table Label</code>'s <code>#label</code> became <code>#title</code> to match its <code>Title</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Resolved"
+          }
+        },
+        {
+          "body": "<strong>The empty version is actually empty.</strong> <code>Role=Empty</code> on <code>Table Cell</code> held a stray blue checkmark — a copy of another component parked in the set, drawing an unflattened shape on an unbound <code>#025ae9</code>. Both primitives now draw nothing for <code>Role=Empty</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Resolved"
+          }
+        },
+        {
+          "body": "<strong>The disabled look lives in the primitives, not in each copy.</strong> <code>Table Label</code> and <code>Table Cell</code> each publish their own Disabled version, so a disabled row swaps to them. Before, every copy had its colours painted over by hand, which meant the disabled look did not travel if either primitive were used elsewhere.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Every colour is bound to a named system colour.</strong> Checked against Figma's selection-colours panel, which the earlier tooling could not read — the set paints six colours and the panel lists exactly six names. The icon placeholder had been documented as a hardcoded <code>#C2C6CF</code>; it is <code>border/color-border</code> at <code>#D7E0EF</code>. This closes the standing recommendation to audit the bindings.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Resolved"
+          }
+        },
+        {
+          "body": "<strong>A recommendation turned out to describe our own preview.</strong> \"Give disabled rows their own background\" said disabled reuses the Header <code>#F6F9FD</code>, so the two read alike in a stack. Exporting the set shows otherwise: a disabled Content row is still white. The claim came from an invented CSS rule in the documentation preview, not from the component. Closed with no Figma change.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Token"
+          }
+        },
+        {
+          "body": "<strong>The preview was drawing three things Figma does not.</strong> The asset placeholder was <code>#C8D3E5</code> against a real <code>#D7E0EF</code>; disabled rows were given a <code>#F6F9FD</code> background the component never had; and the preview root drew in the documentation face rather than Proxima Soft. Corrected against the SVG export of the whole set.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Layout was documented from numbers that were never read.</strong> Heights said 37 / 65 / 56 where Figma has <code>Hug · 68</code> and <code>Hug · 70</code>, and the four spec sections carried font specs instead of text style names. Rebuilt from the Auto layout panels and the resolved styles: <code>Primary/Label/Small</code>, <code>Primary/Label/Fine</code> and <code>Secondary/Light/Caption</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Code tab rebuilt to the content guide.</strong> Property Mapping regrouped into prose rows, one per setting, and grown from 10 to 13 to cover both primitives; the missing Import block added; Usage Snippets split into one per <code>Role</code>; four usage guidelines written where there were none.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Native readiness moved to Ready.</strong> C1 through C6 all pass now. C7 stays Not Mapped and is excluded from the badge by rule — the native library does not exist yet.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        },
+        {
+          "body": "<strong>Two versions of history were missing.</strong> The v2.0 and v2.1 work shipped together in <code>7f5cafa</code> (August 2026) and never got changelog entries, while the Overview tab referenced both throughout. Both are written above, reconstructed from that commit and from the Overview's own version-tagged records.",
+          "delta": {
+            "kind": "resolved",
+            "label": "Docs"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.1.0",
+      "date": "August 2026",
+      "kind": "minor",
+      "kindLabel": "Minor",
+      "header": "Follow-up pass on the rebuild · node 5734:37611",
+      "rows": [
+        {
+          "body": "<strong>The supporting line got bigger.</strong> <code>#description</code> moved to the shared 10px text style, up from 8px. 12px is still the target and stays as a recommendation — it is the floor the rest of the system's body text sits on.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C3 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Disabled now dims every text layer.</strong> The description had been left at full strength while the label and cells dimmed, so a disabled row read as half-available. All of it takes <code>text/color-text-disabled</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Swappable areas settled on one naming pattern.</strong> All three took the <code>⤷ …Slot</code> form — <code>⤷ ColumnSlot</code> on the row, <code>⤷ AssetSlot</code> on both primitives. Settling it library-wide stays open as a documentation item.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Resolved"
+          }
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "August 2026",
+      "kind": "major",
+      "kindLabel": "Major",
+      "header": "2026 Working File · rebuilt as one composable row · node 5734:37611",
+      "rows": [
+        {
+          "body": "<strong>Three components became one.</strong> <code>Table</code>, <code>Table - Item</code> and <code>Table - Label</code> published 9 + 3 + 2 versions between them, and only <code>Table</code> was ever placed on a screen. <code>Table Row</code> replaces all three with 4 versions, composing <code>Table Label</code> and <code>Table Cell</code> as real copies inside swappable areas rather than redrawing them.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C1 Resolved"
+          }
+        },
+        {
+          "body": "<strong>The column-count setting is gone.</strong> <code>no. of columns</code> was a text setting with a period in its name, and it fixed the number of columns at build time. Column count is now however many <code>Table Cell</code> copies you drop into <code>⤷ ColumnSlot</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C2 Resolved"
+          }
+        },
+        {
+          "body": "<strong>The header icon became a swappable area.</strong> It was a hardcoded <code>#C2C6CF</code> circle behind an <code>icon=yes/no</code> toggle. Both <code>Table Label</code> and <code>Table Cell</code> now carry a 24 × 24 <code>⤷ AssetSlot</code> holding a swappable <code>Placeholder</code>.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C6 Resolved"
+          }
+        },
+        {
+          "body": "<strong>The row maps to native primitives after all.</strong> The initial assessment doubted a table belonged in a mobile design system. A slot-based row is a stack of cells on both platforms — no platform <code>Table</code> needed — so Table stays, scoped to genuine multi-column data.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C4 Resolved"
+          }
+        },
+        {
+          "body": "<strong>Disabled shipped; pressed and selected were dropped on purpose.</strong> Rows are display-only and carry no tap target, so those two states have nothing to show. <code>State=Disabled</code> was added for rows showing unavailable data.",
+          "delta": {
+            "kind": "resolved",
+            "label": "C5 Resolved"
+          }
+        }
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "April 2026",

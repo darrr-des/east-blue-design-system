@@ -128,6 +128,15 @@ Its values become the cards, in Figma's order. Every other property becomes a **
 
 **Check the preview against an export, not against the layer tree.** Run `export_node_as_image` on the default variant and compare it to the rendered preview side by side. A layer that exists in the tree is not necessarily drawn — Alert's leading slot and its action button are both present in every variant and hidden in all of them, and the old preview drew both. The tree tells you what exists; the export tells you what ships.
 
+**The tree order is not the paint order.** An absolutely-positioned layer sits wherever its position puts it, regardless of where the panel lists it — so reading the layer list top-to-bottom gets the stacking backwards. Caught twice on the Carousel run:
+
+| Component | Layer | Panel says | Actually paints |
+|---|---|---|---|
+| Carousel Item | `Overlay` | last, so on top | **beneath** `content` — a press dims the artwork, never the copy |
+| Date Picker Cell | `Range highlight start` | before `Container`, so beneath | **beneath** — correct here, but the preview had rebuilt it as a child of the cell, which forced it on top |
+
+Both shipped previews that were wrong in a way no amount of tree-reading would reveal. The export settles it: if the preview stacks differently from the image, the preview is wrong.
+
 **Give the preview a server-rendered default.** `previewHtml` must contain the component's default state inside the host div, not an empty shell — the demo script overwrites it on load, but the static markup is what shows before JS runs, when JS fails, and when a viewer has a stale cached demo script:
 
 ```ts
@@ -436,11 +445,12 @@ cd astro-site
 npm run build          # schema breakage
 npm run lint           # preview structure + colors-table coverage
 grep -c "getSnippet" public/scripts/demos/<slug>.js     # must be ≥ 1
+grep -n "font-family: inherit" src/styles/global.css        # check 18 — this component must not appear
 ```
 
 Then open `http://localhost:4321/components/<slug>` and click **every** control on **every** card.
 
-## 4b. The 14 checks
+## 4b. The 18 checks
 
 | # | Check | How to tell it passed |
 |---|---|---|
@@ -462,6 +472,23 @@ Then open `http://localhost:4321/components/<slug>` and click **every** control 
 | 15 | Colors rows follow the controls | Switch a control — hex and token both change |
 | 16 | Colors table is Role │ Element │ Token │ Value | Grouped by role, in card order |
 | 17 | DEV code is live on both tabs | SwiftUI and Compose both change with the controls |
+| 18 | The preview renders in the component's own faces | No `.eb-preview-*` root says `font-family: inherit`; every `Primary/*` layer draws in Proxima Soft and every `Secondary/*` layer in BarkAda |
+
+### Check 18 — why it exists
+
+Checks 11 and 12 confirm a text layer **resolves to a style name**. Neither confirms the preview **draws in that style's face**, and the two are independent: a preview root declaring `font-family: inherit` picks up the site's `--font-body`, which is **BarkAda**, so a `Primary/*` layer renders in the wrong face and still passes all seventeen. It went unnoticed on eight components before anyone spotted it by eye.
+
+The rule is one line:
+
+> **`Primary/*` is Proxima Soft. `Secondary/*` is BarkAda.** The preview root names the face most of its layers use; any layer in the other family names its own.
+
+Two things make this worth its own check rather than a sweep:
+
+**A component can be half wrong and look right.** List Item's `#label` is `Secondary/Bold/Base` and genuinely is BarkAda, so it looked correct — while the marker beside it, a `Primary/*` layer, was inheriting the same font and was wrong.
+
+**A blanket replace breaks working components.** Modal mixes both faces on purpose — `Primary/Headlines/Section` title over a `Secondary/Default/Base` description. Setting every root to Proxima Soft would have broken it. Read the layers first, then decide the root.
+
+How to check it: list the component's text styles from the Typography rows, then confirm the CSS. A `Primary`-only component names Proxima Soft at the root and nothing else; a mixed one names Proxima Soft at the root and BarkAda on each Secondary layer.
 
 ## 4c. Report format
 
@@ -498,7 +525,7 @@ The AI prints one table. Status is one of **✅ Done · ⚠️ Partial · ❌ Mi
 
 Rules for the report:
 
-- **One row per check, always all 14** — a check that passed still gets a row.
+- **One row per check, always all 18** — a check that passed still gets a row.
 - **Detail says what, not how much.** Name the card, the row, the property.
 - **Separate "blocked" from "failed."** A check waiting on maintainer pre-work is Partial + listed under *Blocked*, never Broken.
 - **End with a next-action line** ordered by what unblocks the most.

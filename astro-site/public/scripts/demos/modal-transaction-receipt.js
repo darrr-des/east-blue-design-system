@@ -29,7 +29,9 @@ function _mtrRender(opts) {
   h += '<div class="eb-preview-mtr__content">';
   h += '<div class="eb-preview-mtr__title">' + _mtrEscape(opts.title || 'Put the title here') + '</div>';
   /* The placeholder carries a hard line break, same as Figma. */
-  h += '<div class="eb-preview-mtr__description">First line of text goes here<br>Second line of text goes here</div>';
+  if (opts.hasDescription !== false) {
+    h += '<div class="eb-preview-mtr__description">First line of text goes here<br>Second line of text goes here</div>';
+  }
   h += '<div class="eb-preview-mtr__rows">';
   h += _mtrRow('Label', 'Put content here');
   h += _mtrRow('Label', 'Put content here');
@@ -37,12 +39,15 @@ function _mtrRender(opts) {
   h += '</div></div>';
 
   /* The reference row is a deliberate hand-built duplicate of the entry
-     primitive — it sits outside the card and carries the copy control. */
-  h += '<div class="eb-preview-mtr__reference">';
-  h += '<span class="eb-preview-mtr__row-label">Reference Number</span>';
-  h += '<span class="eb-preview-mtr__row-value">' + _mtrEscape(opts.reference || '165A25912345') + '</span>';
-  h += '<span class="eb-preview-mtr__copy"></span>';
-  h += '</div>';
+     primitive — it sits outside the card and carries the copy control.
+     hasReferenceNo drops the whole strip, not just its value. */
+  if (opts.hasReferenceNo !== false) {
+    h += '<div class="eb-preview-mtr__reference">';
+    h += '<span class="eb-preview-mtr__row-label">Reference Number</span>';
+    h += '<span class="eb-preview-mtr__row-value">' + _mtrEscape(opts.reference || '165A25912345') + '</span>';
+    h += '<span class="eb-preview-mtr__copy"></span>';
+    h += '</div>';
+  }
 
   /* Primary on top when stacked, primary on the right when inline. */
   h += '<div class="eb-preview-mtr__actions">';
@@ -65,13 +70,18 @@ function _mtrUpdate() {
   preview.innerHTML = _mtrRender({
     actions: getVal('mtr-ctrl-actions', 'vertical'),
     title: getVal('mtr-ctrl-title', 'Put the title here'),
-    reference: getVal('mtr-ctrl-ref', '165A25912345')
+    reference: getVal('mtr-ctrl-ref', '165A25912345'),
+    hasDescription: getVal('mtr-ctrl-hasdesc', 'true') === 'true',
+    hasReferenceNo: getVal('mtr-ctrl-hasref', 'true') === 'true'
   });
 }
 
 /* ── Spec card state ─────────────────────────────────────────────── */
+/* One card per ActionOrientation value, keyed by the demoKey in the data
+   file. Defaults are Figma's: both booleans True. */
 var _specCards = {
-  default: { actions: 'vertical' }
+  horizontal: { actions: 'horizontal', hasdescription: 'true', hasreferenceno: 'true' },
+  vertical: { actions: 'vertical', hasdescription: 'true', hasreferenceno: 'true' }
 };
 window._specCards = _specCards;
 
@@ -81,10 +91,44 @@ function updateSpecCard(cardKey, prop, value) {
   card[prop] = value;
   var host = document.getElementById('mtr-spec-' + cardKey);
   if (host) {
-    host.innerHTML = _mtrRender({ actions: card.actions });
+    host.innerHTML = _mtrRender({
+      actions: card.actions,
+      hasDescription: card.hasdescription !== 'false',
+      hasReferenceNo: card.hasreferenceno !== 'false'
+    });
   }
 }
 window.updateSpecCard = updateSpecCard;
+
+/* ── DEV code, live ───────────────────────────────────────────────── */
+/* title, description and the two slots' contents are text layers and
+   slots rather than Figma properties, so only the three switchable
+   properties appear as named arguments. */
+function getSnippet(cardKey, lang) {
+  var card = _specCards[cardKey] || _specCards['vertical'];
+  var compose = lang === 'compose';
+  var sep = compose ? ' <span class="syn-eq">=</span> ' : '<span class="syn-punc">:</span> ';
+  var cased = card.actions === 'horizontal' ? 'Horizontal' : 'Vertical';
+  var orientation = compose
+    ? '<span class="syn-type">EBActionOrientation</span><span class="syn-punc">.</span>' +
+      '<span class="syn-dot">' + cased + '</span>'
+    : '<span class="syn-dot">.' + card.actions + '</span>';
+
+  var args = [
+    'title' + sep + '<span class="syn-str">"Put the title here"</span>',
+    'actionOrientation' + sep + orientation
+  ];
+  if (card.hasdescription === 'false') {
+    args.push('hasDescription' + sep + '<span class="syn-kw">false</span>');
+  }
+  if (card.hasreferenceno === 'false') {
+    args.push('hasReferenceNo' + sep + '<span class="syn-kw">false</span>');
+  }
+  return '<span class="syn-type">EBTransactionReceiptModal</span><span class="syn-punc">(</span>\n    ' +
+    args.join('<span class="syn-punc">,</span>\n    ') +
+    '\n<span class="syn-punc">)</span>';
+}
+window.getSnippet = getSnippet;
 
 function _mtrInit() {
   _mtrUpdate();
